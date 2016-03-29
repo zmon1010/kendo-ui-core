@@ -497,6 +497,29 @@ var Keyboard = Class.extend({
         }
     },
 
+    toolsFromShortcut: function (tools, e) {
+        var key = String.fromCharCode(e.keyCode),
+            toolName,
+            o,
+            matchesKey,
+            found = [];
+        var matchKey = function (toolKey) { return toolKey == key || toolKey == e.keyCode; };
+
+        for (toolName in tools) {
+            o = $.extend({ ctrl: false, alt: false, shift: false }, tools[toolName].options);
+
+            matchesKey = $.isArray(o.key) ? $.grep(o.key, matchKey).length > 0 : matchKey(o.key);
+            if (matchesKey &&
+                o.ctrl == e.ctrlKey &&
+                o.alt == e.altKey &&
+                o.shift == e.shiftKey) {
+                found.push(tools[toolName]);
+            }
+        }
+
+        return found;
+    },
+
     isTypingKey: function (e) {
         var keyCode = e.keyCode;
         return (this.isCharacter(keyCode) && !e.ctrlKey && !e.altKey) ||

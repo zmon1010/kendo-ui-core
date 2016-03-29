@@ -70,7 +70,7 @@ test("value method passes serialization options to serializer", function() {
 
 test("value method refreshes toolbar tools", function() {
     var editor = new kendo.ui.Editor("#editor");
-    var refreshSpy = spy(editor.toolbar, "refreshTools")
+    var refreshSpy = spy(editor.toolbar, "refreshTools");
 
     editor.value("<p>content change</p>");
 
@@ -112,7 +112,7 @@ function selectRangeInValue(editor, value) {
 test("state returns true when tool is toggled", function() {
     var editor = new kendo.ui.Editor("#editor");
 
-    selectRangeInValue(editor, "<em>f|o|o</em");
+    selectRangeInValue(editor, "<em>f|o|o</em>");
 
     ok(editor.state("italic"));
 });
@@ -120,7 +120,7 @@ test("state returns true when tool is toggled", function() {
 test("state returns false when tool is not toggled", function() {
     var editor = new kendo.ui.Editor("#editor");
 
-    selectRangeInValue(editor, "<em>f|o|o</em");
+    selectRangeInValue(editor, "<em>f|o|o</em>");
 
     ok(!editor.state("bold"));
 });
@@ -128,7 +128,7 @@ test("state returns false when tool is not toggled", function() {
 test("state returns false when tool does not provide a finder", function() {
     var editor = new kendo.ui.Editor("#editor");
 
-    selectRangeInValue(editor, "<em>f|o|o</em");
+    selectRangeInValue(editor, "<em>f|o|o</em>");
 
     ok(!editor.state("insertImage"));
 });
@@ -136,7 +136,7 @@ test("state returns false when tool does not provide a finder", function() {
 test("state returns false for unknown tools", function() {
     var editor = new kendo.ui.Editor("#editor");
 
-    selectRangeInValue(editor, "<em>f|o|o</em");
+    selectRangeInValue(editor, "<em>f|o|o</em>");
 
     ok(!editor.state("foo"));
 });
@@ -144,7 +144,7 @@ test("state returns false for unknown tools", function() {
 test("state returns true when range is collapsed", function() {
     var editor = new kendo.ui.Editor("#editor");
 
-    selectRangeInValue(editor, "<em>fo||o</em");
+    selectRangeInValue(editor, "<em>fo||o</em>");
 
     ok(editor.state("italic"));
 });
@@ -282,4 +282,66 @@ test("inline Editor toolbar does not show on focus when widget is readonly", fun
     ok(!editor.toolbar.element.is(":visible"));
 });
 
+    var editor, defaultCmd;
+    editor_module("editor run key command to post process content", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            defaultCmd = {
+                name: "cmd",
+                options: {
+                    key: [13, 32],
+                    keyPressCommand: true,
+                    command: function() {
+                        this.changesContent = function() { return true; };
+                    }
+                }
+            };
+
+            editor.toolbar.tools = { cmd: defaultCmd };
+        },
+        afterEach: function() {
+            removeMocksIn(editor.keyboard);
+            removeMocksIn(editor);
+        }
+    });
+
+    test("exec only tools that match shortcut", function() {
+        mockFunc(editor, "exec", function(name) {
+            equal(name, defaultCmd.name);
+        });
+
+        var e = makeEvent(32);
+        editor.runPostContentKeyCommands(e);
+    });
+
+    test("don't run non-keyPressCommand tools", function () {
+        mockFunc(editor, "exec", function(name) {});
+        editor.toolbar.tools.cmd.options.keyPressCommand = false;
+
+        var e = makeEvent(32);
+        editor.runPostContentKeyCommands(e);
+
+        ok(!editor.exec.called);
+    });
+
+    test("end typing if command changes content", function () {
+        mockFunc(editor.keyboard, "endTyping");
+        editor.toolbar.tools.cmd.options.command = function() {
+            this.changesContent = function() { return true; }
+        };
+
+        var e = makeEvent(32);
+        editor.runPostContentKeyCommands(e);
+
+        ok(editor.keyboard.endTyping.called);
+    });
+
+    function makeEvent(keyCode) {
+        var e = new $.Event();
+        e.keyCode = keyCode;
+        e.shiftKey = false;
+        e.ctrlKey = false;
+        e.altKey = false;
+        return e;
+    }
 })();

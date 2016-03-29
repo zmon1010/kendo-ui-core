@@ -272,7 +272,7 @@
 
         setOptions: function(options) {
             var editor = this;
- 
+
             Widget.fn.setOptions.call(editor, options);
             if(options.tools) {
                 editor.toolbar.bindTo(editor);
@@ -578,21 +578,31 @@
                         }
                     }
 
-                    var toolName = editor.keyboard.toolFromShortcut(editor.toolbar.tools, e);
-
-                    if (toolName) {
+                    var tools = editor.toolbar.tools;
+                    var toolName = editor.keyboard.toolFromShortcut(tools, e);
+                    var toolOptions = toolName ? tools[toolName].options : {};
+                    if (toolName && !toolOptions.keyPressCommand) {
                         e.preventDefault();
+
                         if (!/^(undo|redo)$/.test(toolName)) {
                             editor.keyboard.endTyping(true);
                         }
+
                         editor.trigger("keydown", e);
                         editor.exec(toolName);
+                        editor.runPostContentKeyCommands(e);
+
                         return false;
                     }
 
                     editor.keyboard.clearTimeout();
 
                     editor.keyboard.keydown(e);
+                },
+                "keypress": function(e) {
+                    setTimeout(function () {
+                        editor.runPostContentKeyCommands(e);
+                    }, 0);
                 },
                 "keyup": function (e) {
                     var selectionCodes = [8, 9, 33, 34, 35, 36, 37, 38, 39, 40, 40, 45, 46];
@@ -661,6 +671,24 @@
             }
         },
 
+        runPostContentKeyCommands: function (e) {
+            var range = this.getRange();
+            var tools = this.keyboard.toolsFromShortcut(this.toolbar.tools, e);
+
+            for (var i = 0; i < tools.length; i++) {
+                var tool = tools[i];
+                var o = tool.options;
+                if(!o.keyPressCommand) {
+                    continue;
+                }
+
+                var cmd = new o.command({range: range});
+                if (cmd.changesContent()) {
+                    this.keyboard.endTyping(true);
+                    this.exec(tool.name);
+                }
+            }
+        },
 
         refresh: function() {
             var that = this;

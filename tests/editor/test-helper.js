@@ -97,31 +97,39 @@ window.EditorHelpers = {
     }
 };
 
-/* exported mockFunc */
-function mockFunc(obj, methodName, mockMethod, context) {
-    var method = obj[methodName];
+/* exported initMock */
+function initMock(callback, context) {
     var mock = function() {
         mock.called = true;
         mock.callCount++;
-        if (typeof(mockMethod) === "function") {
-            mockMethod.apply(context || obj, arguments);
+        if (typeof(callback) === "function") {
+            var result = callback.apply(context || this, arguments);
             if(mock.callbacks) {
                 for (var i = 0; i < mock.callbacks.length; i++) {
-                    mock.callbacks[i].apply(context || obj, arguments);
+                    mock.callbacks[i].apply(context || this, arguments);
                 }
             }
+
+            return result;
         }
     };
 
     mock.called = false;
     mock.callCount = 0;
-    mock.originalMethod = method;
 
     mock.callbacks = [];
     mock.addMethod = function(callback) {
         mock.callbacks.push(callback);
     };
 
+    return mock;
+}
+
+/* exported mockFunc */
+function mockFunc(obj, methodName, mockMethod, context) {
+    var method = obj[methodName];
+    var mock = initMock(mockMethod, context || obj);
+    mock.originalMethod = method;
     obj[methodName] = mock;
 }
 
@@ -146,7 +154,7 @@ function trackMethodCall(obj, methodName) {
 /* exported removeMocksIn */
 function removeMocksIn(obj) {
     for (var propName in obj) {
-        if (isMockFunc(obj[propName])) {
+        if (obj[propName] && isMockFunc(obj[propName])) {
             removeMock(obj, propName);
         }
     }

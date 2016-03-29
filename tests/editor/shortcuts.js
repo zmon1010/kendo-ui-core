@@ -151,6 +151,7 @@ test("shift enter calls new line", function() {
 test("enter calls paragraph", function() {
     var command = null;
 
+    delete editor.toolbar.tools.autoLink;
     editor.exec = function () {
         command = arguments[0];
     };
@@ -174,4 +175,94 @@ test("editor prevents default if shortcut is known", function() {
     ok(e.isDefaultPrevented());
 });
 
+    editor_module("Get multiple tools from shortcut", {
+        setup: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+        }
+    });
+
+    test("find tool by single character", function() {
+        var commands = { bold: { options: { key: 'B'} } };
+
+        var e = makeEvent();
+
+        var tools = editor.keyboard.toolsFromShortcut(commands, e);
+
+        equal(tools.length, 1);
+        equal(tools[0].options.key, "B");
+    });
+
+    test("find shorcut with ctrl", function() {
+        var commands = { bold: { options: { ctrl: true, key: 'B' } } };
+
+        var e = makeEvent();
+        e.ctrlKey = true;
+
+        var tools = editor.keyboard.toolsFromShortcut(commands, e);
+
+        equal(tools.length, 1);
+        equal(tools[0], commands["bold"]);
+    });
+
+    test("should not find shorcut with ctrl when ctrl is not pressed", function() {
+        var commands = { bold: { options: { ctrl: true, key: 'B'} } };
+
+        var e = makeEvent();
+
+        var tools = editor.keyboard.toolsFromShortcut(commands, e);
+
+        equal(tools.length, 0);
+    });
+
+    test("should find shortcut with alt", function() {
+        var commands = { bold: { options: { alt: true, key: 'B' } } };
+
+        var e = makeEvent();
+        e.altKey = true;
+
+        var tools = editor.keyboard.toolsFromShortcut(commands, e);
+
+        equal(tools.length, 1);
+        equal(tools[0], commands["bold"]);
+    });
+
+    test("should find shortcut with shift", function() {
+        var commands = { bold: { options: { shift: true, key: 'B'} } };
+
+        var e = makeEvent();
+        e.shiftKey  = true;
+
+        var tools = editor.keyboard.toolsFromShortcut(commands, e);
+
+        equal(tools.length, 1);
+        equal(tools[0], commands["bold"]);
+    });
+
+    test("should find shortcut with all modifiers", function() {
+        var commands = { bold: { options: { shift: true, alt: true, ctrl: true, key: 'B' } } };
+
+        var e = makeEvent();
+
+        e.shiftKey = true;
+        e.altKey = true;
+        e.ctrlKey = true;
+
+        var tools = editor.keyboard.toolsFromShortcut(commands, e);
+
+        equal(tools.length, 1);
+        equal(tools[0], commands["bold"]);
+    });
+
+    test("find multiple tools", function () {
+        var commands = {
+            bold: { options: { key: "B"} } ,
+            bold2: { options: { key: "B"} }
+        };
+
+        var e = makeEvent();
+
+        var tools = editor.keyboard.toolsFromShortcut(commands, e);
+
+        equal(tools.length, 2);
+    })
 }());

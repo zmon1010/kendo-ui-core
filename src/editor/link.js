@@ -20,6 +20,10 @@ var kendo = window.kendo,
     textNodes = RangeUtils.textNodes,
     registerTool = Editor.EditorUtils.registerTool;
 
+var HTTP_PROTOCOL = "http://";
+var protocolRegExp = /^\w*:\/\//;
+var endLinkCharsRegExp = /[\w\/\$\-_\*\?]/i;
+
 var LinkFormatFinder = Class.extend({
     findSuitable: function (sourceNode) {
         return dom.parentOfType(sourceNode, ["a"]);
@@ -195,7 +199,7 @@ var LinkCommand = Command.extend({
         var title, text, target;
         var textInput = $("#k-editor-link-text", element);
 
-        if (href && href != "http://") {
+        if (href && href != HTTP_PROTOCOL) {
 
             if (href.indexOf("@") > 0 && !/^(\w+:)|(\/\/)/i.test(href)) {
                 href = "mailto:" + href;
@@ -245,7 +249,7 @@ var LinkCommand = Command.extend({
             return anchor.getAttribute("href", 2);
         }
 
-        return "http://";
+        return HTTP_PROTOCOL;
     },
 
     linkText: function (nodes) {
@@ -268,6 +272,67 @@ var LinkCommand = Command.extend({
 
 });
 
+    var AutoLinkCommand = Command.extend({
+        init: function (options) {
+            Command.fn.init.call(this, options);
+
+            this.formatter = new LinkFormatter();
+        },
+
+        exec: function () {
+            var detectedLink = this.detectLink();
+            if(!detectedLink) {
+                return;
+            }
+
+            var range = this.getRange();
+            var linkMarker = new kendo.ui.editor.Marker();
+            var linkRange = range.cloneRange();
+
+            linkRange.setStart(detectedLink.start.node, detectedLink.start.offset);
+            linkRange.setEnd(detectedLink.end.node, detectedLink.end.offset);
+
+            range = this.lockRange();
+            linkMarker.add(linkRange);
+
+            this.formatter.apply(linkRange, {
+                href: this._ensureWebProtocol(detectedLink.text)
+            });
+
+            linkMarker.remove(linkRange);
+            this.releaseRange(range);
+        },
+
+        detectLink: function () {
+            var range = this.getRange();
+            var traverser = new LeftDomTextTraverser({
+                node: range.startContainer,
+                offset: range.startOffset,
+                cancelAtNode: function(node) { return node && dom.name(node) === "a"; }
+            });
+
+            var detection = new DomTextLinkDetection(traverser);
+            return detection.detectLink();
+        },
+
+        changesContent: function() {
+            return !!this.detectLink();
+        },
+
+        _ensureWebProtocol: function (linkText) {
+            var hasProtocol = this._hasProtocolPrefix(linkText);
+            return hasProtocol ? linkText : this._prefixWithWebProtocol(linkText);
+        },
+
+        _hasProtocolPrefix: function(linkText) {
+            return protocolRegExp.test(linkText);
+        },
+
+        _prefixWithWebProtocol: function(linkText) {
+            return HTTP_PROTOCOL + linkText;
+        }
+    });
+
 var UnlinkTool = Tool.extend({
     init: function(options) {
         this.options = options;
@@ -287,16 +352,219 @@ var UnlinkTool = Tool.extend({
     }
 });
 
+    var DomTextLinkDetection = Class.extend({
+        init: function (traverser) {
+            this.traverser = traverser;
+            this.start = DomPos();
+            this.end = DomPos();
+            this.text = "";
+        },
+
+        detectLink: function () {
+            var node = this.traverser.node;
+            var offset = this.traverser.offset;
+            if (dom.isDataNode(node)) {
+                var text = node.data.substring(0, offset);
+                if(/\s{2}$/.test(dom.stripBom(text))) {
+                    return;
+                }
+            } else if(offset === 0) {//heuristic for new line
+                var p = dom.closestEditableOfType(node, dom.blockElements);
+                if (p && p.previousSibling) {
+                    this.traverser.init({
+                        node: p.previousSibling
+                    });
+                }
+            }
+
+            this.traverser.traverse($.proxy(this._detectEnd, this));
+            if (!this.end.blank()) {
+                this.traverser.init(this.end);
+                this.traverser.traverse($.proxy(this._detectStart, this));
+
+                if (!this._isLinkDetected()) {
+                    var puntuationTraverser = new RightDomTextTraverser({
+                        node: this.start.node,
+                        offset: this.start.offset,
+                        cancelAtNode: this.traverser.cancelAtNode
+                    });
+                    puntuationTraverser.traverse($.proxy(this._skipStartPuntuation, this));
+                    if(!this._isLinkDetected()) {
+                        this.start = DomPos();
+                    }
+                }
+            }
+
+            if (this.start.blank()) {
+                return null;
+            } else {
+                return {
+                    start: this.start,
+                    end: this.end,
+                    text: this.text
+                };
+            }
+        },
+
+        _isLinkDetected: function() {
+            return protocolRegExp.test(this.text) || /^w{3}\./i.test(this.text);
+        },
+
+        _detectEnd: function(text, node) {
+            var i = lastIndexOfRegExp(text, endLinkCharsRegExp);
+            if(i > -1) {
+                this.end.node = node;
+                this.end.offset = i + 1;
+
+                return false;
+            }
+        },
+
+        _detectStart: function(text, node) {
+            var i = lastIndexOfRegExp(text, /\s/);
+            var ii = i + 1;
+            this.text = text.substring(ii) + this.text;
+
+            this.start.node = node;
+            this.start.offset = ii;
+
+            if (i > -1) {
+                return false;
+            }
+        },
+
+        _skipStartPuntuation: function(text, node, offset) {
+            var i = indexOfRegExp(text, /\w/);
+            var ii = i;
+            if(i === -1) {
+                ii = text.length;
+            }
+
+            this.text = this.text.substring(ii);
+            this.start.node = node;
+            this.start.offset = ii + (offset |0);
+
+            if (i > -1) {
+                return false;
+            }
+        }
+    });
+
+    function lastIndexOfRegExp(str, search) {
+        var i = str.length;
+        while (i-- && !search.test(str[i])) {}
+
+        return i;
+    }
+    function indexOfRegExp(str, search) {
+        var r = search.exec(str);
+
+        return r ? r.index : -1;
+    }
+
+    var DomPos = function() {
+        return {
+            node: null,
+            offset: null,
+            blank: function() {
+                return this.node === null && this.offset === null;
+            }
+        };
+    };
+
+    var DomTextTraverser = Class.extend({
+        init: function (options) {
+            this.node = options.node;
+            this.offset = options.offset === undefined ? (dom.isDataNode(this.node) && this.node.length) || 0 : options.offset;
+            this.cancelAtNode = options.cancelAtNode || this.cancelAtNode || $.noop;
+        },
+
+        traverse: function (callback) {
+            if (!callback) {
+                return;
+            }
+            this.cancel = false;
+            this._traverse(callback, this.node, this.offset);
+        },
+
+        _traverse: function (callback, node, offset) {
+            if(!node || this.cancel) {
+                return;
+            }
+            if (node.nodeType === 3) {
+                var text = node.data;
+                if (offset !== undefined) {
+                    text = this.subText(text, offset);
+                }
+                this.cancel = (callback(text, node, offset) === false);
+            }
+            else {
+                var edgeNode = this.edgeNode(node);
+                this.cancel = this.cancel || this.cancelAtNode(edgeNode);
+                return this._traverse(callback, edgeNode);
+            }
+
+            var next = this.next(node);
+            if (!next) {
+                var parent = node.parentNode;
+                while (!next && dom.isInline(parent)) {
+                    next = this.next(parent);
+                    parent = parent.parentNode;
+                }
+            }
+            this.cancel = this.cancel || this.cancelAtNode(next);
+            this._traverse(callback, next);
+        },
+
+        edgeNode: function(node) {}, //jshint ignore: line
+        next: function(node) {}, //jshint ignore: line
+        subText: function(text, offset) {} //jshint ignore: line
+
+    });
+
+    var LeftDomTextTraverser = DomTextTraverser.extend({
+        subText: function(text, splitIndex) {
+            return text.substring(0, splitIndex);
+        },
+
+        next: function(node) {
+            return node.previousSibling;
+        },
+
+        edgeNode: function(node) {
+            return node.lastChild;
+        }
+    });
+
+    var RightDomTextTraverser = DomTextTraverser.extend({
+        subText: function(text, splitIndex) {
+            return text.substring(splitIndex);
+        },
+
+        next: function(node) {
+            return node.nextSibling;
+        },
+
+        edgeNode: function(node) {
+            return node.firstChild;
+        }
+    });
+
 extend(kendo.ui.editor, {
     LinkFormatFinder: LinkFormatFinder,
     LinkFormatter: LinkFormatter,
     UnlinkCommand: UnlinkCommand,
     LinkCommand: LinkCommand,
-    UnlinkTool: UnlinkTool
+    AutoLinkCommand: AutoLinkCommand,
+    UnlinkTool: UnlinkTool,
+    DomTextLinkDetection: DomTextLinkDetection,
+    LeftDomTextTraverser: LeftDomTextTraverser,
+    RightDomTextTraverser: RightDomTextTraverser
 });
 
 registerTool("createLink", new Tool({ key: "K", ctrl: true, command: LinkCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Create Link"})}));
 registerTool("unlink", new UnlinkTool({ key: "K", ctrl: true, shift: true, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Remove Link"})}));
+registerTool("autoLink", new Tool({ key: [13, 32], keyPressCommand: true, command: AutoLinkCommand }));
 
 })(window.kendo.jQuery);
 

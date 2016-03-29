@@ -353,7 +353,8 @@
             "insertLineBreak",
             "insertParagraph",
             "redo",
-            "undo"
+            "undo",
+            "autoLink"
         ],
 
         tools: {}, // tools collection is copied from defaultTools during initialization
