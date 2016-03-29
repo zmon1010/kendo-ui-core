@@ -965,18 +965,6 @@
             connectionEditTool.start(new Point(), {});
         });
 
-        test("click event is trigged if the default action is prevented in the dragStart event", 1, function() {
-            toolservice.activeTool = connectionEditTool;
-            d.bind("dragStart", function(e) {;
-                e.preventDefault();
-            });
-            d.bind("click", function(e) {
-                ok(e.item === connection);
-            });
-
-            connectionEditTool.start(new Point(), {});
-        });
-
         // ------------------------------------------------------------
         module("ConnectionEditTool / move", {
             setup: function() {

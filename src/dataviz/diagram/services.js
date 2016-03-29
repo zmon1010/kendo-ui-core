@@ -764,9 +764,6 @@
                     }
                 }
 
-                if(service.hoveredItem) {
-                    this.toolService.triggerClick({item: service.hoveredItem, point: p, meta: meta});
-                }
                 this.adorner = undefined;
                 this.handle = undefined;
             },
@@ -940,7 +937,6 @@
                 var diagram = toolService.diagram;
 
                 if (adorner) {
-                    toolService.triggerClick({item: connection, point: p, meta: meta});
                     if (canDrag(connection)) {
                         var unit = adorner.stop(p);
                         if (!diagram.trigger(DRAG_END, { shapes: [], connections: [connection], connectionHandle: this.handleName })) {
@@ -1098,12 +1094,7 @@
                 tool.toolService = this;
                 this.tools[index] = tool;
             },
-            triggerClick: function(data) {
-                if (this.startPoint.equals(data.point)) {
-                    this.diagram.trigger("click", data);
-                }
 
-            },
             _discardNewConnection: function () {
                 if (this.newConnection) {
                     this.diagram.remove(this.newConnection);
