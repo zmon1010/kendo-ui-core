@@ -135,7 +135,7 @@
                 };
             };
 
-            chart.surface.trigger("mouseleave", { element: { }});
+            chart.surface.trigger("mouseleave", { element: { }, originalEvent: {}});
         });
 
     })();
