@@ -595,19 +595,6 @@
             }
         });
 
-        function noMeta(meta) {
-            return meta.ctrlKey === false && meta.altKey === false && meta.shiftKey === false;
-        }
-
-        function tryActivateSelection(options, meta) {
-            var enabled = options !== false;
-
-            if (options.key && options.key != "none") {
-                enabled = meta[options.key + "Key"];
-            }
-            return enabled;
-        }
-
         var ScrollerTool = EmptyTool.extend({
             init: function (toolService) {
                 var tool = this;
@@ -702,9 +689,7 @@
                     selectable = diagram.options.selectable;
 
                 if (hoveredItem) {
-                    if (tryActivateSelection(selectable, meta)) {
-                        toolService.selectSingle(hoveredItem, meta);
-                    }
+                    toolService.selectSingle(hoveredItem, meta);
                     if (hoveredItem.adorner) { //connection
                         this.adorner = hoveredItem.adorner;
                         this.handle = this.adorner._hitTest(p);
@@ -887,7 +872,7 @@
                     diagram = toolService.diagram,
                     selectable =  diagram.options.selectable,
                     item = toolService.hoveredItem,
-                    isActive = tryActivateSelection(selectable, meta) &&
+                    isActive = selectable !== false &&
                                item && item.path && !(item.isSelected && meta.ctrlKey);
 
                 if (isActive) {
@@ -1097,13 +1082,10 @@
             },
 
             selectSingle: function(item, meta) {
-                if (item.isSelected) {
-                    if (meta.ctrlKey) {
-                        item.select(false);
-                    }
-                } else {
-                    var diagram = this.diagram;
-                    var addToSelection = meta.ctrlKey && diagram.options.selectable.multiple !== false;
+                var diagram = this.diagram;
+                var selectable = diagram.options.selectable;
+                if (selectable && !item.isSelected && item.options.selectable !== false) {
+                    var addToSelection = meta.ctrlKey && selectable.multiple !== false;
                     diagram.select(item, { addToSelection: addToSelection });
                 }
             },
@@ -2367,6 +2349,10 @@
                     return connector;
                 }
             }
+        }
+
+        function noMeta(meta) {
+            return meta.ctrlKey === false && meta.altKey === false && meta.shiftKey === false;
         }
 
         deepExtend(diagram, {

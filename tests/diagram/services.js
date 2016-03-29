@@ -505,6 +505,17 @@
             ok(shape.isSelected);
         });
 
+        test("selects hovered item if diagram selectable key is not pressed", function() {
+            setupTool({
+                selectable: {
+                    key: "shift"
+                }
+            });
+            toolservice.hoveredItem = shape;
+            pointertool.start(new Point(), {});
+            ok(shape.isSelected);
+        });
+
         test("does not select hovered item if diagram is not selectable", function() {
             setupTool({
                 selectable: false
