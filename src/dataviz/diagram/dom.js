@@ -2128,44 +2128,77 @@
                 var that = this;
                 var element = that.element;
 
-                element.on(MOUSEWHEEL_NS, proxy(that._wheel, that));
-                if (!kendo.support.touch && !kendo.support.mobileOS) {
-                    that.toolService = new ToolService(that);
-                    this.scroller.wrapper
-                        .on("mousemove" + NS, proxy(that._mouseMove, that))
-                        .on("mouseup" + NS, proxy(that._mouseUp, that))
-                        .on("mousedown" + NS, proxy(that._mouseDown, that))
-                        .on("mouseover" + NS, proxy(that._mouseover, that))
-                        .on("mouseout" + NS, proxy(that._mouseout, that));
+                element.on(MOUSEWHEEL_NS, proxy(that._wheel, that))
+                .on("keydown" + NS, proxy(that._keydown, that));
 
-                    element.on("keydown" + NS, proxy(that._keydown, that));
-                } else {
-                    that._userEvents = new kendo.UserEvents(element, {
-                        multiTouch: true,
-                        tap: proxy(that._tap, that)
-                    });
+                that._userEvents = new kendo.UserEvents(this.scrollable, {
+                    multiTouch: true,
+                    fastTap: true,
+                    tap: proxy(that._tap, that),
+                    start: proxy(that._dragStart, that),
+                    move: proxy(that._drag, that),
+                    end: proxy(that._dragEnd, that),
+                    gesturestart: proxy(that._gestureStart, that),
+                    gesturechange: proxy(that._gestureChange, that),
+                    gestureend: proxy(that._gestureEnd, that)
+                });
 
-                    that._userEvents.bind(["gesturestart", "gesturechange", "gestureend"], {
-                        gesturestart: proxy(that._gestureStart, that),
-                        gesturechange: proxy(that._gestureChange, that),
-                        gestureend: proxy(that._gestureEnd, that)
-                    });
-                    that.toolService = new ToolService(that);
-                    if (that.options.pannable !== false)  {
-                        that.scroller.enable();
-                    }
-                }
+                that.toolService = new ToolService(that);
+
+                this.scrollable
+                    .on("mouseover" + NS, proxy(that._mouseover, that))
+                    .on("mouseout" + NS, proxy(that._mouseout, that))
+                    .on("mousemove" + NS, proxy(that._mouseMove, that));
 
                 this._syncHandler = proxy(that._syncChanges, that);
+
                 that._resizeHandler = proxy(that.resize, that, false);
                 kendo.onResize(that._resizeHandler);
+
                 this.bind(ZOOM_START, proxy(that._destroyToolBar, that));
                 this.bind(PAN, proxy(that._destroyToolBar, that));
             },
 
+            _dragStart: function (e) {
+                this._pauseMouseHandlers = true;
+                var point = this._eventPositions(e, true);
+
+                var event = e.event;
+                if (this.toolService.start(point, this._meta(event))) {
+                    this._destroyToolBar();
+                    event.preventDefault();
+                }
+            },
+
+            _drag: function (e) {
+                var p = this._eventPositions(e);
+                var event = e.event;
+                if (this.toolService.move(p, this._meta(event))) {
+                    event.preventDefault();
+                }
+            },
+
+            _dragEnd: function (e) {
+                this._pauseMouseHandlers = false;
+                var p = this._eventPositions(e);
+                var event = e.event;
+                if (this.toolService.end(p, this._meta(event))) {
+                    this._createToolBar();
+                    event.preventDefault();
+                }
+            },
+
+            _mouseMove: function (e) {
+                if (!this._pauseMouseHandlers) {
+                    var p = this._eventPositions(e);
+                    this.toolService._updateHoveredItem(p);
+                    this.toolService._updateCursor(p);
+                }
+            },
+
             _tap: function(e) {
                 var toolService = this.toolService;
-                var p = this._caculateMobilePosition(e);
+                var p = this._eventPositions(e);
                 toolService._updateHoveredItem(p);
                 if (toolService.hoveredItem) {
                     var item = toolService.hoveredItem;
@@ -2185,10 +2218,37 @@
                 }
             },
 
-            _caculateMobilePosition: function(e) {
-                return this.documentToModel(
-                    Point(e.x.location, e.y.location)
-                );
+
+            _keydown: function (e) {
+                if (this.toolService.keyDown(e.keyCode, this._meta(e))) {
+                    e.preventDefault();
+                }
+            },
+
+            _wheel: function (e) {
+                var delta = mwDelta(e),
+                    p = this._eventPositions(e),
+                    meta = deepExtend(this._meta(e), { delta: delta });
+
+                if (this.toolService.wheel(p, meta)) {
+                    e.preventDefault();
+                }
+            },
+
+            _meta: function (e) {
+                return { ctrlKey: e.ctrlKey, metaKey: e.metaKey, altKey: e.altKey, shiftKey: e.shiftKey };
+            },
+
+            _eventPositions: function (e, start) {
+                var point;
+                if (e.touch) {
+                    var field = start ? "startLocation" : "location";
+                    point = new Point(e.x[field], e.y[field]);
+                } else {
+                    point = new Point(e.pageX, e.pageY);
+                }
+
+                return this.documentToModel(point);
             },
 
             _gestureStart: function(e) {
@@ -3531,27 +3591,11 @@
                 }
             },
 
-            _mouseDown: function (e) {
-                var p = this._calculatePosition(e);
-                if (e.which == 1 && this.toolService.start(p, this._meta(e))) {
-                    this._destroyToolBar();
-                    e.preventDefault();
-                }
-            },
-
             _addItem: function (item) {
                 if (item instanceof Shape) {
                     this.addShape(item);
                 } else if (item instanceof Connection) {
                     this.addConnection(item);
-                }
-            },
-
-            _mouseUp: function (e) {
-                var p = this._calculatePosition(e);
-                if (e.which == 1 && this.toolService.end(p, this._meta(e))) {
-                    this._createToolBar();
-                    e.preventDefault();
                 }
             },
 
@@ -3618,44 +3662,6 @@
             _toolBarClick: function(e) {
                 this.trigger("toolBarClick", e);
                 this._destroyToolBar();
-            },
-
-            _mouseMove: function (e) {
-                if (this.pauseMouseHandlers) {
-                    return;
-                }
-                var p = this._calculatePosition(e);
-                if ((e.which === 0 || e.which == 1)&& this.toolService.move(p, this._meta(e))) {
-                    e.preventDefault();
-                }
-            },
-
-            _keydown: function (e) {
-                if (this.toolService.keyDown(e.keyCode, this._meta(e))) {
-                    e.preventDefault();
-                }
-            },
-
-            _wheel: function (e) {
-                var delta = mwDelta(e),
-                    p = this._calculatePosition(e),
-                    meta = deepExtend(this._meta(e), { delta: delta });
-
-                if (this.toolService.wheel(p, meta)) {
-                    e.preventDefault();
-                }
-            },
-
-            _meta: function (e) {
-                return { ctrlKey: e.ctrlKey, metaKey: e.metaKey, altKey: e.altKey, shiftKey: e.shiftKey };
-            },
-
-            _calculatePosition: function (e) {
-                var pointEvent = (e.pageX === undefined ? e.originalEvent : e),
-                    point = new Point(pointEvent.pageX, pointEvent.pageY),
-                    offset = this.documentToModel(point);
-
-                return offset;
             },
 
             _normalizePointZoom: function (point) {

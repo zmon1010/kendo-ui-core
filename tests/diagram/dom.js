@@ -186,7 +186,8 @@
                 },
                 y: {
                     location: y
-                }
+                },
+                touch: {}
             };
         }
 
