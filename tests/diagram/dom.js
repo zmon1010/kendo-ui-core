@@ -179,7 +179,7 @@
 
     // ------------------------------------------------------------
     (function() {
-        function tapEvent(x, y) {
+        function tapEvent(x, y, event) {
             return {
                 x: {
                     location: x
@@ -187,7 +187,8 @@
                 y: {
                     location: y
                 },
-                touch: {}
+                touch: {},
+                event: event || {}
             };
         }
 
@@ -208,20 +209,63 @@
         });
 
         test("selects the hovered item", function(e) {
+            var shape = diagram.addShape({});
             stubMethod(diagram, "select", function(item, options) {
                 if (item) {
-                    equal(item, "foo");
-                    equal(options.addToSelection, true);
+                    ok(item === shape);
+                    ok(!options.addToSelection);
                 } else {
                     return [];
                 }
             }, function() {
                 diagram.toolService._updateHoveredItem = function() {
-                    this.hoveredItem = "foo";
+                    this.hoveredItem = shape;
                 };
                 diagram._tap(tapEvent(10, 20));
             });
+        });
 
+        test("adds hovered item to selection if ctrl is pressed", function(e) {
+            var shape = diagram.addShape({});
+            stubMethod(diagram, "select", function(item, options) {
+                if (item) {
+                    ok(item === shape);
+                    ok(options.addToSelection);
+                } else {
+                    return [];
+                }
+            }, function() {
+                diagram.toolService._updateHoveredItem = function() {
+                    this.hoveredItem = shape;
+                };
+
+                diagram._tap(tapEvent(10, 20, {
+                    ctrlKey: true
+                }));
+            });
+        });
+
+        test("does not add hovered item to selection if ctrl is pressed but multiple selection is disabled", function(e) {
+            var shape = diagram.addShape({});
+            stubMethod(diagram, "select", function(item, options) {
+                if (item) {
+                    ok(item === shape);
+                    ok(!options.addToSelection);
+                } else {
+                    return [];
+                }
+            }, function() {
+                diagram.toolService._updateHoveredItem = function() {
+                    this.hoveredItem = shape;
+                };
+                diagram.options.selectable = {
+                    multiple: false
+                };
+
+                diagram._tap(tapEvent(10, 20, {
+                    ctrlKey: true
+                }));
+            });
         });
 
         test("does not select item if no item is hovered", 0, function(e) {
@@ -235,30 +279,32 @@
             });
         });
 
-        test("deselects already selected item", function(e) {
-            var item = {
-                isSelected: true,
-                select: function(e) {
-                    equal(e, false);
-                }
-            };
+        test("deselects already selected item if ctrl is pressed", function(e) {
+            var shape = diagram.addShape({});
             diagram.toolService._updateHoveredItem = function() {
-                this.hoveredItem = item;
+                this.hoveredItem = shape;
             };
-            diagram._tap(tapEvent(10, 20));
+            diagram.select(shape);
+            shape.select = function(e) {
+                equal(e, false);
+            };
+            diagram._tap(tapEvent(10, 20, {
+                ctrlKey: true
+            }));
         });
 
         test("triggers click if there is a hovered item", function(e) {
+            var shape = diagram.addShape({});
             diagram.toolService._updateHoveredItem = function() {
-                this.hoveredItem = "foo";
+                this.hoveredItem = shape;
             };
             diagram.bind("click", function(e) {
-                equal(e.item, "foo");
+                ok(e.item === shape);
             });
             diagram._tap(tapEvent(10, 20));
         });
 
-        test("does triggers click if there is not a hovered item", 0, function(e) {
+        test("does not trigger click if there is not a hovered item", 0, function(e) {
             diagram.toolService._updateHoveredItem = $.noop;
             diagram.bind("click", function(e) {
                 ok(false);

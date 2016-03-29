@@ -2198,26 +2198,39 @@
 
             _tap: function(e) {
                 var toolService = this.toolService;
-                var p = this._eventPositions(e);
-                toolService._updateHoveredItem(p);
+                var selectable = this.options.selectable;
+                var point = this._eventPositions(e);
+                toolService._updateHoveredItem(point);
+
                 if (toolService.hoveredItem) {
                     var item = toolService.hoveredItem;
-                    if (this.options.selectable !== false) {
-                        this._destroyToolBar();
-                        if (item.isSelected) {
-                            item.select(false);
-                        } else {
-                            this.select(item, { addToSelection: true });
-                        }
-                        this._createToolBar();
-                    }
+
                     this.trigger("click", {
                         item: item,
-                        point: p
+                        point: point
                     });
+
+                    if (selectable && item.options.selectable !== false) {
+                        var multiple = selectable.multiple !== false;
+                        var ctrlPressed = kendo.support.mobileOS || this._meta(e.event).ctrlKey;
+
+                        if (item.isSelected) {
+                            if (ctrlPressed) {
+                                this._destroyToolBar();
+                                item.select(false);
+                            }
+                        } else {
+                            this._destroyToolBar();
+                            this.select(item, {
+                                addToSelection: multiple && ctrlPressed
+                            });
+                            this._createToolBar();
+                        }
+                    }
+                } else if (selectable) {
+                    this.deselect();
                 }
             },
-
 
             _keydown: function (e) {
                 if (this.toolService.keyDown(e.keyCode, this._meta(e))) {
