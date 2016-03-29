@@ -771,8 +771,12 @@
                 var selectable = toolService.diagram.options.selectable;
                 var enabled = selectable && selectable.multiple !== false;
 
-                if (enabled && selectable.key && selectable.key != "none") {
-                    enabled = meta[selectable.key + "Key"];
+                if (enabled) {
+                    if (selectable.key && selectable.key != "none") {
+                        enabled = meta[selectable.key + "Key"];
+                    } else {
+                        enabled = noMeta(meta);
+                    }
                 }
 
                 return enabled && !defined(toolService.hoveredItem) && !defined(toolService.hoveredAdorner);

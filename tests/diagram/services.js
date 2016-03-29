@@ -735,7 +735,7 @@
             setupTool({
                 selectable: false
             });
-            ok(!selectiontool.tryActivate(new Point(), {}));
+            ok(!selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         test("does not activate if multiple selection is disabled", function() {
@@ -744,14 +744,14 @@
                     multiple: false
                 }
             });
-            ok(!selectiontool.tryActivate(new Point(), {}));
+            ok(!selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         test("activates if diagram is selectable", function() {
             setupTool({
                 selectable: true
             });
-            ok(selectiontool.tryActivate(new Point(), {}));
+            ok(selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         test("activates if multiple selection is enabled", function() {
@@ -760,7 +760,7 @@
                     multiple: true
                 }
             });
-            ok(selectiontool.tryActivate(new Point(), {}));
+            ok(selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         test("does not activate if there is a hovered item", function() {
@@ -768,7 +768,7 @@
                 selectable: true
             });
             toolservice.hoveredItem = {};
-            ok(!selectiontool.tryActivate(new Point(), {}));
+            ok(!selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         test("does not activate if there is a hovered adorner", function() {
@@ -776,7 +776,7 @@
                 selectable: true
             });
             toolservice.hoveredAdorner = {};
-            ok(!selectiontool.tryActivate(new Point(), {}));
+            ok(!selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         module("SelectionTool / custom key", {
@@ -791,6 +791,16 @@
             });
 
             ok(selectiontool.tryActivate({}, getMeta()));
+        });
+
+        test("does not activate if key is set to none and some key is pressed", function() {
+            setupTool({
+                selectable: {
+                    key: "none"
+                }
+            });
+
+            ok(!selectiontool.tryActivate({}, getMeta("ctrl")));
         });
 
         test("does not activate if key is set to none but multiple selection is disabled", function() {
