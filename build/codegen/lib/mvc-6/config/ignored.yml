@@ -60,6 +60,11 @@
 - listview.alttemplate
 - listview.pageable
 - maskedtextbox.rules
+- menu.animation
+- menu.datasource
+- menu.direction
+- menu.items
+- menu.popupcollision
 - multiselect.animation
 - multiselect.datasource
 - multiselect.value

@@ -4,9 +4,10 @@
     using Kendo.Mvc;
     using Kendo.Mvc.Extensions;
     using Microsoft.AspNet.Routing;
+    using Rendering;
     using System;
     using System.Collections.Generic;
-
+    using System.Net;
     public abstract class NavigationItem<T> : LinkedObjectBase<T>, INavigatable, IHideObjectMembers, IHtmlAttributesContainer, IContentContainer
         where T : NavigationItem<T>
     {
@@ -15,6 +16,8 @@
         private string controllerName;
         private string actionName;
         private string url;
+        private string template;
+        private Func<T, object> inlineTemplate;
 
         private bool selected;
         private bool enabled;
@@ -75,24 +78,29 @@
 
         //TODO check
         //[ScriptIgnore]
-        //public HtmlTemplate Template
-        //{
-        //    get;
-        //    private set;
-        //}
+        public HtmlTemplate Template
+        {
+            get;
+            private set;
+        }
+
+        public Func<T, object> InlineTemplate
+        {
+            get; set;
+        }
 
         //[ScriptIgnore]
-        //public string Html
-        //{
-        //    get
-        //    {
-        //        return Template.Html;
-        //    }
-        //    set
-        //    {
-        //        Template.Html = value;
-        //    }
-        //}
+        public string Html
+        {
+            get
+            {
+                return Template.Html;
+            }
+            set
+            {
+                Template.Html = value;
+            }
+        }
 
         //[ScriptIgnore]
         public bool Visible
@@ -275,6 +283,21 @@
             if (HtmlAttributes.Count > 0)
             {
                 json["attr"] = HtmlAttributes;
+            }
+
+            if (ImageHtmlAttributes.Count > 0)
+            {
+                json["imageAttr"] = ImageHtmlAttributes;
+            }
+
+            if(ContentHtmlAttributes.Count > 0)
+            {
+                json["contentAttr"] = ContentHtmlAttributes;
+            }
+
+            if (Template?.HasValue() == true)
+            {
+                json["content"] = Template;
             }
 
             return json;

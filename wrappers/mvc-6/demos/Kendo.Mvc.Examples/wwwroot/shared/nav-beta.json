@@ -3347,6 +3347,92 @@
         }
       },
       {
+        "text": "Images",
+        "url": "menu/images",
+        "title": {
+            "kendo-ui": "Images in KendoMenu control | Kendo UI Demo",
+            "aspnet-mvc": "Images in ASP.NET MVC Menu control | ASP.NET MVC Demo"
+        },
+        "meta": {
+            "kendo-ui": "This KendoMenu example shows the feature which allows you to use menu with images. They can be loaded from a specific URL or be arranged in image sprite CSS class.",
+            "aspnet-mvc": "This ASP.NET MVC Menu example shows the feature that allows you to use menu with images. They are loaded from a specific URL or arranged in image sprite CSS class."
+        }
+      },
+      {
+        "text": "Direction",
+        "url": "menu/direction",
+        "title": {
+            "kendo-ui": "Kendo UI Menu direction demo",
+            "aspnet-mvc": "ASP.NET MVC Menu direction demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how the pop-up direction of the items in Kendo UI dropdown jQuery menu can be changed, depending on your web app development needs.",
+            "aspnet-mvc": "This demo shows how the pop-up direction of the items in ASP.NET MVC dropdown menu can be changed, depending on your web app development needs."
+        }
+      },
+      {
+        "text": "Orientation",
+        "title": {
+            "kendo-ui": "Orientation of dropdown menus in Kendo UI Menu widget",
+            "aspnet-mvc": "Orientation of dropdown menus in ASP.NET MVC Menu"
+        },
+        "url": "menu/orientation",
+        "meta": {
+            "kendo-ui": "In this example we will see how the orientation of the Kendo UI Menu can be easily modified through the orientation settings.",
+            "aspnet-mvc": "In this example we will see how the orientation of the ASP.NET MVC Menu can be easily modified through the orientation settings."
+        }
+      },
+      {
+        "packages": [
+          "mvc-offline"
+        ],
+        "text": "SiteMapBinding",
+        "url": "menu/sitemapbinding"
+      },
+      {
+        "packages": [
+          "mvc-offline"
+        ],
+        "text": "ModelBinding",
+        "url": "menu/modelbinding"
+      },
+      {
+        "text": "Animation effects",
+        "url": "menu/animation",
+        "title": {
+            "kendo-ui": "Animation effects example in KendoMenu widget",
+            "aspnet-mvc": "Animation effects example in ASP.NET MVC Menu"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates how KendoMenu HTML dropdown control supports animation effects which can be easily customized to change the desired animation effect.",
+            "aspnet-mvc": "This sample demonstrates how ASP.NET MVC Menu dropdown control supports animation effects which can be easily customized to change the desired animation effect."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "menu/events",
+        "title": {
+            "kendo-ui": "Kendo UI jQuery Menu Events Sample | KendoMenu Demos",
+            "aspnet-mvc": "ASP.NET MVC Menu Events Sample | ASP.NET MVC Demos"
+        },
+        "meta": {
+            "kendo-ui": "This sample shows KendoMenu events which are enabled and the demo source code guides you how you can handle the events in your dropdown menu.",
+            "aspnet-mvc": "This sample shows ASP.NET MVC Menu events which are enabled and the demo source code guides you how you can handle the events in your dropdown menu."
+        }
+      },
+      {
+        "text": "API",
+        "url": "menu/api",
+        "title": {
+            "kendo-ui": "API functions demo for KendoMenu",
+            "aspnet-mvc": "API functions demo for ASP.NET MVC Menu"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates how API functions of KendoMenu control operate and how you can configure them for your web project.",
+            "aspnet-mvc": "This demo illustrates how the API functions of ASP.NET MVC Menu control operate and how you can configure them for your web project."
+        }
+      },
+      {
         "text": "Context Menu",
         "url": "menu/context-menu",
         "title": {
@@ -3355,6 +3441,75 @@
         "meta": {
             "kendo-ui": "This example demonstrates how to use a Kendo UI ContextMenu widget."
         }
+      },
+      {
+        "text": "RTL support",
+        "url": "menu/right-to-left-support",
+        "title": {
+            "kendo-ui": "Right-to-left support in Kendo UI Menu control | Kendo UI Web Demo",
+            "aspnet-mvc": "Right-to-left support in ASP.NET MVC Menu | ASP.NET MVC Demo"
+        },
+        "meta": {
+            "kendo-ui": "Review how the RTL feature is enabled for the dropdown items in Kendo UI Menu and in the menu labels of the widget.",
+            "aspnet-mvc": "Review how the RTL feature is enabled for the dropdown items in ASP.NET MVC Menu and in the menu labels of the control."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "menu/keyboard-navigation",
+        "title": {
+            "kendo-ui": "Keyboard navigation in Kendo UI Menu",
+            "aspnet-mvc": "Keyboard navigation in ASP.NET MVC Menu"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates how the keyboard navigation is a supported feature in Kendo UI Menu widget.",
+            "aspnet-mvc": "This example demonstrates the keyboard navigation support feature in ASP.NET MVC Menu."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "menu/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Menu"
+        },
+        "meta": {
+            "kendo-ui": "Events and visible MVVM binding support in Kendo UI Menu"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "menu/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Menu"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI Menu"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS - ContextMenu",
+        "url": "menu/context-menu-angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI ContextMenu"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI ContextMenu"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       }
     ],
     "category": "Navigation"

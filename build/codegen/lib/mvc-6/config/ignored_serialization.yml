@@ -38,6 +38,10 @@
 - calendar.monthTemplate.contentId
 - calendar.monthTemplate.empty
 - calendar.monthTemplate.emptyId
+- menu.aligntoanchor
+- menu.closeonclick
+- menu.openonclick
+- menu.orientation
 - lineargauge.transitions
 - radialgauge.transitions
 - sortable.disabled

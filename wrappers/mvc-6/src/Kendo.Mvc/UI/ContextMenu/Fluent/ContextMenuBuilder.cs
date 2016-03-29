@@ -83,20 +83,20 @@ namespace Kendo.Mvc.UI.Fluent
         /// %&gt;
         /// </code>
         /// </example>
-        public ContextMenuBuilder Direction(string value)
-        {
-            try
-            {
-                ContextMenuDirection direction = (ContextMenuDirection)Enum.Parse(typeof(ContextMenuDirection), value);
-                Component.Direction = direction;
-            }
-            catch (OverflowException)
-            {
-                Component.Direction = ContextMenuDirection.Left;
-            }
+        //public ContextMenuBuilder Direction(string value)
+        //{
+        //    try
+        //    {
+        //        ContextMenuDirection direction = (ContextMenuDirection)Enum.Parse(typeof(ContextMenuDirection), value);
+        //        Component.Direction = direction;
+        //    }
+        //    catch (OverflowException)
+        //    {
+        //        Component.Direction = ContextMenuDirection.Left;
+        //    }
  
-            return this;
-        }
+        //    return this;
+        //}
 
 /// <summary>
 /// Binds the menu to a sitemap

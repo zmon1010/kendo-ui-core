@@ -173,7 +173,7 @@ namespace Kendo.Mvc.UI
             return !string.IsNullOrEmpty(url) && (url.IsCaseInsensitiveEqual(currentUrl) || url.IsCaseInsensitiveEqual(currentRoute));
         }
 
-        private static IUrlHelper GetUrlHelper(ActionContext context)
+        public static IUrlHelper GetUrlHelper(ActionContext context)
         {
             return context.HttpContext.RequestServices.GetRequiredService<IUrlHelper>();
         }

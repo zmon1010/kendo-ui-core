@@ -1,13 +1,70 @@
-namespace Kendo.Mvc.UI
+﻿namespace Kendo.Mvc.UI
 {
+    using Extensions;
+    using Kendo.Mvc.UI;
+    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNet.Mvc.Routing;
+    using System.Globalization;
+    using System.Net;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Kendo.Mvc.Extensions;
     using Fluent;
+
     public static class NavigationItemContainerExtensions
     {
+        public static string GetImageUrl<T>(this T item, ViewContext viewContext) where T : NavigationItem<T>
+        {
+            var urlHelper = NavigatableExtensions.GetUrlHelper(viewContext);
+
+            return urlHelper.Content(item.ImageUrl);
+        }
+
+        public static string GetItemContentId<TComponent, TItem>(this TComponent component, TItem item)
+            where TComponent : WidgetBase, INavigationItemContainer<TItem>
+            where TItem : NavigationItem<TItem>, IContentContainer
+        {
+            return item.ContentHtmlAttributes.ContainsKey("id") ?
+                   "{0}".FormatWith(item.ContentHtmlAttributes["id"].ToString()) :
+                   "{0}-{1}".FormatWith(component.Id, (component.Items.Where(i => i.Visible == true).IndexOf(item) + 1).ToString(CultureInfo.InvariantCulture));
+        }
+
+        public static string GetItemUrl<TComponent, TItem>(this TComponent component, TItem item)
+            where TComponent : WidgetBase, INavigationItemComponent<TItem>
+            where TItem : NavigationItem<TItem>, IContentContainer
+        {
+            return component.GetItemUrl(item, "#");
+        }
+
+        public static string GetItemUrl<TComponent, TItem>(this TComponent component, TItem item, string defaultValue)
+            where TComponent : WidgetBase, INavigationItemComponent<TItem>
+            where TItem : NavigationItem<TItem>, IContentContainer
+        {
+            string url = item.GenerateUrl(((WidgetBase)component).ViewContext, component.UrlGenerator);
+
+            if (url != null)
+            {
+                return url;
+            }
+
+            IAsyncContentContainer asyncContentContainer = item as IAsyncContentContainer;
+
+            if (asyncContentContainer != null && asyncContentContainer.ContentUrl.HasValue())
+            {
+                return component.IsSelfInitialized ? WebUtility.UrlDecode(asyncContentContainer.ContentUrl) : asyncContentContainer.ContentUrl;
+            }
+
+            if (item.Template.HasValue() &&
+                !item.RouteName.HasValue() && !item.Url.HasValue() &&
+                !item.ActionName.HasValue() && !item.ControllerName.HasValue())
+            {
+                return (component.IsInClientTemplate ? "\\#" : "#") + component.GetItemContentId(item);
+            }
+
+            return defaultValue;
+        }
+
         public static void BindTo<T>(this INavigationItemComponent<T> component, string sitemapViewDataKey) where T : NavigationItem<T>, new()
         {
             BindTo(component, sitemapViewDataKey, null);
