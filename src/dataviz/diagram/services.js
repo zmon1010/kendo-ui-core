@@ -74,16 +74,6 @@
 
         diagram.Cursors = Cursors;
 
-        function selectSingle(item, meta) {
-            if (item.isSelected) {
-                if (meta.ctrlKey) {
-                    item.select(false);
-                }
-            } else {
-                item.diagram.select(item, {addToSelection: meta.ctrlKey});
-            }
-        }
-
         var PositionAdapter = kendo.Class.extend({
             init: function (layoutState) {
                 this.layoutState = layoutState;
@@ -713,7 +703,7 @@
 
                 if (hoveredItem) {
                     if (tryActivateSelection(selectable, meta)) {
-                        selectSingle(hoveredItem, meta);
+                        toolService.selectSingle(hoveredItem, meta);
                     }
                     if (hoveredItem.adorner) { //connection
                         this.adorner = hoveredItem.adorner;
@@ -821,17 +811,18 @@
                 return this.toolService._hoveredConnector;
             },
             start: function (p, meta) {
-                var diagram = this.toolService.diagram,
-                    connector = this.toolService._hoveredConnector,
+                var toolService = this.toolService,
+                    diagram = toolService.diagram,
+                    connector = toolService._hoveredConnector,
                     connection = diagram._createConnection({}, connector._c, p);
 
                 if (canDrag(connection) && !diagram.trigger(DRAG_START, { shapes: [], connections: [connection], connectionHandle: TARGET }) && diagram._addConnection(connection)) {
-                    this.toolService._connectionManipulation(connection, connector._c.shape, true);
-                    this.toolService._removeHover();
-                    selectSingle(this.toolService.activeConnection, meta);
+                    toolService._connectionManipulation(connection, connector._c.shape, true);
+                    toolService._removeHover();
+                    toolService.selectSingle(toolService.activeConnection, meta);
                 } else {
                     connection.source(null);
-                    this.toolService.end(p);
+                    toolService.end(p);
                 }
             },
 
@@ -903,9 +894,10 @@
             },
 
             start: function (p, meta) {
+                var toolService = this.toolService;
                 var connection = this._c;
 
-                selectSingle(connection, meta);
+                toolService.selectSingle(connection, meta);
 
                 var adorner = connection.adorner;
 
@@ -915,13 +907,13 @@
                     name = HANDLE_NAMES[handle];
                 }
 
-                if (canDrag(connection) && adorner && !this.toolService.diagram.trigger(DRAG_START, { shapes: [], connections: [connection], connectionHandle: name })) {
+                if (canDrag(connection) && adorner && !toolService.diagram.trigger(DRAG_START, { shapes: [], connections: [connection], connectionHandle: name })) {
                     this.handle = handle;
                     this.handleName = name;
                     adorner.start(p);
                 } else {
-                    this.toolService.startPoint = p;
-                    this.toolService.end(p);
+                    toolService.startPoint = p;
+                    toolService.end(p);
                 }
             },
 
@@ -1098,6 +1090,18 @@
             setTool: function (tool, index) {
                 tool.toolService = this;
                 this.tools[index] = tool;
+            },
+
+            selectSingle: function(item, meta) {
+                if (item.isSelected) {
+                    if (meta.ctrlKey) {
+                        item.select(false);
+                    }
+                } else {
+                    var diagram = this.diagram;
+                    var addToSelection = meta.ctrlKey && diagram.options.selectable.multiple !== false;
+                    diagram.select(item, { addToSelection: addToSelection });
+                }
             },
 
             _discardNewConnection: function () {

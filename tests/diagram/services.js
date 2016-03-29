@@ -514,6 +514,33 @@
             ok(!shape.isSelected);
         });
 
+        test("adds item to selection if ctrl is pressed", 1, function() {
+            setupTool({
+                selectable: true
+            });
+            toolservice.hoveredItem = shape;
+            toolservice.diagram.select = function(item, options) {
+                if (item) {
+                    equal(options.addToSelection, true);
+                }
+            };
+            pointertool.start(new Point(), { ctrlKey: true});
+        });
+
+        test("does not add item to selection if ctrl is pressed but multiple selection is disabled", 1, function() {
+            setupTool({
+                selectable: {
+                    multiple: false
+                }
+            });
+            toolservice.hoveredItem = shape;
+            toolservice.diagram.select = function(item, options) {
+                if (item) {
+                    equal(options.addToSelection, false);
+                }
+            };
+            pointertool.start(new Point(), { ctrlKey: true});
+        });
         // ------------------------------------------------------------
         module("PointerTool / start", {
             setup: function() {
@@ -848,6 +875,7 @@
                 select: $.noop
             };
             connection.adorner = new ConnectionEditAdornerMock();
+            toolservice.diagram.select = $.noop;
         }
 
         function setupTool(options) {
