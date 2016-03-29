@@ -24,10 +24,13 @@
         },
         range: function(range) {
             if (range !== undefined) {
-                this._range = range.clone().skipHiddenCells();
+                this._setRange(range);
             }
 
             return this._range;
+        },
+        _setRange: function(range) {
+            this._range = range;
         },
         redo: function() {
             this.exec();
@@ -49,6 +52,9 @@
     });
 
     var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand = Command.extend({
+        _setRange: function(range) {
+            Command.prototype._setRange.call(this, range.skipHiddenCells());
+        },
         init: function(options) {
             Command.fn.init.call(this, options);
             this._value = options.value;

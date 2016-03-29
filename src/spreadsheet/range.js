@@ -10,6 +10,8 @@
     var $ = kendo.jQuery;
 
     var UnionRef = kendo.spreadsheet.UnionRef;
+    var CellRef = kendo.spreadsheet.CellRef;
+    var RangeRef = kendo.spreadsheet.RangeRef;
 
     var styles = [
         "color", "fontFamily", "underline",
@@ -35,8 +37,29 @@
         },
 
         skipHiddenCells: function() {
-            this._skipHiddenCells = true;
-            return this;
+            var refs = [];
+            var self = this, sheet = self._sheet;
+            var skipHiddenRows = sheet.isHiddenRow.bind(sheet);
+            var skipHiddenCols = sheet.isHiddenColumn.bind(sheet);
+            self._ref.forEach(function add(ref){
+                if (ref instanceof UnionRef) {
+                    ref.forEach(add);
+                } else {
+                    ref = self._normalize(ref.toRangeRef());
+                    var tl = ref.topLeft, br = ref.bottomRight;
+                    var rows = partition(tl.row, br.row, skipHiddenRows);
+                    var cols = partition(tl.col, br.col, skipHiddenCols);
+                    for (var i = 0; i < rows.length; ++i) {
+                        for (var j = 0; j < cols.length; ++j) {
+                            refs.push(new RangeRef(
+                                new CellRef(rows[i].begin, cols[j].begin),
+                                new CellRef(rows[i].end, cols[j].end)
+                            ));
+                        }
+                    }
+                }
+            });
+            return sheet.range(refs.length > 1 ? new UnionRef(refs) : refs[0]);
         },
 
         _normalize: function(ref) {
@@ -46,10 +69,8 @@
         _set: function(name, value, noTrigger) {
             var self = this;
             var sheet = self._sheet;
-            sheet.withSkipHidden(self._skipHiddenCells, function(){
-                self._ref.forEach(function(ref) {
-                    sheet._set(ref.toRangeRef(), name, value);
-                });
+            self._ref.forEach(function(ref) {
+                sheet._set(ref.toRangeRef(), name, value);
             });
             if (!noTrigger) {
                 sheet.triggerChange({
@@ -787,6 +808,23 @@
             this._sheet.draw(this, options, callback);
         }
     });
+
+    function partition(begin, end, predicate) {
+        while (begin <= end && predicate(begin)) {
+            begin++;
+        }
+        if (begin > end) {
+            return [];
+        }
+        for (var i = begin + 1; i <= end; ++i) {
+            if (predicate(i)) {
+                return [
+                    { begin: begin, end: i - 1 }
+                ].concat(partition(i + 1, end, predicate));
+            }
+        }
+        return [{ begin: begin, end: end }];
+    }
 
     // use $.each instead of forEach to work in oldIE
     $.each(styles, function(i, property) {
