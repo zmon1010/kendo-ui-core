@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartCategoryAxisNotesSettings<T> where T : class 
     {
-        public string Position { get; set; }
+        public ChartNotePosition? Position { get; set; }
 
         public ChartCategoryAxisNotesIconSettings<T> Icon { get; } = new ChartCategoryAxisNotesIconSettings<T>();
 
@@ -28,9 +28,9 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Position?.HasValue() == true)
+            if (Position.HasValue)
             {
-                settings["position"] = Position;
+                settings["position"] = Position?.Serialize();
             }
 
             var icon = Icon.Serialize();

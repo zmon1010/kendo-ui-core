@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The position of the value axis note.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public ChartValueAxisNotesSettingsBuilder<T> Position(string value)
+        public ChartValueAxisNotesSettingsBuilder<T> Position(ChartNotePosition value)
         {
             Container.Position = value;
             return this;

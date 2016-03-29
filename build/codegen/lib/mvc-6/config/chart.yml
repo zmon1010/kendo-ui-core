@@ -247,10 +247,6 @@
             :member: VML
             :description: Attempts to render the widget as VML elements.
 
-    - :name: !ruby/regexp '/.*dashType$/i'
-      :merge: true
-      :enum_type: ChartDashType
-
     - :name: series.aggregate
       :description: Specifies the preferred series aggregate.
       :type:
@@ -286,22 +282,39 @@
             :member: SumOrNull
             :description: The sum of all values for the date period. If there are not data for the current period of time the aggregate will return 'null'(instead of 'zero' for the sum aggregate).
 
-    - :name: series.style
-      :description: Specifies the preferred rendering style.
+    - :name: series.notes.label.position
+      :description: Specifies the position of the labels.
       :type: String
-      :enum_type: ChartLineStyle
+      :enum_type: ChartNoteLabelPosition
       :values:
-          - :value: normal
-            :member: Normal
-            :description: Points will be connected with straight line.
+          - :value: inside
+            :member: Inside
+            :description: The label is positioned inside of the icon.
 
-          - :value: step
-            :member: Step
-            :description: Points will be connected with a line at right angles.
+          - :value: outside
+            :member: Outside
+            :description: The label is positioned outside of the icon.
 
-          - :value: smooth
-            :member: Smooth
-            :description: Points will be connected with smooth line.
+    - :name: series.notes.position
+      :description: Specifies the position of the note.
+      :type: String
+      :enum_type: ChartNotePosition
+      :values:
+          - :value: top
+            :member: Top
+            :description: The note is positioned on the top.
+
+          - :value: bottom
+            :member: Bottom
+            :description: The note is positioned on the bottom.
+
+          - :value: left
+            :member: Left
+            :description: The note is positioned on the left.
+
+          - :value: right
+            :member: Right
+            :description: The note is positioned on the right.
 
     - :name: series.line.style
       :description: Specifies the preferred line rendering style.
@@ -332,6 +345,23 @@
           - :value: 100%
             :member: Stack100
             :description: The value of the stack is always 100% (1.0). Points within the category (or group) are represented as percentages.
+
+    - :name: series.style
+      :description: Specifies the preferred rendering style.
+      :type: String
+      :enum_type: ChartLineStyle
+      :values:
+          - :value: normal
+            :member: Normal
+            :description: Points will be connected with straight line.
+
+          - :value: step
+            :member: Step
+            :description: Points will be connected with a line at right angles.
+
+          - :value: smooth
+            :member: Smooth
+            :description: Points will be connected with smooth line.
 
     - :name: series.target.line.width
       :merge: true
@@ -420,3 +450,15 @@
       :description: Specifies an axis that should not be zoomed.
       :type: String
       :enum_type: ChartAxisLock
+
+    - :name: !ruby/regexp '/.*dashType$/i'
+      :merge: true
+      :enum_type: ChartDashType
+
+    - :name: !ruby/regexp '/.*\.notes\.label\.position$/i'
+      :merge: true
+      :enum_type: ChartNoteLabelPosition
+
+    - :name: !ruby/regexp '/.*\.notes\.position$/i'
+      :merge: true
+      :enum_type: ChartNotePosition

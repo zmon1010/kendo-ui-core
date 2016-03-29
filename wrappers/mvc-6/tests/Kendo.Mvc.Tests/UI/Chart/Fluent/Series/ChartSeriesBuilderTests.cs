@@ -73,7 +73,7 @@ namespace Kendo.Mvc.UI.Tests
 
             series.Aggregates.Close.ShouldEqual(ChartSeriesAggregate.Avg);
         }
-        
+
         [Fact]
         public void Color_should_reset_ColorHandler()
         {
@@ -129,6 +129,40 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Stack_Group()
+        {
+            var value = "group";
+
+            builder.Stack(value);
+
+            series.Stack.Group.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Stack_Group_should_return_builder()
+        {
+            builder.Stack("group").ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Stack_Group_and_Type()
+        {
+            var stackType = ChartStackType.Stack100;
+            var stackGroup = "group";
+
+            builder.Stack(stackType, stackGroup);
+
+            series.Stack.Type.ShouldEqual(stackType);
+            series.Stack.Group.ShouldEqual(stackGroup);
+        }
+
+        [Fact]
+        public void Stack_Group_and_Type_should_return_builder()
+        {
+            builder.Stack("group").ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Stack_Type()
         {
             var value = ChartStackType.Stack100;
@@ -139,7 +173,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void StackType_should_return_builder()
+        public void Stack_Type_should_return_builder()
         {
             builder.Stack(ChartStackType.Stack100).ShouldBeSameAs(builder);
         }

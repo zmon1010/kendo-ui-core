@@ -629,7 +629,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Notes()
         {
-            var value = "red";
+            var value = ChartNotePosition.Bottom;
 
             builder.Notes(x => x.Position(value));
 

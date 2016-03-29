@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
-        public string Position { get; set; }
+        public ChartNoteLabelPosition? Position { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -87,9 +87,9 @@ namespace Kendo.Mvc.UI
                 settings["format"] = Format;
             }
 
-            if (Position?.HasValue() == true)
+            if (Position.HasValue)
             {
-                settings["position"] = Position;
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;
