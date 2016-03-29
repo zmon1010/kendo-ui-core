@@ -85,6 +85,10 @@
       :type: bool
       :default: false
 
+    - :name: categoryAxis.labels.rotation.angle
+      :merge: true
+      :type: object
+
     - :name: categoryAxis.max
       :merge: true
       :type: object

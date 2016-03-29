@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public string Align { get; set; }
 
-        public double? Angle { get; set; }
+        public object Angle { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI
                 settings["align"] = Align;
             }
 
-            if (Angle.HasValue)
+            if (Angle != null)
             {
                 settings["angle"] = Angle;
             }
