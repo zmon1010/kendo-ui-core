@@ -1204,5 +1204,21 @@
         command.exec();
     });
 
+    test("PropertyChangeCommand operates only on visible range", function(){
+        var command = new kendo.spreadsheet.PropertyChangeCommand({ property: "bold", value: true });
+        var range = sheet.range("A1:A4");
+        range.values([ [1], [2], [3], [4] ])
+            .select()
+            .filter({
+                column: 0,
+                filter: new kendo.spreadsheet.ValueFilter({ values: [ 1, 2, 4 ]})
+            });
+        command.range(range);
+        command.exec();
+        ok(sheet.range("A1").bold()); // the first column remains visible anyway
+        ok(sheet.range("A2").bold());
+        ok(!sheet.range("A3").bold());
+        ok(sheet.range("A4").bold());
+    });
 
 })();
