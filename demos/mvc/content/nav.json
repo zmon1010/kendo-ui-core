@@ -6607,6 +6607,42 @@
         "category": "Layout"
     },
     {
+        "text": "WordsProcessing",
+        "name": "wordsprocessing",
+        "api": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview",
+        "category": "Editors",
+        "spriteCssClass": "wordprocessingIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "wordsprocessing/index",
+                "title": {
+                    "aspnet-mvc": "Demo and source code for Telerik RadWordsProcessing in MVC"
+                },
+                "meta": {
+                    "aspnet-mvc": "See how the Telerik RadWordsProcessing can be integrated in MVC applications."
+                },
+                "description": {
+                    "aspnet-mvc": "With <strong>RadWordsProcessing</strong> you can virtually effortlessly convert documents from one to another file format among the supported DOCX, RTF, HTML and TXT."
+                },
+                "sources": {
+                    "aspnet-mvc": [
+                        {
+                            "name": "CreatePdfDocument.cs",
+                            "url": "~/Helpers/CreatePdfDocument.cs"
+                        }
+                    ]
+                }
+            }
+        ],
+        "documentation": {
+            "aspnet-mvc": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview"
+        },
+        "packages": [
+            "mvc"
+        ]
+    },
+    {
         "packages": [
             "!mvc",
             "!jsp",

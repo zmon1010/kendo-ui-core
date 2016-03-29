@@ -136,6 +136,22 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Flow.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow.FormatProviders.Pdf, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Flow.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip.Extensions, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Zip.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -209,6 +225,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\WordsProcessing\IndexController.cs" />
     <Compile Include="Controllers\PdfProcessing\IndexController.cs" />
     <Compile Include="Controllers\Scatter_Charts\Pan_And_ZoomController.cs" />
     <Compile Include="Controllers\Spreadsheet\DataSourceController.cs" />
@@ -1394,6 +1411,7 @@
     <Content Include="Areas\aspx\Views\multiselect\grouping.aspx" />
     <Content Include="Areas\aspx\Views\multiselect\virtualization.aspx" />
     <Content Include="Areas\aspx\Views\treelist\excel_export.aspx" />
+    <Content Include="Areas\aspx\Views\wordsprocessing\index.aspx" />
     <Content Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <Content Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\aspx\Views\styling\index.aspx" />
@@ -2644,6 +2662,12 @@
     <Content Include="Content\web\window\armchair-402.png" />
     <Content Include="Content\web\window\egg-chair.png" />
     <Content Include="Content\web\window\kubus-armchair.png" />
+    <Content Include="Content\web\wordsprocessing\CustomDocument_file.png" />
+    <Content Include="Content\web\wordsprocessing\docx_file.png" />
+    <Content Include="Content\web\wordsprocessing\html_file.png" />
+    <Content Include="Content\web\wordsprocessing\rtf_file.png" />
+    <Content Include="Content\web\wordsprocessing\SampleDocumentImage.png" />
+    <Content Include="Content\web\wordsprocessing\txt_file.png" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\b020132b.tlrk-bar.js" />
@@ -3362,6 +3386,8 @@
     <Content Include="Areas\razor\Views\spreadsheet\disabled_cells.cshtml" />
     <Content Include="Areas\razor\Views\spreadsheet\datasource.cshtml" />
     <Content Include="Areas\razor\Views\pdfprocessing\index.cshtml" />
+    <Content Include="Areas\razor\Views\wordsprocessing\index.cshtml" />
+    <Content Include="Content\web\wordsprocessing\SampleDocument.docx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
