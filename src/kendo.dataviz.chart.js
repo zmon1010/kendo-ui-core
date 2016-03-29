@@ -236,6 +236,7 @@ var __meta__ = { // jshint ignore:line
         TOOLTIP_INVERSE = "chart-tooltip-inverse",
         VALUE = "value",
         VERTICAL_AREA = "verticalArea",
+        VERTICAL_BOX_PLOT = "verticalBoxPlot",
         VERTICAL_BULLET = "verticalBullet",
         VERTICAL_LINE = "verticalLine",
         WATERFALL = "waterfall",
@@ -253,7 +254,8 @@ var __meta__ = { // jshint ignore:line
             SECONDS, MINUTES, HOURS, DAYS, WEEKS, MONTHS, YEARS
         ],
         EQUALLY_SPACED_SERIES = [
-            BAR, COLUMN, OHLC, CANDLESTICK, BOX_PLOT, BULLET, RANGE_COLUMN, RANGE_BAR, WATERFALL, HORIZONTAL_WATERFALL
+            BAR, COLUMN, OHLC, CANDLESTICK, BOX_PLOT, VERTICAL_BOX_PLOT,
+            BULLET, RANGE_COLUMN, RANGE_BAR, WATERFALL, HORIZONTAL_WATERFALL
         ];
 
     var DateLabelFormats = {
@@ -7085,6 +7087,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         options: {
+            vertical: true,
             border: {
                 _brightness: 0.8
             },
@@ -7203,8 +7206,9 @@ var __meta__ = { // jshint ignore:line
             if (hasGradientOverlay(options)) {
                 container.append(this.createGradientOverlay(body, {
                         baseColor: this.color
-                    },
-                    deepExtend({}, options.overlay)
+                    }, deepExtend({
+                        end: !options.vertical ? [0, 1] : undefined
+                    }, options.overlay)
                 ));
             }
         },
@@ -7404,6 +7408,8 @@ var __meta__ = { // jshint ignore:line
                 color = pointOptions.color;
             }
 
+            pointOptions.vertical = !chart.options.invertAxes;
+
             var point = new pointType(value, pointOptions);
             point.color = color;
 
@@ -7541,6 +7547,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         pointType: function() {
+            if (this.options.invertAxes) {
+                return VerticalBoxPlot;
+            }
+
             return BoxPlot;
         },
 
@@ -7803,6 +7813,65 @@ var __meta__ = { // jshint ignore:line
         }
     });
     deepExtend(BoxPlot.fn, PointEventsMixin);
+
+    var VerticalBoxPlot = BoxPlot.extend({
+        reflow: function(box) {
+            var point = this,
+                options = point.options,
+                chart = point.owner,
+                value = point.value,
+                valueAxis = chart.seriesValueAxis(options),
+                mid, whiskerSlot, boxSlot, medianSlot, meanSlot;
+
+            boxSlot = valueAxis.getSlot(value.q1, value.q3);
+            point.boxSlot = boxSlot;
+
+            whiskerSlot = valueAxis.getSlot(value.lower, value.upper);
+            medianSlot = valueAxis.getSlot(value.median);
+
+            boxSlot.y1 = whiskerSlot.y1 = box.y1;
+            boxSlot.y2 = whiskerSlot.y2 = box.y2;
+
+            point.realBody = boxSlot;
+
+            if (value.mean) {
+                meanSlot = valueAxis.getSlot(value.mean);
+                point.meanPoints = [
+                    [[meanSlot.x1, box.y1], [meanSlot.x1, box.y2]]
+                ];
+            }
+
+            mid = whiskerSlot.center().y;
+            point.whiskerPoints = [[
+                [whiskerSlot.x1, mid - 5], [whiskerSlot.x1, mid + 5],
+                [whiskerSlot.x1, mid], [boxSlot.x1, mid]
+            ], [
+                [whiskerSlot.x2, mid - 5], [whiskerSlot.x2, mid + 5],
+                [whiskerSlot.x2, mid], [boxSlot.x2, mid]
+            ]];
+
+            point.medianPoints = [
+                [[medianSlot.x1, box.y1], [medianSlot.x1, box.y2]]
+            ];
+
+            point.box = whiskerSlot.clone().wrap(boxSlot);
+
+            point.reflowNote();
+        },
+
+        reflowOutliers: function(outliers) {
+            var valueAxis = this.owner.seriesValueAxis(this.options);
+            var centerY = this.box.center().y;
+
+            for (var i = 0; i < outliers.length; i++) {
+                var outlierValue = outliers[i].value;
+                var markerBox = valueAxis.getSlot(outlierValue).move(undefined, centerY);
+
+                this.box = this.box.wrap(markerBox);
+                outliers[i].reflow(markerBox);
+            }
+        }
+    });
 
     // TODO: Rename to Segment?
     var PieSegment = ChartElement.extend({
@@ -10014,7 +10083,8 @@ var __meta__ = { // jshint ignore:line
 
             if (series.length > 0) {
                 plotArea.invertAxes = inArray(
-                    series[0].type, [BAR, BULLET, VERTICAL_LINE, VERTICAL_AREA, RANGE_BAR, HORIZONTAL_WATERFALL]
+                    series[0].type, [BAR, BULLET, VERTICAL_LINE, VERTICAL_AREA,
+                                     RANGE_BAR, HORIZONTAL_WATERFALL, VERTICAL_BOX_PLOT]
                 );
 
                 for (var i = 0; i < series.length; i++) {
@@ -10112,7 +10182,7 @@ var __meta__ = { // jshint ignore:line
             );
 
             this.createBoxPlotChart(
-                filterSeriesByType(series, BOX_PLOT), pane
+                filterSeriesByType(series, [BOX_PLOT, VERTICAL_BOX_PLOT]), pane
             );
 
             this.createOHLCChart(
@@ -13692,7 +13762,7 @@ var __meta__ = { // jshint ignore:line
 
     PlotAreaFactory.current.register(CategoricalPlotArea, [
         BAR, COLUMN, LINE, VERTICAL_LINE, AREA, VERTICAL_AREA,
-        CANDLESTICK, OHLC, BULLET, VERTICAL_BULLET, BOX_PLOT,
+        CANDLESTICK, OHLC, BULLET, VERTICAL_BULLET, BOX_PLOT, VERTICAL_BOX_PLOT,
         RANGE_COLUMN, RANGE_BAR, WATERFALL, HORIZONTAL_WATERFALL
     ]);
 
@@ -13749,12 +13819,12 @@ var __meta__ = { // jshint ignore:line
     );
 
     SeriesBinder.current.register(
-        [BOX_PLOT],
+        [BOX_PLOT, VERTICAL_BOX_PLOT],
         ["lower", "q1", "median", "q3", "upper", "mean", "outliers"], [CATEGORY, COLOR, NOTE_TEXT]
     );
 
     DefaultAggregates.current.register(
-        [BOX_PLOT],
+        [BOX_PLOT, VERTICAL_BOX_PLOT],
         { lower: MAX, q1: MAX, median: MAX, q3: MAX, upper: MAX, mean: MAX, outliers: FIRST,
           color: FIRST, noteText: FIRST }
     );

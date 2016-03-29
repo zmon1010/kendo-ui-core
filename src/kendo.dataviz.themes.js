@@ -356,6 +356,7 @@ var __meta__ = { // jshint ignore:line
             var defaults = result.chart.seriesDefaults;
             defaults.verticalLine = deepExtend({}, defaults.line);
             defaults.verticalArea = deepExtend({}, defaults.area);
+            defaults.verticalBoxPlot = deepExtend({}, defaults.boxPlot);
 
             defaults.polarArea = deepExtend({}, defaults.radarArea);
             defaults.polarLine = deepExtend({}, defaults.radarLine);
