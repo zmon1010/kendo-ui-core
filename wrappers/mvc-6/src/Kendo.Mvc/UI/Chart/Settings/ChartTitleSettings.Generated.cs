@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartTitleSettings<T> where T : class 
     {
-        public string Align { get; set; }
-
         public string Background { get; set; }
 
         public ChartTitleBorderSettings<T> Border { get; } = new ChartTitleBorderSettings<T>();
@@ -31,17 +29,14 @@ namespace Kendo.Mvc.UI
 
         public bool? Visible { get; set; }
 
+        public ChartTextAlignment? Align { get; set; }
+
 
         public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            if (Align?.HasValue() == true)
-            {
-                settings["align"] = Align;
-            }
 
             if (Background?.HasValue() == true)
             {
@@ -89,6 +84,11 @@ namespace Kendo.Mvc.UI
             if (Visible.HasValue)
             {
                 settings["visible"] = Visible;
+            }
+
+            if (Align.HasValue)
+            {
+                settings["align"] = Align?.Serialize();
             }
 
             return settings;

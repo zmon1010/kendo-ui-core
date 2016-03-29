@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartZoomableMousewheelSettings<T> where T : class 
     {
-        public string Lock { get; set; }
+        public ChartAxisLock? Lock { get; set; }
 
         public bool? Enabled { get; set; }
 
@@ -21,9 +21,9 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Lock?.HasValue() == true)
+            if (Lock.HasValue)
             {
-                settings["lock"] = Lock;
+                settings["lock"] = Lock?.Serialize();
             }
 
             return settings;

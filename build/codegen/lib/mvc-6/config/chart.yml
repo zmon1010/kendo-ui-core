@@ -155,6 +155,44 @@
             :member: Custom
             :description: The legend is positioned using OffsetX and OffsetY
 
+    - :name: pannable.key
+      :description: Specifies the key that should be pressed to activate panning or zooming.
+      :type: String
+      :enum_type: ChartActivationKey
+      :values:
+          - :value: none
+            :member: None
+            :description: No key is required.
+
+          - :value: ctrl
+            :member: Ctrl
+            :description: The "ctrl" key should be pressed.
+
+          - :value: shift
+            :member: Shift
+            :description: The "shift" key should be pressed.
+
+          - :value: alt
+            :member: Alt
+            :description: The "alt" key should be pressed.
+
+    - :name: pannable.lock
+      :description: Specifies an axis that should not be panned or zoomed.
+      :type: String
+      :enum_type: ChartAxisLock
+      :values:
+          - :value: none
+            :member: None
+            :description: No axis locking is applied.
+
+          - :value: x
+            :member: X
+            :description: Locks the x axis.
+
+          - :value: y
+            :member: Y
+            :description: Locks the y axis.
+
     - :name: plotArea.border.dashType
       :description: Specifies the line dash type.
       :type: String
@@ -295,6 +333,23 @@
       :merge: true
       :type: double
 
+    - :name: title.align
+      :description: Specifies the text alignment.
+      :type: String
+      :enum_type: ChartTextAlignment
+      :values:
+          - :value: left
+            :member: Left
+            :description: The text is aligned to the left.
+
+          - :value: center
+            :member: Center
+            :description: The text is aligned to the middle
+
+          - :value: right
+            :member: Right
+            :description: The text is aligned to the right.
+
     - :name: valueAxis.axisCrossingValue
       :merge: true
       :type: object[]
@@ -346,3 +401,18 @@
     - :name: yAxis.plotBands.to
       :merge: true
       :type: object
+
+    - :name: zoomable.selection.key
+      :description: Specifies a keyboard key that should be pressed to activate the selection.
+      :type: String
+      :enum_type: ChartActivationKey
+
+    - :name: zoomable.selection.lock
+      :description: Specifies an axis that should not be zoomed.
+      :type: String
+      :enum_type: ChartAxisLock
+
+    - :name: zoomable.mousewheel.lock
+      :description: Specifies an axis that should not be zoomed.
+      :type: String
+      :enum_type: ChartAxisLock

@@ -11,9 +11,9 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartZoomableSelectionSettings<T> where T : class 
     {
-        public string Key { get; set; }
+        public ChartActivationKey? Key { get; set; }
 
-        public string Lock { get; set; }
+        public ChartAxisLock? Lock { get; set; }
 
         public bool? Enabled { get; set; }
 
@@ -23,14 +23,14 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Key?.HasValue() == true)
+            if (Key.HasValue)
             {
-                settings["key"] = Key;
+                settings["key"] = Key?.Serialize();
             }
 
-            if (Lock?.HasValue() == true)
+            if (Lock.HasValue)
             {
-                settings["lock"] = Lock;
+                settings["lock"] = Lock?.Serialize();
             }
 
             return settings;

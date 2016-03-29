@@ -7,11 +7,11 @@ using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Tests
 {
-    public class SeriesDefaultSettingsSerializationTests
+    public class SeriesDefaultsSettingsSerializationTests
     {
         private readonly ChartSeriesDefaultsSettings<object> settings;
 
-        public SeriesDefaultSettingsSerializationTests()
+        public SeriesDefaultsSettingsSerializationTests()
         {
             settings = new ChartSeriesDefaultsSettings<object>();
         }

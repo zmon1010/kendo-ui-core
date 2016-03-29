@@ -11,10 +11,10 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// Specifies an axis that should not be zoomed. The supported values are none, x and y.
+        /// Specifies an axis that should not be zoomed.
         /// </summary>
         /// <param name="value">The value for Lock</param>
-        public ChartZoomableMousewheelSettingsBuilder<T> Lock(string value)
+        public ChartZoomableMousewheelSettingsBuilder<T> Lock(ChartAxisLock value)
         {
             Container.Lock = value;
             return this;
