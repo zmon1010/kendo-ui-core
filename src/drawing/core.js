@@ -136,6 +136,14 @@
             }
         },
 
+        suspendTracking: function() {
+            this._suspendedTracking = true;
+        },
+
+        resumeTracking: function() {
+            this._suspendedTracking = false;
+        },
+
         _resize: noop,
 
         _handler: function(event) {
@@ -143,7 +151,7 @@
 
             return function(e) {
                 var node = surface.eventTarget(e);
-                if (node) {
+                if (node && !surface._suspendedTracking) {
                     surface.trigger(event, {
                         element: node,
                         originalEvent: e,
@@ -708,9 +716,18 @@
     });
 
     function eventCoordinates(event) {
+        var x, y;
+        if (event.touch) {
+            x = event.x.location;
+            y = event.y.location;
+        } else {
+            x = event.pageX || event.clientX || 0;
+            y = event.pageY || event.clientY || 0;
+        }
+
         return {
-            x: event.pageX || event.clientX || 0,
-            y: event.pageY || event.clientY || 0
+            x: x,
+            y: y
         };
     }
 

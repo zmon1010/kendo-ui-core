@@ -176,8 +176,6 @@ var __meta__ = { // jshint ignore:line
         MONTHS = "months",
         MOUSELEAVE_NS = "mouseleave" + NS,
         MOUSEMOVE_TRACKING = "mousemove.tracking",
-        MOUSEOVER_NS = "mouseover" + NS,
-        MOUSEOUT_NS = "mouseout" + NS,
         MOUSEMOVE_NS = "mousemove" + NS,
         MOUSEMOVE_DELAY = 20,
         MOUSEWHEEL_DELAY = 150,
@@ -788,11 +786,13 @@ var __meta__ = { // jshint ignore:line
 
         _attachEvents: function() {
             var chart = this,
-                element = chart.element;
+                element = chart.element,
+                surface = chart.surface;
+
+            surface.bind("mouseenter", proxy(chart._mouseover, chart));
+            surface.bind("mouseleave", proxy(chart._mouseout, chart));
 
             element.on(CONTEXTMENU_NS, proxy(chart._click, chart));
-            element.on(MOUSEOVER_NS, proxy(chart._mouseover, chart));
-            element.on(MOUSEOUT_NS, proxy(chart._mouseout, chart));
             element.on(MOUSEWHEEL_NS, proxy(chart._mousewheel, chart));
             element.on(MOUSELEAVE_NS, proxy(chart._mouseleave, chart));
 
@@ -820,11 +820,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         _mouseout: function(e) {
-            var chart = this,
-                element = chart._getChartElement(e);
+            if (e.element) {
+                var element = this._drawingChartElement(e.element, e);
 
-            if (element && element.leave) {
-                element.leave(chart, e);
+                if (element && element.leave) {
+                    element.leave(this, e.originalEvent);
+                }
             }
         },
 
@@ -836,8 +837,9 @@ var __meta__ = { // jshint ignore:line
                 chart._startNavigation(e, DRAG_START);
             }
 
-            if (chart._pannable) {
-                chart._pannable.start(e);
+            if (chart._pannable && chart._pannable.start(e)) {
+                this.surface.suspendTracking();
+                this._unsetActivePoint();
             }
 
             if (chart._zoomSelection) {
@@ -903,8 +905,8 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            if (this._pannable) {
-                this._pannable.end(e);
+            if (this._pannable && this._pannable.end(e)) {
+                this.surface.resumeTracking();
             }
         },
 
@@ -924,14 +926,31 @@ var __meta__ = { // jshint ignore:line
 
             if (mousewheelZoom) {
                 var args = { delta: delta, axisRanges: axisRanges(this._plotArea.axes), originalEvent: e };
-                if (!chart.trigger(ZOOM_START, args)) {
+                if (chart._zooming || !chart.trigger(ZOOM_START, args)) {
                     e.preventDefault();
+
+                    if (!chart._zooming) {
+                        chart._unsetActivePoint();
+                        chart.surface.suspendTracking();
+                        chart._zooming = true;
+                    }
+
+                    if (chart._mwTimeout) {
+                        clearTimeout(chart._mwTimeout);
+                    }
 
                     args.axisRanges = ranges = mousewheelZoom.updateRanges(delta);
                     if (ranges && !chart.trigger(ZOOM, args)) {
                         mousewheelZoom.zoom();
-                        chart.trigger(ZOOM_END, args);
                     }
+
+                    chart._mwTimeout = setTimeout(function() {
+                        chart.trigger(ZOOM_END, args);
+                        chart._zooming = false;
+                        if (chart.surface) {
+                            chart.surface.resumeTracking();
+                        }
+                    }, MOUSEWHEEL_DELAY);
                 }
             } else {
                 if (!state) {
@@ -1029,10 +1048,12 @@ var __meta__ = { // jshint ignore:line
 
         _getChartElement: function(e, match) {
             var element = this.surface.eventTarget(e);
-            if (!element) {
-                return;
+            if (element) {
+                return this._drawingChartElement(element, e, match);
             }
+        },
 
+        _drawingChartElement: function(element, e, match) {
             var chartElement;
             while (element && !chartElement) {
                 chartElement = element.chartElement;
@@ -1076,46 +1097,48 @@ var __meta__ = { // jshint ignore:line
 
         _tap: function(e) {
             var chart = this,
-                element = chart._getChartElement(e);
+                drawingElement = chart.surface.eventTarget(e),
+                element = chart._drawingChartElement(drawingElement, e);
 
             if (chart._activePoint === element) {
-                chart._click(e);
+                chart._propagateClick(element, e);
             } else {
-                if (!chart._startHover(e)) {
+                if (!chart._startHover(drawingElement, e)) {
                     chart._unsetActivePoint();
                 }
 
-                chart._click(e);
+                chart._propagateClick(element, e);
             }
         },
 
         _click: function(e) {
             var chart = this,
                 element = chart._getChartElement(e);
+            chart._propagateClick(element, e);
+        },
 
+        _propagateClick: function(element, e) {
             while (element) {
                 if (element.click) {
-                    element.click(chart, e);
+                    element.click(this, e);
                 }
 
                 element = element.parent;
             }
         },
 
-        _startHover: function(e) {
+        _startHover: function(element, e) {
             var chart = this,
-                element = chart._getChartElement(e),
                 tooltip = chart._tooltip,
                 highlight = chart._highlight,
                 tooltipOptions = chart.options.tooltip,
                 point;
 
-
             if (chart._suppressHover || !highlight || highlight.isHighlighted(element) || chart._sharedTooltip()) {
                 return;
             }
 
-            point = chart._getChartElement(e, function(element) {
+            point = chart._drawingChartElement(element, e, function(element) {
                 return element.hover;
             });
 
@@ -1136,7 +1159,7 @@ var __meta__ = { // jshint ignore:line
         _mouseover: function(e) {
             var chart = this;
 
-            if (chart._startHover(e)) {
+            if (chart._startHover(e.element, e.originalEvent)) {
                 $(document).on(MOUSEMOVE_TRACKING, proxy(chart._mouseMoveTracking, chart));
             }
         },
@@ -12494,6 +12517,7 @@ var __meta__ = { // jshint ignore:line
 
         start: function(e) {
             this._active = acceptKey(e.event, this.options.key);
+            return this._active;
         },
 
         move: function(e) {
@@ -12507,7 +12531,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         end: function() {
+            var active = this._active;
             this._active = false;
+
+            return active;
         },
 
         pan: function() {

@@ -110,6 +110,51 @@
             surface.destroy();
         });
 
+        test("eventTarget returns shape returned by the searchTree", function() {
+            var path = new d.Path();
+            surface._searchTree.pointShape = function() {
+                return path;
+            };
+
+            ok(surface.eventTarget({}) === path);
+        });
+
+        test("eventTarget passes point based on the event coordinates to searchTree", function() {
+            var path = new d.Path();
+            var offset = surface._elementOffset();
+            surface._searchTree.pointShape = function(point) {
+                equal(point.x, 100 - offset.left);
+                equal(point.y, 200 - offset.top);
+            };
+
+            surface.eventTarget({ pageX: 100, pageY: 200 });
+        });
+
+        test("eventTarget passes point based on the userevent coordinates to searchTree", function() {
+            var path = new d.Path();
+            var offset = surface._elementOffset();
+            surface._searchTree.pointShape = function(point) {
+                equal(point.x, 100 - offset.left);
+                equal(point.y, 200 - offset.top);
+            };
+
+            surface.eventTarget({
+                touch: {},
+                x: {
+                    location: 100
+                },
+                y: {
+                    location: 200
+                }
+            });
+        });
+
+        test("eventTarget returns undefined if there is no searchTree", function() {
+            delete surface._searchTree;
+
+            ok(surface.eventTarget() === undefined);
+        });
+
         // ------------------------------------------------------------
         module("Surface / Canvas / mouse tracking", {
             setup: setup,
@@ -177,6 +222,30 @@
             surface.element.trigger("click");
         });
 
+        test("does not trigger surface click if tracking is suspended", 0, function() {
+            surface._searchTree.pointShape = function() {
+                return new d.Path();
+            };
+            surface.bind("click", function(e) {
+                ok(false);
+            });
+            surface.suspendTracking();
+            surface.element.trigger("click");
+        });
+
+        test("triggers the click event if tracking is suspended and resumed", 1, function() {
+            surface.eventTarget = function() {
+                return new d.Path();
+            };
+            surface.bind("click", function(e) {
+                ok(true);
+            });
+            surface.suspendTracking();
+            surface.element.trigger("click");
+            surface.resumeTracking();
+            surface.element.trigger("click");
+        });
+
         // ------------------------------------------------------------
         module("Surface / Canvas / mouse tracking / mousemove", {
             setup: setup,
@@ -192,6 +261,30 @@
                 ok(e.element === path);
                 equal(e.type, "mousemove");
             });
+            surface.element.trigger("mousemove");
+        });
+
+        test("does not trigger the surface mousemove event if tracking is suspended", 0, function() {
+            surface._searchTree.pointShape = function() {
+                return new d.Path();
+            };
+            surface.bind("mousemove", function(e) {
+                ok(false);
+            });
+            surface.suspendTracking();
+            surface.element.trigger("mousemove");
+        });
+
+        test("triggers mousemove event if tracking is suspended and resumed", 1, function() {
+            surface.eventTarget = function() {
+                return new d.Path();
+            };
+            surface.bind("mousemove", function(e) {
+                ok(true);
+            });
+            surface.suspendTracking();
+            surface.element.trigger("mousemove");
+            surface.resumeTracking();
             surface.element.trigger("mousemove");
         });
 
@@ -214,6 +307,30 @@
                 ok(e.element === path);
                 equal(e.type, "mouseenter");
             });
+            surface.element.trigger("mousemove");
+        });
+
+        test("does not trigger the surface mouseenter event if tracking is suspended", 0, function() {
+            surface.eventTarget = function() {
+                return new d.Path();
+            };
+            surface.bind("mouseenter", function(e) {
+                ok(false);
+            });
+            surface.suspendTracking();
+            surface.element.trigger("mousemove");
+        });
+
+        test("triggers the surface mouseenter event if tracking is suspended and resumed", 1, function() {
+            surface.eventTarget = function() {
+                return new d.Path();
+            };
+            surface.bind("mouseenter", function(e) {
+                ok(true);
+            });
+            surface.suspendTracking();
+            surface.element.trigger("mousemove");
+            surface.resumeTracking();
             surface.element.trigger("mousemove");
         });
 
@@ -251,6 +368,39 @@
                 equal(e.type, "mouseleave");
             });
             surface.element.trigger("mousemove");
+            surface.element.trigger("mousemove");
+        });
+
+        test("does not trigger the surface mouseleave event if tracking is suspended", 0, function() {
+            var first = true;
+            surface._searchTree.pointShape = function() {
+                if (first) {
+                    first = false;
+                    return new d.Path();
+                }
+            };
+            surface.bind("mouseleave", function(e) {
+                ok(false);
+            });
+            surface.suspendTracking();
+            surface.element.trigger("mousemove");
+            surface.element.trigger("mousemove");
+        });
+
+        test("triggers the surface mouseleave event if tracking is suspended and resumed", function() {
+            var first = true;
+            surface.eventTarget = function() {
+                if (first) {
+                    first = false;
+                    return new d.Path();
+                }
+            };
+            surface.bind("mouseleave", function(e) {
+                ok(true);
+            });
+            surface.element.trigger("mousemove");
+            surface.suspendTracking();
+            surface.resumeTracking();
             surface.element.trigger("mousemove");
         });
 

@@ -569,9 +569,10 @@
             triggerMousewheel(10);
         });
 
-        test("mousewheel triggers zoomEnd event", function() {
+        asyncTest("mousewheel triggers zoomEnd event", function() {
             chart.bind("zoomEnd", function(e) {
                 ok(true);
+                start();
             });
             triggerMousewheel(10);
         });
