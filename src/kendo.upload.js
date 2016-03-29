@@ -99,7 +99,8 @@ var __meta__ = { // jshint ignore:line
             async: {
                 removeVerb: "POST",
                 autoUpload: true,
-                withCredentials: true
+                withCredentials: true,
+                accept: "*/*; q=0.5; application/json"
             },
             localization: {
                 "select": "Select files...",
@@ -1193,7 +1194,12 @@ var __meta__ = { // jshint ignore:line
 
             xhr.open("POST", url, true);
             xhr.withCredentials = this.upload.options.async.withCredentials;
-            xhr.setRequestHeader("Accept", "*/*; q=0.5; application/json");
+
+            var accept = this.upload.options.async.accept;
+            if (accept) {
+                xhr.setRequestHeader("Accept", accept);
+            }
+
             xhr.send(data);
         },
 
