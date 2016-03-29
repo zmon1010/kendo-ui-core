@@ -4,7 +4,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class DropDownListController : Controller
     {
-        public ActionResult Remote_DataSource()
+        public ActionResult RemoteDataSource()
         {
             return View();
         }

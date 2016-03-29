@@ -2,9 +2,9 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class ComboBoxController : Controller
+    public partial class MultiSelectController : Controller
     {
-        public ActionResult Client_Filtering()
+        public ActionResult ServerFiltering()
         {
             return View();
         }

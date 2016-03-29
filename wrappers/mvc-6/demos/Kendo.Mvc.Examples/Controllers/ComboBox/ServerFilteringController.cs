@@ -4,7 +4,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class ComboBoxController : Controller
     {
-        public ActionResult Server_Filtering()
+        public ActionResult ServerFiltering()
         {
             return View();
         }

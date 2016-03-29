@@ -7,7 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class GanttController : Controller
     {
-        public ActionResult Server_Binding()
+        public ActionResult ServerBinding()
         {
             ViewBag.Tasks = taskService.GetAll();
             ViewBag.Dependencies = dependencyService.GetAll();

@@ -2,9 +2,9 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class MultiSelectController : Controller
+    public partial class DropDownListController : Controller
     {
-        public ActionResult Server_Filtering()
+        public ActionResult ServerFiltering()
         {
             return View();
         }

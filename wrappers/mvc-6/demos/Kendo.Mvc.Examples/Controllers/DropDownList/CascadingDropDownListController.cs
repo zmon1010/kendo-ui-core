@@ -6,7 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class DropDownListController : Controller
     {
-        public ActionResult Cascading_DropDownList()
+        public ActionResult CascadingDropDownList()
         {
             return View();
         }

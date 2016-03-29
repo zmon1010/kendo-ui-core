@@ -6,7 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class ComboBoxController : Controller
     {
-        public ActionResult Cascading_ComboBox()
+        public ActionResult CascadingComboBox()
         {
             return View();
         }
