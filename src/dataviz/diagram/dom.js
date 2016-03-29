@@ -1807,6 +1807,7 @@
                 that._initElements();
                 that._extendLayoutOptions(that.options);
                 that._initDefaults(userOptions);
+                that._interactionDefaults();
 
                 that._initCanvas();
 
@@ -1876,9 +1877,7 @@
                     },
                     remove: true
                 },
-                pannable: {
-                    key: "ctrl"
-                },
+                pannable: {},
                 selectable: {
                     key: "none"
                 },
@@ -2112,6 +2111,26 @@
 
                 if (userShapeDefaults && userShapeDefaults.connectors) {
                     options.shapeDefaults.connectors = userShapeDefaults.connectors;
+                }
+            },
+
+            _interactionDefaults: function() {
+                var options = this.options;
+                var selectable = options.selectable;
+                var pannable = options.pannable;
+                var mobile = kendo.support.mobileOS;
+
+                if (selectable && !defined(selectable.multiple)) {
+                    options.selectable = {
+                        key: selectable.key,
+                        multiple: mobile ? false : true
+                    };
+                }
+
+                if (pannable && !defined(pannable.key)) {
+                    options.pannable = {
+                        key: mobile ? "none" : "ctrl"
+                    };
                 }
             },
 

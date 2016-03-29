@@ -178,6 +178,83 @@
     });
 
     // ------------------------------------------------------------
+    module("Diagram / interaction defaults", {
+        teardown: teardown
+    });
+
+    test("sets selectable multiple to true if not defined", function () {
+        createDiagram({
+            selectable: true
+        });
+        equal(diagram.options.selectable.multiple, true);
+    });
+
+    test("sets selectable multiple to false if not defined on mobile devices", function () {
+        var mobileOS = kendo.support.mobileOS;
+        try {
+            kendo.support.mobileOS = true;
+            createDiagram({
+                selectable: true
+            });
+            equal(diagram.options.selectable.multiple, false);
+        } finally {
+            kendo.support.mobileOS = mobileOS;
+        };
+    });
+
+    test("does not override selectable false", function () {
+        createDiagram({
+            selectable: false
+        });
+        equal(diagram.options.selectable, false);
+    });
+
+    test("does not override selectable key", function () {
+        createDiagram({
+            selectable: {
+                key: "shift"
+            }
+        });
+        equal(diagram.options.selectable.key, "shift");
+    });
+
+    test("sets pannable key to ctrl if not defined", function () {
+        createDiagram({
+            pannable: true
+        });
+        equal(diagram.options.pannable.key, "ctrl");
+    });
+
+    test("sets pannable key to none if not defined on mobile devices", function () {
+        var mobileOS = kendo.support.mobileOS;
+        try {
+            kendo.support.mobileOS = true;
+            createDiagram({
+                pannable: true
+            });
+            equal(diagram.options.pannable.key, "none");
+        } finally {
+            kendo.support.mobileOS = mobileOS;
+        };
+    });
+
+    test("does not override pannable false", function () {
+        createDiagram({
+            pannable: false
+        });
+        equal(diagram.options.pannable, false);
+    });
+
+    test("does not override pannable key", function () {
+        createDiagram({
+            pannable: {
+                key: "shift"
+            }
+        });
+        equal(diagram.options.pannable.key, "shift");
+    });
+
+    // ------------------------------------------------------------
     (function() {
         function tapEvent(x, y, event) {
             return {
