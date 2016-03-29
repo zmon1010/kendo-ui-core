@@ -778,7 +778,12 @@
             },
             tryActivate: function (p, meta) {
                 var toolService = this.toolService;
-                var enabled = tryActivateSelection(toolService.diagram.options.selectable, meta);
+                var selectable = toolService.diagram.options.selectable;
+                var enabled = selectable && selectable.multiple !== false;
+
+                if (enabled && selectable.key && selectable.key != "none") {
+                    enabled = meta[selectable.key + "Key"];
+                }
 
                 return enabled && !defined(toolService.hoveredItem) && !defined(toolService.hoveredAdorner);
             },

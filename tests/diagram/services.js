@@ -711,9 +711,27 @@
             ok(!selectiontool.tryActivate(new Point(), {}));
         });
 
+        test("does not activate if multiple selection is disabled", function() {
+            setupTool({
+                selectable: {
+                    multiple: false
+                }
+            });
+            ok(!selectiontool.tryActivate(new Point(), {}));
+        });
+
         test("activates if diagram is selectable", function() {
             setupTool({
                 selectable: true
+            });
+            ok(selectiontool.tryActivate(new Point(), {}));
+        });
+
+        test("activates if multiple selection is enabled", function() {
+            setupTool({
+                selectable: {
+                    multiple: true
+                }
             });
             ok(selectiontool.tryActivate(new Point(), {}));
         });
@@ -748,6 +766,16 @@
             ok(selectiontool.tryActivate({}, getMeta()));
         });
 
+        test("does not activate if key is set to none but multiple selection is disabled", function() {
+            setupTool({
+                selectable: {
+                    multiple: false,
+                    key: "none"
+                }
+            });
+            ok(!selectiontool.tryActivate(new Point(), {}));
+        });
+
         test("activates if key is not set", function() {
             setupTool({
                 selectable: {}
@@ -774,6 +802,17 @@
             });
 
             ok(!selectiontool.tryActivate({}, getMeta()));
+        });
+
+        test("does not activate if key is set and pressed but multiple selection is disabled", function() {
+            setupTool({
+                selectable: {
+                    key: "ctrl",
+                    multiple: false
+                }
+            });
+
+            ok(!selectiontool.tryActivate({}, getMeta("ctrl")));
         });
     })();
 
