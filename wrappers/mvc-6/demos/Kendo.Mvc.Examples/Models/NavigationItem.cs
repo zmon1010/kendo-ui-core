@@ -18,30 +18,14 @@ namespace Kendo.Mvc.Examples.Models
                     return true;
                 }
 
-                var invert = false;
-                var match = false;
-
                 foreach (var packageName in Packages)
                 {
-                    var name = packageName;
-
-                    if (name == "!mvc" || name == "!mvc-offline") {
+                    if (packageName.StartsWith("!mvc")) { // !mvc; !mvc-offline; !mvc-core
                         return false;
-                    }
-
-                    if (name[0] == '!')
-                    {
-                        invert = true;
-                        name = name.Substring(1);
-                    }
-
-                    if (name == "mvc" || name == "mvc-offline")
-                    {
-                        match = true;
                     }
                 }
 
-                return (!invert && match) || (invert && !match);
+                return true;
             }
         }
     }
