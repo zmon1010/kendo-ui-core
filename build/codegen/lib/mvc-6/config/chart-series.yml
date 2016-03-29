@@ -72,3 +72,19 @@
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
+
+- :name: line
+  :type: Line
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expression
+        :member: memberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: category
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName

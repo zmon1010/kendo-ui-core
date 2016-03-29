@@ -71,5 +71,19 @@ namespace Kendo.Mvc.UI.Tests
 
             settings.Serialize().ContainsKey("column").ShouldBeTrue();
         }
+
+        [Fact]
+        public void Default_Line_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("line").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Line_series_should_be_serialized()
+        {
+            settings.Line.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("line").ShouldBeTrue();
+        }
     }
 }

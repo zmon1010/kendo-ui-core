@@ -39,5 +39,11 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Column().ShouldBeType(typeof(ChartSeriesBuilder<object>));
         }
+
+        [Fact]
+        public void Line_series_should_return_builder()
+        {
+            builder.Line().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
     }
 }

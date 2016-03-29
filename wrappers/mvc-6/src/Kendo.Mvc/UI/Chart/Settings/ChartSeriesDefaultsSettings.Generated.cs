@@ -29,6 +29,11 @@ namespace Kendo.Mvc.UI
         /// </summary>
         public ChartSeries<T> Column { get; } = new ChartSeries<T>();
 
+        /// <summary>
+        /// The Line series default settings.
+        /// </summary>
+        public ChartSeries<T> Line { get; } = new ChartSeries<T>();
+
         public IDictionary<string, object> Serialize()
         {
             var settings = new Dictionary<string, object>();
@@ -59,6 +64,13 @@ namespace Kendo.Mvc.UI
             if (column.Any())
             {
                 settings["column"] = column;
+            }
+
+            var line = Line.Serialize();
+
+            if (line.Any())
+            {
+                settings["line"] = line;
             }
 
             return settings;

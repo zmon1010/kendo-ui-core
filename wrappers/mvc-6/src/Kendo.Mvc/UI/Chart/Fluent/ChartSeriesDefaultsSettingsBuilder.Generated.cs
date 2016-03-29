@@ -53,5 +53,14 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new ChartSeriesBuilder<T>(Container.Column);
         }
+
+        /// <summary>
+        /// The line series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the line series settings.</param>
+        public ChartSeriesBuilder<T> Line()
+        {
+            return new ChartSeriesBuilder<T>(Container.Line);
+        }
     }
 }
