@@ -144,6 +144,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Telerik.Windows.Documents.Flow.FormatProviders.Pdf.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Windows.Zip, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Telerik.Windows.Zip.dll</HintPath>
@@ -225,6 +229,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
     <Compile Include="Controllers\WordsProcessing\IndexController.cs" />
     <Compile Include="Controllers\PdfProcessing\IndexController.cs" />
     <Compile Include="Controllers\Scatter_Charts\Pan_And_ZoomController.cs" />
@@ -1411,6 +1416,7 @@
     <Content Include="Areas\aspx\Views\multiselect\grouping.aspx" />
     <Content Include="Areas\aspx\Views\multiselect\virtualization.aspx" />
     <Content Include="Areas\aspx\Views\treelist\excel_export.aspx" />
+    <Content Include="Areas\aspx\Views\spreadprocessing\index.aspx" />
     <Content Include="Areas\aspx\Views\wordsprocessing\index.aspx" />
     <Content Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <Content Include="Areas\razor\Views\combobox\virtualization.cshtml" />
@@ -2455,6 +2461,13 @@
     <Content Include="Content\web\sortable\weather-dashboard.jpg" />
     <Content Include="Content\web\splitter\ajax\ajaxContent1.html" />
     <Content Include="Content\web\splitter\ajax\ajaxContent2.html" />
+    <Content Include="Content\web\spreadprocessing\csv_file.png" />
+    <Content Include="Content\web\spreadprocessing\CustomDocumentImage.png" />
+    <Content Include="Content\web\spreadprocessing\CustomDocument_file.png" />
+    <Content Include="Content\web\spreadprocessing\pdf_file.png" />
+    <Content Include="Content\web\spreadprocessing\SampleDocumentImage.png" />
+    <Content Include="Content\web\spreadprocessing\txt_file.png" />
+    <Content Include="Content\web\spreadprocessing\xlsx_file.png" />
     <Content Include="Content\web\Suites\ajax.png" />
     <Content Include="Content\web\Suites\mvc.png" />
     <Content Include="Content\web\Suites\orm.png" />
@@ -3388,6 +3401,8 @@
     <Content Include="Areas\razor\Views\pdfprocessing\index.cshtml" />
     <Content Include="Areas\razor\Views\wordsprocessing\index.cshtml" />
     <Content Include="Content\web\wordsprocessing\SampleDocument.docx" />
+    <Content Include="Content\web\spreadprocessing\SampleDocument.xlsx" />
+    <Content Include="Areas\razor\Views\spreadprocessing\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

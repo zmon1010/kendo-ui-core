@@ -5218,6 +5218,34 @@
         "category": "Layout"
     },
     {
+        "text": "SpreadProcessing",
+        "name": "spreadprocessing",
+        "api": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview",
+        "category": "Editors",
+        "spriteCssClass": "spreadprocessingIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "spreadprocessing/index",
+                "title": {
+                    "aspnet-mvc": "Demo and source code for Telerik RadSpreadProcessing in MVC"
+                },
+                "meta": {
+                    "aspnet-mvc": "See how the Telerik RadSpreadProcessing can be integrated in MVC applications."
+                },
+                "description": {
+                    "aspnet-mvc": "With <strong>RadSpreadProcessing</strong> you can virtually effortlessly convert documents from one to another file format among the supported DOCX, RTF, HTML and TXT."
+                }
+            }
+        ],
+        "documentation": {
+            "aspnet-mvc": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview"
+        },
+        "packages": [
+            "mvc"
+        ]
+    },
+    {
         "text": "TabStrip",
         "name": "tabstrip",
         "api": "web/tabstrip",
@@ -6623,15 +6651,7 @@
                     "aspnet-mvc": "See how the Telerik RadWordsProcessing can be integrated in MVC applications."
                 },
                 "description": {
-                    "aspnet-mvc": "With <strong>RadWordsProcessing</strong> you can virtually effortlessly convert documents from one to another file format among the supported DOCX, RTF, HTML and TXT."
-                },
-                "sources": {
-                    "aspnet-mvc": [
-                        {
-                            "name": "CreatePdfDocument.cs",
-                            "url": "~/Helpers/CreatePdfDocument.cs"
-                        }
-                    ]
+                    "aspnet-mvc": "With <strong>RadSpreadProcessing</strong> you can effortlessly convert documents from one to another file format among XLSX, CSV and TXT. Further, you can export any of these to PDF."
                 }
             }
         ],
@@ -6826,7 +6846,7 @@
         ]
     },
     {
-        "text": "PDF Processing",
+        "text": "PdfProcessing",
         "name": "pdfprocessing",
         "api": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview",
         "category": "Editors",
@@ -6836,7 +6856,7 @@
                 "text": "Basic usage",
                 "url": "pdfprocessing/index",
                 "title": {
-                    "aspnet-mvc": "Demo and source code for  Telerik ASP.NET MVC Autocomplete"
+                    "aspnet-mvc": "Demo and source code for Telerik RadPdfProcessing in MVC"
                 },
                 "meta": {
                     "aspnet-mvc": "See how the Telerik RadPdfProcessing can be integrated in MVC applications."
