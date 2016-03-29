@@ -656,9 +656,9 @@
 
                 if (defined(options.key)) {
                     if (!options.key || options.key == "none") {
-                        enabled = noMeta(meta);
+                        enabled = noMeta(meta) && !defined(toolService.hoveredItem);
                     } else {
-                        enabled = meta[options.key + "Key"] && !(meta.ctrlKey && defined(toolService.hoveredItem));
+                        enabled = meta[options.key + "Key"];
                     }
                 }
 

@@ -401,11 +401,31 @@
             ok(scrollerTool.tryActivate({}, getMeta()));
         });
 
+        test("does not activate if key is set to none and there is a hovered item", function() {
+            setupTool({
+                pannable: {
+                    key: "none"
+                }
+            });
+
+            toolservice.hoveredItem = true;
+            ok(!scrollerTool.tryActivate({}, getMeta()));
+        });
+
         test("activates on ctrl if key is not set", function() {
             setupTool({
                 pannable: {}
             });
 
+            ok(scrollerTool.tryActivate({}, getMeta("ctrl")));
+        });
+
+        test("activates on ctrl if key is not set and there is a hovered item", function() {
+            setupTool({
+                pannable: {}
+            });
+
+            toolservice.hoveredItem = true;
             ok(scrollerTool.tryActivate({}, getMeta("ctrl")));
         });
 
@@ -426,8 +446,20 @@
                 }
             });
 
+            toolservice.hoveredItem = true;
             ok(scrollerTool.tryActivate({}, getMeta("alt")));
         });
+
+        test("activates if specific key is set and pressed and there is a hovered item", function() {
+            setupTool({
+                pannable: {
+                    key: "alt"
+                }
+            });
+
+            ok(scrollerTool.tryActivate({}, getMeta("alt")));
+        });
+
 
         test("does not activate if specific key is set but not pressed", function() {
             setupTool({
@@ -436,17 +468,6 @@
                 }
             });
 
-            ok(!scrollerTool.tryActivate({}, getMeta("ctrl")));
-        });
-
-        test("does not activate if ctrl key is set and pressed and there is a hoveredItem", function() {
-            setupTool({
-                pannable: {
-                    key: "ctrl"
-                }
-            });
-
-            toolservice.hoveredItem = true;
             ok(!scrollerTool.tryActivate({}, getMeta("ctrl")));
         });
 
