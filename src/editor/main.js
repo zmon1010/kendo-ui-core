@@ -685,9 +685,8 @@
                 var cmd = new o.command({range: range});
                 if (cmd.changesContent()) {
                     this.keyboard.endTyping(true);
+                    this.exec(tool.name);
                 }
-
-                this.exec(tool.name);
             }
         },
 

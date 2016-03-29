@@ -292,7 +292,7 @@ test("inline Editor toolbar does not show on focus when widget is readonly", fun
                     key: [13, 32],
                     keyPressCommand: true,
                     command: function() {
-                        this.changesContent = function() {};
+                        this.changesContent = function() { return true; };
                     }
                 }
             };
