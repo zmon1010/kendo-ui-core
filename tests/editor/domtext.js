@@ -111,6 +111,22 @@
         equal(callback.callCount, 2);
     });
 
+    test("clone traverser", function() {
+        var traverser = new LeftDomTextTraverser({
+            node: {},
+            offset: 0,
+            cancelAtNode: function() {}
+        });
+
+        var result = traverser.clone({
+            node: {},
+            offset: 1
+        });
+
+        ok(result instanceof LeftDomTextTraverser);
+        equal(result.cancelAtNode, traverser.cancelAtNode);
+    });
+
     QUnit.module("right DOM text traverser");
 
     test("traverse from start of single text node", function() {
@@ -215,6 +231,22 @@
         traverser.traverse(callback);
 
         equal(callback.callCount, 2);
+    });
+
+    test("clone traverser", function() {
+        var traverser = new RightDomTextTraverser({
+            node: {},
+            offset: 0,
+            cancelAtNode: function() {}
+        });
+
+        var result = traverser.clone({
+            node: {},
+            offset: 1
+        });
+
+        ok(result instanceof RightDomTextTraverser);
+        equal(result.cancelAtNode, traverser.cancelAtNode);
     });
 
     QUnit.module("detection of link");

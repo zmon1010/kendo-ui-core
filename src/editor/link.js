@@ -379,15 +379,12 @@ var UnlinkTool = Tool.extend({
 
             this.traverser.traverse($.proxy(this._detectEnd, this));
             if (!this.end.blank()) {
-                this.traverser.init(this.end);
+                this.traverser = this.traverser.clone(this.end);
                 this.traverser.traverse($.proxy(this._detectStart, this));
 
                 if (!this._isLinkDetected()) {
-                    var puntuationTraverser = new RightDomTextTraverser({
-                        node: this.start.node,
-                        offset: this.start.offset,
-                        cancelAtNode: this.traverser.cancelAtNode
-                    });
+                    var puntuationOptions = this.traverser.extendOptions(this.start);
+                    var puntuationTraverser = new RightDomTextTraverser(puntuationOptions);
                     puntuationTraverser.traverse($.proxy(this._skipStartPuntuation, this));
                     if(!this._isLinkDetected()) {
                         this.start = DomPos();
@@ -516,6 +513,14 @@ var UnlinkTool = Tool.extend({
             this._traverse(callback, next);
         },
 
+        extendOptions: function(o) {
+            return $.extend({
+                node: this.node,
+                offset: this.offset,
+                cancelAtNode: this.cancelAtNode
+            }, o || {});
+        },
+
         edgeNode: function(node) {}, //jshint ignore: line
         next: function(node) {}, //jshint ignore: line
         subText: function(text, offset) {} //jshint ignore: line
@@ -533,6 +538,11 @@ var UnlinkTool = Tool.extend({
 
         edgeNode: function(node) {
             return node.lastChild;
+        },
+
+        clone: function(options) {
+            var o = this.extendOptions(options);
+            return new LeftDomTextTraverser(o);
         }
     });
 
@@ -547,6 +557,11 @@ var UnlinkTool = Tool.extend({
 
         edgeNode: function(node) {
             return node.firstChild;
+        },
+
+        clone: function(options) {
+            var o = this.extendOptions(options);
+            return new RightDomTextTraverser(o);
         }
     });
 
