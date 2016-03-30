@@ -685,8 +685,7 @@
             start: function (p, meta) {
                 var toolService = this.toolService,
                     diagram = toolService.diagram,
-                    hoveredItem = toolService.hoveredItem,
-                    selectable = diagram.options.selectable;
+                    hoveredItem = toolService.hoveredItem;
 
                 if (hoveredItem) {
                     toolService.selectSingle(hoveredItem, meta);
@@ -722,9 +721,8 @@
                 }
             },
 
-            end: function (p, meta) {
+            end: function () {
                 var diagram = this.toolService.diagram,
-                    service = this.toolService,
                     adorner = this.adorner,
                     unit;
 
@@ -916,7 +914,7 @@
                 }
             },
 
-            end: function (p, meta) {
+            end: function (p) {
                 var connection = this._c;
                 var adorner = connection.adorner;
                 var toolService = this.toolService;
