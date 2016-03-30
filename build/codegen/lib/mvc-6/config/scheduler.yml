@@ -3,3 +3,19 @@
       :type: String
       :enum_type: MobileMode
       :description: Defines the mobile modes supported by Kendo UI Scheduler for ASP.NET MVC
+
+    - :name: majortick
+      :merge: true
+      :type: int
+
+    - :name: minortickcount
+      :merge: true
+      :type: int
+
+    - :name: workweekstart
+      :merge: true
+      :type: int
+
+    - :name: workweekend
+      :merge: true
+      :type: int

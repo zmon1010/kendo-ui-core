@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI
 
         public double? Height { get; set; }
 
-        public double? MajorTick { get; set; }
+        public int? MajorTick { get; set; }
 
         public string MajorTimeHeaderTemplate { get; set; }
 
@@ -49,7 +49,7 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Min { get; set; }
 
-        public double? MinorTickCount { get; set; }
+        public int? MinorTickCount { get; set; }
 
         public string MinorTimeHeaderTemplate { get; set; }
 
@@ -77,9 +77,9 @@ namespace Kendo.Mvc.UI
 
         public DateTime? WorkDayEnd { get; set; }
 
-        public double? WorkWeekStart { get; set; }
+        public int? WorkWeekStart { get; set; }
 
-        public double? WorkWeekEnd { get; set; }
+        public int? WorkWeekEnd { get; set; }
 
         public MobileMode? Mobile { get; set; }
 

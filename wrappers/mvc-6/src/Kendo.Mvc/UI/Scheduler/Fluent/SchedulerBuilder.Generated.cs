@@ -176,7 +176,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The number of minutes represented by a major tick.
         /// </summary>
         /// <param name="value">The value for MajorTick</param>
-        public SchedulerBuilder<T> MajorTick(double value)
+        public SchedulerBuilder<T> MajorTick(int value)
         {
             Container.MajorTick = value;
             return this;
@@ -239,7 +239,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The number of time slots to display per major tick.
         /// </summary>
         /// <param name="value">The value for MinorTickCount</param>
-        public SchedulerBuilder<T> MinorTickCount(double value)
+        public SchedulerBuilder<T> MinorTickCount(int value)
         {
             Container.MinorTickCount = value;
             return this;
@@ -402,7 +402,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The start of working week (index based).
         /// </summary>
         /// <param name="value">The value for WorkWeekStart</param>
-        public SchedulerBuilder<T> WorkWeekStart(double value)
+        public SchedulerBuilder<T> WorkWeekStart(int value)
         {
             Container.WorkWeekStart = value;
             return this;
@@ -412,7 +412,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The end of working week (index based).
         /// </summary>
         /// <param name="value">The value for WorkWeekEnd</param>
-        public SchedulerBuilder<T> WorkWeekEnd(double value)
+        public SchedulerBuilder<T> WorkWeekEnd(int value)
         {
             Container.WorkWeekEnd = value;
             return this;
