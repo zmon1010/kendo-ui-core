@@ -178,15 +178,105 @@
     });
 
     // ------------------------------------------------------------
+    module("Diagram / interaction defaults", {
+        teardown: teardown
+    });
+
+    test("sets selectable multiple to true if not defined", function () {
+        createDiagram({
+            selectable: true
+        });
+        equal(diagram.options.selectable.multiple, true);
+    });
+
+    test("sets selectable multiple to false if not defined on mobile devices", function () {
+        var mobileOS = kendo.support.mobileOS;
+        try {
+            kendo.support.mobileOS = true;
+            createDiagram({
+                selectable: true
+            });
+            equal(diagram.options.selectable.multiple, false);
+        } finally {
+            kendo.support.mobileOS = mobileOS;
+        };
+    });
+
+    test("does not override selectable false", function () {
+        createDiagram({
+            selectable: false
+        });
+        equal(diagram.options.selectable, false);
+    });
+
+    test("does not override selectable key", function () {
+        createDiagram({
+            selectable: {
+                key: "shift"
+            }
+        });
+        equal(diagram.options.selectable.key, "shift");
+    });
+
+    test("does not override selectable stroke options", function () {
+        createDiagram({
+            selectable: {
+                stroke: {
+                    color: "foo"
+                }
+            }
+        });
+        equal(diagram.options.selectable.stroke.color, "foo");
+    });
+
+    test("sets pannable key to ctrl if not defined", function () {
+        createDiagram({
+            pannable: true
+        });
+        equal(diagram.options.pannable.key, "ctrl");
+    });
+
+    test("sets pannable key to none if not defined on mobile devices", function () {
+        var mobileOS = kendo.support.mobileOS;
+        try {
+            kendo.support.mobileOS = true;
+            createDiagram({
+                pannable: true
+            });
+            equal(diagram.options.pannable.key, "none");
+        } finally {
+            kendo.support.mobileOS = mobileOS;
+        };
+    });
+
+    test("does not override pannable false", function () {
+        createDiagram({
+            pannable: false
+        });
+        equal(diagram.options.pannable, false);
+    });
+
+    test("does not override pannable key", function () {
+        createDiagram({
+            pannable: {
+                key: "shift"
+            }
+        });
+        equal(diagram.options.pannable.key, "shift");
+    });
+
+    // ------------------------------------------------------------
     (function() {
-        function tapEvent(x, y) {
+        function tapEvent(x, y, event) {
             return {
                 x: {
                     location: x
                 },
                 y: {
                     location: y
-                }
+                },
+                touch: {},
+                event: event || {}
             };
         }
 
@@ -207,20 +297,63 @@
         });
 
         test("selects the hovered item", function(e) {
+            var shape = diagram.addShape({});
             stubMethod(diagram, "select", function(item, options) {
                 if (item) {
-                    equal(item, "foo");
-                    equal(options.addToSelection, true);
+                    ok(item === shape);
+                    ok(!options.addToSelection);
                 } else {
                     return [];
                 }
             }, function() {
                 diagram.toolService._updateHoveredItem = function() {
-                    this.hoveredItem = "foo";
+                    this.hoveredItem = shape;
                 };
                 diagram._tap(tapEvent(10, 20));
             });
+        });
 
+        test("adds hovered item to selection if ctrl is pressed", function(e) {
+            var shape = diagram.addShape({});
+            stubMethod(diagram, "select", function(item, options) {
+                if (item) {
+                    ok(item === shape);
+                    ok(options.addToSelection);
+                } else {
+                    return [];
+                }
+            }, function() {
+                diagram.toolService._updateHoveredItem = function() {
+                    this.hoveredItem = shape;
+                };
+
+                diagram._tap(tapEvent(10, 20, {
+                    ctrlKey: true
+                }));
+            });
+        });
+
+        test("does not add hovered item to selection if ctrl is pressed but multiple selection is disabled", function(e) {
+            var shape = diagram.addShape({});
+            stubMethod(diagram, "select", function(item, options) {
+                if (item) {
+                    ok(item === shape);
+                    ok(!options.addToSelection);
+                } else {
+                    return [];
+                }
+            }, function() {
+                diagram.toolService._updateHoveredItem = function() {
+                    this.hoveredItem = shape;
+                };
+                diagram.options.selectable = {
+                    multiple: false
+                };
+
+                diagram._tap(tapEvent(10, 20, {
+                    ctrlKey: true
+                }));
+            });
         });
 
         test("does not select item if no item is hovered", 0, function(e) {
@@ -234,30 +367,32 @@
             });
         });
 
-        test("deselects already selected item", function(e) {
-            var item = {
-                isSelected: true,
-                select: function(e) {
-                    equal(e, false);
-                }
-            };
+        test("deselects already selected item if ctrl is pressed", function(e) {
+            var shape = diagram.addShape({});
             diagram.toolService._updateHoveredItem = function() {
-                this.hoveredItem = item;
+                this.hoveredItem = shape;
             };
-            diagram._tap(tapEvent(10, 20));
+            diagram.select(shape);
+            shape.select = function(e) {
+                equal(e, false);
+            };
+            diagram._tap(tapEvent(10, 20, {
+                ctrlKey: true
+            }));
         });
 
         test("triggers click if there is a hovered item", function(e) {
+            var shape = diagram.addShape({});
             diagram.toolService._updateHoveredItem = function() {
-                this.hoveredItem = "foo";
+                this.hoveredItem = shape;
             };
             diagram.bind("click", function(e) {
-                equal(e.item, "foo");
+                ok(e.item === shape);
             });
             diagram._tap(tapEvent(10, 20));
         });
 
-        test("does triggers click if there is not a hovered item", 0, function(e) {
+        test("does not trigger click if there is not a hovered item", 0, function(e) {
             diagram.toolService._updateHoveredItem = $.noop;
             diagram.bind("click", function(e) {
                 ok(false);
@@ -302,9 +437,9 @@
 
     // ------------------------------------------------------------
     (function() {
-        function move(x, y) {
+        function move(x, y, which) {
             diagram._mouseMove({
-                which: 0,
+                which: which || 0,
                 pageX: x,
                 pageY: y,
                 preventDefault: $.noop
@@ -341,6 +476,22 @@
 
             move(150, 150);
             move(0, 0);
+        });
+
+        test("doesn't track mouse if a mouse button is pressed", 0, function(e) {
+            diagram.bind("mouseEnter", function(e) {
+               ok(false);
+            });
+            diagram.bind("mouseLeave", function(e) {
+                ok(false);
+            });
+
+            move(150, 150, 1);
+            move(0, 0, 1);
+            move(150, 150, 2);
+            move(0, 0, 2);
+            move(150, 150, 3);
+            move(0, 0, 3);
         });
     })();
 

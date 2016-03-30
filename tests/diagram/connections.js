@@ -31,15 +31,13 @@
 
     /*-----------------------------------------------*/
     module("Diagram connections", {
-        setup: function () {
-            createDiagram();
-        },
         teardown: function () {
             diagram.destroy();
         }
     });
 
     test("type polyline", function () {
+        createDiagram();
         $.each(diagram.connections, function(index, item) {
             equal(this.options.type, "polyline");
         });

@@ -401,11 +401,31 @@
             ok(scrollerTool.tryActivate({}, getMeta()));
         });
 
+        test("does not activate if key is set to none and there is a hovered item", function() {
+            setupTool({
+                pannable: {
+                    key: "none"
+                }
+            });
+
+            toolservice.hoveredItem = true;
+            ok(!scrollerTool.tryActivate({}, getMeta()));
+        });
+
         test("activates on ctrl if key is not set", function() {
             setupTool({
                 pannable: {}
             });
 
+            ok(scrollerTool.tryActivate({}, getMeta("ctrl")));
+        });
+
+        test("activates on ctrl if key is not set and there is a hovered item", function() {
+            setupTool({
+                pannable: {}
+            });
+
+            toolservice.hoveredItem = true;
             ok(scrollerTool.tryActivate({}, getMeta("ctrl")));
         });
 
@@ -426,8 +446,20 @@
                 }
             });
 
+            toolservice.hoveredItem = true;
             ok(scrollerTool.tryActivate({}, getMeta("alt")));
         });
+
+        test("activates if specific key is set and pressed and there is a hovered item", function() {
+            setupTool({
+                pannable: {
+                    key: "alt"
+                }
+            });
+
+            ok(scrollerTool.tryActivate({}, getMeta("alt")));
+        });
+
 
         test("does not activate if specific key is set but not pressed", function() {
             setupTool({
@@ -436,17 +468,6 @@
                 }
             });
 
-            ok(!scrollerTool.tryActivate({}, getMeta("ctrl")));
-        });
-
-        test("does not activate if ctrl key is set and pressed and there is a hoveredItem", function() {
-            setupTool({
-                pannable: {
-                    key: "ctrl"
-                }
-            });
-
-            toolservice.hoveredItem = true;
             ok(!scrollerTool.tryActivate({}, getMeta("ctrl")));
         });
 
@@ -484,6 +505,17 @@
             ok(shape.isSelected);
         });
 
+        test("selects hovered item if diagram selectable key is not pressed", function() {
+            setupTool({
+                selectable: {
+                    key: "shift"
+                }
+            });
+            toolservice.hoveredItem = shape;
+            pointertool.start(new Point(), {});
+            ok(shape.isSelected);
+        });
+
         test("does not select hovered item if diagram is not selectable", function() {
             setupTool({
                 selectable: false
@@ -493,6 +525,33 @@
             ok(!shape.isSelected);
         });
 
+        test("adds item to selection if ctrl is pressed", 1, function() {
+            setupTool({
+                selectable: true
+            });
+            toolservice.hoveredItem = shape;
+            toolservice.diagram.select = function(item, options) {
+                if (item) {
+                    equal(options.addToSelection, true);
+                }
+            };
+            pointertool.start(new Point(), { ctrlKey: true});
+        });
+
+        test("does not add item to selection if ctrl is pressed but multiple selection is disabled", 1, function() {
+            setupTool({
+                selectable: {
+                    multiple: false
+                }
+            });
+            toolservice.hoveredItem = shape;
+            toolservice.diagram.select = function(item, options) {
+                if (item) {
+                    equal(options.addToSelection, false);
+                }
+            };
+            pointertool.start(new Point(), { ctrlKey: true});
+        });
         // ------------------------------------------------------------
         module("PointerTool / start", {
             setup: function() {
@@ -687,14 +746,32 @@
             setupTool({
                 selectable: false
             });
-            ok(!selectiontool.tryActivate(new Point(), {}));
+            ok(!selectiontool.tryActivate(new Point(), getMeta()));
+        });
+
+        test("does not activate if multiple selection is disabled", function() {
+            setupTool({
+                selectable: {
+                    multiple: false
+                }
+            });
+            ok(!selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         test("activates if diagram is selectable", function() {
             setupTool({
                 selectable: true
             });
-            ok(selectiontool.tryActivate(new Point(), {}));
+            ok(selectiontool.tryActivate(new Point(), getMeta()));
+        });
+
+        test("activates if multiple selection is enabled", function() {
+            setupTool({
+                selectable: {
+                    multiple: true
+                }
+            });
+            ok(selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         test("does not activate if there is a hovered item", function() {
@@ -702,7 +779,7 @@
                 selectable: true
             });
             toolservice.hoveredItem = {};
-            ok(!selectiontool.tryActivate(new Point(), {}));
+            ok(!selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         test("does not activate if there is a hovered adorner", function() {
@@ -710,7 +787,7 @@
                 selectable: true
             });
             toolservice.hoveredAdorner = {};
-            ok(!selectiontool.tryActivate(new Point(), {}));
+            ok(!selectiontool.tryActivate(new Point(), getMeta()));
         });
 
         module("SelectionTool / custom key", {
@@ -725,6 +802,26 @@
             });
 
             ok(selectiontool.tryActivate({}, getMeta()));
+        });
+
+        test("does not activate if key is set to none and some key is pressed", function() {
+            setupTool({
+                selectable: {
+                    key: "none"
+                }
+            });
+
+            ok(!selectiontool.tryActivate({}, getMeta("ctrl")));
+        });
+
+        test("does not activate if key is set to none but multiple selection is disabled", function() {
+            setupTool({
+                selectable: {
+                    multiple: false,
+                    key: "none"
+                }
+            });
+            ok(!selectiontool.tryActivate(new Point(), {}));
         });
 
         test("activates if key is not set", function() {
@@ -753,6 +850,17 @@
             });
 
             ok(!selectiontool.tryActivate({}, getMeta()));
+        });
+
+        test("does not activate if key is set and pressed but multiple selection is disabled", function() {
+            setupTool({
+                selectable: {
+                    key: "ctrl",
+                    multiple: false
+                }
+            });
+
+            ok(!selectiontool.tryActivate({}, getMeta("ctrl")));
         });
     })();
 
@@ -788,6 +896,7 @@
                 select: $.noop
             };
             connection.adorner = new ConnectionEditAdornerMock();
+            toolservice.diagram.select = $.noop;
         }
 
         function setupTool(options) {
@@ -962,18 +1071,6 @@
             toolservice.end = function() {
                 ok(true);
             };
-            connectionEditTool.start(new Point(), {});
-        });
-
-        test("click event is trigged if the default action is prevented in the dragStart event", 1, function() {
-            toolservice.activeTool = connectionEditTool;
-            d.bind("dragStart", function(e) {;
-                e.preventDefault();
-            });
-            d.bind("click", function(e) {
-                ok(e.item === connection);
-            });
-
             connectionEditTool.start(new Point(), {});
         });
 

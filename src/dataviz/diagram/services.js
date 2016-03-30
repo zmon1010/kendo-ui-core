@@ -74,16 +74,6 @@
 
         diagram.Cursors = Cursors;
 
-        function selectSingle(item, meta) {
-            if (item.isSelected) {
-                if (meta.ctrlKey) {
-                    item.select(false);
-                }
-            } else {
-                item.diagram.select(item, {addToSelection: meta.ctrlKey});
-            }
-        }
-
         var PositionAdapter = kendo.Class.extend({
             init: function (layoutState) {
                 this.layoutState = layoutState;
@@ -605,19 +595,6 @@
             }
         });
 
-        function noMeta(meta) {
-            return meta.ctrlKey === false && meta.altKey === false && meta.shiftKey === false;
-        }
-
-        function tryActivateSelection(options, meta) {
-            var enabled = options !== false;
-
-            if (options.key && options.key != "none") {
-                enabled = meta[options.key + "Key"];
-            }
-            return enabled;
-        }
-
         var ScrollerTool = EmptyTool.extend({
             init: function (toolService) {
                 var tool = this;
@@ -656,9 +633,9 @@
 
                 if (defined(options.key)) {
                     if (!options.key || options.key == "none") {
-                        enabled = noMeta(meta);
+                        enabled = noMeta(meta) && !defined(toolService.hoveredItem);
                     } else {
-                        enabled = meta[options.key + "Key"] && !(meta.ctrlKey && defined(toolService.hoveredItem));
+                        enabled = meta[options.key + "Key"];
                     }
                 }
 
@@ -708,13 +685,10 @@
             start: function (p, meta) {
                 var toolService = this.toolService,
                     diagram = toolService.diagram,
-                    hoveredItem = toolService.hoveredItem,
-                    selectable = diagram.options.selectable;
+                    hoveredItem = toolService.hoveredItem;
 
                 if (hoveredItem) {
-                    if (tryActivateSelection(selectable, meta)) {
-                        selectSingle(hoveredItem, meta);
-                    }
+                    toolService.selectSingle(hoveredItem, meta);
                     if (hoveredItem.adorner) { //connection
                         this.adorner = hoveredItem.adorner;
                         this.handle = this.adorner._hitTest(p);
@@ -747,9 +721,8 @@
                 }
             },
 
-            end: function (p, meta) {
+            end: function () {
                 var diagram = this.toolService.diagram,
-                    service = this.toolService,
                     adorner = this.adorner,
                     unit;
 
@@ -764,9 +737,6 @@
                     }
                 }
 
-                if(service.hoveredItem) {
-                    this.toolService.triggerClick({item: service.hoveredItem, point: p, meta: meta});
-                }
                 this.adorner = undefined;
                 this.handle = undefined;
             },
@@ -781,7 +751,16 @@
             },
             tryActivate: function (p, meta) {
                 var toolService = this.toolService;
-                var enabled = tryActivateSelection(toolService.diagram.options.selectable, meta);
+                var selectable = toolService.diagram.options.selectable;
+                var enabled = selectable && selectable.multiple !== false;
+
+                if (enabled) {
+                    if (selectable.key && selectable.key != "none") {
+                        enabled = meta[selectable.key + "Key"];
+                    } else {
+                        enabled = noMeta(meta);
+                    }
+                }
 
                 return enabled && !defined(toolService.hoveredItem) && !defined(toolService.hoveredAdorner);
             },
@@ -819,17 +798,18 @@
                 return this.toolService._hoveredConnector;
             },
             start: function (p, meta) {
-                var diagram = this.toolService.diagram,
-                    connector = this.toolService._hoveredConnector,
+                var toolService = this.toolService,
+                    diagram = toolService.diagram,
+                    connector = toolService._hoveredConnector,
                     connection = diagram._createConnection({}, connector._c, p);
 
                 if (canDrag(connection) && !diagram.trigger(DRAG_START, { shapes: [], connections: [connection], connectionHandle: TARGET }) && diagram._addConnection(connection)) {
-                    this.toolService._connectionManipulation(connection, connector._c.shape, true);
-                    this.toolService._removeHover();
-                    selectSingle(this.toolService.activeConnection, meta);
+                    toolService._connectionManipulation(connection, connector._c.shape, true);
+                    toolService._removeHover();
+                    toolService.selectSingle(toolService.activeConnection, meta);
                 } else {
                     connection.source(null);
-                    this.toolService.end(p);
+                    toolService.end(p);
                 }
             },
 
@@ -890,7 +870,7 @@
                     diagram = toolService.diagram,
                     selectable =  diagram.options.selectable,
                     item = toolService.hoveredItem,
-                    isActive = tryActivateSelection(selectable, meta) &&
+                    isActive = selectable !== false &&
                                item && item.path && !(item.isSelected && meta.ctrlKey);
 
                 if (isActive) {
@@ -901,9 +881,10 @@
             },
 
             start: function (p, meta) {
+                var toolService = this.toolService;
                 var connection = this._c;
 
-                selectSingle(connection, meta);
+                toolService.selectSingle(connection, meta);
 
                 var adorner = connection.adorner;
 
@@ -913,13 +894,13 @@
                     name = HANDLE_NAMES[handle];
                 }
 
-                if (canDrag(connection) && adorner && !this.toolService.diagram.trigger(DRAG_START, { shapes: [], connections: [connection], connectionHandle: name })) {
+                if (canDrag(connection) && adorner && !toolService.diagram.trigger(DRAG_START, { shapes: [], connections: [connection], connectionHandle: name })) {
                     this.handle = handle;
                     this.handleName = name;
                     adorner.start(p);
                 } else {
-                    this.toolService.startPoint = p;
-                    this.toolService.end(p);
+                    toolService.startPoint = p;
+                    toolService.end(p);
                 }
             },
 
@@ -933,14 +914,13 @@
                 }
             },
 
-            end: function (p, meta) {
+            end: function (p) {
                 var connection = this._c;
                 var adorner = connection.adorner;
                 var toolService = this.toolService;
                 var diagram = toolService.diagram;
 
                 if (adorner) {
-                    toolService.triggerClick({item: connection, point: p, meta: meta});
                     if (canDrag(connection)) {
                         var unit = adorner.stop(p);
                         if (!diagram.trigger(DRAG_END, { shapes: [], connections: [connection], connectionHandle: this.handleName })) {
@@ -1098,12 +1078,16 @@
                 tool.toolService = this;
                 this.tools[index] = tool;
             },
-            triggerClick: function(data) {
-                if (this.startPoint.equals(data.point)) {
-                    this.diagram.trigger("click", data);
-                }
 
+            selectSingle: function(item, meta) {
+                var diagram = this.diagram;
+                var selectable = diagram.options.selectable;
+                if (selectable && !item.isSelected && item.options.selectable !== false) {
+                    var addToSelection = meta.ctrlKey && selectable.multiple !== false;
+                    diagram.select(item, { addToSelection: addToSelection });
+                }
             },
+
             _discardNewConnection: function () {
                 if (this.newConnection) {
                     this.diagram.remove(this.newConnection);
@@ -2363,6 +2347,10 @@
                     return connector;
                 }
             }
+        }
+
+        function noMeta(meta) {
+            return meta.ctrlKey === false && meta.altKey === false && meta.shiftKey === false;
         }
 
         deepExtend(diagram, {
