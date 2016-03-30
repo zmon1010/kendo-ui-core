@@ -149,11 +149,10 @@ test("shift enter calls new line", function() {
 });
 
 test("enter calls paragraph", function() {
-    var command = null;
+    var commands = [];
 
-    delete editor.toolbar.tools.autoLink;
     editor.exec = function () {
-        command = arguments[0];
+        commands.push(arguments[0]);
     };
 
     var e = makeEvent(13);
@@ -161,7 +160,7 @@ test("enter calls paragraph", function() {
 
     $(editor.body).trigger(e);
 
-    equal(command, 'insertParagraph');
+    equal($.inArray('insertParagraph', commands), 0, "InsertParagraph command should be first");
 });
 
 test("editor prevents default if shortcut is known", function() {

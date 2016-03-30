@@ -274,7 +274,7 @@
             var editor = this;
 
             Widget.fn.setOptions.call(editor, options);
-            if(options.tools) {
+            if (options.tools) {
                 editor.toolbar.bindTo(editor);
             }
         },
@@ -590,7 +590,7 @@
 
                         editor.trigger("keydown", e);
                         editor.exec(toolName);
-                        editor.runPostContentKeyCommands(e);
+                        editor._runPostContentKeyCommands(e);
 
                         return false;
                     }
@@ -601,7 +601,7 @@
                 },
                 "keypress": function(e) {
                     setTimeout(function () {
-                        editor.runPostContentKeyCommands(e);
+                        editor._runPostContentKeyCommands(e);
                     }, 0);
                 },
                 "keyup": function (e) {
@@ -671,14 +671,14 @@
             }
         },
 
-        runPostContentKeyCommands: function (e) {
+        _runPostContentKeyCommands: function (e) {
             var range = this.getRange();
             var tools = this.keyboard.toolsFromShortcut(this.toolbar.tools, e);
 
             for (var i = 0; i < tools.length; i++) {
                 var tool = tools[i];
                 var o = tool.options;
-                if(!o.keyPressCommand) {
+                if (!o.keyPressCommand) {
                     continue;
                 }
 

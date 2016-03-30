@@ -311,7 +311,7 @@ test("inline Editor toolbar does not show on focus when widget is readonly", fun
         });
 
         var e = makeEvent(32);
-        editor.runPostContentKeyCommands(e);
+        editor._runPostContentKeyCommands(e);
     });
 
     test("don't run non-keyPressCommand tools", function () {
@@ -319,7 +319,7 @@ test("inline Editor toolbar does not show on focus when widget is readonly", fun
         editor.toolbar.tools.cmd.options.keyPressCommand = false;
 
         var e = makeEvent(32);
-        editor.runPostContentKeyCommands(e);
+        editor._runPostContentKeyCommands(e);
 
         ok(!editor.exec.called);
     });
@@ -331,7 +331,7 @@ test("inline Editor toolbar does not show on focus when widget is readonly", fun
         };
 
         var e = makeEvent(32);
-        editor.runPostContentKeyCommands(e);
+        editor._runPostContentKeyCommands(e);
 
         ok(editor.keyboard.endTyping.called);
     });

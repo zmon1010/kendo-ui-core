@@ -18,7 +18,8 @@ var kendo = window.kendo,
     InlineFormatter = Editor.InlineFormatter,
     InlineFormatFinder = Editor.InlineFormatFinder,
     textNodes = RangeUtils.textNodes,
-    registerTool = Editor.EditorUtils.registerTool;
+    registerTool = Editor.EditorUtils.registerTool,
+    keys = kendo.keys;
 
 var HTTP_PROTOCOL = "http://";
 var protocolRegExp = /^\w*:\/\//;
@@ -281,7 +282,7 @@ var LinkCommand = Command.extend({
 
         exec: function () {
             var detectedLink = this.detectLink();
-            if(!detectedLink) {
+            if (!detectedLink) {
                 return;
             }
 
@@ -365,10 +366,10 @@ var UnlinkTool = Tool.extend({
             var offset = this.traverser.offset;
             if (dom.isDataNode(node)) {
                 var text = node.data.substring(0, offset);
-                if(/\s{2}$/.test(dom.stripBom(text))) {
+                if (/\s{2}$/.test(dom.stripBom(text))) {
                     return;
                 }
-            } else if(offset === 0) {//heuristic for new line
+            } else if (offset === 0) {//heuristic for new line
                 var p = dom.closestEditableOfType(node, dom.blockElements);
                 if (p && p.previousSibling) {
                     this.traverser.init({
@@ -386,7 +387,7 @@ var UnlinkTool = Tool.extend({
                     var puntuationOptions = this.traverser.extendOptions(this.start);
                     var puntuationTraverser = new RightDomTextTraverser(puntuationOptions);
                     puntuationTraverser.traverse($.proxy(this._skipStartPuntuation, this));
-                    if(!this._isLinkDetected()) {
+                    if (!this._isLinkDetected()) {
                         this.start = DomPos();
                     }
                 }
@@ -409,7 +410,7 @@ var UnlinkTool = Tool.extend({
 
         _detectEnd: function(text, node) {
             var i = lastIndexOfRegExp(text, endLinkCharsRegExp);
-            if(i > -1) {
+            if (i > -1) {
                 this.end.node = node;
                 this.end.offset = i + 1;
 
@@ -433,7 +434,7 @@ var UnlinkTool = Tool.extend({
         _skipStartPuntuation: function(text, node, offset) {
             var i = indexOfRegExp(text, /\w/);
             var ii = i;
-            if(i === -1) {
+            if (i === -1) {
                 ii = text.length;
             }
 
@@ -485,7 +486,7 @@ var UnlinkTool = Tool.extend({
         },
 
         _traverse: function (callback, node, offset) {
-            if(!node || this.cancel) {
+            if (!node || this.cancel) {
                 return;
             }
             if (node.nodeType === 3) {
@@ -579,7 +580,7 @@ extend(kendo.ui.editor, {
 
 registerTool("createLink", new Tool({ key: "K", ctrl: true, command: LinkCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Create Link"})}));
 registerTool("unlink", new UnlinkTool({ key: "K", ctrl: true, shift: true, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Remove Link"})}));
-registerTool("autoLink", new Tool({ key: [13, 32], keyPressCommand: true, command: AutoLinkCommand }));
+registerTool("autoLink", new Tool({ key: [keys.ENTER, keys.SPACEBAR], keyPressCommand: true, command: AutoLinkCommand }));
 
 })(window.kendo.jQuery);
 
