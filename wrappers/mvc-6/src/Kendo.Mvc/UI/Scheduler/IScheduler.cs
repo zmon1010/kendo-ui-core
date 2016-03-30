@@ -96,7 +96,7 @@
             get;
         }
 
-        double? MajorTick
+        int? MajorTick
         {
             get;
         }
@@ -111,7 +111,7 @@
             get;
         }
 
-        double? MinorTickCount
+        int? MinorTickCount
         {
             get;
         }
@@ -141,12 +141,12 @@
             get;
         }
 
-        double? WorkWeekStart
+        int? WorkWeekStart
         {
             get;
         }
 
-        double? WorkWeekEnd
+        int? WorkWeekEnd
         {
             get;
         }
