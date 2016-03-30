@@ -7686,42 +7686,60 @@ var __meta__ = { // jshint ignore:line
                 chart = point.owner,
                 value = point.value,
                 valueAxis = chart.seriesValueAxis(options),
-                mid, whiskerSlot, boxSlot, medianSlot, meanSlot;
+                whiskerSlot, boxSlot, medianSlot, meanSlot;
 
-            boxSlot = valueAxis.getSlot(value.q1, value.q3);
-            point.boxSlot = boxSlot;
-
-            whiskerSlot = valueAxis.getSlot(value.lower, value.upper);
-            medianSlot = valueAxis.getSlot(value.median);
-
-            boxSlot.x1 = whiskerSlot.x1 = box.x1;
-            boxSlot.x2 = whiskerSlot.x2 = box.x2;
-
+            point.boxSlot = boxSlot = valueAxis.getSlot(value.q1, value.q3);
             point.realBody = boxSlot;
+            point.reflowBoxSlot(box);
+
+            point.whiskerSlot = whiskerSlot = valueAxis.getSlot(value.lower, value.upper);
+            point.reflowWhiskerSlot(box);
+
+            medianSlot = valueAxis.getSlot(value.median);
 
             if (value.mean) {
                 meanSlot = valueAxis.getSlot(value.mean);
-                point.meanPoints = [
-                    [[box.x1, meanSlot.y1], [box.x2, meanSlot.y1]]
-                ];
+                point.meanPoints = point.calcMeanPoints(box, meanSlot);
             }
 
-            mid = whiskerSlot.center().x;
-            point.whiskerPoints = [[
+            point.whiskerPoints = point.calcWhiskerPoints(boxSlot, whiskerSlot);
+            point.medianPoints = point.calcMedianPoints(box, medianSlot);
+
+            point.box = whiskerSlot.clone().wrap(boxSlot);
+            point.reflowNote();
+        },
+
+        reflowBoxSlot: function(box) {
+            this.boxSlot.x1 = box.x1;
+            this.boxSlot.x2 = box.x2;
+        },
+
+        reflowWhiskerSlot: function(box) {
+            this.whiskerSlot.x1 = box.x1;
+            this.whiskerSlot.x2 = box.x2;
+        },
+
+        calcMeanPoints: function(box, meanSlot) {
+            return [
+                [[box.x1, meanSlot.y1], [box.x2, meanSlot.y1]]
+            ];
+        },
+
+        calcWhiskerPoints: function(boxSlot, whiskerSlot) {
+            var mid = whiskerSlot.center().x;
+            return [[
                 [mid - 5, whiskerSlot.y1], [mid + 5, whiskerSlot.y1],
                 [mid, whiskerSlot.y1], [mid, boxSlot.y1]
             ], [
                 [mid - 5, whiskerSlot.y2], [mid + 5, whiskerSlot.y2],
                 [mid, whiskerSlot.y2], [mid, boxSlot.y2]
             ]];
+        },
 
-            point.medianPoints = [
+        calcMedianPoints: function(box, medianSlot) {
+            return [
                 [[box.x1, medianSlot.y1], [box.x2, medianSlot.y1]]
             ];
-
-            point.box = whiskerSlot.clone().wrap(boxSlot);
-
-            point.reflowNote();
         },
 
         renderOutliers: function(options) {
@@ -7773,11 +7791,17 @@ var __meta__ = { // jshint ignore:line
 
         reflowOutliers: function(outliers) {
             var valueAxis = this.owner.seriesValueAxis(this.options);
-            var centerX = this.box.center().x;
+            var center = this.box.center();
 
             for (var i = 0; i < outliers.length; i++) {
                 var outlierValue = outliers[i].value;
-                var markerBox = valueAxis.getSlot(outlierValue).move(centerX);
+                var markerBox = valueAxis.getSlot(outlierValue);
+
+                if (this.options.vertical) {
+                    markerBox.move(center.x);
+                } else {
+                    markerBox.move(undefined, center.y);
+                }
 
                 this.box = this.box.wrap(markerBox);
                 outliers[i].reflow(markerBox);
@@ -7815,61 +7839,37 @@ var __meta__ = { // jshint ignore:line
     deepExtend(BoxPlot.fn, PointEventsMixin);
 
     var VerticalBoxPlot = BoxPlot.extend({
-        reflow: function(box) {
-            var point = this,
-                options = point.options,
-                chart = point.owner,
-                value = point.value,
-                valueAxis = chart.seriesValueAxis(options),
-                mid, whiskerSlot, boxSlot, medianSlot, meanSlot;
+        reflowBoxSlot: function(box) {
+            this.boxSlot.y1 = box.y1;
+            this.boxSlot.y2 = box.y2;
+        },
 
-            boxSlot = valueAxis.getSlot(value.q1, value.q3);
-            point.boxSlot = boxSlot;
+        reflowWhiskerSlot: function(box) {
+            this.whiskerSlot.y1 = box.y1;
+            this.whiskerSlot.y2 = box.y2;
+        },
 
-            whiskerSlot = valueAxis.getSlot(value.lower, value.upper);
-            medianSlot = valueAxis.getSlot(value.median);
+        calcMeanPoints: function(box, meanSlot) {
+            return [
+                [[meanSlot.x1, box.y1], [meanSlot.x1, box.y2]]
+            ];
+        },
 
-            boxSlot.y1 = whiskerSlot.y1 = box.y1;
-            boxSlot.y2 = whiskerSlot.y2 = box.y2;
-
-            point.realBody = boxSlot;
-
-            if (value.mean) {
-                meanSlot = valueAxis.getSlot(value.mean);
-                point.meanPoints = [
-                    [[meanSlot.x1, box.y1], [meanSlot.x1, box.y2]]
-                ];
-            }
-
-            mid = whiskerSlot.center().y;
-            point.whiskerPoints = [[
+        calcWhiskerPoints: function(boxSlot, whiskerSlot) {
+            var mid = whiskerSlot.center().y;
+            return [[
                 [whiskerSlot.x1, mid - 5], [whiskerSlot.x1, mid + 5],
                 [whiskerSlot.x1, mid], [boxSlot.x1, mid]
             ], [
                 [whiskerSlot.x2, mid - 5], [whiskerSlot.x2, mid + 5],
                 [whiskerSlot.x2, mid], [boxSlot.x2, mid]
             ]];
-
-            point.medianPoints = [
-                [[medianSlot.x1, box.y1], [medianSlot.x1, box.y2]]
-            ];
-
-            point.box = whiskerSlot.clone().wrap(boxSlot);
-
-            point.reflowNote();
         },
 
-        reflowOutliers: function(outliers) {
-            var valueAxis = this.owner.seriesValueAxis(this.options);
-            var centerY = this.box.center().y;
-
-            for (var i = 0; i < outliers.length; i++) {
-                var outlierValue = outliers[i].value;
-                var markerBox = valueAxis.getSlot(outlierValue).move(undefined, centerY);
-
-                this.box = this.box.wrap(markerBox);
-                outliers[i].reflow(markerBox);
-            }
+        calcMedianPoints: function(box, medianSlot) {
+            return [
+                [[medianSlot.x1, box.y1], [medianSlot.x1, box.y2]]
+            ];
         }
     });
 
