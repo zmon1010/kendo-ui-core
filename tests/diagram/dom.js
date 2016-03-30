@@ -4,6 +4,7 @@
         Point = dataviz.diagram.Point,
         Rect = dataviz.diagram.Rect,
         Geometry = dataviz.diagram.Geometry,
+        supportMobileOs,
         diagram;
 
     function createDiagram(options, styles) {
@@ -179,7 +180,14 @@
 
     // ------------------------------------------------------------
     module("Diagram / interaction defaults", {
-        teardown: teardown
+        setup: function() {
+            supportMobileOs = kendo.support.mobileOS;
+            kendo.support.mobileOS = false;
+        },
+        teardown: function() {
+            kendo.support.mobileOS = supportMobileOs;
+            teardown();
+        }
     });
 
     test("sets selectable multiple to true if not defined", function () {
@@ -282,9 +290,14 @@
 
         module("Diagram / tap", {
             setup: function() {
+                supportMobileOs = kendo.support.mobileOS;
+                kendo.support.mobileOS = false;
                 setup();
             },
-            teardown: teardown
+            teardown: function() {
+                kendo.support.mobileOS = supportMobileOs;
+                teardown();
+            }
         });
 
         test("converts point", function(e) {

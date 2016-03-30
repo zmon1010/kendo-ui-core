@@ -5,6 +5,7 @@
     var deepExtend = kendo.deepExtend;
     var diagram = kendo.dataviz.diagram;
     var Point = diagram.Point;
+    var supportMobileOs;
     var element;
     var d;
 
@@ -347,8 +348,16 @@
             }
         }
 
+        // ------------------------------------------------------------
         module("ScrollerTool", {
-            teardown: teardown
+            setup: function() {
+                supportMobileOs = kendo.support.mobileOS;
+                kendo.support.mobileOS = false;
+            },
+            teardown: function() {
+                kendo.support.mobileOS = supportMobileOs;
+                teardown();
+            }
         });
 
         test("activates if ctrl is pressed", function() {
@@ -387,8 +396,16 @@
             ok(!scrollerTool.tryActivate({}, getMeta("ctrl")));
         });
 
+        // ------------------------------------------------------------
         module("ScrollerTool / custom key", {
-            teardown: teardown
+            setup: function() {
+                supportMobileOs = kendo.support.mobileOS;
+                kendo.support.mobileOS = false;
+            },
+            teardown: function() {
+                kendo.support.mobileOS = supportMobileOs;
+                teardown();
+            }
         });
 
         test("activates if key is set to none and no key is pressed", function() {
@@ -493,7 +510,14 @@
         }
 
         module("PointerTool", {
-            teardown: teardown
+            setup: function() {
+                supportMobileOs = kendo.support.mobileOS;
+                kendo.support.mobileOS = false;
+            },
+            teardown: function() {
+                kendo.support.mobileOS = supportMobileOs;
+                teardown();
+            }
         });
 
         test("selects hovered item if diagram is selectable", function() {
@@ -738,8 +762,16 @@
             }
         }
 
+        // ------------------------------------------------------------
         module("SelectionTool", {
-            teardown: teardown
+            setup: function() {
+                supportMobileOs = kendo.support.mobileOS;
+                kendo.support.mobileOS = false;
+            },
+            teardown: function() {
+                kendo.support.mobileOS = supportMobileOs;
+                teardown();
+            }
         });
 
         test("does not activate if diagram is not selectable", function() {
@@ -790,8 +822,16 @@
             ok(!selectiontool.tryActivate(new Point(), getMeta()));
         });
 
+        // ------------------------------------------------------------
         module("SelectionTool / custom key", {
-            teardown: teardown
+            setup: function() {
+                supportMobileOs = kendo.support.mobileOS;
+                kendo.support.mobileOS = false;
+            },
+            teardown: function() {
+                kendo.support.mobileOS = supportMobileOs;
+                teardown();
+            }
         });
 
         test("activates if key is set to none", function() {
