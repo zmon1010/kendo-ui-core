@@ -2121,16 +2121,15 @@
                 var mobile = kendo.support.mobileOS;
 
                 if (selectable && !defined(selectable.multiple)) {
-                    options.selectable = {
-                        key: selectable.key,
+                    options.selectable = deepExtend({
                         multiple: mobile ? false : true
-                    };
+                    }, options.selectable);
                 }
 
                 if (pannable && !defined(pannable.key)) {
-                    options.pannable = {
+                    options.pannable = deepExtend({
                         key: mobile ? "none" : "ctrl"
-                    };
+                    }, options.pannable);
                 }
             },
 

@@ -218,6 +218,17 @@
         equal(diagram.options.selectable.key, "shift");
     });
 
+    test("does not override selectable stroke options", function () {
+        createDiagram({
+            selectable: {
+                stroke: {
+                    color: "foo"
+                }
+            }
+        });
+        equal(diagram.options.selectable.stroke.color, "foo");
+    });
+
     test("sets pannable key to ctrl if not defined", function () {
         createDiagram({
             pannable: true
