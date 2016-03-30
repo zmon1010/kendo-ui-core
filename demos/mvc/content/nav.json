@@ -8111,6 +8111,23 @@
                 }
             },
             {
+                "text": "Vertical Box Plot",
+                "url": "box-plot-charts/vertical",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Kendo UI HTML5 Box Plot Charts Example",
+                    "aspnet-mvc": "ASP.NET MVC Box Plot Charts Example"
+                },
+                "meta": {
+                    "kendo-ui": "In this demo you will see in action the HTML5 Box Plot Chart control for Kendo UI.",
+                    "aspnet-mvc": "In this demo you will see in action the ASP.NET MVC Box Plot Chart HTMLHelper extension for Kendo UI Box Plot Charts component."
+                },
+                "description": {
+                    "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><p>The Box Plot chart is useful for comparing distributions between different sets of numerical data. It depicts graphically numerical data by displaying a data distribution summary with six indicators (lower value, first quartile, median, mean, third quartile, upper value) and outliers for each set of data.</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() function. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>",
+                    "aspnet-mvc": "<p>The Telerik ASP.NET MVC chart is a powerful data visualization component, which allows you to graphically represent your data. It is useful when you would like to utilize modern browser technologies such as <a href=\"http://en.wikipedia.org/wiki/Scalable_Vector_Graphics\">SVG</a> or <a href=\"https://en.wikipedia.org/wiki/Canvas_element\">Canvas</a> (with a fallback to <a href=\"http://en.wikipedia.org/wiki/Vector_Markup_Language\">VML</a> for older IE versions) for interactive data visualizations. </p> <p>The component offers a variety of chart types such as area, bar, line, scatter, polar, radar, pie and donut, stock (OHLC) and many more.</p> <p>The Box Plot chart is useful for comparing distributions between different sets of numerical data. It depicts graphically numerical data by displaying a data distribution summary with six indicators (lower value, first quartile, median, mean, third quartile, upper value) and outliers for each set of data.<br /> <br /> The chart can fetch data for its series from either local or remote data source. You can find more information about the MVC chart in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">product documentation</a>.</p> <p><strong><br /> Key Features of Telerik MVC Charts</strong></p> <ul> <li>Various Chart Types</li> <li>A Number of Data Types</li> <li>High Performance</li> <li>Export to PDF</li> <li>Simple-to-Customize Look and Feel</li> <li>Rich Server and Client-side API</li> <li>Server and Client-side Data Binding</li> <li>Built-in Themes</li> <li>Intuitive Built-in Animations</li> <li>Multiple Series and Combination Charts</li> <li>Plot Bands</li> <li>Rich Cross-Browser and Mobile Support</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/charts\">Telerik MVC Charts</a>.</p>"
+                }
+            },
+            {
                 "text": "Binding to remote data",
                 "url": "box-plot-charts/remote-data-binding",
                 "title": {
