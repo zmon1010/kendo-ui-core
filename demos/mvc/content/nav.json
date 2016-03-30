@@ -5244,7 +5244,7 @@
             "aspnet-mvc": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview"
         },
         "packages": [
-            "mvc"
+            "mvc-offline"
         ]
     },
     {
@@ -6663,7 +6663,7 @@
             "aspnet-mvc": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview"
         },
         "packages": [
-            "mvc"
+            "mvc-offline"
         ]
     },
     {
@@ -6884,7 +6884,7 @@
             "aspnet-mvc": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview"
         },
         "packages": [
-            "mvc"
+            "mvc-offline"
         ]
     },
     {
