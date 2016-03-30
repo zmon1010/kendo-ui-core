@@ -2489,26 +2489,30 @@
         });
 
         test("tooltipAnchor is limited to the clipbox / horizontal / above axis", function() {
-            createBar({ vertical: false, aboveAxis: true }, Box2D(1,1, 40, 100));
+            createBar({ vertical: false, aboveAxis: true }, Box2D(1, 20, 40, 100));
             var anchor = bar.tooltipAnchor(10, 10);
             equal(anchor.x, 40 + TOOLTIP_OFFSET);
+            equal(anchor.y, 20);
         });
 
         test("tooltipAnchor is limited to the clipbox / vertical / above axis", function() {
-            createBar({ vertical: true, aboveAxis: true}, Box2D(1, 40, 100, 100));
+            createBar({ vertical: true, aboveAxis: true}, Box2D(1, 40, 50, 100));
             var anchor = bar.tooltipAnchor(10, 10);
+            equal(anchor.x, 50 + TOOLTIP_OFFSET);
             equal(anchor.y, 40);
         });
 
         test("tooltipAnchor is limited to the clipbox / horizontal / below axis", function() {
-            createBar({ vertical: false, aboveAxis: false}, Box2D(40,1, 100, 100));
+            createBar({ vertical: false, aboveAxis: false}, Box2D(40, 20, 100, 100));
             var anchor = bar.tooltipAnchor(10, 10);
             equal(anchor.x, 30 - TOOLTIP_OFFSET);
+            equal(anchor.y, 20);
         });
 
         test("tooltipAnchor is limited to the clipbox / vertical / below axis", function() {
-            createBar({ vertical: true, aboveAxis: false}, Box2D(1, 1, 100, 40));
+            createBar({ vertical: true, aboveAxis: false}, Box2D(1, 1, 50, 40));
             var anchor = bar.tooltipAnchor(10, 10);
+            equal(anchor.x, 50 + TOOLTIP_OFFSET);
             equal(anchor.y, 30);
         });
 

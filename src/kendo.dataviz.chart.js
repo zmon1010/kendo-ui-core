@@ -3948,7 +3948,7 @@ var __meta__ = { // jshint ignore:line
             return borderColor;
         },
 
-        tooltipAnchor: function(tooltipWidth, tooltipHeight) {
+        tooltipAnchor: function (tooltipWidth, tooltipHeight) {
             var bar = this,
                 options = bar.options,
                 box = bar.box,
@@ -3959,17 +3959,18 @@ var __meta__ = { // jshint ignore:line
                 y;
 
             if (vertical) {
-                x = box.x2 + TOOLTIP_OFFSET;
+                x = math.min(box.x2, clipBox.x2) + TOOLTIP_OFFSET;
                 y = aboveAxis ? math.max(box.y1, clipBox.y1) : math.min(box.y2, clipBox.y2) - tooltipHeight;
             } else {
                 var x1 = math.max(box.x1, clipBox.x1),
                     x2 = math.min(box.x2, clipBox.x2);
+
                 if (options.isStacked) {
                     x = aboveAxis ? x2 - tooltipWidth : x1;
-                    y = box.y1 - tooltipHeight - TOOLTIP_OFFSET;
+                    y = math.max(box.y1, clipBox.y1) - tooltipHeight - TOOLTIP_OFFSET;
                 } else {
                     x = aboveAxis ? x2 + TOOLTIP_OFFSET : x1 - tooltipWidth - TOOLTIP_OFFSET;
-                    y = box.y1;
+                    y = math.max(box.y1, clipBox.y1);
                 }
             }
 
@@ -5282,33 +5283,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        tooltipAnchor: function(tooltipWidth, tooltipHeight) {
-            var bar = this,
-                options = bar.options,
-                box = bar.box,
-                vertical = options.vertical,
-                aboveAxis = bar.aboveAxis,
-                clipBox = bar.owner.pane.clipBox() || box,
-                x,
-                y;
-
-            if (vertical) {
-                x = box.x2 + TOOLTIP_OFFSET;
-                y = aboveAxis ? math.max(box.y1, clipBox.y1) : math.min(box.y2, clipBox.y2) - tooltipHeight;
-            } else {
-                var x1 = math.max(box.x1, clipBox.x1),
-                    x2 = math.min(box.x2, clipBox.x2);
-                if (options.isStacked) {
-                    x = aboveAxis ? x2 - tooltipWidth : x1;
-                    y = box.y1 - tooltipHeight - TOOLTIP_OFFSET;
-                } else {
-                    x = aboveAxis ? x2 + TOOLTIP_OFFSET : x1 - tooltipWidth - TOOLTIP_OFFSET;
-                    y = box.y1;
-                }
-            }
-
-            return new Point2D(x, y);
-        },
+        tooltipAnchor: Bar.fn.tooltipAnchor,
 
         createHighlight: function(style) {
             return draw.Path.fromRect(this.box.toRect(), style);
