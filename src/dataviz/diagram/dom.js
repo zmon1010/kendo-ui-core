@@ -2208,7 +2208,7 @@
             },
 
             _mouseMove: function (e) {
-                if (!this._pauseMouseHandlers) {
+                if (!this._pauseMouseHandlers && e.which === 0) {
                     var p = this._eventPositions(e);
                     this.toolService._updateHoveredItem(p);
                     this.toolService._updateCursor(p);

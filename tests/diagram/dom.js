@@ -426,9 +426,9 @@
 
     // ------------------------------------------------------------
     (function() {
-        function move(x, y) {
+        function move(x, y, which) {
             diagram._mouseMove({
-                which: 0,
+                which: which || 0,
                 pageX: x,
                 pageY: y,
                 preventDefault: $.noop
@@ -465,6 +465,22 @@
 
             move(150, 150);
             move(0, 0);
+        });
+
+        test("doesn't track mouse if a mouse button is pressed", 0, function(e) {
+            diagram.bind("mouseEnter", function(e) {
+               ok(false);
+            });
+            diagram.bind("mouseLeave", function(e) {
+                ok(false);
+            });
+
+            move(150, 150, 1);
+            move(0, 0, 1);
+            move(150, 150, 2);
+            move(0, 0, 2);
+            move(150, 150, 3);
+            move(0, 0, 3);
         });
     })();
 
