@@ -88,3 +88,33 @@
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
+
+- :name: scatter
+  :type: Scatter
+  :fields:
+      - :name: XField
+        :description: The x value.
+        :generic: TXValue
+        :expression: xValueExpression
+        :member: xMemberName
+
+      - :name: YField
+        :description: The y value.
+        :generic: TYValue
+        :expression: yValueExpression
+        :member: yMemberName
+
+- :name: scatterLine
+  :type: ScatterLine
+  :fields:
+      - :name: XField
+        :description: The x value.
+        :generic: TXValue
+        :expression: xValueExpression
+        :member: xMemberName
+
+      - :name: YField
+        :description: The y value.
+        :generic: TYValue
+        :expression: yValueExpression
+        :member: yMemberName

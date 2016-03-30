@@ -944,7 +944,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the preferred rendering style.
         /// </summary>
         /// <param name="value">The value for Style</param>
-        public ChartSeriesBuilder<T> Style(ChartLineStyle value)
+        public ChartSeriesBuilder<T> Style(ChartSeriesStyle value)
         {
             Container.Style = value;
             return this;

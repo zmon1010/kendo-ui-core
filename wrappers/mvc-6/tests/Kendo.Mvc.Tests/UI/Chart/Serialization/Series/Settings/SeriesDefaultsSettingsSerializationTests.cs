@@ -85,5 +85,33 @@ namespace Kendo.Mvc.UI.Tests
 
             settings.Serialize().ContainsKey("line").ShouldBeTrue();
         }
+
+        [Fact]
+        public void Default_ScatterLine_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("scatterLine").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void ScatterLine_series_should_be_serialized()
+        {
+            settings.ScatterLine.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("scatterLine").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Default_Scatter_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("scatter").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Scatter_series_should_be_serialized()
+        {
+            settings.Scatter.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("scatter").ShouldBeTrue();
+        }
     }
 }

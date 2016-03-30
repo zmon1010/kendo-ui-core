@@ -62,5 +62,23 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new ChartSeriesBuilder<T>(Container.Line);
         }
+
+        /// <summary>
+        /// The scatter series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the scatter series settings.</param>
+        public ChartSeriesBuilder<T> Scatter()
+        {
+            return new ChartSeriesBuilder<T>(Container.Scatter);
+        }
+
+        /// <summary>
+        /// The scatterLine series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the scatterLine series settings.</param>
+        public ChartSeriesBuilder<T> ScatterLine()
+        {
+            return new ChartSeriesBuilder<T>(Container.ScatterLine);
+        }
     }
 }

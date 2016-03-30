@@ -181,7 +181,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Style_should_be_serialized()
         {
-            series.Style = ChartLineStyle.Smooth;
+            series.Style = ChartSeriesStyle.Smooth;
 
             series.Serialize()["style"].ShouldEqual("smooth");
         }

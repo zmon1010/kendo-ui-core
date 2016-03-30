@@ -34,6 +34,16 @@ namespace Kendo.Mvc.UI
         /// </summary>
         public ChartSeries<T> Line { get; } = new ChartSeries<T>();
 
+        /// <summary>
+        /// The Scatter series default settings.
+        /// </summary>
+        public ChartSeries<T> Scatter { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The ScatterLine series default settings.
+        /// </summary>
+        public ChartSeries<T> ScatterLine { get; } = new ChartSeries<T>();
+
         public IDictionary<string, object> Serialize()
         {
             var settings = new Dictionary<string, object>();
@@ -71,6 +81,20 @@ namespace Kendo.Mvc.UI
             if (line.Any())
             {
                 settings["line"] = line;
+            }
+
+            var scatter = Scatter.Serialize();
+
+            if (scatter.Any())
+            {
+                settings["scatter"] = scatter;
+            }
+
+            var scatterLine = ScatterLine.Serialize();
+
+            if (scatterLine.Any())
+            {
+                settings["scatterLine"] = scatterLine;
             }
 
             return settings;

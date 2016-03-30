@@ -168,7 +168,7 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesMissingValues? MissingValues { get; set; }
 
-        public ChartLineStyle? Style { get; set; }
+        public ChartSeriesStyle? Style { get; set; }
 
 
         public Chart<T> Chart { get; set; }

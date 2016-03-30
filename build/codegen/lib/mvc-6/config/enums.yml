@@ -28,6 +28,21 @@
         :member: Zero
         :description: The value is assumed to be zero.
 
+- :type: ChartLineStyle
+  :description: Specifies the preferred rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with smooth line.
+
+      - :value: step
+        :member: Step
+        :description: Points will be connected with a line at right angles.
+
 - :type: ChartScatterLineMissingValues
   :description: Specifies the behavior for handling missing values in the series.
   :values:
@@ -38,6 +53,17 @@
       - :value: interpolate
         :member: Interpolate
         :description: The value is interpolated from neighboring points.
+
+- :type: ChartScatterLineStyle
+  :description: Specifies the preferred rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with a straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with a smooth line.
 
 - :type: FilterType
   :description: The filtering method used to determine the suggestions for the current value.
