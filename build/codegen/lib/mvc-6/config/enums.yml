@@ -1,3 +1,44 @@
+- :type: ChartAreaMissingValues
+  :description: Specifies the behavior for handling missing values in the series.
+  :values:
+      - :value: gap
+        :member: Gap
+        :description: The line stops before the missing point and continues after it.
+
+      - :value: interpolate
+        :member: Interpolate
+        :description: The value is interpolated from neighboring points.
+
+      - :value: zero
+        :member: Zero
+        :description: The value is assumed to be zero.
+
+- :type: ChartLineMissingValues
+  :description: Specifies the behavior for handling missing values in the series.
+  :values:
+      - :value: gap
+        :member: Gap
+        :description: The line stops before the missing point and continues after it.
+
+      - :value: interpolate
+        :member: Interpolate
+        :description: The value is interpolated from neighboring points.
+
+      - :value: zero
+        :member: Zero
+        :description: The value is assumed to be zero.
+
+- :type: ChartScatterLineMissingValues
+  :description: Specifies the behavior for handling missing values in the series.
+  :values:
+      - :value: gap
+        :member: Gap
+        :description: The line stops before the missing point and continues after it.
+
+      - :value: interpolate
+        :member: Interpolate
+        :description: The value is interpolated from neighboring points.
+
 - :type: FilterType
   :description: The filtering method used to determine the suggestions for the current value.
   :values:

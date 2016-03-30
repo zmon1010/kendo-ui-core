@@ -109,8 +109,6 @@ namespace Kendo.Mvc.UI
 
         public double? MinSize { get; set; }
 
-        public string MissingValues { get; set; }
-
         public string Name { get; set; }
 
         public string NegativeColor { get; set; }
@@ -167,6 +165,8 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesAggregate? Aggregate { get; set; }
         public ClientHandlerDescriptor AggregateHandler { get; set; }
+
+        public ChartSeriesMissingValues? MissingValues { get; set; }
 
         public ChartLineStyle? Style { get; set; }
 
@@ -437,11 +437,6 @@ namespace Kendo.Mvc.UI
                 settings["minSize"] = MinSize;
             }
 
-            if (MissingValues?.HasValue() == true)
-            {
-                settings["missingValues"] = MissingValues;
-            }
-
             if (Name?.HasValue() == true)
             {
                 settings["name"] = Name;
@@ -596,6 +591,11 @@ namespace Kendo.Mvc.UI
                 settings["aggregate"] = Aggregate?.Serialize();
             }
 
+
+            if (MissingValues.HasValue)
+            {
+                settings["missingValues"] = MissingValues?.Serialize();
+            }
 
             if (Style.HasValue)
             {

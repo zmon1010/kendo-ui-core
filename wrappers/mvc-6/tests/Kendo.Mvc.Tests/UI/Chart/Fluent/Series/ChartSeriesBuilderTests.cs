@@ -129,6 +129,64 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_MissingValues()
+        {
+            var value = ChartSeriesMissingValues.Interpolate;
+
+            builder.MissingValues(value);
+
+            series.MissingValues.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void MissingValues_should_return_builder()
+        {
+            builder.MissingValues(ChartSeriesMissingValues.Interpolate).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_MissingValues_with_ChartAreaMissingValues()
+        {
+            builder.MissingValues(ChartAreaMissingValues.Zero);
+
+            series.MissingValues.ShouldEqual(ChartSeriesMissingValues.Zero);
+        }
+
+        [Fact]
+        public void MissingValues_with_ChartAreaMissingValues_should_return_builder()
+        {
+            builder.MissingValues(ChartAreaMissingValues.Zero).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_MissingValues_with_ChartLineMissingValues()
+        {
+            builder.MissingValues(ChartLineMissingValues.Interpolate);
+
+            series.MissingValues.ShouldEqual(ChartSeriesMissingValues.Interpolate);
+        }
+
+        [Fact]
+        public void MissingValues_with_ChartLineMissingValues_should_return_builder()
+        {
+            builder.MissingValues(ChartLineMissingValues.Interpolate).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_MissingValues_with_ChartScatterLineMissingValues()
+        {
+            builder.MissingValues(ChartScatterLineMissingValues.Gap);
+
+            series.MissingValues.ShouldEqual(ChartSeriesMissingValues.Gap);
+        }
+
+        [Fact]
+        public void MissingValues_with_ChartScatterLineMissingValues_should_return_builder()
+        {
+            builder.MissingValues(ChartScatterLineMissingValues.Gap).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Stack_Group()
         {
             var value = "group";

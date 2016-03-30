@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI.Tests
             var value = ChartSeriesAggregate.Avg;
 
             series.Aggregates.Close = value;
-            
+
             ((Dictionary<string, object>)series.Serialize()["aggregate"])["close"].ShouldEqual("avg");
         }
 
@@ -140,6 +140,20 @@ namespace Kendo.Mvc.UI.Tests
             series.LowField = value;
 
             series.Serialize()["lowField"].ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Default_MissingValues_should_not_be_serialized()
+        {
+            series.Serialize().ContainsKey("missingValues").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void MissingValues_should_be_serialized()
+        {
+            series.MissingValues = ChartSeriesMissingValues.Gap;
+
+            series.Serialize()["missingValues"].ShouldEqual("gap");
         }
 
         [Fact]

@@ -282,6 +282,23 @@
             :member: SumOrNull
             :description: The sum of all values for the date period. If there are not data for the current period of time the aggregate will return 'null'(instead of 'zero' for the sum aggregate).
 
+    - :name: series.missingValues
+      :description: Specifies the behavior for handling missing values in the series.
+      :type: String
+      :enum_type: ChartSeriesMissingValues
+      :values:
+          - :value: gap
+            :member: Gap
+            :description: The line stops before the missing point and continues after it.
+
+          - :value: interpolate
+            :member: Interpolate
+            :description: The value is interpolated from neighboring points.
+
+          - :value: zero
+            :member: Zero
+            :description: The value is assumed to be zero.
+
     - :name: series.notes.label.position
       :description: Specifies the position of the labels.
       :type: String

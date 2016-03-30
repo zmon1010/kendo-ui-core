@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -35,7 +36,61 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
+        /// <summary>
+        /// Specifies the behavior for handling missing values in the series.
+        /// </summary>
+        /// <param name="value">The value for MissingValues</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> MissingValues(ChartAreaMissingValues value)
+        {
+            try
+            {
+                Container.MissingValues = (ChartSeriesMissingValues?)Enum.Parse(typeof(ChartSeriesMissingValues), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the behavior for handling missing values in the series.
+        /// </summary>
+        /// <param name="value">The value for MissingValues</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> MissingValues(ChartLineMissingValues value)
+        {
+            try
+            {
+                Container.MissingValues = (ChartSeriesMissingValues?)Enum.Parse(typeof(ChartSeriesMissingValues), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the behavior for handling missing values in the series.
+        /// </summary>
+        /// <param name="value">The value for MissingValues</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> MissingValues(ChartScatterLineMissingValues value)
+        {
+            try
+            {
+                Container.MissingValues = (ChartSeriesMissingValues?)Enum.Parse(typeof(ChartSeriesMissingValues), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
         /// <summary>
         /// Sets the name of the stack that this series belongs to. Each unique name creates a new stack.
         /// </summary>
