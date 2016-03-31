@@ -34,3 +34,4 @@ fill(sheet, {
 sheet.range("G2:G11").values([
     [1],[2],[3],[4],[5],[6],[7],[8],[9],[10]
 ]);
+sheet.range("F4:H6").enable(false);
