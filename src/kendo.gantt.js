@@ -2372,7 +2372,7 @@ var __meta__ = { // jshint ignore:line
                 .bind("close", that._onDialogClose);
         },
         
-        _onDialogClose: function(e) {},
+        _onDialogClose: function() {},
         
         _createResourceEditor: function(container, options) {
             var that = this;
