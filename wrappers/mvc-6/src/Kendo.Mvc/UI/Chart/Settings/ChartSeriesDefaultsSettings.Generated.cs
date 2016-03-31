@@ -20,6 +20,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Bar { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The Bubble series default settings.
+        /// </summary>
+        public ChartSeries<T> Bubble { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Candlestick series default settings.
         /// </summary>
         public ChartSeries<T> Candlestick { get; } = new ChartSeries<T>();
@@ -60,6 +65,13 @@ namespace Kendo.Mvc.UI
             if (bar.Any())
             {
                 settings["bar"] = bar;
+            }
+
+            var bubble = Bubble.Serialize();
+
+            if (bubble.Any())
+            {
+                settings["bubble"] = bubble;
             }
 
             var candlestick = Candlestick.Serialize();

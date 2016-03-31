@@ -160,6 +160,106 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines bubble series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Bubble(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Type = "bubble",
+                Data = data
+            };
+
+            item.Chart = Chart;
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bubble series bound to model member(s).
+        /// </summary>
+        /// <param name="xValueExpression">
+        /// The expression used to extract the The x value. from the model.
+        /// </param>
+        /// <param name="yValueExpression">
+        /// The expression used to extract the The y value. from the model.
+        /// </param>
+        /// <param name="sizeExpression">
+        /// The expression used to extract the The size value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Bubble<TXValue, TYValue, TSizeValue>(
+            Expression<Func<T, TXValue>> xValueExpression,
+            Expression<Func<T, TYValue>> yValueExpression,
+            Expression<Func<T, TSizeValue>> sizeExpression)
+        {
+            return Bubble(xValueExpression.MemberWithoutInstance(), yValueExpression.MemberWithoutInstance(), sizeExpression.MemberWithoutInstance());
+        }
+
+        /// <summary>
+        /// Defines bubble series bound to model member(s).
+        /// </summary>
+        /// <param name="xValueExpression">
+        /// The expression used to extract the The x value. from the model.
+        /// </param>
+        /// <param name="yValueExpression">
+        /// The expression used to extract the The y value. from the model.
+        /// </param>
+        /// <param name="sizeExpression">
+        /// The expression used to extract the The size value. from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the category from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Bubble<TXValue, TYValue, TSizeValue, TCategory>(
+            Expression<Func<T, TXValue>> xValueExpression,
+            Expression<Func<T, TYValue>> yValueExpression,
+            Expression<Func<T, TSizeValue>> sizeExpression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            return Bubble(xValueExpression.MemberWithoutInstance(), yValueExpression.MemberWithoutInstance(), sizeExpression.MemberWithoutInstance(), categoryExpression.MemberWithoutInstance());
+        }
+
+        /// <summary>
+        /// Defines bound bubble series.
+        /// </summary>
+        /// <param name="xMemberName">
+        /// The name of the The x value. member.
+        /// </param>
+        /// <param name="yMemberName">
+        /// The name of the The y value. member.
+        /// </param>
+        /// <param name="sizeMemberName">
+        /// The name of the The size value. member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the category member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Bubble(
+            string xMemberName,
+            string yMemberName,
+            string sizeMemberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bubble",
+                Name = xMemberName.AsTitle() + ", " + yMemberName.AsTitle() + ", " + sizeMemberName.AsTitle(),
+                XField = xMemberName,
+                YField = yMemberName,
+                SizeField = sizeMemberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines candlestick series bound to inline data.
         /// </summary>
         /// <param name="data">

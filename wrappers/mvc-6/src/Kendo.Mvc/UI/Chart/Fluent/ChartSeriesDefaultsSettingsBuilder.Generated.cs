@@ -37,6 +37,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The bubble series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the bubble series settings.</param>
+        public ChartSeriesBuilder<T> Bubble()
+        {
+            return new ChartSeriesBuilder<T>(Container.Bubble);
+        }
+
+        /// <summary>
         /// The candlestick series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the candlestick series settings.</param>
