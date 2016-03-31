@@ -2729,14 +2729,14 @@
                 "text": "Binding to remote data",
                 "url": "listview/remote-data-binding",
                 "title": {
-                    "kendo-ui": "Example for Jquery Listview binding to remote data | Kendo UI demos"
+                    "kendo-ui": "Example for Jquery Listview binding to remote data | Kendo UI demos",
+                    "aspnet-mvc": "ASP.NET MVC Listview binding to remote data | Telerik UI for ASP.NET MVC demos"
                 },
                 "meta": {
-                    "kendo-ui": "This Kendo UI ListView demo shows how the control can be bound to remote data by using Kendo UI DataSource component."
-                },
-                "packages": [
-                    "!mvc"
-                ]
+                    "kendo-ui": "This Kendo UI ListView demo shows how the control can be bound to remote data by using Kendo UI DataSource component.",
+                    "aspnet-mvc": "This example and demo source code illustrate how the Telerik ASP.NET MVC ListView component can be bound to remote data using the DataSource component."
+
+                }
             },
             {
                 "text": "Custom data source",

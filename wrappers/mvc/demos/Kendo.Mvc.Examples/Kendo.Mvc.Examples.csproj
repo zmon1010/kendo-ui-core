@@ -228,6 +228,7 @@
     <Compile Include="Controllers\DateTimePicker\DisableDatesController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
+    <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
     <Compile Include="Controllers\WordsProcessing\IndexController.cs" />
@@ -1000,6 +1001,7 @@
     <Content Include="Areas\aspx\Views\linear_gauge\export.aspx" />
     <Content Include="Areas\aspx\Views\linear_gauge\multiple_pointers.aspx" />
     <Content Include="Areas\aspx\Views\line_charts\visuals.aspx" />
+    <Content Include="Areas\aspx\Views\listview\remote_data_binding.aspx" />
     <Content Include="Areas\aspx\Views\map\export.aspx" />
     <Content Include="Areas\aspx\Views\menu\context_menu.aspx" />
     <Content Include="Areas\aspx\Views\mobile_listview\local_virtualization.aspx" />
@@ -3403,6 +3405,9 @@
     <Content Include="Content\web\wordsprocessing\SampleDocument.docx" />
     <Content Include="Content\web\spreadprocessing\SampleDocument.xlsx" />
     <Content Include="Areas\razor\Views\spreadprocessing\index.cshtml" />
+    <Content Include="Areas\razor\Views\listview\remote_data_binding.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
@@ -4220,7 +4225,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>61330</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:56541/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

@@ -3,9 +3,17 @@
 require_once '../lib/DataSourceResult.php';
 require_once '../lib/Kendo/Autoload.php';
 
-$result = new DataSourceResult('sqlite:..//sample.db');
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    header('Content-Type: application/json');
 
-$data = $result->read('Products', array('ProductID', 'ProductName', 'UnitPrice', 'UnitsInStock', 'Discontinued'));
+    $request = json_decode(file_get_contents('php://input'));
+
+    $result = new DataSourceResult('sqlite:..//sample.db');
+
+    echo json_encode($result->read('Products', array('ProductID', 'ProductName', 'UnitPrice', 'UnitsInStock'), $request));
+
+    exit;
+}
 
 require_once '../include/header.php';
 
@@ -22,35 +30,44 @@ require_once '../include/header.php';
 <div class="demo-section k-content wide">
 <?php
 
+    $transport = new \Kendo\Data\DataSourceTransport();
+
+    $read = new \Kendo\Data\DataSourceTransportRead();
+
+    $read->url('remote-data-binding.php')
+         ->contentType('application/json')
+         ->type('POST');
+
+    $transport->read($read)
+              ->parameterMap('function(data) {
+                return kendo.stringify(data); }');
+
     $model = new \Kendo\Data\DataSourceSchemaModel();
 
-$productNameField = new \Kendo\Data\DataSourceSchemaModelField('ProductName');
-$productNameField->type('string');
+    $productNameField = new \Kendo\Data\DataSourceSchemaModelField('ProductName');
+    $productNameField->type('string');
 
-$unitPriceField = new \Kendo\Data\DataSourceSchemaModelField('UnitPrice');
-$unitPriceField->type('number');
+    $unitPriceField = new \Kendo\Data\DataSourceSchemaModelField('UnitPrice');
+    $unitPriceField->type('number');
 
-$unitsInStockField = new \Kendo\Data\DataSourceSchemaModelField('UnitsInStock');
-$unitsInStockField->type('number');
+    $unitsInStockField = new \Kendo\Data\DataSourceSchemaModelField('UnitsInStock');
+    $unitsInStockField->type('number');
 
-$discontinuedField = new \Kendo\Data\DataSourceSchemaModelField('Discontinued');
-$discontinuedField->type('boolean');
+    $model->addField($productNameField)
+          ->addField($unitPriceField)
+          ->addField($unitsInStockField);
 
-$model->addField($productNameField)
-      ->addField($unitPriceField)
-      ->addField($unitsInStockField)
-      ->addField($discontinuedField);
+    $schema = new \Kendo\Data\DataSourceSchema();
+    $schema->data('data')
+           ->model($model)
+           ->total('total');
 
-$schema = new \Kendo\Data\DataSourceSchema();
-$schema->data('data')
-       ->model($model)
-       ->total('total');
+    $dataSource = new \Kendo\Data\DataSource();
 
-$dataSource = new \Kendo\Data\DataSource();
-
-$dataSource->data($data)
-           ->pageSize(20)
-           ->schema($schema);
+    $dataSource->transport($transport)
+               ->schema($schema)
+               ->pageSize(20)
+               ->serverPaging(true);
 
     $listview = new \Kendo\UI\ListView('listView');
     $listview->dataSource($dataSource)

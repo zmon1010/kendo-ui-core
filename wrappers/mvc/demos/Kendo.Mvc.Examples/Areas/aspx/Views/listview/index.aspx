@@ -16,10 +16,10 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     .Name("listView")
     .TagName("div")
     .ClientTemplateId("template")
-    .DataSource(dataSource => {
-        dataSource.Read(read => read.Action("Products_Read", "ListView"));
-        dataSource.PageSize(21);
-    })
+    .DataSource(dataSource => dataSource        
+        .PageSize(20)
+        .ServerOperation(false)        
+     )
     .Pageable()
 %>
 </div>

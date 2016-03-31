@@ -1,64 +1,25 @@
-<?php
-
-require_once '../lib/DataSourceResult.php';
-require_once '../lib/Kendo/Autoload.php';
-
-$result = new DataSourceResult('sqlite:..//sample.db');
-
-$data = $result->read('Products', array('ProductID', 'ProductName', 'UnitPrice', 'UnitsInStock', 'Discontinued'));
-
-require_once '../include/header.php';
-
-?>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 <script type="text/x-kendo-tmpl" id="template">
     <div class="product">
-        <img src="../content/web/foods/#:ProductID#.jpg" alt="#:ProductName# image" />
+        <img src="<%=Url.Content("~/content/web/foods/")%>#:ProductID#.jpg" alt="#:ProductName# image" />
         <h3>#:ProductName#</h3>
         <p>#:kendo.toString(UnitPrice, "c")#</p>
     </div>
 </script>
 
 <div class="demo-section k-content wide">
-<?php
-
-    $model = new \Kendo\Data\DataSourceSchemaModel();
-
-$productNameField = new \Kendo\Data\DataSourceSchemaModelField('ProductName');
-$productNameField->type('string');
-
-$unitPriceField = new \Kendo\Data\DataSourceSchemaModelField('UnitPrice');
-$unitPriceField->type('number');
-
-$unitsInStockField = new \Kendo\Data\DataSourceSchemaModelField('UnitsInStock');
-$unitsInStockField->type('number');
-
-$discontinuedField = new \Kendo\Data\DataSourceSchemaModelField('Discontinued');
-$discontinuedField->type('boolean');
-
-$model->addField($productNameField)
-      ->addField($unitPriceField)
-      ->addField($unitsInStockField)
-      ->addField($discontinuedField);
-
-$schema = new \Kendo\Data\DataSourceSchema();
-$schema->data('data')
-       ->model($model)
-       ->total('total');
-
-$dataSource = new \Kendo\Data\DataSource();
-
-$dataSource->data($data)
-           ->pageSize(20)
-           ->schema($schema);
-
-    $listview = new \Kendo\UI\ListView('listView');
-    $listview->dataSource($dataSource)
-             ->templateId('template')
-             ->pageable(true);
-
-    echo $listview->render();
-?>
+<%: Html.Kendo().ListView<Kendo.Mvc.Examples.Models.ProductViewModel>()
+    .Name("listView")
+    .TagName("div")
+    .ClientTemplateId("template")
+    .DataSource(dataSource => {
+        dataSource.Read(read => read.Action("Products_Read", "ListView"));
+        dataSource.PageSize(21);
+    })
+    .Pageable()
+%>
 </div>
 
 <style>
@@ -119,5 +80,4 @@ $dataSource->data($data)
         visibility: hidden;
     }
 </style>
-
-<?php require_once '../include/footer.php'; ?>
+</asp:Content>
