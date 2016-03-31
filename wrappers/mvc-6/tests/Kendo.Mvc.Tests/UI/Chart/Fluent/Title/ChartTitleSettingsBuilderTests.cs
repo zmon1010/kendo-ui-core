@@ -31,6 +31,22 @@ namespace Kendo.Mvc.UI.Tests
         public void Align_should_return_builder()
         {
             builder.Align(ChartTextAlignment.Center).ShouldBeSameAs(builder);
-        }        
+        }
+
+        [Fact]
+        public void Builder_should_set_Position()
+        {
+            var value = ChartTitlePosition.Bottom;
+
+            builder.Position(value);
+
+            settings.Position.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Position_should_return_builder()
+        {
+            builder.Position(ChartTitlePosition.Bottom).ShouldBeSameAs(builder);
+        }
     }
 }

@@ -80,16 +80,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The position of the title.
-        /// </summary>
-        /// <param name="value">The value for Position</param>
-        public ChartTitleSettingsBuilder<T> Position(string value)
-        {
-            Container.Position = value;
-            return this;
-        }
-
-        /// <summary>
         /// The text of the chart title. You can also set the text directly for a title with default options.
         /// </summary>
         /// <param name="value">The value for Text</param>
@@ -125,6 +115,16 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartTitleSettingsBuilder<T> Align(ChartTextAlignment value)
         {
             Container.Align = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the title position.
+        /// </summary>
+        /// <param name="value">The value for Position</param>
+        public ChartTitleSettingsBuilder<T> Position(ChartTitlePosition value)
+        {
+            Container.Position = value;
             return this;
         }
 

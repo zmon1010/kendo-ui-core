@@ -28,5 +28,19 @@ namespace Kendo.Mvc.UI.Tests
 
             settings.Serialize()["align"].ShouldEqual("center");
         }
+
+        [Fact]
+        public void Default_Position_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("position").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Position_should_be_serialized()
+        {
+            settings.Position = ChartTitlePosition.Top;
+
+            settings.Serialize()["position"].ShouldEqual("top");
+        }
     }
 }

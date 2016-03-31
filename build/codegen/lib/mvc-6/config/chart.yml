@@ -371,7 +371,7 @@
           - :value: normal
             :member: Normal
             :description: Points will be connected with straight line.
-            
+
           - :value: smooth
             :member: Smooth
             :description: Points will be connected with smooth line.
@@ -400,6 +400,19 @@
           - :value: right
             :member: Right
             :description: The text is aligned to the right.
+
+    - :name: title.position
+      :description: Specifies the title position.
+      :type: String
+      :enum_type: ChartTitlePosition
+      :values:
+          - :value: top
+            :member: Top
+            :description: The title is positioned at the top
+
+          - :value: bottom
+            :member: Bottom
+            :description: The title is positioned at the bottom
 
     - :name: valueAxis.axisCrossingValue
       :merge: true

@@ -23,13 +23,13 @@ namespace Kendo.Mvc.UI
 
         public ChartTitlePaddingSettings<T> Padding { get; } = new ChartTitlePaddingSettings<T>();
 
-        public string Position { get; set; }
-
         public string Text { get; set; }
 
         public bool? Visible { get; set; }
 
         public ChartTextAlignment? Align { get; set; }
+
+        public ChartTitlePosition? Position { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -71,11 +71,6 @@ namespace Kendo.Mvc.UI
                 settings["padding"] = padding;
             }
 
-            if (Position?.HasValue() == true)
-            {
-                settings["position"] = Position;
-            }
-
             if (Text?.HasValue() == true)
             {
                 settings["text"] = Text;
@@ -89,6 +84,11 @@ namespace Kendo.Mvc.UI
             if (Align.HasValue)
             {
                 settings["align"] = Align?.Serialize();
+            }
+
+            if (Position.HasValue)
+            {
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;
