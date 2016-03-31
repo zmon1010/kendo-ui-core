@@ -679,21 +679,23 @@
                         }
                         var range = isPaste ? sheet.range(row, col)
                             : sheet.range(origin.row + dr, origin.col + dc);
-                        for (var property in cellState) {
-                            if (property != "value") {
-                                // make sure value comes last (after the loop),
-                                // because if we set value here and get get to
-                                // formula later and cellState.formula is null,
-                                // it'll clear the value.
-                                range._set(property, cellState[property]);
+                        if (range.enable()) {
+                            for (var property in cellState) {
+                                if (property != "value") {
+                                    // make sure value comes last (after the loop),
+                                    // because if we set value here and get get to
+                                    // formula later and cellState.formula is null,
+                                    // it'll clear the value.
+                                    range._set(property, cellState[property]);
+                                }
                             }
-                        }
-                        if (!cellState.formula) {
-                            // only need to set the value if we don't have a
-                            // formula.  Go through the lower level setter rather
-                            // than range.value(...), because range.value will clear
-                            // the formula!  chicken and egg issues.
-                            range._set("value", cellState.value);
+                            if (!cellState.formula) {
+                                // only need to set the value if we don't have a
+                                // formula.  Go through the lower level setter rather
+                                // than range.value(...), because range.value will clear
+                                // the formula!  chicken and egg issues.
+                                range._set("value", cellState.value);
+                            }
                         }
                         col++;
                     });

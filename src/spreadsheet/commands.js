@@ -61,8 +61,10 @@
         },
         exec: function() {
             var range = this.range();
-            this.getState();
-            range[this._property](this._value);
+            if (range.enable()) {
+                this.getState();
+                range[this._property](this._value);
+            }
         }
     });
 
