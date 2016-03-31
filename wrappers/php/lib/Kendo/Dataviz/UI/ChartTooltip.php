@@ -51,6 +51,15 @@ class ChartTooltip extends \Kendo\SerializableObject {
     }
 
     /**
+    * The opacity of the tooltip.
+    * @param float $value
+    * @return \Kendo\Dataviz\UI\ChartTooltip
+    */
+    public function opacity($value) {
+        return $this->setProperty('opacity', $value);
+    }
+
+    /**
     * The padding of the tooltip. A numeric value will set all paddings.
     * @param float|\Kendo\Dataviz\UI\ChartTooltipPadding|array $value
     * @return \Kendo\Dataviz\UI\ChartTooltip

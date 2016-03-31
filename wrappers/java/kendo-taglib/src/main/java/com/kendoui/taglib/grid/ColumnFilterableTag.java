@@ -106,6 +106,14 @@ public class ColumnFilterableTag extends  BaseTag implements DataBoundWidget /* 
         setProperty("multi", value);
     }
 
+    public java.lang.Object getOperators() {
+        return (java.lang.Object)getProperty("operators");
+    }
+
+    public void setOperators(java.lang.Object value) {
+        setProperty("operators", value);
+    }
+
     public boolean getSearch() {
         return (Boolean)getProperty("search");
     }

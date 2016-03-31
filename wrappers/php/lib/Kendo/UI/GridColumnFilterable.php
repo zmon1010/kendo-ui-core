@@ -56,6 +56,15 @@ class GridColumnFilterable extends \Kendo\SerializableObject {
     }
 
     /**
+    * The property is identical to filterable.operators, but is used for a specific column.
+    * @param  $value
+    * @return \Kendo\UI\GridColumnFilterable
+    */
+    public function operators($value) {
+        return $this->setProperty('operators', $value);
+    }
+
+    /**
     * Controls whether to show a search box when checkbox filtering is enabled.
     * @param boolean $value
     * @return \Kendo\UI\GridColumnFilterable

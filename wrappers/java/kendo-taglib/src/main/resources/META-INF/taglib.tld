@@ -6897,6 +6897,12 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The opacity of the tooltip.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The padding of the tooltip. A numeric value will set all paddings.</description>
             <name>padding</name>
             <rtexprvalue>true</rtexprvalue>
@@ -12173,7 +12179,7 @@ makes a HTTP request for every CRUD operation.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The number of data items per page.</description>
+            <description>The number of data items per page. The property has no default value, that's why if paging should be used, make sure some pageSize is set.</description>
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -22372,6 +22378,12 @@ for all columns when filtering is enabled via the filterable option.Can be set t
             <name>multi</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The property is identical to filterable.operators, but is used for a specific column.</description>
+            <name>operators</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>Controls whether to show a search box when checkbox filtering is enabled.</description>

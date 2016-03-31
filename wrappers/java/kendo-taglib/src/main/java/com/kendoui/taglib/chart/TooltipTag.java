@@ -101,6 +101,14 @@ public class TooltipTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("format", value);
     }
 
+    public float getOpacity() {
+        return (Float)getProperty("opacity");
+    }
+
+    public void setOpacity(float value) {
+        setProperty("opacity", value);
+    }
+
     public float getPadding() {
         return (Float)getProperty("padding");
     }

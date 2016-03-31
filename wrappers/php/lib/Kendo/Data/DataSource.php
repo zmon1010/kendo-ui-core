@@ -79,7 +79,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * The number of data items per page.
+    * The number of data items per page. The property has no default value, that's why if paging should be used, make sure some pageSize is set.
     * @param float $value
     * @return \Kendo\Data\DataSource
     */

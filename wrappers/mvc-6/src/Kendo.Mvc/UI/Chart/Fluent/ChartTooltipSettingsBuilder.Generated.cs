@@ -64,6 +64,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The opacity of the tooltip.
+        /// </summary>
+        /// <param name="value">The value for Opacity</param>
+        public ChartTooltipSettingsBuilder<T> Opacity(double value)
+        {
+            Container.Opacity = value;
+            return this;
+        }
+
+        /// <summary>
         /// The padding of the tooltip. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>

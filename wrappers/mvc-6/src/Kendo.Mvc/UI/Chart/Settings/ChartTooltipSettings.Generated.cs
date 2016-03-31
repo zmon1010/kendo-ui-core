@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
+        public double? Opacity { get; set; }
+
         public ChartTooltipPaddingSettings<T> Padding { get; } = new ChartTooltipPaddingSettings<T>();
 
         public bool? Shared { get; set; }
@@ -66,6 +68,11 @@ namespace Kendo.Mvc.UI
             if (Format?.HasValue() == true)
             {
                 settings["format"] = Format;
+            }
+
+            if (Opacity.HasValue)
+            {
+                settings["opacity"] = Opacity;
             }
 
             var padding = Padding.Serialize();
