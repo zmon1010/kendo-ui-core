@@ -1043,6 +1043,7 @@ var __meta__ = { // jshint ignore:line
             };
 
             if (this.editable && this.container.is(":visible")) {
+                that.trigger("close", { window: that.container });
                 this.container.data("kendoWindow").bind("deactivate", destroy).close();
             } else {
                 destroy();
@@ -1085,7 +1086,7 @@ var __meta__ = { // jshint ignore:line
                     draggable: false,
                     title: options.title,
                     visible: false,
-                    close: function() {
+                    deactivate: function() {
                         this.destroy();
                         wrapper.focus();
                     }
@@ -2367,10 +2368,12 @@ var __meta__ = { // jshint ignore:line
                 })
                 .bind("remove", function(e) {
                     that.removeTask(e.model.uid);
-                });
-
+                })
+                .bind("close", that._onDialogClose);
         },
-
+        
+        _onDialogClose: function(e) {},
+        
         _createResourceEditor: function(container, options) {
             var that = this;
             var model = options instanceof ObservableObject ? options : options.model;
