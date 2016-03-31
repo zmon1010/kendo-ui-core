@@ -7,10 +7,15 @@
         /// The expression used to extract the <%= field[:description] %> from the model.
         /// </param>
 % end
-        public virtual ChartSeriesBuilder<T>  <%= series[:type] %><<%= (fields.map { |field| field[:generic] }.uniq).join(', ') %>>(
+        public virtual ChartSeriesBuilder<T>  <%= series[:type] %><<%= (unique_generic_types(fields).map { |generic| generic }).join(', ') %>>(
             <%= fields.map { |field| "Expression<Func<T, #{field[:generic]}>> #{field[:expression]}" }.join(',
             ') %>)
         {
+            if (typeof(T).IsPlainType() && (<%= fields.map { |field| "!#{field[:expression]}.IsBindable()" }.join(' || ') %>))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,

@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Column_series_created_with_named_expression_should_set_field()
         {
-            factory.Column(expression: s => s.TotalSales);
+            factory.Column(valueExpression: s => s.TotalSales);
 
             chart.Series[0].Field.ShouldEqual("TotalSales");
         }
@@ -131,7 +131,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Column_series_created_with_named_expressions_should_set_CategoryField()
         {
-            factory.Column(expression: s => s.TotalSales, categoryExpression: category => category.RepName);
+            factory.Column(valueExpression: s => s.TotalSales, categoryExpression: category => category.RepName);
 
             chart.Series[0].CategoryField.ShouldEqual("RepName");
         }

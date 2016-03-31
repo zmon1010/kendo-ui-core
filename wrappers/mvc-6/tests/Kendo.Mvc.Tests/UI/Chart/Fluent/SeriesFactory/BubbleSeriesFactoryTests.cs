@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             CreateSeries();
 
-            chart.Series[0].CategoryField.ShouldEqual("RepSales");
+            chart.Series[0].CategoryField.ShouldEqual("RepName");
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Bubble_series_with_default_expression_should_return_builder()
         {
-            var builder = factory.Bubble(s => s.TotalSales, s => s.RepSalesHigh, x => x.RepSalesLow);
+            var builder = factory.Bubble(s => s.TotalSales, s => s.RepSalesHigh, x => x.RepName);
 
             builder.ShouldBeType(typeof(ChartSeriesBuilder<SalesData>));
         }
@@ -115,7 +115,7 @@ namespace Kendo.Mvc.UI.Tests
 
         private ChartSeriesBuilder<SalesData> CreateSeries()
         {
-            return factory.Bubble(s => s.TotalSales, s => s.RepSalesHigh, x => x.RepSalesLow, x => x.RepSales);
+            return factory.Bubble(s => s.TotalSales, s => s.RepSalesHigh, x => x.RepSalesLow, x => x.RepName);
         }
     }
 }

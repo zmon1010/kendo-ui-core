@@ -5,7 +5,9 @@ module CodeGen::MVC6::Wrappers::ChartGenerator
     CHART_SERIES_DEFAULTS_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/chart-series-defaults-settings.erb"), 0, '%<>')
     CHART_SERIES_FACTORY = ERB.new(File.read("build/codegen/lib/mvc-6/templates/chart-series-factory.erb"), 0, '%<>')
     CHART_SERIES_FACTORY_OVERLOADS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/chart-series-factory-overloads.erb"), 0, '%<>')
-
+    PRIMITIVE_CSHARP_TYPES = [
+        'string'
+    ]
     def generate_chart
         write_chart_series_defaults_builder
         write_chart_series_defaults_settings
@@ -43,5 +45,15 @@ module CodeGen::MVC6::Wrappers::ChartGenerator
 
     def series_overloads(series, fields)
         CHART_SERIES_FACTORY_OVERLOADS.result(binding)
+    end
+
+    def primitive_type?(type)
+        PRIMITIVE_CSHARP_TYPES.include?(type)
+    end
+
+    def unique_generic_types(fields)
+        field_with_generic = fields.select { |field| !primitive_type?(field[:generic]) }
+        generic_types = field_with_generic.map { |field| field[:generic] }
+        generic_types.uniq
     end
 end

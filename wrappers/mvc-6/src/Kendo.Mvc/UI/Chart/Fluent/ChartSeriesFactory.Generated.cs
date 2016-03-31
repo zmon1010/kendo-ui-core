@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -40,6 +41,11 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual ChartSeriesBuilder<T>  Area<TValue>(
             Expression<Func<T, TValue>> expression)
         {
+            if (typeof(T).IsPlainType() && (!expression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
@@ -65,6 +71,11 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
+            if (typeof(T).IsPlainType() && (!expression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
@@ -127,17 +138,22 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines bar series bound to model member(s).
         /// </summary>
-        /// <param name="expression">
+        /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Bar<TValue>(
-            Expression<Func<T, TValue>> expression)
+            Expression<Func<T, TValue>> valueExpression)
         {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
                 Type = "bar",
-                Field = expression.MemberWithoutInstance()
+                Field = valueExpression.MemberWithoutInstance()
             };
 
             Container.Add(item);
@@ -148,21 +164,26 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines bar series bound to model member(s).
         /// </summary>
-        /// <param name="expression">
+        /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
         /// <param name="categoryExpression">
         /// The expression used to extract the category from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Bar<TValue, TCategory>(
-            Expression<Func<T, TValue>> expression,
+            Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
                 Type = "bar",
-                Field = expression.MemberWithoutInstance(),
+                Field = valueExpression.MemberWithoutInstance(),
                 CategoryField = categoryExpression.MemberWithoutInstance()
             };
 
@@ -174,22 +195,22 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines bound bar series.
         /// </summary>
-        /// <param name="memberName">
+        /// <param name="valueMemberName">
         /// The name of the value member.
         /// </param>
         /// <param name="categoryMemberName">
         /// The name of the category member. Optional.
         /// </param>
         public virtual ChartSeriesBuilder<T> Bar(
-            string memberName,
+            string valueMemberName,
             string categoryMemberName = null)
         {
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
                 Type = "bar",
-                Name = memberName.AsTitle(),
-                Field = memberName,
+                Name = valueMemberName.AsTitle(),
+                Field = valueMemberName,
                 CategoryField = categoryMemberName
             };
 
@@ -234,6 +255,11 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TYValue>> yValueExpression,
             Expression<Func<T, TSizeValue>> sizeExpression)
         {
+            if (typeof(T).IsPlainType() && (!xValueExpression.IsBindable() || !yValueExpression.IsBindable() || !sizeExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
@@ -263,12 +289,17 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the category from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Bubble<TXValue, TYValue, TSizeValue, TCategory>(
+        public virtual ChartSeriesBuilder<T>  Bubble<TXValue, TYValue, TSizeValue>(
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression,
             Expression<Func<T, TSizeValue>> sizeExpression,
-            Expression<Func<T, TCategory>> categoryExpression)
+            Expression<Func<T, string>> categoryExpression)
         {
+            if (typeof(T).IsPlainType() && (!xValueExpression.IsBindable() || !yValueExpression.IsBindable() || !sizeExpression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
@@ -361,6 +392,11 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TValue>> lowExpression,
             Expression<Func<T, TValue>> closeExpression)
         {
+            if (typeof(T).IsPlainType() && (!openExpression.IsBindable() || !highExpression.IsBindable() || !lowExpression.IsBindable() || !closeExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
@@ -435,17 +471,22 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines column series bound to model member(s).
         /// </summary>
-        /// <param name="expression">
+        /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Column<TValue>(
-            Expression<Func<T, TValue>> expression)
+            Expression<Func<T, TValue>> valueExpression)
         {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
                 Type = "column",
-                Field = expression.MemberWithoutInstance()
+                Field = valueExpression.MemberWithoutInstance()
             };
 
             Container.Add(item);
@@ -456,21 +497,26 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines column series bound to model member(s).
         /// </summary>
-        /// <param name="expression">
+        /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
         /// <param name="categoryExpression">
         /// The expression used to extract the category from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Column<TValue, TCategory>(
-            Expression<Func<T, TValue>> expression,
+            Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
                 Type = "column",
-                Field = expression.MemberWithoutInstance(),
+                Field = valueExpression.MemberWithoutInstance(),
                 CategoryField = categoryExpression.MemberWithoutInstance()
             };
 
@@ -482,22 +528,22 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines bound column series.
         /// </summary>
-        /// <param name="memberName">
+        /// <param name="valueMemberName">
         /// The name of the value member.
         /// </param>
         /// <param name="categoryMemberName">
         /// The name of the category member. Optional.
         /// </param>
         public virtual ChartSeriesBuilder<T> Column(
-            string memberName,
+            string valueMemberName,
             string categoryMemberName = null)
         {
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
                 Type = "column",
-                Name = memberName.AsTitle(),
-                Field = memberName,
+                Name = valueMemberName.AsTitle(),
+                Field = valueMemberName,
                 CategoryField = categoryMemberName
             };
 
@@ -534,6 +580,11 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual ChartSeriesBuilder<T>  Line<TValue>(
             Expression<Func<T, TValue>> expression)
         {
+            if (typeof(T).IsPlainType() && (!expression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
@@ -559,6 +610,11 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
+            if (typeof(T).IsPlainType() && (!expression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
@@ -631,6 +687,11 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
+            if (typeof(T).IsPlainType() && (!xValueExpression.IsBindable() || !yValueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
@@ -703,6 +764,11 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
+            if (typeof(T).IsPlainType() && (!xValueExpression.IsBindable() || !yValueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
             var item = new ChartSeries<T>()
             {
                 Chart = Chart,
