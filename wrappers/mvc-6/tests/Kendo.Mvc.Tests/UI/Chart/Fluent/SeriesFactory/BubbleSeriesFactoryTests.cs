@@ -82,11 +82,11 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Bubble_series_with_expression_should_set_Name()
+        public void Bubble_series_with_expression_should_not_set_Name()
         {
             CreateSeries();
 
-            chart.Series[0].Name.ShouldEqual("Total Sales, Rep Sales High, Rep Sales Low");
+            chart.Series[0].Name.ShouldEqual(null);
         }
 
         [Fact]

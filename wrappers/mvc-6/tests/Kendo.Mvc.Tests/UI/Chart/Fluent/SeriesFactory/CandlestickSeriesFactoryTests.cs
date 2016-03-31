@@ -82,11 +82,11 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Candlestick_series_with_expression_should_set_Name()
+        public void Candlestick_series_with_expression_should_not_set_Name()
         {
             factory.Candlestick(s => s.TotalSales, s => s.RepSalesHigh, s => s.RepSalesLow, s => s.RepSales);
 
-            chart.Series[0].Name.ShouldEqual("Total Sales, Rep Sales High, Rep Sales Low, Rep Sales");
+            chart.Series[0].Name.ShouldEqual(null);
         }
 
         [Fact]

@@ -21,11 +21,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "area",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -40,7 +40,16 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual ChartSeriesBuilder<T>  Area<TValue>(
             Expression<Func<T, TValue>> expression)
         {
-            return Area(expression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "area",
+                Field = expression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -56,7 +65,17 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
-            return Area(expression.MemberWithoutInstance(), categoryExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "area",
+                Field = expression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -95,11 +114,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "bar",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -114,7 +133,16 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual ChartSeriesBuilder<T>  Bar<TValue>(
             Expression<Func<T, TValue>> expression)
         {
-            return Bar(expression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bar",
+                Field = expression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -130,7 +158,17 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
-            return Bar(expression.MemberWithoutInstance(), categoryExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bar",
+                Field = expression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -169,11 +207,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "bubble",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -196,7 +234,18 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TYValue>> yValueExpression,
             Expression<Func<T, TSizeValue>> sizeExpression)
         {
-            return Bubble(xValueExpression.MemberWithoutInstance(), yValueExpression.MemberWithoutInstance(), sizeExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bubble",
+                XField = xValueExpression.MemberWithoutInstance(),
+                YField = yValueExpression.MemberWithoutInstance(),
+                SizeField = sizeExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -220,7 +269,19 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TSizeValue>> sizeExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
-            return Bubble(xValueExpression.MemberWithoutInstance(), yValueExpression.MemberWithoutInstance(), sizeExpression.MemberWithoutInstance(), categoryExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bubble",
+                XField = xValueExpression.MemberWithoutInstance(),
+                YField = yValueExpression.MemberWithoutInstance(),
+                SizeField = sizeExpression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -269,11 +330,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "candlestick",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -300,7 +361,19 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TValue>> lowExpression,
             Expression<Func<T, TValue>> closeExpression)
         {
-            return Candlestick(openExpression.MemberWithoutInstance(), highExpression.MemberWithoutInstance(), lowExpression.MemberWithoutInstance(), closeExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "candlestick",
+                OpenField = openExpression.MemberWithoutInstance(),
+                HighField = highExpression.MemberWithoutInstance(),
+                LowField = lowExpression.MemberWithoutInstance(),
+                CloseField = closeExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -349,11 +422,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "column",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -368,7 +441,16 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual ChartSeriesBuilder<T>  Column<TValue>(
             Expression<Func<T, TValue>> expression)
         {
-            return Column(expression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "column",
+                Field = expression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -384,7 +466,17 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
-            return Column(expression.MemberWithoutInstance(), categoryExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "column",
+                Field = expression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -423,11 +515,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "line",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -442,7 +534,16 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual ChartSeriesBuilder<T>  Line<TValue>(
             Expression<Func<T, TValue>> expression)
         {
-            return Line(expression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "line",
+                Field = expression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -458,7 +559,17 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
-            return Line(expression.MemberWithoutInstance(), categoryExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "line",
+                Field = expression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -497,11 +608,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "scatter",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -520,7 +631,17 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
-            return Scatter(xValueExpression.MemberWithoutInstance(), yValueExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "scatter",
+                XField = xValueExpression.MemberWithoutInstance(),
+                YField = yValueExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>
@@ -559,11 +680,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "scatterLine",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -582,7 +703,17 @@ namespace Kendo.Mvc.UI.Fluent
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
-            return ScatterLine(xValueExpression.MemberWithoutInstance(), yValueExpression.MemberWithoutInstance());
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "scatterLine",
+                XField = xValueExpression.MemberWithoutInstance(),
+                YField = yValueExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }
 
         /// <summary>

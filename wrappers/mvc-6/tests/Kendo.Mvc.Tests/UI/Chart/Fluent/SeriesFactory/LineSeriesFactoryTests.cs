@@ -57,11 +57,11 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Line_series_created_with_expression_should_set_Name()
+        public void Line_series_created_with_expression_should_not_set_Name()
         {
             factory.Line(s => s.TotalSales);
 
-            chart.Series[0].Name.ShouldEqual("Total Sales");
+            chart.Series[0].Name.ShouldEqual(null);
         }
                 
         [Fact]
@@ -109,7 +109,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             factory.Line(s => s.TotalSales, category => category.RepName);
 
-            chart.Series[0].Name.ShouldEqual("Total Sales");
+            chart.Series[0].Name.ShouldEqual(null);
         }
 
         [Fact]

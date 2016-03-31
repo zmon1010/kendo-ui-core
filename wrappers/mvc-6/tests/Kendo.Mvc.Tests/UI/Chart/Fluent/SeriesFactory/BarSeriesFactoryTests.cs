@@ -57,11 +57,19 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Bar_series_created_with_expression_should_set_Name()
+        public void Bar_series_created_with_members_should_set_Name()
+        {
+            factory.Bar("TotalSales");
+
+            chart.Series[0].Name.ShouldEqual("Total Sales");
+        }
+
+        [Fact]
+        public void Bar_series_created_with_expression_should_not_set_Name()
         {
             factory.Bar(s => s.TotalSales);
 
-            chart.Series[0].Name.ShouldEqual("Total Sales");
+            chart.Series[0].Name.ShouldEqual(null);
         }
                 
         [Fact]
@@ -109,7 +117,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             factory.Bar(s => s.TotalSales, category => category.RepName);
 
-            chart.Series[0].Name.ShouldEqual("Total Sales");
+            chart.Series[0].Name.ShouldEqual(null);
         }
 
         [Fact]

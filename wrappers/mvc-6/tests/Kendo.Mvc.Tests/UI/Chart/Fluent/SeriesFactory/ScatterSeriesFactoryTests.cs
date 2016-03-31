@@ -67,19 +67,19 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Scatter_series_with_expression_should_set_Name()
+        public void Scatter_series_with_members_should_set_Name()
         {
-            CreateSeries();
+            factory.ScatterLine("TotalSales", "RepSalesHigh");
 
             chart.Series[0].Name.ShouldEqual("Total Sales, Rep Sales High");
         }
 
         [Fact]
-        public void Scatter_series_with_custom_name_should_override_default_Name()
+        public void Scatter_series_with_expression_should_not_set_Name()
         {
-            CreateSeries().Name("customName");
+            CreateSeries();
 
-            chart.Series[0].Name.ShouldEqual("customName");
+            chart.Series[0].Name.ShouldEqual(null);
         }
 
         [Fact]

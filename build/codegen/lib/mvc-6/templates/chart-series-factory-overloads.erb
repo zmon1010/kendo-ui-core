@@ -11,5 +11,17 @@
             <%= fields.map { |field| "Expression<Func<T, #{field[:generic]}>> #{field[:expression]}" }.join(',
             ') %>)
         {
-            return <%= series[:type] %>(<%= fields.map { |field| "#{field[:expression]}.MemberWithoutInstance()" }.join(', ') %>);
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "<%= series[:name] %>",
+                <%= fields.map { |field|
+                    "#{field[:name]} = #{field[:expression]}.MemberWithoutInstance()" }.join(',
+                ')
+                %>
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
         }

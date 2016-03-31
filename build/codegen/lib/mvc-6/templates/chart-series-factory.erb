@@ -22,11 +22,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "<%= series[:name] %>",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
