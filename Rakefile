@@ -851,6 +851,28 @@ bundle :name => 'aspnetmvc.internal.commercial',
            'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/lib'
        ]
 
+bundle :name => 'aspnetmvc.internal.commercial.no-source',
+       :license => 'src-license-complete',
+       :eula => 'aspnetmvc',
+       :vsdoc => %w(all web mobile dataviz),
+       :intellisense => %w(all web mobile dataviz),
+       :type_script => %w(all web mobile dataviz),
+       :changelog => %w(components aspnetmvc),
+       :product => 'UI for ASP.NET MVC',
+       :upload_as_internal_build => true,
+       :skip_grunt_build => true,
+       :contents => {
+            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES,
+            'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
+            'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       :prerequisites => [
+           'mvc:assets',
+           'spreadsheet:binaries',
+           'type_script:master:test'
+       ]
+
 bundle :name => 'aspnetmvc.hotfix.commercial',
        :skip_grunt_build => true,
        :license => 'src-license-complete',
