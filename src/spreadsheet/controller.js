@@ -823,6 +823,10 @@
         },
 
         onEditorBarFocus: function() {
+            var disabled = this._workbook.activeSheet().selection().enable() === false;
+            if (disabled) {
+                return;
+            }
             this.editor
                 .activate({
                     range: this._workbook.activeSheet()._viewActiveCell(),
