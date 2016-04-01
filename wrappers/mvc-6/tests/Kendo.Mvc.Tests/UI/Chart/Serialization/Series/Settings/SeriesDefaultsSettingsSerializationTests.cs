@@ -59,6 +59,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_Bullet_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("bullet").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Bullet_series_should_be_serialized()
+        {
+            settings.Bullet.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("bullet").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_Candlestick_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("candlestick").ShouldBeFalse();
@@ -154,6 +168,20 @@ namespace Kendo.Mvc.UI.Tests
             settings.Scatter.Data = new int[] { 1, 2, 3 };
 
             settings.Serialize().ContainsKey("scatter").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Default_VerticalBullet_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("verticalBullet").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void VerticalBullet_series_should_be_serialized()
+        {
+            settings.VerticalBullet.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("verticalBullet").ShouldBeTrue();
         }
     }
 }

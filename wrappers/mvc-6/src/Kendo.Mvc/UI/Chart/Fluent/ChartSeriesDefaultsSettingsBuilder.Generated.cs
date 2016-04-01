@@ -46,6 +46,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The bullet series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the bullet series settings.</param>
+        public ChartSeriesBuilder<T> Bullet()
+        {
+            return new ChartSeriesBuilder<T>(Container.Bullet);
+        }
+
+        /// <summary>
         /// The candlestick series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the candlestick series settings.</param>
@@ -106,6 +115,15 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartSeriesBuilder<T> ScatterLine()
         {
             return new ChartSeriesBuilder<T>(Container.ScatterLine);
+        }
+
+        /// <summary>
+        /// The verticalBullet series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the verticalBullet series settings.</param>
+        public ChartSeriesBuilder<T> VerticalBullet()
+        {
+            return new ChartSeriesBuilder<T>(Container.VerticalBullet);
         }
     }
 }

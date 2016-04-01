@@ -65,7 +65,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The expression used to extract the value from the model.
         /// </param>
         /// <param name="categoryExpression">
-        /// The expression used to extract the category from the model.
+        /// The expression used to extract the The category value. from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Area<TValue, TCategory>(
             Expression<Func<T, TValue>> expression,
@@ -96,7 +96,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the value member.
         /// </param>
         /// <param name="categoryMemberName">
-        /// The name of the category member. Optional.
+        /// The name of the The category value. member. Optional.
         /// </param>
         public virtual ChartSeriesBuilder<T> Area(
             string memberName,
@@ -168,7 +168,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The expression used to extract the value from the model.
         /// </param>
         /// <param name="categoryExpression">
-        /// The expression used to extract the category from the model.
+        /// The expression used to extract the The category value. from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Bar<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
@@ -199,7 +199,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the value member.
         /// </param>
         /// <param name="categoryMemberName">
-        /// The name of the category member. Optional.
+        /// The name of the The category value. member. Optional.
         /// </param>
         public virtual ChartSeriesBuilder<T> Bar(
             string valueMemberName,
@@ -345,6 +345,83 @@ namespace Kendo.Mvc.UI.Fluent
                 YField = yMemberName,
                 SizeField = sizeMemberName,
                 CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
+        /// Defines bullet series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Bullet(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bullet",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bullet series bound to model member(s).
+        /// </summary>
+        /// <param name="currentExpression">
+        /// The expression used to extract the The current value; from the model.
+        /// </param>
+        /// <param name="targetExpression">
+        /// The expression used to extract the The target value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Bullet<TValue, TCategory>(
+            Expression<Func<T, TValue>> currentExpression,
+            Expression<Func<T, TCategory>> targetExpression)
+        {
+            if (typeof(T).IsPlainType() && (!currentExpression.IsBindable() || !targetExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bullet",
+                CurrentField = currentExpression.MemberWithoutInstance(),
+                TargetField = targetExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound bullet series.
+        /// </summary>
+        /// <param name="currentMemberName">
+        /// The name of the The current value; member.
+        /// </param>
+        /// <param name="targetMemberName">
+        /// The name of the The target value. member.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Bullet(
+            string currentMemberName,
+            string targetMemberName)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "bullet",
+                Name = currentMemberName.AsTitle() + ", " + targetMemberName.AsTitle(),
+                CurrentField = currentMemberName,
+                TargetField = targetMemberName
             };
 
             Container.Add(item);
@@ -501,7 +578,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The expression used to extract the value from the model.
         /// </param>
         /// <param name="categoryExpression">
-        /// The expression used to extract the category from the model.
+        /// The expression used to extract the The category value. from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Column<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
@@ -532,7 +609,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the value member.
         /// </param>
         /// <param name="categoryMemberName">
-        /// The name of the category member. Optional.
+        /// The name of the The category value. member. Optional.
         /// </param>
         public virtual ChartSeriesBuilder<T> Column(
             string valueMemberName,
@@ -578,7 +655,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The expression used to extract the value from the model.
         /// </param>
         /// <param name="categoryExpression">
-        /// The expression used to extract the category from the model.
+        /// The expression used to extract the The category value. from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Donut<TValue>(
             Expression<Func<T, TValue>> expressionValue,
@@ -609,7 +686,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the value member.
         /// </param>
         /// <param name="categoryMemberName">
-        /// The name of the category member.
+        /// The name of the The category value. member.
         /// </param>
         public virtual ChartSeriesBuilder<T> Donut(
             string valueMemberName,
@@ -681,7 +758,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The expression used to extract the value from the model.
         /// </param>
         /// <param name="categoryExpression">
-        /// The expression used to extract the category from the model.
+        /// The expression used to extract the The category value. from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Line<TValue, TCategory>(
             Expression<Func<T, TValue>> expression,
@@ -712,7 +789,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the value member.
         /// </param>
         /// <param name="categoryMemberName">
-        /// The name of the category member. Optional.
+        /// The name of the The category value. member. Optional.
         /// </param>
         public virtual ChartSeriesBuilder<T> Line(
             string memberName,
@@ -758,7 +835,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The expression used to extract the value from the model.
         /// </param>
         /// <param name="categoryExpression">
-        /// The expression used to extract the category from the model.
+        /// The expression used to extract the The category value. from the model.
         /// </param>
         public virtual ChartSeriesBuilder<T>  Pie<TValue>(
             Expression<Func<T, TValue>> expressionValue,
@@ -789,7 +866,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The name of the value member.
         /// </param>
         /// <param name="categoryMemberName">
-        /// The name of the category member.
+        /// The name of the The category value. member.
         /// </param>
         public virtual ChartSeriesBuilder<T> Pie(
             string valueMemberName,
@@ -956,6 +1033,83 @@ namespace Kendo.Mvc.UI.Fluent
                 Name = xMemberName.AsTitle() + ", " + yMemberName.AsTitle(),
                 XField = xMemberName,
                 YField = yMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
+        /// Defines verticalBullet series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> VerticalBullet(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalBullet",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines verticalBullet series bound to model member(s).
+        /// </summary>
+        /// <param name="currentExpression">
+        /// The expression used to extract the The current value; from the model.
+        /// </param>
+        /// <param name="targetExpression">
+        /// The expression used to extract the The target value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  VerticalBullet<TValue, TCategory>(
+            Expression<Func<T, TValue>> currentExpression,
+            Expression<Func<T, TCategory>> targetExpression)
+        {
+            if (typeof(T).IsPlainType() && (!currentExpression.IsBindable() || !targetExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalBullet",
+                CurrentField = currentExpression.MemberWithoutInstance(),
+                TargetField = targetExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound verticalBullet series.
+        /// </summary>
+        /// <param name="currentMemberName">
+        /// The name of the The current value; member.
+        /// </param>
+        /// <param name="targetMemberName">
+        /// The name of the The target value. member.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> VerticalBullet(
+            string currentMemberName,
+            string targetMemberName)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalBullet",
+                Name = currentMemberName.AsTitle() + ", " + targetMemberName.AsTitle(),
+                CurrentField = currentMemberName,
+                TargetField = targetMemberName
             };
 
             Container.Add(item);

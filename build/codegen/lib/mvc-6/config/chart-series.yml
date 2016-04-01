@@ -9,7 +9,7 @@
 
       - :name: CategoryField
         :optional: true
-        :description: category
+        :description: The category value.
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
@@ -25,7 +25,7 @@
 
       - :name: CategoryField
         :optional: true
-        :description: category
+        :description: The category value.
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
@@ -58,6 +58,21 @@
         :generic: string
         :expression: categoryExpression
         :member: categoryMemberName
+
+- :name: bullet
+  :type: Bullet
+  :fields:
+      - :name: CurrentField
+        :description: The current value;
+        :generic: TValue
+        :expression: currentExpression
+        :member: currentMemberName
+
+      - :name: TargetField
+        :description: The target value.
+        :generic: TCategory
+        :expression: targetExpression
+        :member: targetMemberName
 
 - :name: candlestick
   :type: Candlestick
@@ -97,7 +112,7 @@
 
       - :name: CategoryField
         :optional: true
-        :description: category
+        :description: The category value.
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
@@ -112,7 +127,7 @@
         :member: valueMemberName
 
       - :name: CategoryField
-        :description: category
+        :description: The category value.
         :generic: string
         :expression: categoryExpression
         :member: categoryMemberName
@@ -129,7 +144,7 @@
 
       - :name: CategoryField
         :optional: true
-        :description: category
+        :description: The category value.
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
@@ -144,7 +159,7 @@
         :member: valueMemberName
 
       - :name: CategoryField
-        :description: category
+        :description: The category value.
         :generic: string
         :expression: categoryExpression
         :member: categoryMemberName
@@ -179,3 +194,18 @@
         :generic: TYValue
         :expression: yValueExpression
         :member: yMemberName
+        
+- :name: verticalBullet
+  :type: VerticalBullet
+  :fields:
+      - :name: CurrentField
+        :description: The current value;
+        :generic: TValue
+        :expression: currentExpression
+        :member: currentMemberName
+
+      - :name: TargetField
+        :description: The target value.
+        :generic: TCategory
+        :expression: targetExpression
+        :member: targetMemberName

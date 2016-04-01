@@ -25,6 +25,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Bubble { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The Bullet series default settings.
+        /// </summary>
+        public ChartSeries<T> Bullet { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Candlestick series default settings.
         /// </summary>
         public ChartSeries<T> Candlestick { get; } = new ChartSeries<T>();
@@ -59,6 +64,11 @@ namespace Kendo.Mvc.UI
         /// </summary>
         public ChartSeries<T> ScatterLine { get; } = new ChartSeries<T>();
 
+        /// <summary>
+        /// The VerticalBullet series default settings.
+        /// </summary>
+        public ChartSeries<T> VerticalBullet { get; } = new ChartSeries<T>();
+
         public IDictionary<string, object> Serialize()
         {
             var settings = new Dictionary<string, object>();
@@ -82,6 +92,13 @@ namespace Kendo.Mvc.UI
             if (bubble.Any())
             {
                 settings["bubble"] = bubble;
+            }
+
+            var bullet = Bullet.Serialize();
+
+            if (bullet.Any())
+            {
+                settings["bullet"] = bullet;
             }
 
             var candlestick = Candlestick.Serialize();
@@ -131,6 +148,13 @@ namespace Kendo.Mvc.UI
             if (scatterLine.Any())
             {
                 settings["scatterLine"] = scatterLine;
+            }
+
+            var verticalBullet = VerticalBullet.Serialize();
+
+            if (verticalBullet.Any())
+            {
+                settings["verticalBullet"] = verticalBullet;
             }
 
             return settings;
