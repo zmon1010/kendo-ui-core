@@ -1158,6 +1158,37 @@ bundle :name => 'php.commercial',
            "php:assets"
        ]
 
+bundle :name => 'php.commercial.no-source',
+       :license => 'src-license-complete',
+       :eula => 'php',
+       :changelog => %w(components php),
+       :product => 'UI for PHP',
+       :upload_as_internal_build => true,
+       :skip_grunt_build => true,
+       :release_build => {
+          :file_metadata => {
+             :zip => {
+              :label => "Manual Installation",
+              :download_name => "telerik.ui.for.php.#{VERSION}.commercial.zip",
+              :file_category => "Installation",
+              :file_type => "Paid Files",
+              :extension => "ZIP",
+              :file_markers => ["Default File"],
+              :websites => ["Telerik"],
+              :download_message => 'You have successfully downloaded Telerik UI for PHP Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/php/introduction">this article</a> on how to get started.',
+              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />PHP Server Wrappers<br />Complete Source Code</strong>"
+             }
+          }
+        },
+       :type_script => %w(all web mobile dataviz),
+       :contents => {
+            'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES
+       }.merge(PHP_CONTENT),
+       :prerequisites => [
+           "php:assets"
+       ]
+
 # Kendo UI Core
 bundle :name => 'core',
        :license => 'src-license-core',
