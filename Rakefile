@@ -319,6 +319,41 @@ bundle :name => 'professional.commercial',
             'apptemplates' => APPTEMPLATES_CONTENT
        }
 
+bundle :name => 'professional.commercial.no-source',
+       :license => 'src-license-complete',
+       :eula => 'complete',
+       :readme => 'README.KendoUI.Complete',
+       :vsdoc => %w(all web mobile dataviz),
+       :intellisense => %w(all web mobile dataviz),
+       :type_script => %w(all web mobile dataviz),
+       :changelog => %w(components),
+       :demos => {
+           :dir => 'examples'
+       },
+       :product => 'Kendo UI Professional',
+       :upload_as_internal_build => true,
+       :skip_grunt_build => true,
+       :release_build => {
+           :file_metadata => {
+             :zip => {
+              :label => "Manual Installation",
+              :download_name => "telerik.kendoui.professional.#{VERSION}.commercial.no-source.zip",
+              :file_category => "Installation",
+              :file_type => "Paid Files",
+              :extension => "ZIP",
+              :file_markers => ["Default File"],
+              :websites => ["Telerik", "SiteFinity"],
+              :download_message => 'You have successfully downloaded the Kendo UI Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
+              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles"
+             }
+           }
+       },
+       :contents => {
+            'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES,
+            'apptemplates' => APPTEMPLATES_CONTENT
+       }
+
 bundle :name => 'professional.trial',
        :license => 'src-license-complete',
        :eula => 'complete',
@@ -715,6 +750,66 @@ bundle :name => 'aspnetmvc.commercial',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
        ]
 
+bundle :name => 'aspnetmvc.commercial.no-source',
+       :license => 'src-license-complete',
+       :eula => 'aspnetmvc',
+       :vsdoc => %w(all web mobile dataviz),
+       :intellisense => %w(all web mobile dataviz),
+       :type_script => %w(all web mobile dataviz),
+       :changelog => %w(components aspnetmvc),
+       :demos => {
+           :dir => [
+               'wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/html',
+               'wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/html',
+               'wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/html'
+           ],
+           :template_dir => 'mvc'
+       },
+       :product => 'UI for ASP.NET MVC',
+       :upload_as_internal_build => false,
+       :skip_grunt_build => true,
+       :release_build => {
+          :file_metadata => {
+             :zip => {
+              :label => "Manual Installation",
+              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.commercial.zip",
+              :file_category => "Installation",
+              :file_type => "Paid Files",
+              :extension => "ZIP",
+              :file_markers => ["Default File"],
+              :websites => ["Telerik"],
+              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
+              :whats_included_message => "<strong>Quick Start Demos <br />Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers <br />Complete Source Code</strong>"
+             }
+          }
+       },
+       :contents => {
+            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES,
+            'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
+       }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
+       :post_build => 'mvc_6:update_demo_deps_commercial',
+       :prerequisites => [
+           'mvc:assets',
+           'type_script:master:test',
+           'spreadsheet:binaries',
+           'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples.sln',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples.sln',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
+           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
+       ]
+
 bundle :name => 'aspnetmvc.internal.commercial',
        :license => 'src-license-complete',
        :eula => 'aspnetmvc',
@@ -754,6 +849,28 @@ bundle :name => 'aspnetmvc.internal.commercial',
            'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
            'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
            'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/lib'
+       ]
+
+bundle :name => 'aspnetmvc.internal.commercial.no-source',
+       :license => 'src-license-complete',
+       :eula => 'aspnetmvc',
+       :vsdoc => %w(all web mobile dataviz),
+       :intellisense => %w(all web mobile dataviz),
+       :type_script => %w(all web mobile dataviz),
+       :changelog => %w(components aspnetmvc),
+       :product => 'UI for ASP.NET MVC',
+       :upload_as_internal_build => true,
+       :skip_grunt_build => true,
+       :contents => {
+            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES,
+            'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
+            'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       :prerequisites => [
+           'mvc:assets',
+           'spreadsheet:binaries',
+           'type_script:master:test'
        ]
 
 bundle :name => 'aspnetmvc.hotfix.commercial',
@@ -925,6 +1042,40 @@ bundle :name => 'jsp.commercial',
            "dist/bundles/jsp.commercial/src/kendo-taglib/pom.xml"
        ]
 
+bundle :name => 'jsp.commercial.no-source',
+       :license => 'src-license-complete',
+       :eula => 'jsp',
+       :changelog => %w(components jsp),
+       :product => 'UI for JSP',
+       :upload_as_internal_build => true,
+       :skip_grunt_build => true,
+       :release_build => {
+         :file_metadata => {
+             :zip => {
+              :label => "Manual Installation",
+              :download_name => "telerik.ui.for.jsp.#{VERSION}.commercial.zip",
+              :file_category => "Installation",
+              :file_type => "Paid Files",
+              :extension => "ZIP",
+              :file_markers => ["Default File"],
+              :websites => ["Telerik"],
+              :download_message => 'You have successfully downloaded Telerik UI for JSP Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/jsp/introduction">this article</a> on how to get started.',
+              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />JSP Server Wrappers<br />Complete Source Code</strong>"
+             }
+          }
+        },
+       :type_script => %w(all web mobile dataviz),
+       :contents => {
+            'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES
+       }.merge(JSP_CONTENT),
+       :prerequisites => [
+           "java:assets",
+           "dist/bundles/jsp.commercial/wrappers/jsp/spring-demos/src/main/webapp/WEB-INF/lib/#{JAR_NAME}",
+           "dist/bundles/jsp.commercial/wrappers/jsp/spring-demos/pom.xml",
+           "dist/bundles/jsp.commercial/src/kendo-taglib/pom.xml"
+       ]
+
 # UI for PHP
 bundle :name => 'php.trial',
        :skip_grunt_build => true,
@@ -1002,6 +1153,37 @@ bundle :name => 'php.commercial',
             'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS,
             'src/php' => PHP_LIB_SRC
+       }.merge(PHP_CONTENT),
+       :prerequisites => [
+           "php:assets"
+       ]
+
+bundle :name => 'php.commercial.no-source',
+       :license => 'src-license-complete',
+       :eula => 'php',
+       :changelog => %w(components php),
+       :product => 'UI for PHP',
+       :upload_as_internal_build => true,
+       :skip_grunt_build => true,
+       :release_build => {
+          :file_metadata => {
+             :zip => {
+              :label => "Manual Installation",
+              :download_name => "telerik.ui.for.php.#{VERSION}.commercial.zip",
+              :file_category => "Installation",
+              :file_type => "Paid Files",
+              :extension => "ZIP",
+              :file_markers => ["Default File"],
+              :websites => ["Telerik"],
+              :download_message => 'You have successfully downloaded Telerik UI for PHP Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/php/introduction">this article</a> on how to get started.',
+              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />PHP Server Wrappers<br />Complete Source Code</strong>"
+             }
+          }
+        },
+       :type_script => %w(all web mobile dataviz),
+       :contents => {
+            'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES
        }.merge(PHP_CONTENT),
        :prerequisites => [
            "php:assets"
