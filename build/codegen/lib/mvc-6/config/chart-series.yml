@@ -165,6 +165,33 @@
         :expression: categoryExpression
         :member: categoryMemberName
 
+- :name: ohlc
+  :type: OHLC
+  :fields:
+      - :name: OpenField
+        :description: The open value.
+        :generic: TValue
+        :expression: openExpression
+        :member: openMemberName
+
+      - :name: HighField
+        :description: The high value.
+        :generic: TValue
+        :expression: highExpression
+        :member: highMemberName
+
+      - :name: LowField
+        :description: The low value.
+        :generic: TValue
+        :expression: lowExpression
+        :member: lowMemberName
+
+      - :name: CloseField
+        :description: The close value.
+        :generic: TValue
+        :expression: closeExpression
+        :member: closeMemberName
+
 - :name: pie
   :type: Pie
   :fields:

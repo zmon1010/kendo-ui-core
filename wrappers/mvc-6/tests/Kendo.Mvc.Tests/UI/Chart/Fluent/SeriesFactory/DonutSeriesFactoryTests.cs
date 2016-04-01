@@ -119,8 +119,7 @@ namespace Kendo.Mvc.UI.Tests
 
             chart.Series[0].CategoryField.ShouldEqual("RepName");
         }
-
-        [Fact]
+        
         private ChartSeriesBuilder<SalesData> CreateSeries()
         {
             return factory.Donut(s => s.TotalSales, s => s.RepName);

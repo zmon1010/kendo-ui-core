@@ -55,6 +55,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Line { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The OHLC series default settings.
+        /// </summary>
+        public ChartSeries<T> OHLC { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Pie series default settings.
         /// </summary>
         public ChartSeries<T> Pie { get; } = new ChartSeries<T>();
@@ -139,6 +144,13 @@ namespace Kendo.Mvc.UI
             if (line.Any())
             {
                 settings["line"] = line;
+            }
+
+            var ohlc = OHLC.Serialize();
+
+            if (ohlc.Any())
+            {
+                settings["ohlc"] = ohlc;
             }
 
             var pie = Pie.Serialize();

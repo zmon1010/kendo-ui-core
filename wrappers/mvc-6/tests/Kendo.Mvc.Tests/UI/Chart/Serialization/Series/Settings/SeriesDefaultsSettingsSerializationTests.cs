@@ -143,6 +143,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_OHLC_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("ohlc").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void OHLC_series_should_be_serialized()
+        {
+            settings.OHLC.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("ohlc").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_Pie_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("pie").ShouldBeFalse();

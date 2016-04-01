@@ -100,6 +100,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The ohlc series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the ohlc series settings.</param>
+        public ChartSeriesBuilder<T> OHLC()
+        {
+            return new ChartSeriesBuilder<T>(Container.OHLC);
+        }
+
+        /// <summary>
         /// The pie series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the pie series settings.</param>

@@ -119,8 +119,7 @@ namespace Kendo.Mvc.UI.Tests
 
             chart.Series[0].TargetField.ShouldEqual("RepSales");
         }
-
-        [Fact]
+        
         private ChartSeriesBuilder<SalesData> CreateSeries()
         {
             return factory.VerticalBullet(s => s.TotalSales, s => s.RepSales);

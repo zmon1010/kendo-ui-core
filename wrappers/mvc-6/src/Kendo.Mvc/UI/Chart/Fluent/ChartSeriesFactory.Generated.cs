@@ -886,6 +886,103 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines ohlc series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> OHLC(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "ohlc",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines ohlc series bound to model member(s).
+        /// </summary>
+        /// <param name="openExpression">
+        /// The expression used to extract the The open value. from the model.
+        /// </param>
+        /// <param name="highExpression">
+        /// The expression used to extract the The high value. from the model.
+        /// </param>
+        /// <param name="lowExpression">
+        /// The expression used to extract the The low value. from the model.
+        /// </param>
+        /// <param name="closeExpression">
+        /// The expression used to extract the The close value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  OHLC<TValue>(
+            Expression<Func<T, TValue>> openExpression,
+            Expression<Func<T, TValue>> highExpression,
+            Expression<Func<T, TValue>> lowExpression,
+            Expression<Func<T, TValue>> closeExpression)
+        {
+            if (typeof(T).IsPlainType() && (!openExpression.IsBindable() || !highExpression.IsBindable() || !lowExpression.IsBindable() || !closeExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "ohlc",
+                OpenField = openExpression.MemberWithoutInstance(),
+                HighField = highExpression.MemberWithoutInstance(),
+                LowField = lowExpression.MemberWithoutInstance(),
+                CloseField = closeExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound ohlc series.
+        /// </summary>
+        /// <param name="openMemberName">
+        /// The name of the The open value. member.
+        /// </param>
+        /// <param name="highMemberName">
+        /// The name of the The high value. member.
+        /// </param>
+        /// <param name="lowMemberName">
+        /// The name of the The low value. member.
+        /// </param>
+        /// <param name="closeMemberName">
+        /// The name of the The close value. member.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> OHLC(
+            string openMemberName,
+            string highMemberName,
+            string lowMemberName,
+            string closeMemberName)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "ohlc",
+                Name = openMemberName.AsTitle() + ", " + highMemberName.AsTitle() + ", " + lowMemberName.AsTitle() + ", " + closeMemberName.AsTitle(),
+                OpenField = openMemberName,
+                HighField = highMemberName,
+                LowField = lowMemberName,
+                CloseField = closeMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines pie series bound to inline data.
         /// </summary>
         /// <param name="data">

@@ -89,8 +89,7 @@ namespace Kendo.Mvc.UI.Tests
 
             builder.ShouldBeType(typeof(ChartSeriesBuilder<SalesData>));
         }
-
-        [Fact]
+        
         private ChartSeriesBuilder<SalesData> CreateSeries()
         {
             return factory.Scatter(s => s.TotalSales, s => s.RepSalesHigh);
