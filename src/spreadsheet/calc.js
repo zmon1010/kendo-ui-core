@@ -298,8 +298,8 @@
     }
 
     function makePrinter(exp) {
-        return makeClosure("function(row, col){return(" + print(exp.ast, 0) + ")}");
-        function print(node, prec) { // jshint ignore:line, because you are stupid.
+        return makeClosure("function(row, col){return(" + print(exp.ast, exp, 0) + ")}");
+        function print(node, parent, prec) { // jshint ignore:line, because you are stupid.
             switch (node.type) {
               case "num":
               case "bool":
@@ -309,21 +309,21 @@
               case "ref":
                 return "this.refs[" + node.index + "].print(row, col)";
               case "prefix":
-                return withParens(node.op, prec, function(){
-                    return JSON.stringify(node.op) + " + " + print(node.exp, OPERATORS[node.op]);
+                return withParens(function(){
+                    return JSON.stringify(node.op) + " + " + print(node.exp, node, OPERATORS[node.op]);
                 });
               case "postfix":
-                return withParens(node.op, prec, function(){
-                    return print(node.exp, OPERATORS[node.op]) + " + " + JSON.stringify(node.op);
+                return withParens(function(){
+                    return print(node.exp, node, OPERATORS[node.op]) + " + " + JSON.stringify(node.op);
                 });
               case "binary":
-                return withParens(node.op, prec, function(){
+                return withParens(function(){
                     var left = parenthesize(
-                        print(node.left, OPERATORS[node.op]),
+                        print(node.left, node, OPERATORS[node.op]),
                         node.left instanceof NameRef && node.op == ":"
                     );
                     var right = parenthesize(
-                        print(node.right, OPERATORS[node.op]),
+                        print(node.right, node, OPERATORS[node.op]),
                         node.right instanceof NameRef && node.op == ":"
                     );
                     return left + " + " + JSON.stringify(node.op) + " + " + right;
@@ -332,27 +332,31 @@
                 return JSON.stringify(node.func + "(") + " + "
                     + (node.args.length > 0
                        ? node.args.map(function(arg){
-                           return print(arg, 0);
+                           return print(arg, node, 0);
                        }).join(" + ', ' + ")
                        : "''")
                     + " + ')'";
               case "matrix":
                 return "'{ ' + " + node.value.map(function(el){
                     return el.map(function(el){
-                        return print(el, 0);
+                        return print(el, node, 0);
                     }).join(" + ', ' + ");
                 }).join(" + '; ' + ") + "+ ' }'";
               case "null":
                 return "''";
             }
             throw new Error("Cannot make printer for node " + node.type);
+
+            function withParens(f) {
+                var op = node.op;
+                var needParens = (OPERATORS[op] < prec
+                                  || (!prec && op == ",")
+                                  || (parent.type == "binary" && prec == OPERATORS[op] && node === parent.right));
+                return parenthesize(f(), needParens);
+            }
         }
         function parenthesize(code, cond) {
             return cond ? "'(' + " + code + " + ')'" : code;
-        }
-        function withParens(op, prec, f) {
-            var needParens = (OPERATORS[op] < prec || (!prec && op == ","));
-            return parenthesize(f(), needParens);
         }
     }
 

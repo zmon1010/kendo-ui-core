@@ -605,6 +605,19 @@
         testOne("=sum((foo):a1)", "sum((foo):A1)");
     });
 
+    test("parenthesize operators with same precedence", function(){
+        function testOne(input, output) {
+            var exp = calc.parse(Sheet1, 0, 0, input);
+            var formula = calc.compile(exp);
+            equal(formula.print(0, 0), output);
+        }
+
+        testOne("=1/2*4", "1/2*4");
+        testOne("=1/(2*4)", "1/(2*4)");
+        testOne("=(1*2)*4", "1*2*4");
+        testOne("=1*(2*4)", "1*(2*4)"); // the parens are not really necessary here, but it's not a bug to include them either
+    });
+
     test("formula cache", function(){
         function testOne(f1, f2) {
             var e1 = calc.parse(Sheet1, 0, 0, f1);
