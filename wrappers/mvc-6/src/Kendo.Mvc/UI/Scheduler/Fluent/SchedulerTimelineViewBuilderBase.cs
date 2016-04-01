@@ -386,5 +386,27 @@
 
             return (TTimelineViewBuilder)this;
         }
+
+        /// <summary>
+        /// The template used to render the slot content
+        /// </summary>
+        /// <param name="slotTemplate">The slotTemplate</param>
+        public TTimelineViewBuilder SlotTemplate(string slotTemplate)
+        {
+            view.SlotTemplate = slotTemplate;
+
+            return (TTimelineViewBuilder)this;
+        }
+
+        /// <summary>
+        /// The Id of the template used to render the slot content.
+        /// </summary>
+        /// <param name="slotTemplateId">The id of template</param>
+        public TTimelineViewBuilder SlotTemplateId(string slotTemplateId)
+        {
+            view.SlotTemplateId = slotTemplateId;
+
+            return (TTimelineViewBuilder)this;
+        }
     }
 }
