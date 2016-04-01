@@ -64,6 +64,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The donut series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the donut series settings.</param>
+        public ChartSeriesBuilder<T> Donut()
+        {
+            return new ChartSeriesBuilder<T>(Container.Donut);
+        }
+
+        /// <summary>
         /// The line series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the line series settings.</param>

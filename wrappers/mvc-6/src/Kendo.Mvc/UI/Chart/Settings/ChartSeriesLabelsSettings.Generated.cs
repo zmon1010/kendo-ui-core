@@ -33,9 +33,6 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesLabelsPaddingSettings<T> Padding { get; } = new ChartSeriesLabelsPaddingSettings<T>();
 
-        public string Position { get; set; }
-        public ClientHandlerDescriptor PositionHandler { get; set; }
-
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
@@ -47,6 +44,8 @@ namespace Kendo.Mvc.UI
         public ChartSeriesLabelsFromSettings<T> From { get; } = new ChartSeriesLabelsFromSettings<T>();
 
         public ChartSeriesLabelsToSettings<T> To { get; } = new ChartSeriesLabelsToSettings<T>();
+
+        public ChartSeriesLabelsPosition? Position { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -123,16 +122,6 @@ namespace Kendo.Mvc.UI
                 settings["padding"] = padding;
             }
 
-            if (PositionHandler?.HasValue() == true)
-            {
-                settings["position"] = PositionHandler;
-            }
-            else if (Position?.HasValue() == true)
-            {
-               settings["position"] = Position;
-            }
-
-
             if (TemplateId.HasValue())
             {
                 settings["template"] = new ClientHandlerDescriptor {
@@ -166,6 +155,11 @@ namespace Kendo.Mvc.UI
             if (to.Any())
             {
                 settings["to"] = to;
+            }
+
+            if (Position.HasValue)
+            {
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;

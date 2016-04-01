@@ -282,6 +282,51 @@
             :member: SumOrNull
             :description: The sum of all values for the date period. If there are not data for the current period of time the aggregate will return 'null'(instead of 'zero' for the sum aggregate).
 
+    - :name: series.labels.position
+      :description: Specifies the position of the labels.
+      :type: String
+      :enum_type: ChartSeriesLabelsPosition
+      :values:
+          - :value: above
+            :member: Above
+            :description: The label is positioned at the top of the marker.
+
+          - :value: below
+            :member: Below
+            :description: the label is positioned at the bottom of the marker.
+
+          - :value: bottom
+            :member: Bottom
+            :description: The label is positioned at the bottom of the segment.
+
+          - :value: center
+            :member: Center
+            :description: the label is positioned at the center.
+
+          - :value: insideBase
+            :member: InsideBase
+            :description: The label is positioned inside, near the base of the bar.
+
+          - :value: insideEnd
+            :member: InsideEnd
+            :description: The label is positioned inside, near the end of the point.
+
+          - :value: left
+            :member: Left
+            :description: The label is positioned to the left of the marker.
+
+          - :value: outsideEnd
+            :member: OutsideEnd
+            :description: The label is positioned outside, near the end of the point
+
+          - :value: right
+            :member: Right
+            :description: The label is positioned to the right of the marker.
+
+          - :value: top
+            :member: Top
+            :description: The label is positioned at the top of the segment.
+
     - :name: series.missingValues
       :description: Specifies the behavior for handling missing values in the series.
       :type: String

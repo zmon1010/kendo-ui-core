@@ -198,38 +198,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The position of the labels.
-        /// </summary>
-        /// <param name="value">The value for Position</param>
-        public ChartSeriesLabelsSettingsBuilder<T> Position(string value)
-        {
-            Container.PositionHandler = null;
-            Container.Position = value;
-            return this;
-        }
-        /// <summary>
-        /// The position of the labels.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
-        public ChartSeriesLabelsSettingsBuilder<T> PositionHandler(string handler)
-        {
-            Container.Position = null;
-            Container.PositionHandler = new ClientHandlerDescriptor { HandlerName = handler };
-            return this;
-        }
-
-        /// <summary>
-        /// The position of the labels.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartSeriesLabelsSettingsBuilder<T> PositionHandler(Func<object, object> handler)
-        {
-            Container.Position = null;
-            Container.PositionHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
-            return this;
-        }
-
-        /// <summary>
         /// The template which renders the chart series label.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>
@@ -310,6 +278,16 @@ namespace Kendo.Mvc.UI.Fluent
             Container.To.Chart = Container.Chart;
             configurator(new ChartSeriesLabelsToSettingsBuilder<T>(Container.To));
 
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the position of the labels.
+        /// </summary>
+        /// <param name="value">The value for Position</param>
+        public ChartSeriesLabelsSettingsBuilder<T> Position(ChartSeriesLabelsPosition value)
+        {
+            Container.Position = value;
             return this;
         }
 

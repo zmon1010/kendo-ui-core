@@ -35,6 +35,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Column { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The Donut series default settings.
+        /// </summary>
+        public ChartSeries<T> Donut { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Line series default settings.
         /// </summary>
         public ChartSeries<T> Line { get; } = new ChartSeries<T>();
@@ -91,6 +96,13 @@ namespace Kendo.Mvc.UI
             if (column.Any())
             {
                 settings["column"] = column;
+            }
+
+            var donut = Donut.Serialize();
+
+            if (donut.Any())
+            {
+                settings["donut"] = donut;
             }
 
             var line = Line.Serialize();

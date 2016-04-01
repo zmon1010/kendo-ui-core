@@ -43,6 +43,21 @@
         :member: Step
         :description: Points will be connected with a line at right angles.
 
+- :type: ChartPieLabelsPosition
+  :description: Specifies the position of pie chart labels.
+  :values:
+      - :value: center
+        :member: Center
+        :description: The label is positioned at the center of the pie segment.
+
+      - :value: insideEnd
+        :member: InsideEnd
+        :description: The label is positioned inside, near the end of the pie segment.
+
+      - :value: outsideEnd
+        :member: OutsideEnd
+        :description: The label is positioned outside, near the end of the pie segment.
+
 - :type: ChartScatterLineMissingValues
   :description: Specifies the behavior for handling missing values in the series.
   :values:

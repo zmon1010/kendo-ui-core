@@ -87,6 +87,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_Donut_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("donut").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Donut_series_should_be_serialized()
+        {
+            settings.Donut.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("donut").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_Line_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("line").ShouldBeFalse();

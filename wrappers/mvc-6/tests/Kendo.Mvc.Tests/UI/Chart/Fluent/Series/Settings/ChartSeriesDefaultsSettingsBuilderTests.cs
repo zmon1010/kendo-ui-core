@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Bar().ShouldBeType(typeof(ChartSeriesBuilder<object>));
         }
-                
+
         [Fact]
         public void Bubble_series_should_return_builder()
         {
@@ -44,6 +44,12 @@ namespace Kendo.Mvc.UI.Tests
         public void Column_series_should_return_builder()
         {
             builder.Column().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
+        public void Donut_series_should_return_builder()
+        {
+            builder.Donut().ShouldBeType(typeof(ChartSeriesBuilder<object>));
         }
 
         [Fact]
