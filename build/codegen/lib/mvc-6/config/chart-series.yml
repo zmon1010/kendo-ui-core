@@ -118,6 +118,22 @@
         :expression: categoryExpression
         :member: categoryMemberName
 
+- :name: pie
+  :type: Pie
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expressionValue
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :description: category
+        :generic: string
+        :expression: categoryExpression
+        :member: categoryMemberName
+        :skip_in_name: true
+
 - :name: scatter
   :type: Scatter
   :fields:

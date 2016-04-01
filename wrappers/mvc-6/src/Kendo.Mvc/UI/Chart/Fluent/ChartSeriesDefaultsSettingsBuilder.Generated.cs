@@ -73,6 +73,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The pie series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the pie series settings.</param>
+        public ChartSeriesBuilder<T> Pie()
+        {
+            return new ChartSeriesBuilder<T>(Container.Pie);
+        }
+
+        /// <summary>
         /// The scatter series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the scatter series settings.</param>

@@ -40,6 +40,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Line { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The Pie series default settings.
+        /// </summary>
+        public ChartSeries<T> Pie { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Scatter series default settings.
         /// </summary>
         public ChartSeries<T> Scatter { get; } = new ChartSeries<T>();
@@ -93,6 +98,13 @@ namespace Kendo.Mvc.UI
             if (line.Any())
             {
                 settings["line"] = line;
+            }
+
+            var pie = Pie.Serialize();
+
+            if (pie.Any())
+            {
+                settings["pie"] = pie;
             }
 
             var scatter = Scatter.Serialize();

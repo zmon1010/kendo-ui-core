@@ -655,6 +655,83 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines pie series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Pie(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "pie",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines pie series bound to model member(s).
+        /// </summary>
+        /// <param name="expressionValue">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the category from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Pie<TValue>(
+            Expression<Func<T, TValue>> expressionValue,
+            Expression<Func<T, string>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!expressionValue.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "pie",
+                Field = expressionValue.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound pie series.
+        /// </summary>
+        /// <param name="valueMemberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the category member.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Pie(
+            string valueMemberName,
+            string categoryMemberName)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "pie",
+                Name = valueMemberName.AsTitle(),
+                Field = valueMemberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines scatter series bound to inline data.
         /// </summary>
         /// <param name="data">

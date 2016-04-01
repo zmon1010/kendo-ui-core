@@ -101,6 +101,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_Pie_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("pie").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Pie_series_should_be_serialized()
+        {
+            settings.Pie.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("pie").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_ScatterLine_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("scatterLine").ShouldBeFalse();
