@@ -43,6 +43,47 @@
         :member: Step
         :description: Points will be connected with a line at right angles.
 
+- :type: ChartFunnelLabelsAlign
+  :description: Specifies the position of pie chart labels.
+  :values:
+      - :value: center
+        :member: Center
+        :description: The labels are positioned on the top of the funnel chart.
+
+      - :value: right
+        :member: Right
+        :description: The labels are positioned on the left side of the chart.
+
+      - :value: left
+        :member: Left
+        :description: The labels are positioned on the right side of the chart.
+
+- :type: ChartFunnelLabelsPosition
+  :description: Specifies the position of pie chart labels.
+  :values:
+      - :value: center
+        :member: Center
+        :description: The label is positioned at the center of the funnel segment..
+
+      - :value: top
+        :member: Top
+        :description: The label is positioned at the top of the label area.
+
+      - :value: bottom
+        :member: Bottom
+        :description: The label is positioned at the bottom of the label area.
+
+- :type: ChartPieLabelsAlign
+  :description: Specifies the position of pie chart labels.
+  :values:
+      - :value: circle
+        :member: Circle
+        :description: The label is positioned in a circle around the chart.
+
+      - :value: column
+        :member: Column
+        :description: the label is positioned in a column around the chart.
+
 - :type: ChartPieLabelsPosition
   :description: Specifies the position of pie chart labels.
   :values:

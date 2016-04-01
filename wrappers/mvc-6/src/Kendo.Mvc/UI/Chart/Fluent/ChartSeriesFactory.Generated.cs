@@ -706,6 +706,83 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines funnel series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Funnel(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "funnel",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines funnel series bound to model member(s).
+        /// </summary>
+        /// <param name="expressionValue">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the The category value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Funnel<TValue>(
+            Expression<Func<T, TValue>> expressionValue,
+            Expression<Func<T, string>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!expressionValue.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "funnel",
+                Field = expressionValue.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound funnel series.
+        /// </summary>
+        /// <param name="valueMemberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the The category value. member.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Funnel(
+            string valueMemberName,
+            string categoryMemberName)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "funnel",
+                Name = valueMemberName.AsTitle(),
+                Field = valueMemberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines line series bound to inline data.
         /// </summary>
         /// <param name="data">

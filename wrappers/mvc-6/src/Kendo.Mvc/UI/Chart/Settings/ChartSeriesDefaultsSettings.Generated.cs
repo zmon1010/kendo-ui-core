@@ -45,6 +45,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Donut { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The Funnel series default settings.
+        /// </summary>
+        public ChartSeries<T> Funnel { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Line series default settings.
         /// </summary>
         public ChartSeries<T> Line { get; } = new ChartSeries<T>();
@@ -120,6 +125,13 @@ namespace Kendo.Mvc.UI
             if (donut.Any())
             {
                 settings["donut"] = donut;
+            }
+
+            var funnel = Funnel.Serialize();
+
+            if (funnel.Any())
+            {
+                settings["funnel"] = funnel;
             }
 
             var line = Line.Serialize();

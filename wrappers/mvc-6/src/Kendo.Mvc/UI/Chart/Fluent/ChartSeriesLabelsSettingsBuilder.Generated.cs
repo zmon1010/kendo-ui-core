@@ -11,16 +11,6 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The label alignment when series.type is set to "donut", "funnel" or "pie".The supported values  for "donut" and "pie" are:The supported values for "funnel" are:
-        /// </summary>
-        /// <param name="value">The value for Align</param>
-        public ChartSeriesLabelsSettingsBuilder<T> Align(string value)
-        {
-            Container.Align = value;
-            return this;
-        }
-
-        /// <summary>
         /// The background color of the labels. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
@@ -278,6 +268,16 @@ namespace Kendo.Mvc.UI.Fluent
             Container.To.Chart = Container.Chart;
             configurator(new ChartSeriesLabelsToSettingsBuilder<T>(Container.To));
 
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the alignment of the labels.
+        /// </summary>
+        /// <param name="value">The value for Align</param>
+        public ChartSeriesLabelsSettingsBuilder<T> Align(ChartSeriesLabelsAlign value)
+        {
+            Container.Align = value;
             return this;
         }
 

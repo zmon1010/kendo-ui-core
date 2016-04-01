@@ -282,6 +282,31 @@
             :member: SumOrNull
             :description: The sum of all values for the date period. If there are not data for the current period of time the aggregate will return 'null'(instead of 'zero' for the sum aggregate).
 
+    - :name: series.labels.align
+      :description: Specifies the alignment of the labels.
+      :type: String
+      :enum_type: ChartSeriesLabelsAlign
+      :values:
+          - :value: center
+            :member: Center
+            :description: the label is positioned at the center of the segment.
+
+          - :value: circle
+            :member: Circle
+            :description: The label is positioned in a circle around the chart.
+
+          - :value: column
+            :member: Column
+            :description: the label is positioned in a column around the chart.
+
+          - :value: left
+            :member: Left
+            :description: The label is positioned to the left of the segment.
+
+          - :value: right
+            :member: Right
+            :description: The label is positioned to the right of the segment.
+
     - :name: series.labels.position
       :description: Specifies the position of the labels.
       :type: String

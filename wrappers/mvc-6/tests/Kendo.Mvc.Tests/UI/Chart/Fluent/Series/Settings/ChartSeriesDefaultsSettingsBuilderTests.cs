@@ -59,6 +59,13 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Funnel_series_should_return_builder()
+        {
+            builder.Funnel().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+
+        [Fact]
         public void Line_series_should_return_builder()
         {
             builder.Line().ShouldBeType(typeof(ChartSeriesBuilder<object>));

@@ -82,6 +82,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The funnel series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the funnel series settings.</param>
+        public ChartSeriesBuilder<T> Funnel()
+        {
+            return new ChartSeriesBuilder<T>(Container.Funnel);
+        }
+
+        /// <summary>
         /// The line series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the line series settings.</param>

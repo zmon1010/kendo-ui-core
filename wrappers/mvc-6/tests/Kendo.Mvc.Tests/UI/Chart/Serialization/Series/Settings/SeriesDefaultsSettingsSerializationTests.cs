@@ -115,6 +115,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_Funnel_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("funnel").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Funnel_series_should_be_serialized()
+        {
+            settings.Funnel.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("funnel").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_Line_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("line").ShouldBeFalse();

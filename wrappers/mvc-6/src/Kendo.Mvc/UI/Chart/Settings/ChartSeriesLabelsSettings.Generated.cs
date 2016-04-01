@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartSeriesLabelsSettings<T> where T : class 
     {
-        public string Align { get; set; }
-
         public string Background { get; set; }
         public ClientHandlerDescriptor BackgroundHandler { get; set; }
 
@@ -45,6 +43,8 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesLabelsToSettings<T> To { get; } = new ChartSeriesLabelsToSettings<T>();
 
+        public ChartSeriesLabelsAlign? Align { get; set; }
+
         public ChartSeriesLabelsPosition? Position { get; set; }
 
 
@@ -53,11 +53,6 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            if (Align?.HasValue() == true)
-            {
-                settings["align"] = Align;
-            }
 
             if (BackgroundHandler?.HasValue() == true)
             {
@@ -155,6 +150,11 @@ namespace Kendo.Mvc.UI
             if (to.Any())
             {
                 settings["to"] = to;
+            }
+
+            if (Align.HasValue)
+            {
+                settings["align"] = Align?.Serialize();
             }
 
             if (Position.HasValue)

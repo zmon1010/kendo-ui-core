@@ -133,6 +133,22 @@
         :member: categoryMemberName
         :skip_in_name: true
 
+- :name: funnel
+  :type: Funnel
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expressionValue
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :description: The category value.
+        :generic: string
+        :expression: categoryExpression
+        :member: categoryMemberName
+        :skip_in_name: true
+
 - :name: line
   :type: Line
   :fields:
@@ -194,7 +210,7 @@
         :generic: TYValue
         :expression: yValueExpression
         :member: yMemberName
-        
+
 - :name: verticalBullet
   :type: VerticalBullet
   :fields:
