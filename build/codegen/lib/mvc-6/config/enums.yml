@@ -13,6 +13,25 @@
         :member: Zero
         :description: The value is assumed to be zero.
 
+- :type: ChartBarLabelsPosition
+  :description: Specifies the position of the labels.
+  :values:
+      - :value: center
+        :member: Center
+        :description: the label is positioned at the center.
+
+      - :value: insideBase
+        :member: InsideBase
+        :description: The label is positioned inside, near the base of the bar.
+
+      - :value: insideEnd
+        :member: InsideEnd
+        :description: The label is positioned inside, near the end of the point.
+
+      - :value: outsideEnd
+        :member: OutsideEnd
+        :description: The label is positioned outside, near the end of the point
+
 - :type: ChartLineMissingValues
   :description: Specifies the behavior for handling missing values in the series.
   :values:

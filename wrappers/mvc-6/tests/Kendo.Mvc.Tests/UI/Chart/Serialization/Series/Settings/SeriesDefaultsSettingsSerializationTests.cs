@@ -129,6 +129,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_HorizontalWaterfall_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("horizontalWaterfall").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void HorizontalWaterfall_series_should_be_serialized()
+        {
+            settings.HorizontalWaterfall.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("horizontalWaterfall").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_Line_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("line").ShouldBeFalse();
@@ -210,6 +224,20 @@ namespace Kendo.Mvc.UI.Tests
             settings.VerticalBullet.Data = new int[] { 1, 2, 3 };
 
             settings.Serialize().ContainsKey("verticalBullet").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Default_Waterfall_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("waterfall").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Waterfall_series_should_be_serialized()
+        {
+            settings.Waterfall.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("waterfall").ShouldBeTrue();
         }
     }
 }

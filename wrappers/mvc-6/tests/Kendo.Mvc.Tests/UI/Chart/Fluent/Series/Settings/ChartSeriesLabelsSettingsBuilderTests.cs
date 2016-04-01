@@ -69,6 +69,22 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Position_with_ChartBarLabelsPosition()
+        {
+            var value = ChartBarLabelsPosition.InsideBase;
+
+            builder.Position(value);
+
+            settings.Position.ShouldEqual(ChartSeriesLabelsPosition.InsideBase);
+        }
+
+        [Fact]
+        public void Position_with_ChartBarLabelsPositio_should_return_builder()
+        {
+            builder.Position(ChartBarLabelsPosition.InsideBase).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Align_with_ChartFunnelLabelsAlign()
         {
             var value = ChartFunnelLabelsAlign.Right;

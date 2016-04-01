@@ -65,6 +65,12 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void HorizontalWaterfall_series_should_return_builder()
+        {
+            builder.HorizontalWaterfall().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void Line_series_should_return_builder()
         {
             builder.Line().ShouldBeType(typeof(ChartSeriesBuilder<object>));
@@ -92,6 +98,12 @@ namespace Kendo.Mvc.UI.Tests
         public void Scatter_series_should_return_builder()
         {
             builder.Scatter().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
+        public void Waterfall_series_should_return_builder()
+        {
+            builder.Waterfall().ShouldBeType(typeof(ChartSeriesBuilder<object>));
         }
     }
 }

@@ -783,6 +783,109 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines horizontalWaterfall series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> HorizontalWaterfall(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "horizontalWaterfall",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines horizontalWaterfall series bound to model member(s).
+        /// </summary>
+        /// <param name="valueExpression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  HorizontalWaterfall<TValue>(
+            Expression<Func<T, TValue>> valueExpression)
+        {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "horizontalWaterfall",
+                Field = valueExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines horizontalWaterfall series bound to model member(s).
+        /// </summary>
+        /// <param name="valueExpression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the The category value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  HorizontalWaterfall<TValue, TCategory>(
+            Expression<Func<T, TValue>> valueExpression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "horizontalWaterfall",
+                Field = valueExpression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound horizontalWaterfall series.
+        /// </summary>
+        /// <param name="valueMemberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the The category value. member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> HorizontalWaterfall(
+            string valueMemberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "horizontalWaterfall",
+                Name = valueMemberName.AsTitle(),
+                Field = valueMemberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines line series bound to inline data.
         /// </summary>
         /// <param name="data">
@@ -1284,6 +1387,109 @@ namespace Kendo.Mvc.UI.Fluent
                 Name = currentMemberName.AsTitle() + ", " + targetMemberName.AsTitle(),
                 CurrentField = currentMemberName,
                 TargetField = targetMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
+        /// Defines waterfall series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Waterfall(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "waterfall",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines waterfall series bound to model member(s).
+        /// </summary>
+        /// <param name="valueExpression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Waterfall<TValue>(
+            Expression<Func<T, TValue>> valueExpression)
+        {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "waterfall",
+                Field = valueExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines waterfall series bound to model member(s).
+        /// </summary>
+        /// <param name="valueExpression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the The category value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  Waterfall<TValue, TCategory>(
+            Expression<Func<T, TValue>> valueExpression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "waterfall",
+                Field = valueExpression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound waterfall series.
+        /// </summary>
+        /// <param name="valueMemberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the The category value. member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> Waterfall(
+            string valueMemberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "waterfall",
+                Name = valueMemberName.AsTitle(),
+                Field = valueMemberName,
+                CategoryField = categoryMemberName
             };
 
             Container.Add(item);

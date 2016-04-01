@@ -50,6 +50,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Funnel { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The HorizontalWaterfall series default settings.
+        /// </summary>
+        public ChartSeries<T> HorizontalWaterfall { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Line series default settings.
         /// </summary>
         public ChartSeries<T> Line { get; } = new ChartSeries<T>();
@@ -78,6 +83,11 @@ namespace Kendo.Mvc.UI
         /// The VerticalBullet series default settings.
         /// </summary>
         public ChartSeries<T> VerticalBullet { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Waterfall series default settings.
+        /// </summary>
+        public ChartSeries<T> Waterfall { get; } = new ChartSeries<T>();
 
         public IDictionary<string, object> Serialize()
         {
@@ -139,6 +149,13 @@ namespace Kendo.Mvc.UI
                 settings["funnel"] = funnel;
             }
 
+            var horizontalWaterfall = HorizontalWaterfall.Serialize();
+
+            if (horizontalWaterfall.Any())
+            {
+                settings["horizontalWaterfall"] = horizontalWaterfall;
+            }
+
             var line = Line.Serialize();
 
             if (line.Any())
@@ -179,6 +196,13 @@ namespace Kendo.Mvc.UI
             if (verticalBullet.Any())
             {
                 settings["verticalBullet"] = verticalBullet;
+            }
+
+            var waterfall = Waterfall.Serialize();
+
+            if (waterfall.Any())
+            {
+                settings["waterfall"] = waterfall;
             }
 
             return settings;

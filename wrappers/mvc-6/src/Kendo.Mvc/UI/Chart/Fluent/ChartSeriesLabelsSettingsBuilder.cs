@@ -90,7 +90,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="value">The value for Position</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ChartSeriesLabelsSettingsBuilder<T> Position(ChartPieLabelsPosition value)
+        public ChartSeriesLabelsSettingsBuilder<T> Position(ChartBarLabelsPosition value)
         {
             try
             {
@@ -102,12 +102,31 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
         /// <summary>
         /// Specifies the position of the labels.
         /// </summary>
         /// <param name="value">The value for Position</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ChartSeriesLabelsSettingsBuilder<T> Position(ChartFunnelLabelsPosition value)
+        {
+            try
+            {
+                Container.Position = (ChartSeriesLabelsPosition?) Enum.Parse(typeof(ChartSeriesLabelsPosition), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the position of the labels.
+        /// </summary>
+        /// <param name="value">The value for Position</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesLabelsSettingsBuilder<T> Position(ChartPieLabelsPosition value)
         {
             try
             {

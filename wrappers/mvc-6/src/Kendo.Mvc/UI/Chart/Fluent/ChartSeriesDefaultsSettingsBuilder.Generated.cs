@@ -91,6 +91,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The horizontalWaterfall series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the horizontalWaterfall series settings.</param>
+        public ChartSeriesBuilder<T> HorizontalWaterfall()
+        {
+            return new ChartSeriesBuilder<T>(Container.HorizontalWaterfall);
+        }
+
+        /// <summary>
         /// The line series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the line series settings.</param>
@@ -142,6 +151,15 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartSeriesBuilder<T> VerticalBullet()
         {
             return new ChartSeriesBuilder<T>(Container.VerticalBullet);
+        }
+
+        /// <summary>
+        /// The waterfall series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the waterfall series settings.</param>
+        public ChartSeriesBuilder<T> Waterfall()
+        {
+            return new ChartSeriesBuilder<T>(Container.Waterfall);
         }
     }
 }
