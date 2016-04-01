@@ -90,6 +90,14 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Bubble_series_created_with_members_should_set_Name()
+        {
+            factory.Bubble("TotalSales", "RepSalesHigh", "RepSalesLow");
+
+            chart.Series[0].Name.ShouldEqual("Total Sales, Rep Sales High");
+        }
+
+        [Fact]
         public void Bubble_series_with_custom_name_should_override_default_Name()
         {
             CreateSeries().Name("customName");

@@ -43,13 +43,21 @@ module CodeGen::MVC6::Wrappers::ChartGenerator
         write_file(filename, CHART_SERIES_FACTORY.result(binding))
     end
 
+    def primitive_type?(type)
+        PRIMITIVE_CSHARP_TYPES.include?(type)
+    end
+
+    def default_series_name(series)
+        fields_in_series_name = series[:required_fields].select { |field| !field[:skip_in_name] }
+        name = fields_in_series_name.map { |field| "#{field[:member]}.AsTitle()" }.join(' + ", " + ')
+        name
+    end
+
     def series_overloads(series, fields)
         CHART_SERIES_FACTORY_OVERLOADS.result(binding)
     end
 
-    def primitive_type?(type)
-        PRIMITIVE_CSHARP_TYPES.include?(type)
-    end
+
 
     def unique_generic_types(fields)
         field_with_generic = fields.select { |field| !primitive_type?(field[:generic]) }

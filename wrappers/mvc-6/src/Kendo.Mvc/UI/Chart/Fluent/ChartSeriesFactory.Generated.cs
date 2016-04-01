@@ -340,7 +340,7 @@ namespace Kendo.Mvc.UI.Fluent
             {
                 Chart = Chart,
                 Type = "bubble",
-                Name = xMemberName.AsTitle() + ", " + yMemberName.AsTitle() + ", " + sizeMemberName.AsTitle(),
+                Name = xMemberName.AsTitle() + ", " + yMemberName.AsTitle(),
                 XField = xMemberName,
                 YField = yMemberName,
                 SizeField = sizeMemberName,

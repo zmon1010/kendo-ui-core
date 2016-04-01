@@ -50,6 +50,7 @@
         :generic: TSizeValue
         :expression: sizeExpression
         :member: sizeMemberName
+        :skip_in_name: true
 
       - :name: CategoryField
         :optional: true

@@ -50,7 +50,7 @@ namespace Kendo.Mvc.UI.Fluent
             {
                 Chart = Chart,
                 Type = "<%= series[:name] %>",
-                Name = <%= series[:required_fields].map { |field| "#{field[:member]}.AsTitle()" }.join(' + ", " + ') %>,
+                Name = <%= default_series_name(series) %>,
                 <%= series[:fields].map { |field|
                     "#{field[:name]} = #{field[:member]}" }.join(',
                 ')
