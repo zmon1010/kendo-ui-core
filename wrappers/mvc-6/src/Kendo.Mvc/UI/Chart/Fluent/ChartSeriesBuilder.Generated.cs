@@ -577,16 +577,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The behavior for handling missing values. The supported values are:
-        /// </summary>
-        /// <param name="value">The value for MissingValues</param>
-        public ChartSeriesBuilder<T> MissingValues(string value)
-        {
-            Container.MissingValues = value;
-            return this;
-        }
-
-        /// <summary>
         /// The name of the chart series which is visible in the legend.
         /// </summary>
         /// <param name="value">The value for Name</param>
@@ -941,10 +931,20 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies the behavior for handling missing values in the series.
+        /// </summary>
+        /// <param name="value">The value for MissingValues</param>
+        public ChartSeriesBuilder<T> MissingValues(ChartSeriesMissingValues value)
+        {
+            Container.MissingValues = value;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the preferred rendering style.
         /// </summary>
         /// <param name="value">The value for Style</param>
-        public ChartSeriesBuilder<T> Style(ChartLineStyle value)
+        public ChartSeriesBuilder<T> Style(ChartSeriesStyle value)
         {
             Container.Style = value;
             return this;

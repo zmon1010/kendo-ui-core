@@ -73,7 +73,7 @@ namespace Kendo.Mvc.UI.Tests
 
             series.Aggregates.Close.ShouldEqual(ChartSeriesAggregate.Avg);
         }
-        
+
         [Fact]
         public void Color_should_reset_ColorHandler()
         {
@@ -129,6 +129,98 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_MissingValues()
+        {
+            var value = ChartSeriesMissingValues.Interpolate;
+
+            builder.MissingValues(value);
+
+            series.MissingValues.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void MissingValues_should_return_builder()
+        {
+            builder.MissingValues(ChartSeriesMissingValues.Interpolate).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_MissingValues_with_ChartAreaMissingValues()
+        {
+            builder.MissingValues(ChartAreaMissingValues.Zero);
+
+            series.MissingValues.ShouldEqual(ChartSeriesMissingValues.Zero);
+        }
+
+        [Fact]
+        public void MissingValues_with_ChartAreaMissingValues_should_return_builder()
+        {
+            builder.MissingValues(ChartAreaMissingValues.Zero).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_MissingValues_with_ChartLineMissingValues()
+        {
+            builder.MissingValues(ChartLineMissingValues.Interpolate);
+
+            series.MissingValues.ShouldEqual(ChartSeriesMissingValues.Interpolate);
+        }
+
+        [Fact]
+        public void MissingValues_with_ChartLineMissingValues_should_return_builder()
+        {
+            builder.MissingValues(ChartLineMissingValues.Interpolate).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_MissingValues_with_ChartScatterLineMissingValues()
+        {
+            builder.MissingValues(ChartScatterLineMissingValues.Gap);
+
+            series.MissingValues.ShouldEqual(ChartSeriesMissingValues.Gap);
+        }
+
+        [Fact]
+        public void MissingValues_with_ChartScatterLineMissingValues_should_return_builder()
+        {
+            builder.MissingValues(ChartScatterLineMissingValues.Gap).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Stack_Group()
+        {
+            var value = "group";
+
+            builder.Stack(value);
+
+            series.Stack.Group.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Stack_Group_should_return_builder()
+        {
+            builder.Stack("group").ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Stack_Group_and_Type()
+        {
+            var stackType = ChartStackType.Stack100;
+            var stackGroup = "group";
+
+            builder.Stack(stackType, stackGroup);
+
+            series.Stack.Type.ShouldEqual(stackType);
+            series.Stack.Group.ShouldEqual(stackGroup);
+        }
+
+        [Fact]
+        public void Stack_Group_and_Type_should_return_builder()
+        {
+            builder.Stack("group").ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Stack_Type()
         {
             var value = ChartStackType.Stack100;
@@ -139,25 +231,51 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void StackType_should_return_builder()
+        public void Stack_Type_should_return_builder()
         {
             builder.Stack(ChartStackType.Stack100).ShouldBeSameAs(builder);
         }
 
         [Fact]
-        public void Builder_should_set_Style()
+        public void Builder_should_set_Style_with_ChartLineStyle()
         {
-            var value = ChartLineStyle.Smooth;
+            builder.Style(ChartLineStyle.Step);
 
-            builder.Style(value);
-
-            series.Style.ShouldEqual(value);
+            series.Style.ShouldEqual(ChartSeriesStyle.Step);
         }
 
         [Fact]
-        public void Style_should_return_builder()
+        public void Style_with_ChartLineStyle_should_return_builder()
         {
-            builder.Style(ChartLineStyle.Smooth).ShouldBeSameAs(builder);
+            builder.Style(ChartLineStyle.Step).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Style_with_ChartScatterLineStyle()
+        {
+            builder.Style(ChartScatterLineStyle.Smooth);
+
+            series.Style.ShouldEqual(ChartSeriesStyle.Smooth);
+        }
+
+        [Fact]
+        public void Style_with_ChartScatterLineStyle_should_return_builder()
+        {
+            builder.Style(ChartScatterLineStyle.Smooth).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Style_with_ChartSeriesStyle()
+        {
+            builder.Style(ChartSeriesStyle.Smooth);
+
+            series.Style.ShouldEqual(ChartSeriesStyle.Smooth);
+        }
+
+        [Fact]
+        public void Style_with_ChartSeriesStyle_should_return_builder()
+        {
+            builder.Style(ChartSeriesStyle.Smooth).ShouldBeSameAs(builder);
         }
 
         [Fact]

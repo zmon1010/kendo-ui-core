@@ -107,7 +107,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The position of the labels.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public ChartYAxisNotesLabelSettingsBuilder<T> Position(string value)
+        public ChartYAxisNotesLabelSettingsBuilder<T> Position(ChartNoteLabelPosition value)
         {
             Container.Position = value;
             return this;

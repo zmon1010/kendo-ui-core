@@ -104,6 +104,22 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Legend_with_bool_value()
+        {
+            var value = true;
+
+            builder.Legend(value);
+
+            chart.Legend.Visible.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Legend_with_bool_value_should_return_builder()
+        {
+            builder.Legend(true).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Panes_should_return_builder()
         {
             builder.Panes(delegate { }).ShouldBeSameAs(builder);
@@ -112,7 +128,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Pannable()
         {
-            var value = "value";
+            var value = ChartActivationKey.Alt;
 
             builder.Pannable(x => x.Key(value));
 
@@ -122,7 +138,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_enable_Pannable()
         {
-            var value = "value";
+            var value = ChartActivationKey.Alt;
 
             builder.Pannable(x => x.Key(value));
 
@@ -309,7 +325,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Zoomable()
         {
-            var value = "value";
+            var value = ChartActivationKey.Shift;
 
             builder.Zoomable(x => x.Selection(s => s.Key(value)));
 
@@ -319,7 +335,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_enable_Zoomable()
         {
-            var value = "value";
+            var value = ChartActivationKey.Shift;
 
             builder.Zoomable(x => x.Selection(s => s.Key(value)));
 

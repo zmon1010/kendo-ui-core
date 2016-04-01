@@ -11,20 +11,20 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// Specifies the key that should be pressed to activate panning. The supported values are:
+        /// Specifies the key that should be pressed to activate panning or zooming.
         /// </summary>
         /// <param name="value">The value for Key</param>
-        public ChartPannableSettingsBuilder<T> Key(string value)
+        public ChartPannableSettingsBuilder<T> Key(ChartActivationKey value)
         {
             Container.Key = value;
             return this;
         }
 
         /// <summary>
-        /// Specifies an axis that should not be panned. The supported values are none, x and y.
+        /// Specifies an axis that should not be panned or zoomed.
         /// </summary>
         /// <param name="value">The value for Lock</param>
-        public ChartPannableSettingsBuilder<T> Lock(string value)
+        public ChartPannableSettingsBuilder<T> Lock(ChartAxisLock value)
         {
             Container.Lock = value;
             return this;

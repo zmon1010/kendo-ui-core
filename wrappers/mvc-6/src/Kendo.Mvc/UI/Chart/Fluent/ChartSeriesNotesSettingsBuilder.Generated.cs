@@ -11,16 +11,6 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The position of the series note.
-        /// </summary>
-        /// <param name="value">The value for Position</param>
-        public ChartSeriesNotesSettingsBuilder<T> Position(string value)
-        {
-            Container.Position = value;
-            return this;
-        }
-
-        /// <summary>
         /// The icon of the notes.
         /// </summary>
         /// <param name="configurator">The configurator for the icon setting.</param>
@@ -78,5 +68,15 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Visual = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
+        /// <summary>
+        /// Specifies the position of the note.
+        /// </summary>
+        /// <param name="value">The value for Position</param>
+        public ChartSeriesNotesSettingsBuilder<T> Position(ChartNotePosition value)
+        {
+            Container.Position = value;
+            return this;
+        }
+
     }
 }

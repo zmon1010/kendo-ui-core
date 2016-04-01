@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -37,13 +38,135 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A boolean value indicating if the series should be stacked.
-        /// A string value is interpreted as series.stack.group.
+        /// Specifies the behavior for handling missing values in the series.
         /// </summary>
-        /// <param name="configurator">The configurator for the stack setting.</param>
-        public ChartSeriesBuilder<T> Stack(ChartStackType value)
+        /// <param name="value">The value for MissingValues</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> MissingValues(ChartAreaMissingValues value)
         {
-            Container.Stack.Type = value;
+            try
+            {
+                Container.MissingValues = (ChartSeriesMissingValues?)Enum.Parse(typeof(ChartSeriesMissingValues), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the behavior for handling missing values in the series.
+        /// </summary>
+        /// <param name="value">The value for MissingValues</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> MissingValues(ChartLineMissingValues value)
+        {
+            try
+            {
+                Container.MissingValues = (ChartSeriesMissingValues?)Enum.Parse(typeof(ChartSeriesMissingValues), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the behavior for handling missing values in the series.
+        /// </summary>
+        /// <param name="value">The value for MissingValues</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> MissingValues(ChartScatterLineMissingValues value)
+        {
+            try
+            {
+                Container.MissingValues = (ChartSeriesMissingValues?)Enum.Parse(typeof(ChartSeriesMissingValues), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the name of the stack that this series belongs to. Each unique name creates a new stack.
+        /// </summary>
+        /// <param name="stackType">The stack type.</param>
+        /// <param name="stackGroup">The name of the stack group.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Chart(Model)
+        ///             .Name("Chart")
+        ///             .Series(series => series.Bar(s => s.Sales).Stack("Female"))
+        /// );
+        /// </code>
+        /// </example>
+        public virtual ChartSeriesBuilder<T> Stack(ChartStackType stackType, string stackGroup = null)
+        {
+            Container.Stack.Type = stackType;
+
+            if (stackGroup != null)
+            {
+                Container.Stack.Group = stackGroup;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the name of the stack that this series belongs to. Each unique name creates a new stack.
+        /// </summary>
+        /// <param name="stackGroup">The name of the stack group.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Chart(Model)
+        ///             .Name("Chart")
+        ///             .Series(series => series.Bar(s => s.Sales).Stack("Female"))
+        /// );
+        /// </code>
+        /// </example>
+        public virtual ChartSeriesBuilder<T> Stack(string stackGroup)
+        {
+            Container.Stack.Group = stackGroup;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Specifies the preferred rendering style.
+        /// </summary>
+        /// <param name="value">The value for Style</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> Style(ChartLineStyle value)
+        {
+            try
+            {
+                Container.Style = (ChartSeriesStyle?)Enum.Parse(typeof(ChartSeriesStyle), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the preferred rendering style.
+        /// </summary>
+        /// <param name="value">The value for Style</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> Style(ChartScatterLineStyle value)
+        {
+            try
+            {
+                Container.Style = (ChartSeriesStyle?)Enum.Parse(typeof(ChartSeriesStyle), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
 
             return this;
         }

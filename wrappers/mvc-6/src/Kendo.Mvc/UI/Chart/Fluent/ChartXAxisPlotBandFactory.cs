@@ -21,5 +21,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+                
+        /// <summary>
+        /// Adds an item to the collection
+        /// </summary>
+        public virtual ChartXAxisPlotBandBuilder<T> Add(double from, double to, string color)
+        {
+            var item = new ChartXAxisPlotBand<T>()
+            {
+                Chart = Chart,
+                From = from,
+                To = to,
+                Color = color
+            };
+            Container.Add(item);            
+
+            return new ChartXAxisPlotBandBuilder<T>(item);
+        }
     }
 }

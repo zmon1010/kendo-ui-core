@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartSeriesLabelsSettings<T> where T : class 
     {
-        public string Align { get; set; }
-
         public string Background { get; set; }
         public ClientHandlerDescriptor BackgroundHandler { get; set; }
 
@@ -33,9 +31,6 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesLabelsPaddingSettings<T> Padding { get; } = new ChartSeriesLabelsPaddingSettings<T>();
 
-        public string Position { get; set; }
-        public ClientHandlerDescriptor PositionHandler { get; set; }
-
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
@@ -48,17 +43,16 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesLabelsToSettings<T> To { get; } = new ChartSeriesLabelsToSettings<T>();
 
+        public ChartSeriesLabelsAlign? Align { get; set; }
+
+        public ChartSeriesLabelsPosition? Position { get; set; }
+
 
         public Chart<T> Chart { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            if (Align?.HasValue() == true)
-            {
-                settings["align"] = Align;
-            }
 
             if (BackgroundHandler?.HasValue() == true)
             {
@@ -123,16 +117,6 @@ namespace Kendo.Mvc.UI
                 settings["padding"] = padding;
             }
 
-            if (PositionHandler?.HasValue() == true)
-            {
-                settings["position"] = PositionHandler;
-            }
-            else if (Position?.HasValue() == true)
-            {
-               settings["position"] = Position;
-            }
-
-
             if (TemplateId.HasValue())
             {
                 settings["template"] = new ClientHandlerDescriptor {
@@ -166,6 +150,16 @@ namespace Kendo.Mvc.UI
             if (to.Any())
             {
                 settings["to"] = to;
+            }
+
+            if (Align.HasValue)
+            {
+                settings["align"] = Align?.Serialize();
+            }
+
+            if (Position.HasValue)
+            {
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;

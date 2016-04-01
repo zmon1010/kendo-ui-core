@@ -184,6 +184,36 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Numeric()
+        {
+            builder.Numeric();
+
+            axis.Type.ShouldEqual("numeric");
+        }
+
+        [Fact]
+        public void Numeric_should_return_builder()
+        {
+            builder.Numeric().ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_the_name_of_numeric_axis()
+        {
+            var value = "name";
+
+            builder.Numeric(value);
+
+            axis.Name.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Numeric_axis_type_with_name_should_return_builder()
+        {
+            builder.Numeric("name").ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Pane()
         {
             var value = "red";
@@ -302,7 +332,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Notes()
         {
-            var value = "red";
+            var value = ChartNotePosition.Bottom;
 
             builder.Notes(x => x.Position(value));
 

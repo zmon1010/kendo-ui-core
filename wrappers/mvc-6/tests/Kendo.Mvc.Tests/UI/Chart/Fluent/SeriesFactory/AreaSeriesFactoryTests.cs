@@ -16,7 +16,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Area_series_with_custom_data_should_set_series_type()
+        public void Area_series_with_custom_data_should_set_Type()
         {
             factory.Area(new int[] { });
 
@@ -50,7 +50,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Area_series_created_with_expression_should_set_series_type()
+        public void Area_series_created_with_expression_should_set_Type()
         {
             factory.Area(s => s.TotalSales);
 
@@ -58,15 +58,15 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Area_series_created_with_expression_should_set_series_name()
+        public void Area_series_created_with_expression_should_not_set_Name()
         {
             factory.Area(s => s.TotalSales);
 
-            chart.Series[0].Name.ShouldEqual("Total Sales");
+            chart.Series[0].Name.ShouldEqual(null);
         }
                 
         [Fact]
-        public void Area_series_with_custom_name_should_override_default_series_name()
+        public void Area_series_with_custom_name_should_override_default_Name()
         {
             factory.Area(s => s.TotalSales).Name("customName");
 
@@ -98,7 +98,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Area_series_created_with_category_expression_should_set_series_type()
+        public void Area_series_created_with_category_expression_should_set_Type()
         {
             factory.Area(s => s.TotalSales, category => category.RepName);
 
@@ -106,11 +106,11 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Area_series_created_with_category_expression_should_set_series_name()
+        public void Area_series_created_with_category_expression_should_set_Name()
         {
             factory.Area(s => s.TotalSales, category => category.RepName);
 
-            chart.Series[0].Name.ShouldEqual("Total Sales");
+            chart.Series[0].Name.ShouldEqual(null);
         }
 
         [Fact]

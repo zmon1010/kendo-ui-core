@@ -1,3 +1,145 @@
+- :type: ChartAreaMissingValues
+  :description: Specifies the behavior for handling missing values in the series.
+  :values:
+      - :value: gap
+        :member: Gap
+        :description: The line stops before the missing point and continues after it.
+
+      - :value: interpolate
+        :member: Interpolate
+        :description: The value is interpolated from neighboring points.
+
+      - :value: zero
+        :member: Zero
+        :description: The value is assumed to be zero.
+
+- :type: ChartBarLabelsPosition
+  :description: Specifies the position of the labels.
+  :values:
+      - :value: center
+        :member: Center
+        :description: the label is positioned at the center.
+
+      - :value: insideBase
+        :member: InsideBase
+        :description: The label is positioned inside, near the base of the bar.
+
+      - :value: insideEnd
+        :member: InsideEnd
+        :description: The label is positioned inside, near the end of the point.
+
+      - :value: outsideEnd
+        :member: OutsideEnd
+        :description: The label is positioned outside, near the end of the point
+
+- :type: ChartLineMissingValues
+  :description: Specifies the behavior for handling missing values in the series.
+  :values:
+      - :value: gap
+        :member: Gap
+        :description: The line stops before the missing point and continues after it.
+
+      - :value: interpolate
+        :member: Interpolate
+        :description: The value is interpolated from neighboring points.
+
+      - :value: zero
+        :member: Zero
+        :description: The value is assumed to be zero.
+
+- :type: ChartLineStyle
+  :description: Specifies the preferred rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with smooth line.
+
+      - :value: step
+        :member: Step
+        :description: Points will be connected with a line at right angles.
+
+- :type: ChartFunnelLabelsAlign
+  :description: Specifies the position of pie chart labels.
+  :values:
+      - :value: center
+        :member: Center
+        :description: The labels are positioned on the top of the funnel chart.
+
+      - :value: right
+        :member: Right
+        :description: The labels are positioned on the left side of the chart.
+
+      - :value: left
+        :member: Left
+        :description: The labels are positioned on the right side of the chart.
+
+- :type: ChartFunnelLabelsPosition
+  :description: Specifies the position of pie chart labels.
+  :values:
+      - :value: center
+        :member: Center
+        :description: The label is positioned at the center of the funnel segment..
+
+      - :value: top
+        :member: Top
+        :description: The label is positioned at the top of the label area.
+
+      - :value: bottom
+        :member: Bottom
+        :description: The label is positioned at the bottom of the label area.
+
+- :type: ChartPieLabelsAlign
+  :description: Specifies the position of pie chart labels.
+  :values:
+      - :value: circle
+        :member: Circle
+        :description: The label is positioned in a circle around the chart.
+
+      - :value: column
+        :member: Column
+        :description: the label is positioned in a column around the chart.
+
+- :type: ChartPieLabelsPosition
+  :description: Specifies the position of pie chart labels.
+  :values:
+      - :value: center
+        :member: Center
+        :description: The label is positioned at the center of the pie segment.
+
+      - :value: insideEnd
+        :member: InsideEnd
+        :description: The label is positioned inside, near the end of the pie segment.
+
+      - :value: outsideEnd
+        :member: OutsideEnd
+        :description: The label is positioned outside, near the end of the pie segment.
+
+- :type: ChartScatterLineMissingValues
+  :description: Specifies the behavior for handling missing values in the series.
+  :values:
+      - :value: gap
+        :member: Gap
+        :description: The line stops before the missing point and continues after it.
+
+      - :value: interpolate
+        :member: Interpolate
+        :description: The value is interpolated from neighboring points.
+
+- :type: ChartScatterLineStyle
+  :description: Specifies the preferred rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with a straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with a smooth line.
+
 - :type: FilterType
   :description: The filtering method used to determine the suggestions for the current value.
   :values:

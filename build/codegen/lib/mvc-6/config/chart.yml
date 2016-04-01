@@ -85,6 +85,10 @@
       :type: bool
       :default: false
 
+    - :name: categoryAxis.labels.rotation.angle
+      :merge: true
+      :type: object
+
     - :name: categoryAxis.max
       :merge: true
       :type: object
@@ -155,6 +159,44 @@
             :member: Custom
             :description: The legend is positioned using OffsetX and OffsetY
 
+    - :name: pannable.key
+      :description: Specifies the key that should be pressed to activate panning or zooming.
+      :type: String
+      :enum_type: ChartActivationKey
+      :values:
+          - :value: none
+            :member: None
+            :description: No key is required.
+
+          - :value: ctrl
+            :member: Ctrl
+            :description: The "ctrl" key should be pressed.
+
+          - :value: shift
+            :member: Shift
+            :description: The "shift" key should be pressed.
+
+          - :value: alt
+            :member: Alt
+            :description: The "alt" key should be pressed.
+
+    - :name: pannable.lock
+      :description: Specifies an axis that should not be panned or zoomed.
+      :type: String
+      :enum_type: ChartAxisLock
+      :values:
+          - :value: none
+            :member: None
+            :description: No axis locking is applied.
+
+          - :value: x
+            :member: X
+            :description: Locks the x axis.
+
+          - :value: y
+            :member: Y
+            :description: Locks the y axis.
+
     - :name: plotArea.border.dashType
       :description: Specifies the line dash type.
       :type: String
@@ -205,10 +247,6 @@
             :member: VML
             :description: Attempts to render the widget as VML elements.
 
-    - :name: !ruby/regexp '/.*dashType$/i'
-      :merge: true
-      :enum_type: ChartDashType
-
     - :name: series.aggregate
       :description: Specifies the preferred series aggregate.
       :type:
@@ -244,22 +282,126 @@
             :member: SumOrNull
             :description: The sum of all values for the date period. If there are not data for the current period of time the aggregate will return 'null'(instead of 'zero' for the sum aggregate).
 
-    - :name: series.style
-      :description: Specifies the preferred rendering style.
+    - :name: series.labels.align
+      :description: Specifies the alignment of the labels.
       :type: String
-      :enum_type: ChartLineStyle
+      :enum_type: ChartSeriesLabelsAlign
       :values:
-          - :value: normal
-            :member: Normal
-            :description: Points will be connected with straight line.
+          - :value: center
+            :member: Center
+            :description: the label is positioned at the center of the segment.
 
-          - :value: step
-            :member: Step
-            :description: Points will be connected with a line at right angles.
+          - :value: circle
+            :member: Circle
+            :description: The label is positioned in a circle around the chart.
 
-          - :value: smooth
-            :member: Smooth
-            :description: Points will be connected with smooth line.
+          - :value: column
+            :member: Column
+            :description: the label is positioned in a column around the chart.
+
+          - :value: left
+            :member: Left
+            :description: The label is positioned to the left of the segment.
+
+          - :value: right
+            :member: Right
+            :description: The label is positioned to the right of the segment.
+
+    - :name: series.labels.position
+      :description: Specifies the position of the labels.
+      :type: String
+      :enum_type: ChartSeriesLabelsPosition
+      :values:
+          - :value: above
+            :member: Above
+            :description: The label is positioned at the top of the marker.
+
+          - :value: below
+            :member: Below
+            :description: the label is positioned at the bottom of the marker.
+
+          - :value: bottom
+            :member: Bottom
+            :description: The label is positioned at the bottom of the segment.
+
+          - :value: center
+            :member: Center
+            :description: the label is positioned at the center.
+
+          - :value: insideBase
+            :member: InsideBase
+            :description: The label is positioned inside, near the base of the bar.
+
+          - :value: insideEnd
+            :member: InsideEnd
+            :description: The label is positioned inside, near the end of the point.
+
+          - :value: left
+            :member: Left
+            :description: The label is positioned to the left of the marker.
+
+          - :value: outsideEnd
+            :member: OutsideEnd
+            :description: The label is positioned outside, near the end of the point
+
+          - :value: right
+            :member: Right
+            :description: The label is positioned to the right of the marker.
+
+          - :value: top
+            :member: Top
+            :description: The label is positioned at the top of the segment.
+
+    - :name: series.missingValues
+      :description: Specifies the behavior for handling missing values in the series.
+      :type: String
+      :enum_type: ChartSeriesMissingValues
+      :values:
+          - :value: gap
+            :member: Gap
+            :description: The line stops before the missing point and continues after it.
+
+          - :value: interpolate
+            :member: Interpolate
+            :description: The value is interpolated from neighboring points.
+
+          - :value: zero
+            :member: Zero
+            :description: The value is assumed to be zero.
+
+    - :name: series.notes.label.position
+      :description: Specifies the position of the labels.
+      :type: String
+      :enum_type: ChartNoteLabelPosition
+      :values:
+          - :value: inside
+            :member: Inside
+            :description: The label is positioned inside of the icon.
+
+          - :value: outside
+            :member: Outside
+            :description: The label is positioned outside of the icon.
+
+    - :name: series.notes.position
+      :description: Specifies the position of the note.
+      :type: String
+      :enum_type: ChartNotePosition
+      :values:
+          - :value: top
+            :member: Top
+            :description: The note is positioned on the top.
+
+          - :value: bottom
+            :member: Bottom
+            :description: The note is positioned on the bottom.
+
+          - :value: left
+            :member: Left
+            :description: The note is positioned on the left.
+
+          - :value: right
+            :member: Right
+            :description: The note is positioned on the right.
 
     - :name: series.line.style
       :description: Specifies the preferred line rendering style.
@@ -291,9 +433,56 @@
             :member: Stack100
             :description: The value of the stack is always 100% (1.0). Points within the category (or group) are represented as percentages.
 
+    - :name: series.style
+      :description: Specifies the preferred rendering style.
+      :type: String
+      :enum_type: ChartSeriesStyle
+      :values:
+          - :value: normal
+            :member: Normal
+            :description: Points will be connected with straight line.
+
+          - :value: smooth
+            :member: Smooth
+            :description: Points will be connected with smooth line.
+
+          - :value: step
+            :member: Step
+            :description: Points will be connected with a line at right angles.
+
     - :name: series.target.line.width
       :merge: true
       :type: double
+
+    - :name: title.align
+      :description: Specifies the text alignment.
+      :type: String
+      :enum_type: ChartTextAlignment
+      :values:
+          - :value: left
+            :member: Left
+            :description: The text is aligned to the left.
+
+          - :value: center
+            :member: Center
+            :description: The text is aligned to the middle
+
+          - :value: right
+            :member: Right
+            :description: The text is aligned to the right.
+
+    - :name: title.position
+      :description: Specifies the title position.
+      :type: String
+      :enum_type: ChartTitlePosition
+      :values:
+          - :value: top
+            :member: Top
+            :description: The title is positioned at the top
+
+          - :value: bottom
+            :member: Bottom
+            :description: The title is positioned at the bottom
 
     - :name: valueAxis.axisCrossingValue
       :merge: true
@@ -346,3 +535,30 @@
     - :name: yAxis.plotBands.to
       :merge: true
       :type: object
+
+    - :name: zoomable.selection.key
+      :description: Specifies a keyboard key that should be pressed to activate the selection.
+      :type: String
+      :enum_type: ChartActivationKey
+
+    - :name: zoomable.selection.lock
+      :description: Specifies an axis that should not be zoomed.
+      :type: String
+      :enum_type: ChartAxisLock
+
+    - :name: zoomable.mousewheel.lock
+      :description: Specifies an axis that should not be zoomed.
+      :type: String
+      :enum_type: ChartAxisLock
+
+    - :name: !ruby/regexp '/.*dashType$/i'
+      :merge: true
+      :enum_type: ChartDashType
+
+    - :name: !ruby/regexp '/.*\.notes\.label\.position$/i'
+      :merge: true
+      :enum_type: ChartNoteLabelPosition
+
+    - :name: !ruby/regexp '/.*\.notes\.position$/i'
+      :merge: true
+      :enum_type: ChartNotePosition

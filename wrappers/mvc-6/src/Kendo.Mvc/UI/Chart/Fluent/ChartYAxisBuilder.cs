@@ -43,7 +43,16 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public ChartYAxisBuilder<T> Numeric()
         {
+            return Numeric(string.Empty);
+        }
+
+        /// <summary>
+        /// Defines a numeric axis.
+        /// </summary>
+        public ChartYAxisBuilder<T> Numeric(string name)
+        {
             Container.Type = "numeric";
+            Container.Name = name;
             return this;
         }
 

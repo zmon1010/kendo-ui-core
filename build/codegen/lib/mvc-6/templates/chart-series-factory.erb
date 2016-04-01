@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -22,11 +23,11 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var item = new ChartSeries<T>()
             {
+                Chart = Chart,
                 Type = "<%= series[:name] %>",
                 Data = data
             };
 
-            item.Chart = Chart;
             Container.Add(item);
 
             return new ChartSeriesBuilder<T>(item);
@@ -49,7 +50,7 @@ namespace Kendo.Mvc.UI.Fluent
             {
                 Chart = Chart,
                 Type = "<%= series[:name] %>",
-                Name = <%= series[:required_fields].map { |field| "#{field[:member]}.AsTitle()" }.join(' + ", " + ') %>,
+                Name = <%= default_series_name(series) %>,
                 <%= series[:fields].map { |field|
                     "#{field[:name]} = #{field[:member]}" }.join(',
                 ')

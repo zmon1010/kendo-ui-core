@@ -158,7 +158,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Pannable()
         {
-            var value = "value";
+            var value = ChartActivationKey.Alt;
 
             builder.Pannable(x => x.Key(value));
 
@@ -168,9 +168,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_enable_Pannable()
         {
-            var value = "value";
-
-            builder.Pannable(x => x.Key(value));
+            builder.Pannable(x => x.Key(ChartActivationKey.Alt));
 
             chart.Pannable.Enabled.ShouldEqual(true);
         }
@@ -401,7 +399,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Zoomable()
         {
-            var value = "value";
+            var value = ChartActivationKey.Shift;
 
             builder.Zoomable(x => x.Selection(s => s.Key(value)));
 
@@ -411,7 +409,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_enable_Zoomable()
         {
-            var value = "value";
+            var value = ChartActivationKey.Shift;
 
             builder.Zoomable(x => x.Selection(s => s.Key(value)));
 

@@ -3,12 +3,12 @@ using Kendo.Mvc.UI.Fluent;
 
 namespace Kendo.Mvc.UI.Tests
 {
-    public class AutoBaseUnitStepsBuilderTests
+    public class CategoryAxisAutoBaseUnitStepsBuilderTests
     {
         private readonly ChartCategoryAxisAutoBaseUnitStepsSettings<SalesData> autoBaseUnitSteps;
         private readonly ChartCategoryAxisAutoBaseUnitStepsSettingsBuilder<SalesData> builder;
 
-        public AutoBaseUnitStepsBuilderTests()
+        public CategoryAxisAutoBaseUnitStepsBuilderTests()
         {
             autoBaseUnitSteps = new ChartCategoryAxisAutoBaseUnitStepsSettings<SalesData>();
             builder = new ChartCategoryAxisAutoBaseUnitStepsSettingsBuilder<SalesData>(autoBaseUnitSteps);

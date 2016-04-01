@@ -451,6 +451,366 @@
     "category": "Charts"
   },
   {
+    "text": "Bar Charts",
+    "name": "bar-charts",
+    "pro": "true",
+    "api": "dataviz/chart",
+    "documentation": {
+       "kendo-ui": "getting-started/dataviz/chart/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/chart/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/chart/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/charts",
+       "aspnet-mvc": "aspnet-mvc/chart",
+       "jsp-ui": "jsp/chart",
+       "php-ui": "php/chart"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/charts",
+       "aspnet-mvc": "aspnet-mvc/chart",
+       "jsp-ui": "jsp/chart",
+       "php-ui": "php/chart"
+    },
+    "spriteCssClass": "chartBarIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "bar-charts/index",
+        "title": {
+            "kendo-ui": "Demo for Kendo UI Bar Chart",
+            "aspnet-mvc": "ASP.NET MVC Bar Charts sample"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates the basic usage of Kendo UI Bar Chart which enables the user to show customized bar charts.",
+            "aspnet-mvc": "In this demo you will see in action the ASP.NET MVC Bar Chart HTMLHelper extension for Kendo UI Bar Charts widget."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><p>A Bar chart displays data as horizontal or vertical bars whose lengths vary according to their value. You can use a Bar chart to show a comparison between several sets of data (for example, summaries of the unique and total site visitors for certain period).</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() function. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>",
+			"aspnet-mvc": "<p>The Telerik ASP.NET MVC chart is a powerful data visualization component, which allows you to graphically represent your data. It is useful when you would like to utilize modern browser technologies such as <a href=\"http://en.wikipedia.org/wiki/Scalable_Vector_Graphics\">SVG</a> or <a href=\"https://en.wikipedia.org/wiki/Canvas_element\">Canvas</a> (with a fallback to <a href=\"http://en.wikipedia.org/wiki/Vector_Markup_Language\">VML</a> for older IE versions) for interactive data visualizations. </p> <p>The component offers a variety of chart types such as area, bar, line, scatter, polar, radar, pie and donut, stock (OHLC) and many more.</p> <p>A Bar chart displays data as horizontal bars whose lengths vary according to their value. You can use a Bar chart to show a comparison between several sets of data (for example, summaries of the unique and total site visitors for certain period).<br /> <br /> The chart can fetch data for its series from either local or remote data source. You can find more information about the MVC chart in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">product documentation</a>.</p> <p><strong><br /> Key Features of Telerik MVC Charts</strong></p> <ul> <li>Various Chart Types</li> <li>A Number of Data Types</li> <li>High Performance</li> <li>Export to PDF</li> <li>Simple-to-Customize Look and Feel</li> <li>Rich Server and Client-side API</li> <li>Server and Client-side Data Binding</li> <li>Built-in Themes</li> <li>Intuitive Built-in Animations</li> <li>Multiple Series and Combination Charts</li> <li>Plot Bands</li> <li>Rich Cross-Browser and Mobile Support</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/charts\">Telerik MVC Charts</a>.</p>"
+        }
+      },
+      {
+        "text": "Column chart",
+        "url": "bar-charts/column",
+        "title": {
+            "kendo-ui": "Example of a basic Kendo UI Column Chart control",
+            "aspnet-mvc": "Example of a basic ASP.NET MVC Column Chart control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how some settings of Kendo UI chart widget can be changed in order to display the bar Chart as a Column chart.",
+            "aspnet-mvc": "This demo shows how some settings of ASP.NET MVC chart can be changed in order to display the bar Chart as a Column chart."
+        },
+		"description": {
+            "kendo-ui": "<p>The Column chart visualizes data as vertical bars whose heights vary according to their value. It can be useful for presenting a comparison between several sets of data (e.g., snapshots of data across different points in time like the GDP growth shown in this example).</p> <p>Column charts are very similar to Bar charts, with the only difference that bars&rsquo; orientation is vertical instead of horizontal.</p> <p>You can define the chart series as horizontal via the seriesDefaults-&gt; type -&gt;<strong>= \"column\"</strong></p>",
+			"aspnet-mvc": "<p>The Column chart shows data as vertical bars whose heights vary according to their value. It can be useful for showing a comparison between several sets of data (e.g., snapshots of data across different points in time like the GDP growth shown in this example).</p> <p>Column charts are very similar to Bar charts, with the only difference that bars&rsquo; orientation is vertical instead of horizontal.</p> <p>You can define the chart series as horizontal via the Series -&gt; series.<strong>Column</strong> method:<br /> <br /> .Series(series =&gt; series.Column(new double[] { 3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855 }))</p>"
+		},
+		"group": "Bar Chart Types"
+      },
+      {
+        "text": "Stacked bars",
+        "url": "bar-charts/stacked-bar",
+        "title": {
+            "kendo-ui": "Kendo UI jQuery-powered Stacked Bar Charts | Kendo UI DataViz Demos",
+            "aspnet-mvc": "ASP.NET MVC Stacked Bar Charts | UI for ASP.NET MVC demo"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how Kendo UI Bar Charts component supports a stacked bar. The feature of the widget is enabled by setting the stacked property to true.",
+            "aspnet-mvc": "This example shows how ASP.NET MVC Bar Chart supports a stacked bar. The feature of the control is enabled by setting the stacked property to true."
+        },
+		"description": {
+            "kendo-ui": "<p>A Stacked bar is a bar divided into subparts to represent cumulative effect, to display money distribution or production against time. You can easily enable the stack feature through the seriesDefaults-&gt; stack chart setting:</p><p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-seriesDefaults\">seriesDefaults option</a> in the documentation.</p>",
+			"aspnet-mvc": "<p>A Stacked bar is a bar divided into subparts to show cumulative effect, to display money distribution or production against time. You can easily enable the stack feature through the SeriesDefaults -&gt; Bar -&gt; Stack(true) setting:</p> <p>.SeriesDefaults(series =&gt; series.Bar().Stack(true))</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/kendo.mvc.ui.fluent/chartbuilder#methods-SeriesDefaults%28System.Action%3CKendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder%3CT%3E%3E%29\">SeriesDefaults option</a> in the documentation.</p>"
+		}
+      },
+      {
+        "text": "Stacked and grouped bars",
+        "url": "bar-charts/grouped-stacked-bar",
+        "title": {
+            "kendo-ui": "Kendo UI Stacked and Grouped Bar Chart Example",
+            "aspnet-mvc": "ASP.NET MVC Stacked and Grouped Bar Chart Example"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates the implementation of Kendo UI stacked and grouped bars in various data visualization-driven web apps.",
+            "aspnet-mvc": "This sample demonstrates the implementation of ASP.NET MVC stacked and grouped bars in various data visualization-driven web apps."
+        },
+        "description": {
+            "kendo-ui": "<p>In general, the data series in a stacked column or bar chart have one stack per category. There are cases in which you might want to arrange your data so that the chart appears to have more than one stack per category, i.e. grouping the stacks.</p> <p>In this demo you can see how to group stacked columns to display the World population compared by age and sex in a specific period of time by setting the series -&gt; stack option, which applies the name of the stack that the series belong to (Male or Female in this sample)</p>",
+            "aspnet-mvc": "<p>Usually, the data series in a stacked column or bar chart have one stack per category. There are scenarios in which you might want to arrange your data so that the chart appears to have more than one stack per category.</p> <p>In this demo, you can see how to group stacked columns to display the World population compared by age and sex in a specific period of time by setting the Stack() method, which sets the name of the stack that the series belong to:</p> <p>series.Column(new int[] { 1100941, 1139797, 1172929, 1184435, 1184654 }).Name(\"0-19\").Stack(\"Female\");</p>"
+        }
+      },
+      {
+        "text": "100% Stacked bars",
+        "url": "bar-charts/stacked100-bar",
+        "title": {
+            "kendo-ui": "Kendo UI jQuery-powered 100% Stacked Bar Charts | Kendo UI DataViz Demos",
+            "aspnet-mvc": "100% Stacked Bars in Telerik ASP.NET MVC Bar Charts"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how Kendo UI Bar Charts component supports a 100% stacked bar. The feature of the widget is enabled by setting the stack type to '100%'.",
+            "aspnet-mvc": "This demo illustrates 100% stacked bars capability in Telerik ASP.NET MVC Bar Charts for Kendo UI jQuery-powered Bar Chart control."
+        },
+        "description": {
+            "kendo-ui": "<p>The Bar chart type supports 100% stacking, where the stacked series values are rescaled in a way they add up to 100%.</p> <p>You can enable the 100% stack feature through the seriesDefaults-&gt; stack -&gt; type chart attribute.</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-seriesDefaults\">seriesDefaults option</a> in the documentation.</p>",
+            "aspnet-mvc": "<p>The Bar chart type supports 100% stacking, where the stacked series value are rescaled such that they add up to 100%.</p> <p>You can enable the 100% stack feature through the SeriesDefaults -&gt; Bar -&gt; Stack(ChartStackType.Stack100) method.</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/kendo.mvc.ui.fluent/chartbuilder#methods-SeriesDefaults%28System.Action%3CKendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder%3CT%3E%3E%29\">SeriesDefaults option</a> in the documentation.</p>"
+        }
+      },
+      {
+        "text": "100% Stacked and grouped bars",
+        "url": "bar-charts/grouped-stacked100-bar",
+        "title": {
+            "kendo-ui": "Kendo UI 100% Stacked and Grouped Bar Chart Example",
+            "aspnet-mvc": "ASP.NET MVC 100% Stacked and Grouped Bar Chart Example"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates the implementation of Kendo UI 100% stacked and grouped bars in various data visualization-driven web apps.",
+            "aspnet-mvc": "This sample demonstrates the implementation of ASP.NET MVC 100% stacked and grouped bars in various data visualization-driven web apps."
+        },
+        "description": {
+            "kendo-ui": "<p>This example demonstrates the implementation of 100% stacked and grouped bars for the Kendo UI chart.</p> <p>You can enable the 100% stack feature by setting the seriesDefaults -&gt; stack -&gt; type and series -&gt; stack -&gt; group attributes of the chart (the latter are set to Male and Female in this demo).</p>",
+            "aspnet-mvc": "<p>This example demonstrates the implementation of ASP.NET MVC 100% stacked and grouped bars.</p> <p>You can enable the 100% stack feature by setting the first ChartStackType.Stack100 argument of the Series -&gt; Column -&gt; Stack() method, i.e.</p> <p>series.Column(new int[] { 1100941, 1139797, 1172929, 1184435, 1184654 }).Name(\"0-19\").Stack(ChartStackType.Stack100, \"Female\");</p>"
+        }
+      },
+      {
+        "text": "Date axis",
+        "url": "bar-charts/date-axis",
+        "title": {
+            "kendo-ui": "Date axis example in Kendo UI jQuery chart control",
+            "aspnet-mvc": "Date axis example in ASP.NET MVC Bar chart control"
+        },
+        "meta": {
+            "kendo-ui": "This sample shows how you can configure the base date unit for your date axis in Kendo UI HTML5 business bar chart.",
+            "aspnet-mvc": "This sample shows how you can configure the base date unit for your date axis in ASP.NET MVC business bar chart."
+        },
+		"description": {
+            "kendo-ui": "<p>You can scale the date axis of your Kendo UI  Bar Chart to get a better visualization of seasonal data in your app. This can be done by modifying:</p> <ul> <li>The base date unit of the x-axis through the categoryAxis.baseUnit attribute, which takes seconds, minutes, hours, days, week, months and years</li> <li>The default aggregates of the series through the series -&gt; aggregate chart setting, which takes max, min, sum, avg and count.</li> </ul>",
+			"aspnet-mvc": "<p>You can scale the date axis of your ASP.NET MVC Bar Chart to get a better visualization of the seasonal data in your app. This can be done by modifying:</p> <ul> <li>The base date unit of the x-axis through the CategoryAxis.BaseUnit method, which takes seconds, minutes, hours, days, week, months and years</li> <li>The default aggregates of the series through the Series.Aggregate property, which takes max, min, sum, avg and count.</li> </ul>"
+		},
+		"group": "Functionality"
+      },
+      {
+        "text": "Logarithmic axis",
+        "url": "bar-charts/logarithmic-axis",
+        "title": {
+            "kendo-ui": "Logarithmic axis sample for Kendo UI Bar Charts",
+            "aspnet-mvc": "Logarithmic axis sample for ASP.NET MVC Bar Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how you can use a logarithmic axis for the Kendo UI Bar Chart.",
+            "aspnet-mvc": "This demo shows how you can use a logarithmic axis for the ASP.NET MVC Bar Chart."
+        },
+		"description": {
+            "kendo-ui": "<p>Logarithmic axis is a special numeric axis that transforms the actual values by using a logarithmic function with a particular base. Logarithmic axis is helpful for displaying values that cover different orders of magnitude because it lets large values display together with small values in a more condensed scale than the default linear axis.</p> <p>This demo shows how you can use a logarithmic axis for the Kendo UI Column Chart by setting the valueAxis -&gt; type = \"log\" attribute value.</p>",
+			"aspnet-mvc": "<p>A logarithmic axis is a special numeric axis that transforms the actual values by using a logarithmic function with a particular base. A logarithmic axis is useful for displaying values that cover different orders of magnitude because it lets large values display together with small values in a more condensed scale than the default linear axis.</p> <p>This demo shows how you can use a logarithmic axis for the ASP.NET MVC Column Chart by setting the ValueAxis -&gt; Logarithmic() method.</p>"
+		}
+      },
+      {
+        "text": "Multi-axis",
+        "url": "bar-charts/multiple-axes",
+        "title": {
+            "kendo-ui": "Example of multiple axes implementation in Kendo UI Bar Chart",
+            "aspnet-mvc": "Multi-axis in ASP.NET MVC Bar Charts | UI for ASP.NET MVC demos"
+        },
+        "meta": {
+            "kendo-ui": "This sample illustrates how you can display a data series, using multiple axes in your business chart, built with Kendo UI HTML5 Bar Chart widget.",
+            "aspnet-mvc": "In this demo you will see how multiple axis of Telerik jQuery-powered Bar Charts can be configured in ASP.NET MVC."
+        },
+		"description": {
+            "kendo-ui": "<p>The Telerik Kendo UI Bar chart supports multiple axis. This helps you leverage the best charting performance and visualize data on any number axis to provide solid business reports for your users.</p> <p>The example above shows a hybrid car range report visualized through four value axes: <em>km</em>, <em>miles</em>, <em>miles per gallon</em> and <em>liters per 100km</em>. Note that each of them has a unique name which is set through the <strong>valueAxis.title</strong>attribute. You can also populate the <strong>categoryAxis.axisCrossingValue</strong> array with values to specify the alignment of the value axes.</p>",
+			      "aspnet-mvc": "<p>The Telerik ASP.NET MVC Bar chart supports multiple axis. This helps you leverage the best charting performance and visualize data on any number axis to provide solid business reports for your users.</p> <p>The example above shows a hybrid car range report visualized through four value axes: <em>km</em>, <em>miles</em>, <em>miles per gallon</em> and <em>liters per 100km</em>. Note that each of them has unique name which is set through the <strong>ValueAxis.Title </strong>method. You can also set the <strong>CategoryAxis.AxisCrossingValue</strong> method to specify the alignment of the value axes.</p>"
+		}
+      },
+      {
+        "text": "Plot bands",
+        "url": "bar-charts/plotbands",
+        "title": {
+            "kendo-ui": "Plot Bands example in Kendo UI Bar chart",
+            "aspnet-mvc": "Plot Bands example in ASP.NET MVC Bar chart"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates how to add plot bands to your Kendo UI jQuery charts in order to plot data within some borders.",
+            "aspnet-mvc": "This sample demonstrates how to add plot bands to your ASP.NET MVC charts in order to plot data within some borders."
+        },
+		"description": {
+            "kendo-ui": "<p>Plot Bands are colored ranges which are used to highlight certain areas in the Kendo UI chart, usually specific thresholds designating whether the data falls under these boundaries or not. You can create them by setting valueAxis-&gt; plotBands values</p> <p>Each Plot Band could be configured independently by specifying the following properties:</p> <ul> <li>From &mdash; the start position of the plot band.</li> <li>To &mdash; the end position of the plot band.</li> <li>Opacity &mdash; the opacity of the plot band.</li> <li>Color &mdash; the color of the plot band.</li> </ul>",
+			      "aspnet-mvc": "<p>Plot Bands are colored ranges, which are used to highlight certain areas in the ASP.NET MVC Chart. You can create them by setting:</p> <p>ValueAxis -&gt; PlotBands -&gt; bands.Add().From(10000).To(30000).Color(\"#c00\").Opacity(0.3);</p> <p>Each Plot Band could be configured independently by specifying the following properties:</p> <ul> <li>From &mdash; the start position of the plot band.</li> <li>To &mdash; the end position of the plot band.</li> <li>Opacity &mdash; the opacity of the plot band.</li> <li>Color &mdash; the color of the plot band.</li> </ul>"
+		},
+        "requiresServer": "true"
+      },
+      {
+        "text": "Gap and spacing",
+        "url": "bar-charts/gap-spacing",
+        "title": {
+            "kendo-ui": "Gap and spacing in Kendo UI Bar Charts | Kendo UI DataViz demo",
+            "aspnet-mvc": "Gap and spacing in MVC Bar Charts | UI for ASP.NET MVC demo"
+        },
+        "meta": {
+            "kendo-ui": "With this example, you will be able to take a closer look at gap and spacing in Kendo UI Bar Charts. Set gap and spacing values to play with the demo.",
+            "aspnet-mvc": "With this example, you will be able to take a closer look at gap and spacing in ASP.NET MVC Bar Charts. Set gap and spacing values to play with the demo."
+        },
+		    "description": {
+            "kendo-ui": "<p>The Bar chart component allows you to control the distance between its categories as well as between series points within a category. This can be done through the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series.gap\">series.gap</a> and <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series.spacing\">series.spacing</a> client-side settings of the chart.</p> <p>In this demo, you can play with the provided GAP and SPACING dropdowns to change the values of the above properties.</p>",
+			      "aspnet-mvc": "<p>The Bar chart component allows you to control the distance between its categories as well as between series points within a category. This can be done through the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series.gap\">series.gap</a> and <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series.spacing\">series.spacing</a> client-side settings of the chart.</p> <p>In this demo, you can play with the provided GAP and SPACING dropdowns to change the values of the above properties.</p>"
+		}
+      },
+      {
+        "text": "Error Bars",
+        "url": "bar-charts/error-bars",
+        "title": {
+            "kendo-ui": "Example of using ErrorBars for Kendo UI Bar Chart",
+            "aspnet-mvc": "This demo shows how to use ErrorBars for ASP.NET MVC Bar Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to use ErrorBars for Kendo UI Bar Chart",
+            "aspnet-mvc": "Example of using ErrorBars for ASP.NET MVC Bar Chart"
+        },
+		"description": {
+            "kendo-ui": "<p>This example demonstrates how to show variability of data using the Error Bars feature of the Kendo UI chart. The Error bars are configured via the series -&gt; errorBars setting and are offered for the following series types: Area, Vertical Area, Column, Bar, Line, Vertical Line, Scatter and ScatterLine.</p><p>The error bars support statistical calculations based on the series data. The supported types are <a href=\"http://en.wikipedia.org/wiki/Standard_error\">standard error</a> and <a href=\"http://en.wikipedia.org/wiki/Standard_deviation\">population standard deviation</a>. To specify that standard error should be used, you need to set \"stderr\" as a value.</p><p>You can find more information in the following help article: <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/error-bars\">Error Bars</a>.</p>",
+			      "aspnet-mvc": "<p>This demo illustrates how to show variability of data using the Error Bars feature of the Telerik MVC Bar Chart. The Error bars are specified as part of the Series setting and are offered by the following Series types: Area, Vertical Area, Column, Bar, Line, Vertical Line, Scatter and ScatterLine.</p><p>The error bars support statistical calculations based on the series data. The supported types are <a href=\"http://en.wikipedia.org/wiki/Standard_error\">standard error</a> and <a href=\"http://en.wikipedia.org/wiki/Standard_deviation\">population standard deviation</a>. To specify that standard error should be used, you need to set \"stderr\" as a value, i.e.</p><p>Series -&gt; Column-&gt; .ErrorBars(errorBars =&gt; errorBars.Value(\"<strong>stderr</strong>\"))</p><p>You can find more information in the following help article: <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/error-bars\">Error Bars</a>.</p>"
+		}
+      },
+      {
+        "text": "Custom Visuals",
+        "url": "bar-charts/visuals",
+        "title": {
+            "kendo-ui": "Example of using custom visuals for the Kendo UI Bar Chart",
+            "aspnet-mvc": "Example of using custom visuals for ASP.NET MVC Bar Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to use ustom visuals for the Kendo UI Bar Chart",
+            "aspnet-mvc": "This demo shows how to use ustom visuals for the ASP.NET MVC Bar Chart"
+        },
+		"description": {
+            "kendo-ui": "<p>You can implement custom visualizations for the Bar/Column chart legend items, axis titles, labels, markers and series by utilizing the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/drawing\">Kendo Drawing API</a>. This can be done by assigning a JavaScript function which creates these custom shapes to the seriesDefaults -&gt; visual attribute of the chart</p> <p>Context information is available through the function argument fields, including <strong>rect</strong> (the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/geometry/rect\">kendo.geometry.Rect</a> that defines where the visual should be rendered) and options (different options depending on the item type).</p> <p>You can read more about it in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/drawing\">Kendo UI JavaScript API reference</a>.</p>",
+			      "aspnet-mvc": "<p>You can implement custom visualizations for the Bar/Column chart legend items, axis titles, labels, markers and series by utilizing the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/drawing\">Kendo Drawing API</a>. You can do that by setting a JavaScript function name as a string parameter of the Series <strong>Visual</strong> method:<br /> <br /> SeriesDefaults -&gt; .Column().Visual(\"columnVisual\") or <br /> Series -&gt; series.Column(&hellip;).Visual(\"columnVisual\")</p> <p>Various context information is available through the function argument fields. Such are <strong>rect</strong> (the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/geometry/rect\">kendo.geometry.Rect</a> that defines where the visual should be rendered), createVisual (a function that can be used to get the default visual) and options (different options depending on the item type).</p> <p>You can read more about it in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/drawing\">Kendo UI JavaScript API reference</a>.</p>"
+		}
+      },
+      {
+        "text": "Pan and zoom",
+        "url": "bar-charts/pan-and-zoom",
+        "new": "true",
+        "title": {
+            "kendo-ui": "Pan and zoom in Bar charts | Kendo UI Bar Chart demo"
+        },
+        "meta": {
+            "kendo-ui": "Enable pan and zoom effect in Kendo UI Bar charts. This example demonstrates how to enable pan and zoom for your bar charts."
+        },
+		"description": {
+            "kendo-ui": "<p>The Pan and Zoom features allow you to navigate through and zoom in/out the Telerik Kendo UI Bar Chart. </p> <p>You can enable the pan feature through the pannable setting as well as to lock either the X or Y axis using the nested lock attribute.</p> <p>To enable the zoom set the zoomable configuration option. You can also fine tune the mouse wheel and selection zooming through the available mousewheel and selection nested properties.</p>",
+			      "aspnet-mvc": "<p>The Pan and Zoom features allow you to navigate through and zoom in/out the Telerik MVC Bar Chart. </p> <p>You can enable the pan feature through the Pannable setting as well as to lock the either the X or Y axis using the Lock method.</p> <p>To enable the Zoom set the Zoomable configuration option. You can also fine tune the mouse wheel and selection zooming through the available Mousewheel and Selection methods.</p>"
+		}
+      },
+      {
+        "text": "Custom pan and zoom",
+        "url": "bar-charts/custom-pan-and-zoom",
+        "title": {
+            "kendo-ui": "Custom Pan and zoom in Bar charts | Kendo UI Bar Chart demo"
+        },
+        "meta": {
+            "kendo-ui": "Achieve pan and zoom effect in Kendo UI Bar charts. This example demonstrates how you can apply pan and zoom to your bar charts."
+        },
+        "description": {
+            "kendo-ui": "<p>In addition to the built-in pan and zoom functionality, the Kendo UI chart supports custom panning and zooming as well. </p> <p>This example represents a custom implementation wiring the drag, dragEnd and zoom events of the chart. The idea is to intercept when these events are raised and fetch the data that has to be visualized in the chart, using a dynamical query by invoking the <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#methods-query\">query method</a> of the chart data source. Review the code snippets in the demo for more details.</p>"
+        },
+        "packages": [
+          "!mvc"
+        ]
+      },
+      {
+        "text": "Binding to remote data",
+        "url": "bar-charts/remote-data-binding",
+        "title": {
+            "kendo-ui": "Binding to remote data demo | Kendo UI HTML5 jQuery Bar Charts",
+            "aspnet-mvc": "Binding to remote data demo | ASP.NET MVC Bar Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how Kendo UI Bar Charts widget can be bound to remote data to produce high-performance report in your business app.",
+            "aspnet-mvc": "This demo shows how ASP.NET MVC Bar Charts can be bound to remote data to produce high-performance report in your business app."
+        },
+		"description": {
+            "kendo-ui": "<p>The Kendo UI chart supports binding to remote data via RESTful services.</p><p>For remote data binding you need to specify a remote endpoint or a web service returning data in JSON/JSONP format and utilize the DataSource in-between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>In this example the Kendo UI Bar chart is bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.</p> <p>You can find more information about the data-binding capabilities of the Kendo UI chart in this <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\">help article</a>.</p>",
+			      "aspnet-mvc": "<p>The Telerik MVC Chart offers two ways of data-binding:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\" target=\"_blank\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\" target=\"_blank\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP format and utilize the DataSource as a mediator between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>You can see in this demo how the ASP.NET MVC Bar chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.</p> <p>You can find more information about the data-binding capabilities of the MVC chart in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">help article</a>.</p>"
+		},
+		"group": "Data Binding",
+        "requiresServer": "true"
+      },
+      {
+        "text": "Binding to local data",
+        "url": "bar-charts/local-data-binding",
+        "title": {
+            "kendo-ui": "Local data-binding example | Kendo UI Bar Charts",
+            "aspnet-mvc": "Local data-binding example | ASP.NET MVC Bar Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how the local data-binding is supported in Kendo UI Bar Charts. Use the demo source code to try the feature of the widget.",
+            "aspnet-mvc": "This demo shows how the local data-binding is supported in ASP.NET MVC Bar Charts. Use the demo source code to try the feature of the component."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() function. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>",
+			      "aspnet-mvc": "<p>The Telerik MVC Chart offers two ways of data-binding:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\" target=\"_blank\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\" target=\"_blank\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP format and utilize the DataSource as a mediator between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>You can see in this demo how the ASP.NET MVC Bar chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.</p> <p>You can find more information about the data-binding capabilities of the MVC chart in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">help article</a>.</p>"
+        }
+      },
+      {
+        "text": "Binding to grouped data",
+        "url": "bar-charts/grouped-data",
+        "title": {
+            "kendo-ui": "Grouped data binding demo for Kendo UI HTML5 Bar Charts",
+            "aspnet-mvc": "Grouped data binding demo for ASP.NET MVC Bar Charts"
+        },
+        "meta": {
+            "kendo-ui": "This example shows the feature of binding to grouped data in Kendo UI Bar Charts. See the source code to find how to use name templates for the data group.",
+            "aspnet-mvc": "This example shows the feature of binding to grouped data in ASP.NET MVC Bar Charts. See the source code to find how to use name templates for the data group."
+        },
+		"description": {
+            "kendo-ui": "<p>The Kendo UI chart can be bound to a grouped data by using <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource\">Kendo UI DataSource</a> as a mediator. To do so follow the steps below:</p> <ol> <li>Bind the chart to a <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/dataviz/ui/chart#configuration-dataSource\">Kendo UI DataSource instance</a>.</li> <li>Set the <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/dataviz/ui/chart#configuration-dataSource\">DataSource.group.field property</a> to the name of the column in the underlying data which will be the criteria for grouping the chart series items into series (symbol in this example)</li> <li>Bind the series.field setting to the &ldquo;close&rdquo; field in the underlying data source</li> <li>Bind the categoryAxis.field attribute to the \"date\" field in the source</li> </ol> <p> This will result in as many series as the number of distinct values in the column (i.e., DataSource.group.field). For each value there will be chart series in the chart. </p>",
+			      "aspnet-mvc": "<p>Telerik MVC charting extension can be integrated to a grouped data by <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource\">Kendo UI DataSource</a>. To do so you can follow the following steps:</p> <ol> <li>Bind the chart to a <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/dataviz/ui/chart#configuration-dataSource\">Kendo UI DataSource control</a>.</li> <li>Set the <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/dataviz/ui/chart#configuration-dataSource\">DataSource.group.field property</a> to the name of the column in the underlying data which will be the criteria for grouping the chart series items into series: Group(group =&gt; group.Add(model =&gt; model.Symbol)</li> <li>Bind the Y values of the series to the &ldquo;Close&rdquo; field: series.Area(model =&gt; model.Close)</li> <li>Bind the Category Axis to the Date field: .Categories(model =&gt; model.Date)</li> </ol> <p> This will result in as many series as the number of distinct values in the column (i.e., DataSource.group.field). For each value there will be a chart series in the chart. </p>"
+		},
+        "requiresServer": "true"
+      },
+      {
+        "text": "MVVM",
+        "url": "bar-charts/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Chart"
+        },
+        "meta": {
+            "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI Chart"
+        },
+        "description": {
+            "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI chart to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call) which wraps the chart data source, and instantiate the chart, its attributes and binding definition using <strong>data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the chart, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ],
+        "requiresServer": "true"
+      },
+      {
+        "text": "AngularJS",
+        "url": "bar-charts/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Chart"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directives support in Kendo UI Chart"
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
+       },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ],
+        "requiresServer": "true"
+      }
+
+    ],
+    "category": "Charts"
+  },
+  {
     "text": "Barcode",
     "name": "barcode",
     "pro": "true",
@@ -3772,6 +4132,303 @@
       }
     ],
     "category": "Gauges"
+  },
+  {
+    "text": "Line Charts",
+    "name": "line-charts",
+    "pro": "true",
+    "api": "dataviz/chart",
+    "documentation": {
+       "kendo-ui": "getting-started/dataviz/chart/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/chart/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/chart/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/charts",
+       "aspnet-mvc": "aspnet-mvc/chart",
+       "jsp-ui": "jsp/chart",
+       "php-ui": "php/chart"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/charts",
+       "aspnet-mvc": "aspnet-mvc/chart",
+       "jsp-ui": "jsp/chart",
+       "php-ui": "php/chart"
+    },
+    "spriteCssClass": "chartLineIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "line-charts/index",
+        "title": {
+            "kendo-ui": "Kendo UI Line Charts Demo",
+            "aspnet-mvc": " ASP.NET MVC Line Charts Control demo"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates the features and core functionality of Kendo UI Line Charts component. HTML5 line graphs show trends over a specific time period.",
+            "aspnet-mvc": "This demo illustrates how you can use Telerik ASP.NET MVC Line Charts helper to show trends for several series on the same diagram & visualize them as lines."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart is a data visualization widget which allows you to output a graphical representation of your data. It is useful when you would like to utilize modern browser technologies such as SVG or Canvas (with a fallback to VML for older IE versions) for interactive data visualizations. The chart supports various chart types such as area, bar, line, scatter, pie and donut, etc. as well as stock (OHLC).</p><p>In this example, you can see how to register and configure a Line chart. A Line chart shows data as continuous lines that pass through points defined by their items' values. It can be useful for showing a trend over time and comparing several (four in this demo) sets of similar data.</p><br/><p>To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() function. As a result, the chart is registered as a standard jQuery plugin.</p><br/><p>The chart can fetch data for its series from either local or remote data source. It can also use the Kendo UI DataSource as a mediator for processing data.</p><br/><p>Additional information about how to use the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/overview\" target=\"_blank\">this section</a> of the product documentation.</p>",
+			      "aspnet-mvc": "<p>The Telerik ASP.NET MVC chart is a powerful data visualization component, which allows you to graphically represent your data. It is useful when you would like to utilize modern browser technologies such as <a href=\"http://en.wikipedia.org/wiki/Scalable_Vector_Graphics\">SVG</a> or <a href=\"https://en.wikipedia.org/wiki/Canvas_element\">Canvas</a> (with a fallback to <a href=\"http://en.wikipedia.org/wiki/Vector_Markup_Language\">VML</a> for older IE versions) for interactive data visualizations. </p> <p>The component offers a variety of chart types such as area, bar, line, scatter, polar, radar, pie and donut, stock (OHLC) and many more.</p> <p>In this example, you can see how to register and configure a Line chart. A Line chart shows data as continuous lines that pass through points defined by their items' values. It can be useful for showing a trend over time and comparing several (four in this demo) sets of similar data.</p> <p>The chart can fetch data for its series from either local or remote data source. You can find more information about the MVC chart in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">product documentation</a>.</p> <p><strong><br /> Key Features of Telerik MVC Charts</strong></p> <ul><li>Various Chart Types</li> <li>A Number of Data Types</li> <li>High Performance</li> <li>Export to PDF</li> <li>Simple-to-Customize Look and Feel</li> <li>Rich Server and Client-side API</li> <li>Server and Client-side Data Binding</li> <li>Built-in Themes</li> <li>Intuitive Built-in Animations</li> <li>Multiple Series and Combination Charts</li> <li>Plot Bands</li> <li>Rich Cross-Browser and Mobile Support</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/charts\">Telerik MVC Charts</a>.</p>"
+        }
+      },
+      {
+        "text": "Stacked line",
+        "url": "line-charts/stacked-line",
+        "title": {
+            "kendo-ui": "Kendo UI Stacked Line Charts Demo",
+            "aspnet-mvc": "ASP.NET MVC Stacked Line Charts Demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how you can easily implement Kendo UI Stacked Line Charts in your business webapp.",
+            "aspnet-mvc": "This demo shows how you can easily implement ASP.NET MVC Stacked Line Charts in your business webapp."
+        },
+        "group" : "Line Chart Types",
+        "description": {
+            "kendo-ui": "<p>This demo shows how to configure a Stacked line chart. To enable this feature set the seriesDefaults -&gt; stack setting</p><p>You can also divide the line chart series in two parts, by setting:</p> <p>missingValues -&gt; gap</p> <p>and having <strong>null</strong> data value entries in the series data, which will be used as a divider.</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-seriesDefaults\">SeriesDefaults option</a> in the documentation.</p>",
+            "aspnet-mvc": "<p>This demo shows how to configure a Stacked line chart. To enable the stack feature set true as an argument of the the SeriesDefaults -&gt; Bar -&gt; Stack(true) method:</p> <p>.SeriesDefaults(series =&gt; series.Line().Stack(true))</p> <p>You can also divide the line chart on two parts, by setting:</p> <p>.MissingValues(ChartLineMissingValues.Gap)</p> <p>And having <strong>null</strong> data value entries in the series data, which will be used as a divider.</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/kendo.mvc.ui.fluent/chartbuilder#methods-SeriesDefaults%28System.Action%3CKendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder%3CT%3E%3E%29\">SeriesDefaults option</a> in the documentation.</p>"
+        }
+      },
+      {
+        "text": "100% Stacked line",
+        "url": "line-charts/stacked100-line",
+        "title": {
+            "kendo-ui": "Kendo UI 100% Stacked Line Charts Demo",
+            "aspnet-mvc": "100% stacked line example in Telerik ASP.NET MVC Line charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how you can easily implement Kendo UI 100% Stacked Line Charts in your business webapp.",
+            "aspnet-mvc": "This example illustrates how to implement 100% stacked line in Telerik line charts for ASP.NET MVC."
+        },
+        "description": {
+            "kendo-ui": "<p>The Line chart supports 100% stacking, where the last series is always rendered as a flat line on top of the value axis.</p> <p>You can enable the 100% stack feature through the seriesDefaults-&gt; stack -&gt; type setting.</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-seriesDefaults\">SeriesDefaults option</a> in the documentation.</p>",
+            "aspnet-mvc": "<p>The Line chart supports 100% stacking, where the last series is always rendered as a flat line on top of the value axis.</p> <p>You can enable the 100% stack feature through the SeriesDefaults -&gt; Line -&gt; Stack(ChartStackType.Stack100) method.</p> <p>For more information inspect the <a href=\"http://docs.telerik.com/kendo-ui/api/aspnet-mvc/kendo.mvc.ui.fluent/chartbuilder#methods-SeriesDefaults%28System.Action%3CKendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder%3CT%3E%3E%29\">SeriesDefaults option</a> in the documentation.</p>"
+        }
+      },
+      {
+        "text": "Stepped line",
+        "url": "line-charts/step-line",
+        "title": {
+            "kendo-ui": "Example of using Kendo UI Line Chart with step line style",
+            "aspnet-mvc": "Steped line demo for Telerik ASP.NET MVC Line Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to configure step line style for the Kendo UI Line Chart",
+            "aspnet-mvc": "This demo shows how to configure step line style for Telerik jQuery-based Line Charts in ASP.NET MVC."
+        },
+        "description": {
+            "kendo-ui": "<p>The Stepped Line chart is a form of Line chart where each data point from the series is connected with vertical and horizontal lines to form a step-like progression. This type of line visualization is useful when you want to highlight the increase or decrease in values over time.</p> <p>You can configure a stepped area chart through the series -&gt; style settings of the Kendo UI Chart.</p>",
+            "aspnet-mvc": "<p>The Stepped Line chart is a form of Line chart where each data point from the series is connected with vertical and horizontal lines to form a step-like progression. This type of line visualization is useful when you want to highlight the increase or decrease in values over time.</p> <p>You can configure a stepped area chart through the Series -&gt; Line -&gt; Style(ChartAreaStyle.<strong>Step</strong>) settings of the MVC Chart.</p>"
+        }
+      },
+      {
+        "text": "Smooth line",
+        "url": "line-charts/smooth-line",
+        "title": {
+            "kendo-ui": "Example of using Kendo UI Line Chart with smooth line (spline) style",
+            "aspnet-mvc": "ASP.NET MVC Smooth Line Charts for Kendo UI Line chart widget"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to configure smooth line (spline) style for the Kendo UI Line Chart",
+            "aspnet-mvc": "In this demo you will figure out how to configure smooth line (spline) style chart in ASP.NET MVC."
+        },
+        "description": {
+            "kendo-ui": "<p>This demo shows how to configure smooth line (spline) style for the Telerik Kendo UI line chart.</p> <p>A Spline chart is a form of line/area chart where each data point from the series is connected with a curved line, which represents a rough approximation of the missing data points.</p> <p>You can configure a smooth line area chart through the series -&gt;  style settings of the chart.</p>",
+            "aspnet-mvc": "<p>This demo shows how to configure smooth line (spline) style for the Telerik MVC Line chart.</p> <p>A Spline chart is a form of line/area chart where each data point from the series is connected with a curved line, which represents a rough approximation of the missing data points.</p> <p>You can configure a smooth line area chart through the Series -&gt; Line -&gt; Style(ChartLineStyle.Smooth) settings of the ASP.NET MVC Chart.</p>"
+        }
+      },
+      {
+        "text": "Date axis",
+        "url": "line-charts/date-axis",
+        "title": {
+            "kendo-ui": "Example of Kendo UI HTML5 Line Charts Date Axis",
+            "aspnet-mvc": "Date axis in ASP.NET MVC Line Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates the date axis in Kendo UI Line Charts can be easily changed by setting the configuration and specifying the aggregate function value.",
+            "aspnet-mvc": "This example shows how date axis functionality works in Telerik Line Charts for ASP.NET MVC."
+        },
+        "group": "Functionality",
+        "description": {
+            "kendo-ui": "<p>You can scale the date axis of the Kendo UI line chart to get a better visualization of the seasonal data in your app. This can be done by modifying:</p> <ul> <li>The base date unit of the x-axis through the categoryAxis.baseUnit attribute, which takes seconds, minutes, hours, days, week, months and years</li> <li>The default aggregates of the series through the series.aggregate attribute, which takes max, min, sum, avg and count.</li> </ul>",
+            "aspnet-mvc": "<p>You can scale the date axis of your ASP.NET MVC Line Chart to get a better visualization of the seasonal data in your app. This can be done by modifying:</p> <ul> <li>The base date unit of the x-axis through the CategoryAxis.BaseUnit property, which takes seconds, minutes, hours, days, week, months and years</li> <li>The default aggregates of the series through the Series.Aggregate property, which takes max, min, sum, avg and count.</li> </ul>"
+        }
+      },
+      {
+        "text": "Logarithmic axis",
+        "url": "line-charts/logarithmic-axis",
+        "title": {
+            "kendo-ui": "Logarithmic axis sample for Kendo UI Line Charts",
+            "aspnet-mvc": "Logarithmic axis sample for ASP.NET MVC Line Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how you can use a logarithmic axis for the Kendo UI Line Chart.",
+            "aspnet-mvc": "This demo shows how you can use a logarithmic axis for the ASP.NET MVC Line Chart."
+        },
+        "description": {
+            "kendo-ui": "<p>Logarithmic axis is a special numeric axis that transforms the actual values by using a logarithmic function with a particular base. Logarithmic axis is useful for displaying values that cover different orders of magnitude because it lets large values display together with small values in a more condensed scale than the default linear axis.</p> <p>This example shows how you can use a logarithmic axis for the Kendo UI line chart by setting the valueAxis -&gt; type = \"log\". The base of the logarithmic axis is defined by the interval between the major divisions, controlled by the majorUnit property.</p>",
+            "aspnet-mvc": "<p>A logarithmic axis is a special numeric axis that transforms the actual values by using a logarithmic function with a particular base. A logarithmic axis is useful for displaying values that cover different orders of magnitude because it lets large values display together with small values in a more condensed scale than the default linear axis.</p> <p>This demo shows how you can use a logarithmic axis for the ASP.NET MVC Line Chart by setting the ValueAxis -&gt; Logarithmic() method. The base of the logarithmic axis is defined by the interval between the major divisions, controlled by the MajorUnit property.</p>"
+        },
+        "requiresServer": "true"
+      },
+      {
+        "text": "Multi-axis",
+        "url": "line-charts/multiple-axes",
+        "title": {
+            "kendo-ui": "Multi-axes feature example | Kendo UI Line Charts widget",
+            "aspnet-mvc": "Multi-axes feature example | ASP.NET MVC Line Charts control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how easily Kendo UI Line Charts can be customized to achieve what you want in your app. Apply multiple axes to your Kendo UI Line Charts.",
+            "aspnet-mvc": "This demo shows how easily ASP.NET MVC Line Charts can be customized to achieve what you want in your app. Apply multiple axes to your ASP.NET MVC Line Charts."
+        },
+        "description": {
+            "kendo-ui": "<p>The Telerik Kendo UI line chart supports multiple axis. This helps you leverage the best charting performance and visualize data on any number of axis to provide solid business reports for your users.</p> <p>The example illustrates a weather report and includes information for the: <em>max and min temperatures, wind speed and rainfall in mm</em>. Note that each of them has a unique name which is set through the <strong>series.name </strong>attribute. You can also populate the <strong>categoryAxis.axisCrossingValue</strong> array to specify the alignment of the value axes.</p>",
+            "aspnet-mvc": "<p>The Telerik ASP.NET MVC Line chart supports multiple axis. This helps you leverage the best charting performance and visualize data on any number axis to provide solid business reports for your users.</p> <p>The example shows a weather report and includes information for the: <em>max and min temperatures, wind speed and rainfall in mm</em>. Note that each of them has unique name which is set through the <strong>ValueAxis.Title </strong>method. You can also set the <strong>CategoryAxis.AxisCrossingValue</strong> method to specify the alignment of the value axes.</p>"
+        }
+      },
+      {
+        "text": "Notes",
+        "url": "line-charts/notes",
+        "title": {
+            "kendo-ui": "Notes feature example | Kendo UI Line Charts widget",
+            "aspnet-mvc": "Notes feature example | ASP.NET MVC Line Charts Control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to place annotations in your Kendo UI Charts.",
+            "aspnet-mvc": "This demo illustrates how you can use Telerik ASP.NET MVC Line Charts helper to show trends for several series on the same diagram & visualize them as lines."
+        },
+        "description": {
+            "kendo-ui": "<p>In this demo, you can see how to add notes for the Min and Max values of the Line chart.</p> <p>To do that you need to set the series -&gt; notes and noteTextField settings which will also allow you to specify the note and its label position.</p>",
+            "aspnet-mvc": "<p>In this demo, you can see how to add notes for the Min and Max values of the Line chart.</p> <p>To do that you need to set the Series -&gt; Line -&gt; Notes and NoteTextField setting which will also allow you to specify the note and its label positions.</p>"
+        }
+      },
+      {
+        "text": "Error Bars",
+        "url": "line-charts/error-bars",
+        "title": {
+            "kendo-ui": "Example of using ErrorBars for Kendo UI Line Chart",
+            "aspnet-mvc": "Example of using ErrorBars for ASP.NET MVC Line Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to use ErrorBars for Kendo UI Line Chart",
+            "aspnet-mvc": "This demo shows how to use ErrorBars for ASP.NET MVC Line Chart"
+        },
+        "description": {
+            "kendo-ui": "<p>This sample presents how to show variability of data using the Error Bars feature of the Kendo UI line chart. The Error bars are specified as part of the seriesDefaults -&gt; errorBars setting and are offered by the following series types: Area, Vertical Area, Column, Bar, Line, Vertical Line, Scatter and ScatterLine.</p> <p>The error bars support statistical calculations based on the series data. The supported types are <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/error-bars#setting-a-percentage-value\">percentage value</a>, <a href=\"http://en.wikipedia.org/wiki/Standard_error\">standard error</a> and <a href=\"http://en.wikipedia.org/wiki/Standard_deviation\">population standard deviation</a> and other. To specify that percentage error should be used, you need to set \"percentage(Int)\" as a value, i.e.</p><p>value: \"percentage(20)\"</p><p>You can find more information in the following help article: <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/error-bars\">Error Bars</a>.</p>",
+            "aspnet-mvc": "<p>This demo illustrates how to show variability of data using the Error Bars feature of the Telerik MVC Line Chart. The Error bars are specified as part of the Series setting and are offered by the following Series types: Area, Vertical Area, Column, Bar, Line, Vertical Line, Scatter and ScatterLine.</p> <p>The error bars support statistical calculations based on the series data. The supported types are <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/error-bars#setting-a-percentage-value\">percentage value</a>, <a href=\"http://en.wikipedia.org/wiki/Standard_error\">standard error</a> and <a href=\"http://en.wikipedia.org/wiki/Standard_deviation\">population standard deviation</a> and other. To specify that percentage error should be used, you need to set \"percentage(Int)\" as a value, i.e.</p><p>.ErrorBars(errorBars =&gt; errorBars.Value(\"percentage(20\"))</p><p>You can find more information in the following help article: <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/error-bars\">Error Bars</a>.</p>"
+        }
+      },
+      {
+        "text": "Custom Visuals",
+        "url": "line-charts/visuals",
+        "title": {
+            "kendo-ui": "Example of using custom visuals for the Kendo UI Line Chart",
+            "aspnet-mvc": "Example of using custom visuals for ASP.NET MVC Line Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to use ustom visuals for the Kendo UI Line Chart",
+            "aspnet-mvc": "This demo shows how to use ustom visuals for the ASP.NET MVC Line Chart"
+        },
+        "description": {
+            "kendo-ui": "<p>You can implement custom visualizations for the Line chart markers and highlights by utilizing the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/drawing\">Kendo Drawing API</a>. You can do that by assigning a JavaScript function which will generate the custom shapes via the markers -&gt; visual and the series -&gt; highlight -&gt; toggle configuration setting.<p>Context information is available through the function argument fields. Such are <strong>rect</strong> (the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/geometry/rect\">kendo.geometry.Rect</a> that defines where the visual should be rendered) and options (different options depending on the item type).</p> <p>You can read more about it in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/drawing\">Kendo UI JavaScript API reference</a>.</p>",
+            "aspnet-mvc": "<p>You can implement custom visualizations for the Line chart markers and highlights by utilizing the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/drawing\">Kendo Drawing API</a>. You can do that by setting a JavaScript function name as a string parameter of the Series:</p> <ul> <li>Markers -&gt; Visual method: .Markers(markers =&gt; markers.Visual(\"markerVisual\"))</li> <li>Highlight -&gt; Toggle method -&gt; .Highlight(highlight =&gt; highlight.Toggle(\"toggleHandler\")); </li> </ul> <p>Various context information is available through the function argument fields. Such are <strong>rect</strong> (the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/geometry/rect\">kendo.geometry.Rect</a> that defines where the visual should be rendered), createVisual (a function that can be used to get the default visual) and options (different options depending on the item type).</p> <p>You can read more about it in the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/drawing\">Kendo UI JavaScript API reference</a>.</p>"
+        }
+      },
+      {
+        "text": "Binding to remote data",
+        "url": "line-charts/remote-data-binding",
+        "title": {
+            "kendo-ui": "Binding to remote data example | Kendo UI Line Charts features",
+            "aspnet-mvc": "Binding to remote data - Telerik ASP.NET MVC Line Charts demo"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates how binding to remote data works in Kendo UI Line Charts and the demo source code would guide you how to apply it to your line chart.",
+            "aspnet-mvc": "This example demonstrates how Telerik ASP.NET MVC Line charts can be bound to remote data source."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart supports binding to remote data via RESTful services.</p> <p>For remote data binding you need to specify a remote endpoint or a web service returning data in JSON/JSONP format and utilize the DataSource in-between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>In this example the chart fetches its data from a remote endpoint assigned via the DataSource read configuration. You can find more information about the data-binding capabilities of the Kendo UI chart in this <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\">help article</a>.</p>",
+            "aspnet-mvc": "<p>The Telerik MVC Chart offers two ways of data-binding:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\" target=\"_blank\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\" target=\"_blank\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP format and utilize the DataSource as a mediator between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>In this example the chart fetches its data from a MVC controller assigned via the DataSource read configuration. You can find more information about the data-binding capabilities of the MVC chart in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">help article</a>.</p>"
+        },
+		"group": "Data Binding",
+        "requiresServer": "true"
+      },
+      {
+        "text": "Binding to local data",
+        "url": "line-charts/local-data-binding",
+        "title": {
+            "kendo-ui": "Binding to local data example | Kendo UI Line Charts",
+            "aspnet-mvc": "Binding to local data example | ASP.NET MVC Line Charts"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates how Kendo UI Line Charts use existing objects as data points.",
+            "aspnet-mvc": "This example illustrates how ASP.NET MVC Line Charts use existing objects as data points."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be instructed to display data from local data storage via its data source property configuration. This is possible because of its built-in data-binding capabilities. In the example above the data for the chart is defined via a JSON array and assigned to the chart via the dataSource data attribute. Thus the chart fetches the data and displays its series and categoryAxis values by setting their field properties to match the relevant data items attribute names in the source.</p> <br/> <p> To instantiate a Kendo UI chart, you need to specify an empty div with an id on the page, select this div with a jQuery selector and invoke the kendoChart() function. As a result, the chart is registered as a standard jQuery plugin.  </p> <br/> <p>Additional information about how to utilize the data-binding capabilities of the Kendo UI chart widget can be found in <a href=\"http://docs.telerik.com/kendo-ui/dataviz/chart/data-binding\" target=\"_blank\">this section</a> of the product documentation.</p>",
+			      "aspnet-mvc": "<p>The Telerik MVC Line chart can be instructed to display data from local data storage using its built-in data-binding capabilities. </p> <p>There are two ways to bind the chart:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>In this example you can see how to bind the chart using the server approach. You need to create an action method and pass the InternetUsers list located in the \\Models\\Chart\\ChartDataRepository.cs file as a model. After that you should configure the data bound fields for the Series (series =>{series.Area(model => model.Value)}) and Category Axis (axis => axis.Categories(model => model.Year)) Note that the view has to be strongly typed so that the chart is able to load its data.</p> <p>You can find additional information about how to utilize the data-binding capabilities of the MVC chart in <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">the Getting Started section</a> of the product documentation.</p>"
+        }
+      },
+      {
+        "text": "Binding to grouped data",
+        "url": "line-charts/grouped-data",
+        "title": {
+            "kendo-ui": "Binding to grouped data demo | Kendo UI Line Charts",
+            "aspnet-mvc": "Binding to grouped data demo | ASP.NET MVC Line Charts"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates how binding to grouped data feature works in Kendo UI Line Charts.",
+            "aspnet-mvc": "This example illustrates how binding to grouped data feature works in ASP.NET MVC Line Charts."
+        },
+        "description": {
+            "kendo-ui": "<p>The Kendo UI chart can be bound to a grouped data using <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource\">Kendo UI DataSource</a>as a mediator. To do that follow the steps below:</p> <ol> <li>Bind the chart to a <a href=\"http://docs.telerik.com/kendo-ui/framework/datasource/overview\">Kendo UI DataSource instance</a>.</li> <li>Set the <a href=\"http://docs.telerik.com/kendo-ui/framework/datasource/basic-usage#working-with-grouped-data\">DataSource.group.field property</a> to the name (e.g., the &ldquo;symbol&rdquo; field) of the column in the underlying data which will be the criteria for grouping the chart series items into series</li> <li>Bind the Y values of the series to the corresponding data source field (e.g., the \"close\" field)</li> <li>Bind the categoryAxis to the corresponding field (e.g., the \"date\" field)</li> </ol> <p> This will result in as many series as the number of distinct values in the DataSource.group.field column (e.g., \"symbol\"). &nbsp;Since the &ldquo;symbol&rdquo; field in this example contains three distinct values (\"1. GOOG (close)\", \"2. AAPL (close)\" and \"3. AMZN (close)\") the chart will create three series as well.</p>",
+            "aspnet-mvc": "<p>Telerik MVC charting extension can be integrated to a grouped data by <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource\">Kendo UI DataSource</a>. To do, so you can follow the steps below:</p> <ol> <li>Bind the chart to a <a href=\"http://docs.telerik.com/kendo-ui/framework/datasource/overview\">Kendo UI DataSource control</a>.</li> <li>Set the <a href=\"http://docs.telerik.com/kendo-ui/framework/datasource/basic-usage#working-with-grouped-data\">DataSource.group.field property</a> to the name (e.g., the &ldquo;Symbol&rdquo; field) of the column in the underlying data which will be the criteria for grouping the chart series items into series Group(group =&gt; group.Add(model =&gt; model.Symbol)</li> <li>Bind the Y values of the series to the corresponding data source field (e.g., the \"Close\" field): series.Area(model =&gt; model.Close)</li> <li>Bind the Category Axis to the corresponding field (e.g., the \"Date\" field): .Categories(model =&gt; model.Date)</li> </ol> <p> This will result in as many series as the number of distinct values in the DataSource.group.field column (e.g., \"Symbol\"). &nbsp;Since the &ldquo;Symbol&rdquo; field in this example contains three distinct values (\"1. GOOG (close)\", \"2. AAPL (close)\" and \"3. AMZN (close)\") the chart will create three series as well.</p>"
+        },
+        "requiresServer": "true"
+      },
+      {
+        "text": "MVVM",
+        "url": "line-charts/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Chart"
+        },
+        "meta": {
+            "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI Chart"
+        },
+        "description":{
+           "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI chart to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call) which wraps the chart data source, and instantiate the chart, its attributes and binding definition using <strong>data-</strong> attributes. The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the chart, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ],
+        "requiresServer": "true"
+      },
+      {
+        "text": "AngularJS",
+        "url": "line-charts/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Chart"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directives support in Kendo UI Chart"
+        },
+        "description":{
+           "kendo-ui": "<p>The Kendo UI chart features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our chart for apps which could benefit from such integrations. Further, you can specify chart options as fields in the $scope and then associate them via the relevant <b>k-</b> chart Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p>"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ],
+        "requiresServer": "true"
+      }
+
+    ],
+    "category": "Charts"
   },
   {
     "text": "TreeView",

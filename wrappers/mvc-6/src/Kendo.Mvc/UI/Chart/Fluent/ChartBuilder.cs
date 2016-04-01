@@ -77,6 +77,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets the legend visibility.
+        /// </summary>
+        /// <param name="visible">A value indicating whether to show the legend.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Chart()
+        ///             .Name("Chart")
+        ///             .Legend(false)
+        /// );
+        /// </code>
+        /// </example>
+        public ChartBuilder<T> Legend(bool visible)
+        {
+            Component.Legend.Visible = visible;
+
+            return this;
+        }
+
+        /// <summary>
         /// Configures the default value axis or adds a new one
         /// </summary>
         /// <param name="configurator">The configurator for the axis</param>

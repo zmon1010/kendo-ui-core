@@ -15,6 +15,21 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Area { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The Bar series default settings.
+        /// </summary>
+        public ChartSeries<T> Bar { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Bubble series default settings.
+        /// </summary>
+        public ChartSeries<T> Bubble { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Bullet series default settings.
+        /// </summary>
+        public ChartSeries<T> Bullet { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Candlestick series default settings.
         /// </summary>
         public ChartSeries<T> Candlestick { get; } = new ChartSeries<T>();
@@ -23,6 +38,56 @@ namespace Kendo.Mvc.UI
         /// The Column series default settings.
         /// </summary>
         public ChartSeries<T> Column { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Donut series default settings.
+        /// </summary>
+        public ChartSeries<T> Donut { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Funnel series default settings.
+        /// </summary>
+        public ChartSeries<T> Funnel { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The HorizontalWaterfall series default settings.
+        /// </summary>
+        public ChartSeries<T> HorizontalWaterfall { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Line series default settings.
+        /// </summary>
+        public ChartSeries<T> Line { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The OHLC series default settings.
+        /// </summary>
+        public ChartSeries<T> OHLC { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Pie series default settings.
+        /// </summary>
+        public ChartSeries<T> Pie { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Scatter series default settings.
+        /// </summary>
+        public ChartSeries<T> Scatter { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The ScatterLine series default settings.
+        /// </summary>
+        public ChartSeries<T> ScatterLine { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The VerticalBullet series default settings.
+        /// </summary>
+        public ChartSeries<T> VerticalBullet { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The Waterfall series default settings.
+        /// </summary>
+        public ChartSeries<T> Waterfall { get; } = new ChartSeries<T>();
 
         public IDictionary<string, object> Serialize()
         {
@@ -33,6 +98,27 @@ namespace Kendo.Mvc.UI
             if (area.Any())
             {
                 settings["area"] = area;
+            }
+
+            var bar = Bar.Serialize();
+
+            if (bar.Any())
+            {
+                settings["bar"] = bar;
+            }
+
+            var bubble = Bubble.Serialize();
+
+            if (bubble.Any())
+            {
+                settings["bubble"] = bubble;
+            }
+
+            var bullet = Bullet.Serialize();
+
+            if (bullet.Any())
+            {
+                settings["bullet"] = bullet;
             }
 
             var candlestick = Candlestick.Serialize();
@@ -47,6 +133,76 @@ namespace Kendo.Mvc.UI
             if (column.Any())
             {
                 settings["column"] = column;
+            }
+
+            var donut = Donut.Serialize();
+
+            if (donut.Any())
+            {
+                settings["donut"] = donut;
+            }
+
+            var funnel = Funnel.Serialize();
+
+            if (funnel.Any())
+            {
+                settings["funnel"] = funnel;
+            }
+
+            var horizontalWaterfall = HorizontalWaterfall.Serialize();
+
+            if (horizontalWaterfall.Any())
+            {
+                settings["horizontalWaterfall"] = horizontalWaterfall;
+            }
+
+            var line = Line.Serialize();
+
+            if (line.Any())
+            {
+                settings["line"] = line;
+            }
+
+            var ohlc = OHLC.Serialize();
+
+            if (ohlc.Any())
+            {
+                settings["ohlc"] = ohlc;
+            }
+
+            var pie = Pie.Serialize();
+
+            if (pie.Any())
+            {
+                settings["pie"] = pie;
+            }
+
+            var scatter = Scatter.Serialize();
+
+            if (scatter.Any())
+            {
+                settings["scatter"] = scatter;
+            }
+
+            var scatterLine = ScatterLine.Serialize();
+
+            if (scatterLine.Any())
+            {
+                settings["scatterLine"] = scatterLine;
+            }
+
+            var verticalBullet = VerticalBullet.Serialize();
+
+            if (verticalBullet.Any())
+            {
+                settings["verticalBullet"] = verticalBullet;
+            }
+
+            var waterfall = Waterfall.Serialize();
+
+            if (waterfall.Any())
+            {
+                settings["waterfall"] = waterfall;
             }
 
             return settings;

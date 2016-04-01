@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartTitleSettings<T> where T : class 
     {
-        public string Align { get; set; }
-
         public string Background { get; set; }
 
         public ChartTitleBorderSettings<T> Border { get; } = new ChartTitleBorderSettings<T>();
@@ -25,11 +23,13 @@ namespace Kendo.Mvc.UI
 
         public ChartTitlePaddingSettings<T> Padding { get; } = new ChartTitlePaddingSettings<T>();
 
-        public string Position { get; set; }
-
         public string Text { get; set; }
 
         public bool? Visible { get; set; }
+
+        public ChartTextAlignment? Align { get; set; }
+
+        public ChartTitlePosition? Position { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -37,11 +37,6 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            if (Align?.HasValue() == true)
-            {
-                settings["align"] = Align;
-            }
 
             if (Background?.HasValue() == true)
             {
@@ -76,11 +71,6 @@ namespace Kendo.Mvc.UI
                 settings["padding"] = padding;
             }
 
-            if (Position?.HasValue() == true)
-            {
-                settings["position"] = Position;
-            }
-
             if (Text?.HasValue() == true)
             {
                 settings["text"] = Text;
@@ -89,6 +79,16 @@ namespace Kendo.Mvc.UI
             if (Visible.HasValue)
             {
                 settings["visible"] = Visible;
+            }
+
+            if (Align.HasValue)
+            {
+                settings["align"] = Align?.Serialize();
+            }
+
+            if (Position.HasValue)
+            {
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;

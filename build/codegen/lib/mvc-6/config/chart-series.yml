@@ -9,10 +9,70 @@
 
       - :name: CategoryField
         :optional: true
-        :description: category
+        :description: The category value.
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
+
+- :name: bar
+  :type: Bar
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: valueExpression
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: The category value.
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
+- :name: bubble
+  :type: Bubble
+  :fields:
+      - :name: XField
+        :description: The x value.
+        :generic: TXValue
+        :expression: xValueExpression
+        :member: xMemberName
+
+      - :name: YField
+        :description: The y value.
+        :generic: TYValue
+        :expression: yValueExpression
+        :member: yMemberName
+
+      - :name: SizeField
+        :description: The size value.
+        :generic: TSizeValue
+        :expression: sizeExpression
+        :member: sizeMemberName
+        :skip_in_name: true
+
+      - :name: CategoryField
+        :optional: true
+        :description: category
+        :generic: string
+        :expression: categoryExpression
+        :member: categoryMemberName
+
+- :name: bullet
+  :type: Bullet
+  :fields:
+      - :name: CurrentField
+        :description: The current value;
+        :generic: TValue
+        :expression: currentExpression
+        :member: currentMemberName
+
+      - :name: TargetField
+        :description: The target value.
+        :generic: TCategory
+        :expression: targetExpression
+        :member: targetMemberName
 
 - :name: candlestick
   :type: Candlestick
@@ -47,12 +107,180 @@
       - :name: Field
         :description: value
         :generic: TValue
+        :expression: valueExpression
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: The category value.
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
+- :name: donut
+  :type: Donut
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expressionValue
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :description: The category value.
+        :generic: string
+        :expression: categoryExpression
+        :member: categoryMemberName
+        :skip_in_name: true
+
+- :name: funnel
+  :type: Funnel
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expressionValue
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :description: The category value.
+        :generic: string
+        :expression: categoryExpression
+        :member: categoryMemberName
+        :skip_in_name: true
+
+- :name: horizontalWaterfall
+  :type: HorizontalWaterfall
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: valueExpression
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: The category value.
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
+- :name: line
+  :type: Line
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
         :expression: expression
         :member: memberName
 
       - :name: CategoryField
         :optional: true
-        :description: category
+        :description: The category value.
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
+- :name: ohlc
+  :type: OHLC
+  :fields:
+      - :name: OpenField
+        :description: The open value.
+        :generic: TValue
+        :expression: openExpression
+        :member: openMemberName
+
+      - :name: HighField
+        :description: The high value.
+        :generic: TValue
+        :expression: highExpression
+        :member: highMemberName
+
+      - :name: LowField
+        :description: The low value.
+        :generic: TValue
+        :expression: lowExpression
+        :member: lowMemberName
+
+      - :name: CloseField
+        :description: The close value.
+        :generic: TValue
+        :expression: closeExpression
+        :member: closeMemberName
+
+- :name: pie
+  :type: Pie
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expressionValue
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :description: The category value.
+        :generic: string
+        :expression: categoryExpression
+        :member: categoryMemberName
+        :skip_in_name: true
+
+- :name: scatter
+  :type: Scatter
+  :fields:
+      - :name: XField
+        :description: The x value.
+        :generic: TXValue
+        :expression: xValueExpression
+        :member: xMemberName
+
+      - :name: YField
+        :description: The y value.
+        :generic: TYValue
+        :expression: yValueExpression
+        :member: yMemberName
+
+- :name: scatterLine
+  :type: ScatterLine
+  :fields:
+      - :name: XField
+        :description: The x value.
+        :generic: TXValue
+        :expression: xValueExpression
+        :member: xMemberName
+
+      - :name: YField
+        :description: The y value.
+        :generic: TYValue
+        :expression: yValueExpression
+        :member: yMemberName
+
+- :name: verticalBullet
+  :type: VerticalBullet
+  :fields:
+      - :name: CurrentField
+        :description: The current value;
+        :generic: TValue
+        :expression: currentExpression
+        :member: currentMemberName
+
+      - :name: TargetField
+        :description: The target value.
+        :generic: TCategory
+        :expression: targetExpression
+        :member: targetMemberName
+
+- :name: waterfall
+  :type: Waterfall
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: valueExpression
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: The category value.
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
