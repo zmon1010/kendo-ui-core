@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+      requireSync([
+        "../../src/jquery.js",
+        "../../src/kendo.spreadsheet.js"
+      ]);
+    </script>
+  </head>
+  <body>
+
+    <div id="spreadsheet"></div>
+    <pre id="result"></pre>
+    <script>
+      $("#spreadsheet").kendoSpreadsheet({
+        sheets: [{
+          name: "Food Order",
+          mergedCells: [
+            "A1:C1"
+          ],
+          rows: [{
+            height: 70,
+            cells: [{
+              value: "Order #231", bold: "true", fontSize: 32, textAlign: "center"
+            }]
+          }, {
+            height: 25,
+            cells: [{
+              value: "Product", bold: "true", textAlign: "center"
+            }, {
+              value: "Quantity", bold: "true", textAlign: "center"
+            }, {
+              value: "Price", bold: "true", textAlign: "center"
+            }]
+          }, {
+            index: 1000,
+            cells: [{
+              index: 1000,
+              value: "foo"
+            }]
+          }],
+          columns: [{
+            width: 200
+          }, {
+            width: 115
+          }, {
+            width: 115
+          }]
+        }]
+      });
+
+      // Load sheet data
+      var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+      var sheet = spreadsheet.sheetByIndex(0);
+      sheet.fromJSON({
+        rows: [{
+          index: 2,
+          cells: [{
+            value: "Calzone"
+          }, {
+            value: 1
+          }, {
+            value: 12.29, format: "$#,##0.00"
+          }]
+        }, {
+          index: 3,
+          cells: [{
+            value: "Margarita"
+          }, {
+            value: 2
+          }, {
+            value: 9.11, format: "$#,##0.00"
+          }]
+        }]
+      });
+    </script>
+
+  </body>
+</html>
