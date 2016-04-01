@@ -577,10 +577,21 @@
         },
 
         syncWith: function(formulaInput) {
-            var eventName = "input" + ns;
+            var self = this;
 
-            this._editorToSync = formulaInput;
-            this.element.off(eventName).on(eventName, this._sync.bind(this));
+            // IE does not support "input" event on elements with contenteditable
+            // https://developer.mozilla.org/en-US/docs/Web/Events/input#Browser_compatibility
+            var eventName = "input" + ns;
+            var handler = self._sync.bind(self), iehandler;
+            if (kendo.support.browser.msie) {
+                eventName = "keydown" + ns;
+                iehandler = function() {
+                    setTimeout(handler);
+                };
+            }
+
+            self._editorToSync = formulaInput;
+            self.element.off(eventName).on(eventName, iehandler || handler);
         },
 
         scale: function() {
