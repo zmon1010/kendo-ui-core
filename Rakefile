@@ -1042,6 +1042,40 @@ bundle :name => 'jsp.commercial',
            "dist/bundles/jsp.commercial/src/kendo-taglib/pom.xml"
        ]
 
+bundle :name => 'jsp.commercial.no-source',
+       :license => 'src-license-complete',
+       :eula => 'jsp',
+       :changelog => %w(components jsp),
+       :product => 'UI for JSP',
+       :upload_as_internal_build => true,
+       :skip_grunt_build => true,
+       :release_build => {
+         :file_metadata => {
+             :zip => {
+              :label => "Manual Installation",
+              :download_name => "telerik.ui.for.jsp.#{VERSION}.commercial.zip",
+              :file_category => "Installation",
+              :file_type => "Paid Files",
+              :extension => "ZIP",
+              :file_markers => ["Default File"],
+              :websites => ["Telerik"],
+              :download_message => 'You have successfully downloaded Telerik UI for JSP Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/jsp/introduction">this article</a> on how to get started.',
+              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />JSP Server Wrappers<br />Complete Source Code</strong>"
+             }
+          }
+        },
+       :type_script => %w(all web mobile dataviz),
+       :contents => {
+            'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES
+       }.merge(JSP_CONTENT),
+       :prerequisites => [
+           "java:assets",
+           "dist/bundles/jsp.commercial/wrappers/jsp/spring-demos/src/main/webapp/WEB-INF/lib/#{JAR_NAME}",
+           "dist/bundles/jsp.commercial/wrappers/jsp/spring-demos/pom.xml",
+           "dist/bundles/jsp.commercial/src/kendo-taglib/pom.xml"
+       ]
+
 # UI for PHP
 bundle :name => 'php.trial',
        :skip_grunt_build => true,
