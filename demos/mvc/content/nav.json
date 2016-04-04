@@ -325,6 +325,16 @@
                     "!jsp",
                     "!php"
                 ]
+            },
+            {
+                "text": "Tag Helper",
+                "url": "button/tag-helper",
+                "title": {
+                    "aspnet-mvc": "ASP.NET MVC Button Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ]
             }
         ],
         "category": "Navigation"
@@ -1015,6 +1025,16 @@
                     "!jsp",
                     "!php"
                 ]
+            },
+            {
+                "text": "Tag Helper",
+                "url": "datepicker/tag-helper",
+                "title": {
+                    "aspnet-mvc": "ASP.NET MVC DatePicker Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ]
             }
         ],
         "category": "Editors"
@@ -1174,6 +1194,16 @@
                     "!mvc",
                     "!jsp",
                     "!php"
+                ]
+            },
+            {
+                "text": "Tag Helper",
+                "url": "datetimepicker/tag-helper",
+                "title": {
+                    "aspnet-mvc": "ASP.NET MVC DateTimePicker Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
                 ]
             }
         ],
@@ -3822,6 +3852,16 @@
                     "!jsp",
                     "!php"
                 ]
+            },
+            {
+                "text": "Tag Helper",
+                "url": "numerictextbox/tag-helper",
+                "title": {
+                    "aspnet-mvc": "ASP.NET MVC NumericTextBox Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ]
             }
         ],
         "category": "Editors"
@@ -5716,6 +5756,16 @@
                     "!jsp",
                     "!php"
                 ]
+            },
+            {
+                "text": "Tag Helper",
+                "url": "timepicker/tag-helper",
+                "title": {
+                    "aspnet-mvc": "ASP.NET MVC TimePicker Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ]
             }
         ],
         "category": "Editors"
@@ -6830,6 +6880,16 @@
                     "!mvc",
                     "!jsp",
                     "!php"
+                ]
+            },
+            {
+                "text": "Tag Helper",
+                "url": "window/tag-helper",
+                "title": {
+                    "aspnet-mvc": "ASP.NET MVC Window Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
                 ]
             }
         ],

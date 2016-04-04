@@ -1,0 +1,70 @@
+﻿@using Kendo.Mvc.UI
+@addTagHelper "*, Kendo.Mvc"
+
+<div>
+	<h4>Basic Button</h4>
+	<p>
+        <kendo-button name="primaryTextButton"
+                      class="k-primary">
+            Primary Button
+        </kendo-button>
+
+        <kendo-button name="textButton">
+            Button
+        </kendo-button>
+	</p>
+</div>
+
+<div>
+	<h4>Disabled buttons</h4>
+	<p>
+        <kendo-button name="primaryDisabledButton1"
+                      tag="span"
+                      enable="false"
+                      class="k-primary">
+            Primary disabled via configuration
+        </kendo-button>
+
+        <kendo-button name="disabledButton1"
+                      tag="span"
+                      enable="false">
+            Disabled via configuration
+        </kendo-button>
+	</p><br />
+
+	<p>
+        <kendo-button name="primaryDisabledButton2"
+                      tag="span"
+                      disabled="disabled"
+                      class="k-primary">
+            Primary disabled via HTML attribute
+        </kendo-button>
+
+        <kendo-button name="disabledButton2"
+                      tag="span"
+                      disabled="disabled">
+            Disabled via HTML attribute
+        </kendo-button>
+	</p>
+</div>
+
+<div>
+	<h4>Buttons with icons</h4>
+	<p>
+        <kendo-button name="iconTextButton"
+                      tag="a"
+                      sprite-css-class="k-icon k-i-ungroup">Icon and text</kendo-button>
+
+        <kendo-button name="kendoIconTextButton"
+                      tag="a"
+                      icon="plus">
+            Kendo UI icon
+        </kendo-button>
+
+        <kendo-button name="iconButton"
+                      tag="em"
+                      sprite-css-class="k-icon k-i-refresh">
+            <span class='k-sprite'>Refresh</span>
+        </kendo-button>
+	</p>
+</div>

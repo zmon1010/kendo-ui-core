@@ -1,0 +1,18 @@
+@addTagHelper "*, Kendo.Mvc"
+
+<div class="demo-section k-content">
+    <h4>Show e-mails from:</h4>
+    <kendo-datepicker name='datepicker'
+                      value='DateTime.Parse("10/10/2011")'
+                      style='width: 100%;'>
+    </kendo-datepicker>
+
+    <h4 style="margin-top: 2em;">Add to archive mail from:</h4>
+    <kendo-datepicker name="monthpicker"
+                      start="CalendarView.Year"
+                      depth="CalendarView.Year"
+                      format="MMMM yyyy"
+                      value='DateTime.Parse("November 2011")'
+                      style="width: 100%;">
+    </kendo-datepicker>
+</div>
