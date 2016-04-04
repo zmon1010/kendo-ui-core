@@ -146,6 +146,7 @@ COMPOSITE_OPTION_SECTION = ERB.new(%{
 <% if simple %>
 <%= simple.examples %>
 <% end %>
+<% if sample_option %>
 #### Example - using [<%= php_type %>](<%= root %><%= path %>/<%= php_class %>)
     <?php
     <%= owner.variable %> = <%= owner.value %>;
@@ -162,6 +163,7 @@ COMPOSITE_OPTION_SECTION = ERB.new(%{
     <%= sample_option.variable %> = <%= sample_option.value %>;
     <%= owner.variable %>-><%= php_name %>(array('<%= sample_option.name %>' => <%= sample_option.variable %>));
     ?>
+<% end %>
 })
 
 COMPOSITE_OPTION_DESCRIPTION = ERB.new(%{
