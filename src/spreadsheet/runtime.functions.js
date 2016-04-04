@@ -2267,7 +2267,7 @@
         function makeComparator(cmp, x) {
             if (typeof x == "string") {
                 var num = parseFloat(x);
-                if (!isNaN(num)) {
+                if (!isNaN(num) && num == x) {
                     x = num;
                 }
             }

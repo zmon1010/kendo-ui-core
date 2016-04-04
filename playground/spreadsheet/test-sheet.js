@@ -34,4 +34,13 @@ fill(sheet, {
 sheet.range("G2:G11").values([
     [1],[2],[3],[4],[5],[6],[7],[8],[9],[10]
 ]);
+
+sheet.range("A5:A9").values([
+    ["foo"],
+    ["bar"],
+    ["3-Non-Admin"],
+    ["wak"],
+    ["3-Non-Admin"]
+]);
+sheet.range("C5").formula('countif(A:A, "3-Non-Admin")');
 sheet.range("F4:H6").enable(false);
