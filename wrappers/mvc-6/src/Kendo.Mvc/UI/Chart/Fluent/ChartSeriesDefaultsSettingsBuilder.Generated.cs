@@ -154,6 +154,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The radarArea series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the radarArea series settings.</param>
+        public ChartSeriesBuilder<T> RadarArea()
+        {
+            return new ChartSeriesBuilder<T>(Container.RadarArea);
+        }
+
+        /// <summary>
         /// The scatter series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the scatter series settings.</param>

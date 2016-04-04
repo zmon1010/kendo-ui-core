@@ -85,6 +85,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> PolarScatter { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The RadarArea series default settings.
+        /// </summary>
+        public ChartSeries<T> RadarArea { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Scatter series default settings.
         /// </summary>
         public ChartSeries<T> Scatter { get; } = new ChartSeries<T>();
@@ -211,6 +216,13 @@ namespace Kendo.Mvc.UI
             if (polarScatter.Any())
             {
                 settings["polarScatter"] = polarScatter;
+            }
+
+            var radarArea = RadarArea.Serialize();
+
+            if (radarArea.Any())
+            {
+                settings["radarArea"] = radarArea;
             }
 
             var scatter = Scatter.Serialize();

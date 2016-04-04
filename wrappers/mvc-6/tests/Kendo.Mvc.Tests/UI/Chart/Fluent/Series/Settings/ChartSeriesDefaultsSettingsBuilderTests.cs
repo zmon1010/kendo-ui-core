@@ -107,6 +107,12 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void RadarArea_series_should_return_builder()
+        {
+            builder.RadarArea().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void ScatterLine_series_should_return_builder()
         {
             builder.ScatterLine().ShouldBeType(typeof(ChartSeriesBuilder<object>));
