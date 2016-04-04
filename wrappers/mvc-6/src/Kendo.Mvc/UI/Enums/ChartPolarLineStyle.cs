@@ -3,7 +3,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Specifies the preferred rendering style.
     /// </summary>
-    public enum ChartSeriesStyle
+    public enum ChartPolarLineStyle
     {
         /// <summary>
         /// Points will be connected with a straight line.
@@ -12,25 +12,19 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// Points will be connected with a smooth line.
         /// </summary>
-        Smooth,
-        /// <summary>
-        /// Points will be connected with a line at right angles.
-        /// </summary>
-        Step
+        Smooth
     }
 
-    internal static class ChartSeriesStyleExtensions
+    internal static class ChartPolarLineStyleExtensions
     {
-        internal static string Serialize(this ChartSeriesStyle value)
+        internal static string Serialize(this ChartPolarLineStyle value)
         {
             switch (value)
             {
-                case ChartSeriesStyle.Normal:
+                case ChartPolarLineStyle.Normal:
                     return "normal";
-                case ChartSeriesStyle.Smooth:
+                case ChartPolarLineStyle.Smooth:
                     return "smooth";
-                case ChartSeriesStyle.Step:
-                    return "step";
             }
 
             return value.ToString();

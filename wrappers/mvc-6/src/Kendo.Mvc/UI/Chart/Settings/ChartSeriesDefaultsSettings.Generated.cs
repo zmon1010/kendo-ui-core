@@ -75,6 +75,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> PolarArea { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The PolarLine series default settings.
+        /// </summary>
+        public ChartSeries<T> PolarLine { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Scatter series default settings.
         /// </summary>
         public ChartSeries<T> Scatter { get; } = new ChartSeries<T>();
@@ -187,6 +192,13 @@ namespace Kendo.Mvc.UI
             if (polarArea.Any())
             {
                 settings["polarArea"] = polarArea;
+            }
+
+            var polarLine = PolarLine.Serialize();
+
+            if (polarLine.Any())
+            {
+                settings["polarLine"] = polarLine;
             }
 
             var scatter = Scatter.Serialize();

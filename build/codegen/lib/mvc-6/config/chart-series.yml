@@ -239,6 +239,21 @@
         :expression: yValueExpression
         :member: yMemberName
 
+- :name: polarLine
+  :type: PolarLine
+  :fields:
+      - :name: XField
+        :description: The x value.
+        :generic: TXValue
+        :expression: xValueExpression
+        :member: xMemberName
+
+      - :name: YField
+        :description: The y value.
+        :generic: TYValue
+        :expression: yValueExpression
+        :member: yMemberName
+
 - :name: scatter
   :type: Scatter
   :fields:

@@ -136,6 +136,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The polarLine series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the polarLine series settings.</param>
+        public ChartSeriesBuilder<T> PolarLine()
+        {
+            return new ChartSeriesBuilder<T>(Container.PolarLine);
+        }
+
+        /// <summary>
         /// The scatter series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the scatter series settings.</param>
