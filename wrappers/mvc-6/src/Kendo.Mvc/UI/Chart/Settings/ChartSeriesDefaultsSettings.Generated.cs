@@ -100,6 +100,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> RadarLine { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The RangeBar series default settings.
+        /// </summary>
+        public ChartSeries<T> RangeBar { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Scatter series default settings.
         /// </summary>
         public ChartSeries<T> Scatter { get; } = new ChartSeries<T>();
@@ -257,6 +262,13 @@ namespace Kendo.Mvc.UI
             if (radarLine.Any())
             {
                 settings["radarLine"] = radarLine;
+            }
+
+            var rangeBar = RangeBar.Serialize();
+
+            if (rangeBar.Any())
+            {
+                settings["rangeBar"] = rangeBar;
             }
 
             var scatter = Scatter.Serialize();

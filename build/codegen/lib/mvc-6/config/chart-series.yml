@@ -317,6 +317,28 @@
         :expression: categoryExpression
         :member: categoryMemberName
 
+- :name: rangeBar
+  :type: RangeBar
+  :fields:
+      - :name: FromField
+        :description: The from value.
+        :generic: TValue
+        :expression: fromExpression
+        :member: fromMemberName
+
+      - :name: ToField
+        :description: The to value.
+        :generic: TValue
+        :expression: toExpression
+        :member: toMemberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: The category value.
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
 - :name: scatter
   :type: Scatter
   :fields:

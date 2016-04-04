@@ -181,6 +181,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The rangeBar series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the rangeBar series settings.</param>
+        public ChartSeriesBuilder<T> RangeBar()
+        {
+            return new ChartSeriesBuilder<T>(Container.RangeBar);
+        }
+
+        /// <summary>
         /// The scatter series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the scatter series settings.</param>
