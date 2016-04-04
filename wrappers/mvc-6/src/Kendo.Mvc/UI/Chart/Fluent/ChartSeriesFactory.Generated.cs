@@ -2037,6 +2037,109 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines verticalLine series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> VerticalLine(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalLine",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines verticalLine series bound to model member(s).
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  VerticalLine<TValue>(
+            Expression<Func<T, TValue>> expression)
+        {
+            if (typeof(T).IsPlainType() && (!expression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalLine",
+                Field = expression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines verticalLine series bound to model member(s).
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the The category value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  VerticalLine<TValue, TCategory>(
+            Expression<Func<T, TValue>> expression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!expression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalLine",
+                Field = expression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound verticalLine series.
+        /// </summary>
+        /// <param name="memberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the The category value. member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> VerticalLine(
+            string memberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalLine",
+                Name = memberName.AsTitle(),
+                Field = memberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines waterfall series bound to inline data.
         /// </summary>
         /// <param name="data">

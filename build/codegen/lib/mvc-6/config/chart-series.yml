@@ -378,6 +378,22 @@
         :expression: targetExpression
         :member: targetMemberName
 
+- :name: verticalLine
+  :type: VerticalLine
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expression
+        :member: memberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: The category value.
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
 - :name: waterfall
   :type: Waterfall
   :fields:

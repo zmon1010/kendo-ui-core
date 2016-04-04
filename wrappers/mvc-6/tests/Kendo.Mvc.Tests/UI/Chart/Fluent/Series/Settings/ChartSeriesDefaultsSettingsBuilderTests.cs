@@ -149,6 +149,12 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void VerticalLine_series_should_return_builder()
+        {
+            builder.VerticalLine().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void Waterfall_series_should_return_builder()
         {
             builder.Waterfall().ShouldBeType(typeof(ChartSeriesBuilder<object>));

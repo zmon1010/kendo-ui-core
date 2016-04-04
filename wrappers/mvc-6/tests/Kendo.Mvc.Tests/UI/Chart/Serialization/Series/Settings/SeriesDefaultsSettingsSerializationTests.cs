@@ -325,6 +325,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_VerticalLine_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("verticalLine").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void VerticalLine_series_should_be_serialized()
+        {
+            settings.VerticalLine.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("verticalLine").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_Waterfall_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("waterfall").ShouldBeFalse();

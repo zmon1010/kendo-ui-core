@@ -217,6 +217,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The verticalLine series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the verticalLine series settings.</param>
+        public ChartSeriesBuilder<T> VerticalLine()
+        {
+            return new ChartSeriesBuilder<T>(Container.VerticalLine);
+        }
+
+        /// <summary>
         /// The waterfall series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the waterfall series settings.</param>

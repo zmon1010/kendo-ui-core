@@ -120,6 +120,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> VerticalBullet { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The VerticalLine series default settings.
+        /// </summary>
+        public ChartSeries<T> VerticalLine { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Waterfall series default settings.
         /// </summary>
         public ChartSeries<T> Waterfall { get; } = new ChartSeries<T>();
@@ -280,6 +285,13 @@ namespace Kendo.Mvc.UI
             if (verticalBullet.Any())
             {
                 settings["verticalBullet"] = verticalBullet;
+            }
+
+            var verticalLine = VerticalLine.Serialize();
+
+            if (verticalLine.Any())
+            {
+                settings["verticalLine"] = verticalLine;
             }
 
             var waterfall = Waterfall.Serialize();
