@@ -113,6 +113,12 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void RadarColumn_series_should_return_builder()
+        {
+            builder.RadarColumn().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void RadarLine_series_should_return_builder()
         {
             builder.RadarLine().ShouldBeType(typeof(ChartSeriesBuilder<object>));

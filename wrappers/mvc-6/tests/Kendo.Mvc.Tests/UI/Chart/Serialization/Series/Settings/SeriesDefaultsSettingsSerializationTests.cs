@@ -241,6 +241,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_RadarColumn_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("radarColumn").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void RadarColumn_series_should_be_serialized()
+        {
+            settings.RadarColumn.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("radarColumn").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_RadarLine_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("radarLine").ShouldBeFalse();

@@ -90,6 +90,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> RadarArea { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The RadarColumn series default settings.
+        /// </summary>
+        public ChartSeries<T> RadarColumn { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The RadarLine series default settings.
         /// </summary>
         public ChartSeries<T> RadarLine { get; } = new ChartSeries<T>();
@@ -228,6 +233,13 @@ namespace Kendo.Mvc.UI
             if (radarArea.Any())
             {
                 settings["radarArea"] = radarArea;
+            }
+
+            var radarColumn = RadarColumn.Serialize();
+
+            if (radarColumn.Any())
+            {
+                settings["radarColumn"] = radarColumn;
             }
 
             var radarLine = RadarLine.Serialize();

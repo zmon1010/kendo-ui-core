@@ -163,6 +163,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The radarColumn series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the radarColumn series settings.</param>
+        public ChartSeriesBuilder<T> RadarColumn()
+        {
+            return new ChartSeriesBuilder<T>(Container.RadarColumn);
+        }
+
+        /// <summary>
         /// The radarLine series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the radarLine series settings.</param>
