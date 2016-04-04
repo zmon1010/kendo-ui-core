@@ -12,6 +12,13 @@ function log {
 log "Generating documentation"
 (cd docs && bundle --without development --path ~/gems && bundle exec jekyll build)
 
+if [ ! $? -eq 0 ]
+then
+    echo Unable to generate documentation
+    echo Subshell exited with error code $?
+    exit
+fi
+
 for host in "${HOSTS[@]}"
 do
     log "Uploading documentation to $host"
