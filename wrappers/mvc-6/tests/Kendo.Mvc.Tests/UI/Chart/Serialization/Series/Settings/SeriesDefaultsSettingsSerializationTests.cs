@@ -227,6 +227,48 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_RadarArea_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("radarArea").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void RadarArea_series_should_be_serialized()
+        {
+            settings.RadarArea.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("radarArea").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Default_RadarColumn_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("radarColumn").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void RadarColumn_series_should_be_serialized()
+        {
+            settings.RadarColumn.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("radarColumn").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Default_RadarLine_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("radarLine").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void RadarLine_series_should_be_serialized()
+        {
+            settings.RadarLine.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("radarLine").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_ScatterLine_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("scatterLine").ShouldBeFalse();

@@ -148,6 +148,17 @@
         :member: Smooth
         :description: Points will be connected with a smooth line.
 
+- :type: ChartRadarLineStyle
+  :description: Specifies the preferred rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with a straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with a smooth line.
+
 - :type: ChartScatterLineMissingValues
   :description: Specifies the behavior for handling missing values in the series.
   :values:
