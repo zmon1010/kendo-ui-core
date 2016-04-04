@@ -440,11 +440,11 @@
       :values:
           - :value: normal
             :member: Normal
-            :description: Points will be connected with straight line.
+            :description: Points will be connected with a straight line.
 
           - :value: smooth
             :member: Smooth
-            :description: Points will be connected with smooth line.
+            :description: Points will be connected with a smooth line.
 
           - :value: step
             :member: Step

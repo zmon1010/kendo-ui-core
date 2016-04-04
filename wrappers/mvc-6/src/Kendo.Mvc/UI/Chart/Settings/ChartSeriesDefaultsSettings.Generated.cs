@@ -70,6 +70,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Pie { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The PolarArea series default settings.
+        /// </summary>
+        public ChartSeries<T> PolarArea { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Scatter series default settings.
         /// </summary>
         public ChartSeries<T> Scatter { get; } = new ChartSeries<T>();
@@ -175,6 +180,13 @@ namespace Kendo.Mvc.UI
             if (pie.Any())
             {
                 settings["pie"] = pie;
+            }
+
+            var polarArea = PolarArea.Serialize();
+
+            if (polarArea.Any())
+            {
+                settings["polarArea"] = polarArea;
             }
 
             var scatter = Scatter.Serialize();
