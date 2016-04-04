@@ -110,9 +110,19 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> ScatterLine { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The VerticalArea series default settings.
+        /// </summary>
+        public ChartSeries<T> VerticalArea { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The VerticalBullet series default settings.
         /// </summary>
         public ChartSeries<T> VerticalBullet { get; } = new ChartSeries<T>();
+
+        /// <summary>
+        /// The VerticalLine series default settings.
+        /// </summary>
+        public ChartSeries<T> VerticalLine { get; } = new ChartSeries<T>();
 
         /// <summary>
         /// The Waterfall series default settings.
@@ -263,11 +273,25 @@ namespace Kendo.Mvc.UI
                 settings["scatterLine"] = scatterLine;
             }
 
+            var verticalArea = VerticalArea.Serialize();
+
+            if (verticalArea.Any())
+            {
+                settings["verticalArea"] = verticalArea;
+            }
+
             var verticalBullet = VerticalBullet.Serialize();
 
             if (verticalBullet.Any())
             {
                 settings["verticalBullet"] = verticalBullet;
+            }
+
+            var verticalLine = VerticalLine.Serialize();
+
+            if (verticalLine.Any())
+            {
+                settings["verticalLine"] = verticalLine;
             }
 
             var waterfall = Waterfall.Serialize();
