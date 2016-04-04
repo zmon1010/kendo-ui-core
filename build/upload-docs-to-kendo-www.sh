@@ -15,8 +15,7 @@ log "Generating documentation"
 if [ ! $? -eq 0 ]
 then
     echo Unable to generate documentation
-    echo Subshell exited with error code $?
-    exit
+    exit $?
 fi
 
 for host in "${HOSTS[@]}"
