@@ -1497,6 +1497,109 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines radarLine series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> RadarLine(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "radarLine",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines radarLine series bound to model member(s).
+        /// </summary>
+        /// <param name="valueExpression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  RadarLine<TValue>(
+            Expression<Func<T, TValue>> valueExpression)
+        {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "radarLine",
+                Field = valueExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines radarLine series bound to model member(s).
+        /// </summary>
+        /// <param name="valueExpression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the The category value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  RadarLine<TValue, TCategory>(
+            Expression<Func<T, TValue>> valueExpression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!valueExpression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "radarLine",
+                Field = valueExpression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound radarLine series.
+        /// </summary>
+        /// <param name="valueMemberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the The category value. member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> RadarLine(
+            string valueMemberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "radarLine",
+                Name = valueMemberName.AsTitle(),
+                Field = valueMemberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines scatter series bound to inline data.
         /// </summary>
         /// <param name="data">

@@ -176,6 +176,24 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="value">The value for Style</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesBuilder<T> Style(ChartRadarLineStyle value)
+        {
+            try
+            {
+                Container.Style = (ChartSeriesStyle?)Enum.Parse(typeof(ChartSeriesStyle), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the preferred rendering style.
+        /// </summary>
+        /// <param name="value">The value for Style</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ChartSeriesBuilder<T> Style(ChartScatterLineStyle value)
         {
             try

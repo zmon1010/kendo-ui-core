@@ -285,6 +285,22 @@
         :expression: categoryExpression
         :member: categoryMemberName
 
+- :name: radarLine
+  :type: RadarLine
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: valueExpression
+        :member: valueMemberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: The category value.
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
 - :name: scatter
   :type: Scatter
   :fields:
