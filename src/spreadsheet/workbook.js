@@ -298,21 +298,29 @@
 
         fromJSON: function(json) {
             if (json.sheets) {
+                while (this._sheets.length > 1) {
+                    this.removeSheet(this._sheets[0]);
+                }
+
                 for (var idx = 0; idx < json.sheets.length; idx++) {
-                    var sheet = this.sheetByIndex(idx);
+                    var data = json.sheets[idx];
+                    var args = sheetParamsFromJSON(data);
+                    var sheet = this.insertSheet({
+                        rows         : args.rowCount,
+                        columns      : args.columnCount,
+                        rowHeight    : args.rowHeight,
+                        columnWidth  : args.columnWidth,
+                        headerHeight : args.headerHeight,
+                        headerWidth  : args.headerWidth,
+                        data         : data
+                    });
 
-                    if (!sheet) {
-                        sheet = this.insertSheet();
-                    }
-
-                    sheet.fromJSON(json.sheets[idx]);
-
-                    var dataSource = json.sheets[idx].dataSource;
-
-                    if (dataSource) {
-                        sheet.setDataSource(dataSource);
+                    if (data.dataSource) {
+                        sheet.setDataSource(data.dataSource);
                     }
                 }
+
+                this.removeSheet(this._sheets[0]);
             }
 
             if (json.activeSheet) {
@@ -419,6 +427,43 @@
         },
         options: {}
     });
+
+    function sheetParamsFromJSON(data) {
+        function or(v, def) {
+            return v !== undefined ? v : def;
+        }
+
+        var rowCount     = or(data.rowCount, 200),
+            columnCount  = or(data.columnCount, 50),
+            rowHeight    = or(data.rowHeight, 20),
+            columnWidth  = or(data.columnWidth, 64),
+            headerHeight = or(data.headerHeight, 20),
+            headerWidth  = or(data.headerWidth, 32);
+
+        if (data.rows !== undefined) {
+            for (var i = 0; i < data.rows.length; ++i) {
+                var row = data.rows[i];
+                var ri = or(row.index, i);
+                if (ri >= rowCount) { rowCount = ri + 1; }
+                if (row.cells) {
+                    for (var j = 0; j < row.cells.length; ++j) {
+                        var cell = row.cells[j];
+                        var ci = or(cell.index, j);
+                        if (ci >= columnCount) { columnCount = ci + 1; }
+                    }
+                }
+            }
+        }
+
+        return {
+            rowCount     : rowCount,
+            columnCount  : columnCount,
+            rowHeight    : rowHeight,
+            columnWidth  : columnWidth,
+            headerHeight : headerHeight,
+            headerWidth  : headerWidth
+        };
+    }
 
     kendo.spreadsheet.Workbook = Workbook;
     if (kendo.PDFMixin) {

@@ -95,44 +95,6 @@
         }
     });
 
-    function paramsFromJSON(data) {
-        function or(data, key, def) {
-            var v = data[key];
-            return v !== undefined ? v : def;
-        }
-
-        var rowCount     = or(data, "rowCount", 200),
-            columnCount  = or(data, "columnCount", 50),
-            rowHeight    = or(data, "rowHeight", 20),
-            columnWidth  = or(data, "columnWidth", 64),
-            headerHeight = or(data, "headerHeight", 20),
-            headerWidth  = or(data, "headerWidth", 32);
-
-        if (data.rows !== undefined) {
-            for (var i = 0; i < data.rows.length; ++i) {
-                var row = data.rows[i];
-                var ri = or(row, "index", i);
-                if (ri >= rowCount) { rowCount = ri + 1; }
-                if (row.cells) {
-                    for (var j = 0; j < row.cells.length; ++j) {
-                        var cell = row.cells[j];
-                        var ci = or(cell, "index", j);
-                        if (ci >= columnCount) { columnCount = ci + 1; }
-                    }
-                }
-            }
-        }
-
-        return {
-            rowCount     : rowCount,
-            columnCount  : columnCount,
-            rowHeight    : rowHeight,
-            columnWidth  : columnWidth,
-            headerHeight : headerHeight,
-            headerWidth  : headerWidth
-        };
-    }
-
     var Sheet = kendo.Observable.extend({
         init: function() {
             kendo.Observable.prototype.init.call(this);
@@ -1037,9 +999,6 @@
         },
 
         fromJSON: function(json) {
-            var args = paramsFromJSON(json);
-            this._reinit(args.rowCount, args.columnCount, args.rowHeight, args.columnWidth, args.headerHeight, args.headerWidth);
-
             this.batch(function() {
                 if (json.name !== undefined) {
                     this._name(json.name);
