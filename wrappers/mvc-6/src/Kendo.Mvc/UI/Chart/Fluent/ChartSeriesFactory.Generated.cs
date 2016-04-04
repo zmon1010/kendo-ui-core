@@ -1163,6 +1163,237 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines polarArea series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> PolarArea(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarArea",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines polarArea series bound to model member(s).
+        /// </summary>
+        /// <param name="xValueExpression">
+        /// The expression used to extract the The x value. from the model.
+        /// </param>
+        /// <param name="yValueExpression">
+        /// The expression used to extract the The y value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  PolarArea<TXValue, TYValue>(
+            Expression<Func<T, TXValue>> xValueExpression,
+            Expression<Func<T, TYValue>> yValueExpression)
+        {
+            if (typeof(T).IsPlainType() && (!xValueExpression.IsBindable() || !yValueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarArea",
+                XField = xValueExpression.MemberWithoutInstance(),
+                YField = yValueExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound polarArea series.
+        /// </summary>
+        /// <param name="xMemberName">
+        /// The name of the The x value. member.
+        /// </param>
+        /// <param name="yMemberName">
+        /// The name of the The y value. member.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> PolarArea(
+            string xMemberName,
+            string yMemberName)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarArea",
+                Name = xMemberName.AsTitle() + ", " + yMemberName.AsTitle(),
+                XField = xMemberName,
+                YField = yMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
+        /// Defines polarLine series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> PolarLine(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarLine",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines polarLine series bound to model member(s).
+        /// </summary>
+        /// <param name="xValueExpression">
+        /// The expression used to extract the The x value. from the model.
+        /// </param>
+        /// <param name="yValueExpression">
+        /// The expression used to extract the The y value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  PolarLine<TXValue, TYValue>(
+            Expression<Func<T, TXValue>> xValueExpression,
+            Expression<Func<T, TYValue>> yValueExpression)
+        {
+            if (typeof(T).IsPlainType() && (!xValueExpression.IsBindable() || !yValueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarLine",
+                XField = xValueExpression.MemberWithoutInstance(),
+                YField = yValueExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound polarLine series.
+        /// </summary>
+        /// <param name="xMemberName">
+        /// The name of the The x value. member.
+        /// </param>
+        /// <param name="yMemberName">
+        /// The name of the The y value. member.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> PolarLine(
+            string xMemberName,
+            string yMemberName)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarLine",
+                Name = xMemberName.AsTitle() + ", " + yMemberName.AsTitle(),
+                XField = xMemberName,
+                YField = yMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
+        /// Defines polarScatter series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> PolarScatter(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarScatter",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines polarScatter series bound to model member(s).
+        /// </summary>
+        /// <param name="xValueExpression">
+        /// The expression used to extract the The x value. from the model.
+        /// </param>
+        /// <param name="yValueExpression">
+        /// The expression used to extract the The y value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  PolarScatter<TXValue, TYValue>(
+            Expression<Func<T, TXValue>> xValueExpression,
+            Expression<Func<T, TYValue>> yValueExpression)
+        {
+            if (typeof(T).IsPlainType() && (!xValueExpression.IsBindable() || !yValueExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarScatter",
+                XField = xValueExpression.MemberWithoutInstance(),
+                YField = yValueExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound polarScatter series.
+        /// </summary>
+        /// <param name="xMemberName">
+        /// The name of the The x value. member.
+        /// </param>
+        /// <param name="yMemberName">
+        /// The name of the The y value. member.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> PolarScatter(
+            string xMemberName,
+            string yMemberName)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "polarScatter",
+                Name = xMemberName.AsTitle() + ", " + yMemberName.AsTitle(),
+                XField = xMemberName,
+                YField = yMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines scatter series bound to inline data.
         /// </summary>
         /// <param name="data">

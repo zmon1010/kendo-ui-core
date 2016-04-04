@@ -32,36 +32,6 @@
         :member: OutsideEnd
         :description: The label is positioned outside, near the end of the point
 
-- :type: ChartLineMissingValues
-  :description: Specifies the behavior for handling missing values in the series.
-  :values:
-      - :value: gap
-        :member: Gap
-        :description: The line stops before the missing point and continues after it.
-
-      - :value: interpolate
-        :member: Interpolate
-        :description: The value is interpolated from neighboring points.
-
-      - :value: zero
-        :member: Zero
-        :description: The value is assumed to be zero.
-
-- :type: ChartLineStyle
-  :description: Specifies the preferred rendering style.
-  :values:
-      - :value: normal
-        :member: Normal
-        :description: Points will be connected with straight line.
-
-      - :value: smooth
-        :member: Smooth
-        :description: Points will be connected with smooth line.
-
-      - :value: step
-        :member: Step
-        :description: Points will be connected with a line at right angles.
-
 - :type: ChartFunnelLabelsAlign
   :description: Specifies the position of pie chart labels.
   :values:
@@ -92,6 +62,36 @@
         :member: Bottom
         :description: The label is positioned at the bottom of the label area.
 
+- :type: ChartLineMissingValues
+  :description: Specifies the behavior for handling missing values in the series.
+  :values:
+      - :value: gap
+        :member: Gap
+        :description: The line stops before the missing point and continues after it.
+
+      - :value: interpolate
+        :member: Interpolate
+        :description: The value is interpolated from neighboring points.
+
+      - :value: zero
+        :member: Zero
+        :description: The value is assumed to be zero.
+
+- :type: ChartLineStyle
+  :description: Specifies the preferred rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with smooth line.
+
+      - :value: step
+        :member: Step
+        :description: Points will be connected with a line at right angles.
+
 - :type: ChartPieLabelsAlign
   :description: Specifies the position of pie chart labels.
   :values:
@@ -117,6 +117,36 @@
       - :value: outsideEnd
         :member: OutsideEnd
         :description: The label is positioned outside, near the end of the pie segment.
+
+- :type: ChartPointLabelsPosition
+  :description: Specifies the position of the labels.
+  :values:
+      - :value: above
+        :member: Above
+        :description: The label is positioned at the top of the marker.
+
+      - :value: below
+        :member: Below
+        :description: the label is positioned at the bottom of the marker.
+
+      - :value: left
+        :member: Left
+        :description: The label is positioned to the left of the marker.
+
+      - :value: right
+        :member: Right
+        :description: The label is positioned to the right of the marker.
+
+- :type: ChartPolarLineStyle
+  :description: Specifies the preferred rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with a straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with a smooth line.
 
 - :type: ChartScatterLineMissingValues
   :description: Specifies the behavior for handling missing values in the series.

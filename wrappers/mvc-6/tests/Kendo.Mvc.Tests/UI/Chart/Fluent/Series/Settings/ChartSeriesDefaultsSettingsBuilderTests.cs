@@ -89,6 +89,24 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void PolarArea_series_should_return_builder()
+        {
+            builder.PolarArea().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
+        public void PolarLine_series_should_return_builder()
+        {
+            builder.PolarLine().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
+        public void PolarScatter_series_should_return_builder()
+        {
+            builder.PolarScatter().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void ScatterLine_series_should_return_builder()
         {
             builder.ScatterLine().ShouldBeType(typeof(ChartSeriesBuilder<object>));

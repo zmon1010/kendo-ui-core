@@ -79,7 +79,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Position_with_ChartBarLabelsPositio_should_return_builder()
+        public void Position_with_ChartBarLabelsPositionp_should_return_builder()
         {
             builder.Position(ChartBarLabelsPosition.InsideBase).ShouldBeSameAs(builder);
         }
@@ -95,7 +95,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Align_with_ChartFunnelLabelsPositio_should_return_builder()
+        public void Align_with_ChartFunnelLabelsPosition_should_return_builder()
         {
             builder.Align(ChartFunnelLabelsAlign.Right).ShouldBeSameAs(builder);
         }
@@ -127,7 +127,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Align_with_ChartPieLabelsPositio_should_return_builder()
+        public void Align_with_ChartPieLabelsPosition_should_return_builder()
         {
             builder.Align(ChartPieLabelsAlign.Column).ShouldBeSameAs(builder);
         }
@@ -143,9 +143,25 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Position_with_ChartPieLabelsPositio_should_return_builder()
+        public void Position_with_ChartPieLabelsPosition_should_return_builder()
         {
             builder.Position(ChartPieLabelsPosition.InsideEnd).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Position_with_ChartPointLabelsPosition()
+        {
+            var value = ChartPointLabelsPosition.Below;
+
+            builder.Position(value);
+
+            settings.Position.ShouldEqual(ChartSeriesLabelsPosition.Below);
+        }
+
+        [Fact]
+        public void Position_with_ChartPointLabelsPosition_should_return_builder()
+        {
+            builder.Position(ChartPointLabelsPosition.Below).ShouldBeSameAs(builder);
         }
     }
 }

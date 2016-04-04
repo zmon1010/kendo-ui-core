@@ -251,6 +251,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Style_with_ChartPolarLineStyle()
+        {
+            builder.Style(ChartPolarLineStyle.Smooth);
+
+            series.Style.ShouldEqual(ChartSeriesStyle.Smooth);
+        }
+
+        [Fact]
+        public void Style_with_ChartPolarLineStyle_should_return_builder()
+        {
+            builder.Style(ChartPolarLineStyle.Smooth).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Style_with_ChartScatterLineStyle()
         {
             builder.Style(ChartScatterLineStyle.Smooth);

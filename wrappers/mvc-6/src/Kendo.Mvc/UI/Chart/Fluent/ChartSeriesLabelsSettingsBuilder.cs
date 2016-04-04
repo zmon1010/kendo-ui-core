@@ -138,5 +138,23 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Specifies the position of the labels.
+        /// </summary>
+        /// <param name="value">The value for Position</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesLabelsSettingsBuilder<T> Position(ChartPointLabelsPosition value)
+        {
+            try
+            {
+                Container.Position = (ChartSeriesLabelsPosition?) Enum.Parse(typeof(ChartSeriesLabelsPosition), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
     }
 }

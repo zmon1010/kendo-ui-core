@@ -185,6 +185,48 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_PolarArea_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("polarArea").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void PolarArea_series_should_be_serialized()
+        {
+            settings.PolarArea.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("polarArea").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Default_PolarLine_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("polarLine").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void PolarLine_series_should_be_serialized()
+        {
+            settings.PolarLine.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("polarLine").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Default_PolarScatter_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("polarScatter").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void PolarScatter_series_should_be_serialized()
+        {
+            settings.PolarScatter.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("polarScatter").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_ScatterLine_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("scatterLine").ShouldBeFalse();
