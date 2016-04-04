@@ -213,6 +213,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_PolarScatter_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("polarScatter").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void PolarScatter_series_should_be_serialized()
+        {
+            settings.PolarScatter.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("polarScatter").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_ScatterLine_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("scatterLine").ShouldBeFalse();
