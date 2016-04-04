@@ -347,6 +347,22 @@
         :expression: yValueExpression
         :member: yMemberName
 
+- :name: verticalArea
+  :type: VerticalArea
+  :fields:
+      - :name: Field
+        :description: value
+        :generic: TValue
+        :expression: expression
+        :member: memberName
+
+      - :name: CategoryField
+        :optional: true
+        :description: The category value.
+        :generic: TCategory
+        :expression: categoryExpression
+        :member: categoryMemberName
+
 - :name: verticalBullet
   :type: VerticalBullet
   :fields:

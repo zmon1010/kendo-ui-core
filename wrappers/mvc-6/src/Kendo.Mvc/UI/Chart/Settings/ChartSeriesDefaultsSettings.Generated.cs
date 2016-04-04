@@ -110,6 +110,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> ScatterLine { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The VerticalArea series default settings.
+        /// </summary>
+        public ChartSeries<T> VerticalArea { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The VerticalBullet series default settings.
         /// </summary>
         public ChartSeries<T> VerticalBullet { get; } = new ChartSeries<T>();
@@ -261,6 +266,13 @@ namespace Kendo.Mvc.UI
             if (scatterLine.Any())
             {
                 settings["scatterLine"] = scatterLine;
+            }
+
+            var verticalArea = VerticalArea.Serialize();
+
+            if (verticalArea.Any())
+            {
+                settings["verticalArea"] = verticalArea;
             }
 
             var verticalBullet = VerticalBullet.Serialize();

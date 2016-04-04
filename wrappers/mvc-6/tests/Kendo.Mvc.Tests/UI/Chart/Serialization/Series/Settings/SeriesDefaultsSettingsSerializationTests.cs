@@ -297,6 +297,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_VerticalArea_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("verticalArea").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void VerticalArea_series_should_be_serialized()
+        {
+            settings.VerticalArea.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("verticalArea").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_VerticalBullet_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("verticalBullet").ShouldBeFalse();

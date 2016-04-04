@@ -199,6 +199,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The verticalArea series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the verticalArea series settings.</param>
+        public ChartSeriesBuilder<T> VerticalArea()
+        {
+            return new ChartSeriesBuilder<T>(Container.VerticalArea);
+        }
+
+        /// <summary>
         /// The verticalBullet series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the verticalBullet series settings.</param>

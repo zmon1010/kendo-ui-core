@@ -1857,6 +1857,109 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines verticalArea series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> VerticalArea(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalArea",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines verticalArea series bound to model member(s).
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  VerticalArea<TValue>(
+            Expression<Func<T, TValue>> expression)
+        {
+            if (typeof(T).IsPlainType() && (!expression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalArea",
+                Field = expression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines verticalArea series bound to model member(s).
+        /// </summary>
+        /// <param name="expression">
+        /// The expression used to extract the value from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the The category value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  VerticalArea<TValue, TCategory>(
+            Expression<Func<T, TValue>> expression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!expression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalArea",
+                Field = expression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound verticalArea series.
+        /// </summary>
+        /// <param name="memberName">
+        /// The name of the value member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the The category value. member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> VerticalArea(
+            string memberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "verticalArea",
+                Name = memberName.AsTitle(),
+                Field = memberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines verticalBullet series bound to inline data.
         /// </summary>
         /// <param name="data">
