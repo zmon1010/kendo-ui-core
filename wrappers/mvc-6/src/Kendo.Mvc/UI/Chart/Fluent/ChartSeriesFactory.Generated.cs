@@ -1703,6 +1703,242 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines rangeBar series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> RangeBar(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "rangeBar",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines rangeBar series bound to model member(s).
+        /// </summary>
+        /// <param name="fromExpression">
+        /// The expression used to extract the The from value. from the model.
+        /// </param>
+        /// <param name="toExpression">
+        /// The expression used to extract the The to value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  RangeBar<TValue>(
+            Expression<Func<T, TValue>> fromExpression,
+            Expression<Func<T, TValue>> toExpression)
+        {
+            if (typeof(T).IsPlainType() && (!fromExpression.IsBindable() || !toExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "rangeBar",
+                FromField = fromExpression.MemberWithoutInstance(),
+                ToField = toExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines rangeBar series bound to model member(s).
+        /// </summary>
+        /// <param name="fromExpression">
+        /// The expression used to extract the The from value. from the model.
+        /// </param>
+        /// <param name="toExpression">
+        /// The expression used to extract the The to value. from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the The category value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  RangeBar<TValue, TCategory>(
+            Expression<Func<T, TValue>> fromExpression,
+            Expression<Func<T, TValue>> toExpression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!fromExpression.IsBindable() || !toExpression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "rangeBar",
+                FromField = fromExpression.MemberWithoutInstance(),
+                ToField = toExpression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound rangeBar series.
+        /// </summary>
+        /// <param name="fromMemberName">
+        /// The name of the The from value. member.
+        /// </param>
+        /// <param name="toMemberName">
+        /// The name of the The to value. member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the The category value. member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> RangeBar(
+            string fromMemberName,
+            string toMemberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "rangeBar",
+                Name = fromMemberName.AsTitle() + ", " + toMemberName.AsTitle(),
+                FromField = fromMemberName,
+                ToField = toMemberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
+        /// Defines rangeColumn series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> RangeColumn(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "rangeColumn",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines rangeColumn series bound to model member(s).
+        /// </summary>
+        /// <param name="fromExpression">
+        /// The expression used to extract the The from value. from the model.
+        /// </param>
+        /// <param name="toExpression">
+        /// The expression used to extract the The to value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  RangeColumn<TValue>(
+            Expression<Func<T, TValue>> fromExpression,
+            Expression<Func<T, TValue>> toExpression)
+        {
+            if (typeof(T).IsPlainType() && (!fromExpression.IsBindable() || !toExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "rangeColumn",
+                FromField = fromExpression.MemberWithoutInstance(),
+                ToField = toExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines rangeColumn series bound to model member(s).
+        /// </summary>
+        /// <param name="fromExpression">
+        /// The expression used to extract the The from value. from the model.
+        /// </param>
+        /// <param name="toExpression">
+        /// The expression used to extract the The to value. from the model.
+        /// </param>
+        /// <param name="categoryExpression">
+        /// The expression used to extract the The category value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T>  RangeColumn<TValue, TCategory>(
+            Expression<Func<T, TValue>> fromExpression,
+            Expression<Func<T, TValue>> toExpression,
+            Expression<Func<T, TCategory>> categoryExpression)
+        {
+            if (typeof(T).IsPlainType() && (!fromExpression.IsBindable() || !toExpression.IsBindable() || !categoryExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "rangeColumn",
+                FromField = fromExpression.MemberWithoutInstance(),
+                ToField = toExpression.MemberWithoutInstance(),
+                CategoryField = categoryExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound rangeColumn series.
+        /// </summary>
+        /// <param name="fromMemberName">
+        /// The name of the The from value. member.
+        /// </param>
+        /// <param name="toMemberName">
+        /// The name of the The to value. member.
+        /// </param>
+        /// <param name="categoryMemberName">
+        /// The name of the The category value. member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> RangeColumn(
+            string fromMemberName,
+            string toMemberName,
+            string categoryMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "rangeColumn",
+                Name = fromMemberName.AsTitle() + ", " + toMemberName.AsTitle(),
+                FromField = fromMemberName,
+                ToField = toMemberName,
+                CategoryField = categoryMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines scatter series bound to inline data.
         /// </summary>
         /// <param name="data">

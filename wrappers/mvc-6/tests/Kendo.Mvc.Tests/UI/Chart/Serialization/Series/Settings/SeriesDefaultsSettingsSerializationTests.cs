@@ -269,6 +269,34 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_RangeBar_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("rangeBar").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void RangeBar_series_should_be_serialized()
+        {
+            settings.RangeBar.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("rangeBar").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Default_RangeColumn_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("rangeColumn").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void RangeColumn_series_should_be_serialized()
+        {
+            settings.RangeColumn.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("rangeColumn").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_ScatterLine_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("scatterLine").ShouldBeFalse();

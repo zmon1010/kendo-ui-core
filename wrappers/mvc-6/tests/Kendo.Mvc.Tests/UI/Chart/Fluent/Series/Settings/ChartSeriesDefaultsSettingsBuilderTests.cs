@@ -125,6 +125,18 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void RangeBar_series_should_return_builder()
+        {
+            builder.RangeBar().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
+        public void RangeColumn_series_should_return_builder()
+        {
+            builder.RangeColumn().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void ScatterLine_series_should_return_builder()
         {
             builder.ScatterLine().ShouldBeType(typeof(ChartSeriesBuilder<object>));
