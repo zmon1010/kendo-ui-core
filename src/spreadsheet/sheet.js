@@ -898,10 +898,18 @@
             var rows = this._rows.toJSON("height", positions);
             var columns = this._columns.toJSON("width", {});
             var viewSelection = this._viewSelection;
+            var hyperlinks = [];
 
             this.forEach(kendo.spreadsheet.SHEETREF, function(row, col, cell) {
                 if (Object.keys(cell).length === 0) {
                     return;
+                }
+
+                if (cell.link) {
+                    hyperlinks.push({
+                        ref    : kendo.spreadsheet.Ref.display(null, row, col),
+                        target : cell.link
+                    });
                 }
 
                 var position = positions[row];
@@ -969,7 +977,8 @@
                 showGridLines: this.showGridLines(),
                 mergedCells: this._mergedCells.map(function(ref) {
                     return ref.toString();
-                })
+                }),
+                hyperlinks: hyperlinks
             };
 
             if (this._sort) {
