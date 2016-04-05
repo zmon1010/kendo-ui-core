@@ -190,6 +190,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The rangeColumn series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the rangeColumn series settings.</param>
+        public ChartSeriesBuilder<T> RangeColumn()
+        {
+            return new ChartSeriesBuilder<T>(Container.RangeColumn);
+        }
+
+        /// <summary>
         /// The scatter series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the scatter series settings.</param>
