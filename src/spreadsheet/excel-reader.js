@@ -43,10 +43,11 @@
     var SEL_VALUE = ["sheetData", "row", "c", "v"];
     var SEL_VIEW = ["bookViews", "workbookView"];
     var SEL_SHEET_VIEW = ["sheetViews", "sheetView"];
+    var SEL_HYPERLINK = ["hyperlinks", "hyperlink"];
 
     function readWorkbook(zip, workbook, deferred) {
         var strings = readStrings(zip);
-        var relationships = readRelationships(zip, "workbook.xml");
+        var relationships = readRelationships(zip, "_rels/workbook.xml");
         var theme = readTheme(zip, relationships.byType.theme[0]);
         var styles = readStyles(zip, theme);
         var items = [];
@@ -201,6 +202,9 @@
         var ref, type, value, formula, formulaRange;
         var nCols = sheet._columns._count;
         var prevCellRef = null;
+        var relsFile = file.replace(/worksheets\//, "worksheets/_rels/");
+        var relationships = readRelationships(zip, relsFile);
+
         parse(zip, "xl/" + file, {
             enter: function(tag, attrs) {
                 if (this.is(SEL_CELL)) {
@@ -282,6 +286,13 @@
                 }
                 else if (this.is(SEL_SHEET_VIEW)) {
                     sheet.showGridLines(bool(attrs.showGridLines, true));
+                }
+                else if (this.is(SEL_HYPERLINK)) {
+                    var relId = attrs["r:id"];
+                    var target = relationships.byId[relId];
+                    if (target) {
+                        sheet.range(attrs.ref).link(target);
+                    }
                 }
             },
             leave: function(tag) {
@@ -513,7 +524,7 @@
 
     function readRelationships(zip, file) {
         var map = { byId: {}, byType: { theme: [] } };
-        parse(zip, "xl/_rels/" + file + ".rels", {
+        parse(zip, "xl/" + file + ".rels", {
             enter: function(tag, attrs) {
                 if (tag == "Relationship") {
                     map.byId[attrs.Id] = attrs.Target;
