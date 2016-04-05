@@ -296,11 +296,17 @@
             }
         },
 
+        _clearSheets: function() {
+            for (var i = 0; i < this._sheets.length; i++) {
+                this._sheets[i].unbind();
+            }
+            this._sheets = [];
+            this._sheetsSearchCache = {};
+        },
+
         fromJSON: function(json) {
             if (json.sheets) {
-                while (this._sheets.length > 1) {
-                    this.removeSheet(this._sheets[0]);
-                }
+                this._clearSheets();
 
                 for (var idx = 0; idx < json.sheets.length; idx++) {
                     var data = json.sheets[idx];
@@ -319,12 +325,12 @@
                         sheet.setDataSource(data.dataSource);
                     }
                 }
-
-                this.removeSheet(this._sheets[0]);
             }
 
             if (json.activeSheet) {
                 this.activeSheet(this.sheetByName(json.activeSheet));
+            } else {
+                this.activeSheet(this._sheets[0]);
             }
         },
 
@@ -345,14 +351,8 @@
             var promise = deferred.promise();
             var args = { file: file, promise: promise };
 
-            if(file && !this.trigger("excelImport", args)) {
-                for (var i = 0; i < this._sheets.length; i++) {
-                    this._sheets[i].unbind();
-                }
-
-                this._sheets = [];
-                this._sheetsSearchCache = {};
-
+            if (file && !this.trigger("excelImport", args)) {
+                this._clearSheets();
                 kendo.spreadsheet.readExcel(file, this, deferred);
             } else {
                 deferred.reject();
