@@ -95,6 +95,7 @@
             var value = this._value;
             this.getState();
             try {
+                range.link(null);
                 range.input(value);
 
                 var validationState = range._getValidationState();
