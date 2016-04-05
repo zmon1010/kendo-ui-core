@@ -44,3 +44,5 @@ sheet.range("A5:A9").values([
 ]);
 sheet.range("C5").formula('countif(A:A, "3-Non-Admin")');
 sheet.range("F4:H6").enable(false);
+
+sheet.range("D2").link("http://google.com/");
