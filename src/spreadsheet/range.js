@@ -13,10 +13,10 @@
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
 
-    var styles = [
+    var PROPERTIES = [
         "color", "fontFamily", "underline",
         "italic", "bold", "textAlign",
-        "verticalAlign", "background"
+        "verticalAlign", "background", "format", "link"
     ];
 
     var borders = {
@@ -257,10 +257,6 @@
             this._property("enable", value);
         },
 
-        format: function(value) {
-            return this._property("format", value);
-        },
-
         formula: function(value) {
             if (value === undefined) {
                 var f = this._get("formula");
@@ -458,10 +454,9 @@
                 }
 
                 if (clearAll || (options && options.formatOnly === true)) {
-                    styles.forEach(function(x) {
+                    PROPERTIES.forEach(function(x) {
                         this[x](null);
                     }.bind(this));
-                    this.format(null);
                     this.unmerge();
                 }
 
@@ -828,7 +823,7 @@
     }
 
     // use $.each instead of forEach to work in oldIE
-    $.each(styles, function(i, property) {
+    $.each(PROPERTIES, function(i, property) {
         Range.prototype[property] = function(value) {
             return this._property(property, value);
         };

@@ -82,6 +82,16 @@
     }
 
     function drawCell(collection, cell, cls, hBorders, vBorders, showGrid) {
+        function maybeLink(el) {
+            if (cell.link) {
+                return kendo.dom.element("a", {
+                    href   : cell.link,
+                    target : "_blank" // XXX: customizable?
+                }, [ el ]);
+            }
+            return el;
+        }
+
         if (!cls && !kendo.spreadsheet.draw.shouldDrawCell(cell)) {
             return;
         }
@@ -232,7 +242,9 @@
         var verticalAlign = cell.verticalAlign || "bottom";
 
         if (verticalAlign && data) {
-            data = kendo.dom.element("div", { className: "k-vertical-align-" + verticalAlign }, [ data ]);
+            data = kendo.dom.element("div", { className: "k-vertical-align-" + verticalAlign }, [ maybeLink(data) ]);
+        } else {
+            data = maybeLink(data);
         }
 
         var children = data ? [ data ] : [];
