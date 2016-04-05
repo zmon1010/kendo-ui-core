@@ -13326,7 +13326,7 @@ var __meta__ = { // jshint ignore:line
                 timeIndex(date,  new Date(date.getFullYear(), date.getMonth()), DAYS) / new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
         } else if (baseUnit == YEARS) {
             index = date.getFullYear() - startDate.getFullYear() + dateIndex(date, new Date(date.getFullYear(), 0), MONTHS, 1)  / 12;
-        } else if (baseUnit == DAYS) {
+        } else if (baseUnit == DAYS || baseUnit == WEEKS) {
             index = timeIndex(date, startDate, baseUnit);
         } else {
             index = dateDiff(date, start) /  TIME_PER_UNIT[baseUnit];

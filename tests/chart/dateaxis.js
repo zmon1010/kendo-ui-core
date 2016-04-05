@@ -379,6 +379,18 @@
             equal(dateAxis.categoryIndex(new Date("2016/03/28"), null), 2);
         });
 
+        tzTest("Sofia", "returns correct index for weeks baseUnit during DST", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2016/03/27"), new Date("2016/03/28")
+                ],
+                baseUnit: "weeks",
+                weekStartDay: kendo.days.Monday
+            });
+
+            equal(dateAxis.categoryIndex(new Date("2016/03/28"), null), 1);
+        });
+
         // ------------------------------------------------------------
         module("Date Category Axis / Min-Max values", {
             setup: function() {
