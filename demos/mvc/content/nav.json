@@ -224,8 +224,7 @@
             },
             {
                 "packages": [
-                    "online",
-                    "!mvc-core"
+                    "online"
                 ],
                 "text": "Multiple buttons",
                 "url": "button/multiple",
@@ -1668,8 +1667,7 @@
             },
             {
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ],
                 "text": "Globalization",
                 "url": "editor/globalization"
@@ -1996,16 +1994,14 @@
                 "text": "Server binding",
                 "url": "grid/serverbinding",
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ]
             },
             {
                 "text": "Custom server binding",
                 "url": "grid/customserverbinding",
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ]
             },
             {
@@ -2142,8 +2138,7 @@
                 "text": "Server editing",
                 "url": "grid/serverediting",
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ]
             },
             {
@@ -2309,8 +2304,7 @@
                 "text": "Server aggregates",
                 "url": "grid/serveraggregates",
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ]
             },
             {
@@ -2340,8 +2334,7 @@
                 "text": "Server hierarchy",
                 "url": "grid/serverhierarchy",
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ]
             },
             {
@@ -2382,8 +2375,7 @@
                 "text": "Column header template",
                 "url": "grid/headertemplate",
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ]
             },
             {
@@ -2422,16 +2414,14 @@
                 "text": "Server detail template",
                 "url": "grid/serverdetails",
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ]
             },
             {
                 "text": "Server row template",
                 "url": "grid/serverrowtemplate",
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ]
             },
             {
@@ -2694,8 +2684,7 @@
                     "kendo-ui": "Export to and import from Microsoft Excel (.xlsx), CSV, Text and JSON files"
                 },
                 "packages": [
-                    "!offline",
-                    "!mvc-core"
+                    "!offline"
                 ],
                 "sources": {
                     "kendo-ui": [
@@ -2722,8 +2711,7 @@
                     "kendo-ui": "Export to print-ready PDF files"
                 },
                 "packages": [
-                    "!offline",
-                    "!mvc-core"
+                    "!offline"
                 ]
             },
             {
@@ -3264,16 +3252,14 @@
             },
             {
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ],
                 "text": "SiteMapBinding",
                 "url": "menu/sitemapbinding"
             },
             {
                 "packages": [
-                    "mvc-offline",
-                    "!mvc-core"
+                    "mvc-offline"
                 ],
                 "text": "ModelBinding",
                 "url": "menu/modelbinding"
