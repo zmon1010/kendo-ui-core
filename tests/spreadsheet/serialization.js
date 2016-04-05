@@ -737,4 +737,20 @@
         equal(validationOptions.col, validationObject.col);
         equal(validationOptions.col, validationObject.col);
     });
+
+    test("fromJSON can load data with different rowCount/columnCount", function(){
+        spreadsheet.fromJSON({
+            sheets: [{
+                rows: [{
+                    index: 1000,
+                    cells: [{
+                        index: 1000,
+                        value: "Foo"
+                    }]
+                }]
+            }]
+        });
+        equal(spreadsheet.activeSheet().range(1000, 1000).value(), "Foo");
+    });
+
 })();
