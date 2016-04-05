@@ -96,9 +96,12 @@
     });
 
     var Sheet = kendo.Observable.extend({
-        init: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth) {
+        init: function() {
             kendo.Observable.prototype.init.call(this);
+            this._reinit.apply(this, arguments);
+        },
 
+        _reinit: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth) {
             var cellCount = rowCount * columnCount - 1;
 
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
@@ -119,7 +122,7 @@
             this._editSelection = new Selection(this);
 
             this._formulaSelections = [];
-        },
+       },
 
         _selectionState: function() {
             return this._inEdit ? this._editSelection : this._viewSelection;
@@ -1099,6 +1102,9 @@
                     this._showGridLines = json.showGridLines;
                 }
             });
+
+            this._rows._refresh();
+            this._columns._refresh();
         },
 
         formula: function(ref) {
