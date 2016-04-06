@@ -69,6 +69,15 @@ class GridFilterableMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The placeholder of the search input for columns with the search option set to true.
+    * @param string $value
+    * @return \Kendo\UI\GridFilterableMessages
+    */
+    public function search($value) {
+        return $this->setProperty('search', $value);
+    }
+
+    /**
     * The text of the DropDownList displayed in the filter menu for columns whose values option is set.
     * @param string $value
     * @return \Kendo\UI\GridFilterableMessages

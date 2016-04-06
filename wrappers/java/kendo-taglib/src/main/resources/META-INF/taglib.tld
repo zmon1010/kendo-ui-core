@@ -22781,6 +22781,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The placeholder of the search input for columns with the search option set to true.</description>
+            <name>search</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The text of the DropDownList displayed in the filter menu for columns whose values option is set.</description>
             <name>selectValue</name>
             <rtexprvalue>true</rtexprvalue>

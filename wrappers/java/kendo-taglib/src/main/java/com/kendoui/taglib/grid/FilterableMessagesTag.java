@@ -131,6 +131,14 @@ public class FilterableMessagesTag extends  BaseTag  /* interfaces *//* interfac
         setProperty("or", value);
     }
 
+    public java.lang.String getSearch() {
+        return (java.lang.String)getProperty("search");
+    }
+
+    public void setSearch(java.lang.String value) {
+        setProperty("search", value);
+    }
+
     public java.lang.String getSelectValue() {
         return (java.lang.String)getProperty("selectValue");
     }
