@@ -89,6 +89,8 @@
 - splitter.panes.max
 - splitter.panes.min
 - splitter.panes.contentUrl
+- spreadsheet.sheets.datasource
+- spreadsheet.sheets.filter.columns.criteria.value
 - stockchart.datasource
 - stockchart.navigator.categoryaxis.notes.data
 - stockchart.navigator.datasource
