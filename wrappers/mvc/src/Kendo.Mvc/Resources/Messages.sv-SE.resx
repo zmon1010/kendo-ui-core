@@ -898,4 +898,7 @@
   <data name="Filter_EnumIsNull" xml:space="preserve">
     <value>Is null</value>
   </data>
+  <data name="Filter_Search" xml:space="preserve">
+    <value>Sök</value>
+  </data>
 </root>

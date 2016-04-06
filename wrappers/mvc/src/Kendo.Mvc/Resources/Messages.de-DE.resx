@@ -804,4 +804,7 @@
   <data name="Filter_EnumIsNull" xml:space="preserve">
     <value>ist nicht angegeben</value>
   </data>
+  <data name="Filter_Search" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
 </root>

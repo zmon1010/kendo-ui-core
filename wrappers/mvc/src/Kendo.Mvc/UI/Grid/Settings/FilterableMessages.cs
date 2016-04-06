@@ -21,6 +21,7 @@ namespace Kendo.Mvc.UI
             Value = Messages.Filter_Value;
             Cancel = Messages.Filter_Cancel;
             CheckAll = Messages.Grid_CheckAll;
+            Search = Messages.Filter_Search;
         }
 
         public string Info { get; set; }
@@ -35,6 +36,7 @@ namespace Kendo.Mvc.UI
         public string Value { get; set; }
         public string Cancel { get; set; }
         public string CheckAll { get; set; }
+        public string Search { get; set; }
 
         private const string DefaultInfo = "Show items with value that:";
         private const string DefaultIsTrue = "is true";
@@ -48,6 +50,7 @@ namespace Kendo.Mvc.UI
         private const string DefaultValue = "Value";
         private const string DefaultCancel = "Cancel";
         private const string DefaultCheckAll = "Select All";
+        private const string DefaultSearch = "Search";
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -109,6 +112,11 @@ namespace Kendo.Mvc.UI
             if (CheckAll != DefaultCheckAll)
             {
                 json["checkAll"] = CheckAll;
+            }
+
+            if (Search != DefaultSearch)
+            {
+                json["search"] = Search;
             }
         }
     }

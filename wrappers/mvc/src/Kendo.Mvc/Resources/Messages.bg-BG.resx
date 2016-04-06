@@ -807,4 +807,7 @@
   <data name="Filter_EnumIsNull" xml:space="preserve">
     <value>Е null</value>
   </data>
+  <data name="Filter_Search" xml:space="preserve">
+    <value>Търси</value>
+  </data>
 </root>

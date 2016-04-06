@@ -146,5 +146,16 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the text for the search input placeholder when the search option is enabled.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public FilterableMessagesBuilder Search(string message)
+        {
+            messages.Search = message;
+
+            return this;
+        }
     }
 }

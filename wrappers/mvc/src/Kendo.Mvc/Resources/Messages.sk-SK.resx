@@ -810,4 +810,7 @@
   <data name="Upload_UploadSelectedFiles" xml:space="preserve">
     <value>Nahrať súbory</value>
   </data>
+  <data name="Filter_Search" xml:space="preserve">
+    <value>Hľadať</value>
+  </data>
 </root>
