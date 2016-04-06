@@ -65,6 +65,10 @@
             this.trigger("change", e);
         },
 
+        _sheetCommandRequest: function(e) {
+            this.trigger("commandRequest", e);
+        },
+
         _inputForRef: function(ref) {
             return new kendo.spreadsheet.Range(ref, this._sheet).input();
         },
@@ -191,6 +195,7 @@
             sheet._name(sheetName);
 
             sheet.bind("change", this._sheetChange.bind(this));
+            sheet.bind("commandRequest", this._sheetCommandRequest.bind(this));
 
             sheets.splice(insertIndex, 0, sheet);
 

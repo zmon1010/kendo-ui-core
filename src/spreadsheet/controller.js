@@ -279,6 +279,7 @@
         workbook: function(workbook) {
             this._workbook = workbook;
             this.clipboard = workbook.clipboard();
+            workbook.bind("commandRequest", this.onCommandRequest.bind(this));
         },
 
         refresh: function() {

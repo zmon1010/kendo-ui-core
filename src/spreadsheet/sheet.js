@@ -700,12 +700,12 @@
                 var origin = this._autoFillOrigin;
 
                 if (this._autoFillPunch) { // we just clear data here
-                    this._workbook.execute({
+                    this.trigger("commandRequest", {
                         command: "ClearContentCommand", options: { operatingRange: this.range(this._autoFillPunch) }
                     });
                 } else {
                     if (!dest.eq(origin)) {
-                        this._workbook.execute({
+                        this.trigger("commandRequest", {
                             command: "AutoFillCommand", options: { operatingRange: this.range(dest), origin: this.range(origin) }
                         });
                     } else {
