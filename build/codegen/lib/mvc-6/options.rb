@@ -3,6 +3,7 @@ module CodeGen::MVC6::Wrappers::Options
     GENERIC_ARGS = YAML.load(File.read("build/codegen/lib/mvc-6/config/generics.yml"))
     IGNORED_SERIALIZATION = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_serialization.yml")).map(&:downcase)
     IGNORED_FLUENT = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_fluent.yml")).map(&:downcase)
+    IGNORED_BY_REGEXP = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_by_regexp.yml"))
     NAME_MAP = YAML.load(File.read("build/codegen/lib/mvc-6/config/name_map.yml"))
 
     CSHARP_TYPES = {
@@ -31,21 +32,26 @@ module CodeGen::MVC6::Wrappers::Options
     def delete_ignored(ignored)
         return if @options.nil?
 
-        regular_expressions =  ignored.find_all { |element| element.instance_of?(Regexp) }
-        
         @options.delete_if do |option|
             option.delete_ignored(ignored)
-            ignored.include?(option.full_name) || ignore_by_regexp?(regular_expressions, option.full_name)
+            ignored.include?(option.full_name) || ignore_by_regexp?(option.full_name)
         end
     end
 
-    def ignore_by_regexp?(regular_expressions, string)
+    def ignore_by_regexp?(option_full_name)
+        component_regular_expressions = IGNORED_BY_REGEXP[component_name.downcase]
+        regular_expressions = []
+
+        if !component_regular_expressions.nil?
+            regular_expressions = component_regular_expressions.find_all { |element| element.instance_of?(Regexp) }
+        end
+
         # the two flags are necessary when "lookahead" for regular expressions is used
         matched_by_some_regexp = false
         not_matched_by_some_regexp = false
 
         regular_expressions.each do |regexp|
-            if string.match(regexp) != nil
+            if option_full_name.match(regexp) != nil
                 matched_by_some_regexp = true
             else
                 not_matched_by_some_regexp = true

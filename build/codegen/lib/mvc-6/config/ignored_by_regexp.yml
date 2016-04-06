@@ -1,0 +1,8 @@
+sparkline:
+    - !ruby/regexp '/sparkline.(?!pointWidth)/i'
+
+stockchart:
+    # ignore all options that do not contain "stockchart.datefield"
+    - !ruby/regexp '/stockchart.(?!datefield)/i'
+    # ignore all options that do not contain "stockchart.navigator"
+    - !ruby/regexp '/stockchart.(?!navigator)/i'

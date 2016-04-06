@@ -4,10 +4,10 @@ end
 
 module CodeGen::MVC6::Wrappers
     IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored.yml")).map do |option|
-        if option.instance_of?(Regexp)
-            option
-        else
+        if option.instance_of?(String)
             option.downcase
+        else
+            option
         end
     end
 end

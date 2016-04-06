@@ -46,6 +46,10 @@
     - :name: T
       :constraint: struct, IComparable
 
+:sparkline:
+    - :name: T
+      :constraint: class
+
 :stockchart:
     - :name: T
       :constraint: class
