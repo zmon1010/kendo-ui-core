@@ -467,7 +467,14 @@
         },
         exec: function() {
             this.getState();
-            this.range().fillFrom(this._origin);
+            try {
+                this.range().fillFrom(this._origin);
+            } catch(ex) {
+                if (ex instanceof kendo.spreadsheet.Range.FillError) {
+                    return { reason: "error", body: ex+"" };
+                }
+                throw ex;
+            }
         }
     });
 
