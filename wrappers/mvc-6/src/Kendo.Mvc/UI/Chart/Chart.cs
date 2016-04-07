@@ -45,10 +45,14 @@ namespace Kendo.Mvc.UI
 
         protected override void WriteHtml(TextWriter writer)
         {
-            var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
+            var tag = GenerateTag(writer);
             tag.WriteTo(writer, HtmlEncoder);
-
             base.WriteHtml(writer);
+        }
+
+        protected virtual TagBuilder GenerateTag(TextWriter writer)
+        {
+            return Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
         }
 
         public override void WriteInitializationScript(TextWriter writer)

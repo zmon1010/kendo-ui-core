@@ -1,17 +1,6 @@
-﻿using System;
-using Xunit;
-using Kendo.Mvc.UI.Fluent;
+﻿using Xunit;
 using Kendo.Mvc.Tests;
-using System.Collections.Generic;
-using Microsoft.AspNet.Mvc.Rendering;
-using Moq;
-using Kendo.Mvc.Infrastructure;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.Extensions.OptionsModel;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace Kendo.Mvc.UI.Tests
 {
@@ -21,23 +10,7 @@ namespace Kendo.Mvc.UI.Tests
 
         public KendoHtmlGeneratorTests()
         {
-            var actionBindingContextAccessor = new Mock<IActionBindingContextAccessor>().Object;
-            var metadataProvider = new Mock<IModelMetadataProvider>().Object;
-            var requestServices = new Mock<IServiceProvider>().Object;
-
-            var optionsAccessorMoq = new Mock<IOptions<MvcViewOptions>>();
-
-            optionsAccessorMoq
-                .SetupGet(c => c.Value)
-                .Returns(new MvcViewOptions() { HtmlHelperOptions = new HtmlHelperOptions() { IdAttributeDotReplacement = "_" } });
-
-            var optionsAccessor = optionsAccessorMoq.Object;
-
-            generator = new KendoHtmlGenerator(
-                actionBindingContextAccessor,
-                metadataProvider,
-                requestServices,
-                optionsAccessor);
+            generator = KendoHtmlGeneratorTestHelper.CreateKendoHtmlGenerator();
         }
 
         [Fact]

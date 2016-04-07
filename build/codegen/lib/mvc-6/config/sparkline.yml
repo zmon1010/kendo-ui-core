@@ -1,0 +1,4 @@
+:options:
+    - :name: seriesColors
+      :merge: true
+      :type: String[]

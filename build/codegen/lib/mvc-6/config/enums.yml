@@ -195,3 +195,30 @@
       - :value: contains
         :member: Contains
         :description: Matches values containing the typed string
+
+- :type: SparklineType
+  :description: Defines the possible series orientation.
+  :values:
+      - :value: area
+        :member: Area
+        :description: Area series.
+
+      - :value: bar
+        :member: Bar
+        :description: Bar Series (synonym for Column in sparklines)
+
+      - :value: bullet
+        :member: Bullet
+        :description: Bullet series.
+
+      - :value: column
+        :member: Column
+        :description: Column series.
+
+      - :value: line
+        :member: Line
+        :description: Line series.
+
+      - :value: pie
+        :member: Pie
+        :description: Pie series.
