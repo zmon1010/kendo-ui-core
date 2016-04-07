@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/angular.js",
+        "../src/kendo.all.js"
+      ]);
+    </script>
+  </head>
+  <body>
+    <div id="example" ng-app="KendoDemos">
+      <div ng-controller="MyCtrl">
+        <button ng-click="start()">Start</button>
+        <button ng-click="stop()">Stop</button>
+        <div class="demo-section k-content wide">
+          <div>
+            <div kendo-chart
+                 k-options="kendoChartOptions"
+                 k-rebind="kendoChartOptions"
+                 style="height: 250px;" ></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        angular.module("KendoDemos", [ "kendo.directives" ])
+        .controller("MyCtrl", function($scope, $interval){
+      	    var options = {
+	        categoryAxis: {
+  	            categories: [ "2012", "2013"]
+  	        },
+  	        series: [
+    	            { data: [1, 2, 3] }
+  	        ],
+                seriesDefaults : {
+                    type : "line"
+                },
+                animation: false
+	    };
+            $scope.kendoChartOptions = options;
+
+            $scope.start = function() {
+                $scope.timer = $interval(function() {
+	            $scope.kendoChartOptions.series = [
+    	                { data: [Math.floor((Math.random() * 10) + 1), Math.floor((Math.random() * 10) + 1), Math.floor((Math.random() * 10) + 1)] }
+  	            ];
+	        }, 1000);
+            };
+
+            $scope.stop = function() {
+                $interval.cancel($scope.timer);
+            };
+        })
+      </script>
+    </div>
+  </body>
+</html>
