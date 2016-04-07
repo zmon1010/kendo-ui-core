@@ -1803,7 +1803,7 @@
             }
 
             function drawBackgroundImage(group, box, img_width, img_height, renderBG) {
-                var aspect_ratio = img_width / img_height;
+                var aspect_ratio = img_width / img_height, f;
 
                 // for background-origin: border-box the box is already appropriate
                 var orgBox = box;
@@ -1815,20 +1815,34 @@
                 }
 
                 if (!/^\s*auto(\s+auto)?\s*$/.test(backgroundSize)) {
-                    var size = backgroundSize.split(/\s+/g);
-                    // compute width
-                    if (/%$/.test(size[0])) {
-                        img_width = orgBox.width * parseFloat(size[0]) / 100;
-                    } else {
-                        img_width = parseFloat(size[0]);
+                    if (backgroundSize == "contain") {
+                        f = Math.min(orgBox.width / img_width,
+                                     orgBox.height / img_height);
+                        img_width *= f;
+                        img_height *= f;
                     }
-                    // compute height
-                    if (size.length == 1 || size[1] == "auto") {
-                        img_height = img_width / aspect_ratio;
-                    } else if (/%$/.test(size[1])) {
-                        img_height = orgBox.height * parseFloat(size[1]) / 100;
-                    } else {
-                        img_height = parseFloat(size[1]);
+                    else if (backgroundSize == "cover") {
+                        f = Math.max(orgBox.width / img_width,
+                                     orgBox.height / img_height);
+                        img_width *= f;
+                        img_height *= f;
+                    }
+                    else {
+                        var size = backgroundSize.split(/\s+/g);
+                        // compute width
+                        if (/%$/.test(size[0])) {
+                            img_width = orgBox.width * parseFloat(size[0]) / 100;
+                        } else {
+                            img_width = parseFloat(size[0]);
+                        }
+                        // compute height
+                        if (size.length == 1 || size[1] == "auto") {
+                            img_height = img_width / aspect_ratio;
+                        } else if (/%$/.test(size[1])) {
+                            img_height = orgBox.height * parseFloat(size[1]) / 100;
+                        } else {
+                            img_height = parseFloat(size[1]);
+                        }
                     }
                 }
 

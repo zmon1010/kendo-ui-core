@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <script src="./pako.min.js"></script>
+    <style type="text/css">
+      .b-s-contain {
+        height: 100px;
+        margin: 1em;
+        background-image: url("./images/1.jpg");
+        background-size: contain;
+      }
+      .b-s-cover {
+        height: 100px;
+        margin: 1em;
+        background-image: url("./images/1.jpg");
+        background-size: cover;
+      }
+      .b-s-contain2 {
+        height: 100px;
+        margin: 1em;
+        background-image: url("./diagram/Generic/telerik-logo.png");
+        background-size: contain;
+      }
+      .b-s-cover2 {
+        height: 100px;
+        margin: 1em;
+        background-image: url("./diagram/Generic/telerik-logo.png");
+        background-size: cover;
+      }
+      #test1 {
+        border: 1px solid red;
+        width: 40%;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    Kendo:
+    <button onclick="pdf('#test1')">PDF</button>
+    <button onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    |
+    <button onclick="h2c('#test1')">html2canvas</button>
+    <div id="test1">
+      <div class="b-s-contain"></div>
+      <div class="b-s-cover"></div>
+      <div class="b-s-contain2"></div>
+      <div class="b-s-cover2"></div>
+    </div>
+  </body>
+</html>
