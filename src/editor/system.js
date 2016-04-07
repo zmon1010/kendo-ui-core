@@ -595,7 +595,8 @@ var Clipboard = Class.extend({
             new ScriptCleaner(pasteCleanup),
             new TabCleaner(pasteCleanup),
             new MSWordFormatCleaner(pasteCleanup),
-            new WebkitFormatCleaner(pasteCleanup)
+            new WebkitFormatCleaner(pasteCleanup),
+            new HtmlTagsCleaner(pasteCleanup)
         ];
     },
 
@@ -927,6 +928,7 @@ var Clipboard = Class.extend({
 var Cleaner = Class.extend({
     init: function(options) {
         this.options = options || {};
+        this.replacements = [];
     },
 
     clean: function(html, customReplacements) {
@@ -1333,7 +1335,7 @@ var MSWordFormatCleaner = Cleaner.extend({
         $(placeholder).find("*").css({
             fontSize: "",
             fontFamily: ""
-        })
+        });
     },
 
     clean: function(html) {
@@ -1383,6 +1385,40 @@ var WebkitFormatCleaner = Cleaner.extend({
     }
 });
 
+    var DomCleaner = Cleaner.extend({
+        clean: function(html) {
+            var container = dom.create(document, 'div', {innerHTML: html});
+            container = this.cleanDom(container);
+            return container.innerHTML;
+        },
+
+        cleanDom: function(container) {
+            return container;
+        }
+    });
+
+    var HtmlTagsCleaner = DomCleaner.extend({
+        cleanDom: function(container) {
+            var tags = this.collectTags();
+
+            $(container).find(tags).each(function() {
+                dom.unwrap(this);
+            });
+
+            return container;
+        },
+
+        collectTags: function() {
+            if (this.options.span) {
+                return "span";
+            }
+        },
+
+        applicable: function() {
+            return this.options.span;
+        }
+    });
+
 var PrintCommand = Command.extend({
     init: function(options) {
         Command.fn.init.call(this, options);
@@ -1431,6 +1467,7 @@ extend(editorNS, {
     TabCleaner: TabCleaner,
     MSWordFormatCleaner: MSWordFormatCleaner,
     WebkitFormatCleaner: WebkitFormatCleaner,
+    HtmlTagsCleaner: HtmlTagsCleaner,
     PrintCommand: PrintCommand,
     ExportPdfCommand: ExportPdfCommand
 });
