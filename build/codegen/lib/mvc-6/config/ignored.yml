@@ -30,6 +30,14 @@
 - dropdownlist.animation
 - dropdownlist.datasource
 - dropdownlist.index
+- editor.stylesheets
+- editor.content
+- editor.filebrowser.transport.create.data
+- editor.filebrowser.transport.destroy.data
+- editor.filebrowser.transport.read.data
+- editor.imagebrowser.transport.create.data
+- editor.imagebrowser.transport.destroy.data
+- editor.imagebrowser.transport.read.data
 - gantt.assignments
 - gantt.datasource
 - gantt.dependencies
