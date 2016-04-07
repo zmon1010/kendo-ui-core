@@ -72,18 +72,13 @@ namespace Kendo.Mvc.UI.Fluent
 
             var constructor = columnType.GetConstructor(new[] { lambdaExpression.GetType() });
 
-            var column = (IGanttBoundColumn)constructor.Invoke(new object[] { lambdaExpression });
+            var column = (IGanttColumn)constructor.Invoke(new object[] { lambdaExpression });
 
             column.Member = memberName;
 
             if (!column.Title.HasValue())
             {
                 column.Title = memberName.AsTitle();
-            }
-
-            if (memberType != null)
-            {
-                column.MemberType = memberType;
             }
 
             container.Columns.Add((GanttColumnBase<TTaskModel>)column);

@@ -927,7 +927,6 @@
     <Compile Include="UI\Diagram\Html\DiagramHtmlBuilder.cs" />
     <Compile Include="UI\Gantt\Columns\GanttBoundColumn.cs" />
     <Compile Include="UI\Gantt\Columns\GanttColumnBase.cs" />
-    <Compile Include="UI\Gantt\Columns\IGanttBoundColumn.cs" />
     <Compile Include="UI\Gantt\Columns\IGanttColumn.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttBoundColumnBuilder.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttColumnBuilderBase.cs" />

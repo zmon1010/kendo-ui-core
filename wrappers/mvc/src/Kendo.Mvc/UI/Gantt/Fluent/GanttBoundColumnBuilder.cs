@@ -8,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// </summary>
     /// <typeparam name="TTaskModel">The type of the task data item</typeparam>
     /// /// <typeparam name="TDependenciesModel">The type of the dependency data item</typeparam>
-    public class GanttBoundColumnBuilder<TTaskModel, TDependenciesModel> : GanttColumnBuilderBase<IGanttBoundColumn, GanttBoundColumnBuilder<TTaskModel, TDependenciesModel>>
+    public class GanttBoundColumnBuilder<TTaskModel, TDependenciesModel> : GanttColumnBuilderBase<IGanttColumn, GanttBoundColumnBuilder<TTaskModel, TDependenciesModel>>
         where TTaskModel : class, IGanttTask
         where TDependenciesModel : class, IGanttDependency
     {
@@ -16,7 +16,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Initializes a new instance of the <see cref="GanttBoundColumnBuilder{T}"/> class.
         /// </summary>
         /// <param name="column">The column.</param>
-        public GanttBoundColumnBuilder(IGanttBoundColumn column)
+        public GanttBoundColumnBuilder(IGanttColumn column)
             : base(column)
         {
         }
