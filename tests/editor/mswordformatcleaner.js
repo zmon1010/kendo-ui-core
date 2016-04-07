@@ -459,4 +459,22 @@ test("converts font tags to spans", function() {
     equal(clean('<font face="calibri">foo</font>'), '<span style="font-family:calibri">foo</span>');
 });
 
+    test("msAllFormatting removes font-size", function () {
+        cleaner.options.msAllFormatting = true;
+        equalClean(
+            '<p class="MsoNormal">Next <span style="font-size:22.0pt;line-height:107%">para</span>graph<o:p></o:p></p>',
+            '<p>Next <span style="line-height:107%">para</span>graph</p>');
+    });
+
+    test("msAllFormatting removes font-family", function () {
+        cleaner.options.msAllFormatting = true;
+        equalClean(
+            '<p class="MsoNormal">Another <span style="font-family:&quot;Source Code Pro&quot;">para</span>graph<o:p></o:p></p>',
+            '<p>Another <span>para</span>graph</p>');
+    });
+
+    function equalClean(input, expected) {
+        equal(clean(input), expected);
+    }
+
 }());

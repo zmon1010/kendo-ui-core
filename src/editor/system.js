@@ -1329,6 +1329,13 @@ var MSWordFormatCleaner = Cleaner.extend({
         }
     },
 
+    removeFormatting: function (placeholder) {
+        $(placeholder).find("*").css({
+            fontSize: "",
+            fontFamily: ""
+        })
+    },
+
     clean: function(html) {
         var that = this, placeholder;
         var filters = this.options;
@@ -1343,10 +1350,15 @@ var MSWordFormatCleaner = Cleaner.extend({
 
             placeholder = dom.create(document, 'div', {innerHTML: html});
             that.headers(placeholder);
-            if(filters.msConvertLists) {
+
+            if (filters.msConvertLists) {
                 that.lists(placeholder);
             }
             that.tables(placeholder);
+
+            if (filters.msAllFormatting) {
+                that.removeFormatting(placeholder);
+            }
 
             html = placeholder.innerHTML.replace(/(<[^>]*)\s+class="?[^"\s>]*"?/ig, '$1');
         }
