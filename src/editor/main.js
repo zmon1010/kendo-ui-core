@@ -725,6 +725,17 @@
                 semantic: true,
                 scripts: false
             },
+            pasteCleanup: {
+                all: false,
+                css: false,
+                custom: $.noop,
+                keepNewLines: false,
+                msAllFormatting: false,
+                msConvertLists: true,
+                msTags: true,
+                none: false,
+                span: false
+            },
             stylesheets: [],
             dialogOptions: {
                 modal: true, resizable: false, draggable: true,

@@ -590,11 +590,12 @@ var Keyboard = Class.extend({
 var Clipboard = Class.extend({
     init: function(editor) {
         this.editor = editor;
+        var pasteCleanup = editor.options.pasteCleanup;
         this.cleaners = [
-            new ScriptCleaner(),
-            new TabCleaner(),
-            new MSWordFormatCleaner(),
-            new WebkitFormatCleaner()
+            new ScriptCleaner(pasteCleanup),
+            new TabCleaner(pasteCleanup),
+            new MSWordFormatCleaner(pasteCleanup),
+            new WebkitFormatCleaner(pasteCleanup)
         ];
     },
 
@@ -924,9 +925,13 @@ var Clipboard = Class.extend({
 });
 
 var Cleaner = Class.extend({
-    clean: function(html) {
+    init: function(options) {
+        this.options = options || {};
+    },
+
+    clean: function(html, customReplacements) {
         var that = this,
-            replacements = that.replacements,
+            replacements = customReplacements || that.replacements,
             i, l;
 
         for (i = 0, l = replacements.length; i < l; i += 2) {
@@ -938,19 +943,23 @@ var Cleaner = Class.extend({
 });
 
 var ScriptCleaner = Cleaner.extend({
-    init: function() {
+    init: function(options) {
+        Cleaner.fn.init.call(this, options);
+
         this.replacements = [
             /<(\/?)script([^>]*)>/i, "<$1telerik:script$2>"
         ];
     },
 
     applicable: function(html) {
-        return (/<script[^>]*>/i).test(html);
+        return !this.options.none && (/<script[^>]*>/i).test(html);
     }
 });
 
 var TabCleaner = Cleaner.extend({
-    init: function() {
+    init: function(options) {
+        Cleaner.fn.init.call(this, options);
+
         var replacement = ' ';
         this.replacements = [
             /<span\s+class="Apple-tab-span"[^>]*>\s*<\/span>/gi, replacement,
@@ -965,11 +974,18 @@ var TabCleaner = Cleaner.extend({
 });
 
 var MSWordFormatCleaner = Cleaner.extend({
-    init: function() {
-        this.replacements = [
+    init: function(options) {
+        Cleaner.fn.init.call(this, options);
+
+        this.junkReplacements = [
             /<\?xml[^>]*>/gi, '',
             /<!--(.|\n)*?-->/g, '', /* comments */
             /&quot;/g, "'", /* encoded quotes (in attributes) */
+            /<o:p>&nbsp;<\/o:p>/ig, '&nbsp;',
+            /<\/?(meta|link|style|o:|v:|x:)[^>]*>((?:.|\n)*?<\/(meta|link|style|o:|v:|x:)[^>]*>)?/ig, '', /* external references and namespaced tags */
+            /<\/o>/g, ''
+        ];
+        this.replacements = this.junkReplacements.concat([
             /(?:<br>&nbsp;[\s\r\n]+|<br>)*(<\/?(h[1-6]|hr|p|div|table|tbody|thead|tfoot|th|tr|td|li|ol|ul|caption|address|pre|form|blockquote|dl|dt|dd|dir|fieldset)[^>]*>)(?:<br>&nbsp;[\s\r\n]+|<br>)*/g, '$1',
             /<br><br>/g, '<BR><BR>',
             /<br>(?!\n)/g, ' ',
@@ -984,12 +1000,9 @@ var MSWordFormatCleaner = Cleaner.extend({
             /<(\/?)b(\s[^>]*)?>/ig, '<$1strong$2>',
             /<(\/?)font(\s[^>]*)?>/ig, this.convertFontMatch,
             /<(\/?)i(\s[^>]*)?>/ig, '<$1em$2>',
-            /<o:p>&nbsp;<\/o:p>/ig, '&nbsp;',
-            /<\/?(meta|link|style|o:|v:|x:)[^>]*>((?:.|\n)*?<\/(meta|link|style|o:|v:|x:)[^>]*>)?/ig, '', /* external references and namespaced tags */
-            /<\/o>/g, '',
             /style=(["|'])\s*\1/g, '', /* empty style attributes */
             /(<br[^>]*>)?\n/g, function ($0, $1) { return $1 ? $0 : ' '; } /* phantom extra line feeds */
-        ];
+        ]);
     },
 
     convertFontMatch: function(match, closing, args) {
@@ -1318,24 +1331,34 @@ var MSWordFormatCleaner = Cleaner.extend({
 
     clean: function(html) {
         var that = this, placeholder;
+        var filters = this.options;
 
-        html = this.extractListLevels(html);
-        html = Cleaner.fn.clean.call(that, html);
-        html = that.stripEmptyAnchors(html);
+        if (filters.none) {
+            html = Cleaner.fn.clean.call(that, html, this.junkReplacements);
+            html = that.stripEmptyAnchors(html);
+        } else {
+            html = this.extractListLevels(html);
+            html = Cleaner.fn.clean.call(that, html);
+            html = that.stripEmptyAnchors(html);
 
-        placeholder = dom.create(document, 'div', {innerHTML: html});
-        that.headers(placeholder);
-        that.lists(placeholder);
-        that.tables(placeholder);
+            placeholder = dom.create(document, 'div', {innerHTML: html});
+            that.headers(placeholder);
+            if(filters.msConvertLists) {
+                that.lists(placeholder);
+            }
+            that.tables(placeholder);
 
-        html = placeholder.innerHTML.replace(/(<[^>]*)\s+class="?[^"\s>]*"?/ig, '$1');
+            html = placeholder.innerHTML.replace(/(<[^>]*)\s+class="?[^"\s>]*"?/ig, '$1');
+        }
 
         return html;
     }
 });
 
 var WebkitFormatCleaner = Cleaner.extend({
-    init: function() {
+    init: function(options) {
+        Cleaner.fn.init.call(this, options);
+
         this.replacements = [
             /\s+class="Apple-style-span[^"]*"/gi, '',
             /<(div|p|h[1-6])\s+style="[^"]*"/gi, '<$1',
@@ -1392,6 +1415,7 @@ extend(editorNS, {
     Keyboard: Keyboard,
     Clipboard: Clipboard,
     Cleaner: Cleaner,
+    ScriptCleaner: ScriptCleaner,
     TabCleaner: TabCleaner,
     MSWordFormatCleaner: MSWordFormatCleaner,
     WebkitFormatCleaner: WebkitFormatCleaner,

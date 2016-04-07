@@ -4,7 +4,9 @@ var cleaner;
 
 module("editor MS Word format cleaner", {
     setup: function() {
-        cleaner = new kendo.ui.editor.MSWordFormatCleaner();
+        cleaner = new kendo.ui.editor.MSWordFormatCleaner({
+            msConvertLists: true
+        });
     }
 });
 
@@ -44,6 +46,16 @@ test("ordered list", function() {
     equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><!--[if !supportLists]--><span style=""><span style="">1.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><!--[endif]-->foo</p>'), '<ol><li>foo</li></ol>');
 });
 
+    test("skip formatting of ordered list, when explicitly stopped", function() {
+        cleaner.options.msConvertLists = false;
+        equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><!--[if !supportLists]--><span style=""><span style="">1.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><!--[endif]-->foo</p>'), '<p style="text-indent:-0.25in"><span><span>1.<span style="font:7pt \'times new roman\'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p>');
+    });
+
+    test("cleanup junk only when pasteCleanup.none", function () {
+        cleaner.options.none = true;
+        equal(clean('<p class="MsoListParagraphCxSpFirst" style="text-indent: -0.25in;"><!--[if !supportLists]--><span style=""><span style="">1.<span style="font: 7pt &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><!--[endif]-->foo</p>'), '<p class="msolistparagraphcxspfirst" style="text-indent:-0.25in"><span style=""><span style="">1.<span style="font:7pt \'times new roman\'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>foo</p>');
+    });
+
 test("strip comments", function() {
     equal(clean('<!--[if gte mso 9]>\n<xml>foo</xml><![endif]--><!--[if gte mso 9]><xml>foo</xml><![endif]-->'), '');
 });
@@ -75,6 +87,16 @@ test("remove o namespace", function() {
 test("remove v namespace", function() {
     equal(clean('<v:p>foo</v:p>'), '');
 });
+
+    test("remove o namespace when options.none", function() {
+        cleaner.options.none = true;
+        equal(clean('<o:p>foo</o:p>'), '');
+    });
+
+    test("remove v namespace when options.none", function() {
+        cleaner.options.none = true;
+        equal(clean('<v:p>foo</v:p>'), '');
+    });
 
 test("remove mso style attributes", function() {
     equal(clean('<p style="mso-fareast-font:Symbol;color:red;">foo</p>').indexOf('mso'), -1);
@@ -201,6 +223,11 @@ test("converting italics tags to emphasis", function() {
 test("xml declaration", function() {
     equal(clean('<?xml:namespace prefix="v" ns="urn:schemas-microsoft-com:vml" />'), '');
 });
+
+    test("xml declaration when options.none", function() {
+        cleaner.options.none = true;
+        equal(clean('<?xml:namespace prefix="v" ns="urn:schemas-microsoft-com:vml" />'), '');
+    });
 
 test("vml shapes", function() {
     equal(clean('<x:clientdata objecttype="Pict">'), '');
