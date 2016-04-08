@@ -596,7 +596,8 @@ var Clipboard = Class.extend({
             new TabCleaner(pasteCleanup),
             new MSWordFormatCleaner(pasteCleanup),
             new WebkitFormatCleaner(pasteCleanup),
-            new HtmlTagsCleaner(pasteCleanup)
+            new HtmlTagsCleaner(pasteCleanup),
+            new HtmlAttrCleaner(pasteCleanup)
         ];
     },
 
@@ -1419,6 +1420,28 @@ var WebkitFormatCleaner = Cleaner.extend({
         }
     });
 
+    var HtmlAttrCleaner = DomCleaner.extend({
+        cleanDom: function(container) {
+            var attributes = this.collectAttr();
+            var nodes = $(container).find("[" + attributes.join("],[") + "]");
+            nodes.removeAttr(attributes.join(" "));
+
+            return container;
+        },
+
+        collectAttr: function() {
+            if (this.options.css) {
+                return ["class", "style"];
+            }
+
+            return [];
+        },
+
+        applicable: function() {
+            return this.options.css;
+        }
+    });
+
 var PrintCommand = Command.extend({
     init: function(options) {
         Command.fn.init.call(this, options);
@@ -1468,6 +1491,7 @@ extend(editorNS, {
     MSWordFormatCleaner: MSWordFormatCleaner,
     WebkitFormatCleaner: WebkitFormatCleaner,
     HtmlTagsCleaner: HtmlTagsCleaner,
+    HtmlAttrCleaner: HtmlAttrCleaner,
     PrintCommand: PrintCommand,
     ExportPdfCommand: ExportPdfCommand
 });

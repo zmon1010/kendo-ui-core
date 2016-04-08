@@ -39,6 +39,34 @@
             '<div>some inline content</div>');
     });
 
+    module("HtmlAttrCleaner");
+
+    test("not applicable when options.css is off", function() {
+        cleaner = new kendo.ui.editor.HtmlAttrCleaner({ css: false });
+        ok(!cleaner.applicable());
+    });
+
+    test("applicable when style and class attrs", function() {
+        cleaner = new kendo.ui.editor.HtmlAttrCleaner({ css: true });
+        ok(cleaner.applicable());
+    });
+
+    test("remove style", function() {
+        cleaner = new kendo.ui.editor.HtmlAttrCleaner({ css: true });
+
+        equalClean(
+            "<div style='color: green;'>content</div>",
+            "<div>content</div>");
+    });
+
+    test("remove class", function() {
+        cleaner = new kendo.ui.editor.HtmlAttrCleaner({ css: true });
+
+        equalClean(
+            "<div class='toggle'>content</div>",
+            "<div>content</div>");
+    });
+
     function equalClean(input, expected) {
         equal(cleaner.clean(input), expected);
     }
@@ -66,6 +94,14 @@
         editor.paste('<div>some <span>inline</span> content</div>');
 
         okContent('<div>some inline content</div>');
+    });
+    
+    test("css styling of elements is stripped", function() {
+        editor.options.pasteCleanup.css = true;
+        
+        editor.paste("<div class='toggle' style='width: auto;'>content</div>");
+        
+        okContent("<div>content</div>");
     });
 
     function okContent(html) {
