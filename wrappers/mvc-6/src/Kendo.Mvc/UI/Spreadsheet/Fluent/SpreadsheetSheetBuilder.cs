@@ -34,6 +34,10 @@ namespace Kendo.Mvc.UI.Fluent
         public SpreadsheetSheetBuilder DataSource<T>(Action<DataSourceBuilder<T>> configurator)
             where T : class
         {
+            Container.DataSource = new DataSource(Spreadsheet.ModelMetadataProvider)
+            {
+                Type = DataSourceType.Ajax
+            };
             Container.DataSource.ModelType(typeof(T));
             configurator(new DataSourceBuilder<T>(Container.DataSource, Spreadsheet.ViewContext, Spreadsheet.UrlGenerator));
 

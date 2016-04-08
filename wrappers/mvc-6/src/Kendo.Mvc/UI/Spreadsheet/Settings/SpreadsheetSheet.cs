@@ -1,5 +1,6 @@
 using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,27 +15,21 @@ namespace Kendo.Mvc.UI
         public DataSource DataSource
         {
             get;
-            private set;
+            set;
         }
 
         public SpreadsheetSheet()
         {
-            DataSource = new DataSource(Spreadsheet.ModelMetadataProvider)
-            {
-                Type = DataSourceType.Server,
-                ServerAggregates = true,
-                ServerFiltering = true,
-                ServerGrouping = true,
-                ServerPaging = true,
-                ServerSorting = true
-            };
         }
 
         public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
-            settings["dataSource"] = (Dictionary<string, object>)DataSource.ToJson();
+            if (DataSource != null)
+            {
+                settings["dataSource"] = DataSource.ToJson();
+            }
 
             return settings;
         }
