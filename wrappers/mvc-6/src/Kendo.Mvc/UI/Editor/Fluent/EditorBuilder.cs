@@ -13,6 +13,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+
+        /// <summary>
+        /// Sets the CSS files that will be registered in the Editor's iframe
+        /// </summary>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Editor()
+        ///             .Name("Editor")
+        ///             .StyleSheets(styleSheets => styleSheets.Add("editorStyles.css"))
+        /// );
+        /// </code>        
+        public EditorBuilder StyleSheets(Action<EditorStyleSheetBuilder> configurator)
+        {
+            configurator(new EditorStyleSheetBuilder(Component.StyleSheets));
+            
+            return this;
+        }
     }
 }
 

@@ -16,6 +16,8 @@ namespace Kendo.Mvc.UI
         {
         }
 
+        public List<string> StyleSheets { get; set; } = new List<string>();
+
         protected override void WriteHtml(TextWriter writer)
         {
             var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
@@ -30,6 +32,11 @@ namespace Kendo.Mvc.UI
             var settings = SerializeSettings();
 
             // TODO: Manually serialized settings go here
+
+            if (StyleSheets.Count > 0)
+            {
+                settings["stylesheets"] = StyleSheets;
+            }
 
             writer.Write(Initializer.Initialize(Selector, "Editor", settings));
         }
