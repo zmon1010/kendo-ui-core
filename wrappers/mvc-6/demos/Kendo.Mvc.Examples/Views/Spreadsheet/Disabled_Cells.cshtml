@@ -1,15 +1,36 @@
 ﻿<div id="example">
-    <script src="~/shared/jszip.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+
+    <div class="box wide">
+        <div class="box-col">
+            <h4>Disable cells</h4>
+            <ul class="options">
+                <li>
+                    <button class="k-button" id="toggle">Disable / Enable 'Quantity' column</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+$(function() {
+    $("#toggle").click(function () {
+        var range = $("#spreadsheet").data("kendoSpreadsheet").activeSheet().range("C3:C11");
+        var enabled = range.enable();
+
+        if (enabled === null) {
+            enabled = true;
+        }
+
+        //Enable / disable specified range
+        range.enable(!enabled);
+    });
+});
+    </script>
 
     @(Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
     .HtmlAttributes(new { style = "width:100%" })
-    .Excel(excel => excel
-        .ProxyURL(Url.Action("Index_Save", "Spreadsheet"))
-    )
-    .Pdf(pdf => pdf
-        .ProxyURL(Url.Action("Index_Save", "Spreadsheet"))
-    )
     .Sheets(sheets =>
     {
         sheets.Add()
@@ -84,7 +105,8 @@
                         .Value(216321)
                         .Background("rgb(255,255,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Calzone")
@@ -125,7 +147,8 @@
                         .Value(546897)
                         .Background("rgb(229,243,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Margarita")
@@ -166,7 +189,8 @@
                         .Value(456231)
                         .Background("rgb(255,255,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Pollo Formaggio")
@@ -207,7 +231,8 @@
                         .Value(455873)
                         .Background("rgb(229,243,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Greek Salad")
@@ -248,7 +273,8 @@
                         .Value(456892)
                         .Background("rgb(255,255,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Spinach and Blue Cheese")
@@ -289,7 +315,8 @@
                         .Value(546564)
                         .Background("rgb(229,243,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Rigoletto")
@@ -330,7 +357,8 @@
                         .Value(789455)
                         .Background("rgb(255,255,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Creme Brulee")
@@ -371,7 +399,8 @@
                         .Value(123002)
                         .Background("rgb(229,243,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Radeberger Beer")
@@ -412,7 +441,8 @@
                         .Value(564896)
                         .Background("rgb(255,255,255)")
                         .Color("rgb(0,62,117)")
-                        .TextAlign(SpreadsheetTextAlign.Center);
+                        .TextAlign(SpreadsheetTextAlign.Center)
+                        .Enable(false);
 
                     cells.Add()
                         .Value("Budweiser Beer")
