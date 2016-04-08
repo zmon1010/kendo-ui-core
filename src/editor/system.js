@@ -597,7 +597,8 @@ var Clipboard = Class.extend({
             new MSWordFormatCleaner(pasteCleanup),
             new WebkitFormatCleaner(pasteCleanup),
             new HtmlTagsCleaner(pasteCleanup),
-            new HtmlAttrCleaner(pasteCleanup)
+            new HtmlAttrCleaner(pasteCleanup),
+            new HtmlContentCleaner(pasteCleanup)
         ];
     },
 
@@ -1442,6 +1443,167 @@ var WebkitFormatCleaner = Cleaner.extend({
         }
     });
 
+
+    var TextContainer = function() {
+        this.text = "";
+        this.add = function(text) {
+            this.text += text;
+        };
+    };
+
+    var HtmlTextLines = Class.extend({
+        init: function(separators) {
+            this.separators = separators || {
+                    text: " ",
+                    line: "<br/>"
+                };
+            this.lines = [];
+            this.inlineBlockText = [];
+            this.resetLine();
+        },
+
+        appendText: function(text) {
+            if (text.nodeType === 3) {
+                text = text.nodeValue;
+            }
+
+            this.textContainer.add(text);
+        },
+
+        appendInlineBlockText: function(text) {
+            this.inlineBlockText.push(text);
+        },
+
+        flashInlineBlockText: function() {
+            if (this.inlineBlockText.length) {
+                this.appendText(this.inlineBlockText.join(" "));
+                this.inlineBlockText = [];
+            }
+        },
+
+        endLine: function() {
+            this.flashInlineBlockText();
+            this.resetLine();
+        },
+
+        html: function() {
+            var separators = this.separators;
+            var result = "";
+            var lines = this.lines;
+
+            this.flashInlineBlockText();
+
+            for (var i = 0, il = lines.length, il1 = il - 1; i < il; i++) {
+                var line = lines[i];
+                for (var j = 0, jl = line.length, jl1 = jl - 1; j < jl; j++) {
+                    var text = line[j].text;
+                    result += text;
+                    if (j !== jl1) {
+                        result += separators.text;
+                    }
+                }
+                if (i !== il1) {
+                    result += separators.line;
+                }
+            }
+
+            return result;
+        },
+
+        resetLine: function() {
+            this.textContainer = new TextContainer();
+            this.line = [];
+            this.line.push(this.textContainer);
+            this.lines.push(this.line);
+        }
+    });
+
+    var DomEnumerator = Class.extend({
+        init: function(callback) {
+            this.callback = callback;
+        },
+        enumerate: function(node) {
+            if (!node) {
+                return;
+            }
+
+            var preventDown = this.callback(node);
+
+            var child = node.firstChild;
+            if (!preventDown && child) {
+                this.enumerate(child);
+            }
+
+            this.enumerate(node.nextSibling);
+        }
+    });
+
+    var HtmlContentCleaner = Cleaner.extend({
+        init: function(options) {
+            Cleaner.fn.init.call(this, options);
+            this.hasText = false; //unpleasant flag to prevent an empty line at the beginning of the generated content.
+            this.enumerator = new DomEnumerator($.proxy(this.buildText, this));
+        },
+
+        clean: function(html) {
+            var container = dom.create(document, 'div', {innerHTML: html});
+
+            return this.cleanDom(container);
+        },
+
+        cleanDom: function(container) {
+            this.separators = this.getDefaultSeparators();
+            this.htmlLines = new HtmlTextLines(this.separators);
+            this.enumerator.enumerate(container.firstChild);
+            this.hasText = false;
+
+            return this.htmlLines.html();
+        },
+
+        buildText: function(node) {
+            if (dom.isDataNode(node)) {
+                this.htmlLines.appendText(node.nodeValue.replace('\n', this.separators.line));
+                this.hasText = true;
+            } else if (dom.isBlock(node) && this.hasText) {
+                var action = this.actions[dom.name(node)] || this.actions.block;
+                return action(this, node);
+            }
+        },
+
+        applicable: function() {
+            var o = this.options;
+            return o.all || o.keepNewLines;
+        },
+
+        getDefaultSeparators: function() {
+            if (this.options.all) {
+                return {text: " ", line: " "};
+            } else {
+                return {text: " ", line: "<br/>"};
+            }
+        },
+
+        actions: {
+            ul: $.noop,
+            ol: $.noop,
+            table: $.noop,
+            thead: $.noop,
+            tbody: $.noop,
+            td: function(cleaner, node) {
+                var tdCleaner = new HtmlContentCleaner({all: true});
+
+                var cellText = tdCleaner.cleanDom(node);
+                cleaner.htmlLines.appendInlineBlockText(cellText);
+
+                return true;
+            },
+
+            block: function(cleaner) {
+                cleaner.htmlLines.endLine();
+            }
+        }
+    });
+
 var PrintCommand = Command.extend({
     init: function(options) {
         Command.fn.init.call(this, options);
@@ -1492,6 +1654,8 @@ extend(editorNS, {
     WebkitFormatCleaner: WebkitFormatCleaner,
     HtmlTagsCleaner: HtmlTagsCleaner,
     HtmlAttrCleaner: HtmlAttrCleaner,
+    HtmlContentCleaner: HtmlContentCleaner,
+    HtmlTextLines: HtmlTextLines,
     PrintCommand: PrintCommand,
     ExportPdfCommand: ExportPdfCommand
 });
