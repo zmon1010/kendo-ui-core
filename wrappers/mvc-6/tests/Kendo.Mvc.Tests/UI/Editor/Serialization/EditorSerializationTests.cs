@@ -27,13 +27,15 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void StyleSheets_should_be_serialized()
         {
-            var values = new List<string>{ "value1", "value2" };
+            var values = new List<string> { "value1", "value2" };
 
             editor.StyleSheets = values;
 
+            editor.Encoded = true;
+
             editor.AssertSettings(settings =>
             {
-                settings["stylesheets"].ShouldEqual(values);
+                settings["encoded"].ShouldEqual(true);
             });
         }
     }
