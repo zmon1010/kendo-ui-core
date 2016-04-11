@@ -1,0 +1,78 @@
+:options:
+    - :name: sheets.frozencolumns
+      :merge: true
+      :type: int
+
+    - :name: sheets.frozenrows
+      :merge: true
+      :type: int
+
+    - :name: sheets.columns.index
+      :merge: true
+      :type: int
+
+    - :name: sheets.rows.index
+      :merge: true
+      :type: int
+
+    - :name: sheets.rows.cells.index
+      :merge: true
+      :type: int
+      
+    - :name: sheets.rows.cells.value
+      :merge: true
+      :type: object
+
+    - :name: sheets.filter.columns.criteria.operator
+      :type: String
+      :merge: true
+      :description: The criterion operator type.
+      :enum_type: SpreadsheetFilterOperator
+      :values:
+          - :value: contains
+            :member: Contains
+            :description: contains the value
+
+          - :value: doesnotcontain
+            :member: DoesNotContain
+            :description: does not contain the value
+
+          - :value: startswith
+            :member: StartsWith
+            :description: starts with the value
+
+          - :value: endswith
+            :member: EndsWith
+            :description: ends with the value
+
+          - :value: eq
+            :member: EqualTo
+            :description: is the same as the value
+
+          - :value: neq
+            :member: NotEqualTo
+            :description: is not the same as the value
+
+          - :value: lt
+            :member: LowerThan
+            :description: is greater than the value
+
+          - :value: gt
+            :member: GreaterThan
+            :description: is less than the value
+
+          - :value: gte
+            :member: GreaterThanOrEqualTo
+            :description: is greater than or equal to the value
+
+          - :value: lte
+            :member: LowerThanOrEqualTo
+            :description: is less than or equal to the value
+
+    - :name: sheets.filter.columns.values
+      :merge: true
+      :type: object[]
+
+    - :name: sheets.mergedcells
+      :merge: true
+      :type: string[]

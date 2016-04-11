@@ -2656,10 +2656,7 @@
                 "meta": {
                     "kendo-ui": "This demo for Kendo UI jQuery-based Spreadsheet component shows how you can make your static HTML tables and raw data much more interactive to match your modern web app.",
                     "aspnet-mvc": "In this demo for Kendo UI jQuery-powered Spreadsheet in ASP.NET MVC you will see all basic functionalities of the extension."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Sorting and Filtering",
@@ -2669,10 +2666,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo shows the sorting and filtering support that Kendo UI Spreadsheet provides"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Server Import/Export",
@@ -2684,7 +2678,8 @@
                     "kendo-ui": "Export to and import from Microsoft Excel (.xlsx), CSV, Text and JSON files"
                 },
                 "packages": [
-                    "!offline"
+                    "!offline",
+                    "!mvc-core"
                 ],
                 "sources": {
                     "kendo-ui": [
@@ -2711,7 +2706,8 @@
                     "kendo-ui": "Export to print-ready PDF files"
                 },
                 "packages": [
-                    "!offline"
+                    "!offline",
+                    "!mvc-core"
                 ]
             },
             {
@@ -2732,10 +2728,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo shows how to disable/enable editing in Kendo UI Spreadsheet provides for particular range"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Events",
@@ -2745,10 +2738,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This example shows events which are triggered in Kendo UI Spreadsheet widget."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Validation",
@@ -2758,10 +2748,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This example shows the data validation in Kendo UI Spreadsheet widget."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             }
         ],
         "category": "Data Management"

@@ -222,3 +222,108 @@
       - :value: pie
         :member: Pie
         :description: Pie series.
+
+- :type: SpreadsheetTopFilterType
+  :description: The top filter type.
+  :values:
+      - :value: topNumber
+        :member: TopNumber
+        :description: Top number
+
+      - :value: topPercent
+        :member: TopPercent
+        :description: Top Percent
+
+      - :value: bottomNumber
+        :member: BottomNumber
+        :description: Bottom Number
+
+      - :value: bottomPercent
+        :member: BottomPercent
+        :description: Bottom Percent
+
+- :type: SpreadsheetFilterLogic
+  :description: The custom filter logic type.
+  :values:
+      - :value: and
+        :member: And
+        :description: And logic
+
+      - :value: or
+        :member: Or
+        :description: Or logic
+
+- :type: SpreadsheetDynamicFilterType
+  :description: The dynamic filter type.
+  :values:
+      - :value: aboveAverage
+        :member: AboveAverage
+        :description: Above average
+
+      - :value: belowAverage
+        :member: BelowAverage
+        :description: Below average
+
+      - :value: tomorrow
+        :member: Tomorrow
+        :description: Tomorrow
+
+      - :value: today
+        :member: Today
+        :description: Today
+
+      - :value: yesterday
+        :member: Yesterday
+        :description: Yesterday
+
+      - :value: nextWeek
+        :member: NextWeek
+        :description: Next week
+
+      - :value: thisWeek
+        :member: ThisWeek
+        :description: This Week
+
+      - :value: lastWeek
+        :member: LastWeek
+        :description: Last week
+
+      - :value: nextMonth
+        :member: NextMonth
+        :description: Next month
+
+      - :value: thisMonth
+        :member: ThisMonth
+        :description: This month
+
+      - :value: lastMonth
+        :member: LastMonth
+        :description: Last month
+
+      - :value: nextQuarter
+        :member: NextQuarter
+        :description: Next quarter
+
+      - :value: thisQuarter
+        :member: ThisQuarter
+        :description: This quarter
+
+      - :value: lastQuarter
+        :member: LastQuarter
+        :description: Last quarter
+
+      - :value: nextYear
+        :member: NextYear
+        :description: Next year
+
+      - :value: thisYear
+        :member: ThisYear
+        :description: This year
+
+      - :value: lastYear
+        :member: LastYear
+        :description: Last year
+
+      - :value: yearToDate
+        :member: YearToDate
+        :description: Year to date
