@@ -1562,6 +1562,9 @@ var WebkitFormatCleaner = Cleaner.extend({
 
         buildText: function(node) {
             if (dom.isDataNode(node)) {
+                if(dom.isEmptyspace(node)) {
+                    return;
+                }
                 this.htmlLines.appendText(node.nodeValue.replace('\n', this.separators.line));
                 this.hasText = true;
             } else if (dom.isBlock(node) && this.hasText) {

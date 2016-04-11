@@ -109,6 +109,12 @@
     test("cleans two div nodes", function() {
         equalClean("<div>line1</div><div>line2</div>", "line1<br/>line2");
     });
+    
+    test("skip emptyspace nodes", function() {
+        equalClean(
+            "<div>line1</div>\r\n\t\t\t<div>line2</div>",
+            "line1<br/>line2");
+    });
 
     test("list", function() {
         equalClean(
