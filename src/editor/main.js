@@ -728,7 +728,7 @@
             pasteCleanup: {
                 all: false,
                 css: false,
-                custom: $.noop,
+                custom: null,
                 keepNewLines: false,
                 msAllFormatting: false,
                 msConvertLists: true,

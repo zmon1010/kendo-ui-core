@@ -109,7 +109,7 @@
     test("cleans two div nodes", function() {
         equalClean("<div>line1</div><div>line2</div>", "line1<br/>line2");
     });
-    
+
     test("skip emptyspace nodes", function() {
         equalClean(
             "<div>line1</div>\r\n\t\t\t<div>line2</div>",
@@ -185,6 +185,30 @@
         equal(htmlLines.html(), "line1<br/><br/>");
     });
 
+    module("CustomCleaner");
+
+    test("not applicable if custom not defined", function() {
+        cleaner = new kendo.ui.editor.CustomCleaner();
+        ok(!cleaner.applicable());
+    });
+
+    test("applicable if custom defined", function() {
+        cleaner = new kendo.ui.editor.CustomCleaner({ custom: $.noop });
+        ok(cleaner.applicable());
+    });
+
+    test("custom callback changes content", function() {
+        expect(2);
+        cleaner = new kendo.ui.editor.CustomCleaner({
+            custom: function(html) {
+                equal(html, "any text", "provide the input to the custom handler");
+                return "new content";
+            }
+        });
+
+        equalClean("any text", "new content");
+    });
+
     editor_module("pasteCleanup integration", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
@@ -232,6 +256,18 @@
         editor.paste("<p>line1</p><p>line2</p>");
 
         okContent("line1 line2");
+    });
+
+    test("custom paste cleanup", function() {
+        expect(2);
+        editor.options.pasteCleanup.custom = function(html) {
+            equal(html, "any text");
+            return "new content";
+        }
+
+        editor.paste("any text");
+
+        okContent("new content");
     });
 
     function okContent(html) {

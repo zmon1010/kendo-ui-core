@@ -598,7 +598,8 @@ var Clipboard = Class.extend({
             new WebkitFormatCleaner(pasteCleanup),
             new HtmlTagsCleaner(pasteCleanup),
             new HtmlAttrCleaner(pasteCleanup),
-            new HtmlContentCleaner(pasteCleanup)
+            new HtmlContentCleaner(pasteCleanup),
+            new CustomCleaner(pasteCleanup) //always keep at end
         ];
     },
 
@@ -1562,7 +1563,7 @@ var WebkitFormatCleaner = Cleaner.extend({
 
         buildText: function(node) {
             if (dom.isDataNode(node)) {
-                if(dom.isEmptyspace(node)) {
+                if (dom.isEmptyspace(node)) {
                     return;
                 }
                 this.htmlLines.appendText(node.nodeValue.replace('\n', this.separators.line));
@@ -1605,6 +1606,16 @@ var WebkitFormatCleaner = Cleaner.extend({
                 cleaner.htmlLines.endLine();
             }
         }
+    });
+
+    var CustomCleaner = Cleaner.extend({
+        clean: function(html) {
+            return this.options.custom(html);
+        },
+
+        applicable: function(html) {
+            return typeof(this.options.custom) === "function";
+        },
     });
 
 var PrintCommand = Command.extend({
@@ -1659,6 +1670,7 @@ extend(editorNS, {
     HtmlAttrCleaner: HtmlAttrCleaner,
     HtmlContentCleaner: HtmlContentCleaner,
     HtmlTextLines: HtmlTextLines,
+    CustomCleaner: CustomCleaner,
     PrintCommand: PrintCommand,
     ExportPdfCommand: ExportPdfCommand
 });
