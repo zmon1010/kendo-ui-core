@@ -418,6 +418,7 @@ bundle :name => 'professional.office365',
        :license => 'src-license-office365',
        :eula => 'office365',
        :readme => 'README.KendoUI.Office365',
+       :readme_src => 'README.NoSource',
        :vsdoc => %w(all web mobile dataviz),
        :intellisense => %w(all web mobile dataviz),
        :type_script => %w(all web mobile dataviz),
@@ -427,6 +428,7 @@ bundle :name => 'professional.office365',
        },
        :product => 'Kendo UI Professional',
        :upload_as_internal_build => true,
+       :skip_grunt_build => true,
        :release_build => {
            :file_metadata => {
              :zip => {
@@ -455,7 +457,21 @@ bundle :name => 'professional.office365',
        },
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
-            'styles' => MIN_CSS_RESOURCES,
+            'styles' => MIN_CSS_RESOURCES
+       }
+
+bundle :name => 'professional.office365.source',
+       :license => 'src-license-office365',
+       :eula => 'complete',
+       :changelog => %w(components),
+       :release_build => {
+           :file_metadata => {
+             :zip => {
+              :download_name => "telerik.kendoui.professional.#{VERSION}.office365.source.zip",
+             }
+           }
+       },
+       :contents => {
             'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS
        }
@@ -1212,6 +1228,7 @@ BUNDLES = [
     'professional.commercial.source',
     'professional.trial',
     'professional.office365',
+    'professional.office365.source',
     'jsp.commercial',
     'jsp.commercial.no-source',
     'jsp.trial',
