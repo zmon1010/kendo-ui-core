@@ -20,22 +20,19 @@ namespace Kendo.Mvc.UI
         {
             Animation = new PopupAnimation();
 
-            Items = new LinkedObjectCollection<ContextMenuItem>(null);
+            Items = new List<ContextMenuItem>();
 
             CloseOnClick = true;
             HighlightPath = true;
-            SecurityTrimming = new SecurityTrimming();
         }
+
+        public string Direction { get; set; }
 
         public PopupAnimation Animation { get; private set; }
 
         public bool? OpenOnClick { get; set; }
 
         public bool? HighlightPath { get; set; }
-
-        public INavigationItemAuthorization Authorization { get; private set; }
-
-        public SecurityTrimming SecurityTrimming { get; set; }
 
         public Action<ContextMenuItem> ItemAction { get; set; }
 
@@ -45,14 +42,18 @@ namespace Kendo.Mvc.UI
         {
             if (Items.Any())
             {
-                var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
-
                 if (HighlightPath.Value)
                 {
-                    Items.Each(HighlightSelectedItem); //TODO check
+                    Items.Each(HighlightSelectedItem);
                 }
 
+                INavigationComponentHtmlBuilder<ContextMenuItem> builder = new ContextMenuHtmlBuilder(this);
 
+                IHtmlNode menuTag = builder.Build();
+
+                Items.Each(item => item.WriteItem<ContextMenu, ContextMenuItem>(this, menuTag, builder));
+
+                menuTag.WriteTo(writer, HtmlEncoder);
             }
             
             base.WriteHtml(writer);
@@ -91,7 +92,7 @@ namespace Kendo.Mvc.UI
                 settings["animation"] = animation["animation"];
             }
 
-            if (AlignToAnchor.Value)
+            if (AlignToAnchor.HasValue && AlignToAnchor.Value == true)
             {
                 settings["alignToAnchor"] = true;
             }
@@ -101,12 +102,17 @@ namespace Kendo.Mvc.UI
                 settings["orientation"] = Orientation?.Serialize();
             }
 
-            if (OpenOnClick.Value)
+            if (Direction.HasValue())
+            {
+                settings["direction"] = Direction;
+            }
+
+            if (OpenOnClick.HasValue && OpenOnClick.Value == true)
             {
                 settings["openOnClick"] = true;
             }
 
-            if (!CloseOnClick.Value)
+            if (CloseOnClick.HasValue && CloseOnClick.Value == false)
             {
                 settings["closeOnClick"] = false;
             }

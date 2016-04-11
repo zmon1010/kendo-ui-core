@@ -2,24 +2,29 @@
 {
     // using System.Web.Script.Serialization;
     using Kendo.Mvc;
+    using Kendo.Mvc.Extensions;
     using Microsoft.AspNet.Routing;
+    using Rendering;
     using System;
     using System.Collections.Generic;
-
-    public abstract class NavigationItem<T> : LinkedObjectBase<T>, INavigatable, IHideObjectMembers, IHtmlAttributesContainer, IContentContainer where T : NavigationItem<T>
+    using System.Net;
+    public abstract class NavigationItem<T> : LinkedObjectBase<T>, INavigatable, IHideObjectMembers, IHtmlAttributesContainer, IContentContainer
+        where T : NavigationItem<T>
     {
         private string text;
         private string routeName;
         private string controllerName;
         private string actionName;
         private string url;
+        private string template;
+        private Func<T, object> inlineTemplate;
 
         private bool selected;
         private bool enabled;
 
         protected NavigationItem()
         {
-            //Template = new HtmlTemplate();
+            Template = new HtmlTemplate();
             HtmlAttributes = new RouteValueDictionary();
             ImageHtmlAttributes = new RouteValueDictionary();
             LinkHtmlAttributes = new RouteValueDictionary();
@@ -71,26 +76,30 @@
             set;
         }
 
-        //TODO check
         //[ScriptIgnore]
-        //public HtmlTemplate Template
-        //{
-        //    get;
-        //    private set;
-        //}
+        public HtmlTemplate Template
+        {
+            get;
+            private set;
+        }
+
+        public Func<T, object> InlineTemplate
+        {
+            get; set;
+        }
 
         //[ScriptIgnore]
-        //public string Html
-        //{
-        //    get
-        //    {
-        //        return Template.Html;
-        //    }
-        //    set
-        //    {
-        //        Template.Html = value;
-        //    }
-        //}
+        public string Html
+        {
+            get
+            {
+                return Template.Html;
+            }
+            set
+            {
+                Template.Html = value;
+            }
+        }
 
         //[ScriptIgnore]
         public bool Visible
@@ -114,16 +123,14 @@
         //[ScriptIgnore]
         public Action Content
         {
-            get; set;
-            //TODO
-            //get
-            //{
-            //    return Template.Content;
-            //}
-            //set
-            //{
-            //    Template.Content = value;
-            //}
+            get
+            {
+                return Template.Content;
+            }
+            set
+            {
+                Template.Content = value;
+            }
         }
 
         public string Text

@@ -7,13 +7,17 @@
     using Microsoft.AspNet.Mvc.Rendering;
     using Microsoft.AspNet.Routing;
     using Kendo.Mvc.Extensions;
-
+    using Microsoft.AspNet.Mvc.Razor;
+    using System.IO;
+    using Microsoft.Extensions.WebEncoders;
     /// <summary>
     /// Defines the fluent interface for configuring navigation items
     /// </summary>
     /// <typeparam name="TItem">The type of the item.</typeparam>
     /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    public abstract class NavigationItemBuilder<TItem, TBuilder> where TItem : NavigationItem<TItem> where TBuilder : NavigationItemBuilder<TItem, TBuilder>, IHideObjectMembers
+    public abstract class NavigationItemBuilder<TItem, TBuilder> 
+        where TItem : NavigationItem<TItem> 
+        where TBuilder : NavigationItemBuilder<TItem, TBuilder>, IHideObjectMembers
     {
         private readonly NavigationItem<TItem> item;
 
@@ -433,7 +437,7 @@
         public TBuilder Content(Action value)
         {
 
-            //Item.Template.Content = value;
+            Item.Template.Content = value;
 
             return this as TBuilder;
         }
@@ -459,8 +463,7 @@
         /// </code>
         public TBuilder Content(Func<object, object> value)
         {
-            //TODO
-            //Item.Template.InlineTemplate = value;
+            Item.Template.InlineTemplate = value;
 
             return this as TBuilder;
         }
@@ -483,7 +486,7 @@
         public TBuilder Content(string value)
         {
 
-            //Item.Template.Html = value;
+            Item.Template.Html = value;
 
             return this as TBuilder;
         }

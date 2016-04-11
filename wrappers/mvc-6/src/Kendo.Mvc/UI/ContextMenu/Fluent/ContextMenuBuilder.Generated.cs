@@ -80,16 +80,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Represents the menu item opening direction.
-        /// </summary>
-        /// <param name="value">The value for Direction</param>
-        public ContextMenuBuilder Direction(ContextMenuDirection value)
-        {
-            Container.Direction = value;
-            return this;
-        }
-
-        /// <summary>
         /// Specifies the orientation in which the menu items will be ordered
         /// </summary>
         /// <param name="value">The value for Orientation</param>

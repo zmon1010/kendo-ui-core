@@ -23,8 +23,6 @@ namespace Kendo.Mvc.UI
 
         public string Target { get; set; }
 
-        public ContextMenuDirection? Direction { get; set; }
-
         public ContextMenuOrientation? Orientation { get; set; }
 
 
@@ -50,11 +48,6 @@ namespace Kendo.Mvc.UI
             if (Target?.HasValue() == true)
             {
                 settings["target"] = Target;
-            }
-
-            if (Direction.HasValue)
-            {
-                settings["direction"] = Direction?.Serialize();
             }
 
             return settings;

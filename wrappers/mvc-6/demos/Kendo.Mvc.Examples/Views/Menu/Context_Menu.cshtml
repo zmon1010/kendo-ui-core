@@ -27,16 +27,15 @@
 
 <div class="demo-section k-header">
     <h4>WebMail</h4>
-    @*@(Html.Kendo().ListView<Kendo.Mvc.Examples.Models.WebMail>()
+    @(Html.Kendo().ListView<Kendo.Mvc.Examples.Models.WebMail>()
     .Name("listview-context-menu")
     .TagName("div")
     .ClientTemplateId("template")
-    .DataSource(dataSource =>
-    {
-        dataSource.Read(read => read.Action("_WebMailData", "Menu"));
-        dataSource.PageSize(5);
-    })
-    )*@
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("_WebMailData", "Menu"))
+        .PageSize(5)
+    ))
 
     @(Html.Kendo().ContextMenu()
         .Name("menu")

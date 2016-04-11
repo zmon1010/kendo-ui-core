@@ -23,15 +23,15 @@
             set;
         }
 
-        INavigationItemAuthorization Authorization
-        {
-            get;
-        }
+        //INavigationItemAuthorization Authorization
+        //{
+        //    get;
+        //}
 
-        SecurityTrimming SecurityTrimming
-        {
-            get;
-            set;
-        }
+        //SecurityTrimming SecurityTrimming
+        //{
+        //    get;
+        //    set;
+        //}
     }
 }

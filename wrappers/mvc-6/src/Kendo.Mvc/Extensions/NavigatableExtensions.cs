@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
     using Microsoft.AspNet.Mvc.Rendering;
     using Microsoft.AspNet.Routing;
     using Microsoft.Extensions.DependencyInjection;
-
+    using Infrastructure;
     public static class NavigatableExtensions
     {
         /// <summary>
@@ -166,14 +166,16 @@ namespace Kendo.Mvc.UI
         /// <returns></returns>
         public static bool IsCurrent(this INavigatable navigatable, ViewContext viewContext, IUrlGenerator urlGenerator)
         {
-            var currentUrl = ""; //viewContext.HttpContext.Request.; TODO implement
+            var request = viewContext.HttpContext.Request;
+
+            var currentUrl = request.Path + request.QueryString;
             var url = urlGenerator.Generate(viewContext, navigatable);
             var currentRoute = GetUrlHelper(viewContext).RouteUrl(viewContext.RouteData.Values);
 
             return !string.IsNullOrEmpty(url) && (url.IsCaseInsensitiveEqual(currentUrl) || url.IsCaseInsensitiveEqual(currentRoute));
         }
 
-        private static IUrlHelper GetUrlHelper(ActionContext context)
+        public static IUrlHelper GetUrlHelper(ActionContext context)
         {
             return context.HttpContext.RequestServices.GetRequiredService<IUrlHelper>();
         }
@@ -224,5 +226,15 @@ namespace Kendo.Mvc.UI
                 navigatable.RouteValues.Merge(values);
             }
         }
+
+        //public static bool IsAccessible(this INavigatable item, INavigationItemAuthorization authorization, ViewContext viewContext)
+        //{
+        //    return authorization.IsAccessibleToUser(viewContext.HttpContext, item);
+        //}
+
+        //public static bool IsAccessible<T>(this IEnumerable<T> items, INavigationItemAuthorization authorization, ViewContext viewContext)
+        //{
+        //    return items.Any(item => authorization.IsAccessibleToUser(viewContext.HttpContext, (INavigatable)item));
+        //}
     }
 }
