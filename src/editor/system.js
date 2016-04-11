@@ -1613,9 +1613,9 @@ var WebkitFormatCleaner = Cleaner.extend({
             return this.options.custom(html);
         },
 
-        applicable: function(html) {
+        applicable: function() {
             return typeof(this.options.custom) === "function";
-        },
+        }
     });
 
 var PrintCommand = Command.extend({
