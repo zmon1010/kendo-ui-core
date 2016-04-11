@@ -254,6 +254,7 @@ bundle :name => 'professional.commercial',
        :license => 'src-license-complete',
        :eula => 'complete',
        :readme => 'README.KendoUI.Complete',
+       :readme_src => 'README.NoSource',
        :vsdoc => %w(all web mobile dataviz),
        :intellisense => %w(all web mobile dataviz),
        :type_script => %w(all web mobile dataviz),
@@ -263,6 +264,7 @@ bundle :name => 'professional.commercial',
        },
        :product => 'Kendo UI Professional',
        :upload_as_internal_build => true,
+       :skip_grunt_build => true,
        :release_build => {
            :file_metadata => {
              :zip => {
@@ -314,44 +316,23 @@ bundle :name => 'professional.commercial',
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
-            'src/js' => COMPLETE_SRC_JS,
-            'src/styles' => SRC_CSS,
             'apptemplates' => APPTEMPLATES_CONTENT
        }
 
-bundle :name => 'professional.commercial.no-source',
+bundle :name => 'professional.commercial.source',
        :license => 'src-license-complete',
        :eula => 'complete',
-       :readme => 'README.KendoUI.Complete',
-       :vsdoc => %w(all web mobile dataviz),
-       :intellisense => %w(all web mobile dataviz),
-       :type_script => %w(all web mobile dataviz),
        :changelog => %w(components),
-       :demos => {
-           :dir => 'examples'
-       },
-       :product => 'Kendo UI Professional',
-       :upload_as_internal_build => true,
-       :skip_grunt_build => true,
        :release_build => {
            :file_metadata => {
              :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.commercial.no-source.zip",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik", "SiteFinity"],
-              :download_message => 'You have successfully downloaded the Kendo UI Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles"
+              :download_name => "telerik.kendoui.professional.#{VERSION}.commercial.source.zip"
              }
            }
        },
        :contents => {
-            'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
-            'styles' => MIN_CSS_RESOURCES,
-            'apptemplates' => APPTEMPLATES_CONTENT
+            'src/js' => COMPLETE_SRC_JS,
+            'src/styles' => SRC_CSS
        }
 
 bundle :name => 'professional.trial',
@@ -1228,7 +1209,7 @@ BUNDLES = [
     'aspnetmvc.trial',
     'cdn.commercial',
     'professional.commercial',
-    'professional.commercial.no-source',
+    'professional.commercial.source',
     'professional.trial',
     'professional.office365',
     'jsp.commercial',
