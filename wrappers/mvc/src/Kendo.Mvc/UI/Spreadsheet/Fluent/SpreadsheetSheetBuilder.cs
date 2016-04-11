@@ -147,6 +147,11 @@ namespace Kendo.Mvc.UI.Fluent
         public SpreadsheetSheetBuilder DataSource<T>(Action<DataSourceBuilder<T>> configurator)
             where T : class
         {
+            container.DataSource = new DataSource()
+            {
+                Type = DataSourceType.Ajax
+            };
+
             container.DataSource.ModelType(typeof(T));
             configurator(new DataSourceBuilder<T>(container.DataSource, spreadsheet.ViewContext, spreadsheet.UrlGenerator));
 
