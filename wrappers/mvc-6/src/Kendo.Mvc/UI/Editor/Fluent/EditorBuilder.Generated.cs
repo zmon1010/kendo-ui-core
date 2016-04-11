@@ -157,6 +157,16 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// The content of the editor.
+        /// </summary>
+        /// <param name="value">The value for Value</param>
+        public EditorBuilder Value(string value)
+        {
+            Container.Value = value;
+            return this;
+        }
+
 
         
         /// <summary>

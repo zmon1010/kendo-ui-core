@@ -11,11 +11,13 @@ namespace Kendo.Mvc.UI.Tests
     {
         private readonly Editor editor;
         private readonly EditorBuilder builder;
+        private readonly Func<object, object> nullFunction;
 
         public EditorBuilderTests()
         {
             editor = new Editor(TestHelper.CreateViewContext());
             builder = new EditorBuilder(editor);
+            nullFunction = (parameter) => null;
         }
 
         [Fact]
@@ -33,7 +35,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Encoded(true).ShouldBeSameAs(builder);
         }
-        
+
         [Fact]
         public void Builder_should_set_Stylesheets_with_list()
         {
@@ -48,6 +50,34 @@ namespace Kendo.Mvc.UI.Tests
         public void Stylesheets_with_list_should_return_builder()
         {
             builder.StyleSheets(delegate { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Value_with_string()
+        {
+            var value = "value";
+
+            builder.Value(value);
+
+            editor.Value.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Value_with_string_should_return_builder()
+        {
+            builder.Value("value").ShouldBeSameAs(builder);
+        }
+        
+        [Fact]
+        public void Value_with_Action_should_return_builder()
+        {
+            builder.Value(delegate { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Value_with_Func_should_return_builder()
+        {
+            builder.Value(nullFunction).ShouldBeSameAs(builder);
         }
     }
 }

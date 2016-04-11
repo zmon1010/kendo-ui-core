@@ -8,5 +8,10 @@ namespace Kendo.Mvc.UI.Tests
         {
             return new Editor(TestHelper.CreateViewContext()) { Name = "#Editor" };
         }
+
+        public static EditorMock CreateEditorMock()
+        {
+            return new EditorMock(TestHelper.CreateViewContext()) { Name = "EditorMock" };
+        }
     }
 }

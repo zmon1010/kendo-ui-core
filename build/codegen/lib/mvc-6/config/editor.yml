@@ -1,4 +1,4 @@
 :options:
-    - :name: some_option
-      :type: List<string>
-      :description: Allows custom stylesheets to be included within the editing area.
+    - :name: value
+      :type: String
+      :description: The content of the editor.

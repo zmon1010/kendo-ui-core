@@ -31,6 +31,8 @@ namespace Kendo.Mvc.UI
 
         public string Tag { get; set; }
 
+        public string Value { get; set; }
+
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -90,11 +92,6 @@ namespace Kendo.Mvc.UI
             if (fileBrowser.Any())
             {
                 settings["fileBrowser"] = fileBrowser;
-            }
-
-            if (Tag?.HasValue() == true)
-            {
-                settings["tag"] = Tag;
             }
 
             return settings;
