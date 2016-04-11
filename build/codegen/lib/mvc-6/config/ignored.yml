@@ -18,6 +18,7 @@
 - combobox.index
 - contextmenu.animation
 - contextmenu.datasource
+- contextmenu.direction
 - contextmenu.items
 - contextmenu.popupcollision
 - datepicker.animation

@@ -112,10 +112,10 @@
             return defaultValue;
         }
 
-        public static void BindTo<T>(this INavigationItemComponent<T> component, string sitemapViewDataKey) where T : NavigationItem<T>, new()
-        {
-            BindTo(component, sitemapViewDataKey, null);
-        }
+        //public static void BindTo<T>(this INavigationItemComponent<T> component, string sitemapViewDataKey) where T : NavigationItem<T>, new()
+        //{
+        //    BindTo(component, sitemapViewDataKey, null);
+        //}
 
         public static void BindTo<TNavigationItem, TDataItem>(this INavigationItemComponent<TNavigationItem> component, IEnumerable<TDataItem> dataSource, Action<TNavigationItem, TDataItem> action) where TNavigationItem : NavigationItem<TNavigationItem>, new()
         {

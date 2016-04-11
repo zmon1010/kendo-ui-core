@@ -26,6 +26,8 @@ namespace Kendo.Mvc.UI
             HighlightPath = true;
         }
 
+        public string Direction { get; set; }
+
         public PopupAnimation Animation { get; private set; }
 
         public bool? OpenOnClick { get; set; }
@@ -98,6 +100,11 @@ namespace Kendo.Mvc.UI
             if (Orientation.HasValue && Orientation != ContextMenuOrientation.Vertical)
             {
                 settings["orientation"] = Orientation?.Serialize();
+            }
+
+            if (Direction.HasValue())
+            {
+                settings["direction"] = Direction;
             }
 
             if (OpenOnClick.HasValue && OpenOnClick.Value == true)
