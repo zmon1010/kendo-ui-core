@@ -273,7 +273,7 @@ var __meta__ = { // jshint ignore:line
             .addClass(DEFAULTSTATE);
         item
             .filter(".k-separator")
-			.empty()
+            .empty()
             .append("&nbsp;");
         item
             .filter("li[disabled]")
