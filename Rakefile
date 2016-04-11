@@ -639,6 +639,7 @@ bundle :name => 'aspnetmvc.hotfix.trial',
 bundle :name => 'aspnetmvc.commercial',
        :license => 'src-license-complete',
        :eula => 'aspnetmvc',
+       :readme_src => 'README.NoSource',
        :vsdoc => %w(all web mobile dataviz),
        :intellisense => %w(all web mobile dataviz),
        :type_script => %w(all web mobile dataviz),
@@ -653,6 +654,7 @@ bundle :name => 'aspnetmvc.commercial',
        },
        :product => 'UI for ASP.NET MVC',
        :upload_as_internal_build => false,
+       :skip_grunt_build => true,
        :release_build => {
           :file_metadata => {
              :zip => {
@@ -703,18 +705,6 @@ bundle :name => 'aspnetmvc.commercial',
        :contents => {
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
-            'src/js' => MVC_SRC_JS,
-            'src/styles' => SRC_CSS,
-            'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
-            'src/Kendo.Mvc/Kendo.Mvc' => FileList['wrappers/mvc/src/Kendo.Mvc/**/*']
-                .exclude('**/bin/**/*')
-                .exclude('**/obj/**/*')
-                .exclude('**/*.csproj'),
-            'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => FileList[SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/**/*']
-                .exclude('**/bin/**/*')
-                .exclude('**/obj/**/*')
-                .exclude('**/*.snk')
-                .exclude('**/*.csproj'),
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
        :post_build => 'mvc_6:update_demo_deps_commercial',
@@ -723,14 +713,6 @@ bundle :name => 'aspnetmvc.commercial',
            'type_script:master:test',
            'spreadsheet:binaries',
            'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
-           'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc.sln',
-           'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
-           'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
-           'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
-           'dist/bundles/aspnetmvc.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
-           'dist/bundles/aspnetmvc.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
-           'dist/bundles/aspnetmvc.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
-           'dist/bundles/aspnetmvc.commercial/src/Telerik.Web.Spreadsheet/lib',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples.sln',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
@@ -747,80 +729,18 @@ bundle :name => 'aspnetmvc.commercial',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
        ]
 
-bundle :name => 'aspnetmvc.commercial.no-source',
+bundle :name => 'aspnetmvc.commercial.source',
        :license => 'src-license-complete',
        :eula => 'aspnetmvc',
-       :vsdoc => %w(all web mobile dataviz),
-       :intellisense => %w(all web mobile dataviz),
-       :type_script => %w(all web mobile dataviz),
        :changelog => %w(components aspnetmvc),
-       :demos => {
-           :dir => [
-               'wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/html',
-               'wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/html',
-               'wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/html'
-           ],
-           :template_dir => 'mvc'
-       },
-       :product => 'UI for ASP.NET MVC',
-       :upload_as_internal_build => false,
-       :skip_grunt_build => true,
        :release_build => {
           :file_metadata => {
              :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.commercial.zip",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos <br />Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers <br />Complete Source Code</strong>"
+              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.commercial.source.zip",
              }
           }
        },
        :contents => {
-            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
-            'styles' => MIN_CSS_RESOURCES,
-            'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
-       }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
-       :post_build => 'mvc_6:update_demo_deps_commercial',
-       :prerequisites => [
-           'mvc:assets',
-           'type_script:master:test',
-           'spreadsheet:binaries',
-           'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples.sln',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples.sln',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
-       ]
-
-bundle :name => 'aspnetmvc.internal.commercial',
-       :license => 'src-license-complete',
-       :eula => 'aspnetmvc',
-       :vsdoc => %w(all web mobile dataviz),
-       :intellisense => %w(all web mobile dataviz),
-       :type_script => %w(all web mobile dataviz),
-       :changelog => %w(components aspnetmvc),
-       :product => 'UI for ASP.NET MVC',
-       :upload_as_internal_build => true,
-       :contents => {
-            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
-            'styles' => MIN_CSS_RESOURCES,
-            'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
-            'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
             'src/js' => MVC_SRC_JS,
             'src/styles' => SRC_CSS,
             'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
@@ -833,22 +753,19 @@ bundle :name => 'aspnetmvc.internal.commercial',
                 .exclude('**/obj/**/*')
                 .exclude('**/*.snk')
                 .exclude('**/*.csproj')
-       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       },
        :prerequisites => [
-           'mvc:assets',
-           'spreadsheet:binaries',
-           'type_script:master:test',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc.sln',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
-           'dist/bundles/aspnetmvc.internal.commercial/src/Telerik.Web.Spreadsheet/lib'
+           'dist/bundles/aspnetmvc.commercial.source/src/Kendo.Mvc/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.commercial.source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
+           'dist/bundles/aspnetmvc.commercial.source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
+           'dist/bundles/aspnetmvc.commercial.source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
+           'dist/bundles/aspnetmvc.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
+           'dist/bundles/aspnetmvc.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
+           'dist/bundles/aspnetmvc.commercial.source/src/Telerik.Web.Spreadsheet/lib'
        ]
 
-bundle :name => 'aspnetmvc.internal.commercial.no-source',
+bundle :name => 'aspnetmvc.internal.commercial',
        :license => 'src-license-complete',
        :eula => 'aspnetmvc',
        :vsdoc => %w(all web mobile dataviz),
@@ -1217,9 +1134,8 @@ bundle :name => 'core',
 
 BUNDLES = [
     'aspnetmvc.commercial',
-    'aspnetmvc.commercial.no-source',
+    'aspnetmvc.commercial.source',
     'aspnetmvc.internal.commercial',
-    'aspnetmvc.internal.commercial.no-source',
     'aspnetmvc.hotfix.commercial',
     'aspnetmvc.hotfix.trial',
     'aspnetmvc.trial',
