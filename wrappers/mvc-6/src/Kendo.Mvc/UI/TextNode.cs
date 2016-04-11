@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Html;
 using Microsoft.AspNet.Html.Abstractions;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
@@ -11,18 +10,21 @@ using Microsoft.Extensions.WebEncoders;
 
 namespace Kendo.Mvc.UI
 {
-    public class LiteralNode : IHtmlNode
+    public class TextNode : IHtmlNode
     {
-        public LiteralNode(string content)
+        public TextNode(string content)
         {
-            this.Content = new HtmlString(content);
+            this.Content = new StringHtmlContent(content);
         }
 
         public IHtmlContent Content { get; set; }
 
         public IList<IHtmlNode> Children
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public IHtmlContentBuilder InnerHtml
@@ -35,7 +37,10 @@ namespace Kendo.Mvc.UI
 
         public TagRenderMode RenderMode
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public string TagName
@@ -56,11 +61,6 @@ namespace Kendo.Mvc.UI
             parent.Children.Add(this);
 
             return this;
-        }
-
-        public void WriteTo(TextWriter output, IHtmlEncoder encoder)
-        {
-            this.Content.WriteTo(output, encoder);
         }
 
         public string Attribute(string key)
@@ -147,6 +147,10 @@ namespace Kendo.Mvc.UI
         {
             throw new NotImplementedException();
         }
-        
+
+        public void WriteTo(TextWriter output, IHtmlEncoder encoder)
+        {
+            this.Content.WriteTo(output, encoder);
+        }
     }
 }

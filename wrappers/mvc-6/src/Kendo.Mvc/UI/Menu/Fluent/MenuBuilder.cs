@@ -106,19 +106,19 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-        public MenuBuilder SecurityTrimming(bool value)
-        {
-            Component.SecurityTrimming.Enabled = value;
+        //public MenuBuilder SecurityTrimming(bool value)
+        //{
+        //    Component.SecurityTrimming.Enabled = value;
 
-            return this;
-        }
+        //    return this;
+        //}
 
-        public MenuBuilder SecurityTrimming(Action<SecurityTrimmingBuilder> securityTrimmingAction)
-        {
-            securityTrimmingAction(new SecurityTrimmingBuilder(Component.SecurityTrimming));
+        //public MenuBuilder SecurityTrimming(Action<SecurityTrimmingBuilder> securityTrimmingAction)
+        //{
+        //    securityTrimmingAction(new SecurityTrimmingBuilder(Component.SecurityTrimming));
 
-            return this;
-        }
+        //    return this;
+        //}
     }
 }
 

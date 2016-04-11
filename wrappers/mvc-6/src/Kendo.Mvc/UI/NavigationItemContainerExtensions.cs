@@ -14,6 +14,53 @@
 
     public static class NavigationItemContainerExtensions
     {
+        public static void WriteItem<TComponent, TItem>(this TItem item, TComponent component, IHtmlNode parentTag, INavigationComponentHtmlBuilder<TItem> builder)
+            where TItem : NavigationItem<TItem>, IContentContainer, INavigationItemContainer<TItem>
+            where TComponent : WidgetBase, INavigationItemComponent<TItem>
+        {
+            var accessible = true;
+            //if (component.SecurityTrimming.Enabled)
+            //{
+            //    accessible = item.IsAccessible(component.Authorization, component.ViewContext);
+            //}
+
+            if (component.ItemAction != null)
+            {
+                component.ItemAction(item);
+            }
+
+            if (item.Visible && accessible)
+            {
+                var hasAccessibleChildren = item.Items.Any() && item.Items.Any(i => i.Visible);
+
+                //if (component.SecurityTrimming.Enabled && hasAccessibleChildren)
+                //{
+                //    hasAccessibleChildren = item.Items.IsAccessible(component.Authorization, ((WidgetBase)component).ViewContext);
+
+                //    if (component.SecurityTrimming.HideParent && !hasAccessibleChildren)
+                //    {
+                //        return;
+                //    }
+                //}
+
+                IHtmlNode itemTag = builder.ItemTag(item).AppendTo(parentTag);
+
+                builder.ItemInnerContentTag(item, hasAccessibleChildren).AppendTo(itemTag);
+
+                if (item.Template.HasValue() ||
+                    (item is IAsyncContentContainer ? !string.IsNullOrEmpty(((IAsyncContentContainer)item).ContentUrl) : false))
+                {
+                    builder.ItemContentTag(item).AppendTo(itemTag);
+                }
+                else if (hasAccessibleChildren)
+                {
+                    IHtmlNode ul = builder.ChildrenTag(item).AppendTo(itemTag);
+
+                    item.Items.Each(child => child.WriteItem(component, ul, builder));
+                }
+            }
+        }
+
         public static string GetImageUrl<T>(this T item, ViewContext viewContext) where T : NavigationItem<T>
         {
             var urlHelper = NavigatableExtensions.GetUrlHelper(viewContext);

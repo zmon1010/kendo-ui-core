@@ -437,7 +437,7 @@
         public TBuilder Content(Action value)
         {
 
-            //Item.Template.Content = value;
+            Item.Template.Content = value;
 
             return this as TBuilder;
         }
@@ -463,18 +463,7 @@
         /// </code>
         public TBuilder Content(Func<object, object> value)
         {
-            var result = value(Item);
-            var helperResult = result as HelperResult;
-
-            //if (helperResult != null)
-            //{
-            //    using (StringWriter writer = new StringWriter())
-            //    {
-            //        helperResult.WriteTo(writer, ViewContext.GetService<IHtmlEncoder>());
-
-            //        Item.Template = writer.ToString();
-            //    }
-            //}
+            Item.Template.InlineTemplate = value;
 
             return this as TBuilder;
         }
@@ -497,7 +486,7 @@
         public TBuilder Content(string value)
         {
 
-            //Item.Template = value;
+            Item.Template.Html = value;
 
             return this as TBuilder;
         }

@@ -24,7 +24,7 @@
 
         protected NavigationItem()
         {
-            //Template = new HtmlTemplate();
+            Template = new HtmlTemplate();
             HtmlAttributes = new RouteValueDictionary();
             ImageHtmlAttributes = new RouteValueDictionary();
             LinkHtmlAttributes = new RouteValueDictionary();
@@ -76,7 +76,6 @@
             set;
         }
 
-        //TODO check
         //[ScriptIgnore]
         public HtmlTemplate Template
         {
@@ -124,16 +123,14 @@
         //[ScriptIgnore]
         public Action Content
         {
-            get; set;
-            //TODO
-            //get
-            //{
-            //    return Template.Content;
-            //}
-            //set
-            //{
-            //    Template.Content = value;
-            //}
+            get
+            {
+                return Template.Content;
+            }
+            set
+            {
+                Template.Content = value;
+            }
         }
 
         public string Text
@@ -244,63 +241,6 @@
                 routeName = controllerName = actionName = null;
                 RouteValues.Clear();
             }
-        }
-
-        public virtual IDictionary<string, object> Serialize()
-        {
-            var json = new Dictionary<string, object>();
-
-            if (Text?.HasValue() == true)
-            {
-                json["text"] = Text;
-            }
-
-            if (Url?.HasValue() == true)
-            {
-                json["url"] = Url;
-            }
-
-            if (ImageUrl?.HasValue() == true)
-            {
-                json["imageUrl"] = ImageUrl;
-            }
-
-            if (SpriteCssClasses?.HasValue() == true)
-            {
-                json["spriteCssClass"] = SpriteCssClasses;
-            }
-
-            if (Enabled)
-            {
-                json["enabled"] = Enabled;
-            }
-
-            if (Selected)
-            {
-                json["selected"] = Selected;
-            }
-
-            if (HtmlAttributes.Count > 0)
-            {
-                json["attr"] = HtmlAttributes;
-            }
-
-            if (ImageHtmlAttributes.Count > 0)
-            {
-                json["imageAttr"] = ImageHtmlAttributes;
-            }
-
-            if(ContentHtmlAttributes.Count > 0)
-            {
-                json["contentAttr"] = ContentHtmlAttributes;
-            }
-
-            if (Template?.HasValue() == true)
-            {
-                json["content"] = Template;
-            }
-
-            return json;
         }
     }
 }

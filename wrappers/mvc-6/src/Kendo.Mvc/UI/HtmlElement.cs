@@ -64,7 +64,15 @@
         {
             foreach (string @class in classes)
             {
-                tagBuilder.AddCssClass(@class);
+                string value;
+                if (Attributes().TryGetValue("class", out value))
+                {
+                    Attributes()["class"] = value + " " + @class;
+                }
+                else
+                {
+                    Attributes()["class"] = @class;
+                }
             }
 
             return this;
@@ -122,8 +130,7 @@
         {
             Children.Clear();
 
-            //TODO Check Literal Node implementation
-            //Children.Add(new LiteralNode(value));
+            Children.Add(new LiteralNode(value));
 
             return this;
         }
@@ -161,7 +168,7 @@
         {
             Children.Clear();
 
-            tagBuilder.InnerHtml.AppendHtml(value); //appends encoded string
+            tagBuilder.InnerHtml.SetContent(value);
 
             return this;
         }
@@ -219,7 +226,6 @@
 
             if (RenderMode != TagRenderMode.SelfClosing)
             {
-                //TODO Check template execution logic
                 if (TemplateCallback != null)
                 {
                     TemplateCallback(output);
@@ -232,7 +238,6 @@
                 {
                     tagBuilder.InnerHtml.WriteTo(output, encoder);
                 }
-
 
                 tagBuilder.TagRenderMode = TagRenderMode.EndTag;
                 tagBuilder.WriteTo(output, encoder);

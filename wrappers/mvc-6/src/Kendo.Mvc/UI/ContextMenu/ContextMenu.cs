@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ContextMenu : WidgetBase, INavigationItemComponent<ContextMenuItem>
     {
-        //internal bool isPathHighlighted;
+        internal bool isPathHighlighted;
 
         public ContextMenu(ViewContext viewContext)
             : base(viewContext)
@@ -24,7 +24,6 @@ namespace Kendo.Mvc.UI
 
             CloseOnClick = true;
             HighlightPath = true;
-            SecurityTrimming = new SecurityTrimming();
         }
 
         public PopupAnimation Animation { get; private set; }
@@ -32,10 +31,6 @@ namespace Kendo.Mvc.UI
         public bool? OpenOnClick { get; set; }
 
         public bool? HighlightPath { get; set; }
-
-        public INavigationItemAuthorization Authorization { get; private set; }
-
-        public SecurityTrimming SecurityTrimming { get; set; }
 
         public Action<ContextMenuItem> ItemAction { get; set; }
 
@@ -45,48 +40,49 @@ namespace Kendo.Mvc.UI
         {
             if (Items.Any())
             {
-                var tag = Generator.GenerateTag("ul", ViewContext, Id, Name, HtmlAttributes);
+                if (HighlightPath.Value)
+                {
+                    Items.Each(HighlightSelectedItem);
+                }
 
-                //if (HighlightPath.Value)
-                //{
-                //    Items.Each(HighlightSelectedItem); //TODO check
-                //}
+                INavigationComponentHtmlBuilder<ContextMenuItem> builder = new ContextMenuHtmlBuilder(this);
 
-                tag.WriteTo(writer, HtmlEncoder);
+                IHtmlNode menuTag = builder.Build();
+
+                Items.Each(item => item.WriteItem<ContextMenu, ContextMenuItem>(this, menuTag, builder));
+
+                menuTag.WriteTo(writer, HtmlEncoder);
             }
             
             base.WriteHtml(writer);
         }
 
-        //private void HighlightSelectedItem(ContextMenuItem item)
-        //{
-        //    if (item.IsCurrent(ViewContext, UrlGenerator))
-        //    {
-        //        isPathHighlighted = true;
+        private void HighlightSelectedItem(ContextMenuItem item)
+        {
+            if (item.IsCurrent(ViewContext, UrlGenerator))
+            {
+                isPathHighlighted = true;
 
-        //        //item.Selected = item.Parent != null;
+                item.Selected = item.Parent != null;
 
-        //        do
-        //        {
-        //            if (!item.Selected)
-        //            {
-        //                item.HtmlAttributes.AppendInValue("class", " ", "k-state-highlight");
-        //            }
-        //            //item = item.Parent;
-        //        }
-        //        while (item != null);
+                do
+                {
+                    if (!item.Selected)
+                    {
+                        item.HtmlAttributes.AppendInValue("class", " ", "k-state-highlight");
+                    }
+                    item = item.Parent;
+                }
+                while (item != null);
 
-        //        return;
-        //    }
-        //    item.Items.Each(HighlightSelectedItem);
-        //}
+                return;
+            }
+            item.Items.Each(HighlightSelectedItem);
+        }
 
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
-
-            var items = Items.Select(c => c.Serialize());
-            settings["dataSource"] = items;
 
             var animation = Animation.ToJson();
             if (animation.Keys.Any())

@@ -3,7 +3,7 @@
     using System;
     using Kendo.Mvc.Extensions;
     using Microsoft.AspNet.Mvc.Razor;
-
+    using Microsoft.Extensions.WebEncoders;
     public class HtmlTemplate : HtmlTemplate<object>
     {
         private Action content;
@@ -93,8 +93,8 @@
 
                     if (helperResult != null)
                     {
-                        //TODO
-                        //helperResult.WriteTo(writer,); //encoder
+                        helperResult.WriteTo(writer, HtmlEncoder.Default);
+
                         return;
                     }
 

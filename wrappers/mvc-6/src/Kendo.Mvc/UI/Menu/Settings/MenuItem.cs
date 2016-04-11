@@ -19,24 +19,5 @@ namespace Kendo.Mvc.UI
         }
 
         public bool Separator { get; set; }
-
-        public override IDictionary<string, object> Serialize()
-        {
-            if (Separator)
-            {
-                HtmlAttributes.Add("class", "k-separator");
-            }
-
-            var json = base.Serialize();
-
-            var items = Items.Select(c => c.Serialize());
-
-            if (items.Any())
-            {
-                json["items"] = items;
-            }
-
-            return json;
-        }
     }
 }

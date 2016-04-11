@@ -3386,13 +3386,6 @@
         "packages": [
           "mvc-offline"
         ],
-        "text": "SiteMapBinding",
-        "url": "menu/sitemapbinding"
-      },
-      {
-        "packages": [
-          "mvc-offline"
-        ],
         "text": "ModelBinding",
         "url": "menu/modelbinding"
       },

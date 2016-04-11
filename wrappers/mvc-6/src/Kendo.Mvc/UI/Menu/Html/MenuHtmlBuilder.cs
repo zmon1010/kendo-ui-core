@@ -1,10 +1,4 @@
-﻿using Kendo.Mvc.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Kendo.Mvc.UI
+﻿namespace Kendo.Mvc.UI
 {
     public class MenuHtmlBuilder : NavigationHtmlBuilderBase<Menu, MenuItem>, INavigationComponentHtmlBuilder<MenuItem>
     {

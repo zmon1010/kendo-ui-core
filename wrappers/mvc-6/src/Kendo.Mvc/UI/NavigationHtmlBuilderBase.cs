@@ -40,19 +40,16 @@
                     .Attribute("src", item.GetImageUrl(Component.ViewContext));
         }
 
-        //TODO Text node
         public IHtmlNode Text(TItem item)
         {
             if (item.Encoded)
             {
-                //return new TextNode(item.Text);
+                return new TextNode(item.Text);
             }
             else
             {
-                //return new LiteralNode(item.Text);
+                return new LiteralNode(item.Text);
             }
-
-            return new LiteralNode();
         }
 
         public IHtmlNode SpriteTag(TItem item)

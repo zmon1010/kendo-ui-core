@@ -275,12 +275,12 @@ public ContextMenuBuilder BindTo(IEnumerable<ContextMenuItem> items)
         /// %&gt;
         /// </code>
         /// </example>
-        public ContextMenuBuilder SecurityTrimming(bool value)
-        {
-            Component.SecurityTrimming.Enabled = value;
+        //public ContextMenuBuilder SecurityTrimming(bool value)
+        //{
+        //    Component.SecurityTrimming.Enabled = value;
 
-            return this;
-        }
+        //    return this;
+        //}
 
         /// <summary>
         /// Defines the security trimming functionality of the component
@@ -297,12 +297,12 @@ public ContextMenuBuilder BindTo(IEnumerable<ContextMenuItem> items)
         /// %&gt;
         /// </code>
         /// </example>
-        public ContextMenuBuilder SecurityTrimming(Action<SecurityTrimmingBuilder> securityTrimmingAction)
-        {
-            securityTrimmingAction(new SecurityTrimmingBuilder(Component.SecurityTrimming));
+        //public ContextMenuBuilder SecurityTrimming(Action<SecurityTrimmingBuilder> securityTrimmingAction)
+        //{
+        //    securityTrimmingAction(new SecurityTrimmingBuilder(Component.SecurityTrimming));
 
-            return this;
-        }
+        //    return this;
+        //}
     }
 }
 

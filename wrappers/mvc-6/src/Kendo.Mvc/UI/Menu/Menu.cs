@@ -13,8 +13,8 @@ namespace Kendo.Mvc.UI
     /// Kendo UI Menu component
     /// </summary>
     public partial class Menu : WidgetBase, INavigationItemComponent<MenuItem>
-
     {
+        internal bool isPathHighlighted;
         public Menu(ViewContext viewContext) : base(viewContext)
         {
             Animation = new PopupAnimation();
@@ -24,7 +24,8 @@ namespace Kendo.Mvc.UI
             CloseOnClick = true;
             HighlightPath = true;
             Orientation = MenuOrientation.Horizontal;
-            SecurityTrimming = new SecurityTrimming();
+            //SecurityTrimming = new SecurityTrimming();
+            //SecurityTrimming.Enabled = false;
         }
 
         public PopupAnimation Animation { get; private set; }
@@ -35,42 +36,59 @@ namespace Kendo.Mvc.UI
 
         public bool? HighlightPath { get; set; }
 
-        public SecurityTrimming SecurityTrimming { get; set; }
+        //public SecurityTrimming SecurityTrimming { get; set; }
 
-        public INavigationItemAuthorization Authorization { get; private set; }
+        //public INavigationItemAuthorization Authorization { get; private set; }
 
         public string Direction { get; set; }
 
         protected override void WriteHtml(TextWriter writer)
         {
-            var test = new HtmlElement("ul");
-            test.Children.Add(new HtmlElement("li"));
-            test.InnerHtml.Append("asdf");
+            if (Items.Any())
+            {
+                if (HighlightPath.Value)
+                {
+                    Items.Each(HighlightSelectedItem);
+                }
 
-            var a = test.InnerHtml.ToString();
-            //if (Items.Any())
-            //{
-            //    var tag = Generator.GenerateTag("ul", ViewContext, Id, Name, HtmlAttributes);
+                INavigationComponentHtmlBuilder<MenuItem> builder = new MenuHtmlBuilder(this);
 
-            //    //if (HighlightPath.Value)
-            //    //{
-            //    //    Items.Each(HighlightSelectedItem); //TODO check
-            //    //}
+                IHtmlNode menuTag = builder.Build();
 
-            //    tag.WriteTo(writer, HtmlEncoder);
-            //}
+                Items.Each(item => item.WriteItem<Menu, MenuItem>(this, menuTag, builder));
 
-            test.WriteTo(writer, HtmlEncoder);
+                menuTag.WriteTo(writer, HtmlEncoder);
+            }
 
-            //base.WriteHtml(writer);
+            base.WriteHtml(writer);
+        }
+
+        private void HighlightSelectedItem(MenuItem item)
+        {
+            if (item.IsCurrent(ViewContext, UrlGenerator))
+            {
+                isPathHighlighted = true;
+
+                item.Selected = item.Parent != null;
+
+                do
+                {
+                    if (!item.Selected)
+                    {
+                        item.HtmlAttributes.AppendInValue("class", " ", "k-state-highlight");
+                    }
+                    item = item.Parent;
+                }
+                while (item != null);
+
+                return;
+            }
+            item.Items.Each(HighlightSelectedItem);
         }
 
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
-
-            var items = Items.Select(c => c.Serialize());
-            settings["dataSource"] = items;
 
             var animation = Animation.ToJson();
             if (animation.Keys.Any())
