@@ -3187,10 +3187,7 @@
                 "meta": {
                     "kendo-ui": "In this Kendo UI Menu demo we will demonstrates the rich features of the component and its basic usage for your app.",
                     "aspnet-mvc": "In this ASP.NET MVC Menu demo we will demonstrates the rich features of the component and its basic usage for your app."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Images",
@@ -3202,10 +3199,7 @@
                 "meta": {
                     "kendo-ui": "This KendoMenu example shows the feature which allows you to use menu with images. They can be loaded from a specific URL or be arranged in image sprite CSS class.",
                     "aspnet-mvc": "This ASP.NET MVC Menu example shows the feature that allows you to use menu with images. They are loaded from a specific URL or arranged in image sprite CSS class."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Direction",
@@ -3217,10 +3211,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows how the pop-up direction of the items in Kendo UI dropdown jQuery menu can be changed, depending on your web app development needs.",
                     "aspnet-mvc": "This demo shows how the pop-up direction of the items in ASP.NET MVC dropdown menu can be changed, depending on your web app development needs."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Orientation",
@@ -3232,10 +3223,7 @@
                 "meta": {
                     "kendo-ui": "In this example we will see how the orientation of the Kendo UI Menu can be easily modified through the orientation settings.",
                     "aspnet-mvc": "In this example we will see how the orientation of the ASP.NET MVC Menu can be easily modified through the orientation settings."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "packages": [
@@ -3261,10 +3249,7 @@
                 "meta": {
                     "kendo-ui": "This sample demonstrates how KendoMenu HTML dropdown control supports animation effects which can be easily customized to change the desired animation effect.",
                     "aspnet-mvc": "This sample demonstrates how ASP.NET MVC Menu dropdown control supports animation effects which can be easily customized to change the desired animation effect."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Events",
@@ -3276,10 +3261,7 @@
                 "meta": {
                     "kendo-ui": "This sample shows KendoMenu events which are enabled and the demo source code guides you how you can handle the events in your dropdown menu.",
                     "aspnet-mvc": "This sample shows ASP.NET MVC Menu events which are enabled and the demo source code guides you how you can handle the events in your dropdown menu."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "API",
@@ -3291,10 +3273,7 @@
                 "meta": {
                     "kendo-ui": "This demo illustrates how API functions of KendoMenu control operate and how you can configure them for your web project.",
                     "aspnet-mvc": "This demo illustrates how the API functions of ASP.NET MVC Menu control operate and how you can configure them for your web project."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Context Menu",
@@ -3316,10 +3295,7 @@
                 "meta": {
                     "kendo-ui": "Review how the RTL feature is enabled for the dropdown items in Kendo UI Menu and in the menu labels of the widget.",
                     "aspnet-mvc": "Review how the RTL feature is enabled for the dropdown items in ASP.NET MVC Menu and in the menu labels of the control."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Keyboard navigation",
@@ -3331,10 +3307,7 @@
                 "meta": {
                     "kendo-ui": "This example demonstrates how the keyboard navigation is a supported feature in Kendo UI Menu widget.",
                     "aspnet-mvc": "This example demonstrates the keyboard navigation support feature in ASP.NET MVC Menu."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "MVVM",
@@ -3873,10 +3846,7 @@
                 "meta": {
                     "kendo-ui": "This example shows the core features of Kendo UI jQuery-based Accordion widget.",
                     "aspnet-mvc": "This example shows the core features of ASP.NET MVC Accordion component."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Images",
@@ -3888,10 +3858,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows how images and sprites can implemented in Kendo Expandable PanelBar component.",
                     "aspnet-mvc": "This demo shows how images and sprites can be implemented in ASP.NET MVC Expandable PanelBar component."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Loading content with AJAX",
@@ -3904,10 +3871,7 @@
                     "kendo-ui": "This example shows how content is loaded in KendoPanelBar component with AJAX.",
                     "aspnet-mvc": "This example shows how content is loaded in ASP.NET MVC PanelBar component with AJAX."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Animation effects",
@@ -3919,10 +3883,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows how animations effects can be easily implemented into KendoPanelBar widget.",
                     "aspnet-mvc": "This demo shows how animations effects can be easily implemented into ASP.NET MVC PanelBar control."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Events",
@@ -3935,10 +3896,7 @@
                     "kendo-ui": "This example demonstrates how events in KendoPanelBar widget work and you can set them to expand the content area of the accordion.",
                     "aspnet-mvc": "This example demonstrates how events work in ASP.NET MVC PanelBar control and how you can set them to expand the content area of the accordion."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "API",
@@ -3950,10 +3908,7 @@
                 "meta": {
                     "kendo-ui": "This sample shows the API functions of Kendo UI PanelBar component.",
                     "aspnet-mvc": "This sample shows the API functions of ASP.NET MVC PanelBar component."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "RTL support",
@@ -3965,10 +3920,7 @@
                 "meta": {
                     "kendo-ui": "See how directions of the arrows in Kendo UI PanelBar are easily changed when moving from right to left.",
                     "aspnet-mvc": "See how directions of the arrows in ASP.NET MVC PanelBar are easily changed when moving from right to left."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Keyboard navigation",
@@ -3980,10 +3932,7 @@
                 "meta": {
                     "kendo-ui": "Users can navigate in Kendo UI PanelBar by using the keyboard and different keyboard combinations. Play with the demo and implement the feature in your app.",
                     "aspnet-mvc": "Users can navigate in ASP.NET MVC PanelBar by using the keyboard and different keyboard combinations. Play with the demo and implement the feature in your app."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "MVVM",

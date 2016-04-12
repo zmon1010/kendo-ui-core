@@ -71,6 +71,10 @@
 - multiselect.value
 - notification.animation
 - notification.templates
+- panelbar.animation
+- panelbar.contenturls
+- panelbar.datasource
+- panelbar.items
 - progressbar.value
 - pivotgrid.datasource
 - pivotgrid.messages

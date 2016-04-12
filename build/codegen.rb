@@ -247,6 +247,7 @@ namespace :generate do
                 'docs/api/javascript/ui/multiselect.md',
                 'docs/api/javascript/ui/notification.md',
                 'docs/api/javascript/ui/numerictextbox.md',
+                'docs/api/javascript/ui/panelbar.md',
                 'docs/api/javascript/ui/progressbar.md',
                 'docs/api/javascript/ui/rangeslider.md',
                 'docs/api/javascript/ui/scheduler.md',

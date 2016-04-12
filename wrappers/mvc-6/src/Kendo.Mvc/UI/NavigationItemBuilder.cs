@@ -17,7 +17,7 @@
     /// <typeparam name="TBuilder">The type of the builder.</typeparam>
     public abstract class NavigationItemBuilder<TItem, TBuilder> 
         where TItem : NavigationItem<TItem> 
-        where TBuilder : NavigationItemBuilder<TItem, TBuilder>, IHideObjectMembers
+        where TBuilder : NavigationItemBuilder<TItem, TBuilder>
     {
         private readonly NavigationItem<TItem> item;
 

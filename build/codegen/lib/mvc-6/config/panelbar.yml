@@ -1,0 +1,13 @@
+:options:
+    - :name: expandMode
+      :type: String
+      :enum_type: PanelBarExpandMode
+      :description: Specifies how the PanelBar items are displayed when opened and closed.
+      :values:
+          - :value: single
+            :member: Single
+            :description: Display one item at a time
+
+          - :value: multiple
+            :member: Multiple
+            :description: Display multiple items at a time
