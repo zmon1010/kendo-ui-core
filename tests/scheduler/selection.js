@@ -1318,6 +1318,7 @@
 
         scheduler.select(null);
         ok(!eventElement.hasClass("k-state-selected"));
+        ok(!scheduler._old);
     });
 
     test("select method is not selecting events when passed UIDs are not found", function() {

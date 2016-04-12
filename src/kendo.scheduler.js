@@ -1798,6 +1798,7 @@ var __meta__ = { // jshint ignore:line
 
             if (!options) {
                 that._selection = null;
+                that._old = null;
                 view.clearSelection();
 
                 return;
