@@ -1,8 +1,9 @@
 namespace Kendo.Mvc.UI.Tests
 {
-    using Kendo.Mvc.UI.Fluent;
-
-    public class EditorBuilderTests
+	using Kendo.Mvc.UI;
+	using Kendo.Mvc.UI.Fluent;
+	using Xunit;
+	public class EditorBuilderTests
     {
         private readonly Editor editor;
         private readonly EditorBuilder builder;
@@ -13,17 +14,23 @@ namespace Kendo.Mvc.UI.Tests
             builder = new EditorBuilder(editor);
         }
 
-        //[Fact]
-        //public void Effects_creates_fx_factory()
-        //{
-        //    var fxFacCreated = false;
+		//[Fact]
+		//public void Effects_creates_fx_factory()
+		//{
+		//    var fxFacCreated = false;
 
-        //    builder.Effects(fx =>
-        //    {
-        //        fxFacCreated = fx != null;
-        //    });
+		//    builder.Effects(fx =>
+		//    {
+		//        fxFacCreated = fx != null;
+		//    });
 
-        //    Assert.True(fxFacCreated);
-        //}
+		//    Assert.True(fxFacCreated);
+		//}
+
+		[Fact]
+		public void PasteCleanup_returns_builder()
+		{
+			builder.PasteCleanup(pasteCleanup => { }).ShouldBeSameAs(builder);
+		}
     }
 }

@@ -42,6 +42,8 @@ namespace Kendo.Mvc.UI
 
             //>> Initialization
         
+            PasteCleanup = new EditorPasteCleanupSettings();
+                
             Resizable = new EditorResizableSettings();
                 
             Serialization = new EditorSerializationSettings();
@@ -52,6 +54,12 @@ namespace Kendo.Mvc.UI
         //>> Fields
         
         public string Domain { get; set; }
+        
+        public EditorPasteCleanupSettings PasteCleanup
+        {
+            get;
+            set;
+        }
         
         public EditorResizableSettings Resizable
         {
@@ -163,6 +171,11 @@ namespace Kendo.Mvc.UI
                 json["domain"] = Domain;
             }
             
+            var pasteCleanup = PasteCleanup.ToJson();
+            if (pasteCleanup.Any())
+            {
+                json["pasteCleanup"] = pasteCleanup;
+            }
             var resizable = Resizable.ToJson();
             if (resizable.Any())
             {

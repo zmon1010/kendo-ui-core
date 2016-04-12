@@ -68,6 +68,10 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("messages", value);
     }
 
+    public void setPasteCleanup(com.kendoui.taglib.editor.PasteCleanupTag value) {
+        setProperty("pasteCleanup", value);
+    }
+
     public void setPdf(com.kendoui.taglib.editor.PdfTag value) {
         setProperty("pdf", value);
     }

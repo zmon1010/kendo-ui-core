@@ -63,6 +63,15 @@ This property has been introduced in internal builds after 2014.1.319.
     }
 
     /**
+    * Options for controlling how the pasting content is modified before it is added in the editor.
+    * @param \Kendo\UI\EditorPasteCleanup|array $value
+    * @return \Kendo\UI\Editor
+    */
+    public function pasteCleanup($value) {
+        return $this->setProperty('pasteCleanup', $value);
+    }
+
+    /**
     * Configures the Kendo UI Editor PDF export settings.
     * @param \Kendo\UI\EditorPdf|array $value
     * @return \Kendo\UI\Editor

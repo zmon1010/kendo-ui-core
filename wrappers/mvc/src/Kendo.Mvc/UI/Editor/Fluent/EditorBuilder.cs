@@ -251,6 +251,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Options for controlling how the pasting content is modified before it is added in the editor.
+        /// </summary>
+        /// <param name="configurator">The action that configures the pastecleanup.</param>
+        public EditorBuilder PasteCleanup(Action<EditorPasteCleanupSettingsBuilder> configurator)
+        {
+            configurator(new EditorPasteCleanupSettingsBuilder(container.PasteCleanup));
+            return this;
+        }
+        
+        /// <summary>
         /// If enabled, the editor renders a resize handle to allow users to resize it.
         /// </summary>
         public EditorBuilder Resizable()

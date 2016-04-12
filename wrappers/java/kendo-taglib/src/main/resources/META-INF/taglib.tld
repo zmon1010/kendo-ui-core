@@ -19971,6 +19971,77 @@ If function is assigned, the current path and image name will be provided.</desc
 
 
     <tag>
+        <description>Options for controlling how the pasting content is modified before it is added in the editor.</description>
+        <name>editor-pasteCleanup</name>
+        <tag-class>com.kendoui.taglib.editor.PasteCleanupTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>All HTML tags are stripped leaving only the text in the content.</description>
+            <name>all</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Remove style and class attributes from the pasting content.</description>
+            <name>css</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Use a callback function to integrate a custom implementation for cleaning up the paste content. Make sure the callback function always returns the result.</description>
+            <name>custom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Strip all HTML tags but keep new lines in the pasted content.</description>
+            <name>keepNewLines</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Remove all special formatting from MS Word content like font-name, font-size and MS Word specific tags.</description>
+            <name>msAllFormatting</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Converts MS Word pasted content into HTML lists.</description>
+            <name>msConvertLists</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Removes all MS Word specific tags and cleans up the extra metadata.</description>
+            <name>msTags</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Prevent any cleaning up of the content.</description>
+            <name>none</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Remove all span elements from the content, ensuring much of the inline formatting is removed.</description>
+            <name>span</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Use a callback function to integrate a custom implementation for cleaning up the paste content. Make sure the callback function always returns the result.</description>
+        <name>editor-pasteCleanup-custom</name>
+        <tag-class>com.kendoui.taglib.editor.PasteCleanupCustomFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
         <description>Configures the Kendo UI Editor PDF export settings.</description>
         <name>editor-pdf</name>
         <tag-class>com.kendoui.taglib.editor.PdfTag</tag-class>

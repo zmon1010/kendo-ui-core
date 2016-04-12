@@ -2690,4 +2690,4 @@
     <Compile Include="UI\Spreadsheet\Settings\SpreadsheetToolbarSettings.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetToolbarSettingsBuilder.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="UI\Editor\Settings\EditorPasteCleanupSettings.cs" /><Compile Include="UI\Editor\Fluent\EditorPasteCleanupSettingsBuilder.cs" /></ItemGroup></Project>
