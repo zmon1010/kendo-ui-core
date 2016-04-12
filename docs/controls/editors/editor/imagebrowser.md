@@ -78,5 +78,6 @@ Other articles on Kendo UI Editor:
 * [Post-Process Content]({% slug post_process_content_editor_widget %})
 * [Set Selections]({% slug set_selections_editor_widget %})
 * [Prevent Cross-Site Scripting]({% slug prevent_xss_editor_widget %})
+* [Pasting]({% slug pasting_editor_widget %})
 * [Troubleshooting]({% slug troubleshooting_editor_widget %})
 * [Editor JavaScript API Reference](/api/javascript/ui/editor)
