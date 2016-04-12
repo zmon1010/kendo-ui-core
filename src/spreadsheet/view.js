@@ -83,7 +83,13 @@
 
     function drawCell(collection, cell, cls, hBorders, vBorders, showGrid) {
         function maybeLink(el) {
-            if (cell.link) {
+            var link = cell.link;
+            if (!link) {
+                if (typeof cell.value == "object") {
+                    link = cell.value.link;
+                }
+            }
+            if (link) {
                 var style = {
                     textDecoration: "none"
                 };
@@ -94,7 +100,7 @@
                     style.textDecoration = "underline";
                 }
                 return kendo.dom.element("a", {
-                    href   : cell.link,
+                    href   : link,
                     style  : style,
                     target : "_blank" // XXX: customizable?
                 }, [ el ]);

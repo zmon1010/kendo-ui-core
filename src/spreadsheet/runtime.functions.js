@@ -1864,7 +1864,7 @@
     defineFunction("days360", _days_360).args([
         [ "*start_date", "date" ],
         [ "*end_date", "date" ],
-        [ "*method", [ "or", "logical", [ "null", "false" ] ] ]
+        [ "*method", [ "or", "logical", [ "null", false ] ] ]
     ]);
 
     defineFunction("yearfrac", function(start, end, method){
@@ -2248,6 +2248,21 @@
         return isNaN(value) ? new CalcError("VALUE") : value;
     }).args([
         [ "*value", "anyvalue" ]
+    ]);
+
+    function Hyperlink(link, text) {
+        this.link = link;
+        this.text = text;
+    }
+    Hyperlink.prototype.toString = function() {
+        return this.text;
+    };
+
+    defineFunction("hyperlink", function(link, text){
+        return new Hyperlink(link, text);
+    }).args([
+        [ "*link", "string" ],
+        [ "*text", [ "or", "string", [ "null", "$link" ] ] ]
     ]);
 
     //// other misc functions
