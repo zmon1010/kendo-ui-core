@@ -394,6 +394,38 @@
             }));
         });
 
+        test("destroy toolbar if selecting already selected item and ctrl is pressed", function(e) {
+            var shape = diagram.addShape({});
+            diagram.toolService._updateHoveredItem = function() {
+                this.hoveredItem = shape;
+            };
+            diagram.select(shape);
+
+            diagram._destroyToolBar = function() {
+                ok(true);
+            };
+
+            diagram._tap(tapEvent(10, 20, {
+                ctrlKey: true
+            }));
+        });
+
+        test("creates toolbar if selecting already selected item", function(e) {
+            var shape = diagram.addShape({});
+            diagram.toolService._updateHoveredItem = function() {
+                this.hoveredItem = shape;
+            };
+            diagram.select(shape);
+
+            diagram._createToolBar = function() {
+                ok(true);
+            };
+
+            diagram._tap(tapEvent(10, 20, {
+                ctrlKey: false
+            }));
+        });
+
         test("triggers click if there is a hovered item", function(e) {
             var shape = diagram.addShape({});
             diagram.toolService._updateHoveredItem = function() {
@@ -410,6 +442,15 @@
             diagram.bind("click", function(e) {
                 ok(false);
             });
+            diagram._tap(tapEvent(10, 20));
+        });
+
+        test("destroys toolbar if there isn't a hovered item", function(e) {
+            diagram.toolService._updateHoveredItem = $.noop;
+            diagram._destroyToolBar = function() {
+                ok(true);
+            };
+
             diagram._tap(tapEvent(10, 20));
         });
 

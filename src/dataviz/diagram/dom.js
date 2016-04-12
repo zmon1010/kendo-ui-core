@@ -2236,6 +2236,8 @@
                             if (ctrlPressed) {
                                 this._destroyToolBar();
                                 item.select(false);
+                            } else {
+                                this._createToolBar();
                             }
                         } else {
                             this._destroyToolBar();
@@ -2246,6 +2248,7 @@
                         }
                     }
                 } else if (selectable) {
+                    this._destroyToolBar();
                     this.deselect();
                 }
             },

@@ -28,10 +28,10 @@
 
      <script src="../../src/util/main.js"></script>     
      <script src="../../src/mixins/observers.js"></script>
-     <script src="../../src/geometry/main.js"></script>
+     <script src="../../src/drawing/geometry.js"></script>
      <script src="../../src/drawing/core.js"></script>     
      <script src="../../src/drawing/mixins.js"></script>
-     <script src="../../src/drawing/text-metrics.js"></script>
+     <script src="../../src/util/text-metrics.js"></script>
      <script src="../../src/drawing/shapes.js"></script>
      <script src="../../src/drawing/parser.js"></script>
      <script src="../../src/drawing/svg.js"></script>
@@ -175,25 +175,25 @@ function findIdx(data, id) {
                 }
             };
 
-            var diagram = $("#diagram").kendoDiagram({
-                dataSource: shapesDataSource,
-                connectionsDataSource: connectionsDataSource,
-                shapeDefaults: {
-                    content: {
-                        template: "#:text#"
-                    }
-                },
-    add: function(e) {
-       console.log("add", e);
-       if (e.shape) {
-        e.preventDefault();
-        //e.connection.type("cascading");                    
-       }
-       // e.connection.type("polyline");                    
-    },
-    remove: function(e) {
-       console.log("remove", e);
-    }
+    var diagram = $("#diagram").kendoDiagram({
+        dataSource: shapesDataSource,
+        connectionsDataSource: connectionsDataSource,
+        shapeDefaults: {
+            content: {
+                template: "#:text#"
+            }
+        },
+        connectionDefaults: {
+            editable: {
+                tools: false
+            }
+        },
+        click: function(e) {
+            console.log("click", e);
+        },
+        select: function(e) {
+            console.log("select", e);
+        }
     }).data("kendoDiagram");
     
     function updateConnectors() {
