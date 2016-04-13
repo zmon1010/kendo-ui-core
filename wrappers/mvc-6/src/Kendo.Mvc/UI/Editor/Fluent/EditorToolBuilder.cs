@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring EditorTool
     /// </summary>
     public partial class EditorToolBuilder
-        
+
     {
         public EditorToolBuilder(EditorTool container)
         {
@@ -21,5 +21,21 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+
+        public EditorToolBuilder Palette(IEnumerable<string> colors)
+        {
+            Container.PaletteColors = colors;
+            Container.Palette = null;
+
+            return this;
+        }
+        
+        public EditorToolBuilder Palette(ColorPickerPalette palette)
+        {
+            Container.PaletteColors = null;
+            Container.Palette = palette;
+
+            return this;
+        }
     }
 }

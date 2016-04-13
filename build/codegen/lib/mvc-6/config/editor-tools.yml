@@ -1,23 +1,30 @@
 # button tools
 - :name: bold
-  :button: true
+  :overload: button
 
 # dropDown tools
 - :name: fontName
-  :dropDown: true
+  :overload: dropDown
+
+# color picker tools
+- :name: backColor
+  :overload: colorPicker
+
+- :name: foreColor
+  :overload: colorPicker
 
 # table editing
 - :name: addColumnLeft
-  :table_editing: true
+  :overload: tableEditing
 - :name: addColumnRight
-  :table_editing: true
+  :overload: tableEditing
 - :name: addRowAbove
-  :table_editing: true
+  :overload: tableEditing
 - :name: addRowBelow
-  :table_editing: true
+  :overload: tableEditing
 - :name: createTable
-  :table_editing: true
+  :overload: tableEditing
 - :name: deleteColumn
-  :table_editing: true
+  :overload: tableEditing
 - :name: deleteRow
-  :table_editing: true
+  :overload: tableEditing

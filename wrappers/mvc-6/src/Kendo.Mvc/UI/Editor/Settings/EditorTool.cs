@@ -11,11 +11,22 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class EditorTool 
     {
+        public IEnumerable<string> PaletteColors { get; set; } = new List<string>();
+
         public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
             // Do manual serialization here
+
+            if (Palette.HasValue)
+            {
+                settings["palette"] = Palette?.Serialize();
+            }
+            else if (PaletteColors != null && PaletteColors.Any())
+            {
+                settings["palette"] = PaletteColors;
+            }
 
             return settings;
         }

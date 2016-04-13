@@ -23,6 +23,8 @@ namespace Kendo.Mvc.UI
 
         public string TemplateId { get; set; }
 
+        public ColorPickerPalette? Palette { get; set; }
+
 
         public Editor Editor { get; set; }
 
