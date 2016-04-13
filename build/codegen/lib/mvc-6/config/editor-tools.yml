@@ -1,21 +1,3 @@
 - :name: bold
-# - :name: createLink
-# - :name: indent
-# - :name: insertFile
-# - :name: insertImage
-# - :name: insertOrderedList
-# - :name: insertUnorderedList
-# - :name: italic
-# - :name: justifyCenter
-# - :name: justifyFull
-# - :name: justifyLeft
-# - :name: justifyRight
-# - :name: outdent
-# - :name: pdf
-# - :name: print
-# - :name: strikethrough
-# - :name: subscript
-# - :name: superscript
-# - :name: underline
-# - :name: unlink
-# - :name: viewHtml
+- :name: fontName
+  :dropDown: true

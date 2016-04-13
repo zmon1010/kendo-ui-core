@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring List<EditorToolItem>
     /// </summary>
     public partial class EditorToolItemFactory
-        
+
     {
         public EditorToolItemFactory(List<EditorToolItem> container)
         {
@@ -21,5 +21,20 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+        
+        /// <summary>
+        /// Adds an item to the collection
+        /// </summary>
+        public EditorToolItemBuilder Add(string text, string value)
+        {
+            var item = new EditorToolItem()
+            {
+                Text = text,
+                Value = value
+            };
+            Container.Add(item);
+
+            return new EditorToolItemBuilder(item);
+        }
     }
 }

@@ -16,12 +16,69 @@ namespace Kendo.Mvc.UI.Fluent
 
 
         /// <summary>
-        /// Adds bold tool.
+        /// Adds "bold" tool.
         /// </summary>
         public virtual EditorToolFactory Bold()
         {
             AddButtonTool("bold");
             return this;
+        }
+
+
+        /// <summary>
+        /// Adds "fontName" tool.
+        /// </summary>
+        public virtual EditorToolFactory FontName()
+        {
+            AddDropDownTool("fontName", null);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds "fontName" tool.
+        /// </summary>
+        public virtual EditorToolFactory FontName(Action<EditorToolItemFactory> configurator)
+        {
+            AddDropDownTool("fontName", CreateDropDownToolItems(configurator));
+            return this;
+        }
+
+
+        /// <summary>
+        /// Adds a tool to the editor.
+        /// </summary>
+        private void AddButtonTool(string name)
+        {
+            var item = new EditorTool()
+            {
+                Editor = Editor,
+                Name = name
+            };
+            Container.Add(item);
+        }
+
+        /// <summary>
+        /// Adds a tool to the editor.
+        /// </summary>
+        private void AddDropDownTool(string name, List<EditorToolItem> items)
+        {
+            var item = new EditorTool()
+            {
+                Editor = Editor,
+                Name = name,
+                Items = items
+            };
+            Container.Add(item);
+        }
+
+        private List<EditorToolItem> CreateDropDownToolItems(Action<EditorToolItemFactory> configurator)
+        {
+            var items = new List<EditorToolItem>();
+            configurator(new EditorToolItemFactory(items)
+            {
+                Editor = Editor
+            });
+            return items;
         }
 
         /// <summary>
@@ -31,16 +88,6 @@ namespace Kendo.Mvc.UI.Fluent
         {
             Container.Clear();
             return this;
-        }
-
-        /// <summary>
-        /// Removes all tools.
-        /// </summary>
-        private void AddButtonTool(string name)
-        {
-            var item = new EditorTool() { Name = name };
-            item.Editor = Editor;
-            Container.Add(item);
         }
     }
 }

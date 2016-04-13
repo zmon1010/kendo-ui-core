@@ -16,8 +16,27 @@ namespace Kendo.Mvc.UI.Fluent
 
 % EDITOR_TOOLS.each do |tool|
 
+% if !!tool[:dropDown]
         /// <summary>
-        /// Adds <%= tool[:name] %> tool.
+        /// Adds "<%= tool[:name] %>" tool.
+        /// </summary>
+        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
+        {
+            AddDropDownTool("<%= tool[:name] %>", null);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds "<%= tool[:name] %>" tool.
+        /// </summary>
+        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>(Action<EditorToolItemFactory> configurator)
+        {
+            AddDropDownTool("<%= tool[:name] %>", CreateDropDownToolItems(configurator));
+            return this;
+        }
+% else
+        /// <summary>
+        /// Adds "<%= tool[:name] %>" tool.
         /// </summary>
         public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
         {
@@ -26,6 +45,45 @@ namespace Kendo.Mvc.UI.Fluent
         }
 % end
 
+% end
+
+        /// <summary>
+        /// Adds a tool to the editor.
+        /// </summary>
+        private void AddButtonTool(string name)
+        {
+            var item = new EditorTool()
+            {
+                Editor = Editor,
+                Name = name
+            };
+            Container.Add(item);
+        }
+
+        /// <summary>
+        /// Adds a tool to the editor.
+        /// </summary>
+        private void AddDropDownTool(string name, List<EditorToolItem> items)
+        {
+            var item = new EditorTool()
+            {
+                Editor = Editor,
+                Name = name,
+                Items = items
+            };
+            Container.Add(item);
+        }
+
+        private List<EditorToolItem> CreateDropDownToolItems(Action<EditorToolItemFactory> configurator)
+        {
+            var items = new List<EditorToolItem>();
+            configurator(new EditorToolItemFactory(items)
+            {
+                Editor = Editor
+            });
+            return items;
+        }
+
         /// <summary>
         /// Removes all tools.
         /// </summary>
@@ -33,16 +91,6 @@ namespace Kendo.Mvc.UI.Fluent
         {
             Container.Clear();
             return this;
-        }
-
-        /// <summary>
-        /// Removes all tools.
-        /// </summary>
-        private void AddButtonTool(string name)
-        {
-            var item = new EditorTool() { Name = name };
-            item.Editor = Editor;
-            Container.Add(item);
         }
     }
 }
