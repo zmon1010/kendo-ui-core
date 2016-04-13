@@ -1,50 +1,46 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
-    /// Defines the fluent API for adding items to Kendo UI Editor
+    /// Defines the fluent API for adding items to Editor.
     /// </summary>
     public partial class EditorToolFactory
-        
     {
-
         public Editor Editor { get; set; }
 
-        /// <summary>
-        /// Adds an item for a custom action.
-        /// </summary>
-        public virtual EditorToolBuilder Custom()
-        {
-            var item = new EditorTool();
-            item.Editor = Editor;
-            Container.Add(item);
 
-            return new EditorToolBuilder(item);
+        /// <summary>
+        /// Adds bold tool.
+        /// </summary>
+        public virtual EditorToolFactory Bold()
+        {
+            AddButtonTool("bold");
+            return this;
         }
 
         /// <summary>
-        /// Adds an item for the undo action.
+        /// Removes all tools.
         /// </summary>
-        public virtual EditorToolBuilder Undo()
+        public virtual EditorToolFactory Clear()
         {
-            var item = new EditorTool() { Name = "undo" };
-            item.Editor = Editor;
-            Container.Add(item);
-
-            return new EditorToolBuilder(item);
+            Container.Clear();
+            return this;
         }
 
         /// <summary>
-        /// Adds an item for the redo action.
+        /// Removes all tools.
         /// </summary>
-        public virtual EditorToolBuilder Redo()
+        private void AddButtonTool(string name)
         {
-            var item = new EditorTool() { Name = "redo" };
+            var item = new EditorTool() { Name = name };
             item.Editor = Editor;
             Container.Add(item);
-
-            return new EditorToolBuilder(item);
         }
     }
 }

@@ -4,6 +4,7 @@ module CodeGen::MVC6::Wrappers
     class Generator
         include Rake::DSL
         include CodeGen::MVC6::Wrappers::ChartGenerator
+        include CodeGen::MVC6::Wrappers::EditorGenerator
         include CodeGen::MVC6::Wrappers::EnumGenerator
         include CodeGen::MVC6::Wrappers::ModelGenerator
         
@@ -11,6 +12,7 @@ module CodeGen::MVC6::Wrappers
             @path = path
 
             generate_chart
+            generate_editor
             generate_enums
         end
 

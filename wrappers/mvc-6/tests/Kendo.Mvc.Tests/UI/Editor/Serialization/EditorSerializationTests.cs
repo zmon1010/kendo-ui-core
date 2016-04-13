@@ -38,5 +38,25 @@ namespace Kendo.Mvc.UI.Tests
                 settings["encoded"].ShouldEqual(true);
             });
         }
+
+        [Fact]
+        public void Default_Tools_should_not_be_serialized()
+        {
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("tools").ShouldBeFalse();
+            });
+        }
+
+        [Fact]
+        public void Tools_should_be_serialized()
+        {
+            editor.Tools = new List<EditorTool>() { new EditorTool() { Name = "FontName" } };
+
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("tools").ShouldBeTrue();
+            });
+        }
     }
 }

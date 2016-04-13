@@ -1,0 +1,48 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Resources;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for adding items to Editor.
+    /// </summary>
+    public partial class EditorToolFactory
+    {
+        public Editor Editor { get; set; }
+
+% EDITOR_TOOLS.each do |tool|
+
+        /// <summary>
+        /// Adds <%= tool[:name] %> tool.
+        /// </summary>
+        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
+        {
+            AddButtonTool("<%= tool[:name] %>");
+            return this;
+        }
+% end
+
+        /// <summary>
+        /// Removes all tools.
+        /// </summary>
+        public virtual EditorToolFactory Clear()
+        {
+            Container.Clear();
+            return this;
+        }
+
+        /// <summary>
+        /// Removes all tools.
+        /// </summary>
+        private void AddButtonTool(string name)
+        {
+            var item = new EditorTool() { Name = name };
+            item.Editor = Editor;
+            Container.Add(item);
+        }
+    }
+}
