@@ -23,6 +23,12 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         protected override void WriteHtml(TextWriter writer)
         {
             var tag = Generator.GenerateTag("input", ViewContext, Id, Name, HtmlAttributes);
@@ -36,17 +42,23 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-            if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) ||
-                !string.IsNullOrEmpty(DataSource.Transport.Read.ActionName) ||
-                DataSource.Type == DataSourceType.Custom)
+            if (DataSourceId.HasValue())
             {
-                settings["dataSource"] = DataSource.ToJson();
+                settings["dataSourceId"] = DataSourceId;
             }
-            else if (DataSource.Data != null)
+            else
             {
-                settings["dataSource"] = DataSource.Data;
+                if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) ||
+                    !string.IsNullOrEmpty(DataSource.Transport.Read.ActionName) ||
+                    DataSource.Type == DataSourceType.Custom)
+                {
+                    settings["dataSource"] = DataSource.ToJson();
+                }
+                else if (DataSource.Data != null)
+                {
+                    settings["dataSource"] = DataSource.Data;
+                }
             }
-
 
             writer.Write(Initializer.Initialize(Selector, "AutoComplete", settings));
         }

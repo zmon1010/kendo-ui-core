@@ -41,6 +41,11 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets the item action.
@@ -85,20 +90,27 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
-            
-            if (Items.Any())// && this.UsesTemplates())
-            {
-                this.DataSource.Data = SerializeItems(Items);
-                this.LoadOnDemand = false;
-            }
 
-            if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) || DataSource.Type == DataSourceType.Custom)
+            if (DataSourceId.HasValue())
             {
-                settings["dataSource"] = DataSource.ToJson();
+                settings["dataSourceId"] = DataSourceId;
             }
-            else if (DataSource.Data != null)
+            else
             {
-                settings["dataSource"] = DataSource.Data;
+                if (Items.Any())// && this.UsesTemplates())
+                {
+                    this.DataSource.Data = SerializeItems(Items);
+                    this.LoadOnDemand = false;
+                }
+
+                if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) || DataSource.Type == DataSourceType.Custom)
+                {
+                    settings["dataSource"] = DataSource.ToJson();
+                }
+                else if (DataSource.Data != null)
+                {
+                    settings["dataSource"] = DataSource.Data;
+                }
             }
             var animation = Animation.ToJson();
             if (animation.Keys.Any())

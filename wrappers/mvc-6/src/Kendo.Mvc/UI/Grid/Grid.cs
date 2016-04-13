@@ -62,7 +62,13 @@ namespace Kendo.Mvc.UI
 			private set;
 		}
 
-		private string clientRowTemplate;
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
+        private string clientRowTemplate;
 
 		public string ClientRowTemplate
 		{
@@ -194,74 +200,80 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-			var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
+            var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
 
-			var idPrefix = "#";
-			if (IsInClientTemplate)
-			{
-				idPrefix = "\\" + idPrefix;
-			}
+            var idPrefix = "#";
+            if (IsInClientTemplate)
+            {
+                idPrefix = "\\" + idPrefix;
+            }
 
-			var columns = VisibleColumns.Select(c => c.ToJson());
-			if (columns.Any())
-			{
-				settings["columns"] = columns;
-			}
+            var columns = VisibleColumns.Select(c => c.ToJson());
+            if (columns.Any())
+            {
+                settings["columns"] = columns;
+            }
 
-			if (Pageable.Enabled)
-			{
-				Pageable.AutoBind = autoBind;
+            if (Pageable.Enabled)
+            {
+                Pageable.AutoBind = autoBind;
 
-				settings["pageable"] = Pageable.ToJson();
-			}
+                settings["pageable"] = Pageable.ToJson();
+            }
 
-			if (Selectable.Enabled)
-			{
-				settings["selectable"] = $"{Selectable.Mode}, {Selectable.Type}";
-			}
+            if (Selectable.Enabled)
+            {
+                settings["selectable"] = $"{Selectable.Mode}, {Selectable.Type}";
+            }
 
-			if (Filterable.Enabled)
-			{
-				var filtering = Filterable.ToJson();
-				settings["filterable"] = filtering.Any() ? (object)filtering : true;
-			}
+            if (Filterable.Enabled)
+            {
+                var filtering = Filterable.ToJson();
+                settings["filterable"] = filtering.Any() ? (object)filtering : true;
+            }
 
-			if (Resizable.Enabled)
-			{
-				settings["resizable"] = true;
-			}
+            if (Resizable.Enabled)
+            {
+                settings["resizable"] = true;
+            }
 
-			if (Reorderable.Enabled)
-			{
-				settings["reorderable"] = true;
-			}
+            if (Reorderable.Enabled)
+            {
+                settings["reorderable"] = true;
+            }
 
-			if (!Scrollable.Enabled)
-			{
-				settings["scrollable"] = false;
-			}
-			else
-			{
-				var scrolling = Scrollable.ToJson();
-				if (scrolling.Any())
-				{
-					settings["scrollable"] = scrolling;
-				}
-				settings["height"] = Scrollable.Height;
-			}
+            if (!Scrollable.Enabled)
+            {
+                settings["scrollable"] = false;
+            }
+            else
+            {
+                var scrolling = Scrollable.ToJson();
+                if (scrolling.Any())
+                {
+                    settings["scrollable"] = scrolling;
+                }
+                settings["height"] = Scrollable.Height;
+            }
 
-			if (Editable.Enabled)
-			{
-				settings["editable"] = Editable.ToJson();
-			}
+            if (Editable.Enabled)
+            {
+                settings["editable"] = Editable.ToJson();
+            }
 
-			if (ToolBar.Enabled)
-			{
-				settings["toolbar"] = ToolBar.ToJson().First().Value;
-			}
-			settings["dataSource"] = DataSource.ToJson();
+            if (ToolBar.Enabled)
+            {
+                settings["toolbar"] = ToolBar.ToJson().First().Value;
+            }
+            if (DataSourceId.HasValue())
+            {
+                settings["dataSourceId"] = DataSourceId;
+            }
+            else {
+                settings["dataSource"] = DataSource.ToJson();
+            }
 
-			if (!String.IsNullOrEmpty(ClientDetailTemplateId))
+            if (!String.IsNullOrEmpty(ClientDetailTemplateId))
 			{
 				settings["detailTemplate"] = new ClientHandlerDescriptor { HandlerName = String.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, ClientDetailTemplateId) };
 			}

@@ -54,6 +54,13 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        public AutoCompleteBuilder DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
     }
 }
 

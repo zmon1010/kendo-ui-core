@@ -32,6 +32,11 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
 
         public string KPIStatusTemplate { get; set; }
 
@@ -92,8 +97,14 @@ namespace Kendo.Mvc.UI
             {
                 settings["messages"] = messages;
             }
-
-            settings["dataSource"] = DataSource.ToJson();
+            if (DataSourceId.HasValue())
+            {
+                settings["dataSourceId"] = DataSourceId;
+            }
+            else
+            {
+                settings["dataSource"] = DataSource.ToJson();
+            }
 
             writer.Write(Initializer.Initialize(Selector, "PivotGrid", settings));
         }

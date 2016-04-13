@@ -61,11 +61,14 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-            settings["dataSource"] = DataSource.ToJson();
-
-            if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
+            if (!DataSourceId.HasValue())
             {
-                ProcessDataSource();
+                settings["dataSource"] = DataSource.ToJson();
+
+                if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
+                {
+                    ProcessDataSource();
+                }
             }
             InitializeEditor();
             settingsSerializer.Serialize(settings);
@@ -135,7 +138,7 @@ namespace Kendo.Mvc.UI
                 throw new NotSupportedException(string.Format(Exceptions.CannotBeNullOrEmpty, "TagName"));
             }
 
-            if (Editable.Enabled && DataSource.Schema.Model.Id == null)
+            if (Editable.Enabled && DataSource.Schema.Model.Id == null && !DataSourceId.HasValue())
             {
                 throw new NotSupportedException(Exceptions.DataKeysEmpty);
             }
@@ -167,6 +170,13 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
+
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         public string ClientTemplateId
         {
             get;

@@ -151,24 +151,31 @@ namespace Kendo.Mvc.UI.Fluent
 			return this;
 		}
 
-		/// <summary>
-		/// Enables grid paging.
-		/// </summary>
-		/// <example>  
-		///<code lang="Razor">
-		/// @(Html.Kendo().Grid&lt;Product&gt;()
-		///     .Name(&quot;grid&quot;)
-		///     .Pageable()
-		///     .DataSource(dataSource =&gt;
-		///         // configure the data source
-		///         dataSource
-		///             .Ajax()
-		///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
-		///     )
-		/// )
-		/// </code>
-		/// </example>
-		public GridBuilder<T> Pageable()
+        public GridBuilder<T> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+            return this;
+        }
+
+
+        /// <summary>
+        /// Enables grid paging.
+        /// </summary>
+        /// <example>  
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Pageable()
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Pageable()
 		{
 			return Pageable(delegate { });
 		}

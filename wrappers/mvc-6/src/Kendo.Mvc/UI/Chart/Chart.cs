@@ -33,6 +33,12 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets or sets the data source.
         /// </summary>
@@ -68,7 +74,14 @@ namespace Kendo.Mvc.UI
 
         protected virtual void SerializeCustomSettings(IDictionary<string, object> settings)
         {
-            SerializeDataSource(settings);
+            if (DataSourceId.HasValue())
+            {
+                settings["dataSourceId"] = DataSourceId;
+            }
+            else
+            {
+                SerializeDataSource(settings);
+            }
 
             var seriesDefaults = SeriesDefaults.Serialize();
             if (seriesDefaults.Any())

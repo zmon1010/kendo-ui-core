@@ -30,6 +30,12 @@ namespace Kendo.Mvc.UI
             Animation = new PopupAnimation();
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         protected override void WriteHtml(TextWriter writer)
         {
             if (Enable == false)
@@ -63,15 +69,22 @@ namespace Kendo.Mvc.UI
                 settings["animation"] = animation["animation"];
             }
 
-            if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) ||
-                !string.IsNullOrEmpty(DataSource.Transport.Read.ActionName) ||
-                DataSource.Type == DataSourceType.Custom)
+            if (DataSourceId.HasValue())
             {
-                settings["dataSource"] = DataSource.ToJson();
+                settings["dataSourceId"] = DataSourceId;
             }
-            else if (DataSource.Data != null)
+            else
             {
-                settings["dataSource"] = DataSource.Data;
+                if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) ||
+                    !string.IsNullOrEmpty(DataSource.Transport.Read.ActionName) ||
+                    DataSource.Type == DataSourceType.Custom)
+                {
+                    settings["dataSource"] = DataSource.ToJson();
+                }
+                else if (DataSource.Data != null)
+                {
+                    settings["dataSource"] = DataSource.Data;
+                }
             }
 
             if (SelectedIndex.HasValue && SelectedIndex > -1)

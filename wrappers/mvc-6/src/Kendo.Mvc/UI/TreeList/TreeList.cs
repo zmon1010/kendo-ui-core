@@ -46,6 +46,12 @@ namespace Kendo.Mvc.UI
 			private set;
 		}
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         public override void ProcessSettings()
         {
             if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
@@ -74,8 +80,14 @@ namespace Kendo.Mvc.UI
         {			
             var settings = SerializeSettings();
 
-			settings["dataSource"] = DataSource.ToJson();			
-
+            if (DataSourceId.HasValue())
+            {
+                settings["dataSourceId"] = DataSourceId;
+            }
+            else
+            {
+                settings["dataSource"] = DataSource.ToJson();
+            }
 			if (Selectable.Enabled == true)
 			{
 				var selectable = "row";

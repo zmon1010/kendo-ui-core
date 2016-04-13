@@ -76,6 +76,12 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public ChartBuilder<T> DataSource(string dataSourceId)
+        {
+            this.Component.DataSourceId = dataSourceId;
+            return this;
+        }
+
         /// <summary>
         /// Sets the legend visibility.
         /// </summary>
