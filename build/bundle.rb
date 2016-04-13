@@ -16,6 +16,7 @@ def bundle(options)
     name = options[:name]
     eula = options[:eula]
     readme = options[:readme]
+    readme_src = options[:readme_src]
     vsdoc_sources = options[:vsdoc]
     intellisense_sources = options[:intellisense]
     vsdoc_dest = options[:vsdoc_dest] || "vsdoc"
@@ -85,6 +86,12 @@ def bundle(options)
         readme_path = File.join(path, "README")
         file_copy :to => readme_path, :from => File.join(README_DIR, "#{readme}.txt")
         prerequisites.push(readme_path)
+    end
+
+    if readme_src
+        readme_src_path = File.join(path, 'src', 'README')
+        file_copy :to => readme_src_path, :from => File.join(README_DIR, "#{readme_src}.txt")
+        prerequisites.push(readme_src_path)
     end
 
     if vsdoc_sources
