@@ -787,6 +787,42 @@ bundle :name => 'aspnetmvc.internal.commercial',
            'type_script:master:test'
        ]
 
+bundle :name => 'aspnetmvc.internal.commercial.source',
+       :license => 'src-license-complete',
+       :eula => 'aspnetmvc',
+       :changelog => %w(components aspnetmvc),
+       :release_build => {
+          :file_metadata => {
+             :zip => {
+              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.internal.commercial.source.zip",
+             }
+          }
+       },
+       :contents => {
+            'src/js' => MVC_SRC_JS,
+            'src/styles' => SRC_CSS,
+            'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
+            'src/Kendo.Mvc/Kendo.Mvc' => FileList['wrappers/mvc/src/Kendo.Mvc/**/*']
+                .exclude('**/bin/**/*')
+                .exclude('**/obj/**/*')
+                .exclude('**/*.csproj'),
+            'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => FileList[SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/**/*']
+                .exclude('**/bin/**/*')
+                .exclude('**/obj/**/*')
+                .exclude('**/*.snk')
+                .exclude('**/*.csproj')
+       },
+       :prerequisites => [
+           'dist/bundles/aspnetmvc.internal.commercial.source/src/Kendo.Mvc/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.internal.commercial.source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
+           'dist/bundles/aspnetmvc.internal.commercial.source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
+           'dist/bundles/aspnetmvc.internal.commercial.source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.internal.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
+           'dist/bundles/aspnetmvc.internal.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
+           'dist/bundles/aspnetmvc.internal.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
+           'dist/bundles/aspnetmvc.internal.commercial.source/src/Telerik.Web.Spreadsheet/lib'
+       ]
+
 bundle :name => 'aspnetmvc.hotfix.commercial',
        :skip_grunt_build => true,
        :license => 'src-license-complete',
@@ -1096,6 +1132,7 @@ BUNDLES = [
     'aspnetmvc.commercial',
     'aspnetmvc.commercial.source',
     'aspnetmvc.internal.commercial',
+    'aspnetmvc.internal.commercial.source',
     'aspnetmvc.hotfix.commercial',
     'aspnetmvc.hotfix.trial',
     'aspnetmvc.trial',
