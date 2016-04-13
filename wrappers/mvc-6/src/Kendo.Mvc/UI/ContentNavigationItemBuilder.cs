@@ -1,4 +1,4 @@
-﻿using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
 {
     public class ContentNavigationItemBuilder<TItem, TBuilder> : NavigationItemBuilder<TItem, TBuilder>
         where TItem : NavigationItem<TItem>, IAsyncContentContainer
-        where TBuilder : NavigationItemBuilder<TItem, TBuilder>
+        where TBuilder : NavigationItemBuilder<TItem, TBuilder>, IHideObjectMembers
     {
         public ContentNavigationItemBuilder(TItem item, ViewContext viewContext)
             : base(item, viewContext)

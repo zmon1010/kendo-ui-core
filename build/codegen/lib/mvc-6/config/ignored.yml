@@ -108,6 +108,16 @@
 - stockchart.series.data
 - stockchart.seriesdefaults
 - stockchart.valueaxis.notes.data
+- tabstrip.animation
+- tabstrip.contenturls
+- tabstrip.datacontentfield
+- tabstrip.datacontenturlfield
+- tabstrip.dataimageurlfield
+- tabstrip.dataspritecssclass
+- tabstrip.datatextfield
+- tabstrip.dataurlfield
+- tabstrip.datasource
+- tabstrip.items
 - timepicker.animation
 - tooltip.animation
 - tooltip.content
