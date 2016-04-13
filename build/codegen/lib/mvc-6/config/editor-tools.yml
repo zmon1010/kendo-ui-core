@@ -1,3 +1,23 @@
+# button tools
 - :name: bold
+  :button: true
+
+# dropDown tools
 - :name: fontName
   :dropDown: true
+
+# table editing
+- :name: addColumnLeft
+  :table_editing: true
+- :name: addColumnRight
+  :table_editing: true
+- :name: addRowAbove
+  :table_editing: true
+- :name: addRowBelow
+  :table_editing: true
+- :name: createTable
+  :table_editing: true
+- :name: deleteColumn
+  :table_editing: true
+- :name: deleteRow
+  :table_editing: true

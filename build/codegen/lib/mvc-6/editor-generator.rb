@@ -2,6 +2,9 @@ module CodeGen::MVC6::Wrappers::EditorGenerator
 
     EDITOR_TOOLS = YAML.load(File.read("build/codegen/lib/mvc-6/config/editor-tools.yml"))
     EDITOR_TOOL_FACTORY = ERB.new(File.read("build/codegen/lib/mvc-6/templates/editor-tool-factory.erb"), 0, '%<>')
+    BUTTON_TOOLS = EDITOR_TOOLS.select { |tool| !!tool[:button] }
+    DROP_DOWN_TOOLS = EDITOR_TOOLS.select { |tool| !!tool[:dropDown] }
+    TABLE_EDITING_TOOLS = EDITOR_TOOLS.select { |tool| !!tool[:table_editing] }
 
     def generate_editor
         write_editor_tool_factory

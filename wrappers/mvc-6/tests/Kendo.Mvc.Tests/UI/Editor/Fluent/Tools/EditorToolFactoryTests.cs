@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI.Tests
             items = new List<EditorTool>();
             factory = new EditorToolFactory(items);
         }
-                
+
         [Fact]
         public void Builder_should_create_Bold_tool()
         {
@@ -43,6 +43,20 @@ namespace Kendo.Mvc.UI.Tests
             items[0].Name.ShouldEqual("fontName");
             items[0].Items[0].Text.ShouldEqual(text);
             items[0].Items[0].Value.ShouldEqual(value);
-        }        
+        }
+
+        [Fact]
+        public void Builder_should_create_TableEditing_tool()
+        {
+            factory.TableEditing();
+
+            items[0].Name.ShouldEqual("addColumnLeft");
+            items[1].Name.ShouldEqual("addColumnRight");
+            items[2].Name.ShouldEqual("addRowAbove");
+            items[3].Name.ShouldEqual("addRowBelow");
+            items[4].Name.ShouldEqual("createTable");
+            items[5].Name.ShouldEqual("deleteColumn");
+            items[6].Name.ShouldEqual("deleteRow");
+        }
     }
 }

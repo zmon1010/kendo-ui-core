@@ -43,6 +43,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public EditorToolFactory TableEditing()
+        {
+            AddButtonTool("addColumnLeft");
+            AddButtonTool("addColumnRight");
+            AddButtonTool("addRowAbove");
+            AddButtonTool("addRowBelow");
+            AddButtonTool("createTable");
+            AddButtonTool("deleteColumn");
+            AddButtonTool("deleteRow");
+            return this;
+        }
 
         /// <summary>
         /// Adds a tool to the editor.

@@ -14,9 +14,20 @@ namespace Kendo.Mvc.UI.Fluent
     {
         public Editor Editor { get; set; }
 
-% EDITOR_TOOLS.each do |tool|
+% BUTTON_TOOLS.each do |tool|
 
-% if !!tool[:dropDown]
+        /// <summary>
+        /// Adds "<%= tool[:name] %>" tool.
+        /// </summary>
+        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
+        {
+            AddButtonTool("<%= tool[:name] %>");
+            return this;
+        }
+% end
+
+% DROP_DOWN_TOOLS.each do |tool|
+
         /// <summary>
         /// Adds "<%= tool[:name] %>" tool.
         /// </summary>
@@ -34,18 +45,15 @@ namespace Kendo.Mvc.UI.Fluent
             AddDropDownTool("<%= tool[:name] %>", CreateDropDownToolItems(configurator));
             return this;
         }
-% else
-        /// <summary>
-        /// Adds "<%= tool[:name] %>" tool.
-        /// </summary>
-        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
-        {
-            AddButtonTool("<%= tool[:name] %>");
-            return this;
-        }
 % end
 
+        public EditorToolFactory TableEditing()
+        {
+% TABLE_EDITING_TOOLS.each do |tool|
+            AddButtonTool("<%= tool[:name] %>");
 % end
+            return this;
+        }
 
         /// <summary>
         /// Adds a tool to the editor.
