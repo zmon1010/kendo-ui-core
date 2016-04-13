@@ -245,8 +245,7 @@
             if (value === undefined) {
                 value = true;
 
-                /* jshint shadow:true */
-                this._sheet.forEach(this._ref.toRangeRef(), function(_, _, data) {
+                this._sheet.forEach(this._ref.toRangeRef(), function(_, __, data) {
                     if (data.enable === false) {
                         value = false;
                     }
