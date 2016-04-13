@@ -839,7 +839,9 @@ var __meta__ = { // jshint ignore:line
                 field = this.model.fields[this.field];
 
                 if (field) {
-                    if (field.parse) {
+                    if (field.type == "number") {
+                        this._parse = parseFloat;
+                    } else if (field.parse) {
                         this._parse = proxy(field.parse, field);
                     }
                     this.type = field.type || "string";

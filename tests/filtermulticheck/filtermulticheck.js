@@ -533,4 +533,34 @@
 		equal(widget.container.find("li").length , 4);
         equal(widget.container.find("li[style*='display: none']").length , 0);		
 	});	
+
+    test("filters numbers when using non cultures with comma as separator", function(){
+        var dataSource = new kendo.data.DataSource({
+            data: [
+                { foo: 1 },
+                { foo: 2.12345 },
+                { foo: 3 }
+            ],
+            schema: {
+                model: {
+                    fields: {
+                        foo: { type: "number" }
+                    }
+                }
+            }
+        });
+        var culture = kendo.culture().name;
+        try {
+            kendo.culture("de-DE");
+            widget = setup({
+                dataSource: dataSource
+            });
+            widget.form.find(":checkbox:not(.k-check-all)").eq(1).prop("checked", true);
+            widget.form.submit();
+            var filter = dataSource.filter().filters[0];
+            equal(filter.value, 2.12345);
+        } finally {
+            kendo.culture(culture);
+        }
+	});
 })();
