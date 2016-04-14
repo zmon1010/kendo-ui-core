@@ -5371,10 +5371,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows how Kendo UI jQuery Tabs control works. KendoTabStrup divides the content into multiple sections which the user can navigate through clicking on the tab pane.",
                     "aspnet-mvc": "Look at this demo to learn how to use the ASP.NET MVC TabStrip HtmlHelper extension for the Kendo UI TabStrip widget."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Images",
@@ -5386,10 +5383,7 @@
                 "meta": {
                     "kendo-ui": "This example shows how images are displayed in Kendo UI TabStrip component.",
                     "aspnet-mvc": "This example shows how images are displayed in Telerik ASP.NET MVC TabStrip component."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Loading content with AJAX",
@@ -5402,10 +5396,7 @@
                     "kendo-ui": "This sample shows how the tabs in Kendo UI TabStrip control are dynamically loaded with AJAX upon selection of a tab.",
                     "aspnet-mvc": "This example illustrates how to load content with AJAX in Telerik TabStrip for ASP.NET MVC."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Animation effects",
@@ -5417,10 +5408,7 @@
                 "meta": {
                     "kendo-ui": "This sample shows the supported animation effects in Kendo UI TabStrip. You can play with the sample by changing the settings of the animation.",
                     "aspnet-mvc": "This sample shows the supported animation effects in ASP.NET MVC TabStrip. You can play with the sample by changing the settings of the animation."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Tab position",
@@ -5432,10 +5420,7 @@
                 "meta": {
                     "kendo-ui": "This sample shows different tab position options for the Kendo UI TabStrip.",
                     "aspnet-mvc": "This sample shows different tab position options for the ASP.NET MVC TabStrip."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Scrollable tabs",
@@ -5447,10 +5432,7 @@
                 "meta": {
                     "kendo-ui": "This sample shows auto scrollable tabs in the Kendo UI TabStrip.",
                     "aspnet-mvc": "This sample shows auto scrollable tabs in the ASP.NET MVC TabStrip."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Events",
@@ -5463,10 +5445,7 @@
                     "kendo-ui": "This sample shows how you can trigger select event in Kendo UI TabStrip. Find demo source code for all types of events in KendoTabStrip.",
                     "aspnet-mvc": "This demo shows how to use events feature of Telerik ASP.NET MVC Tabstrip extension for Kendo UI Tabstrip widget."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "API",
@@ -5478,10 +5457,7 @@
                 "meta": {
                     "kendo-ui": "This sample shows how API functions in KendoTabStrip control work. Find the demo source code to play with Kendo UI TabStrip API.",
                     "aspnet-mvc": "This sample shows how API functions in ASP.NET MVC TabStrip control work. Find the demo source code to play with ASP.NET MVC TabStrip API."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "RTL support",
@@ -5493,10 +5469,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows the right-to-left feature, enabled in Kendo UI TabStrip. Now users can easily reorder the tabs from right to left.",
                     "aspnet-mvc": "This demo shows the right-to-left feature, enabled in ASP.NET MVC TabStrip. Now users can easily reorder the tabs from right to left."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Keyboard navigation",
@@ -5508,10 +5481,7 @@
                 "meta": {
                     "kendo-ui": "This Kendo UI demo shows how end users of your app can intuitively use keyboard navigation in Kendo UI TabStrip.",
                     "aspnet-mvc": "This ASP.NET MVC demo shows how end users of your app can intuitively use keyboard navigation in ASP.NET MVC TabStrip."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "MVVM",
