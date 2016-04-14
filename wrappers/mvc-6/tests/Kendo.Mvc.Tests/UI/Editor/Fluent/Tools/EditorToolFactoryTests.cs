@@ -391,6 +391,64 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_create_FontSize_tool()
+        {
+            builder.FontSize();
+
+            items.Count.ShouldEqual(1);
+            items[0].Name.ShouldEqual("fontSize");
+        }
+
+        [Fact]
+        public void FontSize_should_return_builder()
+        {
+            builder.FontSize().ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_FontSize_tool_items()
+        {
+            var text = "text";
+            var value = "value";
+
+            builder.FontSize(x => x.Add(text, value));
+
+            items.Count.ShouldEqual(1);
+            items[0].Name.ShouldEqual("fontSize");
+            items[0].Items[0].Text.ShouldEqual(text);
+            items[0].Items[0].Value.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Builder_should_create_Formatting_tool()
+        {
+            builder.Formatting();
+
+            items.Count.ShouldEqual(1);
+            items[0].Name.ShouldEqual("formatting");
+        }
+
+        [Fact]
+        public void Formatting_should_return_builder()
+        {
+            builder.Formatting().ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Formatting_tool_items()
+        {
+            var text = "text";
+            var value = "value";
+
+            builder.Formatting(x => x.Add(text, value));
+
+            items.Count.ShouldEqual(1);
+            items[0].Name.ShouldEqual("formatting");
+            items[0].Items[0].Text.ShouldEqual(text);
+            items[0].Items[0].Value.ShouldEqual(value);
+        }
+
+        [Fact]
         public void Builder_should_create_BackColor_tool()
         {
             builder.BackColor();
@@ -458,6 +516,22 @@ namespace Kendo.Mvc.UI.Tests
         public void TableEditing_should_return_builder()
         {
             builder.TableEditing().ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_Clear_all_tools()
+        {
+            builder.Bold().Italic().Underline();
+
+            builder.Clear();
+
+            items.Count.ShouldEqual(0);
+        }
+
+        [Fact]
+        public void Clear_should_return_builder()
+        {
+            builder.Clear().ShouldBeSameAs(builder);
         }
     }
 }

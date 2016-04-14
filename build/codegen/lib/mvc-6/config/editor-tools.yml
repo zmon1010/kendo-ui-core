@@ -71,6 +71,10 @@
 # dropDown tools
 - :name: fontName
   :overload: dropDown
+- :name: fontSize
+  :overload: dropDown
+- :name: formatting
+  :overload: dropDown
 
 # color picker tools
 - :name: backColor

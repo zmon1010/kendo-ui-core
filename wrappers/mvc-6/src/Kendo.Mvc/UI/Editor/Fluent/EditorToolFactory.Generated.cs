@@ -269,6 +269,42 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Adds "fontSize" tool.
+        /// </summary>
+        public virtual EditorToolFactory FontSize()
+        {
+            AddDropDownTool("fontSize", null);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds "fontSize" tool.
+        /// </summary>
+        public virtual EditorToolFactory FontSize(Action<EditorToolItemFactory> configurator)
+        {
+            AddDropDownTool("fontSize", CreateDropDownToolItems(configurator));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds "formatting" tool.
+        /// </summary>
+        public virtual EditorToolFactory Formatting()
+        {
+            AddDropDownTool("formatting", null);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds "formatting" tool.
+        /// </summary>
+        public virtual EditorToolFactory Formatting(Action<EditorToolItemFactory> configurator)
+        {
+            AddDropDownTool("formatting", CreateDropDownToolItems(configurator));
+            return this;
+        }
+
         public EditorToolFactory TableEditing()
         {
             AddTool("addColumnLeft");

@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds an item to the collection
         /// </summary>
-        public EditorToolItemBuilder Add(string text, string value)
+        public EditorToolItemFactory Add(string text, string value)
         {
             var item = new EditorToolItem()
             {
@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
             };
             Container.Add(item);
 
-            return new EditorToolItemBuilder(item);
+            return this;
         }
     }
 }

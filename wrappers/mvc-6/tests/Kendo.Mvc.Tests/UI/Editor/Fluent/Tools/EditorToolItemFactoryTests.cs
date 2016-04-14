@@ -7,13 +7,13 @@ namespace Kendo.Mvc.UI.Tests
 {
     public class EditorToolItemFactoryTests
     {
-        private readonly EditorToolItemFactory factory;
+        private readonly EditorToolItemFactory builder;
         private readonly List<EditorToolItem> items;
 
         public EditorToolItemFactoryTests()
         {
             items = new List<EditorToolItem>();
-            factory = new EditorToolItemFactory(items);
+            builder = new EditorToolItemFactory(items);
         }
 
         [Fact]
@@ -22,10 +22,20 @@ namespace Kendo.Mvc.UI.Tests
             var text = "text";
             var value = "value";
 
-            factory.Add(text, value);
-            
+            builder.Add(text, value);
+
+            items.Count.ShouldEqual(1);
             items[0].Text.ShouldEqual(text);
             items[0].Value.ShouldEqual(value);
-        }      
+        }
+
+        [Fact]
+        public void Add_should_return_builder()
+        {
+            var text = "text";
+            var value = "value";
+
+            builder.Add(text, value).ShouldBeSameAs(builder);
+        }
     }
 }
