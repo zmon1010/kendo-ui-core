@@ -54,7 +54,7 @@
 
         activeCell: function(ref) {
             if (ref) {
-                this.originalActiveCell = ref;
+                this.originalActiveCell = ref.first();
                 this._activeCell = this._sheet.unionWithMerged(ref.toRangeRef());
                 this._sheet.focus(ref);
                 this._sheet.triggerChange({ activeCell: true, selection: true });
