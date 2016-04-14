@@ -5,7 +5,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring TabStripItem
     /// </summary>
-    public class TabStripItemBuilder : ContentNavigationItemBuilder<TabStripItem, TabStripItemBuilder>, IHideObjectMembers
+    public class TabStripItemBuilder : ContentNavigationItemBuilder<TabStripItem, TabStripItemBuilder>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TabStripItemBuilder"/> class.

@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
 {
     public class ContentNavigationItemBuilder<TItem, TBuilder> : NavigationItemBuilder<TItem, TBuilder>
         where TItem : NavigationItem<TItem>, IAsyncContentContainer
-        where TBuilder : NavigationItemBuilder<TItem, TBuilder>, IHideObjectMembers
+        where TBuilder : NavigationItemBuilder<TItem, TBuilder>
     {
         public ContentNavigationItemBuilder(TItem item, ViewContext viewContext)
             : base(item, viewContext)
