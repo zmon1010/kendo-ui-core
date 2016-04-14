@@ -548,6 +548,7 @@ var __meta__ = { // jshint ignore:line
                 this.surface = draw.Surface.create(wrap, {
                     type: this.options.renderAs
                 });
+
             } else {
                 this.surface.clear();
                 this.surface.resize();
@@ -794,7 +795,6 @@ var __meta__ = { // jshint ignore:line
 
             surface.bind("mouseenter", proxy(chart._mouseover, chart));
             surface.bind("mouseleave", proxy(chart._mouseout, chart));
-
             element.on(CONTEXTMENU_NS, proxy(chart._click, chart));
             element.on(MOUSEWHEEL_NS, proxy(chart._mousewheel, chart));
             element.on(MOUSELEAVE_NS, proxy(chart._mouseleave, chart));
@@ -812,13 +812,63 @@ var __meta__ = { // jshint ignore:line
                 chart._userEvents = new kendo.UserEvents(element, {
                     global: true,
                     filter: ":not(.k-selector)",
-                    multiTouch: false,
+                    multiTouch: true,
                     fastTap: true,
                     tap: proxy(chart._tap, chart),
                     start: proxy(chart._start, chart),
                     move: proxy(chart._move, chart),
-                    end: proxy(chart._end, chart)
+                    end: proxy(chart._end, chart),
+                    gesturestart: proxy(chart._gesturestart, chart),
+                    gesturechange: proxy(chart._gesturechange, chart),
+                    gestureend: proxy(chart._gestureend, chart)
                 });
+            }
+        },
+
+        _gesturestart: function(e) {
+            if (this._mousewheelZoom) {
+                this._gestureDistance = e.distance;
+                this._unsetActivePoint();
+                this.surface.suspendTracking();
+            }
+        },
+
+        _gestureend: function() {
+            if (this._zooming) {
+                if (this.surface) {
+                    this.surface.resumeTracking();
+                }
+                this._zooming = false;
+                this.trigger(ZOOM_END, {});
+            }
+        },
+
+        _gesturechange: function(e) {
+            var chart = this;
+            var mousewheelZoom = chart._mousewheelZoom;
+
+            if (mousewheelZoom) {
+                e.preventDefault();
+                var previousGestureDistance = chart._gestureDistance;
+                var scaleDelta = -e.distance / previousGestureDistance + 1;
+
+                if (math.abs(scaleDelta) >= 0.1) {
+                    scaleDelta = math.round(scaleDelta * 10);
+
+                    chart._gestureDistance = e.distance;
+                    var args = { delta: scaleDelta, axisRanges: axisRanges(chart._plotArea.axes), originalEvent: e };
+                    if (chart._zooming || !chart.trigger(ZOOM_START, args)) {
+
+                        if (!chart._zooming) {
+                            chart._zooming = true;
+                        }
+
+                        var ranges = args.axisRanges = mousewheelZoom.updateRanges(scaleDelta);
+                        if (ranges && !chart.trigger(ZOOM, args)) {
+                            mousewheelZoom.zoom();
+                        }
+                    }
+                }
             }
         },
 

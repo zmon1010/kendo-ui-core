@@ -577,6 +577,83 @@
             triggerMousewheel(10);
         });
 
+
+        // ------------------------------------------------------------
+
+        function triggerPinchZoom(distance) {
+            chart._gesturestart({
+                distance: 10
+            });
+
+            chart._gesturechange({
+                distance: distance,
+                preventDefault: $.noop
+            });
+
+            chart._gestureend({
+                distance: distance
+            });
+        }
+
+        module("Events / pinch zoom", {
+            setup: function() {
+                setupChart({
+                    series: [{}],
+                    categoryAxis: {
+                        categories: ["A", "B", "C", "D"],
+                        name: "foo",
+                        min: 1,
+                        max: 2
+                    },
+                    chartArea: { width: 600, height: 400 },
+                    zoomable: true
+                });
+            },
+            teardown: destroyChart
+        });
+
+        test("triggers zoomStart", function() {
+            chart.bind("zoomStart", function(e) {
+                ok(true);
+            });
+            triggerPinchZoom(1);
+        });
+
+        test("zoomStart is preventable", 0, function() {
+            chart.bind("zoomStart", function(e) {
+                e.preventDefault();
+            });
+            chart._plotArea.redraw = function() {
+                ok(false);
+            };
+            triggerPinchZoom(1);
+        });
+
+        test("triggers zoom with updated ranges", function() {
+            chart.bind("zoom", function(e) {
+                equal(e.axisRanges.foo.min, 0);
+                equal(e.axisRanges.foo.max, 4);
+            });
+            triggerPinchZoom(1);
+        });
+
+        test("zoom event is preventable", 0, function() {
+            chart.bind("zoom", function(e) {
+                e.preventDefault();
+            });
+            chart._plotArea.redraw = function() {
+                ok(false);
+            };
+            triggerPinchZoom(1);
+        });
+
+        test("triggers zoomEnd event", function() {
+            chart.bind("zoomEnd", function(e) {
+                ok(true);
+            });
+            triggerPinchZoom(1);
+        });
+
     })();
 
     (function() {
