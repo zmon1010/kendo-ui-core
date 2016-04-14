@@ -88,7 +88,7 @@ JSP_BUNDLES.each do |bundle|
     end
 end
 
-file_copy :to => 'dist/bundles/jsp.commercial.source/src/kendo-taglib/pom.xml',
+file_copy :to => 'dist/bundles/jsp.commercial-source/src/kendo-taglib/pom.xml',
           :from => JSP_TAGLIB_POM
 
 file 'dist/bundles/jsp.commercial/src/kendo-taglib/pom.xml' do  |t|

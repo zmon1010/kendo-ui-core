@@ -319,17 +319,10 @@ bundle :name => 'professional.commercial',
             'apptemplates' => APPTEMPLATES_CONTENT
        }
 
-bundle :name => 'professional.commercial.source',
+bundle :name => 'professional.commercial-source',
        :license => 'src-license-complete',
        :eula => 'complete',
        :changelog => %w(components),
-       :release_build => {
-           :file_metadata => {
-             :zip => {
-              :download_name => "telerik.kendoui.professional.#{VERSION}.commercial.source.zip"
-             }
-           }
-       },
        :contents => {
             'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS
@@ -460,17 +453,10 @@ bundle :name => 'professional.office365',
             'styles' => MIN_CSS_RESOURCES
        }
 
-bundle :name => 'professional.office365.source',
+bundle :name => 'professional.office365-source',
        :license => 'src-license-office365',
        :eula => 'complete',
        :changelog => %w(components),
-       :release_build => {
-           :file_metadata => {
-             :zip => {
-              :download_name => "telerik.kendoui.professional.#{VERSION}.office365.source.zip",
-             }
-           }
-       },
        :contents => {
             'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS
@@ -729,17 +715,10 @@ bundle :name => 'aspnetmvc.commercial',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
        ]
 
-bundle :name => 'aspnetmvc.commercial.source',
+bundle :name => 'aspnetmvc.commercial-source',
        :license => 'src-license-complete',
        :eula => 'aspnetmvc',
        :changelog => %w(components aspnetmvc),
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.commercial.source.zip",
-             }
-          }
-       },
        :contents => {
             'src/js' => MVC_SRC_JS,
             'src/styles' => SRC_CSS,
@@ -755,14 +734,14 @@ bundle :name => 'aspnetmvc.commercial.source',
                 .exclude('**/*.csproj')
        },
        :prerequisites => [
-           'dist/bundles/aspnetmvc.commercial.source/src/Kendo.Mvc/Kendo.Mvc.sln',
-           'dist/bundles/aspnetmvc.commercial.source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
-           'dist/bundles/aspnetmvc.commercial.source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
-           'dist/bundles/aspnetmvc.commercial.source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
-           'dist/bundles/aspnetmvc.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
-           'dist/bundles/aspnetmvc.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
-           'dist/bundles/aspnetmvc.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
-           'dist/bundles/aspnetmvc.commercial.source/src/Telerik.Web.Spreadsheet/lib'
+           'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
+           'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
+           'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
+           'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
+           'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
+           'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/lib'
        ]
 
 bundle :name => 'aspnetmvc.internal.commercial',
@@ -787,17 +766,10 @@ bundle :name => 'aspnetmvc.internal.commercial',
            'type_script:master:test'
        ]
 
-bundle :name => 'aspnetmvc.internal.commercial.source',
+bundle :name => 'aspnetmvc.internal.commercial-source',
        :license => 'src-license-complete',
        :eula => 'aspnetmvc',
        :changelog => %w(components aspnetmvc),
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.internal.commercial.source.zip",
-             }
-          }
-       },
        :contents => {
             'src/js' => MVC_SRC_JS,
             'src/styles' => SRC_CSS,
@@ -813,14 +785,14 @@ bundle :name => 'aspnetmvc.internal.commercial.source',
                 .exclude('**/*.csproj')
        },
        :prerequisites => [
-           'dist/bundles/aspnetmvc.internal.commercial.source/src/Kendo.Mvc/Kendo.Mvc.sln',
-           'dist/bundles/aspnetmvc.internal.commercial.source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
-           'dist/bundles/aspnetmvc.internal.commercial.source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
-           'dist/bundles/aspnetmvc.internal.commercial.source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
-           'dist/bundles/aspnetmvc.internal.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
-           'dist/bundles/aspnetmvc.internal.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
-           'dist/bundles/aspnetmvc.internal.commercial.source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
-           'dist/bundles/aspnetmvc.internal.commercial.source/src/Telerik.Web.Spreadsheet/lib'
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/lib'
        ]
 
 bundle :name => 'aspnetmvc.hotfix.commercial',
@@ -981,24 +953,17 @@ bundle :name => 'jsp.commercial',
            "dist/bundles/jsp.commercial/wrappers/jsp/spring-demos/pom.xml"
        ]
 
-bundle :name => 'jsp.commercial.source',
+bundle :name => 'jsp.commercial-source',
        :license => 'src-license-complete',
        :eula => 'jsp',
        :changelog => %w(components jsp),
-       :release_build => {
-         :file_metadata => {
-             :zip => {
-              :download_name => "telerik.ui.for.jsp.#{VERSION}.commercial.source.zip",
-             }
-          }
-        },
        :contents => {
             'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS,
             'src/kendo-taglib' => JSP_TAGLIB_SRC.exclude('**/test/**/*')
        },
        :prerequisites => [
-           "dist/bundles/jsp.commercial.source/src/kendo-taglib/pom.xml"
+           "dist/bundles/jsp.commercial-source/src/kendo-taglib/pom.xml"
        ]
 
 # UI for PHP
@@ -1082,17 +1047,10 @@ bundle :name => 'php.commercial',
            "php:assets"
        ]
 
-bundle :name => 'php.commercial.source',
+bundle :name => 'php.commercial-source',
        :license => 'src-license-complete',
        :eula => 'php',
        :changelog => %w(components php),
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :download_name => "telerik.ui.for.php.#{VERSION}.commercial.source.zip",
-             }
-          }
-        },
        :contents => {
             'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS,
@@ -1130,23 +1088,23 @@ bundle :name => 'core',
 
 BUNDLES = [
     'aspnetmvc.commercial',
-    'aspnetmvc.commercial.source',
+    'aspnetmvc.commercial-source',
     'aspnetmvc.internal.commercial',
-    'aspnetmvc.internal.commercial.source',
+    'aspnetmvc.internal.commercial-source',
     'aspnetmvc.hotfix.commercial',
     'aspnetmvc.hotfix.trial',
     'aspnetmvc.trial',
     'cdn.commercial',
     'professional.commercial',
-    'professional.commercial.source',
+    'professional.commercial-source',
     'professional.trial',
     'professional.office365',
-    'professional.office365.source',
+    'professional.office365-source',
     'jsp.commercial',
-    'jsp.commercial.source',
+    'jsp.commercial-source',
     'jsp.trial',
     'php.commercial',
-    'php.commercial.source',
+    'php.commercial-source',
     'php.trial',
     'appbuilder.professional',
     'appbuilder.core',

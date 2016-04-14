@@ -37,7 +37,7 @@ CLEAN.include(FileList[
     SPREADSHEET_ROOT + '/lib/NET*/**/*'
 ])
 
-['commercial.source', 'internal.commercial.source'].each do |bundle|
+['commercial-source', 'internal.commercial-source'].each do |bundle|
     # Copy Source.snk as Kendo.snk (the original Kendo.snk should not be distributed)
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk",
               :from => 'wrappers/mvc/src/shared/Source.snk'

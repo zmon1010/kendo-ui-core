@@ -351,7 +351,7 @@ else
          :root => MVC6_SRC_ROOT + 'bin/Release/'
 end
 
-['commercial.source', 'internal.commercial.source'].each do |bundle|
+['commercial-source', 'internal.commercial-source'].each do |bundle|
     # Copy Source.snk as Kendo.snk (the original Kendo.snk should not be distributed)
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk",
               :from => 'wrappers/mvc/src/shared/Source.snk'
