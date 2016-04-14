@@ -160,6 +160,9 @@
         register: function(name, dialogClass) {
             registry[name] = dialogClass;
         },
+        registered: function(name) {
+            return !!registry[name];
+        },
         create: function(name, options) {
             var dialogClass = registry[name];
 

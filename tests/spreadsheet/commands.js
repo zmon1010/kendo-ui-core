@@ -1221,4 +1221,22 @@
         ok(sheet.range("A4").bold());
     });
 
+    module("Spreadsheet PasteCommand", moduleOptions);
+
+    var PasteCommand = $.proxy(command, this, kendo.spreadsheet.PasteCommand);
+
+    test("errors out when paste is not available", function() {
+        var command = PasteCommand({
+            workbook: {
+                clipboard: function() {
+                    return { canPaste: function() { return false; } };
+                }
+            }
+        });
+
+        var status = command.exec();
+
+        equal(status.reason, "error");
+    });
+
 })();

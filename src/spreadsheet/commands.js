@@ -363,22 +363,21 @@
             this._clipboard.menuInvoked = true;
             if (!status.canPaste) {
                 if (status.menuInvoked) {
-                    return { reason: "useKeyboard" };
+                    return { reason: "error", type: "useKeyboard" };
                 }
                 if (status.pasteOnMerged) {
-                    return { reason: "modifyMerged" };
+                    return { reason: "error", type: "modifyMerged" };
                 }
                 if (status.overflow) {
-                    return { reason: "overflow" };
+                    return { reason: "error", type: "overflow" };
                 }
-                return {};
+                return { reason: "error" };
             }
             this.getState();
             this._clipboard.paste();
 
             var range = this._workbook.activeSheet().range(this._clipboard.pasteRef());
             range._adjustRowHeight();
-            return {};
         }
     });
 
@@ -399,7 +398,7 @@
                 //reason : focusclipbord
                 document.execCommand('paste');
             } else {
-                return { reason: "useKeyboard" };
+                return { reason: "error", type: "useKeyboard" };
             }
         }
     });
@@ -415,9 +414,9 @@
             this._clipboard.menuInvoked = true;
             if (!status.canCopy) {
                 if (status.menuInvoked) {
-                    return { reason: "useKeyboard" };
+                    return { reason: "error", type: "useKeyboard" };
                 } else if (status.multiSelection) {
-                    return { reason: "unsupportedSelection" };
+                    return { reason: "error", type: "unsupportedSelection" };
                 }
                 return;
             }
@@ -440,7 +439,7 @@
                 clipboard.trigger("copy");
                 $(textarea).remove();
             } else {
-                return { reason: "useKeyboard" };
+                return { reason: "error", type: "useKeyboard" };
             }
         }
     });
@@ -492,7 +491,7 @@
                 clipboard.trigger("cut");
                 $(textarea).remove();
             } else {
-                return { reason: "useKeyboard" };
+                return { reason: "error", type: "useKeyboard" };
             }
         }
     });
