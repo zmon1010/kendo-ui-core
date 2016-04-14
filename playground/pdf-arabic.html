@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js"
+      ]);
+    </script>
+    <script>
+      kendo.pdf.defineFont({
+        "FreeMono|Bold|Italic"  : "./freefont/FreeMonoBoldOblique.ttf",
+        "FreeMono|Bold"         : "./freefont/FreeMonoBold.ttf",
+        "FreeMono|Italic"       : "./freefont/FreeMonoOblique.ttf",
+        "FreeMono"              : "./freefont/FreeMono.ttf",
+        "FreeSans|Bold|Italic"  : "./freefont/FreeSansBoldOblique.ttf",
+        "FreeSans|Bold"         : "./freefont/FreeSansBold.ttf",
+        "FreeSans|Italic"       : "./freefont/FreeSansOblique.ttf",
+        "FreeSans"              : "./freefont/FreeSans.ttf",
+        "FreeSerif|Bold|Italic" : "./freefont/FreeSerifBoldItalic.ttf",
+        "FreeSerif|Bold"        : "./freefont/FreeSerifBold.ttf",
+        "FreeSerif|Italic"      : "./freefont/FreeSerifItalic.ttf",
+        "FreeSerif"             : "./freefont/FreeSerif.ttf"
+      });
+    </script>
+    <style type="text/css">
+      body {
+        font-family: FreeSans;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="exportPDF()">Export PDF</button>
+    <script>
+      function exportPDF() {
+        kendo.drawing.drawDOM("#test", {
+          paperSize: "A4",
+          margin: "1cm"
+        }).then(function(group){
+          group.options.set("pdf.margin", "1cm");
+          kendo.drawing.pdf.saveAs(group, "test.pdf");
+        });
+      }
+    </script>
+    <div id="test">
+
+يَجِبُ عَلَى الإنْسَانِ أن يَكُونَ أمِيْنَاً وَصَادِقَاً مَعَ نَفْسِهِ وَمَعَ أَهْلِهِ وَجِيْرَانِهِ وَأَنْ يَبْذُلَ كُلَّ
+جُهْدٍ فِي إِعْلاءِ شَأْنِ الوَطَنِ وَأَنْ يَعْمَلَ عَلَى مَا يَجْلِبُ السَّعَادَةَ لِلنَّاسِ . ولَن يَتِمَّ لَهُ ذلِك
+إِلا بِأَنْ يُقَدِّمَ المَنْفَعَةَ العَامَّةَ عَلَى المَنْفَعَةِ الخَاصَّةِ وَهذَا مِثَالٌ لِلتَّضْحِيَةِ .
+
+    </div>
+  </body>
+</html>
