@@ -186,6 +186,7 @@ var __meta__ = { // jshint ignore:line
         OBJECT = "object",
         OHLC = "ohlc",
         OUTSIDE_END = "outsideEnd",
+        PAN_THRESHOLD = kendo.support.mobileOS ? 10 : 0,
         PIE = "pie",
         PIE_SECTOR_ANIM_DELAY = 70,
         PLOT_AREA_CLICK = "plotAreaClick",
@@ -859,7 +860,7 @@ var __meta__ = { // jshint ignore:line
                 ranges = {},
                 i, currentAxis, axisName, axis, delta;
 
-            if (pannable) {
+            if (pannable && pannable._active) {
                 e.preventDefault();
                 ranges = pannable.move(e);
                 if (ranges && !chart.trigger(DRAG, { axisRanges: ranges, originalEvent: e})) {
@@ -12557,12 +12558,18 @@ var __meta__ = { // jshint ignore:line
 
         options: {
             key: "none",
-            lock: "none"
+            lock: "none",
+            threshold: PAN_THRESHOLD
         },
 
         start: function(e) {
-            this._active = acceptKey(e.event, this.options.key);
-            return this._active;
+            var options = this.options;
+            var lock = (options.lock  || "").toLowerCase();
+            var threshold = options.threshold;
+            if (!threshold || !lock || lock == "none" || (lock == "y" && math.abs(e.x.startLocation - e.x.location) >= threshold) || (lock == "x" && math.abs(e.y.startLocation - e.y.location) >= threshold)) {
+                this._active = acceptKey(e.event, this.options.key);
+                return this._active;
+            }
         },
 
         move: function(e) {
