@@ -1928,11 +1928,11 @@ var __meta__ = { // jshint ignore:line
                     return;
                 }
 
-                var clientX = e.clientX,
+                var clientX = e.clientX / parseFloat(document.documentElement.style.zoom || document.body.style.zoom || 1),
                     winScrollLeft = $(window).scrollLeft(),
                     position = th.offset().left + (!isRtl ? this.offsetWidth : 0);
 
-                if(clientX + winScrollLeft > position - indicatorWidth && clientX + winScrollLeft < position + indicatorWidth) {
+                if (clientX + winScrollLeft > position - indicatorWidth && clientX + winScrollLeft < position + indicatorWidth) {
                     that._createResizeHandle(th.closest("div"), th);
                 } else if (that.resizeHandle) {
                     that.resizeHandle.hide();
