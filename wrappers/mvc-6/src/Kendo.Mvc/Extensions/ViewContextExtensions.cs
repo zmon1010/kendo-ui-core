@@ -26,7 +26,7 @@ namespace Kendo.Mvc.Extensions
 		public static ViewContext ViewContextForType<T>(this ViewContext viewContext, IModelMetadataProvider metadataProvider)
 		{
 			var actionContext = new ActionContext(viewContext.HttpContext, new RouteData(), new ActionDescriptor());
-			var viewDataDictionary = new ViewDataDictionary<T>(metadataProvider, new ModelStateDictionary());
+			var viewDataDictionary = new ViewDataDictionary<T>(viewContext.ViewData);
             var tempDataDictionary = new TempDataDictionary(viewContext.GetService<IHttpContextAccessor>(), viewContext.GetService<ITempDataProvider>());
             var options = new HtmlHelperOptions
             {
