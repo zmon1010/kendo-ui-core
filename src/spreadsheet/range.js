@@ -680,18 +680,13 @@
                             : sheet.range(origin.row + dr, origin.col + dc);
                         if (range.enable()) {
                             for (var property in cellState) {
-                                if (property == "value") {
+                                if (property != "value") {
                                     // make sure value comes last (after the loop),
                                     // because if we set value here and get get to
                                     // formula later and cellState.formula is null,
                                     // it'll clear the value.
-                                    continue;
+                                    range._set(property, cellState[property]);
                                 }
-                                if (property == "validation" && isPaste) {
-                                    // do not reset cell validation on paste. #5602
-                                    continue;
-                                }
-                                range._set(property, cellState[property]);
                             }
                             if (!cellState.formula) {
                                 // only need to set the value if we don't have a
