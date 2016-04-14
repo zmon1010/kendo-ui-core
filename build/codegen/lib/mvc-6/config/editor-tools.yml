@@ -2,6 +2,72 @@
 - :name: bold
   :overload: button
 
+- :name: cleanFormatting
+  :overload: button
+
+- :name: createLink
+  :overload: button
+
+- :name: indent
+  :overload: button
+
+- :name: insertFile
+  :overload: button
+
+- :name: insertImage
+  :overload: button
+
+- :name: insertOrderedList
+  :overload: button
+
+- :name: insertUnorderedList
+  :overload: button
+
+- :name: italic
+  :overload: button
+
+- :name: justifyCenter
+  :overload: button
+
+- :name: justifyFull
+  :overload: button
+
+- :name: justifyLeft
+  :overload: button
+
+- :name: justifyRight
+  :overload: button
+
+- :name: outdent
+  :overload: button
+
+- :name: pdf
+  :overload: button
+
+- :name: print
+  :overload: button
+
+- :name: separator
+  :overload: button
+
+- :name: strikethrough
+  :overload: button
+
+- :name: subscript
+  :overload: button
+
+- :name: superscript
+  :overload: button
+
+- :name: underline
+  :overload: button
+
+- :name: unlink
+  :overload: button
+
+- :name: viewHtml
+  :overload: button
+
 # dropDown tools
 - :name: fontName
   :overload: dropDown
