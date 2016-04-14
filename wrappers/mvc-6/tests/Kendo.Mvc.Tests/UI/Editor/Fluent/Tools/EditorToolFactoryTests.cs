@@ -287,33 +287,33 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Builder_should_create_Subscript_tool()
+        public void Builder_should_create_SubScript_tool()
         {
-            builder.Subscript();
+            builder.SubScript();
 
             items.Count.ShouldEqual(1);
             items[0].Name.ShouldEqual("subscript");
         }
 
         [Fact]
-        public void Subscript_should_return_builder()
+        public void SubScript_should_return_builder()
         {
-            builder.Subscript().ShouldBeSameAs(builder);
+            builder.SubScript().ShouldBeSameAs(builder);
         }
 
         [Fact]
-        public void Builder_should_create_Superscript_tool()
+        public void Builder_should_create_SuperScript_tool()
         {
-            builder.Superscript();
+            builder.SuperScript();
 
             items.Count.ShouldEqual(1);
             items[0].Name.ShouldEqual("superscript");
         }
 
         [Fact]
-        public void Superscript_should_return_builder()
+        public void SuperScript_should_return_builder()
         {
-            builder.Superscript().ShouldBeSameAs(builder);
+            builder.SuperScript().ShouldBeSameAs(builder);
         }
 
         [Fact]
@@ -368,6 +368,7 @@ namespace Kendo.Mvc.UI.Tests
 
             items.Count.ShouldEqual(1);
             items[0].Name.ShouldEqual("fontName");
+            items[0].Items.Count.ShouldEqual(0);
         }
 
         [Fact]
@@ -397,6 +398,7 @@ namespace Kendo.Mvc.UI.Tests
 
             items.Count.ShouldEqual(1);
             items[0].Name.ShouldEqual("fontSize");
+            items[0].Items.Count.ShouldEqual(0);
         }
 
         [Fact]
@@ -426,6 +428,7 @@ namespace Kendo.Mvc.UI.Tests
 
             items.Count.ShouldEqual(1);
             items[0].Name.ShouldEqual("formatting");
+            items[0].Items.Count.ShouldEqual(0);
         }
 
         [Fact]
@@ -455,6 +458,7 @@ namespace Kendo.Mvc.UI.Tests
 
             items.Count.ShouldEqual(1);
             items[0].Name.ShouldEqual("insertHtml");
+            items[0].Items.Count.ShouldEqual(0);
         }
 
         [Fact]
@@ -476,7 +480,7 @@ namespace Kendo.Mvc.UI.Tests
             items[0].Items[0].Text.ShouldEqual(text);
             items[0].Items[0].Value.ShouldEqual(value);
         }
-
+        
         [Fact]
         public void Builder_should_create_BackColor_tool()
         {
@@ -526,6 +530,7 @@ namespace Kendo.Mvc.UI.Tests
             items[0].Name.ShouldEqual("foreColor");
             items[0].Palette.ShouldEqual(ColorPickerPalette.WebSafe);
         }
+
         [Fact]
         public void Builder_should_create_TableEditing_tool()
         {

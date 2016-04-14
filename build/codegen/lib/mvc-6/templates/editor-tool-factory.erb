@@ -18,9 +18,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds "<%= tool[:name] %>" tool.
         /// </summary>
-        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
+        public virtual EditorToolFactory <%= tool[:name] %>()
         {
-            AddTool("<%= tool[:name] %>");
+            AddTool("<%= serialize_tool_name(tool) %>");
             return this;
         }
 % end
@@ -29,15 +29,15 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds "<%= tool[:name] %>" tool.
         /// </summary>
-        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
+        public virtual EditorToolFactory <%= tool[:name] %>()
         {
-            AddTool("<%= tool[:name] %>");
+            AddTool("<%= serialize_tool_name(tool) %>");
             return this;
         }
 
-        public EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>(Action<EditorToolBuilder> configurator)
+        public EditorToolFactory <%= tool[:name] %>(Action<EditorToolBuilder> configurator)
         {
-            AddTool("<%= tool[:name] %>", configurator);
+            AddTool("<%= serialize_tool_name(tool) %>", configurator);
             return this;
         }
 % end
@@ -46,18 +46,18 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Adds "<%= tool[:name] %>" tool.
         /// </summary>
-        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
+        public virtual EditorToolFactory <%= tool[:name] %>()
         {
-            AddDropDownTool("<%= tool[:serialize_as].nil? ? tool[:name] : tool[:serialize_as] %>", null);
+            AddDropDownTool("<%= serialize_tool_name(tool) %>", new List<EditorToolItem>());
             return this;
         }
 
         /// <summary>
         /// Adds "<%= tool[:name] %>" tool.
         /// </summary>
-        public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>(Action<EditorToolItemFactory> configurator)
+        public virtual EditorToolFactory <%= tool[:name] %>(Action<EditorToolItemFactory> configurator)
         {
-            AddDropDownTool("<%= tool[:serialize_as].nil? ? tool[:name] : tool[:serialize_as] %>", CreateDropDownToolItems(configurator));
+            AddDropDownTool("<%= serialize_tool_name(tool) %>", CreateDropDownToolItems(configurator));
             return this;
         }
 % end
@@ -65,7 +65,7 @@ namespace Kendo.Mvc.UI.Fluent
         public EditorToolFactory TableEditing()
         {
 % TABLE_EDITING_TOOLS.each do |tool|
-            AddTool("<%= tool[:name] %>");
+            AddTool("<%= serialize_tool_name(tool) %>");
 % end
             return this;
         }

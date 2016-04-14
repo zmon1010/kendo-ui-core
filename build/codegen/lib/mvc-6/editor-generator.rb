@@ -17,9 +17,17 @@ module CodeGen::MVC6::Wrappers::EditorGenerator
         write_file(filename, EDITOR_TOOL_FACTORY.result(binding))
     end
 
-    def capitalize_first_letter(string)
-        capitalized_string = string.dup
-        capitalized_string[0] = capitalized_string[0].upcase
-        capitalized_string
+    def lowercase_first_letter(string)
+        new_string = string.dup
+        new_string[0] = new_string[0].downcase
+        new_string
+    end
+
+    def serialize_tool_name(tool)
+        if !tool[:serialize_as].nil?
+            tool[:serialize_as]
+        else
+            lowercase_first_letter(tool[:name])
+        end
     end
 end

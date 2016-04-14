@@ -1,103 +1,114 @@
 # button tools
-- :name: bold
+- :name: Bold
   :overload: button
 
-- :name: cleanFormatting
+- :name: CleanFormatting
   :overload: button
 
-- :name: createLink
+- :name: CreateLink
   :overload: button
 
-- :name: indent
+- :name: Indent
   :overload: button
 
-- :name: insertFile
+- :name: InsertFile
   :overload: button
 
-- :name: insertImage
+- :name: InsertImage
   :overload: button
 
-- :name: insertOrderedList
+- :name: InsertOrderedList
   :overload: button
 
-- :name: insertUnorderedList
+- :name: InsertUnorderedList
   :overload: button
 
-- :name: italic
+- :name: Italic
   :overload: button
 
-- :name: justifyCenter
+- :name: JustifyCenter
   :overload: button
 
-- :name: justifyFull
+- :name: JustifyFull
   :overload: button
 
-- :name: justifyLeft
+- :name: JustifyLeft
   :overload: button
 
-- :name: justifyRight
+- :name: JustifyRight
   :overload: button
 
-- :name: outdent
+- :name: Outdent
   :overload: button
 
-- :name: pdf
+- :name: Pdf
   :overload: button
 
-- :name: print
+- :name: Print
   :overload: button
 
-- :name: separator
+- :name: Separator
   :overload: button
 
-- :name: strikethrough
+- :name: Strikethrough
   :overload: button
 
-- :name: subscript
+- :name: SubScript
+  :overload: button
+  :serialize_as: subscript
+
+- :name: SuperScript
+  :overload: button
+  :serialize_as: superscript
+
+- :name: Underline
   :overload: button
 
-- :name: superscript
+- :name: Unlink
   :overload: button
 
-- :name: underline
-  :overload: button
-
-- :name: unlink
-  :overload: button
-
-- :name: viewHtml
+- :name: ViewHtml
   :overload: button
 
 # dropDown tools
-- :name: fontName
+- :name: FontName
   :overload: dropDown
-- :name: fontSize
+
+- :name: FontSize
   :overload: dropDown
-- :name: formatting
+
+- :name: Formatting
   :overload: dropDown
-- :name: snippets
+
+- :name: Snippets
   :overload: dropDown
   :serialize_as: insertHtml
 
 # color picker tools
-- :name: backColor
+- :name: BackColor
   :overload: colorPicker
 
-- :name: foreColor
+- :name: ForeColor
   :overload: colorPicker
 
 # table editing
-- :name: addColumnLeft
+- :name: AddColumnLeft
   :overload: tableEditing
-- :name: addColumnRight
+
+- :name: AddColumnRight
   :overload: tableEditing
-- :name: addRowAbove
+
+- :name: AddRowAbove
   :overload: tableEditing
-- :name: addRowBelow
+
+- :name: AddRowBelow
   :overload: tableEditing
-- :name: createTable
+
+- :name: CreateTable
   :overload: tableEditing
+
 - :name: deleteColumn
   :overload: tableEditing
-- :name: deleteRow
+
+- :name: DeleteRow
   :overload: tableEditing

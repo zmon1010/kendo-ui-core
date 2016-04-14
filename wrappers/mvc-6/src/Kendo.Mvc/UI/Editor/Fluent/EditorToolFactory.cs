@@ -8,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring List<EditorTool>
     /// </summary>
     public partial class EditorToolFactory
-        
+
     {
         public EditorToolFactory(List<EditorTool> container)
         {
