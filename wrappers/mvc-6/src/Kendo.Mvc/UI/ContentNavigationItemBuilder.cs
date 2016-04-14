@@ -1,4 +1,4 @@
-﻿using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;

@@ -1,0 +1,26 @@
+:options:
+    - :name: scrollable.distance
+      :merge: true
+      :type: int
+
+    - :name: tabposition
+      :type: String
+      :merge: true
+      :description: The criterion operator type.
+      :enum_type: TabStripTabPosition
+      :values:
+          - :value: top
+            :member: Top
+            :description: tabs are positioned on the top
+
+          - :value: left
+            :member: Left
+            :description: tabs are positioned on the left
+
+          - :value: right
+            :member: Right
+            :description: tabs are positioned on the right
+
+          - :value: bottom
+            :member: Bottom
+            :description: tabs are positioned on the bottom
