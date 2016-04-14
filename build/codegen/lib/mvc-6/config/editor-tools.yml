@@ -75,6 +75,9 @@
   :overload: dropDown
 - :name: formatting
   :overload: dropDown
+- :name: snippets
+  :overload: dropDown
+  :serialize_as: insertHtml
 
 # color picker tools
 - :name: backColor

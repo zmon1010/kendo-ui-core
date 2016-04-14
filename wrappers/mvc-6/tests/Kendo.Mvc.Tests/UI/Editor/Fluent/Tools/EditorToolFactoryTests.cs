@@ -449,6 +449,35 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_create_Snippets_tool()
+        {
+            builder.Snippets();
+
+            items.Count.ShouldEqual(1);
+            items[0].Name.ShouldEqual("insertHtml");
+        }
+
+        [Fact]
+        public void Snippets_should_return_builder()
+        {
+            builder.Snippets().ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_set_Snippets_tool_items()
+        {
+            var text = "text";
+            var value = "value";
+
+            builder.Snippets(x => x.Add(text, value));
+
+            items.Count.ShouldEqual(1);
+            items[0].Name.ShouldEqual("insertHtml");
+            items[0].Items[0].Text.ShouldEqual(text);
+            items[0].Items[0].Value.ShouldEqual(value);
+        }
+
+        [Fact]
         public void Builder_should_create_BackColor_tool()
         {
             builder.BackColor();

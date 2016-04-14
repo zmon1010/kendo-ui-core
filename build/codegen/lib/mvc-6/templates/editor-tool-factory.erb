@@ -48,7 +48,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>()
         {
-            AddDropDownTool("<%= tool[:name] %>", null);
+            AddDropDownTool("<%= tool[:serialize_as].nil? ? tool[:name] : tool[:serialize_as] %>", null);
             return this;
         }
 
@@ -57,7 +57,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public virtual EditorToolFactory <%= capitalize_first_letter(tool[:name]) %>(Action<EditorToolItemFactory> configurator)
         {
-            AddDropDownTool("<%= tool[:name] %>", CreateDropDownToolItems(configurator));
+            AddDropDownTool("<%= tool[:serialize_as].nil? ? tool[:name] : tool[:serialize_as] %>", CreateDropDownToolItems(configurator));
             return this;
         }
 % end

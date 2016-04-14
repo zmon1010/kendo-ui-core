@@ -305,6 +305,24 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Adds "snippets" tool.
+        /// </summary>
+        public virtual EditorToolFactory Snippets()
+        {
+            AddDropDownTool("insertHtml", null);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds "snippets" tool.
+        /// </summary>
+        public virtual EditorToolFactory Snippets(Action<EditorToolItemFactory> configurator)
+        {
+            AddDropDownTool("insertHtml", CreateDropDownToolItems(configurator));
+            return this;
+        }
+
         public EditorToolFactory TableEditing()
         {
             AddTool("addColumnLeft");
