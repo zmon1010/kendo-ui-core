@@ -12,9 +12,10 @@
 <div id="header">
 
 @*    <div id="webinar-banner">
-        Kendo UI Q1 16 Release Webinar is near!
-        <a href="http://www.telerik.com/campaigns/kendo-ui/february-2016-release">Sign up</a>
-        to watch technical demos of the freshly released bits and win awesome prizes.
+
+        The SaveAs Webinar: Exporting Content from JavaScript Apps:
+        <a href="http://www.telerik.com/campaigns/kendo-ui/exporting-js-content">Sign up</a>
+        to learn how to export or save data to different file formats.
         <span class="close"></span>
     </div>
 
@@ -25,18 +26,23 @@
             var bannerLink = banner.find("a");
             var trackingAttribute = "data-gtm-event";
             var uniqueLocalStorageBannerKey = "KendoUIQ12016ReleaseWebinarBannerDisabled";
-            var bannerExpiresAt = Date.UTC(2016, 1, 17, 18, 0);
+            var bannerExpiresAt = Date.UTC(2016, 3, 26, 16, 0);
             var showWebinarBanner = true;
             var suites = {
                 // "suite": "trackingAttribute"
-                "kendo-ui": "yellow-strip, KendoUIQ12016Release, kendo-demos-page",
-                "aspnet-mvc": "yellow-strip, KendoUIQ12016Release, mvc-demos-page",
-                "php-ui": "yellow-strip, KendoUIQ12016Release, php-demos-page",
-                "jsp-ui": "yellow-strip, KendoUIQ12016Release, jsp-demos-page"
+                "/kendo-ui/": "yellow-strip, KendoUIQ22016ExportWebinar, kendo-overview-page", // Kendo UI Demos Overview page only
+                "kendo-ui/": "yellow-strip, KendoUIQ22016ExportWebinar, kendo-demos-page",
+                "aspnet-mvc/": "yellow-strip, KendoUIQ22016ExportWebinar, mvc-demos-page",
+                "php-ui/": "yellow-strip, KendoUIQ22016ExportWebinar, php-demos-page",
+                "jsp-ui/": "yellow-strip, KendoUIQ22016ExportWebinar, jsp-demos-page"
             };
 
             for (var j in suites) {
-                if (location.href.indexOf(j) > 0) {
+                var isOverviewKey = j === "/kendo-ui/";
+                var containsKey = location.href.indexOf(j) > 0;
+                var endsWithKey = location.href.endsWith(j);
+
+                if (containsKey && (isOverviewKey && endsWithKey || !isOverviewKey && !endsWithKey)) {
                     try {
                         showWebinarBanner = (typeof bannerExpiresAt == "undefined" || bannerExpiresAt > (new Date()).getTime()) && ("1" !== localStorage.getItem(uniqueLocalStorageBannerKey));
                     } catch (e) {
