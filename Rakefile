@@ -153,8 +153,6 @@ require 'bundle'
 require 'theme_builder'
 require 'demos'
 require 'download_builder'
-require 'internal_build_upload'
-require 'release_build_upload'
 require 'release_notes'
 require 'product_incubator_hub'
 require 'cdn'
@@ -263,56 +261,7 @@ bundle :name => 'professional.commercial',
            :dir => 'examples'
        },
        :product => 'Kendo UI Professional',
-       :upload_as_internal_build => true,
        :skip_grunt_build => true,
-       :release_build => {
-           :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.commercial.zip",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik", "SiteFinity"],
-              :download_message => 'You have successfully downloaded the Kendo UI Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />Complete Source Code</strong>"
-             },
-             :msi => {
-              :label => "Automatic Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.commercial.msi",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "MSI",
-              :file_markers => ["Default File For Common Installer"],
-              :websites => ["Telerik"],
-              :download_message => 'You successfully downloaded the Kendo UI Professional installer. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />Complete Source Code</strong>"
-             },
-             :exe => {
-              :label => "Control Panel:",
-              :download_name => "TelerikControlPanelSetup.KUI.Professional.#{VERSION}.exe",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "EXE",
-              :file_markers => ["Is Bolded"],
-              :websites => ["Telerik"],
-              :download_message => 'You successfully downloaded the Kendo UI Professional installer. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Installer EXE package</strong>"
-             },
-             :nuget => {
-              :label => "Kendo UI Professional NuGet package",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.commercial.nupkg.zip",
-              :file_category => "Other Setup Files",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :websites => ["Telerik"],
-              :download_message => "You successfully downloaded Kendo UI Professional Commercial NuGet package.",
-              :whats_included_message => "<strong>Commercial NuGet package for Kendo UI Professional</strong>"
-             }
-           },
-           :download_builder => true,
-       },
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
@@ -344,68 +293,7 @@ bundle :name => 'professional.trial',
             'styles' => MIN_CSS_RESOURCES,
             'apptemplates' => APPTEMPLATES_CONTENT
        },
-       :product => 'Kendo UI Professional',
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.trial.zip",
-              :file_category => "Installation",
-              :file_type => "Trial Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik", "SiteFinity"],
-              :download_message => 'You have successfully downloaded the Kendo UI Professional Trial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles</strong>"
-             },
-             :msi => {
-              :label => "Automatic Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.trial.msi",
-              :file_category => "Installation",
-              :file_type => "Trial Files",
-              :extension => "MSI",
-              :file_markers => ["Default File For Common Installer"],
-              :websites => ["Telerik"],
-              :download_message => 'You successfully downloaded the Kendo UI Professional Trial installer. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.'
-             },
-             :nuget => {
-              :label => "Kendo UI Professional NuGet package",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.trial.nupkg.zip",
-              :file_category => "Other Setup Files",
-              :file_type => "Trial Files",
-              :extension => "ZIP",
-              :websites => ["Telerik"],
-              :download_message => "You successfully downloaded Kendo UI Professional Trial NuGet package.",
-              :whats_included_message => "<strong>Trial NuGet package for Kendo UI Professional</strong>"
-             }
-           },
-           :changelog => true,
-       },
-       :beta_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Q#{VERSION_Q} #{VERSION_YEAR} Beta - Manual Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.beta.trial.zip",
-              :file_category => "Beta",
-              :file_type => "Additional files - shown to all",
-              :extension => "ZIP",
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Kendo UI Professional Q#{VERSION_Q} #{VERSION_YEAR} Beta release. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles</strong>"
-             },
-             :msi => {
-              :label => "Q#{VERSION_Q} #{VERSION_YEAR} Beta -Automatic Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.beta.trial.msi",
-              :file_category => "Beta",
-              :file_type => "Additional files - shown to all",
-              :extension => "MSI",
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Kendo UI Professional Q#{VERSION_Q} #{VERSION_YEAR} Beta release. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles</strong>"
-             }
-           },
-          :changelog => true,
-       }
+       :product => 'Kendo UI Professional'
 
 bundle :name => 'professional.office365',
        :license => 'src-license-office365',
@@ -420,34 +308,7 @@ bundle :name => 'professional.office365',
            :dir => 'examples'
        },
        :product => 'Kendo UI Professional',
-       :upload_as_internal_build => true,
        :skip_grunt_build => true,
-       :release_build => {
-           :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.office365.zip",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik", "SiteFinity"],
-              :download_message => 'You have successfully downloaded the Kendo UI Promotional version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />Complete Source Code</strong>"
-             },
-             :msi => {
-              :label => "Automatic Installation",
-              :download_name => "telerik.kendoui.professional.#{VERSION}.office365.msi",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "MSI",
-              :file_markers => ["Default File For Common Installer"],
-              :websites => ["Telerik"],
-              :download_message => 'You successfully downloaded the Kendo UI Professional installer. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />Complete Source Code</strong>"
-             }
-           }
-       },
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES
@@ -472,7 +333,6 @@ bundle :name => 'aspnetmvc.trial',
        :intellisense => %w(all web mobile dataviz),
        :type_script => %w(all web mobile dataviz),
        :changelog => %w(components aspnetmvc),
-       :upload_as_release_build => true,
        :demos => {
            :dir => [
                'wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/html',
@@ -482,81 +342,6 @@ bundle :name => 'aspnetmvc.trial',
            :template_dir => 'mvc'
        },
        :product => 'UI for ASP.NET MVC',
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.trial.zip",
-              :file_category => "Installation",
-              :file_type => "Trial Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Trial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos <br />Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers</strong>"
-             },
-             :msi => {
-              :label => "Automatic Installation",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.trial.msi",
-              :file_category => "Installation",
-              :file_type => "Trial Files",
-              :extension => "MSI",
-              :file_markers => ["Default File", "Default File For Common Installer"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Trial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos <br />Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers</strong>"
-             },
-             :exe => {
-              :label => "Web Installer:",
-              :download_name => "TelerikUIForAspNetMvcSetup.#{VERSION}.exe",
-              :file_category => "Installation",
-              :file_type => "Trial Files",
-              :extension => "EXE",
-              :file_markers => ["Is Common Installer", "Is Bolded"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Trial installer. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Installer EXE package</strong>"
-             },
-             :nuget => {
-              :label => "Telerik UI for ASP.NET MVC NuGet package",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.trial.nupkg.zip",
-              :file_category => "Other Setup Files",
-              :file_type => "Trial Files",
-              :extension => "ZIP",
-              :websites => ["Telerik"],
-              :download_message => "You successfully downloaded Telerik UI for ASP.NET MVC Trial NuGet package.",
-              :whats_included_message => "<strong>Trial NuGet package for Telerik UI for ASP.NET MVC</strong>"
-             }
-          },
-          :demos => true,
-          :changelog => true,
-       },
-       :beta_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Q#{VERSION_Q} #{VERSION_YEAR} Beta - Manual Installation",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.beta.trial.zip",
-              :file_category => "Beta",
-              :file_type => "Additional files - shown to all",
-              :extension => "ZIP",
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Q#{VERSION_Q} #{VERSION_YEAR} Beta release. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos <br />Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers</strong>"
-             },
-             :msi => {
-              :label => "Q#{VERSION_Q} #{VERSION_YEAR} Beta - Automatic Installation",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.beta.trial.msi",
-              :file_category => "Beta",
-              :file_type => "Additional files - shown to all",
-              :extension => "MSI",
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Q#{VERSION_Q} #{VERSION_YEAR} Beta release. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos <br />Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers</strong>"
-             }
-          },
-          :demos => true,
-          :changelog => true,
-       },
        :contents => {
             'js' => TRIAL_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
@@ -593,22 +378,6 @@ bundle :name => 'aspnetmvc.hotfix.trial',
        :type_script => %w(all web mobile dataviz),
        :changelog => %w(components aspnetmvc),
        :product => 'UI for ASP.NET MVC',
-       :release_build => {
-         :file_metadata => {
-             :zip => {
-              :label => "DLL, Scripts and Skins",
-              :download_name => "telerik.ui.for.aspnetmvc.hotfix.#{VERSION}.trial.zip",
-              :file_category => "Installation",
-              :file_type => "Trial Files",
-              :extension => "ZIP",
-              :file_markers => ["Use this file in VS Extensions and license key generation"],
-              :vs_hotfix => true,
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Trial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers</strong>"
-             }
-          }
-       },
        :contents => {
             'js' => TRIAL_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
@@ -639,55 +408,7 @@ bundle :name => 'aspnetmvc.commercial',
            :template_dir => 'mvc'
        },
        :product => 'UI for ASP.NET MVC',
-       :upload_as_internal_build => false,
        :skip_grunt_build => true,
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.commercial.zip",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos <br />Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers <br />Complete Source Code</strong>"
-             },
-             :msi => {
-              :label => "Automatic Installation",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.commercial.msi",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "MSI",
-              :file_markers => ["Default File", "Default File For Common Installer"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos <br />Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers <br />Complete Source Code</strong>"
-             },
-             :exe => {
-              :label => "Control Panel:",
-              :download_name => "TelerikControlPanelSetup.MVC.#{VERSION}.exe",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "EXE",
-              :file_markers => ["Is Bolded"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Commercial installer. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Installer EXE package</strong>"
-             },
-             :nuget => {
-              :label => "Telerik UI for ASP.NET MVC NuGet package",
-              :download_name => "telerik.ui.for.aspnetmvc.#{VERSION}.commercial.nupkg.zip",
-              :file_category => "Other Setup Files",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :websites => ["Telerik"],
-              :download_message => "You successfully downloaded Telerik UI for ASP.NET MVC Commercial NuGet package.",
-              :whats_included_message => "<strong>Commercial NuGet package for Telerik UI for ASP.NET MVC</strong>"
-             }
-          }
-       },
        :contents => {
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
@@ -752,7 +473,6 @@ bundle :name => 'aspnetmvc.internal.commercial',
        :type_script => %w(all web mobile dataviz),
        :changelog => %w(components aspnetmvc),
        :product => 'UI for ASP.NET MVC',
-       :upload_as_internal_build => true,
        :skip_grunt_build => true,
        :contents => {
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
@@ -804,24 +524,7 @@ bundle :name => 'aspnetmvc.hotfix.commercial',
        :type_script => %w(all web mobile dataviz),
        :changelog => %w(components aspnetmvc),
        :product => 'UI for ASP.NET MVC',
-       :upload_as_internal_build => true,
        :product => 'UI for ASP.NET MVC',
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "DLL, Scripts and Skins",
-              :download_name => "telerik.ui.for.aspnetmvc.hotfix.#{VERSION}.commercial.zip",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :file_markers => ["Use this file in VS Extensions and license key generation"],
-              :vs_hotfix => true,
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for ASP.NET MVC Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Minified Javascript Files<br />Minified Css Styles<br />ASP.NET MVC Server Wrappers</strong>"
-             }
-          }
-       },
        :vs_extension => true,
        :contents => {
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
@@ -859,7 +562,6 @@ bundle :name => 'appbuilder.professional',
             'js' => APP_BUILDER_MIN_JS,
             'typescript' => FileList['resources/typescript/jquery.d.ts']
        },
-       :upload_to_appbuilder => true,
        :appbuilder_features => "Kendo UI DataViz"
 
 bundle :name => 'appbuilder.core',
@@ -874,8 +576,7 @@ bundle :name => 'appbuilder.core',
             'styles' => APP_BUILDER_CORE_MIN_CSS,
             'js' => APP_BUILDER_CORE_MIN_JS,
             'typescript' => FileList['resources/typescript/jquery.d.ts']
-       },
-       :upload_to_appbuilder => true
+       }
 
 # UI for JSP
 bundle :name => 'jsp.trial',
@@ -886,37 +587,6 @@ bundle :name => 'jsp.trial',
        :changelog => %w(components jsp),
        :type_script => %w(all web mobile dataviz),
        :product => 'UI for JSP',
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.ui.for.jsp.#{VERSION}.trial.zip",
-              :file_category => "Installation",
-              :file_type => "Trial Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for JSP Trial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/jsp/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />JSP Server Wrappers</strong>"
-             }
-          },
-          :changelog => true,
-        },
-        :beta_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Q#{VERSION_Q} #{VERSION_YEAR} Beta - Manual Installation",
-              :download_name => "telerik.ui.for.jsp.#{VERSION}.beta.trial.zip",
-              :file_category => "Beta",
-              :file_type => "Additional files - shown to all",
-              :extension => "ZIP",
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for JSP Q#{VERSION_Q} #{VERSION_YEAR} Beta release. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/jsp/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />JSP Server Wrappers</strong>"
-             }
-          },
-          :changelog => true,
-        },
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
@@ -935,13 +605,6 @@ bundle :name => 'jsp.commercial',
        :changelog => %w(components jsp),
        :product => 'UI for JSP',
        :skip_grunt_build => true,
-       :release_build => {
-         :file_metadata => {
-             :zip => {
-              :download_name => "telerik.ui.for.jsp.#{VERSION}.commercial.zip",
-             }
-          }
-        },
        :type_script => %w(all web mobile dataviz),
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
@@ -975,37 +638,6 @@ bundle :name => 'php.trial',
        :changelog => %w(components php),
        :type_script => %w(all web mobile dataviz),
        :product => 'UI for PHP',
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.ui.for.php.#{VERSION}.trial.zip",
-              :file_category => "Installation",
-              :file_type => "Trial Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for PHP Trial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/php/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />PHP Server Wrappers</strong>"
-             }
-          },
-          :changelog => true,
-        },
-        :beta_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Q#{VERSION_Q} #{VERSION_YEAR} Beta - Manual Installation",
-              :download_name => "telerik.ui.for.php.#{VERSION}.beta.trial.zip",
-              :file_category => "Beta",
-              :file_type => "Additional files - shown to all",
-              :extension => "ZIP",
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for PHP Q#{VERSION_Q} #{VERSION_YEAR} Beta release. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/php/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />PHP Server Wrappers</strong>"
-             }
-          },
-          :changelog => true,
-        },
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
@@ -1021,23 +653,7 @@ bundle :name => 'php.commercial',
        :readme_src => 'README.NoSource',
        :changelog => %w(components php),
        :product => 'UI for PHP',
-       :upload_as_internal_build => true,
        :skip_grunt_build => true,
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.ui.for.php.#{VERSION}.commercial.zip",
-              :file_category => "Installation",
-              :file_type => "Paid Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik"],
-              :download_message => 'You have successfully downloaded Telerik UI for PHP Commercial version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/php/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />PHP Server Wrappers<br />Complete Source Code</strong>"
-             }
-          }
-        },
        :type_script => %w(all web mobile dataviz),
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
@@ -1064,21 +680,6 @@ bundle :name => 'core',
        :changelog => %w(components),
        :changelog_exclude => PRO_WIDGETS,
        :readme => 'README.KendoUI.Core',
-       :release_build => {
-          :file_metadata => {
-             :zip => {
-              :label => "Manual Installation",
-              :download_name => "telerik.kendoui.#{VERSION}.core.zip",
-              :file_category => "Installation",
-              :file_type => "Free Product Files",
-              :extension => "ZIP",
-              :file_markers => ["Default File"],
-              :websites => ["Telerik", "SiteFinity"],
-              :download_message => 'You have successfully downloaded Kendo UI Core (Apache 2.0) version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
-              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />Complete Source Code</strong>"
-             }
-          }
-        },
        :contents => {
             'js' => CORE_MIN_JS + CORE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => CORE_MIN_CSS_RESOURCES,
@@ -1414,4 +1015,3 @@ task :bundles =>  "bundles:all"
 
 task :default => :bundles
 
-task "internal_builds:upload" => [ "internal_builds:bundles:all", "internal_builds:uncheck_previous", "bower:internal_build" ]
