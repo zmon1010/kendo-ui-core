@@ -56,6 +56,8 @@
             };
 
             CurrentTimeMarker = new SchedulerCurrentTimeMarkerSettings();
+
+            Footer = new SchedulerFooterSettings();
         }
 
         public PDFSettings Pdf
@@ -310,6 +312,12 @@
             set;
         }
 
+        public SchedulerFooterSettings Footer
+        {
+            get;
+            private set;
+        }
+
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = this.SeriailzeBaseOptions();
@@ -378,7 +386,20 @@
                 {
                     options["editable"] = editable;
                 }
-            }            
+            }
+
+            if (Footer.Enabled == false)
+            {
+                options["footer"] = false;
+            }
+            else
+            {
+                IDictionary<string, object> footer = Footer.ToJson();
+                if (footer.Count > 0)
+                {
+                    options["footer"] = footer;
+                }
+            }
 
             if (!string.IsNullOrEmpty(EventTemplate))
             {

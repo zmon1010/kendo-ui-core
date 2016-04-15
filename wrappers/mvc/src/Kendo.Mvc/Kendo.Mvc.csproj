@@ -885,10 +885,12 @@
     <Compile Include="UI\Grid\GridFilterMode.cs" />
     <Compile Include="UI\Grid\Html\GridHeaderRowBuilder.cs" />
     <Compile Include="UI\Grid\Html\GridHeaderCellBuilderDecorator.cs" />
+    <Compile Include="UI\Scheduler\Fluent\SchedulerFooterBuilder.cs" />
     <Compile Include="UI\Scheduler\Fluent\SchedulerTimelineMonthViewBuilder.cs" />
     <Compile Include="UI\Scheduler\Fluent\SchedulerToolbarFactory.cs" />
     <Compile Include="UI\Scheduler\SchedulerToolbarCommand.cs" />
     <Compile Include="UI\Scheduler\SchedulerToolbarCommandType.cs" />
+    <Compile Include="UI\Scheduler\Settings\SchedulerFooterSettings.cs" />
     <Compile Include="UI\Scheduler\Settings\SchedulerEditRecurringMode.cs" />
     <Compile Include="UI\Scheduler\Views\SchedulerTimelineMonthView.cs" />
     <Compile Include="UI\Settings\PDFSettings.cs" />
@@ -2690,4 +2692,8 @@
     <Compile Include="UI\Spreadsheet\Settings\SpreadsheetToolbarSettings.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetToolbarSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Editor\Settings\EditorPasteCleanupSettings.cs" /><Compile Include="UI\Editor\Fluent\EditorPasteCleanupSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Editor\Settings\EditorPasteCleanupSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorPasteCleanupSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>

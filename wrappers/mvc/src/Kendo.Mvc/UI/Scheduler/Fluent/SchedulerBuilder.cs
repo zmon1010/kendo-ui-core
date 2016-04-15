@@ -758,6 +758,29 @@
         }
 
         /// <summary>
+        /// If set to false the footer of the scheduler would not be displayed.
+        /// </summary>
+        /// <param name="configurator">The configurator for the footer setting.</param>
+        public SchedulerBuilder<TModel> Footer(Action<SchedulerFooterBuilder> configurator)
+        {
+            Component.Footer.Enabled = true;
+
+            configurator(new SchedulerFooterBuilder(Component.Footer));
+
+            return this;
+        }
+
+        /// <summary>
+        /// If set to false the footer of the scheduler would not be displayed.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the footer option.</param>
+        public SchedulerBuilder<TModel> Footer(bool enabled)
+        {
+            Component.Footer.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// Constraints the minimum date which can be selected via the scheduler navigation.
         /// </summary>
         /// <param name="date">The min date</param>
