@@ -13,7 +13,6 @@ namespace Kendo.Mvc.UI
     public partial class EditorFileBrowserSettings
     {
         public const string DefaultFileTypes = "*.*";
-        //private readonly EditorFileBrowserMessagesSettings messages;
 
         public EditorFileBrowserSettings()
         {

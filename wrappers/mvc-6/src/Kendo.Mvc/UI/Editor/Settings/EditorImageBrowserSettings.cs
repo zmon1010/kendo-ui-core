@@ -11,7 +11,6 @@ namespace Kendo.Mvc.UI
     public partial class EditorImageBrowserSettings
     {
         public const string DefaultFileTypes = "*.png,*.gif,*.jpg,*.jpeg";
-        //private readonly EditorImageBrowserMessages messages;
 
         public EditorImageBrowserSettings()
         {
