@@ -88,7 +88,7 @@ This example shows a simple logic to strip `<strong>` tags from the pasted HTML 
     $("#editor").kendoEditor({
         pasteCleanup: {
             custom: function(html) {
-                return html.replace(/<strong[^>]*>/, "");
+                return html.replace(/<\/?strong[^>]*>/, "");
             }
         }
     });
