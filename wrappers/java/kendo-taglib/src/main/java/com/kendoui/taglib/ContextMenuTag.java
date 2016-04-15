@@ -95,6 +95,14 @@ public class ContextMenuTag extends WidgetWithItemsTag /* interfaces */implement
         setProperty("alignToAnchor", value);
     }
 
+    public boolean getAnimation() {
+        return (Boolean)getProperty("animation");
+    }
+
+    public void setAnimation(boolean value) {
+        setProperty("animation", value);
+    }
+
     public boolean getCloseOnClick() {
         return (Boolean)getProperty("closeOnClick");
     }

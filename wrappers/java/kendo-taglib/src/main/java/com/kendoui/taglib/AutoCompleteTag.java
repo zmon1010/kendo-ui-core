@@ -86,6 +86,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setEvent("select", value.getBody());
     }
 
+    public boolean getAnimation() {
+        return (Boolean)getProperty("animation");
+    }
+
+    public void setAnimation(boolean value) {
+        setProperty("animation", value);
+    }
+
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
     }

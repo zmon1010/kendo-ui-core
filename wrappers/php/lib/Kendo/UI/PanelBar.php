@@ -39,7 +39,7 @@ class PanelBar extends \Kendo\UI\Widget {
 
     /**
     * A collection of visual animations used when PanelBar items are expand or collapsed through
-user interactions. Setting this option to false will disable all animations.
+user interactions. Setting this option to false will disable all animations. is not a valid configuration.
     * @param boolean|\Kendo\UI\PanelBarAnimation|array $value
     * @return \Kendo\UI\PanelBar
     */

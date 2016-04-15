@@ -25,6 +25,12 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The data source of the widget which is used to display suggestions for the current value. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
 instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
             <name>dataSource</name>
@@ -175,7 +181,7 @@ refer to Popup documentation.</description>
     </tag>
 
     <tag>
-        <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.</description>
+        <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly. is not a valid configuration.</description>
         <name>autoComplete-animation</name>
         <tag-class>com.kendoui.taglib.autocomplete.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -11917,6 +11923,13 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.Available animations for the ContextMenu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden
+by setting the close animation. Each animation also has a direction which can be set off the animation (i.e. slideIn:Down).</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies that sub menus should close after item selection (provided they won't navigate).</description>
             <name>closeOnClick</name>
             <rtexprvalue>true</rtexprvalue>
@@ -12004,7 +12017,7 @@ Could be any pointer/mouse/touch event, also several, separated by spaces.</desc
     </tag>
 
     <tag>
-        <description>A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget.Available animations for the ContextMenu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden
+        <description>A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.Available animations for the ContextMenu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden
 by setting the close animation. Each animation also has a direction which can be set off the animation (i.e. slideIn:Down).</description>
         <name>contextMenu-animation</name>
         <tag-class>com.kendoui.taglib.contextmenu.AnimationTag</tag-class>
@@ -12883,6 +12896,12 @@ callbacks which will handle push notifications (data pushed from the server).</d
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Configures the opening and closing animations of the calendar popup. Setting the animation option to false will disable the opening and closing animations. As a result the calendar popup will open and close instantly. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies the culture info used by the widget.</description>
             <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
@@ -12970,7 +12989,7 @@ The following settings are available for the start value:</description>
     </tag>
 
     <tag>
-        <description>Configures the opening and closing animations of the calendar popup. Setting the animation option to false will disable the opening and closing animations. As a result the calendar popup will open and close instantly.</description>
+        <description>Configures the opening and closing animations of the calendar popup. Setting the animation option to false will disable the opening and closing animations. As a result the calendar popup will open and close instantly. is not a valid configuration.</description>
         <name>datePicker-animation</name>
         <tag-class>com.kendoui.taglib.datepicker.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -13084,6 +13103,12 @@ The following settings are available for the start value:</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Configures the opening and closing animations of the popups. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies the culture info used by the widget.</description>
             <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
@@ -13184,7 +13209,7 @@ settings are available for the depth value:</description>
     </tag>
 
     <tag>
-        <description>Configures the opening and closing animations of the popups. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.</description>
+        <description>Configures the opening and closing animations of the popups. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly. is not a valid configuration.</description>
         <name>dateTimePicker-animation</name>
         <tag-class>com.kendoui.taglib.datetimepicker.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -16272,7 +16297,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The function that positions the connector.</description>
+            <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
             <name>position</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16415,7 +16440,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
     <tag>
-        <description>The function that positions the connector.</description>
+        <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
         <name>diagram-shapeDefaults-connector-position</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorPositionFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -17338,7 +17363,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The function that positions the connector.</description>
+            <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
             <name>position</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17481,7 +17506,7 @@ See visual.</description>
 
 
     <tag>
-        <description>The function that positions the connector.</description>
+        <description>The function that positions the connector. The function is passed a shape and should return a kendo.dataviz.diagram.Point holding the connector position as result.</description>
         <name>diagram-shape-connector-position</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeConnectorPositionFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -18238,6 +18263,12 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Controls whether to bind the widget to the data source on initialization.</description>
             <name>autoBind</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18425,7 +18456,7 @@ The supported filter values are startswith, endswith and contains.</description>
     </tag>
 
     <tag>
-        <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.</description>
+        <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly. is not a valid configuration.</description>
         <name>dropDownList-animation</name>
         <tag-class>com.kendoui.taglib.dropdownlist.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -26128,6 +26159,13 @@ Cancelling the event will prevent the user action.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.Available animations for the Menu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden
+by setting the close animation.  Each animation also has a direction which can be set off the animation (i.e. slideIn:Down).</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies that sub menus should close after item selection (provided they won't navigate).</description>
             <name>closeOnClick</name>
             <rtexprvalue>true</rtexprvalue>
@@ -26203,7 +26241,7 @@ its parent horizontally. You can also switch off the screen boundary detection c
     </tag>
 
     <tag>
-        <description>A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget.Available animations for the Menu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden
+        <description>A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.Available animations for the Menu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden
 by setting the close animation.  Each animation also has a direction which can be set off the animation (i.e. slideIn:Down).</description>
         <name>menu-animation</name>
         <tag-class>com.kendoui.taglib.menu.AnimationTag</tag-class>
@@ -26352,6 +26390,12 @@ by setting the close animation.  Each animation also has a direction which can b
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Controls whether to bind the widget to the data source on initialization.</description>
@@ -26530,7 +26574,7 @@ A zero value means that a request will be made as soon as the user focuses the w
     </tag>
 
     <tag>
-        <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.</description>
+        <description>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly. is not a valid configuration.</description>
         <name>multiSelect-animation</name>
         <tag-class>com.kendoui.taglib.multiselect.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -26717,7 +26761,7 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Defines custom show and hide animations via an Kendo UI Animation object. Setting the value to false disables animations.</description>
+            <description>Defines custom show and hide animations via an Kendo UI Animation object. Setting the value to false disables animations. is not a valid configuration.</description>
             <name>animation</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -27154,7 +27198,7 @@ A special all value is supported. It sets the page size to the total number of r
         </attribute>
         <attribute>
             <description>A collection of visual animations used when PanelBar items are expand or collapsed through
-user interactions. Setting this option to false will disable all animations.</description>
+user interactions. Setting this option to false will disable all animations. is not a valid configuration.</description>
             <name>animation</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -27214,7 +27258,7 @@ are available:</description>
 
     <tag>
         <description>A collection of visual animations used when PanelBar items are expand or collapsed through
-user interactions. Setting this option to false will disable all animations.</description>
+user interactions. Setting this option to false will disable all animations. is not a valid configuration.</description>
         <name>panelBar-animation</name>
         <tag-class>com.kendoui.taglib.panelbar.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -28106,6 +28150,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Which element the popup will be appended to.</description>
             <name>appendTo</name>
             <rtexprvalue>true</rtexprvalue>
@@ -28167,7 +28217,7 @@ space separated "y" plus "x" position.The available "y" positions are:
     </tag>
 
     <tag>
-        <description>Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.</description>
+        <description>Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly. is not a valid configuration.</description>
         <name>popup-animation</name>
         <tag-class>com.kendoui.taglib.popup.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -43280,8 +43330,7 @@ and is about to render it.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A collection of visual animations used when TabStrip tab are selected through
-user interactions. Setting this option to false will disable all animations.</description>
+            <description>A collection of visual animations used when TabStrip tab are selected through user interactions. Setting this option to false will disable all animations. is not a valid configuration.</description>
             <name>animation</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -43395,8 +43444,7 @@ A fade animation is highly recommended with any of the non-default tab position 
     </tag>
 
     <tag>
-        <description>A collection of visual animations used when TabStrip tab are selected through
-user interactions. Setting this option to false will disable all animations.</description>
+        <description>A collection of visual animations used when TabStrip tab are selected through user interactions. Setting this option to false will disable all animations. is not a valid configuration.</description>
         <name>tabStrip-animation</name>
         <tag-class>com.kendoui.taglib.tabstrip.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -43571,6 +43619,12 @@ is closed. By default not specified - uses the opening animation with reverse.</
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies the culture info used by the widget.</description>
             <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
@@ -43637,7 +43691,7 @@ is closed. By default not specified - uses the opening animation with reverse.</
     </tag>
 
     <tag>
-        <description>Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.</description>
+        <description>Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly. is not a valid configuration.</description>
         <name>timePicker-animation</name>
         <tag-class>com.kendoui.taglib.timepicker.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -44170,6 +44224,12 @@ is closed. By default not specified - uses the opening animation with reverse.</
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies if the Tooltip will be hidden when mouse leaves the target element. If set to false a close button will be shown within Tooltip. If set to false, showAfter is specified and the showOn is set to "mouseenter" the Tooltip will be displayed after the given timeout even if the element is no longer hovered.</description>
             <name>autoHide</name>
             <rtexprvalue>true</rtexprvalue>
@@ -44252,8 +44312,7 @@ is closed. By default not specified - uses the opening animation with reverse.</
     </tag>
 
     <tag>
-        <description>A collection of {Animation} objects, used to change default animations. A value of false
-will disable all animations in the widget.</description>
+        <description>A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.</description>
         <name>tooltip-animation</name>
         <tag-class>com.kendoui.taglib.tooltip.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -45554,7 +45613,7 @@ instance.If the HierarchicalDataSource option is set to a JavaScript object or a
         </attribute>
         <attribute>
             <description>A collection of visual animations used when items are expanded or collapsed through user interaction.
-Setting this option to false will disable all animations.</description>
+Setting this option to false will disable all animations. is not a valid configuration.</description>
             <name>animation</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -45691,7 +45750,7 @@ This event has been introduced in internal builds after 2014.2.828.</description
 
     <tag>
         <description>A collection of visual animations used when items are expanded or collapsed through user interaction.
-Setting this option to false will disable all animations.</description>
+Setting this option to false will disable all animations. is not a valid configuration.</description>
         <name>treeView-animation</name>
         <tag-class>com.kendoui.taglib.treeview.AnimationTag</tag-class>
         <body-content>JSP</body-content>
@@ -46314,6 +46373,12 @@ and "Maximize".</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The element that the Window will be appended to. Beneficial if the Window is used together with a form.
 Note that this does not constrain the window dragging within the given element.</description>
             <name>appendTo</name>
@@ -46477,8 +46542,7 @@ has been clicked on a window with static content.</description>
     </tag>
 
     <tag>
-        <description>A collection of {Animation} objects, used to change default animations. A value of false
-will disable all animations in the widget.</description>
+        <description>A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.</description>
         <name>window-animation</name>
         <tag-class>com.kendoui.taglib.window.AnimationTag</tag-class>
         <body-content>JSP</body-content>

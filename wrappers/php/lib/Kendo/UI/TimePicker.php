@@ -13,8 +13,8 @@ class TimePicker extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.
-    * @param \Kendo\UI\TimePickerAnimation|array $value
+    * Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly. is not a valid configuration.
+    * @param boolean|\Kendo\UI\TimePickerAnimation|array $value
     * @return \Kendo\UI\TimePicker
     */
     public function animation($value) {

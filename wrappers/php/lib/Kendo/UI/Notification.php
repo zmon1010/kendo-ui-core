@@ -18,7 +18,7 @@ class Notification extends \Kendo\UI\Widget {
     }
 
     /**
-    * Defines custom show and hide animations via an Kendo UI Animation object. Setting the value to false disables animations.
+    * Defines custom show and hide animations via an Kendo UI Animation object. Setting the value to false disables animations. is not a valid configuration.
     * @param |boolean $value
     * @return \Kendo\UI\Notification
     */

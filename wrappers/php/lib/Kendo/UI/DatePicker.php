@@ -25,8 +25,8 @@ class DatePicker extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * Configures the opening and closing animations of the calendar popup. Setting the animation option to false will disable the opening and closing animations. As a result the calendar popup will open and close instantly.
-    * @param \Kendo\UI\DatePickerAnimation|array $value
+    * Configures the opening and closing animations of the calendar popup. Setting the animation option to false will disable the opening and closing animations. As a result the calendar popup will open and close instantly. is not a valid configuration.
+    * @param boolean|\Kendo\UI\DatePickerAnimation|array $value
     * @return \Kendo\UI\DatePicker
     */
     public function animation($value) {

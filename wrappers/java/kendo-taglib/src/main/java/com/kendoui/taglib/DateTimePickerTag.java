@@ -93,6 +93,14 @@ public class DateTimePickerTag extends WidgetTag /* interfaces *//* interfaces *
         setProperty("ARIATemplate", value);
     }
 
+    public boolean getAnimation() {
+        return (Boolean)getProperty("animation");
+    }
+
+    public void setAnimation(boolean value) {
+        setProperty("animation", value);
+    }
+
     public java.lang.String getCulture() {
         return (java.lang.String)getProperty("culture");
     }

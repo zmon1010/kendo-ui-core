@@ -70,6 +70,14 @@ public class TimePickerTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("open", value.getBody());
     }
 
+    public boolean getAnimation() {
+        return (Boolean)getProperty("animation");
+    }
+
+    public void setAnimation(boolean value) {
+        setProperty("animation", value);
+    }
+
     public java.lang.String getCulture() {
         return (java.lang.String)getProperty("culture");
     }

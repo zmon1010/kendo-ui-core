@@ -28,7 +28,7 @@ class TreeView extends \Kendo\UI\Widget {
 
     /**
     * A collection of visual animations used when items are expanded or collapsed through user interaction.
-Setting this option to false will disable all animations.
+Setting this option to false will disable all animations. is not a valid configuration.
     * @param boolean|\Kendo\UI\TreeViewAnimation|array $value
     * @return \Kendo\UI\TreeView
     */

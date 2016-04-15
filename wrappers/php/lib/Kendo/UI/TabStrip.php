@@ -60,8 +60,7 @@ class TabStrip extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * A collection of visual animations used when TabStrip tab are selected through
-user interactions. Setting this option to false will disable all animations.
+    * A collection of visual animations used when TabStrip tab are selected through user interactions. Setting this option to false will disable all animations. is not a valid configuration.
     * @param boolean|\Kendo\UI\TabStripAnimation|array $value
     * @return \Kendo\UI\TabStrip
     */

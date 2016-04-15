@@ -89,6 +89,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setEvent("select", value.getBody());
     }
 
+    public boolean getAnimation() {
+        return (Boolean)getProperty("animation");
+    }
+
+    public void setAnimation(boolean value) {
+        setProperty("animation", value);
+    }
+
     public boolean getAutoBind() {
         return (Boolean)getProperty("autoBind");
     }

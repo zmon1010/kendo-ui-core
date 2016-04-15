@@ -87,6 +87,14 @@ public class MenuTag extends WidgetWithItemsTag /* interfaces */implements DataB
         setEvent("select", value.getBody());
     }
 
+    public boolean getAnimation() {
+        return (Boolean)getProperty("animation");
+    }
+
+    public void setAnimation(boolean value) {
+        setProperty("animation", value);
+    }
+
     public boolean getCloseOnClick() {
         return (Boolean)getProperty("closeOnClick");
     }

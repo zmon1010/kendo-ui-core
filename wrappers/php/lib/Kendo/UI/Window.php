@@ -36,9 +36,8 @@ and "Maximize".
     }
 
     /**
-    * A collection of {Animation} objects, used to change default animations. A value of false
-will disable all animations in the widget.
-    * @param \Kendo\UI\WindowAnimation|array $value
+    * A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.
+    * @param boolean|\Kendo\UI\WindowAnimation|array $value
     * @return \Kendo\UI\Window
     */
     public function animation($value) {

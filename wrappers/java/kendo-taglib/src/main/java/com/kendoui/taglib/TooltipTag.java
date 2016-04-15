@@ -110,6 +110,14 @@ public class TooltipTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("show", value.getBody());
     }
 
+    public boolean getAnimation() {
+        return (Boolean)getProperty("animation");
+    }
+
+    public void setAnimation(boolean value) {
+        setProperty("animation", value);
+    }
+
     public boolean getAutoHide() {
         return (Boolean)getProperty("autoHide");
     }

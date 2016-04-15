@@ -46,9 +46,8 @@ class Tooltip extends \Kendo\UI\Widget {
     }
 
     /**
-    * A collection of {Animation} objects, used to change default animations. A value of false
-will disable all animations in the widget.
-    * @param \Kendo\UI\TooltipAnimation|array $value
+    * A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.
+    * @param boolean|\Kendo\UI\TooltipAnimation|array $value
     * @return \Kendo\UI\Tooltip
     */
     public function animation($value) {

@@ -13,8 +13,8 @@ class AutoComplete extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.
-    * @param \Kendo\UI\AutoCompleteAnimation|array $value
+    * Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly. is not a valid configuration.
+    * @param boolean|\Kendo\UI\AutoCompleteAnimation|array $value
     * @return \Kendo\UI\AutoComplete
     */
     public function animation($value) {
