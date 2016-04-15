@@ -1,5 +1,3 @@
-require 'release_build_upload'
-require 'beta_build_upload'
 require 'erb'
 
 def description(name)
@@ -7,10 +5,6 @@ def description(name)
 
     "Build Kendo UI #{name}"
 end
-
-desc "Upload all internal builds on kendoui.com"
-task "internal_builds:bundles:all" => [ "build:production:get_binaries" ]
-
 
 def bundle(options)
     name = options[:name]
@@ -165,25 +159,6 @@ def bundle(options)
     write_changelog(txt_changelog_path, changelog_suites,
                     options[:changelog_exclude], options[:product])
 
-    if options[:upload_as_internal_build]
-        versioned_bundle_lib_archive_path = File.join(ARCHIVE_ROOT, 'LIB Archive', VERSION, versioned_bundle_name(name) + ".zip")
-
-        file_copy :to => versioned_bundle_lib_archive_path, :from => "#{path}.zip"
-
-        desc "Upload #{name} as an internal build on kendoui.com"
-        task "internal_builds:bundles:#{name}" => versioned_bundle_lib_archive_path do
-            upload_internal_build \
-                :title => versioned_bundle_name(name),
-                :product => options[:product],
-                :changelog_path => changelog_path,
-                :vs_extension => !!options[:vs_extension],
-                :archive_path => versioned_bundle_lib_archive_path
-        end
-
-        # add bundle to bundles:all
-        task "internal_builds:bundles:all" => "internal_builds:bundles:#{name}"
-    end
-
     if options[:upload_to_appbuilder]
         versioned_bundle_path = File.join(ARCHIVE_ROOT, 'AppBuilder/Uploads', VERSION, versioned_bundle_name(name) + ".zip")
 
@@ -215,69 +190,5 @@ def bundle(options)
         desc "Upload bundles in AppBuidler"
         task "appbuilder_builds:bundles:verified:all" => "appbuilder_builds:bundles:verified:#{name}"
     end
-
-    if options[:release_build]
-      if SERVICE_PACK_NUMBER != nil
-        release_destination_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}"
-      else
-        release_destination_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/Q#{VERSION_Q} #{VERSION_YEAR}"
-      end
-
-      versioned_bundle_release_destination_path = File.join(RELEASE_ROOT, VERSION_YEAR.to_s, release_destination_folder_name)
-      versioned_bundle_release_archive_path = File.join(ARCHIVE_ROOT, "Production")
-
-      desc "Copy #{name} as release build on telerik.com"
-      task "release_builds:copy:#{name}" do
-          FileUtils.mkdir_p(versioned_bundle_release_destination_path)
-          release_build_file_copy(options[:release_build], name, versioned_bundle_release_destination_path, versioned_bundle_release_archive_path)
-
-      end
-
-      desc "Upload #{name} as release build on telerik.com"
-      task "release_builds:upload:#{name}" =>  "release_builds:copy:#{name}" do
-          upload_release_build \
-                  :title => name,
-                  :product => options[:product],
-                  :params => options[:release_build],
-                  :archive_path => versioned_bundle_release_destination_path
-      end
-
-      # add bundle to bundles:all
-      task "release_builds:bundles:all" => "release_builds:upload:#{name}"
-    end
-
-    if options[:beta_build]
-      if ENV["DRY_RUN"]
-          beta_destination_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/DRY_RUN_BETA"
-      else
-          beta_destination_folder_name = "Q#{VERSION_Q} #{VERSION_YEAR}/BETA"
-      end
-
-      versioned_bundle_beta_destination_path = File.join(RELEASE_ROOT, VERSION_YEAR.to_s, beta_destination_folder_name)
-      versioned_bundle_beta_archive_path = File.join(ARCHIVE_ROOT, "Stable")
-
-      desc "Copy #{name} as beta build on telerik.com"
-      task "beta_builds:copy:#{name}" do
-          FileUtils.mkdir_p(versioned_bundle_beta_destination_path)
-
-          beta_build_file_copy(options[:beta_build], name, versioned_bundle_beta_destination_path, versioned_bundle_beta_archive_path)
-
-      end
-
-      desc "Upload #{name} as beta build on telerik.com"
-      task "beta_builds:upload:#{name}" =>  "beta_builds:copy:#{name}" do
-
-          upload_beta_build \
-                  :title => name,
-                  :product => options[:product],
-                  :params => options[:beta_build],
-                  :archive_path => versioned_bundle_beta_destination_path
-      end
-
-      # add bundle to bundles:all
-      task "beta_builds:bundles:all" => "beta_builds:upload:#{name}"
-
-    end
-
 end
 

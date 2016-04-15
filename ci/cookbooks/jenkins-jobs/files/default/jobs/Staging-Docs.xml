@@ -38,7 +38,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>stable</name>
+        <name>master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -73,7 +73,7 @@
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>cd docs;
-bundle --without development --path ~/gems;
+bundle --without development
 bundle exec bundle exec jekyll build
 rsync -avc --delete _site/ /var/www/kendo-ui
 </command>
@@ -90,7 +90,7 @@ rsync -avc --delete _site/ /var/www/kendo-ui
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>CI-Docs-Links</childProjects>
+      <childProjects>CI-Docs-Links,CI-Docs-Redirects</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

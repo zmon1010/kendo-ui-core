@@ -62,7 +62,7 @@ See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist#int
   </builders>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Upload-Bower-internal,Upload-Download-Builder-production,Upload-AppBuilder-Bundle-production</childProjects>
+      <childProjects>Upload-Bower-internal,Upload-AppBuilder-Bundle-production</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

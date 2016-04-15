@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Runs all unit tests on Firefox and Chrome		</description>
+  <description>Deploy the documentation production branch to ordkendowww01.telerik.local and ordkendowww02.telerik.local</description>
   <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>10</daysToKeep>
+    <daysToKeep>7</daysToKeep>
     <numToKeep>20</numToKeep>
     <artifactDaysToKeep>10</artifactDaysToKeep>
     <artifactNumToKeep>20</artifactNumToKeep>
@@ -38,17 +38,13 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>master</name>
+        <name>production</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <browser class="hudson.plugins.git.browser.GithubWeb"/>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.SubmoduleOption>
-        <disableSubmodules>false</disableSubmodules>
-        <recursiveSubmodules>true</recursiveSubmodules>
-      </hudson.plugins.git.extensions.impl.SubmoduleOption>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <reference></reference>
@@ -67,48 +63,30 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>./build/diff-erb-encoding.sh</command>
+      <command># Clean-up generated wrappers
+rm -rf docs/api/aspnet-mvc
+rm -rf docs/api/jsp
+rm -rf docs/api/php
+
+git clean -xf
+
+DOCS_BRANCH=production ./build/run-build-task build:production:generate_help
+</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>DOCS_BRANCH=master ./build/run-build-task build:master:tests</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>git push --force origin HEAD:stable</command>
+      <command>./build/upload-docs-to-kendo-www.sh</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.5">
       <factGenerator/>
     </hudson.plugins.chucknorris.CordellWalkerRecorder>
-    <hudson.tasks.junit.JUnitResultArchiver>
-      <testResults>*-test-results.xml</testResults>
-      <keepLongStdio>false</keepLongStdio>
-      <testDataPublishers/>
-    </hudson.tasks.junit.JUnitResultArchiver>
-    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@0.16">
-      <buildSteps>
-        <hudson.tasks.Shell>
-          <command>rm *-test-results.xml</command>
-        </hudson.tasks.Shell>
-      </buildSteps>
-      <scriptOnlyIfSuccess>false</scriptOnlyIfSuccess>
-      <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
-    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
       <teamDomain>kendoui</teamDomain>
       <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
       <buildServerUrl>http://kendobuild/build/</buildServerUrl>
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>CI-Brazil-Time-Zones,CI-Multiple-jQuery,CI-Firefox,CI-Download-Builder,CI-Wrappers-Generation,Bundles</childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-        <completeBuild>true</completeBuild>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
   </publishers>
   <buildWrappers>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.3.1">

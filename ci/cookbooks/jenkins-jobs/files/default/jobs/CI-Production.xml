@@ -64,6 +64,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
+      <command>./build/diff-erb-encoding.sh</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
       <command>DOCS_BRANCH=production ./build/run-build-task build:production:tests</command>
     </hudson.tasks.Shell>
   </builders>
