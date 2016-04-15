@@ -711,6 +711,25 @@ html .km-pane-wrapper .k-header
     background-color: transparent;
 }
 
+.k-menu {
+    .k-state-selected > .k-link {
+        color: @widget-text-color;
+        background-color: @selected-secondary-background-color;
+    }
+
+    .k-link.k-state-active {
+        background-color: @selected-background;
+        color: @selected-text-color;
+    }
+
+    .k-state-hover > .k-link {
+        color: @hover-text-color;
+        background-color: @hover-background-color;
+        border-color: @hover-border-color;
+        .composite-background(@hover-gradient);
+    }
+}
+
 .k-state-highlight
 {
     background: @active-background-color;
@@ -2381,11 +2400,6 @@ html .km-pane-wrapper .km-widget,
 .k-menu-group > .k-state-focused
 {
     background-color: @hover-background-color;
-}
-
-.k-menu-group > .k-item > .k-state-active
-{
-    background-color: @selected-secondary-background-color;
 }
 
 .k-textbox:hover,

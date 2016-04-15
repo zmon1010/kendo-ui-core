@@ -442,6 +442,36 @@ span.k-tooltip {
     margin-left: 5px;
 }
 
+.k-menu {
+    .k-state-selected {
+        .k-i-arrow-s {
+            background-position: 0 -32px;
+        }
+    }
+
+    .k-state-hover {
+        .k-state-active {
+            .k-i-arrow-s {
+                background-position: -16px -32px;
+            }
+
+            .k-i-arrow-e {
+               background-position: -16px -16px;
+            }
+        }
+    }
+
+    .k-state-active {
+        .k-i-arrow-s {
+            background-position: -16px -32px;
+        }
+
+        .k-i-arrow-e {
+            background-position: -16px -16px;
+        }
+    }
+}
+
 .k-context-menu.k-menu-vertical > .k-item > .k-link,
 .k-menu .k-menu-group .k-item > .k-link {
     padding: .786em 4.929em .786em 1.714em;
