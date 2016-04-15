@@ -33,7 +33,7 @@ namespace Kendo.Mvc.Examples.Controllers
         {
             get
             {
-                return "*.png";
+                return "*.txt, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx, *.zip, *.rar, *.jpg, *.jpeg, *.gif, *.png";
             }
         }
 

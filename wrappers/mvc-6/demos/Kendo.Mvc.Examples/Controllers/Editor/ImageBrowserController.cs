@@ -14,6 +14,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
         [FromServices]
         public override IHostingEnvironment Server { get; set; }
+
         /// <summary>
         /// Gets the base paths from which content will be served.
         /// </summary>

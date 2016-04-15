@@ -1,0 +1,17 @@
+@* Make sure tag helpers are not available for the Editor content *@
+@removeTagHelper "*, Microsoft.AspNet.Mvc.Razor"
+@removeTagHelper "*, Microsoft.AspNetCore.Mvc.Razor"
+
+@(Html.Kendo().Editor()
+      .Name("editor")
+      .Tools(tools => tools
+        .Clear()
+        .Snippets(snippets => snippets
+            .Add("Signature", "<p>Regards,<br /> John Doe,<br /><a href='mailto:john.doe@example.com'>john.doe@example.com</a></p>")
+            .Add("Kendo online demos", " <a href='http://demos.telerik.com/kendo-ui'>Kendo online demos</a> ")
+        )
+      )
+      .Value(@<text>
+    Put the cursor after this text and use the "Insert HTML" tool.
+    </text>)
+)
