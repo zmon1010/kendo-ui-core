@@ -1,10 +1,13 @@
 $(function () {
     populateSearchDataSource(desktopExamples);
 
+    var isRoot = window.location.href.match("/(.+kendo-ui|aspnet-mvc|php-ui|jsp-ui)/?$") !== null;
+    var baseUrl = isRoot ? "" : "../";
+
     $("#example-search").kendoExampleSearch({
         product: product,
         minLength: 3,
-        template: '<a href="#: path + url #"> #: text # </a>',
+        template: '<a href="' + baseUrl + '#: url #"> #: text # </a>',
         dataTextField: "text",
         select: function (e) {
             location.href = e.item.find("a").attr("href");
