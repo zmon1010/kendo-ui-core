@@ -226,6 +226,7 @@
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
     <Compile Include="Controllers\DatePicker\DisableDatesController.cs" />
     <Compile Include="Controllers\DateTimePicker\DisableDatesController.cs" />
+    <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
@@ -983,6 +984,7 @@
     <Content Include="Areas\aspx\Views\dropdownlist\grouping.aspx" />
     <Content Include="Areas\aspx\Views\dropdownlist\serverfiltering.aspx" />
     <Content Include="Areas\aspx\Views\dropdownlist\virtualization.aspx" />
+    <Content Include="Areas\aspx\Views\editor\paste_cleanup.aspx" />
     <Content Include="Areas\aspx\Views\financial\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\gantt\api.aspx" />
     <Content Include="Areas\aspx\Views\gantt\column_resizing.aspx" />

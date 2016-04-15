@@ -1646,6 +1646,25 @@
                 ]
             },
             {
+                "text": "Paste Cleanup",
+                "url": "editor/paste-cleanup",
+                "title": {
+                    "kendo-ui": "Paste cleanup options demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
+                    "aspnet-mvc": "Paste cleanup options demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how you can clean up the content users paste in Kendo UI Editor's",
+                    "aspnet-mvc": "This example shows how you can clean up the content users paste in ASP.NET MVC Editor"
+                },
+                "description": {
+                    "kendo-ui": "<p>The Kendo UI Editor widget exposes several options for cleaning up the content users paste in the content area. This allows for better control on what content is entered and ensures consistent styling.</p>",
+                    "aspnet-mvc": "<p>The ASP.NET MVC web editor exposes several options for cleaning up the content users paste in the content area. This allows for better control on what content is entered and ensures consistent styling.</p>"
+                },
+                "packages": [
+                    "!mvc-core"
+                ]
+            },
+            {
                 "text": "Events",
                 "url": "editor/events",
                 "title": {

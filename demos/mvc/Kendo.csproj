@@ -1224,6 +1224,7 @@
     <Content Include="Views\demos\mobile-listview\responsive-images.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\demos\editor\paste-cleanup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
