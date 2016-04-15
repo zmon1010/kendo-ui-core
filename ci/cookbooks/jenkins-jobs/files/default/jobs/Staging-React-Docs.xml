@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Runs all unit tests on Firefox and Chrome		</description>
+  <description>Deploy the react docs to staging server</description>
   <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>10</daysToKeep>
+    <daysToKeep>7</daysToKeep>
     <numToKeep>20</numToKeep>
     <artifactDaysToKeep>10</artifactDaysToKeep>
     <artifactNumToKeep>20</artifactNumToKeep>
@@ -11,7 +11,7 @@
   <keepDependencies>false</keepDependencies>
   <properties>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.8">
-      <projectUrl>https://github.com/telerik/kendo/</projectUrl>
+      <projectUrl>https://github.com/telerik/k2-site/</projectUrl>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.7">
       <teamDomain></teamDomain>
@@ -33,7 +33,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>git@github.com:telerik/kendo.git</url>
+        <url>git@github.com:telerik/k2-site.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -49,13 +49,10 @@
         <disableSubmodules>false</disableSubmodules>
         <recursiveSubmodules>true</recursiveSubmodules>
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
-      <hudson.plugins.git.extensions.impl.CloneOption>
-        <shallow>true</shallow>
-        <reference></reference>
-      </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
-  <canRoam>true</canRoam>
+  <assignedNode>master</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
@@ -67,48 +64,23 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>./build/diff-erb-encoding.sh</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>DOCS_BRANCH=master ./build/run-build-task build:master:tests</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>git push --force origin HEAD:stable</command>
+      <command>ruby2.2 /usr/local/bin/bundle --without development --path ~/gems2.2
+ruby2.2 /usr/local/bin/bundle exec jekyll build --config _config.yml,_staging.yml
+rsync -avc --delete _site/ /var/www/ui-for-react
+
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.5">
       <factGenerator/>
     </hudson.plugins.chucknorris.CordellWalkerRecorder>
-    <hudson.tasks.junit.JUnitResultArchiver>
-      <testResults>*-test-results.xml</testResults>
-      <keepLongStdio>false</keepLongStdio>
-      <testDataPublishers/>
-    </hudson.tasks.junit.JUnitResultArchiver>
-    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@0.16">
-      <buildSteps>
-        <hudson.tasks.Shell>
-          <command>rm *-test-results.xml</command>
-        </hudson.tasks.Shell>
-      </buildSteps>
-      <scriptOnlyIfSuccess>false</scriptOnlyIfSuccess>
-      <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
-    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
       <teamDomain>kendoui</teamDomain>
       <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
       <buildServerUrl>http://kendobuild/build/</buildServerUrl>
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>CI-Brazil-Time-Zones,CI-Multiple-jQuery,CI-Firefox,CI-Download-Builder,CI-Wrappers-Generation,Bundles</childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-        <completeBuild>true</completeBuild>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
   </publishers>
   <buildWrappers>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.3.1">

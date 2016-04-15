@@ -113,6 +113,7 @@
         <string>CI</string>
         <string>CI-Brazil-Time-Zones</string>
         <string>CI-Docs-Links</string>
+        <string>CI-Docs-Redirects</string>
         <string>CI-Dojo</string>
         <string>CI-Download-Builder</string>
         <string>CI-Download-Builder-production</string>
@@ -122,6 +123,8 @@
         <string>CI-Production</string>
         <string>CI-Wrappers-Generation</string>
         <string>CI-Wrappers-Generation-production</string>
+        <string>Spreadsheet-Touch-Binaries</string>
+        <string>Staging-React-Docs</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -219,6 +222,7 @@
         <string>Staging-Demos</string>
         <string>Staging-Demos-production</string>
         <string>Staging-Docs</string>
+        <string>Staging-Docs-Test</string>
         <string>Staging-Dojo</string>
       </jobNames>
       <jobFilters/>
@@ -241,7 +245,8 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[4]/jobNames/comparator"/>
-        <string>Upload-docs-production</string>
+        <string>Upload-Docs-Production</string>
+        <string>Upload-docs-production-old</string>
         <string>Upload-Dojo-production</string>
       </jobNames>
       <jobFilters/>
