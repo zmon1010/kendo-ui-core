@@ -39,6 +39,28 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_Pdf_should_not_be_serialized()
+        {
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("pdf").ShouldBeFalse();
+            });
+        }
+
+        [Fact]
+        public void Pdf_should_be_serialized()
+        {
+            var value = true;
+
+            editor.Pdf.AvoidLinks = value;
+            
+            editor.AssertSettings(settings =>
+            {
+                ((IDictionary<string, object>) settings["pdf"])["avoidLinks"].ShouldEqual(value);
+            });
+        }
+
+        [Fact]
         public void Default_StyleSheets_should_not_be_serialized()
         {
             editor.AssertSettings(settings =>

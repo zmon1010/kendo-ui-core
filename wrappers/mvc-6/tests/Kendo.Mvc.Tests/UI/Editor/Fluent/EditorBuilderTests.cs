@@ -53,6 +53,22 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Pdf()
+        {
+            var value = true;
+
+            builder.Pdf(x => x.AvoidLinks(value));
+
+            editor.Pdf.AvoidLinks.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Pdf_should_return_builder()
+        {
+            builder.Pdf(delegate { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Stylesheets_with_list()
         {
             var value = "value";

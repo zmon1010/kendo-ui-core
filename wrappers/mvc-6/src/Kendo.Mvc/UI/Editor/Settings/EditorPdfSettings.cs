@@ -9,13 +9,15 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI EditorPdfSettings class
     /// </summary>
-    public partial class EditorPdfSettings 
+    public partial class EditorPdfSettings : PdfSettings
     {
-        public Dictionary<string, object> Serialize()
+        public override Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
             // Do manual serialization here
+
+            settings.Merge(base.Serialize());
 
             return settings;
         }
