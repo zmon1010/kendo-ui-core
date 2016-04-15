@@ -15,7 +15,7 @@ log "Generating documentation"
 if [ ! $? -eq 0 ]
 then
     echo Unable to generate documentation
-    exit $?
+    exit 1
 fi
 
 for host in "${HOSTS[@]}"
