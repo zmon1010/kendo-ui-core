@@ -751,6 +751,17 @@
             equal(position.top, 70);
         });
 
+        test("takes surface offset into account", function() {
+            surface._offset = {
+                x: -100,
+                y: -100
+            };
+            tooltip.show(shape);
+            var position = getPopupPosition();
+            equal(position.left, 219);
+            equal(position.top, 170);
+        });
+
         // ------------------------------------------------------------
         module("Surface / tooltip / close button", {
             setup: function() {

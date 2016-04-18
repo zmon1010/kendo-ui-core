@@ -529,13 +529,18 @@
         _position: function(shape, options, elementSize, event) {
             var position = options.position;
             var tooltipOffset = options.offset || 0;
-            var offset = this.surface._elementOffset();
+            var surface = this.surface;
+            var offset = surface._elementOffset();
+            var surfaceOffset = surface._offset;
             var bbox = shape.bbox();
             var width = elementSize.width;
             var height = elementSize.height;
             var left = 0, top = 0;
 
             bbox.origin.translate(offset.left, offset.top);
+            if (surfaceOffset) {
+                bbox.origin.translate(-surfaceOffset.x, -surfaceOffset.y);
+            }
 
             if (position == "cursor" && event) {
                 var coord = eventCoordinates(event);
