@@ -17,12 +17,14 @@ namespace Kendo.Mvc.Tests
 {
 	public static class TestHelper
 	{
-		public static ViewContext CreateViewContext()
+        // Passing only UrlGenerator at the moment for test purposes.
+        // Should be refactored if more custom MockUps are required.
+		public static ViewContext CreateViewContext(Mock<IUrlGenerator> customUrlGenerator = null)
 		{
 			var httpContext = new DefaultHttpContext();
 			var urlHelper = new Mock<IUrlHelper>();
 			var htmlHelper = new Mock<ITestableHtmlHelper>();
-			var urlGenerator = new Mock<IUrlGenerator>();
+			var urlGenerator = customUrlGenerator != null ? customUrlGenerator : new Mock<IUrlGenerator>();
 			var kendoHtmlGenerator = new Mock<IKendoHtmlGenerator>();
             var actionBindingContextAccessor = new Mock<IActionBindingContextAccessor>();
 			var provider = new EmptyModelMetadataProvider();
