@@ -78,6 +78,7 @@ var __meta__ = { // jshint ignore:line
         alignPathToPixel = dataviz.alignPathToPixel,
         autoFormat = dataviz.autoFormat,
         dateComparer = dataviz.dateComparer,
+        eventTargetElement = dataviz.eventTargetElement,
         getSpacing = dataviz.getSpacing,
         inArray = dataviz.inArray,
         interpolate = dataviz.interpolateValue,
@@ -811,7 +812,6 @@ var __meta__ = { // jshint ignore:line
             if (kendo.UserEvents) {
                 chart._userEvents = new kendo.UserEvents(element, {
                     global: true,
-                    filter: ":not(.k-selector)",
                     multiTouch: true,
                     fastTap: true,
                     tap: proxy(chart._tap, chart),
@@ -2099,7 +2099,7 @@ var __meta__ = { // jshint ignore:line
             var options = this.options;
 
             return {
-                element: $(e.target),
+                element: eventTargetElement(e),
                 text: options.text,
                 series: options.series,
                 seriesIndex: options.series.index,
@@ -3754,7 +3754,7 @@ var __meta__ = { // jshint ignore:line
                 dataItem: this.dataItem,
                 runningTotal: this.runningTotal,
                 total: this.total,
-                element: $((e || {}).target),
+                element: eventTargetElement(e),
                 originalEvent: e,
                 point: this
             };
@@ -10882,7 +10882,7 @@ var __meta__ = { // jshint ignore:line
 
             if (categories.length > 0 && values.length > 0) {
                 chart.trigger(PLOT_AREA_CLICK, {
-                    element: $(e.target),
+                    element: eventTargetElement(e),
                     originalEvent: e,
                     category: singleItemOrArray(categories),
                     value: singleItemOrArray(values)
@@ -11200,7 +11200,7 @@ var __meta__ = { // jshint ignore:line
 
             if (xValues.length > 0 && yValues.length > 0) {
                 chart.trigger(PLOT_AREA_CLICK, {
-                    element: $(e.target),
+                    element: eventTargetElement(e),
                     originalEvent: e,
                     x: singleItemOrArray(xValues),
                     y: singleItemOrArray(yValues)

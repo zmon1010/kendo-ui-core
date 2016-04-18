@@ -1533,7 +1533,7 @@ var __meta__ = { // jshint ignore:line
             var label = this;
 
             widget.trigger(AXIS_LABEL_CLICK, {
-                element: $(e.target),
+                element: eventTargetElement(e),
                 value: label.value,
                 text: label.text,
                 index: label.index,
@@ -2640,7 +2640,7 @@ var __meta__ = { // jshint ignore:line
                 options = note.options;
 
             return {
-                element: $(e.target),
+                element: eventTargetElement(e),
                 text: defined(options.label) ? options.label.text : "",
                 dataItem: note.dataItem,
                 series: note.series,
@@ -4196,6 +4196,12 @@ var __meta__ = { // jshint ignore:line
         return new Box2D(origin.x, origin.y, bottomRight.x, bottomRight.y);
     }
 
+    function eventTargetElement(e) {
+        e = e || {};
+        var element = $(e.touch ? e.touch.initialTouch : e.target);
+        return element;
+    }
+
     decodeEntities._element = document.createElement("span");
 
     // Exports ================================================================
@@ -4238,6 +4244,7 @@ var __meta__ = { // jshint ignore:line
         boxDiff: boxDiff,
         dateComparer: dateComparer,
         decodeEntities: decodeEntities,
+        eventTargetElement: eventTargetElement,
         getSpacing: getSpacing,
         inArray: inArray,
         interpolateValue: interpolateValue,

@@ -48,6 +48,7 @@ var __meta__ = { // jshint ignore:line
         ShapeBuilder = dataviz.ShapeBuilder,
         SplineSegment = dataviz.SplineSegment,
         SplineAreaSegment = dataviz.SplineAreaSegment,
+        eventTargetElement = dataviz.eventTargetElement,
         getSpacing = dataviz.getSpacing,
         filterSeriesByType = dataviz.filterSeriesByType,
         limitValue = util.limitValue,
@@ -1395,7 +1396,7 @@ var __meta__ = { // jshint ignore:line
 
             if (category !== null && value !== null) {
                 chart.trigger(PLOT_AREA_CLICK, {
-                    element: $(e.target),
+                    element: eventTargetElement(e),
                     category: category,
                     value: value
                 });
@@ -1513,7 +1514,7 @@ var __meta__ = { // jshint ignore:line
 
             if (xValue !== null && yValue !== null) {
                 chart.trigger(PLOT_AREA_CLICK, {
-                    element: $(e.target),
+                    element: eventTargetElement(e),
                     x: xValue,
                     y: yValue
                 });
