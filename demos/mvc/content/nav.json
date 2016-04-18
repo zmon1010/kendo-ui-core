@@ -6838,7 +6838,6 @@
     },
     {
         "packages": [
-            "!mvc",
             "!jsp",
             "!php"
         ],
@@ -6857,6 +6856,7 @@
         "spriteCssClass": "dataSourceIcon",
         "items": [
             {
+				"packages": [ "!mvc" ],
                 "text": "Basic usage",
                 "url": "datasource/index",
                 "title": {
@@ -6867,6 +6867,7 @@
                 }
             },
             {
+				"packages": [ "!mvc" ],
                 "text": "Binding to remote data",
                 "url": "datasource/remote-data-binding",
                 "title": {
@@ -6885,6 +6886,7 @@
                 }
             },
             {
+				"packages": [ "!mvc" ],
                 "text": "Binding to XML",
                 "url": "datasource/xml-data",
                 "title": {
@@ -6896,6 +6898,7 @@
                 "requiresServer": "true"
             },
             {
+				"packages": [ "!mvc" ],
                 "text": "Remote data operations",
                 "url": "datasource/remote-operations",
                 "title": {
@@ -6914,6 +6917,7 @@
                 }
             },
             {
+				"packages": [ "!mvc" ],
                 "text": "Local data operations",
                 "url": "datasource/local-operations",
                 "title": {
