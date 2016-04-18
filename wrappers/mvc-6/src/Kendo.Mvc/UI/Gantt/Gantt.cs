@@ -78,6 +78,19 @@ namespace Kendo.Mvc.UI
                 settings["resources"] = resources;
             }
 
+            if (Editable.Enabled.HasValue && Editable.Enabled == false)
+            {
+                settings["editable"] = false;
+            }
+            else
+            {
+                var editable = Editable.Serialize();
+                if (editable.Any())
+                {
+                    settings["editable"] = editable;
+                }
+            }
+
             writer.Write(Initializer.Initialize(Selector, "Gantt", settings));
         }
 
