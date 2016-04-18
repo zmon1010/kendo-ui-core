@@ -267,6 +267,7 @@
         print: function(trow, tcol) {
             var col = this.col, row = this.row, rel = this.rel, abs;
             if (trow == null) {
+                var sheet = this.hasSheet() ? displaySheet(this.sheet) + "!" : "";
                 if (isFinite(col)) {
                     col = rel & 1 ? ("C[" + col + "]") : ("C" + (col + 1));
                 } else {
@@ -277,7 +278,7 @@
                 } else {
                     row = "";
                 }
-                return row + col;
+                return sheet + row + col;
             } else {
                 abs = this.absolute(trow, tcol);
                 return abs.valid() ? displayRef(this._hasSheet && this.sheet, abs.row, abs.col, rel) : "#REF!";
