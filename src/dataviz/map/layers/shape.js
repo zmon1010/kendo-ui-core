@@ -27,6 +27,9 @@
     // Implementation =========================================================
     var ShapeLayer = Layer.extend({
         init: function(map, options) {
+
+            this._pan = proxy(this._pan, this);
+
             Layer.fn.init.call(this, map, options);
 
             this.surface = d.Surface.create(this.element, {
@@ -167,9 +170,18 @@
             this._markers = [];
         },
 
+        _pan: function() {
+            if (!this._panning) {
+                this._panning = true;
+                this.surface.suspendTracking();
+            }
+        },
+
         _panEnd: function(e) {
             Layer.fn._panEnd.call(this, e);
             this._translateSurface();
+            this.surface.resumeTracking();
+            this._panning = false;
         },
 
         _translateSurface: function() {
@@ -195,6 +207,18 @@
                     layer.map.trigger(event, args);
                 }
             };
+        },
+
+        _activate: function() {
+            Layer.fn._activate.call(this);
+
+            this.map.bind("pan", this._pan);
+        },
+
+        _deactivate: function() {
+            Layer.fn._deactivate.call(this);
+
+            this.map.unbind("pan", this._pan);
         }
     });
 

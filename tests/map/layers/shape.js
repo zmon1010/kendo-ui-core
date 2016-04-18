@@ -234,6 +234,22 @@
         map.trigger("reset");
     });
 
+    test("suspends surface tracking on pan", 1, function() {
+        layer.surface.suspendTracking = function() {
+            ok(true);
+        };
+
+        map.trigger("pan");
+    });
+
+    test("resumes surface tracking on pan", 1, function() {
+        layer.surface.resumeTracking = function() {
+            ok(true);
+        };
+
+        map.trigger("panEnd");
+    });
+
     test("surface events are forwarded to map", function() {
         map.bind("shapeClick", function() { ok(true) });
         layer.surface.trigger("click", {
