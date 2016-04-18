@@ -139,6 +139,7 @@
 
         suspendTracking: function() {
             this._suspendedTracking = true;
+            this.hideTooltip();
         },
 
         resumeTracking: function() {

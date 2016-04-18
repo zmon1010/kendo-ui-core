@@ -317,6 +317,14 @@ function baseSurfaceEventTests(name, TSurface) {
         surface.element.trigger("click");
     });
 
+    test("hides tooltip if tracking is suspended", 1, function() {
+        surface.hideTooltip = function() {
+            ok(true);
+        };
+
+        surface.suspendTracking();
+    });
+
     test("triggers events if tracking is suspended and resumed", 1, function() {
         surface.eventTarget = function() {
             return { options: {}};

@@ -116,7 +116,7 @@
         },
 
         suspendTracking: function() {
-            this._suspendedTracking = true;
+            d.Surface.fn.suspendTracking.call(this);
             if (this._searchTree) {
                 this._searchTree.clear();
                 delete this._searchTree;
@@ -124,7 +124,7 @@
         },
 
         resumeTracking: function() {
-            this._suspendedTracking = false;
+            d.Surface.fn.resumeTracking.call(this);
             if (!this._searchTree) {
                 this._searchTree = new d.ShapesQuadTree();
 
