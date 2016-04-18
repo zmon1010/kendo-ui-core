@@ -200,6 +200,18 @@ namespace Kendo.Mvc.UI
                 }
             }
 
+			if (Editable.Enabled == false) {
+                json["editable"] = false;
+            }
+			else
+			{
+		        var editable = Editable.ToJson();
+		        if (editable.Any())
+		        {
+		            json["editable"] = editable;
+		        }
+			}
+
 //>> Serialization
         
             if (AutoBind.HasValue)
@@ -212,14 +224,6 @@ namespace Kendo.Mvc.UI
                 json["columnResizeHandleWidth"] = ColumnResizeHandleWidth;
             }
                 
-            var editable = Editable.ToJson();
-            if (editable.Any())
-            {
-                json["editable"] = editable;
-            } else if (Editable.Enabled != true) {
-                json["editable"] = Editable.Enabled;
-            }
-
             if (Navigatable.HasValue)
             {
                 json["navigatable"] = Navigatable;

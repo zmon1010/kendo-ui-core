@@ -49,6 +49,7 @@ module CodeGen::MVC::Wrappers
         'diagram.editable.select',
         'diagram.editable.rotate',
         'diagram.editable.resize',
+        'gantt.editable',
         'map.center',
         'map.controls.attribution',
         'map.controls.navigator',
