@@ -37,6 +37,22 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_PasteCleanup()
+        {
+            var value = true;
+
+            builder.PasteCleanup(x => x.KeepNewLines(value));
+
+            editor.PasteCleanup.KeepNewLines.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void PasteCleanup_should_return_builder()
+        {
+            builder.PasteCleanup(delegate { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_Stylesheets_with_list()
         {
             var value = "value";

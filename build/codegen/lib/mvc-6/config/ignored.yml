@@ -37,7 +37,8 @@
 - editor.imagebrowser.transport.create.data
 - editor.imagebrowser.transport.destroy.data
 - editor.imagebrowser.transport.read.data
-- editor.pastecleanup
+- editor.pdf.margin
+- editor.pdf.papersize
 - editor.stylesheets
 - gantt.assignments
 - gantt.datasource

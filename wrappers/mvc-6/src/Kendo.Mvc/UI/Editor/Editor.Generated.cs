@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public EditorMessagesSettings Messages { get; } = new EditorMessagesSettings();
 
+        public EditorPasteCleanupSettings PasteCleanup { get; } = new EditorPasteCleanupSettings();
+
         public EditorPdfSettings Pdf { get; } = new EditorPdfSettings();
 
         public EditorResizableSettings Resizable { get; } = new EditorResizableSettings();
@@ -52,6 +54,12 @@ namespace Kendo.Mvc.UI
             if (messages.Any())
             {
                 settings["messages"] = messages;
+            }
+
+            var pasteCleanup = PasteCleanup.Serialize();
+            if (pasteCleanup.Any())
+            {
+                settings["pasteCleanup"] = pasteCleanup;
             }
 
             var pdf = Pdf.Serialize();

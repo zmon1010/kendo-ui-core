@@ -46,6 +46,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Options for controlling how the pasting content is modified before it is added in the editor.
+        /// </summary>
+        /// <param name="configurator">The configurator for the pastecleanup setting.</param>
+        public EditorBuilder PasteCleanup(Action<EditorPasteCleanupSettingsBuilder> configurator)
+        {
+
+            Container.PasteCleanup.Editor = Container;
+            configurator(new EditorPasteCleanupSettingsBuilder(Container.PasteCleanup));
+
+            return this;
+        }
+
+        /// <summary>
         /// Configures the Kendo UI Editor PDF export settings.
         /// </summary>
         /// <param name="configurator">The configurator for the pdf setting.</param>

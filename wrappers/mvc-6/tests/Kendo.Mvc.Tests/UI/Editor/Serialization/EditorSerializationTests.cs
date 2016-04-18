@@ -16,6 +16,29 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_PasteCleanup_should_not_be_serialized()
+        {
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("pasteCleanup").ShouldBeFalse();
+            });
+        }
+
+        [Fact]
+        public void PasteCleanup_should_be_serialized()
+        {
+            var value = true;
+
+            editor.PasteCleanup.KeepNewLines = value;
+            
+            editor.AssertSettings(settings =>
+            {
+                var pasteCleanup = (IDictionary<string, object>) settings["pasteCleanup"];
+                pasteCleanup["keepNewLines"].ShouldEqual(value);
+            });
+        }
+
+        [Fact]
         public void Default_StyleSheets_should_not_be_serialized()
         {
             editor.AssertSettings(settings =>
@@ -30,12 +53,10 @@ namespace Kendo.Mvc.UI.Tests
             var values = new List<string> { "value1", "value2" };
 
             editor.StyleSheets = values;
-
-            editor.Encoded = true;
-
+            
             editor.AssertSettings(settings =>
             {
-                settings["encoded"].ShouldEqual(true);
+                settings["stylesheets"].ShouldEqual(values);
             });
         }
 
