@@ -3038,6 +3038,8 @@
 
                     this._panTransform();
 
+                    this.canvas.surface.hideTooltip();
+
                     this._updateAdorners();
                 }
 

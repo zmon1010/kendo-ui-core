@@ -971,6 +971,7 @@
                 this.activeTool.start(p, meta);
                 this._updateCursor(p);
                 this.diagram.focus();
+                this.diagram.canvas.surface.suspendTracking();
                 this.startPoint = p;
                 return true;
             },
@@ -993,6 +994,7 @@
                 if (this.activeTool) {
                     this.activeTool.end(p, meta);
                 }
+                this.diagram.canvas.surface.resumeTracking();
                 this.activeTool = undefined;
                 this._updateCursor(p);
                 return true;

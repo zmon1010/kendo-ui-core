@@ -60,6 +60,21 @@
         d.toolService.start(new Point(), {});
     });
 
+    test("toolservice start suspends surface tracking", function() {
+        d.canvas.surface.suspendTracking = function() {
+            ok(true);
+        };
+        d.toolService.start(new Point(), {});
+    });
+
+    test("toolservice end resumes surface tracking", function() {
+        d.toolService.start(new Point(), {});
+        d.canvas.surface.resumeTracking = function() {
+            ok(true);
+        };
+        d.toolService.end(new Point(), {});
+    });
+
     module("Selection tests", {
         setup: setup,
         teardown: teardown
