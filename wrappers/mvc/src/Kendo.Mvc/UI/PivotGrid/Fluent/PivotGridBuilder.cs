@@ -270,6 +270,13 @@
             return this;
         }
 
+        public PivotGridBuilder<TModel> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
+
         /// <summary>
         /// Binds the pivotGrid to a list of objects
         /// </summary>

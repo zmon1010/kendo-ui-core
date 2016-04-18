@@ -61,6 +61,12 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         //>> Fields
         
         public bool? AutoBind { get; set; }
@@ -135,7 +141,14 @@ namespace Kendo.Mvc.UI
         {
             var json = new Dictionary<string, object>(Events);
 
-            json["dataSource"] = (Dictionary<string, object>)DataSource.ToJson();
+            if (string.IsNullOrEmpty(DataSourceId))
+            {
+                json["dataSource"] = (Dictionary<string, object>)DataSource.ToJson();
+            }
+            else
+            {
+                json["dataSourceId"] = DataSourceId;
+            }
 
             Editable.InitializeEditor(ViewContext, ViewData);
 

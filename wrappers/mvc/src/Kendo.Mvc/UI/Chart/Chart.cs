@@ -222,6 +222,12 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets or sets a value indicating if the chart
         /// should be data bound during initialization.
@@ -328,7 +334,14 @@ namespace Kendo.Mvc.UI
 
             SerializeTransitions(options);
 
-            SerializeDataSource(options);
+            if (DataSourceId.HasValue())
+            {
+                options.Add("dataSourceId", DataSourceId);
+            }
+            else
+            {
+                SerializeDataSource(options);
+            }
 
             SerializeSeriesColors(options);
 

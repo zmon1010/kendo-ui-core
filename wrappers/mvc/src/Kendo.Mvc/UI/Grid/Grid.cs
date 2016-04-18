@@ -107,6 +107,11 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
 
         public IDictionary<string, object> ValidationMetadata
         {
@@ -763,7 +768,7 @@ namespace Kendo.Mvc.UI
         {
             var options = new Dictionary<string, object>(Events);
 
-            var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
+            var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true) || DataSourceId.HasValue();
                         
             var columns = VisibleColumns.Select(c => c.ToJson());
 
@@ -895,9 +900,14 @@ namespace Kendo.Mvc.UI
             {
                 options["allowCopy"] = AllowCopy.ToJson();
             }
-
-            options["dataSource"] = DataSource.ToJson();
-
+            if (DataSourceId.HasValue())
+            {
+                options["dataSourceId"] = DataSourceId;
+            }
+            else
+            {
+                options["dataSource"] = DataSource.ToJson();
+            }
             if (!String.IsNullOrEmpty(ClientDetailTemplateId))
             {
                 options["detailTemplate"] = new ClientHandlerDescriptor { HandlerName = String.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, ClientDetailTemplateId) };
@@ -1347,7 +1357,7 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-                return DataSource.Type == DataSourceType.Ajax || DataSource.Type == DataSourceType.WebApi || DataSource.Type == DataSourceType.Custom;
+                return DataSource.Type == DataSourceType.Ajax || DataSource.Type == DataSourceType.WebApi || DataSource.Type == DataSourceType.Custom || DataSourceId.HasValue();
             }
         }
         
@@ -1411,7 +1421,7 @@ namespace Kendo.Mvc.UI
                 }
             }
 
-            if (!DataKeys.Any() && (Editable.Enabled || (Selectable.Enabled && !IsClientBinding)))
+            if (!DataKeys.Any() && (Editable.Enabled || (Selectable.Enabled && !IsClientBinding)) && (string.IsNullOrEmpty(DataSourceId)))
             {
                 throw new NotSupportedException(Exceptions.DataKeysEmpty);
             }
@@ -1421,7 +1431,7 @@ namespace Kendo.Mvc.UI
                 throw new NotSupportedException(Exceptions.ExcelExportNotSupportedInServerBinding);
             }
 
-            if (Editable.Enabled)
+            if (Editable.Enabled && string.IsNullOrEmpty(DataSourceId))
             {
                 if (DataSource.Type != DataSourceType.Custom)
                 {

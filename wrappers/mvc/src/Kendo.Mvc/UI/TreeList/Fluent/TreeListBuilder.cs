@@ -293,6 +293,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public TreeListBuilder<T> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
+
         /// <summary>
         /// Binds the grid to a list of objects
         /// </summary>

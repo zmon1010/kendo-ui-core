@@ -543,6 +543,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public TreeViewBuilder DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
+
         /// <summary>
         /// Allows the treeview to fetch the entire datasource at initialization time.
         /// </summary>

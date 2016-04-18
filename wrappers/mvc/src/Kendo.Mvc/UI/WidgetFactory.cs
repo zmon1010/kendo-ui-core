@@ -190,6 +190,23 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Creates a new <see cref="Kendo.Mvc.UI.DataSource{T}"/> bound to the specified data item type.
+        /// </summary>
+        /// <example>
+        /// <typeparam name="T">The type of the data item</typeparam>
+        /// <code lang="CS">
+        ///  @(Html.Kendo().DataSource&lt;Order&gt;()
+        ///             .Name("DataSource")
+        ///             .BindTo(Model)
+        /// )
+        /// </code>
+        /// </example>      
+        public virtual DataSourceWidgetBuilder<T> DataSource<T>() where T : class
+        {
+            return new DataSourceWidgetBuilder<T>(new DataSourceWidget<T>(ViewContext,Initializer,UrlGenerator));
+        }
+
+        /// <summary>
         /// Creates a new <see cref="Kendo.Mvc.UI.ListView{T}"/> bound to the specified data item type.
         /// </summary>
         /// <example>

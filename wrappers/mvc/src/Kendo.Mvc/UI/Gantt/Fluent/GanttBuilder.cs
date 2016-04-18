@@ -49,6 +49,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public GanttBuilder<TTaskModel, TDependenciesModel> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
+
         /// <summary>
         /// Configures the dependencies DataSource options.
         /// </summary>
@@ -70,6 +77,13 @@ namespace Kendo.Mvc.UI.Fluent
         public GanttBuilder<TTaskModel, TDependenciesModel> DependenciesDataSource(Action<GanttDependenciesDataSourceBuilder<TDependenciesModel>> configurator)
         {
             configurator(new GanttDependenciesDataSourceBuilder<TDependenciesModel>(Component.DependenciesDataSource, this.Component.ViewContext, this.Component.UrlGenerator));
+
+            return this;
+        }
+
+        public GanttBuilder<TTaskModel, TDependenciesModel> DependenciesDataSource(string dataSourceId)
+        {
+            Component.DependenciesDataSourceId = dataSourceId;
 
             return this;
         }

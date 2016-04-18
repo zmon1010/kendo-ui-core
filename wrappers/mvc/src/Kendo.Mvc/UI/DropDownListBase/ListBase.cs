@@ -32,6 +32,11 @@
             get;
             private set;
         }
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
 
         public string DataTextField
         {
@@ -138,14 +143,21 @@
         protected virtual IDictionary<string, object> SeriailzeBaseOptions()
         {
             var options = new Dictionary<string, object>(Events);
-            
-            if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) || DataSource.Type == DataSourceType.Custom)
+
+            if (string.IsNullOrEmpty(DataSourceId))
             {
-                options["dataSource"] = DataSource.ToJson();
+                if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) || DataSource.Type == DataSourceType.Custom)
+                {
+                    options["dataSource"] = DataSource.ToJson();
+                }
+                else if (DataSource.Data != null)
+                {
+                    options["dataSource"] = DataSource.Data;
+                }
             }
-            else if (DataSource.Data != null)
+            else
             {
-                options["dataSource"] = DataSource.Data;
+                options["dataSourceId"] = DataSourceId;
             }
 
             var animation = Animation.ToJson();

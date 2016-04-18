@@ -41,6 +41,12 @@
             private set;
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         public IUrlGenerator UrlGenerator
         {
             get;
@@ -227,7 +233,14 @@
                 options["messages"] = messages;
             }
 
-            options["dataSource"] = DataSource.ToJson();
+            if (DataSourceId.HasValue())
+            {
+                options["dataSourceId"] = DataSourceId;
+            }
+            else
+            {
+                options["dataSource"] = DataSource.ToJson();
+            }
 
             options["dataCellTemplate"] = GetTemplate(DataCellTemplateId, DataCellTemplate);
             options["kpiStatusTemplate"] = GetTemplate(KPIStatusTemplateId, KPIStatusTemplate);

@@ -64,10 +64,21 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         public DataSource DependenciesDataSource
         {
             get;
             private set;
+        }
+        public string DependenciesDataSourceId
+        {
+            get;
+            set;
         }
 
         public List<GanttColumnBase<TTaskModel>> Columns
@@ -341,14 +352,24 @@ namespace Kendo.Mvc.UI
                 json["resources"] = resources;
             }
 
-            ProcessDataSource(DataSource);
-
-            ProcessDataSource(DependenciesDataSource);
-
-            json["dataSource"] = (Dictionary<string, object>)DataSource.ToJson();
-
-            json["dependencies"] = (Dictionary<string, object>)DependenciesDataSource.ToJson();
-
+            if (DataSourceId.HasValue())
+            {
+                json["dataSourceId"] = DataSourceId;
+            }
+            else
+            {
+                ProcessDataSource(DataSource);
+                json["dataSource"] = (Dictionary<string, object>)DataSource.ToJson();
+            }
+            if (DependenciesDataSourceId.HasValue())
+            {
+                json["dependenciesId"] = DependenciesDataSourceId;
+            }
+            else
+            {
+                ProcessDataSource(DependenciesDataSource);
+                json["dependencies"] = (Dictionary<string, object>)DependenciesDataSource.ToJson();
+            }
             writer.Write(Initializer.Initialize(Selector, "Gantt", json));
 
             base.WriteInitializationScript(writer);

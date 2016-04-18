@@ -132,6 +132,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this as TDropDownBuilder;
         }
 
+        public TDropDownBuilder DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this as TDropDownBuilder;
+        }
+
         /// <summary>
         /// Specifies the delay in ms after which the widget will start filtering the dataSource.
         /// </summary>

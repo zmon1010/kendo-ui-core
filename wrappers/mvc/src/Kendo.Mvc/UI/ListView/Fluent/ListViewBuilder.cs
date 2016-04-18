@@ -288,5 +288,12 @@
 
             return this;
         }
+
+        public ListViewBuilder<T> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
     }
 }

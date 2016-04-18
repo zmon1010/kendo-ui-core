@@ -47,6 +47,11 @@ namespace Kendo.Mvc.UI
             get;
         }
 
+        string DataSourceId
+        {
+            get;
+        }
+
         GridFilterableSettings Filterable
         {
             get;
