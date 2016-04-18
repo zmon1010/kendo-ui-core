@@ -72,6 +72,7 @@
 
         clear: function() {
             this._visual.children = [];
+            this.hideTooltip();
         },
 
         destroy: function() {

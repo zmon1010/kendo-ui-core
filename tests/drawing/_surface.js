@@ -282,6 +282,14 @@ function baseSurfaceEventTests(name, TSurface) {
         surface.hideTooltip();
     });
 
+    test("hides tooltip on clear", 1, function() {
+        tooltip.hide = function() {
+            ok(true);
+        };
+
+        surface.clear();
+    });
+
     // ------------------------------------------------------------
 
     module("Surface Base Tests / " + name + " / tracking", {
