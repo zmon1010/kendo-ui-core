@@ -1182,12 +1182,13 @@ var __meta__ = { // jshint ignore:line
 
         _startHover: function(element, e) {
             var chart = this,
+                chartElement = chart._drawingChartElement(element, e),
                 tooltip = chart._tooltip,
                 highlight = chart._highlight,
                 tooltipOptions = chart.options.tooltip,
                 point;
 
-            if (chart._suppressHover || !highlight || highlight.isHighlighted(element) || chart._sharedTooltip()) {
+            if (chart._suppressHover || !highlight || highlight.isHighlighted(chartElement) || chart._sharedTooltip()) {
                 return;
             }
 
