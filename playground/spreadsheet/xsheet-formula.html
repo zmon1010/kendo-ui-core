@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+      requireSync([
+        "../../src/jquery.js",
+        "../../src/kendo.dom.js",
+        "../../src/kendo.spreadsheet.js",
+      ]);
+    </script>
+  </head>
+  <body>
+    <div id="spreadsheet" style="width:100%"></div>
+
+    <script>
+     $("#spreadsheet").kendoSpreadsheet({
+         toolbar: false,
+         "activeSheet": "B",
+         "sheets": [
+             {
+                 "name": "A",
+                 "rows": [
+                     {
+                         "cells": [
+                             {
+                                 "index": 20,
+                                 "value": "INCORRECT" // this value is refered to from the second sheet
+                             }
+                         ]
+                     }
+                 ]
+             },
+             {
+                 "name": "B",
+                 "rows": [
+                     {
+                         "cells": [
+                             {
+                                 "formula": "A!D1", // this is not used, but is somehow related to the problem
+                                 "index": 8
+                             },
+                             {
+                                 "formula": "U1", // this loads 'A'!U1, rather than U1 from B
+                                 "index": 25
+                             }
+                         ]
+                     }
+                 ]
+             }
+         ]
+     });
+    </script>
+  </body>
+</html>
