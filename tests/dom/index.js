@@ -329,7 +329,6 @@
 
     test("render updates variable children", function() {
         tree.render([ element("div", null, [ element("div", { style:{ position: "absolute", left: "50px", top: "50px" }}) ]) ]);
-        debugger;
         tree.render([ element("div", null, [ element("table", { style:{ position: "absolute", top: "50px", left: "50px" }}) ]) ]);
 
         equal(root.firstChild.firstChild.tagName, "TABLE");

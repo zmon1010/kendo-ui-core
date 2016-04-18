@@ -494,7 +494,6 @@ test("paragraph after formatted text keeps formatting in new paragraph", functio
 
     createParagraphCommand(range).exec();
 
-    debugger
     equal(editor.value(), '<p>foo <strong>bar</strong></p><p><strong></strong>baz</p>');
 });
 
