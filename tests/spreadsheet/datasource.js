@@ -343,6 +343,56 @@
         equal(view[3].foo, "foo3");
     });
 
+    test("rebinding with less data clears the previous cell range", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        binder.dataSource.data([
+                    { foo: "foo4", bar: "bar4" },
+                    { foo: "foo5", bar: "bar5" }
+                ]);
+
+        equal(sheet.range("A2").value(), "foo4");
+        equal(sheet.range("A3").value(), "foo5");
+        equal(sheet.range("A4").value(), null);
+    });
+
+    test("rebinding with more data grows the previous range", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                ]
+            },
+            sheet: sheet
+        });
+
+        binder.dataSource.data([
+                    { foo: "foo3", bar: "bar3" },
+                    { foo: "foo4", bar: "bar4" },
+                    { foo: "foo5", bar: "bar5" }
+                ]);
+
+        equal(sheet.range("A2").value(), "foo3");
+        equal(sheet.range("A3").value(), "foo4");
+        equal(sheet.range("A4").value(), "foo5");
+    });
+
     test("show title of the columns in the header", function() {
         var binder = new SheetDataSourceBinder({
             columns: [{ field: "foo", title: "title1" }, { field: "bar", title: "title2" } ],
@@ -358,6 +408,58 @@
 
         equal(sheet.range("A1").value(), "title1");
         equal(sheet.range("B1").value(), "title2");
+    });
+
+    test("canceling inserted record updates the cell range values", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                ]
+            },
+            sheet: sheet
+        });
+
+
+        binder.dataSource.insert(0, { foo: "foo3", bar: "bar3" });
+
+        binder.dataSource.cancelChanges();
+
+        equal(sheet.range("A2").value(), "foo1");
+        equal(sheet.range("A3").value(), "foo2");
+        equal(sheet.range("A4").value(), null);
+    });
+
+    test("canceling inserted via the sheet record updates the cell range values", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                ]
+            },
+            sheet: sheet
+        });
+
+
+        sheet.insertRow(0);
+
+        equal(sheet.range("A1").value(), null);
+        equal(sheet.range("A3").value(), "foo1");
+        equal(sheet.range("A4").value(), "foo2");
+
+        binder.dataSource.cancelChanges();
+
+        equal(sheet.range("A2").value(), "foo1");
+        equal(sheet.range("A3").value(), "foo2");
+        equal(sheet.range("A4").value(), null);
     });
 
     test("add fields of bound columns on the sheet's first row", function() {

@@ -19,6 +19,8 @@
 
             this._header();
 
+            this._boundRowsCount = 0;
+
             this.dataSource.fetch();
         },
 
@@ -93,6 +95,8 @@
                     }
                 });
 
+                this._boundRowsCount = dataSource.view().length;
+
                 this._skipRebind = false;
             }
         },
@@ -141,13 +145,19 @@
             });
 
             this.sheet.batch(function() {
-                for (var idx = 0, length = data.length; idx < length; idx++) {
+                var length = Math.max(data.length, this._boundRowsCount);
+
+                for (var idx = 0; idx < length; idx++) {
                     for (var getterIdx = 0; getterIdx < getters.length; getterIdx++) {
+                        var value = data[idx] ? getters[getterIdx](data[idx]) : null;
+
                         //skip header row
-                        this.sheet.range(idx + 1,getterIdx).value(getters[getterIdx](data[idx]));
+                        this.sheet.range(idx + 1, getterIdx).value(value);
                     }
                 }
             }.bind(this));
+
+            this._boundRowsCount = data.length;
         },
 
         destroy: function() {
