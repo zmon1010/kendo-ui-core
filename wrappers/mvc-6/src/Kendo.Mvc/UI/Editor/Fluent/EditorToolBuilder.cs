@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -35,6 +36,14 @@ namespace Kendo.Mvc.UI.Fluent
             Container.PaletteColors = null;
             Container.Palette = palette;
 
+            return this;
+        }
+
+        [Obsolete("The property is deprecated. Please use the Tooltip property instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public EditorToolBuilder ToolTip(string value)
+        {
+            Container.Tooltip = value;
             return this;
         }
     }

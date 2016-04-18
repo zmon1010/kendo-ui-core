@@ -567,5 +567,36 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Clear().ShouldBeSameAs(builder);
         }
+
+        [Fact]
+        public void Builder_should_create_CustomButton_tool()
+        {
+            builder.CustomButton(x => x.Name("customTool"));
+
+            items.Count.ShouldEqual(1);
+            items[0].Name.ShouldEqual("customTool");
+        }
+
+        [Fact]
+        public void CustomButton_should_return_builder()
+        {
+            builder.CustomButton(delegate { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Builder_should_create_CustomTemplate_tool()
+        {
+            var value = "#= template #";
+            builder.CustomTemplate(x => x.Template(value));
+
+            items.Count.ShouldEqual(1);
+            items[0].Template.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void CustomTemplate_should_return_builder()
+        {
+            builder.CustomTemplate(delegate { }).ShouldBeSameAs(builder);
+        }
     }
 }

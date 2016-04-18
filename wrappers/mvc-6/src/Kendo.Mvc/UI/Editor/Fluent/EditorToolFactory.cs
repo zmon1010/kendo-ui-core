@@ -38,5 +38,29 @@ namespace Kendo.Mvc.UI.Fluent
             AddTool("foreColor", configurator);
             return this;
         }
+
+        /// <summary>
+        /// Adds a custom button tool.
+        /// </summary>
+        /// <param name="configurator"></param>
+        /// <returns></returns>
+        public EditorToolFactory CustomButton(Action<EditorToolBuilder> configurator)
+        {
+            AddTool(null, configurator);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a custom template tool.
+        /// </summary>
+        /// <param name="configurator"></param>
+        /// <returns></returns>
+        public EditorToolFactory CustomTemplate(Action<EditorToolBuilder> configurator)
+        {
+            AddTool(null, configurator);
+
+            return this;
+        }
     }
 }
