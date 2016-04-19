@@ -2642,8 +2642,6 @@ namespace Kendo.Mvc.UI.Fluent
 
             return new ChartBoxPlotSeriesBuilder<TModel>(boxPlotSeries);
         }
-
-        //stamo
         
         /// <summary>
         /// Defines bound vertical box plot series.
