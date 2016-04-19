@@ -3334,6 +3334,48 @@
                 return found;
             },
 
+            getShapeByModelId: function (id) {
+                var shape;
+                if (this._isEditable) {
+                    shape = this._dataMap[id];
+                } else {
+                    shape = Utils.first(this.shapes, function(shape) {
+                        return (shape.dataItem || {}).id === id;
+                    });
+                }
+                return shape;
+            },
+
+            getShapeByModelUid: function(uid) {
+                var shape;
+                if (this._isEditable) {
+                    shape = Utils.first(this.shapes, function(shape) {
+                        return (shape.dataItem || {}).uid === uid;
+                    });
+                } else {
+                    shape = this._dataMap[uid];
+                }
+                return shape;
+            },
+
+            getConnectionByModelId: function(id) {
+                var connection;
+                if (this.connectionsDataSource) {
+                    connection = Utils.first(this.connections, function(connection) {
+                        return (connection.dataItem || {}).id === id;
+                    });
+                }
+                return connection;
+            },
+
+            getConnectionByModelUid: function(uid) {
+                var connection;
+                if (this.connectionsDataSource) {
+                    connection = this._connectionsDataMap[uid];
+                }
+                return connection;
+            },
+
             _extendLayoutOptions: function(options) {
                 if(options.layout) {
                     options.layout = deepExtend(diagram.LayoutBase.fn.defaultOptions || {}, options.layout);

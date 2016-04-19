@@ -271,4 +271,255 @@
         equal(connection.to.y, 400);
     });
 
+    (function() {
+
+        function createDiagram(options) {
+            diagram = $('<div id="diagram" style="width: 800px; height: 600px;" />')
+                .appendTo(QUnit.fixture)
+                .kendoDiagram(options)
+                .getKendoDiagram();
+
+            return diagram;
+        }
+
+        /*-----------------------------------------------*/
+        module("Diagram API / getShapeByModelId", {
+            teardown: function () {
+                kendo.destroy(QUnit.fixture);
+            }
+        });
+
+        test("returns shape by id for HierarchicalDataSource", function() {
+            createDiagram({
+                dataSource: {
+                    data: [{
+                        Id: 1,
+                        items: [{
+                            Id: 2
+                        }]
+                    }],
+                    schema: {
+                        model: {
+                            id: "Id",
+                            children: "items"
+                        }
+                    }
+                }
+            });
+
+            var shape = diagram.getShapeByModelId(2);
+            equal(shape.dataItem.Id, 2);
+        });
+
+        test("returns shape by id for flat dataSource", function() {
+            createDiagram({
+                dataSource: {
+                    data: [{
+                        Id: 1
+                    }, {
+                        Id: 2
+                    }],
+                    schema: {
+                        model: {
+                            id: "Id"
+                        }
+                    }
+                },
+                connectionsDataSource: {}
+            });
+            var shape = diagram.getShapeByModelId(2);
+            equal(shape.dataItem.Id, 2);
+        });
+
+        test("returns undefined if no dataSource is used", function() {
+            createDiagram({
+                shapes: [{
+                    id: 1
+                }]
+            });
+            var shape = diagram.getShapeByModelId(1);
+            ok(!shape);
+        });
+
+        /*-----------------------------------------------*/
+        module("Diagram API / getShapeByModelUid", {
+            teardown: function () {
+                kendo.destroy(QUnit.fixture);
+            }
+        });
+
+        test("returns shape by uid for HierarchicalDataSource", function() {
+            createDiagram({
+                dataSource: {
+                    data: [{
+                        Id: 1,
+                        items: [{
+                            Id: 2
+                        }]
+                    }],
+                    schema: {
+                        model: {
+                            id: "Id",
+                            children: "items"
+                        }
+                    }
+                }
+            });
+
+            var uid = diagram.dataSource.at(0).children.at(0).uid;
+            var shape = diagram.getShapeByModelUid(uid);
+            equal(shape.dataItem.Id, 2);
+        });
+
+        test("returns shape by uid for flat dataSource", function() {
+            createDiagram({
+                dataSource: {
+                    data: [{
+                        Id: 1
+                    }, {
+                        Id: 2
+                    }],
+                    schema: {
+                        model: {
+                            id: "Id"
+                        }
+                    }
+                },
+                connectionsDataSource: {}
+            });
+
+            var uid = diagram.dataSource.at(1).uid;
+            var shape = diagram.getShapeByModelUid(uid);
+            equal(shape.dataItem.Id, 2);
+        });
+
+        test("returns undefined if no dataSource is used", function() {
+            createDiagram({
+                shapes: [{}]
+            });
+            var shape = diagram.getShapeByModelUid(kendo.guid());
+            ok(!shape);
+        });
+
+        /*-----------------------------------------------*/
+        module("Diagram API / getConnectionByModelId", {
+            teardown: function () {
+                kendo.destroy(QUnit.fixture);
+            }
+        });
+
+        test("returns undefined for HierarchicalDataSource", function() {
+            createDiagram({
+                dataSource: {
+                    data: [{
+                        Id: 1,
+                        items: [{
+                            Id: 2
+                        }]
+                    }],
+                    schema: {
+                        model: {
+                            id: "Id",
+                            children: "items"
+                        }
+                    }
+                }
+            });
+
+            var connection = diagram.getConnectionByModelId(1);
+            ok(!connection);
+        });
+
+        test("returns connection by id for flat dataSource", function() {
+            createDiagram({
+                dataSource: {},
+                connectionsDataSource: {
+                    data: [{
+                        Id: 1
+                    }, {
+                        Id: 2
+                    }],
+                    schema: {
+                        model: {
+                            id: "Id"
+                        }
+                    }
+                }
+            });
+
+            var connection = diagram.getConnectionByModelId(2);
+            equal(connection.dataItem.Id, 2);
+        });
+
+        test("returns undefined if no dataSource is used", function() {
+            createDiagram({
+                connections: [{id: 1}]
+            });
+
+            var connection = diagram.getConnectionByModelId(1);
+            ok(!connection);
+        });
+
+        /*-----------------------------------------------*/
+        module("Diagram API / getConnectionByModelUid", {
+            teardown: function () {
+                kendo.destroy(QUnit.fixture);
+            }
+        });
+
+        test("returns undefined for HierarchicalDataSource", function() {
+            createDiagram({
+                dataSource: {
+                    data: [{
+                        Id: 1,
+                        items: [{
+                            Id: 2
+                        }]
+                    }],
+                    schema: {
+                        model: {
+                            id: "Id",
+                            children: "items"
+                        }
+                    }
+                }
+            });
+
+            var connection = diagram.getConnectionByModelUid(kendo.guid());
+            ok(!connection);
+        });
+
+        test("returns connection by uid for flat dataSource", function() {
+            createDiagram({
+                dataSource: {},
+                connectionsDataSource: {
+                    data: [{
+                        Id: 1
+                    }, {
+                        Id: 2
+                    }],
+                    schema: {
+                        model: {
+                            id: "Id"
+                        }
+                    }
+                }
+            });
+
+            var uid = diagram.connectionsDataSource.at(1).uid;
+            var connection = diagram.getConnectionByModelUid(uid);
+            equal(connection.dataItem.Id, 2);
+        });
+
+        test("returns undefined if no dataSource is used", function() {
+            createDiagram({
+                connections: [{}]
+            });
+
+            var connection = diagram.getConnectionByModelUid(kendo.guid());
+            ok(!connection);
+        });
+
+    })();
+
 })();
