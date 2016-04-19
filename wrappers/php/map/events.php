@@ -26,6 +26,7 @@ $map->center(array(39.6924, -97.3370))
     ->panEnd('onPanEnd')
     ->shapeClick('onShapeClick')
     ->shapeCreated('onShapeCreated')
+    ->shapeFeatureCreated('onShapeFeatureCreated')
     ->shapeMouseEnter('onShapeMouseEnter')
     ->shapeMouseLeave('onShapeMouseLeave')
     ->zoomStart('onZoomStart')
@@ -63,6 +64,14 @@ function onShapeClick(e) {
 function onShapeCreated(e) {
     kendoConsole.log(kendo.format(
         "Shape created :: {0}", e.shape.dataItem.properties.name
+    ));
+}
+
+function onShapeFeatureCreated(e) {
+    kendoConsole.log(kendo.format(
+    "Feature created :: {0} with {1} child shape(s)",
+        e.properties.name,
+        e.group.children.length
     ));
 }
 
