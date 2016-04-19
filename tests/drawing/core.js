@@ -352,7 +352,7 @@
                 width: 100,
                 height: 50,
                 content: "foo",
-                group: true,
+                shared: true,
                 hideDelay: 100
             });
             equal(tooltip.options.position, "left");
@@ -362,7 +362,7 @@
             equal(tooltip.options.width, 100);
             equal(tooltip.options.height, 50);
             equal(tooltip.options.content, "foo");
-            equal(tooltip.options.group, true);
+            equal(tooltip.options.shared, true);
             equal(tooltip.options.hideDelay, 100);
         });
 
@@ -532,13 +532,13 @@
             surface.trigger("mouseleave", { element: shape, type: "mouseleave", originalEvent: {}});
         }, true, 50);
 
-        asyncTest("does not hide element if the mouse moves from one element of a group to another from the same group and the group option is true", 1, function() {
+        asyncTest("does not hide element if the mouse moves from one element of a group to another from the same group and the shared option is true", 1, function() {
             var shape2 = new d.Rect(new g.Rect([50, 0], [100, 100]));
             group.append(shape, shape2);
 
             group.options.tooltip = {
                 content: "foo",
-                group: true
+                shared: true
             };
 
             tooltip.popup.bind("close", function() {
@@ -554,13 +554,13 @@
             }, 0);
         });
 
-        asyncTest("hides element if the mouse moves from one element of a group to another from the same group but the group option is false", 2, function() {
+        asyncTest("hides element if the mouse moves from one element of a group to another from the same group but the shared option is false", 2, function() {
             var shape2 = new d.Rect(new g.Rect([50, 0], [100, 100]));
             group.append(shape, shape2);
 
             group.options.tooltip = {
                 content: "foo",
-                group: false
+                shared: false
             };
 
             tooltip.popup.bind("close", function() {
@@ -737,12 +737,12 @@
             equal(position.top, 210);
         });
 
-        test("uses group bbox if group is set to true", function() {
+        test("uses group bbox if shared is set to true", function() {
             var shape2 = new d.Rect(new g.Rect([200, 100], [100, 100]));
             shape.options.set("tooltip", null);
             group.append(shape, shape2);
             group.options.tooltip = {
-                group: true,
+                shared: true,
                 content: "foo"
             };
             tooltip.show(group);

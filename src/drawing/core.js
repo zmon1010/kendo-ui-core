@@ -499,7 +499,7 @@
                 width: options.width,
                 height: options.height,
                 content: options.content,
-                group: options.group,
+                shared: options.shared,
                 hideDelay: options.hideDelay,
                 showAfter: options.showAfter
             };
@@ -591,7 +591,7 @@
 
             clearTimeout(this._timeout);
 
-            if (current && ((current.shape === shape && options.group) || current.target === target)) {
+            if (current && ((current.shape === shape && options.shared) || current.target === target)) {
                 return;
             }
 
@@ -613,7 +613,7 @@
                     elementSize: elementSize,
                     shape: shape,
                     target: target,
-                    position: this._position(options.group ? shape: target, options, elementSize, event)
+                    position: this._position(options.shared ? shape: target, options, elementSize, event)
                 };
 
                 if (delay) {
