@@ -88,7 +88,8 @@
         textColor: "Text Color",
         textWrap: "Wrap text",
         underline: "Underline",
-        validation: "Data validation..."
+        validation: "Data validation...",
+        hyperlink: "Link"
     };
 
     var defaultTools = {
@@ -106,7 +107,8 @@
             "format",
             "merge",
             "freeze",
-            "filter"
+            "filter",
+            "hyperlink"
         ],
         insert: [
             [ "addColumnLeft", "addColumnRight", "addRowBelow", "addRowAbove" ],
@@ -144,6 +146,7 @@
         freeze:                { type: "freeze",                              iconClass: "freeze-panes" },
         borders:               { type: "borders",                             iconClass: "all-borders" },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
+        hyperlink:             { type: "dialog", dialogName: "hyperlink", iconClass: "hyperlink", overflow: "never" },
 
         //insert tab
         addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "add-column-left"  },

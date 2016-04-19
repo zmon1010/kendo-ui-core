@@ -152,6 +152,14 @@
         },
         unsupportedSelectionDialog: {
             errorMessage: "That action cannot be performed on multiple selection."
+        },
+        linkDialog: {
+            title: "Hyperlink",
+            labels: {
+                text: "Text",
+                url: "Address",
+                removeLink: "Remove link"
+            }
         }
     };
 
@@ -195,7 +203,6 @@
                     .kendoWindow({
                         scrollable: false,
                         resizable: false,
-                        maximizable: false,
                         modal: true,
                         visible: false,
                         width: this.options.width || 320,
@@ -1496,6 +1503,43 @@
     });
 
     kendo.spreadsheet.dialogs.register("unsupportedSelection", UnsupportedSelectionDialog);
+
+    var HyperlinkDialog = SpreadsheetDialog.extend({
+        options: {
+            template:
+            ("<div class='k-edit-label'><label>#: messages.linkDialog.labels.text #:</label></div>" +
+             "<div class='k-edit-field'><input class='k-textbox' data-bind='value: text' /></div>" +
+             "<div class='k-edit-label'><label>#: messages.linkDialog.labels.url #:</label></div>" +
+             "<div class='k-edit-field'><input class='k-textbox' data-bind='value: url' /></div>" +
+             "<div class='k-action-buttons'>" + (
+                 ("<button class='k-button k-primary' data-bind='click: apply'>#= messages.okText #</button>" +
+                  "<button class='k-button' data-bind='click: remove'>#= messages.linkDialog.labels.removeLink #</button>")
+             ) + "</div>"
+            ),
+            title: MESSAGES.linkDialog.title
+        },
+        open: function(range) {
+            var self = this;
+            SpreadsheetDialog.fn.open.apply(self, arguments);
+            var element = self.dialog().element;
+            var model = kendo.observable({
+                text: range.input(),
+                url: range.link(),
+                apply: function() {
+                    range.input(model.text);
+                    range.link(model.url);
+                    self.close();
+                },
+                remove: function() {
+                    range.link(null);
+                    self.close();
+                }
+            });
+            kendo.bind(element, model);
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("hyperlink", HyperlinkDialog);
 
 })(window.kendo);
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
