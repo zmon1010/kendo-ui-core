@@ -720,6 +720,9 @@
             encoded: true,
             domain: null,
             resizable: false,
+            deserialization: {
+                custom: null
+            },
             serialization: {
                 entities: true,
                 semantic: true,
@@ -831,7 +834,8 @@
         value: function (html) {
             var body = this.body,
                 editorNS = kendo.ui.editor,
-                currentHtml = editorNS.Serializer.domToXhtml(body, this.options.serialization);
+                options = this.options,
+                currentHtml = editorNS.Serializer.domToXhtml(body, options.serialization);
 
             if (html === undefined) {
                 return currentHtml;
@@ -841,7 +845,7 @@
                 return;
             }
 
-            editorNS.Serializer.htmlToDom(html, body);
+            editorNS.Serializer.htmlToDom(html, body, options.deserialization);
 
             this.selectionRestorePoint = null;
             this.update();

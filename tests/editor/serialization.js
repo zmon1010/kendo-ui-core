@@ -617,4 +617,102 @@ test("multiple css properties are persisted", function() {
     verifyCycle('<span style="background:url(data:image/png;base64,foobarbaz);color:#ff0000;"></span>');
 });
 
+    var root;
+    editor_module("custom serialization", {
+        beforeEach: function() {
+            root = $("<div>content</div>")[0];
+            editor = $("#editor-fixture").data("kendoEditor");
+        },
+        afterEach: function() {
+            editor.options.serialization.custom = null;
+            editor.options.deserialization.custom = null;
+            editor.value("");
+        }
+    }, {
+        deserialization: {
+            custom: null
+        },
+        serialization: {
+            custom: null
+        }
+    });
+
+    test("custom serialization", function() {
+        expect(2);
+        var result = Serializer.domToXhtml(root, {
+            custom: function(html) {
+                equal(html, "content");
+                return "new content";
+            }
+        });
+
+        equal(result, "new content");
+    });
+
+    test("define custom with non-function value", function() {
+        var result = Serializer.domToXhtml(root, { custom: {a:1} });
+        equal(result, "content");
+    });
+
+    test("no return value of handler still does not break the result", function() {
+        var result = Serializer.domToXhtml(root, { custom: function(html) {}});
+        equal(result, "content");
+    });
+
+    test("html content is customized", function() {
+        var content = "con<strong>tent</strong>";
+        root.innerHTML = content;
+
+        var result = Serializer.domToXhtml(root, { custom: function() {
+            return "new content";
+        }});
+
+        equal(result, "new content");
+    });
+
+    test("editor value is customized", function() {
+        editor.options.serialization.custom = function(html) {
+            return "new content";
+        };
+        editor.value("should change");
+
+        equal(editor.value(), "new content");
+    });
+
+    test("deserialization with defined custom handler with non-function value", function() {
+        root = Serializer.htmlToDom("content", root, { custom: {a:1} });
+        equal(root.innerHTML, "content");
+    });
+
+    test("deserialize custom handler", function() {
+        expect(2);
+        root = Serializer.htmlToDom("content", root, {
+            custom: function(html) {
+                equal(html, "content", "should propagate original value");
+                return "new content";
+            }
+        });
+
+        equal(root.innerHTML, "new content");
+    });
+
+    test("deserialize custom handler with no return value does not break content", function() {
+        root = Serializer.htmlToDom("content", root, {
+            custom: function(html) {}
+        });
+
+        equal(root.innerHTML, "content");
+    });
+
+    test("editor value custom content deserialization", function() {
+        expect(2);
+        editor.options.deserialization.custom = function(html) {
+            equal(html, "content", "should provide original content");
+            return "new content";
+        };
+        editor.value("content");
+
+        equal(editor.value(), "new content", "update with custom");
+    });
+
 }());

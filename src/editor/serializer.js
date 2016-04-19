@@ -24,6 +24,7 @@ var div = document.createElement("div");
 div.innerHTML = " <hr>";
 var supportsLeadingWhitespace = div.firstChild.nodeType === 3;
 div = null;
+var isFunction = $.isFunction;
 
 var Serializer = {
     toEditableHtml: function(html) {
@@ -100,12 +101,13 @@ var Serializer = {
         });
     },
 
-    htmlToDom: function(html, root) {
+    htmlToDom: function(html, root, options) {
         var browser = kendo.support.browser;
         var msie = browser.msie;
         var legacyIE = msie && browser.version < 9;
         var originalSrc = "originalsrc";
         var originalHref = "originalhref";
+        var o = options || {};
 
         html = Serializer.toEditableHtml(html);
 
@@ -119,6 +121,9 @@ var Serializer = {
 
         }
 
+        if(isFunction(o.custom)) {
+            html = o.custom(html) || html;
+        }
         root.innerHTML = html;
 
         if (legacyIE) {
@@ -555,13 +560,22 @@ var Serializer = {
             return textChild && (childrenCount == 1 || (childrenCount == 2 && dom.insignificant(root.lastChild)));
         }
 
+        function runCustom() {
+            if ($.isFunction(options.custom)) {
+                result = options.custom(result) || result;
+            }
+        }
+
         if (textOnly(root)) {
-            return dom.encode(text(root.firstChild).replace(/[\r\n\v\f\t ]+/, ' '), options);
+            result = dom.encode(text(root.firstChild).replace(/[\r\n\v\f\t ]+/, ' '), options);
+            runCustom();
+
+            return result;
         }
 
         children(root);
-
         result = result.join('');
+        runCustom();
 
         // if serialized dom contains only whitespace elements, consider it empty (required field validation)
         if (result.replace(brRe, "").replace(emptyPRe, "") === "") {
