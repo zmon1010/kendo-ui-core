@@ -129,6 +129,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Fired when a GeoJSON Feature is created on a shape layer.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the shapeFeatureCreated event.</param>
+        public MapEventBuilder ShapeFeatureCreated(string handler)
+        {
+            Handler("shapeFeatureCreated", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Fired when the mouse enters a shape.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the shapeMouseEnter event.</param>
