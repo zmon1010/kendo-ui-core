@@ -20,6 +20,8 @@ namespace Kendo.Mvc.UI
             Operator = Messages.Filter_Operator;
             Value = Messages.Filter_Value;
             Cancel = Messages.Filter_Cancel;
+            Search = Messages.Filter_Search;
+            SelectedItemsFormat = Messages.Filter_SelectedItemsFormat;
         }
 
         public string Info { get; set; }
@@ -33,6 +35,8 @@ namespace Kendo.Mvc.UI
         public string Operator { get; set; }
         public string Value { get; set; }
         public string Cancel { get; set; }
+        public string Search { get; set; }
+        public string SelectedItemsFormat { get; set; }
 
         private const string DefaultInfo = "Show items with value that:";
         private const string DefaultIsTrue = "is true";
@@ -45,6 +49,8 @@ namespace Kendo.Mvc.UI
         private const string DefaultOperator = "Operator";
         private const string DefaultValue = "Value";
         private const string DefaultCancel = "Cancel";
+        private const string DefaultSearch = "Search";
+        private const string DefaultSelectedItemsFormat = "{0} items selected";
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -101,6 +107,14 @@ namespace Kendo.Mvc.UI
             if (Cancel != DefaultCancel)
             {
                 json["cancel"] = Cancel;
+            }
+            if (Search != DefaultSearch)
+            {
+                json["search"] = Search;
+            }
+            if (SelectedItemsFormat != DefaultSelectedItemsFormat)
+            {
+                json["selectedItemsFormat"] = SelectedItemsFormat;
             }
         }
     }

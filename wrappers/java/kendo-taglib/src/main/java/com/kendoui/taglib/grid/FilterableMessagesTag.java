@@ -147,6 +147,14 @@ public class FilterableMessagesTag extends  BaseTag  /* interfaces *//* interfac
         setProperty("selectValue", value);
     }
 
+    public java.lang.String getSelectedItemsFormat() {
+        return (java.lang.String)getProperty("selectedItemsFormat");
+    }
+
+    public void setSelectedItemsFormat(java.lang.String value) {
+        setProperty("selectedItemsFormat", value);
+    }
+
     public java.lang.String getValue() {
         return (java.lang.String)getProperty("value");
     }

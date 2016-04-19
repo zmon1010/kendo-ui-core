@@ -844,6 +844,15 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} selected items.
+        /// </summary>
+        public static string Filter_SelectedItemsFormat {
+            get {
+                return ResourceManager.GetString("Filter_SelectedItemsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to -Select value-.
         /// </summary>
         public static string Filter_SelectValue {

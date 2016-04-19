@@ -96,6 +96,15 @@ class GridFilterableMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The format string for selected items count in filter menu when search option set to true.
+    * @param string $value
+    * @return \Kendo\UI\GridFilterableMessages
+    */
+    public function selectedItemsFormat($value) {
+        return $this->setProperty('selectedItemsFormat', $value);
+    }
+
+    /**
     * The text of the operator item in filter menu (available in mobile mode only).
     * @param string $value
     * @return \Kendo\UI\GridFilterableMessages

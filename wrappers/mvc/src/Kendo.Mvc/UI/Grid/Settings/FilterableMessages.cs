@@ -22,6 +22,7 @@ namespace Kendo.Mvc.UI
             Cancel = Messages.Filter_Cancel;
             CheckAll = Messages.Grid_CheckAll;
             Search = Messages.Filter_Search;
+            SelectedItemsFormat = Messages.Filter_SelectedItemsFormat;
         }
 
         public string Info { get; set; }
@@ -37,6 +38,7 @@ namespace Kendo.Mvc.UI
         public string Cancel { get; set; }
         public string CheckAll { get; set; }
         public string Search { get; set; }
+        public string SelectedItemsFormat { get; set; }
 
         private const string DefaultInfo = "Show items with value that:";
         private const string DefaultIsTrue = "is true";
@@ -51,6 +53,7 @@ namespace Kendo.Mvc.UI
         private const string DefaultCancel = "Cancel";
         private const string DefaultCheckAll = "Select All";
         private const string DefaultSearch = "Search";
+        private const string DefaultSelectedItemsFormat = "{0} selected items";
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -117,6 +120,11 @@ namespace Kendo.Mvc.UI
             if (Search != DefaultSearch)
             {
                 json["search"] = Search;
+            }
+
+            if (SelectedItemsFormat != DefaultSelectedItemsFormat)
+            {
+                json["selectedItemsFormat"] = SelectedItemsFormat;
             }
         }
     }

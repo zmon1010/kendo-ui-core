@@ -22895,6 +22895,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The format string for selected items count in filter menu when search option set to true.</description>
+            <name>selectedItemsFormat</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The text of the value item in filter menu (available in mobile mode only).</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>

@@ -813,4 +813,7 @@
   <data name="Filter_Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Filter_SelectedItemsFormat" xml:space="preserve">
+    <value>{0} selected items</value>
+  </data>
 </root>

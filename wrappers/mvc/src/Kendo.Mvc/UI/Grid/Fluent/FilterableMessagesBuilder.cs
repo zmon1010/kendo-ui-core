@@ -157,5 +157,16 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+        
+        /// <summary>
+        /// Sets the format for the selected items count message.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public FilterableMessagesBuilder SelectedItemsFormat(string format)
+        {
+            messages.SelectedItemsFormat = format;
+
+            return this;
+        }
     }
 }

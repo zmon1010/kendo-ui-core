@@ -803,6 +803,7 @@ var __meta__ = { // jshint ignore:line
                 '#}#' +
                 '<ul class="k-multicheck-wrap"></ul>' +
                 '</li><li class="k-button-container">' +
+                "#if(messages.selectedItemsFormat){#<div class='k-filter-selected-items'></div>#}#" +
                     '<button type="reset" class="k-button">#=messages.clear#</button>' +
                 '</li></ul>' +
             '</form>' +
@@ -945,14 +946,21 @@ var __meta__ = { // jshint ignore:line
             if (ignoreCase) {
                 searchString = searchString.toLowerCase();
             }
+            var i = 0;
+            if(this.options.checkAll && labels.length)
+            {
+                labels[0].parentNode.style.display = searchString ? "none" : "";
+                i++;
+            }
 
-            for (var i = this.options.checkAll ? 1 : 0 ; i < labels.length ; i++) {
+            while (i < labels.length) {
                 var label = labels[i];
                 var labelText = label.textContent || label.innerText;
                 if (ignoreCase) {
                     labelText = labelText.toLowerCase();
                 }
                 label.parentNode.style.display = labelText.indexOf(searchString) >= 0 ? "" : "none";
+                i++;
             }
         },
         _activate: function() {
@@ -968,7 +976,11 @@ var __meta__ = { // jshint ignore:line
                     "<span class='k-icon k-font-icon k-i-search' />" +
                     "</div>";
                 }
-                html += "<ul class='k-reset k-multicheck-wrap'></ul><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
+                html += "<ul class='k-reset k-multicheck-wrap'></ul>";
+                if (options.messages.selectedItemsFormat) {
+                    html += "<div class='k-filter-selected-items'>" + kendo.format(options.messages.selectedItemsFormat, 0) + "</div>";
+                }
+                html +="<button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
                 html += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
 
                 this.form = $('<form class="k-filter-menu"/>').html(html);
@@ -1027,6 +1039,9 @@ var __meta__ = { // jshint ignore:line
             this.checkBoxAll.on(CHANGE+ multiCheckNS, this.checkAllHandler);
         },
         updateCheckAllState: function() {
+            if (this.options.messages.selectedItemsFormat) {
+                this.form.find(".k-filter-selected-items").text(kendo.format(this.options.messages.selectedItemsFormat, this.container.find(":checked:not(.k-check-all)").length));
+            }
             if (this.checkBoxAll) {
                 var state = this.container.find(":checkbox:not(.k-check-all)").length == this.container.find(":checked:not(.k-check-all)").length;
                 this.checkBoxAll.prop("checked", state);
@@ -1086,8 +1101,9 @@ var __meta__ = { // jshint ignore:line
             var itemsHtml = kendo.render(template, data);
             if (options.checkAll) {
                 this.createCheckAllItem();
-                this.container.on(CHANGE+ multiCheckNS, ":checkbox", proxy(this.updateCheckAllState, this));
             }
+            this.container.on(CHANGE + multiCheckNS, ":checkbox", proxy(this.updateCheckAllState, this));
+
             this.container.append(itemsHtml);
 
         },
@@ -1235,7 +1251,8 @@ var __meta__ = { // jshint ignore:line
                 clear: "Clear",
                 filter: "Filter",
                 search: "Search",
-                cancel: "Cancel"
+                cancel: "Cancel",
+                selectedItemsFormat: "{0} items selected"
             },
             forceUnique: true,
             animations: {

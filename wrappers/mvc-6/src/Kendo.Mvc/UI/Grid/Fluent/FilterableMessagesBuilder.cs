@@ -135,5 +135,26 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+        /// <summary>
+        /// Sets the text for Search placeholder.
+        /// </summary>
+        /// <param name="message">The message</param> 
+        public FilterableMessagesBuilder Search(string message)
+        {
+            messages.Search = message;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the format for the selected items count message.
+        /// </summary>
+        /// <param name="message">The message</param> 
+        public FilterableMessagesBuilder SelectedItemsFormat(string message)
+        {
+            messages.SelectedItemsFormat = message;
+
+            return this;
+        }
     }
 }

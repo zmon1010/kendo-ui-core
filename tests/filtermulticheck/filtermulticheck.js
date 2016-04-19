@@ -467,19 +467,19 @@
 		widget.searchTextBox[0].value = "striNg";
         widget.search();		
         equal(widget.container.find("li").length , 4);
-        equal(widget.container.find("li[style*='display: none']").length , 3);
+        equal(widget.container.find("li[style*='display: none']").length , 4);
         
 		widget.searchTextBox[0].value = "some";
         widget.search();
-        equal(widget.container.find("li[style*='display: none']").length , 2);
+        equal(widget.container.find("li[style*='display: none']").length , 3);
         
 		widget.searchTextBox[0].value = "tring";
         widget.search();
-        equal(widget.container.find("li[style*='display: none']").length , 0);
+        equal(widget.container.find("li[style*='display: none']").length , 1);
         
 		widget.searchTextBox[0].value = "me";
         widget.search();
-        equal(widget.container.find("li[style*='display: none']").length , 1);
+        equal(widget.container.find("li[style*='display: none']").length , 2);
     });
 	
 	test("checkboxes are filtered case insensitive", function(){
@@ -528,7 +528,7 @@
 		widget.searchTextBox[0].value = "2";
         widget.search();		
         equal(widget.container.find("li").length , 4);
-        equal(widget.container.find("li[style*='display: none']").length , 2);		
+        equal(widget.container.find("li[style*='display: none']").length , 3);//CheckAll should not be visible if filtered	
         widget._reset();
 		equal(widget.container.find("li").length , 4);
         equal(widget.container.find("li[style*='display: none']").length , 0);		

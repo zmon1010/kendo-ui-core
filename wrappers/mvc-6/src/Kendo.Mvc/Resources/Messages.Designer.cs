@@ -600,7 +600,24 @@ namespace Kendo.Mvc.Resources {
                 return ResourceManager.GetString("Filter_Clear", resourceCulture);
             }
         }
+        /// <summary>
+        ///    Looks up a localized string similar to Search.
+        /// </summary>
+        internal static string Filter_Search {
+            get {
+                return ResourceManager.GetString("Filter_Search", resourceCulture);
+            }
+        }
         
+        /// <summary>
+        ///    Looks up a localized string similar to {0} selected items.
+        /// </summary>
+        internal static string Filter_SelectedItemsFormat {
+            get {
+                return ResourceManager.GetString("Filter_SelectedItemsFormat", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Is equal to.
         /// </summary>
