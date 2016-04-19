@@ -2422,6 +2422,7 @@
             },
 
             _findConnectionTarget: function(options) {
+                options = options || {};
                 var diagram = this;
                 var shapeId = isString(options) ? options : options.shapeId || options.id;
                 var target;
