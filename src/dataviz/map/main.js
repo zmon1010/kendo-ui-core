@@ -127,18 +127,19 @@
         events:[
             "beforeReset",
             "click",
-            "reset",
-            "pan",
-            "panEnd",
             "markerActivate",
             "markerClick",
             "markerCreated",
+            "pan",
+            "panEnd",
+            "reset",
             "shapeClick",
             "shapeCreated",
+            "shapeFeatureCreated",
             "shapeMouseEnter",
             "shapeMouseLeave",
-            "zoomStart",
-            "zoomEnd"
+            "zoomEnd",
+            "zoomStart"
         ],
 
         destroy: function() {

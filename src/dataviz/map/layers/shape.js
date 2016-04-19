@@ -151,6 +151,11 @@
             return cancelled;
         },
 
+        featureCreated: function(e) {
+            e.layer = this;
+            this.map.trigger("shapeFeatureCreated", e);
+        },
+
         _createMarker: function(shape) {
             var marker = this.map.markers.bind({
                 location: shape.location
@@ -231,14 +236,17 @@
 
         parse: function(item) {
             var root = new Group();
+            var unwrap = true;
 
             if (item.type === "Feature") {
+                unwrap = false;
                 this._loadGeometryTo(root, item.geometry, item);
+                this._featureCreated(root, item);
             } else {
                 this._loadGeometryTo(root, item, item);
             }
 
-            if (root.children.length < 2) {
+            if (unwrap && root.children.length < 2) {
                 root = root.children[0];
             }
 
@@ -253,6 +261,16 @@
             }
 
             return cancelled;
+        },
+
+        _featureCreated: function(group, dataItem) {
+            if (this.observer && this.observer.featureCreated) {
+                this.observer.featureCreated({
+                    group: group,
+                    dataItem: dataItem,
+                    properties: dataItem.properties
+                });
+            }
         },
 
         _loadGeometryTo: function(container, geometry, dataItem) {

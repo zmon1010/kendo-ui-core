@@ -257,5 +257,48 @@
         });
     });
 
+    // ------------------------------------------------------------
+    module("Shape Layer / Events", {
+        setup: function() {
+            map = new MapMock();
+            layer = new ShapeLayer(map);
+        },
+        teardown: destroyLayer
+    });
+
+    test("fires shapeCreated for single geometry", function() {
+        map.bind("shapeCreated", function(e) {
+            ok(true);
+        });
+
+        var data = [{
+            "type": "LineString",
+            "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]
+        }];
+
+        layer._load(data);
+    });
+
+    test("fires shapeFeatureCreated for features", function() {
+        map.bind("shapeFeatureCreated", function(e) {
+            ok(true);
+        });
+
+        var data = [{
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [-180.0, 10.0], [20.0, 90.0], [180.0, -5.0], [-30.0, -90.0]
+                ]]
+            },
+            "properties": {
+                "foo": "bar"
+            }
+        }];
+
+        layer._load(data);
+    });
+
     baseLayerTests("Shape Layer", ShapeLayer);
 })();

@@ -109,6 +109,10 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("shapeCreated", value.getBody());
     }
 
+    public void setShapeFeatureCreated(ShapeFeatureCreatedFunctionTag value) {
+        setEvent("shapeFeatureCreated", value.getBody());
+    }
+
     public void setShapeMouseEnter(ShapeMouseEnterFunctionTag value) {
         setEvent("shapeMouseEnter", value.getBody());
     }
@@ -307,6 +311,18 @@ public class MapTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setShapeCreated(String value) {
         setProperty("shapeCreated", new Function(value));
+    }
+
+    public String getShapeFeatureCreated() {
+        Function property = ((Function)getProperty("shapeFeatureCreated"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setShapeFeatureCreated(String value) {
+        setProperty("shapeFeatureCreated", new Function(value));
     }
 
     public String getShapeMouseEnter() {

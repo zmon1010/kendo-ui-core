@@ -24826,6 +24826,11 @@ This typically occurs on initial load and after a zoom/center change.</descripti
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when a GeoJSON Feature is created on a shape layer.</description>
+            <name>shapeFeatureCreated</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the mouse enters a shape.</description>
             <name>shapeMouseEnter</name>
             <rtexprvalue>true</rtexprvalue>
@@ -26050,6 +26055,12 @@ This typically occurs on initial load and after a zoom/center change.</descripti
         <description>Fired when a shape is created, but is not rendered yet.</description>
         <name>map-shapeCreated</name>
         <tag-class>com.kendoui.taglib.map.ShapeCreatedFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when a GeoJSON Feature is created on a shape layer.</description>
+        <name>map-shapeFeatureCreated</name>
+        <tag-class>com.kendoui.taglib.map.ShapeFeatureCreatedFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

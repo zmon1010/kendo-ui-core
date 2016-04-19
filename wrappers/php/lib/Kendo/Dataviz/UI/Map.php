@@ -271,6 +271,20 @@ This typically occurs on initial load and after a zoom/center change.
     }
 
     /**
+    * Sets the shapeFeatureCreated event of the Map.
+    * Fired when a GeoJSON Feature is created on a shape layer.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\Map
+    */
+    public function shapeFeatureCreated($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('shapeFeatureCreated', $value);
+    }
+
+    /**
     * Sets the shapeMouseEnter event of the Map.
     * Fired when the mouse enters a shape.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
