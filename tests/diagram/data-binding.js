@@ -86,6 +86,20 @@
         equal(diagram.shapes.length, 2);
     });
 
+    test("throws error if a flat dataSource instance is passed", function() {
+        try {
+            diagram = createDiagram({
+                dataSource: new kendo.data.DataSource({
+                    data: [{
+                        id: "1"
+                    }]
+                })
+            });
+        } catch (e) {
+            ok(/incorrect dataSource/ig.test(e.message));
+        };
+    });
+
     test("triggers dataBound once after binding all items", 1, function() {
         diagram = createDiagram({
             dataSource: {

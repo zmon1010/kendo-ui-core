@@ -4007,6 +4007,10 @@
 
                 dataSource = isArray(dataSource) ? { data: dataSource } : dataSource;
 
+                if (dataSource instanceof kendo.data.DataSource && !(dataSource instanceof kendo.data.HierarchicalDataSource)) {
+                    throw new Error("Incorrect DataSource type. If a single dataSource instance is set to the diagram then it should be a HierarchicalDataSource. You should set only the options instead of an instance or a HierarchicalDataSource instance or supply connectionsDataSource as well.");
+                }
+
                 if (!dataSource.fields) {
                     dataSource.fields = [
                         { field: "text" },
