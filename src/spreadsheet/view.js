@@ -81,6 +81,13 @@
         ].join(" ");
     }
 
+    function asURL(link) {
+        if (!/:\/\//.test(link)) {
+            link = "http://" + link;
+        }
+        return link;
+    }
+
     function drawCell(collection, cell, cls, hBorders, vBorders, showGrid) {
         function maybeLink(el) {
             var link = cell.link;
@@ -100,7 +107,7 @@
                     style.textDecoration = "underline";
                 }
                 return kendo.dom.element("a", {
-                    href   : link,
+                    href   : asURL(link),
                     style  : style,
                     target : "_blank" // XXX: customizable?
                 }, [ el ]);
