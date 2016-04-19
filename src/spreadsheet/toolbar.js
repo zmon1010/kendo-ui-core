@@ -97,7 +97,7 @@
             "open",
             "exportAs",
             [ "cut", "copy", "paste" ],
-            [ "bold", "italic", "underline" ],
+            [ "bold", "italic", "underline" ], "hyperlink",
             "backgroundColor", "textColor",
             "borders",
             "fontSize", "fontFamily",
@@ -107,8 +107,7 @@
             "format",
             "merge",
             "freeze",
-            "filter",
-            "hyperlink"
+            "filter"
         ],
         insert: [
             [ "addColumnLeft", "addColumnRight", "addRowBelow", "addRowAbove" ],
@@ -146,7 +145,7 @@
         freeze:                { type: "freeze",                              iconClass: "freeze-panes" },
         borders:               { type: "borders",                             iconClass: "all-borders" },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
-        hyperlink:             { type: "dialog", dialogName: "hyperlink", iconClass: "hyperlink", overflow: "never" },
+        hyperlink:             { type: "dialog", dialogName: "hyperlink", iconClass: "hyperlink", overflow: "never", text: "" },
 
         //insert tab
         addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "add-column-left"  },

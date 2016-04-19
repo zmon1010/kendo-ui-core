@@ -1507,13 +1507,12 @@
     var HyperlinkDialog = SpreadsheetDialog.extend({
         options: {
             template:
-            ("<div class='k-edit-label'><label>#: messages.linkDialog.labels.text #:</label></div>" +
-             "<div class='k-edit-field'><input class='k-textbox' data-bind='value: text' /></div>" +
-             "<div class='k-edit-label'><label>#: messages.linkDialog.labels.url #:</label></div>" +
+            ("<div class='k-edit-label'><label>#: messages.linkDialog.labels.url #:</label></div>" +
              "<div class='k-edit-field'><input class='k-textbox' data-bind='value: url' /></div>" +
              "<div class='k-action-buttons'>" + (
-                 ("<button class='k-button k-primary' data-bind='click: apply'>#= messages.okText #</button>" +
-                  "<button class='k-button' data-bind='click: remove'>#= messages.linkDialog.labels.removeLink #</button>")
+                 ("<button style='float: left' class='k-button' data-bind='click: remove'>#= messages.linkDialog.labels.removeLink #</button>" +
+                  "<button class='k-button k-primary' data-bind='click: apply'>#= messages.okText #</button>" +
+                  "<button class='k-button' data-bind='click: cancel'>#= messages.cancel #</button>")
              ) + "</div>"
             ),
             title: MESSAGES.linkDialog.title
@@ -1523,17 +1522,25 @@
             SpreadsheetDialog.fn.open.apply(self, arguments);
             var element = self.dialog().element;
             var model = kendo.observable({
-                text: range.input(),
                 url: range.link(),
                 apply: function() {
-                    range.input(model.text);
-                    range.link(model.url);
+                    if (!/\S/.test(model.url)) {
+                        model.url = null;
+                    }
+                    self.trigger("action", {
+                        command: "PropertyChangeCommand",
+                        options: {
+                            property: "link",
+                            value: model.url
+                        }
+                    });
                     self.close();
                 },
                 remove: function() {
-                    range.link(null);
-                    self.close();
-                }
+                    model.url = null;
+                    model.apply();
+                },
+                cancel: self.close.bind(self)
             });
             kendo.bind(element, model);
         }
