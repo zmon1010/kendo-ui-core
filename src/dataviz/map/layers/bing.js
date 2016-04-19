@@ -18,6 +18,10 @@
     // Bing tile layer =============================================================
     var BingLayer = TileLayer.extend({
         init: function(map, options) {
+            this.options.baseUrl =
+                this._scheme() +
+                "://dev.virtualearth.net/REST/v1/Imagery/Metadata/";
+
             TileLayer.fn.init.call(this, map, options);
 
             this._onMetadata = $.proxy(this._onMetadata, this);
@@ -25,7 +29,6 @@
         },
 
         options: {
-            baseUrl: "//dev.virtualearth.net/REST/v1/Imagery/Metadata/",
             imagerySet: "road"
         },
 
@@ -42,7 +45,7 @@
                     output: "json",
                     include: "ImageryProviders",
                     key: options.key,
-                    uriScheme: this._scheme(window.location.protocol)
+                    uriScheme: this._scheme()
                 },
                 type: "get",
                 dataType: "jsonp",
@@ -52,6 +55,7 @@
         },
 
         _scheme: function(proto) {
+            proto = proto || window.location.protocol;
             return proto.replace(":", "") === "https" ? "https" : "http";
         },
 

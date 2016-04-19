@@ -42,6 +42,11 @@
             ok(layer.element.parent().is("#scroll-element"));
         });
 
+        test("sets default protocol for metadata", function() {
+            equal(layer.options.baseUrl,
+                "http://dev.virtualearth.net/REST/v1/Imagery/Metadata/");
+        });
+
         test("resets layer on metadata", function() {
             var element = layer.element;
 
