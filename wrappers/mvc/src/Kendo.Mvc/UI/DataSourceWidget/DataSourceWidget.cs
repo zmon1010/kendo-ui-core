@@ -9,18 +9,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class DataSourceWidget<T> : WidgetBase where T : class
     {
-        public DataSource DataSource
-        {
-            get;
-            private set;
-        }
-
-        public PivotDataSource PivotDataSource
-        {
-            get;
-            internal set;
-        }
-
         public DataSourceWidget(ViewContext viewContext, IJavaScriptInitializer initializer, IUrlGenerator urlGenerator)
             : base(viewContext, initializer)
         {
@@ -36,7 +24,33 @@ namespace Kendo.Mvc.UI
                 ServerSorting = true
             };
 
+            ClassName = "DataSource";
+
             DataSource.ModelType(typeof(T));
+        }
+
+        public DataSource DataSource
+        {
+            get;
+            private set;
+        }
+
+        public PivotDataSource PivotDataSource
+        {
+            get;
+            internal set;
+        }
+
+        public IUrlGenerator UrlGenerator
+        {
+            get;
+            private set;
+        }
+
+        internal string ClassName
+        {
+            get;
+            set;
         }
 
         public override void WriteInitializationScript(TextWriter writer)
@@ -55,12 +69,6 @@ namespace Kendo.Mvc.UI
             }
         }
 
-        internal string ClassName
-        {
-            get;
-            set;
-        } = "DataSource";
-
         private void ProcessDataSource()
         {
             var binder = new DataSourceRequestModelBinder();
@@ -71,11 +79,6 @@ namespace Kendo.Mvc.UI
             var request = (DataSourceRequest)binder.BindModel(controller.ControllerContext, bindingContext);
 
             DataSource.Process(request, true/*!EnableCustomBinding*/);
-        }
-        public IUrlGenerator UrlGenerator
-        {
-            get;
-            private set;
         }
     }
 }
