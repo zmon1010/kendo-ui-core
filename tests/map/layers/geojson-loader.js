@@ -203,20 +203,64 @@
         module("GeoJSON Loader / Feature", {
             setup: function() {
                 loader = new map.GeoJSONLoader(locator, style);
-                item = { "type": "Feature",
+                item = {
+                    "type": "Feature",
                     "geometry": {
                         "type": "Polygon",
                         "coordinates": [[
                             [-180.0, 10.0], [20.0, 90.0], [180.0, -5.0], [-30.0, -90.0]
                         ]]
+                    },
+                    "properties": {
+                        "foo": "bar"
                     }
                 };
                 result = loader.parse(item);
             }
         });
 
-        test("parses to a path", function() {
-            ok(result instanceof d.Path);
+        test("does not unwrap group", function() {
+            ok(result instanceof d.Group);
+        });
+
+        test("triggers featureCreated on observer", function() {
+            loader.observer = {
+                featureCreated: function() {
+                    ok(true);
+                }
+            };
+
+            result = loader.parse(item);
+        });
+
+        test("passes group to featureCreated", function() {
+            loader.observer = {
+                featureCreated: function(e) {
+                    ok(e.group instanceof d.Group);
+                }
+            };
+
+            result = loader.parse(item);
+        });
+
+        test("passes dataItem to featureCreated", function() {
+            loader.observer = {
+                featureCreated: function(e) {
+                    equal(e.dataItem.properties.foo, "bar");
+                }
+            };
+
+            result = loader.parse(item);
+        });
+
+        test("passes properties to featureCreated", function() {
+            loader.observer = {
+                featureCreated: function(e) {
+                    equal(e.properties.foo, "bar");
+                }
+            };
+
+            result = loader.parse(item);
         });
     })();
 
@@ -363,6 +407,7 @@
 
             ok(!result);
         });
+
     })();
 
     (function() {
