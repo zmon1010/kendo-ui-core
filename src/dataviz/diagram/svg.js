@@ -496,7 +496,20 @@
         _font: function() {
             var options = this.options;
             if (options.fontFamily && defined(options.fontSize)) {
-                options.font = options.fontSize + "px " + options.fontFamily;
+                var fontOptions = [];
+
+                if (options.fontStyle) {
+                    fontOptions.push(options.fontStyle);
+                }
+
+                if (options.fontWeight) {
+                    fontOptions.push(options.fontWeight);
+                }
+
+                fontOptions.push(options.fontSize + (isNumber(options.fontSize) ? "px" : ""));
+                fontOptions.push(options.fontFamily);
+
+                options.font = fontOptions.join(" ");
             } else {
                 delete options.font;
             }
@@ -515,10 +528,12 @@
 
                 VisualBase.fn.redraw.call(this, options);
 
-                if (options.fontFamily || defined(options.fontSize)) {
+                if (options.fontFamily || defined(options.fontSize) || options.fontStyle || options.fontWeight) {
                     deepExtend(textOptions, {
                         fontFamily: options.fontFamily,
-                        fontSize: options.fontSize
+                        fontSize: options.fontSize,
+                        fontStyle: options.fontStyle,
+                        fontWeight: options.fontWeight
                     });
                     this._font();
                     this.drawingElement.options.set("font", textOptions.font);

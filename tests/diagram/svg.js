@@ -1068,6 +1068,17 @@
             equal(textblock.options.font, "10px " + SANS);
         });
 
+        test("inits font with weight and style", function() {
+            textblock = new TextBlock({
+                color: "red",
+                fontSize: 10,
+                fontFamily: SANS,
+                fontStyle: "italic",
+                fontWeight: "bold"
+            });
+            equal(textblock.options.font, "italic bold 10px " + SANS);
+        });
+
         test("sets drawing text", function() {
             equal(drawingElement.content(), "foo");
         });
@@ -1131,6 +1142,13 @@
             equal(textblock.options.font, "10px " + ARIAL);
             textblock.redraw({fontSize: 15});
             equal(textblock.options.font, "15px " + ARIAL);
+        });
+
+        test("redraw sets fontWeight and fontStyle", function() {
+            textblock.redraw({fontWeight: "bold"});
+            equal(textblock.options.font, "bold 10px " + SANS);
+            textblock.redraw({fontStyle: "italic"});
+            equal(textblock.options.font, "italic bold 10px " + SANS);
         });
 
         test("redraw renders font", function() {
