@@ -19,7 +19,7 @@ namespace Kendo.Mvc.UI
             var result = base.Serialize();
 
             FluentDictionary.For(result)
-                .Add("type", series.Type)
+                .Add("type", series.Orientation == ChartSeriesOrientation.Horizontal ? "boxPlot" : "verticalBoxPlot")
                 .Add("gap", series.Gap, () => series.Gap.HasValue)
                 .Add("spacing", series.Spacing, () => series.Spacing.HasValue)
                 .Add("axis", series.Axis, () => series.Axis.HasValue())

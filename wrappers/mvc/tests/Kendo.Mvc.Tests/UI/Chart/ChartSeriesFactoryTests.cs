@@ -1,6 +1,7 @@
 namespace Kendo.Mvc.UI.Tests.Chart
 {
     using System;
+    using System.Collections.Generic;
     using Kendo.Mvc.UI;
     using Kendo.Mvc.UI.Fluent;
     using Xunit;
@@ -9,11 +10,13 @@ namespace Kendo.Mvc.UI.Tests.Chart
     {
         private readonly Chart<SalesData> chart;
         private readonly ChartSeriesFactory<SalesData> factory;
+        private readonly ChartSeriesFactory<BoxPlotData> boxPlotFactory;
 
         public ChartSeriesFactoryTests()
         {
             chart = ChartTestHelper.CreateChart<SalesData>();
             factory = new ChartSeriesFactory<SalesData>(chart);
+            boxPlotFactory = new ChartSeriesFactory<BoxPlotData>(chart); 
         }
 
         [Fact]
@@ -934,6 +937,77 @@ namespace Kendo.Mvc.UI.Tests.Chart
         {
             var builder = factory.PolarScatter(new int[] { 1 });
             builder.Series.ShouldBeType<ChartPolarScatterSeries<SalesData, object, object>>();
+        }
+
+        
+        [Fact]
+        public void VerticalBoxPlot_should_create_series_from_expressions()
+        {
+            var builder = boxPlotFactory.VerticalBoxPlot<decimal>(x => x.Lower, x => x.Q1, x => x.Median, x => x.Q3, x => x.Upper);
+            builder.Series.ShouldBeType<ChartBoxPlotSeries<BoxPlotData, decimal, string>>();
+            builder.Series.Orientation.ShouldEqual(ChartSeriesOrientation.Vertical);
+        }
+
+        [Fact]
+        public void VerticalBoxPlot_should_create_series_from_expressions_and_categoryExpression()
+        {
+            var builder = boxPlotFactory.VerticalBoxPlot<decimal, string>(x => x.Lower, x => x.Q1, x => x.Median, x => x.Q3, x => x.Upper, x => x.Mean, x => x.Outliers, null, null, null);
+            builder.Series.ShouldBeType<ChartBoxPlotSeries<BoxPlotData, decimal, string>>();
+            builder.Series.Orientation.ShouldEqual(ChartSeriesOrientation.Vertical);
+        }
+
+        [Fact]
+        public void VerticalBoxPlot_should_create_series_from_member_names()
+        {
+            var builder = boxPlotFactory.VerticalBoxPlot("Lower", "Q1", "Median", "Q3", "Upper", "Mean", "Outliers");
+
+            builder.Series.ShouldBeType<ChartBoxPlotSeries<BoxPlotData, decimal, string>>();
+            builder.Series.Orientation.ShouldEqual(ChartSeriesOrientation.Vertical);
+        }
+
+        [Fact]
+        public void VerticalBoxPlot_with_type_should_set_all_member_names()
+        {
+            var builder = boxPlotFactory.VerticalBoxPlot("Lower", "Q1", "Median", "Q3", "Upper", "Mean", "Outliers");
+
+            builder.Series.LowerMember.ShouldEqual("Lower");
+            builder.Series.Q1Member.ShouldEqual("Q1");
+            builder.Series.MedianMember.ShouldEqual("Median");
+            builder.Series.Q3Member.ShouldEqual("Q3");
+            builder.Series.UpperMember.ShouldEqual("Upper");
+            builder.Series.MeanMember.ShouldEqual("Mean");
+            builder.Series.OutliersMember.ShouldEqual("Outliers");
+        }
+
+        [Fact]
+        public void VerticalBoxPlot_should_create_series_from_type_and_member_names()
+        {
+            var builder = boxPlotFactory.VerticalBoxPlot(typeof(decimal), "Lower", "Q1", "Median", "Q3", "Upper", "Mean", "Outliers");
+
+            builder.Series.ShouldBeType<ChartBoxPlotSeries<BoxPlotData, decimal, string>>();
+            builder.Series.Orientation.ShouldEqual(ChartSeriesOrientation.Vertical);
+        }
+
+        [Fact]
+        public void VerticalBoxPlot_with_type_should_set_member_names()
+        {
+            var builder = boxPlotFactory.VerticalBoxPlot(typeof(decimal), "Lower", "Q1", "Median", "Q3", "Upper", "Mean" , "Outliers");
+
+            builder.Series.LowerMember.ShouldEqual("Lower");
+            builder.Series.Q1Member.ShouldEqual("Q1");
+            builder.Series.MedianMember.ShouldEqual("Median");
+            builder.Series.Q3Member.ShouldEqual("Q3");
+            builder.Series.UpperMember.ShouldEqual("Upper");
+            builder.Series.MeanMember.ShouldEqual("Mean");
+            builder.Series.OutliersMember.ShouldEqual("Outliers");
+        }
+
+        [Fact]
+        public void VerticalBoxPlot_should_create_unbound_series_from_data()
+        {
+            var builder = boxPlotFactory.VerticalBoxPlot(new int[] { 1 });
+            builder.Series.ShouldBeType<ChartBoxPlotSeries<BoxPlotData, object, string>>();
+            builder.Series.Orientation.ShouldEqual(ChartSeriesOrientation.Vertical);
         }
 
         [Fact]

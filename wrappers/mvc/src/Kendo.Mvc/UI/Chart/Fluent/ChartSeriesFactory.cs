@@ -2643,6 +2643,111 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartBoxPlotSeriesBuilder<TModel>(boxPlotSeries);
         }
 
+        //stamo
+        
+        /// <summary>
+        /// Defines bound vertical box plot series.
+        /// </summary>
+        public virtual ChartBoxPlotSeriesBuilder<TModel> VerticalBoxPlot<TValue, TCategory>(
+            Expression<Func<TModel, TValue>> lowerExpression,
+            Expression<Func<TModel, TValue>> q1Expression,
+            Expression<Func<TModel, TValue>> medianExpression,
+            Expression<Func<TModel, TValue>> q3Expression,
+            Expression<Func<TModel, TValue>> upperExpression,
+            Expression<Func<TModel, TValue>> meanExpression = null,
+            Expression<Func<TModel, IList<TValue>>> outliersExpression = null,
+            Expression<Func<TModel, string>> colorExpression = null,
+            Expression<Func<TModel, TCategory>> categoryExpression = null,
+            Expression<Func<TModel, string>> noteTextExpression = null
+            )
+        {
+            var builder = BoxPlot(lowerExpression, q1Expression, medianExpression, q3Expression, upperExpression, meanExpression, outliersExpression, colorExpression, categoryExpression, noteTextExpression);
+            builder.Series.Orientation = ChartSeriesOrientation.Vertical;
+            return builder;
+        }
+
+        /// <summary>
+        /// Defines bound box plot series.
+        /// </summary>
+        public virtual ChartBoxPlotSeriesBuilder<TModel> VerticalBoxPlot<TValue>(
+            Expression<Func<TModel, TValue>> lowerExpression,
+            Expression<Func<TModel, TValue>> q1Expression,
+            Expression<Func<TModel, TValue>> medianExpression,
+            Expression<Func<TModel, TValue>> q3Expression,
+            Expression<Func<TModel, TValue>> upperExpression,
+            Expression<Func<TModel, TValue>> meanExpression = null,
+            Expression<Func<TModel, IList<TValue>>> outliersExpression = null,
+            Expression<Func<TModel, string>> colorExpression = null,
+            Expression<Func<TModel, string>> noteTextExpression = null
+            )
+        {
+            var builder = BoxPlot<TValue, string>(lowerExpression, q1Expression, medianExpression, q3Expression, upperExpression, meanExpression, outliersExpression, colorExpression, null, noteTextExpression);
+            builder.Series.Orientation = ChartSeriesOrientation.Vertical;
+            return builder;
+        }
+
+        /// <summary>
+        /// Defines bound box plot series.
+        /// </summary>
+        public virtual ChartBoxPlotSeriesBuilder<TModel> VerticalBoxPlot(
+            string lowerMemberName,
+            string q1MemberName,
+            string medianMemberName,
+            string q3MemberName,
+            string upperMemberName,
+            string meanMemberName,
+            string outliersMemberName,
+            string colorMemberName = null,
+            string categoryMemberName = null,
+            string noteTextMemberName = null)
+        {
+            var builder = BoxPlot(
+                null, lowerMemberName, q1MemberName, medianMemberName,
+                q3MemberName, upperMemberName, meanMemberName, outliersMemberName,
+                colorMemberName, categoryMemberName, noteTextMemberName
+            );
+            builder.Series.Orientation = ChartSeriesOrientation.Vertical;
+            return builder;
+        }
+
+        /// <summary>
+        /// Defines bound box plot series.
+        /// </summary>
+        public virtual ChartBoxPlotSeriesBuilder<TModel> VerticalBoxPlot(
+            Type memberType,
+            string lowerMemberName,
+            string q1MemberName,
+            string medianMemberName,
+            string q3MemberName,
+            string upperMemberName,
+            string meanMemberName = null,
+            string outliersMemberName = null,
+            string colorMemberName = null,
+            string categoryMemberName = null,
+            string noteTextMemberName = null)
+        {
+            var builder = BoxPlot(
+                memberType, lowerMemberName, q1MemberName, medianMemberName,
+                q3MemberName, upperMemberName, meanMemberName, outliersMemberName,
+                colorMemberName, categoryMemberName, noteTextMemberName
+            );
+            builder.Series.Orientation = ChartSeriesOrientation.Vertical;
+            return builder;
+        }
+
+        /// <summary>
+        /// Defines box plot series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The data to bind to
+        /// </param>
+        public virtual ChartBoxPlotSeriesBuilder<TModel> VerticalBoxPlot(IEnumerable data)
+        {
+            var builder = BoxPlot(data);
+            builder.Series.Orientation = ChartSeriesOrientation.Vertical;
+            return builder;
+        }
+        
         /// <summary>
         /// Defines bound waterfall series.
         /// </summary>

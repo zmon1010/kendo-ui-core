@@ -76,6 +76,13 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Should_serialize_type_for_vertical_orientation()
+        {
+            series.Orientation = ChartSeriesOrientation.Vertical;
+            GetJson(series)["type"].ShouldEqual("verticalBoxPlot");
+        }
+
+        [Fact]
         public void Serializes_aggregates()
         {
             series.Aggregates.Lower = ChartSeriesAggregate.Max;

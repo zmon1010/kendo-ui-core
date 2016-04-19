@@ -212,6 +212,11 @@ using System.Collections.Generic;
         /// </summary>
         public ChartLine Line { get; set; }
 
+        /// <summary>
+        /// The orientation of the chart.
+        /// </summary>
+        public ChartSeriesOrientation Orientation { get; set; }
+
         private void Initialize()
         {
             Border = new ChartElementBorder();
@@ -220,6 +225,7 @@ using System.Collections.Generic;
             Aggregates = new ChartBoxPlotAggregates();
             Outliers = new ChartMarkers();
             Extremes = new ChartMarkers();
+            Orientation = ChartSeriesOrientation.Horizontal;
         }
 
         public override IChartSerializer CreateSerializer()

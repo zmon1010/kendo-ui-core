@@ -12,7 +12,7 @@ namespace Kendo.Mvc.UI.Tests
         public decimal Q3 { get; set; }
         public decimal Upper { get; set; }
         public decimal Mean { get; set; }
-        public decimal[] Outliers { get; set; }
+        public IList<decimal> Outliers { get; set; }
     }
 
     public static class BoxPlotDataBuilder

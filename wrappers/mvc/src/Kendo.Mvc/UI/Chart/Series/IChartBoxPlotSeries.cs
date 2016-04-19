@@ -184,5 +184,10 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+
+        /// <summary>
+        /// The orientation of the series.
+        /// </summary>
+        ChartSeriesOrientation Orientation { get; set; }
     }
 }
