@@ -38,7 +38,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="expression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Area<TValue>(
+        public virtual ChartSeriesBuilder<T> Area<TValue>(
             Expression<Func<T, TValue>> expression)
         {
             if (typeof(T).IsPlainType() && (!expression.IsBindable()))
@@ -67,7 +67,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Area<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> Area<TValue, TCategory>(
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -141,7 +141,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Bar<TValue>(
+        public virtual ChartSeriesBuilder<T> Bar<TValue>(
             Expression<Func<T, TValue>> valueExpression)
         {
             if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
@@ -170,7 +170,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Bar<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> Bar<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -219,6 +219,179 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
         /// <summary>
+        /// Defines boxPlot series bound to inline data.
+        /// </summary>
+        /// <param name="data">
+        /// The list of data items to bind to
+        /// </param>
+        public virtual ChartSeriesBuilder<T> BoxPlot(IEnumerable data)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "boxPlot",
+                Data = data
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines boxPlot series bound to model member(s).
+        /// </summary>
+        /// <param name="lowerExpression">
+        /// The expression used to extract the The lower value. from the model.
+        /// </param>
+        /// <param name="q1Expression">
+        /// The expression used to extract the The Q1 value. from the model.
+        /// </param>
+        /// <param name="medianExpression">
+        /// The expression used to extract the The median value. from the model.
+        /// </param>
+        /// <param name="q3Expression">
+        /// The expression used to extract the The Q3 value. from the model.
+        /// </param>
+        /// <param name="upperExpression">
+        /// The expression used to extract the The upper value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> BoxPlot<TValue>(
+            Expression<Func<T, TValue>> lowerExpression,
+            Expression<Func<T, TValue>> q1Expression,
+            Expression<Func<T, TValue>> medianExpression,
+            Expression<Func<T, TValue>> q3Expression,
+            Expression<Func<T, TValue>> upperExpression)
+        {
+            if (typeof(T).IsPlainType() && (!lowerExpression.IsBindable() || !q1Expression.IsBindable() || !medianExpression.IsBindable() || !q3Expression.IsBindable() || !upperExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "boxPlot",
+                LowerField = lowerExpression.MemberWithoutInstance(),
+                Q1Field = q1Expression.MemberWithoutInstance(),
+                MedianField = medianExpression.MemberWithoutInstance(),
+                Q3Field = q3Expression.MemberWithoutInstance(),
+                UpperField = upperExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines boxPlot series bound to model member(s).
+        /// </summary>
+        /// <param name="lowerExpression">
+        /// The expression used to extract the The lower value. from the model.
+        /// </param>
+        /// <param name="q1Expression">
+        /// The expression used to extract the The Q1 value. from the model.
+        /// </param>
+        /// <param name="medianExpression">
+        /// The expression used to extract the The median value. from the model.
+        /// </param>
+        /// <param name="q3Expression">
+        /// The expression used to extract the The Q3 value. from the model.
+        /// </param>
+        /// <param name="upperExpression">
+        /// The expression used to extract the The upper value. from the model.
+        /// </param>
+        /// <param name="meanExpression">
+        /// The expression used to extract the The mean value. from the model.
+        /// </param>
+        /// <param name="outliersExpression">
+        /// The expression used to extract the The outliers value. from the model.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> BoxPlot<TValue>(
+            Expression<Func<T, TValue>> lowerExpression,
+            Expression<Func<T, TValue>> q1Expression,
+            Expression<Func<T, TValue>> medianExpression,
+            Expression<Func<T, TValue>> q3Expression,
+            Expression<Func<T, TValue>> upperExpression,
+            Expression<Func<T, TValue>> meanExpression,
+            Expression<Func<T, IList<TValue>>> outliersExpression)
+        {
+            if (typeof(T).IsPlainType() && (!lowerExpression.IsBindable() || !q1Expression.IsBindable() || !medianExpression.IsBindable() || !q3Expression.IsBindable() || !upperExpression.IsBindable() || !meanExpression.IsBindable() || !outliersExpression.IsBindable()))
+            {
+                throw new InvalidOperationException(Exceptions.MemberExpressionRequired);
+            }
+
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "boxPlot",
+                LowerField = lowerExpression.MemberWithoutInstance(),
+                Q1Field = q1Expression.MemberWithoutInstance(),
+                MedianField = medianExpression.MemberWithoutInstance(),
+                Q3Field = q3Expression.MemberWithoutInstance(),
+                UpperField = upperExpression.MemberWithoutInstance(),
+                MeanField = meanExpression.MemberWithoutInstance(),
+                OutliersField = outliersExpression.MemberWithoutInstance()
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+
+        /// <summary>
+        /// Defines bound boxPlot series.
+        /// </summary>
+        /// <param name="lowerMemberName">
+        /// The name of the The lower value. member.
+        /// </param>
+        /// <param name="q1MemberName">
+        /// The name of the The Q1 value. member.
+        /// </param>
+        /// <param name="medianMemberName">
+        /// The name of the The median value. member.
+        /// </param>
+        /// <param name="q3MemberName">
+        /// The name of the The Q3 value. member.
+        /// </param>
+        /// <param name="upperMemberName">
+        /// The name of the The upper value. member.
+        /// </param>
+        /// <param name="meanMemberName">
+        /// The name of the The mean value. member. Optional.
+        /// </param>
+        /// <param name="outliersMemberName">
+        /// The name of the The outliers value. member. Optional.
+        /// </param>
+        public virtual ChartSeriesBuilder<T> BoxPlot(
+            string lowerMemberName,
+            string q1MemberName,
+            string medianMemberName,
+            string q3MemberName,
+            string upperMemberName,
+            string meanMemberName = null,
+            string outliersMemberName = null)
+        {
+            var item = new ChartSeries<T>()
+            {
+                Chart = Chart,
+                Type = "boxPlot",
+                Name = lowerMemberName.AsTitle() + ", " + q1MemberName.AsTitle() + ", " + medianMemberName.AsTitle() + ", " + q3MemberName.AsTitle() + ", " + upperMemberName.AsTitle(),
+                LowerField = lowerMemberName,
+                Q1Field = q1MemberName,
+                MedianField = medianMemberName,
+                Q3Field = q3MemberName,
+                UpperField = upperMemberName,
+                MeanField = meanMemberName,
+                OutliersField = outliersMemberName
+            };
+
+            Container.Add(item);
+
+            return new ChartSeriesBuilder<T>(item);
+        }
+        /// <summary>
         /// Defines bubble series bound to inline data.
         /// </summary>
         /// <param name="data">
@@ -250,7 +423,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="sizeExpression">
         /// The expression used to extract the The size value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Bubble<TXValue, TYValue, TSizeValue>(
+        public virtual ChartSeriesBuilder<T> Bubble<TXValue, TYValue, TSizeValue>(
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression,
             Expression<Func<T, TSizeValue>> sizeExpression)
@@ -289,7 +462,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the category from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Bubble<TXValue, TYValue, TSizeValue>(
+        public virtual ChartSeriesBuilder<T> Bubble<TXValue, TYValue, TSizeValue>(
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression,
             Expression<Func<T, TSizeValue>> sizeExpression,
@@ -380,7 +553,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="targetExpression">
         /// The expression used to extract the The target value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Bullet<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> Bullet<TValue, TCategory>(
             Expression<Func<T, TValue>> currentExpression,
             Expression<Func<T, TCategory>> targetExpression)
         {
@@ -463,7 +636,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="closeExpression">
         /// The expression used to extract the The close value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Candlestick<TValue>(
+        public virtual ChartSeriesBuilder<T> Candlestick<TValue>(
             Expression<Func<T, TValue>> openExpression,
             Expression<Func<T, TValue>> highExpression,
             Expression<Func<T, TValue>> lowExpression,
@@ -551,7 +724,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Column<TValue>(
+        public virtual ChartSeriesBuilder<T> Column<TValue>(
             Expression<Func<T, TValue>> valueExpression)
         {
             if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
@@ -580,7 +753,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Column<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> Column<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -657,7 +830,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Donut<TValue>(
+        public virtual ChartSeriesBuilder<T> Donut<TValue>(
             Expression<Func<T, TValue>> expressionValue,
             Expression<Func<T, string>> categoryExpression)
         {
@@ -734,7 +907,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Funnel<TValue>(
+        public virtual ChartSeriesBuilder<T> Funnel<TValue>(
             Expression<Func<T, TValue>> expressionValue,
             Expression<Func<T, string>> categoryExpression)
         {
@@ -808,7 +981,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  HorizontalWaterfall<TValue>(
+        public virtual ChartSeriesBuilder<T> HorizontalWaterfall<TValue>(
             Expression<Func<T, TValue>> valueExpression)
         {
             if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
@@ -837,7 +1010,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  HorizontalWaterfall<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> HorizontalWaterfall<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -911,7 +1084,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="expression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Line<TValue>(
+        public virtual ChartSeriesBuilder<T> Line<TValue>(
             Expression<Func<T, TValue>> expression)
         {
             if (typeof(T).IsPlainType() && (!expression.IsBindable()))
@@ -940,7 +1113,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Line<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> Line<TValue, TCategory>(
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -1023,7 +1196,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="closeExpression">
         /// The expression used to extract the The close value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  OHLC<TValue>(
+        public virtual ChartSeriesBuilder<T> OHLC<TValue>(
             Expression<Func<T, TValue>> openExpression,
             Expression<Func<T, TValue>> highExpression,
             Expression<Func<T, TValue>> lowExpression,
@@ -1114,7 +1287,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Pie<TValue>(
+        public virtual ChartSeriesBuilder<T> Pie<TValue>(
             Expression<Func<T, TValue>> expressionValue,
             Expression<Func<T, string>> categoryExpression)
         {
@@ -1191,7 +1364,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="yValueExpression">
         /// The expression used to extract the The y value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  PolarArea<TXValue, TYValue>(
+        public virtual ChartSeriesBuilder<T> PolarArea<TXValue, TYValue>(
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
@@ -1268,7 +1441,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="yValueExpression">
         /// The expression used to extract the The y value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  PolarLine<TXValue, TYValue>(
+        public virtual ChartSeriesBuilder<T> PolarLine<TXValue, TYValue>(
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
@@ -1345,7 +1518,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="yValueExpression">
         /// The expression used to extract the The y value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  PolarScatter<TXValue, TYValue>(
+        public virtual ChartSeriesBuilder<T> PolarScatter<TXValue, TYValue>(
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
@@ -1419,7 +1592,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RadarArea<TValue>(
+        public virtual ChartSeriesBuilder<T> RadarArea<TValue>(
             Expression<Func<T, TValue>> valueExpression)
         {
             if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
@@ -1448,7 +1621,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RadarArea<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> RadarArea<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -1522,7 +1695,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RadarColumn<TValue>(
+        public virtual ChartSeriesBuilder<T> RadarColumn<TValue>(
             Expression<Func<T, TValue>> valueExpression)
         {
             if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
@@ -1551,7 +1724,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RadarColumn<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> RadarColumn<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -1625,7 +1798,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RadarLine<TValue>(
+        public virtual ChartSeriesBuilder<T> RadarLine<TValue>(
             Expression<Func<T, TValue>> valueExpression)
         {
             if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
@@ -1654,7 +1827,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RadarLine<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> RadarLine<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -1731,7 +1904,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="toExpression">
         /// The expression used to extract the The to value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RangeBar<TValue>(
+        public virtual ChartSeriesBuilder<T> RangeBar<TValue>(
             Expression<Func<T, TValue>> fromExpression,
             Expression<Func<T, TValue>> toExpression)
         {
@@ -1765,7 +1938,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RangeBar<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> RangeBar<TValue, TCategory>(
             Expression<Func<T, TValue>> fromExpression,
             Expression<Func<T, TValue>> toExpression,
             Expression<Func<T, TCategory>> categoryExpression)
@@ -1849,7 +2022,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="toExpression">
         /// The expression used to extract the The to value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RangeColumn<TValue>(
+        public virtual ChartSeriesBuilder<T> RangeColumn<TValue>(
             Expression<Func<T, TValue>> fromExpression,
             Expression<Func<T, TValue>> toExpression)
         {
@@ -1883,7 +2056,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  RangeColumn<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> RangeColumn<TValue, TCategory>(
             Expression<Func<T, TValue>> fromExpression,
             Expression<Func<T, TValue>> toExpression,
             Expression<Func<T, TCategory>> categoryExpression)
@@ -1967,7 +2140,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="yValueExpression">
         /// The expression used to extract the The y value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Scatter<TXValue, TYValue>(
+        public virtual ChartSeriesBuilder<T> Scatter<TXValue, TYValue>(
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
@@ -2044,7 +2217,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="yValueExpression">
         /// The expression used to extract the The y value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  ScatterLine<TXValue, TYValue>(
+        public virtual ChartSeriesBuilder<T> ScatterLine<TXValue, TYValue>(
             Expression<Func<T, TXValue>> xValueExpression,
             Expression<Func<T, TYValue>> yValueExpression)
         {
@@ -2118,7 +2291,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="expression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  VerticalArea<TValue>(
+        public virtual ChartSeriesBuilder<T> VerticalArea<TValue>(
             Expression<Func<T, TValue>> expression)
         {
             if (typeof(T).IsPlainType() && (!expression.IsBindable()))
@@ -2147,7 +2320,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  VerticalArea<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> VerticalArea<TValue, TCategory>(
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -2224,7 +2397,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="targetExpression">
         /// The expression used to extract the The target value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  VerticalBullet<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> VerticalBullet<TValue, TCategory>(
             Expression<Func<T, TValue>> currentExpression,
             Expression<Func<T, TCategory>> targetExpression)
         {
@@ -2298,7 +2471,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="expression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  VerticalLine<TValue>(
+        public virtual ChartSeriesBuilder<T> VerticalLine<TValue>(
             Expression<Func<T, TValue>> expression)
         {
             if (typeof(T).IsPlainType() && (!expression.IsBindable()))
@@ -2327,7 +2500,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  VerticalLine<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> VerticalLine<TValue, TCategory>(
             Expression<Func<T, TValue>> expression,
             Expression<Func<T, TCategory>> categoryExpression)
         {
@@ -2401,7 +2574,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="valueExpression">
         /// The expression used to extract the value from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Waterfall<TValue>(
+        public virtual ChartSeriesBuilder<T> Waterfall<TValue>(
             Expression<Func<T, TValue>> valueExpression)
         {
             if (typeof(T).IsPlainType() && (!valueExpression.IsBindable()))
@@ -2430,7 +2603,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="categoryExpression">
         /// The expression used to extract the The category value. from the model.
         /// </param>
-        public virtual ChartSeriesBuilder<T>  Waterfall<TValue, TCategory>(
+        public virtual ChartSeriesBuilder<T> Waterfall<TValue, TCategory>(
             Expression<Func<T, TValue>> valueExpression,
             Expression<Func<T, TCategory>> categoryExpression)
         {

@@ -20,6 +20,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Bar { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The BoxPlot series default settings.
+        /// </summary>
+        public ChartSeries<T> BoxPlot { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Bubble series default settings.
         /// </summary>
         public ChartSeries<T> Bubble { get; } = new ChartSeries<T>();
@@ -155,6 +160,13 @@ namespace Kendo.Mvc.UI
             if (bar.Any())
             {
                 settings["bar"] = bar;
+            }
+
+            var boxPlot = BoxPlot.Serialize();
+
+            if (boxPlot.Any())
+            {
+                settings["boxPlot"] = boxPlot;
             }
 
             var bubble = Bubble.Serialize();

@@ -29,6 +29,12 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void BoxPlot_series_should_return_builder()
+        {
+            builder.BoxPlot().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void Bubble_series_should_return_builder()
         {
             builder.Bubble().ShouldBeType(typeof(ChartSeriesBuilder<object>));

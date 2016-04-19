@@ -45,6 +45,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_BoxPlot_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("boxPlot").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void BoxPlot_series_should_be_serialized()
+        {
+            settings.BoxPlot.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("boxPlot").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_Bubble_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("bubble").ShouldBeFalse();

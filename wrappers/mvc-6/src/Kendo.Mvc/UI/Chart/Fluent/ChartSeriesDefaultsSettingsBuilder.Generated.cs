@@ -37,6 +37,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The boxPlot series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the boxPlot series settings.</param>
+        public ChartSeriesBuilder<T> BoxPlot()
+        {
+            return new ChartSeriesBuilder<T>(Container.BoxPlot);
+        }
+
+        /// <summary>
         /// The bubble series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the bubble series settings.</param>
