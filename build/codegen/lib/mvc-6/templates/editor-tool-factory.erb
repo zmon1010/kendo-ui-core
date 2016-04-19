@@ -1,0 +1,132 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Resources;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for adding items to Editor.
+    /// </summary>
+    public partial class EditorToolFactory
+    {
+        public Editor Editor { get; set; }
+% BUTTON_TOOLS.each do |tool|
+
+        /// <summary>
+        /// Adds "<%= tool[:name] %>" tool.
+        /// </summary>
+        public virtual EditorToolFactory <%= tool[:name] %>()
+        {
+            AddTool("<%= serialize_tool_name(tool) %>");
+            return this;
+        }
+% end
+% COLOR_PICKER_TOOLS.each do |tool|
+
+        /// <summary>
+        /// Adds "<%= tool[:name] %>" tool.
+        /// </summary>
+        public virtual EditorToolFactory <%= tool[:name] %>()
+        {
+            AddTool("<%= serialize_tool_name(tool) %>");
+            return this;
+        }
+
+        public EditorToolFactory <%= tool[:name] %>(Action<EditorToolBuilder> configurator)
+        {
+            AddTool("<%= serialize_tool_name(tool) %>", configurator);
+            return this;
+        }
+% end
+% DROP_DOWN_TOOLS.each do |tool|
+
+        /// <summary>
+        /// Adds "<%= tool[:name] %>" tool.
+        /// </summary>
+        public virtual EditorToolFactory <%= tool[:name] %>()
+        {
+            AddDropDownTool("<%= serialize_tool_name(tool) %>", new List<EditorToolItem>());
+            return this;
+        }
+
+        /// <summary>
+        /// Adds "<%= tool[:name] %>" tool.
+        /// </summary>
+        public virtual EditorToolFactory <%= tool[:name] %>(Action<EditorToolItemFactory> configurator)
+        {
+            AddDropDownTool("<%= serialize_tool_name(tool) %>", CreateDropDownToolItems(configurator));
+            return this;
+        }
+% end
+
+        public EditorToolFactory TableEditing()
+        {
+% TABLE_EDITING_TOOLS.each do |tool|
+            AddTool("<%= serialize_tool_name(tool) %>");
+% end
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a tool to the editor.
+        /// </summary>
+        private void AddTool(string name)
+        {
+            var item = new EditorTool()
+            {
+                Editor = Editor,
+                Name = name
+            };
+            Container.Add(item);
+        }
+
+        private void AddTool(string name, Action<EditorToolBuilder> configurator)
+        {
+            var item = new EditorTool()
+            {
+                Editor = Editor,
+                Name = name
+            };
+
+            configurator(new EditorToolBuilder(item));
+
+            Container.Add(item);
+        }
+
+        /// <summary>
+        /// Adds a tool to the editor.
+        /// </summary>
+        private void AddDropDownTool(string name, List<EditorToolItem> items)
+        {
+            var item = new EditorTool()
+            {
+                Editor = Editor,
+                Name = name,
+                Items = items
+            };
+            Container.Add(item);
+        }
+
+        private List<EditorToolItem> CreateDropDownToolItems(Action<EditorToolItemFactory> configurator)
+        {
+            var items = new List<EditorToolItem>();
+            configurator(new EditorToolItemFactory(items)
+            {
+                Editor = Editor
+            });
+            return items;
+        }
+
+        /// <summary>
+        /// Remove all tools.
+        /// </summary>
+        public virtual EditorToolFactory Clear()
+        {
+            Container.Clear();
+            return this;
+        }
+    }
+}

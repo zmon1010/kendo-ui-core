@@ -10,6 +10,9 @@
 - datetimepicker.monthTemplate.contentId
 - datetimepicker.monthTemplate.empty
 - datetimepicker.monthTemplate.emptyId
+- editor.tag
+- editor.tools.palette
+- editor.value
 - gantt.editable
 - grid.sortable.sortMode
 - scheduler.mobile

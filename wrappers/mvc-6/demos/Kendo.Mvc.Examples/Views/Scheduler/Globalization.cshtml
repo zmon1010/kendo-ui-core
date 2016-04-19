@@ -22,7 +22,7 @@
             Choose culture:
             @(Html.Kendo().DropDownList()
                 .Name("CulturesSelector")
-                .BindTo(new[] { "en-US", "de-DE", "bg-BG", "it-IT" })
+                .BindTo(new[] { "en-US", "de-DE", "fr-FR", "bg-BG" })
                 .Value(culture)
                 .Events(events => events.Change("cultureChange"))
             )

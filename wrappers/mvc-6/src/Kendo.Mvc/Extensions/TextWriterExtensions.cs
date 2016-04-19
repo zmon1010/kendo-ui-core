@@ -7,7 +7,7 @@ namespace Kendo.Mvc.Extensions
 {
     public static class TextWriterExtensions
     {
-        public static void WriteContent<T>(this TextWriter writer, Func<T, object> action, IHtmlEncoder htmlEncoder, T dataItem = null) where T : class
+        public static void WriteContent<T>(this TextWriter writer, Func<T, object> action, IHtmlEncoder htmlEncoder, T dataItem = null, bool htmlEncode = false) where T : class
 		{
 			var result = action(dataItem);
 
@@ -21,7 +21,14 @@ namespace Kendo.Mvc.Extensions
 
 			if (result != null)
 			{
-				writer.Write(result.ToString());
+                if (htmlEncode)
+                {
+                    writer.Write(htmlEncoder.HtmlEncode(result.ToString()));
+                }
+                else
+                {
+                    writer.Write(result.ToString());
+                }
 			}
 		} 
     }

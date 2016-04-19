@@ -7,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.WebEncoders;
+using System.IO;
 
 namespace Kendo.Mvc.Infrastructure
 {
@@ -200,7 +202,11 @@ namespace Kendo.Mvc.Infrastructure
             }
             else if (value.TemplateDelegate != null)
             {
-                output.Append(value.TemplateDelegate(value));
+                using (var writer = new StringWriter())
+                {
+                    writer.WriteContent(value.TemplateDelegate, new HtmlEncoder(), value);
+                    output.Append(writer.ToString());
+                }
             }
         }
 

@@ -1,0 +1,114 @@
+# button tools
+- :name: Bold
+  :overload: button
+
+- :name: CleanFormatting
+  :overload: button
+
+- :name: CreateLink
+  :overload: button
+
+- :name: Indent
+  :overload: button
+
+- :name: InsertFile
+  :overload: button
+
+- :name: InsertImage
+  :overload: button
+
+- :name: InsertOrderedList
+  :overload: button
+
+- :name: InsertUnorderedList
+  :overload: button
+
+- :name: Italic
+  :overload: button
+
+- :name: JustifyCenter
+  :overload: button
+
+- :name: JustifyFull
+  :overload: button
+
+- :name: JustifyLeft
+  :overload: button
+
+- :name: JustifyRight
+  :overload: button
+
+- :name: Outdent
+  :overload: button
+
+- :name: Pdf
+  :overload: button
+
+- :name: Print
+  :overload: button
+
+- :name: Separator
+  :overload: button
+
+- :name: Strikethrough
+  :overload: button
+
+- :name: SubScript
+  :overload: button
+  :serialize_as: subscript
+
+- :name: SuperScript
+  :overload: button
+  :serialize_as: superscript
+
+- :name: Underline
+  :overload: button
+
+- :name: Unlink
+  :overload: button
+
+- :name: ViewHtml
+  :overload: button
+
+# dropDown tools
+- :name: FontName
+  :overload: dropDown
+
+- :name: FontSize
+  :overload: dropDown
+
+- :name: Formatting
+  :overload: dropDown
+
+- :name: Snippets
+  :overload: dropDown
+  :serialize_as: insertHtml
+
+# color picker tools
+- :name: BackColor
+  :overload: colorPicker
+
+- :name: ForeColor
+  :overload: colorPicker
+
+# table editing
+- :name: AddColumnLeft
+  :overload: tableEditing
+
+- :name: AddColumnRight
+  :overload: tableEditing
+
+- :name: AddRowAbove
+  :overload: tableEditing
+
+- :name: AddRowBelow
+  :overload: tableEditing
+
+- :name: CreateTable
+  :overload: tableEditing
+
+- :name: deleteColumn
+  :overload: tableEditing
+
+- :name: DeleteRow
+  :overload: tableEditing

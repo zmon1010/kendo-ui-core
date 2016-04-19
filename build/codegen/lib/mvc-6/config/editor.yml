@@ -1,0 +1,9 @@
+:options:
+    - :name: value
+      :type: String
+      :description: The content of the editor.
+
+    - :name: tools.palette
+      :description: The color palette.
+      :type: String
+      :enum_type: ColorPickerPalette
