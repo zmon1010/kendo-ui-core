@@ -18721,6 +18721,29 @@ and a contenteditable iframe is generated.</description>
     </tag>
 
     <tag>
+        <description>Fine-tune deserialization in the Editor widget. Deserialization is the process of parsing the HTML string input from the value() method or from the viewHtml dialog into editable content.</description>
+        <name>editor-deserialization</name>
+        <tag-class>com.kendoui.taglib.editor.DeserializationTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Callback that allows custom deserialization to be plugged in. The method accepts string as the only parameter and is expected to return the modified content as string as well.</description>
+            <name>custom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Callback that allows custom deserialization to be plugged in. The method accepts string as the only parameter and is expected to return the modified content as string as well.</description>
+        <name>editor-deserialization-custom</name>
+        <tag-class>com.kendoui.taglib.editor.DeserializationCustomFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
         <description>Configuration for file browser dialog.</description>
         <name>editor-fileBrowser</name>
         <tag-class>com.kendoui.taglib.editor.FileBrowserTag</tag-class>
@@ -20238,8 +20261,14 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <description>Allows setting of serialization options.</description>
         <name>editor-serialization</name>
         <tag-class>com.kendoui.taglib.editor.SerializationTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
+        <attribute>
+            <description>Define custom serialization for the editable content. The method accepts a single parameter as a string and is expected to return a string.</description>
+            <name>custom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>Indicates whether the characters outside the ASCII range will be encoded as HTML entities. By default, they are encoded.</description>
             <name>entities</name>
@@ -20263,6 +20292,12 @@ or as presentational (b / i / u / font) tags. Used for outputting content for le
     </tag>
 
 
+    <tag>
+        <description>Define custom serialization for the editable content. The method accepts a single parameter as a string and is expected to return a string.</description>
+        <name>editor-serialization-custom</name>
+        <tag-class>com.kendoui.taglib.editor.SerializationCustomFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>A collection of tools that are used to interact with the Editor.

@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class Editor 
     {
+        public EditorDeserializationSettings Deserialization { get; } = new EditorDeserializationSettings();
+
         public string Domain { get; set; }
 
         public bool? Encoded { get; set; }
@@ -39,6 +41,12 @@ namespace Kendo.Mvc.UI
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
+
+            var deserialization = Deserialization.Serialize();
+            if (deserialization.Any())
+            {
+                settings["deserialization"] = deserialization;
+            }
 
             if (Domain?.HasValue() == true)
             {

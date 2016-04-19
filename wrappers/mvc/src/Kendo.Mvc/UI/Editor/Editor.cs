@@ -42,6 +42,8 @@ namespace Kendo.Mvc.UI
 
             //>> Initialization
         
+            Deserialization = new EditorDeserializationSettings();
+                
             PasteCleanup = new EditorPasteCleanupSettings();
                 
             Resizable = new EditorResizableSettings();
@@ -52,6 +54,12 @@ namespace Kendo.Mvc.UI
         }
 
         //>> Fields
+        
+        public EditorDeserializationSettings Deserialization
+        {
+            get;
+            set;
+        }
         
         public string Domain { get; set; }
         
@@ -166,6 +174,11 @@ namespace Kendo.Mvc.UI
 
             //>> Serialization
         
+            var deserialization = Deserialization.ToJson();
+            if (deserialization.Any())
+            {
+                json["deserialization"] = deserialization;
+            }
             if (Domain.HasValue())
             {
                 json["domain"] = Domain;

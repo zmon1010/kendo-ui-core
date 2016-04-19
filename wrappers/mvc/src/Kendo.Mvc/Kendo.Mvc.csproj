@@ -2696,4 +2696,4 @@
     <Compile Include="UI\Editor\Settings\EditorPasteCleanupSettings.cs" />
     <Compile Include="UI\Editor\Fluent\EditorPasteCleanupSettingsBuilder.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="UI\Editor\Settings\EditorDeserializationSettings.cs" /><Compile Include="UI\Editor\Fluent\EditorDeserializationSettingsBuilder.cs" /></ItemGroup></Project>

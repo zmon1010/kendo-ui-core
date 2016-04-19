@@ -14,7 +14,7 @@ import com.kendoui.taglib.EditorTag;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class SerializationTag extends  BaseTag  /* interfaces */ /* interfaces */ {
+public class DeserializationTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     
     @Override
     public int doEndTag() throws JspException {
@@ -24,7 +24,7 @@ public class SerializationTag extends  BaseTag  /* interfaces */ /* interfaces *
         EditorTag parent = (EditorTag)findParentWithClass(EditorTag.class);
 
 
-        parent.setSerialization(this);
+        parent.setDeserialization(this);
 
 //<< doEndTag
 
@@ -50,10 +50,10 @@ public class SerializationTag extends  BaseTag  /* interfaces */ /* interfaces *
 //>> Attributes
 
     public static String tagName() {
-        return "editor-serialization";
+        return "editor-deserialization";
     }
 
-    public void setCustom(SerializationCustomFunctionTag value) {
+    public void setCustom(DeserializationCustomFunctionTag value) {
         setEvent("custom", value.getBody());
     }
 
@@ -67,30 +67,6 @@ public class SerializationTag extends  BaseTag  /* interfaces */ /* interfaces *
 
     public void setCustom(String value) {
         setProperty("custom", new Function(value));
-    }
-
-    public boolean getEntities() {
-        return (Boolean)getProperty("entities");
-    }
-
-    public void setEntities(boolean value) {
-        setProperty("entities", value);
-    }
-
-    public boolean getScripts() {
-        return (Boolean)getProperty("scripts");
-    }
-
-    public void setScripts(boolean value) {
-        setProperty("scripts", value);
-    }
-
-    public boolean getSemantic() {
-        return (Boolean)getProperty("semantic");
-    }
-
-    public void setSemantic(boolean value) {
-        setProperty("semantic", value);
     }
 
 //<< Attributes

@@ -7,17 +7,11 @@ using System.Linq;
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Kendo UI EditorSerializationSettings class
+    /// Kendo UI EditorDeserializationSettings class
     /// </summary>
-    public partial class EditorSerializationSettings 
+    public partial class EditorDeserializationSettings 
     {
         public ClientHandlerDescriptor Custom { get; set; }
-
-        public bool? Entities { get; set; }
-
-        public bool? Scripts { get; set; }
-
-        public bool? Semantic { get; set; }
 
 
         public Editor Editor { get; set; }
@@ -29,21 +23,6 @@ namespace Kendo.Mvc.UI
             if (Custom?.HasValue() == true)
             {
                 settings["custom"] = Custom;
-            }
-
-            if (Entities.HasValue)
-            {
-                settings["entities"] = Entities;
-            }
-
-            if (Scripts.HasValue)
-            {
-                settings["scripts"] = Scripts;
-            }
-
-            if (Semantic.HasValue)
-            {
-                settings["semantic"] = Semantic;
             }
 
             return settings;

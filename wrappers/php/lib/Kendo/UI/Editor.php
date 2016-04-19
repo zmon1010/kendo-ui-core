@@ -33,6 +33,15 @@ class Editor extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
+    * Fine-tune deserialization in the Editor widget. Deserialization is the process of parsing the HTML string input from the value() method or from the viewHtml dialog into editable content.
+    * @param \Kendo\UI\EditorDeserialization|array $value
+    * @return \Kendo\UI\Editor
+    */
+    public function deserialization($value) {
+        return $this->setProperty('deserialization', $value);
+    }
+
+    /**
     * Relaxes the same-origin policy when using the iframe-based editor.
 This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain.
 In that case, this property must be used to allow the editor to function properly across browsers.

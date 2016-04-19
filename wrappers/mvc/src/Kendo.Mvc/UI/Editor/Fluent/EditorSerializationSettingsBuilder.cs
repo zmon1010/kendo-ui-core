@@ -20,6 +20,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// Define custom serialization for the editable content. The method accepts a single parameter as a string and is expected to return a string.
+        /// </summary>
+        /// <param name="value">The value that configures the custom.</param>
+        public EditorSerializationSettingsBuilder Custom(string value)
+        {
+            container.Custom = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Indicates whether the characters outside the ASCII range will be encoded as HTML entities. By default, they are encoded.
         /// </summary>
         /// <param name="value">The value that configures the entities.</param>
