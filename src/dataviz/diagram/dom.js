@@ -409,10 +409,6 @@
                 this.options = deepExtend({}, this.options, modelOptions);
 
                 this.redrawVisual();
-                if (this.options.content) {
-                    this._template();
-                    this.content(this.options.content);
-                }
             },
 
             updateOptionsFromModel: function(model, field) {
@@ -422,10 +418,10 @@
                     if (model && field) {
                         if (!dataviz.inArray(field, ["x", "y", "width", "height"])) {
                             if (this.options.visual) {
-                                this.redrawVisual();
+                                this._redrawVisual();
                             } else if (modelOptions.type) {
                                 this.options = deepExtend({}, this.options, modelOptions);
-                                this.redrawVisual();
+                                this._redrawVisual();
                             }
 
                             if (this.options.content) {
@@ -443,12 +439,20 @@
                 }
             },
 
-            redrawVisual: function() {
+            _redrawVisual: function() {
                 this.visual.clear();
                 this._contentVisual = null;
                 this.options.dataItem = this.dataItem;
                 this.createShapeVisual();
                 this.updateBounds();
+            },
+
+            redrawVisual: function() {
+                this._redrawVisual();
+                if (this.options.content) {
+                    this._template();
+                    this.content(this.options.content);
+                }
             },
 
             updateModel: function(syncChanges) {

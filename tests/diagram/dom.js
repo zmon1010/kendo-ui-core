@@ -1854,6 +1854,58 @@
             });
         })();
 
+        (function() {
+
+            // ------------------------------------------------------------
+            module("Shape / redrawVisual", {
+                setup: function() {
+                    setup();
+                    shape = diagram.addShape({
+                        id: "visualShape",
+                        type: "rectangle",
+                        x: 10,
+                        y: 40,
+                        width: 100,
+                        height: 100
+                    });
+                },
+                teardown: teardown
+            });
+
+            test("recreates shapeVisual", function() {
+                shape.options.type = "circle";
+                shape.redrawVisual();
+
+                ok(shape.shapeVisual instanceof dataviz.diagram.Circle);
+                equal(shape.visual.children.length, 1);
+            });
+
+            test("recreates content", function() {
+                shape.options.type = "circle";
+                shape.options.content = {
+                    text: "foo"
+                };
+                shape.redrawVisual();
+
+                equal(shape._contentVisual.options.text, "foo");
+                equal(shape.visual.children.length, 2);
+            });
+
+            test("updates content template", function() {
+                shape.dataItem = {
+                    foo: "bar"
+                };
+                shape.options.content = {
+                    template: "#:dataItem.foo#"
+                };
+                shape.redrawVisual();
+
+                equal(shape._contentVisual.options.text, "bar");
+                equal(shape.visual.children.length, 2);
+            });
+
+        })();
+
         // ------------------------------------------------------------
         module("Shape / bounds / events", {
             setup: setup,
