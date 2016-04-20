@@ -4425,6 +4425,43 @@
         });
 
         // ------------------------------------------------------------
+        module("Categorical Plot Area / Events / plotAreaHover", {
+            teardown: destroyChart
+        });
+
+        test("point hover bubbles to plot area", 1, function() {
+            createBarChart({
+                plotAreaHover: function() { ok(true); }
+            });
+
+            hoverChart(chart, barElement, 300, 300);
+        });
+
+        test("fires when hovering plot area directly", 1, function() {
+            createBarChart({
+                plotAreaHover: function() { ok(true); }
+            });
+
+            hoverChart(chart, plotAreaElement, 300, 300);
+        });
+
+        test("does not fire when hovering outside of axis range", 0, function() {
+            createBarChart({
+                plotAreaHover: function() { ok(false); }
+            });
+
+            hoverChart(chart, plotAreaElement, 300, 580);
+        });
+
+        test("does not fire when hovering on axes", 0, function() {
+            createBarChart({
+                plotAreaHover: function() { ok(false); }
+            });
+
+            hoverChart(chart, plotAreaElement, 3000, 0);
+        });
+
+        // ------------------------------------------------------------
         function createChartWithPanes(plotAreaClick) {
             chart = createChart({
                 panes: [{

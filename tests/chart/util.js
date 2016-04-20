@@ -301,6 +301,10 @@ function clickChart(chart, element, x, y) {
     chart._userEvents.end(x || 0, y || 0);
 }
 
+function hoverChart(chart, element, x, y) {
+    chart._mousemove({ x: { client: x || 0 }, y: { client: y || 0 } });
+}
+
 kendo.util.loadFonts = function(fonts, callback) {
     callback();
 }

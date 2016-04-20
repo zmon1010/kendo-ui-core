@@ -191,6 +191,7 @@ var __meta__ = { // jshint ignore:line
         PIE = "pie",
         PIE_SECTOR_ANIM_DELAY = 70,
         PLOT_AREA_CLICK = "plotAreaClick",
+        PLOT_AREA_HOVER = "plotAreaHover",
         POINTER = "pointer",
         RANGE_BAR = "rangeBar",
         RANGE_COLUMN = "rangeColumn",
@@ -387,6 +388,7 @@ var __meta__ = { // jshint ignore:line
             LEGEND_ITEM_CLICK,
             LEGEND_ITEM_HOVER,
             PLOT_AREA_CLICK,
+            PLOT_AREA_HOVER,
             DRAG_START,
             DRAG,
             DRAG_END,
@@ -1252,6 +1254,7 @@ var __meta__ = { // jshint ignore:line
             var coords = this._eventCoordinates(e);
 
             this._trackCrosshairs(coords);
+            this._plotArea.hover(this, e);
 
             if (this._sharedTooltip()) {
                 this._trackSharedTooltip(coords, e);
@@ -1607,8 +1610,11 @@ var __meta__ = { // jshint ignore:line
 
         _shouldAttachMouseMove: function() {
             var chart = this;
+            var events = chart._events;
 
-            return chart._plotArea.crosshairs.length || (chart._tooltip && chart._sharedTooltip());
+            return chart._plotArea.crosshairs.length ||
+                   (chart._tooltip && chart._sharedTooltip()) ||
+                   defined(events[PLOT_AREA_HOVER]);
         },
 
         setOptions: function(options) {
@@ -10854,7 +10860,15 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        hover: function(chart, e) {
+            this._dispatchEvent(chart, e, PLOT_AREA_HOVER);
+        },
+
         click: function(chart, e) {
+            this._dispatchEvent(chart, e, PLOT_AREA_CLICK);
+        },
+
+        _dispatchEvent: function(chart, e, eventType) {
             var plotArea = this,
                 coords = chart._eventCoordinates(e),
                 point = new Point2D(coords.x, coords.y),
@@ -10886,7 +10900,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (categories.length > 0 && values.length > 0) {
-                chart.trigger(PLOT_AREA_CLICK, {
+                chart.trigger(eventType, {
                     element: eventTargetElement(e),
                     originalEvent: e,
                     category: singleItemOrArray(categories),
