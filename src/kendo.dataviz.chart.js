@@ -5263,6 +5263,10 @@ var __meta__ = { // jshint ignore:line
                         align: RIGHT
                     });
 
+                    bullet.target.value = this.value;
+                    bullet.target.dataItem = this.dataItem;
+                    bullet.target.series = this.series;
+
                     bullet.append(bullet.target);
                 }
 
