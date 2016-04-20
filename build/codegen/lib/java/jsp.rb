@@ -334,7 +334,7 @@ import com.kendoui.taglib.BaseTag;
 import com.kendoui.taglib.<%= owner.tag_class %>;
 <% end %>
 
-<% if options.any? { |o| o.type == 'Function' } %>
+<% if options.any? { |o| o.type.include?('Function') } %>
 import com.kendoui.taglib.json.Function;
 <% end %>
 

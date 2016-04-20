@@ -12,6 +12,8 @@ import com.kendoui.taglib.EditorTag;
 
 
 
+import com.kendoui.taglib.json.Function;
+
 
 import javax.servlet.jsp.JspException;
 

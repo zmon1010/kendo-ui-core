@@ -10,6 +10,8 @@ import com.kendoui.taglib.EditorTag;
 
 
 
+import com.kendoui.taglib.json.Function;
+
 
 import com.kendoui.taglib.json.Function;
 
