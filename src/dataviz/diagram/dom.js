@@ -3641,6 +3641,11 @@
                     dataBound;
 
                 if (e.field) {
+                    for (idx = 0; idx < items.length; idx++) {
+                        if (this._dataMap[items[idx].uid]) {
+                            this._dataMap[items[idx].uid].redrawVisual();
+                        }
+                    }
                     return;
                 }
 

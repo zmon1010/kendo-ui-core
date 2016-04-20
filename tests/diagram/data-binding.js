@@ -432,6 +432,15 @@
         }
     });
 
+    test("dataSource itemchange redraws shape", function() {
+        shape = shapes[1];
+
+        shape.redrawVisual = function() {
+            ok(true);
+        };
+        shape.dataItem.set("foo", "bar");
+    });
+
     test("dataSource remove removes uid from map", function() {
         var item = dataSource.at(0);
         uid = item.uid;
