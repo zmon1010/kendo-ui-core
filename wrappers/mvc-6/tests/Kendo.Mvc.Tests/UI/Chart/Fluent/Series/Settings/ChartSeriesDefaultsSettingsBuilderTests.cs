@@ -29,6 +29,12 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void BoxPlot_series_should_return_builder()
+        {
+            builder.BoxPlot().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void Bubble_series_should_return_builder()
         {
             builder.Bubble().ShouldBeType(typeof(ChartSeriesBuilder<object>));
@@ -152,6 +158,12 @@ namespace Kendo.Mvc.UI.Tests
         public void VerticalArea_series_should_return_builder()
         {
             builder.VerticalArea().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
+        public void VerticalBoxPlot_series_should_return_builder()
+        {
+            builder.VerticalBoxPlot().ShouldBeType(typeof(ChartSeriesBuilder<object>));
         }
 
         [Fact]

@@ -37,6 +37,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The boxPlot series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the boxPlot series settings.</param>
+        public ChartSeriesBuilder<T> BoxPlot()
+        {
+            return new ChartSeriesBuilder<T>(Container.BoxPlot);
+        }
+
+        /// <summary>
         /// The bubble series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the bubble series settings.</param>
@@ -223,6 +232,15 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartSeriesBuilder<T> VerticalArea()
         {
             return new ChartSeriesBuilder<T>(Container.VerticalArea);
+        }
+
+        /// <summary>
+        /// The verticalBoxPlot series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the verticalBoxPlot series settings.</param>
+        public ChartSeriesBuilder<T> VerticalBoxPlot()
+        {
+            return new ChartSeriesBuilder<T>(Container.VerticalBoxPlot);
         }
 
         /// <summary>

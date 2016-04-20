@@ -57,11 +57,9 @@ module CodeGen::MVC6::Wrappers::ChartGenerator
         CHART_SERIES_FACTORY_OVERLOADS.result(binding)
     end
 
-
-
     def unique_generic_types(fields)
-        field_with_generic = fields.select { |field| !primitive_type?(field[:generic]) }
-        generic_types = field_with_generic.map { |field| field[:generic] }
+        fields_with_generic = fields.select { |field| !primitive_type?(field[:generic]) && !field[:skip_in_generic_list] }
+        generic_types = fields_with_generic.map { |field| field[:generic] }
         generic_types.uniq
     end
 end

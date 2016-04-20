@@ -30,6 +30,54 @@
         :expression: categoryExpression
         :member: categoryMemberName
 
+- :name: boxPlot
+  :type: BoxPlot
+  :fields:
+      - :name: LowerField
+        :description: The lower value.
+        :generic: TValue
+        :expression: lowerExpression
+        :member: lowerMemberName
+
+      - :name: Q1Field
+        :description: The Q1 value.
+        :generic: TValue
+        :expression: q1Expression
+        :member: q1MemberName
+
+      - :name: MedianField
+        :description: The median value.
+        :generic: TValue
+        :expression: medianExpression
+        :member: medianMemberName
+
+      - :name: Q3Field
+        :description: The Q3 value.
+        :generic: TValue
+        :expression: q3Expression
+        :member: q3MemberName
+
+      - :name: UpperField
+        :description: The upper value.
+        :generic: TValue
+        :expression: upperExpression
+        :member: upperMemberName
+
+      - :name: MeanField
+        :optional: true
+        :description: The mean value.
+        :generic: TValue
+        :expression: meanExpression
+        :member: meanMemberName
+
+      - :name: OutliersField
+        :optional: true
+        :description: The outliers value.
+        :generic: IList<TValue>
+        :skip_in_generic_list: true
+        :expression: outliersExpression
+        :member: outliersMemberName
+
 - :name: bubble
   :type: Bubble
   :fields:
@@ -406,6 +454,54 @@
         :generic: TCategory
         :expression: categoryExpression
         :member: categoryMemberName
+
+- :name: verticalBoxPlot
+  :type: VerticalBoxPlot
+  :fields:
+      - :name: LowerField
+        :description: The lower value.
+        :generic: TValue
+        :expression: lowerExpression
+        :member: lowerMemberName
+
+      - :name: Q1Field
+        :description: The Q1 value.
+        :generic: TValue
+        :expression: q1Expression
+        :member: q1MemberName
+
+      - :name: MedianField
+        :description: The median value.
+        :generic: TValue
+        :expression: medianExpression
+        :member: medianMemberName
+
+      - :name: Q3Field
+        :description: The Q3 value.
+        :generic: TValue
+        :expression: q3Expression
+        :member: q3MemberName
+
+      - :name: UpperField
+        :description: The upper value.
+        :generic: TValue
+        :expression: upperExpression
+        :member: upperMemberName
+
+      - :name: MeanField
+        :optional: true
+        :description: The mean value.
+        :generic: TValue
+        :expression: meanExpression
+        :member: meanMemberName
+
+      - :name: OutliersField
+        :optional: true
+        :description: The outliers value.
+        :generic: IList<TValue>
+        :skip_in_generic_list: true
+        :expression: outliersExpression
+        :member: outliersMemberName
 
 - :name: verticalBullet
   :type: VerticalBullet

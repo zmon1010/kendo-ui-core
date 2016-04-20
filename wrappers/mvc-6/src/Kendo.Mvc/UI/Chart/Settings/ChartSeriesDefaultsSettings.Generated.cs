@@ -20,6 +20,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> Bar { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The BoxPlot series default settings.
+        /// </summary>
+        public ChartSeries<T> BoxPlot { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The Bubble series default settings.
         /// </summary>
         public ChartSeries<T> Bubble { get; } = new ChartSeries<T>();
@@ -125,6 +130,11 @@ namespace Kendo.Mvc.UI
         public ChartSeries<T> VerticalArea { get; } = new ChartSeries<T>();
 
         /// <summary>
+        /// The VerticalBoxPlot series default settings.
+        /// </summary>
+        public ChartSeries<T> VerticalBoxPlot { get; } = new ChartSeries<T>();
+
+        /// <summary>
         /// The VerticalBullet series default settings.
         /// </summary>
         public ChartSeries<T> VerticalBullet { get; } = new ChartSeries<T>();
@@ -144,182 +154,168 @@ namespace Kendo.Mvc.UI
             var settings = new Dictionary<string, object>();
 
             var area = Area.Serialize();
-
             if (area.Any())
             {
                 settings["area"] = area;
             }
 
             var bar = Bar.Serialize();
-
             if (bar.Any())
             {
                 settings["bar"] = bar;
             }
 
-            var bubble = Bubble.Serialize();
+            var boxPlot = BoxPlot.Serialize();
+            if (boxPlot.Any())
+            {
+                settings["boxPlot"] = boxPlot;
+            }
 
+            var bubble = Bubble.Serialize();
             if (bubble.Any())
             {
                 settings["bubble"] = bubble;
             }
 
             var bullet = Bullet.Serialize();
-
             if (bullet.Any())
             {
                 settings["bullet"] = bullet;
             }
 
             var candlestick = Candlestick.Serialize();
-
             if (candlestick.Any())
             {
                 settings["candlestick"] = candlestick;
             }
 
             var column = Column.Serialize();
-
             if (column.Any())
             {
                 settings["column"] = column;
             }
 
             var donut = Donut.Serialize();
-
             if (donut.Any())
             {
                 settings["donut"] = donut;
             }
 
             var funnel = Funnel.Serialize();
-
             if (funnel.Any())
             {
                 settings["funnel"] = funnel;
             }
 
             var horizontalWaterfall = HorizontalWaterfall.Serialize();
-
             if (horizontalWaterfall.Any())
             {
                 settings["horizontalWaterfall"] = horizontalWaterfall;
             }
 
             var line = Line.Serialize();
-
             if (line.Any())
             {
                 settings["line"] = line;
             }
 
             var ohlc = OHLC.Serialize();
-
             if (ohlc.Any())
             {
                 settings["ohlc"] = ohlc;
             }
 
             var pie = Pie.Serialize();
-
             if (pie.Any())
             {
                 settings["pie"] = pie;
             }
 
             var polarArea = PolarArea.Serialize();
-
             if (polarArea.Any())
             {
                 settings["polarArea"] = polarArea;
             }
 
             var polarLine = PolarLine.Serialize();
-
             if (polarLine.Any())
             {
                 settings["polarLine"] = polarLine;
             }
 
             var polarScatter = PolarScatter.Serialize();
-
             if (polarScatter.Any())
             {
                 settings["polarScatter"] = polarScatter;
             }
 
             var radarArea = RadarArea.Serialize();
-
             if (radarArea.Any())
             {
                 settings["radarArea"] = radarArea;
             }
 
             var radarColumn = RadarColumn.Serialize();
-
             if (radarColumn.Any())
             {
                 settings["radarColumn"] = radarColumn;
             }
 
             var radarLine = RadarLine.Serialize();
-
             if (radarLine.Any())
             {
                 settings["radarLine"] = radarLine;
             }
 
             var rangeBar = RangeBar.Serialize();
-
             if (rangeBar.Any())
             {
                 settings["rangeBar"] = rangeBar;
             }
 
             var rangeColumn = RangeColumn.Serialize();
-
             if (rangeColumn.Any())
             {
                 settings["rangeColumn"] = rangeColumn;
             }
 
             var scatter = Scatter.Serialize();
-
             if (scatter.Any())
             {
                 settings["scatter"] = scatter;
             }
 
             var scatterLine = ScatterLine.Serialize();
-
             if (scatterLine.Any())
             {
                 settings["scatterLine"] = scatterLine;
             }
 
             var verticalArea = VerticalArea.Serialize();
-
             if (verticalArea.Any())
             {
                 settings["verticalArea"] = verticalArea;
             }
 
-            var verticalBullet = VerticalBullet.Serialize();
+            var verticalBoxPlot = VerticalBoxPlot.Serialize();
+            if (verticalBoxPlot.Any())
+            {
+                settings["verticalBoxPlot"] = verticalBoxPlot;
+            }
 
+            var verticalBullet = VerticalBullet.Serialize();
             if (verticalBullet.Any())
             {
                 settings["verticalBullet"] = verticalBullet;
             }
 
             var verticalLine = VerticalLine.Serialize();
-
             if (verticalLine.Any())
             {
                 settings["verticalLine"] = verticalLine;
             }
 
             var waterfall = Waterfall.Serialize();
-
             if (waterfall.Any())
             {
                 settings["waterfall"] = waterfall;

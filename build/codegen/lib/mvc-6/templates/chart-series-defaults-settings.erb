@@ -23,14 +23,12 @@ namespace Kendo.Mvc.UI
 
 % if series[:type].upcase.eql?(series[:type])
             var <%= series[:type].downcase %> = <%= series[:type] %>.Serialize();
-
             if (<%= series[:type].downcase %>.Any())
             {
                 settings["<%= series[:type].downcase %>"] = <%= series[:type].downcase %>;
             }
 % else
             var <%= series[:type].camelize %> = <%= series[:type] %>.Serialize();
-
             if (<%= series[:type].camelize %>.Any())
             {
                 settings["<%= series[:type].camelize %>"] = <%= series[:type].camelize %>;
