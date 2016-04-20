@@ -1,3 +1,7 @@
+@* Make sure tag helpers are not available for the Window content *@
+@removeTagHelper "*, Microsoft.AspNet.Mvc.Razor"
+@removeTagHelper "*, Microsoft.AspNetCore.Mvc.Razor"
+
 @(Html.Kendo().Window()
     .Name("window")
     .Title("About Josef Hoffmann")
@@ -9,7 +13,7 @@
     )
     .Content(@<text>
         <div class="armchair">
-            <img src="@Url.Content("~/shared/web/window/kubus-armchair.png")"
+            <img src="/shared/web/window/kubus-armchair.png"
                     alt="Josef Hoffmann - Kubus Armchair" />
             Josef Hoffmann - Kubus Armchair
         </div>
