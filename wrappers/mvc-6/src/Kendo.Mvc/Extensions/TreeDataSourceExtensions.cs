@@ -14,7 +14,7 @@ namespace Kendo.Mvc.Extensions
     /// Provides extension methods to process TreeDataSourceRequest.
     /// </summary>
     public static class TreeDataSourceExtensions
-    {        
+    {
         internal static IEnumerable<AggregateResult> AggregateForLevel<TModel, T1, T2>(this IEnumerable data,
             IQueryable allData,
             List<AggregateDescriptor> aggregates,
@@ -42,21 +42,21 @@ namespace Kendo.Mvc.Extensions
                 else
                 {
                     expr = Expression.Equal(left, Expression.Constant(fn.Invoke(item)));
-                }                                
+                }
             }
 
             return expr;
         }
 
-        internal static IEnumerable<AggregateResult> AggregateForLevel<TModel, T1, T2>(this IQueryable data, 
-            IQueryable allData, 
-            List<AggregateDescriptor> aggregates, 
+        internal static IEnumerable<AggregateResult> AggregateForLevel<TModel, T1, T2>(this IQueryable data,
+            IQueryable allData,
+            List<AggregateDescriptor> aggregates,
             Expression<Func<TModel, T1>> idSelector,
             Expression<Func<TModel, T2>> parentIDSelector)
         {
             data = data.ChildrenRecursive(allData, idSelector, parentIDSelector);
 
-            return data.Aggregate(aggregates.SelectMany(a => a.Aggregates));                               
+            return data.Aggregate(aggregates.SelectMany(a => a.Aggregates));
         }
 
 
@@ -85,11 +85,9 @@ namespace Kendo.Mvc.Extensions
 
             var allParam = Expression.Parameter(elementType, "allItem");
             var rootParam = Expression.Parameter(elementType, "rootItem");
-            
-            var matchesParentID = ExpressionFactory.MakeMemberAccess(rootParam, idSelector.MemberWithoutInstance());
 
             var allID = ExpressionFactory.MakeMemberAccess(allParam, parentIDSelector.MemberWithoutInstance());
-            allID = Expression.Convert(allID, matchesParentID.Type);
+            var matchesParentID = Expression.Convert(ExpressionFactory.MakeMemberAccess(rootParam, idSelector.MemberWithoutInstance()), allID.Type);
 
             BinaryExpression comparison = Expression.Equal(matchesParentID, allID);
 
@@ -103,12 +101,12 @@ namespace Kendo.Mvc.Extensions
                     Expression.Quote(whereLambda));
 
             var selectManyLambda = Expression.Lambda(typeof(Func<TModel, IEnumerable<TModel>>), whereCall, rootParam);
-            
+
             var selectManyCall =
                     Expression.Call(
                         typeof(Queryable),
                         "SelectMany",
-                        new Type[] { 
+                        new Type[] {
                             elementType,
                             elementType
                         },
@@ -122,8 +120,8 @@ namespace Kendo.Mvc.Extensions
 
         private static MethodInfo anyMethod = typeof(Queryable).GetMethods().First(method => method.Name == "Any" && method.GetParameters().Length == 1);
         private static MethodInfo AnyMethod(Type type)
-        {            
-            return anyMethod.MakeGenericMethod(type);                  
+        {
+            return anyMethod.MakeGenericMethod(type);
         }
 
         internal static IQueryable ParentsRecursive<TModel>(this IQueryable matches,
@@ -152,10 +150,8 @@ namespace Kendo.Mvc.Extensions
             var allParam = Expression.Parameter(elementType, "allItem");
             var matchesParam = Expression.Parameter(elementType, "matchedItem");
 
-            var allID = ExpressionFactory.MakeMemberAccess(allParam, idSelector.MemberWithoutInstance());
-
             var matchesParentID = ExpressionFactory.MakeMemberAccess(matchesParam, parentIDSelector.MemberWithoutInstance());
-            matchesParentID = Expression.Convert(matchesParentID, allID.Type);
+            var allID = Expression.Convert(ExpressionFactory.MakeMemberAccess(allParam, idSelector.MemberWithoutInstance()), matchesParentID.Type);
 
             BinaryExpression comparison = Expression.Equal(matchesParentID, allID);
 
@@ -178,6 +174,6 @@ namespace Kendo.Mvc.Extensions
                         Expression.Quote(whereLambda));
 
             return allData.Provider.CreateQuery(whereCall);
-        }        
+        }
     }
 }
