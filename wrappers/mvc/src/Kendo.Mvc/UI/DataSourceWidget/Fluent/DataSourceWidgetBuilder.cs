@@ -99,15 +99,6 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new TreeListAjaxDataSourceBuilder<T>(Component.DataSource, Component.ViewContext, Component.UrlGenerator));
             return this;
         }
-        /// <summary>
-        /// Specifies if filtering should be handled by the server.
-        /// </summary>        
-        public DataSourceWidgetBuilder<T> ServerFiltering(bool enabled)
-        {
-            Component.DataSource.ServerFiltering = enabled;
-
-            return this;
-        }
     }
 }
 

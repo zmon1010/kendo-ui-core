@@ -44,6 +44,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+                /// <summary>
+        /// The filtering method used to determine the suggestions for the current value. The default filter is "startswith" -
+		/// all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.
+        /// </summary>
+        /// <param name="value">The value for Filter</param>
+        public AutoCompleteBuilder Filter(FilterType filterType)
+        {
+            Container.Filter = filterType.ToString();
+            return this;
+        }
+
         /// <summary>
         /// Sets the data source configuration of the AutoComplete.
         /// </summary>
