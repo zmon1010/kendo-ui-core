@@ -15,6 +15,7 @@
 
         util = kendo.util,
         defined = util.defined,
+        limitValue = util.limitValue,
 
         g = kendo.geometry,
 
@@ -532,6 +533,7 @@
             var tooltipOffset = options.offset || 0;
             var surface = this.surface;
             var offset = surface._elementOffset();
+            var size = surface.getSize();
             var surfaceOffset = surface._offset;
             var bbox = shape.bbox();
             var width = elementSize.width;
@@ -562,8 +564,8 @@
             }
 
             return {
-                left: left,
-                top: top
+                left: limitValue(left, offset.left, offset.left + size.width),
+                top: limitValue(top, offset.top, offset.top + size.height)
             };
         },
 
