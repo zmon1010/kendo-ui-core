@@ -233,7 +233,7 @@ module CodeGen::TypeScript
                 end
             end
 
-            CodeGen::TypeScript.type(@type)
+            @type.split("|").map { |t| CodeGen::TypeScript.type(t) }.join("|")
         end
 
         def type_script_declaration
