@@ -775,6 +775,23 @@
             equal(getTicks().length, 1);
         });
 
+        test("major tick step of 0 is treated as 1", function() {
+            createNumericAxis({
+                majorTicks: { step: 0 }
+            });
+
+            equal(getTicks().length, 7);
+        });
+
+        test("minor tick step of 0 is treated as 1", function() {
+            createNumericAxis({
+                majorTicks: { visible: false },
+                minorTicks: { visible: true, step: 0 }
+            });
+
+            equal(getTicks().length, 31);
+        });
+
         // ------------------------------------------------------------
         module("Numeric Axis / Vertical / Label Step / Rendering", {
             setup: function() {

@@ -2884,6 +2884,30 @@
             equal(gridLines.length, 7);
         });
 
+        test("minorGridLine step of 0 is treated as 1", function() {
+            renderPlotArea({
+                categories: ["A"],
+                minorGridLines: {
+                    step: 0,
+                    visible: true
+                }
+            });
+
+            equal(gridLines.length, 8);
+        });
+
+        test("majorGridLine step of 0 is treated as 1", function() {
+            renderPlotArea({
+                categories: ["A"],
+                majorGridLines: {
+                    step: 0,
+                    visible: true
+                }
+            });
+
+            equal(gridLines.length, 7);
+        });
+
         test("renders gridlines over hidden value axis", function() {
             renderPlotArea({
                 categories: ["A"],

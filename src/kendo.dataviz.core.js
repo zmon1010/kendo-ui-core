@@ -1924,10 +1924,11 @@ var __meta__ = { // jshint ignore:line
                 };
 
             function render(tickPositions, tickOptions, skipUnit) {
-                var i, count = tickPositions.length;
+                var count = tickPositions.length;
+                var step = math.max(1, tickOptions.step);
 
                 if (tickOptions.visible) {
-                    for (i = tickOptions.skip; i < count; i += tickOptions.step) {
+                    for (var i = tickOptions.skip; i < count; i += step) {
                         if (defined(skipUnit) && (i % skipUnit === 0)) {
                             continue;
                         }
@@ -2084,11 +2085,11 @@ var __meta__ = { // jshint ignore:line
 
             var container = this.gridLinesVisual();
             function render(tickPositions, gridLine, skipUnit) {
-                var count = tickPositions.length,
-                    i;
+                var count = tickPositions.length;
+                var step = math.max(1, gridLine.step);
 
                 if (gridLine.visible) {
-                    for (i = gridLine.skip; i < count; i += gridLine.step) {
+                    for (var i = gridLine.skip; i < count; i += step) {
                         pos = round(tickPositions[i]);
                         if (!inArray(pos, majorTicks)) {
                             if (i % skipUnit !== 0 && (!axisLineVisible || linePos !== pos)) {
