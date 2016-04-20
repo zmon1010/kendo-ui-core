@@ -1860,7 +1860,7 @@ var __meta__ = { // jshint ignore:line
                 item = deepExtend({}, notes, items[i]);
                 item.value = axis.parseNoteValue(item.value);
 
-                note = new Note(item.value, item.label.text, null, null, null, item);
+                note = new Note(item.value, item.label.text, item, null, null, item);
 
                 if (note.options.visible) {
                     if (defined(note.options.position)) {
