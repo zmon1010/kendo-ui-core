@@ -112,6 +112,29 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// The font style of the connection content text.
+        /// </summary>
+        /// <param name="value">The value that configures the font style.</param>
+        public DiagramConnectionContentSettingsBuilder<TShapeModel, TConnectionModel> FontStyle(string value)
+        {
+            container.FontStyle = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The font weight of the connection content text.
+        /// </summary>
+        /// <param name="value">The value that configures the font weight.</param>
+        public DiagramConnectionContentSettingsBuilder<TShapeModel, TConnectionModel> FontWeight(string value)
+        {
+            container.FontWeight = value;
+
+            return this;
+        }
+
         
         //<< Fields
     }

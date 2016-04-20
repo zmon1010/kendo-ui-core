@@ -33,6 +33,24 @@ class DiagramConnectionContent extends \Kendo\SerializableObject {
     }
 
     /**
+    * The font style of the connection content text.
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\DiagramConnectionContent
+    */
+    public function fontStyle($value) {
+        return $this->setProperty('fontStyle', $value);
+    }
+
+    /**
+    * The font weight of the connection content text.
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\DiagramConnectionContent
+    */
+    public function fontWeight($value) {
+        return $this->setProperty('fontWeight', $value);
+    }
+
+    /**
     * Sets the template option of the DiagramConnectionContent.
     * The template which renders the labels.The fields which can be used in the template are:
     * @param string $value The id of the element which represents the kendo template.

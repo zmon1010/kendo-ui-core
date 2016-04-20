@@ -87,6 +87,22 @@ public class ShapeContentTag extends  BaseTag  /* interfaces */ /* interfaces */
         setProperty("fontSize", value);
     }
 
+    public java.lang.String getFontStyle() {
+        return (java.lang.String)getProperty("fontStyle");
+    }
+
+    public void setFontStyle(java.lang.String value) {
+        setProperty("fontStyle", value);
+    }
+
+    public java.lang.String getFontWeight() {
+        return (java.lang.String)getProperty("fontWeight");
+    }
+
+    public void setFontWeight(java.lang.String value) {
+        setProperty("fontWeight", value);
+    }
+
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }

@@ -13562,6 +13562,18 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>float</type>
         </attribute>
         <attribute>
+            <description>The font style of the connection content text.</description>
+            <name>fontStyle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font weight of the connection content text.</description>
+            <name>fontWeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The template which renders the labels.The fields which can be used in the template are:</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
@@ -14315,6 +14327,18 @@ data source is fired. By default the widget will bind to the data source specifi
             <name>fontSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The font style of the connection content text.</description>
+            <name>fontStyle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font weight of the connection content text.</description>
+            <name>fontWeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The template which renders the labels.The fields which can be used in the template are:</description>
@@ -16476,6 +16500,18 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>float</type>
         </attribute>
         <attribute>
+            <description>The font style of the shape content text.</description>
+            <name>fontStyle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font weight of the shape content text.</description>
+            <name>fontWeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The template which renders the labels.The fields which can be used in the template are:</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
@@ -17540,6 +17576,18 @@ See visual.</description>
             <name>fontSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The font style of the shape content text.</description>
+            <name>fontStyle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font weight of the shape content text.</description>
+            <name>fontWeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The template which renders the labels.The fields which can be used in the template are:</description>

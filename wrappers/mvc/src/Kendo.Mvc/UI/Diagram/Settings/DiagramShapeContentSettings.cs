@@ -24,6 +24,10 @@ namespace Kendo.Mvc.UI
         public string FontFamily { get; set; }
         
         public double? FontSize { get; set; }
+
+        public string FontStyle { get; set; }
+
+        public string FontWeight { get; set; }
         
         public string Template { get; set; }
 
@@ -55,6 +59,16 @@ namespace Kendo.Mvc.UI
             if (FontSize.HasValue)
             {
                 json["fontSize"] = FontSize;
+            }
+
+            if (FontStyle.HasValue())
+            {
+                json["fontStyle"] = FontStyle;
+            }
+
+            if (FontWeight.HasValue())
+            {
+                json["fontWeight"] = FontWeight;
             }
                 
             if (!string.IsNullOrEmpty(TemplateId))

@@ -29,6 +29,10 @@ namespace Kendo.Mvc.UI
 
         public double? FontSize { get; set; }
 
+        public string FontStyle { get; set; }
+
+        public string FontWeight { get; set; }
+
         public ClientHandlerDescriptor Visual { get; set; }
         
         //<< Fields
@@ -74,6 +78,16 @@ namespace Kendo.Mvc.UI
             if (FontSize.HasValue)
             {
                 json["fontSize"] = FontSize;
+            }
+
+            if (FontStyle.HasValue())
+            {
+                json["fontStyle"] = FontStyle;
+            }
+
+            if (FontWeight.HasValue())
+            {
+                json["fontWeight"] = FontWeight;
             }
             
         //<< Serialization
