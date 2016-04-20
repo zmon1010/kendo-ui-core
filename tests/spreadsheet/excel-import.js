@@ -862,6 +862,7 @@
         addFile("xl/worksheets/sheet2.xml", SHEET);
 
         var sheets = [];
+        var activeSheet;
         const workbook = {
             options: { },
             sheets: () => sheets,
@@ -872,13 +873,14 @@
             },
             recalcSheets: () => null,
             triggerChange: () => null,
-            activeSheet: sheet => equal(sheet.name(), "Sheet2")
+            activeSheet: sheet => activeSheet = sheet
         };
 
         var deferred = new $.Deferred();
         kendo.spreadsheet._readWorkbook(zip, workbook, deferred);
 
         deferred.then(function() {
+            equal(activeSheet.name(), "Sheet2");
             start();
         });
     });

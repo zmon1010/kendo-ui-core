@@ -45,7 +45,7 @@
     var SEL_SHEET_VIEW = ["sheetViews", "sheetView"];
     var SEL_HYPERLINK = ["hyperlinks", "hyperlink"];
 
-    function readWorkbook(zip, workbook, deferred) {
+    function readWorkbook(zip, workbook, progress) {
         var strings = readStrings(zip);
         var relationships = readRelationships(zip, "_rels/workbook.xml");
         var theme = readTheme(zip, relationships.byType.theme[0]);
@@ -90,16 +90,27 @@
             }
         });
 
-        loadSheets(items, workbook, deferred)
-            .then(function() {
-                var sheets = workbook.sheets();
-                recalcSheets(sheets);
+        var loading = new $.Deferred();
+        loading.progress(function(args) {
+            if (progress) {
+                progress.notify(args);
+            }
+        })
+        .then(function() {
+            var sheets = workbook.sheets();
+            recalcSheets(sheets);
 
-                workbook.activeSheet(sheets[activeSheet]);
-            });
+            workbook.activeSheet(sheets[activeSheet]);
+
+            if (progress) {
+                progress.resolve();
+            }
+        });
+
+        loadSheets(items, workbook, loading);
     }
 
-    function loadSheets(items, workbook, deferred) {
+    function loadSheets(items, workbook, progress) {
         var ready = (new $.Deferred()).resolve();
         for (var i = 0; i < items.length; i++) {
             /*jshint -W083 */
@@ -109,29 +120,23 @@
                     sheet.suspendChanges(true);
 
                     var promise = queueSheet(sheet, entry);
-                    if (deferred) {
-                        var args = {
-                            sheet: sheet,
-                            progress: i / (items.length - 1)
-                        };
+                    var args = {
+                        sheet: sheet,
+                        progress: i / (items.length - 1)
+                    };
 
-                        promise.then(function() {
-                            deferred.notify(args);
-                        });
-                    }
+                    promise.then(function() {
+                        progress.notify(args);
+                    });
 
                     return promise;
                 });
             })(items[i], i);
         }
 
-        if (deferred) {
-            ready.then(function() {
-                deferred.resolve();
-            });
-        }
-
-        return ready;
+        ready.then(function() {
+            progress.resolve();
+        });
     }
 
     function queueSheet(sheet, ctx) {
