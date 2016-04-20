@@ -20,7 +20,7 @@
             gauge.exportPDF({ paperSize: "auto", margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" } }).done(function (data) {
                 kendo.saveAs({
                     dataURI: data,
-                    fileName: "chart.pdf",
+                    fileName: "gauge.pdf",
                     proxyURL: "//demos.telerik.com/kendo-ui/service/export"
                 });
             });
@@ -31,7 +31,7 @@
             gauge.exportImage().done(function (data) {
                 kendo.saveAs({
                     dataURI: data,
-                    fileName: "chart.png",
+                    fileName: "gauge.png",
                     proxyURL: "//demos.telerik.com/kendo-ui/service/export"
                 });
             });
@@ -42,13 +42,13 @@
             gauge.exportSVG().done(function (data) {
                 kendo.saveAs({
                     dataURI: data,
-                    fileName: "chart.svg",
+                    fileName: "gauge.svg",
                     proxyURL: "//demos.telerik.com/kendo-ui/service/export"
                 });
             });
         });
 
-        function createChart() {
+        function createGauge() {
             $("#gauge").kendoLinearGauge({
                 pointer: [{
                     value: 10,
@@ -92,8 +92,8 @@
             });
         }
 
-        $(document).ready(createChart);
-        $(document).bind("kendo:skinChange", createChart);
+        $(document).ready(createGauge);
+        $(document).bind("kendo:skinChange", createGauge);
     </script>
 
     <style>
