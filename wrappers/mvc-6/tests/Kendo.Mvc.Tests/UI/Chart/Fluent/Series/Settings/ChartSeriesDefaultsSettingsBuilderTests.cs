@@ -161,6 +161,12 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void VerticalBoxPlot_series_should_return_builder()
+        {
+            builder.VerticalBoxPlot().ShouldBeType(typeof(ChartSeriesBuilder<object>));
+        }
+
+        [Fact]
         public void VerticalBullet_series_should_return_builder()
         {
             builder.VerticalBullet().ShouldBeType(typeof(ChartSeriesBuilder<object>));

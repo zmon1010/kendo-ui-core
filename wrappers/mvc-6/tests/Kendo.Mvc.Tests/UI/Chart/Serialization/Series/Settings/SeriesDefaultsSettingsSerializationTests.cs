@@ -353,6 +353,20 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Default_VerticalBoxPlot_series_should_not_be_serialized()
+        {
+            settings.Serialize().ContainsKey("verticalBoxPlot").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void VerticalBoxPlot_series_should_be_serialized()
+        {
+            settings.VerticalBoxPlot.Data = new int[] { 1, 2, 3 };
+
+            settings.Serialize().ContainsKey("verticalBoxPlot").ShouldBeTrue();
+        }
+
+        [Fact]
         public void Default_VerticalBullet_series_should_not_be_serialized()
         {
             settings.Serialize().ContainsKey("verticalBullet").ShouldBeFalse();

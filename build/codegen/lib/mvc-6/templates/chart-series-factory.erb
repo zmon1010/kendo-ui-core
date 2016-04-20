@@ -13,6 +13,7 @@ namespace Kendo.Mvc.UI.Fluent
     public partial class ChartSeriesFactory<T> where T : class
     {
 % CHART_SERIES.each do |series|
+
         /// <summary>
         /// Defines <%= series[:name] %> series bound to inline data.
         /// </summary>
@@ -62,5 +63,6 @@ namespace Kendo.Mvc.UI.Fluent
             return new ChartSeriesBuilder<T>(item);
         }
 % end
+
     }
 }

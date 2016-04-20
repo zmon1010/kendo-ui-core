@@ -235,6 +235,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The verticalBoxPlot series default settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the verticalBoxPlot series settings.</param>
+        public ChartSeriesBuilder<T> VerticalBoxPlot()
+        {
+            return new ChartSeriesBuilder<T>(Container.VerticalBoxPlot);
+        }
+
+        /// <summary>
         /// The verticalBullet series default settings.
         /// </summary>
         /// <param name="configurator">The configurator for the verticalBullet series settings.</param>
