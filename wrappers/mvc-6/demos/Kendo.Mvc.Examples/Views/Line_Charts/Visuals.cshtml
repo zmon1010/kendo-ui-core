@@ -5,7 +5,7 @@
         .Name("chart")
         .Title("Forecast")
         .Legend(legend => legend.Visible(false))
-        .SeriesDefaults(seriesDefaults => seriesDefaults.Line().Style(ChartLineStyle.Smooth))
+        .SeriesDefaults(seriesDefaults => seriesDefaults.Line().Style(ChartSeriesStyle.Smooth))
         .Series(series =>
         {
             series.Line(model => model.Temperature).CategoryField("Day")

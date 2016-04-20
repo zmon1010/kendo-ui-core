@@ -44,7 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the preferred line rendering style.
         /// </summary>
         /// <param name="value">The value for Style</param>
-        public ChartSeriesLineSettingsBuilder<T> Style(ChartAreaStyle value)
+        public ChartSeriesLineSettingsBuilder<T> Style(ChartSeriesLineStyle value)
         {
             Container.Style = value;
             return this;

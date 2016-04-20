@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartSeriesOverlaySettings<T> where T : class 
     {
-        public string Gradient { get; set; }
+        public ChartSeriesGradient? Gradient { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -20,9 +20,9 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Gradient?.HasValue() == true)
+            if (Gradient.HasValue)
             {
-                settings["gradient"] = Gradient;
+                settings["gradient"] = Gradient?.Serialize();
             }
 
             return settings;

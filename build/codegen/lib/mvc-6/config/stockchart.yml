@@ -95,12 +95,12 @@
     - :name: series.style
       :description: Specifies the preferred rendering style.
       :type: String
-      :enum_type: ChartLineStyle
+      :enum_type: ChartSeriesStyle
 
     - :name: series.line.style
       :description: Specifies the preferred line rendering style.
       :type: String
-      :enum_type: ChartAreaStyle
+      :enum_type: ChartSeriesLineStyle
 
     - :name: series.stack.type
       :description: Specifies the preferred stack type.

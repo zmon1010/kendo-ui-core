@@ -11,16 +11,6 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The legend horizontal alignment when the legend.position is "top" or "bottom" and the vertical alignment when the legend.position is "left" or "right".The supported values are:
-        /// </summary>
-        /// <param name="value">The value for Align</param>
-        public ChartLegendSettingsBuilder<T> Align(string value)
-        {
-            Container.Align = value;
-            return this;
-        }
-
-        /// <summary>
         /// The background color of the legend. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Background</param>
@@ -130,16 +120,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The orientation of the legend items.The supported values are:
-        /// </summary>
-        /// <param name="value">The value for Orientation</param>
-        public ChartLegendSettingsBuilder<T> Orientation(string value)
-        {
-            Container.Orientation = value;
-            return this;
-        }
-
-        /// <summary>
         /// The padding of the chart legend. A numeric value will set all paddings.
         /// </summary>
         /// <param name="configurator">The configurator for the padding setting.</param>
@@ -188,6 +168,26 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartLegendSettingsBuilder<T> Width(double value)
         {
             Container.Width = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the legend align.
+        /// </summary>
+        /// <param name="value">The value for Align</param>
+        public ChartLegendSettingsBuilder<T> Align(ChartLegendAlign value)
+        {
+            Container.Align = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the legend orientation.
+        /// </summary>
+        /// <param name="value">The value for Orientation</param>
+        public ChartLegendSettingsBuilder<T> Orientation(ChartLegendOrientation value)
+        {
+            Container.Orientation = value;
             return this;
         }
 

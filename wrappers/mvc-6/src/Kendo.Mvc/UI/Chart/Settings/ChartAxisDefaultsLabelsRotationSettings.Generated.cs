@@ -11,9 +11,9 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartAxisDefaultsLabelsRotationSettings<T> where T : class 
     {
-        public string Align { get; set; }
-
         public double? Angle { get; set; }
+
+        public ChartAxisLabelRotationAlignment? Align { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -22,14 +22,14 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Align?.HasValue() == true)
-            {
-                settings["align"] = Align;
-            }
-
             if (Angle.HasValue)
             {
                 settings["angle"] = Angle;
+            }
+
+            if (Align.HasValue)
+            {
+                settings["align"] = Align?.Serialize();
             }
 
             return settings;

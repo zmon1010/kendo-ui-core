@@ -11,10 +11,10 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
-        /// The chart series gradient.The supported values are:
+        /// Specifies the series gradient.
         /// </summary>
         /// <param name="value">The value for Gradient</param>
-        public ChartSeriesOverlaySettingsBuilder<T> Gradient(string value)
+        public ChartSeriesOverlaySettingsBuilder<T> Gradient(ChartSeriesGradient value)
         {
             Container.Gradient = value;
             return this;

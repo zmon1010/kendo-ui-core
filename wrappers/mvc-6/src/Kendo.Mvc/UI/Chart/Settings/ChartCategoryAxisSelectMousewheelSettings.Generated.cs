@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public bool? Reverse { get; set; }
 
-        public string Zoom { get; set; }
+        public ChartZoomDirection? Zoom { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -27,9 +27,9 @@ namespace Kendo.Mvc.UI
                 settings["reverse"] = Reverse;
             }
 
-            if (Zoom?.HasValue() == true)
+            if (Zoom.HasValue)
             {
-                settings["zoom"] = Zoom;
+                settings["zoom"] = Zoom?.Serialize();
             }
 
             return settings;

@@ -1,3 +1,18 @@
+- :type: ChartAreaStyle
+  :description: Specifies the preferred line rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with straight line.
+
+      - :value: step
+        :member: Step
+        :description: Points will be connected with a line at right angles.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with smooth line.
+
 - :type: ChartAreaMissingValues
   :description: Specifies the behavior for handling missing values in the series.
   :values:
@@ -12,6 +27,51 @@
       - :value: zero
         :member: Zero
         :description: The value is assumed to be zero.
+
+- :type: ChartAxisLabelRotationAlignment
+  :description: Specifies the rotation of the labels.
+  :values:
+      - :value: end
+        :member: End
+        :description: Labels are aligned to the end.
+
+      - :value: center
+        :member: Center
+        :description: Labels are aligned to the center.
+
+- :type: ChartAxisTitlePosition
+  :description: Specifies the position of the title.
+  :values:
+      - :value: bottom
+        :member: Bottom
+        :description: The title is positioned at the bottom.
+
+      - :value: center
+        :member: Center
+        :description: The title is positioned in the center.
+
+      - :value: left
+        :member: Left
+        :description: The title is positioned on the left.
+
+      - :value: right
+        :member: Right
+        :description: The title is positioned on the right.
+
+      - :value: top
+        :member: Top
+        :description: The title is positioned at the top.
+
+- :type: ChartBarGradient
+  :description: Specifies the gradient.
+  :values:
+      - :value: glass
+        :member: Glass
+        :description: The series have glass effect overlay.
+
+      - :value: none
+        :member: None
+        :description: The series do not have grdient.
 
 - :type: ChartBarLabelsPosition
   :description: Specifies the position of the labels.
@@ -52,7 +112,7 @@
   :values:
       - :value: center
         :member: Center
-        :description: The label is positioned at the center of the funnel segment..
+        :description: The label is positioned at the center of the funnel segment.
 
       - :value: top
         :member: Top
@@ -137,6 +197,17 @@
         :member: Right
         :description: The label is positioned to the right of the marker.
 
+- :type: ChartPolarAreaStyle
+  :description: Specifies the preferred line rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with smooth line.
+
 - :type: ChartPolarLineStyle
   :description: Specifies the preferred rendering style.
   :values:
@@ -147,6 +218,17 @@
       - :value: smooth
         :member: Smooth
         :description: Points will be connected with a smooth line.
+
+- :type: ChartRadarAreaStyle
+  :description: Specifies the preferred line rendering style.
+  :values:
+      - :value: normal
+        :member: Normal
+        :description: Points will be connected with straight line.
+
+      - :value: smooth
+        :member: Smooth
+        :description: Points will be connected with smooth line.
 
 - :type: ChartRadarLineStyle
   :description: Specifies the preferred rendering style.

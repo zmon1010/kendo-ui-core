@@ -21,10 +21,10 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The zoom direction.The supported values are:
+        /// Specifies the mousehweel zoom type.
         /// </summary>
         /// <param name="value">The value for Zoom</param>
-        public ChartCategoryAxisSelectMousewheelSettingsBuilder<T> Zoom(string value)
+        public ChartCategoryAxisSelectMousewheelSettingsBuilder<T> Zoom(ChartZoomDirection value)
         {
             Container.Zoom = value;
             return this;

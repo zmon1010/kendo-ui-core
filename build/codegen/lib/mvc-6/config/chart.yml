@@ -3,6 +3,11 @@
       :merge: true
       :type: String[]
 
+    - :name: axisDefaults.labels.rotation.align
+      :description: Specifies the rotation of the labels.
+      :type: String
+      :enum_type: ChartAxisLabelRotationAlignment
+
     - :name: categoryAxis.axisCrossingValue
       :merge: true
       :type: object[]
@@ -89,6 +94,11 @@
       :merge: true
       :type: object
 
+    - :name: categoryAxis.labels.rotation.align
+      :description: Specifies the rotation of the labels.
+      :type: String
+      :enum_type: ChartAxisLabelRotationAlignment
+
     - :name: categoryAxis.max
       :merge: true
       :type: object
@@ -113,13 +123,35 @@
       :merge: true
       :type: object
 
+    - :name: categoryAxis.select.max
+      :merge: true
+      :type: object
+
     - :name: categoryAxis.select.min
       :merge: true
       :type: object
 
-    - :name: categoryAxis.select.max
-      :merge: true
-      :type: object
+    - :name: categoryAxis.select.mousewheel.zoom
+      :description: Specifies the mousehweel zoom type.
+      :type: String
+      :enum_type: ChartZoomDirection
+      :values:
+          - :value: both
+            :member: Both
+            :description: Both ends of the selection are moved.
+
+          - :value: left
+            :member: Left
+            :description: The left selection edge is moved during zoom.
+
+          - :value: right
+            :member: Right
+            :description: The right selection edge is moved during zoom.
+
+    - :name: categoryAxis.title.position
+      :description: Specifies the title position.
+      :type: String
+      :enum_type: ChartAxisTitlePosition
 
     - :name: categoryAxis.type
       :description: Specifies the category axis type.
@@ -133,6 +165,36 @@
           - :value: date
             :member: Date
             :description: Specialized axis for displaying chronological data.
+
+    - :name: legend.align
+      :description: Specifies the legend align.
+      :type: String
+      :enum_type: ChartLegendAlign
+      :values:
+          - :value: center
+            :member: Center
+            :description: The legend is aligned to the center.
+
+          - :value: end
+            :member: End
+            :description: The legend is aligned to the end.
+
+          - :value: start
+            :member: Start
+            :description: The legend is aligned to the start.
+
+    - :name: legend.orientation
+      :description: Specifies the legend orientation.
+      :type: String
+      :enum_type: ChartLegendOrientation
+      :values:
+          - :value: horizontal
+            :member: Horizontal
+            :description: The orientation is horizontal.
+
+          - :value: vertical
+            :member: Vertical
+            :description: The orientation is vertical.
 
     - :name: legend.position
       :description: Specifies the legend position.
@@ -352,6 +414,29 @@
             :member: Top
             :description: The label is positioned at the top of the segment.
 
+    - :name: series.markers.type
+      :description: Specifies the shape of the marker.
+      :type:
+          - String
+          - Function
+      :enum_type: ChartMarkerShape
+      :values:
+          - :value: circle
+            :member: Circle
+            :description: The marker shape is circle.
+
+          - :value: cross
+            :member: Cross
+            :description: The marker shape is cross.
+
+          - :value: square
+            :member: Square
+            :description: The marker shape is square.
+
+          - :value: triangle
+            :member: Triangle
+            :description: The marker shape is triangle.
+
     - :name: series.missingValues
       :description: Specifies the behavior for handling missing values in the series.
       :type: String
@@ -406,7 +491,7 @@
     - :name: series.line.style
       :description: Specifies the preferred line rendering style.
       :type: String
-      :enum_type: ChartAreaStyle
+      :enum_type: ChartSeriesLineStyle
       :values:
           - :value: normal
             :member: Normal
@@ -419,6 +504,27 @@
           - :value: smooth
             :member: Smooth
             :description: Points will be connected with smooth line.
+
+    - :name: series.overlay.gradient
+      :description: Specifies the series gradient.
+      :type: String
+      :enum_type: ChartSeriesGradient
+      :values:
+          - :value: glass
+            :member: Glass
+            :description: The series have glass effect overlay.
+
+          - :value: none
+            :member: None
+            :description: The series do not have grdient.
+
+          - :value: roundedBevel
+            :member: RoundedBevel
+            :description: The segments have round bevel effect overlay.
+
+          - :value: sharpBevel
+            :member: SharpBevel
+            :description: The segments have sharp bevel effect overlay.
 
     - :name: series.stack.type
       :description: Specifies the preferred stack type.
@@ -488,6 +594,11 @@
       :merge: true
       :type: object[]
 
+    - :name: valueAxis.labels.rotation.align
+      :description: Specifies the rotation of the labels.
+      :type: String
+      :enum_type: ChartAxisLabelRotationAlignment
+
     - :name: valueAxis.plotBands.from
       :merge: true
       :type: object
@@ -496,9 +607,19 @@
       :merge: true
       :type: object
 
+    - :name: valueAxis.title.position
+      :description: Specifies the title position.
+      :type: String
+      :enum_type: ChartAxisTitlePosition
+
     - :name: xAxis.axisCrossingValue
       :merge: true
       :type: object[]
+
+    - :name: xAxis.labels.rotation.align
+      :description: Specifies the rotation of the labels.
+      :type: String
+      :enum_type: ChartAxisLabelRotationAlignment
 
     - :name: xAxis.min
       :merge: true
@@ -515,6 +636,11 @@
     - :name: xAxis.plotBands.to
       :merge: true
       :type: object
+
+    - :name: xAxis.title.position
+      :description: Specifies the title position.
+      :type: String
+      :enum_type: ChartAxisTitlePosition
 
     - :name: yAxis.axisCrossingValue
       :merge: true
@@ -535,6 +661,11 @@
     - :name: yAxis.plotBands.to
       :merge: true
       :type: object
+
+    - :name: yAxis.title.position
+      :description: Specifies the title position.
+      :type: String
+      :enum_type: ChartAxisTitlePosition
 
     - :name: zoomable.selection.key
       :description: Specifies a keyboard key that should be pressed to activate the selection.

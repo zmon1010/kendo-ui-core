@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartLegendSettings<T> where T : class 
     {
-        public string Align { get; set; }
-
         public string Background { get; set; }
 
         public ChartLegendBorderSettings<T> Border { get; } = new ChartLegendBorderSettings<T>();
@@ -31,8 +29,6 @@ namespace Kendo.Mvc.UI
 
         public double? OffsetY { get; set; }
 
-        public string Orientation { get; set; }
-
         public ChartLegendPaddingSettings<T> Padding { get; } = new ChartLegendPaddingSettings<T>();
 
         public bool? Reverse { get; set; }
@@ -40,6 +36,10 @@ namespace Kendo.Mvc.UI
         public bool? Visible { get; set; }
 
         public double? Width { get; set; }
+
+        public ChartLegendAlign? Align { get; set; }
+
+        public ChartLegendOrientation? Orientation { get; set; }
 
         public ChartLegendPosition? Position { get; set; }
 
@@ -49,11 +49,6 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            if (Align?.HasValue() == true)
-            {
-                settings["align"] = Align;
-            }
 
             if (Background?.HasValue() == true)
             {
@@ -105,11 +100,6 @@ namespace Kendo.Mvc.UI
                 settings["offsetY"] = OffsetY;
             }
 
-            if (Orientation?.HasValue() == true)
-            {
-                settings["orientation"] = Orientation;
-            }
-
             var padding = Padding.Serialize();
             if (padding.Any())
             {
@@ -129,6 +119,16 @@ namespace Kendo.Mvc.UI
             if (Width.HasValue)
             {
                 settings["width"] = Width;
+            }
+
+            if (Align.HasValue)
+            {
+                settings["align"] = Align?.Serialize();
+            }
+
+            if (Orientation.HasValue)
+            {
+                settings["orientation"] = Orientation?.Serialize();
             }
 
             if (Position.HasValue)

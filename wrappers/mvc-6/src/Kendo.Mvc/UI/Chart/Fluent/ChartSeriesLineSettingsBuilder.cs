@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -21,5 +22,62 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         // Place custom settings here
+
+        // <summary>
+        /// Specifies the preferred line rendering style.
+        /// </summary>
+        /// <param name="value">The value for Style</param>
+        [Obsolete("The property is deprecated. Please use the ChartSeriesLineStyle value instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesLineSettingsBuilder<T> Style(ChartAreaStyle value)
+        {
+            try
+            {
+                Container.Style = (ChartSeriesLineStyle?)Enum.Parse(typeof(ChartSeriesLineStyle), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        // <summary>
+        /// Specifies the preferred line rendering style.
+        /// </summary>
+        /// <param name="value">The value for Style</param>
+        [Obsolete("The property is deprecated. Please use the ChartSeriesLineStyle value instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesLineSettingsBuilder<T> Style(ChartPolarAreaStyle value)
+        {
+            try
+            {
+                Container.Style = (ChartSeriesLineStyle?)Enum.Parse(typeof(ChartSeriesLineStyle), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
+
+        // <summary>
+        /// Specifies the preferred line rendering style.
+        /// </summary>
+        /// <param name="value">The value for Style</param>
+        [Obsolete("The property is deprecated. Please use the ChartSeriesLineStyle value instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ChartSeriesLineSettingsBuilder<T> Style(ChartRadarAreaStyle value)
+        {
+            try
+            {
+                Container.Style = (ChartSeriesLineStyle?)Enum.Parse(typeof(ChartSeriesLineStyle), value.ToString());
+            }
+            catch (Exception)
+            {
+            }
+
+            return this;
+        }
     }
 }

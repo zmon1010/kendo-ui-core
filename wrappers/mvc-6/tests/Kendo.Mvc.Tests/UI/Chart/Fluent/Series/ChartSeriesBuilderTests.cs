@@ -309,7 +309,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Builder_should_set_Line_Style()
         {
-            var value = ChartAreaStyle.Smooth;
+            var value = ChartSeriesLineStyle.Smooth;
 
             builder.Line(x => x.Style(value));
 
@@ -319,7 +319,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Line_Style_should_return_builder()
         {
-            builder.Line(x => x.Style(ChartAreaStyle.Smooth)).ShouldBeSameAs(builder);
+            builder.Line(x => x.Style(ChartSeriesLineStyle.Smooth)).ShouldBeSameAs(builder);
         }
     }
 }

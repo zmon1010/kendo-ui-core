@@ -23,8 +23,6 @@ namespace Kendo.Mvc.UI
 
         public ChartValueAxisTitlePaddingSettings<T> Padding { get; } = new ChartValueAxisTitlePaddingSettings<T>();
 
-        public string Position { get; set; }
-
         public double? Rotation { get; set; }
 
         public string Text { get; set; }
@@ -32,6 +30,8 @@ namespace Kendo.Mvc.UI
         public bool? Visible { get; set; }
 
         public ClientHandlerDescriptor Visual { get; set; }
+
+        public ChartAxisTitlePosition? Position { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -73,11 +73,6 @@ namespace Kendo.Mvc.UI
                 settings["padding"] = padding;
             }
 
-            if (Position?.HasValue() == true)
-            {
-                settings["position"] = Position;
-            }
-
             if (Rotation.HasValue)
             {
                 settings["rotation"] = Rotation;
@@ -96,6 +91,11 @@ namespace Kendo.Mvc.UI
             if (Visual?.HasValue() == true)
             {
                 settings["visual"] = Visual;
+            }
+
+            if (Position.HasValue)
+            {
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;

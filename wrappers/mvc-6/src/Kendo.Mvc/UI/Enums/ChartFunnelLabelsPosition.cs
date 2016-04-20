@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI
     public enum ChartFunnelLabelsPosition
     {
         /// <summary>
-        /// The label is positioned at the center of the funnel segment..
+        /// The label is positioned at the center of the funnel segment.
         /// </summary>
         Center,
         /// <summary>

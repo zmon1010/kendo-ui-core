@@ -80,16 +80,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The position of the title.The supported values are:
-        /// </summary>
-        /// <param name="value">The value for Position</param>
-        public ChartYAxisTitleSettingsBuilder<T> Position(string value)
-        {
-            Container.Position = value;
-            return this;
-        }
-
-        /// <summary>
         /// The rotation angle of the title. By default the title is not rotated.
         /// </summary>
         /// <param name="value">The value for Rotation</param>
@@ -138,5 +128,15 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Visual = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
+        /// <summary>
+        /// Specifies the title position.
+        /// </summary>
+        /// <param name="value">The value for Position</param>
+        public ChartYAxisTitleSettingsBuilder<T> Position(ChartAxisTitlePosition value)
+        {
+            Container.Position = value;
+            return this;
+        }
+
     }
 }

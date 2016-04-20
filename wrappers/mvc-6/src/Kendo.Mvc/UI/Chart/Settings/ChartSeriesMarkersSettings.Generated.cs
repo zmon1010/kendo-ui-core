@@ -18,14 +18,14 @@ namespace Kendo.Mvc.UI
 
         public double? Size { get; set; }
 
-        public string Type { get; set; }
-        public ClientHandlerDescriptor TypeHandler { get; set; }
-
         public bool? Visible { get; set; }
 
         public ClientHandlerDescriptor Visual { get; set; }
 
         public double? Rotation { get; set; }
+
+        public ChartMarkerShape? Type { get; set; }
+        public ClientHandlerDescriptor TypeHandler { get; set; }
 
 
         public Chart<T> Chart { get; set; }
@@ -55,16 +55,6 @@ namespace Kendo.Mvc.UI
                 settings["size"] = Size;
             }
 
-            if (TypeHandler?.HasValue() == true)
-            {
-                settings["type"] = TypeHandler;
-            }
-            else if (Type?.HasValue() == true)
-            {
-               settings["type"] = Type;
-            }
-
-
             if (Visible.HasValue)
             {
                 settings["visible"] = Visible;
@@ -79,6 +69,16 @@ namespace Kendo.Mvc.UI
             {
                 settings["rotation"] = Rotation;
             }
+
+            if (TypeHandler?.HasValue() == true)
+            {
+                settings["type"] = TypeHandler;
+            }
+            else if (Type.HasValue)
+            {
+                settings["type"] = Type?.Serialize();
+            }
+
 
             return settings;
         }
