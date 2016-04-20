@@ -19,11 +19,21 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
 
         public DataSource DependenciesDataSource
         {
             get;
             private set;
+        }
+        public string DependenciesDataSourceId
+        {
+            get;
+            set;
         }
 
         public GanttAssignmentsSettings Assignments { get; }
@@ -58,14 +68,27 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-            ProcessDataSource(DataSource);
+            if (DataSourceId.HasValue())
+            {
+                settings["dataSourceId"] = DataSourceId;
+            }
+            else
+            {
+                ProcessDataSource(DataSource);
 
-            settings["dataSource"] = (Dictionary<string, object>)DataSource.ToJson();
+                settings["dataSource"] = (Dictionary<string, object>)DataSource.ToJson();
+            }
 
-            ProcessDataSource(DependenciesDataSource);
+            if (DependenciesDataSourceId.HasValue())
+            {
+                settings["dependenciesId"] = DependenciesDataSourceId;
+            }
+            else
+            {
+                ProcessDataSource(DependenciesDataSource);
 
-            settings["dependencies"] = (Dictionary<string, object>)DependenciesDataSource.ToJson();
-
+                settings["dependencies"] = (Dictionary<string, object>)DependenciesDataSource.ToJson();
+            }
             var assignments = Assignments.Serialize();
             if (assignments.Any())
             {

@@ -95,6 +95,17 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+        /// <summary>
+        /// Set ID of the DataSource that to be used for data binding
+        /// </summary>
+        /// <param name="dataSourceId"></param>
+        /// <returns></returns>
+        public TreeViewBuilder DataSource(string dataSourceId)
+        {
+            this.Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
 
         /// <summary>
         /// Binds the TreeView to a list of items.

@@ -28,6 +28,12 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public ListViewBuilder<T> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+            return this;
+        }
+
         /// <summary>
         /// Binds the ListView to a list of objects
         /// </summary>

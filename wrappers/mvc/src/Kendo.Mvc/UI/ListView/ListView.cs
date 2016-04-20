@@ -65,6 +65,12 @@
             private set;
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         public string ClientTemplateId
         {
             get;
@@ -128,9 +134,9 @@
                 FormId = Name + "form"
             };
 
-            if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
+            if ((DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax") && string.IsNullOrEmpty(DataSourceId))
             {
-                 ProcessDataSource();
+                ProcessDataSource();
             }
 
             InitializeEditor();
@@ -167,7 +173,7 @@
                 throw new NotSupportedException(string.Format(Exceptions.CannotBeNullOrEmpty, "TagName"));
             }
 
-            if (Editable.Enabled && DataSource.Schema.Model.Id == null)
+            if (Editable.Enabled && DataSource.Schema.Model.Id == null && string.IsNullOrEmpty(DataSourceId))
             {
                 throw new NotSupportedException(Exceptions.DataKeysEmpty);
             }

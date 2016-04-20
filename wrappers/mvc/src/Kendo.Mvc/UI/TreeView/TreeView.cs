@@ -74,6 +74,12 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
         public ExpandableAnimation Animation
         {
             get;
@@ -192,20 +198,27 @@ namespace Kendo.Mvc.UI
         {
             var json = new Dictionary<string, object>(Events);
 
-            // use client-side rendering if templates are set
-            if (Items.Any() && this.UsesTemplates())
+            if (string.IsNullOrEmpty(DataSourceId))
             {
-                this.DataSource.Data = SerializeItems(Items);
-                this.LoadOnDemand = false;
-            }
+                // use client-side rendering if templates are set
+                if (Items.Any() && this.UsesTemplates())
+                {
+                    this.DataSource.Data = SerializeItems(Items);
+                    this.LoadOnDemand = false;
+                }
 
-            if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) || DataSource.Type == DataSourceType.Custom)
-            {
-                json["dataSource"] = DataSource.ToJson();
+                if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) || DataSource.Type == DataSourceType.Custom)
+                {
+                    json["dataSource"] = DataSource.ToJson();
+                }
+                else if (DataSource.Data != null)
+                {
+                    json["dataSource"] = DataSource.Data;
+                }
             }
-            else if (DataSource.Data != null)
+            else
             {
-                json["dataSource"] = DataSource.Data;
+                json["dataSourceId"] = DataSourceId;
             }
 
             if (DragAndDrop)

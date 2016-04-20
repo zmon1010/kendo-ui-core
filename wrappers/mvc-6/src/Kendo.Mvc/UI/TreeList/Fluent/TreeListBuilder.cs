@@ -35,10 +35,17 @@ namespace Kendo.Mvc.UI.Fluent
 			return this;
 		}
 
-		/// <summary>
-		/// If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values:
-		/// </summary>
-		public TreeListBuilder<T> Selectable()
+        public TreeListBuilder<T> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values:
+        /// </summary>
+        public TreeListBuilder<T> Selectable()
 		{
 			Container.Selectable.Enabled = true;
 			return this;

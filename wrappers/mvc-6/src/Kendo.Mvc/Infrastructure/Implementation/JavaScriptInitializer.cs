@@ -47,13 +47,28 @@ namespace Kendo.Mvc.Infrastructure
 
             foreach (var keyValuePair in @object)
             {
+                var value = keyValuePair.Value;
+                var @string = value as string;
+
+                if (@string != null)
+                {
+                    if (keyValuePair.Key == "dataSourceId")
+                    {
+                        output.Append(",\"dataSource\":");
+                        output.Append(@string.JavaScriptStringEncode(false));
+                        continue;
+                    }
+                    else if (keyValuePair.Key == "dependenciesId")
+                    {
+                        output.Append(",\"dependencies\":");
+                        output.Append(@string.JavaScriptStringEncode(false));
+                        continue;
+                    }
+                }
+
                 output.Append(",")
                       .Append("\"" + keyValuePair.Key + "\"")
                       .Append(":");
-
-                var value = keyValuePair.Value;
-
-                var @string = value as string;
 
                 if (@string != null)
                 {

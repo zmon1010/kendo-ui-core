@@ -71,6 +71,12 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public GridBuilder<T> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+            return this;
+        }
+
         /// <summary>
         /// Configures the Excel export settings.
         /// </summary>

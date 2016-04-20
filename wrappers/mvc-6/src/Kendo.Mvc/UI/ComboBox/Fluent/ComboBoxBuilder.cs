@@ -174,6 +174,12 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public ComboBoxBuilder DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+            return this;
+        }
+
         /// <summary>
         /// The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
 		/// The supported filter values are startswith, endswith and contains.

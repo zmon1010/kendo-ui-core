@@ -14,8 +14,14 @@
 
         public void Serialize(IDictionary<string, object> options)
         {
-            options["dataSource"] = listView.DataSource.ToJson();
-
+            if (string.IsNullOrEmpty(listView.DataSourceId))
+            {
+                options["dataSource"] = listView.DataSource.ToJson();
+            }
+            else
+            {
+                options["dataSourceId"] = listView.DataSource;
+            }
             var autoBind = listView.DataSource.Type != DataSourceType.Server && listView.AutoBind.GetValueOrDefault(true);
 
             if (!autoBind)

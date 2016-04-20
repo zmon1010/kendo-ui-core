@@ -391,6 +391,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public ChartBuilder<T> DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
+
         /// <summary>
         /// Enables or disables automatic binding.
         /// </summary>
