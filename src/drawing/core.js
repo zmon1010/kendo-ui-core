@@ -576,9 +576,9 @@
         hide: function() {
             var current = this._current;
             delete this._current;
+            clearTimeout(this._showTimeout);
             if (this.popup.visible() && current &&
                 !this.surface.trigger("tooltipClose", { element: current.shape, target: current.target, popup: this.popup})) {
-                delete this._current;
                 this.popup.close();
             }
         },
