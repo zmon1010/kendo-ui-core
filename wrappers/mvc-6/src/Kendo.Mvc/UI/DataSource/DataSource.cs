@@ -140,6 +140,11 @@ namespace Kendo.Mvc.UI
 
             if (Groups.Any())
             {
+                if (Aggregates.Any())
+                {
+                    Groups.Where(g => g.AggregateFunctions.Count == 0)
+                      .Each(g => g.AggregateFunctions.AddRange(Aggregates.SelectMany(a => a.Aggregates)));
+                }
                 json["group"] = Groups.ToJson();
             }
 
