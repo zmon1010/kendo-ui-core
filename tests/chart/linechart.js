@@ -1111,5 +1111,42 @@
             $(document.body).trigger(e);
        });
 
+       // ------------------------------------------------------------
+       module("Line Chart / API", {
+           teardown: function() {
+               destroyChart()
+           }
+       });
+
+       test("ignores null values when series have zIndex", function() {
+           createLineChart({
+               dataSource: [
+                   {
+                       "country": "United States",
+                       "year": "1994",
+                       "value": 4.9
+                   },
+                   {
+                       "country": "United States",
+                       "year": "1995",
+                       "value": 9.2
+                   },
+                   {
+                       "country": "United States",
+                       "year": "1996",
+                       "value": null
+                   },
+                   {
+                       "country": "United States",
+                       "year": "1997",
+                       "value": 21.6
+                   }
+               ],
+               series: [{ field: "value", zIndex: 0, type: "line" }]
+           });
+
+           ok(true);
+        });
+
     })();
 })();
