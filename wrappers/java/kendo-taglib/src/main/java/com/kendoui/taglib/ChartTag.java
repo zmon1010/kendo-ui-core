@@ -160,6 +160,10 @@ public class ChartTag extends WidgetTag /* interfaces */implements DataBoundWidg
         setEvent("plotAreaClick", value.getBody());
     }
 
+    public void setPlotAreaHover(PlotAreaHoverFunctionTag value) {
+        setEvent("plotAreaHover", value.getBody());
+    }
+
     public void setRender(RenderFunctionTag value) {
         setEvent("render", value.getBody());
     }
@@ -382,6 +386,18 @@ public class ChartTag extends WidgetTag /* interfaces */implements DataBoundWidg
 
     public void setPlotAreaClick(String value) {
         setProperty("plotAreaClick", new Function(value));
+    }
+
+    public String getPlotAreaHover() {
+        Function property = ((Function)getProperty("plotAreaHover"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setPlotAreaHover(String value) {
+        setProperty("plotAreaHover", new Function(value));
     }
 
     public String getRender() {

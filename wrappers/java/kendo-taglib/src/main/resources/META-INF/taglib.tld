@@ -803,6 +803,11 @@ Can be cancelled.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user hovers the plot area.</description>
+            <name>plotAreaHover</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the chart is ready to render on screen.Can be used, for example, to remove loading indicators. Changes to options will be ignored.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>render</name>
             <rtexprvalue>true</rtexprvalue>
@@ -11229,6 +11234,12 @@ Can be cancelled.</description>
         <description>Fired when the user clicks the plot area.</description>
         <name>chart-plotAreaClick</name>
         <tag-class>com.kendoui.taglib.chart.PlotAreaClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user hovers the plot area.</description>
+        <name>chart-plotAreaHover</name>
+        <tag-class>com.kendoui.taglib.chart.PlotAreaHoverFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -36369,6 +36380,11 @@ and is about to render it.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user hovers the plot area.</description>
+            <name>plotAreaHover</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the chart is ready to render on screen.Can be used, for example, to remove loading indicators. Changes to options will be ignored.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>render</name>
             <rtexprvalue>true</rtexprvalue>
@@ -43361,6 +43377,12 @@ and is about to render it.</description>
         <description>Fires when plot area is clicked.</description>
         <name>stockChart-plotAreaClick</name>
         <tag-class>com.kendoui.taglib.stockchart.PlotAreaClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user hovers the plot area.</description>
+        <name>stockChart-plotAreaHover</name>
+        <tag-class>com.kendoui.taglib.stockchart.PlotAreaHoverFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
