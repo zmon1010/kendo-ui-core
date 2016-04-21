@@ -8,7 +8,7 @@ module("AspNetMvc transport", {
         $.mockjaxSettings.responseTime = 0;
     },
     teardown: function() {
-        $.mockjaxClear();
+        $.mockjax.clear();
         kendo.culture("en-US");
     }
 });

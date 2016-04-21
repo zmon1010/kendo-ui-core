@@ -82,7 +82,7 @@ function moduleTeardown() {
     Upload.prototype._supportsFormData = _supportsFormData;
     uploadInstance.destroy();
     $("iframe[name^='uploadInstance'], form[target^='uploadInstance']").remove();
-    $.mockjaxClear();
+    $.mockjax.clear();
     removeHTML();
 }
 

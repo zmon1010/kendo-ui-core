@@ -12,7 +12,7 @@
         teardown: function() {
             TreeViewHelpers.destroy();
             kendo.effects.enable();
-            $.mockjaxClear();
+            $.mockjax.clear();
         }
     });
 

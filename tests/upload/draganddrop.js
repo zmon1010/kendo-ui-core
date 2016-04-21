@@ -38,7 +38,7 @@ function moduleSetup() {
 
 function moduleTeardown() {
     removeHTML();
-    $.mockjaxClear();
+    $.mockjax.clear();
 }
 
 // -----------------------------------------------------------------------------------

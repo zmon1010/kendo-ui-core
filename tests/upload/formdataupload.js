@@ -112,7 +112,7 @@ function moduleTeardown() {
     kendo.destroy($("#testbed_container"));
     removeHTML();
     Upload.prototype._supportsFormData = _supportsFormData;
-    $.mockjaxClear();
+    $.mockjax.clear();
 }
 
 // -----------------------------------------------------------------------------------
