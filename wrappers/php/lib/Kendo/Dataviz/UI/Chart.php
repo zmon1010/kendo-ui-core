@@ -350,6 +350,20 @@ Can be cancelled.
     }
 
     /**
+    * Sets the plotAreaHover event of the Chart.
+    * Fired when the user hovers the plot area.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\Chart
+    */
+    public function plotAreaHover($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('plotAreaHover', $value);
+    }
+
+    /**
     * Sets the render event of the Chart.
     * Fired when the chart is ready to render on screen.Can be used, for example, to remove loading indicators. Changes to options will be ignored.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

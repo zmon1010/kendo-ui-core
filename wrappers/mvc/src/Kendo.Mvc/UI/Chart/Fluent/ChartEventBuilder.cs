@@ -467,6 +467,51 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Defines the inline handler of the PlotAreaHover client-side event
+        /// </summary>
+        /// <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Chart()
+        ///           .Name("Chart")
+        ///           .Events(events => events.PlotAreaHover(
+        ///                @&lt;text&gt;
+        ///                function(e) {
+        ///                    //event handling code
+        ///                }
+        ///                &lt;/text&gt;
+        ///           ))
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ChartEventBuilder PlotAreaHover(Func<object, object> inlineCodeBlock)
+        {
+            Handler("plotAreaHover", inlineCodeBlock);
+
+            return this;
+        }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the the PlotAreaHover client-side event.
+        /// </summary>
+        /// <param name="onPlotAreaHoverHandlerName">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().Chart()
+        ///            .Name("Chart")
+        ///            .Events(events => events.PlotAreaHover("onPlotAreaHover"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ChartEventBuilder PlotAreaHover(string onPlotAreaHoverHandlerName)
+        {
+            Handler("plotAreaHover", onPlotAreaHoverHandlerName);
+
+            return this;
+        }
+
+        /// <summary>
         /// Defines the inline handler of the Render client-side event
         /// </summary>
         /// <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
