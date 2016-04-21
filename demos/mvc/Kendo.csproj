@@ -1225,6 +1225,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\demos\editor\paste-cleanup.cshtml" />
+    <Content Include="Views\demos\drawing\tooltip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

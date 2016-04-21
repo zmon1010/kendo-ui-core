@@ -6979,6 +6979,16 @@
                 "meta": {
                     "kendo-ui": "This demo illustrates how the Kendo UI Drawing API can be used to manipulate paths."
                 }
+            },
+            {
+                "text": "Tooltip",
+                "url": "drawing/tooltip",
+                "title": {
+                    "kendo-ui": "Kendo UI Drawing Tooltip"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates using tooltip the Kendo UI Drawing elements"
+                }
             }
         ]
     },

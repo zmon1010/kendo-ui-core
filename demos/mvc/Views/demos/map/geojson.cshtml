@@ -1,5 +1,7 @@
-<div id="example">
-    <div id="map"></div>
+<div id="example">
+
+    <div id="map"></div>
+
     <script src="../content/dataviz/map/js/chroma.min.js"></script>
     <script>
         function createMap() {
@@ -21,6 +23,7 @@
                     }
                 }],
                 shapeCreated: onShapeCreated,
+                shapeFeatureCreated: onShapeFeatureCreated,
                 shapeMouseEnter: onShapeMouseEnter,
                 shapeMouseLeave: onShapeMouseLeave
             });
@@ -37,6 +40,15 @@
                 var color = scale(users).hex();
                 shape.options.fill.set("color", color);
             }
+        }
+
+        function onShapeFeatureCreated(e) {
+            e.group.options.tooltip = {
+                content: e.properties.name,
+                position: "cursor",
+                offset: 10,
+                width: 80
+            };
         }
 
         function onShapeMouseEnter(e) {
