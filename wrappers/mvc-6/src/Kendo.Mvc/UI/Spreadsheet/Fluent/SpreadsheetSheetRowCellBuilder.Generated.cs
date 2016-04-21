@@ -163,6 +163,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The hyperlink (URL) of the cell.
+        /// </summary>
+        /// <param name="value">The value for Link</param>
+        public SpreadsheetSheetRowCellBuilder Link(string value)
+        {
+            Container.Link = value;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the cell font to underline, if set to true.
         /// </summary>
         /// <param name="value">The value for Underline</param>

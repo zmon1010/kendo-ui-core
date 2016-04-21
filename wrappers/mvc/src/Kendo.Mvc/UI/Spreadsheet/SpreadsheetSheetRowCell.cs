@@ -46,6 +46,8 @@ namespace Kendo.Mvc.UI
         
         public int? Index { get; set; }
         
+        public string Link { get; set; }
+        
         public bool? Underline { get; set; }
         
         public SpreadsheetSheetRowCellValidationSettings Validation
@@ -126,6 +128,11 @@ namespace Kendo.Mvc.UI
                 json["index"] = Index;
             }
                 
+            if (Link.HasValue())
+            {
+                json["link"] = Link;
+            }
+            
             if (Underline.HasValue)
             {
                 json["underline"] = Underline;

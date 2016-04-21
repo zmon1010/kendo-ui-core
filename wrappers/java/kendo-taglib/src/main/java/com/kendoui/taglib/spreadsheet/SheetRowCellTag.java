@@ -149,6 +149,14 @@ public class SheetRowCellTag extends  BaseTag  /* interfaces */ /* interfaces */
         setProperty("italic", value);
     }
 
+    public java.lang.String getLink() {
+        return (java.lang.String)getProperty("link");
+    }
+
+    public void setLink(java.lang.String value) {
+        setProperty("link", value);
+    }
+
     public java.lang.String getTextAlign() {
         return (java.lang.String)getProperty("textAlign");
     }

@@ -132,6 +132,15 @@ class SpreadsheetSheetRowCell extends \Kendo\SerializableObject {
     }
 
     /**
+    * The hyperlink (URL) of the cell.
+    * @param string $value
+    * @return \Kendo\UI\SpreadsheetSheetRowCell
+    */
+    public function link($value) {
+        return $this->setProperty('link', $value);
+    }
+
+    /**
     * Sets the cell font to underline, if set to true.
     * @param boolean $value
     * @return \Kendo\UI\SpreadsheetSheetRowCell

@@ -35987,6 +35987,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>The hyperlink (URL) of the cell.</description>
+            <name>link</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies the text alignment in the cell</description>
             <name>textAlign</name>
             <rtexprvalue>true</rtexprvalue>

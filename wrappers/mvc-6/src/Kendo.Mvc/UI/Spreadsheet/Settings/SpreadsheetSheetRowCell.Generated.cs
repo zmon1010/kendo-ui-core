@@ -39,6 +39,8 @@ namespace Kendo.Mvc.UI
 
         public int? Index { get; set; }
 
+        public string Link { get; set; }
+
         public bool? Underline { get; set; }
 
         public object Value { get; set; }
@@ -130,6 +132,11 @@ namespace Kendo.Mvc.UI
             if (Index.HasValue)
             {
                 settings["index"] = Index;
+            }
+
+            if (Link?.HasValue() == true)
+            {
+                settings["link"] = Link;
             }
 
             if (Underline.HasValue)
