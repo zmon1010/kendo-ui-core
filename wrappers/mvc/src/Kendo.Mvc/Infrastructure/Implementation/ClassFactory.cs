@@ -8,13 +8,27 @@ namespace Kendo.Mvc.Infrastructure.Implementation
     
     internal class ClassFactory
     {
-        public static readonly ClassFactory Instance = new ClassFactory();
+        private static ClassFactory instance = new ClassFactory();
+        public static ClassFactory Instance
+        {
+            get
+            {
+                if (instance.classCount > instance.maxCachedClassesCount)
+                {
+                    instance = new ClassFactory();
+                }
+
+                return instance;
+            }
+        }
+        
+        private int classCount;
+        private int maxCachedClassesCount = 128;
 
         static ClassFactory() { }  // Trigger lazy initialization of static fields
 
         ModuleBuilder module;
-        Dictionary<Signature, Type> classes;
-        int classCount;
+        Dictionary<Signature, Type> classes;        
         ReaderWriterLock rwLock;
         
         private ClassFactory()
