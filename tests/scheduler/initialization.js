@@ -307,6 +307,7 @@
     test("custom view is instantiated", function() {
         var MyCustomView = kendo.ui.SchedulerView.extend({
             renderLayout: $.noop,
+            refreshLayout: $.noop,
             dateForTitle: $.noop,
             shortDateForTitle: $.noop,
             render: $.noop,
@@ -327,6 +328,7 @@
     test("custom view with title same as default view is instantiated", function() {
         var MyCustomView = kendo.ui.SchedulerView.extend({
             renderLayout: $.noop,
+            refreshLayout: $.noop,
             dateForTitle: $.noop,
             shortDateForTitle: $.noop,
             render: $.noop,
@@ -347,6 +349,7 @@
     test("custom view with name same as default view is instantiated", function() {
         var MyCustomView = kendo.ui.SchedulerView.extend({
             renderLayout: $.noop,
+            refreshLayout: $.noop,
             dateForTitle: $.noop,
             shortDateForTitle: $.noop,
             render: $.noop,
@@ -372,6 +375,7 @@
                 name: "foo",
                 dateForTitle: $.noop,
                 shortDateForTitle: $.noop,
+                refreshLayout: $.noop,
                 render: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
@@ -391,6 +395,7 @@
                 render: $.noop,
                 renderLayout: function(selectedDate) {
                 },
+                refreshLayout: $.noop,
                 destroy: function() {
                     kendo.ui.SchedulerView.fn.destroy.call(this);
                     ok(true);
@@ -423,6 +428,7 @@
                 renderLayout: function(selectedDate) {
                     ok(true);
                 },
+                refreshLayout: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
             }),
@@ -459,6 +465,41 @@
         equal(view.calls("render"), 0);
     });
 
+    test("scheduler refresh layout on each refresh", function() {
+
+        container.appendTo("body");
+
+        var scheduler = new Scheduler(container, {
+            date: new Date("2013-06-05T10:00:00.000Z"),
+            height: 100,
+            views: ["month"],
+            dataSource: {
+                batch: true,
+                data: [{
+                    "title": "Helpdesk weekly meeting",
+                    "description": "",
+                    "startTimezone": null,
+                    "start": new Date("2013-06-05T10:00:00.000Z"),
+                    "end": new Date("2013-06-05T12:00:00.000Z"),
+                    "recurrenceRule": "FREQ=WEEKLY;BYDAY=WE",
+                    "recurrenceID": null,
+                    "recurrenceException": null,
+                    "isAllDay": false
+                }]
+            }
+        });
+
+        scheduler.element.height(800);
+        scheduler.resize(true);
+
+        var slotOffset = scheduler.wrapper.find(".k-scheduler-table tr:nth-child(1) td:nth-child(4)").offset();
+        var eventOffset = scheduler.wrapper.find(".k-event:first").offset();
+
+        ok(slotOffset.left < eventOffset.left);
+
+        container.remove();
+    });
+
     test("renderEvent is called with events as SchedulerEvent", 1, function() {
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 title: "foo",
@@ -469,6 +510,7 @@
                 },
                 renderLayout: function() {
                 },
+                refreshLayout: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
             }),
@@ -487,6 +529,7 @@
                 shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: $.noop,
+                refreshLayout: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
             }),
@@ -496,6 +539,7 @@
                 shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: $.noop,
+                refreshLayout: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
             }),
@@ -516,6 +560,7 @@
                 shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: $.noop,
+                refreshLayout: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
             }),
@@ -524,6 +569,7 @@
                 shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: $.noop,
+                refreshLayout: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
             }),

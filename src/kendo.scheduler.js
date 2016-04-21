@@ -3782,6 +3782,8 @@ var __meta__ = { // jshint ignore:line
 
             this._data = this.dataSource.expand(view.startDate(), view.endDate());
 
+            view.refreshLayout();
+
             view.render(this._data);
 
             this.trigger("dataBound");
