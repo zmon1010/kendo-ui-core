@@ -314,6 +314,13 @@
 
             destroy: function() {
                 delete this.element;
+            },
+
+            getSize: function() {
+                return {
+                    width: 1000,
+                    height: 1000
+                };
             }
         });
 
