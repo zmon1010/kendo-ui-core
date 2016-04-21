@@ -119,7 +119,7 @@ function tzTest(tzAlias, testName, expected, callback ) {
 
 function triggerTouchEvent(element, type, info) {
     info.target = element;
-    element.trigger($.Event(type, { originalEvent: { changedTouches: [ info ] }}));
+    element.trigger($.Event(type, { originalEvent: { changedTouches: [ info ] }, preventDefault: $.noop }));
 }
 
 function press(element, x, y, id) {

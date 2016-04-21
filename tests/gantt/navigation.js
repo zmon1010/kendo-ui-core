@@ -283,11 +283,10 @@
     test("enter stopPropagation upon keyup", function() {
         var content = gantt.list.content;
         var eventInfo = {
-            type: "keyup",
             ctrlKey: false,
             altKey: false
         };
-        var event = $.Event(eventInfo);
+        var event = $.Event("keyup", eventInfo);
 
         focusTable();
         stub(gantt.list, "_startEditHandler");

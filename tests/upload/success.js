@@ -160,7 +160,7 @@ function uploadSuccess(params) {
         }, 100);
     });
 
-    test("success event arguments contain list of removed files", function() {
+    asyncTest("success event arguments contain list of removed files", function() {
         stop(1);
 
         var uploadInstance = createUpload({ success:

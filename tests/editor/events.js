@@ -274,7 +274,7 @@ test("calling preventDefault of observable keydown event prevents DOM event", fu
     var preventDefault = function(e) { e.preventDefault(); };
     editor.bind("keydown", preventDefault);
 
-    var e = $.Event({ type: "keydown", keyCode: 42 });
+    var e = $.Event({ type: "keydown", keyCode: 42, preventDefault: $.noop });
 
     $(editor.body).trigger(e);
 
