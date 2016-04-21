@@ -840,7 +840,7 @@
                     return true;
                 }
 
-                for (var idx = 2; idx < length - 2; idx++) {
+                for (var idx = 2; idx <= length - 2; idx++) {
                     if (segments[idx - 1]._isOnPathTo(segments[idx], point, width)) {
                         return true;
                     }

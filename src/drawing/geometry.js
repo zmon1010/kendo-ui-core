@@ -1066,6 +1066,10 @@
 
     //Cardano's formula
     function solveCubic(a, b, c, d) {
+        if (a === 0) {
+            return solveQuadratic(b, c, d);
+        }
+
         var p =  (3 * a * c - math.pow(b, 2)) / (3 * math.pow(a, 2)),
             q =  (2 * math.pow(b, 3) - 9 * a * b * c + 27 * math.pow(a, 2) * d) / (27 * math.pow(a, 3)),
             Q = math.pow(p / 3, 3) + math.pow(q / 2, 2),
@@ -1206,6 +1210,14 @@
                 }
             }
         }
+    }
+
+    function solveQuadratic(a, b, c) {
+        var squareRoot = math.sqrt(math.pow(b, 2) - 4 * a * c);
+        return [
+            (-b + squareRoot) / (2 * a),
+            (-b - squareRoot) / (2 * a)
+        ];
     }
 
     // Exports ================================================================
