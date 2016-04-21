@@ -15,11 +15,11 @@
     </script>
 </div>
 
-<div data-role="view" id="edit-detailview" data-show="detailShow" data-init="detailInit">
+<div data-role="view" id="edit-detailview" data-show="detailShow" data-init="detailInit" data-title="Details">
     <header data-role="header">
         <div data-role="navbar">
             <a class="nav-button" data-align="left" data-role="backbutton" id="cancel">Cancel</a>
-            <span data-role="view-title">Details</span>
+            <span data-role="view-title"></span>
             <a class="nav-button" data-align="right" data-role="button" id="done">Done</a>
         </div>
     </header>
@@ -38,7 +38,7 @@
             </li>
             <li>
                 Discontinued
-                    <input type="checkbox" data-role="switch" data-bind="checked: Discontinued"/>
+                <input type="checkbox" data-role="switch" data-bind="checked: Discontinued"/>
             </li>
         </ul>
     </form>
@@ -110,7 +110,8 @@
     }
 
     function navigate(e) {
-        var itemUID = $(e.touch.currentTarget).data("uid");
+        console.log($(e.touch.target).data("uid"))
+        var itemUID = $(e.touch.target).data("uid");
         kendo.mobile.application.navigate("#edit-detailview?uid=" + itemUID);
     }
 
