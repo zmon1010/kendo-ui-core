@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./shapes", "../kendo.color" ], f);
+    define([ "./search", "../kendo.color" ], f);
 })(function(){
 
 (function ($) {
