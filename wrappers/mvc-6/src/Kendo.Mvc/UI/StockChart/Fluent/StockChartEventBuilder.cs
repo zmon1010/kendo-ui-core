@@ -234,6 +234,28 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Fired when the user hovers the plot area.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the plotAreaHover event.</param>
+        public StockChartEventBuilder PlotAreaHover(string handler)
+        {
+            Handler("plotAreaHover", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user hovers the plot area.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public StockChartEventBuilder PlotAreaHover(Func<object, object> handler)
+        {
+            Handler("plotAreaHover", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fired when the chart is ready to render on screen.Can be used, for example, to remove loading indicators. Changes to options will be ignored.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the render event.</param>
