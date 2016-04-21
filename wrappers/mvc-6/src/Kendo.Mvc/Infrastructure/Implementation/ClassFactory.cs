@@ -159,7 +159,13 @@ namespace Kendo.Mvc.Infrastructure.Implementation
 
         private PropertyDeclarationSyntax DeclareDynamicProperty(DynamicProperty property)
         {
-            return SyntaxFactory.PropertyDeclaration(SyntaxFactory.ParseTypeName(property.Type.FullName), property.Name)
+            var nonNullableType = Nullable.GetUnderlyingType(property.Type);
+
+            var propertyType = nonNullableType == null ?
+                SyntaxFactory.ParseTypeName(property.Type.FullName) :
+                SyntaxFactory.NullableType(SyntaxFactory.ParseTypeName(nonNullableType.FullName));
+           
+            return SyntaxFactory.PropertyDeclaration(propertyType, property.Name)
                 .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword)))
                 .WithAccessorList(
                     SyntaxFactory.AccessorList(
