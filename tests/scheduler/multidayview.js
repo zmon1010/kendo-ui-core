@@ -1373,6 +1373,31 @@
         equal(timeElementsCount,2);
     });
 
+    test("Current time marker is not rendered when no groups are available", function() {
+        var viewName = "week";
+        var element = $("<div>").appendTo(QUnit.fixture);
+
+        setupGroupedScheduler(element, "vertical", viewName, {
+            date: new Date(),
+            startTime: new Date("2013/6/6 01:00"),
+            endTime: new Date("2013/6/6 00:59"),
+            group: {
+                resources: ["Rooms"],
+                orientation: "horizontal"
+            },
+            resources: [{
+                field: "roomId",
+                name: "Rooms",
+                dataSource: [],
+                title: "Room"
+            }]
+        });
+
+        var scheduler = element.data("kendoScheduler");
+        var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
+        equal(timeElementsCount,0);
+    });
+
     test("Current time marker arrow is rendered when horizontal grouping is applied", function() {
         var viewName = "week";
         var element = $("<div>").appendTo(QUnit.fixture);
