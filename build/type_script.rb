@@ -579,6 +579,10 @@ module CodeGen::TypeScript
             @owner.type_script_type + @name.pascalize
         end
 
+        def type_script_declaration
+            "#{name}?: #{toggleable ? 'boolean|' : '' }#{type_script_type};"
+        end
+
         def type_script_interface
             COMPOSITE.result(binding)
         end
