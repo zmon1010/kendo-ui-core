@@ -42,7 +42,7 @@
         },
 
         _blur: function() {
-            this.deactivate();
+            //this.deactivate(); -- this breaks validation (the popup shows up twice and can't be dismissed)
         },
 
         _triggerUpdate: function() {
