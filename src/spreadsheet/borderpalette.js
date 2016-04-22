@@ -27,6 +27,13 @@
             cancel: "Cancel"
         };
 
+        function withPreventDefault(f) {
+            return function(e) {
+                e.preventDefault();
+                return f.apply(this, arguments);
+            };
+        }
+
         var ColorChooser = kendo.ui.Widget.extend({
             init: function(element, options) {
                 kendo.ui.Widget.call(this, element, options);
@@ -39,8 +46,8 @@
                 this._customColorPalette();
                 this._customColorButton();
 
-                this.resetButton.on("click", this.resetColor.bind(this));
-                this.customColorButton.on("click", this.customColor.bind(this));
+                this.resetButton.on("click", withPreventDefault(this.resetColor.bind(this)));
+                this.customColorButton.on("click", withPreventDefault(this.customColor.bind(this)));
             },
 
             options: {
@@ -183,7 +190,7 @@
                 this._borderTypePalette();
                 this._borderColorPalette();
 
-                this.element.on("click", ".k-spreadsheet-border-type-palette .k-button", this._click.bind(this));
+                this.element.on("click", ".k-spreadsheet-border-type-palette .k-button", withPreventDefault(this._click.bind(this)));
             },
 
             options: {

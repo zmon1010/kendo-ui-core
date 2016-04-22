@@ -449,7 +449,8 @@
         destroy: function() {
             this.popup.destroy();
         },
-        open: function() {
+        open: function(ev) {
+            ev.preventDefault();
             this.popup.toggle();
         },
         _popup: function() {
