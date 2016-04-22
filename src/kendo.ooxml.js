@@ -138,14 +138,16 @@ var WORKSHEET = kendo.template(
    '# for (var ci = 0; ci < columns.length; ci++) { #' +
        '# var column = columns[ci]; #' +
        '# var columnIndex = typeof column.index === "number" ? column.index + 1 : (ci + 1); #' +
-       '# if (column.width) { #' +
-       '<col min="${columnIndex}" max="${columnIndex}" customWidth="1"' +
-       '# if (column.autoWidth) { #' +
-       ' width="${((column.width*7+5)/7*256)/256}" bestFit="1"' +
-       '# } else { #' +
-       ' width="#= kendo.ooxml.toWidth(column.width) #" ' +
-       '# } #' +
-       '/>' +
+       '# if (column.width === 0) { #' +
+           '<col min="${columnIndex}" max="${columnIndex}" hidden="1" customWidth="1" />' +
+       '# } else if (column.width) { #' +
+           '<col min="${columnIndex}" max="${columnIndex}" customWidth="1"' +
+           '# if (column.autoWidth) { #' +
+               ' width="${((column.width*7+5)/7*256)/256}" bestFit="1"' +
+           '# } else { #' +
+               ' width="#= kendo.ooxml.toWidth(column.width) #" ' +
+           '# } #' +
+           '/>' +
        '# } #' +
    '# } #' +
    '</cols>' +
