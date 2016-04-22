@@ -1,5 +1,6 @@
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNet.Html.Abstractions;
 using Microsoft.AspNet.Mvc.Infrastructure;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Kendo.Mvc.UI
@@ -107,7 +109,10 @@ namespace Kendo.Mvc.UI
 
 		private string EditorForModel(IHtmlHelper htmlHelper, string templateName, IEnumerable<Action<IDictionary<string, object>, object>> foreignKeyData, object additionalViewData)
 		{
-			var viewContext = ViewContext.ViewContextForType<T>(ModelMetadataProvider);
+            IHtmlContent editor;
+            var sb = new StringBuilder();
+            var viewContext = ViewContext.ViewContextForType<T>(ModelMetadataProvider);
+
 			((ICanHasViewContext)htmlHelper).Contextualize(viewContext);
 
 			if (foreignKeyData != null)
@@ -118,21 +123,34 @@ namespace Kendo.Mvc.UI
 
 			if (templateName.HasValue())
 			{
-				return htmlHelper.EditorForModel(templateName, additionalViewData).ToString();
-			}
+                editor = htmlHelper.EditorForModel(templateName, additionalViewData);
+			} else
+            {
+                editor = htmlHelper.EditorForModel(additionalViewData);
+            }            
 
-			return htmlHelper.EditorForModel(additionalViewData).ToString();
+            using (var writer = new StringWriter(sb))
+            {                
+                editor.WriteTo(writer, HtmlEncoder);
+            }
 
-		}
+            return sb.ToString();
+        }
 
 		private string EditorForColumn(TreeListColumn<T> column, IHtmlHelper helper)
 		{
-			((ICanHasViewContext)helper).Contextualize(ViewContext.ViewContextForType<T>(ModelMetadataProvider));
+			((ICanHasViewContext)helper).Contextualize(ViewContext.ViewContextForType<T>(ModelMetadataProvider));			
 
-			var validation = helper.ValidationMessage(column.Field);
+            var sb = new StringBuilder();
 
-			return helper.Editor(column.Field, string.Empty /*EditorTemplateName*/, null /*AdditionalViewData*/).ToString() + validation ?? string.Empty;
-		}
+            using (var writer = new StringWriter(sb))
+            {
+                helper.Editor(column.Field, string.Empty /*EditorTemplateName*/, null /*AdditionalViewData*/).WriteTo(writer, HtmlEncoder);
+                helper.ValidationMessage(column.Field).WriteTo(writer, HtmlEncoder);
+            }
+
+            return sb.ToString();
+        }
 
 		private void InitializeEditors()
 		{
