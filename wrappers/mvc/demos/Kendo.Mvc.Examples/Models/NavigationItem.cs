@@ -13,7 +13,7 @@ namespace Kendo.Mvc.Examples.Models
         {
             get
             {
-                if (Packages == null)
+                if (Packages == null || Packages.Length == 0)
                 {
                     return true;
                 }

@@ -16,7 +16,7 @@ namespace Kendo.Models
 
         public bool ShouldInclude(string package)
         {
-            if (Packages == null)
+            if (Packages == null || Packages.Length == 0)
             {
                 return true;
             }

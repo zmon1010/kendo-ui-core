@@ -8682,9 +8682,7 @@
                 "description": {
                     "kendo-ui": "<p>This example illustrates how to get reference to the Kendo UI Chart and its series client-side objects, which allows you to customize series options like type, appearance, stacking and many more:</p> <ul> <li>Get reference to the Kendo UI Chart client-side object: var chart = $(\"#chart\").data(\"kendoChart\");</li> <li>Get reference to the series client object: series = chart.options.series,</li> <li>Set the series type: series[i].type = type;</li> <li>Stack the series: series[i].stack = stack;</li> </ul> <p>You can find a complete list of the series attributes in <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series\">the API documentation</a>.</p>",
                     "aspnet-mvc": "<p>This demo shows how to get reference to the Kendo Chart and its series client-side objects, which allows you to customize series options like type, appearance, stacking and many more:</p> <ul> <li>Get reference to the Kendo UI Chart client-side object: var chart = $(\"#chart\").data(\"kendoChart\");</li> <li>Get reference to the series client object: series = chart.options.series,</li> <li>Set the series type: series[i].type = type;</li> <li>Stack the series: series[i].stack = stack;</li> </ul> <p>You can find a complete list of the series attributes in <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series\">the control&rsquo;s API documentation</a>.</p>"
-                },
-                "packages": [
-                ]
+                }
             },
             {
                 "text": "Events",
@@ -8701,9 +8699,7 @@
                     "kendo-ui": "<p>The Kendo UI Chart exposes many client-side events that allow easy and flexible use in a wide range of application scenarios:</p> <ul> <li>seriesClick</li> <li>seriesHover</li> <li>dataBound</li> <li>axisLabelClick</li> <li>plotAreaClick</li> <li>render</li> <li>legendItemClick</li> <li>legendItemHover</li> <li>DragStart</li> <li>drag</li> <li>dragEnd</li> <li>zoomStart</li> <li>zoom</li> <li>zoomEnd</li> </ul>",
                     "aspnet-mvc": "<p>The Chart exposes through its Events attribute many client-side events that allow easy and flexible use in a wide range of application scenarios:</p> <ul> <li>.SeriesClick()</li> <li>.SeriesHover()</li> <li>.DataBound()</li> <li>.AxisLabelClick()</li> <li>.PlotAreaClick()</li> <li>.Render()</li> <li>.LegendItemClick()</li> <li>.LegendItemHover()</li> <li>.DragStart()</li> <li>.Drag()</li> <li>.DragEnd()</li> <li>.ZoomStart()</li> <li>.Zoom()</li> <li>.ZoomEnd()</li> </ul>"
                 },
-                "requiresServer": "true",
-                "packages": [
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "PDF Export",
@@ -8718,9 +8714,7 @@
                 "description": {
                     "kendo-ui": "<p>This example demonstrates how to configure the pdf export settings of the Telerik Kendo UI chart widget. </p> <p>You can specify the Author, Creator, Date, FileName, AllPages, PaperSize, ProxyURL and other options, through the <strong>pdf</strong> attribute of the chart.</p> <p>The <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-saveAsPDF\">saveAsPDF</a>or <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a> methods can be used to trigger export operation.</p>",
                     "aspnet-mvc": "<p>This example shows how to configure the PDF export settings of the Telerik MVC Charting helper. </p> <p>You can specify the Author, Creator, Date, FileName, AllPages, PaperSize, ProxyURL and other options, through the <strong>PDF</strong> property of the Chart helper.</p> <p>The <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-saveAsPDF\">saveAsPDF</a> or <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a> methods can be used to trigger export operation.</p>"
-                },
-                "packages": [
-                ]
+                }
             },
             {
                 "text": "Advanced Export",
@@ -8734,9 +8728,7 @@
                 "description": {
                     "kendo-ui": "<p>This demo presents how to export charts to PDF, PNG Images or SVG and save the produced files directly in the browser. You can do that by getting a reference to the chart&rsquo;s client-side object<br /> <br /> var chart = $(\"#chart\").getKendoChart();<br /> <br /> and firing the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a>, <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportImage\">exportImage</a> and <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportSVG\">exportSVG</a> methods. Use the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/kendo#methods-saveAs\">kendo.saveAs</a> method to save the result and specify the file name.</p>",
                     "aspnet-mvc": "<p>This example demonstrates how to export charts to PDF, PNG Images or SVG and save the produced files directly in the browser. You can do that by getting a reference to the chart&rsquo;s client-side object<br /> <br /> var chart = $(\"#chart\").getKendoChart();<br /> <br /> and firing the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a>, <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportImage\">exportImage</a> and <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportSVG\">exportSVG</a> methods. Use the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/kendo#methods-saveAs\">kendo.saveAs</a> method to save the result and specify the file name.</p>"
-                },
-                "packages": [
-                ]
+                }
             },
             {
                 "text": "Selection",
@@ -8752,9 +8744,7 @@
                 "description": {
                     "kendo-ui": "<p>This example demonstrates how to configure the axis selection in the Telerik Kendo UI chart through the exposed selectStart, select and selectEnd chart events as well as the zoom and reverse attributes of the categoryAxis -&gt; select -&gt; mousewheel settings.</p>",
                     "aspnet-mvc": "<p>This demo illustrates how to configure on the client the axis selection in the Telerik MVC Chart through the exposed Events -&gt; SelectStart, Select and SelectEnd chart events as well as the zoom and reverse attributes of the categoryAxis -&gt; select -&gt; mousewheel settings.</p>"
-                },
-                "packages": [
-                ]
+                }
             },
             {
                 "text": "Benchmark",
