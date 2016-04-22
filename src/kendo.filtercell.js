@@ -101,8 +101,21 @@ var __meta__ = { // jshint ignore:line
                     .attr(kendo.attr("bind"), "value: value")
                     .appendTo(wrapper);
 
+            var suggestDataSource = options ? options.suggestDataSource : null;
+
+            if (suggestDataSource) {
+                // avoid deep cloning the suggest data source
+                options = $.extend({}, options, { suggestDataSource: {} });
+            }
+
             Widget.fn.init.call(that, element[0], options);
+
+            if (suggestDataSource) {
+                that.options.suggestDataSource = suggestDataSource;
+            }
+
             options = that.options;
+
             dataSource = that.dataSource = options.dataSource;
 
             //gets the type from the dataSource or sets default to string
