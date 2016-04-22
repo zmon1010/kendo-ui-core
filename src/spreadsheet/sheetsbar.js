@@ -97,10 +97,12 @@
                     .on("blur", this._onEditorBlur.bind(this));
             },
 
-            _destroyEditor: function() {
+            _destroyEditor: function(canceled) {
+                var newSheetName = canceled ? null : this._editor.val();
                 this._editor.off();
                 this._editor = null;
                 this._renderSheets(this._sheets, this._selectedIndex, false);
+                this._onSheetRename(newSheetName);
             },
 
             renderSheets: function(sheets, selectedIndex) {
@@ -313,20 +315,17 @@
                 if (this._editor) {
                     if (e.which === 13) {
                         this._destroyEditor();
-                        this._onSheetRename($(e.target).val());
                     }
 
                     if (e.which === 27) {
-                        this._destroyEditor();
-                        this._onSheetRename();
+                        this._destroyEditor(true);
                     }
                 }
             },
 
-            _onEditorBlur: function(e) {
+            _onEditorBlur: function() {
                 if (this._editor) {
                     this._destroyEditor();
-                    this._onSheetRename($(e.target).val());
                 }
             },
 
@@ -346,7 +345,6 @@
 
                 if (this._editor) {
                     this._destroyEditor();
-                    this._onSheetRename(this._editor.val());
                 }
 
                 this.trigger("remove", {name: removedSheetName});
@@ -361,9 +359,7 @@
                 }
 
                 if (this._editor) {
-                    var editorValue = this._editor.val();
                     this._destroyEditor();
-                    this._onSheetRename(editorValue);
                 }
 
                 this._scrollSheetsToItem($(e.target).closest("li"));
