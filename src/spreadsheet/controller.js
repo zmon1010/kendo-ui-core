@@ -346,24 +346,25 @@
                         shouldPrevent = false;
                         break;
                 }
-                if(shouldPrevent) {
+                if (shouldPrevent) {
                     event.preventDefault();
                 }
             } else {
                 var disabled = this._workbook.activeSheet().selection().enable() === false;
 
                 if (action == "delete" || action == "backspace") {
-                    if (disabled) { return; }
-
-                    this._execute({ command: "ClearContentCommand" });
+                    if (!disabled) {
+                        this._execute({ command: "ClearContentCommand" });
+                    }
                     event.preventDefault();
                 } else if (alphaNumRegExp.test(action) || action === ":edit") {
-                    if (disabled) { return; }
-
+                    if (disabled) {
+                        event.preventDefault();
+                        return;
+                    }
                     if (action !== ":edit") {
                         this.editor.value("");
                     }
-
                     this.editor
                         .activate({
                             range: this._workbook.activeSheet()._viewActiveCell(),
