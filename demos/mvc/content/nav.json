@@ -224,7 +224,8 @@
             },
             {
                 "packages": [
-                    "online"
+                    "online",
+                    "!mvc-core"
                 ],
                 "text": "Multiple buttons",
                 "url": "button/multiple",
