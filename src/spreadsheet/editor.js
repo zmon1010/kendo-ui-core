@@ -25,6 +25,9 @@
 
             this.barInput.bind("focus", this._focus.bind(this));
             this.cellInput.bind("focus", this._focus.bind(this));
+
+            this.barInput.bind("blur", this._blur.bind(this));
+            this.cellInput.bind("blur", this._blur.bind(this));
         },
 
         events: [
@@ -36,6 +39,10 @@
 
         _focus: function(e) {
             this.lastActive = e.sender == this.barInput ? "bar" : "cell";
+        },
+
+        _blur: function() {
+            this.deactivate();
         },
 
         _triggerUpdate: function() {

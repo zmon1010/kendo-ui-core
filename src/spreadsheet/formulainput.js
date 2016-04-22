@@ -252,6 +252,7 @@
         _blur: function() {
             this.popup.close();
             clearTimeout(this._focusId);
+            this.trigger("blur");
         },
 
         _isFormula: function() {
