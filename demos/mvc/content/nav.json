@@ -8683,7 +8683,6 @@
                     "aspnet-mvc": "<p>This demo shows how to get reference to the Kendo Chart and its series client-side objects, which allows you to customize series options like type, appearance, stacking and many more:</p> <ul> <li>Get reference to the Kendo UI Chart client-side object: var chart = $(\"#chart\").data(\"kendoChart\");</li> <li>Get reference to the series client object: series = chart.options.series,</li> <li>Set the series type: series[i].type = type;</li> <li>Stack the series: series[i].stack = stack;</li> </ul> <p>You can find a complete list of the series attributes in <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series\">the control&rsquo;s API documentation</a>.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -8703,7 +8702,6 @@
                 },
                 "requiresServer": "true",
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -8721,7 +8719,6 @@
                     "aspnet-mvc": "<p>This example shows how to configure the PDF export settings of the Telerik MVC Charting helper. </p> <p>You can specify the Author, Creator, Date, FileName, AllPages, PaperSize, ProxyURL and other options, through the <strong>PDF</strong> property of the Chart helper.</p> <p>The <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-saveAsPDF\">saveAsPDF</a> or <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a> methods can be used to trigger export operation.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -8738,7 +8735,6 @@
                     "aspnet-mvc": "<p>This example demonstrates how to export charts to PDF, PNG Images or SVG and save the produced files directly in the browser. You can do that by getting a reference to the chart&rsquo;s client-side object<br /> <br /> var chart = $(\"#chart\").getKendoChart();<br /> <br /> and firing the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a>, <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportImage\">exportImage</a> and <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportSVG\">exportSVG</a> methods. Use the <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/kendo#methods-saveAs\">kendo.saveAs</a> method to save the result and specify the file name.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -8757,7 +8753,6 @@
                     "aspnet-mvc": "<p>This demo illustrates how to configure on the client the axis selection in the Telerik MVC Chart through the exposed Events -&gt; SelectStart, Select and SelectEnd chart events as well as the zoom and reverse attributes of the categoryAxis -&gt; select -&gt; mousewheel settings.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -8766,7 +8761,8 @@
                     "kendo-ui": "<p>The purpose of this demo is to provide a benchmark for live Kendo UI chart updates, using multiple chart series and reflecting the frames per second/milliseconds per frame needed to render the chart in different browsers. You also have the option to choose between SVG (default) and Canvas rendering for the chart and compare the results in each of these supported rendering modes.</p>"
                 },
                 "packages": [
-                    "!mvc"
+                    "!mvc",
+                    "!mvc-core"
                 ],
                 "url": "chart-api/benchmark"
             }

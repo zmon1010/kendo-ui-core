@@ -546,6 +546,24 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Select_with_From_and_To()
+        {
+            var from = 1;
+            var to = 2;
+
+            builder.Select(from, to);
+
+            axis.Select.From.ShouldEqual(from);
+            axis.Select.To.ShouldEqual(to);
+        }
+
+        [Fact]
+        public void Select_with_From_and_To_should_return_builder()
+        {
+            builder.Select(1, 2).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Builder_should_set_StartAngle()
         {
             var value = 1.2;

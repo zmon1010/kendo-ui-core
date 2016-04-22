@@ -63,6 +63,17 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+        
+        /// <summary>
+        /// Sets the selection range.
+        /// </summary>
+        public ChartCategoryAxisBuilder<T> Select(object from, object to)
+        {
+            Container.Select.From = from;
+            Container.Select.To = to;
+
+            return this;
+        }
 
         /// <summary>
         /// Sets the axis title.
