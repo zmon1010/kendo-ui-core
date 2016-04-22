@@ -1,4 +1,5 @@
 DPL_FILES = [
+    'Telerik.Documents.SpreadsheetStreaming',
     'Telerik.Windows.Documents.Core',
     'Telerik.Windows.Documents.Fixed',
     'Telerik.Windows.Documents.Flow',
