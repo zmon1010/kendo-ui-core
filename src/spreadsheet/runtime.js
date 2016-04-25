@@ -1194,12 +1194,7 @@
     }
 
     function parseDate(str) {
-        // XXX: this is biased towards US style (when numeric, month must come first).
-        return kendo.parseDate(str, [
-            "MM/dd/yyyy",
-            "MM-dd-yyyy",
-            "MM/dd/yy",
-            "MM-dd-yy",
+        return kendo.parseDate(str) || kendo.parseDate(str, [
             "MMMM dd yyyy",
             "MMMM dd yy",
             "MMM dd yyyy",
@@ -1217,10 +1212,8 @@
             "MMMM yyyy",
             "MMM yyyy",
             "dd MMMM",
-            "dd MMM",
-            "MM-dd",
-            "MM/dd"
-        ]) || kendo.parseDate(str);
+            "dd MMM"
+        ]);
     }
 
     /* -----[ exports ]----- */
