@@ -2146,7 +2146,7 @@ namespace Kendo.Mvc.UI.Fluent
             return TextBox<TProperty>()
                         .Name(GetName(expression))
                         .ModelMetadata(ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData))
-                        .Value((TProperty)(model != null && model.GetType().IsPredefinedType() ? model : null));
+                        .Value((TProperty)(model != null && (model.GetType().IsPredefinedType() || model.GetType().IsEnumType()) ? model : null));
         }
 
         /// <summary>
@@ -2362,7 +2362,7 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return DropDownList().Name(GetName(expression))
                                  .ModelMetadata(ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData))
-                                 .Value(GetValue(expression));
+                                 .Value(GetValueWithEnum(expression));
         }
 
         /// <summary>
@@ -2377,7 +2377,7 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return ComboBox().Name(GetName(expression))
                              .ModelMetadata(ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData))
-                             .Value(GetValue(expression));
+                             .Value(GetValueWithEnum(expression));
         }
 
         /// <summary>
@@ -2594,7 +2594,28 @@ namespace Kendo.Mvc.UI.Fluent
         private string GetValue<TValue>(Expression<Func<TModel, TValue>> expression) 
         {
             object model = ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData).Model;
-            return model != null && model.GetType().IsPredefinedType() ? Convert.ToString(model) : null;
+            if (model != null && (model.GetType().IsPredefinedType() || model.GetType().IsEnumType()))
+            {
+                return Convert.ToString(model);
+            }
+
+            return null;
+        }
+
+        private string GetValueWithEnum<TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            object model = ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData).Model;
+
+            if (model != null && model.GetType().IsPredefinedType())
+            {
+                return Convert.ToString(model);
+            }
+            else if (model.GetType().IsEnumType())
+            {
+                return Convert.ToString((int)model);
+            }
+
+            return null;
         }
 
         private IEnumerable GetIEnumerableValues<TValue>(Expression<Func<TModel, TValue>> expression)

@@ -42,7 +42,7 @@ namespace Kendo.Mvc.Extensions
                     return true;
                 }
             }
-            return type.IsEnum;
+            return false;
         }
         
         internal static string FirstSortableProperty(this Type type)

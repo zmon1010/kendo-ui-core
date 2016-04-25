@@ -18,7 +18,8 @@ namespace Kendo.Mvc.UI.Tests
             htmlHelper.ViewData.Model = new TestModel {
                 ID = 1, DoubleProperty = 1.0, DecimalProperty = 1.0m, DateTimeProperty = DateTime.Today, TimeProperty = DateTime.Now.TimeOfDay, ComplexModel = new TestModel(),
                 NullableShort = 5,
-                NullableLong = 5
+                NullableLong = 5,
+                EnumProperty = DayOfWeek.Thursday
             };
 
             factory = new WidgetFactory<TestModel>(htmlHelper);
@@ -254,13 +255,21 @@ namespace Kendo.Mvc.UI.Tests
             Assert.Equal("ID", builder.ToComponent().Name);
         }
 
-        //[Fact]
-        //public void DropDownListFor_should_return_new_instance_with_set_value()
-        //{
-        //    var builder = factory.DropDownListFor(m => m.ID);
+        [Fact]
+        public void DropDownListFor_should_return_new_instance_with_set_value()
+        {
+            var builder = factory.DropDownListFor(m => m.ID);
 
-        //    Assert.Equal(htmlHelper.ViewData.Model.ID.ToString(), builder.ToComponent().Value);
-        //}
+            Assert.Equal(htmlHelper.ViewData.Model.ID.ToString(), builder.ToComponent().Value);
+        }
+
+        [Fact]
+        public void DropDownListFor_should_return_new_instance_with_set_value_for_enum_type()
+        {
+            var builder = factory.DropDownListFor(m => m.EnumProperty);
+
+            Assert.Equal(((int)htmlHelper.ViewData.Model.EnumProperty).ToString(), builder.ToComponent().Value);
+        }
 
         //[Fact]
         //public void DropDownListFor_should_not_set_value_if_Model_is_not_predifined_type()
@@ -290,6 +299,14 @@ namespace Kendo.Mvc.UI.Tests
             var builder = factory.ComboBoxFor(m => m.ID);
 
             Assert.Equal(htmlHelper.ViewData.Model.ID.ToString(), builder.ToComponent().Value);
+        }
+
+        [Fact]
+        public void ComboBoxFor_should_return_new_instance_with_set_value_for_enum_type()
+        {
+            var builder = factory.ComboBoxFor(m => m.EnumProperty);
+
+            Assert.Equal(((int)htmlHelper.ViewData.Model.EnumProperty).ToString(), builder.ToComponent().Value);
         }
 
         [Fact]
@@ -331,11 +348,43 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void AutoCompleteBoxFor_should_return_new_instance_with_set_text_value_for_enum_type()
+        {
+            var builder = factory.AutoCompleteFor(m => m.EnumProperty);
+
+            Assert.Equal(htmlHelper.ViewData.Model.EnumProperty.ToString(), builder.ToComponent().Value);
+        }
+
+        [Fact]
         public void AutoCompleteFor_should_not_set_value_if_Model_is_not_predifined_type()
         {
             var builder = factory.AutoCompleteFor(m => m.ComplexModel);
 
             builder.ToComponent().Value.ShouldBeNull();
+        }
+
+        [Fact]
+        public void TextBoxFor_should_return_new_instance_with_set_value_for_enum_type()
+        {
+            var builder = factory.TextBoxFor(m => m.EnumProperty);
+
+            Assert.Equal(htmlHelper.ViewData.Model.EnumProperty, builder.ToComponent().Value);
+        }
+
+        [Fact]
+        public void TextBoxFor_should_return_new_instance_with_value_from_expression_null()
+        {
+            var builder = factory.TextBoxFor(m => m.NullableInt);
+
+            Assert.Equal(null, builder.ToComponent().Value);
+        }
+
+        [Fact]
+        public void MaskedTextBoxFor_should_return_new_instance_with_set_text_value_for_enum_type()
+        {
+            var builder = factory.MaskedTextBoxFor(m => m.EnumProperty);
+
+            Assert.Equal(htmlHelper.ViewData.Model.EnumProperty.ToString(), builder.ToComponent().Value);
         }
 
         public class TestModel
@@ -361,6 +410,8 @@ namespace Kendo.Mvc.UI.Tests
             public TimeSpan? NullableTime { get; set; }
 
             public TestModel ComplexModel { get; set; }
+
+            public DayOfWeek EnumProperty { get; set; }
         }
     }
 }
