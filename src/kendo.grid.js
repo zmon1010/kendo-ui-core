@@ -2156,14 +2156,29 @@ var __meta__ = { // jshint ignore:line
         _draggable: function() {
             var that = this;
             if (that.options.reorderable) {
+
                 if (that._draggableInstance) {
                     that._draggableInstance.destroy();
                 }
+
+                var header = that.wrapper.children(".k-grid-header");
 
                 that._draggableInstance = that.wrapper.kendoDraggable({
                     group: kendo.guid(),
                     autoScroll: true,
                     filter: that.content ? ".k-grid-header:first " + HEADERCELLS : "table:first>.k-grid-header " + HEADERCELLS,
+                    dragstart: function() {
+                        header.children(".k-grid-header-wrap").unbind("scroll" + NS + "scrolling").bind("scroll" + NS + "scrolling", function (e) {
+                            if (that.virtualScrollable) {
+                                that.content.find(">.k-virtual-scrollable-wrap").scrollLeft(this.scrollLeft);
+                            } else {
+                                that.scrollables.not(e.currentTarget).scrollLeft(this.scrollLeft);
+                            }
+                        });
+                    },
+                    dragend: function() {
+                        header.children(".k-grid-header-wrap").unbind("scroll" + NS + "scrolling");
+                    },
                     drag: function() {
                         that._hideResizeHandle();
                     },
@@ -4984,6 +4999,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (scrollable.virtual) {
+
                     that.content.find(">.k-virtual-scrollable-wrap").unbind("scroll" + NS).bind("scroll" + NS, function () {
                         that.scrollables.scrollLeft(this.scrollLeft);
                         if (that.lockedContent) {
@@ -4991,7 +5007,7 @@ var __meta__ = { // jshint ignore:line
                         }
                     });
                 } else {
-                    that.scrollables.unbind("scroll" + NS).bind("scroll" + NS, function (e) {
+                    that.content.unbind("scroll" + NS).bind("scroll" + NS, function (e) {
                         that.scrollables.not(e.currentTarget).scrollLeft(this.scrollLeft);
                         if (that.lockedContent && e.currentTarget == that.content[0]) {
                             that.lockedContent[0].scrollTop = this.scrollTop;
