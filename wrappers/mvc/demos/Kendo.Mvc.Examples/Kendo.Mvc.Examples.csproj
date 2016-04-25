@@ -3415,6 +3415,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Areas\razor\Views\datasource\shared_datasource.cshtml" />
+    <Content Include="Areas\razor\Views\editor\paste_cleanup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
