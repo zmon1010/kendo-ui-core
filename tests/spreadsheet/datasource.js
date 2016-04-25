@@ -530,5 +530,25 @@
         equal(binder.calls("destroy"), 1);
     });
 
+    test("binding to date field parses value as date", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                schema: {
+                    model: {
+                        fields: {
+                            foo: { type: "date" }
+                        }
+                    }
+                }
+            },
+            sheet: sheet
+        });
+
+        sheet.bind("change", ok.bind(this));
+        sheet.range("A2").format("d/m/yyyy").input("1/1/1999");
+    });
 
 })();

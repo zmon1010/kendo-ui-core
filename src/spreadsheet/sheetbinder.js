@@ -66,6 +66,7 @@
                 var dataSource = this.dataSource;
                 var data = dataSource.view();
                 var columns = this.columns;
+                var fields = kendo.getter("options.schema.model.fields", true)(dataSource);
 
                 if (!columns.length && data.length) {
                     columns = Object.keys(data[0].toJSON());
@@ -88,8 +89,17 @@
                         }
 
                         var colValueIndex = 0;
+                        var field, type, value;
                         for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col && ci < columns.length; ci++) {
-                            record.set(columns[ci].field, values[valueIndex][colValueIndex++]);
+                            field = columns[ci].field;
+                            type = fields && fields[field] && fields[field].type;
+                            value = values[valueIndex][colValueIndex++];
+
+                            if (type == "date") {
+                                value = kendo.spreadsheet.numberToDate(value);
+                            }
+
+                            record.set(field, value);
                         }
                         valueIndex++;
                     }
