@@ -45,7 +45,7 @@ kendo.ExcelExporter = kendo.Class.extend({
                 this.dataSource._data = data;
 
                 var transport = this.dataSource.transport;
-                if (dataSource._isServerGrouped() && transport.options.data) { // clear the transport data when using aspnet-mvc transport
+                if (dataSource._isServerGrouped() && transport.options && transport.options.data) { // clear the transport data when using aspnet-mvc transport
                     transport.options.data = null;
                 }
             }
