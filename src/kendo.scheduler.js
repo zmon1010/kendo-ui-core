@@ -3728,7 +3728,7 @@ var __meta__ = { // jshint ignore:line
             if (!that.popup) {
                 that.popup = new Popup(html, {
                     anchor: target,
-                    activate: function() {
+                    open: function() {
                         if (!that.calendar) {
                             that.calendar = new Calendar(this.element.find(".k-scheduler-calendar"),
                             {
