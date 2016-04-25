@@ -1455,7 +1455,6 @@
                     "aspnet-mvc": "This demo shows how you can use Telerik editor extension in ASP.NET MVC."
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -1511,7 +1510,6 @@
                     "aspnet-mvc": "This example shows how to use the ASP.NET MVC Editor to edit parts of the page inline, allowing authors to see the page in its final state."
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -1530,7 +1528,6 @@
                     "aspnet-mvc": "<p>This example shows how to customize some of the native Editor tools (font size, font name and block format) by modifying the tools' item collections, as well as how to create completely custom tools (Content Area Background Color and Insert a Horizontal Ruler).</p> <p>You can use the Add method of the FontName, FontSize and Formatting settings to modify the default font size, font name and formatblock options set.</p> <p>To add a new custom button on the toolbar: set the Tools -&gt; CustomButton:</p> <p>.CustomButton(cb =&gt; cb.Name(\"custom\").ToolTip(\"horizontal rule\").Exec(\"execFunction\"))</p> <p>Where the Exec param should be the name of a JavaScript function that will be fired when the custom button is clicked.</p> <p>If you want to create a custom dropdown with a label next to it, you can set the Tools -&gt; CustomTemplate and specify the HTML markup that will be rendered on the toolbar.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -1553,7 +1550,7 @@
                     "mvc",
                     "jsp",
                     "php",
-                    "!mvc-core"
+                    "mvc-core"
                 ],
                 "sources": {
                     "kendo-ui": [
@@ -1586,7 +1583,6 @@
                     "aspnet-mvc": "<p>You can see in this demo the whole set of tools supported by the Telerik MVC Editor. You can easily add or hide each of them through the Tools collection option of the component:</p> <p>.Tools(tools =&gt; tools. Clear().Bold().Italic().Underline().Strikethrough()...FontName().FontSize().FontColor().BackColor().Print())</p> <p>If you remove the Clear() option, the default toolbar will be shown along with the specified by you buttons.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -1605,7 +1601,6 @@
                     "aspnet-mvc": "<p>The snippets feature of the MVC Editor allows you to quickly insert predefined HTML code snippets in the content area.</p> <p>The snippet tool can insert plain text or HTML content which you can configure using the Tools -&gt; Snippets -&gt; Add(\"Snippet Item Name\", \"&lt;b&gt;My Snippet Content&lt;/b&gt;\") method.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -1624,7 +1619,6 @@
                     "aspnet-mvc": "<p>The demo presents you how to use the Editor's style tool, which provides the ability to customize the widget content by means of custom CSS classes and styling, and a CSS file registered in the Editor iframe document.</p> <p>You can register and import your own CSS file into the content area through the StyleSheets option:<br /> .StyleSheets(css =&gt; css.Add(Url.Content(\"~/PATH_TO_CSS_FILE/CSS_FILE.css\"))) </p> <p > Use the Tools -&gt; Formatting -&gt; Add(\"Dropdown Item Name\",\".CSS Class Name\") method to populate the Format dropdown with options. Note that the specified CSS class should exist in the CSS file imported in the content area through the StyleSheets -&gt; Add method.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -1643,7 +1637,6 @@
                     "aspnet-mvc": "<p>Nowadays, the PDF format is very popular and widely used to present documents in a manner independent of application software, hardware and operating systems. This demo demonstrates how to export the Telerik MVC Editor contents to PDF.</p> <p>The approach is very straight-forward - to export the content to PDF include the corresponding command to the editor&rsquo;s toolbar&nbsp;.Tools(tools =&gt; tools.Pdf()) and configure the export settings through the Pdf attribute. For instance, you can specify the file name and whether to export all pages, margins, paper size, font, etc.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
@@ -1682,12 +1675,12 @@
                     "aspnet-mvc": "<p>Telerik MVC Editor exposes rich API and events which provide easy configuration or extension points for customization on top of its built-in features.</p> <p>This particular demo shows how you can intercept the <strong>Change</strong>, <strong>Execute, Select </strong>and <strong>Paste </strong>events of the editor to output messages in the console when these events are raised. You can use these events for customizations or to execute custom logic, if necessary.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
                 ]
             },
             {
                 "packages": [
-                    "mvc-offline"
+                    "mvc-offline",
+                    "!mvc-core"
                 ],
                 "text": "Globalization",
                 "url": "editor/globalization"
@@ -1708,7 +1701,7 @@
                     "aspnet-mvc": "<p>Telerik MVC Editor exposes rich client-side API and events, which provide easy configuration or extension points for custom functionality on top of the built-in features.</p> <p>The example shows how you can get a reference to the editor&rsquo;s client-side object and obtain/replace its content using the provided <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/ui/editor#methods-value\">editor.value()</a> method.</p> <p>You can find more information about the available editor&rsquo;s client-side API <a href=\"http://docs.telerik.com/KENDO-UI/api/javascript/ui/editor\">here</a>.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
+                    "mvc-core"
                 ]
             },
             {
@@ -1728,7 +1721,7 @@
                     "aspnet-mvc": "<p>The Telerik MVC Editor supports right-to-left languages and rendering. All you have to do is to register the <strong>kendo.rtl.min.css</strong> file (located at Kendo.Mvc.Examples\\Content\\web installation folder) and wrap the editor in a container element with <strong>k-rtl </strong>class set for it, as demonstrated in this example.</p> <p>More information on the right-to-left support of the components can be found in <a href=\"http://docs.telerik.com/kendo-ui/accessibility/supporting-rtl-languages\" target=\"_blank\">this topic</a>.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
+                    "mvc-core"
                 ]
             },
             {
@@ -1765,7 +1758,7 @@
                     "aspnet-mvc": "<p>This demo illustrates the keyboard support of Telerik Editor for MVC, which provides access to the available editor&rsquo;s toolbar buttons without the need of using a mouse.</p> <p>Once the focus goes on the first toolbar button, you can focus the next one by pressing the Tab key. You can go back onto the previous tool by pressing Shift+Tab. To execute the command of the selected tool press the Enter key.</p> <p>Further details about the Keyboard, Section 508 and WAI-ARIA support of Telerik UI for ASP.NET MVC extensions can be found in the <a href=\"http://docs.telerik.com/kendo-ui/accessibility/accessibility-overview\">Accessibility Overview section</a> of the documentation.</p>"
                 },
                 "packages": [
-                    "!mvc-core"
+                    "mvc-core"
                 ]
             }
         ],
