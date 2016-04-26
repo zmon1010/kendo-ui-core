@@ -1957,7 +1957,7 @@ var __meta__ = { // jshint ignore:line
 
             wrapper.on("focus" + NS, function() {
                 if (!that._selection) {
-                     that._createSelection(that.wrapper.find(".k-scheduler-content").find("td:first"));
+                    that._selectFirstSlot();
                 }
 
                 that._select();
@@ -1974,6 +1974,10 @@ var __meta__ = { // jshint ignore:line
                 that._ctrlKey = e.ctrlKey;
                 that._shiftKey = e.shiftKey;
             });
+        },
+
+        _selectFirstSlot: function() {
+            this._createSelection(this.wrapper.find(".k-scheduler-content").find("td:first"));
         },
 
         _select: function() {
@@ -2102,6 +2106,13 @@ var __meta__ = { // jshint ignore:line
 
             that._ctrlKey = e.ctrlKey;
             that._shiftKey = e.shiftKey;
+
+            if (!selection) {
+                that._selectFirstSlot();
+                that._select();
+
+                return;
+            }
 
             if (key === keys.TAB) {
                 if (view.moveToEvent(selection, shiftKey)) {
@@ -3371,6 +3382,7 @@ var __meta__ = { // jshint ignore:line
                 that.rebind();
 
                 return;
+
             }
 
             return that._selectedView;

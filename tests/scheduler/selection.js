@@ -152,6 +152,17 @@
         ok(td.hasClass("k-state-selected"));
     });
 
+    test("scheduler selects first cell on keypress if no initial selection is available", function() {
+
+        scheduler.select(null);
+
+        var td = container.find(".k-scheduler-content td:first");
+
+        keydown();
+
+        ok(td.hasClass("k-state-selected"));
+    });
+
     test("scheduler selects first cell on focus when there are more than one scheduler on the page", function() {
 
         var fixture = scheduler.wrapper.parent();
