@@ -1277,6 +1277,44 @@
         equal(scheduler.dataSource.at(0).ownerId, 1);
     });
 
+    test("moving event between groups changes selection", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            startTime: new Date("2013/6/6 10:00"),
+            endTime: new Date("2013/6/6 11:00"),
+            date: new Date("2013/6/6"),
+            selectable: true,
+            dataSource: [
+                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 10:30"), ownerId: 2, title: "" }
+            ],
+            group: {
+                resources: ["Owner"]
+            },
+            resources: [
+                {
+                    field: "ownerId",
+                    name: "Owner",
+                    dataSource: [
+                        { text: "Alex", value: 1, color: "red" },
+                        { text: "Bob", value: 2, color: "green" }
+                    ],
+                    title: "Owner"
+                }
+            ]
+        });
+
+        scheduler.focus();
+
+        var handle = div.find(".k-event:last");
+
+        scheduler.select([div.find(".k-event").data("uid")]);
+
+        var slots = div.find(".k-scheduler-content td:nth-child(2)");
+
+        dragdrop(scheduler, handle, slots.eq(0).prev());
+
+        ok(scheduler.wrapper.find(".k-event").hasClass("k-state-selected"));
+    });
+
     test("moving event between vertical groups changes its resource", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             startTime: new Date("2013/6/6 10:00"),

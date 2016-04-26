@@ -2188,7 +2188,7 @@ var __meta__ = { // jshint ignore:line
             this._adjustSelectedDate();
         },
 
-        _updateSelection: function(dataItem, events) {
+        _updateSelection: function(dataItem, events, groupIndex) {
             var selection = this._selection;
 
             if (dataItem && selection) {
@@ -2217,11 +2217,16 @@ var __meta__ = { // jshint ignore:line
                     selection.isAllDay = dataItem.isAllDay;
                 }
 
+                if (groupIndex !== null && groupIndex !== undefined) {
+                    selection.groupIndex = groupIndex;
+                }
+
                 selection.index = dataItem.index;
                 if (this._ctrlKey) {
                     selection.events = selection.events.concat(events || []);
                 } else {
                     selection.events = events || [];
+
                 }
             }
         },
@@ -2524,7 +2529,7 @@ var __meta__ = { // jshint ignore:line
                                 eventOptions = $.extend({ isAllDay: event.isAllDay, start: start, end: end }, updatedEventOptions, endResources);
                             }
 
-                            that._updateEvent(null, event, eventOptions);
+                            that._updateEvent(null, event, eventOptions, endSlot.groupIndex);
                         }
 
                         e.currentTarget.removeClass("k-event-active");
@@ -2731,7 +2736,7 @@ var __meta__ = { // jshint ignore:line
             });
         },
 
-        _updateEvent: function(dir, event, eventInfo) {
+        _updateEvent: function(dir, event, eventInfo, groupIndex) {
             var that = this;
 
             var updateEvent = function(event, callback) {
@@ -2748,7 +2753,7 @@ var __meta__ = { // jshint ignore:line
                         callback();
                     }
 
-                    that._updateSelection(event);
+                    that._updateSelection((event), [event.uid], groupIndex);
                     that.dataSource.sync();
                 }
             };
@@ -3331,6 +3336,7 @@ var __meta__ = { // jshint ignore:line
                 var view = this;
                 if (that._selection) {
                     view.constrainSelection(that._selection);
+
                     that._select();
 
                     that._adjustSelectedDate();
