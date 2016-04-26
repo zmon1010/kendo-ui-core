@@ -11,8 +11,8 @@
         FAST = "fast",
         // caution: variables below are updated during builds.
         // update build/theme_builder.rb if you change their names or values!
-        KENDO_LOCATION = "http://kendo.cdn.telerik.com/2015.3.930/",
-        JQUERY_LOCATION = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js",
+        KENDO_LOCATION = "https://kendo.cdn.telerik.com/2015.3.930/",
+        JQUERY_LOCATION = "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js",
         LESSJS_LOCATION = "https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js",
         requiredJs = [ "scripts/less.js", "scripts/themebuilder.js", "scripts/constants.js", "scripts/less/type-default.js", "scripts/less/type-bootstrap.js", "scripts/less/type-flat.js", "scripts/less/type-fiori.js", "scripts/less/type-highcontrast.js", "scripts/less/type-material.js", "scripts/less/type-office365.js", "scripts/less/type-metro.js", "scripts/less/common-mixins.js", "scripts/less/themes-type.js", "scripts/less/themes-spreadsheet.js","scripts/less/themes-checkbox.js",  "scripts/less/themes-radiobutton.js", "scripts/less/common-spreadsheet.js", "scripts/less/type-nova.js" ],
         requiredCss = ["styles/styles.css"],
@@ -66,7 +66,7 @@
                 this._injectStyles();
                 this._showMessage(
                     "The Kendo UI ThemeBuilder bookmarklet is not available at this time.<br>" +
-                    "Head to the <a href='http://demos.telerik.com/kendo-ui/beta/themebuilder'>ThemeBuilder web app</a> to modify themes."
+                    "Head to the <a href='http://demos.telerik.com/kendo-ui/themebuilder'>ThemeBuilder web app</a> to modify themes."
                 );
             }
         },
