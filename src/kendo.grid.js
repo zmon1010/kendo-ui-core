@@ -230,8 +230,6 @@ var __meta__ = { // jshint ignore:line
 
             if (delta && !(delta > 0 && scrollTop === 0) && !(delta < 0 && scrollTop + scrollbar[0].clientHeight == scrollbar[0].scrollHeight)) {
                 e.preventDefault();
-                //In Firefox DOMMouseScroll event cannot be canceled
-                $(e.currentTarget).one("wheel" + NS, false);
                 this.verticalScrollbar.scrollTop(scrollTop + (-delta));
             }
         },
@@ -6734,9 +6732,6 @@ var __meta__ = { // jshint ignore:line
 
             if (delta) {
                 e.preventDefault();
-                //In Firefox DOMMouseScroll event cannot be canceled
-                $(e.currentTarget).one("wheel" + NS, false);
-
                 content.scrollTop(scrollTop + (-delta));
             }
         },
