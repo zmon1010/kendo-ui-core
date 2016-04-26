@@ -2098,6 +2098,32 @@
         equalWithRound(eventElements.eq(2).offset().top, eventSlotOffset.top);
     });
 
+    test("set offsetHeight of allDay slots when there are collinding events", function() {
+        var selectedDate = new Date(2013, 1, 26, 0, 0, 0),
+            view = setup({
+                dates: [
+                    selectedDate,
+                    new Date(2013, 1, 27, 0, 0, 0),
+                    new Date(2013, 1, 28, 0, 0, 0),
+                    new Date(2013, 1, 29, 0, 0, 0)
+                ],
+                height: 400
+            });
+
+        var events = [
+            new SchedulerEvent({uid:"uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), title: "first event", isAllDay: true }),
+            new SchedulerEvent({uid:"uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), title: "second event", isAllDay: true }),
+            new SchedulerEvent({uid:"uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), title: "third event", isAllDay: true })
+        ];
+
+        view.render(events);
+
+        var eventSlotOffsetHeight = view.element.find(".k-scheduler-header-all-day td").eq(0)[0].offsetHeight;
+        var slotObjectOffsetHeight = view.groups[0]._daySlotCollections[0]._slots[0].offsetHeight;
+
+        equalWithRound(eventSlotOffsetHeight, slotObjectOffsetHeight);
+    });
+
     test("slot by position when the cursor is over the border", function() {
         var view = new MyWorkWeekView(container,  {
             date: new Date(),

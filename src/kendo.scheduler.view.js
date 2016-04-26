@@ -895,6 +895,17 @@ var __meta__ = { // jshint ignore:line
             this.isDaySlot = false;
         },
 
+        refresh: function() {
+            var element = this.element;
+
+            this.clientWidth = element.clientWidth;
+            this.clientHeight = element.clientHeight;
+            this.offsetWidth = element.offsetWidth;
+            this.offsetHeight = element.offsetHeight;
+            this.offsetTop = element.offsetTop;
+            this.offsetLeft = element.offsetLeft;
+        },
+
         startDate: function() {
             return kendo.timezone.toLocalDate(this.start);
         },
@@ -925,18 +936,6 @@ var __meta__ = { // jshint ignore:line
             Slot.fn.init.apply(this, arguments);
 
             this.isHorizontal = isHorizontal ? true : false;
-        },
-
-        refresh: function() {
-
-            var element = this.element;
-
-            this.clientWidth = element.clientWidth;
-            this.clientHeight = element.clientHeight;
-            this.offsetWidth = element.offsetWidth;
-            this.offsetHeight = element.offsetHeight;
-            this.offsetTop = element.offsetTop;
-            this.offsetLeft = element.offsetLeft;
         },
 
         offsetX: function(rtl, offset) {
@@ -1026,11 +1025,6 @@ var __meta__ = { // jshint ignore:line
                 this.firstChildHeight = 3;
                 this.firstChildTop = 0;
             }
-        },
-
-        refresh: function() {
-            this.clientHeight = this.element.clientHeight;
-            this.offsetTop = this.element.offsetTop;
         },
 
         startDate: function() {
