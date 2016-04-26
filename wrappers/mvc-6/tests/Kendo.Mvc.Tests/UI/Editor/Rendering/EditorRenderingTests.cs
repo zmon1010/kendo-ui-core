@@ -120,7 +120,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Builder_should_not_encode_Value_in_ineline_edit_mode()
+        public void Builder_should_not_encode_Value_in_inline_edit_mode()
         {
             editor.Tag = "div";
             var builder = new EditorBuilder(editor);
