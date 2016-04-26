@@ -153,7 +153,6 @@
     });
 
     test("scheduler selects first cell on keypress if no initial selection is available", function() {
-
         scheduler.select(null);
 
         var td = container.find(".k-scheduler-content td:first");
@@ -182,7 +181,6 @@
         var td = secondContainer.find(".k-scheduler-content td:first");
         ok(td.hasClass("k-state-selected"));
     });
-
 
     test("scheduler agenda view support focusing when there are no events rendered", function() {
         scheduler.views.agenda = {title: "Agenda", type: "kendo.ui.AgendaView"};
@@ -656,6 +654,26 @@
 
         container.focus();
     }
+
+    test("scheduler adjust selection when moving from view with timeslots to view with dayslots", function() {
+        setupWidget({
+            views: [
+                "week",
+                "month"
+            ]
+        });
+
+        scheduler.wrapper.focus();
+
+        scheduler.view("month");
+
+        scheduler.wrapper.trigger({
+            type: "keydown",
+            keyCode: kendo.keys.TAB
+        });
+
+        ok(scheduler._selection.isAllDay);
+    });
 
     test("Scheduler raises change event on slot selection", 4, function() {
         setupWidget();

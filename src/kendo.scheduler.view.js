@@ -1231,6 +1231,8 @@ var __meta__ = { // jshint ignore:line
             } else {
                 if (!group.daySlotCollectionCount()) {
                     selection.isAllDay = false;
+                } else if (!group.timeSlotCollectionCount()) {
+                    selection.isAllDay = true;
                 }
             }
 
