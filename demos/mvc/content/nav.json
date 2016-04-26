@@ -1642,6 +1642,7 @@
             {
                 "text": "Paste Cleanup",
                 "url": "editor/paste-cleanup",
+                "new": true,
                 "title": {
                     "kendo-ui": "Paste cleanup options demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
                     "aspnet-mvc": "Paste cleanup options demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
