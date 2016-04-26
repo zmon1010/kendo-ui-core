@@ -623,7 +623,7 @@
         equal(events.length, 4);
     });
 
-    test("DAILY occurrences method honours INTERVAL=6 (DST change)", function() {
+    tzTest("Sofia", "DAILY occurrences method honours INTERVAL=6 (DST change)", function() {
         var schedulerEvent = new SchedulerEvent({
             uid: "uid",
             id: 1,
