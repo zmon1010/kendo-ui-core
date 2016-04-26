@@ -80,7 +80,7 @@ namespace :spreadsheet do
         if PLATFORM =~ /linux|darwin/
             src = SPREADSHEET_REDIST_ROOT
             dst = "#{SPREADSHEET_SRC_ROOT}/bin/"
-            system "cp -r #{src} #{dst}"
+            system "cp -r #{src}/ #{dst}"
         else
             src = SPREADSHEET_REDIST_ROOT.gsub('/', '\\')
             dst = "#{SPREADSHEET_SRC_ROOT}/bin".gsub('/', '\\')
@@ -93,7 +93,7 @@ namespace :spreadsheet do
             'Release-NET45' => 'NET45',
             'Release-NET45-Trial' => 'NET45-Trial'
         }.each do |build, target|
-            src = SPREADSHEET_SRC_ROOT + "/bin/#{build}/Telerik.Windows.*"
+            src = SPREADSHEET_SRC_ROOT + "/bin/#{build}/Telerik.{Documents,Windows}.*"
             dest = SPREADSHEET_ROOT + "/lib/#{target}"
             mkdir_p dest
             Dir.glob(src).each { |f| cp f, dest }
