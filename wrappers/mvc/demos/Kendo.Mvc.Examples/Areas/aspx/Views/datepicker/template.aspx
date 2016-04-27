@@ -40,7 +40,7 @@
 
  <style>
     .birthday {
-        background: transparent url(../content/web/calendar/cake.png) no-repeat 0 50%;
+        background: transparent url('@Url.Content("~/Content/web/calendar/cake.png")') no-repeat 0 50%;
         display: inline-block;
         width: 16px;
         height: 16px;
