@@ -35,13 +35,13 @@ namespace KendoScaffolder.UI
 
             if (viewModel.ViewType == ViewType.MVC)
             {
-                WidgetTitle.Text = WebTreeViewTitle;
+                WidgetTitle.Text = MvcTreeViewTitle;
                 this.Title = MvcTreeViewTitle;
             }
             else
             {
                 WidgetTitle.Text = WebTreeViewTitle;
-                this.Title = MvcTreeViewTitle;
+                this.Title = WebTreeViewTitle;
             }
 
             DataContext = viewModel;
