@@ -1448,4 +1448,80 @@
 
         ok(ds.contains(ds.get(1), ds.get(3)));
     });
+
+    test("record changes pushed via the remote serivce calls are accepted - result is object", function() {
+        var pushUpdate;
+
+        var ds = new TreeListDataSource({
+            transport: {
+                push: function(options) {
+                    pushUpdate = options.pushUpdate;
+                },
+                read: function(options) {
+                    options.success({
+                        data: [
+                            { id: "1", parentId: null, name: "name" },
+                            { id: "2", parentId: "1", name: "name2" }
+                        ]
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    id: "id",
+                    parentId: "parentId"
+                },
+                data: "data"
+            }
+        });
+
+        ds.read();
+
+        pushUpdate({
+            data: [{
+                id: "1",
+                parentId: null,
+                name: "someOtherName"
+            }]
+        });
+
+        equal(ds.view().length, 2);
+        equal(ds.at(0).name, "someOtherName");
+    });
+
+    test("record changes pushed via the remote serivce calls are accepted", function() {
+        var pushUpdate;
+
+        var ds = new TreeListDataSource({
+            transport: {
+                push: function(options) {
+                    pushUpdate = options.pushUpdate;
+                },
+                read: function(options) {
+                    options.success([
+                        { id: "1", parentId: null, name: "name" },
+                        { id: "2", parentId: "1", name: "name2" }
+                    ]);
+                }
+            },
+            schema: {
+                model: {
+                    id: "id",
+                    parentId: "parentId"
+                }
+            }
+        });
+
+        ds.read();
+
+        pushUpdate({
+            id: "1",
+            parentId: null,
+            name: "someOtherName"
+        });
+
+        equal(ds.view().length, 2);
+        equal(ds.at(0).name, "someOtherName");
+    });
+
 })();

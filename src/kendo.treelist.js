@@ -304,6 +304,16 @@ var __meta__ = { // jshint ignore:line
             return true;
         },
 
+        _push: function(result, operation) {
+            var data = DataSource.fn._readData.call(this, result);
+
+            if (!data) {
+                data = result;
+            }
+
+            this[operation](data);
+        },
+
         _readData: function(newData) {
             var data = this.data();
             newData = DataSource.fn._readData.call(this, newData);
