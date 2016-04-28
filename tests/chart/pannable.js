@@ -83,22 +83,6 @@
         ok(!pannable._active);
     });
 
-    test("does not activate panning if the delta for not locked axes does no exceed the threshold", function() {
-        setup(chartOptions, {
-            lock: "y",
-            threshold: 10
-        });
-        pannable.start(createEventArg({
-            x: {
-                location: 5
-            },
-            y: {
-                location: 100
-            }
-        }));
-        ok(!pannable._active);
-    });
-
     // ------------------------------------------------------------
     module("Pannable / move", {
         teardown: function() {
