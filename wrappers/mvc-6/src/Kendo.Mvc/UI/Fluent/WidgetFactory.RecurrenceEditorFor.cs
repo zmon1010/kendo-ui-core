@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             var widget = RecurrenceEditor()
                     .Expression(GetExpressionName(expression))
-                    .Value(model != null && model.GetType().IsPredefinedType() ? Convert.ToString(model) : null);
+                    .Value(GetValue(expression));
 
             return widget;
         }

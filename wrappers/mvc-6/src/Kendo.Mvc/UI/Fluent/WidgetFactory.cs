@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc.ModelBinding;
+﻿using Kendo.Mvc.Extensions;
+using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
@@ -135,6 +136,36 @@ namespace Kendo.Mvc.UI.Fluent
             }
 
             return HtmlString.Empty;
+        }
+
+        private string GetValue<TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            var explorer = GetModelExplorer(expression);
+            var model = explorer.Model;
+
+            if (model != null && (model.GetType().IsPredefinedType() || model.GetType().IsEnumType()))
+            {
+                return Convert.ToString(model);
+            }
+
+            return null;
+        }
+
+        private string GetValueWithEnum<TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            var explorer = GetModelExplorer(expression);
+            var model = explorer.Model;
+
+            if (model != null && model.GetType().IsPredefinedType())
+            {
+                return Convert.ToString(model);
+            }
+            else if (model.GetType().IsEnumType())
+            {
+                return Convert.ToString((int)model);
+            }
+
+            return null;
         }
     }
 }

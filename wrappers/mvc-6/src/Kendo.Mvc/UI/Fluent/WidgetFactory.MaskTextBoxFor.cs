@@ -12,9 +12,9 @@ namespace Kendo.Mvc.UI.Fluent
 			var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
 			var model = metadata.Model;
 
-			return MaskedTextBox()
-					.Expression(GetExpressionName(expression))
-					.Value(model != null && model.GetType().IsPredefinedType() ? Convert.ToString(model) : null);			
+            return MaskedTextBox()
+                    .Expression(GetExpressionName(expression))
+                    .Value(GetValue(expression));
 		}
 	}
 }

@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             var widget = DropDownList()
                     .Expression(GetExpressionName(expression))
-                    .Value(model != null && model.GetType().IsPredefinedType() ? Convert.ToString(model) : null);
+                    .Value(GetValueWithEnum(expression));
 
             return widget;
         }
