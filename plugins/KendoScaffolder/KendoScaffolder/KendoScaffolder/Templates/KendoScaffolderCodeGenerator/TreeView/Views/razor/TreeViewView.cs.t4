@@ -1,0 +1,62 @@
+﻿<#@ template language="C#" HostSpecific="True" debug="true"#>
+<#@ output extension=".cshtml"#>
+<#@include file="..\ImportsTreeViewView.include.t4"#>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+#>
+@(Html.Kendo().TreeView()
+      .Name("treeview")
+<#
+    if(!string.IsNullOrEmpty(DataTextField)){
+#>
+      .DataTextField("<#= DataTextField #>")
+<#
+    }
+#>
+      .DataSource(dataSource => dataSource
+            .Read(read => read
+                  .Action("<#= entitySetName #>_Read", "TreeView")
+            )
+<#
+    if(TreeViewEvents.Count > 0){
+#>
+            .Events(events =>
+            {
+<#
+                  foreach (string ev in TreeViewEvents)
+                  {
+#>
+                  events.<#= ev #>("on<#= ev #>");
+<#
+                  }
+#>
+            })
+<#
+      }
+#>
+      )
+<#
+    if(Animation){
+#>
+      .Animation(true)
+<#
+    }
+#>
+)
+<# if(TreeViewEvents.Count > 0){ #>
+
+<script>
+
+<#
+    foreach (string ev in TreeViewEvents)
+    {
+#>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= ev #>
+    }
+
+<#
+    }
+#>
+</script>
+<# } #>

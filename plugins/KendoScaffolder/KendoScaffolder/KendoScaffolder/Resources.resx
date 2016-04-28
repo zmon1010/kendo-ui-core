@@ -130,4 +130,7 @@
   <data name="SchedulerDescription" xml:space="preserve">
     <value>The $WIDGET widget displays a set of events (a.k.a. appointments or tasks). It can display the scheduler events in different views - a single day, a whole week or month and as a list of tasks which need to be accomplished.</value>
   </data>
+  <data name="TreeViewDescription" xml:space="preserve">
+    <value>The $WIDGET widget display hierarchical data</value>
+  </data>
 </root>

@@ -92,6 +92,22 @@ namespace KendoScaffolder.UI
                     widgetDescription = rm.GetString("SchedulerDescription");
                     WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
                     return;
+
+                case "WidgetsListViewTreeViewItem":
+                    SelectedWidget = KendoWidget.TreeView;
+                    SelectedViewType = ViewType.MVC;
+                    WidgetName.Text = "UI for MVC TreeView";
+                    widgetDescription = rm.GetString("TreeViewDescription");
+                    WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
+                    return;
+
+                case "WidgetsListViewWebTreeViewItem":
+                    SelectedWidget = KendoWidget.TreeView;
+                    SelectedViewType = ViewType.Web;
+                    WidgetName.Text = "Kendo UI TreeView";
+                    widgetDescription = rm.GetString("TreeViewDescription");
+                    WidgetDescription.Text = widgetDescription.Replace(WidgetNamePlaceHolder, WidgetName.Text);
+                    return;
             }
         }
 

@@ -1,0 +1,75 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" Debug="True" #>
+<#@ output extension="cs" #>
+<#@ include file="ImportsTreeViewController.include.t4" #>
+<#
+string routePrefix;
+if (String.IsNullOrEmpty(AreaName)) 
+{
+    routePrefix = ControllerRootName;
+}
+else
+{
+    routePrefix = AreaName + "/" + ControllerRootName;
+}
+#>
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+<# foreach (var namespaceName in RequiredNamespaces) { #>
+using <#= namespaceName #>;
+<# } #>
+
+namespace <#= Namespace #>
+{
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+#>
+    public class <#= ControllerName #> : Controller
+    {
+        private <#= ContextTypeName #> db = new <#= ContextTypeName #>();
+
+        public ActionResult <#= ViewPrefix #><#= ViewName #>()
+        {
+            return View();
+        }
+
+        public JsonResult <#= entitySetName #>_Read(int? id)
+        {
+			<#= ContextTypeName #> dataContext = new <#= ContextTypeName #>();
+
+            var employees = from e in dataContext.<#= entitySetName #>
+                            where (id.HasValue ? e.<#= ParentIdFieldName #> == id : e.<#= ParentIdFieldName #> == null)
+                            select new {
+                                <#= PrimaryKeyName #> = e.<#= PrimaryKeyName #>,
+<#
+PushIndent(new string(' ', 32));
+ListModelEntityProperties();
+ClearIndent();
+#>
+                                hasChildren = true
+                            };
+            return Json(employees, JsonRequestBehavior.AllowGet);
+        }
+	}
+}
+
+<#+
+    private void ListModelEntityProperties()
+    {
+        IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
+        foreach (PropertyMetadata property in properties) {
+            if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey && !property.IsAssociation) {
+#>
+<#= property.PropertyName #> = e.<#= property.PropertyName #>,
+<#+
+                }
+            }
+        }
+#>
