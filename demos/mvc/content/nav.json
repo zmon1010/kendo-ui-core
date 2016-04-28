@@ -382,7 +382,6 @@
     {
         "text": "Calendar",
         "name": "calendar",
-        "new": "true",
         "api": "web/calendar",
         "documentation": {
             "kendo-ui": "getting-started/web/calendar/overview",
@@ -438,8 +437,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows how Kendo UI Calendar allows you to disable dates.",
                     "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to disable dates"
-                },
-                "new": "true"
+                }
             },
             {
                 "text": "Events",
@@ -2637,7 +2635,6 @@
         "text": "Spreadsheet",
         "name": "spreadsheet",
         "pro": "true",
-        "new": "true",
         "api": "web/spreadsheet",
         "documentation": {
             "kendo-ui": "getting-started/web/spreadsheet/overview",
@@ -4453,7 +4450,6 @@
             {
                 "text": "Task Template",
                 "url": "gantt/task-template",
-                "new": "true",
                 "title": {
                     "kendo-ui": "Task template support of Kendo UI Gantt"
                 },
@@ -5752,7 +5748,6 @@
             {
                 "text": "Keyboard navigation",
                 "url": "toolbar/keyboard-navigation",
-                "new": "true",
                 "title": {
                     "kendo-ui": "Kendo UI ToolBar control | Keyboard support demo",
                     "aspnet-mvc": "ASP.NET MVC ToolBar control | Keyboard support demo"
@@ -8019,7 +8014,6 @@
             {
                 "text": "Pan and zoom",
                 "url": "bar-charts/pan-and-zoom",
-                "new": "true",
                 "title": {
                     "kendo-ui": "Pan and zoom in Bar charts | Kendo UI Bar Chart demo"
                 },
@@ -10618,7 +10612,6 @@
             {
                 "text": "Pan and zoom",
                 "url": "scatter-charts/pan-and-zoom",
-                "new": "true",
                 "title": {
                     "kendo-ui": "Pan and zoom in Kendo UI Scatter Charts"
                 },
