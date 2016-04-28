@@ -5991,10 +5991,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo illustrates how to use drag & drop to allow users to rearrange treelist items"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Editing",
@@ -6004,10 +6001,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo illustrates how editing works within the Kendo UI jQuery TreeList widget which represents items in a hierarchical tree structure."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Popup editing",
@@ -6017,10 +6011,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo illustrates how the records in KendoTreeList can be easily modified in a pop-up dialog."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Column resizing",
@@ -6032,10 +6023,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows the column resizing feature of the KendoTreeList control.",
                     "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC TreeList."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Column reordering",
@@ -6047,10 +6035,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows column moving and reordering feature of KendoTreeList control.",
                     "aspnet-mvc": "In this demo you can see how simple it is to reorder columns in Telerik ASP.NET MVC TreeList."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Column menu",
@@ -6062,10 +6047,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows column menu functionality of KendoTreeList widget.",
                     "aspnet-mvc": "This Telerik example shows column menu functionality in the TreeList extension for ASP.NET MVC."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Frozen columns",
@@ -6077,10 +6059,7 @@
                 "meta": {
                     "kendo-ui": "This demo shows locked columns feature of KendoTreeList control.",
                     "aspnet-mvc": "Play with the demo for frozen columns functionality of Telerik ASP.NET MVC TreeList."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Aggregates",
@@ -6090,10 +6069,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This example demonstrates the aggregate option for KendoTreeList. Use demo source code to enable the TreeList to calculate aggregated values."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Localization",
@@ -6127,8 +6103,7 @@
                     "!offline",
                     "!jsp",
                     "!php",
-                    "!offline",
-                    "!mvc-core"
+                    "!offline"
                 ]
             },
             {
@@ -6143,9 +6118,7 @@
                 "packages": [
                     "!offline",
                     "!jsp",
-                    "!php",
-                    "!offline",
-                    "!mvc-core"
+                    "!php"
                 ]
             },
             {
@@ -6156,10 +6129,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This example demonstrates different events which are available in KendoTreeList widget and the code explains how you can use them for  your project."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "API",
@@ -6169,10 +6139,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo shows how API Functions can manipulate the contents and behavior of Kendo UI TreeList widget."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "MVVM",

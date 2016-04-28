@@ -90,19 +90,12 @@ namespace Kendo.Mvc.UI
             {
                 settings["dataSource"] = DataSource.ToJson();
             }
-			if (Selectable.Enabled == true)
-			{
-				var selectable = "row";
-				if (Selectable.Mode.HasValue)
-				{
-					selectable = Selectable.Mode.Value.Serialize();
-				}
 
-				if (Selectable.Type.HasValue)
-				{
-					selectable += ", " + Selectable.Type.Value.Serialize();
-				}
-			}
+            var selectable = Selectable.Serialize();
+            if (selectable.Any())
+            {
+                settings.AddRange(selectable);
+            }
 
 			writer.Write(Initializer.Initialize(Selector, "TreeList", settings));
         }

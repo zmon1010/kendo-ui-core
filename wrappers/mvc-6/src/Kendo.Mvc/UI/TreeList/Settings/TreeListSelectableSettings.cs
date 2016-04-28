@@ -15,7 +15,30 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-            // Do manual serialization here
+            if (Enabled == true)
+            {
+                if (Mode.HasValue || Type.HasValue)
+                {
+                    var selectable = "row";
+
+                    if (Mode.HasValue)
+                    {
+                        selectable = Mode.Value.Serialize();
+                    }
+
+                    if (Type.HasValue)
+                    {
+                        selectable += ", " + Type.Value.Serialize();
+                    }
+
+                    settings["selectable"] = selectable;
+                }
+
+                if (!Mode.HasValue && !Type.HasValue)
+                {
+                    settings["selectable"] = true;
+                }
+            }
 
             return settings;
         }
