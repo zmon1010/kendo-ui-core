@@ -58,7 +58,7 @@ if(string.IsNullOrEmpty(HasChildrenFieldName)){ #>
    }
    else
    {
-#>                                hasChildren = e.<#= HasChildrenFieldName#>
+#>                                hasChildren = e.<#= HasChildrenFieldName#>.Any()
 <#}#>                            };
             return Json(employees, JsonRequestBehavior.AllowGet);
         }
