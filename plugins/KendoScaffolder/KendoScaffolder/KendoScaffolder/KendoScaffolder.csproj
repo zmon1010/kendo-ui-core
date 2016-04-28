@@ -276,6 +276,8 @@
     <Resource Include="Resources\Images\grid-js.png" />
     <Resource Include="Resources\Images\scheduler-cs.png" />
     <Resource Include="Resources\Images\scheduler-js.png" />
+    <Resource Include="Resources\Images\treeview-cs.png" />
+    <Resource Include="Resources\Images\treeview-js.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -21,6 +21,7 @@ namespace KendoScaffolder.UI.Models
             DataTextField = "";
             DataUrlField = "";
             ParentIdFieldName = "ParentId";
+            HasChildrenFieldName = "";
         }
         public IEnumerable<CheckBoxListItem> TreeViewEvents
         {
@@ -51,6 +52,11 @@ namespace KendoScaffolder.UI.Models
             set;
         }
         public string ParentIdFieldName
+        {
+            get;
+            set;
+        }
+        public string HasChildrenFieldName
         {
             get;
             set;

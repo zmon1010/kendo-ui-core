@@ -23,3 +23,4 @@
 <#@ parameter type="System.String" name ="ViewName" #>
 <#@ parameter type="System.String" name ="ViewPrefix" #>
 <#@ parameter type="System.String" name="ParentIdFieldName" #>
+<#@ parameter type="System.STring" name="HasChildrenFieldName" #>

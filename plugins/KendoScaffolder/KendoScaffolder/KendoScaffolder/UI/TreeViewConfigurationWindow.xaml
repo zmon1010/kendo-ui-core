@@ -73,7 +73,10 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>                    </Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="Controller Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                     <TextBox Grid.Row="1" Name="ControllerName" Loaded="ControllerName_Loaded" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ControllerName}" />
 
@@ -94,7 +97,10 @@
                     		ItemsSource="{Binding DbContextTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedDbContextType, Mode=OneWayToSource}" />
                     
                     <Label Grid.Row="11" Content="Parent Field Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                    <TextBox Grid.Row="12" Name="ParentIdFieldName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ParentIdFieldName}" />                    
+                    <TextBox Grid.Row="12" Name="ParentIdFieldName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ParentIdFieldName}" />
+
+                    <Label Grid.Row="13" Content="Has Children Field Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                    <TextBox Grid.Row="14" Name="HasChildrenFieldName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding HasChildrenFieldName}" />
                 </Grid>
             </TabItem>
             <TabItem Height="36" Width="220" Header="TreeView options">
@@ -111,17 +117,8 @@
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
@@ -143,7 +140,6 @@
                     <Label Grid.Row="6" Content="DataUrlField:" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                     <TextBox Grid.Row="7" Name="DataUrlField" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="222" Text="{Binding DataUrlField}" />
                     <CheckBox Grid.Row="15" Grid.Column="1" Name="SortableAllowUnsort" Visibility="Collapsed" Margin="6, 0, 0, 0" IsChecked="{Binding AllowUnsort, Mode=TwoWay}" Content="Allow Unsort" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Label Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="2" Name="RequireMvc" Content="Note: WebAPI Scaffolding requires Kendo.MVC.dll to be included, &#xD;&#xA;along with the kendo.aspnetmvc.min.js file" Visibility="Visible" Foreground="Red" Margin="-5,26,-129,-44" />
                 </Grid>
             </TabItem>
             <TabItem Height="36" Width="220" Header="Events">

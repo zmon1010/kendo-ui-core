@@ -47,14 +47,19 @@ namespace <#= Namespace #>
             var employees = from e in dataContext.<#= entitySetName #>
                             where (id.HasValue ? e.<#= ParentIdFieldName #> == id : e.<#= ParentIdFieldName #> == null)
                             select new {
-                                <#= PrimaryKeyName #> = e.<#= PrimaryKeyName #>,
+                                id = e.<#= PrimaryKeyName #>,
 <#
 PushIndent(new string(' ', 32));
 ListModelEntityProperties();
 ClearIndent();
-#>
+if(string.IsNullOrEmpty(HasChildrenFieldName)){ #>
                                 hasChildren = true
-                            };
+<#
+   }
+   else
+   {
+#>                                hasChildren = e.<#= HasChildrenFieldName#>
+<#}#>                            };
             return Json(employees, JsonRequestBehavior.AllowGet);
         }
 	}

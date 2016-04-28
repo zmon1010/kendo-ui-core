@@ -120,6 +120,7 @@ namespace KendoScaffolder.Scaffolders
                 controllerParameters.Add("ViewModelTypeChildren", ViewModelType.Children);
             }
             controllerParameters.Add("ParentIdFieldName", ViewModel.ParentIdFieldName);
+            controllerParameters.Add("HasChildrenFieldName" , ViewModel.HasChildrenFieldName);
 
             return controllerParameters;
         }
