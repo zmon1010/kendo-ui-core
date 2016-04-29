@@ -643,7 +643,7 @@
                 data[dr][dc] = cellState;
 
                 properties.forEach(function(property) {
-                    cellState[property] = cell[property] || null;
+                    cellState[property] = typeof cell[property] == "undefined" ? null : cell[property];
                 });
             });
 
