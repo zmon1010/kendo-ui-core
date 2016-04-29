@@ -7072,7 +7072,6 @@
         "text": "Integration with JS libraries",
         "name": "integration",
         "spriteCssClass": "integrationIcon",
-        "new": "true",
         "items": [
             {
                 "text": "Kendo UI + Handlebars",
@@ -7118,8 +7117,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo illustrates how Angular 2 can be integrated with the Kendo UI framework"
-                },
-                "new": "true"
+                }
             },
             {
                 "text": "Kendo UI + WebComponents",
@@ -7129,8 +7127,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo illustrates how Kendo UI widget can be initialized and used the WebComponents way"
-                },
-                "new": "true"
+                }
             }
         ],
         "category": "Framework"
