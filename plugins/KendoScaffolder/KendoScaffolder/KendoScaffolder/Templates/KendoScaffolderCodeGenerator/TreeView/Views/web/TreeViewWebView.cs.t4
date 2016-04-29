@@ -1,0 +1,49 @@
+﻿<#@ template language="C#" HostSpecific="True" debug="true"#>
+<#@ output extension=".cshtml"#>
+<#@include file="..\ImportsTreeViewView.include.t4"#>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+#>
+<div id="treeview"></div>
+<script>
+    $("#treeview").kendoTreeView({
+        dataSource: {
+            transport: {
+                read: {
+                    url: "<#= entitySetName #>_Read"
+                }
+            }
+        },
+        dataTextField: "<#= DataTextField #>"<#=TreeViewEvents.Count >0 ? "," : ""#> 
+<#
+for(int i = 0 ; i < TreeViewEvents.Count ; i++)
+{
+	string ev = TreeViewEvents[i];
+#>
+        <#= ev.ToLower() #>:on<#= ev #><#= i<TreeViewEvents.Count - 1 || Animation? "," : ""#>
+<#
+}
+#>
+<#
+    if(Animation){
+#>
+        animation: true
+<#
+    }
+#>
+    });
+	
+<#
+    foreach (string ev in TreeViewEvents)
+    {
+#>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= ev #>
+    }
+
+<#
+    }
+#>
+
+</script>
+

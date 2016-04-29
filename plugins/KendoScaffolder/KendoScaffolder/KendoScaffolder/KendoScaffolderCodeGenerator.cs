@@ -64,6 +64,11 @@ namespace KendoScaffolder
                         viewModel.ViewType = widgetSelection.SelectedViewType;
                         widgetConfigurationWindow = new SchedulerConfigurationWindow((SchedulerConfigurationViewModel)viewModel);
                         break;
+                    case KendoWidget.TreeView:
+                        viewModel = new TreeViewConfigurationViewModel(Context);
+                        viewModel.ViewType = widgetSelection.SelectedViewType;
+                        widgetConfigurationWindow = new TreeViewConfigurationWindow((TreeViewConfigurationViewModel)viewModel);
+                        break;
                 }
 
                 bool? showDialog = widgetConfigurationWindow.ShowDialog();
@@ -127,6 +132,8 @@ namespace KendoScaffolder
                     return new GridScaffolder((GridConfigurationViewModel)viewModel, Context);
                 case KendoWidget.Scheduler:
                     return new SchedulerScaffolder((SchedulerConfigurationViewModel)viewModel, Context);
+                case KendoWidget.TreeView:
+                    return new TreeViewScaffolder((TreeViewConfigurationViewModel)viewModel, Context);
             }
 
             return null;

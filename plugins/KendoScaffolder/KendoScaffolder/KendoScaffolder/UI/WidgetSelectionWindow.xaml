@@ -50,6 +50,12 @@
                             <TextBlock Margin="10, 0, 0, 0">UI for MVC Scheduler</TextBlock>
                         </StackPanel>
                     </ListViewItem>
+                    <ListViewItem Name="WidgetsListViewTreeViewItem">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/KendoScaffolder;component/Resources/Images/treeview-cs.png" Stretch="None" VerticalAlignment="Center"></Image>
+                            <TextBlock Margin="10, 0, 0, 0">UI for MVC TreeView</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
                     <ListViewItem Name="WidgetsListViewWebGridItem" Visibility="Visible">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/KendoScaffolder;component/Resources/Images/grid-js.png" Stretch="None" VerticalAlignment="Center"></Image>
@@ -66,6 +72,12 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/KendoScaffolder;component/Resources/Images/scheduler-js.png" Stretch="None" VerticalAlignment="Center"></Image>
                             <TextBlock Margin="10, 0, 0, 0">Kendo UI Scheduler</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Name="WidgetsListViewWebTreeViewItem" Visibility="Visible">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/KendoScaffolder;component/Resources/Images/treeview-js.png" Stretch="None" VerticalAlignment="Center"></Image>
+                            <TextBlock Margin="10, 0, 0, 0">Kendo UI TreeView</TextBlock>
                         </StackPanel>
                     </ListViewItem>
                 </ListView>

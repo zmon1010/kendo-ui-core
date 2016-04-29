@@ -10,7 +10,8 @@ namespace KendoScaffolder
     {
         Chart,
         Grid,
-        Scheduler
+        Scheduler,
+        TreeView
     }
 
     public enum ViewType

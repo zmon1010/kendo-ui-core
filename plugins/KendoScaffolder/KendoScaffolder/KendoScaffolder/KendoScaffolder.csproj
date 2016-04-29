@@ -83,8 +83,12 @@
     <Compile Include="Scaffolders\IKendoWidgetScaffolder.cs" />
     <Compile Include="Scaffolders\KendoScaffolderUtils.cs" />
     <Compile Include="Scaffolders\SchedulerScaffolder.cs" />
+    <Compile Include="Scaffolders\TreeViewScaffolder.cs" />
     <Compile Include="UI\ChartConfigurationWindow.xaml.cs">
       <DependentUpon>ChartConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TreeViewConfigurationWindow.xaml.cs">
+      <DependentUpon>TreeViewConfigurationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Models\ChartConfigurations.cs" />
     <Compile Include="UI\Models\ChartConfigurationViewModel.cs" />
@@ -101,6 +105,7 @@
     <Compile Include="UI\Models\Charts\WatterfallLikeChartConfiguration.cs" />
     <Compile Include="UI\Models\DataSourceBoundWidgetViewModel.cs" />
     <Compile Include="UI\Models\EnumToBooleanConverter.cs" />
+    <Compile Include="UI\Models\TreeViewConfigurationViewModel.cs" />
     <Compile Include="UI\Models\GridConfigurationViewModel.cs" />
     <Compile Include="UI\GridConfigurationWindow.xaml.cs">
       <DependentUpon>GridConfigurationWindow.xaml</DependentUpon>
@@ -203,6 +208,21 @@
     <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Views\web\SchedulerAjaxWebView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\TreeView\Controllers\ImportsTreeViewController.include.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\TreeView\Controllers\TreeViewController.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\TreeView\Views\ImportsTreeViewView.include.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\TreeView\Views\razor\TreeViewView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\TreeView\Views\web\TreeViewWebView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -211,6 +231,10 @@
     <Page Include="UI\ChartConfigurationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\TreeViewConfigurationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\GridConfigurationWindow.xaml">
       <SubType>Designer</SubType>
@@ -252,6 +276,8 @@
     <Resource Include="Resources\Images\grid-js.png" />
     <Resource Include="Resources\Images\scheduler-cs.png" />
     <Resource Include="Resources\Images\scheduler-js.png" />
+    <Resource Include="Resources\Images\treeview-cs.png" />
+    <Resource Include="Resources\Images\treeview-js.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -96,5 +96,14 @@ namespace KendoScaffolder {
                 return ResourceManager.GetString("SchedulerDescription", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The $WIDGET widget display hierarchical data.
+        /// </summary>
+        internal static string TreeViewDescription {
+            get {
+                return ResourceManager.GetString("TreeViewDescription", resourceCulture);
+            }
+        }
     }
 }
