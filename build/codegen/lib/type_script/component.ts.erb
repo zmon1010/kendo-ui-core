@@ -1,6 +1,6 @@
 % if (type_script_type =~ /^[a-z].*/ || type_script_type == '' )
 % if (type_script_type != 'kendo')
-    module <%= type_script_type %> {
+    namespace <%= type_script_type %> {
 %end
 % methods.each do |method|
 % method.type_script_declarations.each do |declaration|

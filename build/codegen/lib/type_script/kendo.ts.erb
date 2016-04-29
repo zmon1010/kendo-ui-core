@@ -1,6 +1,8 @@
-// type definitions for Kendo UI
+// Type definitions for Kendo UI Professional v2016.1.314
+// Project: http://www.telerik.com/kendo-ui
+// Definitions by: Telerik <https://github.com/telerik/>
 
-declare module kendo {
+declare namespace kendo {
     function culture(): {
         name: string;
         calendar: {
@@ -362,7 +364,7 @@ declare module kendo {
 
 }
 
-declare module kendo.effects {
+declare namespace kendo.effects {
     function enable(): void;
     function disable(): void;
 
@@ -463,7 +465,7 @@ declare module kendo.effects {
     }
 }
 
-declare module kendo.data {
+declare namespace kendo.data {
     interface ObservableObjectEvent {
         sender?: ObservableObject;
         field?: string;
@@ -505,7 +507,7 @@ declare module kendo.data {
         render(value: Object): string;
     }
 
-    module binders { }
+    namespace binders { }
 
     interface Bindings {
         [key: string]: Binding;
@@ -1286,11 +1288,11 @@ declare module kendo.data {
     }
 }
 
-declare module kendo.data.transports {
+declare namespace kendo.data.transports {
     var odata: DataSourceTransport;
 }
 
-declare module kendo.ui {
+declare namespace kendo.ui {
     function progress(container: JQuery, toggle: boolean): void;
 
     class Widget extends Observable {
@@ -1437,7 +1439,7 @@ declare module kendo.ui {
 }
 
 % if suite =~ /mobile|all/
-declare module kendo.mobile {
+declare namespace kendo.mobile {
     function init(selector: string): void;
     function init(element: JQuery): void;
     function init(element: Element): void;
@@ -1479,7 +1481,7 @@ declare module kendo.mobile {
     }
 }
 
-declare module kendo.mobile.ui {
+declare namespace kendo.mobile.ui {
 
     class Widget extends kendo.ui.Widget {
     }
@@ -1505,26 +1507,26 @@ declare module kendo.mobile.ui {
 }
 % end
 % if suite =~ /all|dataviz/
-declare module kendo.dataviz.ui {
+declare namespace kendo.dataviz.ui {
     function registerTheme(name: string, options: any): void;
 
     function plugin(widget: typeof kendo.ui.Widget): void;
     function plugin(widget: any): void;
 }
 
-declare module kendo.dataviz.map.layer {
+declare namespace kendo.dataviz.map.layer {
     class Shape {
     }
 }
 
-declare module kendo.drawing.pdf {
+declare namespace kendo.drawing.pdf {
     function saveAs(group: kendo.drawing.Group, fileName: string,
                     proxyUrl?: string, callback?: Function): void;
 }
 
 % end
 % namespaces.keys.each do |key|
-declare module <%= key %> {
+declare namespace <%= key %> {
 %   namespaces[key].each do |component|
 <%= component.type_script_class %>
 
@@ -1534,7 +1536,7 @@ declare module <%= key %> {
 
 % drawing_aliases = namespaces.select {|ns| ns == 'kendo.drawing' || ns == 'kendo.geometry'}
 % drawing_aliases.keys.each do |key|
-declare module <%= key.sub('kendo', 'kendo.dataviz') %> {
+declare namespace <%= key.sub('kendo', 'kendo.dataviz') %> {
 %   namespaces[key].each do |component|
 <%= component.type_script_class %>
 
