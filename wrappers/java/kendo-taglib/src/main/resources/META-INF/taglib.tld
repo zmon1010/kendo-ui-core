@@ -23610,7 +23610,7 @@ attachment; filename="&lt;fileName.pdf&gt;".</description>
             <description>A scale factor.  In many cases, text size on screen will be too big for print, so you can use this option to scale down the output in PDF.  See the documentation in drawDOM.</description>
             <name>scale</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>Sets the subject of the PDF file.</description>

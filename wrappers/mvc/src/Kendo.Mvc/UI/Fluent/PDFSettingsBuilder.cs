@@ -220,6 +220,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// A scale factor. In many cases, text size on screen will be too big for print, so you can use this option to scale down the output in PDF.
+        /// </summary>
+        public PDFSettingsBuilder Scale(double scale)
+        {
+            pdf.Scale = scale;
+            return this;
+        }
+
+        /// <summary>
         /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
         /// </summary>
         /// <param name="value">The value for Template</param>

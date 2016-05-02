@@ -39,6 +39,8 @@ namespace Kendo.Mvc.UI
 
         public bool? RepeatHeaders { get; set; }
 
+        public double? Scale { get; set; }
+
         public IDictionary<string, object> Margin { get; set; }
 
         public bool ForceProxy
@@ -136,6 +138,11 @@ namespace Kendo.Mvc.UI
             if (RepeatHeaders.HasValue)
             {
                 json["repeatHeaders"] = RepeatHeaders;
+            }
+
+            if (Scale.HasValue)
+            {
+                json["scale"] = Scale;
             }
 
             if (ForceProxy)

@@ -32,26 +32,26 @@
         </p>
     </div>
 
-	<style>
-	    /*
-	        Use the DejaVu Sans font for display and embedding in the PDF file.
-	        The standard PDF fonts have no support for Unicode characters.
-	    */
-	    .k-grid {
-	        font-family: "DejaVu Sans", "Arial", sans-serif;
-	    }
-	
-	    /* Hide the Grid header and pager during export */
-	    .k-pdf-export .k-grid-toolbar,
-	    .k-pdf-export .k-pager-wrap
-	    {
-	        display: none;
-	    }
-	</style>
+    <style>
+        /*
+            Use the DejaVu Sans font for display and embedding in the PDF file.
+            The standard PDF fonts have no support for Unicode characters.
+        */
+        .k-grid {
+            font-family: "DejaVu Sans", "Arial", sans-serif;
+        }
 
-	<!-- Load Pako ZLIB library to enable PDF compression -->
-	<script src="../resources/shared/js/pako.min.js"></script>
-	
+        /* Hide the Grid header and pager during export */
+        .k-pdf-export .k-grid-toolbar,
+        .k-pdf-export .k-pager-wrap
+        {
+            display: none;
+        }
+    </style>
+
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="../resources/shared/js/pako.min.js"></script>
+
     <script type="x/kendo-template" id="page-template">
       <div class="page-template">
         <div class="header">
@@ -64,45 +64,45 @@
         </div>
       </div>
     </script>
-    
-	<kendo:grid name="grid" groupable="true" sortable="true" style="height:550px;">
+
+    <kendo:grid name="grid" groupable="true" sortable="true" style="height:550px;">
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="pdf" />
         </kendo:grid-toolbar>
         <kendo:grid-pdf allPages="true" avoidLinks="true" paperSize="A4"
-            landscape="true" repeatHeaders="true" template="page-template"
-			proxyURL="${saveUrl}" fileName="Kendo UI Grid Export.pdf">
-			<kendo:grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="1cm" />
-		</kendo:grid-pdf>
-		<kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5">
-		</kendo:grid-pageable>
-	    <kendo:grid-columns>
-	        <kendo:grid-column title="Contact Name" field="contactName" width="240" 
-	        	template="<div class='customer-photo' style='background-image: url(../resources/web/Customers/#:data.customerId#.jpg);'></div><div class='customer-name'>#: contactName #</div>">            	
-	        </kendo:grid-column>
-	        <kendo:grid-column title="Contact Title" field="contactTitle" />
-	        <kendo:grid-column title="Company Name" field="companyName" />
-	        <kendo:grid-column title="Country" field="country" width="150" />
-	    </kendo:grid-columns>
-	    <kendo:dataSource pageSize="10">
-	         <kendo:dataSource-schema>
-	            <kendo:dataSource-schema-model>
-	                <kendo:dataSource-schema-model-fields>
-	                    <kendo:dataSource-schema-model-field name="contactName" type="string" />
-	                    <kendo:dataSource-schema-model-field name="contactTitle" type="string" />
-	                    <kendo:dataSource-schema-model-field name="companyName" type="string" />
-	                    <kendo:dataSource-schema-model-field name="country" type="string" />
-	                </kendo:dataSource-schema-model-fields>
-	            </kendo:dataSource-schema-model>
-	        </kendo:dataSource-schema>
-	        <kendo:dataSource-transport>
-	            <kendo:dataSource-transport-read url="${transportReadUrl}"/>
-	        </kendo:dataSource-transport>
-	    </kendo:dataSource>
-	</kendo:grid>
-	
-	
-	 <style type="text/css">
+            landscape="true" repeatHeaders="true" template="page-template" scale="0.8"
+            proxyURL="${saveUrl}" fileName="Kendo UI Grid Export.pdf">
+            <kendo:grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="1cm" />
+        </kendo:grid-pdf>
+        <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5">
+        </kendo:grid-pageable>
+        <kendo:grid-columns>
+            <kendo:grid-column title="Contact Name" field="contactName" width="240"
+                template="<div class='customer-photo' style='background-image: url(../resources/web/Customers/#:data.customerId#.jpg);'></div><div class='customer-name'>#: contactName #</div>">
+            </kendo:grid-column>
+            <kendo:grid-column title="Contact Title" field="contactTitle" />
+            <kendo:grid-column title="Company Name" field="companyName" />
+            <kendo:grid-column title="Country" field="country" width="150" />
+        </kendo:grid-columns>
+        <kendo:dataSource pageSize="10">
+             <kendo:dataSource-schema>
+                <kendo:dataSource-schema-model>
+                    <kendo:dataSource-schema-model-fields>
+                        <kendo:dataSource-schema-model-field name="contactName" type="string" />
+                        <kendo:dataSource-schema-model-field name="contactTitle" type="string" />
+                        <kendo:dataSource-schema-model-field name="companyName" type="string" />
+                        <kendo:dataSource-schema-model-field name="country" type="string" />
+                    </kendo:dataSource-schema-model-fields>
+                </kendo:dataSource-schema-model>
+            </kendo:dataSource-schema>
+            <kendo:dataSource-transport>
+                <kendo:dataSource-transport-read url="${transportReadUrl}"/>
+            </kendo:dataSource-transport>
+        </kendo:dataSource>
+    </kendo:grid>
+
+
+     <style type="text/css">
         /* Page Template for the exported PDF */
         .page-template {
           font-family: "DejaVu Sans", "Arial", sans-serif;
@@ -139,25 +139,25 @@
           transform: rotate(-35deg) scale(1.7, 1.5);
         }
 
-        /* Content styling */	 
-	    .customer-photo {
-	        display: inline-block;
-	        width: 32px;
-	        height: 32px;
-	        border-radius: 50%;
-	        background-size: 32px 35px;
-	        background-position: center center;
-	        vertical-align: middle;
-	        line-height: 32px;
-	        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
-	        margin-left: 5px;
-	    }
-	
-	    .customer-name {
-	        display: inline-block;
-	        vertical-align: middle;
-	        line-height: 32px;
-	        padding-left: 3px;
-	    }
-	</style>  
+        /* Content styling */
+        .customer-photo {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-size: 32px 35px;
+            background-position: center center;
+            vertical-align: middle;
+            line-height: 32px;
+            box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+            margin-left: 5px;
+        }
+
+        .customer-name {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 32px;
+            padding-left: 3px;
+        }
+    </style>
 <demo:footer />

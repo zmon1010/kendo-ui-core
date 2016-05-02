@@ -169,11 +169,11 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("repeatHeaders", value);
     }
 
-    public java.lang.Object getScale() {
-        return (java.lang.Object)getProperty("scale");
+    public float getScale() {
+        return (Float)getProperty("scale");
     }
 
-    public void setScale(java.lang.Object value) {
+    public void setScale(float value) {
         setProperty("scale", value);
     }
 

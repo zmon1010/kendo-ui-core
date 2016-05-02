@@ -139,7 +139,7 @@ The default "auto" means paper size is determined by content.Supported values:
 
     /**
     * A scale factor.  In many cases, text size on screen will be too big for print, so you can use this option to scale down the output in PDF.  See the documentation in drawDOM.
-    * @param float|array| $value
+    * @param float $value
     * @return \Kendo\UI\GridPdf
     */
     public function scale($value) {
