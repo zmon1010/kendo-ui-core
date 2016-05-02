@@ -49,6 +49,8 @@ namespace Kendo.Mvc.UI
 
         public string TemplateId { get; set; }
 
+        public string Value { get; set; }
+
         public bool? ValuePrimitive { get; set; }
 
         public AutoCompleteVirtualSettings Virtual { get; } = new AutoCompleteVirtualSettings();
@@ -163,6 +165,11 @@ namespace Kendo.Mvc.UI
             else if (Template.HasValue())
             {
                 settings["template"] = Template;
+            }
+
+            if (Value?.HasValue() == true)
+            {
+                settings["value"] = Value;
             }
 
             if (ValuePrimitive.HasValue)

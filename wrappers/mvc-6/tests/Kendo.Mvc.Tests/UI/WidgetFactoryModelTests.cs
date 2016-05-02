@@ -345,51 +345,51 @@ namespace Kendo.Mvc.UI.Tests
             builder.ToComponent().Value.ShouldBeNull();
         }
 
-        //[Fact]
-        //public void AutoCompleteFor_should_return_new_instance()
-        //{
-        //    Assert.NotNull(factory.AutoCompleteFor(m => m.ID));
-        //}
+        [Fact]
+        public void AutoCompleteFor_should_return_new_instance()
+        {
+            Assert.NotNull(factory.AutoCompleteFor(m => m.ID));
+        }
 
-        //[Fact]
-        //public void AutoCompleteFor_should_return_new_instance_with_set_name()
-        //{
-        //    var builder = factory.AutoCompleteFor(m => m.ID);
+        [Fact]
+        public void AutoCompleteFor_should_return_new_instance_with_set_name()
+        {
+            var builder = factory.AutoCompleteFor(m => m.ID);
 
-        //    Assert.Equal("ID", builder.ToComponent().Name);
-        //}
+            Assert.Equal("ID", builder.ToComponent().Name);
+        }
 
-        //[Fact]
-        //public void AutoCompleteFor_should_return_new_instance_with_value_from_expression_null()
-        //{
-        //    var builder = factory.AutoCompleteFor(m => m.NullableInt);
+        [Fact]
+        public void AutoCompleteFor_should_return_new_instance_with_value_from_expression_null()
+        {
+            var builder = factory.AutoCompleteFor(m => m.NullableInt);
 
-        //    Assert.Equal(null, builder.ToComponent().Value);
-        //}
+            Assert.Equal(null, builder.ToComponent().Value);
+        }
 
-        //[Fact]
-        //public void AutoCompleteFor_should_return_new_instance_with_set_value()
-        //{
-        //    var builder = factory.AutoCompleteFor(m => m.ID);
+        [Fact]
+        public void AutoCompleteFor_should_return_new_instance_with_set_value()
+        {
+            var builder = factory.AutoCompleteFor(m => m.ID);
 
-        //    Assert.Equal(htmlHelper.ViewData.Model.ID.ToString(), builder.ToComponent().Value);
-        //}
+            Assert.Equal(htmlHelper.ViewData.Model.ID.ToString(), builder.ToComponent().Value);
+        }
 
-        //[Fact]
-        //public void AutoCompleteBoxFor_should_return_new_instance_with_set_text_value_for_enum_type()
-        //{
-        //    var builder = factory.AutoCompleteFor(m => m.EnumProperty);
+        [Fact]
+        public void AutoCompleteBoxFor_should_return_new_instance_with_set_text_value_for_enum_type()
+        {
+            var builder = factory.AutoCompleteFor(m => m.EnumProperty);
 
-        //    Assert.Equal(htmlHelper.ViewData.Model.EnumProperty.ToString(), builder.ToComponent().Value);
-        //}
+            Assert.Equal(htmlHelper.ViewData.Model.EnumProperty.ToString(), builder.ToComponent().Value);
+        }
 
-        //[Fact]
-        //public void AutoCompleteFor_should_not_set_value_if_Model_is_not_predifined_type()
-        //{
-        //    var builder = factory.AutoCompleteFor(m => m.ComplexModel);
+        [Fact]
+        public void AutoCompleteFor_should_not_set_value_if_Model_is_not_predifined_type()
+        {
+            var builder = factory.AutoCompleteFor(m => m.ComplexModel);
 
-        //    builder.ToComponent().Value.ShouldBeNull();
-        //}
+            builder.ToComponent().Value.ShouldBeNull();
+        }
 
         //[Fact]
         //public void TextBoxFor_should_return_new_instance_with_set_value_for_enum_type()

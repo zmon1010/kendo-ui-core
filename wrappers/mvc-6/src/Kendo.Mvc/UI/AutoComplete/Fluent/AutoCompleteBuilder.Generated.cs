@@ -210,6 +210,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The value of the widget.
+        /// </summary>
+        /// <param name="value">The value for Value</param>
+        public AutoCompleteBuilder Value(string value)
+        {
+            Container.Value = value;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the value binding behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item text field. If set to false, the View-Model field will be updated with the selected item.
         /// </summary>
         /// <param name="value">The value for ValuePrimitive</param>
