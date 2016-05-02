@@ -229,6 +229,15 @@ refer to Popup documentation.
     }
 
     /**
+    * The value of the widget.
+    * @param string $value
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function value($value) {
+        return $this->setProperty('value', $value);
+    }
+
+    /**
     * Specifies the value binding behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item text field. If set to false, the View-Model field will be updated with the selected item.
     * @param boolean $value
     * @return \Kendo\UI\AutoComplete

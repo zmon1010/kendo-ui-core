@@ -136,6 +136,12 @@ refer to Popup documentation.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The value of the widget.</description>
+            <name>value</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies the value binding behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item text field. If set to false, the View-Model field will be updated with the selected item.</description>
             <name>valuePrimitive</name>
             <rtexprvalue>true</rtexprvalue>

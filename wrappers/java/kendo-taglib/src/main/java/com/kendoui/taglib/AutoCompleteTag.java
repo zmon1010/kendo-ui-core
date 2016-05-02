@@ -226,6 +226,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("template", value);
     }
 
+    public java.lang.String getValue() {
+        return (java.lang.String)getProperty("value");
+    }
+
+    public void setValue(java.lang.String value) {
+        setProperty("value", value);
+    }
+
     public boolean getValuePrimitive() {
         return (Boolean)getProperty("valuePrimitive");
     }
