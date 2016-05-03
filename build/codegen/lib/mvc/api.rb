@@ -47,6 +47,14 @@ title: <%= name %>
             @fields = []
         end
 
+        def api_link(namespace = nil)
+            namespace = 'ui'
+            namespace = 'data' if @name =~ /^DataSource/
+            namespace = 'dataviz/ui' if @name =~ /^Chart|Map|Diagram/
+
+            super(namespace)
+        end
+
         def empty?
             @methods.empty? && @fields.empty? && @properties.empty? && @summary
         end

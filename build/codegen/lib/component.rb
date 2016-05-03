@@ -42,13 +42,14 @@ module CodeGen
             Field
         end
 
-        def api_link
-            directory = 'ui';
+        def api_link(namespace = nil)
+            unless namespace
+                namespace = 'ui'
+                namespace = 'data' if @full_name.start_with?('kendo.data.')
+                namespace = 'dataviz/ui' if @full_name.start_with?('kendo.dataviz')
+            end
 
-            directory = 'data' if @full_name.start_with?('kendo.data.')
-            directory = 'dataviz/ui' if @full_name.start_with?('kendo.dataviz')
-
-            "/api/javascript/#{directory}/#{js_name.downcase}"
+            "/api/javascript/#{namespace}/#{js_name.downcase}"
         end
 
         def js_name
