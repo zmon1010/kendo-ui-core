@@ -1335,9 +1335,15 @@ var MSWordFormatCleaner = Cleaner.extend({
     },
 
     removeFormatting: function (placeholder) {
-        $(placeholder).find("*").css({
-            fontSize: "",
-            fontFamily: ""
+        $(placeholder).find("*").each(function() {
+            $(this).css({
+                fontSize: "",
+                fontFamily: ""
+            });
+
+            if (!this.getAttribute("style") && !this.style.cssText) {
+                this.removeAttribute("style");
+            }
         });
     },
 

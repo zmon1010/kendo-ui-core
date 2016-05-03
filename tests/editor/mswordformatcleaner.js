@@ -467,6 +467,7 @@ test("converts font tags to spans", function() {
     });
 
     test("msAllFormatting removes font-family", function () {
+
         cleaner.options.msAllFormatting = true;
         equalClean(
             '<p class="MsoNormal">Another <span style="font-family:&quot;Source Code Pro&quot;">para</span>graph<o:p></o:p></p>',
