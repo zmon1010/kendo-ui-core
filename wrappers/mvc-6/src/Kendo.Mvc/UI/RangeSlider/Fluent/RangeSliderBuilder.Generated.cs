@@ -21,6 +21,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The title of the left drag handle of the RangeSlider.
+        /// </summary>
+        /// <param name="value">The value for LeftDragHandleTitle</param>
+        public RangeSliderBuilder<T> LeftDragHandleTitle(string value)
+        {
+            Container.LeftDragHandleTitle = value;
+            return this;
+        }
+
+        /// <summary>
         /// The maximum value of the RangeSlider.
         /// </summary>
         /// <param name="value">The value for Max</param>
@@ -41,14 +51,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// F
-		/// The orientation of a RangeSlider; "horizontal" or
-		/// "vertical".
+        /// The orientation of a RangeSlider - "horizontal" or "vertical".
         /// </summary>
         /// <param name="value">The value for Orientation</param>
         public RangeSliderBuilder<T> Orientation(SliderOrientation value)
         {
             Container.Orientation = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The title of the right drag handle of the RangeSlider.
+        /// </summary>
+        /// <param name="value">The value for RightDragHandleTitle</param>
+        public RangeSliderBuilder<T> RightDragHandleTitle(string value)
+        {
+            Container.RightDragHandleTitle = value;
             return this;
         }
 

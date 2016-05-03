@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public string DecreaseButtonTitle { get; set; }
 
+        public string DragHandleTitle { get; set; }
+
         public string IncreaseButtonTitle { get; set; }
 
         public T? LargeStep { get; set; }
@@ -41,6 +43,11 @@ namespace Kendo.Mvc.UI
             if (DecreaseButtonTitle?.HasValue() == true)
             {
                 settings["decreaseButtonTitle"] = DecreaseButtonTitle;
+            }
+
+            if (DragHandleTitle?.HasValue() == true)
+            {
+                settings["dragHandleTitle"] = DragHandleTitle;
             }
 
             if (IncreaseButtonTitle?.HasValue() == true)

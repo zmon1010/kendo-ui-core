@@ -13,11 +13,15 @@ namespace Kendo.Mvc.UI
     {
         public T? LargeStep { get; set; }
 
+        public string LeftDragHandleTitle { get; set; }
+
         public T? Max { get; set; }
 
         public T? Min { get; set; }
 
         public SliderOrientation? Orientation { get; set; }
+
+        public string RightDragHandleTitle { get; set; }
 
         public T? SelectionEnd { get; set; }
 
@@ -39,6 +43,11 @@ namespace Kendo.Mvc.UI
                 settings["largeStep"] = LargeStep;
             }
 
+            if (LeftDragHandleTitle?.HasValue() == true)
+            {
+                settings["leftDragHandleTitle"] = LeftDragHandleTitle;
+            }
+
             if (Max.HasValue)
             {
                 settings["max"] = Max;
@@ -52,6 +61,11 @@ namespace Kendo.Mvc.UI
             if (Orientation.HasValue)
             {
                 settings["orientation"] = Orientation?.Serialize();
+            }
+
+            if (RightDragHandleTitle?.HasValue() == true)
+            {
+                settings["rightDragHandleTitle"] = RightDragHandleTitle;
             }
 
             if (SelectionEnd.HasValue)

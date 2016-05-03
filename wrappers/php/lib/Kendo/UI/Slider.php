@@ -23,6 +23,15 @@ class Slider extends \Kendo\UI\Widget {
     }
 
     /**
+    * The title of the drag handle of the Slider.
+    * @param string $value
+    * @return \Kendo\UI\Slider
+    */
+    public function dragHandleTitle($value) {
+        return $this->setProperty('dragHandleTitle', $value);
+    }
+
+    /**
     * The title of the increase button of the Slider.
     * @param string $value
     * @return \Kendo\UI\Slider

@@ -53,6 +53,15 @@ handle must be focused). Note: The allied largeStep will also set large tick for
     }
 
     /**
+    * The title of the left drag handle of the RangeSlider.
+    * @param string $value
+    * @return \Kendo\UI\RangeSlider
+    */
+    public function leftDragHandleTitle($value) {
+        return $this->setProperty('leftDragHandleTitle', $value);
+    }
+
+    /**
     * The maximum value of the RangeSlider.
     * @param float $value
     * @return \Kendo\UI\RangeSlider
@@ -71,14 +80,21 @@ handle must be focused). Note: The allied largeStep will also set large tick for
     }
 
     /**
-    * F
-The orientation of a RangeSlider; "horizontal" or
-"vertical".
+    * The orientation of a RangeSlider - "horizontal" or "vertical".
     * @param string $value
     * @return \Kendo\UI\RangeSlider
     */
     public function orientation($value) {
         return $this->setProperty('orientation', $value);
+    }
+
+    /**
+    * The title of the right drag handle of the RangeSlider.
+    * @param string $value
+    * @return \Kendo\UI\RangeSlider
+    */
+    public function rightDragHandleTitle($value) {
+        return $this->setProperty('rightDragHandleTitle', $value);
     }
 
     /**

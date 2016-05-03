@@ -73,6 +73,14 @@ public class SliderTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("decreaseButtonTitle", value);
     }
 
+    public java.lang.String getDragHandleTitle() {
+        return (java.lang.String)getProperty("dragHandleTitle");
+    }
+
+    public void setDragHandleTitle(java.lang.String value) {
+        setProperty("dragHandleTitle", value);
+    }
+
     public java.lang.String getIncreaseButtonTitle() {
         return (java.lang.String)getProperty("increaseButtonTitle");
     }

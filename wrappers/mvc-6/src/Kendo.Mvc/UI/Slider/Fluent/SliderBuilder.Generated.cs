@@ -20,6 +20,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The title of the drag handle of the Slider.
+        /// </summary>
+        /// <param name="value">The value for DragHandleTitle</param>
+        public SliderBuilder<T> DragHandleTitle(string value)
+        {
+            Container.DragHandleTitle = value;
+            return this;
+        }
+
+        /// <summary>
         /// The title of the increase button of the Slider.
         /// </summary>
         /// <param name="value">The value for IncreaseButtonTitle</param>

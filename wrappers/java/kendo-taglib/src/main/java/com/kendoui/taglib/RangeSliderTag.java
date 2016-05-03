@@ -105,6 +105,14 @@ public class RangeSliderTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("largeStep", value);
     }
 
+    public java.lang.String getLeftDragHandleTitle() {
+        return (java.lang.String)getProperty("leftDragHandleTitle");
+    }
+
+    public void setLeftDragHandleTitle(java.lang.String value) {
+        setProperty("leftDragHandleTitle", value);
+    }
+
     public float getMax() {
         return (Float)getProperty("max");
     }
@@ -127,6 +135,14 @@ public class RangeSliderTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setOrientation(java.lang.String value) {
         setProperty("orientation", value);
+    }
+
+    public java.lang.String getRightDragHandleTitle() {
+        return (java.lang.String)getProperty("rightDragHandleTitle");
+    }
+
+    public void setRightDragHandleTitle(java.lang.String value) {
+        setProperty("rightDragHandleTitle", value);
     }
 
     public float getSelectionEnd() {

@@ -29181,6 +29181,12 @@ handle must be focused). Note: The allied largeStep will also set large tick for
             <type>float</type>
         </attribute>
         <attribute>
+            <description>The title of the left drag handle of the RangeSlider.</description>
+            <name>leftDragHandleTitle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The maximum value of the RangeSlider.</description>
             <name>max</name>
             <rtexprvalue>true</rtexprvalue>
@@ -29193,10 +29199,14 @@ handle must be focused). Note: The allied largeStep will also set large tick for
             <type>float</type>
         </attribute>
         <attribute>
-            <description>F
-The orientation of a RangeSlider; "horizontal" or
-"vertical".</description>
+            <description>The orientation of a RangeSlider - "horizontal" or "vertical".</description>
             <name>orientation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the right drag handle of the RangeSlider.</description>
+            <name>rightDragHandleTitle</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -30941,6 +30951,12 @@ If the developer wants to control the day and month order then one needs to defi
         <attribute>
             <description>The title of the decrease button of the Slider.</description>
             <name>decreaseButtonTitle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the drag handle of the Slider.</description>
+            <name>dragHandleTitle</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
