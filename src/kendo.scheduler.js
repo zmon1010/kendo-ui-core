@@ -1831,6 +1831,7 @@ var __meta__ = { // jshint ignore:line
             if (options.events && options.events.length) {
                 that._selectEvents(options.events, selectedGroups);
                 that._select();
+
                 return;
             }
 
@@ -1986,6 +1987,10 @@ var __meta__ = { // jshint ignore:line
             var wrapper = that.wrapper;
             var current = view.current();
             var selection = that._selection;
+
+           if (!selection) {
+               return;
+           }
 
             if (current) {
                 current.removeAttribute("id");

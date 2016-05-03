@@ -651,8 +651,6 @@
         }, options);
 
         scheduler = new Scheduler(container, options);
-
-        container.focus();
     }
 
     test("scheduler adjust selection when moving from view with timeslots to view with dayslots", function() {
@@ -700,6 +698,8 @@
 
     test("Scheduler raises change event on shift + keydown navigation", 1, function() {
         setupWidget();
+
+        container.focus();
 
         scheduler.bind("change", function(e) {
             equal(e.slots.length, 2);
