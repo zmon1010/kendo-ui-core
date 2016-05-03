@@ -15,8 +15,6 @@ namespace Kendo.Mvc.UI
     public partial class Slider<T> : WidgetBase, IInputComponent<T>
         where T : struct, IComparable
     {
-        public string DragHandleTitle { get; set; }
-
         public Slider(ViewContext viewContext) : base(viewContext)
         {
         }
@@ -87,11 +85,6 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
-
-            if (DragHandleTitle.HasValue())
-            {
-                settings["dragHandleTitle"] = DragHandleTitle;
-            }
 
             writer.Write(Initializer.Initialize(Selector, "Slider", settings));
         }

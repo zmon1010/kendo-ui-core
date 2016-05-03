@@ -17,10 +17,6 @@ namespace Kendo.Mvc.UI
         {
         }
 
-        public string LeftDragHandleTitle { get; set; }
-
-        public string RightDragHandleTitle { get; set; }
-
         public override void ProcessSettings()
         {
             if (!SelectionStart.HasValue)
@@ -108,16 +104,6 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
-
-            if (LeftDragHandleTitle.HasValue())
-            {
-                settings["leftDragHandleTitle"] = LeftDragHandleTitle;
-            }
-
-            if (RightDragHandleTitle.HasValue())
-            {
-                settings["rightDragHandleTitle"] = RightDragHandleTitle;
-            }
 
             writer.Write(Initializer.Initialize(Selector, "RangeSlider", settings));
         }
