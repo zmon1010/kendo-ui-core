@@ -68,8 +68,6 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
@@ -87,20 +85,15 @@
                     <ComboBox Grid.Row="5" Name="ModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Top" 
                               ItemsSource="{Binding ModelTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedModelType, Mode=OneWayToSource}" />
 
-                    <CheckBox Grid.Row="6" Content="Use an existing ViewModel" Name="UseViewModel" HorizontalAlignment="Left" VerticalAlignment="Center" Click="UseViewModel_Clicked" IsChecked="{Binding UseViewModel, Mode=TwoWay}" />
-                    <Label Grid.Row="7" x:Name="ViewModelTypeLabel" Content="ViewModel Class:" Visibility="Collapsed" VerticalAlignment="Bottom" />
-                    <ComboBox Grid.Row="8" x:Name="ViewModelType" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="top" Width="311" Height="23"
-                        	ItemsSource="{Binding ModelTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedViewModelType, Mode=OneWayToSource}" />
-
-                    <Label Grid.Row="9" Content="Data Context Class:" VerticalAlignment="Bottom" />
-                    <ComboBox Grid.Row="10" Grid.Column="1" Width="311" Height="23" Name="DataContextClass" HorizontalAlignment="Left"  VerticalAlignment="Top"
+                    <Label Grid.Row="6" Content="Data Context Class:" VerticalAlignment="Bottom" />
+                    <ComboBox Grid.Row="7" Grid.Column="1" Width="311" Height="23" Name="DataContextClass" HorizontalAlignment="Left"  VerticalAlignment="Top"
                     		ItemsSource="{Binding DbContextTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedDbContextType, Mode=OneWayToSource}" />
                     
-                    <Label Grid.Row="11" Content="Parent Field Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                    <TextBox Grid.Row="12" Name="ParentIdFieldName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ParentIdFieldName}" />
+                    <Label Grid.Row="8" Content="Parent Field Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                    <TextBox Grid.Row="9" Name="ParentIdFieldName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ParentIdFieldName}" />
 
-                    <Label Grid.Row="13" Content="Has Children Field Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                    <TextBox Grid.Row="14" Name="HasChildrenFieldName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding HasChildrenFieldName}" />
+                    <Label Grid.Row="10" Content="Has Children Field Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                    <TextBox Grid.Row="11" Name="HasChildrenFieldName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding HasChildrenFieldName}" />
                 </Grid>
             </TabItem>
             <TabItem Height="36" Width="220" Header="TreeView options">

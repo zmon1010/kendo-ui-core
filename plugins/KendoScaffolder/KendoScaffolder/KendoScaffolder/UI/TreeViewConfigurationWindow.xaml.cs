@@ -68,21 +68,6 @@ namespace KendoScaffolder.UI
             this.DialogResult = true;
         }
 
-        private void UseViewModel_Clicked(object sender, RoutedEventArgs e)
-        {
-            if (ViewModelType.Visibility == Visibility.Visible)
-            {
-                ViewModelType.Visibility = Visibility.Collapsed;
-                ViewModelTypeLabel.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                ViewModelType.Visibility = Visibility.Visible;
-                ViewModelTypeLabel.Visibility = Visibility.Visible;
-            }
-            ToggleAddButtonState();
-        }
-
         private void ControllerName_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             TextBox current = ((TextBox)sender);
@@ -104,17 +89,9 @@ namespace KendoScaffolder.UI
 
         private void ToggleAddButtonState()
         {
-            bool useViewModel = UseViewModel.IsChecked ?? false;
             if (ModelType.SelectedValue != null && DataContextClass.SelectedValue != null)
             {
-                if (!useViewModel || (useViewModel && ViewModelType.SelectedValue != null))
-                {
-                    AddButton.IsEnabled = true;
-                }
-                else
-                {
-                    AddButton.IsEnabled = false;
-                }
+                AddButton.IsEnabled = true;
             }
             else
             {
