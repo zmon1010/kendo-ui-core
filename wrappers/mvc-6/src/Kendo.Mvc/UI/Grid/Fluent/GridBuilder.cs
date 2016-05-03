@@ -146,8 +146,12 @@ namespace Kendo.Mvc.UI.Fluent
 		/// </example>
 		public GridBuilder<T> DataSource(Action<DataSourceBuilder<T>> configurator)
 		{
+			Component.DataSource.ServerAggregates = true;
+			Component.DataSource.ServerFiltering = true;
+			Component.DataSource.ServerGrouping = true;
+			Component.DataSource.ServerPaging = true;
+			Component.DataSource.ServerSorting = true;
 			configurator(new DataSourceBuilder<T>(Component.DataSource, Component.ViewContext, Component.UrlGenerator));
-
 			return this;
 		}
 

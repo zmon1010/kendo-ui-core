@@ -36,12 +36,7 @@ namespace Kendo.Mvc.UI
 
 			DataSource = new DataSource(ModelMetadataProvider)
 			{
-				Type = DataSourceType.Server,
-				ServerAggregates = true,
-				ServerFiltering = true,
-				ServerGrouping = true,
-				ServerPaging = true,
-				ServerSorting = true
+				Type = DataSourceType.Ajax
 			};
 
 			DataSource.ModelType(typeof(T));
