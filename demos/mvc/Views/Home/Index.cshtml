@@ -53,14 +53,16 @@
                 <div id="mobileDemosQR"></div>
 
                 <script type="text/javascript">
-                    $("#mobileDemosQR").kendoQRCode({
-                        value: window.location.href,
-                        size: 110,
-                        color: "#333333",
-                        border: {
-                            color: "#666666",
-                            width: 1
-                        }
+                    $(function() {
+                        $("#mobileDemosQR").kendoQRCode({
+                            value: window.location.href,
+                            size: 110,
+                            color: "#333333",
+                            border: {
+                                color: "#666666",
+                                width: 1
+                            }
+                        });
                     });
                 </script>
             </div>
