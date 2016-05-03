@@ -23619,7 +23619,9 @@ attachment; filename="&lt;fileName.pdf&gt;".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.</description>
+            <description>A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include:
+* pageNumber
+* totalPages</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

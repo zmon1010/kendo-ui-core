@@ -137,7 +137,9 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
+        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include:
+		/// * pageNumber
+		/// * totalPages
         /// </summary>
         /// <param name="value">The value for Template</param>
         public GridPdfSettingsBuilder<T> Template(string value)
@@ -147,7 +149,9 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.
+        /// A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include:
+		/// * pageNumber
+		/// * totalPages
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
         public GridPdfSettingsBuilder<T> TemplateId(string templateId)
