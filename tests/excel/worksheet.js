@@ -159,6 +159,15 @@ test("toXML does not set the showGridLines attribute to 0 if it's true", functio
     equal(dom.find("sheetView").attr("showGridLines"), null);
 });
 
+test("toXML does not set the showGridLines attribute to 0 if it's undefined", function() {
+    var worksheet = Worksheet({
+    });
+
+    var dom = $(worksheet.toXML(0));
+
+    equal(dom.find("sheetView").attr("showGridLines"), null);
+});
+
 test("toXML sets the 'r' attribute to the alphanumeric when index is greater than 26", function() {
     var cells = new Array(27);
 

@@ -116,7 +116,7 @@ var WORKSHEET = kendo.template(
 '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" mc:Ignorable="x14ac">' +
    '<dimension ref="A1" />' +
    '<sheetViews>' +
-       '<sheetView #if(index==0) {# tabSelected="1" #}# workbookViewId="0" #if (!showGridLines) {# showGridLines="0" #}#>' +
+       '<sheetView #if(index==0) {# tabSelected="1" #}# workbookViewId="0" #if (showGridLines === false) {# showGridLines="0" #}#>' +
        '# if (frozenRows || frozenColumns) { #' +
        '<pane state="frozen"' +
        '# if (frozenColumns) { #' +
