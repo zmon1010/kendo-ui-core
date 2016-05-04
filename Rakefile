@@ -562,6 +562,7 @@ bundle :name => 'appbuilder.professional',
             'js' => APP_BUILDER_MIN_JS,
             'typescript' => FileList['resources/typescript/jquery.d.ts']
        },
+       :upload_to_appbuilder => true,
        :appbuilder_features => "Kendo UI DataViz"
 
 bundle :name => 'appbuilder.core',
@@ -576,7 +577,8 @@ bundle :name => 'appbuilder.core',
             'styles' => APP_BUILDER_CORE_MIN_CSS,
             'js' => APP_BUILDER_CORE_MIN_JS,
             'typescript' => FileList['resources/typescript/jquery.d.ts']
-       }
+       },
+       :upload_to_appbuilder => true
 
 # UI for JSP
 bundle :name => 'jsp.trial',
