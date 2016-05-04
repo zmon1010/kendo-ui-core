@@ -4,7 +4,7 @@ gem "rake"
 gem "github_api", "~> 0.12"
 gem "kramdown"
 gem "nokogiri"
-gem "selenium-webdriver", "~> 2.48.1"
+gem "selenium-webdriver", "~> 2.53.0"
 gem "rubyzip", "~> 1.1.4", :require => 'zip/zip'
 
 unless RUBY_PLATFORM =~ /darwin/
