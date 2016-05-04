@@ -9,7 +9,17 @@ namespace Kendo.Mvc.Rendering
 {
     public interface IKendoHtmlGenerator
     {
-		TagBuilder GenerateColorInput(
+        TagBuilder GenerateInput(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string id,
+            string name,
+            object value,
+            string format,
+            string type,
+            IDictionary<string, object> htmlAttributes);
+
+        TagBuilder GenerateColorInput(
 			ViewContext viewContext,
 			ModelMetadata metadata,
 			string id,

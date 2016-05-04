@@ -39,7 +39,7 @@ namespace Kendo.Mvc.Rendering
 
         public string IdAttributeDotReplacement { get; }
 
-        private TagBuilder GenerateInput(
+        public TagBuilder GenerateInput(
 		   ViewContext viewContext,
 		   ModelMetadata metadata,
 		   string id,
@@ -51,7 +51,11 @@ namespace Kendo.Mvc.Rendering
 		{
 			var tagBuilder = GenerateTag("input", viewContext, id, name, htmlAttributes);
             tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
-			tagBuilder.MergeAttribute("type", type);
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                tagBuilder.MergeAttribute("type", type);
+            }
 
 			var fullName = tagBuilder.Attributes["name"];
 			var valueParameter = FormatValue(value, format);
