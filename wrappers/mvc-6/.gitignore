@@ -2,6 +2,7 @@
 **/bower_components/**
 **/*.sln.ide/**
 **/*.vs/**
+**/project.lock.json
 artifacts/**
 **/bin/**
 **/Properties/debugSettings.json
