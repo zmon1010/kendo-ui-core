@@ -3004,9 +3004,7 @@ var __meta__ = { // jshint ignore:line
 
             treeListContent
                 .on("scroll", function() {
-                    that.scrollTop = this.scrollTop;
                     treeListHeader.scrollLeft(this.scrollLeft);
-                    timelineContent.scrollTop(this.scrollTop);
                 })
                 .on("DOMMouseScroll" + NS + " mousewheel" + NS, function(e) {
                     var scrollTop = timelineContent.scrollTop();

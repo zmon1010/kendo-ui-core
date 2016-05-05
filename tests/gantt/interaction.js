@@ -1027,20 +1027,6 @@
         }, 2);
     });
 
-    asyncTest("treelist scroll top timeline", function() {
-        expect(1);
-
-        var timelineContent = gantt.timeline.wrapper.find(".k-grid-content");
-        var treelistContent = gantt.list.element.find(".k-grid-content");
-
-        treelistContent.scrollTop(20);
-
-        setTimeout(function() {
-            equal(timelineContent.scrollTop(), treelistContent.scrollTop());
-            start();
-        }, 2);
-    });
-
     module("Content Focusable", {
         setup: function() {
             element = $("<div/>").appendTo(QUnit.fixture);
