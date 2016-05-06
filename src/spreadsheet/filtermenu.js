@@ -593,7 +593,7 @@
                     this.viewModel.valuesChange({ sender: this.valuesTreeView });
                     valueFilter = this.viewModel.valueFilter.toJSON();
 
-                    if (valueFilter.values && valueFilter.values.length) {
+                    if (valueFilter.blanks || (valueFilter.values && valueFilter.values.length)) {
                         options.valueFilter = valueFilter;
                     }
                 } else if (this.viewModel.active === "custom") {
