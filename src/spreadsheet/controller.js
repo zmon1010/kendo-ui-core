@@ -435,7 +435,7 @@
 
             this._selectionMode = SELECTION_MODES[object.type];
             this.appendSelection = event.mod;
-            this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
+            this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection, event.shiftKey);
         },
 
         onContextMenu: function(event) {

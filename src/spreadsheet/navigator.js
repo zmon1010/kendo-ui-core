@@ -121,9 +121,13 @@
             return ref;
         },
 
-        startSelection: function(ref, mode, addToExisting) {
+        startSelection: function(ref, mode, addToExisting, shiftKey) {
             if (mode == "autofill") {
                 this._sheet.startAutoFill();
+            } else if (shiftKey && mode == "range") {
+                var range = new RangeRef(this._sheet.activeCell().first(), ref);
+                this._sheet.select(range, false, false);
+                this._sheet.startSelection();
             } else {
                 this._sheet.startSelection();
                 this.select(ref, mode, addToExisting);
