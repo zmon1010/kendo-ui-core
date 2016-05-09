@@ -957,7 +957,7 @@
                 throw new Error("kendoEditor.exec(): `name` parameter cannot be empty");
             }
 
-            if (that.body.getAttribute("contenteditable") !== "true" && name !== "print") {
+            if (that.body.getAttribute("contenteditable") !== "true" && name !== "print" && name !== "pdf") {
                 return false;
             }
 

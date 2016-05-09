@@ -126,4 +126,22 @@ test("exec bold on empty range inserts tag", function() {
     equal(innerHTML(editor.body), "foo<strong>BOM<a></a>BOM</strong>");
 });
 
+function assertCommandReadOnlyMode(commandType, name){
+    var called = false;
+    withMock(commandType.prototype, "exec", function () { called = true; }, function() {
+        editor.value("foo");
+        editor.body.removeAttribute("contenteditable");
+        editor.exec(name);
+        ok(called);
+    });
+}
+
+test("exec print when conent area is not contenteditable", function(){
+    assertCommandReadOnlyMode(kendo.ui.editor.PrintCommand, "print");
+});
+
+test("exec pdf when conent area is not contenteditable", function(){
+    assertCommandReadOnlyMode(kendo.ui.editor.ExportPdfCommand, "pdf");
+});
+
 }());
