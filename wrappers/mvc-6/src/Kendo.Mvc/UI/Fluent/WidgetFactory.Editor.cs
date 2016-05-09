@@ -20,17 +20,5 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new EditorBuilder(new Editor(HtmlHelper.ViewContext));
         }
-
-        /// <summary>
-        /// Creates a new <see cref="Editor" /> UI component.
-        /// </summary>
-        public virtual EditorBuilder EditorFor(Expression<Func<TModel, string>> expression)
-        {
-            var metadata = GetModelExplorer(expression);
-
-            return Editor()
-                    .Expression(GetExpressionName(expression))
-                    .Value((string)metadata.Model);
-        }
     }
 }

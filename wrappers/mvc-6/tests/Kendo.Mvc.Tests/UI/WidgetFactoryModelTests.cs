@@ -415,6 +415,14 @@ namespace Kendo.Mvc.UI.Tests
             Assert.Equal(htmlHelper.ViewData.Model.EnumProperty.ToString(), builder.ToComponent().Value);
         }
 
+        [Fact]
+        public void EditorFor_should_return_builder()
+        {
+            var builder = factory.EditorFor(m => m.StringProperty);
+
+            Assert.Equal("value", builder.ToComponent().Value);
+        }
+
         public class TestModel
         {
             public int ID { get; set; }
@@ -440,6 +448,8 @@ namespace Kendo.Mvc.UI.Tests
             public TestModel ComplexModel { get; set; }
 
             public DayOfWeek EnumProperty { get; set; }
+
+            public string StringProperty { get; set; } = "value";
         }
     }
 }
