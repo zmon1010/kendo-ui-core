@@ -368,6 +368,10 @@
                 var sheet = range.sheet();
 
                 columnRange.forEachCell(function(row, col, cell) {
+                    if (sheet.isHiddenRow(row)) {
+                        return;
+                    }
+
                     if (cell.value === undefined) {
                         cell.dataType = "blank";
                     } else if (cell.format) {
