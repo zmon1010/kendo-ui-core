@@ -416,16 +416,36 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void EditorFor_should_return_builder()
+        public void EditorFor_should_set_Value()
         {
             var builder = factory.EditorFor(m => m.StringProperty);
 
             Assert.Equal("value", builder.ToComponent().Value);
         }
+        
+        [Fact]
+        public void CheckBoxFor_should_set_Checked()
+        {
+            var builder = factory.CheckBoxFor(m => m.BooleanProperty);
+
+            Assert.Equal(true, builder.ToComponent().Checked);
+        }
+
+        [Fact]
+        public void CheckBoxFor_should_set_Checked_to_false_with_nullable_bool()
+        {
+            var builder = factory.CheckBoxFor(m => m.NullableBoolean);
+
+            Assert.Equal(false, builder.ToComponent().Checked);
+        }
 
         public class TestModel
         {
             public int ID { get; set; }
+
+            public bool BooleanProperty { get; set; } = true;
+
+            public bool NullableBoolean { get; set; }
 
             [Range(1, 30)]
             public double DoubleProperty { get; set; }
