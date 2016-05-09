@@ -1931,10 +1931,9 @@ ul.keyboard-legend li a {
 }
 
 a.footer-links:hover,
-#overview a.footer-links:hover,
-#overview .copyright a:hover {
+#overview a.footer-links:hover {
     color: #49c3fb;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .quick-links {
@@ -1954,8 +1953,10 @@ a.footer-links:hover,
     color: #818692;
 }
 
-.copyright a {
+.copyright a,
+#overview .copyright a:hover {
   color: #ccc;
+  text-decoration: none;
 }
 
 /* Root navigation */
