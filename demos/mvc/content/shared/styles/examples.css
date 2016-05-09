@@ -1884,7 +1884,7 @@ ul.keyboard-legend li a {
     background-clip: padding-box;
     position: relative;
     display: inline-block;
-    padding: 0.667em 2.000em;
+    padding: 0.6em 2.000em 0.5em;
     line-height: 0.933em;
     transition-property: background-color, color;
     transition-duration: 0.2s;
@@ -1943,7 +1943,8 @@ ul.keyboard-legend li a {
 }
 
 a.footer-links:hover,
-#overview a.footer-links:hover {
+#overview a.footer-links:hover,
+#overview .copyright a:hover {
     color: #49c3fb;
     text-decoration: underline;
 }
@@ -1954,13 +1955,6 @@ a.footer-links:hover,
      padding-left: 20px;
 }
 
-#telerik-logo {
-    background: transparent url(icon-telerik-badge.png) 0 0 no-repeat;
-    width: 30px;
-    height: 27px;
-    float: left;
-}
-
 .copyright {
     line-height: 1.4em;
     padding-left: 20px;
@@ -1969,8 +1963,11 @@ a.footer-links:hover,
 
 .copyright p {
     font-size: 12px;
-    margin-left: 40px;
     color: #818692;
+}
+
+.copyright a {
+  color: #ccc;
 }
 
 /* Root navigation */
