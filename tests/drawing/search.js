@@ -34,6 +34,12 @@
             ok(shape3 === tree.pointShape(new Point(50, 120)));
         });
 
+        test("does not detect shapes without bounding box", function() {
+            var shape = new d.Path(options);
+            tree.add([shape]);
+            ok(shape !== tree.pointShape(new Point(0, 0)));
+        });
+
         test("detects shapes from a group", function() {
             ok(shape1 === tree.pointShape(new Point(20, 30)));
         });
@@ -50,6 +56,13 @@
             shape1.geometry().origin.setX(200);
             ok(shape1 === tree.pointShape(new Point(220, 50)));
             ok(!tree.pointShape(new Point(20, 30)));
+        });
+
+        test("detects shapes without initial bounding box after change of geometry", function() {
+            var shape = new d.Path(options);
+            tree.add([shape]);
+            shape.moveTo(0, 0).lineTo(100, 0).lineTo(100, 100).lineTo(0, 100).close();
+            ok(shape === tree.pointShape(new Point(50, 50)));
         });
 
         test("detects shapes with changed stroke", function() {

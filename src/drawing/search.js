@@ -221,8 +221,10 @@
                     for (var idx = 0; idx < element.children.length; idx++) {
                         this.bboxChange(element.children[idx]);
                     }
-                } else if (element._quadNode) {
-                    element._quadNode.remove(element);
+                } else {
+                    if (element._quadNode) {
+                        element._quadNode.remove(element);
+                    }
                     this._insertShape(element);
                 }
             },
@@ -260,25 +262,27 @@
 
             _insertShape: function(shape) {
                 var bbox = shape.bbox();
-                var rootSize = this.ROOT_SIZE;
-                var sectors = this.getSectors(bbox);
-                var x = sectors[0][0];
-                var y = sectors[1][0];
+                if (bbox) {
+                    var rootSize = this.ROOT_SIZE;
+                    var sectors = this.getSectors(bbox);
+                    var x = sectors[0][0];
+                    var y = sectors[1][0];
 
-                if (this.inRoot(sectors)) {
-                    this.root.insert(shape, bbox);
-                } else {
-                    if (!this.rootMap[x]) {
-                        this.rootMap[x] = {};
+                    if (this.inRoot(sectors)) {
+                        this.root.insert(shape, bbox);
+                    } else {
+                        if (!this.rootMap[x]) {
+                            this.rootMap[x] = {};
+                        }
+
+                        if (!this.rootMap[x][y]) {
+                            this.rootMap[x][y] = new QuadNode(
+                                new Rect([x * rootSize, y * rootSize], [rootSize, rootSize])
+                            );
+                        }
+
+                        this.rootMap[x][y].insert(shape, bbox);
                     }
-
-                    if (!this.rootMap[x][y]) {
-                        this.rootMap[x][y] = new QuadNode(
-                            new Rect([x * rootSize, y * rootSize], [rootSize, rootSize])
-                        );
-                    }
-
-                    this.rootMap[x][y].insert(shape, bbox);
                 }
             },
 
