@@ -262,7 +262,7 @@
             valuesChange: function(e) {
                 var dataSource = e ? e.sender.dataSource : this.valuesDataSource;
                 var checked = function(item) {
-                    return item.checked && item.value;
+                    return item.checked;
                 };
                 var value = function(item) {
                     return item.dataType === "date" ? kendo.spreadsheet.dateToNumber(item.value) : item.value;
@@ -379,7 +379,7 @@
                     if (cell.value !== null && cell.format) {
                         cell.text = kendo.spreadsheet.formatting.text(cell.value, cell.format);
                     } else {
-                        cell.text = cell.value ? cell.value : messages.blanks;
+                        cell.text = cell.dataType == "blank" ? messages.blanks : cell.value;
                     }
 
                     if (cell.dataType === "percent") { //treat percent as number
