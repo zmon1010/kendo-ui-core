@@ -1847,20 +1847,8 @@ ul.keyboard-legend li a {
     margin-left: 1.667em;
 }
 
-.kendo-ui.logo {
-  width: 198px;
-}
-
-.aspnet-mvc.logo {
-  width: 397px;
-}
-
-.php-ui.logo {
-  width: 298px;
-}
-
-.jsp-ui.logo {
-  width: 290px;
+.logo {
+  height: 35px;
 }
 
 #logo-bar span {
