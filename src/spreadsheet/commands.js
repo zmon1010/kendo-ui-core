@@ -36,10 +36,13 @@
             this.exec();
         },
         undo: function() {
-            this.range().setState(this._state);
+            this.setState(this._state);
         },
         getState: function() {
             this._state = this.range().getState(this._property);
+        },
+        setState: function(state) {
+            this.range().setState(state);
         },
         _forEachCell: function(callback) {
             var range = this.range();
@@ -48,6 +51,36 @@
             ref.forEach(function(ref) {
                 range.sheet().forEach(ref.toRangeRef(), callback.bind(this));
             }.bind(this));
+        }
+    });
+
+    var TargetValueCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._target = options.target;
+            this._value = options.value;
+        },
+        exec: function() {
+            this.getState();
+            this.setState(this._value);
+        }
+    });
+
+    kendo.spreadsheet.ColumnWidthCommand = TargetValueCommand.extend({
+        getState: function() {
+            this._state = this.range().sheet().columnWidth(this._target);
+        },
+        setState: function(state) {
+            this.range().sheet().columnWidth(this._target, state);
+        }
+    });
+
+    kendo.spreadsheet.RowHeightCommand = TargetValueCommand.extend({
+        getState: function() {
+            this._state = this.range().sheet().rowHeight(this._target);
+        },
+        setState: function(state) {
+            this.range().sheet().rowHeight(this._target, state);
         }
     });
 

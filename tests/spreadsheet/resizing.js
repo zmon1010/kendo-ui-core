@@ -4,17 +4,27 @@
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
 
+    var element, spreadsheet, sheet;
+
     module("resizing", {
         setup: function() {
-            sheet = new Sheet(1000, 100, 10, 10, 10, 10);
+            element = $("<div>").appendTo(QUnit.fixture);
+            spreadsheet = new kendo.ui.Spreadsheet(element, {
+                rows         : 1000,
+                columns      : 100,
+                rowHeight    : 10,
+                columnWidth  : 10,
+                headerHeight : 10,
+                headerWidth  : 10
+            });
+            sheet = spreadsheet.activeSheet();
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
         }
     });
 
     var DUMMY_VIEW = { ref: rangeRef(0,0, 100, 100), top: 0, left: 0, mergedCellLeft: 0, mergedCellTop: -10 };
-
-    function createPane(row, column, rowCount, columnCount) {
-        return new Pane(sheet, sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
-    }
 
     function rangeRef(topLeftRow, topLeftCol, bottomRightRow, bottomRightCol) {
         var ref = new RangeRef(
@@ -26,10 +36,8 @@
     }
 
     test("renders the resize handler for column", function() {
-        var pane = createPane(0, 0);
-
         sheet.positionResizeHandle(new CellRef(-Infinity, 0)); // first column
-
+        var pane = spreadsheet._workbook._view.panes[0];
         pane._currentView = DUMMY_VIEW;
 
         var handle = pane.renderResizeHandler();
@@ -41,10 +49,8 @@
     });
 
     test("renders the resize handler for row", function() {
-        var pane = createPane(0, 0);
-
         sheet.positionResizeHandle(new CellRef(0, -Infinity)); // first row
-
+        var pane = spreadsheet._workbook._view.panes[0];
         pane._currentView = DUMMY_VIEW;
 
         var handle = pane.renderResizeHandler();
@@ -55,30 +61,30 @@
         equal(handle.attr.style.top, "16.5px");
     });
 
-    test("set the column width", function() {
-        var pane = createPane(0, 0);
-
+    test("set the column width + undo", function() {
         var initialWidth = sheet.columnWidth(0);
 
         sheet.positionResizeHandle(new CellRef(-Infinity, 0));
         sheet.startResizing({ x: 10 + 20, y: 10 });
         sheet.resizeHintPosition({ x: 10+20+20, y: 10 }); // move the hint with 20px
         sheet.completeResizing();
-
         equal(sheet.columnWidth(0), initialWidth + 20);
+
+        spreadsheet._workbook.undoRedoStack.undo();
+        equal(sheet.columnWidth(0), initialWidth);
     });
 
-    test("set the row height", function() {
-        var pane = createPane(0, 0);
-
+    test("set the row height + undo", function() {
         var initialHeight = sheet.rowHeight(0);
 
         sheet.positionResizeHandle(new CellRef(0, -Infinity));
         sheet.startResizing({ x: 10, y: 10 });
         sheet.resizeHintPosition({ x: 10, y: 10 + 20 }); // move the hint with 20px
         sheet.completeResizing();
-
         equal(sheet.rowHeight(0), initialHeight + 20);
+
+        spreadsheet._workbook.undoRedoStack.undo();
+        equal(sheet.rowHeight(0), initialHeight);
     });
 
     module("view resizing hing rendering", {

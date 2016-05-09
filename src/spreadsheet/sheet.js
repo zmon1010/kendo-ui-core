@@ -659,9 +659,21 @@
                 if (this._initialPosition && hintPosition) {
                     var handlePosition = this.resizeHandlePosition();
                     if (handlePosition.col !== -Infinity) {
-                        this.columnWidth(handlePosition.col, this.columnWidth(handlePosition.col) - (this._initialPosition.x - hintPosition.x));
+                        this.trigger("commandRequest", {
+                            command: "ColumnWidthCommand",
+                            options: {
+                                target: handlePosition.col,
+                                value: this.columnWidth(handlePosition.col) - (this._initialPosition.x - hintPosition.x)
+                            }
+                        });
                     } else {
-                        this.rowHeight(handlePosition.row, this.rowHeight(handlePosition.row) - (this._initialPosition.y - hintPosition.y));
+                        this.trigger("commandRequest", {
+                            command: "RowHeightCommand",
+                            options: {
+                                target: handlePosition.row,
+                                value: this.rowHeight(handlePosition.row) - (this._initialPosition.y - hintPosition.y)
+                            }
+                        });
                     }
                 } else {
                     this.trigger("change", { resize: true });
