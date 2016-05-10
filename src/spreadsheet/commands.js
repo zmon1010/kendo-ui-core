@@ -109,13 +109,10 @@
 
     kendo.spreadsheet.GridLinesChangeCommand = TargetValueCommand.extend({
         getState: function() {
-            var sheet = this._range.sheet();
-            this._state = { show: sheet.showGridLines(), color: sheet.gridLinesColor() };
+            this._state = this._range.sheet().showGridLines();
         },
         setState: function(v) {
-            var sheet = this._range.sheet();
-            sheet.showGridLines(v.show);
-            sheet.gridLinesColor(v.color);
+            this._range.sheet().showGridLines(v);
         }
     });
 

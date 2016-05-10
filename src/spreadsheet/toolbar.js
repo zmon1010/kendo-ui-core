@@ -77,6 +77,7 @@
             undo: "Undo"
         },
         exportAs: "Export...",
+        toggleGridlines: "Toggle gridlines",
         sortAsc: "Sort ascending",
         sortDesc: "Sort descending",
         sortButtons: {
@@ -94,7 +95,6 @@
 
     var defaultTools = {
         home: [
-            "gridLinesPopup",
             "open",
             "exportAs",
             [ "cut", "copy", "paste" ],
@@ -108,7 +108,8 @@
             "format",
             "merge",
             "freeze",
-            "filter"
+            "filter",
+            "gridLines"
         ],
         insert: [
             [ "addColumnLeft", "addColumnRight", "addRowBelow", "addRowAbove" ],
@@ -138,7 +139,6 @@
         alignment:             { type: "alignment",                           iconClass: "justify-left" },
         backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
         textColor:             { type: "colorPicker", property: "color",      iconClass: "text" },
-        gridLinesPopup:        { type: "gridLinesPopup", iconClass: "no-borders" },
         fontFamily:            { type: "fontFamily",  property: "fontFamily", iconClass: "text" },
         fontSize:              { type: "fontSize",    property: "fontSize",   iconClass: "font-size" },
         format:                { type: "format",      property: "format",     iconClass: "format-number" },
@@ -148,6 +148,7 @@
         borders:               { type: "borders",                             iconClass: "all-borders" },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
         hyperlink:             { type: "dialog", dialogName: "hyperlink", iconClass: "hyperlink", overflow: "never", text: "" },
+        gridLines:             { type: "button", command: "GridLinesChangeCommand", property: "gridLines", value: true, iconClass: "no-borders", togglable: true },
 
         //insert tab
         addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "add-column-left"  },
@@ -321,6 +322,13 @@
                 var tool = tools[i].tool;
                 var value = kendo.isFunction(range[property]) ? range[property]() : range;
 
+                if (property == "gridLines") {
+                    // the law of leaky abstractions kicks in.  this
+                    // isn't really a property of the range, it's
+                    // per-sheet.
+                    value = range.sheet().showGridLines();
+                }
+
                 if (tool.type === "button") {
                     setToggle(tool, value);
                 } else {
@@ -329,17 +337,13 @@
             }
         },
         _tools: function() {
-            return this.element.find("[data-property]").toArray().reduce(function(tools, element) {
+            return this.element.find("[data-property]").toArray().map(function(element) {
                 element = $(element);
-                var property = element.attr("data-property");
-
-                tools.push({
-                    property: property,
+                return {
+                    property: element.attr("data-property"),
                     tool: this._getItem(element)
-                });
-
-                return tools;
-            }.bind(this), []);
+                };
+            }.bind(this));
         },
         destroy: function() {
             // TODO: move to ToolBar.destroy to take care of these
@@ -508,48 +512,6 @@
         },
         _click: $.noop
     });
-
-    var GridLinesPopup = PopupTool.extend({
-        init: function(options, toolbar) {
-            PopupTool.fn.init.apply(this, arguments);
-            var popup = this.popup;
-            var element = popup.element
-                .addClass("k-spreadsheet-gridlinespopup")
-                .append("<label><input type='checkbox' data-bind='checked: showGridLines, click: changeGridLines' /> Show grid lines</label>" +
-                        "<div></div>");
-            var div = element.find("div");
-            var model = kendo.observable({
-                changeGridLines: function() {
-                    setTimeout(function(){
-                        toolbar.action({
-                            command: "GridLinesChangeCommand",
-                            options: {
-                                value: {
-                                    show: model.showGridLines,
-                                    color: colorChooser.value()
-                                }
-                            }
-                        });
-                    });
-                }
-            });
-            var colorChooser = new kendo.spreadsheet.ColorChooser(div, {
-                change: function() {
-                    model.changeGridLines();
-                    popup.close();
-                }
-            });
-            kendo.bind(element, model);
-        }
-    });
-
-    var GridLinesButton = OverflowDialogButton.extend({
-        _click: function() {
-            this.toolbar.dialog({ name: "gridLinesPopup" });
-        }
-    });
-
-    kendo.toolbar.registerComponent("gridLinesPopup", GridLinesPopup, GridLinesButton);
 
     var ColorPicker = PopupTool.extend({
         init: function(options, toolbar) {
