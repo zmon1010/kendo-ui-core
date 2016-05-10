@@ -1042,4 +1042,46 @@
         equal(scheduler.toolbar.find(".k-view-day").length, 0);
         equal(scheduler.toolbar.find(".k-scheduler-refresh").length, 1);
     });
+
+    test("scheduler items() method returns agenda tasks", function() {
+        var scheduler = new Scheduler(container, {
+            date: new Date("2013-06-05T10:00:00.000Z"),
+            height: 100,
+            views: ["agenda"],
+            dataSource: {
+                batch: true,
+                data: [{
+                    "title": "Helpdesk weekly meeting",
+                    "start": new Date("2013-06-05T02:00:00.000Z"),
+                    "end": new Date("2013-06-05T05:00:00.000Z"),
+                    "isAllDay": false
+                }]
+            }
+        });
+
+        var elements = scheduler.items();
+
+        equal(elements.length, 1);
+    });
+
+    test("scheduler items() method returns agenda tasks", function() {
+        var scheduler = new Scheduler(container, {
+            date: new Date("2013-06-05T10:00:00.000Z"),
+            height: 100,
+            views: ["week"],
+            dataSource: {
+                batch: true,
+                data: [{
+                    "title": "Helpdesk weekly meeting",
+                    "start": new Date("2013-06-05T02:00:00.000Z"),
+                    "end": new Date("2013-06-05T05:00:00.000Z"),
+                    "isAllDay": false
+                }]
+            }
+        });
+
+        var elements = scheduler.items();
+
+        equal(elements.length, 1);
+    });
 })();

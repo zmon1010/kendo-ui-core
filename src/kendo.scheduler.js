@@ -2388,7 +2388,14 @@ var __meta__ = { // jshint ignore:line
         },
 
         items: function() {
-            return this.wrapper.find(".k-scheduler-content").children(".k-event, .k-task");
+            var content = this.wrapper.find(".k-scheduler-content");
+            var view = this.view();
+
+            if (view && view.options.name === "agenda") {
+                return content.find(".k-task");
+            } else {
+                return content.children(".k-event");
+            }
         },
 
         _movable: function() {
