@@ -1926,7 +1926,11 @@ var __meta__ = { // jshint ignore:line
                     return;
                 }
 
-                var clientX = e.clientX / parseFloat(document.documentElement.style.zoom || document.body.style.zoom || 1),
+                function getPageZoomStyle() {
+                    return parseFloat($(document.documentElement).css("zoom") || 1) * parseFloat($(document.body).css("zoom") || 1);
+                }
+
+                var clientX = e.clientX / getPageZoomStyle(),
                     winScrollLeft = $(window).scrollLeft(),
                     position = th.offset().left + (!isRtl ? this.offsetWidth : 0);
 
