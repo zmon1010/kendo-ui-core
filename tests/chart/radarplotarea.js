@@ -222,81 +222,159 @@
             pointElement = getChartDomElement(point.marker);
         }
 
+        function radarPlotAreaEventsTests(eventName, triggerEvent) {
+            var eventOptions = {};
+
+            // ------------------------------------------------------------
+            module("Radar Plot Area / Events / " + eventName, {
+                teardown: destroyChart
+            });
+
+            test("point event bubbles to plot area", function() {
+                eventOptions[eventName] = function() { ok(true); };
+                createRadarChart(eventOptions);
+
+                triggerEvent(chart, pointElement, 300, 300);
+            });
+
+            test("fires on plot area directly", function() {
+                eventOptions[eventName] = function() { ok(true); };
+                createRadarChart(eventOptions);
+
+                triggerEvent(chart, plotAreaElement, 300, 300);
+            });
+
+            test("does not fire outside of axis range", 0, function() {
+                eventOptions[eventName] = function() { ok(false); };
+                createRadarChart(eventOptions);
+
+                triggerEvent(chart, plotAreaElement, 300, 580);
+            });
+
+            test("does not fire on axes", 0, function() {
+                eventOptions[eventName] = function() { ok(false); };
+                createRadarChart(eventOptions);
+
+                triggerEvent(chart, plotAreaElement, 3000, 0);
+            });
+
+            test("event arguments contain value", 1, function() {
+                eventOptions[eventName] = function(e) { close(e.value, 0.4, TOLERANCE); };
+                createRadarChart(eventOptions);
+
+                triggerEvent(chart, plotAreaElement, 300, 400);
+            });
+
+            test("event arguments contain category", 1, function() {
+                eventOptions[eventName] = function(e) { equal(e.category, "A"); };
+                createRadarChart(eventOptions);
+
+                triggerEvent(chart, plotAreaElement, 300, 300);
+            });
+
+            test("event arguments contain empty category", 1, function() {
+                eventOptions[eventName] = function(e) { equal(e.category, ""); };
+                createRadarChart(kendo.deepExtend({
+                    categoryAxis: {
+                        categories: ["A"]
+                    }                    
+                }, eventOptions));
+
+                triggerEvent(chart, plotAreaElement, 300, 400);
+            });
+
+            test("event arguments contain date category", 1, function() {                
+                var date = new Date("2012/09/15");
+                eventOptions[eventName] = function(e) { equal(e.category.toString(), date.toString()); };
+                
+                createRadarChart(kendo.deepExtend({
+                    categoryAxis: {
+                        categories: [date]
+                    }                    
+                }, eventOptions));
+
+                triggerEvent(chart, plotAreaElement, 300, 300);
+            });
+        }
+
+        radarPlotAreaEventsTests("plotAreaClick", clickChart);
+        radarPlotAreaEventsTests("plotAreaHover", hoverChart);
+
         // ------------------------------------------------------------
-        module("Radar Plot Area / Events / plotAreaClick", {
-            teardown: destroyChart
-        });
+        // module("Radar Plot Area / Events / plotAreaClick", {
+            // teardown: destroyChart
+        // });
 
-        test("point click bubbles to plot area", function() {
-            createRadarChart({
-                plotAreaClick: function() { ok(true); }
-            });
+        // test("point click bubbles to plot area", function() {
+            // createRadarChart({
+                // plotAreaClick: function() { ok(true); }
+            // });
 
-            clickChart(chart, pointElement, 300, 300);
-        });
+            // clickChart(chart, pointElement, 300, 300);
+        // });
 
-        test("fires when clicking plot area directly", function() {
-            createRadarChart({
-                plotAreaClick: function() { ok(true); }
-            });
+        // test("fires when clicking plot area directly", function() {
+            // createRadarChart({
+                // plotAreaClick: function() { ok(true); }
+            // });
 
-            clickChart(chart, plotAreaElement, 300, 300);
-        });
+            // clickChart(chart, plotAreaElement, 300, 300);
+        // });
 
-        test("does not fire when clicking outside of axis range", 0, function() {
-            createRadarChart({
-                plotAreaClick: function() { ok(false); }
-            });
+        // test("does not fire when clicking outside of axis range", 0, function() {
+            // createRadarChart({
+                // plotAreaClick: function() { ok(false); }
+            // });
 
-            clickChart(chart, plotAreaElement, 300, 580);
-        });
+            // clickChart(chart, plotAreaElement, 300, 580);
+        // });
 
-        test("does not fire when clicking on axes", 0, function() {
-            createRadarChart({
-                plotAreaClick: function() { ok(false); }
-            });
+        // test("does not fire when clicking on axes", 0, function() {
+            // createRadarChart({
+                // plotAreaClick: function() { ok(false); }
+            // });
 
-            clickChart(chart, plotAreaElement, 3000, 0);
-        });
+            // clickChart(chart, plotAreaElement, 3000, 0);
+        // });
 
-        test("event arguments contain value", 1, function() {
-            createRadarChart({
-                plotAreaClick: function(e) { close(e.value, 0.4, TOLERANCE); }
-            });
+        // test("event arguments contain value", 1, function() {
+            // createRadarChart({
+                // plotAreaClick: function(e) { close(e.value, 0.4, TOLERANCE); }
+            // });
 
-            clickChart(chart, plotAreaElement, 300, 400);
-        });
+            // clickChart(chart, plotAreaElement, 300, 400);
+        // });
 
-        test("event arguments contain category", 1, function() {
-            createRadarChart({
-                plotAreaClick: function(e) { equal(e.category, "A"); }
-            });
+        // test("event arguments contain category", 1, function() {
+            // createRadarChart({
+                // plotAreaClick: function(e) { equal(e.category, "A"); }
+            // });
 
-            clickChart(chart, plotAreaElement, 300, 300);
-        });
+            // clickChart(chart, plotAreaElement, 300, 300);
+        // });
 
-        test("event arguments contain empty category", 1, function() {
-            createRadarChart({
-                categoryAxis: {
-                    categories: ["A"]
-                },
-                plotAreaClick: function(e) { equal(e.category, ""); }
-            });
+        // test("event arguments contain empty category", 1, function() {
+            // createRadarChart({
+                // categoryAxis: {
+                    // categories: ["A"]
+                // },
+                // plotAreaClick: function(e) { equal(e.category, ""); }
+            // });
 
-            clickChart(chart, plotAreaElement, 300, 400);
-        });
+            // clickChart(chart, plotAreaElement, 300, 400);
+        // });
 
-        test("event arguments contain date category", 1, function() {
-            var date = new Date("2012/09/15");
-            createRadarChart({
-                categoryAxis: {
-                    categories: [date]
-                },
-                plotAreaClick: function(e) { equal(e.category.toString(), date.toString()); }
-            });
+        // test("event arguments contain date category", 1, function() {
+            // var date = new Date("2012/09/15");
+            // createRadarChart({
+                // categoryAxis: {
+                    // categories: [date]
+                // },
+                // plotAreaClick: function(e) { equal(e.category.toString(), date.toString()); }
+            // });
 
-            clickChart(chart, plotAreaElement, 300, 300);
-        });
+            // clickChart(chart, plotAreaElement, 300, 300);
+        // });
 
     })();
 })();

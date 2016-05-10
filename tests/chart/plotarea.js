@@ -4308,7 +4308,7 @@
             bar = plotArea.charts[0].points[0];
             barElement = getChartDomElement(bar);
             plotAreaElement = getChartDomElement(plotArea);
-        }
+        }       
 
         // ------------------------------------------------------------
         module("Categorical Plot Area / Events / plotAreaClick", {
@@ -5531,69 +5531,72 @@
             pointElement = getChartDomElement(point.marker);
         }
 
-        // ------------------------------------------------------------
-        module("XY Plot Area / Events / plotAreaClick", {
-            teardown: destroyChart
-        });
-
-        test("point click bubbles to plot area", 1, function() {
-            createScatterChart({
-                plotAreaClick: function() { ok(true); }
+        function xyPlotAreaEventsTests(eventName, triggerEvent) {           
+            var eventOptions = {};
+            // ------------------------------------------------------------
+            module("XY Plot Area / Events / " + eventName, {
+                teardown: destroyChart
             });
 
-            clickChart(chart, plotAreaElement, 300, 300);
-        });
+            test("point event bubbles to plot area", 1, function() {                
+                eventOptions[eventName] = function() { ok(true); };
 
-        test("fires when clicking plot area directly", 1, function() {
-            createScatterChart({
-                plotAreaClick: function() { ok(true); }
+                createScatterChart(eventOptions);
+
+                triggerEvent(chart, plotAreaElement, 300, 300);
             });
 
-            clickChart(chart, plotAreaElement, 300, 300);
-        });
+            test("fires on the plot area directly", 1, function() {                
+                eventOptions[eventName] = function() { ok(true); };
 
-        test("does not fire when clicking outside of axis range", 0, function() {
-            createScatterChart({
-                plotAreaClick: function() { ok(false); }
+                createScatterChart(eventOptions);
+
+                triggerEvent(chart, plotAreaElement, 300, 300);
             });
 
-            clickChart(chart, plotAreaElement, 3000, 0);
-        });
+            test("does not fire when outside of axis range", 0, function() {                
+                eventOptions[eventName] = function() { ok(false); };
 
-        test("event arguments contain x axis value", 1, function() {
-            createScatterChart({
-                plotAreaClick: function(e) { close(e.x, 12, TOLERANCE); }
+                createScatterChart(eventOptions);
+
+                triggerEvent(chart, plotAreaElement, 3000, 0);
             });
 
-            clickChart(chart, plotAreaElement, 200, 500);
-        });
+            test("event arguments contain x axis value", 1, function() {                
+                eventOptions[eventName] = function(e) { close(e.x, 12, TOLERANCE); };
+                createScatterChart(eventOptions);
 
-        test("event arguments contain multiple x axis values", 2, function() {
-            createScatterChart({
-                xAxis: [{}, { name: "b", min: 100, max: 1000 }],
-                plotAreaClick: function(e) { arrayClose(e.x, [12, 192], TOLERANCE); }
+                triggerEvent(chart, plotAreaElement, 200, 500);
             });
 
-            clickChart(chart, plotAreaElement, 200, 500);
-        });
+            test("event arguments contain multiple x axis values", 2, function() {
+                eventOptions[eventName] = function(e) { arrayClose(e.x, [12, 192], TOLERANCE); };
+                createScatterChart(kendo.deepExtend({
+                    xAxis: [{}, { name: "b", min: 100, max: 1000 }]                    
+                }, eventOptions));
 
-        test("event arguments contain y axis value", 1, function() {
-            createScatterChart({
-                plotAreaClick: function(e) { close(e.y, 24, TOLERANCE); }
+                triggerEvent(chart, plotAreaElement, 200, 500);
             });
 
-            clickChart(chart, plotAreaElement, 200, 500);
-        });
+            test("event arguments contain y axis value", 1, function() {
+                eventOptions[eventName] = function(e) { close(e.y, 24, TOLERANCE); };
+                createScatterChart(eventOptions);
 
-        test("event arguments contain multiple y axis values", 2, function() {
-            createScatterChart({
-                yAxis: [{}, { name: "b", min: 100, max: 1000 }],
-                plotAreaClick: function(e) { arrayClose(e.y, [24, 278], TOLERANCE); }
+                triggerEvent(chart, plotAreaElement, 200, 500);
             });
 
-            clickChart(chart, plotAreaElement, 200, 500);
-        });
+            test("event arguments contain multiple y axis values", 2, function() {
+                eventOptions[eventName] = function(e) { arrayClose(e.y, [24, 278], TOLERANCE); };
+                createScatterChart(kendo.deepExtend({
+                    yAxis: [{}, { name: "b", min: 100, max: 1000 }]
+                }, eventOptions));
 
+                triggerEvent(chart, plotAreaElement, 200, 500);
+            });
+        }
+
+        xyPlotAreaEventsTests("plotAreaClick", clickChart);
+        xyPlotAreaEventsTests("plotAreaHover", hoverChart);
     })();
 
 

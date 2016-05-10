@@ -39,6 +39,7 @@ var __meta__ = { // jshint ignore:line
         LogarithmicAxis = dataviz.LogarithmicAxis,
         NumericAxis = dataviz.NumericAxis,
         PlotAreaBase = dataviz.PlotAreaBase,
+        PlotAreaEventsMixin = dataviz.PlotAreaEventsMixin,
         PlotAreaFactory = dataviz.PlotAreaFactory,
         Point2D = dataviz.Point2D,
         Ring = dataviz.Ring,
@@ -63,7 +64,6 @@ var __meta__ = { // jshint ignore:line
         GAP = "gap",
         INTERPOLATE = "interpolate",
         LOGARITHMIC = "log",
-        PLOT_AREA_CLICK = "plotAreaClick",
         POLAR_AREA = "polarArea",
         POLAR_LINE = "polarLine",
         POLAR_SCATTER = "polarScatter",
@@ -1384,7 +1384,7 @@ var __meta__ = { // jshint ignore:line
             return this.categoryAxis;
         },
 
-        click: function(chart, e) {
+        _dispatchEvent: function(chart, e, eventType) {
             var plotArea = this,
                 coords = chart._eventCoordinates(e),
                 point = new Point2D(coords.x, coords.y),
@@ -1395,7 +1395,7 @@ var __meta__ = { // jshint ignore:line
             value = plotArea.valueAxis.getValue(point);
 
             if (category !== null && value !== null) {
-                chart.trigger(PLOT_AREA_CLICK, {
+                chart.trigger(eventType, {
                     element: eventTargetElement(e),
                     category: category,
                     value: value
@@ -1405,6 +1405,8 @@ var __meta__ = { // jshint ignore:line
 
         createCrosshairs: $.noop
     });
+
+    deepExtend(RadarPlotArea.fn, PlotAreaEventsMixin);
 
     var PolarPlotArea = PolarPlotAreaBase.extend({
         options: {
@@ -1502,7 +1504,7 @@ var __meta__ = { // jshint ignore:line
             plotArea.appendChart(areaChart, pane);
         },
 
-        click: function(chart, e) {
+        _dispatchEvent: function(chart, e, eventType) {
             var plotArea = this,
                 coords = chart._eventCoordinates(e),
                 point = new Point2D(coords.x, coords.y),
@@ -1513,7 +1515,7 @@ var __meta__ = { // jshint ignore:line
             yValue = plotArea.axisY.getValue(point);
 
             if (xValue !== null && yValue !== null) {
-                chart.trigger(PLOT_AREA_CLICK, {
+                chart.trigger(eventType, {
                     element: eventTargetElement(e),
                     x: xValue,
                     y: yValue
@@ -1523,6 +1525,8 @@ var __meta__ = { // jshint ignore:line
 
         createCrosshairs: $.noop
     });
+
+    deepExtend(PolarPlotArea.fn, PlotAreaEventsMixin);
 
     // Helpers ================================================================
     function xComparer(a, b) {

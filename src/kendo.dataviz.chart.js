@@ -10134,6 +10134,16 @@ var __meta__ = { // jshint ignore:line
         }
     });
 
+    var PlotAreaEventsMixin = {
+        hover: function(chart, e) {
+            this._dispatchEvent(chart, e, PLOT_AREA_HOVER);
+        },
+
+        click: function(chart, e) {
+            this._dispatchEvent(chart, e, PLOT_AREA_CLICK);
+        }
+    };
+
     var CategoricalPlotArea = PlotAreaBase.extend({
         init: function(series, options) {
             var plotArea = this;
@@ -10859,14 +10869,6 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        hover: function(chart, e) {
-            this._dispatchEvent(chart, e, PLOT_AREA_HOVER);
-        },
-
-        click: function(chart, e) {
-            this._dispatchEvent(chart, e, PLOT_AREA_CLICK);
-        },
-
         _dispatchEvent: function(chart, e, eventType) {
             var plotArea = this,
                 coords = chart._eventCoordinates(e),
@@ -10927,6 +10929,8 @@ var __meta__ = { // jshint ignore:line
             deepExtend(axesOptions[axis.axisIndex], options);
         }
     });
+
+    deepExtend(CategoricalPlotArea.fn, PlotAreaEventsMixin);
 
     var AxisGroupRangeTracker = Class.extend({
         init: function() {
@@ -11194,7 +11198,7 @@ var __meta__ = { // jshint ignore:line
             plotArea.axisY = plotArea.axisY || yAxes[0];
         },
 
-        click: function(chart, e) {
+        _dispatchEvent: function(chart, e, eventType) {
             var plotArea = this,
                 coords = chart._eventCoordinates(e),
                 point = new Point2D(coords.x, coords.y),
@@ -11217,7 +11221,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (xValues.length > 0 && yValues.length > 0) {
-                chart.trigger(PLOT_AREA_CLICK, {
+                chart.trigger(eventType, {
                     element: eventTargetElement(e),
                     originalEvent: e,
                     x: singleItemOrArray(xValues),
@@ -11234,6 +11238,8 @@ var __meta__ = { // jshint ignore:line
             deepExtend(axisOptions, options);
         }
     });
+
+    deepExtend(XYPlotArea.fn, PlotAreaEventsMixin);
 
     var PiePlotArea = PlotAreaBase.extend({
         render: function() {
@@ -13961,6 +13967,7 @@ var __meta__ = { // jshint ignore:line
         PiePlotArea: PiePlotArea,
         PieSegment: PieSegment,
         PlotAreaBase: PlotAreaBase,
+        PlotAreaEventsMixin: PlotAreaEventsMixin,
         PlotAreaFactory: PlotAreaFactory,
         PointEventsMixin: PointEventsMixin,
         RangeBar: RangeBar,
