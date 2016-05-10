@@ -94,6 +94,7 @@
 
     var defaultTools = {
         home: [
+            "gridLinesPopup",
             "open",
             "exportAs",
             [ "cut", "copy", "paste" ],
@@ -137,6 +138,7 @@
         alignment:             { type: "alignment",                           iconClass: "justify-left" },
         backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
         textColor:             { type: "colorPicker", property: "color",      iconClass: "text" },
+        gridLinesPopup:        { type: "gridLinesPopup", iconClass: "no-borders" },
         fontFamily:            { type: "fontFamily",  property: "fontFamily", iconClass: "text" },
         fontSize:              { type: "fontSize",    property: "fontSize",   iconClass: "font-size" },
         format:                { type: "format",      property: "format",     iconClass: "format-number" },
@@ -506,6 +508,48 @@
         },
         _click: $.noop
     });
+
+    var GridLinesPopup = PopupTool.extend({
+        init: function(options, toolbar) {
+            PopupTool.fn.init.apply(this, arguments);
+            var popup = this.popup;
+            var element = popup.element
+                .addClass("k-spreadsheet-gridlinespopup")
+                .append("<label><input type='checkbox' data-bind='checked: showGridLines, click: changeGridLines' /> Show grid lines</label>" +
+                        "<div></div>");
+            var div = element.find("div");
+            var model = kendo.observable({
+                changeGridLines: function() {
+                    setTimeout(function(){
+                        toolbar.action({
+                            command: "GridLinesChangeCommand",
+                            options: {
+                                value: {
+                                    show: model.showGridLines,
+                                    color: colorChooser.value()
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+            var colorChooser = new kendo.spreadsheet.ColorChooser(div, {
+                change: function() {
+                    model.changeGridLines();
+                    popup.close();
+                }
+            });
+            kendo.bind(element, model);
+        }
+    });
+
+    var GridLinesButton = OverflowDialogButton.extend({
+        _click: function() {
+            this.toolbar.dialog({ name: "gridLinesPopup" });
+        }
+    });
+
+    kendo.toolbar.registerComponent("gridLinesPopup", GridLinesPopup, GridLinesButton);
 
     var ColorPicker = PopupTool.extend({
         init: function(options, toolbar) {

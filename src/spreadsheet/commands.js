@@ -107,6 +107,18 @@
         }
     });
 
+    kendo.spreadsheet.GridLinesChangeCommand = TargetValueCommand.extend({
+        getState: function() {
+            var sheet = this._range.sheet();
+            this._state = { show: sheet.showGridLines(), color: sheet.gridLinesColor() };
+        },
+        setState: function(v) {
+            var sheet = this._range.sheet();
+            sheet.showGridLines(v.show);
+            sheet.gridLinesColor(v.color);
+        }
+    });
+
     var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand = Command.extend({
         _setRange: function(range) {
             Command.prototype._setRange.call(this, range.skipHiddenCells());
