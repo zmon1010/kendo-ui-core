@@ -192,6 +192,9 @@
             "close",
             "activate"
         ],
+        options: {
+            autoFocus: true
+        },
         dialog: function() {
             if (!this._dialog) {
                 this._dialog = $("<div class='k-spreadsheet-window k-action-window' />")
@@ -201,6 +204,7 @@
                     }))
                     .appendTo(document.body)
                     .kendoWindow({
+                        autoFocus: this.options.autoFocus,
                         scrollable: false,
                         resizable: false,
                         modal: true,
@@ -1515,7 +1519,8 @@
                   "<button class='k-button' data-bind='click: cancel'>#= messages.cancel #</button>")
              ) + "</div>"
             ),
-            title: MESSAGES.linkDialog.title
+            title: MESSAGES.linkDialog.title,
+            autoFocus: false
         },
         open: function(range) {
             var self = this;
@@ -1543,6 +1548,24 @@
                 cancel: self.close.bind(self)
             });
             kendo.bind(element, model);
+
+            // it would be nice if we could easily handle that in one
+            // place for all dialogs, but it doesn't seem easily
+            // doable.
+            element.find("input")
+                .focus()
+                .on("keydown", function(ev){
+                    if (ev.keyCode == 13 /*ENTER*/) {
+                        model.url = $(this).val(); // there won't be a "change" event and the model wouldn't update :-\
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        model.apply();
+                    } else if (ev.keyCode == 27 /*ESC*/) {
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        model.cancel();
+                    }
+                });
         }
     });
 
