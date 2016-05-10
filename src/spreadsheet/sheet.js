@@ -112,6 +112,7 @@
             this._suspendChanges = false;
             this._filter = null;
             this._showGridLines = true;
+            this._gridLinesColor = null;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._sheetRef = this._grid.normalize(kendo.spreadsheet.SHEETREF);
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
@@ -506,6 +507,10 @@
 
         showGridLines: function(value) {
             return this._field("_showGridLines", value, { layout: true });
+        },
+
+        gridLinesColor: function(value) {
+            return this._field("_gridLinesColor", value, { layout: true });
         },
 
         _ref: function(row, column, numRows, numColumns) {
@@ -998,6 +1003,7 @@
                 frozenRows: this.frozenRows(),
                 frozenColumns: this.frozenColumns(),
                 showGridLines: this.showGridLines(),
+                gridLinesColor: this.gridLinesColor(),
                 mergedCells: this._mergedCells.map(function(ref) {
                     return ref.toString();
                 }),
@@ -1133,6 +1139,8 @@
                 if (json.showGridLines !== undefined) {
                     this._showGridLines = json.showGridLines;
                 }
+
+                this._gridLinesColor = json.gridLinesColor;
             });
 
             this._rows._refresh();

@@ -1280,6 +1280,7 @@
         },
 
         renderData: function() {
+            var sheet = this._sheet;
             var view = this._currentView;
             var cont = kendo.dom.element("div", {
                 className: Pane.classNames.data,
@@ -1290,8 +1291,8 @@
                 }
             });
             var rect = this._currentRect;
-            var layout = kendo.spreadsheet.draw.doLayout(this._sheet, view.ref, { forScreen: true }), prev;
-            var showGridLines = this._sheet._showGridLines;
+            var layout = kendo.spreadsheet.draw.doLayout(sheet, view.ref, { forScreen: true }), prev;
+            var showGridLines = sheet._showGridLines;
             if (showGridLines) {
                 // draw axis first
                 prev = null;
@@ -1302,7 +1303,8 @@
                             className: paneClassNames.vaxis,
                             style: {
                                 left: x + "px",
-                                height: rect.height + "px"
+                                height: rect.height + "px",
+                                borderColor: sheet.gridLinesColor()
                             }
                         }));
                     }
@@ -1315,7 +1317,8 @@
                             className: paneClassNames.haxis,
                             style: {
                                 top: y + "px",
-                                width: rect.width + "px"
+                                width: rect.width + "px",
+                                borderColor: sheet.gridLinesColor()
                             }
                         }));
                     }
