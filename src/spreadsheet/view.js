@@ -777,8 +777,8 @@
             var rectangle = this._sheet._grid.rectangle(cell);
 
             return rectangle.offset(
-                theGrid.headerWidth - this.scroller.scrollLeft,
-                theGrid.headerHeight - this.scroller.scrollTop
+                theGrid.headerWidth - (theGrid.columns.frozen ? 0 : this.scroller.scrollLeft),
+                theGrid.headerHeight - (theGrid.rows.frozen ? 0 : this.scroller.scrollTop)
             );
         },
 
