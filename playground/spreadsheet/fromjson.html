@@ -15,6 +15,17 @@
 
     <div id="spreadsheet"></div>
     <pre id="result"></pre>
+
+    <script type="ignore">
+     $(function() {
+         $("#spreadsheet").kendoSpreadsheet({
+             columns: 2,
+             rows: 10,
+             sheets: [{ name: "Foo" }]
+         });
+     });
+    </script>
+
     <script>
       $("#spreadsheet").kendoSpreadsheet();
       $("#spreadsheet").getKendoSpreadsheet().fromJSON({

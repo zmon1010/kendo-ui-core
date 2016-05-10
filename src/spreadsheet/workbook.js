@@ -315,7 +315,7 @@
 
                 for (var idx = 0; idx < json.sheets.length; idx++) {
                     var data = json.sheets[idx];
-                    var args = sheetParamsFromJSON(data);
+                    var args = sheetParamsFromJSON(data, this.options);
                     var sheet = this.insertSheet({
                         rows         : args.rowCount,
                         columns      : args.columnCount,
@@ -433,17 +433,17 @@
         options: {}
     });
 
-    function sheetParamsFromJSON(data) {
-        function or(v, def) {
-            return v !== undefined ? v : def;
+    function sheetParamsFromJSON(data, options) {
+        function or(a, b, c) {
+            return a !== undefined ? a : b !== undefined ? b : c;
         }
 
-        var rowCount     = or(data.rowCount, 200),
-            columnCount  = or(data.columnCount, 50),
-            rowHeight    = or(data.rowHeight, 20),
-            columnWidth  = or(data.columnWidth, 64),
-            headerHeight = or(data.headerHeight, 20),
-            headerWidth  = or(data.headerWidth, 32);
+        var rowCount     = or(data.rowCount, options.rowCount, 200),
+            columnCount  = or(data.columnCount, options.columnCount, 50),
+            rowHeight    = or(data.rowHeight, options.rowHeight, 20),
+            columnWidth  = or(data.columnWidth, options.columnWidth, 64),
+            headerHeight = or(data.headerHeight, options.headerHeight, 20),
+            headerWidth  = or(data.headerWidth, options.headerWidth, 32);
 
         if (data.rows !== undefined) {
             for (var i = 0; i < data.rows.length; ++i) {
