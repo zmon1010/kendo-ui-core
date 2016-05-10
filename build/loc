@@ -6,7 +6,7 @@ loc() {
 }
 
 KENDO_SRC=(src/{kendo.*.js,{aspnetmvc,dataviz,drawing,editor,spreadsheet,mixins,pdf,util}/**/*.js} styles/**/*.less)
-MVC_SRC=(wrappers/mvc/src/Kendo.Mvc/**/*.cs)
+MVC_SRC=(wrappers/{mvc,mvc-6}/src/Kendo.Mvc/**/*.cs)
 JSP_SRC=(wrappers/java/kendo-taglib/**/*.java)
 PHP_SRC=(wrappers/php/lib/**/*.php)
 
