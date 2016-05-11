@@ -2422,7 +2422,8 @@ var __meta__ = { // jshint ignore:line
                     distance: distance,
                     filter: ".k-event",
                     ignore: ".k-resize-handle",
-                    holdToDrag: isMobile
+                    holdToDrag: isMobile,
+                    autoScroll: true
                 });
 
                 if (movable) {
@@ -2602,6 +2603,7 @@ var __meta__ = { // jshint ignore:line
             that._resizeDraggable = new kendo.ui.Draggable(that.element, {
                 distance: distance,
                 filter: ".k-resize-handle",
+                autoScroll: true,
                 dragstart: function(e) {
                     var dragHandle = $(e.currentTarget);
 
