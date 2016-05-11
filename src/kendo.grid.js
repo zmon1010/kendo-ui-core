@@ -4547,7 +4547,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _handleEnterKey: function(current, currentTable, target) {
-            var editable = this.options.editable;
+            var editable = this.options.editable && this.options.editable.update !== false;
             var container = target.closest("[role=gridcell]");
 
             if (!target.is("table") && !$.contains(current[0], target[0])) {
@@ -4805,6 +4805,7 @@ var __meta__ = { // jshint ignore:line
                 oldIE = isIE && browser.version < 9,
                 editContainer = that._editContainer,
                 focusable,
+                editable = that.options.editable && that.options.editable.update !== false,
                 isEdited;
 
             table = $(table);
@@ -4861,7 +4862,13 @@ var __meta__ = { // jshint ignore:line
             if (oldIE) {
                 document.body.focus();
             }
+
             focusTable(table, true);
+
+            if (!editable) {
+                return;
+            }
+
             if ((!isEdited && !next) || next) {
                 if (mode == "incell") {
                     that.editCell(that.current());
