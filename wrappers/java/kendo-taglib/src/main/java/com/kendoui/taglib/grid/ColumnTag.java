@@ -142,6 +142,14 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("filterable", value);
     }
 
+    public java.lang.Object getFooterAttributes() {
+        return (java.lang.Object)getProperty("footerAttributes");
+    }
+
+    public void setFooterAttributes(java.lang.Object value) {
+        setProperty("footerAttributes", value);
+    }
+
     public java.lang.String getFooterTemplate() {
         return (java.lang.String)getProperty("footerTemplate");
     }

@@ -78,6 +78,15 @@ for all columns when filtering is enabled via the filterable option.Can be set t
     }
 
     /**
+    * HTML attributes of the column footer. The footerAttributes option can be used to set the HTML attributes of that cell.
+    * @param  $value
+    * @return \Kendo\UI\GridColumn
+    */
+    public function footerAttributes($value) {
+        return $this->setProperty('footerAttributes', $value);
+    }
+
+    /**
     * Sets the footerTemplate option of the GridColumn.
     * The template which renders the footer table cell for the column.The fields which can be used in the template are:
     * @param string $value The id of the element which represents the kendo template.
