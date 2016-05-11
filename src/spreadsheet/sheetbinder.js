@@ -7,6 +7,8 @@
         return;
     }
 
+    var identity = function(o) { return o; };
+
     var SheetDataSourceBinder = kendo.Class.extend({
         init: function(options) {
 
@@ -66,11 +68,23 @@
                 var dataSource = this.dataSource;
                 var data = dataSource.view();
                 var columns = this.columns;
-                var fields = kendo.getter("options.schema.model.fields", true)(dataSource);
+                var fields;
+
+                if (dataSource.reader.model) {
+                    fields = dataSource.reader.model.fields;
+                }
 
                 if (!columns.length && data.length) {
                     columns = Object.keys(data[0].toJSON());
                 }
+
+                var getters = columns.map(function(column) {
+                    var field = column.field;
+                    if (field && fields && fields[field] && fields[field].type == "date") {
+                        return kendo.spreadsheet.numberToDate;
+                    }
+                    return identity;
+                });
 
                 this._skipRebind = true;
 
@@ -89,17 +103,8 @@
                         }
 
                         var colValueIndex = 0;
-                        var field, type, value;
                         for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col && ci < columns.length; ci++) {
-                            field = columns[ci].field;
-                            type = fields && fields[field] && fields[field].type;
-                            value = values[valueIndex][colValueIndex++];
-
-                            if (type == "date") {
-                                value = kendo.spreadsheet.numberToDate(value);
-                            }
-
-                            record.set(field, value);
+                            record.set(columns[ci].field, getters[ci](values[valueIndex][colValueIndex++]));
                         }
                         valueIndex++;
                     }
