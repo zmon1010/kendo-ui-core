@@ -7475,8 +7475,7 @@
                 },
                 "packages": [
                     "!jsp",
-                    "!php",
-                    "!mvc-core"
+                    "!php"
                 ]
             }
         ],

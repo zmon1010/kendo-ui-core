@@ -438,7 +438,23 @@ namespace Kendo.Mvc.UI.Tests
 
             Assert.Equal(false, builder.ToComponent().Checked);
         }
+        
+        [Fact]
+        public void RadioButton_should_return_builder()
+        {
+            var builder = factory.RadioButton();
 
+            builder.ShouldBeType<RadioButtonBuilder>();
+        }
+
+        [Fact]
+        public void RadioButtonFor_should_return_builder()
+        {
+            var builder = factory.RadioButtonFor(m => m.BooleanProperty);
+
+            builder.ShouldBeType<RadioButtonBuilder>();
+        }
+        
         public class TestModel
         {
             public int ID { get; set; }
