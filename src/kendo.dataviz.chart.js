@@ -12489,32 +12489,24 @@ var __meta__ = { // jshint ignore:line
         },
 
         _index: function(value) {
-            var that = this,
-                categoryAxis = that.categoryAxis,
-                categories = categoryAxis.options.categories,
-                index = value;
+            var index = value;
 
             if (value instanceof Date) {
-                index = lteDateIndex(value, categories);
-                if (!categoryAxis.options.justified && value > last(categories)) {
-                    index += 1;
-                }
+                index = this.categoryAxis.categoryIndex(value);
             }
 
             return index;
         },
 
         _value: function(index) {
-            var that = this,
-                categoryAxis = this.categoryAxis,
-                categories = categoryAxis.options.categories,
-                value = index;
+            var categories = this.categoryAxis.options.categories;
+            var value = index;
 
-            if (that._dateAxis) {
+            if (this._dateAxis) {
                 if (index > categories.length - 1) {
-                    value = that.options.max;
+                    value = this.options.max;
                 } else {
-                    value = categories[index];
+                    value = categories[math.ceil(index)];
                 }
             }
 
