@@ -950,7 +950,7 @@ if (kendo.support.browser.webkit || kendo.support.browser.mozilla || (kendo.supp
         function replaceIDs() {
             var id = this.id;
             this.id += counter;
-            $(this).closest(".device").find("[href^=#" + id + "]").attr("href", "#" + this.id);
+            $(this).closest(".device").find("[href^='#" + id + "']").attr("href", "#" + this.id);
         }
 
         function replaceLayouts() {
