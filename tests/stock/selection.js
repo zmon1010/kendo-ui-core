@@ -117,6 +117,69 @@
         });
 
         // ------------------------------------------------------------
+        module("Selection / API", {
+            setup: function() {
+                setup();
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("select returns current selection", function() {
+            deepEqual(chart.navigator.select(), {
+                from: new Date("2012/01/02 00:00"),
+                to: new Date("2012/01/03 00:00")
+            });
+        });
+
+        test("select updates selection", function() {
+            var select = chart.navigator.select(
+                new Date("2012/01/02 10:00"),
+                new Date("2012/01/02 11:00")
+            );
+            deepEqual(select.from, new Date("2012/01/02 10:00"));
+            deepEqual(select.to, new Date("2012/01/02 11:00"));
+        });
+
+        test("select updates selection (strings)", function() {
+            var select = chart.navigator.select(
+                "2012/01/02 10:00",
+                "2012/01/02 11:00"
+            );
+            deepEqual(select.from, new Date("2012/01/02 10:00"));
+            deepEqual(select.to, new Date("2012/01/02 11:00"));
+        });
+
+        test("select updates selection object", function() {
+            chart.navigator.selection.set = function(from, to) {
+                deepEqual(from, new Date("2012/01/02 10:00"));
+                deepEqual(to, new Date("2012/01/02 11:00"));
+            };
+
+            chart.navigator.select(
+                new Date("2012/01/02 10:00"),
+                new Date("2012/01/02 11:00")
+            );
+        });
+
+        test("select does not fire select", 0, function() {
+            chart.navigator.select(
+                new Date("2012/01/02 10:00"),
+                new Date("2012/01/02 11:00")
+            );
+            chart.bind("select", function() { ok(false); });
+        });
+
+        test("select does not fire selectEnd", 0, function() {
+            chart.navigator.select(
+                new Date("2012/01/02 10:00"),
+                new Date("2012/01/02 11:00")
+            );
+            chart.bind("selectEnd", function() { ok(false); });
+        });
+
+        // ------------------------------------------------------------
         module("Selection / Event proxy", {
             setup: function() {
                 setup();

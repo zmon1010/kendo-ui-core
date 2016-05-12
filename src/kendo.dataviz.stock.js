@@ -194,7 +194,7 @@ var __meta__ = { // jshint ignore:line
                 navigator = chart._navigator;
 
             if (!navigator) {
-                navigator = chart._navigator = new Navigator(chart);
+                navigator = chart._navigator = chart.navigator = new Navigator(chart);
             }
 
             navigator._setRange();
@@ -674,6 +674,29 @@ var __meta__ = { // jshint ignore:line
             if (plotArea) {
                 return plotArea.namedCategoryAxes[NAVIGATOR_AXIS];
             }
+        },
+
+        select: function(from, to) {
+            var select = this.options.select;
+
+            if (from && to) {
+                select.from = toDate(from);
+                select.to = toDate(to);
+
+                this.filterAxes();
+                this.filterDataSource();
+                this.redrawSlaves();
+
+                this.selection.set(
+                    from,
+                    to
+                );
+            }
+
+            return {
+                from: select.from,
+                to: select.to
+            };
         }
     });
 
