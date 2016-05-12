@@ -924,15 +924,16 @@ table tbody td:first-child + td + td p{
     border-top: 1px solid #535353;
     font-size: 12px;
     padding-bottom: 60px;
+    color: #999;
 }
 
-#copyright{
-    float: left;
-    color: #ffffff;
+#footer p {
+    margin: 10px 0;
 }
 
-#footer span{
-    padding-top: 40px;
+
+#footer a {
+    color: #d60041;
 }
 
 /*clear floats*/
