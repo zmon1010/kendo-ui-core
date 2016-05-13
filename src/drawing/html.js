@@ -455,8 +455,16 @@
                 colgroup = table.find("colgroup:first");
                 if (options.repeatHeaders) {
                     thead = table.find("thead:first");
+
+                    // If we break page in a Kendo Grid, repeat its header.  This ugly hack is
+                    // necessary because a scrollable grid will keep the header in a separate
+                    // <table> element from its content.
+                    //
+                    // XXX: This is likely to break as soon as the widget HTML is modified.
                     grid = $(el).closest(".k-grid[data-role=\"grid\"]");
-                    gridHead = grid.find(".k-grid-header:first");
+                    if (grid[0] && grid[0].querySelector(".k-auto-scrollable")) {
+                        gridHead = grid.find(".k-grid-header:first");
+                    }
                 }
                 var page = makePage();
                 var range = doc.createRange();
@@ -473,7 +481,7 @@
                         colgroup.clone().prependTo(table);
                     }
                 }
-                if (options.repeatHeaders && grid[0]) {
+                if (options.repeatHeaders && gridHead && gridHead[0]) {
                     grid = $(el).closest(".k-grid[data-role=\"grid\"]");
                     if (gridHead[0]) {
                         gridHead.clone().prependTo(grid);
