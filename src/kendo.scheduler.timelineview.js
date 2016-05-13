@@ -166,7 +166,7 @@ var __meta__ = { // jshint ignore:line
 
             that._groups();
 
-            that._currentTime();
+            that._currentTime(true);
         },
         name: "timeline",
 
@@ -240,15 +240,16 @@ var __meta__ = { // jshint ignore:line
             return left;
         },
 
-        _currentTime: function() {
+        _currentTime: function(setUpdateTimer) {
             var that = this;
             var markerOptions = that.options.currentTimeMarker;
 
             if (markerOptions !== false && markerOptions.updateInterval !== undefined) {
-                var updateInterval = markerOptions.updateInterval;
-
                 that._currentTimeMarkerUpdater();
-                that._currentTimeUpdateTimer = setInterval(proxy(this._currentTimeMarkerUpdater, that), updateInterval);
+
+                if (setUpdateTimer) {
+                    that._currentTimeUpdateTimer = setInterval(proxy(this._currentTimeMarkerUpdater, that), markerOptions.updateInterval);
+                }
             }
         },
 
@@ -906,7 +907,8 @@ var __meta__ = { // jshint ignore:line
 
             this._positionEvents(eventGroups, eventsByResource.length);
 
-            this._currentTimeMarkerUpdater();
+            this._currentTime(false);
+
             this.trigger("activate");
         },
 
