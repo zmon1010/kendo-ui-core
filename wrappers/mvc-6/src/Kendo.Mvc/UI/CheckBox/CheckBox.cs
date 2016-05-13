@@ -23,7 +23,10 @@ namespace Kendo.Mvc.UI
 
         protected override void WriteHtml(TextWriter writer)
         {
+            VerifySettings();
+
             var builder = GetHtmlBuilder();
+
             builder.WriteHtml(writer, HtmlEncoder);
         }   
         

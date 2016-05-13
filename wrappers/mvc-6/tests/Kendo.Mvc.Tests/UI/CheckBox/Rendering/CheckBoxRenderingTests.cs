@@ -1,4 +1,7 @@
-﻿using Kendo.Mvc.Tests;
+﻿using System.IO;
+using Kendo.Mvc.Tests;
+using Moq;
+using Moq.Protected;
 using Xunit;
 
 namespace Kendo.Mvc.UI.Tests
@@ -24,6 +27,19 @@ namespace Kendo.Mvc.UI.Tests
             var html = checkBox.ToHtmlString();
 
             html.ShouldEqual(expected);
+        }
+
+        [Fact]
+        public void CheckBox_should_verify_settings_in_WriteHtml()
+        {
+            var checkBoxMock = new Mock<CheckBoxMock>(TestHelper.CreateViewContext());
+            var builderMock = new CheckBoxHtmlBuilderMock(checkBoxMock.Object);
+            checkBoxMock.Protected().Setup<CheckBoxHtmlBuilder>("GetHtmlBuilder").Returns(builderMock);
+            checkBoxMock.Setup(x => x.VerifySettings());
+
+            checkBoxMock.Object.WriteHtml(new StringWriter());
+
+            checkBoxMock.Verify(x => x.VerifySettings(), Times.Once());
         }
     }
 }
