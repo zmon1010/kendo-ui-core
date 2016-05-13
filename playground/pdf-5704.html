@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.all.js",
+         "./console.time.js",
+         "./test-pdf-helpers.js"
+     ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+  </head>
+  <body>
+    <div id="exportContainer">Content</div>
+
+    <script type="text/javascript">
+     $(function() {
+         var containerToExport = $('#exportContainer');
+
+         kendo.drawing.drawDOM(containerToExport)
+              .then(function(group) {
+                  return kendo.drawing.exportPDF(group, {
+                      margin: { left: "1cm" }
+                  });
+              })
+              .done(function(data) {
+                  kendo.saveAs({
+                      dataURI: data,
+                      fileName: "ExportedFile"
+                  });
+              });
+     });
+    </script>
+  </body>
+</html>
