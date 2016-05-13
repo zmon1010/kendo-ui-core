@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.all.js",
+         "./console.time.js",
+         "./test-pdf-helpers.js"
+     ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+  </head>
+  <body>
+    <button id="export" class="k-button">Export PDF</button>
+
+    <div id="pdf">
+
+      <p>Content before the Grid.</p>
+
+      <div class="page-break"></div>
+
+      <div id="grid"></div>
+
+      <div class="page-break"></div>
+
+      <p>Content after the Grid.</p>
+
+    </div>
+
+    <script>
+
+     $(function() {
+
+         $("#grid").kendoGrid({
+             dataSource: {
+                 type: "odata",
+                 transport: {
+                     read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                 },
+                 schema: {
+                     model: {
+                         fields: {
+                             OrderID: { type: "number" },
+                             Freight: { type: "number" },
+                             ShipName: { type: "string" },
+                             OrderDate: { type: "date" },
+                             ShipCity: { type: "string" }
+                         }
+                     }
+                 },
+                 pageSize: 30,
+                 serverPaging: true,
+                 serverFiltering: true,
+                 serverSorting: true
+             },
+             scrollable: false,
+             pageable: true,
+             columns: [{
+                 field:"OrderID",
+                 filterable: false
+             }, {
+                 field: "OrderDate",
+                 title: "Order Date",
+                 format: "{0:MM/dd/yyyy}"
+             }, {
+                 field: "ShipName",
+                 title: "Ship Name"
+             }, {
+                 field: "ShipCity",
+                 title: "Ship City"
+             }]
+         });
+
+         $("#export").click(function() {
+             kendo.drawing
+                  .drawDOM("#pdf", { forcePageBreak: ".page-break", paperSize: "A4", repeatHeaders: true })
+                  .then(function(group) {
+                      kendo.drawing.pdf.saveAs(group, "multipage.pdf");
+                  });
+         });
+
+     });
+
+    </script>
+  </body>
+</html>
