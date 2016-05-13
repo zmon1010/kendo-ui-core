@@ -458,6 +458,19 @@
         }
     });
 
+    function copyToClipboard(html, beforeRemove) {
+        var textarea = document.createElement('textarea');
+        $(textarea).addClass("k-spreadsheet-clipboard")
+            .val(html)
+            .appendTo(document.body)
+            .focus()
+            .select();
+
+        document.execCommand('copy');
+
+        $(textarea).remove();
+    }
+
     kendo.spreadsheet.ToolbarCopyCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
@@ -467,11 +480,8 @@
         exec: function() {
             if (kendo.support.clipboard.copy) {
                 var clipboard = this._workbook._view.clipboard;
-                var textarea = document.createElement('textarea');
-                $(textarea).addClass("k-spreadsheet-clipboard").val(clipboard.html()).appendTo(document.body).focus().select();
-                document.execCommand('copy');
+                copyToClipboard(clipboard.html());
                 clipboard.trigger("copy");
-                $(textarea).remove();
             } else {
                 return { reason: "error", type: "useKeyboard" };
             }
@@ -519,11 +529,8 @@
         exec: function() {
             if (kendo.support.clipboard.copy) {
                 var clipboard = this._workbook._view.clipboard;
-                var textarea = document.createElement('textarea');
-                $(textarea).val(clipboard.html()).appendTo(document.body).focus().select();
-                document.execCommand('copy');
+                copyToClipboard(clipboard.html());
                 clipboard.trigger("cut");
-                $(textarea).remove();
             } else {
                 return { reason: "error", type: "useKeyboard" };
             }

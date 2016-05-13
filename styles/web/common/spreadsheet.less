@@ -267,7 +267,7 @@
 
 .k-spreadsheet-clipboard-paste,
 .k-spreadsheet-clipboard {
-    position: fixed;
+    position: absolute;
     opacity: 0;
     top: 0;
     left: 0;
@@ -278,6 +278,10 @@
     width: 1px;
     height: 1px;
     box-sizing: border-box;
+}
+
+textarea.k-spreadsheet-clipboard {
+    position: fixed;
 }
 
 .k-spreadsheet-top-corner {
