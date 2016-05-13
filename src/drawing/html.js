@@ -250,6 +250,14 @@
             var container = doc.createElement("KENDO-PDF-DOCUMENT");
             var adjust = 0;
 
+            if (browser.webkit) {
+                // workaround for https://github.com/telerik/kendo/issues/5705 — when this style is
+                // applied, Chrome will overlap the first two lines in text.  It doesn't looke like
+                // a bug in our line breaking algorithm (line contents is determined correctly) but
+                // rather in the values returned by range.getClientRects for the first two lines.
+                copy.style.webkitLineBreak = "normal";
+            }
+
             // make sure <tfoot> elements are at the end (Grid widget
             // places TFOOT before TBODY, tricking our algorithm to
             // insert a page break right after the header).
