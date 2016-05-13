@@ -1524,7 +1524,7 @@ namespace Kendo.Mvc.UI
             {
                 var container = new HtmlElement("div").AddClass(UIPrimitives.Grid.InFormContainer);
 
-                htmlHelper.EditorForModel(dataItem, Editable.TemplateName, Columns.OfType<IGridForeignKeyColumn>().Select(c => c.SerializeSelectList), Editable.AdditionalViewData).AppendTo(container);
+                htmlHelper.EditorForModel(dataItem, Editable.TemplateName, Columns.LeafColumns().OfType<IGridForeignKeyColumn>().Select(c => c.SerializeSelectList), Editable.AdditionalViewData).AppendTo(container);
 
                 EditorHtml = popupSlashes.Replace(container.InnerHtml, match =>
                 {
