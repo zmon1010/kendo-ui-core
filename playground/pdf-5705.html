@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.all.js",
+         "./console.time.js",
+         "./test-pdf-helpers.js"
+     ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+
+    <style>
+     body {
+       font-family: sans-serif;
+     }
+
+     #test {
+       /* font-size: 12px;
+          font-family: Verdana,Geneva,sans-serif;
+          margin-top: -1px;
+          padding: 1px .2em 0;
+          word-wrap: break-word; */
+       /* -webkit-nbsp-mode: space; */
+       -webkit-line-break: after-white-space;
+     }
+    </style>
+  </head>
+  <body>
+    <button onclick="pdfPages('#test', { paperSize: 'A4', margin: '1cm' })">PDF</button>
+
+    <div id="test">&#xFEFF;&#xFEFF;Et asperiores sed ea. Sit est ea natus temporibus laboriosam esse in. Excepturi nam eos aut quasi et delectus autem soluta. Numquam sequi dolorem velit ut.
+      Modi enim est et vitae delectus vitae explicabo. Et dolorem sunt sed officiis maiores. Excepturi facere dolores molestiae non iure. Porro qui qui natus rerum. Dolorum ut placeat fugiat.</div>
+    
+    <hr />
+    <textarea cols="20" id="editor" name="editor" rows="5" style="height:440px">
+Et asperiores sed ea. Sit est ea natus temporibus laboriosam esse in. Excepturi nam eos aut quasi et delectus autem soluta. Numquam sequi dolorem velit ut.
+Modi enim est et vitae delectus vitae explicabo. Et dolorem sunt sed officiis maiores. Excepturi facere dolores molestiae non iure. Porro qui qui natus rerum. Dolorum ut placeat fugiat.
+    </textarea>
+    <script>
+     $(function(){
+         $("#editor").kendoEditor({
+             "pdf":{
+                 "paperSize":"A4",
+                 "margin":{"top":20,"right":20,"bottom":20,"left":20}
+             },
+             "tools":[{"name":"pdf"}]
+         });
+     });
+    </script>
+  </body>
+</html>
