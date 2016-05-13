@@ -257,7 +257,7 @@ var __meta__ = { // jshint ignore:line
                     $(elementHtml).prependTo(this.content).css({
                         top: markerTopPosition,
                         height: "1px",
-                        right: "1px",
+                        width: this.content[0].scrollWidth,
                         left: 0
                     });
                 }
@@ -1578,6 +1578,9 @@ var __meta__ = { // jshint ignore:line
             }
 
             this.refreshLayout();
+
+            this._currentTimeMarkerUpdater();
+
             this.trigger("activate");
         },
 

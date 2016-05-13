@@ -225,7 +225,7 @@ var __meta__ = { // jshint ignore:line
                     $(elementHtml).prependTo(this.content).css({
                         left: this._adjustLeftPosition(left),
                         width: "1px",
-                        bottom: "1px",
+                        height: this.content[0].scrollHeight - 1,
                         top: 0
                     });
                 }
@@ -906,6 +906,7 @@ var __meta__ = { // jshint ignore:line
 
             this._positionEvents(eventGroups, eventsByResource.length);
 
+            this._currentTimeMarkerUpdater();
             this.trigger("activate");
         },
 

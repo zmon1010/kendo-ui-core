@@ -406,6 +406,19 @@
         equal(timeElementsCount,2);
     });
 
+    test("Current time marker is rendered correctly when height is set", function() {
+        debugger;
+        setupScheduler({
+            date: new Date(),
+            eventHeight: 300,
+            height:200
+        });
+
+        var timeElement = scheduler.view().element.find(".k-current-time").filter(":not(.k-current-time-arrow-down)");
+
+        equal(timeElement.height(), timeElement.next().height() - 1);
+    });
+
     test("Current time marker arrow is rendered correctly", function() {
         var view = setup({ date: new Date() });
 
