@@ -32,3 +32,9 @@ $(() => {
 
     window.content(dom);
 });
+
+$(() => {
+    var genericWidget = kendo.widgetInstance($("#foo"), kendo.ui);
+
+    genericWidget.options.foo = true;
+});
