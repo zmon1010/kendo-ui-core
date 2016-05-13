@@ -110,7 +110,7 @@
                     href   : asURL(link),
                     style  : style,
                     target : "_blank" // XXX: customizable?
-                }, [ el ]);
+                }, el ? [ el ] : []);
             }
             return el;
         }
