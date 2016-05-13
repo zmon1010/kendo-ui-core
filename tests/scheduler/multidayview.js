@@ -1369,6 +1369,47 @@
         });
 
         var scheduler = element.data("kendoScheduler");
+
+        var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
+        equal(timeElementsCount,2);
+    });
+
+    test("Current time marker is rendered when grouping without orientation is applied", function() {
+        var viewName = "week";
+        var element = $("<div>").appendTo(QUnit.fixture);
+
+        setupGroupedScheduler(element, "horizontal", viewName, {
+            date: new Date(),
+            startTime: new Date("2013/6/6 01:00"),
+            endTime: new Date("2013/6/6 00:59"),
+            editable: false,
+            draggable: false,
+            group: {
+                resources: ["ResourceName", "ResourceName2"],
+            },
+            resources: [
+                {
+                    field: "rooms",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Room1", value: 1 },
+                        { text: "Room2", value: 2 }
+                    ]
+                },
+                {
+                    field: "persons",
+                    name: "ResourceName2",
+                    dataSource: [
+                        { text: "Fred", value: 1 },
+                        { text: "Barny", value: 2 }
+                    ]
+                }
+            ],
+            views: [ "week" ]
+        });
+
+        var scheduler = element.data("kendoScheduler");
+
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,2);
     });

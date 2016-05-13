@@ -2302,7 +2302,7 @@ var __meta__ = { // jshint ignore:line
             resources: [],
             group: {
                 resources: [],
-                direction: "horizontal"
+                orientation: "horizontal"
             },
             views: [],
             selectable: false
