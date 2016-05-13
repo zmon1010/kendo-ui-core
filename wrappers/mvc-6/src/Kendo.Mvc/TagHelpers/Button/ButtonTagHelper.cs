@@ -9,6 +9,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI Button TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-button")]
+    [OutputElementHint("button")]
     public partial class ButtonTagHelper : TagHelperBase
     {
         public string Tag { get; set; }

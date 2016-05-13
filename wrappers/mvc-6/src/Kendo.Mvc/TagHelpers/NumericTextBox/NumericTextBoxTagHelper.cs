@@ -14,6 +14,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI NumericTextBox TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-numerictextbox")]
+    [OutputElementHint("input")]
     public partial class NumericTextBoxTagHelper : TagHelperBase
     {
         /// <summary>

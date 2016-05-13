@@ -10,6 +10,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI Window TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-window")]
+    [OutputElementHint("div")]
     public partial class WindowTagHelper : TagHelperBase
     {
         public string ContentUrl { get; set; }

@@ -16,6 +16,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI DatePicker TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-datepicker")]
+    [OutputElementHint("input")]
     public partial class DatePickerTagHelper : TagHelperBase
     {
         /// <summary>

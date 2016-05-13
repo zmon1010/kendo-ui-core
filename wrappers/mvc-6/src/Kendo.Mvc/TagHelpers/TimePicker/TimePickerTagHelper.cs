@@ -13,6 +13,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI TimePicker TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-timepicker")]
+    [OutputElementHint("input")]
     public partial class TimePickerTagHelper : TagHelperBase
     {
         /// <summary>
