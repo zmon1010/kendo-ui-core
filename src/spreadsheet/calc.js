@@ -211,7 +211,7 @@
                 exp = parseArray();
                 skip("punc", "}");
             }
-            else if (is("num") || is("str")) {
+            else if (is("num") || is("str") || is("error")) {
                 exp = input.next();
             }
             else if (is("sym")) {
@@ -304,6 +304,8 @@
               case "num":
               case "bool":
                 return JSON.stringify(node.value);
+              case "error":
+                return JSON.stringify("#" + node.value);
               case "str":
                 return JSON.stringify(JSON.stringify(node.value));
               case "ref":
@@ -370,6 +372,7 @@
               case "num"     :
               case "str"     :
               case "null"    :
+              case "error"   :
               case "bool"    : return cpsAtom(node, k);
               case "prefix"  :
               case "postfix" : return cpsUnary(node, k);
@@ -611,6 +614,9 @@
             }
             else if (type == "str") {
                 return JSON.stringify(node.value);
+            }
+            else if (type == "error") {
+                return "context.error(" + JSON.stringify(node.value) + ")";
             }
             else if (type == "return") {
                 return "context.resolve(" + js(node.value) + ")";
@@ -1062,7 +1068,7 @@
             if (isPunc(ch)) {
                 return readPunc();
             }
-            if ((m = input.lookingAt(/^#([a-z\/]+)[?!]/i))) {
+            if ((m = input.lookingAt(/^#([a-z\/]+)[?!]?/i))) {
                 input.skip(m);
                 return { type: "error", value: m[1] };
             }
@@ -1148,7 +1154,7 @@
             return peek() === "";
         }
         function croak(msg) {
-            throw new ParseError(msg, pos);
+            throw new ParseError(msg + " (input: " + input + ")", pos);
         }
         function skip(ch) {
             if (typeof ch == "string") {

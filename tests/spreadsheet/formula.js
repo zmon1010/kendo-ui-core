@@ -25,6 +25,7 @@
     var spreadsheet = kendo.spreadsheet;
     var calc = spreadsheet.calc;
     var runtime = calc.runtime;
+    var CalcError = runtime.CalcError;
 
     // check for the existence of `props` in `obj` (deep).  does not
     // mind if `obj` contains additional properties, but those
@@ -734,6 +735,23 @@
     });
 
     /* -----[ expression evaluation ]----- */
+
+    test("error tokens", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: "=#VALUE!",
+            A2: "=#N/A",
+            A3: "=#NAME?"
+        });
+        ss.recalculate(function(){
+            ok(ss.$("A1") instanceof CalcError);
+            ok(ss.$("A2") instanceof CalcError);
+            ok(ss.$("A3") instanceof CalcError);
+            equal(ss.$("A1").code, "VALUE");
+            equal(ss.$("A2").code, "N/A");
+            equal(ss.$("A3").code, "NAME");
+        });
+    });
 
     test("circular deps", function(){
         var ss = new Spreadsheet();

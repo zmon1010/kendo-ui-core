@@ -66,6 +66,10 @@
             }
         },
 
+        error: function(val) {
+            return new CalcError(val);
+        },
+
         _resolve: function(val) {
             if (val === undefined) {
                 val = null;
