@@ -407,7 +407,6 @@
     });
 
     test("Current time marker is rendered correctly when height is set", function() {
-        debugger;
         setupScheduler({
             date: new Date(),
             eventHeight: 300,
