@@ -424,6 +424,14 @@
             triggerMousewheel(-10);
         });
 
+        asyncTest("mousewheel triggers zoomEnd with axisRanges", function() {
+            chart.bind("zoomEnd", function(e) {
+                ok(e.axisRanges.value);
+                start();
+            });
+            triggerMousewheel(10);
+        });
+
         // ------------------------------------------------------------
         module("Events / zoom selection", {
             setup: function() {
@@ -572,6 +580,14 @@
         asyncTest("mousewheel triggers zoomEnd event", function() {
             chart.bind("zoomEnd", function(e) {
                 ok(true);
+                start();
+            });
+            triggerMousewheel(10);
+        });
+
+        asyncTest("zoomEnd sends axisRanges", function() {
+            chart.bind("zoomEnd", function(e) {
+                ok(e.axisRanges.foo);
                 start();
             });
             triggerMousewheel(10);

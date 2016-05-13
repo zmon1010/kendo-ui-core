@@ -1069,8 +1069,10 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (!inAxis && plotArea.backgroundBox().containsPoint(coords)) {
+                var ranges = axisRanges(axes);
+
                 prevented = chart.trigger(chartEvent, {
-                    axisRanges: axisRanges(axes),
+                    axisRanges: ranges,
                     originalEvent: e
                 });
 
@@ -1080,6 +1082,7 @@ var __meta__ = { // jshint ignore:line
                     chart._suppressHover = true;
                     chart._unsetActivePoint();
                     chart._navState = {
+                        axisRanges: ranges,
                         pane: pane,
                         axes: axes
                     };
