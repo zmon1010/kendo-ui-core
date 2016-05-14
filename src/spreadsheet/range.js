@@ -357,6 +357,8 @@
 
                 return values;
             } else {
+                this._sheet._set(ref, "formula", null);
+
                 for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
                     for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
                         var row = values[ri - topLeftRow];

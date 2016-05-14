@@ -441,6 +441,13 @@
         equal(sheet.range("C3").value(), "C3");
     });
 
+    test("values clears formulas", function() {
+        sheet.range("A1").formula("1+1").values([[ 1 ]]);
+
+        equal(sheet.range("A1").formula(), null);
+        equal(sheet.range("A1").value(), 1);
+    });
+
     test("clear set the range content and style to default", function() {
         sheet.range("A1:A3")
             .value("foo")
