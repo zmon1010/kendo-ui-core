@@ -508,6 +508,12 @@ body > label
     padding: 17px;
 }
 
+.branding img
+{
+    width: 435px;
+    height: 36px;
+}
+
 .header
 {
     position: relative;
