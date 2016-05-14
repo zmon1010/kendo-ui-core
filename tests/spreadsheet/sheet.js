@@ -596,6 +596,7 @@
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
             defaults.rowHeight, defaults.columnWidth);
+            sheet._name("Sheet1");
         }
     });
 
@@ -622,6 +623,7 @@
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
             defaults.rowHeight, defaults.columnWidth);
+            sheet._name("Sheet1");
         }
     });
 
@@ -810,6 +812,15 @@
         deepEqual(values, [[ 42, 43, 44, 45, 46, 47, 48, 49 ]]);
         var values = sheet.range("A1:J1").fillFrom("A1:B1").values();
         deepEqual(values, [[ 44, 45, 46, 47, 48, 49, 50, 51 ]]);
+    });
+
+    test("autofill over formula removes it", function() {
+        sheet.range("A1:A2").value(1);
+        sheet.range("A2").formula("formula");
+
+        sheet.range("A2:A4").fillFrom("A1");
+
+        equal(sheet.range("A2").formula(), null);
     });
 
 })();

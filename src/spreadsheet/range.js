@@ -417,8 +417,14 @@
                     var propValue = data[propName];
                     ref.topLeft.row = ref.bottomRight.row = ri;
                     ref.topLeft.col = ref.bottomRight.col = ci;
+
+                    if (propName == "value") {
+                        sheet._set(ref, "formula", null);
+                    }
+
                     sheet._set(ref, propName, propValue);
                 };
+
                 for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
                     for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
                         var row = props[ri - topLeftRow];
