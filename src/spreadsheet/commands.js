@@ -458,7 +458,7 @@
         }
     });
 
-    function copyToClipboard(html, beforeRemove) {
+    function copyToClipboard(html) {
         var textarea = document.createElement('textarea');
         $(textarea).addClass("k-spreadsheet-clipboard")
             .val(html)
