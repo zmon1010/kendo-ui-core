@@ -2491,6 +2491,10 @@ a.footer-links:hover,
     padding: 2.5em 0 0.700em 0;
 }
 
+#overview h1 sup {
+    font-size: .5em;
+}
+
 #overview a:hover {
     color: #036c9c;
 }
