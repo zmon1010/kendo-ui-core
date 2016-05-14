@@ -99,12 +99,6 @@
        sheet.bind("change", success).deleteRow(0);
     });
 
-    test("deleteRow triggers the deleteRow event passing the row index", 1, function() {
-       sheet.bind("deleteRow", function(e) {
-           equal(e.index, 0);
-       }).deleteRow(0);
-    });
-
     test("deleteRow move the bottom row values to the deleted one", function() {
         sheet.range("2:2").value("foo");
 
@@ -343,12 +337,6 @@
 
     test("insertRow triggers the change event", 1, function() {
        sheet.bind("change", success).insertRow(0);
-    });
-
-    test("insertRow triggers the insertRow event passing the row index", 1, function() {
-       sheet.bind("insertRow", function(e) {
-           equal(e.index, 0);
-       }).insertRow(0);
     });
 
     test("insertRow pushing record outside of the sheet throws error", function() {

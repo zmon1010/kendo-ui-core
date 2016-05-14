@@ -261,6 +261,54 @@
         workbook.insertSheet();
     });
 
+    test("sheet insertRow triggers workbook change", function() {
+        var sheet = workbook.activeSheet();
+
+        workbook.bind("change", function (reason) {
+            ok(reason.ref);
+            ok(reason.insertRow);
+            equal(reason.insertRow.index, 2);
+        });
+
+        sheet.insertRow(2);
+    });
+
+    test("sheet deleteRow triggers workbook change", function() {
+        var sheet = workbook.activeSheet();
+
+        workbook.bind("change", function (reason) {
+            ok(reason.ref);
+            ok(reason.deleteRow);
+            equal(reason.deleteRow.index, 2);
+        });
+
+        sheet.deleteRow(2);
+    });
+
+    test("sheet insertColumn triggers workbook change", function() {
+        var sheet = workbook.activeSheet();
+
+        workbook.bind("change", function (reason) {
+            ok(reason.ref);
+            ok(reason.insertColumn);
+            equal(reason.insertColumn.index, 2);
+        });
+
+        sheet.insertColumn(2);
+    });
+
+    test("sheet insertRow triggers workbook change", function() {
+        var sheet = workbook.activeSheet();
+
+        workbook.bind("change", function (reason) {
+            ok(reason.ref);
+            ok(reason.insertRow);
+            equal(reason.insertRow.index, 2);
+        });
+
+        sheet.insertRow(2);
+    });
+
     test("renameSheet trigger workbook change with correct reason", function() {
         workbook.insertSheet();
 

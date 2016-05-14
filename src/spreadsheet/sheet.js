@@ -334,9 +334,12 @@
                 }
 
                 this._adjustReferences("row", rowIndex, 1, mergedCells);
-            }, { recalc: true, layout: true });
-
-            this.trigger("insertRow", { index: rowIndex });
+            }, {
+                recalc: true,
+                layout: true,
+                insertRow: { index: rowIndex },
+                ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
+            });
 
             return this;
         },
@@ -383,9 +386,12 @@
                 }
 
                 this._adjustReferences("row", rowIndex, -1, mergedCells);
-            }, { recalc: true, layout: true });
-
-            this.trigger("deleteRow", { index: rowIndex });
+            }, {
+                recalc: true,
+                layout: true,
+                deleteRow: { index: rowIndex },
+                ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
+            });
 
             return this;
         },
@@ -424,7 +430,12 @@
                 }
 
                 this._adjustReferences("col", columnIndex, 1, mergedCells);
-            }, { recalc: true, layout: true });
+            }, {
+                recalc: true,
+                layout: true,
+                insertColumn: { index: columnIndex },
+                ref: new RangeRef(new CellRef(0, columnIndex), new CellRef(Infinity, Infinity))
+            });
 
             return this;
         },
@@ -472,7 +483,12 @@
                 }
 
                 this._adjustReferences("col", columnIndex, -1, mergedCells);
-            }, { recalc: true, layout: true });
+            }, {
+                recalc: true,
+                layout: true,
+                deleteColumn: { index: columnIndex },
+                ref: new RangeRef(new CellRef(0, columnIndex), new CellRef(Infinity, Infinity))
+            });
 
             return this;
         },
