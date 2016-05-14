@@ -922,7 +922,7 @@
             if (!this.isEditorDeactivateBound) {
                 this.isEditorDeactivateBound = true;
 
-                viewEditor.one("deactivate", function (callback, options) {
+                viewEditor.one("deactivate", function () {
                     this.isEditorDeactivateBound = false;
 
                     if (this._lastCommandRequest) {
