@@ -22,6 +22,9 @@
     <script>
 
         (function ($) {
+            function endsWith(str, suffix) {
+                return str.indexOf(suffix, str.length - suffix.length) !== -1;
+            }
             var banner = $("#webinar-banner");
             var bannerLink = banner.find("a");
             var trackingAttribute = "data-gtm-event";
@@ -40,7 +43,7 @@
             for (var j in suites) {
                 var isOverviewKey = j === "/kendo-ui/";
                 var containsKey = location.href.indexOf(j) > 0;
-                var endsWithKey = location.href.endsWith(j);
+                var endsWithKey = endsWith(location.href, j);
 
                 if (containsKey && (isOverviewKey && endsWithKey || !isOverviewKey && !endsWithKey)) {
                     try {
