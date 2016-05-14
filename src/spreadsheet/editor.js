@@ -99,6 +99,12 @@
 
         enable: function(enable) {
             this.barInput.enable(enable);
+            this.cellInput.enable(enable);
+        },
+
+        enableEditing: function (enable) {
+            this.barInput.enableEditing(enable);
+            this.cellInput.enableEditing(enable);
         },
 
         barElement: function() {
