@@ -80,12 +80,10 @@
         equal($(document.activeElement).closest(".k-spreadsheet-message").text(), "Custom message.OK");
     });
 
-    test("closing error dialog calls the editor focusLastActive method", 1, function() {
-        spreadsheet._view.showError({ body: "Foo"});
-
-        spreadsheet._view.editor.focusLastActive = function() {
+    test("closing error dialog calls the provided callback", 1, function() {
+        spreadsheet._view.showError({ body: "Foo"}, function() {
             ok(true);
-        };
+        });
 
         $(".k-spreadsheet-message .k-button").trigger("click");
     });

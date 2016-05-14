@@ -11,7 +11,7 @@
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
 
-            spreadsheet = new kendo.ui.Spreadsheet(element, { ассад: "asdsad"});
+            spreadsheet = new kendo.ui.Spreadsheet(element, { });
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -330,6 +330,59 @@
         });
     });
 
+    test("edit errors prevent executing toolbar commands", 1, function() {
+        spreadsheet._workbook._view.editor.isActive = function(e) {
+            return true;
+        };
+
+        spreadsheet._workbook._view.editor.deactivate = function() {
+            ok(true);
+        };
+
+        spreadsheet._workbook._view.openDialog = function() {
+            ok(false);
+        };
+
+        spreadsheet._controller.onDialogRequest({ options: {}});
+    });
+
+    test("edit errors clear last command queue", 1, function() {
+        spreadsheet._lastCommandRequest = {
+            callback: function() {
+                console.log("DA FUQ");
+                ok(false);
+            },
+            options: {}
+        };
+
+        spreadsheet._workbook.execute = function(e) {
+            return {
+                reason: "error"
+            };
+        };
+
+        spreadsheet._controller._execute({});
+
+        ok(spreadsheet._controller._lastCommandRequest === null);
+    });
+
+    test("edit cell execute queued toolbar commands", 2, function() {
+        spreadsheet._workbook._view.editor.isActive = function(e) {
+            return true;
+        };
+
+        spreadsheet._workbook._view.editor.deactivate = function() {
+            ok(true);
+            spreadsheet._workbook._view.editor.trigger("deactivate");
+        };
+
+        spreadsheet._workbook._view.openDialog = function() {
+            ok(true);
+        };
+
+        spreadsheet._controller.onDialogRequest({ options: {}});
+    });
+
     test("fromFile forwards call to workbook", function() {
         var BLOB = {};
         var NAME = "foo";
@@ -341,7 +394,6 @@
 
         spreadsheet.fromFile(BLOB, NAME);
     });
-
     // ------------------------------------------------------------
     module("Spreadsheet options", {
         setup: function() {

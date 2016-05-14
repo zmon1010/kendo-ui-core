@@ -133,8 +133,7 @@
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
             this.keyListener = new kendo.spreadsheet.EventListener(this.clipboardElement, this, CLIPBOARD_EVENTS);
 
-            this.barKeyListener = new kendo.spreadsheet.EventListener(this.editor.barElement(), this, FORMULABAR_EVENTS);
-            this.inputKeyListener = new kendo.spreadsheet.EventListener(this.editor.cellElement(), this, FORMULAINPUT_EVENTS);
+            this._enableEditorEvents();
 
             if (this.sheetsbar) {
                 this.sheetsbar.bind("select", this.onSheetBarSelect.bind(this));
@@ -156,6 +155,16 @@
             }
         },
 
+        _enableEditorEvents: function (enable) {
+            if (enable === undefined || enable) {
+                this.barKeyListener = new kendo.spreadsheet.EventListener(this.editor.barElement(), this, FORMULABAR_EVENTS);
+                this.inputKeyListener = new kendo.spreadsheet.EventListener(this.editor.cellElement(), this, FORMULAINPUT_EVENTS);
+            } else {
+                this.barKeyListener.destroy();
+                this.inputKeyListener.destroy();
+            }
+        },
+
         _execute: function(options) {
             var result = this._workbook.execute(options);
 
@@ -164,10 +173,16 @@
             }
 
             if (result) {
+                this.enableEditor(false);
+
                 if (result.reason === "error") {
-                    this.view.showError(result);
+                    this._lastCommandRequest = null;
+
+                    this.view.showError(result, this.enableEditor.bind(this, true));
                 } else {
-                    this.view.openDialog(result.reason);
+                    this.view.openDialog(result.reason, {
+                        close: this.enableEditor.bind(this, true)
+                    });
                 }
             }
 
@@ -235,6 +250,7 @@
 
         destroy: function() {
             this.listener.destroy();
+            this._enableEditorEvents(false);
             this.keyListener.destroy();
             this.inputKeyListener.destroy();
         },
@@ -895,26 +911,81 @@
         },
 
 ////////////////////////////////////////////////////////////////////
+        deactivateEditor: function(callback, options) {
+            var viewEditor = this.view.editor;
 
-        onCommandRequest: function(e) {
-            if (e.command) {
-                this._execute(e);
-            } else {
-                this._workbook.undoRedoStack[e.action]();
+            this._lastCommandRequest = {
+                callback: callback,
+                options: options
+            };
+
+            if (!this.isEditorDeactivateBound) {
+                this.isEditorDeactivateBound = true;
+
+                viewEditor.one("deactivate", function (callback, options) {
+                    this.isEditorDeactivateBound = false;
+
+                    if (this._lastCommandRequest) {
+                        this._lastCommandRequest.callback(this._lastCommandRequest.options);
+                        this._lastCommandRequest = null;
+                    }
+                }.bind(this));
+            }
+
+            viewEditor.deactivate();
+        },
+
+        enableEditor: function(enable) {
+            enable = enable === undefined || enable;
+
+            this._enableEditorEvents(enable);
+            this.editor.enableEditing(enable);
+
+            if (enable) {
+                this.editor.focusLastActive();
             }
         },
 
-        onDialogRequest: function(e) {
-            var exportOptions = {
-                pdfExport: this._workbook.options.pdf,
-                excelExport: this._workbook.options.excel
-            };
-            if(e.options) {
-                $.extend(true, e.options, exportOptions);
+        executeRequest: function(callback, options) {
+            if (this.view.editor.isActive()) {
+                this.deactivateEditor(callback, options);
             } else {
-                e.options = exportOptions;
+                callback(options);
             }
-            this.view.openDialog(e.name, e.options);
+        },
+
+        onCommandRequest: function(e) {
+            var executeCommand = function(e) {
+                if (e.command) {
+                    this._execute(e);
+                } else {
+                    this._workbook.undoRedoStack[e.action]();
+                }
+            }.bind(this);
+
+            this.executeRequest(executeCommand, e);
+        },
+
+        onDialogRequest: function(e) {
+            var executeDialog = function(e) {
+                this.enableEditor(false);
+
+                var additionalOptions = {
+                    pdfExport: this._workbook.options.pdf,
+                    excelExport: this._workbook.options.excel,
+                    close: this.enableEditor.bind(this, true)
+                };
+
+                if(e.options) {
+                    $.extend(true, e.options, additionalOptions);
+                } else {
+                    e.options = additionalOptions;
+                }
+
+                this.view.openDialog(e.name, e.options);
+            }.bind(this);
+
+            this.executeRequest(executeDialog, e);
         }
     });
 

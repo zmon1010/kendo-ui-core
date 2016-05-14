@@ -89,16 +89,16 @@
         ],
 
         enable: function(enable) {
+            if (enable === undefined) {
+                return this.element.attr("contenteditable") === "false" ? false : true;
+            }
+
             this.enableEditing(enable);
 
             this.element.toggleClass("k-state-disabled", !enable);
         },
 
         enableEditing:  function(enable) {
-            if (enable === undefined) {
-                return this.element.attr("contenteditable") === "false" ? false : true;
-            }
-
             this.element.attr("contenteditable", enable);
         },
 
