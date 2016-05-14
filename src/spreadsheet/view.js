@@ -907,21 +907,24 @@
             }
         },
 
-        showError: function(options) {
+        showError: function(options, callback) {
             var errorMessages = VIEW_MESAGES.errors;
 
             if (kendo.spreadsheet.dialogs.registered(options.type)) {
-                this.openDialog(options.type);
+                this.openDialog(options.type, {
+                    close: callback
+                });
             } else {
                 this.openDialog("message", {
                     title : options.title || "Error",
                     text  : options.body ? options.body : errorMessages[options.type],
-                    activate: function() {
-                        this.dialog().element.find(".k-button").focus();
-                    },
-                    close: function() {
-                        this.editor.focusLastActive();
-                    }.bind(this)
+                    activate: function(e) {
+                        e.sender.dialog().element
+                            .find(".k-button")
+                            .focus();
+
+                    }.bind(this),
+                    close: callback
                 });
             }
         },

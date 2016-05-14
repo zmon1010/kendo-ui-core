@@ -190,4 +190,17 @@
         spreadsheet.refresh();
         equal(tabstrip.calls("quickAccessAdjust"), 1);
     });
+
+    test("call the provided callback after closing the error dialog", 1, function() {
+        var callback = function () {
+            ok(true);
+        };
+
+        spreadsheet._view.showError({
+            body: "sometext",
+            type: "validationError"
+        }, callback);
+
+        spreadsheet._view._dialogs[0].close();
+    });
 })();
