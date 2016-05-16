@@ -390,8 +390,8 @@ var __meta__ = { // jshint ignore:line
             selection = navi.selection = new Selection(chart, axisClone, {
                 min: min,
                 max: max,
-                from: from,
-                to: to,
+                from: from || min,
+                to: to || max,
                 selectStart: $.proxy(navi._selectStart, navi),
                 select: $.proxy(navi._select, navi),
                 selectEnd: $.proxy(navi._selectEnd, navi),

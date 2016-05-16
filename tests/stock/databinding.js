@@ -377,6 +377,35 @@
             });
         });
 
+        test("selected range is updated on data binding", function() {
+            var ds = new kendo.data.DataSource();
+
+            createStockChart({
+                dateField: "date",
+                navigator: {
+                    dataSource: ds,
+                    series: [{
+                        type: "area",
+                        field: "value"
+                    }],
+                    categoryAxis: null,
+                    select: null
+                }
+            });
+
+            ds.data([{
+                date: new Date("2016/04/01"),
+                value: 1
+            }, {
+                date: new Date("2016/05/01"),
+                value: 1
+            }]);
+
+            var selection = chart.navigator.selection;
+            deepEqual(selection.options.from, new Date("2016/04/01 00:00"));
+            deepEqual(selection.options.to, new Date("2016/05/02 00:00"));
+        });
+
         // ------------------------------------------------------------
         module("Data Binding / With Navigator Data Source / Zoom", {
             setup: function() {
