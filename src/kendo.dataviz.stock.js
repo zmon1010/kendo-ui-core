@@ -767,6 +767,7 @@ var __meta__ = { // jshint ignore:line
                     maxDateGroups: 200
                 }, user, {
                 name: NAVIGATOR_AXIS,
+                title: null,
                 baseUnit: "fit",
                 baseUnitStep: "auto",
                 labels: { visible: false },
@@ -786,6 +787,7 @@ var __meta__ = { // jshint ignore:line
                     width: 0.5
                 },
                 plotBands: [],
+                title: null,
                 labels: { visible: false, mirror: true }
             })
         );
