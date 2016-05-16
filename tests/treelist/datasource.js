@@ -1449,6 +1449,68 @@
         ok(ds.contains(ds.get(1), ds.get(3)));
     });
 
+    asyncTest("cancelChanges after remote loading", 1, function() {
+        var ds = new TreeListDataSource({
+            transport: {
+                read: function(options) {
+                    if (!options.data.id) {
+                        options.success([
+                            { id: 1, parentId: null, hasChildren: true, name: "foo" },
+                        ]);
+                    } else {
+                        options.success([
+                            { id: 2, parentId: 1, name: "bar" }
+                        ]);
+                    }
+                }
+            }
+        });
+
+        ds.read()
+            .then(() => ds.load(ds.get(1)))
+            .then(() => {
+                var model = ds.get(1);
+
+                model.set("name", "baz");
+                ds.cancelChanges(model);
+
+                equal(model.name, "foo");
+            })
+            .always(start);
+    });
+
+    asyncTest("change is triggered once for model updates after remote loading", 1, function() {
+        var ds = new TreeListDataSource({
+            transport: {
+                read: function(options) {
+                    if (!options.data.id) {
+                        options.success([
+                            { id: 1, parentId: null, hasChildren: true, name: "foo" },
+                        ]);
+                    } else {
+                        options.success([
+                            { id: 2, parentId: 1, name: "bar" }
+                        ]);
+                    }
+                }
+            }
+        });
+
+        ds.read()
+            .then(() => ds.load(ds.get(1)))
+            .then(() => {
+                var handler = spy();
+                ds.bind("change", handler);
+
+                var model = ds.get(1);
+
+                model.set("name", "baz");
+
+                equal(handler.calls, 1);
+            })
+            .always(start);
+    });
+
     test("record changes pushed via the remote serivce calls are accepted - result is object", function() {
         var pushUpdate;
 

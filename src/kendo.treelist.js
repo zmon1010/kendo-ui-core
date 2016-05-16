@@ -316,9 +316,10 @@ var __meta__ = { // jshint ignore:line
 
         _readData: function(newData) {
             var data = this.data();
+
             newData = DataSource.fn._readData.call(this, newData);
 
-            this._concat(newData, data);
+            this._replaceData(data.toJSON().concat(newData), data);
 
             if (newData instanceof ObservableArray) {
                 return newData;
@@ -327,14 +328,14 @@ var __meta__ = { // jshint ignore:line
             return data;
         },
 
-        _concat: function(source, target) {
-            var targetLength = target.length;
+        _replaceData: function(source, target) {
+            var sourceLength = source.length;
 
-            for (var i = 0; i < source.length; i++) {
-                target[targetLength++] = source[i];
+            for (var i = 0; i < sourceLength; i++) {
+                target[i] = source[i];
             }
 
-            target.length = targetLength;
+            target.length = sourceLength;
         },
 
         _readAggregates: function(data) {
