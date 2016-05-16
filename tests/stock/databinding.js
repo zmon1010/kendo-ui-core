@@ -183,6 +183,21 @@
             });
         });
 
+        test("slave axis range is set to full date range", function() {
+            var ds = new kendo.data.DataSource();
+            createStockChart({
+                navigator: {
+                    series: [{
+                        type: "area",
+                        field: "value"
+                    }]
+                }
+            });
+
+            deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/01"));
+            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/11/01"));
+        });
+
         // ------------------------------------------------------------
         module("Data Binding / With Navigator Data Source", {
             setup: function() {
@@ -432,7 +447,7 @@
             }]);
 
             deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/02"));
-            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/09/03 02:00"));
+            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/09/03"));
         });
 
         // ------------------------------------------------------------
@@ -461,7 +476,7 @@
 
             chart.trigger("zoomEnd");
             deepEqual(chart.dataSource._filter.filters[0].value, new Date("2012/08/30"));
-            deepEqual(chart.dataSource._filter.filters[1].value, new Date("2012/11/05"));
+            deepEqual(chart.dataSource._filter.filters[1].value, new Date("2012/11/04"));
         });
 
         test("main DS is not filtered during zoom", function() {

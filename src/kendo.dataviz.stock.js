@@ -413,11 +413,10 @@ var __meta__ = { // jshint ignore:line
         _setRange: function() {
             var plotArea = this.chart._createPlotArea(true);
             var axis = plotArea.namedCategoryAxes[NAVIGATOR_AXIS];
-            var axisOpt = axis.options;
 
-            var range = axis.range();
+            var range = axis.datesRange();
             var min = range.min;
-            var max = addDuration(range.max, axisOpt.baseUnitStep, axisOpt.baseUnit);
+            var max = range.max;
 
             var select = this.options.select || {};
             var from = toDate(select.from) || min;
