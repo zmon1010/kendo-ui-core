@@ -406,6 +406,35 @@
             deepEqual(selection.options.to, new Date("2016/05/02 00:00"));
         });
 
+        test("slave axis range is set to data range", function() {
+            var ds = new kendo.data.DataSource();
+            createStockChart({
+                dateField: "date",
+                navigator: {
+                    dataSource: ds,
+                    series: [{
+                        type: "area",
+                        field: "value"
+                    }],
+                    select: {
+                        from: "2001/01/02",
+                        to: "2015/01/02"
+                    }
+                }
+            });
+
+            ds.data([{
+                date: new Date("2012/09/02"),
+                sales: 110
+            }, {
+                date: new Date("2012/09/03"),
+                sales: 110
+            }]);
+
+            deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/02"));
+            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/09/03 02:00"));
+        });
+
         // ------------------------------------------------------------
         module("Data Binding / With Navigator Data Source / Zoom", {
             setup: function() {

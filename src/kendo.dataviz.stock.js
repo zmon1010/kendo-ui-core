@@ -334,7 +334,7 @@ var __meta__ = { // jshint ignore:line
 
             if (chart._model) {
                 navi.redraw();
-                navi.filterAxes();
+                navi._setRange();
 
                 if (!chart.options.dataSource || (chart.options.dataSource && chart._dataBound)) {
                     navi.redrawSlaves();
