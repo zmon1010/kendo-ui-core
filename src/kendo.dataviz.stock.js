@@ -84,11 +84,14 @@ var __meta__ = { // jshint ignore:line
                 themeOptions = deepExtend({}, themeOptions, stockDefaults);
             }
 
-            if (!chart._navigator) {
-                Navigator.setup(options, themeOptions);
-            }
+            Navigator.setup(options, themeOptions);
 
             Chart.fn._applyDefaults.call(chart, options, themeOptions);
+        },
+
+        setOptions: function(options) {
+            this._destroyNavigator();
+            Chart.fn.setOptions.call(this, options);
         },
 
         _initDataSource: function(userOptions) {
@@ -239,12 +242,14 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _destroyNavigator: function() {
+            this._navigator.destroy();
+            this._navigator = null;
+        },
+
         destroy: function() {
-            var chart = this;
-
-            chart._navigator.destroy();
-
-            Chart.fn.destroy.call(chart);
+            this._destroyNavigator();
+            Chart.fn.destroy.call(this);
         }
     });
 
@@ -703,6 +708,11 @@ var __meta__ = { // jshint ignore:line
     Navigator.setup = function(options, themeOptions) {
         options = options || {};
         themeOptions = themeOptions || {};
+
+        if (options.__navi) {
+            return;
+        }
+        options.__navi = true;
 
         var naviOptions = deepExtend({}, themeOptions.navigator, options.navigator),
             panes = options.panes = [].concat(options.panes),
