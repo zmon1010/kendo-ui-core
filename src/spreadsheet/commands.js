@@ -517,7 +517,7 @@
             this._clipboard = options.workbook.clipboard();
         },
         exec: function() {
-            if (this._clipboard.canCopy()) {
+            if (this.range().enable() && this._clipboard.canCopy()) {
                 this.getState();
                 this._clipboard.cut();
             }
