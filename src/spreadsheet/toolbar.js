@@ -109,7 +109,7 @@
             "merge",
             "freeze",
             "filter",
-            "gridLines"
+            "toggleGridlines"
         ],
         insert: [
             [ "addColumnLeft", "addColumnRight", "addRowBelow", "addRowAbove" ],
@@ -148,7 +148,7 @@
         borders:               { type: "borders",                             iconClass: "all-borders" },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
         hyperlink:             { type: "dialog", dialogName: "hyperlink", iconClass: "hyperlink", overflow: "never", text: "" },
-        gridLines:             { type: "button", command: "GridLinesChangeCommand", property: "gridLines", value: true, iconClass: "no-borders", togglable: true },
+        toggleGridlines:       { type: "button", command: "GridLinesChangeCommand", property: "gridLines", value: true, iconClass: "no-borders", togglable: true },
 
         //insert tab
         addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "add-column-left"  },
