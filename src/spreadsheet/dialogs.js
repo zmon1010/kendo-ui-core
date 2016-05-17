@@ -1533,10 +1533,9 @@
                         model.url = null;
                     }
                     self.trigger("action", {
-                        command: "PropertyChangeCommand",
+                        command: "HyperlinkCommand",
                         options: {
-                            property: "link",
-                            value: model.url
+                            link: model.url
                         }
                     });
                     self.close();

@@ -84,6 +84,29 @@
         }
     });
 
+    kendo.spreadsheet.HyperlinkCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._link = options.link;
+        },
+        exec: function() {
+            var range = this.range();
+            this._prevLink = range.link();
+            range.link(this._link);
+            if (range.value() == null) { // jshint ignore:line
+                this._hasSetValue = true;
+                range.value(this._link);
+            }
+        },
+        undo: function() {
+            var range = this.range();
+            range.link(this._prevLink);
+            if (this._hasSetValue) {
+                range.value(null);
+            }
+        }
+    });
+
     var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand = Command.extend({
         _setRange: function(range) {
             Command.prototype._setRange.call(this, range.skipHiddenCells());
