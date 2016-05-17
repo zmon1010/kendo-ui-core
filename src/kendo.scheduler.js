@@ -2394,7 +2394,9 @@ var __meta__ = { // jshint ignore:line
             if (view && view.options.name === "agenda") {
                 return content.find(".k-task");
             } else {
-                return content.children(".k-event");
+                return content.find(".k-event")
+                              .add(this.wrapper.find(".k-scheduler-header-wrap")
+                                       .find(".k-scheduler-header-all-day").siblings());
             }
         },
 
