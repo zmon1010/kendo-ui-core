@@ -120,12 +120,18 @@
         cacheImages(element, function(){
             var forceBreak = options && options.forcePageBreak;
             var hasPaperSize = options && options.paperSize && options.paperSize != "auto";
-            var paperOptions = hasPaperSize && kendo.pdf.getPaperOptions(function(key, def){
+            var paperOptions = kendo.pdf.getPaperOptions(function(key, def){
+                if (key == "paperSize") {
+                    // kendo.pdf.getPaperOptions croaks on "auto", just pass dummy A4 as we might
+                    // still be interested in margins.
+                    return hasPaperSize ? options[key] : "A4";
+                }
                 return key in options ? options[key] : def;
             });
             var pageWidth = hasPaperSize && paperOptions.paperSize[0];
             var pageHeight = hasPaperSize && paperOptions.paperSize[1];
             var margin = options.margin && paperOptions.margin;
+            var hasMargin = !!margin;
             if (forceBreak || pageHeight) {
                 if (!margin) {
                     margin = { left: 0, top: 0, right: 0, bottom: 0 };
@@ -145,7 +151,7 @@
                     pdf: {
                         multiPage     : true,
                         paperSize     : hasPaperSize ? paperOptions.paperSize : "auto",
-                        _ignoreMargin : true // HACK!  see exportPDF in pdf/drawing.js
+                        _ignoreMargin : hasMargin // HACK!  see exportPDF in pdf/drawing.js
                     }
                 });
                 handlePageBreaks(
