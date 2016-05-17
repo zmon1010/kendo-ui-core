@@ -147,18 +147,39 @@
     </style>
 
     <script>
-      function makePDF() {
-        kendo.drawing.drawDOM("#content", {
-          paperSize: "A4",
-          forcePageBreak: "H1:not(:first-child)",
-          margin: {
-            top: "3cm", left: "4cm", right: "4cm", bottom: "3cm"
-          },
-          template: $("#page-template").html()
-        }).then(function(group){
-          kendo.drawing.pdf.saveAs(group, "loremipsum.pdf");
-        });
-      }
+     function makePDF() {
+         kendo.drawing.drawDOM("#content", {
+             paperSize: "A4",
+             forcePageBreak: "H1:not(:first-child)",
+             margin: {
+                 top: "3cm", left: "4cm", right: "4cm", bottom: "3cm"
+             },
+             template: $("#page-template").html()
+         }).then(function(group){
+             kendo.drawing.pdf.saveAs(group, "loremipsum.pdf");
+         });
+     }
+
+     function debugClientRects() {
+         var r = getSelection().getRangeAt(0);
+         var a = [].slice.call(r.getClientRects());
+         console.log(a);
+         $(".client-rect").remove();
+         a.unshift(r.getBoundingClientRect());
+         var dx = document.body.scrollLeft;
+         var dy = document.body.scrollTop;
+         a.forEach(function(box, i){
+             $("<div class='client-rect'>").css({
+                 position  : "absolute",
+                 left      : (box.left + dx) + "px",
+                 top       : (box.top + dy) + "px",
+                 width     : box.width + "px",
+                 height    : box.height + "px",
+                 boxSizing : "border-box",
+                 border    : i == 0 ? "2px solid blue" : "1px solid red"
+             }).appendTo(document.body);
+         });
+     }
     </script>
 
     <script type="x/kendo-template" id="page-template">
@@ -177,7 +198,12 @@
   </head>
   <body>
     <div id="main">
-      <button onclick="makePDF()">Generate PDF</button>
+      <div style="position: fixed">
+        <button onclick="makePDF()">Generate PDF</button>
+        <button onclick="debugClientRects()">Selection clientRects()</button>
+      </div>
+
+      <p><br/></p><p><br/></p><p><br/></p>
 
       <div id="content">
 
