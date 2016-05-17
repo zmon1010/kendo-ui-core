@@ -147,7 +147,7 @@ categories are listed from right to left and from top to bottom.
     }
 
     /**
-    * The selected axis range. If configured, axis selection will be enabled.** Available only for vertical axes **The range units are:
+    * The selected axis range. If configured, axis selection will be enabled.
     * @param \Kendo\Dataviz\UI\StockChartCategoryAxisItemSelect|array $value
     * @return \Kendo\Dataviz\UI\StockChartCategoryAxisItem
     */

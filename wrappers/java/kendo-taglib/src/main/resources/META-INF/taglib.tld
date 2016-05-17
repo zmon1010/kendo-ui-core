@@ -763,17 +763,6 @@ If it is not supported by the browser, the Chart will switch to the first availa
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires when an legend item is clicked, before the selected series visibility is toggled.
-Can be cancelled.</description>
-            <name>legendItemClick</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Fires when an legend item is hovered.</description>
-            <name>legendItemHover</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
             <description>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>dataBound</name>
             <rtexprvalue>true</rtexprvalue>
@@ -791,6 +780,17 @@ Can be cancelled.</description>
         <attribute>
             <description>Fired when the user starts dragging the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>dragStart</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when an legend item is clicked, before the selected series visibility is toggled.
+Can be cancelled.</description>
+            <name>legendItemClick</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when an legend item is hovered.</description>
+            <name>legendItemHover</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -11188,19 +11188,6 @@ body of the chart.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires when an legend item is clicked, before the selected series visibility is toggled.
-Can be cancelled.</description>
-        <name>chart-legendItemClick</name>
-        <tag-class>com.kendoui.taglib.chart.LegendItemClickFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Fires when an legend item is hovered.</description>
-        <name>chart-legendItemHover</name>
-        <tag-class>com.kendoui.taglib.chart.LegendItemHoverFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
         <description>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>chart-dataBound</name>
         <tag-class>com.kendoui.taglib.chart.DataBoundFunctionTag</tag-class>
@@ -11222,6 +11209,19 @@ Can be cancelled.</description>
         <description>Fired when the user starts dragging the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>chart-dragStart</name>
         <tag-class>com.kendoui.taglib.chart.DragStartFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when an legend item is clicked, before the selected series visibility is toggled.
+Can be cancelled.</description>
+        <name>chart-legendItemClick</name>
+        <tag-class>com.kendoui.taglib.chart.LegendItemClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when an legend item is hovered.</description>
+        <name>chart-legendItemHover</name>
+        <tag-class>com.kendoui.taglib.chart.LegendItemHoverFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -36369,17 +36369,6 @@ If it is not supported by the browser, the Chart will switch to the first availa
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires when an legend item is clicked, before the selected series visibility is toggled.
-Can be cancelled.</description>
-            <name>legendItemClick</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Fires when an legend item is hovered.</description>
-            <name>legendItemHover</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
             <description>Fires when the chart has received data from the data source
 and is about to render it.</description>
             <name>dataBound</name>
@@ -36398,6 +36387,17 @@ and is about to render it.</description>
         <attribute>
             <description>Fires when the user stops dragging the chart.</description>
             <name>dragEnd</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when an legend item is clicked, before the selected series visibility is toggled.
+Can be cancelled.</description>
+            <name>legendItemClick</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when an legend item is hovered.</description>
+            <name>legendItemHover</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -36426,6 +36426,21 @@ and is about to render it.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user modifies the selection.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>select</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user completes modifying the selection.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>selectEnd</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user starts modifying the axis selection.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>selectStart</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fires when chart series are clicked.</description>
             <name>seriesClick</name>
             <rtexprvalue>true</rtexprvalue>
@@ -36448,21 +36463,6 @@ and is about to render it.</description>
         <attribute>
             <description>Fires when the user stops zooming the chart.</description>
             <name>zoomEnd</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Fires when the user starts modifying the axis selection.The range units are:</description>
-            <name>selectStart</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Fires when the user modifies the selection.The range units are:</description>
-            <name>select</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Fires when the user completes modifying the selection.</description>
-            <name>selectEnd</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <dynamic-attributes>true</dynamic-attributes>
@@ -37587,7 +37587,7 @@ on the chart.</description>
 
 
     <tag>
-        <description>The selected axis range. If configured, axis selection will be enabled.** Available only for vertical axes **The range units are:</description>
+        <description>The selected axis range. If configured, axis selection will be enabled.</description>
         <name>stockChart-categoryAxisItem-select</name>
         <tag-class>com.kendoui.taglib.stockchart.CategoryAxisItemSelectTag</tag-class>
         <body-content>JSP</body-content>
@@ -37613,9 +37613,9 @@ a value larger than the last category index (date).</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The upper boundary of the selected range.Note: The category with the specified index (date) is not included in the selected range
+            <description>The upper boundary of the selected range.Note: The category with the specified date is not included in the selected range
 unless the axis is justified. In order to select all categories specify
-a value larger than the last category index (date).</description>
+a value larger than the last category date.</description>
             <name>to</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -43360,19 +43360,6 @@ hex and rgb.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires when an legend item is clicked, before the selected series visibility is toggled.
-Can be cancelled.</description>
-        <name>stockChart-legendItemClick</name>
-        <tag-class>com.kendoui.taglib.stockchart.LegendItemClickFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Fires when an legend item is hovered.</description>
-        <name>stockChart-legendItemHover</name>
-        <tag-class>com.kendoui.taglib.stockchart.LegendItemHoverFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
         <description>Fires when the chart has received data from the data source
 and is about to render it.</description>
         <name>stockChart-dataBound</name>
@@ -43395,6 +43382,19 @@ and is about to render it.</description>
         <description>Fires when the user stops dragging the chart.</description>
         <name>stockChart-dragEnd</name>
         <tag-class>com.kendoui.taglib.stockchart.DragEndFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when an legend item is clicked, before the selected series visibility is toggled.
+Can be cancelled.</description>
+        <name>stockChart-legendItemClick</name>
+        <tag-class>com.kendoui.taglib.stockchart.LegendItemClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when an legend item is hovered.</description>
+        <name>stockChart-legendItemHover</name>
+        <tag-class>com.kendoui.taglib.stockchart.LegendItemHoverFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -43428,6 +43428,24 @@ and is about to render it.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>Fired when the user modifies the selection.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>stockChart-select</name>
+        <tag-class>com.kendoui.taglib.stockchart.SelectFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user completes modifying the selection.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>stockChart-selectEnd</name>
+        <tag-class>com.kendoui.taglib.stockchart.SelectEndFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user starts modifying the axis selection.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>stockChart-selectStart</name>
+        <tag-class>com.kendoui.taglib.stockchart.SelectStartFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Fires when chart series are clicked.</description>
         <name>stockChart-seriesClick</name>
         <tag-class>com.kendoui.taglib.stockchart.SeriesClickFunctionTag</tag-class>
@@ -43455,24 +43473,6 @@ and is about to render it.</description>
         <description>Fires when the user stops zooming the chart.</description>
         <name>stockChart-zoomEnd</name>
         <tag-class>com.kendoui.taglib.stockchart.ZoomEndFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Fires when the user starts modifying the axis selection.The range units are:</description>
-        <name>stockChart-selectStart</name>
-        <tag-class>com.kendoui.taglib.stockchart.SelectStartFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Fires when the user modifies the selection.The range units are:</description>
-        <name>stockChart-select</name>
-        <tag-class>com.kendoui.taglib.stockchart.SelectFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Fires when the user completes modifying the selection.</description>
-        <name>stockChart-selectEnd</name>
-        <tag-class>com.kendoui.taglib.stockchart.SelectEndFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

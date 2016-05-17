@@ -36,50 +36,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the legendItemClick event.</param>
-        public StockChartEventBuilder LegendItemClick(string handler)
-        {
-            Handler("legendItemClick", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public StockChartEventBuilder LegendItemClick(Func<object, object> handler)
-        {
-            Handler("legendItemClick", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when an legend item is hovered.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the legendItemHover event.</param>
-        public StockChartEventBuilder LegendItemHover(string handler)
-        {
-            Handler("legendItemHover", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when an legend item is hovered.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public StockChartEventBuilder LegendItemHover(Func<object, object> handler)
-        {
-            Handler("legendItemHover", handler);
-
-            return this;
-        }
-
-        /// <summary>
         /// Fires when the chart has received data from the data source\n\t\t/// and is about to render it.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the dataBound event.</param>
@@ -163,6 +119,50 @@ namespace Kendo.Mvc.UI.Fluent
         public StockChartEventBuilder DragEnd(Func<object, object> handler)
         {
             Handler("dragEnd", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the legendItemClick event.</param>
+        public StockChartEventBuilder LegendItemClick(string handler)
+        {
+            Handler("legendItemClick", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public StockChartEventBuilder LegendItemClick(Func<object, object> handler)
+        {
+            Handler("legendItemClick", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when an legend item is hovered.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the legendItemHover event.</param>
+        public StockChartEventBuilder LegendItemHover(string handler)
+        {
+            Handler("legendItemHover", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when an legend item is hovered.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public StockChartEventBuilder LegendItemHover(Func<object, object> handler)
+        {
+            Handler("legendItemHover", handler);
 
             return this;
         }
@@ -278,6 +278,72 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Fired when the user modifies the selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the select event.</param>
+        public StockChartEventBuilder Select(string handler)
+        {
+            Handler("select", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user modifies the selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public StockChartEventBuilder Select(Func<object, object> handler)
+        {
+            Handler("select", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user completes modifying the selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the selectEnd event.</param>
+        public StockChartEventBuilder SelectEnd(string handler)
+        {
+            Handler("selectEnd", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user completes modifying the selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public StockChartEventBuilder SelectEnd(Func<object, object> handler)
+        {
+            Handler("selectEnd", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user starts modifying the axis selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the selectStart event.</param>
+        public StockChartEventBuilder SelectStart(string handler)
+        {
+            Handler("selectStart", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user starts modifying the axis selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public StockChartEventBuilder SelectStart(Func<object, object> handler)
+        {
+            Handler("selectStart", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fires when chart series are clicked.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the seriesClick event.</param>
@@ -383,72 +449,6 @@ namespace Kendo.Mvc.UI.Fluent
         public StockChartEventBuilder ZoomEnd(Func<object, object> handler)
         {
             Handler("zoomEnd", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when the user starts modifying the axis selection.The range units are:
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the selectStart event.</param>
-        public StockChartEventBuilder SelectStart(string handler)
-        {
-            Handler("selectStart", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when the user starts modifying the axis selection.The range units are:
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public StockChartEventBuilder SelectStart(Func<object, object> handler)
-        {
-            Handler("selectStart", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when the user modifies the selection.The range units are:
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the select event.</param>
-        public StockChartEventBuilder Select(string handler)
-        {
-            Handler("select", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when the user modifies the selection.The range units are:
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public StockChartEventBuilder Select(Func<object, object> handler)
-        {
-            Handler("select", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when the user completes modifying the selection.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the selectEnd event.</param>
-        public StockChartEventBuilder SelectEnd(string handler)
-        {
-            Handler("selectEnd", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when the user completes modifying the selection.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public StockChartEventBuilder SelectEnd(Func<object, object> handler)
-        {
-            Handler("selectEnd", handler);
 
             return this;
         }

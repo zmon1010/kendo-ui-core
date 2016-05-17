@@ -206,35 +206,6 @@ If it is not supported by the browser, the Chart will switch to the first availa
     }
 
     /**
-    * Sets the legendItemClick event of the StockChart.
-    * Fires when an legend item is clicked, before the selected series visibility is toggled.
-Can be cancelled.
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\Dataviz\UI\StockChart
-    */
-    public function legendItemClick($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('legendItemClick', $value);
-    }
-
-    /**
-    * Sets the legendItemHover event of the StockChart.
-    * Fires when an legend item is hovered.
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\Dataviz\UI\StockChart
-    */
-    public function legendItemHover($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('legendItemHover', $value);
-    }
-
-    /**
     * Sets the dataBound event of the StockChart.
     * Fires when the chart has received data from the data source
 and is about to render it.
@@ -289,6 +260,35 @@ and is about to render it.
         }
 
         return $this->setProperty('dragEnd', $value);
+    }
+
+    /**
+    * Sets the legendItemClick event of the StockChart.
+    * Fires when an legend item is clicked, before the selected series visibility is toggled.
+Can be cancelled.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\StockChart
+    */
+    public function legendItemClick($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('legendItemClick', $value);
+    }
+
+    /**
+    * Sets the legendItemHover event of the StockChart.
+    * Fires when an legend item is hovered.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\StockChart
+    */
+    public function legendItemHover($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('legendItemHover', $value);
     }
 
     /**
@@ -362,6 +362,48 @@ and is about to render it.
     }
 
     /**
+    * Sets the select event of the StockChart.
+    * Fired when the user modifies the selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\StockChart
+    */
+    public function select($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('select', $value);
+    }
+
+    /**
+    * Sets the selectEnd event of the StockChart.
+    * Fired when the user completes modifying the selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\StockChart
+    */
+    public function selectEnd($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('selectEnd', $value);
+    }
+
+    /**
+    * Sets the selectStart event of the StockChart.
+    * Fired when the user starts modifying the axis selection.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\StockChart
+    */
+    public function selectStart($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('selectStart', $value);
+    }
+
+    /**
     * Sets the seriesClick event of the StockChart.
     * Fires when chart series are clicked.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
@@ -429,48 +471,6 @@ and is about to render it.
         }
 
         return $this->setProperty('zoomEnd', $value);
-    }
-
-    /**
-    * Sets the selectStart event of the StockChart.
-    * Fires when the user starts modifying the axis selection.The range units are:
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\Dataviz\UI\StockChart
-    */
-    public function selectStart($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('selectStart', $value);
-    }
-
-    /**
-    * Sets the select event of the StockChart.
-    * Fires when the user modifies the selection.The range units are:
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\Dataviz\UI\StockChart
-    */
-    public function select($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('select', $value);
-    }
-
-    /**
-    * Sets the selectEnd event of the StockChart.
-    * Fires when the user completes modifying the selection.
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\Dataviz\UI\StockChart
-    */
-    public function selectEnd($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('selectEnd', $value);
     }
 
 

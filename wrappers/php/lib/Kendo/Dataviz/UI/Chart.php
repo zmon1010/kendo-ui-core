@@ -223,35 +223,6 @@ If it is not supported by the browser, the Chart will switch to the first availa
     }
 
     /**
-    * Sets the legendItemClick event of the Chart.
-    * Fires when an legend item is clicked, before the selected series visibility is toggled.
-Can be cancelled.
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\Dataviz\UI\Chart
-    */
-    public function legendItemClick($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('legendItemClick', $value);
-    }
-
-    /**
-    * Sets the legendItemHover event of the Chart.
-    * Fires when an legend item is hovered.
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\Dataviz\UI\Chart
-    */
-    public function legendItemHover($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('legendItemHover', $value);
-    }
-
-    /**
     * Sets the dataBound event of the Chart.
     * Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
@@ -305,6 +276,35 @@ Can be cancelled.
         }
 
         return $this->setProperty('dragStart', $value);
+    }
+
+    /**
+    * Sets the legendItemClick event of the Chart.
+    * Fires when an legend item is clicked, before the selected series visibility is toggled.
+Can be cancelled.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\Chart
+    */
+    public function legendItemClick($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('legendItemClick', $value);
+    }
+
+    /**
+    * Sets the legendItemHover event of the Chart.
+    * Fires when an legend item is hovered.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\Chart
+    */
+    public function legendItemHover($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('legendItemHover', $value);
     }
 
     /**

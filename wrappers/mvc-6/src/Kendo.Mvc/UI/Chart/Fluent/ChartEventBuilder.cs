@@ -36,50 +36,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the legendItemClick event.</param>
-        public ChartEventBuilder LegendItemClick(string handler)
-        {
-            Handler("legendItemClick", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartEventBuilder LegendItemClick(Func<object, object> handler)
-        {
-            Handler("legendItemClick", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when an legend item is hovered.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the legendItemHover event.</param>
-        public ChartEventBuilder LegendItemHover(string handler)
-        {
-            Handler("legendItemHover", handler);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Fires when an legend item is hovered.
-        /// </summary>
-        /// <param name="handler">The handler code wrapped in a text tag.</param>
-        public ChartEventBuilder LegendItemHover(Func<object, object> handler)
-        {
-            Handler("legendItemHover", handler);
-
-            return this;
-        }
-
-        /// <summary>
         /// Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the dataBound event.</param>
@@ -163,6 +119,50 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartEventBuilder DragStart(Func<object, object> handler)
         {
             Handler("dragStart", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the legendItemClick event.</param>
+        public ChartEventBuilder LegendItemClick(string handler)
+        {
+            Handler("legendItemClick", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when an legend item is clicked, before the selected series visibility is toggled.\n\t\t/// Can be cancelled.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartEventBuilder LegendItemClick(Func<object, object> handler)
+        {
+            Handler("legendItemClick", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when an legend item is hovered.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the legendItemHover event.</param>
+        public ChartEventBuilder LegendItemHover(string handler)
+        {
+            Handler("legendItemHover", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fires when an legend item is hovered.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartEventBuilder LegendItemHover(Func<object, object> handler)
+        {
+            Handler("legendItemHover", handler);
 
             return this;
         }
