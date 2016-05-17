@@ -262,6 +262,20 @@
             equal(chart._plotArea.namedValueAxes["foo"].options.min, 100);
         });
 
+        test("title is applied on the label axis only", function() {
+            createStockChart({
+                navigator: {
+                    categoryAxis: {
+                        title: { text: "Foo" }
+                    }
+                }
+            });
+
+            equal(chart._plotArea.namedCategoryAxes["_navigator_labels"].title.options.text, "Foo");
+            ok(!chart._plotArea.namedCategoryAxes["_navigator"].options.title);
+            ok(!chart._plotArea.namedCategoryAxes["_navigator_ticks"].options.title);
+        });
+
         // ------------------------------------------------------------
         var support = deepExtend({}, kendo.support);
         var browserOptions = deepExtend({}, kendo.support.browser);

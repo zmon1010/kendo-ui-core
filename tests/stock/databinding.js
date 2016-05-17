@@ -183,6 +183,21 @@
             });
         });
 
+        test("slave axis range is set to full date range", function() {
+            var ds = new kendo.data.DataSource();
+            createStockChart({
+                navigator: {
+                    series: [{
+                        type: "area",
+                        field: "value"
+                    }]
+                }
+            });
+
+            deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/01"));
+            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/11/01"));
+        });
+
         // ------------------------------------------------------------
         module("Data Binding / With Navigator Data Source", {
             setup: function() {
@@ -377,6 +392,64 @@
             });
         });
 
+        test("selected range is updated on data binding", function() {
+            var ds = new kendo.data.DataSource();
+
+            createStockChart({
+                dateField: "date",
+                navigator: {
+                    dataSource: ds,
+                    series: [{
+                        type: "area",
+                        field: "value"
+                    }],
+                    categoryAxis: null,
+                    select: null
+                }
+            });
+
+            ds.data([{
+                date: new Date("2016/04/01"),
+                value: 1
+            }, {
+                date: new Date("2016/05/01"),
+                value: 1
+            }]);
+
+            var selection = chart.navigator.selection;
+            deepEqual(selection.options.from, new Date("2016/04/01 00:00"));
+            deepEqual(selection.options.to, new Date("2016/05/02 00:00"));
+        });
+
+        test("slave axis range is set to data range", function() {
+            var ds = new kendo.data.DataSource();
+            createStockChart({
+                dateField: "date",
+                navigator: {
+                    dataSource: ds,
+                    series: [{
+                        type: "area",
+                        field: "value"
+                    }],
+                    select: {
+                        from: "2001/01/02",
+                        to: "2015/01/02"
+                    }
+                }
+            });
+
+            ds.data([{
+                date: new Date("2012/09/02"),
+                sales: 110
+            }, {
+                date: new Date("2012/09/03"),
+                sales: 110
+            }]);
+
+            deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/02"));
+            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/09/03"));
+        });
+
         // ------------------------------------------------------------
         module("Data Binding / With Navigator Data Source / Zoom", {
             setup: function() {
@@ -403,7 +476,7 @@
 
             chart.trigger("zoomEnd");
             deepEqual(chart.dataSource._filter.filters[0].value, new Date("2012/08/30"));
-            deepEqual(chart.dataSource._filter.filters[1].value, new Date("2012/11/05"));
+            deepEqual(chart.dataSource._filter.filters[1].value, new Date("2012/11/04"));
         });
 
         test("main DS is not filtered during zoom", function() {

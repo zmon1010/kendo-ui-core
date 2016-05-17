@@ -772,5 +772,32 @@
             deepEqual(sOpts.to, new Date("2012/01/15 00:00"));
         });
 
+        test("selection expands to min/max range for partial categories", function() {
+            setup({
+                series: [{
+                    type: "area",
+                    data: [1,2]
+                }],
+                categoryAxis: {
+                    categories: [
+                        new Date("2012/01/05"),
+                        new Date("2012/02/05")
+                    ],
+                    baseUnit: "months",
+                    select: {
+                        from: new Date("2012/01/10"),
+                        to: new Date("2012/01/11"),
+                        min: new Date("2012/01/01"),
+                        max: new Date("2012/03/01")
+                    }
+                }
+            });
+
+            triggerMousewheel(1000);
+
+            deepEqual(sOpts.from, new Date("2012/01/01"));
+            deepEqual(sOpts.to, new Date("2012/03/01"));
+        });
+
     })();
 })();

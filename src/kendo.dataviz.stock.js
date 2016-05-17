@@ -84,11 +84,14 @@ var __meta__ = { // jshint ignore:line
                 themeOptions = deepExtend({}, themeOptions, stockDefaults);
             }
 
-            if (!chart._navigator) {
-                Navigator.setup(options, themeOptions);
-            }
+            Navigator.setup(options, themeOptions);
 
             Chart.fn._applyDefaults.call(chart, options, themeOptions);
+        },
+
+        setOptions: function(options) {
+            this._destroyNavigator();
+            Chart.fn.setOptions.call(this, options);
         },
 
         _initDataSource: function(userOptions) {
@@ -194,7 +197,7 @@ var __meta__ = { // jshint ignore:line
                 navigator = chart._navigator;
 
             if (!navigator) {
-                navigator = chart._navigator = new Navigator(chart);
+                navigator = chart._navigator = chart.navigator = new Navigator(chart);
             }
 
             navigator._setRange();
@@ -239,12 +242,14 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _destroyNavigator: function() {
+            this._navigator.destroy();
+            this._navigator = null;
+        },
+
         destroy: function() {
-            var chart = this;
-
-            chart._navigator.destroy();
-
-            Chart.fn.destroy.call(chart);
+            this._destroyNavigator();
+            Chart.fn.destroy.call(this);
         }
     });
 
@@ -329,7 +334,7 @@ var __meta__ = { // jshint ignore:line
 
             if (chart._model) {
                 navi.redraw();
-                navi.filterAxes();
+                navi._setRange();
 
                 if (!chart.options.dataSource || (chart.options.dataSource && chart._dataBound)) {
                     navi.redrawSlaves();
@@ -385,8 +390,8 @@ var __meta__ = { // jshint ignore:line
             selection = navi.selection = new Selection(chart, axisClone, {
                 min: min,
                 max: max,
-                from: from,
-                to: to,
+                from: from || min,
+                to: to || max,
                 selectStart: $.proxy(navi._selectStart, navi),
                 select: $.proxy(navi._select, navi),
                 selectEnd: $.proxy(navi._selectEnd, navi),
@@ -408,11 +413,10 @@ var __meta__ = { // jshint ignore:line
         _setRange: function() {
             var plotArea = this.chart._createPlotArea(true);
             var axis = plotArea.namedCategoryAxes[NAVIGATOR_AXIS];
-            var axisOpt = axis.options;
 
-            var range = axis.range();
+            var range = axis.datesRange();
             var min = range.min;
-            var max = addDuration(range.max, axisOpt.baseUnitStep, axisOpt.baseUnit);
+            var max = range.max;
 
             var select = this.options.select || {};
             var from = toDate(select.from) || min;
@@ -674,12 +678,40 @@ var __meta__ = { // jshint ignore:line
             if (plotArea) {
                 return plotArea.namedCategoryAxes[NAVIGATOR_AXIS];
             }
+        },
+
+        select: function(from, to) {
+            var select = this.options.select;
+
+            if (from && to) {
+                select.from = toDate(from);
+                select.to = toDate(to);
+
+                this.filterAxes();
+                this.filterDataSource();
+                this.redrawSlaves();
+
+                this.selection.set(
+                    from,
+                    to
+                );
+            }
+
+            return {
+                from: select.from,
+                to: select.to
+            };
         }
     });
 
     Navigator.setup = function(options, themeOptions) {
         options = options || {};
         themeOptions = themeOptions || {};
+
+        if (options.__navi) {
+            return;
+        }
+        options.__navi = true;
 
         var naviOptions = deepExtend({}, themeOptions.navigator, options.navigator),
             panes = options.panes = [].concat(options.panes),
@@ -734,6 +766,7 @@ var __meta__ = { // jshint ignore:line
                     maxDateGroups: 200
                 }, user, {
                 name: NAVIGATOR_AXIS,
+                title: null,
                 baseUnit: "fit",
                 baseUnitStep: "auto",
                 labels: { visible: false },
@@ -753,6 +786,7 @@ var __meta__ = { // jshint ignore:line
                     width: 0.5
                 },
                 plotBands: [],
+                title: null,
                 labels: { visible: false, mirror: true }
             })
         );
