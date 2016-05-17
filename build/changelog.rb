@@ -14,7 +14,7 @@ class Issue
 
         @internal = @labels.join(" ") =~ /Documentation|Internal|Deleted|Invalid|Won't Fix/
         @bug = @labels.include? "Bug"
-        @new_component = @labels.include? "New widget"
+        @new_component = @labels.include? "New Component"
 
         @suites = filtered_labels :s
 
