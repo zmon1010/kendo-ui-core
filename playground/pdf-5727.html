@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.all.js",
+         "./console.time.js",
+         "./test-pdf-helpers.js"
+     ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+  </head>
+  <body>
+
+    <div id="example">
+
+      <div class="box wide hidden-on-narrow">
+        <h4>Export page content</h4>
+        <div class="box-col">
+          <button class='export-pdf k-button'>Export as PDF</button>
+        </div>
+
+      </div>
+
+      <div id="testDiv" style="background-color:lightblue;"> 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        <br />
+        <br />
+        <span class="pageBreak">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          <br />
+          <br />
+        </span>
+        <span class="pageBreak">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </span>
+      </div>
+
+      <div class="responsive-message"></div>
+    </div>
+
+    <style>
+     /*
+        Use the DejaVu Sans font for display and embedding in the PDF file.
+        The standard PDF fonts have no support for Unicode characters.
+      */
+     .k-widget {
+       font-family: "DejaVu Sans", "Arial", sans-serif;
+       font-size: .9em;
+     }
+    </style>
+
+    <!-- <script>
+         // Import DejaVu Sans font for embedding
+
+         // NOTE: Only required if the Kendo UI stylesheets are loaded
+         // from a different origin, e.g. cdn.kendostatic.com
+         kendo.pdf.defineFont({
+         "DejaVu Sans"             : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
+         "DejaVu Sans|Bold"        : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+         "DejaVu Sans|Bold|Italic" : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+         "DejaVu Sans|Italic"      : "//kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+         });
+         </script> -->
+
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="//kendo.cdn.telerik.com/2016.2.504/js/pako_deflate.min.js"></script>
+
+    <script>
+     $(document).ready(function () {
+
+         $(".export-pdf").click(function () {
+             // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+             kendo.drawing.drawDOM("#testDiv", {
+                 forcePageBreak: ".pageBreak",
+             }).then(function (group) {
+                 // Render the result as a PDF file
+                 return kendo.drawing.exportPDF(group, {
+                     paperSize: "auto",
+                     margin: { left: "20mm", top: "20mm", right: "20mm", bottom: "20mm" }
+                 });
+             }).done(function (data) {
+                 // Save the PDF file
+                 kendo.saveAs({
+                     dataURI: data,
+                     fileName: "HR-Dashboard.pdf",
+                     proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                 });
+             });
+         });
+
+     });
+    </script>
+
+  </body>
+</html>
