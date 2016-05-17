@@ -734,15 +734,16 @@
 
                 var type = "cell";
                 var ref = new CellRef(row, column);
+                var selecting = this._sheet.selectionInProgress();
 
                 if (this.isAutoFill(x, y, pane)) {
                     type = "autofill";
                 } else if (this.isFilterIcon(x, y, pane, ref)) {
                     type = "filtericon";
-                } else if (x < grid._headerWidth) {
+                } else if (!selecting && x < grid._headerWidth) {
                     ref = new CellRef(row, -Infinity);
                     type = this.isRowResizer(y, pane, ref) ? "rowresizehandle" : "rowheader";
-                } else if (y < grid._headerHeight) {
+                } else if (!selecting && y < grid._headerHeight) {
                     ref = new CellRef(-Infinity, column);
                     type = this.isColumnResizer(x, pane, ref) ? "columnresizehandle" : "columnheader";
                 }
