@@ -149,7 +149,7 @@
         function readNext() {
             var ch, m;
             // numbers
-            if ((m = input.skip(/^([#0?]+),([#0?]+)/))) {
+            if ((m = input.skip(/^([#0?]+)(?:,([#0?]+))+/))) {
                 // thousands separator.  seems convenient to treat
                 // this as a single token.
                 return { type: "digit", sep: true, format: m[1] + m[2], decimal: decimalPart };

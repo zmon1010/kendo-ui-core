@@ -87,6 +87,11 @@
         htmlEqual(format(12345.578), "12,345.58");
     });
 
+    test("multiple commas in one token", function(){
+        var format = F.compile("#,###,###.00");
+        htmlEqual(format(10.8571428571429), "10.86");
+    });
+
     test("space-padding", function(){
         var format = F.compile("????.??");
         htmlEqual(format(0), "    .  ");
