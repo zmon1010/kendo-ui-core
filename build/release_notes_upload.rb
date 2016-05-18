@@ -155,18 +155,18 @@ end
 def set_fields_data(bot, productName)
     #Beta release notes
     if ENV["BETA"] != nil
-      bot.execute_script("$('[id$=\"_TitleTb\"]').val('#{productName} Q#{VERSION_Q} #{VERSION_YEAR} Beta')")
+      bot.execute_script("$('[id$=\"_TitleTb\"]').val('#{productName} R#{VERSION_Q} #{VERSION_YEAR} Beta')")
       #due to mandatory non-empty value requirement (form validation bug)
       bot.execute_script("$('[id$=\"_ProductMinorVersionTb\"]').val('11')")
       bot.execute_script("$('[id$=\"_ReleaseTypeRadioButtons_2\"]').click().click()")
     else
     #official release notes
       if SERVICE_PACK_NUMBER != nil
-        bot.execute_script("$('[id$=\"_TitleTb\"]').val('#{productName} Q#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}')")
+        bot.execute_script("$('[id$=\"_TitleTb\"]').val('#{productName} R#{VERSION_Q} #{VERSION_YEAR} SP#{SERVICE_PACK_NUMBER}')")
         bot.execute_script("$('[id$=\"_ProductMinorVersionTb\"]').val('#{SERVICE_PACK_NUMBER}')")
         bot.execute_script("$('[id$=\"_ReleaseTypeRadioButtons_1\"]').click().click()")
       else
-        bot.execute_script("$('[id$=\"_TitleTb\"]').val('#{productName} Q#{VERSION_Q} #{VERSION_YEAR}')")
+        bot.execute_script("$('[id$=\"_TitleTb\"]').val('#{productName} R#{VERSION_Q} #{VERSION_YEAR}')")
         #due to mandatory non-empty value requirement (form validation bug)
         bot.execute_script("$('[id$=\"_ProductMinorVersionTb\"]').val('11')")
         bot.execute_script("$('[id$=\"_ReleaseTypeRadioButtons_0\"]').click().click()")
