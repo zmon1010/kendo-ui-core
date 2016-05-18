@@ -792,7 +792,7 @@
             equal(el.text(), "6");
     });
 
-    ngTest("Scheduler -- compile customizable templates", 8, function() {
+    ngTest("Scheduler -- compile customizable templates", 9, function() {
         angular.module("kendo.tests").controller("mine", function($scope) {
             $scope.options = {
                 date: new Date("2013/6/6"),
