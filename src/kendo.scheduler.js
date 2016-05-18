@@ -2248,6 +2248,7 @@ var __meta__ = { // jshint ignore:line
             min: new Date(1900, 0, 1),
             max: new Date(2099, 11, 31),
             toolbar: null,
+            footer: {},
             messages: {
                 today: "Today",
                 pdf: "Export to PDF",
