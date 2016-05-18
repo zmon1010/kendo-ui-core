@@ -12264,7 +12264,9 @@ var __meta__ = { // jshint ignore:line
             clearTimeout(that._mwTimeout);
             that._state = null;
 
-            that.wrapper.remove();
+            if (that.wrapper) {
+                that.wrapper.remove();
+            }
         },
 
         _rangeEventArgs: function(range) {

@@ -276,6 +276,45 @@
             ok(!chart._plotArea.namedCategoryAxes["_navigator_ticks"].options.title);
         });
 
+        test("default visibility is set on selection", function() {
+            createStockChart({
+                dateField: "Date",
+                dataSource: {
+                    data: [{
+                        Date: new Date("2012/09/01"),
+                        Sales: 100
+                    }]
+                },
+                navigator: {
+                    series: [{
+                        field: "Sales"
+                    }]
+                }
+            });
+
+            equal(chart.navigator.selection.options.visible, true);
+        });
+
+        test("visibility is set on selection", function() {
+            createStockChart({
+                dateField: "Date",
+                dataSource: {
+                    data: [{
+                        Date: new Date("2012/09/01"),
+                        Sales: 100
+                    }]
+                },
+                navigator: {
+                    visible: false,
+                    series: [{
+                        field: "Sales"
+                    }]
+                }
+            });
+
+            equal(chart.navigator.selection.options.visible, false);
+        });
+
         // ------------------------------------------------------------
         var support = deepExtend({}, kendo.support);
         var browserOptions = deepExtend({}, kendo.support.browser);

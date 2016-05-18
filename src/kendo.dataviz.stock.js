@@ -395,9 +395,8 @@ var __meta__ = { // jshint ignore:line
                 selectStart: $.proxy(navi._selectStart, navi),
                 select: $.proxy(navi._select, navi),
                 selectEnd: $.proxy(navi._selectEnd, navi),
-                mousewheel: {
-                    zoom: "left"
-                }
+                mousewheel: { zoom: "left" },
+                visible: options.visible
             });
 
             if (options.hint.visible) {
