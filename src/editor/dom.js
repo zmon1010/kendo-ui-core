@@ -413,7 +413,9 @@ var Dom = {
     },
 
     restoreScrollTop: function(doc) {
-        Dom.scrollContainer(doc).scrollTop = persistedScrollTop;
+        if (typeof persistedScrollTop == "number") {
+            Dom.scrollContainer(doc).scrollTop = persistedScrollTop;   
+        }
     },
 
     insertAt: function (parent, newElement, position) {

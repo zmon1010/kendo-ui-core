@@ -365,6 +365,34 @@ test("emptyNode returns false for text node", function() {
         node.appendChild(child);
 
         equal(Dom.innerText(node), "some content");
-    })
-
+    });
+	
+	module("Ensure restoring of scrollTop happens when it is previously persisted", {
+        beforeEach: function() {
+			var scrollContainer = { scrollTop: 0 };
+			mockFunc(Dom, "scrollContainer", function(doc) { return scrollContainer; });
+        },
+		
+		afterEach: function() {
+			removeMocksIn(Dom);
+		}
+    });
+	
+	var doc = {};	
+    test("scrollTop is persisted", function() {
+		Dom.persistScrollTop(doc);
+		Dom.scrollContainer(doc).scrollTop = 10;
+		
+		Dom.restoreScrollTop(doc);
+		equal(Dom.scrollContainer(doc).scrollTop, 0);
+    });
+    
+    test("scrollTop is not persisted", function() {
+		Dom.scrollContainer(doc).scrollTop = null;
+		Dom.persistScrollTop(doc);
+		Dom.scrollContainer(doc).scrollTop = 15;
+		
+		Dom.restoreScrollTop(doc);
+		equal(Dom.scrollContainer(doc).scrollTop, 15);
+    });
 }());
