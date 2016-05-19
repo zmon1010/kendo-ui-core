@@ -63,6 +63,20 @@ callbacks which will handle push notifications (data pushed from the server).
     }
 
     /**
+    * Sets the submit option of the DataSourceTransport.
+    * A function that will receive create, update and delete operations in a single batch.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Data\DataSourceTransport
+    */
+    public function submit($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('submit', $value);
+    }
+
+    /**
     * The configuration used when the data source saves updated data items. Those are data items whose fields have been updated.If the value of transport.update is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.update is a string the data source uses this string as the URL of the remote service.
     * @param string|\Kendo\JavaScriptFunction|\Kendo\Data\DataSourceTransportUpdate|array $value
     * @return \Kendo\Data\DataSourceTransport

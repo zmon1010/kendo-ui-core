@@ -12586,6 +12586,12 @@ callbacks which will handle push notifications (data pushed from the server).</d
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A function that will receive create, update and delete operations in a single batch.</description>
+            <name>submit</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The configuration used when the data source saves updated data items. Those are data items whose fields have been updated.If the value of transport.update is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.update is a string the data source uses this string as the URL of the remote service.</description>
             <name>update</name>
             <rtexprvalue>true</rtexprvalue>
@@ -12855,6 +12861,12 @@ the data source sends the parameters using jQuery's conventions.</description>
 callbacks which will handle push notifications (data pushed from the server).</description>
         <name>dataSource-transport-push</name>
         <tag-class>com.kendoui.taglib.datasource.TransportPushFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function that will receive create, update and delete operations in a single batch.</description>
+        <name>dataSource-transport-submit</name>
+        <tag-class>com.kendoui.taglib.datasource.TransportSubmitFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
