@@ -141,6 +141,16 @@
         });
     });
 
+    test("Pasting from external source interprets values as input", function(){
+        clipboard.external({
+            html: "<table> <td>1</td> <td>true</td> <td>=sum(a1:b1)</td> </table>"
+        });
+        clipboard.paste();
+        equal(typeof sheet.range("A1").value(), "number");
+        equal(typeof sheet.range("B1").value(), "boolean");
+        equal(sheet.range("C1").formula().toString(), "sum(A1:B1)");
+    });
+
     test("Pasting from filtered range does not include hidden values", function(){
         sheet.range("A1:A3").values([
             [ 1 ], [ 2 ], [ 3 ]

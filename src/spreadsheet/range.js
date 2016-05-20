@@ -696,7 +696,22 @@
                                 // formula.  Go through the lower level setter rather
                                 // than range.value(...), because range.value will clear
                                 // the formula!  chicken and egg issues.
-                                range._set("value", cellState.value);
+                                if (isPaste) {
+                                    // https://github.com/telerik/kendo-ui-core/issues/1688
+                                    // if we have a paste from external source, we should parse the
+                                    // value as if it were inputted.  This allows to treat numbers
+                                    // as numbers, or `=sum(a1:b2)` as formula (Google Sheets does
+                                    // the same).  A difference though is that we can't store an
+                                    // invalid Formula and display #ERROR, like G.S. does, so in
+                                    // case of a parse error we'll just set the value as string.
+                                    try {
+                                        range.input(cellState.value);
+                                    } catch(ex) {
+                                        range._set("value", cellState.value);
+                                    }
+                                } else {
+                                    range._set("value", cellState.value);
+                                }
                             }
                         }
                         col++;
