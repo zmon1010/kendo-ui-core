@@ -1,48 +1,45 @@
 {
-    "version": "1.0.0-*",
-    "title": "Telerik UI for ASP.NET MVC 6 RC1 Final",
-    "description": "Telerik UI for ASP.NET MVC provides server-side helpers for Kendo UI's JavaScript framework. It enables developers comfortable with the ASP.NET MVC framework to easily configure and work with Kendo UI via familiar server-side programming instead of relying solely on hand-coding of HTML and JavaScript.",
-    "authors": ["Telerik"],
-    "owners": ["Telerik"],
+  "version": "1.0.0-*",
+  "title": "Telerik UI for ASP.NET MVC 6 RC2 Final",
+  "description": "Telerik UI for ASP.NET MVC provides server-side helpers for Kendo UI's JavaScript framework. It enables developers comfortable with the ASP.NET MVC framework to easily configure and work with Kendo UI via familiar server-side programming instead of relying solely on hand-coding of HTML and JavaScript.",
+  "authors": [ "Telerik" ],
+  "packOptions": {
+    "owners": [ "Telerik" ],
     "licenseUrl": "http://www.telerik.com/purchase/license-agreement/aspnet-mvc",
-    "requireLicenseAcceptance":  true,
     "projectUrl": "http://www.telerik.com/aspnet-mvc",
-    "tags": ["aspnet", "mvc", "aspnext", "vnext", "VS2015", "Kendo", "Kendo UI", "JavaScript", "UI"],
-    "dependencies": {
-      "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-      "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
-      "Microsoft.Dnx.Compilation": "1.0.0-rc1-final",
-      "EntityFramework.Commands": "7.0.0-rc1-final",
-      "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final",
-      "Microsoft.AspNet.Routing": "1.0.0-rc1-final"
-    },
-    "compilationOptions": {
-        "warningsAsErrors": true
-    },
-    "resource": "*.resources",
-    "frameworks": {
-        "dnx451": {
-            "dependencies": {
-            },
-            "frameworkAssemblies": {
-                "System.Reflection": "",
-                "System.Runtime.Serialization": "",
-                "System.Resources.ResourceManager": ""
-            }
-        },
-        "dnxcore50": {
-          "dependencies": {
-            "System.Collections": "4.0.11-beta-23516",
-            "System.Data.Common": "4.0.1-beta-23516",
-            "System.Diagnostics.TraceSource": "4.0.0-beta-23516",
-            "System.Linq": "4.0.1-beta-23516",
-            "System.Linq.Queryable": "4.0.1-beta-23516",
-            "System.Reflection": "4.1.0-beta-23516",
-            "System.Reflection.Extensions": "4.0.1-beta-23516",
-            "System.Resources.ResourceManager": "4.0.1-beta-23516",
-            "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
-            "System.Xml.XmlDocument": "4.0.1-beta-23516"
-          }
-        }
+    "tags": [ "aspnet", "mvc", "aspnext", "vnext", "VS2015", "Kendo", "Kendo UI", "JavaScript", "UI" ],
+    "requireLicenseAcceptance": true
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc.Core": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Routing": "1.0.0-rc2-final"
+  },
+  "buildOptions": {
+    "warningsAsErrors": false,
+    "xmlDoc": true,
+    "embed": {
+      "include": [ "*.resources" ]
     }
+  },
+  "frameworks": {
+    "net451": { },
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "version": "1.0.0-preview1-final",
+      "imports": [
+        "portable-net45+win8+dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  }
 }
