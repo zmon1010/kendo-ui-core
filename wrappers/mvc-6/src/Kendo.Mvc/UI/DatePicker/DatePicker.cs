@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Resources;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Kendo.Mvc.UI
 {

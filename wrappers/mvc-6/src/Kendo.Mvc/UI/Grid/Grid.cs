@@ -1,17 +1,17 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.RegularExpressions;
-using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
-using Microsoft.AspNet.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Text;
-using Microsoft.AspNet.Html.Abstractions;
+using Microsoft.AspNetCore.Html.Abstractions;
 
 namespace Kendo.Mvc.UI
 {

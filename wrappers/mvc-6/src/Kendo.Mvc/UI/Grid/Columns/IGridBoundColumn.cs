@@ -3,7 +3,7 @@ namespace Kendo.Mvc.UI
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.WebEncoders;
 
     public interface IGridBoundColumn : IGridColumn

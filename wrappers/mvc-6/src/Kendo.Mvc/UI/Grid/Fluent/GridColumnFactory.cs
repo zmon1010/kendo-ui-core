@@ -9,8 +9,8 @@ namespace Kendo.Mvc.UI.Fluent
 #endif
     using Kendo.Mvc.Extensions;
 	using Kendo.Mvc.UI;
-	using Microsoft.AspNet.Mvc;
-	using Microsoft.AspNet.Mvc.Rendering;
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 

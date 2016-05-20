@@ -1,5 +1,5 @@
 using System.IO;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI

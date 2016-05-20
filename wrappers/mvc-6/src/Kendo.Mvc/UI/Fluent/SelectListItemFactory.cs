@@ -2,7 +2,7 @@ namespace Kendo.Mvc.UI.Fluent
 {
     using System.Collections.Generic;
     using Infrastructure;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     /// <summary>
     /// Creates items for the <see cref="DropDownListItem" />.
     /// </summary>

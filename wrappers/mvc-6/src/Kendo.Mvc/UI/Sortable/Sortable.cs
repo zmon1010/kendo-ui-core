@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;

@@ -1,7 +1,7 @@
 namespace Kendo.Mvc.Extensions
 {
     using System.Linq.Expressions;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static class ExpressionExtensions
     {

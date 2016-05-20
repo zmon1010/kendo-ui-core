@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.AspNet.Hosting;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Kendo.Mvc.UI
 {

@@ -1,7 +1,7 @@
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;

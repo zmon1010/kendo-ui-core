@@ -10,7 +10,7 @@ namespace Kendo.Mvc.Extensions
     using Kendo.Mvc.Infrastructure.Implementation;
     using Infrastructure.Implementation.Expressions;
     using Kendo.Mvc.UI;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 
     /// <summary>

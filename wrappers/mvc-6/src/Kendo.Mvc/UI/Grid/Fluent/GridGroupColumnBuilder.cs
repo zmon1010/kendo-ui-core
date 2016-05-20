@@ -4,7 +4,7 @@
 	using System.Collections.Generic;	
 
 	using Extensions;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class GridColumnGroupBuilder<T> 
         where T : class 

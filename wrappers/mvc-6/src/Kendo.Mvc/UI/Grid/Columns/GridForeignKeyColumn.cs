@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI
 	using System.Linq.Expressions;
 	using Kendo.Mvc.Extensions;
 	using Kendo.Mvc.Infrastructure.Implementation.Expressions;
-	using Microsoft.AspNet.Mvc.Rendering;
+	using Microsoft.AspNetCore.Mvc.Rendering;
 
 	public class GridForeignKeyColumn<TModel, TValue> : GridBoundColumn<TModel, TValue>, IGridForeignKeyColumn where TModel : class
     {        

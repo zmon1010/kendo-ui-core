@@ -3,7 +3,7 @@
     using Extensions;
     using System;
     using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class TreeListModelDescriptor : ModelDescriptor
     {

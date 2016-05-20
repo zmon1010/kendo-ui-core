@@ -1,8 +1,8 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
 {
     using System;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 
 

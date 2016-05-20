@@ -1,11 +1,11 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 
 namespace Kendo.Mvc.UI
 {

@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Routing;
     using Kendo.Mvc.Extensions;
-    using Microsoft.AspNet.Mvc.Razor;
+    using Microsoft.AspNetCore.Mvc.Razor;
     using System.IO;
     using Microsoft.Extensions.WebEncoders;
     /// <summary>

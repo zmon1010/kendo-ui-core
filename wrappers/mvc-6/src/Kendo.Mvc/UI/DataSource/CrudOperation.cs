@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNetCore.Routing;
 
 namespace Kendo.Mvc.UI
 {

@@ -1,7 +1,7 @@
 using System.IO;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Kendo.Mvc.UI
 {

@@ -1,7 +1,7 @@
 namespace Kendo.Mvc.UI
 {
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using System;
     using System.Collections.Generic;
     using System.Linq;

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     /// <summary>
     /// Defines the fluent interface for configuring the <see cref="SchedulerResource{TModel}"/>.

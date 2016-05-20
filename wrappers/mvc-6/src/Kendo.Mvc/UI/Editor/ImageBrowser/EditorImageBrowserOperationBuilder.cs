@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNet.Routing;
-using Microsoft.AspNet.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Kendo.Mvc.UI.Fluent
 {

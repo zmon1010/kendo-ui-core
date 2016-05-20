@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.WebEncoders;
 
 namespace Kendo.Mvc.UI

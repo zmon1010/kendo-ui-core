@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using System.Linq;
-using Microsoft.AspNet.Razor.TagHelpers;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Kendo.Mvc.TagHelpers
 {

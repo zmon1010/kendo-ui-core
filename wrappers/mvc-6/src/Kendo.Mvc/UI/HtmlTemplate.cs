@@ -2,7 +2,7 @@
 {
     using System;
     using Kendo.Mvc.Extensions;
-    using Microsoft.AspNet.Mvc.Razor;
+    using Microsoft.AspNetCore.Mvc.Razor;
     using Microsoft.Extensions.WebEncoders;
     public class HtmlTemplate : HtmlTemplate<object>
     {

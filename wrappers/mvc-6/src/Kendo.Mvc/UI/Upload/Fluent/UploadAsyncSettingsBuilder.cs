@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.Routing;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 
 namespace Kendo.Mvc.UI.Fluent

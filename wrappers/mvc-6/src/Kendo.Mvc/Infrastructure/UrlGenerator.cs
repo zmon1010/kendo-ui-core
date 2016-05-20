@@ -3,8 +3,8 @@ namespace Kendo.Mvc
     using System;
     using System.Linq;
     using Kendo.Mvc.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
 
     public class UrlGenerator : IUrlGenerator

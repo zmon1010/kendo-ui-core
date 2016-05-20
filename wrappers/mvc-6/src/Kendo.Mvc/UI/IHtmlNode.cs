@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.WebEncoders;
-    using Microsoft.AspNet.Html.Abstractions;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Html.Abstractions;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public interface IHtmlNode
     {

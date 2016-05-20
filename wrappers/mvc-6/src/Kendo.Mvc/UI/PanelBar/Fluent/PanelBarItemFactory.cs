@@ -1,6 +1,6 @@
 namespace Kendo.Mvc.UI.Fluent
 {
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     /// <summary>
     /// Defines the fluent API for adding items to Kendo PanelBar for ASP.NET MVC

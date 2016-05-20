@@ -1,6 +1,6 @@
 namespace Kendo.Mvc.UI.Fluent
 {
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     /// <summary>
     /// Creates items for the <see cref="TreeView" />.
     /// </summary>

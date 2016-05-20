@@ -2,11 +2,11 @@
 using System.IO;
 using System.Linq;
 using Kendo.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.Entity.Design.Internal;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 

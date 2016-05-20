@@ -10,12 +10,12 @@ namespace Kendo.Mvc.UI
     using System.Threading;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Resources;
-    using Microsoft.AspNet.Mvc.ModelBinding;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.WebEncoders;
     using System.Text;
-    using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public class GridBoundColumn<TModel, TValue> : GridColumnBase<TModel>, IGridBoundColumn/*, IGridTemplateColumn<TModel>*/ where TModel : class
     {

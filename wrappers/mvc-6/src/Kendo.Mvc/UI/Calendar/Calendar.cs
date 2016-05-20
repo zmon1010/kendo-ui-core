@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Kendo.Mvc.Resources;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI

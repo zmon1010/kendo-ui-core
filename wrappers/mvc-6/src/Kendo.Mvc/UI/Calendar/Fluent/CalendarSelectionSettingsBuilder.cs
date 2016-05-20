@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;    
     using Kendo.Mvc.UI;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Routing;
 
     /// <summary>
     /// Defines the fluent interface for configuring the <see cref="Calendar.SelectionSettings"/>.

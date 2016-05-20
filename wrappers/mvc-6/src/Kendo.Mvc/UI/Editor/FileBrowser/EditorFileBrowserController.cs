@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using Kendo.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Entity.Design.Internal;
 
 namespace Kendo.Mvc.UI

@@ -3,7 +3,7 @@ namespace Kendo.Mvc.UI
     using Extensions;
     using System;
     using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System.Reflection;
 
     public class GanttDependencyModelDescriptor : ModelDescriptor

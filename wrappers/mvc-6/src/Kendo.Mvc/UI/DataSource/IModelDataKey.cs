@@ -1,6 +1,6 @@
 namespace Kendo.Mvc.UI
 {    
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface IDataKey<T> : IDataKey
             where T : class

@@ -7,9 +7,9 @@
     using System.Threading.Tasks;
     using Extensions;
     using Microsoft.Extensions.WebEncoders;
-    using Microsoft.AspNet.Html.Abstractions;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Html.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public class HtmlElement : IHtmlNode
     {
