@@ -64,7 +64,8 @@ callbacks which will handle push notifications (data pushed from the server).
 
     /**
     * Sets the submit option of the DataSourceTransport.
-    * A function that will receive create, update and delete operations in a single batch.
+    * A function that will handle create, update and delete operations in a single batch.Typically you'd have transport.read and transport.submit operations defined together.
+The transport.create, transport.update and transport.delete operations will not be executed in this case.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Data\DataSourceTransport
     */
