@@ -109,12 +109,12 @@
                 sheet.range(this.pasteRef()).clear();
             }
             var pasteRef = this.pasteRef();
-            sheet.range(pasteRef).setState(state, true);
+            sheet.range(pasteRef).setState(state, this);
             sheet.triggerChange({ recalc: true, ref: pasteRef });
         },
 
         external: function(data) {
-            if (data.html || data.plain) {
+            if (data && (data.html || data.plain)) {
                 this._external = data;
             } else {
                 return this._external;

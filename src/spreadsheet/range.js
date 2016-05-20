@@ -658,7 +658,7 @@
             return state;
         },
 
-        setState: function(state, isPaste) {
+        setState: function(state, clipboard) {
             var sheet = this._sheet;
             var origin = this._ref.first();
             var rowDelta = state.ref.row - origin.row;
@@ -671,15 +671,15 @@
 
                 var row = origin.row;
                 state.data.forEach(function(data, dr){
-                    if (isPaste && sheet.isHiddenRow(state.ref.row + dr)) {
+                    if (clipboard && sheet.isHiddenRow(state.ref.row + dr)) {
                         return;
                     }
                     var col = origin.col;
                     data.forEach(function(cellState, dc){
-                        if (isPaste && sheet.isHiddenColumn(state.ref.col + dc)) {
+                        if (clipboard && sheet.isHiddenColumn(state.ref.col + dc)) {
                             return;
                         }
-                        var range = isPaste ? sheet.range(row, col)
+                        var range = clipboard ? sheet.range(row, col)
                             : sheet.range(origin.row + dr, origin.col + dc);
                         if (range.enable()) {
                             for (var property in cellState) {
@@ -696,7 +696,7 @@
                                 // formula.  Go through the lower level setter rather
                                 // than range.value(...), because range.value will clear
                                 // the formula!  chicken and egg issues.
-                                if (isPaste) {
+                                if (clipboard && clipboard.external()) {
                                     // https://github.com/telerik/kendo-ui-core/issues/1688
                                     // if we have a paste from external source, we should parse the
                                     // value as if it were inputted.  This allows to treat numbers
