@@ -438,8 +438,8 @@
             return a !== undefined ? a : b !== undefined ? b : c;
         }
 
-        var rowCount     = or(data.rowCount, options.rowCount, 200),
-            columnCount  = or(data.columnCount, options.columnCount, 50),
+        var rowCount     = or(data.rowCount, options.rows, 200),
+            columnCount  = or(data.columnCount, options.columns, 50),
             rowHeight    = or(data.rowHeight, options.rowHeight, 20),
             columnWidth  = or(data.columnWidth, options.columnWidth, 64),
             headerHeight = or(data.headerHeight, options.headerHeight, 20),

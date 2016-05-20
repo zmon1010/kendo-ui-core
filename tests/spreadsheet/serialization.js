@@ -753,4 +753,16 @@
         equal(spreadsheet.activeSheet().range(1000, 1000).value(), "Foo");
     });
 
+    test("fromJSON respects rows/columns when sheets is passed", function(){
+        var div = $("<div>").appendTo(QUnit.fixture);
+        var spreadsheet = new kendo.ui.Spreadsheet(div, {
+             columns: 2,
+             rows: 10,
+             sheets: [{ name: "Foo" }]
+        });
+        var sheet = spreadsheet.activeSheet();
+        equal(sheet._rows._count, 10);
+        equal(sheet._columns._count, 2);
+    });
+
 })();
