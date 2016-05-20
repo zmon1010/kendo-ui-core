@@ -213,5 +213,23 @@
             result["destroy"].ShouldEqual(customHandler);
         }
 
+        [Fact]
+        public void FunctionSubmit_option_is_serialized_correctly()
+        {
+            transport.FunctionSubmit = customHandler;
+
+            var result = transport.ToJson();
+            result["submit"].ShouldEqual(customHandler);
+        }
+
+        [Fact]
+        public void FunctionSubmit_option_is_serialized_only_when_set()
+        {
+            transport.FunctionSubmit = customHandler;
+
+            var result = transport.ToJson();
+            result["submit"].ShouldEqual(customHandler);
+        }
+
     }
 }
