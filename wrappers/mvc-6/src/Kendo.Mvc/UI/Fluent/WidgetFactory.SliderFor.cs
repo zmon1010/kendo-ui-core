@@ -8,25 +8,27 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual SliderBuilder<TValue> SliderFor<TValue>(Expression<Func<TModel, TValue>> expression)
             where TValue : struct, IComparable
         {
-            var explorer = GetModelExplorer(expression);
-            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
+            // TODO RC2
 
-            TValue? minimum = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
-            TValue? maximum = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
+            var explorer = GetModelExplorer(expression);
+            //var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
+
+            //TValue? minimum = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
+            //TValue? maximum = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
 
             var slider = Slider<TValue>()
                             .Expression(GetExpressionName(expression))
                             .Value((TValue?)explorer.Model);
 
-            if (minimum.HasValue)
-            {
-                slider.Min(minimum.Value);
-            }
+            //if (minimum.HasValue)
+            //{
+            //    slider.Min(minimum.Value);
+            //}
 
-            if (maximum.HasValue)
-            {
-                slider.Max(maximum.Value);
-            }
+            //if (maximum.HasValue)
+            //{
+            //    slider.Max(maximum.Value);
+            //}
 
             return slider;
         }
@@ -34,25 +36,27 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual SliderBuilder<TValue> SliderFor<TValue>(Expression<Func<TModel, Nullable<TValue>>> expression)
             where TValue : struct, IComparable
         {
-            var explorer = GetModelExplorer(expression);
-            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
+            // TODO RC2
 
-            TValue? minimum = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
-            TValue? maximum = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
+            var explorer = GetModelExplorer(expression);
+            //var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
+
+            //TValue? minimum = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
+            //TValue? maximum = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
 
             var slider = Slider<TValue>()
                             .Expression(GetExpressionName(expression))
                             .Value((TValue?)explorer.Model);
 
-            if (minimum.HasValue)
-            {
-                slider.Min(minimum.Value);
-            }
+            //if (minimum.HasValue)
+            //{
+            //    slider.Min(minimum.Value);
+            //}
 
-            if (maximum.HasValue)
-            {
-                slider.Max(maximum.Value);
-            }
+            //if (maximum.HasValue)
+            //{
+            //    slider.Max(maximum.Value);
+            //}
 
             return slider;
         }

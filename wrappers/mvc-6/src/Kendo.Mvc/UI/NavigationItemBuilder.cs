@@ -9,7 +9,7 @@
     using Kendo.Mvc.Extensions;
     using Microsoft.AspNetCore.Mvc.Razor;
     using System.IO;
-    using Microsoft.Extensions.WebEncoders;
+    using System.Text.Encodings.Web;
     /// <summary>
     /// Defines the fluent interface for configuring navigation items
     /// </summary>

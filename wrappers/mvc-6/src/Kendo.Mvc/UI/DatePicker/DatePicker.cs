@@ -7,6 +7,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Resources;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.UI
 {
@@ -80,8 +81,8 @@ namespace Kendo.Mvc.UI
 
         protected override void WriteHtml(TextWriter writer)
         {        
-            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
-            var tag = Generator.GenerateDateInput(ViewContext, metadata, Id, Name, Value, Format, HtmlAttributes);
+            var explorer = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+            var tag = Generator.GenerateDateInput(ViewContext, explorer, Id, Name, Value, Format, HtmlAttributes);
 
             if (!Enabled)
             {

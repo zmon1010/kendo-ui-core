@@ -12,7 +12,7 @@ namespace Kendo.Mvc.UI
     using Kendo.Mvc.Resources;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.Extensions.WebEncoders;
+    using System.Text.Encodings.Web;
     using System.Text;
     using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -298,10 +298,10 @@ namespace Kendo.Mvc.UI
         {                                    
         }
 
-        public string GetEditor(IHtmlHelper helper, IHtmlEncoder encoder)
+        public string GetEditor(IHtmlHelper helper, HtmlEncoder encoder)
 		{
             var viewContext = Grid.ViewContext.ViewContextForType<TModel>(Grid.ModelMetadataProvider);
-            ((ICanHasViewContext)helper).Contextualize(viewContext);
+            ((IViewContextAware)helper).Contextualize(viewContext);
 
             AppendAdditionalViewData(viewContext.ViewData, Grid.Editable.DefaultDataItem());
 

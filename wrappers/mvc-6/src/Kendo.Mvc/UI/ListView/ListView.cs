@@ -1,10 +1,7 @@
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Resources;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,8 +20,6 @@ namespace Kendo.Mvc.UI
         public ListView(ViewContext viewContext) : base(viewContext)
         {
             settingsSerializer = new ListViewSettingsSerializer<T>(this);
-
-            ActionBindingContext = GetService<IActionBindingContextAccessor>().ActionBindingContext;
 
             DataSource = new DataSource(ModelMetadataProvider)
             {
@@ -78,22 +73,23 @@ namespace Kendo.Mvc.UI
 
         private void ProcessDataSource()
         {
-            if (Pageable.Enabled && DataSource.PageSize == 0)
-            {
-                DataSource.PageSize = 10;
-            }
+            // TODO RC2
+            //if (Pageable.Enabled && DataSource.PageSize == 0)
+            //{
+            //    DataSource.PageSize = 10;
+            //}
 
-            var binder = new DataSourceRequestModelBinder();
+            //var binder = new DataSourceRequestModelBinder();
 
-            var bindingContext = new ModelBindingContext
-            {
-                ValueProvider = ActionBindingContext.ValueProvider,
-                ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
-            };
+            //var bindingContext = new ModelBindingContext
+            //{
+            //    ValueProvider = ActionBindingContext.ValueProvider,
+            //    ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
+            //};
 
-            var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously
+            //var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously
 
-            DataSource.Process((DataSourceRequest)bindingContext.Model, true/*!EnableCustomBinding*/);
+            //DataSource.Process((DataSourceRequest)bindingContext.Model, true/*!EnableCustomBinding*/);
         }
         private void InitializeEditor()
         {
@@ -103,7 +99,7 @@ namespace Kendo.Mvc.UI
                 var htmlHelper = ViewContext.CreateHtmlHelper<T>();
 
                 var viewContext = ViewContext.ViewContextForType<T>(ModelMetadataProvider);
-                ((ICanHasViewContext)htmlHelper).Contextualize(viewContext);
+                ((IViewContextAware)htmlHelper).Contextualize(viewContext);
 
                 var sb = new StringBuilder();
                 using (var writer = new StringWriter(sb))
@@ -157,12 +153,6 @@ namespace Kendo.Mvc.UI
             {
                 return DataSource.Type == DataSourceType.Ajax || DataSource.Type == DataSourceType.WebApi || DataSource.Type == DataSourceType.Custom;
             }
-        }
-
-        public ActionBindingContext ActionBindingContext
-        {
-            get;
-            set;
         }
 
         public DataSource DataSource

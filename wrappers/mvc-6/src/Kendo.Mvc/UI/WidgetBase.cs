@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Kendo.Mvc.UI
 {
@@ -138,7 +139,7 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        public IHtmlEncoder HtmlEncoder
+        public HtmlEncoder HtmlEncoder
         {
             get;
             set;
@@ -250,11 +251,11 @@ namespace Kendo.Mvc.UI
         {            
             Generator = GetService<IKendoHtmlGenerator>();
             HtmlHelper = GetService<IHtmlHelper>();
-            HtmlEncoder = GetService<IHtmlEncoder>();
+            HtmlEncoder = GetService<HtmlEncoder>();
             ModelMetadataProvider = GetService<IModelMetadataProvider>();
             UrlGenerator = GetService<IUrlGenerator>();
 
-            ((ICanHasViewContext)HtmlHelper).Contextualize(ViewContext);
+            ((IViewContextAware)HtmlHelper).Contextualize(ViewContext);
         }
 
         protected TService GetService<TService>()

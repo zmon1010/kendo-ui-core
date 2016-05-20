@@ -7,6 +7,6 @@ namespace Kendo.Mvc.UI
     {
         IEnumerable<FileBrowserEntry> GetFiles(string path, string filter);
         IEnumerable<FileBrowserEntry> GetDirectories(string path);        
-        IHostingEnvironment Server { get; set; }
+        IHostingEnvironment HostingEnvironment { get; set; }
     }
 }

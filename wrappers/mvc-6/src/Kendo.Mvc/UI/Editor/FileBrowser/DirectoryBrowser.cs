@@ -8,11 +8,11 @@ namespace Kendo.Mvc.UI
 {
     public class DirectoryBrowser : IDirectoryBrowser
     {       
-        public virtual IHostingEnvironment Server { get; set; }
+        public virtual IHostingEnvironment HostingEnvironment { get; set; }
 
         public IEnumerable<FileBrowserEntry> GetFiles(string path, string filter)
         {
-            var directory = new DirectoryInfo(Server.MapPath(path));
+            var directory = new DirectoryInfo(MapPath(path));
             var extensions = (filter ?? "*").Split(new string[] { ", ", ",", "; ", ";" }, StringSplitOptions.RemoveEmptyEntries);
             var files = extensions.SelectMany(directory.GetFiles)
                 .Select(file => new FileBrowserEntry
@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI
 
         public IEnumerable<FileBrowserEntry> GetDirectories(string path)
         {
-            var directory = new DirectoryInfo(Server.MapPath(path));
+            var directory = new DirectoryInfo(MapPath(path));
 
             return directory.GetDirectories()
                 .Select(subDirectory => new FileBrowserEntry
@@ -35,6 +35,11 @@ namespace Kendo.Mvc.UI
                     Name = subDirectory.Name,
                     EntryType = FileBrowserEntryType.Directory
                 });
-        }        
+        }
+
+        protected virtual string MapPath(string path)
+        {
+            return HostingEnvironment.WebRootFileProvider.GetFileInfo(path).PhysicalPath;
+        }
     }
 }

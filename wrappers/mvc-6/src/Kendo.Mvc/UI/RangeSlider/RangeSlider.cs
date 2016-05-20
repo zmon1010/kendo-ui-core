@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.UI
 {
@@ -45,7 +46,8 @@ namespace Kendo.Mvc.UI
         {
             var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
             var wrapper = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
-            wrapper.MergeAttributes(Generator.GetValidationAttributes(ViewContext, metadata, Name));
+            // TODO RC2
+            //wrapper.MergeAttributes(Generator.GetValidationAttributes(ViewContext, metadata, Name));
 
             var firstInput = Generator.GenerateTag("input", ViewContext, Id, 
                              string.Format("{0}[0]", Name), HtmlAttributes);

@@ -2,6 +2,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Resources;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using System;
 using System.Linq.Expressions;
 

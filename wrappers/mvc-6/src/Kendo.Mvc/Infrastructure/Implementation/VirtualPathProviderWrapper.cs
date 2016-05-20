@@ -1,6 +1,5 @@
 using System;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Data.Entity.Design.Internal;
 
 namespace Kendo.Mvc.Infrastructure.Implementation
 {

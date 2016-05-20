@@ -3,22 +3,24 @@ namespace Kendo.Mvc.Infrastructure.Implementation
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Reflection;
     using System.Threading;
+    using System.Reflection;
     using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Emit;
-    using Microsoft.Extensions.PlatformAbstractions;
+    using Microsoft.Extensions.CompilationAbstractions;
     using Microsoft.Dnx.Compilation.CSharp;
-    using Microsoft.Dnx.Compilation;
 
     internal class ClassFactory
     {
-        public static readonly ClassFactory Instance = new ClassFactory((IAssemblyLoadContextAccessor)CallContextServiceLocator.Locator.ServiceProvider.GetService(typeof(IAssemblyLoadContextAccessor)));
+        public static readonly ClassFactory Instance = new ClassFactory();
 
-        private readonly IAssemblyLoadContext loader;
+#if !NET451
+        private readonly FactoryLoadContext _assemblyLoadContext;
+#endif
+
         private int classCount;
         private readonly ReaderWriterLockSlim rwLock;
         private static string TO_STRING_METHOD_TEMPLATE =
@@ -38,11 +40,12 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             "return sb.ToString(); " +
         "}";
 
-        static ClassFactory() { }
-
-        private ClassFactory(IAssemblyLoadContextAccessor loaderAccessor)
+        private ClassFactory()
         {
-            loader = loaderAccessor.GetLoadContext(typeof(ClassFactory).GetTypeInfo().Assembly);
+#if !NET451
+            _assemblyLoadContext = new FactoryLoadContext();
+#endif
+
             rwLock = new ReaderWriterLockSlim();
         }
 
@@ -74,9 +77,13 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                 {
                     ms.Seek(0, SeekOrigin.Begin);
 
-                    var assembly = loader.LoadStream(ms, assemblySymbols: null);
-
+#if NET451
+                    var assembly = Assembly.Load(ms.ToArray());
                     return assembly.GetType(typeName);
+#else
+                    var assembly = _assemblyLoadContext.Load(ms);
+#endif
+
                 }
 
                 throw new Exception("Unable to build type" + typeName);
@@ -122,9 +129,8 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         {
             var references = new List<MetadataReference>();
 
-#if DNXCORE50
-            var serviceProvider = CallContextServiceLocator.Locator.ServiceProvider;
-            var libraryExporter = (ILibraryExporter)serviceProvider.GetService(typeof(ILibraryExporter));
+#if !NET451
+            var libraryExporter = CompilationServices.Default.LibraryExporter;
             var libraryExport = libraryExporter.GetExport("System");
             if (libraryExport != null)
             {

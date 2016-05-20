@@ -3,7 +3,7 @@
     using System;
     using Kendo.Mvc.Extensions;
     using Microsoft.AspNetCore.Mvc.Razor;
-    using Microsoft.Extensions.WebEncoders;
+    using System.Text.Encodings.Web;
     public class HtmlTemplate : HtmlTemplate<object>
     {
         private Action content;

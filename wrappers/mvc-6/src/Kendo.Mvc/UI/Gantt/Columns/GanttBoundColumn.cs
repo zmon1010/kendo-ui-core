@@ -5,6 +5,7 @@ using Kendo.Mvc.Resources;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.UI
 {

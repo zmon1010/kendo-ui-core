@@ -2,7 +2,7 @@ namespace Kendo.Mvc.Extensions
 {
     using System.Linq.Expressions;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-
+    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
     public static class ExpressionExtensions
     {
         public static string MemberWithoutInstance(this LambdaExpression expression)

@@ -5,7 +5,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
 
 namespace Kendo.Mvc.UI
 {
@@ -59,7 +59,7 @@ namespace Kendo.Mvc.UI
             return settings;
         }
 
-        public void WriteHtml(TextWriter writer, IKendoHtmlGenerator generator, IHtmlEncoder encoder)
+        public void WriteHtml(TextWriter writer, IKendoHtmlGenerator generator, HtmlEncoder encoder)
         {
             var tag = generator.GenerateTag("div", HtmlAttributes);
 

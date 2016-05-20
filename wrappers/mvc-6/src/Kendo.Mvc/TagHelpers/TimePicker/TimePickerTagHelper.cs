@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Kendo.Mvc.TagHelpers
 {
@@ -28,9 +29,11 @@ namespace Kendo.Mvc.TagHelpers
         protected override void WriteHtml(TagHelperOutput output)
         {
             ModelMetadata metadata = null;
+            ModelExplorer explorer = null;
 
             if (For != null)
             {
+                explorer = For.ModelExplorer;
                 metadata = For.Metadata;
                 Name = For.Name;
 
@@ -38,20 +41,21 @@ namespace Kendo.Mvc.TagHelpers
 
                 Format = ExtractEditFormat(For.ModelExplorer.Metadata.EditFormatString);
 
-                RangeAttribute rangeAttribute = Generator.GetRangeValidationAttribute(ViewContext, metadata, Name);
+                // TODO RC2
+                //RangeAttribute rangeAttribute = Generator.GetRangeValidationAttribute(ViewContext, metadata, Name);
 
-                if (rangeAttribute != null)
-                {
-                    Min = Min ?? (DateTime)Convert.ChangeType(rangeAttribute.Minimum, typeof(DateTime));
-                    Max = Max ?? (DateTime)Convert.ChangeType(rangeAttribute.Maximum, typeof(DateTime));
-                }
+                //if (rangeAttribute != null)
+                //{
+                //    Min = Min ?? (DateTime)Convert.ChangeType(rangeAttribute.Minimum, typeof(DateTime));
+                //    Max = Max ?? (DateTime)Convert.ChangeType(rangeAttribute.Maximum, typeof(DateTime));
+                //}
             }
 
             GenerateId(output);
 
             var htmlAttributes = new Dictionary<string, object>();
 
-            var tagBuilder = Generator.GenerateTimeInput(ViewContext, metadata,
+            var tagBuilder = Generator.GenerateTimeInput(ViewContext, explorer,
                 Id, Name, Value, Format, htmlAttributes);
 
             output.TagName = "input";

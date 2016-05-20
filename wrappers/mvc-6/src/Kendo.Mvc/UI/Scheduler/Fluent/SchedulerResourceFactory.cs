@@ -5,7 +5,7 @@
     using System;
     using System.Linq.Expressions;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-
+    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
     /// <summary>
     /// Creates resources for the <see cref="Scheduler{TModel}" /> class.
     /// </summary>

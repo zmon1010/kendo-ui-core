@@ -55,16 +55,17 @@ namespace Kendo.Mvc.UI
 
         private void ProcessDataSource()
         {
-            var binder = new DataSourceRequestModelBinder();
-            var bindingContext = new ModelBindingContext
-            {
-                ValueProvider = GetService<IActionBindingContextAccessor>().ActionBindingContext.ValueProvider,
-                ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
-            };
+            // TODO RC2
+            //var binder = new DataSourceRequestModelBinder();
+            //var bindingContext = new ModelBindingContext
+            //{
+            //    ValueProvider = GetService<IActionBindingContextAccessor>().ActionBindingContext.ValueProvider,
+            //    ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
+            //};
 
-            var result = binder.BindModelAsync(bindingContext).Result;
+            //var result = binder.BindModelAsync(bindingContext).Result;
 
-            DataSource.Process((DataSourceRequest)bindingContext.Model, true);
+            //DataSource.Process((DataSourceRequest)bindingContext.Model, true);
         }
 
     }

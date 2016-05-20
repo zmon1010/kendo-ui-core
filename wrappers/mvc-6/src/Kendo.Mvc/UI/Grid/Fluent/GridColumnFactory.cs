@@ -1,24 +1,20 @@
 namespace Kendo.Mvc.UI.Fluent
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Linq.Expressions;
-#if DNXCORE50
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
 	using System.Reflection;
-#endif
     using Kendo.Mvc.Extensions;
-	using Kendo.Mvc.UI;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Rendering;
+    using Kendo.Mvc.UI;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
 
-
-	/// <summary>
-	/// Creates columns for the <see cref="Grid{TModel}" />.
-	/// </summary>
-	/// <typeparam name="TModel">The type of the data item to which the grid is bound to</typeparam>
-	public class GridColumnFactory<TModel> : IHideObjectMembers 
+    /// <summary>
+    /// Creates columns for the <see cref="Grid{TModel}" />.
+    /// </summary>
+    /// <typeparam name="TModel">The type of the data item to which the grid is bound to</typeparam>
+    public class GridColumnFactory<TModel> : IHideObjectMembers 
         where TModel : class
     {
         private bool hasGeneratedColumn;

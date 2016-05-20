@@ -5,13 +5,13 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
-    using Microsoft.Extensions.WebEncoders;
+    using System.Text.Encodings.Web;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using System.Text.RegularExpressions;
-
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     public class SchedulerEditableSettings<T> : SchedulerEditableSettingsBase
         where T : class
     {
@@ -30,7 +30,7 @@
             Move = true;
         }
 
-        public IHtmlEncoder HtmlEncoder
+        public HtmlEncoder HtmlEncoder
         {
             get;
             set;
@@ -199,7 +199,7 @@
                 var viewContextForType = viewContext.ViewContextForType<T>(ModelMetadataProvider);
 
                 var htmlHelper = viewContext.CreateHtmlHelper<T>();
-                ((ICanHasViewContext)htmlHelper).Contextualize(viewContextForType);
+                ((IViewContextAware)htmlHelper).Contextualize(viewContextForType);
 
                 var editorContent = htmlHelper.EditorForModel(TemplateName, AdditionalViewData);//.ToString();
 

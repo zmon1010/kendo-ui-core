@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
 using System.IO;
 
 namespace Kendo.Mvc.Infrastructure
@@ -219,7 +219,7 @@ namespace Kendo.Mvc.Infrastructure
             {
                 using (var writer = new StringWriter())
                 {
-                    writer.WriteContent(value.TemplateDelegate, new HtmlEncoder(), value);
+                    writer.WriteContent(value.TemplateDelegate, HtmlEncoder.Default, value);
                     output.Append(writer.ToString());
                 }
             }

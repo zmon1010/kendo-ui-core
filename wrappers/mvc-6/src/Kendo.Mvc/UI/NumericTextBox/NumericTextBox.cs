@@ -1,6 +1,7 @@
 using Kendo.Mvc.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using System.IO;
 
 namespace Kendo.Mvc.UI
@@ -19,8 +20,8 @@ namespace Kendo.Mvc.UI
         {
 			// Do custom rendering here
 
-			var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
-			var tag = Generator.GenerateNumericInput(ViewContext, metadata, Id, Name, Value, string.Empty, HtmlAttributes);
+			var explorer = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+			var tag = Generator.GenerateNumericInput(ViewContext, explorer, Id, Name, Value, string.Empty, HtmlAttributes);
 
 			if (!Enable.GetValueOrDefault(true))
 			{

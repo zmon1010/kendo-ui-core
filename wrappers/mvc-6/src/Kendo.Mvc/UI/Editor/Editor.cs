@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI
                 }
                 else
                 {
-                    writer.Write(HtmlEncoder.HtmlEncode(value));
+                    writer.Write(HtmlEncoder.Encode(value));
                 }
             }
             else if (ValueAction != null)

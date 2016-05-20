@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.Extensions
 {
@@ -27,7 +28,7 @@ namespace Kendo.Mvc.Extensions
 		{
 			var actionContext = new ActionContext(viewContext.HttpContext, new RouteData(), new ActionDescriptor());
 			var viewDataDictionary = new ViewDataDictionary<T>(viewContext.ViewData, null);
-            var tempDataDictionary = new TempDataDictionary(viewContext.GetService<IHttpContextAccessor>(), viewContext.GetService<ITempDataProvider>());
+            var tempDataDictionary = new TempDataDictionary(viewContext.GetService<IHttpContextAccessor>().HttpContext, viewContext.GetService<ITempDataProvider>());
             var options = new HtmlHelperOptions
             {
                 ClientValidationEnabled = viewContext.ClientValidationEnabled,
@@ -45,9 +46,10 @@ namespace Kendo.Mvc.Extensions
                 viewContext.GetService<IHtmlGenerator>(),
                 viewContext.GetService<ICompositeViewEngine>(),
                 viewContext.GetService<IModelMetadataProvider>(),
-                viewContext.GetService<IHtmlEncoder>(),
-                viewContext.GetService<IUrlEncoder>(),
-                viewContext.GetService<IJavaScriptStringEncoder>()
+                viewContext.GetService<IViewBufferScope>(),
+                viewContext.GetService<HtmlEncoder>(),
+                viewContext.GetService<UrlEncoder>(),
+                null
             );
 		}
         public static string GetFullHtmlFieldName(this ViewContext viewContext, string name)

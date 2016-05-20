@@ -7,7 +7,8 @@ using Kendo.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.UI
 {
@@ -20,7 +21,7 @@ namespace Kendo.Mvc.UI
 
         public CheckBox Component { get; private set; }
 
-        public virtual void WriteHtml(TextWriter writer, IHtmlEncoder htmlEncoder)
+        public virtual void WriteHtml(TextWriter writer, HtmlEncoder htmlEncoder)
         {
             var checkBox = BuildCheckBox();
             checkBox.WriteTo(writer, htmlEncoder);

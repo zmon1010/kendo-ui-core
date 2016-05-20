@@ -4,11 +4,9 @@ using System.Linq;
 using Kendo.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.Entity.Design.Internal;
 using Kendo.Mvc.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
 
 namespace Kendo.Mvc.UI
 {
@@ -17,7 +15,7 @@ namespace Kendo.Mvc.UI
         private readonly IDirectoryBrowser directoryBrowser;
         private readonly IDirectoryPermission permission;
 
-        public virtual IHostingEnvironment Server { get; set; }
+        public virtual IHostingEnvironment HostingEnvironment { get; set; }
 
         protected FileBrowserController()
             : this(DI.Current.Resolve<IDirectoryBrowser>(), DI.Current.Resolve<IDirectoryPermission>())
@@ -64,7 +62,7 @@ namespace Kendo.Mvc.UI
 
             if (name.HasValue() && AuthorizeCreateDirectory(path, name))
             {
-                var physicalPath = Path.Combine(Server.MapPath(path), name);
+                var physicalPath = Path.Combine(MapPath(path), name);
 
                 if (!Directory.Exists(physicalPath))
                 {
@@ -96,7 +94,7 @@ namespace Kendo.Mvc.UI
             {
                 try
                 {
-                    directoryBrowser.Server = Server;
+                    directoryBrowser.HostingEnvironment = HostingEnvironment;
 
                     var files = directoryBrowser.GetFiles(path, Filter);
                     var directories = directoryBrowser.GetDirectories(path);
@@ -198,7 +196,7 @@ namespace Kendo.Mvc.UI
                 throw new Exception("Forbidden");
             }
 
-            var physicalPath = Server.MapPath(path);
+            var physicalPath = MapPath(path);
 
             if (System.IO.File.Exists(physicalPath))
             {
@@ -213,7 +211,7 @@ namespace Kendo.Mvc.UI
                 throw new Exception("Forbidden");
             }
 
-            var physicalPath = Server.MapPath(path);
+            var physicalPath = MapPath(path);
 
             if (Directory.Exists(physicalPath))
             {
@@ -254,7 +252,11 @@ namespace Kendo.Mvc.UI
         {
             try
             {
-                file.SaveAs(Path.Combine(Server.MapPath(pathToSave), GetFileName(file)));
+                var path = Path.Combine(MapPath(pathToSave), GetFileName(file));
+                using (var stream = System.IO.File.Create(path))
+                {
+                    file.CopyTo(stream);
+                }
             }
             catch (Exception ex)
             {
@@ -285,6 +287,11 @@ namespace Kendo.Mvc.UI
         {
             var fileContent = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
             return Path.GetFileName(fileContent.FileName.Trim('"'));
+        }
+
+        protected virtual string MapPath(string path)
+        {
+            return HostingEnvironment.WebRootFileProvider.GetFileInfo(path).PhysicalPath;
         }
     }
 }

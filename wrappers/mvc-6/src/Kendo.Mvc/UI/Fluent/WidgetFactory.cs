@@ -1,8 +1,7 @@
 ﻿using Kendo.Mvc.Extensions;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,19 +47,19 @@ namespace Kendo.Mvc.UI.Fluent
             return ExpressionHelper.GetExpressionText(expression);
         }
 
-        private Nullable<TValue> GetRangeValidationParameter<TValue>(IEnumerable<ModelClientValidationRule> rules, string parameter) where TValue : struct
-        {
-            var clientValidationsRules = rules.OfType<ModelClientValidationRangeRule>()
-                                              .Cast<ModelClientValidationRangeRule>();
+        //private Nullable<TValue> GetRangeValidationParameter<TValue>(IEnumerable<ModelClientValidationRule> rules, string parameter) where TValue : struct
+        //{
+        //    var clientValidationsRules = rules.OfType<ModelClientValidationRangeRule>()
+        //                                      .Cast<ModelClientValidationRangeRule>();
 
-            object value = null;
-            if (clientValidationsRules.Any() && clientValidationsRules.First().ValidationParameters.TryGetValue(parameter, out value))
-            {
-                return (TValue)Convert.ChangeType(value, typeof(TValue));
-            }
+        //    object value = null;
+        //    if (clientValidationsRules.Any() && clientValidationsRules.First().ValidationParameters.TryGetValue(parameter, out value))
+        //    {
+        //        return (TValue)Convert.ChangeType(value, typeof(TValue));
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         private string ExtractEditFormat(string format)
         {

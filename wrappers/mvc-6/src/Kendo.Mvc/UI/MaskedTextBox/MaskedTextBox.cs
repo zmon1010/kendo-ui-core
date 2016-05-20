@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.UI
 {
@@ -19,8 +20,8 @@ namespace Kendo.Mvc.UI
 
 		protected override void WriteHtml(TextWriter writer)
         {
-			var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
-			var tag = Generator.GenerateTextInput(ViewContext, metadata, Id, Name, Value, string.Empty, HtmlAttributes);
+			var explorer = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+			var tag = Generator.GenerateTextInput(ViewContext, explorer, Id, Name, Value, string.Empty, HtmlAttributes);
 
 			if (!Enable.GetValueOrDefault(true))
 			{

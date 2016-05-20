@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Internal;
 
 namespace Kendo.Mvc.UI
 {
     public class DataSourceRequestModelBinder : IModelBinder
     {
-        public virtual async Task<ModelBindingResult> BindModelAsync(ModelBindingContext bindingContext)
+        public virtual Task BindModelAsync(ModelBindingContext bindingContext)
         {
             var request = new DataSourceRequest();
 
@@ -32,9 +33,9 @@ namespace Kendo.Mvc.UI
                 request.Aggregates = DataSourceDescriptorSerializer.Deserialize<AggregateDescriptor>(aggregates)
             );
 
-            bindingContext.Model = request;
+            bindingContext.Result = ModelBindingResult.Success(bindingContext.ModelName ?? string.Empty, request);
 
-            return await ModelBindingResult.SuccessAsync(bindingContext.ModelName ?? string.Empty, request);
+            return TaskCache.CompletedTask;
         }
 
         private void TryGetValue<T>(ModelBindingContext bindingContext, string key, Action<T> action)
