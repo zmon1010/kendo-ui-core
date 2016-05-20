@@ -45,6 +45,15 @@
     var SEL_SHEET_VIEW = ["sheetViews", "sheetView"];
     var SEL_HYPERLINK = ["hyperlinks", "hyperlink"];
 
+    function xl(file) {
+        if (!/^\//.test(file)) {
+            file = "xl/" + file;
+        } else {
+            file = file.substr(1);
+        }
+        return file;
+    }
+
     function readWorkbook(zip, workbook, progress) {
         var strings = readStrings(zip);
         var relationships = readRelationships(zip, "_rels/workbook.xml");
@@ -164,7 +173,7 @@
             cols: 0
         };
 
-        parse(zip, "xl/" + file, {
+        parse(zip, xl(file), {
             enter: function(tag, attrs) {
                 if (tag == "dimension") {
                     var ref = parseReference(attrs.ref);
@@ -210,7 +219,7 @@
         var relsFile = file.replace(/worksheets\//, "worksheets/_rels/");
         var relationships = readRelationships(zip, relsFile);
 
-        parse(zip, "xl/" + file, {
+        parse(zip, xl(file), {
             enter: function(tag, attrs) {
                 if (this.is(SEL_CELL)) {
                     value = null;
@@ -529,7 +538,7 @@
 
     function readRelationships(zip, file) {
         var map = { byId: {}, byType: { theme: [] } };
-        parse(zip, "xl/" + file + ".rels", {
+        parse(zip, xl(file) + ".rels", {
             enter: function(tag, attrs) {
                 if (tag == "Relationship") {
                     map.byId[attrs.Id] = attrs.Target;
@@ -733,7 +742,7 @@
             colorScheme: scheme
         };
 
-        var file = "xl/" + rel;
+        var file = xl(rel);
         if (zip.files[file]) {
             parse(zip, file, {
                 enter: function(tag, attrs) {
