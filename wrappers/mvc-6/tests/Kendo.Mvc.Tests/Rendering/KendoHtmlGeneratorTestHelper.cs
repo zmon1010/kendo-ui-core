@@ -1,11 +1,10 @@
 ﻿using System;
 using Moq;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.Extensions.OptionsModel;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Tests
 {
@@ -13,7 +12,6 @@ namespace Kendo.Mvc.Tests
     {
         public static KendoHtmlGenerator CreateKendoHtmlGenerator()
         {
-            var actionBindingContextAccessor = new Mock<IActionBindingContextAccessor>().Object;
             var metadataProvider = new Mock<IModelMetadataProvider>().Object;
             var requestServices = new Mock<IServiceProvider>().Object;
             var optionsAccessorMoq = new Mock<IOptions<MvcViewOptions>>();
@@ -24,10 +22,10 @@ namespace Kendo.Mvc.Tests
             var optionsAccessor = optionsAccessorMoq.Object;
 
             var generator = new KendoHtmlGenerator(
-                actionBindingContextAccessor,
                 metadataProvider,
                 requestServices,
-                optionsAccessor);
+                optionsAccessor,
+                null);
 
             return generator;
         }

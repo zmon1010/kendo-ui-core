@@ -1,6 +1,6 @@
 ﻿using Kendo.Mvc.Tests;
 using Kendo.Mvc.UI.Fluent;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
 using Xunit;
 

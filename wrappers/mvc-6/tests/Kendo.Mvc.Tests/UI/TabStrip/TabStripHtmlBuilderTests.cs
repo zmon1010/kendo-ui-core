@@ -1,7 +1,7 @@
 using Xunit;
 using Kendo.Mvc.Tests;
-using Microsoft.Extensions.WebEncoders;
 using System.IO;
+using System.Text.Encodings.Web;
 
 namespace Kendo.Mvc.UI.Tests
 {

@@ -1,10 +1,9 @@
 ﻿namespace Kendo.Mvc.UI.Tests
 {
-    using Microsoft.Extensions.WebEncoders;
     using System.IO;
     using Kendo.Mvc.Extensions;
     using Xunit;
-
+    using System.Text.Encodings.Web;
     public class HtmlTemplateTests
     {
         [Fact]

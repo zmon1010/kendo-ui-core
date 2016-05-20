@@ -1,11 +1,9 @@
 namespace Kendo.Mvc.UI.Tests
 {
-    using System.Web;
     using Kendo.Mvc.Tests;
     using Moq;
     using Xunit;
-    using Microsoft.Extensions.WebEncoders;
-
+    using System.Text.Encodings.Web;
     public class GridColumnBaseTests
     {
         private readonly Grid<Customer> grid;
@@ -23,7 +21,7 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void ClientTemplate_should_decode_encoded_values()
         {
-            column.Object.ClientTemplate = UrlEncoder.Default.UrlEncode("#=baz#");
+            column.Object.ClientTemplate = UrlEncoder.Default.Encode("#=baz#");
 
             var json = column.Object.ToJson();
 

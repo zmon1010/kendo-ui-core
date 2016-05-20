@@ -3,7 +3,7 @@
     using Kendo.Mvc.Tests;
     using Kendo.Mvc.UI.Fluent;
     using Xunit;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class CustomDataSourceBuilderBaseTests
     {

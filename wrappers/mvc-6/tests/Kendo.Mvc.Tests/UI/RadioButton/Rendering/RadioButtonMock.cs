@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Kendo.Mvc.UI;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Extensions.WebEncoders;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text.Encodings.Web;
 
 namespace Kendo.Mvc.Tests
 {
@@ -11,7 +11,7 @@ namespace Kendo.Mvc.Tests
             : base(viewContext)
         {
             Generator = KendoHtmlGeneratorTestHelper.CreateKendoHtmlGenerator(); ;
-            HtmlEncoder = new HtmlEncoder();
+            HtmlEncoder = HtmlEncoder.Default;
         }
 
         public new void WriteHtml(TextWriter writer)

@@ -4,7 +4,7 @@ namespace Kendo.Mvc.UI.Html.Tests
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Rendering;
     using Kendo.Mvc.Tests;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Moq;
     using Xunit;
 

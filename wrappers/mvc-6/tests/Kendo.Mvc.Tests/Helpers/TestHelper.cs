@@ -1,17 +1,17 @@
 ﻿using System;
 using System.IO;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
-using Microsoft.AspNet.Mvc.ViewComponents;
-using Microsoft.AspNet.Http.Internal;
-using Microsoft.AspNet.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.AspNet.Mvc.ViewEngines;
-using Microsoft.AspNet.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Routing;
 
 namespace Kendo.Mvc.Tests
 {
@@ -26,7 +26,6 @@ namespace Kendo.Mvc.Tests
 			var htmlHelper = new Mock<ITestableHtmlHelper>();
 			var urlGenerator = customUrlGenerator != null ? customUrlGenerator : new Mock<IUrlGenerator>();
 			var kendoHtmlGenerator = new Mock<IKendoHtmlGenerator>();
-            var actionBindingContextAccessor = new Mock<IActionBindingContextAccessor>();
 			var provider = new EmptyModelMetadataProvider();
 
 			var serviceProvider = new Mock<IServiceProvider>();
@@ -55,11 +54,7 @@ namespace Kendo.Mvc.Tests
 
 			serviceProvider
 				.Setup(s => s.GetService(typeof(IViewComponentActivator)))
-				.Returns(new DefaultViewComponentActivator());
-
-			serviceProvider
-				.Setup(s => s.GetService(typeof(IActionBindingContextAccessor)))
-				.Returns(actionBindingContextAccessor.Object);
+				.Returns(new DefaultViewComponentActivator(new TypeActivatorCache()));
 
 			httpContext.RequestServices = serviceProvider.Object;
 

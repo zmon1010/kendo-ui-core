@@ -2,7 +2,7 @@ namespace Kendo.Mvc.UI.Tests
 {
     using Kendo.Mvc.UI.Fluent;
     using Xunit;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Mvc.Tests;
     public class TreeViewItemFactoryTests
     {
