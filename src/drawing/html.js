@@ -1156,28 +1156,6 @@
         }
     }
 
-    function actuallyGetRangeBoundingRect(range) {
-        if (browser.msie || browser.chrome) {
-            // Workaround browser bugs: IE and Chrome would sometimes
-            // return 0 or 1-width rectangles before or after the main
-            // one.  https://github.com/telerik/kendo/issues/4674
-            var a = range.getClientRects(), box, count = 0;
-            if (a.length <= 3) {
-                for (var i = 0; i < a.length; ++i) {
-                    if (a[i].width <= 1) {
-                        count++;
-                    } else {
-                        box = a[i];
-                    }
-                }
-                if (count == a.length - 1) {
-                    return box;
-                }
-            }
-        }
-        return range.getBoundingClientRect();
-    }
-
     function getBorder(style, side) {
         side = "border-" + side;
         return {
@@ -2646,6 +2624,9 @@
             estimateLineLength = 500;
         }
 
+        // we'll maintain this so we can workaround bugs in Chrome's Range.getClientRects
+        // https://github.com/telerik/kendo/issues/5740
+        var prevLineBottom = null;
         while (!doChunk()) {}
 
         if (browser.msie && textOverflow == "ellipsis") {
@@ -2653,6 +2634,41 @@
         }
 
         return;                 // only function declarations after this line
+
+        function actuallyGetRangeBoundingRect(range) {
+            // XXX: to be revised when this Chrome bug is fixed:
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=612459
+            if (browser.msie || browser.chrome) {
+                // Workaround browser bugs: IE and Chrome would sometimes
+                // return 0 or 1-width rectangles before or after the main
+                // one.  https://github.com/telerik/kendo/issues/4674
+
+                // Actually Chrome 50 got worse, since the rectangles can now have the width of a
+                // full character, making it hard to tell whether it's a bogus rectangle or valid
+                // selection location.  The workaround is to ignore rectangles that fall on the
+                // previous line.  https://github.com/telerik/kendo/issues/5740
+                var rectangles = range.getClientRects(), box = {
+                    top    : +Infinity,
+                    right  : -Infinity,
+                    bottom : -Infinity,
+                    left   : +Infinity
+                };
+                for (var i = 0; i < rectangles.length; ++i) {
+                    var b = rectangles[i];
+                    if (b.width <= 1 || b.bottom === prevLineBottom) {
+                        continue;   // bogus rectangle
+                    }
+                    box.left   = Math.min(b.left   , box.left);
+                    box.top    = Math.min(b.top    , box.top);
+                    box.right  = Math.max(b.right  , box.right);
+                    box.bottom = Math.max(b.bottom , box.bottom);
+                }
+                box.width = box.right - box.left;
+                box.height = box.bottom - box.top;
+                return box;
+            }
+            return range.getBoundingClientRect();
+        }
 
         // Render a chunk of text, typically one line (but for justified text we render each word as
         // a separate Text object, because spacing is variable).  Returns true when it finished the
@@ -2680,7 +2696,7 @@
                     // we can only split there if it's on the same line, otherwise we'll fall back
                     // to the default mechanism (see findEOL below).
                     range.setEnd(node, start + pos);
-                    var r = range.getBoundingClientRect();
+                    var r = actuallyGetRangeBoundingRect(range);
                     if (r.bottom == box.bottom) {
                         box = r;
                         found = true;
@@ -2737,7 +2753,7 @@
                 if (pos > 0) {
                     // eliminate trailing whitespace
                     range.setEnd(node, range.startOffset + pos);
-                    box = range.getBoundingClientRect();
+                    box = actuallyGetRangeBoundingRect(range);
                 }
             }
 
@@ -2784,6 +2800,9 @@
                 }
             }
 
+            if (!found) {
+                prevLineBottom = box.bottom;
+            }
             drawText(str, box);
         }
 
