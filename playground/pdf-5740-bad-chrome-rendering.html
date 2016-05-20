@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.pdf.js",
+         "./console.time.js",
+         "./test-pdf-helpers.js"
+     ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+
+    <style>
+     .test {
+       width: 500px;
+       font-family: DejaVu Sans;
+       font-size: 13px;
+     }
+    </style>
+  </head>
+  <body>
+    <button onclick="pdf('#test')">PDF</button>
+    <button onclick="draw('#test', 'svg')">SVG</button>
+    <div id="test">
+      <div class="test">
+        <p style="text-align: justify">Note to self: here, we know where the previous line ended. We can use this information to discard the bogus rectangle returned by actuallyGetRangeBoundingRect. We still have to compute the bounding-box-ourselves as the union of non-bogus rectangles returned by getClientRects (because Chrome would return multiple rectangles on the same line, issue 4 here).</p>
+        
+        <p style="color: #444">Aliquam-erat-volutpat.-Nunc eleifend-leo-vitae-magna.-In-id-erat-non-orci-commodo-lobortis.-Proin-neque-massa, cursus-ut, gravida-ut, lobortis-eget, lacus.-Sed-diam.-Praesent-fermentum-tempor-tellus.-Nullam-tempus.-Mauris-ac-felis-vel-velit-tristique-imperdiet.-Donec-at-pede.-Etiam-vel-neque-nec-dui-dignissim-bibendum.-Vivamus-id-enim.-Phasellus-neque-orci, porta-a, aliquet-quis, semper-a, massa.-Phasellus-purus.-Pellentesque-tristique-imperdiet-tortor.-Nam-euismod-tellus-id-erat.</p>
+
+        <pre style="color: #444">boxes.forEach(function(box, i){
+var el = document.createElement("div");
+el.className = "client-rect";
+el.style.left      = (box.left + dx) + "px";
+el.style.top       = (box.top + dy) + "px";
+el.style.width     = box.width + "px";
+el.style.height    = box.height + "px";
+el.style.border    = i == 0 ? "2px solid blue" : "1px solid red";
+document.body.appendChild(el);
+});</pre>
+      </div>
+    </div>
+
+    <script>
+     var timer;
+     $("#test").mouseup(function() {
+         clearTimeout(timer);
+         timer = setTimeout(function(){
+             [].slice.call(document.querySelectorAll(".client-rect")).forEach(function(el){
+                 el.parentNode.removeChild(el);
+             });
+             var r = getSelection().getRangeAt(0);
+             var boxes = [].slice.call(r.getClientRects());
+             console.log(boxes);
+             boxes.unshift(r.getBoundingClientRect());
+             var dx = document.body.scrollLeft;
+             var dy = document.body.scrollTop;
+             boxes.forEach(function(box, i){
+                 var el = document.createElement("div");
+                 el.className = "client-rect";
+                 el.style.position  = "absolute";
+                 el.style.left      = (box.left + dx) + "px";
+                 el.style.top       = (box.top + dy) + "px";
+                 el.style.width     = box.width + "px";
+                 el.style.height    = box.height + "px";
+                 el.style.boxSizing = "border-box";
+                 el.style.border    = i == 0 ? "2px solid blue" : "1px solid red";
+                 document.body.appendChild(el);
+             });
+         }, 250);
+     });
+    </script>
+  </body>
+</html>
