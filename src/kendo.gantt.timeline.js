@@ -2664,21 +2664,23 @@ var __meta__ = { // jshint ignore:line
                         }
                     });
 
-                this.touch
-                    .bind("tap", function(e) {
-                        var element = e.touch.target;
-                        var task = that._taskByUid($(element).attr("data-uid"));
-                        var currentPosition = e.touch.x.client;
+                if (this.touch) {
+                    this.touch
+                        .bind("tap", function(e) {
+                            var element = e.touch.target;
+                            var task = that._taskByUid($(element).attr("data-uid"));
+                            var currentPosition = e.touch.x.client;
 
-                        if (that.view()._taskTooltip) {
+                            if (that.view()._taskTooltip) {
+                                that.view()._removeTaskTooltip();
+                            }
+
+                            that.view()._createTaskTooltip(task, element, currentPosition);
+                        })
+                        .bind("doubletap", function() {
                             that.view()._removeTaskTooltip();
-                        }
-
-                        that.view()._createTaskTooltip(task, element, currentPosition);
-                    })
-                    .bind("doubletap", function() {
-                        that.view()._removeTaskTooltip();
-                    });
+                        });
+                }
             }
         }
 
