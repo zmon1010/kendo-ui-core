@@ -701,6 +701,10 @@
                 return INDEXED_COLORS[integer(attrs.indexed)];
             } else if (attrs.theme) {
                 var themeColor = theme.colorScheme[integer(attrs.theme)];
+                if (!themeColor) {
+                    return INDEXED_COLORS[0];
+                }
+
                 var color = kendo.parseColor(themeColor);
 
                 if (attrs.tint) {
