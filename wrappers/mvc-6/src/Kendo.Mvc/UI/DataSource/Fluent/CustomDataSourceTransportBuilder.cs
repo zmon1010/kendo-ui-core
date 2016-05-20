@@ -192,5 +192,16 @@
 
             return this;
         }
+
+        /// <summary>
+        /// Sets JavaScript function to handle the submit action.
+        /// </summary>
+        /// <param name="handler">JavaScript function name</param>
+        public CustomDataSourceTransportBuilder Submit(string handler)
+        {
+            transport.FunctionSubmit.HandlerName = handler;
+
+            return this;
+        }
     }
 }

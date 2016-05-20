@@ -78,5 +78,19 @@
             var returnedBuilder = builder.Destroy("Product", "Home");
             returnedBuilder.ShouldBeType(builder.GetType());
         }
+
+        [Fact]
+        public void Submit_string_overload_sets_handler_name_correctly()
+        {
+            builder.Submit("submitName");
+            transport.FunctionSubmit.HasValue().ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Submit_should_return_same_builder()
+        {
+            var returnedBuilder = builder.Submit("submitName");
+            returnedBuilder.ShouldBeType(builder.GetType());
+        }
     }
 }

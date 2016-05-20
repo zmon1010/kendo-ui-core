@@ -17,6 +17,7 @@ namespace Kendo.Mvc.UI
             FunctionUpdate = new ClientHandlerDescriptor();
             FunctionDestroy = new ClientHandlerDescriptor();
             FunctionCreate = new ClientHandlerDescriptor();
+            FunctionSubmit = new ClientHandlerDescriptor();
             ParameterMap = new ClientHandlerDescriptor();
             SerializeEmptyPrefix = true;
             SignalR = new TransportSignalR();
@@ -111,6 +112,11 @@ namespace Kendo.Mvc.UI
                 }
             }
 
+            if (FunctionSubmit.HasValue())
+            {
+                json["submit"] = FunctionSubmit;
+            }
+
             if (StringifyDates)
             {
                 json["stringifyDates"] = StringifyDates;
@@ -157,5 +163,7 @@ namespace Kendo.Mvc.UI
         public ClientHandlerDescriptor FunctionCreate { get; set; }
 
         public ClientHandlerDescriptor FunctionDestroy { get; set; }
+
+        public ClientHandlerDescriptor FunctionSubmit { get; set; }
     }
 }
