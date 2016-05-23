@@ -791,6 +791,8 @@
         destroy: function() {
             Widget.fn.destroy.call(this);
 
+            this._endTyping(true);
+
             this._deregisterHandlers();
 
             clearTimeout(this._spellCorrectTimeout);
