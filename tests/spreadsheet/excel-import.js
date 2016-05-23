@@ -109,6 +109,29 @@
         equal(styles.fills[0].color, "rgba(204, 255, 0, 1)");
     });
 
+    test("sets solid fill to black if theme color is missing", function() {
+        var THEME = {
+            colorScheme: []
+        };
+        var STYLESHEET = `
+            <styleSheet>
+              <fills>
+                <fill>
+                  <patternFill patternType="solid">
+                    <fgColor theme="0"/>
+                    <bgColor indexed="64"/>
+                  </patternFill>
+                </fill>
+              </fills>
+            </styleSheet>
+        `;
+
+        addFile("xl/styles.xml", STYLESHEET);
+
+        var styles = kendo.spreadsheet._readStyles(zip, THEME);
+        equal(styles.fills[0].color, "rgba(0, 0, 0, 1)");
+    });
+
     test("reads border style", function() {
         var THEME = {};
         var STYLESHEET = `
@@ -381,6 +404,33 @@
         });
 
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("locates files with absolute path", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="C1">
+                    <v>123</v>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = mockSheet({
+            range: ref => ({
+                value: val => ok(val === 123),
+                formula: () => null,
+                _get: () => null
+            })
+        });
+
+        kendo.spreadsheet._readSheet(zip, "/xl/worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
 
     test("reads number cell data", function() {
