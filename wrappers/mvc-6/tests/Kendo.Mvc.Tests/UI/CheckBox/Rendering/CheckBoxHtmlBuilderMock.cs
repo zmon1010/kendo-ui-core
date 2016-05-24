@@ -28,8 +28,8 @@ namespace Kendo.Mvc.Tests
 
         protected override ModelMetadata GetModelMetaData()
         {
-            var modelIdentity = new ModelMetadataIdentity();
-            var metaDataMock = new Mock<ModelMetadata>(modelIdentity);
+            var identity = ModelMetadataIdentity.ForProperty(typeof(int), "property", typeof(string));
+            var metaDataMock = new Mock<ModelMetadata>(identity);
 
             metaDataMock.SetupGet(x => x.DisplayName).Returns(MetaDataDisplayName);
             
