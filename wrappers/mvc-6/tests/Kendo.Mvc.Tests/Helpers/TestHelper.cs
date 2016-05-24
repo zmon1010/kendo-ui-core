@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Routing;
+using System.Text.Encodings.Web;
 
 namespace Kendo.Mvc.Tests
 {
@@ -24,7 +25,8 @@ namespace Kendo.Mvc.Tests
 			var httpContext = new DefaultHttpContext();
 			var urlHelper = new Mock<IUrlHelper>();
 			var htmlHelper = new Mock<ITestableHtmlHelper>();
-			var urlGenerator = customUrlGenerator != null ? customUrlGenerator : new Mock<IUrlGenerator>();
+            var htmlEncoder = new Mock<HtmlEncoder>();
+            var urlGenerator = customUrlGenerator != null ? customUrlGenerator : new Mock<IUrlGenerator>();
 			var kendoHtmlGenerator = new Mock<IKendoHtmlGenerator>();
 			var provider = new EmptyModelMetadataProvider();
 
@@ -52,7 +54,11 @@ namespace Kendo.Mvc.Tests
 				.Setup(s => s.GetService(typeof(IKendoHtmlGenerator)))
 				.Returns(kendoHtmlGenerator.Object);
 
-			serviceProvider
+            serviceProvider
+                .Setup(s => s.GetService(typeof(HtmlEncoder)))
+                .Returns(htmlEncoder.Object);
+
+            serviceProvider
 				.Setup(s => s.GetService(typeof(IViewComponentActivator)))
 				.Returns(new DefaultViewComponentActivator(new TypeActivatorCache()));
 
