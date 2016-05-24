@@ -90,7 +90,7 @@
 
         enable: function(enable) {
             if (enable === undefined) {
-                return this.element.attr("contenteditable") === "false";
+                return this.element.attr("contenteditable") === "true";
             }
 
             this.enableEditing(enable);

@@ -359,7 +359,7 @@
         formulaInput.enable(false);
 
         ok(element.hasClass("k-state-disabled"));
-        equal(element.attr("contenteditable"), "false");
+        equal(element.attr("contenteditable"), undefined);
     });
 
     test("enable the widget", function() {
