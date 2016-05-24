@@ -312,7 +312,7 @@
             this._viewPortHeight = this.view.scroller.clientHeight;
             this.navigator.height(this._viewPortHeight);
 
-            if (!editor.isActive()) {// && !this.isEditorDeactivated) {
+            if (!editor.isActive() && !this.isEditorDisabled) {
                 editor.enable(sheet.selection().enable() !== false);
                 editor.value(workbook._inputForRef(sheet.activeCell()));
             }
@@ -949,8 +949,8 @@
             this._enableEditorEvents(enable);
             this.editor.enableEditing(enable);
 
-            //this.isEditorDeactivated = !enable;
-            this.view.enableClipboard(enable)
+            this.isEditorDisabled = !enable;
+            this.view.enableClipboard(enable);
 
             //last active is required only for validation
             if (focusLastActive) {
