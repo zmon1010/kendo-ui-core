@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Microsoft.AspNet.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Kendo.Mvc.Examples.Models
 {
@@ -17,7 +17,7 @@ namespace Kendo.Mvc.Examples.Models
 		public decimal UnitPrice { get; set; }
 	}
 
-	public class CustomProductNameValidationAttribute : ValidationAttribute, IClientModelValidator
+	public class CustomProductNameValidationAttribute : ValidationAttribute  //, IClientModelValidator
 	{		
 		public override bool IsValid(object value)
 		{
@@ -29,9 +29,9 @@ namespace Kendo.Mvc.Examples.Models
 			return true;
 		}
 
-		public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ClientModelValidationContext context)
-		{
-			yield return new ModelClientValidationRule("productnamevalidation", ErrorMessage);
-		}
+		//public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ClientModelValidationContext context)
+		//{
+		//	yield return new ModelClientValidationRule("productnamevalidation", ErrorMessage);
+		//}
 	}
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using Kendo.Mvc.UI;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
@@ -12,8 +12,7 @@ namespace Kendo.Mvc.Examples.Controllers
         private const string folderName = "Images/";        
         private static readonly string[] foldersToCopy = new[] { "shared/images/employees" };
 
-        [FromServices]
-        public override IHostingEnvironment Server { get; set; }
+        public IHostingEnvironment HostingEnvironment { get; set; }
         
         /// <summary>
         /// Gets the base paths from which content will be served.
@@ -37,17 +36,21 @@ namespace Kendo.Mvc.Examples.Controllers
             }
         }
 
+        public FileBrowserController(IHostingEnvironment hostingEnvironment)
+        {
+            HostingEnvironment = hostingEnvironment;
+        }
         private string CreateUserFolder()
         {            
             var virtualPath = Path.Combine(contentFolderRoot, "UserFiles", folderName);
 
-            var path = Server.MapPath(virtualPath);
+            var path = HostingEnvironment.WebRootFileProvider.GetFileInfo(virtualPath).PhysicalPath;
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
                 foreach (var sourceFolder in foldersToCopy)
                 {
-                    CopyFolder(Server.MapPath(sourceFolder), path);
+                    CopyFolder(HostingEnvironment.WebRootFileProvider.GetFileInfo(sourceFolder).PhysicalPath, path);
                 }
             }
             return virtualPath;

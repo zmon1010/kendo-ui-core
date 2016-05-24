@@ -1,12 +1,12 @@
 ﻿namespace Kendo.Mvc.Examples.Models.Scheduler
 {
     using System.Linq;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Kendo.Mvc.UI;
     using System;
     using System.Data;
-    using Microsoft.AspNet.Mvc.ModelBinding;
-    using Microsoft.Data.Entity;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.EntityFrameworkCore;
 
     public class SchedulerTaskService : ISchedulerEventService<TaskViewModel>
     {

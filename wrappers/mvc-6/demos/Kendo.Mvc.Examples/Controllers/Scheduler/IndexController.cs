@@ -1,7 +1,7 @@
 ﻿using Kendo.Mvc.Examples.Models.Scheduler;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {

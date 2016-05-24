@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,12 @@ namespace Kendo.Mvc.Examples.Controllers
 
     public partial class EditorController : Controller
     {
-        
-        [FromServices]
         public IHostingEnvironment HostingEnvironment { get; set; }
+
+        public EditorController(IHostingEnvironment hostingEnvironment)
+        {
+            HostingEnvironment = hostingEnvironment;
+        }
 
         public IActionResult Snippets()
         {

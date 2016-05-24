@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Kendo.Mvc.Examples.Models;
 
 namespace Kendo.Mvc.Examples.Controllers

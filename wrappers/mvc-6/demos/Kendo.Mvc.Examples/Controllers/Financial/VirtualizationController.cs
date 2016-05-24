@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Kendo.Mvc.Examples.Models;
 using Kendo.Mvc.UI;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
