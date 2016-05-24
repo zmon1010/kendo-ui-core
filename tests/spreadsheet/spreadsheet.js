@@ -336,6 +336,8 @@
         };
 
         spreadsheet._workbook._view.editor.deactivate = function() {
+            //commands are executed on deativate event which is not called
+            //when validaiton error occurs
             ok(true);
         };
 
@@ -346,10 +348,29 @@
         spreadsheet._controller.onDialogRequest({ options: {}});
     });
 
+    test("executing toolbar commands does not try deactvate the editor", 1, function() {
+        spreadsheet._workbook._view.editor.isActive = function(e) {
+            return false;
+        };
+
+        spreadsheet._workbook._view.editor.deactivate = function() {
+            ok(false);
+        };
+
+        spreadsheet.enableEditor = function(enable) {
+            ok(false);
+        };
+
+        spreadsheet._workbook._view.openDialog = function() {
+            ok(true);
+        };
+
+        spreadsheet._controller.onDialogRequest({ options: {}});
+    });
+
     test("edit errors clear last command queue", 1, function() {
         spreadsheet._lastCommandRequest = {
             callback: function() {
-                console.log("DA FUQ");
                 ok(false);
             },
             options: {}
@@ -364,6 +385,24 @@
         spreadsheet._controller._execute({});
 
         ok(spreadsheet._controller._lastCommandRequest === null);
+    });
+
+    test("edit errors does not try deactivate editor if it is not active", 1, function() {
+        spreadsheet._workbook._view.editor.isActive = function(e) {
+            return false;
+        };
+
+        spreadsheet._workbook._view.showError = function(options, callback) {
+            ok(!callback);
+        };
+
+        spreadsheet._workbook.execute = function(e) {
+            return {
+                reason: "error"
+            };
+        };
+
+        spreadsheet._controller._execute({});
     });
 
     test("edit cell execute queued toolbar commands", 2, function() {

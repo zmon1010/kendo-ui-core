@@ -90,7 +90,7 @@
 
         enable: function(enable) {
             if (enable === undefined) {
-                return this.element.attr("contenteditable") === "false" ? false : true;
+                return this.element.attr("contenteditable") === "false";
             }
 
             this.enableEditing(enable);
@@ -99,7 +99,11 @@
         },
 
         enableEditing:  function(enable) {
-            this.element.attr("contenteditable", enable);
+            if (enable) {
+                this.element.attr("contenteditable", enable);
+            } else {
+                this.element.removeAttr("contenteditable");
+            }
         },
 
         getPos: function() {
@@ -420,11 +424,13 @@
         },
 
         hide: function() {
+            this.enableEditing(false);
             this.element.hide();
             this._cellTooltip.hide();
         },
 
         show: function() {
+            this.enableEditing(true);
             this.element.show();
         },
 
@@ -445,8 +451,9 @@
                 return;
             }
 
+            this.show();
+
             this.element
-                .show()
                 .css({
                     "top": rectangle.top + 1 + "px",
                     "left": rectangle.left + 1 + "px"

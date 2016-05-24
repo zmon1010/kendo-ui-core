@@ -131,7 +131,6 @@
 
             $(view.scroller).on("scroll", this.onScroll.bind(this));
             this.listener = new kendo.spreadsheet.EventListener(this.container, this, CONTAINER_EVENTS);
-            this.keyListener = new kendo.spreadsheet.EventListener(this.clipboardElement, this, CLIPBOARD_EVENTS);
 
             this._enableEditorEvents();
 
@@ -157,9 +156,11 @@
 
         _enableEditorEvents: function (enable) {
             if (enable === undefined || enable) {
+                this.keyListener = new kendo.spreadsheet.EventListener(this.clipboardElement, this, CLIPBOARD_EVENTS);
                 this.barKeyListener = new kendo.spreadsheet.EventListener(this.editor.barElement(), this, FORMULABAR_EVENTS);
                 this.inputKeyListener = new kendo.spreadsheet.EventListener(this.editor.cellElement(), this, FORMULAINPUT_EVENTS);
             } else {
+                this.keyListener.destroy();
                 this.barKeyListener.destroy();
                 this.inputKeyListener.destroy();
             }
@@ -173,15 +174,20 @@
             }
 
             if (result) {
-                this.enableEditor(false);
+                var closeHandler;
+
+                if (this.view.editor.isActive()) {
+                    this.enableEditor(false);
+                    closeHandler = this.enableEditor.bind(this, true, true);
+                }
 
                 if (result.reason === "error") {
                     this._lastCommandRequest = null;
 
-                    this.view.showError(result, this.enableEditor.bind(this, true));
+                    this.view.showError(result, closeHandler);
                 } else {
                     this.view.openDialog(result.reason, {
-                        close: this.enableEditor.bind(this, true)
+                        close: closeHandler
                     });
                 }
             }
@@ -306,7 +312,7 @@
             this._viewPortHeight = this.view.scroller.clientHeight;
             this.navigator.height(this._viewPortHeight);
 
-            if (!editor.isActive()) {
+            if (!editor.isActive()) {// && !this.isEditorDeactivated) {
                 editor.enable(sheet.selection().enable() !== false);
                 editor.value(workbook._inputForRef(sheet.activeCell()));
             }
@@ -933,15 +939,21 @@
             }
 
             viewEditor.deactivate();
+
+            this.enableEditor(false);
         },
 
-        enableEditor: function(enable) {
+        enableEditor: function(enable, focusLastActive) {
             enable = enable === undefined || enable;
 
             this._enableEditorEvents(enable);
             this.editor.enableEditing(enable);
 
-            if (enable) {
+            //this.isEditorDeactivated = !enable;
+            this.view.enableClipboard(enable)
+
+            //last active is required only for validation
+            if (focusLastActive) {
                 this.editor.focusLastActive();
             }
         },
@@ -973,7 +985,7 @@
                 var additionalOptions = {
                     pdfExport: this._workbook.options.pdf,
                     excelExport: this._workbook.options.excel,
-                    close: this.enableEditor.bind(this, true)
+                    close: this.enableEditor.bind(this, true, false)
                 };
 
                 if(e.options) {

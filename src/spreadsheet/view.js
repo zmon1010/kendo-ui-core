@@ -572,6 +572,16 @@
             });
         },
 
+        enableClipboard: function(enable) {
+            this.isClipboardDeactivated = !enable;
+
+            if (enable) {
+                this.clipboard.attr("contenteditable", enable);
+            } else {
+                this.clipboard.removeAttr("contenteditable");
+            }
+        },
+
         _resize: function() {
             var tabstripHeight = this.tabstrip ? this.tabstrip.element.outerHeight() : 0;
             var formulaBarHeight = this.formulaBar ? this.formulaBar.element.outerHeight() : 0;
@@ -852,8 +862,10 @@
         },
 
         selectClipBoardContents: function() {
+            if (!this.isClipboardDeactivated) {
                 this.clipboard.focus();
                 selectElementContents(this.clipboard[0]);
+            }
         },
 
         scrollIntoView: function(cell) {
