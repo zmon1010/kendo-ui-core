@@ -167,29 +167,15 @@
                 if (validationState) {
                     return this.rejectState(validationState);
                 }
-            } catch(ex1) {
-                if (ex1 instanceof kendo.spreadsheet.calc.ParseError) {
-                    // it's a formula. maybe a closing paren fixes it?
-                    try {
-                        range.input(value + ")");
-
-                        var validationState = range._getValidationState();
-                        if (validationState) {
-                            return this.rejectState(validationState);
-                        }
-                    } catch(ex2) {
-                        if (ex2 instanceof kendo.spreadsheet.calc.ParseError) {
-                            range.input("'" + value);
-
-                            return {
-                                title : "Error in formula",
-                                body  : ex1+"",
-                                reason: "error"
-                            };
-                        }
-                    }
+            } catch(ex) {
+                if (ex instanceof kendo.spreadsheet.calc.ParseError) {
+                    return {
+                        title : "Error in formula",
+                        body  : ex+"",
+                        reason: "error"
+                    };
                 } else {
-                    throw ex1;
+                    throw ex;
                 }
             }
         }
