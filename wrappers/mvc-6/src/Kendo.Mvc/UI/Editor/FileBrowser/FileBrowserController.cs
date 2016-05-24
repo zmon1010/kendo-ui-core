@@ -14,18 +14,23 @@ namespace Kendo.Mvc.UI
     {
         private readonly IDirectoryBrowser directoryBrowser;
         private readonly IDirectoryPermission permission;
-
-        public virtual IHostingEnvironment HostingEnvironment { get; set; }
+        private readonly IHostingEnvironment hostingEnvironment;
 
         protected FileBrowserController()
-            : this(DI.Current.Resolve<IDirectoryBrowser>(), DI.Current.Resolve<IDirectoryPermission>())
+            : this(DI.Current.Resolve<IDirectoryBrowser>(),
+                  DI.Current.Resolve<IDirectoryPermission>(),
+                  DI.Current.Resolve<IHostingEnvironment>())
         {
         }
 
-        protected FileBrowserController(IDirectoryBrowser directoryBrowser, IDirectoryPermission permission)
+        protected FileBrowserController(
+            IDirectoryBrowser directoryBrowser,
+            IDirectoryPermission permission,
+            IHostingEnvironment hostingEnvironment)
         {
             this.directoryBrowser = directoryBrowser;
             this.permission = permission;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -94,7 +99,7 @@ namespace Kendo.Mvc.UI
             {
                 try
                 {
-                    directoryBrowser.HostingEnvironment = HostingEnvironment;
+                    directoryBrowser.HostingEnvironment = hostingEnvironment;
 
                     var files = directoryBrowser.GetFiles(path, Filter);
                     var directories = directoryBrowser.GetDirectories(path);
@@ -291,7 +296,7 @@ namespace Kendo.Mvc.UI
 
         protected virtual string MapPath(string path)
         {
-            return HostingEnvironment.WebRootFileProvider.GetFileInfo(path).PhysicalPath;
+            return hostingEnvironment.WebRootFileProvider.GetFileInfo(path).PhysicalPath;
         }
     }
 }

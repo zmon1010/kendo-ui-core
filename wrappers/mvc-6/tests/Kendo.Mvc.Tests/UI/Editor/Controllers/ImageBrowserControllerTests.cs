@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 namespace Kendo.Mvc.Tests
 {
@@ -18,7 +19,7 @@ namespace Kendo.Mvc.Tests
         private readonly Mock<EditorImageBrowserController> controllerMock;
         private readonly Mock<IDirectoryBrowser> browser;
         private readonly Mock<IDirectoryPermission> permission;
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly Mock<IHostingEnvironment> hostingEnvironment;
         private readonly FileBrowserEntry directory;
         private readonly FileBrowserEntry dummyFile;
         const string PATH = "/shared/";
@@ -29,7 +30,7 @@ namespace Kendo.Mvc.Tests
             dummyFile = new FileBrowserEntry() { Name = "name", EntryType = FileBrowserEntryType.File };
             browser = new Mock<IDirectoryBrowser>();
             permission = new Mock<IDirectoryPermission>();
-            hostingEnvironment = new HostingEnvironment() { WebRootPath = "rootPath" };
+            hostingEnvironment = new Mock<IHostingEnvironment>();
 
             browser.Setup(b => b.GetFiles(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new[] { new FileBrowserEntry { EntryType = FileBrowserEntryType.File } });
@@ -38,10 +39,15 @@ namespace Kendo.Mvc.Tests
 
             permission.Setup(p => p.CanAccess(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
 
-            controllerMock = new Mock<EditorImageBrowserController>(browser.Object, permission.Object) { CallBase = true };
+            var webRootProvider = new Mock<IFileProvider>();
+            webRootProvider.Setup(provider => provider.GetFileInfo(It.IsAny<string>()).PhysicalPath)
+                .Returns("rootPath");
+            hostingEnvironment.Setup(h => h.WebRootFileProvider)
+                .Returns(webRootProvider.Object);
+
+            controllerMock = new Mock<EditorImageBrowserController>(browser.Object, permission.Object, hostingEnvironment.Object) { CallBase = true };
             controllerMock.Setup(x => x.GetFileName(It.IsAny<IFormFile>())).Returns("test.txt");
             controllerMock.SetupGet(c => c.ContentPath).Returns("Editor");
-            controllerMock.Setup(x => x.HostingEnvironment).Returns(hostingEnvironment);
             controllerMock.Setup(x => x.AuthorizeRead(It.IsAny<string>())).Returns(true);
             controllerMock.Setup(x => x.AuthorizeCreateDirectory(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
 
