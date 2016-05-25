@@ -272,6 +272,8 @@
                 "mouseup": function() { that._mouseup(); }
             });
 
+            that._initializeImmutableElements();
+
             that.toolbar.resize();
 
             kendo.notify(that);
@@ -699,6 +701,16 @@
                     }, 10);
                 }
             });
+        },
+
+        _initializeImmutableElements: function(){
+            var that = this,
+                editorNS = kendo.ui.editor;
+
+            if (that.options.immutableElements){
+                that.editorImmutables = new editorNS.EditorImmutables(that);
+                that.editorImmutables.bindEvents();
+            }
         },
 
         _mouseup: function() {
