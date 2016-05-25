@@ -39,7 +39,7 @@
     }
   },
   "frameworks": {
-    "net451": { },
+    "net452": { },
     "netcoreapp1.0": {
       "imports": [
         "dotnet5.6",
