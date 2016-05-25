@@ -7633,6 +7633,12 @@ var __meta__ = { // jshint ignore:line
                if (rows[idx].style.height) {
                    rows[idx].style.height = rows2[idx].style.height = "";
                }
+           }
+
+           for (idx = 0; idx < length; idx++) {
+               if (!rows2[idx]) {
+                   break;
+               }
 
                var offsetHeight1 = rows[idx].offsetHeight;
                var offsetHeight2 = rows2[idx].offsetHeight;

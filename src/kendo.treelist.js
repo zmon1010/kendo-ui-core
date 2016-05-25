@@ -1874,6 +1874,12 @@ var __meta__ = { // jshint ignore:line
                 if (rows[idx].style.height) {
                     rows[idx].style.height = lockedRows[idx].style.height = "";
                 }
+            }
+
+            for (idx = 0; idx < length; idx++) {
+                if (!lockedRows[idx]) {
+                    break;
+                }
 
                 var offsetHeight1 = rows[idx].offsetHeight;
                 var offsetHeight2 = lockedRows[idx].offsetHeight;
