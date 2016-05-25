@@ -61,6 +61,8 @@ namespace Kendo.Mvc.Examples
             // Add MVC to the request pipeline.
             app.UseMvc(routes =>
             {
+                routes.AddHyphenatedRoute();
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
