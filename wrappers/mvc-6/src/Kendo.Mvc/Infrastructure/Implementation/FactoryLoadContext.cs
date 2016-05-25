@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Kendo.Mvc.Infrastructure.Implementation
 {
-#if !NET451
+#if !NET452
     using System.Runtime.Loader;
 
     internal class FactoryLoadContext : AssemblyLoadContext

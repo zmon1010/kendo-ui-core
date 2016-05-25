@@ -17,7 +17,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
     {
         public static readonly ClassFactory Instance = new ClassFactory();
 
-#if !NET451
+#if !NET452
         private readonly FactoryLoadContext _assemblyLoadContext;
 #endif
 
@@ -42,7 +42,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
 
         private ClassFactory()
         {
-#if !NET451
+#if !NET452
             _assemblyLoadContext = new FactoryLoadContext();
 #endif
 
@@ -77,7 +77,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                 {
                     ms.Seek(0, SeekOrigin.Begin);
 
-#if NET451
+#if NET452
                     var assembly = Assembly.Load(ms.ToArray());
                     return assembly.GetType(typeName);
 #else
@@ -129,7 +129,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         {
             var references = new List<MetadataReference>();
 
-#if !NET451
+#if !NET452
             var libraryExporter = CompilationServices.Default.LibraryExporter;
             var libraryExport = libraryExporter.GetExport("System");
             if (libraryExport != null)

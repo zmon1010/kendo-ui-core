@@ -4,7 +4,7 @@
     "warningsAsErrors": true
   },
   "frameworks": {
-    "net451": { }
+    "net452": { }
   },
   "dependencies": {
     "Kendo.Mvc": "1.0.0-*",
