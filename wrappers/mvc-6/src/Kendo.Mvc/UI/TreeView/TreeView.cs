@@ -122,7 +122,10 @@ namespace Kendo.Mvc.UI
 
         private IEnumerable SerializeItems(IList<TreeViewItem> items)
         {
-            var urlHelper = ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelper>();
+            var factory = ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+
+            var urlHelper = factory.GetUrlHelper(ViewContext);
+
             return from item in items select item.Serialize(urlHelper);
         }
 

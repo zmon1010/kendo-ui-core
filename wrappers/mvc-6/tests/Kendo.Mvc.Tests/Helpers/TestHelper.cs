@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Routing;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Kendo.Mvc.Tests
 {
@@ -24,7 +25,8 @@ namespace Kendo.Mvc.Tests
 		{
 			var httpContext = new DefaultHttpContext();
 			var urlHelper = new Mock<IUrlHelper>();
-			var htmlHelper = new Mock<ITestableHtmlHelper>();
+            var urlHelperFactory = new Mock<IUrlHelperFactory>();
+            var htmlHelper = new Mock<ITestableHtmlHelper>();
             var htmlEncoder = new Mock<HtmlEncoder>();
             var urlGenerator = customUrlGenerator != null ? customUrlGenerator : new Mock<IUrlGenerator>();
 			var kendoHtmlGenerator = new Mock<IKendoHtmlGenerator>();
@@ -38,11 +40,15 @@ namespace Kendo.Mvc.Tests
 				.Setup(s => s.GetService(typeof(IModelMetadataProvider)))
 				.Returns(provider);
 
-			serviceProvider
-				.Setup(s => s.GetService(typeof(IUrlHelper)))
+            urlHelperFactory
+                .Setup(s => s.GetUrlHelper(It.IsAny<ActionContext>()))
 				.Returns(urlHelper.Object);
 
-			serviceProvider
+            serviceProvider
+                .Setup(s => s.GetService(typeof(IUrlHelperFactory)))
+                .Returns(urlHelperFactory.Object);
+
+            serviceProvider
 				.Setup(s => s.GetService(typeof(IUrlGenerator)))
 				.Returns(urlGenerator.Object);
 
