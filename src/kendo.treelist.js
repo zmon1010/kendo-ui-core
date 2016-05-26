@@ -1784,8 +1784,9 @@ var __meta__ = { // jshint ignore:line
 
             var messages = this.options.messages;
             var data = this.dataSource.rootNodes();
+            var uidAttr = kendo.attr("uid");
             var selected = this.select().removeClass("k-state-selected").map(function(_, row) {
-                return $(row).attr(kendo.attr("uid"));
+                return $(row).attr(uidAttr);
             });
 
             this._absoluteIndex = 0;
@@ -1840,6 +1841,11 @@ var __meta__ = { // jshint ignore:line
                 this._angularItems("compile");
                 this._angularFooters("compile");
             });
+
+            this.items().filter(function() {
+                return $.inArray($(this).attr(uidAttr), selected) >= 0;
+            })
+            .addClass("k-state-selected");
 
             this._adjustRowsHeight();
         },

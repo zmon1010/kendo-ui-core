@@ -469,4 +469,39 @@
 
         ok(!instance.columns[1].expandable);
     });
+
+    test("hideColumn persist selection", function() {
+        createTreeList({
+            selectable: true,
+            columns: [
+                { field: "id" },
+                { field: "parentId" }
+            ]
+        });
+
+        var row = instance.table.find("tr:first");
+        instance.select(row);
+
+        instance.hideColumn("id");
+
+        ok(row.hasClass("k-state-selected"));
+    });
+
+    test("showColumn persist selection", function() {
+        createTreeList({
+            selectable: true,
+            columns: [
+                { field: "id" },
+                { field: "parentId" }
+            ]
+        });
+
+        var row = instance.table.find("tr:first");
+        instance.select(row);
+
+        instance.hideColumn("id");
+        instance.showColumn("id");
+
+        ok(row.hasClass("k-state-selected"));
+    });
 })();
