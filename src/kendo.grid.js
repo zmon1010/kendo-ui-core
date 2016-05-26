@@ -1447,7 +1447,8 @@ var __meta__ = { // jshint ignore:line
            COLUMNLOCK,
            COLUMNUNLOCK,
            NAVIGATE,
-           "page"
+           "page",
+           "sort"
         ],
 
         setDataSource: function(dataSource) {
@@ -5751,7 +5752,13 @@ var __meta__ = { // jshint ignore:line
                 column,
                 sorterInstance,
                 cell,
-                sortable = that.options.sortable;
+                sortable = that.options.sortable,
+                sortHandler = function(e) {
+                    if (that.trigger("sort", { sort: e.sort })) {
+                        e.preventDefault();
+                    }
+                };
+
 
             if (sortable) {
                 var cells = leafDataCells(that.thead);
@@ -5773,7 +5780,8 @@ var __meta__ = { // jshint ignore:line
                                 extend({}, sortable, column.sortable, {
                                     dataSource: that.dataSource,
                                     aria: true,
-                                    filter: ":not(.k-column-active)"
+                                    filter: ":not(.k-column-active)",
+                                    change: sortHandler
                                 })
                             );
                     }
