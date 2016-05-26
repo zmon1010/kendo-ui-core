@@ -29,6 +29,9 @@ fill(sheet, {
     D1: "=sum(a1,b1,c1)",
     D2: "=sum(a1:c3)",
     //E1: "=sum(A:D)",
+
+    A11: "a",
+    B11: '=IFERROR(VLOOKUP("a", A11:A12, 1, FALSE), VLOOKUP("b", A11:A12, 1, FALSE))'
 });
 
 sheet.range("G2:G11").values([
