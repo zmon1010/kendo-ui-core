@@ -54,6 +54,8 @@ var __meta__ = { // jshint ignore:line
             filter: ""
         },
 
+        events: ["change"],
+
         destroy: function () {
             var that = this;
 
@@ -124,6 +126,10 @@ var __meta__ = { // jshint ignore:line
                 dir = ASC;
             }
 
+            if (this.trigger("change", { sort: { field: field, dir: dir, compare: compare } })) {
+                return;
+            }
+
             if (options.mode === SINGLE) {
                 sort = [{ field: field, dir: dir, compare: compare }];
             } else if (options.mode === "multiple") {
@@ -135,6 +141,7 @@ var __meta__ = { // jshint ignore:line
                 }
                 sort.push({ field: field, dir: dir, compare: compare });
             }
+
 
             this.dataSource.sort(sort);
         }
