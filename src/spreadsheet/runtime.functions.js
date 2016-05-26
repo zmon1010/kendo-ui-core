@@ -2271,7 +2271,7 @@
         return value instanceof CalcError ? valueIfError : value;
     }).args([
         [ "*value", "forced!" ],
-        [ "*value_if_error", "anyvalue" ]
+        [ "*value_if_error", "anyvalue!" ]
     ]);
 
     //// utils
