@@ -1446,7 +1446,8 @@ var __meta__ = { // jshint ignore:line
            COLUMNHIDE,
            COLUMNLOCK,
            COLUMNUNLOCK,
-           NAVIGATE
+           NAVIGATE,
+           "page"
         ],
 
         setDataSource: function(dataSource) {
@@ -5406,6 +5407,12 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     that.pager = new kendo.ui.Pager(wrapper, extend({}, pageable, { dataSource: that.dataSource }));
                 }
+
+                that.pager.bind("pageChange", function(e) {
+                    if (that.trigger("page", { page: e.index })) {
+                        e.preventDefault();
+                    }
+                });
             }
         },
 
