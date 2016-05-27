@@ -1153,6 +1153,10 @@ var __meta__ = { // jshint ignore:line
                 return { value: $(item).val(), operator: "eq", field: that.field };
             });
 
+            if (this.trigger("change", { filter: expression })) {
+                return;
+            }
+
             expression = this._merge(expression);
             if (expression.filters.length) {
                 this.dataSource.filter(expression);
@@ -1268,7 +1272,7 @@ var __meta__ = { // jshint ignore:line
                 right: "slide:right"
             }
         },
-        events: [ INIT, REFRESH]
+        events: [ INIT, REFRESH, "change"]
     });
 
     $.extend(FilterMultiCheck.fn, {
