@@ -216,17 +216,22 @@
         ok(toolbar.element.find("[data-property=bold]").hasClass("k-state-active"));
     });
 
-    /* comment temporary, works on playground
     test("refreshes textAlign buttons", function() {
         createWithTools([ "alignment" ]);
 
-        sheet.range("A1").textAlign("center");
+        sheet.range("A1")
+            .verticalAlign("top")
+            .textAlign("center");
 
-        ok(!toolbar.element.find("[data-property=textAlign][data-value=left]").hasClass("k-state-active"));
-        ok(toolbar.element.find("[data-property=textAlign][data-value=center]").hasClass("k-state-active"));
-        ok(!toolbar.element.find("[data-property=textAlign][data-value=right]").hasClass("k-state-active"));
+        var tool = toolbar.element.find("[data-tool=alignment]");
+        var element = tool.data("instance").popup.element;
+
+        ok(!element.find("[data-property=textAlign][data-value=left]").hasClass("k-state-active"));
+        ok(element.find("[data-property=textAlign][data-value=center]").hasClass("k-state-active"));
+        ok(!element.find("[data-property=textAlign][data-value=right]").hasClass("k-state-active"));
+
+        ok(!element.find("[data-property=verticalAlign][data-value=center]").hasClass("k-state-active"));
     });
-    */
 
     test("refreshes color palette state", function() {
         createWithTools([ "backgroundColor" ]);

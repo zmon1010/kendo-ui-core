@@ -818,15 +818,16 @@
         update: function(range) {
             var textAlign = range.textAlign();
             var verticalAlign = range.verticalAlign();
+            var element = this.popup.element;
 
-            this.popup.element.find(".k-button").removeClass("k-state-active");
+            element.find(".k-button").removeClass("k-state-active");
 
             if (textAlign) {
-                this.popup.element.find(".k-button[data-value=" + textAlign + "]").addClass("k-state-active");
+                element.find("[data-property=textAlign][data-value=" + textAlign + "]").addClass("k-state-active");
             }
 
             if (verticalAlign) {
-                this.popup.element.find(".k-button[data-value=" + verticalAlign + "]").addClass("k-state-active");
+                element.find("[data-property=verticalAlign][data-value=" + verticalAlign + "]").addClass("k-state-active");
             }
         },
         _commandPalette: function() {
