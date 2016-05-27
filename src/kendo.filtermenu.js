@@ -569,8 +569,11 @@ var __meta__ = { // jshint ignore:line
         },
 
         filter: function(expression) {
-            if (this._stripFilters(expression.filters).length &&
-                this.trigger("change", { filter: expression })) {
+            var filters = this._stripFilters(expression.filters);
+            if (filters.length && this.trigger("change", {
+                    filter: { logic: expression.logic, filters: filters }
+                })) {
+
                 return;
             }
 
