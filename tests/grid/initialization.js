@@ -1516,6 +1516,22 @@
         grid.thead.find("th").data("kendoFilterMenu").link.click();
     });
 
+    test("filter event is raised when filter menu is filtered", 3, function() {
+        var grid = new Grid(table, {
+            filterable: true,
+            columns: [{ field: "foo"}],
+            filter: function(e) {
+                equal(e.filter.filters[0].field, "foo");
+                equal(e.filter.filters[0].operator, "eq");
+                equal(e.filter.filters[0].value, 12);
+            }
+        });
+
+        var filterMenu = grid.thead.find("th").data("kendoFilterMenu");
+        filterMenu.link.click();
+        filterMenu.filter({ filters: [{field: "foo", operator: "eq", value: 12 } ] });
+    });
+
     test("unfilterable column from html attribute", function() {
         $(table).html("<thead><tr><th data-kendo-filterable=false data-kendo-field='col1'>col1</th></tr></thead><tbody><tr><td>&nbsp;</td></tr></tbody>");
         var grid = new Grid(table, {

@@ -1448,7 +1448,8 @@ var __meta__ = { // jshint ignore:line
            COLUMNUNLOCK,
            NAVIGATE,
            "page",
-           "sort"
+           "sort",
+           "filter"
         ],
 
         setDataSource: function(dataSource) {
@@ -5612,6 +5613,11 @@ var __meta__ = { // jshint ignore:line
                 closeCallback = function(element) {
                     focusTable(element.closest("table"), true);
                 },
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter })) {
+                        e.preventDefault();
+                    }
+                },
                 filterable = that.options.filterable;
                 if (filterable && typeof filterable.mode == STRING && filterable.mode.indexOf("menu") == -1) {
                     filterable = false;
@@ -5647,7 +5653,8 @@ var __meta__ = { // jshint ignore:line
                                 closeCallback: closeCallback,
                                 title: columns[idx].title || columns[idx].field,
                                 init: filterInit,
-                                pane: that.pane
+                                pane: that.pane,
+                                change: filterHandler
                             }
                         );
 
