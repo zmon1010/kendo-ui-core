@@ -463,12 +463,17 @@ var BackspaceHandler = Class.extend({
     },
     keydown: function(e) {
         var method, startRestorePoint;
-        var range = this.editor.getRange();
+        var editor = this.editor;
+        var range = editor.getRange();
         var keyCode = e.keyCode;
         var keys = kendo.keys;
         var backspace = keyCode === keys.BACKSPACE;
         var del = keyCode == keys.DELETE;
-
+        
+        if (editor.immutables && editor.immutables.keydown(e, range)) {
+            return;
+        }
+        
         if ((backspace || del) && !range.collapsed) {
             method = "_handleSelection";
         } else if (backspace) {
@@ -480,13 +485,13 @@ var BackspaceHandler = Class.extend({
         if (!method) {
             return;
         }
-
+        
         startRestorePoint = new RestorePoint(range);
-
+        
         if (this[method](range)) {
             e.preventDefault();
 
-            finishUpdate(this.editor, startRestorePoint);
+            finishUpdate(editor, startRestorePoint);
         }
     },
     keyup: $.noop

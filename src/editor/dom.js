@@ -279,7 +279,9 @@ var Dom = {
             return entity ? '&'+entity+';' : c;
         });
     },
-
+    isBom: function(node) {
+        return node && node.nodeType === 3 && /^[\ufeff]+$/.test(node.nodeValue);
+    },
     stripBom: function(text) {
         return (text || "").replace(bom, "");
     },
@@ -474,6 +476,14 @@ var Dom = {
 
     closest: function(node, tag) {
         while (node && Dom.name(node) != tag) {
+            node = node.parentNode;
+        }
+
+        return node;
+    },
+    
+    closestBy: function(node, condition) {
+        while (node && !condition(node)) {
             node = node.parentNode;
         }
 

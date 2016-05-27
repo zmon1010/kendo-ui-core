@@ -707,9 +707,9 @@
             var that = this,
                 editorNS = kendo.ui.editor;
 
-            if (that.options.immutableElements){
-                that.editorImmutables = new editorNS.EditorImmutables(that);
-                that.editorImmutables.bindEvents();
+            if (that.options.immutables){
+                that.immutables = new editorNS.Immutables(that);
+                that.immutables.bindEvents();
             }
         },
 
