@@ -119,7 +119,7 @@ var __meta__ = { // jshint ignore:line
             that.trigger(INIT, { field: that.field, container: that.wrapper });
         },
 
-        events: [ INIT, "sort" ],
+        events: [ INIT, "sort", "filtering" ],
 
         options: {
             name: "ColumnMenu",
@@ -551,7 +551,12 @@ var __meta__ = { // jshint ignore:line
                         dataSource: options.dataSource,
                         values: options.values,
                         field: that.field,
-                        title: that.title
+                        title: that.title,
+                        change: function(e) {
+                            if (that.trigger("filtering", { filter: e.filter })) {
+                                e.preventDefault();
+                            }
+                        }
                     },
                     options.filterable)
                     ).data(widget);

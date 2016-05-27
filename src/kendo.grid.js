@@ -5534,6 +5534,11 @@ var __meta__ = { // jshint ignore:line
                         e.preventDefault();
                     }
                 },
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter })) {
+                        e.preventDefault();
+                    }
+                },
                 $angular = options.$angular;
 
             if (columnMenu) {
@@ -5580,6 +5585,7 @@ var __meta__ = { // jshint ignore:line
                             init: initCallback,
                             pane: that.pane,
                             sort: sortHandler,
+                            filtering: filterHandler,
                             filter: isMobile ? ":not(.k-column-active)" : "",
                             lockedColumns: !hasMultiColumnHeaders && column.lockable !== false && lockedColumns(columns).length > 0
                         };
