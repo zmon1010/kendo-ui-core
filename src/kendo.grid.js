@@ -5528,6 +5528,11 @@ var __meta__ = { // jshint ignore:line
                 closeCallback = function(element) {
                     focusTable(element.closest("table"), true);
                 },
+                sortHandler = function(e) {
+                    if (that.trigger("sort", { sort: e.sort })) {
+                        e.preventDefault();
+                    }
+                },
                 $angular = options.$angular;
 
             if (columnMenu) {
@@ -5573,6 +5578,7 @@ var __meta__ = { // jshint ignore:line
                             closeCallback: closeCallback,
                             init: initCallback,
                             pane: that.pane,
+                            sort: sortHandler,
                             filter: isMobile ? ":not(.k-column-active)" : "",
                             lockedColumns: !hasMultiColumnHeaders && column.lockable !== false && lockedColumns(columns).length > 0
                         };
