@@ -569,6 +569,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         filter: function(expression) {
+            if (this.trigger("change", { filter: expression })) {
+                return;
+            }
+
             expression = this._merge(expression);
 
             if (expression.filters.length) {
@@ -579,6 +583,10 @@ var __meta__ = { // jshint ignore:line
         clear: function() {
             var that = this,
                 expression = that.dataSource.filter() || { filters:[] };
+
+            if (this.trigger("change", { filter: null })) {
+                return;
+            }
 
             expression.filters = $.grep(expression.filters, function(filter) {
                 if (filter.filters) {
@@ -610,7 +618,7 @@ var __meta__ = { // jshint ignore:line
             this.clear();
 
             if (this.options.search){
-			    this.container.find("label").parent().show();
+                this.container.find("label").parent().show();
             }
             this._closeForm();
         },
@@ -659,7 +667,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        events: [ INIT ],
+        events: [ INIT, "change" ],
 
         options: {
             name: "FilterMenu",

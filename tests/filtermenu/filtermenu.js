@@ -152,6 +152,34 @@
         equal(dataSource.filter().filters[0].operator, "startswith");
     });
 
+    test("submitting the form raises change event passing the current filter expression", 4, function() {
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            change: function(e) {
+                equal(e.filter.logic, "and");
+                equal(e.filter.filters[0].value, "bar");
+                equal(e.filter.filters[0].field, "foo");
+                equal(e.filter.filters[0].operator, "eq");
+            }
+        });
+
+        filterMenu.form.find("input[type=text]:first").val("bar").change();
+        filterMenu.form.submit();
+    });
+
+    test("preventing change event does not set filter to the DataSource", 1, function() {
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            change: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        filterMenu.form.find("input[type=text]:first").val("bar").change();
+        filterMenu.form.submit();
+
+        ok(!dataSource.filter());
+    });
 
     test("submitting the form sets the filterMenu of the datasource", function() {
         filterMenu = setup(dom, {
@@ -466,6 +494,44 @@
         filterMenu.form.trigger("reset");
 
         equal(dataSource.filter(), null);
+    });
+
+    test("resetting the form triggers change event", 1, function() {
+        var filterMenu = setup(dom, {
+            dataSource: dataSource
+        });
+
+        filterMenu.filter({
+            filters:[
+                { value: "1", field: "foo"}
+            ]
+        });
+
+        filterMenu.bind("change", function(e) {
+            equal(e.filter, null);
+        });
+
+        filterMenu.form.trigger("reset");
+    });
+
+    test("pereventing change event prevents resetting the form", 1, function() {
+        var filterMenu = setup(dom, {
+            dataSource: dataSource
+        });
+
+        filterMenu.filter({
+            filters:[
+                { value: "1", field: "foo"}
+            ]
+        });
+
+        filterMenu.bind("change", function(e) {
+            e.preventDefault();
+        });
+
+        filterMenu.form.trigger("reset");
+
+        equal(dataSource.filter().filters.length, 1);
     });
 
     test("clear removes two expression filter with multiple filtering", function() {
