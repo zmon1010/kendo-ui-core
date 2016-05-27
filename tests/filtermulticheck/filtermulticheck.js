@@ -608,5 +608,23 @@
         ok(!dataSource.filter());
     });
 
+    test("change event is not raised for empty filter", 0, function(){
+        var dataSource = new kendo.data.DataSource({
+            data: [
+                { foo: 1 },
+                { foo: 2 },
+                { foo: 3 }
+            ]
+        });
+
+        widget = setup({
+            dataSource: dataSource,
+            change: function(e) {
+                ok(true);
+            }
+        });
+
+        widget.form.submit();
+    });
 
 })();

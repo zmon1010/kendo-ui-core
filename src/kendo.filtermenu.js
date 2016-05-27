@@ -569,7 +569,8 @@ var __meta__ = { // jshint ignore:line
         },
 
         filter: function(expression) {
-            if (this.trigger("change", { filter: expression })) {
+            if (this._stripFilters(expression.filters).length &&
+                this.trigger("change", { filter: expression })) {
                 return;
             }
 
@@ -1153,7 +1154,7 @@ var __meta__ = { // jshint ignore:line
                 return { value: $(item).val(), operator: "eq", field: that.field };
             });
 
-            if (this.trigger("change", { filter: expression })) {
+            if (expression.filters.length && this.trigger("change", { filter: expression })) {
                 return;
             }
 

@@ -167,6 +167,17 @@
         filterMenu.form.submit();
     });
 
+    test("submitting empty form does not raises change event", 0, function() {
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            change: function(e) {
+                ok(true)
+            }
+        });
+
+        filterMenu.form.submit();
+    });
+
     test("preventing change event does not set filter to the DataSource", 1, function() {
         filterMenu = setup(dom, {
             dataSource: dataSource,
