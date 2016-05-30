@@ -226,6 +226,8 @@ var __meta__ = { // jshint ignore:line
             that.groupContainer = that.element = that.draggable = null;
         },
 
+        events: ["change"],
+
         options: {
             name: "Groupable",
             filter: "th",
@@ -242,9 +244,11 @@ var __meta__ = { // jshint ignore:line
                     return $(item).attr(kendo.attr("field")) === field;
                 })[0];
         },
+
         buildIndicator: function(field, title, dir) {
             return indicatorTmpl({ field: field.replace(/"/g, "'"), dir: dir, title: title, ns: kendo.ns });
         },
+
         descriptors: function() {
             var that = this,
                 indicators = $(".k-group-indicator", that.groupContainer),
@@ -280,18 +284,25 @@ var __meta__ = { // jshint ignore:line
                 };
             });
         },
+
         _removeIndicator: function(indicator) {
             var that = this;
             indicator.remove();
             that._invalidateGroupContainer();
             that._change();
         },
+
         _change: function() {
             var that = this;
             if(that.dataSource) {
-                that.dataSource.group(that.descriptors());
+                var descriptors = that.descriptors();
+                if (that.trigger("change", { groups: descriptors })) {
+                    return;
+                }
+                that.dataSource.group(descriptors);
             }
         },
+
         _dropCuePosition: function(position) {
             var dropCuePositions = this._dropCuePositions;
             if(!dropCue.is(":visible") || dropCuePositions.length === 0) {
