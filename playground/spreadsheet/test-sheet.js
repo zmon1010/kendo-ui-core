@@ -50,18 +50,18 @@ sheet.range("F4:H6").enable(false);
 
 sheet.range("D2").link("http://google.com/");
 
-sheet.range("E5:E7")
-    .value(new Date(1979, 2, 8))
+sheet.range("E5").value(new Date(1979, 2, 8)).select();
+
+sheet.range("E5:E8")
     .format("yyyy-mm-dd")
     .validation({
         dataType: "date",
         showButton: true,
         comparerType: "between",
-        from: "DATEVALUE(\"1/1/1900\")",
-        to: "DATEVALUE(\"1/1/1998\")",
+        from: 'DATEVALUE("1/1/1900")',
+        to: 'DATEVALUE("1/1/1998")',
         allowNulls: true,
         type: "reject",
         titleTemplate: "Birth Date validaiton error",
         messageTemplate: "Birth Date should be between 1899 and 1998 year."
-    })
-    .select();
+    });

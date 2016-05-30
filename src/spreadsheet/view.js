@@ -728,11 +728,11 @@
         },
 
         isEditButton: function(x, y) {
-            var r = this.activeCellRectangle();
-            var cell = this._sheet.activeCell().first();
-            var val = this._sheet.validation(cell);
-            if (val && val.showButton) {
-                if (x > r.right && x < r.right + 15 && y > r.top && y < r.bottom) {
+            var ed = this._sheet.activeCellCustomEditor();
+            if (ed) {
+                var r = this.activeCellRectangle();
+                // XXX: hard-coded button width (20)
+                if (x > r.right && x <= r.right + 20 && y >= r.top && y <= r.bottom) {
                     return true;
                 }
             }
@@ -916,6 +916,27 @@
 
         _destroyDialog: function() {
             this._dialogs.pop();
+        },
+
+        openCustomEditor: function() {
+            var self = this;
+            var cell = self._sheet.activeCell().first();
+            var editor = self._sheet.activeCellCustomEditor();
+            var range = self._sheet.range(cell);
+            editor.edit({
+                range      : range,
+                rect       : self.activeCellRectangle(),
+                view       : this,
+                validation : this._sheet.validation(cell),
+                callback   : function(value, parse){
+                    // XXX: should set through command, because undo.
+                    if (parse) {
+                        range.input(value);
+                    } else {
+                        range.value(value);
+                    }
+                }
+            });
         },
 
         openDialog: function(name, options) {
@@ -1573,21 +1594,28 @@
 
             if (view.ref.intersects(ref)) {
                 var rectangle = self._rectangle(ref);
+                var ed = self._sheet.activeCellCustomEditor();
                 sheet.forEach(ref.collapse(), function(row, col, cell) {
                     cell.left = rectangle.left;
                     cell.top = rectangle.top;
                     cell.width = rectangle.width;
                     cell.height = rectangle.height;
                     drawCell(collection, cell, className, null, null, true);
-                    if (cell.validation && cell.validation.showButton) {
+
+                    if (ed) {
                         var btn = kendo.dom.element("div", {
-                            className: "k-edit-button",
+                            className: "k-button k-spreadsheet-editor-button",
                             style: {
                                 left   : (cell.left + cell.width) + "px",
                                 top    : cell.top + "px",
                                 height : cell.height + "px"
                             }
                         });
+                        if (ed.icon) {
+                            btn.children.push(kendo.dom.element("span", {
+                                className: "k-icon " + ed.icon
+                            }));
+                        }
                         collection.push(btn);
                     }
                 });
