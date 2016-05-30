@@ -1449,7 +1449,8 @@ var __meta__ = { // jshint ignore:line
            NAVIGATE,
            "page",
            "sort",
-           "filter"
+           "filter",
+           "group"
         ],
 
         setDataSource: function(dataSource) {
@@ -3698,7 +3699,12 @@ var __meta__ = { // jshint ignore:line
                     dataSource: that.dataSource,
                     draggableElements: filter,
                     filter: filter,
-                    allowDrag: that.options.reorderable
+                    allowDrag: that.options.reorderable,
+                    change: function(e) {
+                        if(that.trigger("group", { groups: e.groups })) {
+                            e.preventDefault();
+                        }
+                    }
                 }));
             }
         },

@@ -297,6 +297,7 @@ var __meta__ = { // jshint ignore:line
             if(that.dataSource) {
                 var descriptors = that.descriptors();
                 if (that.trigger("change", { groups: descriptors })) {
+                    that.refresh();
                     return;
                 }
                 that.dataSource.group(descriptors);
