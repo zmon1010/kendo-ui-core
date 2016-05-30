@@ -68,6 +68,7 @@
         }
         .k-chart {
             display: inline-block;
+            width: 300px;
         }
      </style>
 <demo:footer />

@@ -144,6 +144,7 @@
    }
    .k-chart {
        display: inline-block;
+       width: 300px;
    }
 </style>
 <?php require_once '../include/footer.php'; ?>
