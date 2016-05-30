@@ -547,4 +547,54 @@
 
         equal(filterCell.wrapper.find("input").val(), "");
     });
+
+    test("triggers change event when filter is change passing current filter descriptor", 4, function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        filterCell = setup(dom, {
+            dataSource: dataSource,
+            field: "foo",
+            change: function(e) {
+                equal(e.filter.logic, "and");
+                equal(e.filter.filters[0].value, "bar");
+                equal(e.filter.filters[0].field, "foo");
+                equal(e.filter.filters[0].operator, "eq");
+            }
+        });
+
+        filterCell.viewModel.set("value", "bar");
+    });
+
+    test("preventing change event does not filter the dataSource", 1, function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        filterCell = setup(dom, {
+            dataSource: dataSource,
+            field: "foo",
+            change: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        filterCell.viewModel.set("value", "bar");
+
+        ok(!dataSource.filter());
+    });
+
+    test("clear triggers change event with null filter", 2, function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        filterCell = setup(dom, {
+            dataSource: dataSource,
+            field: "foo",
+            change: function(e) {
+                equal(e.filter, null);
+            }
+        });
+
+        filterCell.clearFilter();
+
+        ok(!dataSource.filter());
+    });
+
 })();

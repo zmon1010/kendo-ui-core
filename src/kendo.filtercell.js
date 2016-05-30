@@ -336,9 +336,22 @@ var __meta__ = { // jshint ignore:line
                 filters: []
             };
 
+            var prevented = false;
+
             if ((currentFilter.value !== undefined && currentFilter.value !== null) || (isNonValueFilter(currentFilter) && !this._clearInProgress)) {
                 expression.filters.push(currentFilter);
+
+                prevented = that.trigger(CHANGE, { filter: expression });
             }
+
+            if (that._clearInProgress) {
+                prevented = that.trigger(CHANGE, { filter: null });
+            }
+
+            if (prevented) {
+                return;
+            }
+
             var mergeResult = that._merge(expression);
             if (mergeResult.filters.length) {
                 that.dataSource.filter(mergeResult);
