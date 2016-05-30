@@ -332,7 +332,7 @@
         },
 
         between: function (valueToCompare, from, to) {
-            return valueToCompare > from && valueToCompare < to;
+            return valueToCompare >= from && valueToCompare <= to;
         },
 
         equalTo: function (valueToCompare, from) {
