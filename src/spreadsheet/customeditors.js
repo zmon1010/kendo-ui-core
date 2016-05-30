@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.popup", "./view" ], f);
+    define([ "../kendo.core", "../kendo.popup", "./sheet" ], f);
 })(function(){
 
 (function(kendo) {
@@ -76,24 +76,8 @@
                         var from = val.from.value | 0;
                         var to = val.to.value | 0;
                         date = kendo.spreadsheet.dateToNumber(date) | 0;
-                        switch (val.comparerType) {
-                          case "greaterThan":
-                            return !(date > from);
-                          case "lessThan":
-                            return !(date < from);
-                          case "between":
-                            return !(date >= from && date <= to);
-                          case "equalTo":
-                            return !(date == from);
-                          case "notEqualTo":
-                            return !(date != from);
-                          case "greaterThanOrEqualTo":
-                            return !(date >= from);
-                          case "lessThanOrEqualTo":
-                            return !(date <= from);
-                          case "notBetween":
-                            return !(date < from || date > to);
-                        }
+                        return !kendo.spreadsheet.validation
+                            .validationComparers[val.comparerType](date, from, to);
                     },
                     min: min,
                     max: max
