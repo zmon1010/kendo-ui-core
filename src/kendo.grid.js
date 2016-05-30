@@ -5692,7 +5692,13 @@ var __meta__ = { // jshint ignore:line
             var $angular = that.options.$angular;
             var columns = leafColumns(that.columns),
                 filterable = that.options.filterable,
-                rowheader = that.thead.find(".k-filter-row");
+                rowheader = that.thead.find(".k-filter-row"),
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter })) {
+                        e.preventDefault();
+                    }
+                };
+
 
             this._updateHeader(this.dataSource.group().length);
 
@@ -5749,7 +5755,8 @@ var __meta__ = { // jshint ignore:line
                         dataTextField: cellOptions.dataTextField,
                         operator: cellOptions.operator,
                         operators: operators,
-                        showOperators: cellOptions.showOperators
+                        showOperators: cellOptions.showOperators,
+                        change: filterHandler
                     };
 
                     if ($angular) {
