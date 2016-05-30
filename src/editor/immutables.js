@@ -16,8 +16,9 @@
         return node.getAttribute && node.getAttribute("contenteditable") == "false";
     };
     
-    var immutableParent = function (node) {
-        return dom.closestBy(node, immutable);
+    var immutableParent = function (node, top) {
+        var immutableElement = dom.closestBy(node, immutable); 
+        return dom.isAncestorOf(top, immutableElement) ? immutableElement : undefined;
     };
     
     var Immutables = Class.extend({
@@ -71,14 +72,15 @@
         },
         
         canDeleteSelection: function(range) {
-            return !immutableParent(range.startContainer) && !immutableParent(range.endContainer); 
+            var body = this.editor.body;
+            return !immutableParent(range.startContainer, body) && !immutableParent(range.endContainer, body); 
         },
         
         nextImmutable: function(range, forwards) {
             var commonContainer = range.commonAncestorContainer;
             if (dom.isBom(commonContainer) || ((forwards && RangeUtils.isEndOf(range, commonContainer)) || (!forwards && RangeUtils.isStartOf(range, commonContainer)))) {
                 var next = this._nextNode(commonContainer, forwards);
-                return immutableParent(next);
+                return immutableParent(next, this.editor.body);
             }
         },
         
