@@ -727,6 +727,17 @@
             return Math.abs(rectangle.right - x) < 8 && Math.abs(rectangle.bottom - y) < 8;
         },
 
+        isEditButton: function(x, y) {
+            var r = this.activeCellRectangle();
+            var cell = this._sheet.activeCell().first();
+            var val = this._sheet.validation(cell);
+            if (val && val.showButton) {
+                if (x > r.right && x < r.right + 15 && y > r.top && y < r.bottom) {
+                    return true;
+                }
+            }
+        },
+
         objectAt: function(x, y) {
             var grid = this._sheet._grid;
 
@@ -756,6 +767,8 @@
                 } else if (!selecting && y < grid._headerHeight) {
                     ref = new CellRef(-Infinity, column);
                     type = this.isColumnResizer(x, pane, ref) ? "columnresizehandle" : "columnheader";
+                } else if (this.isEditButton(x, y)) {
+                    type = "editor";
                 }
 
                 object = { type: type, ref: ref };
@@ -1554,18 +1567,30 @@
         },
 
         _addTable: function(collection, ref, className) {
-            var sheet = this._sheet;
-            var view = this._currentView;
+            var self = this;
+            var sheet = self._sheet;
+            var view = self._currentView;
 
             if (view.ref.intersects(ref)) {
+                var rectangle = self._rectangle(ref);
                 sheet.forEach(ref.collapse(), function(row, col, cell) {
-                    var rectangle = this._rectangle(ref);
                     cell.left = rectangle.left;
                     cell.top = rectangle.top;
                     cell.width = rectangle.width;
                     cell.height = rectangle.height;
                     drawCell(collection, cell, className, null, null, true);
-                }.bind(this));
+                    if (cell.validation && cell.validation.showButton) {
+                        var btn = kendo.dom.element("div", {
+                            className: "k-edit-button",
+                            style: {
+                                left   : (cell.left + cell.width) + "px",
+                                top    : cell.top + "px",
+                                height : cell.height + "px"
+                            }
+                        });
+                        collection.push(btn);
+                    }
+                });
             }
         },
 

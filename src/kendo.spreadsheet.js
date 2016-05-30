@@ -24,6 +24,7 @@
         "./spreadsheet/formulacontext",
         "./spreadsheet/controller",
         "./spreadsheet/view",
+        "./spreadsheet/customeditors",
         "./spreadsheet/grid",
         "./spreadsheet/axis",
         "./spreadsheet/filter",
