@@ -5,7 +5,8 @@
     using System.Linq;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.EntityFrameworkCore;
-
+    using System.Collections.Generic;
+    using System.Collections;
     public class SchedulerMeetingService : ISchedulerEventService<MeetingViewModel>
     {
         private SampleEntitiesDataContext db;
@@ -22,7 +23,10 @@
 
         public virtual IQueryable<MeetingViewModel> GetAll()
         {
-            return db.Meetings.ToList().Select(meeting => new MeetingViewModel
+            return db.Meetings
+                .Include(model => model.MeetingAttendees)
+                .ToList()
+                .Select(meeting => new MeetingViewModel
                 {
                     MeetingID = meeting.MeetingID,
                     Title = meeting.Title,
@@ -80,23 +84,30 @@
                     meeting.Title = "";
                 }
 
-                var entity = db.Meetings.Include(model => model.MeetingAttendees).FirstOrDefault(m => m.MeetingID == meeting.MeetingID);
+                var entity = meeting.ToEntity();
+                db.Meetings.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
 
-                entity.Title = meeting.Title;
-                entity.Start = meeting.Start;
-                entity.End = meeting.End;
-                entity.Description = meeting.Description;
-                entity.IsAllDay = meeting.IsAllDay;
-                entity.RoomID = meeting.RoomID;
-                entity.RecurrenceID = meeting.RecurrenceID;
-                entity.RecurrenceRule = meeting.RecurrenceRule;
-                entity.RecurrenceException = meeting.RecurrenceException;
-                entity.StartTimezone = meeting.StartTimezone;
-                entity.EndTimezone = meeting.EndTimezone;
+                var oldMeeting = db.Meetings
+                    .Include(model => model.MeetingAttendees)
+                    .FirstOrDefault(m => m.MeetingID == meeting.MeetingID);
 
-                foreach (var meetingAttendee in entity.MeetingAttendees.ToList())
+                foreach (var attendee in oldMeeting.MeetingAttendees.ToList())
                 {
-                    entity.MeetingAttendees.Remove(meetingAttendee);
+                    db.MeetingAttendees.Attach(attendee);
+
+                    if (meeting.Attendees == null || !meeting.Attendees.Contains(attendee.AttendeeID))
+                    {
+                        db.Entry(attendee).State = EntityState.Deleted;
+                    }
+                    else
+                    {
+                        db.Entry(attendee).State = EntityState.Unchanged;
+
+                        ((List<int>)meeting.Attendees).Remove(attendee.AttendeeID);
+                    }
+
+                    entity.MeetingAttendees.Add(attendee);
                 }
 
                 if (meeting.Attendees != null)
@@ -108,6 +119,9 @@
                             MeetingID = entity.MeetingID,
                             AttendeeID = attendeeId
                         };
+
+                        db.MeetingAttendees.Attach(meetingAttendee);
+                        db.Entry(meetingAttendee).State = EntityState.Added;
 
                         entity.MeetingAttendees.Add(meetingAttendee);
                     }
@@ -137,9 +151,8 @@
             foreach (var attendee in attendees)
             {
                 db.MeetingAttendees.Attach(attendee);
+                db.Entry(attendee).State = EntityState.Deleted;
             }
-
-            entity.MeetingAttendees.Clear();
 
             var recurrenceExceptions = db.Meetings.Where(m => m.RecurrenceID == entity.MeetingID);
 
@@ -148,6 +161,7 @@
                 db.Meetings.Remove(recurrenceException);
             }
 
+            db.Entry(entity).State = EntityState.Deleted;
             db.Meetings.Remove(entity);
             db.SaveChanges();
         }
