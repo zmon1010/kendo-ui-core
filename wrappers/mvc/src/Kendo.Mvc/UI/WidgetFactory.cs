@@ -2606,13 +2606,16 @@ namespace Kendo.Mvc.UI.Fluent
         {
             object model = ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData).Model;
 
-            if (model != null && model.GetType().IsPredefinedType())
+            if (model != null)
             {
-                return Convert.ToString(model);
-            }
-            else if (model.GetType().IsEnumType())
-            {
-                return Convert.ToString((int)model);
+                if (model.GetType().IsPredefinedType())
+                {
+                    return Convert.ToString(model);
+                }
+                else if (model.GetType().IsEnumType())
+                {
+                    return Convert.ToString((int)model);
+                }
             }
 
             return null;

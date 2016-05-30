@@ -156,13 +156,16 @@ namespace Kendo.Mvc.UI.Fluent
             var explorer = GetModelExplorer(expression);
             var model = explorer.Model;
 
-            if (model != null && model.GetType().IsPredefinedType())
+            if (model != null)
             {
-                return Convert.ToString(model);
-            }
-            else if (model.GetType().IsEnumType())
-            {
-                return Convert.ToString((int)model);
+                if (model.GetType().IsPredefinedType())
+                {
+                    return Convert.ToString(model);
+                }
+                else if (model.GetType().IsEnumType())
+                {
+                    return Convert.ToString((int)model);
+                }
             }
 
             return null;
