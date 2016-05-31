@@ -12,13 +12,16 @@
         EditorUtils = Editor.EditorUtils,
         RangeUtils = Editor.RangeUtils;
 
+    var rootCondition = function(node) {
+        return $(node).is("body,.k-editor");
+    };
+    
     var immutable = function(node) {
         return node.getAttribute && node.getAttribute("contenteditable") == "false";
     };
     
-    var immutableParent = function (node, top) {
-        var immutableElement = dom.closestBy(node, immutable); 
-        return dom.isAncestorOf(top, immutableElement) ? immutableElement : undefined;
+    var immutableParent = function (node) {
+        return dom.closestBy(node, immutable, rootCondition);
     };
     
     var Immutables = Class.extend({
@@ -72,15 +75,14 @@
         },
         
         canDeleteSelection: function(range) {
-            var body = this.editor.body;
-            return !immutableParent(range.startContainer, body) && !immutableParent(range.endContainer, body); 
+            return !immutableParent(range.startContainer) && !immutableParent(range.endContainer); 
         },
         
         nextImmutable: function(range, forwards) {
             var commonContainer = range.commonAncestorContainer;
             if (dom.isBom(commonContainer) || ((forwards && RangeUtils.isEndOf(range, commonContainer)) || (!forwards && RangeUtils.isStartOf(range, commonContainer)))) {
                 var next = this._nextNode(commonContainer, forwards);
-                return immutableParent(next, this.editor.body);
+                return immutableParent(next);
             }
         },
         

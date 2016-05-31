@@ -1032,11 +1032,11 @@ var RangeUtils = {
         return new RangeEnumerator(range).enumerate();
     },
 
-    editableTextNodes: function(range, root) {
+    editableTextNodes: function(range) {
         var nodes = [],
             immutableParent = Editor.Immutables && Editor.Immutables.immutableParent;
 
-        if (immutableParent && !immutableParent(range.commonAncestorContainer, root)) {
+        if (immutableParent && !immutableParent(range.commonAncestorContainer)) {
             nodes = new ImmutablesRangeEnumerator(range).enumerate();
         }
 

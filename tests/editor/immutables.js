@@ -34,10 +34,6 @@
         equal(immutableElem, Immutables.immutableParent(immutableElem.firstChild, contentArea));
     });
     
-    test("immutableParent function when passed node is not in immutable container and contentArea is placed in contenteditable='false' wrapper", function() {
-        notOk(Immutables.immutableParent(paragraph.firstChild, contentArea));
-    });
-    
     var immutables, range, ev;
     var typingKeyCode = 65;
     var deleteKeyCode = 46;

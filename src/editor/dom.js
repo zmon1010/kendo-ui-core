@@ -482,11 +482,13 @@ var Dom = {
         return node;
     },
     
-    closestBy: function(node, condition) {
+    closestBy: function(node, condition, rootCondition) {
         while (node && !condition(node)) {
+            if (rootCondition && rootCondition(node)){
+                return null;
+            }
             node = node.parentNode;
         }
-
         return node;
     },
 

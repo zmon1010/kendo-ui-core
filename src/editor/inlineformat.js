@@ -131,7 +131,7 @@ var InlineFormatter = Class.extend({
             editor = this.editor;
 
         if (editor && editor.options.immutables){
-            nodes = RangeUtils.editableTextNodes(range, editor.body);
+            nodes = RangeUtils.editableTextNodes(range);
         } else {
             nodes = RangeUtils.textNodes(range);
         }
