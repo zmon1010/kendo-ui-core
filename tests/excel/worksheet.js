@@ -1292,6 +1292,77 @@ test("toXML outputs data cells correctly when render multiline row and column he
     equal(data3_cells.eq(4).find("v").length, 1);
 });
 
+test("toXML outputs data cells correctly with rowspans", function() {
+    var worksheet = Worksheet({
+        rows: [
+            {
+                cells: [
+                    { value: "A1-3", rowSpan: 3 },
+                    { value: "B1-2", rowSpan: 2 },
+                    { value: "C1" },
+                    { value: "D2" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "C2" },
+                    { value: "D2" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "B3-6", rowSpan: 4 },
+                    { value: "C3" },
+                    { value: "D3" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "A4-6", rowSpan: 3 },
+                    { value: "C4" },
+                    { value: "D4" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "C5" },
+                    { value: "D5" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "C6" },
+                    { value: "D6" },
+                ]
+            },
+        ]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    var rows = dom.find("row");
+
+    rows.each(function() {
+        equal($(this).find("c").length, 4);
+    });
+
+    function cell(row, col) {
+        return rows.eq(row).find("c").eq(col);
+    }
+
+    equal(cell(4, 1).attr("r"), "B5")
+    equal(cell(4, 1).find("v").length, 0, "B5 (part of merge range) has no value")
+
+    equal(cell(5, 1).attr("r"), "B6")
+    equal(cell(5, 1).find("v").length, 0, "B6 (part of merge range) has no value")
+
+    equal(cell(4, 2).attr("r"), "C5")
+    equal(cell(4, 2).find("v").length, 1, "C5 has value")
+
+    equal(cell(5, 2).attr("r"), "C6")
+    equal(cell(5, 2).find("v").length, 1, "C6 has value")
+});
+
 test("toXML outputs empty data cells for continues cells with rowSpan", function() {
     var worksheet = Worksheet({
         rows: [
