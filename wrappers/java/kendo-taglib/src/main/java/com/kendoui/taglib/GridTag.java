@@ -188,12 +188,24 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setEvent("excelExport", value.getBody());
     }
 
+    public void setFilter(FilterFunctionTag value) {
+        setEvent("filter", value.getBody());
+    }
+
     public void setFilterMenuInit(FilterMenuInitFunctionTag value) {
         setEvent("filterMenuInit", value.getBody());
     }
 
+    public void setGroup(GroupFunctionTag value) {
+        setEvent("group", value.getBody());
+    }
+
     public void setNavigate(NavigateFunctionTag value) {
         setEvent("navigate", value.getBody());
+    }
+
+    public void setPage(PageFunctionTag value) {
+        setEvent("page", value.getBody());
     }
 
     public void setPdfExport(PdfExportFunctionTag value) {
@@ -210,6 +222,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setSaveChanges(SaveChangesFunctionTag value) {
         setEvent("saveChanges", value.getBody());
+    }
+
+    public void setSort(SortFunctionTag value) {
+        setEvent("sort", value.getBody());
     }
 
     public boolean getAllowCopy() {
@@ -576,6 +592,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setProperty("excelExport", new Function(value));
     }
 
+    public String getFilter() {
+        Function property = ((Function)getProperty("filter"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setFilter(String value) {
+        setProperty("filter", new Function(value));
+    }
+
     public String getFilterMenuInit() {
         Function property = ((Function)getProperty("filterMenuInit"));
         if (property != null) {
@@ -588,6 +616,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setProperty("filterMenuInit", new Function(value));
     }
 
+    public String getGroup() {
+        Function property = ((Function)getProperty("group"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setGroup(String value) {
+        setProperty("group", new Function(value));
+    }
+
     public String getNavigate() {
         Function property = ((Function)getProperty("navigate"));
         if (property != null) {
@@ -598,6 +638,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setNavigate(String value) {
         setProperty("navigate", new Function(value));
+    }
+
+    public String getPage() {
+        Function property = ((Function)getProperty("page"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setPage(String value) {
+        setProperty("page", new Function(value));
     }
 
     public String getPdfExport() {
@@ -646,6 +698,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setSaveChanges(String value) {
         setProperty("saveChanges", new Function(value));
+    }
+
+    public String getSort() {
+        Function property = ((Function)getProperty("sort"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setSort(String value) {
+        setProperty("sort", new Function(value));
     }
 
 //<< Attributes

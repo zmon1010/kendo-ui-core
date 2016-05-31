@@ -22170,6 +22170,21 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>filter</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>page</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
             <name>pdfExport</name>
             <rtexprvalue>true</rtexprvalue>
@@ -22192,6 +22207,11 @@ and the string value will be passed as an argument to a kendo.template() functio
         <attribute>
             <description>Fired when the user clicks the "save" command button.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>saveChanges</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>sort</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -23861,6 +23881,24 @@ This class can be used to obtain reference to the button after Grid initializati
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-filter</name>
+        <tag-class>com.kendoui.taglib.grid.FilterFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-group</name>
+        <tag-class>com.kendoui.taglib.grid.GroupFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-page</name>
+        <tag-class>com.kendoui.taglib.grid.PageFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
         <name>grid-pdfExport</name>
         <tag-class>com.kendoui.taglib.grid.PdfExportFunctionTag</tag-class>
@@ -23888,6 +23926,12 @@ This class can be used to obtain reference to the button after Grid initializati
         <description>Fired when the user clicks the "save" command button.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-saveChanges</name>
         <tag-class>com.kendoui.taglib.grid.SaveChangesFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-sort</name>
+        <tag-class>com.kendoui.taglib.grid.SortFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
