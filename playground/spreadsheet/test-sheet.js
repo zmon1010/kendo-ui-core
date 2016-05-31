@@ -46,7 +46,7 @@ sheet.range("A5:A9").values([
     ["3-Non-Admin"]
 ]);
 sheet.range("C5").formula('countif(A:A, "3-Non-Admin")');
-sheet.range("F4:H6").enable(false);
+sheet.range("G4:G6").enable(false);
 
 sheet.range("D2").link("http://google.com/");
 
@@ -62,6 +62,25 @@ sheet.range("E5:E8")
         to: 'DATEVALUE("1/1/1998")',
         allowNulls: true,
         type: "reject",
-        titleTemplate: "Birth Date validaiton error",
+        titleTemplate: "Birth Date validation error",
         messageTemplate: "Birth Date should be between 1899 and 1998 year."
     });
+
+sheet.range("H1:H5").values([
+    [ "Lorem" ],
+    [ "Etiam" ],
+    [ "Maecenas" ],
+    [ "Aliquam" ],
+    [ "Fusce" ]
+]);
+
+sheet.range("E10:E12").validation({
+    dataType: "list",
+    showButton: true,
+    comparerType: "list",
+    from: "H:H",
+    allowNulls: true,
+    type: "reject"
+}).background("#fea");
+
+sheet.range("E10").select();

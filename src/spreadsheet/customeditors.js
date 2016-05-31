@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.popup", "./sheet" ], f);
+    define([ "../kendo.core", "../kendo.popup", "../kendo.calendar", "../kendo.listview.js", "./sheet" ], f);
 })(function(){
 
 (function(kendo) {
@@ -39,7 +39,7 @@
             if (!calendar) {
                 calendar = $("<div>").kendoCalendar();
                 popup = $("<div>").kendoPopup({
-                    anchor: ".k-spreadsheet-editor-button" // XXX: what if there are two spreadsheets?
+                    anchor: context.view.element.find(".k-spreadsheet-editor-button")
                 });
                 calendar.appendTo(popup);
                 calendar = calendar.getKendoCalendar();
@@ -94,6 +94,54 @@
                 open();
             },
             icon: "k-i-calendar"
+        };
+    });
+
+    registerEditor("_validation_list", function(){
+        var context, list, popup;
+        function create() {
+            if (!list) {
+                list = $("<div/>").kendoStaticList({
+                    template   : "<div>#:value#</div>",
+                    selectable : true,
+                    autoBind   : false
+                });
+                popup = $("<div>").kendoPopup({
+                    anchor: context.view.element.find(".k-spreadsheet-editor-button")
+                });
+                list.appendTo(popup);
+                popup = popup.getKendoPopup();
+                list = list.getKendoStaticList();
+
+                list.bind("change", function(){
+                    popup.close();
+                    var item = list.value()[0];
+                    if (item) {
+                        context.callback(item.value);
+                    }
+                });
+            }
+        }
+        function open() {
+            create();
+            var matrix = context.validation.from.value;
+            var data = [];
+            if (matrix) {
+                matrix.each(function(el){
+                    data.push({ value: el });
+                });
+            }
+            var dataSource = new kendo.data.DataSource({ data: data });
+            list.setDataSource(dataSource);
+            dataSource.read();
+            popup.open();
+        }
+        return {
+            edit: function(options) {
+                context = options;
+                open();
+            },
+            icon: "k-i-arrow-s"
         };
     });
 

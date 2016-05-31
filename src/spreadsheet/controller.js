@@ -428,6 +428,15 @@
                 this.originFrame = object.pane;
             }
 
+            if (object.type === "editor") {
+                // XXX: canceling the edits, because they might not
+                // validate.  Not sure it's the Right Thing.
+                this.onEditorEsc();
+                this.openCustomEditor();
+                event.preventDefault();
+                return;
+            }
+
             if (this.editor.canInsertRef(false) && object.ref) {
                 this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightedRefs());
                 this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
@@ -451,12 +460,6 @@
 
             if (object.type === "filtericon") {
                 this.openFilterMenu(event);
-                event.preventDefault();
-                return;
-            }
-
-            if (object.type === "editor") {
-                this.openCustomEditor();
                 event.preventDefault();
                 return;
             }
