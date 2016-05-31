@@ -664,6 +664,33 @@ var RangeEnumerator = Class.extend({
     }
 });
 
+var ImmutablesRangeEnumerator = Class.extend({
+    init: function(range) {
+        this.enumerate = function () {
+            var nodes = [];
+            var immutable = Editor.Immutables && Editor.Immutables.immutable;
+
+            function visit(node) {
+                if (immutable && !immutable(node)) {
+                    if (dom.is(node, "img") || (node.nodeType == 3 && (!dom.isEmptyspace(node) || node.nodeValue == "\ufeff"))) {
+                        nodes.push(node);
+                    } else {
+                        node = node.firstChild;
+                        while (node) {
+                            visit(node);
+                            node = node.nextSibling;
+                        }
+                    }
+                }
+            }
+
+            new RangeIterator(range).traverse(visit);
+
+            return nodes;
+        };
+    }
+});
+
 var RestorePoint = Class.extend({
     init: function(range, body) {
         var that = this;
@@ -1005,6 +1032,17 @@ var RangeUtils = {
         return new RangeEnumerator(range).enumerate();
     },
 
+    editableTextNodes: function(range, root) {
+        var nodes = [],
+            immutableParent = Editor.Immutables && Editor.Immutables.immutableParent;
+
+        if (immutableParent && !immutableParent(range.commonAncestorContainer, root)) {
+            nodes = new ImmutablesRangeEnumerator(range).enumerate();
+        }
+
+        return nodes;
+    },
+    
     documentFromRange: function(range) {
         var startContainer = range.startContainer;
         return startContainer.nodeType == 9 ? startContainer : startContainer.ownerDocument;
