@@ -541,6 +541,182 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Page client-side event.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///           .Name("Grid")
+        ///           .Events(events => events.Page(
+        ///                @&lt;text&gt;
+        ///                function(e) {
+        ///                    //event handling code
+        ///                }
+        ///                &lt;/text&gt;
+        ///           ))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Page(Func<object, object> handler)
+        {
+            Handler("page", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Page client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///            .Name("Grid")
+        ///            .Events(events => events.Page("gridPaging"))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Page(string handler)
+        {
+            Handler("page", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Group client-side event.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///           .Name("Grid")
+        ///           .Events(events => events.Group(
+        ///                @&lt;text&gt;
+        ///                function(e) {
+        ///                    //event handling code
+        ///                }
+        ///                &lt;/text&gt;
+        ///           ))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Group(Func<object, object> handler)
+        {
+            Handler("group", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Group client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///            .Name("Grid")
+        ///            .Events(events => events.Group("gridGrouping"))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Group(string handler)
+        {
+            Handler("group", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Filter client-side event.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///           .Name("Grid")
+        ///           .Events(events => events.Filter(
+        ///                @&lt;text&gt;
+        ///                function(e) {
+        ///                    //event handling code
+        ///                }
+        ///                &lt;/text&gt;
+        ///           ))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Filter(Func<object, object> handler)
+        {
+            Handler("filter", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Filter client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///            .Name("Grid")
+        ///            .Events(events => events.Filter("gridFiltering"))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Filter(string handler)
+        {
+            Handler("filter", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Sort client-side event.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///           .Name("Grid")
+        ///           .Events(events => events.Sort(
+        ///                @&lt;text&gt;
+        ///                function(e) {
+        ///                    //event handling code
+        ///                }
+        ///                &lt;/text&gt;
+        ///           ))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Sort(Func<object, object> handler)
+        {
+            Handler("sort", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that will handle the the Sort client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid()
+        ///            .Name("Grid")
+        ///            .Events(events => events.Sort("gridSorting"))
+        /// )
+        /// </code>
+        /// </example>
+        public GridEventBuilder Sort(string handler)
+        {
+            Handler("sort", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Defines the name of the JavaScript function that will handle the the DataBinding client-side event.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
