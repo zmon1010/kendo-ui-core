@@ -45,6 +45,7 @@ $model->addField($productNameField)
 
 $schema = new \Kendo\Data\DataSourceSchema();
 $schema->data('data')
+       ->groups('groups')
        ->model($model)
        ->total('total');
 
@@ -53,6 +54,8 @@ $dataSource = new \Kendo\Data\DataSource();
 $dataSource->transport($transport)
            ->pageSize(10)
            ->schema($schema)
+           ->serverFiltering(true)
+           ->serverGrouping(true)
            ->serverSorting(true)
            ->serverPaging(true);
 
@@ -74,10 +77,17 @@ $unitsInStock->field('UnitsInStock')
           ->title('Units In Stock');
 
 $grid->addColumn($productName, $unitPrice, $unitsInStock)
-         ->selectable('cell multiple')
+     ->height(350)
+     ->selectable('cell multiple')
      ->pageable(true)
      ->sortable(true)
+     ->filterable(true)
+     ->groupable(true)
      ->dataSource($dataSource)
+     ->page('onPaging')
+     ->sort('onSorting')
+     ->group('onGrouping')
+     ->filter('onFiltering')
      ->change('onChange')
      ->dataBound('onDataBound')
      ->dataBinding('onDataBinding');
@@ -100,6 +110,22 @@ echo $grid->render();
 
     function onDataBinding(arg) {
         kendoConsole.log("Grid data binding");
+    }
+
+    function onSorting(arg) {
+        kendoConsole.log("Sorting on field: " + arg.sort.field + ", direction:" + (arg.sort.dir || "none"));
+    }
+
+    function onFiltering(arg) {
+        kendoConsole.log("Filter on " + kendo.stringify(arg.filter));
+    }
+
+    function onPaging(arg) {
+        kendoConsole.log("Paging to page index:" + arg.page);
+    }
+
+    function onGrouping(arg) {
+        kendoConsole.log("Group on " + kendo.stringify(arg.groups));
     }
 </script>
 
