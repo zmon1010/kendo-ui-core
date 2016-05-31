@@ -9,7 +9,7 @@ namespace Kendo.Mvc
 #if TRIAL
 	internal class Licensing
 	{
-        const string LicenseMessageTemplate = "Thank you for using the trial version of Telerik UI for ASP.NET MVC. <a href='http://www.telerik.com/purchase/aspnet-mvc?utm_source=trial&utm_medium=web&utm_campaign=MVC' target='_blank' style='color: blue;text-decoration:underline;'>Purchase the commercial version now</a> to get access to all product updates, bug fixes, and Telerik expert support. ";
+        const string LicenseMessageTemplate = "Thank you for using the trial version of Telerik UI for ASP.NET MVC by Progress. <a href='http://www.telerik.com/purchase/aspnet-mvc?utm_source=trial&utm_medium=web&utm_campaign=MVC' target='_blank' style='color: blue;text-decoration:underline;'>Purchase the commercial version now</a> to get access to all product updates, bug fixes, and Telerik expert support. ";
 
 		string TrialMessageHtml
 		{
