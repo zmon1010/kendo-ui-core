@@ -13,6 +13,10 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
@@ -129,6 +133,26 @@ namespace Kendo.Mvc.UI
         {
             get;
             private set;
+        }
+
+        protected IValueProvider ValueProvider
+        {
+            get
+            {
+                var optionsAccessor = ViewContext.GetService<IOptions<MvcOptions>>();
+                var providerFactories = optionsAccessor.Value.ValueProviderFactories.ToArray();
+
+                var actionContext = ViewContext.GetService<IActionContextAccessor>().ActionContext;
+                var factoryContext = new ValueProviderFactoryContext(actionContext);
+
+                for (var i = 0; i < providerFactories.Length; i++)
+                {
+                    var factory = providerFactories[i];
+                    factory.CreateValueProviderAsync(factoryContext);
+                }
+
+                return new CompositeValueProvider(factoryContext.ValueProviders);
+            }
         }
 
         protected IKendoHtmlGenerator Generator { get; set; }
