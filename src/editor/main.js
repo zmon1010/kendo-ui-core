@@ -230,6 +230,7 @@
 
             that._resizable();
             that._initializeContentElement(that);
+            that._initTableResizing();
 
             that.keyboard = new editorNS.Keyboard([
                 new editorNS.BackspaceHandler(that),
@@ -326,6 +327,12 @@
                     }
                 }));
             }
+        },
+
+        _initTableResizing: function() {
+            var editor = this;
+
+            var tableResizing = editor.tableResizing = new kendo.ui.editor.TableResizing(editor.body, {});
         },
 
         _wrapTextarea: function() {

@@ -159,3 +159,20 @@ function removeMocksIn(obj) {
         }
     }
 }
+
+function jQueryEvents(element) {
+    return $._data(element[0] || element, "events");
+}
+
+function assertEvent(element, options) {
+    var type = options.type;
+    var selector = options.selector;
+    var handler = options.handler;
+    var namespace = options.namespace || "";
+    var events = jQueryEvents(element);
+    var event = events[type][0];
+
+    equal(type, event.type);
+    equal(selector, event.selector);
+    equal(namespace, event.namespace);
+}

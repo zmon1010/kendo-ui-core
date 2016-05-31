@@ -20,7 +20,8 @@
         "./editor/viewhtml",
         "./editor/formatting",
         "./editor/toolbar",
-        "./editor/tables"
+        "./editor/tables",
+        "./editor/table-resizing"
     ], f);
 })(function(){
 
