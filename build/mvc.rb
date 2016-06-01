@@ -341,7 +341,7 @@ else
 
     # MVC6 package
     file MVC6_NUGET => MVC6_SOURCES do
-        sh "cd #{MVC6_SRC_ROOT} && dnu restore && dnu pack --configuration Release"
+        sh "cd #{MVC6_SRC_ROOT} && dotnet restore && dotnet pack --configuration Release"
     end
 
     file MVC6_NUGET_SYMBOLS => MVC6_NUGET
