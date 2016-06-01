@@ -2009,7 +2009,6 @@
             },
             {
                 "text": "Export to PDF",
-                "new": true,
                 "url": "grid/pdf-export",
                 "title": {
                     "kendo-ui": "Exporting to PDF"
