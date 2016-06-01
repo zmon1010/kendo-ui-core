@@ -8,7 +8,6 @@
           .HtmlAttributes(new { style = "width:100%" })
           .DataSource(source => {
               source
-                  .Ajax()
                   .Read(read =>
                   {
                       read.Action("GetProducts", "Home");
