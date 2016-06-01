@@ -2211,7 +2211,7 @@
             },
 
             _mouseMove: function (e) {
-                if (!this._pauseMouseHandlers && e.which === 0) {
+                if (!this._pauseMouseHandlers && (e.which === 0 || e.which === 1)) {
                     var p = this._eventPositions(e);
                     this.toolService._updateHoveredItem(p);
                     this.toolService._updateCursor(p);

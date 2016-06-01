@@ -491,13 +491,13 @@
 
     // ------------------------------------------------------------
     (function() {
+        function trigger(name, x, y, which) {
+            var event = jQuery.Event(name, { pageX: x, pageY: y, which: which || 0});
+            diagram.scrollable.trigger(event);
+        }
+
         function move(x, y, which) {
-            diagram._mouseMove({
-                which: which || 0,
-                pageX: x,
-                pageY: y,
-                preventDefault: $.noop
-            });
+            trigger("mousemove", x, y, which);
         }
 
         module("Diagram / mousemove", {
@@ -540,8 +540,12 @@
                 ok(false);
             });
 
+            trigger("mousedown", 0, 0, 1);
+            move(10, 10, 1);
             move(150, 150, 1);
             move(0, 0, 1);
+            trigger("mouseup", 0, 0, 1);
+
             move(150, 150, 2);
             move(0, 0, 2);
             move(150, 150, 3);
