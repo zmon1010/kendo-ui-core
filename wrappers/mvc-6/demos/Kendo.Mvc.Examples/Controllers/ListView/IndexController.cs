@@ -42,9 +42,9 @@ namespace Kendo.Mvc.Examples.Controllers
             {
                 ProductID = product.ProductID,
                 ProductName = product.ProductName,
-                UnitPrice = product.UnitPrice.Value,
-                UnitsInStock = product.UnitsInStock.Value,
-                UnitsOnOrder = product.UnitsOnOrder.Value,
+                UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
+                UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(int),
+                UnitsOnOrder = product.UnitsOnOrder.HasValue ? product.UnitsOnOrder.Value : default(int),
                 Discontinued = product.Discontinued,
                 LastSupply = DateTime.Today
             });
