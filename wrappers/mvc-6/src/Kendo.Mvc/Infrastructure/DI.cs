@@ -1,6 +1,6 @@
 using Kendo.Mvc.Infrastructure.Implementation;
 using Kendo.Mvc.UI.Html;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace Kendo.Mvc.Infrastructure
 {

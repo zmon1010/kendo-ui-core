@@ -1,9 +1,9 @@
 ﻿namespace Kendo.Mvc.UI.Html.Tests
 {
     using Kendo.Mvc.UI;
-    using Microsoft.Extensions.WebEncoders;
     using Mvc.Tests;
     using System.IO;
+    using System.Text.Encodings.Web;
     using Xunit;
 
     public class MenuHtmlBuilderTests

@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI
     using System.Net;
     using Infrastructure;
     using Kendo.Mvc.Extensions;
-    using Microsoft.Extensions.WebEncoders;
+    using System.Text.Encodings.Web;
 
 
     /// <summary>
@@ -145,12 +145,12 @@ namespace Kendo.Mvc.UI
 
             htmlAttributes.Each(attr =>
             {
-                var value = encoder.HtmlEncode(attr.Value.ToString());
+                var value = encoder.Encode(attr.Value.ToString());
                 //if (hasAntiXss)
                 //{
                 //    value = value.Replace("&#32;", " ");
                 //}
-                attributes[encoder.HtmlEncode(attr.Key)] = value;
+                attributes[encoder.Encode(attr.Key)] = value;
             });
 
             return attributes;            

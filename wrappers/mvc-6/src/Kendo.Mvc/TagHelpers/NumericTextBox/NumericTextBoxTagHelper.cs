@@ -1,12 +1,13 @@
-using Microsoft.AspNet.Razor.TagHelpers;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.TagHelpers;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using System.Collections.Generic;
 using Kendo.Mvc.Extensions;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Kendo.Mvc.TagHelpers
 {
@@ -29,9 +30,11 @@ namespace Kendo.Mvc.TagHelpers
         protected override void WriteHtml(TagHelperOutput output)
         {
             ModelMetadata metadata = null;
+            ModelExplorer explorer = null;
 
             if (For != null)
             {
+                explorer = For.ModelExplorer;
                 metadata = For.Metadata;
                 Name = For.Name;
 
@@ -39,13 +42,14 @@ namespace Kendo.Mvc.TagHelpers
 
                 Format = ExtractEditFormat(For.ModelExplorer.Metadata.EditFormatString);
 
-                RangeAttribute rangeAttribute = Generator.GetRangeValidationAttribute(ViewContext, metadata, Name);
+                // TODO RC2
+                //RangeAttribute rangeAttribute = Generator.GetRangeValidationAttribute(ViewContext, metadata, Name);
 
-                if (rangeAttribute != null)
-                {
-                    Min = Min ?? (double)Convert.ChangeType(rangeAttribute.Minimum, typeof(double));
-                    Max = Max ?? (double)Convert.ChangeType(rangeAttribute.Maximum, typeof(double));
-                }
+                //if (rangeAttribute != null)
+                //{
+                //    Min = Min ?? (double)Convert.ChangeType(rangeAttribute.Minimum, typeof(double));
+                //    Max = Max ?? (double)Convert.ChangeType(rangeAttribute.Maximum, typeof(double));
+                //}
             }
 
             GenerateId(output);
@@ -72,7 +76,7 @@ namespace Kendo.Mvc.TagHelpers
                 htmlAttributes.Add("step", "{0}".FormatWith(Step));
             }
 
-            var tagBuilder = Generator.GenerateNumericInput(ViewContext, metadata,
+            var tagBuilder = Generator.GenerateNumericInput(ViewContext, explorer,
                 Id, Name, Value, string.Empty, htmlAttributes);
 
             output.TagName = "input";

@@ -3,7 +3,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {

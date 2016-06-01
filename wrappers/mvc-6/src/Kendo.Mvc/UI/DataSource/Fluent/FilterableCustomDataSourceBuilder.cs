@@ -2,7 +2,7 @@
 {
     using System;
     using System.ComponentModel;    
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class FilterableCustomDataSourceBuilder<TModel> : CustomDataSourceBuilder<TModel>
         where TModel : class

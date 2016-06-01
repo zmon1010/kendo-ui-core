@@ -3,11 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.Extensions.WebEncoders;
-    using Microsoft.AspNet.Html.Abstractions;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using System.Text.Encodings.Web;
+    using Microsoft.AspNetCore.Html;
 
     public interface IHtmlNode
     {
@@ -67,7 +66,7 @@
 
         IHtmlNode Text(string value);
 
-        void WriteTo(TextWriter output, IHtmlEncoder encoder);
+        void WriteTo(TextWriter output, HtmlEncoder encoder);
 
         IHtmlNode AppendTo(IHtmlNode parent);
     }

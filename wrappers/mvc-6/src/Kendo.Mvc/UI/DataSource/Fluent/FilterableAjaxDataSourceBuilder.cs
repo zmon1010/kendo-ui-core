@@ -2,7 +2,7 @@
 {
     using System;
     using System.ComponentModel;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class FilterableAjaxDataSourceBuilder<TModel, TDataSourceBuilder> : AjaxDataSourceBuilderBase<TModel, TDataSourceBuilder>, IHideObjectMembers
          where TModel : class

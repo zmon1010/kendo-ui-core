@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;    
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Routing;
 
     public class CalendarSelectionSettings : INavigatable
     {

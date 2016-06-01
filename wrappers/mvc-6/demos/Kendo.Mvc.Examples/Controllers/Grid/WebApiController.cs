@@ -2,8 +2,8 @@
 using Kendo.Mvc.Examples.Models;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
@@ -45,7 +45,7 @@ namespace Kendo.Mvc.Examples.Controllers
         {
 			if (!ModelState.IsValid)
 			{
-				return HttpBadRequest(ModelState.Values.SelectMany(v => v.Errors).Select(error => error.ErrorMessage));
+				return BadRequest(ModelState.Values.SelectMany(v => v.Errors).Select(error => error.ErrorMessage));
             }
 
 			service.Create(product);
@@ -65,14 +65,14 @@ namespace Kendo.Mvc.Examples.Controllers
 				}
 				catch (DbUpdateConcurrencyException)
 				{
-					return new HttpNotFoundResult();
+					return new NotFoundResult();
 				}
 
-				return new HttpStatusCodeResult(200);
+				return new StatusCodeResult(200);
             }
 			else
 			{
-				return HttpBadRequest(ModelState.Values.SelectMany(v => v.Errors).Select(error => error.ErrorMessage));
+				return BadRequest(ModelState.Values.SelectMany(v => v.Errors).Select(error => error.ErrorMessage));
 			}
 		}
 
@@ -86,10 +86,10 @@ namespace Kendo.Mvc.Examples.Controllers
 			}
 			catch (DbUpdateConcurrencyException)
 			{
-				return new HttpNotFoundResult();
+				return new NotFoundResult();
 			}
 
-			return new HttpStatusCodeResult(200);
+			return new StatusCodeResult(200);
 		}
     }
 }

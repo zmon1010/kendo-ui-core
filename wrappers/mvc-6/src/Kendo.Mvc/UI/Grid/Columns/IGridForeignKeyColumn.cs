@@ -2,7 +2,7 @@ namespace Kendo.Mvc.UI
 {
 	using System;
 	using System.Collections.Generic;
-	using Microsoft.AspNet.Mvc.Rendering;
+	using Microsoft.AspNetCore.Mvc.Rendering;
 
 	public interface IGridForeignKeyColumn : IGridBoundColumn
     {

@@ -1,11 +1,10 @@
 ﻿namespace Kendo.Mvc.UI.Html.Tests
 {
-	using Kendo.Mvc.Tests;
-	using Kendo.Mvc.UI.Fluent;
-	using Microsoft.AspNet.Routing;
-	using Xunit;
+    using Kendo.Mvc.UI.Fluent;
+    using Microsoft.AspNetCore.Routing;
+    using Xunit;
 
-	public class UploadAsyncSettingsBuilderTests
+    public class UploadAsyncSettingsBuilderTests
     {
 		private readonly UploadAsyncSettingsBuilder builder;
 		private readonly UploadAsyncSettings settings;

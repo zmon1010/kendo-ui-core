@@ -1,17 +1,14 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ModelBinding;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.RegularExpressions;
-using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
-using Microsoft.AspNet.Mvc.Infrastructure;
 using System.Text;
-using Microsoft.AspNet.Html.Abstractions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Html;
 
 namespace Kendo.Mvc.UI
 {
@@ -23,8 +20,6 @@ namespace Kendo.Mvc.UI
     {
         public Grid(ViewContext viewContext) : base(viewContext)
         {
-            ActionBindingContext = GetService<IActionBindingContextAccessor>().ActionBindingContext;
-
             Editable = new GridEditableSettings<T>(this)
 			{
 				PopUp = new Window(viewContext)
@@ -43,13 +38,6 @@ namespace Kendo.Mvc.UI
 
             ToolBar = new GridToolBarSettings(this);
         }
-
-		public ActionBindingContext ActionBindingContext
-		{
-			get;
-			set;
-		}
-
 
 		public DataSource DataSource
 		{
@@ -300,7 +288,7 @@ namespace Kendo.Mvc.UI
 		private string EditorForModel(IHtmlHelper htmlHelper, string templateName, IEnumerable<Action<IDictionary<string, object>, object>> foreignKeyData, object additionalViewData)
 		{
 			var viewContext = ViewContext.ViewContextForType<T>(ModelMetadataProvider);
-			((ICanHasViewContext)htmlHelper).Contextualize(viewContext);
+			((IViewContextAware)htmlHelper).Contextualize(viewContext);
 
 			if (foreignKeyData != null)
 			{
@@ -379,23 +367,19 @@ namespace Kendo.Mvc.UI
 
 		private void ProcessDataSource()
 		{
-			if (Pageable.Enabled && DataSource.PageSize == 0)
-			{
-				DataSource.PageSize = 10;
-			}
+            if (Pageable.Enabled && DataSource.PageSize == 0)
+            {
+                DataSource.PageSize = 10;
+            }
 
-			var binder = new DataSourceRequestModelBinder();
+            var request = DataSourceRequestModelBinder.CreateDataSourceRequest(
+                ModelMetadataProvider.GetMetadataForType(typeof(T)), 
+                ValueProvider, 
+                string.Empty
+            );            
 
-			var bindingContext = new ModelBindingContext
-			{
-				ValueProvider = ActionBindingContext.ValueProvider,
-				ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
-			};
-
-			var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously
-
-			DataSource.Process((DataSourceRequest)bindingContext.Model, !EnableCustomBinding);
-		}
+            DataSource.Process(request, !EnableCustomBinding);
+        }
 	}
 }
 

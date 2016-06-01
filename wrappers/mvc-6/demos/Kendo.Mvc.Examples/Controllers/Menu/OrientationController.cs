@@ -1,5 +1,5 @@
 ﻿using Kendo.Mvc.UI;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {

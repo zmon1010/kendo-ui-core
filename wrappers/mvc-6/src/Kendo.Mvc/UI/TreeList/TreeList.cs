@@ -1,10 +1,8 @@
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Microsoft.AspNet.Html.Abstractions;
-using Microsoft.AspNet.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,8 +20,6 @@ namespace Kendo.Mvc.UI
     {
         public TreeList(ViewContext viewContext) : base(viewContext)
         {
-            ActionBindingContext = GetService<IActionBindingContextAccessor>();
-
             DataSource = new DataSource(ModelMetadataProvider)
 			{
 				Type = DataSourceType.Ajax,
@@ -34,12 +30,6 @@ namespace Kendo.Mvc.UI
 			};
 
 			DataSource.Schema.Model = new TreeListModelDescriptor(typeof(T), ModelMetadataProvider);
-		}
-
-		public IActionBindingContextAccessor ActionBindingContext
-		{
-			get;
-			set;
 		}
 
 		public DataSource DataSource
@@ -106,7 +96,7 @@ namespace Kendo.Mvc.UI
             var sb = new StringBuilder();
             var viewContext = ViewContext.ViewContextForType<T>(ModelMetadataProvider);
 
-			((ICanHasViewContext)htmlHelper).Contextualize(viewContext);
+			((IViewContextAware)htmlHelper).Contextualize(viewContext);
 
 			if (foreignKeyData != null)
 			{
@@ -132,7 +122,7 @@ namespace Kendo.Mvc.UI
 
 		private string EditorForColumn(TreeListColumn<T> column, IHtmlHelper helper)
 		{
-			((ICanHasViewContext)helper).Contextualize(ViewContext.ViewContextForType<T>(ModelMetadataProvider));			
+			((IViewContextAware)helper).Contextualize(ViewContext.ViewContextForType<T>(ModelMetadataProvider));			
 
             var sb = new StringBuilder();
 
@@ -197,19 +187,15 @@ namespace Kendo.Mvc.UI
 		}		
 
 		private void ProcessDataSource()
-		{			
-			var binder = new DataSourceRequestModelBinder();
+		{
+            var request = DataSourceRequestModelBinder.CreateDataSourceRequest(
+                ModelMetadataProvider.GetMetadataForType(typeof(T)),
+                ValueProvider,
+                string.Empty
+            );
 
-			var bindingContext = new ModelBindingContext
-			{
-				ValueProvider = ActionBindingContext.ActionBindingContext.ValueProvider,
-				ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
-			};
-
-			var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously
-
-			DataSource.Process((DataSourceRequest)bindingContext.Model, true/*!EnableCustomBinding*/);
-		}		
+            DataSource.Process(request, true);
+        }		
 	}
 }
 

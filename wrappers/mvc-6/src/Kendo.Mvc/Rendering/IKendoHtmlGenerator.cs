@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.Rendering;
-using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,7 +9,7 @@ namespace Kendo.Mvc.Rendering
     {
         TagBuilder GenerateInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
@@ -21,7 +19,7 @@ namespace Kendo.Mvc.Rendering
 
         TagBuilder GenerateColorInput(
 			ViewContext viewContext,
-			ModelMetadata metadata,
+			ModelExplorer modelExplorer,
 			string id,
 			string name,
 			object value,
@@ -29,7 +27,7 @@ namespace Kendo.Mvc.Rendering
 
         TagBuilder GenerateRangeInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
@@ -37,7 +35,7 @@ namespace Kendo.Mvc.Rendering
 
         TagBuilder GenerateDateInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
@@ -46,7 +44,7 @@ namespace Kendo.Mvc.Rendering
 
         TagBuilder GenerateDateTimeInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
@@ -55,7 +53,7 @@ namespace Kendo.Mvc.Rendering
 
         TagBuilder GenerateTimeInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
@@ -64,7 +62,7 @@ namespace Kendo.Mvc.Rendering
 
         TagBuilder GenerateNumericInput(
 			ViewContext viewContext,
-			ModelMetadata metadata,
+			ModelExplorer modelExplorer,
 			string id,
 			string name,
 			object value,
@@ -73,7 +71,7 @@ namespace Kendo.Mvc.Rendering
 
 		TagBuilder GenerateTextInput(
 			ViewContext viewContext,
-			ModelMetadata metadata,
+			ModelExplorer modelExplorer,
 			string id,
 			string name,
 			object value,
@@ -82,7 +80,7 @@ namespace Kendo.Mvc.Rendering
 
         TagBuilder GenerateMultiSelect(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             IDictionary<string, object> htmlAttributes);
@@ -98,16 +96,17 @@ namespace Kendo.Mvc.Rendering
             string tagName,
             IDictionary<string, object> htmlAttributes);
 
-        IDictionary<string, object> GetValidationAttributes(
-            ViewContext viewContext,
-            ModelMetadata metadata,
-            string name);
+        // TODO RC2
+        //IDictionary<string, object> GetValidationAttributes(
+        //    ViewContext viewContext,
+        //    ModelExplorer modelExplorer,
+        //    string name);
+
+        //RangeAttribute GetRangeValidationAttribute(
+        //    ViewContext viewContext,
+        //    ModelExplorer modelExplorer,
+        //    string name);
 
         string SanitizeId(string id);
-
-        RangeAttribute GetRangeValidationAttribute(
-            ViewContext viewContext,
-            ModelMetadata metadata,
-            string name);
     }
 }

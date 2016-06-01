@@ -2,7 +2,7 @@
 {
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Resources;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System;
     using System.Collections.Generic;
 

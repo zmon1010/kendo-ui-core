@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI.Fluent.Tests
     using System.Collections.Generic;
     using Moq;
     using Xunit;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Mvc.Tests;
 
     public class MenuBuilderTests

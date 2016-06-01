@@ -1,6 +1,6 @@
 ﻿namespace Kendo.Mvc.UI
 {
-	using Microsoft.AspNet.Routing;
+	using Microsoft.AspNetCore.Routing;
 
 	public class RequestSettings : INavigatable
 	{

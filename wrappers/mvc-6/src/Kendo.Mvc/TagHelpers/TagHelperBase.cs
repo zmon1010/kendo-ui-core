@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNet.Razor.TagHelpers;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Kendo.Mvc.Rendering;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;

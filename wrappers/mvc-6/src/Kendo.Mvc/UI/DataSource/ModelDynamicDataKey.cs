@@ -2,7 +2,7 @@ namespace Kendo.Mvc.UI
 {
     using System;
     using System.Linq.Expressions;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     internal class ModelDynamicDataKey : IDataKey<object>
     {

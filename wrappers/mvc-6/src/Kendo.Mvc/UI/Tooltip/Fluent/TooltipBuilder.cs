@@ -1,9 +1,10 @@
 using System;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -91,7 +92,9 @@ namespace Kendo.Mvc.UI.Fluent
 
         private static IUrlHelper GetUrlHelper(ViewContext context)
         {
-            return context.HttpContext.RequestServices.GetRequiredService<IUrlHelper>();
+            var factory = context.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+
+            return factory.GetUrlHelper(context);
         }
 
         public TooltipBuilder LoadContentFrom(string actionName, string controllerName, RouteValueDictionary routeValues)

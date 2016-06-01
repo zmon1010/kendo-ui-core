@@ -1,7 +1,7 @@
 namespace Kendo.Mvc
 {    
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
 
     public interface IUrlGenerator
     {

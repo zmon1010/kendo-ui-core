@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNet.Routing;
+﻿using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
 
 namespace Kendo.Mvc.Extensions
 {
@@ -131,7 +131,7 @@ namespace Kendo.Mvc.Extensions
 
             foreach (KeyValuePair<string, object> attribute in instance)
 			{
-				attributes.Append(" {0}=\"{1}\"".FormatWith(encoder.HtmlEncode(attribute.Key), encoder.HtmlEncode(attribute.Value.ToString())));
+				attributes.Append(" {0}=\"{1}\"".FormatWith(encoder.Encode(attribute.Key), encoder.Encode(attribute.Value.ToString())));
 			}
 
 			return attributes.ToString();

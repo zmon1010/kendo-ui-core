@@ -1,6 +1,6 @@
 ﻿
 using Kendo.Mvc.Examples.Models;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers

@@ -1,13 +1,14 @@
 ﻿using System.IO;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Routing;
-using Microsoft.Extensions.WebEncoders;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.AspNet.Mvc.ViewEngines;
-using Microsoft.AspNet.Mvc.Abstractions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.Extensions
 {
@@ -27,7 +28,8 @@ namespace Kendo.Mvc.Extensions
 		{
 			var actionContext = new ActionContext(viewContext.HttpContext, new RouteData(), new ActionDescriptor());
 			var viewDataDictionary = new ViewDataDictionary<T>(viewContext.ViewData, null);
-            var tempDataDictionary = new TempDataDictionary(viewContext.GetService<IHttpContextAccessor>(), viewContext.GetService<ITempDataProvider>());
+            var tempDataFactory = viewContext.GetService<ITempDataDictionaryFactory>();
+            var tempDataDictionary = tempDataFactory.GetTempData(viewContext.HttpContext);
             var options = new HtmlHelperOptions
             {
                 ClientValidationEnabled = viewContext.ClientValidationEnabled,
@@ -45,9 +47,10 @@ namespace Kendo.Mvc.Extensions
                 viewContext.GetService<IHtmlGenerator>(),
                 viewContext.GetService<ICompositeViewEngine>(),
                 viewContext.GetService<IModelMetadataProvider>(),
-                viewContext.GetService<IHtmlEncoder>(),
-                viewContext.GetService<IUrlEncoder>(),
-                viewContext.GetService<IJavaScriptStringEncoder>()
+                viewContext.GetService<IViewBufferScope>(),
+                viewContext.GetService<HtmlEncoder>(),
+                viewContext.GetService<UrlEncoder>(),
+                new ExpressionTextCache()
             );
 		}
         public static string GetFullHtmlFieldName(this ViewContext viewContext, string name)

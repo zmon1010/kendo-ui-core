@@ -5,10 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.Extensions.WebEncoders;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.UI
 {
@@ -21,7 +22,7 @@ namespace Kendo.Mvc.UI
 
         public RadioButton Component { get; private set; }
 
-        public virtual void WriteHtml(TextWriter writer, IHtmlEncoder htmlEncoder)
+        public virtual void WriteHtml(TextWriter writer, HtmlEncoder htmlEncoder)
         {
             var radioButton = BuildRadioButton();
             BuildRadioButton().WriteTo(writer, htmlEncoder);

@@ -2,8 +2,8 @@
 {
     using System;
     using System.Linq;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public interface ISchedulerEventService<T> : IDisposable
         where T : class, ISchedulerEvent

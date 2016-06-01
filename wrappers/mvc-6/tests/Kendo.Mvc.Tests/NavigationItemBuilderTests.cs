@@ -1,11 +1,10 @@
 ﻿namespace Kendo.Mvc.UI.Tests
 {
     using Kendo.Mvc.UI.Fluent;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Mvc.Tests;
     using Xunit;
-
     public class NavigationItemBuilderTests
     {
         NavigationItemTestDouble Item;

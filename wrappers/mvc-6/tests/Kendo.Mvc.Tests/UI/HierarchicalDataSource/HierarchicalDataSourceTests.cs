@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Xunit;
     using Kendo.Mvc.UI;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class HierarchicalDataSourceTests
     {

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Kendo.Mvc.UI.Fluent;
 
 namespace Kendo.Mvc.UI

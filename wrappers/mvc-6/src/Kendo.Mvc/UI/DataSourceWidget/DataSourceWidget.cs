@@ -1,8 +1,8 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.IO;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Kendo.Mvc.UI
 {
@@ -55,16 +55,13 @@ namespace Kendo.Mvc.UI
 
         private void ProcessDataSource()
         {
-            var binder = new DataSourceRequestModelBinder();
-            var bindingContext = new ModelBindingContext
-            {
-                ValueProvider = GetService<IActionBindingContextAccessor>().ActionBindingContext.ValueProvider,
-                ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
-            };
+            var request = DataSourceRequestModelBinder.CreateDataSourceRequest(
+                ModelMetadataProvider.GetMetadataForType(typeof(T)),
+                ValueProvider,
+                string.Empty
+            );
 
-            var result = binder.BindModelAsync(bindingContext).Result;
-
-            DataSource.Process((DataSourceRequest)bindingContext.Model, true);
+            DataSource.Process(request, true);
         }
 
     }

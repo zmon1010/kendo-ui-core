@@ -7,11 +7,12 @@ namespace Kendo.Mvc.UI
     using System.Reflection;
     using Extensions;
     using Kendo.Mvc.Resources;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Routing;
     public static class NavigatableExtensions
     {
         /// <summary>
@@ -177,7 +178,9 @@ namespace Kendo.Mvc.UI
 
         public static IUrlHelper GetUrlHelper(ActionContext context)
         {
-            return context.HttpContext.RequestServices.GetRequiredService<IUrlHelper>();
+            var factory = context.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+
+            return factory.GetUrlHelper(context);
         }
 
         /// <summary>

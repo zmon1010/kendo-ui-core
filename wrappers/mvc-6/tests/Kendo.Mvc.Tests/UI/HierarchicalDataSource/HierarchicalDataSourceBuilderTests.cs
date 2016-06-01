@@ -4,7 +4,7 @@
     using Xunit;
     using Kendo.Mvc.UI;
     using Kendo.Mvc.Tests;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class HierarchicalDataSourceBuilderTests
     {

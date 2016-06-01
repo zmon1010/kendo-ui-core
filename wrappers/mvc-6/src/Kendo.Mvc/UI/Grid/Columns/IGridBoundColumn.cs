@@ -3,8 +3,8 @@ namespace Kendo.Mvc.UI
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.Extensions.WebEncoders;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using System.Text.Encodings.Web;
 
     public interface IGridBoundColumn : IGridColumn
     {
@@ -74,6 +74,6 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-		string GetEditor(IHtmlHelper helper, IHtmlEncoder encoder);		
+		string GetEditor(IHtmlHelper helper, HtmlEncoder encoder);		
     }
 }

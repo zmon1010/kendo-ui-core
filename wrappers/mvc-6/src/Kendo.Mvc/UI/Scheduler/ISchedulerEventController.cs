@@ -1,6 +1,6 @@
 ﻿namespace Kendo.Mvc.UI
 {
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     public interface ISchedulerEventController<T>
         where T : ISchedulerEvent

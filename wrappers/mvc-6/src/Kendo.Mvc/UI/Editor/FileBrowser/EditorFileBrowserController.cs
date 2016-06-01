@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Kendo.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity.Design.Internal;
-
-namespace Kendo.Mvc.UI
+﻿namespace Kendo.Mvc.UI
 {
     public abstract class EditorFileBrowserController : FileBrowserController
     {

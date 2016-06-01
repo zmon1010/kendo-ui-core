@@ -1,9 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Kendo.Mvc.Tests;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Extensions.WebEncoders;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Xunit;
+using System.Text.Encodings.Web;
 
 namespace Kendo.Mvc.UI.Tests
 {

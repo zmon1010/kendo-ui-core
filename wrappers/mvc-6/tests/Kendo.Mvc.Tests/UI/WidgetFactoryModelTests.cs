@@ -4,9 +4,9 @@ using Kendo.Mvc.UI.Fluent;
 using Xunit;
 using Kendo.Mvc.Tests;
 using Moq;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.UI.Tests
 {

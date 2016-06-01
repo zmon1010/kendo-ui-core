@@ -1,7 +1,7 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
 {
     using System;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class CustomDataSourceBuilder<TModel> : CustomDataSourceBuilderBase<CustomDataSourceBuilder<TModel>>, IHideObjectMembers
         where TModel : class

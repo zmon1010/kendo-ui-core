@@ -2,9 +2,9 @@
 {
     using System;
     using System.Linq.Expressions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Routing;
 
     /// <summary>
     /// Defines the fluent interface for configuring the <see cref="CrudOperation"/> options.

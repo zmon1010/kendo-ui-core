@@ -16,25 +16,27 @@ namespace Kendo.Mvc.UI.Fluent
 		public virtual NumericTextBoxBuilder<TValue> NumericTextBoxFor<TValue>(Expression<Func<TModel, Nullable<TValue>>> expression)
 			where TValue : struct
 		{
-			var explorer = GetModelExplorer(expression);
-			var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);			
+            // TODO RC2
+
+            var explorer = GetModelExplorer(expression);
+			//var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);			
 
 			var widget = NumericTextBox<TValue>()					
 					.Expression(GetExpressionName(expression))
 					.Format(ExtractEditFormat(explorer.Metadata.EditFormatString))
 					.Value((TValue?)explorer.Model);
 
-			var min = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
-			if (min.HasValue)
-			{
-				widget.Min(min.Value);
-			}
+			//var min = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
+			//if (min.HasValue)
+			//{
+			//	widget.Min(min.Value);
+			//}
 
-			var max = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
-			if (max.HasValue)
-			{
-				widget.Max(max.Value);
-			}
+			//var max = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
+			//if (max.HasValue)
+			//{
+			//	widget.Max(max.Value);
+			//}
 
 			return widget;
 		}
@@ -50,25 +52,27 @@ namespace Kendo.Mvc.UI.Fluent
 		public virtual NumericTextBoxBuilder<TValue> NumericTextBoxFor<TValue>(Expression<Func<TModel, TValue>> expression)
 			where TValue : struct
 		{
+            // TODO RC2
+
 			var explorer = GetModelExplorer(expression);
-			var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
+			//var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
 			var widget = NumericTextBox<TValue>()
 					.Expression(GetExpressionName(expression))
 					.Format(ExtractEditFormat(explorer.Metadata.EditFormatString))
 					.Value((TValue?)explorer.Model);
 
-			var min = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
-			if (min.HasValue)
-			{
-				widget.Min(min.Value);
-			}
+			//var min = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
+			//if (min.HasValue)
+			//{
+			//	widget.Min(min.Value);
+			//}
 
-			var max = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
-			if (max.HasValue)
-			{
-				widget.Max(max.Value);
-			}
+			//var max = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
+			//if (max.HasValue)
+			//{
+			//	widget.Max(max.Value);
+			//}
 
 			return widget;
 		}

@@ -1,5 +1,5 @@
 ﻿using Kendo.Mvc.Examples.Models;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Funnel_ChartsController : Controller

@@ -2,7 +2,7 @@
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using System.Collections.Generic;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Kendo.Mvc.Examples.Models.TreeList;
 
 namespace Kendo.Mvc.Examples.Controllers
