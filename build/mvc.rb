@@ -128,7 +128,7 @@ class ProjectFileTask < Rake::FileTask
     def execute(args=nil)
         content = File.read(name)
 
-        content.gsub!(/"version": ".*"/, '"version": "' + MVC6_VERSION + '"')
+        content.sub!(/"version": ".*"/, '"version": "' + MVC6_VERSION + '"')
 
         puts "Updating project version to #{MVC6_VERSION}"
 
