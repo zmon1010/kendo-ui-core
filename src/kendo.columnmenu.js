@@ -119,7 +119,7 @@ var __meta__ = { // jshint ignore:line
             that.trigger(INIT, { field: that.field, container: that.wrapper });
         },
 
-        events: [ INIT ],
+        events: [ INIT, "sort", "filtering" ],
 
         options: {
             name: "ColumnMenu",
@@ -386,9 +386,16 @@ var __meta__ = { // jshint ignore:line
                 length,
                 sort = dataSource.sort() || [];
 
-            if (item.hasClass(ACTIVE) && sortable && sortable.allowUnsort !== false) {
+            var removeClass = item.hasClass(ACTIVE) && sortable && sortable.allowUnsort !== false;
+
+            dir = !removeClass ? dir : undefined;
+
+            if (that.trigger("sort", { sort: { field: that.field, dir: dir, compare: compare } })) {
+                return;
+            }
+
+            if (removeClass) {
                 item.removeClass(ACTIVE);
-                dir = undefined;
             } else {
                 item.addClass(ACTIVE);
             }
@@ -544,7 +551,12 @@ var __meta__ = { // jshint ignore:line
                         dataSource: options.dataSource,
                         values: options.values,
                         field: that.field,
-                        title: that.title
+                        title: that.title,
+                        change: function(e) {
+                            if (that.trigger("filtering", { filter: e.filter })) {
+                                e.preventDefault();
+                            }
+                        }
                     },
                     options.filterable)
                     ).data(widget);

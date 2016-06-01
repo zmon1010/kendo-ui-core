@@ -367,4 +367,52 @@
 
         equal(draggable.calls("destroy"), 0);
     });
+
+    test("sorting triggers change event", 3, function() {
+        var groupContainer = $(".container"),
+            groupable = new Groupable(div, {
+                groupContainer:  groupContainer,
+                dataSource: DataSource.create(),
+                change: function(e) {
+                    equal(e.groups.length, 1);
+                    equal(e.groups[0].field, "foo");
+                    equal(e.groups[0].dir, "desc");
+                }
+            }),
+            indicator = groupContainer.append(groupable.buildIndicator("foo")).find(".k-group-indicator:first");
+
+        indicator.find(".k-link").click();
+    });
+
+    test("adding new group indicator triggers change event", 3, function() {
+        var groupContainer = $(".container"),
+            groupable = new Groupable(div, {
+                groupContainer:  groupContainer,
+                dataSource: DataSource.create(),
+                change: function(e) {
+                    equal(e.groups.length, 1);
+                    equal(e.groups[0].field, "field1");
+                    equal(e.groups[0].dir, "asc");
+                }
+            }),
+            th = div.find("th:first");
+
+        moveOverDropTarget(th, groupContainer);
+    });
+
+    test("preventing change event does not set the group to the DataSource", 1, function() {
+        var groupContainer = $(".container"),
+            groupable = new Groupable(div, {
+                groupContainer:  groupContainer,
+                dataSource: DataSource.create(),
+                change: function(e) {
+                    e.preventDefault();
+                }
+            }),
+            th = div.find("th:first");
+
+        moveOverDropTarget(th, groupContainer);
+
+        equal(groupable.dataSource.group().length, 0);
+    });
 })();

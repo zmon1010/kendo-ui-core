@@ -569,6 +569,14 @@ var __meta__ = { // jshint ignore:line
         },
 
         filter: function(expression) {
+            var filters = this._stripFilters(expression.filters);
+            if (filters.length && this.trigger("change", {
+                    filter: { logic: expression.logic, filters: filters }
+                })) {
+
+                return;
+            }
+
             expression = this._merge(expression);
 
             if (expression.filters.length) {
@@ -579,6 +587,10 @@ var __meta__ = { // jshint ignore:line
         clear: function() {
             var that = this,
                 expression = that.dataSource.filter() || { filters:[] };
+
+            if (this.trigger("change", { filter: null })) {
+                return;
+            }
 
             expression.filters = $.grep(expression.filters, function(filter) {
                 if (filter.filters) {
@@ -610,7 +622,7 @@ var __meta__ = { // jshint ignore:line
             this.clear();
 
             if (this.options.search){
-			    this.container.find("label").parent().show();
+                this.container.find("label").parent().show();
             }
             this._closeForm();
         },
@@ -659,7 +671,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        events: [ INIT ],
+        events: [ INIT, "change" ],
 
         options: {
             name: "FilterMenu",
@@ -1145,6 +1157,10 @@ var __meta__ = { // jshint ignore:line
                 return { value: $(item).val(), operator: "eq", field: that.field };
             });
 
+            if (expression.filters.length && this.trigger("change", { filter: expression })) {
+                return;
+            }
+
             expression = this._merge(expression);
             if (expression.filters.length) {
                 this.dataSource.filter(expression);
@@ -1260,7 +1276,7 @@ var __meta__ = { // jshint ignore:line
                 right: "slide:right"
             }
         },
-        events: [ INIT, REFRESH]
+        events: [ INIT, REFRESH, "change"]
     });
 
     $.extend(FilterMultiCheck.fn, {

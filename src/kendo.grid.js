@@ -1446,7 +1446,11 @@ var __meta__ = { // jshint ignore:line
            COLUMNHIDE,
            COLUMNLOCK,
            COLUMNUNLOCK,
-           NAVIGATE
+           NAVIGATE,
+           "page",
+           "sort",
+           "filter",
+           "group"
         ],
 
         setDataSource: function(dataSource) {
@@ -3695,7 +3699,12 @@ var __meta__ = { // jshint ignore:line
                     dataSource: that.dataSource,
                     draggableElements: filter,
                     filter: filter,
-                    allowDrag: that.options.reorderable
+                    allowDrag: that.options.reorderable,
+                    change: function(e) {
+                        if(that.trigger("group", { groups: e.groups })) {
+                            e.preventDefault();
+                        }
+                    }
                 }));
             }
         },
@@ -5406,6 +5415,12 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     that.pager = new kendo.ui.Pager(wrapper, extend({}, pageable, { dataSource: that.dataSource }));
                 }
+
+                that.pager.bind("pageChange", function(e) {
+                    if (that.trigger("page", { page: e.index })) {
+                        e.preventDefault();
+                    }
+                });
             }
         },
 
@@ -5520,6 +5535,16 @@ var __meta__ = { // jshint ignore:line
                 closeCallback = function(element) {
                     focusTable(element.closest("table"), true);
                 },
+                sortHandler = function(e) {
+                    if (that.trigger("sort", { sort: e.sort })) {
+                        e.preventDefault();
+                    }
+                },
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter })) {
+                        e.preventDefault();
+                    }
+                },
                 $angular = options.$angular;
 
             if (columnMenu) {
@@ -5565,6 +5590,8 @@ var __meta__ = { // jshint ignore:line
                             closeCallback: closeCallback,
                             init: initCallback,
                             pane: that.pane,
+                            sort: sortHandler,
+                            filtering: filterHandler,
                             filter: isMobile ? ":not(.k-column-active)" : "",
                             lockedColumns: !hasMultiColumnHeaders && column.lockable !== false && lockedColumns(columns).length > 0
                         };
@@ -5597,6 +5624,11 @@ var __meta__ = { // jshint ignore:line
                 },
                 closeCallback = function(element) {
                     focusTable(element.closest("table"), true);
+                },
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter })) {
+                        e.preventDefault();
+                    }
                 },
                 filterable = that.options.filterable;
                 if (filterable && typeof filterable.mode == STRING && filterable.mode.indexOf("menu") == -1) {
@@ -5633,7 +5665,8 @@ var __meta__ = { // jshint ignore:line
                                 closeCallback: closeCallback,
                                 title: columns[idx].title || columns[idx].field,
                                 init: filterInit,
-                                pane: that.pane
+                                pane: that.pane,
+                                change: filterHandler
                             }
                         );
 
@@ -5665,7 +5698,13 @@ var __meta__ = { // jshint ignore:line
             var $angular = that.options.$angular;
             var columns = leafColumns(that.columns),
                 filterable = that.options.filterable,
-                rowheader = that.thead.find(".k-filter-row");
+                rowheader = that.thead.find(".k-filter-row"),
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter })) {
+                        e.preventDefault();
+                    }
+                };
+
 
             this._updateHeader(this.dataSource.group().length);
 
@@ -5722,7 +5761,8 @@ var __meta__ = { // jshint ignore:line
                         dataTextField: cellOptions.dataTextField,
                         operator: cellOptions.operator,
                         operators: operators,
-                        showOperators: cellOptions.showOperators
+                        showOperators: cellOptions.showOperators,
+                        change: filterHandler
                     };
 
                     if ($angular) {
@@ -5744,7 +5784,13 @@ var __meta__ = { // jshint ignore:line
                 column,
                 sorterInstance,
                 cell,
-                sortable = that.options.sortable;
+                sortable = that.options.sortable,
+                sortHandler = function(e) {
+                    if (that.trigger("sort", { sort: e.sort })) {
+                        e.preventDefault();
+                    }
+                };
+
 
             if (sortable) {
                 var cells = leafDataCells(that.thead);
@@ -5766,7 +5812,8 @@ var __meta__ = { // jshint ignore:line
                                 extend({}, sortable, column.sortable, {
                                     dataSource: that.dataSource,
                                     aria: true,
-                                    filter: ":not(.k-column-active)"
+                                    filter: ":not(.k-column-active)",
+                                    change: sortHandler
                                 })
                             );
                     }

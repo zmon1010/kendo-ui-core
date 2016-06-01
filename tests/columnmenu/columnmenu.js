@@ -284,6 +284,44 @@
         equal(sort[0].dir, "asc");
     });
 
+    test("selecting sort asc item triggers sort event passing the sort descriptor", 2, function() {
+        var menu = setup({
+            field: "foo",
+            sort: function(e) {
+                equal(e.sort.field, "foo");
+                equal(e.sort.dir, "asc");
+            }
+        });
+
+        menu.wrapper.find(".k-sort-asc").click();
+    });
+
+    test("preventing sort events does not set sort to DataSource", 1, function() {
+        var menu = setup({
+            field: "foo",
+            sort: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        menu.wrapper.find(".k-sort-asc").click();
+
+        ok(!dataSource.sort());
+    });
+
+    test("preventing sort events does not highlight the item", 1, function() {
+        var menu = setup({
+            field: "foo",
+            sort: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        var item = menu.wrapper.find(".k-sort-asc").click();
+
+        ok(!item.hasClass("k-state-selected"));
+    });
+
     test("selecting sort asc item twice remove sort expression for the field", function() {
         var menu = setup({ field: "foo" });
 

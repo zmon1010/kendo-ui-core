@@ -224,4 +224,29 @@
         ok(!sort);
     });
 
+    test("clicking an item triggers the change event passing current sort descriptor", 2, function() {
+        var sorter = setup();
+
+        sorter.bind("change", function(e) {
+            equal(e.sort.field, "foo");
+            equal(e.sort.dir, "asc");
+        });
+
+        button.click();
+    });
+
+    test("preventing the change event prevents sorting the DataSource", 1, function() {
+        var sorter = setup();
+
+        sorter.bind("change", function(e) {
+            e.preventDefault();
+        });
+
+        button.click();
+
+        var sort = dataSource.sort();
+
+        ok(!sort);
+    });
+
 })();
