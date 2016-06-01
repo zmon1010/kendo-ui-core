@@ -73,24 +73,20 @@ namespace Kendo.Mvc.UI
 
         private void ProcessDataSource()
         {
-            // TODO RC2
-            //if (Pageable.Enabled && DataSource.PageSize == 0)
-            //{
-            //    DataSource.PageSize = 10;
-            //}
+            if (Pageable.Enabled && DataSource.PageSize == 0)
+            {
+                DataSource.PageSize = 10;
+            }
 
-            //var binder = new DataSourceRequestModelBinder();
+            var request = DataSourceRequestModelBinder.CreateDataSourceRequest(
+                ModelMetadataProvider.GetMetadataForType(typeof(T)),
+                ValueProvider,
+                string.Empty
+            );
 
-            //var bindingContext = new ModelBindingContext
-            //{
-            //    ValueProvider = ActionBindingContext.ValueProvider,
-            //    ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
-            //};
-
-            //var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously
-
-            //DataSource.Process((DataSourceRequest)bindingContext.Model, true/*!EnableCustomBinding*/);
+            DataSource.Process(request, true);
         }
+
         private void InitializeEditor()
         {
             if (Editable.Enabled)

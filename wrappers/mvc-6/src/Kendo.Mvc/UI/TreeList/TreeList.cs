@@ -187,21 +187,15 @@ namespace Kendo.Mvc.UI
 		}		
 
 		private void ProcessDataSource()
-		{			
-            // TODO RC2
+		{
+            var request = DataSourceRequestModelBinder.CreateDataSourceRequest(
+                ModelMetadataProvider.GetMetadataForType(typeof(T)),
+                ValueProvider,
+                string.Empty
+            );
 
-			//var binder = new DataSourceRequestModelBinder();
-
-			//var bindingContext = new ModelBindingContext
-			//{
-			//	ValueProvider = ActionBindingContext.ActionBindingContext.ValueProvider,
-			//	ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
-			//};
-
-			//var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously
-
-			//DataSource.Process((DataSourceRequest)bindingContext.Model, true/*!EnableCustomBinding*/);
-		}		
+            DataSource.Process(request, true);
+        }		
 	}
 }
 

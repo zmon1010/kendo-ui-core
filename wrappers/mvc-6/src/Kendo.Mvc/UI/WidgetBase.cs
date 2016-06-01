@@ -135,7 +135,10 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
-        protected IValueProvider ValueProvider
+        /// <summary>
+        /// Gets a reference to the ValueProvider for the current ActionContext
+        /// </summary>
+        public IValueProvider ValueProvider
         {
             get
             {
