@@ -28,7 +28,8 @@ namespace Kendo.Mvc.Extensions
 		{
 			var actionContext = new ActionContext(viewContext.HttpContext, new RouteData(), new ActionDescriptor());
 			var viewDataDictionary = new ViewDataDictionary<T>(viewContext.ViewData, null);
-            var tempDataDictionary = new TempDataDictionary(viewContext.GetService<IHttpContextAccessor>().HttpContext, viewContext.GetService<ITempDataProvider>());
+            var tempDataFactory = viewContext.GetService<ITempDataDictionaryFactory>();
+            var tempDataDictionary = tempDataFactory.GetTempData(viewContext.HttpContext);
             var options = new HtmlHelperOptions
             {
                 ClientValidationEnabled = viewContext.ClientValidationEnabled,
@@ -49,7 +50,7 @@ namespace Kendo.Mvc.Extensions
                 viewContext.GetService<IViewBufferScope>(),
                 viewContext.GetService<HtmlEncoder>(),
                 viewContext.GetService<UrlEncoder>(),
-                null
+                new ExpressionTextCache()
             );
 		}
         public static string GetFullHtmlFieldName(this ViewContext viewContext, string name)
