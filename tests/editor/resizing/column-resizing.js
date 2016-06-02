@@ -2,7 +2,13 @@
     var ColumnResizing = kendo.ui.editor.ColumnResizing;
     var editor;
     var columnResizing;
+    var fixture;
+    var resizeHandle;
     var table;
+    var FIXTURE_SELECTOR = "#qunit-fixture";
+    var HANDLE_SELECTOR = ".k-resize-handle";
+    var FIRST_COLUMN = "td:first";
+    var PX = "px";
     var DOT = ".";
     var NS = "kendoEditor";
     var MOUSE_MOVE = "mousemove";
@@ -27,12 +33,27 @@
 
     function eventHandler() { }
 
-    editor_module("editor table resizing", {
+    function triggerHover(element, eventOptions) {
+        triggerEvent(element, {
+            type: MOUSE_MOVE,
+            clientX: element.offset().left + element.outerWidth()
+        });
+    }
+
+    function triggerEvent(element, eventOptions) {
+        var options = $.extend({
+            type: "mousedown",
+            clientX: 0,
+            clientY: 0
+        }, eventOptions || {});
+
+        $(element).trigger(options);
+    }
+
+    module("editor table resizing", {
         setup: function() {
-            editor = $("#editor-fixture").data("kendoEditor");
-            QUnit.fixture.append('<textarea id="editor"></textarea>');
+            fixture = $(FIXTURE_SELECTOR);
             table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {});
         },
 
         teardown: function() {
@@ -43,27 +64,40 @@
     test("resizing should not be initialized with element that is different from table", function() {
         columnResizing = new ColumnResizing($("<div />")[0], {});
 
-        equal(undefined, columnResizing.element);
+        equal(columnResizing.element, undefined);
     });
 
     test("resizing should be initialized with table element", function() {
         columnResizing = new ColumnResizing(table, {});
 
-        equal(table, columnResizing.element);
+        equal(columnResizing.element, table);
     });
 
     test("resizing should be initialized with default options", function() {
+        var options = {
+            tags: ["td"],
+            handle: {
+                width: 20,
+                height: 10,
+                appendTo: "#qunit-fixture",
+                template:
+                    '<div class="k-resize-handle">' +
+                        '<div class="k-resize-handle-inner"></div>' +
+                      '</div>'
+            }
+        };
+
         columnResizing = new ColumnResizing(table, {});
 
-        deepEqual({tags: ["td"]}, columnResizing.options);
+        deepEqual(columnResizing.options, options);
     });
 
-    test("resizing should be initialized with custom options", function() {
+    test("resizing should be initialized with custom tags", function() {
         var options = { tags: ["th"] };
 
         columnResizing = new ColumnResizing(table, options);
 
-        deepEqual(options, columnResizing.options);
+        deepEqual(columnResizing.options.tags, ["th"]);
     });
 
     test("resizing should be initialized with array of tags", function() {
@@ -71,10 +105,104 @@
 
         columnResizing = new ColumnResizing(table, options);
 
-        deepEqual({ tags: ["tag"]}, columnResizing.options);
+        deepEqual(columnResizing.options.tags, ["tag"]);
     });
 
-    test("move handlers should be attached to all cells", function() {
+    test("move handlers should be attached to all columns", function() {
+        columnResizing = new ColumnResizing(table, {});
+
         assertEvent(table, { type: MOUSE_MOVE, selector: "td", namespace: NS, handler: eventHandler });
+    });
+
+    test("move handlers should be attached to all tags", function() {
+        columnResizing = new ColumnResizing(table, { tags: ["td", "th"] });
+
+        assertEvent(table, { type: MOUSE_MOVE, selector: "td,th", namespace: NS, handler: eventHandler });
+    });
+
+    module("resize handle", {
+        setup: function() {
+            fixture = $(FIXTURE_SELECTOR);
+            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(table, {
+                handle: {
+                    appendTo: FIXTURE_SELECTOR
+                }
+            });
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("hovering the border of first cell should create resize handle", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        equal(fixture.children(HANDLE_SELECTOR).length, 1);
+    });
+
+    test("resize handle should be appended", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        equal(fixture.children(HANDLE_SELECTOR)[0], columnResizing.resizeHandle[0]);
+    });
+
+    test("resize handle left offset should be set", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        equal(columnResizing.resizeHandle.css("left"), cell[0].offsetWidth - columnResizing.options.handle.width + PX);
+    });
+
+    test("resize handle top offset should be set", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        equal(columnResizing.resizeHandle.css("top"), cell.position().top + PX);
+    });
+
+    test("resize handle top offset should be set", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        equal(columnResizing.resizeHandle.css("width"), columnResizing.options.handle.width + PX);
+    });
+
+    test("resize handle top offset should be set", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        equal(columnResizing.resizeHandle.css("height"), columnResizing.options.handle.height + PX);
+    });
+
+    test("resize handle should be shown", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        equal(columnResizing.resizeHandle.css("display"), "block");
+    });
+
+    test("resize handle should be hidden", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        triggerHover(cell);
+        $(columnResizing.resizeHandle).show();
+
+        triggerEvent(cell, {
+            type: MOUSE_MOVE,
+            clientX: 0,
+            clientY: 0
+        });
+
+        equal(columnResizing.resizeHandle.css("display"), "none");
     });
 })();

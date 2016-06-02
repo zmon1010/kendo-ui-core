@@ -5,8 +5,11 @@
 (function(kendo, undefined) {
     var $ = kendo.jQuery;
     var extend = $.extend;
+    var proxy = $.proxy;
+
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
+
     var NS = ".kendoEditor";
     var MOUSE_OVER = "mouseover";
     var MOUSE_MOVE = "mousemove";
@@ -40,18 +43,72 @@
             if ($(element).is(TABLE)) {
                 that.element = element;
                 
-                $(element).on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), function(e) {
-                    console.log("column move" + e.currentTarget.id);
-                });
+                $(element).on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), proxy(that._detectCellBorderHover, that));
             }
         },
 
         options: {
-            tags: [TD]
+            tags: [TD],
+            handle: {
+                width: 20,
+                height: 10,
+                appendTo: "#qunit-fixture",
+                template:
+                    '<div class="k-resize-handle">' +
+                        '<div class="k-resize-handle-inner"></div>' +
+                      '</div>'
+            }
+        },
+
+        _detectCellBorderHover: function(e) {
+            var that = this;
+            var handleWidth = that.options.handle.width;
+            var cell = $(e.currentTarget);
+            var offset = cell.offset();
+            var columnWidth = offset.left + cell.outerWidth();
+            var clientX = e.clientX;
+            
+            if ((clientX > (columnWidth - handleWidth)) && (clientX < (columnWidth + handleWidth))) {
+                that._createResizeHandle(cell);
+            }
+            else {
+                if (that.resizeHandle) {
+                    that.resizeHandle.hide();
+                }
+            }
+        },
+
+        _createResizeHandle: function(cell) {
+            var that = this;
+            var options = that.options;
+            var handleOptions = options.handle;
+            var handleWidth = handleOptions.width;
+            var resizeHandle = that.resizeHandle;
+            var left;
+            var isRtl = false;
+            var resizeHandle;
+            var appentTo = handleOptions.appendTo;
+
+            if (!resizeHandle) {
+                resizeHandle = that.resizeHandle = $(handleOptions.template);
+
+                $(handleOptions.appendTo).append(resizeHandle);
+            }
+
+            if (!isRtl) {
+                left = cell[0].offsetWidth;
+            }
+
+            resizeHandle.css({
+                top: cell.position().top,
+                left: left - handleWidth,
+                width: handleWidth,
+                height: handleOptions.height
+            });
+
+            resizeHandle.show();
         }
     });
-
-
 
     extend(Editor, {
         TableResizing: TableResizing,
