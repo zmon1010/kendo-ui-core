@@ -138,7 +138,7 @@ var BlockFormatter = Class.extend({
             position = dom.findNodeIndex(ancestors[0]),
             wrapper = dom.create(commonAncestor.ownerDocument, tag, attributes),
             i, ancestor;
-
+        
         for (i = 0; i < ancestors.length; i++) {
             ancestor = ancestors[i];
             if (dom.isBlock(ancestor)) {
@@ -168,7 +168,9 @@ var BlockFormatter = Class.extend({
         function attributes(format) {
             return extend({}, format && format.attr, values);
         }
-
+        
+        this._handleImmutables(nodes, true);
+        
         var images = dom.filter("img", nodes);
         var imageFormat = EditorUtils.formatByName("img", this.format);
         var imageAttributes = attributes(imageFormat);
@@ -183,7 +185,7 @@ var BlockFormatter = Class.extend({
 
         var nonImages = dom.filter("img", nodes, true);
         var formatNodes = this.finder.findSuitable(nonImages);
-
+        
         if (formatNodes.length) {
             for (var i = 0, len = formatNodes.length; i < len; i++) {
                 format = EditorUtils.formatByName(dom.name(formatNodes[i]), this.format);
@@ -194,9 +196,37 @@ var BlockFormatter = Class.extend({
             this.wrap(format.tags[0], attributes(format), nonImages);
         }
     },
+       
+    _handleImmutables: function (nodes, applyFormatting) {
+        if (!this.editor || !this.editor.options.immutables) {
+            return;
+        }
+        var immutableFormat = EditorUtils.formatByName("immutable", this.format);
+        if (!immutableFormat) {
+            return;
+        }
+        var ImmutablesNS = Editor.Immutables;
+        var l = nodes.length - 1;
+        for (var i = l; i >= 0; i--) {
+            var immutableParent = ImmutablesNS.immutableParent(nodes[i]);
+            if (!immutableParent) {
+                continue;
+            }
+            if (immutableParent !== nodes[i + 1]) {
+                if (applyFormatting) {
+                    dom.attr(immutableParent, immutableFormat.attr);
+                } else {
+                    dom.unstyle(immutableParent, immutableFormat.attr.style);
+                }
+            }
+            nodes.splice(i, 1);
+        }
+    },
 
     remove: function (nodes) {
         var i, l, formatNode, namedFormat, name;
+
+        this._handleImmutables(nodes, false);
 
         for (i = 0, l = nodes.length; i < l; i++) {
             formatNode = this.finder.findFormat(nodes[i]);
@@ -311,6 +341,7 @@ var listElements = ["ul","ol","li"];
 registerFormat("justifyLeft", [
     { tags: dom.nonListBlockElements, attr: { style: { textAlign: "left" }} },
     { tags: ["img"], attr: { style: { "float": "left", display: "", marginLeft: "", marginRight: "" }} },
+    { tags: ["immutable"], attr: { style: { "float": "left", display: "", marginLeft: "", marginRight: "" }} },
     { tags: listElements, attr: { style: { textAlign: "left", listStylePosition: "" }} }
 ]);
 registerTool("justifyLeft", new BlockFormatTool({
@@ -324,6 +355,7 @@ registerTool("justifyLeft", new BlockFormatTool({
 registerFormat("justifyCenter", [
     { tags: dom.nonListBlockElements, attr: { style: { textAlign: "center" }} },
     { tags: ["img"], attr: { style: { display: "block", marginLeft: "auto", marginRight: "auto", "float": "" }} },
+    { tags: ["immutable"], attr: { style: { display: "block", marginLeft: "auto", marginRight: "auto", "float": "" }} },
     { tags: listElements, attr: { style: { textAlign: "center", listStylePosition: "inside" }} }
 ]);
 registerTool("justifyCenter", new BlockFormatTool({
@@ -337,6 +369,7 @@ registerTool("justifyCenter", new BlockFormatTool({
 registerFormat("justifyRight", [
     { tags: dom.nonListBlockElements, attr: { style: { textAlign: "right" }} },
     { tags: ["img"], attr: { style: { "float": "right", display: "", marginLeft: "", marginRight: "" }} },
+    { tags: ["immutable"], attr: { style: { "float": "right", display: "", marginLeft: "", marginRight: "" }} },
     { tags: listElements, attr: { style: { textAlign: "right", listStylePosition: "inside" }} }
 ]);
 registerTool("justifyRight", new BlockFormatTool({
@@ -350,6 +383,7 @@ registerTool("justifyRight", new BlockFormatTool({
 registerFormat("justifyFull", [
     { tags: dom.nonListBlockElements, attr: { style: { textAlign: "justify" }} },
     { tags: ["img"], attr: { style: { display: "block", marginLeft: "auto", marginRight: "auto", "float": "" }} },
+    { tags: ["immutable"], attr: { style: { display: "block", marginLeft: "auto", marginRight: "auto", "float": "" }} },
     { tags: listElements, attr: { style: { textAlign: "justify", listStylePosition: "" }} }
 ]);
 registerTool("justifyFull", new BlockFormatTool({
