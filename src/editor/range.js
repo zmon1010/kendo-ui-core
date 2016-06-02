@@ -664,6 +664,13 @@ var RangeEnumerator = Class.extend({
     }
 });
 
+var ImmutablesRangeIterator = RangeIterator.extend({
+    hasPartialSubtree: function () {
+        var immutable = Editor.Immutables && Editor.Immutables.immutable;
+        return immutable && !immutable(this._current) && RangeIterator.fn.hasPartialSubtree.call(this);
+    }
+});
+
 var ImmutablesRangeEnumerator = Class.extend({
     init: function(range) {
         this.enumerate = function () {
@@ -684,7 +691,7 @@ var ImmutablesRangeEnumerator = Class.extend({
                 }
             }
 
-            new RangeIterator(range).traverse(visit);
+            new ImmutablesRangeIterator(range).traverse(visit);
 
             return nodes;
         };

@@ -6,6 +6,7 @@ var RangeEnumerator = EditorNS.RangeEnumerator;
 var formats = kendo.ui.Editor.fn.options.formats;
 var serialize = EditorHelpers.serialize;
 var fixture;
+var editor;
 
 module("editor inline formatter", {
     setup: function() {
@@ -317,6 +318,64 @@ test("format fonts", function() {
     equal(font.nodeName, "FONT");
     notOk(font.size);
     equal(font.style.fontSize, "large");
+});
+
+editor_module("editor inline formatter", {
+    setup: function() {
+        editor = $("#editor-fixture").data("kendoEditor");
+    }
+});
+
+function immutablesFormatter(){
+    var formatter = new InlineFormatter(formats.bold);
+    formatter.immutables = function(){ return true; };
+    return formatter;
+}
+
+function assertActivateNotCalled(text){
+    var range = createRangeFromText(editor, text);
+    var formatter = immutablesFormatter();
+    var called;
+
+    withMock(formatter, "activate", function () { called = true; }, function() {
+        formatter.toggle(range);
+        ok(called === undefined);
+    });
+}
+
+test('toggle does not call activate when selection is inside immutable element', function() {
+    assertActivateNotCalled('<span contenteditable="false">test| f|o</span>');
+});
+
+test('toggle does not call activate when selection is from start to end in immutalbe container', function() {
+    assertActivateNotCalled('<span contenteditable="false">|test fo|</span>');
+});
+
+test('toggle does not call activate when selection is child of immutalbe container', function() {
+    assertActivateNotCalled('<span contenteditable="false"> test <span> test |test fo|</span></span>');
+});
+
+function assertTextNodesToActivate(text, expectedNodesLength){
+    var argument;
+    var range = createRangeFromText(editor, text);
+    var formatter = immutablesFormatter();
+
+    withMock(formatter, "activate", function () { argument = arguments[1]; }, function() {
+        formatter.toggle(range);
+        equal(argument.length, expectedNodesLength);
+    });
+}
+
+test('toggle applies format only in editable nodes when immutable elment is in selected range', function() {
+    assertTextNodesToActivate('te|st <span contenteditable="false">test fo</span> text|', 2);
+});
+
+test('toggle applies format only in editable nodes when immutable element is partially selected', function() {
+    assertTextNodesToActivate('te|st <span contenteditable="false">test| fo</span> text', 1);
+});
+
+test('toggle applies format only in editable nodes when immutable element is partially selected one level deep', function() {
+    assertTextNodesToActivate('te|st <span contenteditable="false">test<span>test|</span> fo</span> text', 1);
 });
 
 }());
