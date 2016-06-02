@@ -57,9 +57,11 @@ function simulateRequestError(fileIndex, response) {
     );
 }
 
-function simulateUpload() {
+function simulateUpload(index) {
+    var i = index || 0;
+
     simulateFileSelect();
-    simulateRequestSuccess(0);
+    simulateRequestSuccess(i);
 }
 
 function simulateUploadError() {
@@ -97,9 +99,17 @@ function simulateRemoveError() {
     simulateRemoveClick();
 }
 
-function simulateUploadWithResponse(response) {
+function simulateUploadWithResponse(response, callback, index) {
+    var i = index || 0;
+
     simulateFileSelect();
-    simulateRequestSuccess(0, response);
+    simulateRequestSuccess(i, response);
+}
+
+function getFileUid(fileIndex) {
+    var uploadInstance = $("#uploadInstance").data("kendoUpload");
+
+    return uploadInstance.wrapper.find(".k-file").eq(fileIndex).attr("data-uid");
 }
 
 function moduleSetup() {
@@ -321,6 +331,17 @@ test("Error event is raised when response code is above 299", function() {
 uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, simulateRemove, errorResponse);
 uploadSelection(createUpload);
 uploadAsyncNoMultiple(createUpload, simulateUpload);
+
+var removeApiTestParams = {
+    createUpload: createUpload,
+    simulateFileSelect: simulateFileSelect,
+    simulateUpload: simulateUpload,
+    getFileUid: getFileUid,
+    simulateUploadWithResponse: simulateUploadWithResponse,
+    errorResponse: errorResponse
+};
+
+removeApi(removeApiTestParams);
 
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

@@ -158,6 +158,88 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.destroy.call(that);
         },
 
+        clearAllFiles: function() {
+            var that = this;
+            var files = that.wrapper.find(".k-file");
+
+            files.each(function(index, file) {
+                that._removeFileByDomElement(file, false);
+            });
+        },
+
+        removeAllFiles: function() {
+            var that = this;
+            var files = that.wrapper.find(".k-file");
+
+            files.each(function(index, file) {
+                that._removeFileByDomElement(file, true);
+            });
+        },
+
+        removeFileByUid: function(uid) {
+            this._removeFileByUid(uid, true);
+        },
+
+        clearFileByUid: function(uid) {
+            this._removeFileByUid(uid, false);
+        },
+
+        _removeFileByUid: function(uid, shouldSendRemoveRequest) {
+            var that = this;
+            var fileEntry;
+
+            if(typeof uid !== 'string') { return; }
+
+            fileEntry = $('.k-file[' + kendo.attr('uid') + '="' + uid + '"]', that.wrapper);
+
+            if(fileEntry.length > 0) {
+                that._removeFileByDomElement(fileEntry, shouldSendRemoveRequest);
+            }
+        },
+
+        clearFile: function(callback) {
+            this._removeFile(callback, false);
+        },
+
+        removeFile: function(callback) {
+            this._removeFile(callback, true);
+        },
+
+        _removeFile: function(callback, shouldSendRemoveRequest) {
+            var that = this;
+            var files = that.wrapper.find(".k-file");
+            var fileData;
+
+            if(typeof callback === "function") {
+                files.each(function(index, file){
+                    fileData = $(file).data("fileNames");
+
+                    if(callback(fileData)) {
+                        that._removeFileByDomElement(file, shouldSendRemoveRequest);
+                    }
+                });
+            }
+        },
+
+        _removeFileByDomElement: function(fileEntry, shouldSendRemoveRequest) {
+            var that = this;
+            var fileData = {
+                target: $(fileEntry, that.wrapper)
+            };
+
+            if(that.options.async.saveUrl) {
+                if($(fileEntry).hasClass("k-file-progress")) {
+                    that._module.onCancel(fileData);
+                } else {
+                    that._module.onRemove(fileData, {}, shouldSendRemoveRequest);
+                }
+
+                that._updateHeaderUploadStatus();
+            } else {
+                that._module.onRemove(fileData, {}, shouldSendRemoveRequest);
+            }
+        },
+
         _addInput: function(sourceInput) {
             //check if source input is a DOM element. Required for some unit tests
             if (!sourceInput[0].nodeType) {
@@ -474,7 +556,7 @@ var __meta__ = { // jshint ignore:line
                 } else if (icon.hasClass("k-i-cancel")) {
                     that.trigger(CANCEL, eventArgs);
                     that._module.onCancel({ target: $(fileEntry, that.wrapper) });
-                    this._checkAllComplete();
+                    that._checkAllComplete();
                     that._updateHeaderUploadStatus();
                 } else if (icon.hasClass("k-i-retry")) {
                     $(".k-warning", fileEntry).remove();
@@ -620,8 +702,8 @@ var __meta__ = { // jshint ignore:line
 
                 headerUploadStatus = $('.k-upload-status-total', that.wrapper);
                 headerUploadStatusIcon = $('.k-icon', headerUploadStatus)
-                                              .removeClass('k-i-loading')
-                                              .addClass((failedUploads.length !== 0) ? 'k-warning' : "k-i-tick")
+                                              .removeClass('k-loading k-warning k-i-tick')
+                                              .addClass((failedUploads.length !== 0) ? 'k-warning' : 'k-i-tick')
                                               .text((failedUploads.length !== 0) ? localization.statusWarning : localization.statusUploaded);
 
                 headerUploadStatus.text(that.localization.headerStatusUploaded)
@@ -960,7 +1042,7 @@ var __meta__ = { // jshint ignore:line
             this.performUpload(fileEntry);
         },
 
-        onRemove: function(e, data) {
+        onRemove: function(e, data, shouldSendRemoveRequest) {
             var fileEntry = getFileEntry(e);
 
             var iframe = fileEntry.data("frame");
@@ -969,7 +1051,7 @@ var __meta__ = { // jshint ignore:line
                 this.upload._removeFileEntry(fileEntry);
                 this.cleanupFrame(iframe);
             } else {
-                removeUploadedFile(fileEntry, this.upload, data);
+                removeUploadedFile(fileEntry, this.upload, data, shouldSendRemoveRequest);
             }
         },
 
@@ -1164,11 +1246,11 @@ var __meta__ = { // jshint ignore:line
             this.performUpload(fileEntry);
         },
 
-        onRemove: function(e, data) {
+        onRemove: function(e, data, shouldSendRemoveRequest) {
             var fileEntry = getFileEntry(e);
 
             if (fileEntry.hasClass("k-file-success")) {
-                removeUploadedFile(fileEntry, this.upload, data);
+                removeUploadedFile(fileEntry, this.upload, data, shouldSendRemoveRequest);
             } else {
                 this.removeFileEntry(fileEntry);
             }
@@ -1347,7 +1429,7 @@ var __meta__ = { // jshint ignore:line
         return !upload.multiple && $(".k-file", upload.wrapper).length > 1;
     }
 
-    function removeUploadedFile(fileEntry, upload, data) {
+    function removeUploadedFile(fileEntry, upload, data, shouldSendRemoveRequest) {
         if (!upload._supportsRemove()) {
             if(shouldRemoveFileEntry(upload)) {
                 upload._removeFileEntry(fileEntry);
@@ -1358,6 +1440,12 @@ var __meta__ = { // jshint ignore:line
 
         var files = fileEntry.data("fileNames");
         var fileNames = $.map(files, function(file) { return file.name; });
+
+        if(shouldSendRemoveRequest === false) {
+            upload._removeFileEntry(fileEntry);
+
+            return;
+        }
 
         upload._submitRemove(fileNames, data,
             function onSuccess(data, textStatus, xhr) {
