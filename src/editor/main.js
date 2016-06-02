@@ -22,6 +22,11 @@
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
 
+    var MOUSE_ENTER = "mouseenter";
+    var MOUSE_LEAVE = "mouseleave";
+    var NS = ".kendoEditor";
+    var TABLE = "table";
+
     // options can be: template (as string), cssClass, title, defaultValue
     var ToolTemplate = Class.extend({
         init: function(options) {
@@ -332,7 +337,16 @@
         _initTableResizing: function() {
             var editor = this;
 
-            var tableResizing = editor.tableResizing = new kendo.ui.editor.TableResizing(editor.body, {});
+            $(editor.body)
+                .on(MOUSE_ENTER + NS, TABLE, function(e) {
+                    editor.tableResizing = new kendo.ui.editor.TableResizing(e.currentTarget, {});
+                })
+                .on(MOUSE_LEAVE + NS, TABLE, function(e) { // jshint ignore:line
+                    if (editor.tableResizing) {
+                        editor.tableResizing.destroy();
+                        editor.tableResizing = null;
+                    }
+                });
         },
 
         _wrapTextarea: function() {
@@ -408,6 +422,7 @@
                     ".k-table td{min-width:1px;padding:.2em .3em;}" +
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
+                    ".k-resize-handle{position:absolute;height: 25px;cursor:col-resize;z-index:2;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +
@@ -496,6 +511,8 @@
         },
 
         _deregisterHandlers: function() {
+            var editor = this;
+
             var handlers = this._handlers;
 
             for (var i = 0; i < handlers.length; i++) {
@@ -504,6 +521,10 @@
             }
 
             this._handlers = [];
+
+            $(editor.body)
+                .off(MOUSE_ENTER + NS)
+                .off(MOUSE_LEAVE + NS);
         },
 
         _initializeContentElement: function() {
@@ -796,6 +817,8 @@
         },
 
         destroy: function() {
+            var editor = this;
+
             Widget.fn.destroy.call(this);
 
             this._endTyping(true);
@@ -807,6 +830,10 @@
             this._focusOutside();
 
             this.toolbar.destroy();
+
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+            }
 
             kendo.destroy(this.wrapper);
         },
