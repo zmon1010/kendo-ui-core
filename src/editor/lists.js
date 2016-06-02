@@ -303,34 +303,41 @@ var ListFormatter = Class.extend({
             sections = [],
             lastSection,
             lastNodes,
-            section;
-
-        // split nodes into sections that need to be different lists
-        do {
-            section = dom.closestEditable(nodes[i], ["td","body"]);
-
-            if (!lastSection || section != lastSection) {
-                if (lastSection) {
-                    sections.push({
-                        section: lastSection,
-                        nodes: lastNodes
-                    });
-                }
-
-                lastNodes = [nodes[i]];
-                lastSection = section;
-            } else {
-                lastNodes.push(nodes[i]);
+            section,
+            node,
+            l = nodes.length,
+            immutables = this.editor && this.editor.options.immutables,
+            immutableParent = immutables ? Editor.Immutables.immutableParent : $.noop;
+        
+        function addLastSection() {
+            if (lastSection) {
+                sections.push({
+                    section: lastSection,
+                    nodes: lastNodes
+                });
             }
+        }
+        
+        // split nodes into sections that need to be different lists
+        for (i = 0; i < l; i++) {
+            node = nodes[i];
+            if (immutableParent(node)) {
+                addLastSection();
+                lastSection = lastNodes = undefined;
+            } else {
+                section = dom.closestEditable(node, ["td","body"]);
+                if (!lastSection || section != lastSection) {
+                    addLastSection();
+                    lastNodes = [node];
+                    lastSection = section;
+                } else {
+                    lastNodes.push(node);
+                }
+            }
+        }
 
-            i++;
-        } while (i < nodes.length);
-
-        sections.push({
-            section: lastSection,
-            nodes: lastNodes
-        });
-
+        addLastSection();
+        
         for (i = 0; i < sections.length; i++) {
             this.applyOnSection(sections[i].section, sections[i].nodes);
         }
