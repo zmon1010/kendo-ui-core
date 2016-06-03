@@ -45,9 +45,7 @@
         function create() {
             if (!calendar) {
                 calendar = $("<div>").kendoCalendar();
-                popup = $("<div>").kendoPopup({
-                    anchor: context.view.element.find(".k-spreadsheet-editor-button")
-                });
+                popup = $("<div>").kendoPopup();
                 calendar.appendTo(popup);
                 calendar = calendar.getKendoCalendar();
                 popup = popup.getKendoPopup();
@@ -58,6 +56,9 @@
                     context.callback(kendo.spreadsheet.dateToNumber(date));
                 });
             }
+            popup.setOptions({
+                anchor: context.view.element.find(".k-spreadsheet-editor-button")
+            });
         }
 
         function open() {
@@ -113,9 +114,7 @@
                     selectable : true,
                     autoBind   : false
                 });
-                popup = $("<div>").kendoPopup({
-                    anchor: context.view.element.find(".k-spreadsheet-editor-button")
-                });
+                popup = $("<div>").kendoPopup();
                 list.appendTo(popup);
                 popup = popup.getKendoPopup();
                 list = list.getKendoStaticList();
@@ -128,6 +127,9 @@
                     }
                 });
             }
+            popup.setOptions({
+                anchor: context.view.element.find(".k-spreadsheet-editor-button")
+            });
         }
         function open() {
             create();
