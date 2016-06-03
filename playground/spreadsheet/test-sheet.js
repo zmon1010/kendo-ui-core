@@ -84,3 +84,49 @@ sheet.range("E10:E12").validation({
 }).background("#fea");
 
 sheet.range("E10").select();
+
+kendo.spreadsheet.registerEditor("color", function(){
+    var context, dlg, colorpicker, model;
+    function create() {
+        if (!dlg) {
+            model = kendo.observable({
+                value: "#000000",
+                ok: function() {
+                    context.callback(model.value);
+                    dlg.close();
+                },
+                cancel: function() {
+                    dlg.close();
+                }
+            });
+            var el = $("<div data-visible='true' data-role='window' data-modal='true' data-resizable='false' data-title='Select color'>" +
+                       "  <div data-role='flatcolorpicker' data-bind='value: value'></div>" +
+                       "  <div style='margin-top: 1em; text-align: right'>" +
+                       "    <button style='width: 5em' class='k-button' data-bind='click: ok'>OK</button>" +
+                       "    <button style='width: 5em' class='k-button' data-bind='click: cancel'>Cancel</button>" +
+                       "  </div>" +
+                       "</div>");
+            kendo.bind(el, model);
+            dlg = el.getKendoWindow();
+        }
+    }
+    function open() {
+        create();
+        dlg.open();
+        dlg.center();
+        var value = context.range.value();
+        if (value != null) {
+            model.set("value", value);
+        }
+    }
+    return {
+        edit: function(options) {
+            context = options;
+            open();
+        },
+        icon: "k-font-icon k-i-background"
+    }
+});
+
+sheet.range("C10:C12").editor("color");
+sheet.range("C10:C12").values([ ["red"], ["green"], ["blue"] ]);
