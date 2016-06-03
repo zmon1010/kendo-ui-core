@@ -158,6 +158,25 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.destroy.call(that);
         },
 
+        getFiles: function() {
+            var that = this;
+            var filesData;
+            var allFiles = [];
+            var listItems = that.wrapper.find(".k-file");
+
+            for(var i = 0; i < listItems.length; i++) {
+                filesData = $(listItems[i]).data("fileNames");
+
+                if(filesData) {
+                    for(var j = 0; j < filesData.length; j++) {
+                        allFiles.push(filesData[j]);
+                    }
+                }
+            }
+
+            return allFiles;
+        },
+
         clearAllFiles: function() {
             var that = this;
             var files = that.wrapper.find(".k-file");

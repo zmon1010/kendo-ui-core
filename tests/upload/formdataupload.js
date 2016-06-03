@@ -830,6 +830,15 @@ test("files are passed to populateFormData", 2, function() {
     simulateFileSelect();
 });
 
+test("getFiles returns all files selected at once", function() {
+    uploadInstance._inputFiles = function () { return getFileListMock() };
+    simulateFileSelect();
+
+    var allFiles = uploadInstance.getFiles();
+
+    equal(allFiles.length, 2);
+});
+
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 module("Upload / FormDataUpload / Templates / autoUpload = false", {
