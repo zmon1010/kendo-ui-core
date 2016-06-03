@@ -2557,6 +2557,7 @@ var __meta__ = { // jshint ignore:line
 
         createVisual: function() {
             BoxElement.fn.createVisual.call(this);
+            this.visual.options.noclip = this.options.noclip;
 
             if (this.options.visible) {
                 this.createLine();

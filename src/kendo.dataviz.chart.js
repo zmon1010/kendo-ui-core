@@ -9243,19 +9243,28 @@ var __meta__ = { // jshint ignore:line
                 charts = container.children,
                 clipBox = container.clipBox,
                 points, point,
-                i, j, length;
+                i, j, length,
+                label, note;
+
             for (i = 0; i < charts.length; i++) {
                 points = charts[i].points || {};
                 length = points.length;
 
                 for (j = 0; j < length; j++) {
                     point = points[j];
-                    if (point && point.label && point.label.options.visible) {
-                        if (point.overlapsBox(clipBox)) {
-                            if (point.label.alignToClipBox) {
-                                point.label.alignToClipBox(clipBox);
+                    if (point && point.overlapsBox && point.overlapsBox(clipBox)) {
+                        label = point.label;
+                        note = point.note;
+
+                        if (label && label.options.visible) {
+                            if (label.alignToClipBox) {
+                                label.alignToClipBox(clipBox);
                             }
-                            point.label.options.noclip = true;
+                            label.options.noclip = true;
+                        }
+
+                        if (note && note.options.visible) {
+                            note.options.noclip = true;
                         }
                     }
                 }
