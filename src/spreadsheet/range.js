@@ -16,7 +16,7 @@
     var PROPERTIES = [
         "color", "fontFamily", "underline",
         "italic", "bold", "textAlign",
-        "verticalAlign", "background", "format", "link"
+        "verticalAlign", "background", "format", "link", "editor"
     ];
 
     var borders = {
