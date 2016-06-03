@@ -385,29 +385,11 @@ var Worksheet = kendo.Class.extend({
         return WORKSHEET_RELS({ hyperlinks: hyperlinks });
     },
     toXML: function(index) {
-        this._mergeCells = this.options.mergedCells || [];
-        this._hyperlinks = this.options.hyperlinks || [];
-        this._rowsByIndex = [];
-
+        var mergeCells = this.options.mergedCells || [];
         var rows = this.options.rows || [];
-        for (var i = 0; i < rows.length; i++) {
-            var ri = rows[i].index;
-            if (typeof ri !== "number") {
-                ri = i;
-            }
+        var data = inflate(rows, mergeCells);
 
-            rows[i].index = ri;
-            this._rowsByIndex[ri] = rows[i];
-        }
-
-        var data = [];
-        for (i = 0; i < rows.length; i++) {
-            data.push(this._row(rows[i], i));
-        }
-
-        data.sort(function(a, b) {
-            return a.index - b.index;
-        });
+        this._readCells(data);
 
         var filter = this.options.filter;
         if (filter && (typeof filter.from === "number") && (typeof filter.to === "number")) {
@@ -425,51 +407,11 @@ var Worksheet = kendo.Class.extend({
             defaults: this.options.defaults || {},
             data: data,
             index: index,
-            mergeCells: this._mergeCells,
+            mergeCells: mergeCells,
             filter: filter,
             showGridLines: this.options.showGridLines,
-            hyperlinks: this._hyperlinks
+            hyperlinks: this.options.hyperlinks || []
         });
-    },
-    _row: function(row) {
-        var data = [];
-        var offset = 0;
-        var sheet = this;
-
-        var cellRefs = {};
-        $.each(row.cells, function(i, cell) {
-            if (!cell) {
-                return;
-            }
-
-            var cellIndex;
-            if (typeof cell.index === "number") {
-                cellIndex = cell.index;
-                offset = cellIndex - i;
-            } else {
-                cellIndex = i + offset;
-            }
-
-            if (cell.colSpan) {
-                offset += cell.colSpan - 1;
-            }
-
-            var items = sheet._cell(cell, row.index, cellIndex);
-            $.each(items, function(i, cellData) {
-                if (cellRefs[cellData.ref]) {
-                    return;
-                }
-
-                cellRefs[cellData.ref] = true;
-                data.push(cellData);
-            });
-        });
-
-        return {
-            data: data,
-            height: row.height,
-            index: row.index
-        };
     },
     _lookupString: function(value) {
         var key = "$" + value;
@@ -516,9 +458,24 @@ var Worksheet = kendo.Class.extend({
         // There is one default border
         return index + 1;
     },
+    _readCells: function(rowData) {
+        for (var i = 0; i < rowData.length; i++) {
+            var row = rowData[i];
+            var cells = row.cells;
+
+            row.data = [];
+
+            for (var j = 0; j < cells.length; j++) {
+                var cellData = this._cell(cells[j], row.index, j);
+                if (cellData) {
+                    row.data.push(cellData);
+                }
+            }
+        }
+    },
     _cell: function(data, rowIndex, cellIndex) {
         if (!data) {
-            return [];
+            return null;
         }
 
         var value = data.value;
@@ -599,41 +556,13 @@ var Worksheet = kendo.Class.extend({
 
         style = this._lookupStyle(style);
 
-        var cells = [];
-        var cellRef = ref(rowIndex, cellIndex);
-        cells.push({
+        return {
             value: value,
             formula: data.formula,
             type: type,
             style: style,
-            ref: cellRef
-        });
-
-        var colSpan = data.colSpan || 1;
-        var rowSpan = data.rowSpan || 1;
-        var ci;
-
-        if (colSpan > 1 || rowSpan > 1) {
-            this._mergeCells.push(cellRef + ":" + ref(rowIndex + rowSpan - 1, cellIndex + colSpan - 1));
-
-            for (var ri = rowIndex + 1; ri < rowIndex + rowSpan; ri++) {
-                if (!this._rowsByIndex[ri]) {
-                    this._rowsByIndex[ri] = { index: ri, cells: [] };
-                }
-
-                for (ci = cellIndex; ci < cellIndex + colSpan; ci++) {
-                    this._rowsByIndex[ri].cells.splice(ci, 0, {});
-                }
-            }
-
-            for (ci = cellIndex + 1; ci < cellIndex + colSpan; ci++) {
-                cells.push({
-                    ref: ref(rowIndex, ci)
-                });
-            }
-        }
-
-        return cells;
+            ref: ref(rowIndex, cellIndex)
+        };
     }
 });
 
@@ -876,6 +805,133 @@ function borderTemplate(border) {
        borderSideTemplate("top", border.top) +
        borderSideTemplate("bottom", border.bottom) +
    "</border>";
+}
+
+function inflate(rows, mergedCells) {
+    var rowData = [];
+    var rowsByIndex = [];
+
+    indexRows(rows, function(row, index) {
+        var data = {
+            _source: row,
+            index: index,
+            height: row.height,
+            cells: []
+        };
+
+        rowData.push(data);
+        rowsByIndex[index] = data;
+    });
+
+    var sorted = sortByIndex(rowData);
+    var ctx = {
+        rowData: rowData,
+        rowsByIndex: rowsByIndex,
+        mergedCells: mergedCells
+    };
+
+    for (var i = 0; i < sorted.length; i++) {
+        fillCells(sorted[i], ctx);
+        delete sorted[i]._source;
+    }
+
+    return sortByIndex(rowData);
+}
+
+function indexRows(rows, callback) {
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        if (!row) {
+            continue;
+        }
+
+        var index = row.index;
+        if (typeof index !== "number") {
+            index = i;
+        }
+
+        callback(row, index);
+    }
+}
+
+function sortByIndex(items) {
+    return items.slice(0).sort(function(a, b) {
+        return a.index - b.index;
+    });
+}
+
+function fillCells(data, ctx) {
+    var row = data._source;
+    var rowIndex = data.index;
+    var cells = row.cells;
+    var cellData = data.cells;
+
+    for (var i = 0; i < cells.length; i++) {
+        var cell = cells[i] || {};
+
+        var rowSpan = cell.rowSpan || 1;
+        var colSpan = cell.colSpan || 1;
+
+        var cellIndex = insertCell(cellData, cell);
+        spanCell(cellData, cellIndex, colSpan);
+
+        if (rowSpan > 1 || colSpan > 1) {
+            ctx.mergedCells.push(
+                ref(rowIndex, cellIndex) + ":" +
+                ref(rowIndex + rowSpan - 1, cellIndex + colSpan - 1)
+            );
+        }
+
+        if (rowSpan > 1) {
+            for (var ri = rowIndex + 1; ri < rowIndex + rowSpan; ri++) {
+                var nextRow = ctx.rowsByIndex[ri];
+                if (!nextRow) {
+                    nextRow = ctx.rowsByIndex[ri] = { index: ri, cells: [] };
+                    ctx.rowData.push(nextRow);
+                }
+
+                spanCell(nextRow.cells, cellIndex - 1, colSpan + 1);
+            }
+        }
+    }
+}
+
+function insertCell(data, cell) {
+    var index;
+
+    if (typeof cell.index === "number") {
+        index = cell.index;
+        insertCellAt(data, cell, cell.index);
+    } else {
+        index = appendCell(data, cell);
+    }
+
+    return index;
+}
+
+function insertCellAt(data, cell, index) {
+    data[index] = cell;
+}
+
+function appendCell(data, cell) {
+    var index = data.length;
+
+    for (var i = 0; i < data.length + 1; i++) {
+        if (!data[i]) {
+            data[i] = cell;
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}
+
+var SPAN_CELL = {};
+function spanCell(cellData, startIndex, colSpan) {
+    for (var i = 1; i < colSpan; i++) {
+        insertCellAt(cellData, SPAN_CELL, startIndex + i);
+    }
 }
 
 kendo.ooxml = {

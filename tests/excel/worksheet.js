@@ -930,29 +930,6 @@ test("toXML creates one mergeCell for a cell with both colSpan and rowSpan set",
     equal(dom.find("mergeCell").attr("ref"), "A1:B2");
 });
 
-test("toXML drops cells overlapping with a colspan", function() {
-    var worksheet = Worksheet([
-        { cells: [{ colSpan: 3, value: 1 }, { index: 2, value: 2 }] }
-    ]);
-
-    var dom = $(worksheet.toXML());
-
-    var cells = dom.find("c");
-    equal(cells.length, 3);
-    equal(cells.find("v").length, 1);
-});
-
-test("toXML drops cells overlapping with a rowspan", function() {
-    var worksheet = Worksheet([
-        { cells: [{ rowSpan: 3 }] },
-        { cells: [{ }]}
-    ]);
-
-    var dom = $(worksheet.toXML());
-
-    equal(dom.find("c").length, 3);
-});
-
 test("toXML creates 'autoFilter' element when the filter option is set", function() {
     var worksheet = Worksheet({
         columns: [ {}, {}, {} ],
