@@ -183,15 +183,15 @@
             return connector.options.name.toLowerCase() === AUTO.toLowerCase();
         }
 
-        function closestConnector(point, shape) {
-            var minimumDistance = MAXINT, resCtr, ctrs = shape.connectors;
-            for (var i = 0; i < ctrs.length; i++) {
-                var ctr = ctrs[i];
-                if (!isAutoConnector(ctr)) {
-                    var dist = point.distanceTo(ctr.position());
+        function closestConnector(point, connectors) {
+            var minimumDistance = MAXINT, resCtr, connector;
+            for (var i = 0; i < connectors.length; i++) {
+                connector = connectors[i];
+                if (!isAutoConnector(connector)) {
+                    var dist = point.distanceTo(connector.position());
                     if (dist < minimumDistance) {
                         minimumDistance = dist;
-                        resCtr = ctr;
+                        resCtr = connector;
                     }
                 }
             }
@@ -727,7 +727,7 @@
                         }
                     }
                 } else if (nameOrPoint instanceof Point) {
-                    return closestConnector(nameOrPoint, this);
+                    return closestConnector(nameOrPoint, this.connectors);
                 } else {
                     return this.connectors.length ? this.connectors[0] : null;
                 }
@@ -1513,19 +1513,17 @@
             _resolveConnectors: function () {
                 var connection = this,
                     sourcePoint, targetPoint,
+                    sourceConnectors, targetConnectors,
                     source = connection.source(),
-                    target = connection.target(),
-                    autoSourceShape,
-                    autoTargetShape;
+                    target = connection.target();
 
                 if (source instanceof Point) {
                     sourcePoint = source;
                 } else if (source instanceof Connector) {
                     if (isAutoConnector(source)) {
-                        autoSourceShape = source.shape;
+                        sourceConnectors = source.shape.connectors;
                     } else {
-                        connection._resolvedSourceConnector = source;
-                        sourcePoint = source.position();
+                        sourceConnectors = [source];
                     }
                 }
 
@@ -1533,31 +1531,28 @@
                     targetPoint = target;
                 } else if (target instanceof Connector) {
                     if (isAutoConnector(target)) {
-                        autoTargetShape = target.shape;
+                        targetConnectors = target.shape.connectors;
                     } else {
-                        connection._resolvedTargetConnector = target;
-                        targetPoint = target.position();
+                        targetConnectors = [target];
                     }
                 }
 
                 if (sourcePoint) {
-                    if (autoTargetShape) {
-                        connection._resolvedTargetConnector = closestConnector(sourcePoint, autoTargetShape);
+                    if (targetConnectors) {
+                        connection._resolvedTargetConnector = closestConnector(sourcePoint, targetConnectors);
                     }
-                } else if (autoSourceShape) {
+                } else if (sourceConnectors) {
                     if (targetPoint) {
-                        connection._resolvedSourceConnector = closestConnector(targetPoint, autoSourceShape);
-                    } else if (autoTargetShape) {
-                        this._resolveAutoConnectors(autoSourceShape, autoTargetShape);
+                        connection._resolvedSourceConnector = closestConnector(targetPoint, sourceConnectors);
+                    } else if (targetConnectors) {
+                        this._resolveAutoConnectors(sourceConnectors, targetConnectors);
                     }
                 }
             },
 
-            _resolveAutoConnectors: function(autoSourceShape, autoTargetShape) {
+            _resolveAutoConnectors: function(sourceConnectors, targetConnectors) {
                 var minNonConflict = MAXINT;
                 var minDist = MAXINT;
-                var sourceConnectors = autoSourceShape.connectors;
-                var targetConnectors;
                 var minNonConflictSource, minNonConflictTarget;
                 var sourcePoint, targetPoint;
                 var minSource, minTarget;
@@ -1569,7 +1564,6 @@
                     sourceConnector = sourceConnectors[sourceIdx];
                     if (!isAutoConnector(sourceConnector)) {
                         sourcePoint = sourceConnector.position();
-                        targetConnectors = autoTargetShape.connectors;
 
                         for (targetIdx = 0; targetIdx < targetConnectors.length; targetIdx++) {
                             targetConnector = targetConnectors[targetIdx];

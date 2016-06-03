@@ -2380,6 +2380,26 @@
             equal(connection._resolvedTargetConnector.options.name, "Top");
         });
 
+        test("chooses closest connectors with route that does not overlap any other shapes if using specific source connector", function() {
+            shape2.position({x: 100, y: 100});
+            shape3.position({x: 200, y: 100});
+
+            connection.source(shape1.getConnector("Right"));
+
+            equal(connection._resolvedSourceConnector.options.name, "Right");
+            equal(connection._resolvedTargetConnector.options.name, "Top");
+        });
+
+        test("chooses closest connectors with route that does not overlap any other shapes if using specific target connector", function() {
+            shape2.position({x: 100, y: 0});
+            shape3.position({x: 100, y: 110});
+
+            connection.target(shape3.getConnector("Top"));
+
+            equal(connection._resolvedSourceConnector.options.name, "Bottom");
+            equal(connection._resolvedTargetConnector.options.name, "Top");
+        });
+
         test("fall backs to closest connectors if there isn't a route that does not overlap any other shapes", function() {
             diagram.addShape({x: 100, width: 100, height: 100});
             connection.refresh();
