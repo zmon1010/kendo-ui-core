@@ -51,6 +51,7 @@ sheet.range("G4:G6").enable(false);
 sheet.range("D2").link("http://google.com/");
 
 sheet.range("E5").value(new Date(1979, 2, 8)).select();
+sheet.range("E6").value(new Date);
 
 sheet.range("E5:E8")
     .format("yyyy-mm-dd")
