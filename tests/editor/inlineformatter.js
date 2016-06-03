@@ -378,4 +378,8 @@ test('toggle applies format only in editable nodes when immutable element is par
     assertTextNodesToActivate('te|st <span contenteditable="false">test<span>test|</span> fo</span> text', 1);
 });
 
+test('toggle applies format only in editable nodes when inline immutable element is partially selected one level deep', function() {
+    assertTextNodesToActivate('test | test<div><strong contenteditable="false">immutable| bold</strong></div>', 1);
+});
+
 }());

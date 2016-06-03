@@ -425,20 +425,21 @@ var RangeIterator = Class.extend({
     },
 
     getSubtreeIterator: function () {
+        return new RangeIterator(this.getSubRange());
+    },
+
+    getSubRange: function(){
         var that = this,
             subRange = that.range.cloneRange();
-
         subRange.selectNodeContents(that._current);
-
         if (dom.isAncestorOrSelf(that._current, that.range.startContainer)) {
             subRange.setStart(that.range.startContainer, that.range.startOffset);
         }
-
         if (dom.isAncestorOrSelf(that._current, that.range.endContainer)) {
             subRange.setEnd(that.range.endContainer, that.range.endOffset);
         }
 
-        return new RangeIterator(subRange);
+        return subRange;
     }
 });
 
@@ -668,6 +669,10 @@ var ImmutablesRangeIterator = RangeIterator.extend({
     hasPartialSubtree: function () {
         var immutable = Editor.Immutables && Editor.Immutables.immutable;
         return immutable && !immutable(this._current) && RangeIterator.fn.hasPartialSubtree.call(this);
+    },
+    
+    getSubtreeIterator: function () {
+        return new ImmutablesRangeIterator(this.getSubRange());
     }
 });
 
@@ -676,7 +681,6 @@ var ImmutablesRangeEnumerator = Class.extend({
         this.enumerate = function () {
             var nodes = [];
             var immutable = Editor.Immutables && Editor.Immutables.immutable;
-
             function visit(node) {
                 if (immutable && !immutable(node)) {
                     if (dom.is(node, "img") || (node.nodeType == 3 && (!dom.isEmptyspace(node) || node.nodeValue == "\ufeff"))) {
