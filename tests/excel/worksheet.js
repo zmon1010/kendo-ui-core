@@ -98,23 +98,6 @@ test("toXML exports cells in order (indexed)", function() {
     equal(cells.eq(1).attr("r"), "E1");
 });
 
-test("toXML restarts index", function() {
-    var worksheet = Worksheet([{
-        cells: [{
-            index: 2,
-            value: "Bar"
-        }, {
-            value: "Foo"
-        }]
-    }]);
-
-    var dom = $(worksheet.toXML());
-    var cells = dom.find("c");
-    equal(cells.length, 2);
-    equal(cells.eq(0).attr("r"), "C1");
-    equal(cells.eq(1).attr("r"), "D1");
-});
-
 test("toXML sets the tabSelected attribute to 1 if the sheet is first", function() {
     var worksheet = Worksheet();
 
@@ -181,8 +164,6 @@ test("toXML sets the 'r' attribute to the alphanumeric when index is greater tha
 });
 
 test("toXML skips empty cells", function() {
-    var row = new Array(25);
-
     var worksheet = Worksheet([
         { cells: [,,{}] }
     ]);

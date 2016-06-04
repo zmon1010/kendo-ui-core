@@ -474,7 +474,7 @@ var Worksheet = kendo.Class.extend({
         }
     },
     _cell: function(data, rowIndex, cellIndex) {
-        if (!data) {
+        if (!data || data === EMPTY_CELL) {
             return null;
         }
 
@@ -807,6 +807,8 @@ function borderTemplate(border) {
    "</border>";
 }
 
+var SPAN_CELL = {};
+var EMPTY_CELL = {};
 function inflate(rows, mergedCells) {
     var rowData = [];
     var rowsByIndex = [];
@@ -823,7 +825,7 @@ function inflate(rows, mergedCells) {
         rowsByIndex[index] = data;
     });
 
-    var sorted = sortByIndex(rowData);
+    var sorted = sortByIndex(rowData).slice(0);
     var ctx = {
         rowData: rowData,
         rowsByIndex: rowsByIndex,
@@ -855,7 +857,7 @@ function indexRows(rows, callback) {
 }
 
 function sortByIndex(items) {
-    return items.slice(0).sort(function(a, b) {
+    return items.sort(function(a, b) {
         return a.index - b.index;
     });
 }
@@ -867,7 +869,7 @@ function fillCells(data, ctx) {
     var cellData = data.cells;
 
     for (var i = 0; i < cells.length; i++) {
-        var cell = cells[i] || {};
+        var cell = cells[i] || EMPTY_CELL;
 
         var rowSpan = cell.rowSpan || 1;
         var colSpan = cell.colSpan || 1;
@@ -927,7 +929,6 @@ function appendCell(data, cell) {
     return index;
 }
 
-var SPAN_CELL = {};
 function spanCell(cellData, startIndex, colSpan) {
     for (var i = 1; i < colSpan; i++) {
         insertCellAt(cellData, SPAN_CELL, startIndex + i);
