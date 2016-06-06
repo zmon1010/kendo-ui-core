@@ -9,11 +9,9 @@ namespace Kendo.Mvc.Examples.Controllers
     public class ImageBrowserController : EditorImageBrowserController
     {
         private const string contentFolderRoot = "shared/";
-        private const string folderName = "Images/";        
+        private const string folderName = "Images/";
         private static readonly string[] foldersToCopy = new[] { "shared/images/employees" };
-
-        public IHostingEnvironment HostingEnvironment { get; set; }
-
+        
         /// <summary>
         /// Gets the base paths from which content will be served.
         /// </summary>
@@ -26,8 +24,8 @@ namespace Kendo.Mvc.Examples.Controllers
         }
 
         public ImageBrowserController(IHostingEnvironment hostingEnvironment)
+            : base(hostingEnvironment)
         {
-            HostingEnvironment = hostingEnvironment;
         }
 
         private string CreateUserFolder()

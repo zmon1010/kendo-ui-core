@@ -1,4 +1,6 @@
-﻿namespace Kendo.Mvc.UI
+﻿using Microsoft.AspNetCore.Hosting;
+
+namespace Kendo.Mvc.UI
 {
     public abstract class EditorFileBrowserController : FileBrowserController
     {
@@ -11,6 +13,12 @@
             {
                 return EditorFileBrowserSettings.DefaultFileTypes;
             }
+        }
+
+        public EditorFileBrowserController(IHostingEnvironment hostingEnvironment)
+            : base(hostingEnvironment)
+        {
+
         }
     }
 }

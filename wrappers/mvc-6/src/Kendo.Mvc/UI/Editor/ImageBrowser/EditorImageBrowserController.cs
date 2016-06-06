@@ -6,10 +6,10 @@ namespace Kendo.Mvc.UI
 {
     public abstract class EditorImageBrowserController : FileBrowserController, IImageBrowserController
     {
-        protected EditorImageBrowserController()
+        protected EditorImageBrowserController(IHostingEnvironment hostingEnvironment)
             : this(DI.Current.Resolve<IDirectoryBrowser>(),
-                  DI.Current.Resolve<IDirectoryPermission>(),
-                  DI.Current.Resolve<IHostingEnvironment>())
+                  DI.Current.Resolve<IDirectoryPermission>(), 
+                  hostingEnvironment)
         {
         }
 
@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
             IDirectoryBrowser directoryBrowser,
             IDirectoryPermission permission,
             IHostingEnvironment hostingEnvironment)
-            : base(directoryBrowser, permission, hostingEnvironment)
+             : base(directoryBrowser, permission, hostingEnvironment)
         {
         }
 

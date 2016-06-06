@@ -23,6 +23,7 @@ namespace Kendo.Mvc.Tests
         private readonly FileBrowserEntry directory;
         private readonly FileBrowserEntry dummyFile;
         const string PATH = "/shared/";
+        const string ROOT_PATH = "/root/";
 
         public ImageBrowserControllerTests()
         {
@@ -40,10 +41,9 @@ namespace Kendo.Mvc.Tests
             permission.Setup(p => p.CanAccess(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
 
             var webRootProvider = new Mock<IFileProvider>();
-            webRootProvider.Setup(provider => provider.GetFileInfo(It.IsAny<string>()).PhysicalPath)
-                .Returns("rootPath");
-            hostingEnvironment.Setup(h => h.WebRootFileProvider)
-                .Returns(webRootProvider.Object);
+            webRootProvider.Setup(provider => provider.GetFileInfo(It.IsAny<string>()).PhysicalPath).Returns(ROOT_PATH);
+            hostingEnvironment.Setup(h => h.WebRootFileProvider).Returns(webRootProvider.Object);
+            hostingEnvironment.Setup(h => h.WebRootPath).Returns(ROOT_PATH);
 
             controllerMock = new Mock<EditorImageBrowserController>(browser.Object, permission.Object, hostingEnvironment.Object) { CallBase = true };
             controllerMock.Setup(x => x.GetFileName(It.IsAny<IFormFile>())).Returns("test.txt");
