@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.popup", "../kendo.calendar", "../kendo.listview.js", "./sheet" ], f);
+    define([ "../kendo.core", "../kendo.popup", "../kendo.calendar", "../kendo.listview", "./sheet" ], f);
 })(function(){
 
 (function(kendo) {
