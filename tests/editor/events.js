@@ -323,4 +323,35 @@ test("execute event can be prevented", function() {
     ok(!editor.undoRedoStack.canUndo());
 });
 
+module("editor body events", {
+    setup: function() {
+        var element = $(QUnit.fixture).append('<textarea id="fakeEditor"></textarea>');
+        editor =  $(QUnit.fixture).find("#fakeEditor").kendoEditor({}).data("kendoEditor");
+    },
+
+    teardown: function() {
+        kendo.destroy(QUnit.fixture);
+    }
+});
+
+test("mouseenter event is attached to tables inside editor body", function() {
+    assertEvent(editor.body, { type: "mouseenter", selector: "table", namespace: "kendoEditor" });
+});
+
+test("mouseleave event is attached to tables inside editor body", function() {
+    assertEvent(editor.body, { type: "mouseleave", selector: "table", namespace: "kendoEditor" });
+});
+
+test("mouseenter events are detached from editor body on destroy", function() {
+    editor.destroy();
+
+    ok(jQueryEventsInfo(editor.body, "mouseenter") === undefined);
+});
+
+test("mouseleave events are detached from editor body on destroy", function() {
+    editor.destroy();
+
+    ok(jQueryEventsInfo(editor.body, "mouseleave") === undefined);
+});
+
 }());

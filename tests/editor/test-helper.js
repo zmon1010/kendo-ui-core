@@ -159,3 +159,57 @@ function removeMocksIn(obj) {
         }
     }
 }
+
+function getJQueryEventType(type) {
+    //jQuery attaches "mouseenter" and "mouseleave" as "mouseover" and "mouseout"
+    if (type === "mouseenter") {
+        return "mouseover";
+    }
+
+    if (type === "mouseleave") {
+        return "mouseout";
+    }
+
+    return type;
+};
+
+function jQueryEvents(element) {
+    if (!element) {
+        return undefined;
+    }
+
+    return $._data(element[0] || element, "events");
+}
+
+function jQueryEventsInfo(element, event) {
+    var events = jQueryEvents(element);
+
+    if (!events) {
+        return undefined;
+    }
+
+    return events[getJQueryEventType(event)];
+}
+
+function assertEvent(element, options) {
+    var selector = options.selector;
+    var namespace = options.namespace || "";
+    var events = jQueryEvents(element);
+    var type = getJQueryEventType(options.type);
+    var event = events[type][0];
+    
+    equal(options.type, event.origType);
+    equal(type, event.type);
+    equal(selector, event.selector);
+    equal(namespace, event.namespace);
+}
+
+function triggerEvent(element, eventOptions) {
+    var options = $.extend({
+        type: "mousedown",
+        clientX: 0,
+        clientY: 0
+    }, eventOptions || {});
+
+    $(element).trigger(options);
+}
