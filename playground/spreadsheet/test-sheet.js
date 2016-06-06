@@ -46,6 +46,88 @@ sheet.range("A5:A9").values([
     ["3-Non-Admin"]
 ]);
 sheet.range("C5").formula('countif(A:A, "3-Non-Admin")');
-sheet.range("F4:H6").enable(false);
+sheet.range("G4:G6").enable(false);
 
 sheet.range("D2").link("http://google.com/");
+
+sheet.range("E5").value(new Date(1979, 2, 8)).select();
+sheet.range("E6").value(new Date);
+
+sheet.range("E5:E8")
+    .format("yyyy-mm-dd")
+    .validation({
+        dataType: "date",
+        showButton: true,
+        comparerType: "between",
+        from: 'DATEVALUE("1/1/1900")',
+        to: 'DATEVALUE("1/1/1998")',
+        allowNulls: true,
+        type: "reject",
+        titleTemplate: "Birth Date validation error",
+        messageTemplate: "Birth Date should be between 1899 and 1998 year."
+    });
+
+sheet.range("H1:H5").values([
+    [ "Lorem" ],
+    [ "Etiam" ],
+    [ "Maecenas" ],
+    [ "Aliquam" ],
+    [ "Fusce" ]
+]);
+
+sheet.range("E10:E12").validation({
+    dataType: "list",
+    showButton: true,
+    comparerType: "list",
+    from: "H:H",
+    allowNulls: true,
+    type: "reject"
+}).background("#fea");
+
+sheet.range("E10").select();
+
+kendo.spreadsheet.registerEditor("color", function(){
+    var context, dlg, colorpicker, model;
+    function create() {
+        if (!dlg) {
+            model = kendo.observable({
+                value: "#000000",
+                ok: function() {
+                    context.callback(model.value);
+                    dlg.close();
+                },
+                cancel: function() {
+                    dlg.close();
+                }
+            });
+            var el = $("<div data-visible='true' data-role='window' data-modal='true' data-resizable='false' data-title='Select color'>" +
+                       "  <div data-role='flatcolorpicker' data-bind='value: value'></div>" +
+                       "  <div style='margin-top: 1em; text-align: right'>" +
+                       "    <button style='width: 5em' class='k-button' data-bind='click: ok'>OK</button>" +
+                       "    <button style='width: 5em' class='k-button' data-bind='click: cancel'>Cancel</button>" +
+                       "  </div>" +
+                       "</div>");
+            kendo.bind(el, model);
+            dlg = el.getKendoWindow();
+        }
+    }
+    function open() {
+        create();
+        dlg.open();
+        dlg.center();
+        var value = context.range.value();
+        if (value != null) {
+            model.set("value", value);
+        }
+    }
+    return {
+        edit: function(options) {
+            context = options;
+            open();
+        },
+        icon: "k-font-icon k-i-background"
+    }
+});
+
+sheet.range("C10:C12").editor("color");
+sheet.range("C10:C12").values([ ["red"], ["green"], ["blue"] ]);

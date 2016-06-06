@@ -135,14 +135,14 @@
             return ref;
         }
 
-        function skip(type, value) {
+        function skip(type, value, allowEOF) {
             if (is(type, value)) {
                 return input.next();
             } else {
                 var tok = input.peek();
                 if (tok) {
                     input.croak("Expected " + type + " «" + value + "» but found " + tok.type + " «" + tok.value + "»");
-                } else {
+                } else if (!allowEOF) {
                     input.croak("Expected " + type + " «" + value + "»");
                 }
             }
@@ -178,7 +178,7 @@
                     skip("op", ",");
                 }
             }
-            skip("punc", ")");
+            skip("punc", ")", true);
             return {
                 type: "func",
                 func: fname,
@@ -204,12 +204,12 @@
             else if (is("punc", "(")) {
                 input.next();
                 exp = parseExpression(true);
-                skip("punc", ")");
+                skip("punc", ")", true);
             }
             else if (is("punc", "{")) {
                 input.next();
                 exp = parseArray();
-                skip("punc", "}");
+                skip("punc", "}", true);
             }
             else if (is("num") || is("str") || is("error")) {
                 exp = input.next();

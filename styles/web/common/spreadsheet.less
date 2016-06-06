@@ -418,7 +418,7 @@ textarea.k-spreadsheet-clipboard {
         height: 28px;
         line-height: 28px;
         border-width: 1px;
-        border-style: solid;  
+        border-style: solid;
     }
 
     .k-edit-field > .k-orientation-label:before {
@@ -426,11 +426,11 @@ textarea.k-spreadsheet-clipboard {
         font-size: 16px;
     }
 
-    .k-orientation-portrait-label:before {        
+    .k-orientation-portrait-label:before {
         content: "\e639";
     }
 
-    .k-orientation-landscape-label:before {        
+    .k-orientation-landscape-label:before {
         content: "\e901";
     }
 
@@ -441,7 +441,7 @@ textarea.k-spreadsheet-clipboard {
         width: 64px;
         height: 92px;
         border-width: 1px;
-        border-style: solid;              
+        border-style: solid;
     }
 
     .k-page-orientation:before {
@@ -451,9 +451,9 @@ textarea.k-spreadsheet-clipboard {
         content: "";
         display: inline-block;
         width: 0;
-        height: 0;        
+        height: 0;
         border-width: 3px;
-        border-style: solid;        
+        border-style: solid;
         margin-top: -1px;
         margin-right: -1px;
     }
@@ -482,7 +482,7 @@ textarea.k-spreadsheet-clipboard {
         width: 34px;
         height: 100%;
         border-width: 0 1px;
-        border-style: solid;      
+        border-style: solid;
     }
 
     .k-page-landscape .k-margins-horizontal {
@@ -498,7 +498,7 @@ textarea.k-spreadsheet-clipboard {
         content: " ";
         display: block;
         clear: both;
-        height: 0; 
+        height: 0;
     }
 }
 
@@ -798,3 +798,17 @@ textarea.k-spreadsheet-clipboard {
     border-width: 0 !important;
 }
 
+.k-spreadsheet-editor-button {
+    position: absolute;
+    width: 20px;
+    z-index: 10;
+    margin-left: 2px;
+    padding: 0 !important;
+
+    span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

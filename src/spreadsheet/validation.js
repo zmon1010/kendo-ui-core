@@ -116,6 +116,7 @@
             this.allowNulls = options.allowNulls ? true : false;
             this.fromIsDateValue = options.fromIsDateValue ? true : false;
             this.toIsDateValue = options.toIsDateValue ? true : false;
+            this.showButton = options.showButton;
 
             //TODO: address to be range / cell ref, and adjust it based on it
             this.sheet = options.sheet;
@@ -317,7 +318,8 @@
                 tooltipTitleTemplate: this.tooltipTitleTemplate,
                 //TODO: export generated messages instead?
                 messageTemplate: this.messageTemplate,
-                titleTemplate: this.titleTemplate
+                titleTemplate: this.titleTemplate,
+                showButton: this.showButton
             };
         }
     });

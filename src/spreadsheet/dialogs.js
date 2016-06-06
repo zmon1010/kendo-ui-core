@@ -110,7 +110,9 @@
                 showHint: "Show hint",
                 hintTitle: "Hint title",
                 hintMessage: "Hint message",
-                ignoreBlank: "Ignore blank"
+                ignoreBlank: "Ignore blank",
+                showListButton: "Display button to show list",
+                showCalendarButton: "Display button to show calendar"
             },
             placeholders: {
                 typeTitle: "Type title",
@@ -1038,6 +1040,7 @@
             this.set("to", validation.to);
             this.set("type", validation.type);
             this.set("ignoreBlank", validation.allowNulls);
+            this.set("showButton", validation.showButton);
 
             if (validation.messageTemplate || validation.titleTemplate) {
                 this.hintMessageTemplate = validation.messageTemplate;
@@ -1061,7 +1064,8 @@
                 comparerType: this.comparer,
                 from: this.from,
                 to: this.to,
-                allowNulls: this.ignoreBlank
+                allowNulls: this.ignoreBlank,
+                showButton: this.showButton
             };
 
             if (this.useCustomMessages) {
@@ -1108,6 +1112,7 @@
             criterion: "any",
             type: "reject",
             ignoreBlank: true,
+            showButton: true,
             useCustomMessages: false,
             errorTemplate:
                 '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-warning"> </span>' +
@@ -1190,11 +1195,30 @@
                         '</div>' +
                     '</div>' +
 
+                    '<div data-bind="visible: isList">' +
+                        '<div class="k-edit-field">' +
+                            '<input type="checkbox" name="showButton" id="showButton" class="k-checkbox" data-bind="checked: showButton"/>' +
+                            '<label for="showButton" class="k-checkbox-label">' +
+                                ' #: messages.validationDialog.labels.showListButton #' +
+                            '</label>' +
+                        '</div>' +
+                    "</div>" +
+
+                    '<div data-bind="visible: isDate">' +
+                        '<div class="k-edit-field">' +
+                            '<input type="checkbox" name="showButton" id="showButton" class="k-checkbox" data-bind="checked: showButton"/>' +
+                            '<label for="showButton" class="k-checkbox-label">' +
+                                ' #: messages.validationDialog.labels.showCalendarButton #' +
+                            '</label>' +
+                        '</div>' +
+                    "</div>" +
+
                     '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.ignoreBlank #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="checkbox" name="ignoreBlank" id="ignoreBlank" class="k-checkbox" data-bind="checked: ignoreBlank"/>' +
-                            '<label class="k-checkbox-label" for="ignoreBlank"></label>' +
+                            '<label for="ignoreBlank" class="k-checkbox-label">' +
+                                ' #: messages.validationDialog.labels.ignoreBlank #' +
+                            '</label>' +
                         '</div>' +
                     '</div>' +
 
@@ -1252,6 +1276,7 @@
                 criteria: options.criteria.slice(0),
                 criterion: options.criterion,
                 ignoreBlank: options.ignoreBlank,
+                showButton: options.showButton,
                 apply: this.apply.bind(this),
                 close: this.close.bind(this),
                 remove: this.remove.bind(this)
