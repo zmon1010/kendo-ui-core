@@ -2714,6 +2714,16 @@
                 }
             },
             {
+                "text": "Custom cell editors",
+                "url": "spreadsheet/custom-editors",
+                "title": {
+                    "kendo-ui": "Custom editors"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how to define your own custom cell editors"
+                }
+            },
+            {
                 "text": "Events",
                 "url": "spreadsheet/events",
                 "title": {
