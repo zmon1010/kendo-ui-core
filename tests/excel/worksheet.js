@@ -98,23 +98,6 @@ test("toXML exports cells in order (indexed)", function() {
     equal(cells.eq(1).attr("r"), "E1");
 });
 
-test("toXML restarts index", function() {
-    var worksheet = Worksheet([{
-        cells: [{
-            index: 2,
-            value: "Bar"
-        }, {
-            value: "Foo"
-        }]
-    }]);
-
-    var dom = $(worksheet.toXML());
-    var cells = dom.find("c");
-    equal(cells.length, 2);
-    equal(cells.eq(0).attr("r"), "C1");
-    equal(cells.eq(1).attr("r"), "D1");
-});
-
 test("toXML sets the tabSelected attribute to 1 if the sheet is first", function() {
     var worksheet = Worksheet();
 
@@ -181,8 +164,6 @@ test("toXML sets the 'r' attribute to the alphanumeric when index is greater tha
 });
 
 test("toXML skips empty cells", function() {
-    var row = new Array(25);
-
     var worksheet = Worksheet([
         { cells: [,,{}] }
     ]);
@@ -930,29 +911,6 @@ test("toXML creates one mergeCell for a cell with both colSpan and rowSpan set",
     equal(dom.find("mergeCell").attr("ref"), "A1:B2");
 });
 
-test("toXML drops cells overlapping with a colspan", function() {
-    var worksheet = Worksheet([
-        { cells: [{ colSpan: 3, value: 1 }, { index: 2, value: 2 }] }
-    ]);
-
-    var dom = $(worksheet.toXML());
-
-    var cells = dom.find("c");
-    equal(cells.length, 3);
-    equal(cells.find("v").length, 1);
-});
-
-test("toXML drops cells overlapping with a rowspan", function() {
-    var worksheet = Worksheet([
-        { cells: [{ rowSpan: 3 }] },
-        { cells: [{ }]}
-    ]);
-
-    var dom = $(worksheet.toXML());
-
-    equal(dom.find("c").length, 3);
-});
-
 test("toXML creates 'autoFilter' element when the filter option is set", function() {
     var worksheet = Worksheet({
         columns: [ {}, {}, {} ],
@@ -1290,6 +1248,77 @@ test("toXML outputs data cells correctly when render multiline row and column he
 
     equal(data3_cells.eq(4).attr("r"), "E5")
     equal(data3_cells.eq(4).find("v").length, 1);
+});
+
+test("toXML outputs data cells correctly with rowspans", function() {
+    var worksheet = Worksheet({
+        rows: [
+            {
+                cells: [
+                    { value: "A1-3", rowSpan: 3 },
+                    { value: "B1-2", rowSpan: 2 },
+                    { value: "C1" },
+                    { value: "D2" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "C2" },
+                    { value: "D2" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "B3-6", rowSpan: 4 },
+                    { value: "C3" },
+                    { value: "D3" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "A4-6", rowSpan: 3 },
+                    { value: "C4" },
+                    { value: "D4" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "C5" },
+                    { value: "D5" },
+                ]
+            },
+            {
+                cells: [
+                    { value: "C6" },
+                    { value: "D6" },
+                ]
+            },
+        ]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    var rows = dom.find("row");
+
+    rows.each(function() {
+        equal($(this).find("c").length, 4);
+    });
+
+    function cell(row, col) {
+        return rows.eq(row).find("c").eq(col);
+    }
+
+    equal(cell(4, 1).attr("r"), "B5")
+    equal(cell(4, 1).find("v").length, 0, "B5 (part of merge range) has no value")
+
+    equal(cell(5, 1).attr("r"), "B6")
+    equal(cell(5, 1).find("v").length, 0, "B6 (part of merge range) has no value")
+
+    equal(cell(4, 2).attr("r"), "C5")
+    equal(cell(4, 2).find("v").length, 1, "C5 has value")
+
+    equal(cell(5, 2).attr("r"), "C6")
+    equal(cell(5, 2).find("v").length, 1, "C6 has value")
 });
 
 test("toXML outputs empty data cells for continues cells with rowSpan", function() {
