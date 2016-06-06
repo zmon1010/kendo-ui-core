@@ -6105,6 +6105,10 @@ var __meta__ = { // jshint ignore:line
                     }
 
                     plotValue += this.plotValue(other);
+
+                    if (this.options.isStacked100) {
+                        plotValue = math.min(plotValue, 1);
+                    }
                 }
 
             }

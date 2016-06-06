@@ -303,6 +303,42 @@
         });
 
         // ------------------------------------------------------------
+        module("Line Chart / 100% Stacked / Fractions", {
+            setup: function() {
+                setupLineChart(plotArea, {
+                    series: [{
+                        type: "line",
+                        data: [0, 0]
+                    },{
+                        type: "line",
+                        data: [100, 23.6]
+                    },{
+                        type: "line",
+                        data: [76.2, 68.9]
+                    },{
+                        type: "line",
+                        data: [16.5, 2.8]
+                    },{
+                        type: "line",
+                        data: [1.6, 1.5]
+                    },{
+                        type: "line",
+                        data: [0, 0]
+                    }],
+                    isStacked: true, isStacked100: true }
+                );
+            }
+        });
+
+        test("reports minumum value for default axis", function() {
+            equal(lineChart.valueAxisRanges[undefined].min, 0);
+        });
+
+        test("reports maximum value for default axis", function() {
+            equal(lineChart.valueAxisRanges[undefined].max, 1);
+        });
+
+        // ------------------------------------------------------------
         module("Line Chart / 100% Stacked / Mixed Values", {
             setup: function() {
                 setupLineChart(plotArea, {
