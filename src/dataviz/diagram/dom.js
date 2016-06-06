@@ -2216,6 +2216,8 @@
                 var toolService = this.toolService;
                 var selectable = this.options.selectable;
                 var point = this._eventPositions(e);
+                var focused = this.focus();
+
                 toolService._updateHoveredItem(point);
 
                 if (toolService.hoveredItem) {
@@ -2235,14 +2237,14 @@
                                 this._destroyToolBar();
                                 item.select(false);
                             } else {
-                                this._createToolBar();
+                                this._createToolBar(focused);
                             }
                         } else {
                             this._destroyToolBar();
                             this.select(item, {
                                 addToSelection: multiple && ctrlPressed
                             });
-                            this._createToolBar();
+                            this._createToolBar(focused);
                         }
                     }
                 } else if (selectable) {
@@ -2516,6 +2518,7 @@
                     for (i = 0; i < containers.length; i++) {
                         containers[i].scrollTop = offsets[i];
                     }
+                    return true;
                 }
             },
 
@@ -3681,7 +3684,7 @@
                 }
             },
 
-            _createToolBar: function() {
+            _createToolBar: function(preventClosing) {
                 var diagram = this.toolService.diagram;
 
                 if (!this.singleToolBar && diagram.select().length === 1) {
@@ -3733,6 +3736,9 @@
                                 point = this.viewToDocument(point);
                                 point = Point(math.max(point.x, 0), math.max(point.y, 0));
                                 this.singleToolBar.showAt(point);
+                                if (preventClosing) {
+                                    this.singleToolBar._popup.one("close", preventDefault);
+                                }
                             } else {
                                 this._destroyToolBar();
                             }
@@ -5151,6 +5157,10 @@
             if (bbox.origin.x !== 0 || bbox.origin.y !== 0) {
                 visual.position(-bbox.origin.x, -bbox.origin.y);
             }
+        }
+
+        function preventDefault(e) {
+            e.preventDefault();
         }
 
         dataviz.ui.plugin(Diagram);

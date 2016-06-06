@@ -454,6 +454,11 @@
             diagram._tap(tapEvent(10, 20));
         });
 
+        test("focuses diagram", function(e) {
+            diagram._tap(tapEvent(10, 20));
+            ok(diagram.element.is(kendo._activeElement()));
+        });
+
         // ------------------------------------------------------------
         module("Diagram / tap / mouse*", {
             setup: function() {
