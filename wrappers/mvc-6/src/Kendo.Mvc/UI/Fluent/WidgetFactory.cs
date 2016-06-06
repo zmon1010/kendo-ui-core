@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -47,19 +48,21 @@ namespace Kendo.Mvc.UI.Fluent
             return ExpressionHelper.GetExpressionText(expression);
         }
 
-        //private Nullable<TValue> GetRangeValidationParameter<TValue>(IEnumerable<ModelClientValidationRule> rules, string parameter) where TValue : struct
-        //{
-        //    var clientValidationsRules = rules.OfType<ModelClientValidationRangeRule>()
-        //                                      .Cast<ModelClientValidationRangeRule>();
+        private Nullable<TValue> GetRangeValidationParameter<TValue>(ModelExplorer explorer, string parameter) where TValue : struct
+        {
+            var rangeAttribute = explorer.Metadata.ValidatorMetadata
+                .Where(attr => attr is RangeAttribute)
+                .FirstOrDefault() as RangeAttribute;
 
-        //    object value = null;
-        //    if (clientValidationsRules.Any() && clientValidationsRules.First().ValidationParameters.TryGetValue(parameter, out value))
-        //    {
-        //        return (TValue)Convert.ChangeType(value, typeof(TValue));
-        //    }
+            if (rangeAttribute != null)
+            {
+                object value = parameter == "min" ? rangeAttribute.Minimum : rangeAttribute.Maximum;
 
-        //    return null;
-        //}
+                return (TValue)Convert.ChangeType(value, typeof(TValue));
+            }
+
+            return null;
+        }
 
         private string ExtractEditFormat(string format)
         {

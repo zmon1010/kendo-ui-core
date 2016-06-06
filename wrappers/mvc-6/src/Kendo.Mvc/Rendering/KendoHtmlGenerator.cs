@@ -278,53 +278,6 @@ namespace Kendo.Mvc.Rendering
             return fullName;
         }
 
-        // TODO RC2
-        //protected virtual IEnumerable<ModelClientValidationRule> GetClientValidationRules(
-        //    ViewContext viewContext,
-        //    ModelExplorer modelExplorer,
-        //    string name)
-        //{
-        //    metadata = metadata ??
-        //        ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider).Metadata;
-
-        //    var validatorProviderContext = new ModelValidatorProviderContext(metadata);
-        //    _actionBindingContext.ValidatorProvider.GetValidators(validatorProviderContext);
-
-        //    var validators = _clientValidatorCache.GetValidators(modelExplorer.Metadata, _clientModelValidatorProvider);
-
-
-        //    return validatorProviderContext
-        //        .Validators.OfType<IClientModelValidator>()
-        //        .SelectMany(v => v.GetClientValidationRules(
-        //            new ClientModelValidationContext(metadata, _metadataProvider, _requestServices)));
-        //}
-
-        // TODO RC2
-        //public RangeAttribute GetRangeValidationAttribute(
-        //    ViewContext viewContext,
-        //    ModelExplorer modelExplorer,
-        //    string name)
-        //{
-        //    metadata = metadata ??
-        //        ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider).Metadata;
-
-        //    var validatorProviderContext = new ModelValidatorProviderContext(metadata);
-        //    _actionBindingContext.ValidatorProvider.GetValidators(validatorProviderContext);
-
-        //    DataAnnotationsModelValidator rangeValidationRule = validatorProviderContext
-        //        .Validators
-        //        .OfType<DataAnnotationsModelValidator>()
-        //        .Cast<DataAnnotationsModelValidator>()
-        //        .First(rule => rule.Attribute is RangeAttribute);
-
-        //    if (rangeValidationRule != null)
-        //    {
-        //        return rangeValidationRule.Attribute as RangeAttribute;
-        //    }
-
-        //    return null;
-        //}
-
         private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)
         {
             ModelStateEntry modelState;

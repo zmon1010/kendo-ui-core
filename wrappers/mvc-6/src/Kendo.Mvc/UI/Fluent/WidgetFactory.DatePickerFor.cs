@@ -33,27 +33,24 @@ namespace Kendo.Mvc.UI.Fluent
 
         private DatePickerBuilder DatePickerOfTValueFor<TValue>(Expression<Func<TModel, TValue>> expression)
         {
-            // TODO RC2
-
             var explorer = GetModelExplorer(expression);
-            //var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
             var widget = DatePicker()
                     .Expression(GetExpressionName(expression))
                     .Format(ExtractEditFormat(explorer.Metadata.EditFormatString))
                     .Value(explorer.Model as DateTime?);
 
-            //var min = GetRangeValidationParameter<DateTime>(rules, MinimumValidator);
-            //if (min.HasValue)
-            //{
-            //    widget.Min(min.Value);
-            //}
+            var min = GetRangeValidationParameter<DateTime>(explorer, MinimumValidator);
+            if (min.HasValue)
+            {
+                widget.Min(min.Value);
+            }
 
-            //var max = GetRangeValidationParameter<DateTime>(rules, MaximumValidator);
-            //if (max.HasValue)
-            //{
-            //    widget.Max(max.Value);
-            //}
+            var max = GetRangeValidationParameter<DateTime>(explorer, MaximumValidator);
+            if (max.HasValue)
+            {
+                widget.Max(max.Value);
+            }
 
             return widget;
         }

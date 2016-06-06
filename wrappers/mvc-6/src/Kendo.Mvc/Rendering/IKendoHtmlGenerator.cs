@@ -96,17 +96,6 @@ namespace Kendo.Mvc.Rendering
             string tagName,
             IDictionary<string, object> htmlAttributes);
 
-        // TODO RC2
-        //IDictionary<string, object> GetValidationAttributes(
-        //    ViewContext viewContext,
-        //    ModelExplorer modelExplorer,
-        //    string name);
-
-        //RangeAttribute GetRangeValidationAttribute(
-        //    ViewContext viewContext,
-        //    ModelExplorer modelExplorer,
-        //    string name);
-
         string SanitizeId(string id);
     }
 }

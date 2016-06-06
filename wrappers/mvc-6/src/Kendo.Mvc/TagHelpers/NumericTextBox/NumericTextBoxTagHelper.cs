@@ -42,14 +42,8 @@ namespace Kendo.Mvc.TagHelpers
 
                 Format = ExtractEditFormat(For.ModelExplorer.Metadata.EditFormatString);
 
-                // TODO RC2
-                //RangeAttribute rangeAttribute = Generator.GetRangeValidationAttribute(ViewContext, metadata, Name);
-
-                //if (rangeAttribute != null)
-                //{
-                //    Min = Min ?? (double)Convert.ChangeType(rangeAttribute.Minimum, typeof(double));
-                //    Max = Max ?? (double)Convert.ChangeType(rangeAttribute.Maximum, typeof(double));
-                //}
+                Min = Min ?? GetRangeValidationParameter<double>(explorer, MinimumValidator);
+                Max = Max ?? GetRangeValidationParameter<double>(explorer, MaximumValidator);
             }
 
             GenerateId(output);
