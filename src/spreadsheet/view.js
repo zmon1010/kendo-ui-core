@@ -929,12 +929,13 @@
                 view       : this,
                 validation : this._sheet.validation(cell),
                 callback   : function(value, parse){
-                    // XXX: should set through command, because undo.
-                    if (parse) {
-                        range.input(value);
-                    } else {
-                        range.value(value);
-                    }
+                    self._executeCommand({
+                        command: "EditCommand",
+                        options: {
+                            property: parse ? "input" : "value",
+                            value: value
+                        }
+                    });
                 }
             });
         },

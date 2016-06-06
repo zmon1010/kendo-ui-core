@@ -142,7 +142,7 @@
 
     kendo.spreadsheet.EditCommand = PropertyChangeCommand.extend({
         init: function(options) {
-            options.property = "input";
+            options.property = options.property || "input";
             PropertyChangeCommand.fn.init.call(this, options);
         },
         rejectState: function(validationState) {
@@ -159,6 +159,12 @@
             var range = this.range();
             var value = this._value;
             this.getState();
+
+            if (this._property == "value") {
+                range.value(value);
+                return;
+            }
+
             try {
                 range.link(null);
                 range.input(value);
