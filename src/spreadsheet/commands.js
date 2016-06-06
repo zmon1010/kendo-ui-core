@@ -155,6 +155,9 @@
                 type: "validationError"
             };
         },
+        getState: function() {
+            this._state = this.range().getState();
+        },
         exec: function() {
             var range = this.range();
             var value = this._value;
