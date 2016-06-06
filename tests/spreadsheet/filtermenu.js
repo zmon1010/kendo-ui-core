@@ -102,6 +102,7 @@
     module("filter menu: filter by value", {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
+            sheet._name("Foo");
         },
         teardown: function() {
             if (filterMenu) {
@@ -199,6 +200,21 @@
 
         ok(!values[0].hasOwnProperty("wrap"));
         ok(!values[1].hasOwnProperty("wrap"));
+    });
+
+    test("validation property is trimmed from values", function() {
+        var range = sheet.range("A1:A3").values([ ["A1"], ["A2"], ["A3"] ]).validation({
+            from: "1",
+            to: "2",
+            comparerType: "between",
+            dataType: "number",
+            messageTemplate: ""
+        });
+
+        var values = controller.values(range, 0);
+
+        ok(!values[0].hasOwnProperty("validation"));
+        ok(!values[1].hasOwnProperty("validation"));
     });
 
     test("recognizes number dataType", function() {

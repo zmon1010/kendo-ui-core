@@ -372,35 +372,38 @@
                         return;
                     }
 
-                    if (cell.value === undefined) {
-                        cell.dataType = "blank";
+                    var value = cell.value;
+                    var dataType = cell.dataType;
+                    var text = cell.text;
+
+                    if (value === undefined) {
+                        dataType = "blank";
                     } else if (cell.format) {
-                        cell.dataType = kendo.spreadsheet.formatting.type(cell.value, cell.format);
+                        dataType = kendo.spreadsheet.formatting.type(value, cell.format);
                     } else {
-                        cell.dataType = typeof cell.value;
+                        dataType = typeof value;
                     }
 
-                    if (cell.value !== null && cell.format) {
-                        cell.text = kendo.spreadsheet.formatting.text(cell.value, cell.format);
+                    if (value !== null && cell.format) {
+                        text = kendo.spreadsheet.formatting.text(value, cell.format);
                     } else {
-                        cell.text = cell.dataType == "blank" ? messages.blanks : cell.value;
+                        text = dataType == "blank" ? messages.blanks : value;
                     }
 
-                    if (cell.dataType === "percent") { //treat percent as number
-                        cell.dataType = "number";
+                    if (dataType === "percent") { //treat percent as number
+                        dataType = "number";
                     }
 
-                    if (cell.dataType === "date") {
-                        cell.value = kendo.spreadsheet.numberToDate(cell.value);
+                    if (dataType === "date") {
+                        value = kendo.spreadsheet.numberToDate(value);
                     }
 
-                    if (cell.hasOwnProperty("wrap")) {
-                        delete cell.wrap;
-                    }
-
-                    cell.checked = !sheet.isHiddenRow(row);
-
-                    values.push(cell);
+                    values.push({
+                        dataType: dataType,
+                        value: value,
+                        text: text,
+                        checked: true
+                    });
                 });
 
                 values = distinctValues(values);
