@@ -720,6 +720,14 @@
         equal(sheet.range("A1").input(), "1/1/2015");
     });
 
+    test("range.input returns number when the numeric format cannot be parsed back", function(){
+        sheet.range("A1")
+            .value(1231231231)
+            .format(" _(* #,##0.00_);_(* (#,##0.00);_(* \"\"-\"\"_)");
+
+        equal(sheet.range("A1").input(), 1231231231);
+    });
+
     test("range.input handles time", function(){
         var r = sheet.range("A1");
         r.input("10:30");

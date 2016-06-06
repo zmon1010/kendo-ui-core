@@ -219,10 +219,12 @@
                         // https://github.com/telerik/kendo/issues/5335
                         var t1 = kendo.spreadsheet.formatting.text(value, existingFormat);
                         x = kendo.spreadsheet.calc.parse(null, null, null, t1); // it's not a formula so we don't need sheet/row/col
-                        var t2 = kendo.spreadsheet.formatting.text(x.value, existingFormat);
-                        if (t1 == t2) {
-                            value = t1;
-                            break OUT; // jshint ignore:line
+                        if (typeof x.value == "number") {
+                            var t2 = kendo.spreadsheet.formatting.text(x.value, existingFormat);
+                            if (t1 == t2) {
+                                value = t1;
+                                break OUT; // jshint ignore:line
+                            }
                         }
                     }
                     if (type === "date") {
