@@ -160,6 +160,7 @@ require 'tests'
 require 'codegen'
 require 'nuget'
 require 'bower'
+require 'npm'
 require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin/
 require 'playground'
 require 'vs_plugin'
