@@ -537,6 +537,19 @@
         ok(!taskWrap.find(".k-task-content .k-task-actions .k-task-delete .k-si-close").length);
     });
 
+    test("delete button not rendered when editable destroy is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { destroy: false };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-content .k-task-actions .k-task-delete").length);
+        ok(!taskWrap.find(".k-task-content .k-task-actions .k-task-delete .k-si-close").length);
+    });
+
     test("resize handles rendered", function() {
         var taskWrap;
 

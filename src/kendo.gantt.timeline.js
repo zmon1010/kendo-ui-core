@@ -613,11 +613,13 @@ var __meta__ = { // jshint ignore:line
             taskChildren.push(content);
 
             if (this.options.editable) {
-                content.children.push(kendoDomElement("span", { className: styles.taskActions }, [
-                    kendoDomElement("a", { className: styles.link + " " + styles.taskDelete, href: "#" }, [
-                        kendoDomElement("span", { className: styles.icon + " " + styles.iconDelete })
-                    ])
-                ]));
+                if (this.options.editable.destroy !== false) {
+                    content.children.push(kendoDomElement("span", { className: styles.taskActions }, [
+                        kendoDomElement("a", { className: styles.link + " " + styles.taskDelete, href: "#" }, [
+                            kendoDomElement("span", { className: styles.icon + " " + styles.iconDelete })
+                        ])
+                    ]));
+                }
 
                 if (this.options.editable.resize !== false) {
                     content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleWest }));
