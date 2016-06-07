@@ -2584,8 +2584,7 @@ var __meta__ = { // jshint ignore:line
                     })
                     .on(KEYDOWN + NS, function(e) {
                         var selectedDependency;
-
-                        if (e.keyCode === keys.DELETE) {
+                        if (e.keyCode === keys.DELETE && that.options.editable && that.options.editable.dependencyDestroy !== false) {
                             selectedDependency = that.selectDependency();
 
                             if (selectedDependency.length) {

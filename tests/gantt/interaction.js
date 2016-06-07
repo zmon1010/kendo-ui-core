@@ -276,6 +276,33 @@
         ok(gantt.calls("removeTask"));
     });
 
+    test("pressing Del key does not call removeDependency() if dependency is selected and editable is false", function() {
+        ganttTimeline.options.editable = false;
+        ganttTimeline._render(tasks);
+        ganttTimeline._renderDependencies(dependencies);
+
+        stub(gantt, "removeDependency");
+
+        ganttTimeline.selectDependency(ganttTimeline.wrapper.find(".k-line:first"));
+        ganttTimeline.wrapper.trigger($.Event("keydown", { keyCode: kendo.keys.DELETE }));
+
+        ok(!gantt.calls("removeDependency"));
+    });
+
+    test("pressing Del key does not call removeDependency() if dependency is selected and editable.dependencyDestroy is false", function() {
+        ganttTimeline._render(tasks);
+        ganttTimeline._renderDependencies(dependencies);
+        ganttTimeline.options.editable = { dependencyDestroy: false };
+
+
+        stub(gantt, "removeDependency");
+
+        ganttTimeline.selectDependency(ganttTimeline.wrapper.find(".k-line:first"));
+        ganttTimeline.wrapper.trigger($.Event("keydown", { keyCode: kendo.keys.DELETE }));
+
+        ok(!gantt.calls("removeDependency"));
+    });
+
     test("pressing Del key calls removeDependency() if dependency is selected", function() {
         ganttTimeline._render(tasks);
         ganttTimeline._renderDependencies(dependencies);
