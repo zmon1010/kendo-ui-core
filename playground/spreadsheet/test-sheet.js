@@ -131,3 +131,8 @@ kendo.spreadsheet.registerEditor("color", function(){
 
 sheet.range("C10:C12").editor("color");
 sheet.range("C10:C12").values([ ["red"], ["green"], ["blue"] ]);
+
+sheet.range("A5").format("@");
+sheet.range("A5").input("1/2/2016");
+sheet.range("B5").input("=A5+1");
+console.log(sheet.range("A5").value());
