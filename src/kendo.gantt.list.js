@@ -856,7 +856,7 @@ var __meta__ = { // jshint ignore:line
                             .removeClass(listStyles.dropPositions);
             };
 
-            if (!this.options.editable) {
+            if (!this.options.editable || this.options.editable.reorder === false) {
                 return;
             }
 
@@ -882,7 +882,7 @@ var __meta__ = { // jshint ignore:line
                     cursorOffset: { top: -20, left: 0 },
                     container: this.content,
                     "dragstart": function(e) {
-                        if (that.editable && that.editable.trigger("validate")) {
+                        if (that.editable && this.options.editable.reorder !== false && that.editable.trigger("validate")) {
                             e.preventDefault();
                             return;
                         }
