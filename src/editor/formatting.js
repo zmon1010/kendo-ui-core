@@ -68,6 +68,7 @@ var FormattingTool = DelayedExecutionTool.extend({
     },
 
     command: function (args) {
+        var that = this;
         var item = args.value;
 
         item = this.toFormattingItem(item);
@@ -88,6 +89,7 @@ var FormattingTool = DelayedExecutionTool.extend({
                     formatter = new Editor.GreedyBlockFormatter(format);
                 }
 
+                formatter.editor = that.editor;
                 return formatter;
             }
         });
@@ -98,6 +100,8 @@ var FormattingTool = DelayedExecutionTool.extend({
         var options = this.options;
         var toolName = options.name;
         var that = this;
+
+        that.editor = editor;
 
         ui.width(options.width);
 

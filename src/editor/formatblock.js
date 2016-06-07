@@ -198,7 +198,7 @@ var BlockFormatter = Class.extend({
     },
        
     _handleImmutables: function (nodes, applyFormatting) {
-        if (!this.editor || !this.editor.options.immutables) {
+        if (!this.immutables()) {
             return;
         }
         var immutableFormat = EditorUtils.formatByName("immutable", this.format);
@@ -221,6 +221,10 @@ var BlockFormatter = Class.extend({
             }
             nodes.splice(i, 1);
         }
+    },
+    
+    immutables: function() {
+        return this.editor && this.editor.options.immutables;
     },
 
     remove: function (nodes) {
@@ -274,26 +278,35 @@ var GreedyBlockFormatter = Class.extend({
         var i, len, list, formatter, range;
         var element;
         var tagName;
+        var block;
+        var immutalbeParent;
 
         if (blocks.length) {
             for (i = 0, len = blocks.length; i < len; i++) {
-                tagName = dom.name(blocks[i]);
+                block = blocks[i];
+                immutalbeParent = this.immutables() && Editor.Immutables.immutableParent(block);
 
-                if (tagName == "li") {
-                    list = blocks[i].parentNode;
-                    formatter = new Editor.ListFormatter(list.nodeName.toLowerCase(), formatTag);
-                    range = this.editor.createRange();
-                    range.selectNode(blocks[i]);
-                    formatter.toggle(range);
-                } else if (formatTag && (tagName == "td" || blocks[i].attributes.contentEditable)) {
-                    new BlockFormatter(format, this.values).apply(blocks[i].childNodes);
-                } else {
-                    element = dom.changeTag(blocks[i], formatTag);
-                    dom.attr(element, format[0].attr);
+                if (!immutalbeParent) {
+                    tagName = dom.name(block);
+
+                    if (tagName == "li") {
+                        list = block.parentNode;
+                        formatter = new Editor.ListFormatter(list.nodeName.toLowerCase(), formatTag);
+                        range = this.editor.createRange();
+                        range.selectNode(blocks[i]);
+                        formatter.toggle(range);
+                    } else if (formatTag && (tagName == "td" || block.attributes.contentEditable)) {
+                        new BlockFormatter(format, this.values).apply(block.childNodes);
+                    } else {
+                        element = dom.changeTag(block, formatTag);
+                        dom.attr(element, format[0].attr);
+                    }
                 }
             }
         } else {
-            new BlockFormatter(format, this.values).apply(nodes);
+            var blockFormatter = new BlockFormatter(format, this.values);
+            blockFormatter.editor = this.editor;
+            blockFormatter.apply(nodes);
         }
     },
 
@@ -308,6 +321,10 @@ var GreedyBlockFormatter = Class.extend({
         }
 
         this.apply(nodes);
+    },
+
+    immutables: function() {
+        return this.editor && this.editor.options.immutables;
     }
 });
 

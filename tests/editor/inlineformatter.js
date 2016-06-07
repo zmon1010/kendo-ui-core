@@ -312,7 +312,7 @@ test("format fonts", function() {
 
     var formatter = new InlineFormatter([{tags:["font"]}], {style:{fontSize:"large"}});
     var font = fixture.firstChild;
-    
+
     formatter.apply([font.firstChild]);
         
     equal(font.nodeName, "FONT");
@@ -320,7 +320,7 @@ test("format fonts", function() {
     equal(font.style.fontSize, "large");
 });
 
-editor_module("editor inline formatter", {
+editor_module("editor inline formatter with immutables enabled", {
     setup: function() {
         editor = $("#editor-fixture").data("kendoEditor");
     }

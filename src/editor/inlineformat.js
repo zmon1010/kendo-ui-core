@@ -127,13 +127,8 @@ var InlineFormatter = Class.extend({
     },
 
     toggle: function (range) {
-        var nodes;
-
-        if (this.immutables()){
-            nodes = RangeUtils.editableTextNodes(range);
-        } else {
-            nodes = RangeUtils.textNodes(range);
-        }
+        var textNodes = this.immutables() ? RangeUtils.editableTextNodes : RangeUtils.textNodes;
+        var nodes = textNodes(range);
 
         if (nodes.length > 0) {
             this.activate(range, nodes);
