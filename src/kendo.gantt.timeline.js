@@ -576,12 +576,12 @@ var __meta__ = { // jshint ignore:line
                 taskElement
             ]);
 
-            if (editable) {
+            if (editable && editable.dependencyCreate !== false) {
                 taskWrapper.children.push(kendoDomElement("div", { className: styles.taskDot + " " + styles.taskDotStart }));
                 taskWrapper.children.push(kendoDomElement("div", { className: styles.taskDot + " " + styles.taskDotEnd }));
             }
 
-            if (!task.summary && !task.isMilestone() && editable && this._taskTemplate === null) {
+            if (!task.summary && !task.isMilestone() && editable && editable.percentComplete !== false && this._taskTemplate === null) {
                 progressHandleOffset = Math.round(position.width * task.percentComplete);
 
                 dragHandleStyle[isRtl ? "right" : "left"] = progressHandleOffset + "px";
@@ -619,9 +619,10 @@ var __meta__ = { // jshint ignore:line
                     ])
                 ]));
 
-                content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleWest }));
-
-                content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleEast }));
+                if (this.options.editable.resize !== false) {
+                    content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleWest }));
+                    content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleEast }));
+                }
             }
 
             var element = kendoDomElement("div", {
@@ -2100,7 +2101,7 @@ var __meta__ = { // jshint ignore:line
                 that.dragInProgress = false;
             };
 
-            if (!this.options.editable) {
+            if (!this.options.editable || this.options.editable.move === false) {
                 return;
             }
 
@@ -2181,7 +2182,7 @@ var __meta__ = { // jshint ignore:line
                 that.dragInProgress = false;
             };
 
-            if (!this.options.editable) {
+            if (!this.options.editable || this.options.editable.resize === false) {
                 return;
             }
 
@@ -2285,7 +2286,7 @@ var __meta__ = { // jshint ignore:line
                     .css(isRtl ? "right" : "left", width);
             };
 
-            if (!this.options.editable) {
+            if (!this.options.editable || this.options.editable.percentComplete === false) {
                 return;
             }
 
@@ -2389,7 +2390,7 @@ var __meta__ = { // jshint ignore:line
                 }
             };
 
-            if (!this.options.editable) {
+            if (!this.options.editable || this.options.editable.dependencyCreate === false) {
                 return;
             }
 
