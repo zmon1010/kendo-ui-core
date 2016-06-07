@@ -129,16 +129,6 @@
         equal(tableResizing.columnResizing.element, table);
     });
 
-    test("table resizing should be destroyed on editor destroy", function() {
-        var editor = $('<textarea id="editor-fixture"></textarea>').appendTo("body").kendoEditor({}).getKendoEditor();
-        var tableResizing = editor.tableResizing = new TableResizing(table, {});
-        trackMethodCall(tableResizing, "destroy");
-
-        editor.destroy();
-
-        equal(tableResizing.destroy.callCount, 1);
-    });
-
     test("destroy should call column resizing destory", function() {
         var columnResizing;
         tableResizing = new TableResizing(table, {});
