@@ -23450,7 +23450,7 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The number of data items which will be displayed in the grid.</description>
+            <description>The number of data items which will be displayed in the grid. This setting will not work if the Grid is assigned an already existing Kendo UI DataSource instance.</description>
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
