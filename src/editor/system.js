@@ -113,8 +113,12 @@ var InsertHtmlCommand = Command.extend({
         var body = editor.body;
         var startRestorePoint = new RestorePoint(range, body);
         var html = options.html || options.value || '';
-
+        
         editor.selectRange(range);
+
+        if (this.trimImmutableContainers(range) === true) {
+            return;
+        }
 
         editor.clipboard.paste(html, options);
 
@@ -127,6 +131,35 @@ var InsertHtmlCommand = Command.extend({
         editor.undoRedoStack.push(genericCommand);
 
         editor.focus();
+    },
+
+    trimImmutableContainers: function(range) {
+        if (this.immutables()){
+            var immutableParent = editorNS.Immutables.immutableParent;
+            var startImmutableParent = immutableParent(range.startContainer);
+            var endImmutableParent = immutableParent(range.endContainer);
+
+            if (startImmutableParent && startImmutableParent === endImmutableParent){
+                return true;
+            } else if (startImmutableParent || endImmutableParent) {
+                if (startImmutableParent){
+                    range.setStartAfter(startImmutableParent);
+                }
+                if (endImmutableParent){
+                    range.setEndBefore(endImmutableParent);
+                }
+                var nodes = editorNS.RangeUtils.editableTextNodes(range);
+                if (nodes.length === 0){
+                    return true;
+                } else {
+                    this.editor.selectRange(range);
+                }
+            }
+        }
+    },
+
+    immutables: function(){
+        return this.editor && this.editor.options.immutables;
     }
 });
 

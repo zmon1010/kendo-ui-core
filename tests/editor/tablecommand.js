@@ -152,4 +152,57 @@ test("creates 3 columns with width roughly equal to 33.3%", function() {
     }
 });
 
+editor_module("editor with immutables true table command", {
+    setup: function() {
+        editor = $("#editor-fixture").data("kendoEditor");
+        editor.options.immutables = true;
+        editor.focus();
+    },
+    teardown: function() {
+        $(".k-window,.k-overlay").remove();
+    }
+});
+
+test("exec does not change content, when selection is in immutable", function() {
+    range = createRangeFromText(editor, '<div contenteditable="false">|foo|bar</div>');
+    execTableCommand({ range:range });
+    equal(editor.value(), '<div contenteditable="false">foobar</div>');
+});
+
+test("exec does not change content, when selection is in immutable inline element", function() {
+    range = createRangeFromText(editor, '<span contenteditable="false">|foo|bar</span>');
+    execTableCommand({ range:range });
+    equal(editor.value(), '<span contenteditable="false">foobar</span>');
+});
+
+test("exec  when selection is in partially selected immutable start container", function() {
+    range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div> text |text');
+    execTableCommand({ range:range });
+    equal(editor.value(), '<div contenteditable="false">foobar</div><table><tbody><tr><td></td></tr></tbody></table>text');
+});
+
+test("exec  when selection is in partially selected only block child in immutable start container", function() {
+    range = createRangeFromText(editor, '<div contenteditable="false"><div>foo|bar</div></div> text |text');
+    execTableCommand({ range:range });
+    equal(editor.value(), '<div contenteditable="false"><div>foobar</div></div><table><tbody><tr><td></td></tr></tbody></table>text');
+});
+
+test("exec  when selection is in partially selected immutable end container", function() {
+    range = createRangeFromText(editor, ' text| text<div contenteditable="false">foo|bar</div>');
+    execTableCommand({ range:range });
+    equal(editor.value(), 'text<table><tbody><tr><td></td></tr></tbody></table><div contenteditable="false">foobar</div>');
+});
+
+test("exec  when selection is in partially selected immutable start and end containers", function() {
+    range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div>test text<div contenteditable="false">foo|bar</div>');
+    execTableCommand({ range:range });
+    equal(editor.value(), '<div contenteditable="false">foobar</div><table><tbody><tr><td></td></tr></tbody></table><div contenteditable="false">foobar</div>');
+});
+
+test("exec  when selection is in partially selected immutable start and end containers and paragraph is in between", function() {
+    range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div><p>test text</p><div contenteditable="false">foo|bar</div>');
+    execTableCommand({ range:range });
+    equal(editor.value(), '<div contenteditable="false">foobar</div><table><tbody><tr><td></td></tr></tbody></table><div contenteditable="false">foobar</div>');
+});
+
 }());
