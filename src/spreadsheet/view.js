@@ -228,7 +228,7 @@
         style.height = height + "px";
 
         var data = cell.value, type = typeof data;
-        if (cell.format && data !== null) {
+        if (cell.format && data != null) { // jshint ignore:line
             data = kendo.spreadsheet.formatting.format(data, cell.format);
             if (data.__dataType) {
                 type = data.__dataType;
@@ -344,7 +344,7 @@
         }
 
         var data = cell.value, type = typeof data;
-        if (cell.format && data !== null) {
+        if (cell.format && data != null) { // jshint ignore:line
             data = kendo.spreadsheet.formatting.format(data, cell.format);
             if (data.__dataType) {
                 type = data.__dataType;
