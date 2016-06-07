@@ -186,12 +186,16 @@
                     var formula = null;
                     if (x.type == "exp") {
                         formula = kendo.spreadsheet.calc.compile(x);
-                    } else if (x.type == "date") {
-                        this.format(x.format || toExcelFormat(kendo.culture().calendar.patterns.d));
-                    } else if (x.type == "percent") {
-                        this.format(x.value*100 == (x.value*100|0) ? "0%" : "0.00%");
-                    } else if (x.format && !existingFormat) {
-                        this.format(x.format);
+                    } else if (existingFormat != "@") {
+                        if (x.type == "date") {
+                            this.format(x.format || toExcelFormat(kendo.culture().calendar.patterns.d));
+                        } else if (x.type == "percent") {
+                            this.format(x.value*100 == (x.value*100|0) ? "0%" : "0.00%");
+                        } else if (x.format && !existingFormat) {
+                            this.format(x.format);
+                        }
+                    } else if (x.type != "string") {
+                        x.value = value;
                     }
                     this.formula(formula);
                     if (!formula) {
