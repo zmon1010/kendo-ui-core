@@ -280,6 +280,16 @@
         htmlEqual(format(12345.777777777), "12,346 ");
     });
 
+    test("adjust decimals does not add unnecessary sections", function(){
+        equal(F.adjustDecimals("#,#.00", -1), "#,#.0");
+        equal(F.adjustDecimals("#,#.00", -2), "#,#");
+        equal(F.adjustDecimals("#,#.00", -3), "#,#");
+        equal(F.adjustDecimals("#,#.00", -2), "#,#");
+        equal(F.adjustDecimals("#,#", -1), "#,#");
+        equal(F.adjustDecimals("#,#", 1), "#,#.0");
+        equal(F.adjustDecimals("#,#", 2), "#,#.00");
+    });
+
     test("does not error out when given string in number format", function(){
         var format = F.compile("[Red][<50]#;[Green][>50]#;[Blue]0.00");
         htmlEqual(format("abc"), "abc");
