@@ -1,5 +1,5 @@
 (function(f, define) {
-    define(["./main"], f);
+    define(["./main", "../kendo.resizable"], f);
 })(function() {
 
 (function(kendo, undefined) {
@@ -63,6 +63,7 @@
                     .on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), proxy(that._detectCellBorderHover, that))
                     .on(MOUSE_LEAVE + NS, that.options.tags.join(COMMA), function(e) {
                         e.stopPropagation();
+                        $(e.currentTarget).children(RESIZE_HANDLE_CLASS).off(NS).remove();
                     });
             }
         },
@@ -71,11 +72,10 @@
             var that = this;
 
             if (that.element) {
+                $(that.element).find(RESIZE_HANDLE_CLASS).remove();
                 $(that.element).off(NS);
                 that.element = null;
             }
-
-            $(RESIZE_HANDLE_CLASS).remove();
         },
 
         options: {
@@ -83,7 +83,6 @@
             handle: {
                 width: 10,
                 height: 10,
-                appendTo: null,
                 template:
                     '<div class="k-resize-handle">' +
                         '<div class="k-resize-handle-inner"></div>' +
@@ -102,6 +101,7 @@
             
             if (!cell.is(LAST_CHILD) && (clientX > (borderLeftOffset - handleWidth)) && (clientX < (borderLeftOffset + handleWidth))) {
                 that._createResizeHandle(cell);
+                that._initResizable(cell);
             }
             else {
                 resizeHandle = that.resizeHandle;
@@ -117,16 +117,14 @@
             var options = that.options;
             var handleOptions = options.handle;
             var handleWidth = handleOptions.width;
-            var appendTo = handleOptions.appendTo;
             var resizeHandle = that.resizeHandle;
             var totalCellsWidth;
             var isRtl = false;
-            var ownerElement = appendTo !== null ? appendTo : $(that.element.ownerDocument.documentElement).children(BODY)[0];
 
             if (!resizeHandle) {
                 resizeHandle = that.resizeHandle = $(handleOptions.template);
 
-                $(ownerElement).append(resizeHandle);
+                cell.append(resizeHandle);
             }
 
             if (!isRtl) {
@@ -140,6 +138,14 @@
                 height: cell[0].offsetHeight
             })
             .show();
+        },
+
+        _initResizable: function(cell) {
+            var that = this;
+
+            that.resizable = $(cell).kendoResizable({
+                handle: RESIZE_HANDLE_CLASS
+            }).data("kendoResizable");
         }
     });
 

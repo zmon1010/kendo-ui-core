@@ -77,7 +77,6 @@
             handle: {
                 width: 10,
                 height: 10,
-                appendTo: null,
                 template:
                     '<div class="k-resize-handle">' +
                         '<div class="k-resize-handle-inner"></div>' +
@@ -142,41 +141,37 @@
         }
     });
 
-    test("hovering the border of first cell should create resize handle", function() {
+    test("hovering the border of first cell should append resize handle", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
-        columnResizing.options.handle.appendTo = QUnit.fixture;
 
         triggerHover(cell);
 
-        equal($(QUnit.fixture).children(HANDLE_SELECTOR).length, 1);
+        ok(cell.children(HANDLE_SELECTOR).length === 1);
     });
 
     test("hovering a second cell should remove previous resize handle", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
-        columnResizing.options.handle.appendTo = QUnit.fixture;
         triggerHover(cell);
 
         triggerHover($(columnResizing.element).find("td:last"));
 
-        equal($(QUnit.fixture).children(HANDLE_SELECTOR).length, 1);
+        ok(cell.children(HANDLE_SELECTOR).length === 1);
     });
 
     test("hovering the last cell should not create resize handle", function() {
         var cell = $(columnResizing.element).find("tr:first td:last");
-        columnResizing.options.handle.appendTo = QUnit.fixture;
 
         triggerHover(cell);
 
-        equal($(QUnit.fixture).children(HANDLE_SELECTOR).length, 0);
+        ok(cell.children(HANDLE_SELECTOR).length === 0);
     });
 
-    test("resize handle should be appended to owner element", function() {
+    test("resize handle should be preserved", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
-        columnResizing.options.handle.appendTo = QUnit.fixture;
 
         triggerHover(cell);
 
-        equal($(QUnit.fixture).children(HANDLE_SELECTOR)[0], columnResizing.resizeHandle[0]);
+        equal(cell.children(HANDLE_SELECTOR)[0], columnResizing.resizeHandle[0]);
     });
 
     test("resize handle left offset should be set", function() {
@@ -245,18 +240,13 @@
             clientY: 0
         });
 
-        ok($(fixture).find(".k-resize-handle").length === 0);
+        ok(cell.children(HANDLE_SELECTOR).length === 0);
     });
 
     module("editor column resizing", {
         setup: function() {
-            fixture = $(FIXTURE_SELECTOR);
             table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {
-                handle: {
-                    appendTo: FIXTURE_SELECTOR
-                }
-            });
+            columnResizing = new ColumnResizing(table, {});
         },
 
         teardown: function() {
@@ -271,10 +261,38 @@
     });
 
     test("destroy should remove resize handle from DOM", function() {
-        var resizeHandle = $('<div class="k-resize-handle" />').appendTo(fixture[0]);
+        $('<div class="k-resize-handle" />').appendTo(columnResizing.element);
 
         columnResizing.destroy();
 
-        ok($(fixture).find(".k-resize-handle").length === 0);
+        ok($(columnResizing.element).find(HANDLE_SELECTOR).length === 0);
+    });
+
+    module("editor column resizable", {
+        setup: function() {
+            fixture = $(FIXTURE_SELECTOR);
+            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(table, {});
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("hovering a cell should initialize resizable", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        ok(cell.data("kendoResizable") instanceof kendo.ui.Resizable);
+    });
+
+    test("hovering a cell should initialize resizable with handle", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerHover(cell);
+
+        ok(cell.data("kendoResizable").options.handle === HANDLE_SELECTOR);
     });
 })();
