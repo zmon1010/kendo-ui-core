@@ -884,7 +884,9 @@ var __meta__ = { // jshint ignore:line
                     cursorOffset: { top: -20, left: 0 },
                     container: this.content,
                     "dragstart": function(e) {
-                        if (that.editable && that.options.editable.reorder !== false && that.editable.trigger("validate")) {
+                        var editable = that.editable;
+
+                        if (editable && editable.reorder !== false && editable.trigger("validate")) {
                             e.preventDefault();
                             return;
                         }

@@ -2370,6 +2370,7 @@ var __meta__ = { // jshint ignore:line
             var startY;
             var useVML = browser.msie && browser.version < 9;
             var styles = GanttTimeline.styles;
+            var editable = this.options.editable;
 
             var cleanUp = function() {
                 originalHandle
@@ -2396,7 +2397,7 @@ var __meta__ = { // jshint ignore:line
                 }
             };
 
-            if (!this.options.editable || this.options.editable.dependencyCreate === false) {
+            if (!editable || editable.dependencyCreate === false) {
                 return;
             }
 
@@ -2591,8 +2592,9 @@ var __meta__ = { // jshint ignore:line
                     })
                     .on(KEYDOWN + NS, function(e) {
                         var selectedDependency;
+                        var editable = that.options.editable;
 
-                        if (e.keyCode === keys.DELETE && that.options.editable && that.options.editable.dependencyDestroy !== false) {
+                        if (e.keyCode === keys.DELETE && editable && editable.dependencyDestroy !== false) {
                             selectedDependency = that.selectDependency();
 
                             if (selectedDependency.length) {

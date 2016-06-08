@@ -1953,6 +1953,7 @@ var __meta__ = { // jshint ignore:line
             var actionsSelector = DOT + Gantt.styles.toolbar.actions;
             var actionMessages = this.options.messages.actions;
             var timeline = this.timeline;
+            var editable = this.options.editable;
 
             var handler = function(e) {
                 var type = e.type;
@@ -1988,7 +1989,7 @@ var __meta__ = { // jshint ignore:line
                 that._createTask(task, orderId);
             };
 
-            if (!this.options.editable || this.options.editable.create === false) {
+            if (!editable || editable.create === false) {
                 return;
             }
 
@@ -3082,7 +3083,9 @@ var __meta__ = { // jshint ignore:line
                 }
             };
             var deleteAction = function() {
-                if (!that.options.editable || that.options.editable.destroy === false || that.list.editable) {
+                var editable = that.options.editable;
+
+                if (!editable || editable.destroy === false || that.list.editable) {
                     return;
                 }
 
