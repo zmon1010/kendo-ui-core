@@ -21271,11 +21271,65 @@ custom number format, standard date format or a custom date format.</description
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to false the user won't be able to create tasks.</description>
+            <name>create</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to create dependencies.</description>
+            <name>dependencyCreate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to delete dependencies.</description>
+            <name>dependencyDestroy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to delete tasks.</description>
+            <name>destroy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to edit the percentComplete of the tasks.</description>
+            <name>dragPercentComplete</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to move tasks.</description>
+            <name>move</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to reorder tasks in the task list.</description>
+            <name>reorder</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to resize tasks.</description>
+            <name>resize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The template which renders the editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the Gantt will know
 which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to update tasks.</description>
+            <name>update</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
 
     </tag>
