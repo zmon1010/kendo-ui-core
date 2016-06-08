@@ -90,7 +90,6 @@
         triggerEvent(table, { type: MOUSE_LEAVE });
 
         equal(tableResizing.destroy.callCount, 1);
-
     });
 
     test("hovering out of a table should remove table resizing", function() {
