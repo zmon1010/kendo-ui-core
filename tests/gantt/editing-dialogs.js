@@ -256,6 +256,24 @@
 
     });
 
+    test("dblclicking on task does not call editTask when non-editable", function() {
+        var gantt = setup({editable:false});
+        var editTask = stub(gantt, "editTask");
+
+        gantt.wrapper.find(".k-task").first().dblclick();
+
+        equal(editTask.calls("editTask"), 0);
+    });
+
+    test("dblclicking on task does not call editTask when editable update is false", function() {
+        var gantt = setup({ editable: { update: false } });
+        var editTask = stub(gantt, "editTask");
+
+        gantt.wrapper.find(".k-task").first().dblclick();
+
+        equal(editTask.calls("editTask"), 0);
+    });
+
     test("editTask creates window instance", function() {
         var gantt = setup();
 

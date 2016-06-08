@@ -574,10 +574,23 @@
         ok(!taskWrap.find(".k-task-content .k-resize-handle.k-resize-e").length);
     });
 
-    test("resize handles not rendered when editable.resize is false", function() {
+    test("resize handles not rendered when editable resize is false", function() {
         var taskWrap;
 
         timeline.view().options.editable = { resize: false };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-content .k-resize-handle.k-resize-w").length);
+        ok(!taskWrap.find(".k-task-content .k-resize-handle.k-resize-e").length);
+    });
+
+    test("resize handles not rendered when editable update is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { update:false, resize: true };
 
         renderTask();
 

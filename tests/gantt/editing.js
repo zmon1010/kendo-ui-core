@@ -913,6 +913,21 @@
         ok(!gantt.list._startEditHandler);
     });
 
+    module("Gantt editable update false", {
+        setup: function() {
+            element = $("<div/>");
+
+            gantt = new Gantt(element, { editable: {update: false} });
+        },
+        teardown: function() {
+            gantt.destroy();
+        }
+    });
+
+    test("does not attach edit handler", function() {
+        ok(!gantt.list._startEditHandler);
+    });
+
     module("Gantt inline editing with column resizing", {
         setup: function() {
             element = $("<div/>").appendTo(QUnit.fixture);

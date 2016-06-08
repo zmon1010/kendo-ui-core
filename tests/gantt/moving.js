@@ -573,4 +573,23 @@
     test("does not attach dropTargetArea widget to the list content", function() {
         ok(!gantt.list.content.data("kendoDropTargetArea"));
     });
+
+    module("Gantt editable update false", {
+        setup: function() {
+            element = $("<div/>");
+
+            gantt = new Gantt(element, { editable: { update: false, reorder:true } });
+        },
+        teardown: function() {
+            gantt.destroy();
+        }
+    });
+
+    test("does not attach draggable widget to the list content", function() {
+        ok(!gantt.list.content.data("kendoDraggable"));
+    });
+
+    test("does not attach dropTargetArea widget to the list content", function() {
+        ok(!gantt.list.content.data("kendoDropTargetArea"));
+    });
 }());
