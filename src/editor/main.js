@@ -1135,11 +1135,9 @@
             }
 
             var options = this.options.pdf;
-            var paperSize = options.paperSize;
 
             this._drawPDF(progress)
             .then(function(root) {
-                options.paperSize = "auto";
                 return kendo.drawing.exportPDF(root, options);
             })
             .done(function(dataURI) {
@@ -1149,7 +1147,6 @@
                     proxyURL: options.proxyURL,
                     forceProxy: options.forceProxy
                 });
-                options.paperSize = paperSize;
                 progress.resolve();
             })
             .fail(function(err) {
