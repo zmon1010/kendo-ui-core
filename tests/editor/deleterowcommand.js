@@ -114,4 +114,31 @@ test("exec upon multiple rows", function() {
     equal(editor.value(), "<p>baz</p>");
 });
 
+
+editor_module("editor immutables enabled delete column command", {
+    setup: function() {
+        editor = $("#editor-fixture").data("kendoEditor");
+        editor.options.immutables = true;
+    },
+
+    teardown: function() {
+        kendo.destroy(QUnit.fixture);
+    }
+});
+
+
+test("deleting row in immutable table should not be possible", function() {
+    range = createRangeFromText(editor, '<table contenteditable="false"><tbody><tr><td>foo</td></tr><tr><td>f||oo</td></tr></tbody></table>');
+    execDeleteRowCommand({ range: range });
+    equal(editor.value(), '<table contenteditable="false"><tbody><tr><td>foo</td></tr><tr><td>foo</td></tr></tbody></table>');
+});
+
+
+test("deleting row in table child of immutable element should not be possible", function() {
+    range = createRangeFromText(editor, '<div contenteditable="false"><table><tbody><tr><td>foo</td></tr><tr><td>f||oo</td></tr></tbody></table></div>');
+    execDeleteRowCommand({ range: range });
+    equal(editor.value(), '<div contenteditable="false"><table><tbody><tr><td>foo</td></tr><tr><td>foo</td></tr></tbody></table></div>');
+});
+
+
 }());

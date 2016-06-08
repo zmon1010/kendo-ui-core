@@ -299,7 +299,12 @@ var InsertRowCommand = Command.extend({
             td = td.parentNode;
         }
 
+        if (this.immutables() && Editor.Immutables.immutableParent(td)) {
+            return;
+        }
+
         row = td.parentNode;
+
         cellCount = row.children.length;
         newRow = row.cloneNode(true);
 
@@ -329,6 +334,10 @@ var InsertColumnCommand = Command.extend({
             newCell,
             position = this.options.position;
 
+        if (this.immutables() && Editor.Immutables.immutableParent(td)) {
+            return;
+        }
+
         columnIndex = dom.findNodeIndex(td, true);
 
         for (i = 0; i < rows.length; i++) {
@@ -354,7 +363,13 @@ var DeleteRowCommand = Command.extend({
         var rows = RangeUtils.mapAll(range, function(node) {
             return $(node).closest("tr")[0];
         });
-        var table = dom.closest(rows[0], "table");
+        var row = rows[0];
+
+        if (this.immutables() && Editor.Immutables.immutableParent(row)) {
+            return;
+        }
+
+        var table = dom.closest(row, "table");
         var focusElement;
 
         if (table.rows.length <= rows.length) {
@@ -366,7 +381,7 @@ var DeleteRowCommand = Command.extend({
             dom.remove(table);
         } else {
             for (var i = 0; i < rows.length; i++) {
-                var row = rows[i];
+                row = rows[i];
                 dom.removeTextSiblings(row);
 
                 focusElement = dom.next(row) || dom.prev(row);
@@ -393,6 +408,10 @@ var DeleteColumnCommand = Command.extend({
             columnIndex = dom.findNodeIndex(td, true),
             columnCount = rows[0].cells.length,
             focusElement, i;
+
+        if (this.immutables() && Editor.Immutables.immutableParent(td)) {
+            return;
+        }
 
         if (columnCount == 1) {
             focusElement = dom.next(table);

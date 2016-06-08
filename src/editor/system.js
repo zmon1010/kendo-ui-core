@@ -78,6 +78,10 @@ var Command = Class.extend({
         this.formatter.editor = this.editor;
         this.formatter.toggle(range);
         this.releaseRange(range);
+    },
+
+    immutables: function(){
+        return this.editor && this.editor.options.immutables;
     }
 });
 
@@ -156,10 +160,6 @@ var InsertHtmlCommand = Command.extend({
                 }
             }
         }
-    },
-
-    immutables: function(){
-        return this.editor && this.editor.options.immutables;
     }
 });
 

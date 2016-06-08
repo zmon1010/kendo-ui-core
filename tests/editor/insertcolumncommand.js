@@ -85,4 +85,31 @@ test("insert row after non-table element and cell", function() {
     equal(dom.find("td").text(), "foo");
 });
 
+
+editor_module("editor immutables enabled insert column command", {
+    setup: function() {
+        editor = $("#editor-fixture").data("kendoEditor");
+        editor.options.immutables = true;
+    },
+
+    teardown: function() {
+        kendo.destroy(QUnit.fixture);
+    }
+});
+
+
+test("insert column in immutable table should not be possible", function() {
+    range = createRangeFromText(editor, '<table contenteditable="false"><tbody><tr><td>f||oo</td></tr></tbody></table>');
+    execInsertColumnCommand({ range: range });
+    equal(editor.value(), '<table contenteditable="false"><tbody><tr><td>foo</td></tr></tbody></table>');
+});
+
+
+test("insert column in table child of immutable element should not be possible", function() {
+    range = createRangeFromText(editor, '<div contenteditable="false"><table><tbody><tr><td>f||oo</td></tr></tbody></table></div>');
+    execInsertColumnCommand({ range: range });
+    equal(editor.value(), '<div contenteditable="false"><table><tbody><tr><td>foo</td></tr></tbody></table></div>');
+});
+
+
 }());
