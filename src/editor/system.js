@@ -117,12 +117,12 @@ var InsertHtmlCommand = Command.extend({
         var body = editor.body;
         var startRestorePoint = new RestorePoint(range, body);
         var html = options.html || options.value || '';
-        
-        editor.selectRange(range);
 
-        if (this.trimImmutableContainers(range) === true) {
+        if (this.immutables() && editorNS.Immutables.trimImmutableContainers(range)) {
             return;
         }
+
+        editor.selectRange(range);
 
         editor.clipboard.paste(html, options);
 
@@ -135,31 +135,6 @@ var InsertHtmlCommand = Command.extend({
         editor.undoRedoStack.push(genericCommand);
 
         editor.focus();
-    },
-
-    trimImmutableContainers: function(range) {
-        if (this.immutables()){
-            var immutableParent = editorNS.Immutables.immutableParent;
-            var startImmutableParent = immutableParent(range.startContainer);
-            var endImmutableParent = immutableParent(range.endContainer);
-
-            if (startImmutableParent && startImmutableParent === endImmutableParent){
-                return true;
-            } else if (startImmutableParent || endImmutableParent) {
-                if (startImmutableParent){
-                    range.setStartAfter(startImmutableParent);
-                }
-                if (endImmutableParent){
-                    range.setEndBefore(endImmutableParent);
-                }
-                var nodes = editorNS.RangeUtils.editableTextNodes(range);
-                if (nodes.length === 0){
-                    return true;
-                } else {
-                    this.editor.selectRange(range);
-                }
-            }
-        }
     }
 });
 
@@ -909,6 +884,10 @@ var Clipboard = Class.extend({
             return;
         }
 
+        if (this.trimImmutableContainers()) {
+            return;
+        }
+
         this._contentModification(
             function beforePaste(editor, range) {
                 var clipboardNode = dom.create(editor.document, 'div', {
@@ -962,6 +941,13 @@ var Clipboard = Class.extend({
         );
     },
 
+    trimImmutableContainers: function(){
+        if (this.editor && this.editor.options.immutables) {
+            var range = this.editor.getRange();
+            return editorNS.Immutables.trimImmutableContainers(range) || this.editor.selectRange(range);
+        }
+    },
+
     splittableParent: function(block, node) {
         var parentNode, body;
 
@@ -984,6 +970,10 @@ var Clipboard = Class.extend({
     paste: function (html, options) {
         var editor = this.editor,
             i, l;
+        
+        if (this.trimImmutableContainers()) {
+            return;
+        }
 
         options = extend({ clean: false, split: true }, options);
 

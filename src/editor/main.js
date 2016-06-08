@@ -709,7 +709,6 @@
 
             if (that.options.immutables){
                 that.immutables = new editorNS.Immutables(that);
-                that.immutables.bindEvents();
             }
         },
 

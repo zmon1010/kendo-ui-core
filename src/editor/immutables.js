@@ -5,11 +5,8 @@
 (function($, undefined) {
     var kendo = window.kendo,
         Class = kendo.Class,
-        extend = $.extend,
-        proxy = $.proxy,
         Editor = kendo.ui.editor,
         dom = Editor.Dom,
-        EditorUtils = Editor.EditorUtils,
         RangeUtils = Editor.RangeUtils;
 
     var rootCondition = function(node) {
@@ -23,19 +20,36 @@
     var immutableParent = function (node) {
         return dom.closestBy(node, immutable, rootCondition);
     };
+
+    var trimImmutableContainers = function(range) {
+        var startImmutableParent = immutableParent(range.startContainer);
+        var endImmutableParent = immutableParent(range.endContainer);
+        var rangeInImmutable = false;
+
+        if (startImmutableParent && startImmutableParent === endImmutableParent){
+            rangeInImmutable = true;
+        } else if (startImmutableParent || endImmutableParent) {
+            if (startImmutableParent){
+                range.setStartAfter(startImmutableParent);
+            }
+            if (endImmutableParent){
+                range.setEndBefore(endImmutableParent);
+            }
+
+            var nodes = RangeUtils.editableTextNodes(range);
+            if (nodes.length === 0){
+                rangeInImmutable = true;
+            }
+        }
+
+        return rangeInImmutable;
+    };
     
     var Immutables = Class.extend({
         init: function (editor) {
             this.editor = editor;
         },
-        
-        bindEvents: function(){
-            this.editor.bind('execute', proxy(this._executeHandler, this));
-        },
-        
-        _executeHandler: function(e){ 
-        },
-        
+
         keydown: function(e, range) {
             if (this._cancelTyping(e, range) || this._cancelDeleting(e, range)) {
                 e.preventDefault();
@@ -52,8 +66,6 @@
         },
         
         _cancelDeleting: function(e, range) {
-            var editor = this.editor;
-            var keyboard = editor.keyboard;
             var keys = kendo.keys;
             var backspace = e.keyCode === keys.BACKSPACE;
             var del = e.keyCode == keys.DELETE;
@@ -111,6 +123,7 @@
 
     Immutables.immutable = immutable;
     Immutables.immutableParent = immutableParent;
+    Immutables.trimImmutableContainers = trimImmutableContainers;
     
     Editor.Immutables = Immutables;
 })(window.kendo.jQuery);
