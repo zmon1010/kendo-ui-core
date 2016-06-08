@@ -401,6 +401,32 @@
         ok(gantt._editor.container.is(":visible"));
     });
 
+    test("destroy button rendered", function() {
+        var gantt = setup();
+        var removeTask = stub(gantt, "removeTask");
+
+        gantt.editTask(gantt.dataSource.at(0).uid);
+
+        var destroyButton = gantt._editor.container.find("a.k-gantt-delete");
+
+        equal(destroyButton.length, 1);
+    });
+
+    test("destroy button not rendered when editable destroy false", function() {
+        var gantt = setup({
+                editable: {
+                    destroy: false
+                }
+            });
+        var removeTask = stub(gantt, "removeTask");
+
+        gantt.editTask(gantt.dataSource.at(0).uid);
+
+       var destroyButton = gantt._editor.container.find("a.k-gantt-delete");
+
+       equal(destroyButton.length,0);
+    });
+
     test("clicking destroy button calls removeTask", function() {
         var gantt = setup();
         var removeTask = stub(gantt, "removeTask");
