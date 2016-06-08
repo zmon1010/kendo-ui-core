@@ -7414,7 +7414,6 @@ var __meta__ = { // jshint ignore:line
                 current = $(that.current()),
                 isCurrentInHeader = false,
                 groups = (that.dataSource.group() || []).length,
-                offsetLeft = that.content && that.content.scrollLeft(),
                 colspan = groups + visibleLeafColumns(visibleColumns(that.columns)).length;
 
             if (e && e.action === "itemchange" && that.editable) { // skip rebinding if editing is in progress
@@ -7467,7 +7466,7 @@ var __meta__ = { // jshint ignore:line
 
             that._setContentHeight();
 
-            that._setContentWidth(offsetLeft);
+            that._setContentWidth(that.content && that.content.scrollLeft());
 
             if (that.lockedTable) {
                 //requires manual trigger of scroll to sync both tables
