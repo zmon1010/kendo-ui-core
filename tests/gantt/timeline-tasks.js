@@ -632,10 +632,10 @@
         ok(!taskWrap.find(".k-task-draghandle").length);
     });
 
-    test("progress drag handle not rendered when editable percentComplete is false", function() {
+    test("progress drag handle not rendered when editable dragPercentComplete is false", function() {
         var taskWrap;
 
-        timeline.view().options.editable = { percentComplete: false };
+        timeline.view().options.editable = { dragPercentComplete: false };
 
         renderTask();
 

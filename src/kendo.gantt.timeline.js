@@ -581,7 +581,7 @@ var __meta__ = { // jshint ignore:line
                 taskWrapper.children.push(kendoDomElement("div", { className: styles.taskDot + " " + styles.taskDotEnd }));
             }
 
-            if (!task.summary && !task.isMilestone() && editable && editable.percentComplete !== false && this._taskTemplate === null) {
+            if (!task.summary && !task.isMilestone() && editable && editable.dragPercentComplete !== false && this._taskTemplate === null) {
                 progressHandleOffset = Math.round(position.width * task.percentComplete);
 
                 dragHandleStyle[isRtl ? "right" : "left"] = progressHandleOffset + "px";
@@ -2292,7 +2292,7 @@ var __meta__ = { // jshint ignore:line
                     .css(isRtl ? "right" : "left", width);
             };
 
-            if (!editable || editable.percentComplete === false || editable.update === false) {
+            if (!editable || editable.dragPercentComplete === false || editable.update === false) {
                 return;
             }
 

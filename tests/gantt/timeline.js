@@ -249,8 +249,8 @@
         ok(!timeline._percentDraggable);
     });
 
-    test("editable percendComplete treu update false does not initialize percent resize draggable", function() {
-        timeline = new Timeline(element, { editable: { percentComplete: true, update: false } });
+    test("editable dragPercentComplete treu update false does not initialize percent resize draggable", function() {
+        timeline = new Timeline(element, { editable: { dragPercentComplete: true, update: false } });
 
         ok(!timeline._percentDraggable);
     });
