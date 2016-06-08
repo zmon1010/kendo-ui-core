@@ -644,6 +644,18 @@
         ok(!taskWrap.find(".k-task-draghandle").length);
     });
 
+    test("progress drag handle not rendered when editable dragPercentComplete is true and update is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { dragPercentComplete: true, update: false  };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-draghandle").length);
+    });
+
     test("width of one hour task is equal to one slot in DayView", function() {
         var taskElement;
         var taskSlot;
