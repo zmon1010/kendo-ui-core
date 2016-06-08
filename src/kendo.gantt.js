@@ -1828,11 +1828,12 @@ var __meta__ = { // jshint ignore:line
 
         _actions: function() {
             var options = this.options;
+            var editable = options.editable;
             var actions = options.toolbar;
             var html = "";
 
             if (!isArray(actions)) {
-                if (options.editable) {
+                if (editable && editable.create !== false) {
                     actions = ["append"];
                 } else {
                     return html;
@@ -1847,7 +1848,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         _footer: function() {
-            if (!this.options.editable) {
+            var editable = this.options.editable;
+
+            if (!editable || editable.create === false) {
                 return;
             }
 
@@ -1985,7 +1988,7 @@ var __meta__ = { // jshint ignore:line
                 that._createTask(task, orderId);
             };
 
-            if (!this.options.editable) {
+            if (!this.options.editable || this.options.editable.create === false) {
                 return;
             }
 
