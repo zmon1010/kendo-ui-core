@@ -213,8 +213,32 @@
         ok(!timeline._moveDraggable);
     });
 
+    test("editable move false does not initialize task draggable", function() {
+        timeline = new Timeline(element, { editable: { move:false } });
+
+        ok(!timeline._moveDraggable);
+    });
+
+    test("editable move true update false does not initialize task draggable", function() {
+        timeline = new Timeline(element, { editable: { move: true, update: false } });
+
+        ok(!timeline._moveDraggable);
+    });
+
     test("editable false does not initialize resize draggable", function() {
         timeline = new Timeline(element, { editable: false });
+
+        ok(!timeline._resizeDraggable);
+    });
+
+    test("editable resize false does not initialize resize draggable", function() {
+        timeline = new Timeline(element, { editable: { resize: false } });
+
+        ok(!timeline._resizeDraggable);
+    });
+
+    test("editable update false does not initialize resize draggable", function() {
+        timeline = new Timeline(element, { editable: { update:false, resize: true } });
 
         ok(!timeline._resizeDraggable);
     });
@@ -225,8 +249,20 @@
         ok(!timeline._percentDraggable);
     });
 
+    test("editable dragPercentComplete treu update false does not initialize percent resize draggable", function() {
+        timeline = new Timeline(element, { editable: { dragPercentComplete: true, update: false } });
+
+        ok(!timeline._percentDraggable);
+    });
+
     test("editable false does not initialize dependency draggable", function() {
         timeline = new Timeline(element, { editable: false });
+
+        ok(!timeline._dependencyDraggable);
+    });
+
+    test("editable dependancyCreate false does not initialize dependency draggable", function() {
+        timeline = new Timeline(element, { editable: { dependencyCreate: false } });
 
         ok(!timeline._dependencyDraggable);
     });

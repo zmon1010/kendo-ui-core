@@ -256,6 +256,24 @@
 
     });
 
+    test("dblclicking on task does not call editTask when non-editable", function() {
+        var gantt = setup({editable:false});
+        var editTask = stub(gantt, "editTask");
+
+        gantt.wrapper.find(".k-task").first().dblclick();
+
+        equal(editTask.calls("editTask"), 0);
+    });
+
+    test("dblclicking on task does not call editTask when editable update is false", function() {
+        var gantt = setup({ editable: { update: false } });
+        var editTask = stub(gantt, "editTask");
+
+        gantt.wrapper.find(".k-task").first().dblclick();
+
+        equal(editTask.calls("editTask"), 0);
+    });
+
     test("editTask creates window instance", function() {
         var gantt = setup();
 
@@ -399,6 +417,32 @@
         gantt._editor.container.parent().find(".k-i-close").click();
 
         ok(gantt._editor.container.is(":visible"));
+    });
+
+    test("destroy button rendered", function() {
+        var gantt = setup();
+        var removeTask = stub(gantt, "removeTask");
+
+        gantt.editTask(gantt.dataSource.at(0).uid);
+
+        var destroyButton = gantt._editor.container.find("a.k-gantt-delete");
+
+        equal(destroyButton.length, 1);
+    });
+
+    test("destroy button not rendered when editable destroy false", function() {
+        var gantt = setup({
+                editable: {
+                    destroy: false
+                }
+            });
+        var removeTask = stub(gantt, "removeTask");
+
+        gantt.editTask(gantt.dataSource.at(0).uid);
+
+       var destroyButton = gantt._editor.container.find("a.k-gantt-delete");
+
+       equal(destroyButton.length,0);
     });
 
     test("clicking destroy button calls removeTask", function() {

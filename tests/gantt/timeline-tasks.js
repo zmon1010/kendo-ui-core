@@ -465,6 +465,19 @@
         ok(!taskWrap.find(".k-task-end").length);
     });
 
+    test("dependency drag handles not rendered when editable.dependencyCreate is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { dependencyCreate: false };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+    });
+
     test("task element rendered", function() {
         var taskWrap;
 
@@ -524,6 +537,19 @@
         ok(!taskWrap.find(".k-task-content .k-task-actions .k-task-delete .k-si-close").length);
     });
 
+    test("delete button not rendered when editable destroy is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { destroy: false };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-content .k-task-actions .k-task-delete").length);
+        ok(!taskWrap.find(".k-task-content .k-task-actions .k-task-delete .k-si-close").length);
+    });
+
     test("resize handles rendered", function() {
         var taskWrap;
 
@@ -539,6 +565,32 @@
         var taskWrap;
 
         timeline.view().options.editable = false;
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-content .k-resize-handle.k-resize-w").length);
+        ok(!taskWrap.find(".k-task-content .k-resize-handle.k-resize-e").length);
+    });
+
+    test("resize handles not rendered when editable resize is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { resize: false };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-content .k-resize-handle.k-resize-w").length);
+        ok(!taskWrap.find(".k-task-content .k-resize-handle.k-resize-e").length);
+    });
+
+    test("resize handles not rendered when editable update is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { update:false, resize: true };
 
         renderTask();
 
@@ -580,6 +632,29 @@
         ok(!taskWrap.find(".k-task-draghandle").length);
     });
 
+    test("progress drag handle not rendered when editable dragPercentComplete is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { dragPercentComplete: false };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-draghandle").length);
+    });
+
+    test("progress drag handle not rendered when editable dragPercentComplete is true and update is false", function() {
+        var taskWrap;
+
+        timeline.view().options.editable = { dragPercentComplete: true, update: false  };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-draghandle").length);
+    });
 
     test("width of one hour task is equal to one slot in DayView", function() {
         var taskElement;

@@ -321,6 +321,32 @@
         ok(gantt.calls("removeTask"));
     });
 
+    test("delete does not remove selected task when editable false", 1, function() {
+        var content = gantt.list.content;
+
+        gantt.options.editable = false;
+
+        focusTable();
+        gantt.select("tr:first");
+        stub(gantt, "removeTask");
+        keyDown(content.find("table"), keys.DELETE);
+
+        ok(!gantt.calls("removeTask"));
+    });
+
+    test("delete does not remove selected task when editable destroy false", 1, function() {
+        var content = gantt.list.content;
+
+        gantt.options.editable = { destroy: false };
+
+        focusTable();
+        gantt.select("tr:first");
+        stub(gantt, "removeTask");
+        keyDown(content.find("table"), keys.DELETE);
+
+        ok(!gantt.calls("removeTask"));
+    });
+
     test("delete does not call removeTask when no selection", function() {
         var content = gantt.list.content;
 

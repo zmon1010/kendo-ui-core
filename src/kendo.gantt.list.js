@@ -573,6 +573,7 @@ var __meta__ = { // jshint ignore:line
 
         _editable: function() {
             var that = this;
+            var editable = this.options.editable;
             var listStyles = GanttList.styles;
             var iconSelector = "span." + listStyles.icon + ":not(" + listStyles.iconHidden +")";
             var finishEdit = function() {
@@ -594,7 +595,7 @@ var __meta__ = { // jshint ignore:line
                 }
             };
 
-            if (!this.options.editable) {
+            if (!editable || editable.update === false) {
                 return;
             }
 
@@ -795,6 +796,7 @@ var __meta__ = { // jshint ignore:line
             var isRtl = kendo.support.isRtl(this.element);
             var selector = 'tr[' + kendo.attr("level") + ' = 0]:last';
             var action = {};
+            var editable = this.options.editable;
             var clear = function() {
                 draggedTask = null;
                 dropTarget = null;
@@ -856,7 +858,7 @@ var __meta__ = { // jshint ignore:line
                             .removeClass(listStyles.dropPositions);
             };
 
-            if (!this.options.editable) {
+            if (!editable || editable.reorder === false || editable.update === false) {
                 return;
             }
 
@@ -882,7 +884,9 @@ var __meta__ = { // jshint ignore:line
                     cursorOffset: { top: -20, left: 0 },
                     container: this.content,
                     "dragstart": function(e) {
-                        if (that.editable && that.editable.trigger("validate")) {
+                        var editable = that.editable;
+
+                        if (editable && editable.reorder !== false && editable.trigger("validate")) {
                             e.preventDefault();
                             return;
                         }

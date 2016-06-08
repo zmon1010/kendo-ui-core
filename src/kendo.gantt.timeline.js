@@ -576,12 +576,12 @@ var __meta__ = { // jshint ignore:line
                 taskElement
             ]);
 
-            if (editable) {
+            if (editable && editable.dependencyCreate !== false) {
                 taskWrapper.children.push(kendoDomElement("div", { className: styles.taskDot + " " + styles.taskDotStart }));
                 taskWrapper.children.push(kendoDomElement("div", { className: styles.taskDot + " " + styles.taskDotEnd }));
             }
 
-            if (!task.summary && !task.isMilestone() && editable && this._taskTemplate === null) {
+            if (!task.summary && !task.isMilestone() && editable && editable.dragPercentComplete !== false && editable.update !== false && this._taskTemplate === null) {
                 progressHandleOffset = Math.round(position.width * task.percentComplete);
 
                 dragHandleStyle[isRtl ? "right" : "left"] = progressHandleOffset + "px";
@@ -596,6 +596,7 @@ var __meta__ = { // jshint ignore:line
             var progressWidth = Math.round(position.width * task.percentComplete);
             var taskChildren = [];
             var taskContent;
+            var editable = this.options.editable;
 
             if (this._taskTemplate !== null) {
                 taskContent = kendoHtmlElement(this._taskTemplate(task));
@@ -612,16 +613,19 @@ var __meta__ = { // jshint ignore:line
 
             taskChildren.push(content);
 
-            if (this.options.editable) {
-                content.children.push(kendoDomElement("span", { className: styles.taskActions }, [
-                    kendoDomElement("a", { className: styles.link + " " + styles.taskDelete, href: "#" }, [
-                        kendoDomElement("span", { className: styles.icon + " " + styles.iconDelete })
-                    ])
-                ]));
+            if (editable) {
+                if (editable.destroy !== false) {
+                    content.children.push(kendoDomElement("span", { className: styles.taskActions }, [
+                        kendoDomElement("a", { className: styles.link + " " + styles.taskDelete, href: "#" }, [
+                            kendoDomElement("span", { className: styles.icon + " " + styles.iconDelete })
+                        ])
+                    ]));
+                }
 
-                content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleWest }));
-
-                content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleEast }));
+                if (editable.resize !== false && editable.update !== false) {
+                    content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleWest }));
+                    content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleEast }));
+                }
             }
 
             var element = kendoDomElement("div", {
@@ -2087,6 +2091,7 @@ var __meta__ = { // jshint ignore:line
             var startOffset;
             var snap = this.options.snap;
             var styles = GanttTimeline.styles;
+            var editable = this.options.editable;
 
             var cleanUp = function() {
                 that.view()._removeDragHint();
@@ -2100,7 +2105,7 @@ var __meta__ = { // jshint ignore:line
                 that.dragInProgress = false;
             };
 
-            if (!this.options.editable) {
+            if (!editable || editable.move === false || editable.update === false) {
                 return;
             }
 
@@ -2173,6 +2178,7 @@ var __meta__ = { // jshint ignore:line
             var resizeStart;
             var snap = this.options.snap;
             var styles = GanttTimeline.styles;
+            var editable = this.options.editable;
 
             var cleanUp = function() {
                 that.view()._removeResizeHint();
@@ -2181,7 +2187,7 @@ var __meta__ = { // jshint ignore:line
                 that.dragInProgress = false;
             };
 
-            if (!this.options.editable) {
+            if (!editable || editable.resize === false || editable.update === false) {
                 return;
             }
 
@@ -2268,6 +2274,7 @@ var __meta__ = { // jshint ignore:line
             var tooltipLeft;
             var styles = GanttTimeline.styles;
             var delta;
+            var editable = this.options.editable;
 
             var cleanUp = function() {
                 that.view()._removePercentCompleteTooltip();
@@ -2285,7 +2292,7 @@ var __meta__ = { // jshint ignore:line
                     .css(isRtl ? "right" : "left", width);
             };
 
-            if (!this.options.editable) {
+            if (!editable || editable.dragPercentComplete === false || editable.update === false) {
                 return;
             }
 
@@ -2363,6 +2370,7 @@ var __meta__ = { // jshint ignore:line
             var startY;
             var useVML = browser.msie && browser.version < 9;
             var styles = GanttTimeline.styles;
+            var editable = this.options.editable;
 
             var cleanUp = function() {
                 originalHandle
@@ -2389,7 +2397,7 @@ var __meta__ = { // jshint ignore:line
                 }
             };
 
-            if (!this.options.editable) {
+            if (!editable || editable.dependencyCreate === false) {
                 return;
             }
 
@@ -2571,8 +2579,9 @@ var __meta__ = { // jshint ignore:line
         _attachEvents: function() {
             var that = this;
             var styles = GanttTimeline.styles;
+            var editable = this.options.editable;
 
-            if (this.options.editable) {
+            if (editable) {
                 this._tabindex();
 
                 this.wrapper
@@ -2583,8 +2592,9 @@ var __meta__ = { // jshint ignore:line
                     })
                     .on(KEYDOWN + NS, function(e) {
                         var selectedDependency;
+                        var editable = that.options.editable;
 
-                        if (e.keyCode === keys.DELETE) {
+                        if (e.keyCode === keys.DELETE && editable && editable.dependencyDestroy !== false) {
                             selectedDependency = that.selectDependency();
 
                             if (selectedDependency.length) {
@@ -2597,17 +2607,21 @@ var __meta__ = { // jshint ignore:line
                 if (!kendo.support.mobileOS) {
                     this.wrapper
                         .on(DBLCLICK + NS, DOT + styles.task, function(e) {
-                            that.trigger("editTask", { uid: $(this).attr("data-uid") });
+                            if (that.options.editable.update !== false) {
+                                that.trigger("editTask", { uid: $(this).attr("data-uid") });
 
-                            e.stopPropagation();
-                            e.preventDefault();
+                                e.stopPropagation();
+                                e.preventDefault();
+                            }
                         });
                 } else {
                     this.touch = this.wrapper
                         .kendoTouch({
                             filter: DOT + styles.task,
                             doubletap: function(e) {
-                                that.trigger("editTask", { uid: $(e.touch.currentTarget).attr("data-uid") });
+                                if (that.options.editable.update !== false) {
+                                    that.trigger("editTask", { uid: $(e.touch.currentTarget).attr("data-uid") });
+                                }
                             }
                         }).data("kendoTouch");
                 }
