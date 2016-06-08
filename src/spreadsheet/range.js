@@ -379,7 +379,7 @@
                     }
                 }
 
-                this._sheet.triggerChange({ recalc: true });
+                this._sheet.triggerChange({ recalc: true, ref: ref });
 
                 return this;
             }
