@@ -143,6 +143,14 @@ var ImageCommand = Command.extend({
                 resizable: showBrowser
             };
 
+        if (this.immutables() && Editor.Immutables.trimImmutableContainers(range)) {
+            dom.windowFromDocument(RangeUtils.documentFromRange(range)).focus();
+            if (!applied) {
+                that.releaseRange(range);
+            }
+            return;
+        }
+
         function apply(e) {
             var element = dialog.element,
                 w = parseInt(element.find(KEDITORIMAGEWIDTH).val(), 10),
