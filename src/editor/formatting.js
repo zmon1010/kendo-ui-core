@@ -219,11 +219,15 @@ var CleanFormatCommand = Command.extend({
 
 
         for(var c = nodes.length - 1; c >= 0; c--) {
-            this.clean(nodes[c]);
+            var node = nodes[c];
+            if (!this.immutableParent(node)) {
+                this.clean(node);
+            }
         }
 
         this.releaseRange(range);
     },
+
     clean: function(node) {
         if (!node || dom.isMarker(node)) {
             return;
@@ -258,6 +262,10 @@ var CleanFormatCommand = Command.extend({
         if ($.inArray(name, this.tagsToClean) > -1) {
             dom.unwrap(node);
         }
+    },
+
+    immutableParent: function(node) {
+        return this.immutables() && Editor.Immutables.immutableParent(node);
     }
 });
 
