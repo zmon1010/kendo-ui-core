@@ -113,6 +113,14 @@ var FileCommand = Command.extend({
                 resizable: showBrowser
             };
 
+        if (this.immutables() && Editor.Immutables.trimImmutableContainers(range)) {
+            dom.windowFromDocument(RangeUtils.documentFromRange(range)).focus();
+            if (!applied) {
+                that.releaseRange(range);
+            }
+            return;
+        }
+
         function apply(e) {
             var element = dialog.element,
                 href = element.find(KEDITORFILEURL).val().replace(/ /g, "%20"),
