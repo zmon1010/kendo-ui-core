@@ -339,10 +339,20 @@
 
             $(editor.body)
                 .on(MOUSE_ENTER + NS, TABLE, function(e) {
-                    editor.tableResizing = new kendo.ui.editor.TableResizing(e.currentTarget, {});
-                })
-                .on(MOUSE_LEAVE + NS, TABLE, function(e) { // jshint ignore:line
+                    var table = e.currentTarget;
+
                     if (editor.tableResizing) {
+                        if (editor.tableResizing.element !== table) {
+                            editor.tableResizing.destroy();
+                            editor.tableResizing = new kendo.ui.editor.TableResizing(table, {});
+                        }
+                    }
+                    else {
+                        editor.tableResizing = new kendo.ui.editor.TableResizing(table, {});
+                    }
+                })
+                .on(MOUSE_LEAVE + NS, TABLE, function() {
+                    if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
                         editor.tableResizing.destroy();
                         editor.tableResizing = null;
                     }

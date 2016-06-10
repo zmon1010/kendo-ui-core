@@ -4,7 +4,6 @@
 
 (function(kendo, undefined) {
     var global = window;
-    var Infinity = global.Infinity;
     var math = global.Math;
     var min = math.min;
     var max = math.max;
@@ -22,7 +21,6 @@
     var RESIZE_HANDLE_CLASS = ".k-resize-handle";
     var COLUMN = "column";
     var COMMA = ",";
-    var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
     var TABLE = "table";
     var TD = "td";
@@ -53,13 +51,23 @@
             
             if (columnResizing) {
                 columnResizing.destroy();
-                //that.columnResizing = null;
+                that.columnResizing = null;
             }
 
             if (element) {
                 $(element).off(NS);
                 that.element = null;
             }
+        },
+
+        resizingInProgress: function() {
+            var that = this;
+
+            if (that.columnResizing) {
+                return !!that.columnResizing.resizingInProgress();
+            }
+
+            return false;
         }
     });
 
@@ -190,8 +198,8 @@
 
             that.resizable = $(column).kendoResizable({
                 handle: RESIZE_HANDLE_CLASS,
-                start: function(e) {
-                    var resizable = this;;
+                start: function() {
+                    var resizable = this;
 
                     resizable.initialWidth = resizable.element.outerWidth();
                 },

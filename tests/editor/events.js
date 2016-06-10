@@ -338,10 +338,6 @@ test("mouseenter event is attached to tables inside editor body", function() {
     assertEvent(editor.body, { type: "mouseenter", selector: "table", namespace: "kendoEditor" });
 });
 
-test("mouseleave event is attached to tables inside editor body", function() {
-    assertEvent(editor.body, { type: "mouseleave", selector: "table", namespace: "kendoEditor" });
-});
-
 test("mouseenter events are detached from editor body on destroy", function() {
     editor.destroy();
 

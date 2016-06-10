@@ -150,15 +150,6 @@
         assertEvent(table, { type: MOUSE_MOVE, selector: "th,td", namespace: NS });
     });
 
-    test("mouseleave handlers should stop propagation on cells", function() {
-        var event = $.Event(MOUSE_LEAVE, {});
-        columnResizing = new ColumnResizing(table, {});
-
-        $(table).find("td:first").trigger(event);
-
-        ok(event.isPropagationStopped());
-    });
-
     module("editor column resizing", {
         setup: function() {
             table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
