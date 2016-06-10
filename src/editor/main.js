@@ -339,10 +339,20 @@
 
             $(editor.body)
                 .on(MOUSE_ENTER + NS, TABLE, function(e) {
-                    editor.tableResizing = new kendo.ui.editor.TableResizing(e.currentTarget, {});
-                })
-                .on(MOUSE_LEAVE + NS, TABLE, function(e) { // jshint ignore:line
+                    var table = e.currentTarget;
+
                     if (editor.tableResizing) {
+                        if (editor.tableResizing.element !== table) {
+                            editor.tableResizing.destroy();
+                            editor.tableResizing = new kendo.ui.editor.TableResizing(table, {});
+                        }
+                    }
+                    else {
+                        editor.tableResizing = new kendo.ui.editor.TableResizing(table, {});
+                    }
+                })
+                .on(MOUSE_LEAVE + NS, TABLE, function() {
+                    if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
                         editor.tableResizing.destroy();
                         editor.tableResizing = null;
                     }
@@ -418,11 +428,11 @@
                     "a{color:#00a}" +
                     "code{font-size:1.23em}" +
                     "telerik\\3Ascript{display: none;}" +
-                    ".k-table{table-layout:fixed;width:100%;border-spacing:0;margin: 0 0 1em;}" +
+                    ".k-table{width:100%;border-spacing:0;margin: 0 0 1em;}" +
                     ".k-table td{min-width:1px;padding:.2em .3em;}" +
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
-                    ".k-resize-handle{position:absolute;height: 25px;cursor:col-resize;z-index:2;}" +
+                    ".k-table .k-resize-handle{position:absolute;height: 25px;cursor:col-resize;z-index:2;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +

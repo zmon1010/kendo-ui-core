@@ -1,11 +1,11 @@
 (function() {
     var TableResizing = kendo.ui.editor.TableResizing;
+    var ColumnResizing = kendo.ui.editor.ColumnResizing;
     var editor;
-    var content;
     var table;
     var tableResizing;
-    var wrapper;
     var DOT = ".";
+    var HANDLE_SELECTOR = ".k-resize-handle";
     var NS = "kendoEditor";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
@@ -28,7 +28,7 @@
                 '<td id="col33" class="col">+col 33</td>' +
             '</tr>' +
         '</table>';
-    var CONTENT_HTML = '<div id="wrappe">' + TABLE_HTML + '</div>';
+    var CONTENT_HTML = '<div id="wrapper">' + TABLE_HTML + '</div>';
 
     function triggerEvent(element, eventOptions) {
         var options = $.extend({
@@ -43,15 +43,15 @@
     editor_module("editor table resizing", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
+            editor.tableResizing = null;
             $(editor.body).append($(CONTENT_HTML)[0]);
-            content = $(CONTENT_HTML).appendTo(QUnit.fixture)[0];
-            table = $(QUnit.fixture).find("#table")[0];
-            wrapper = $(QUnit.fixture).find("#wrapper")[0];
+            $(TABLE_HTML).attr("id", "table2").appendTo(editor.body)[0];
+            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
         },
 
         afterEach: function() {
             if (editor) {
-                editor.body.remove("*");
+                $(editor.body).find("*").remove();
             }
             removeMocksIn(editor.tableResizing);
             kendo.destroy(QUnit.fixture);
@@ -82,30 +82,67 @@
         deepEqual(editor.tableResizing.options, {});
     });
 
-    test("hovering out of a table should call table resizing destroy", function() {
+    test("hovering a different table should destroy current table resizing", function() {
         var table = $(editor.body).find("#table")[0];
-        editor.tableResizing = tableResizing = new TableResizing(table, {});
+        var newTable = $(editor.body).find("#table2")[0];
+        var tableResizing = editor.tableResizing = new TableResizing(table, {});
         trackMethodCall(tableResizing, "destroy");
 
-        triggerEvent(table, { type: MOUSE_LEAVE });
+        triggerEvent(newTable, { type: MOUSE_ENTER });
 
         equal(tableResizing.destroy.callCount, 1);
-
     });
 
-    test("hovering out of a table should remove table resizing", function() {
+    test("hovering the same table twice should not destroy current table resizing", function() {
+        var table = $(editor.body).find("#table")[0];
+        var tableResizing = editor.tableResizing = new TableResizing(table, {});
+        trackMethodCall(tableResizing, "destroy");
+
+        triggerEvent(table, { type: MOUSE_ENTER });
+
+        equal(tableResizing.destroy.callCount, 0);
+    });
+
+    test("moving out of a table should destroy table resizing", function() {
         var table = $(editor.body).find("#table")[0];
         editor.tableResizing = new TableResizing(table, {});
+        editor.tableResizing.resizingInProgress = function() { return false; };
+        var mock = editor.tableResizing;
+        trackMethodCall(mock, "destroy");
 
         triggerEvent(table, { type: MOUSE_LEAVE });
 
+        ok(mock.destroy.callCount === 1);
         ok(editor.tableResizing === null);
     });
 
+    test("moving out of a table should not destroy table resizing if resizing is in progress", function() {
+        var table = $(editor.body).find("#table")[0];
+        editor.tableResizing = new TableResizing(table, {});
+        editor.tableResizing.resizingInProgress = function() { return true; };
+        trackMethodCall(editor.tableResizing, "destroy");
+
+        triggerEvent(table, { type: MOUSE_LEAVE });
+
+        equal(editor.tableResizing.destroy.callCount, 0);
+    });
+
+    module("editor table resizing", {
+        setup: function() {
+            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+        },
+
+        teardown: function() {
+            if (tableResizing) {
+                tableResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
     test("table resizing should be initialized with custom options", function() {
-        var options = {
-            property: "value"
-        };
+        var options = { property: "value" };
+
         tableResizing = new TableResizing(table, options);
 
         ok(tableResizing.options, options);
@@ -129,10 +166,22 @@
         equal(tableResizing.columnResizing.element, table);
     });
 
+    module("editor table resizing", {
+        setup: function() {
+            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+        },
+
+        teardown: function() {
+            if (tableResizing) {
+                tableResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
     test("destroy should call column resizing destory", function() {
-        var columnResizing;
         tableResizing = new TableResizing(table, {});
-        columnResizing = tableResizing.columnResizing;
+        var columnResizing = tableResizing.columnResizing;
         trackMethodCall(columnResizing, "destroy");
 
         tableResizing.destroy();
@@ -144,5 +193,35 @@
         tableResizing.destroy();
 
         ok(jQueryEvents(tableResizing.element) === undefined);
+    });
+
+    module("editor table resizing", {
+        setup: function() {
+            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableResizing = new TableResizing(table, {});
+        },
+
+        teardown: function() {
+            if (tableResizing) {
+                tableResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("resizingInProgress should be true while resizing columns", function() {
+        var columnResizing = tableResizing.columnResizing = new ColumnResizing(tableResizing.element, {});
+
+        columnResizing.resizable = { resizing: true, destroy: $.noop };
+
+        ok(tableResizing.resizingInProgress() === true);
+    });
+
+    test("resizingInProgress should be false when column resizing is stopped", function() {
+        var columnResizing = tableResizing.columnResizing = new ColumnResizing(tableResizing.element, {});
+
+        columnResizing.resizable = { resizing: false, destroy: $.noop };
+
+        ok(tableResizing.resizingInProgress() === false);
     });
 })();
