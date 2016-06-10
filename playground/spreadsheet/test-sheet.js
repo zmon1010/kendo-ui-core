@@ -136,3 +136,5 @@ sheet.range("A5").format("@");
 sheet.range("A5").input("1/2/2016");
 sheet.range("B5").input("=A5+1");
 console.log(sheet.range("A5").value());
+
+sheet.range("A15").format(" _(* #,##0.00_);_(* (#,##0.00);_(* \"\"-\"\"_)").value(1231231231);
