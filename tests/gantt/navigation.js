@@ -280,6 +280,30 @@
         ok(gantt.list.calls("_startEditHandler"));
     });
 
+    test("enter does not trigger edit when non editable", function () {
+        var content = gantt.list.content;
+
+        gantt.options.editable = false;
+
+        focusTable();
+        stub(gantt.list, "_startEditHandler");
+        keyDown(content.find("table"), keys.ENTER);
+
+        ok(!gantt.list.calls("_startEditHandler"));
+    });
+
+    test("enter does not trigger edit when editable update is false", function () {
+        var content = gantt.list.content;
+
+        gantt.options.editable = { update: false };
+
+        focusTable();
+        stub(gantt.list, "_startEditHandler");
+        keyDown(content.find("table"), keys.ENTER);
+
+        ok(!gantt.list.calls("_startEditHandler"));
+    });
+
     test("enter stopPropagation upon keyup", function() {
         var content = gantt.list.content;
         var eventInfo = {

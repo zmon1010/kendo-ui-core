@@ -3200,7 +3200,7 @@ var __meta__ = { // jshint ignore:line
                         case keys.ENTER:
                             e.preventDefault();
                             if (isCell) {
-                                if (that.options.editable) {
+                                if (that.options.editable && that.options.editable.update !== false) {
                                     that._cachedCurrent = that.current;
                                     that.list._startEditHandler(that.current);
                                     $(this).one("keyup", function(e) {
