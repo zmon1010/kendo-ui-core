@@ -272,7 +272,7 @@
                 "mouseup": function() { that._mouseup(); }
             });
 
-            that._initializeImmutableElements();
+            that._initializeImmutables();
 
             that.toolbar.resize();
 
@@ -703,7 +703,7 @@
             });
         },
 
-        _initializeImmutableElements: function(){
+        _initializeImmutables: function(){
             var that = this,
                 editorNS = kendo.ui.editor;
 
@@ -894,14 +894,24 @@
             var body = this.body,
                 editorNS = kendo.ui.editor,
                 options = this.options,
-                currentHtml = editorNS.Serializer.domToXhtml(body, options.serialization);
+                immutables = this.immutables,
+                currentHtml;
 
+            if (this._serializeImmutables) {
+                $.extend(options.serialization, { immutables: immutables });
+            }
+
+            currentHtml = editorNS.Serializer.domToXhtml(body, options.serialization);
             if (html === undefined) {
                 return currentHtml;
             }
 
             if (html == currentHtml) {
                 return;
+            }
+
+            if (this._deserializeImmutables) {
+                $.extend(options.deserialization, { immutables: immutables });
             }
 
             editorNS.Serializer.htmlToDom(html, body, options.deserialization);

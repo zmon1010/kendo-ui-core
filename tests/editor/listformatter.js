@@ -133,7 +133,7 @@ test("apply over paragraph containing whitespace", function() {
 var immutableHtml = '<p contenteditable="false">immutable</p>';
 var setupImmutables = function() {
     editor.options.immutables = true;
-    editor._initializeImmutableElements();
+    editor._initializeImmutables();
     formatter.editor = editor;
 };
 

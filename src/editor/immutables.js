@@ -7,6 +7,7 @@
         Class = kendo.Class,
         Editor = kendo.ui.editor,
         dom = Editor.Dom,
+        template = kendo.template,
         RangeUtils = Editor.RangeUtils;
 
     var rootCondition = function(node) {
@@ -48,6 +49,58 @@
     var Immutables = Class.extend({
         init: function (editor) {
             this.editor = editor;
+            this.serializedImmutables = {};
+            this.options = $.extend({}, editor.options.immutables);
+        },
+
+        serialize: function(node) {
+            var value = "";
+            var custom = this.options.serialization && this.options.serialization.custom;
+            var serializationTemplate = this.options.serialization && this.options.serialization.template;
+            var id = this.randomId();
+
+            this.serializedImmutables[id] = node;
+            if (serializationTemplate) {
+                value = template(serializationTemplate)(node);
+                if (value.indexOf('k-immutable') === -1) {
+                    value = value.replace(/>/, ' k-immutable="' + id + '">');
+                }
+            } else if (custom) {
+                value = custom(node);
+                if (value.indexOf('k-immutable') === -1) {
+                    value = value.replace(/>/, ' k-immutable="' + id + '">');
+                }
+            } else {
+                var tagName = dom.name(node);
+                value = '<' + tagName + ' k-immutable="' + id + '"></' + tagName + '>';
+            }
+
+            return value;
+        },
+
+        deserialize: function(node) {
+            var that = this;
+            var custom = this.options.deserialization && this.options.deserialization.custom;
+
+            $('[k-immutable]', node).each(function() {
+                var id = this.getAttribute('k-immutable');
+                var immutable = that.serializedImmutables[id];
+                if (custom) {
+                    custom(this, immutable);
+                }
+                $(this).replaceWith(immutable);
+            });
+
+            that.serializedImmutables = {};
+        },
+
+        randomId: function(length) {
+            var result = '';
+            var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            for (var i = length || 10; i > 0; --i) {
+                result += chars.charAt(Math.round(Math.random() * (chars.length - 1)));
+            }
+            return result;
         },
 
         keydown: function(e, range) {

@@ -24,13 +24,21 @@ var ViewHtmlCommand = Command.extend({
     exec: function() {
         var that = this,
             editor = that.editor,
+            immutables = editor.immutables,
             messages = editor.options.messages,
             dialog = $(kendo.template(ViewHtmlCommand.template)(messages)).appendTo(document.body),
-            content = ViewHtmlCommand.indent(editor.value()),
-            textarea = ".k-editor-textarea";
+            textarea = ".k-editor-textarea",
+            content;
+        
+        editor._serializeImmutables = !!immutables;
+        content = ViewHtmlCommand.indent(editor.value());
+        editor._serializeImmutables = false;
 
         function apply(e) {
+
+            editor._deserializeImmutables = !!immutables;
             editor.value(dialog.find(textarea).val());
+            editor._deserializeImmutables = false;
 
             close(e);
 
@@ -45,6 +53,10 @@ var ViewHtmlCommand = Command.extend({
             e.preventDefault();
 
             dialog.data("kendoWindow").destroy();
+
+            if (editor.immutables) {
+                editor.immutables.serializedImmutables = {};
+            }
 
             editor.focus();
         }

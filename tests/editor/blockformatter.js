@@ -292,13 +292,14 @@ editor_module("editor block formatter", {
    }
 });
 
-var setupImmutables = function () {
+var setupImmutables = function() {
     editor.options.immutables = true;
-    editor._initializeImmutableElements();
+    editor._initializeImmutables();
     justifyRight.editor = editor;
     justifyCenter.editor = editor;
     justifyLeft.editor = editor;
-}
+};
+
 var firstInnerChild = function(element){
     while (element && element.firstChild ) {
         element = element.firstChild;
@@ -308,6 +309,7 @@ var firstInnerChild = function(element){
     }
     return element;
 };
+
 var immutableHtml = '<span contenteditable="false">test</span>';
 
 test("toggle on immutable element", function() {

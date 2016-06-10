@@ -108,6 +108,7 @@ var Serializer = {
         var originalSrc = "originalsrc";
         var originalHref = "originalhref";
         var o = options || {};
+        var immutables = o.immutables;
 
         html = Serializer.toEditableHtml(html);
 
@@ -125,6 +126,10 @@ var Serializer = {
             html = o.custom(html) || html;
         }
         root.innerHTML = html;
+
+        if (immutables) {
+            immutables.deserialize(root);
+        }
 
         if (legacyIE) {
             dom.remove(root.firstChild);
@@ -161,6 +166,7 @@ var Serializer = {
 
     domToXhtml: function(root, options) {
         var result = [];
+        var immutables = options.immutables;
 
         function semanticFilter(attributes) {
             return $.grep(attributes, function(attr) {
@@ -474,7 +480,9 @@ var Serializer = {
                 tagName, mapper,
                 parent, value, previous;
 
-            if (nodeType == 1) {
+            if (immutables && Editor.Immutables.immutable(node)) {
+                result.push(immutables.serialize(node));
+            } else if (nodeType == 1) {
                 tagName = dom.name(node);
 
                 if (!tagName || dom.insignificant(node)) {

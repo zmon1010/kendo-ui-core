@@ -355,7 +355,7 @@ editor_module("editor with immutables enabled image command", {
    setup: function() {
        editor = $("#editor-fixture").data("kendoEditor");
        editor.options.immutables = true;
-       editor._initializeImmutableElements();
+       editor._initializeImmutables();
    },
    teardown: function() {
        $(".k-window-content").kendoWindow("destroy");

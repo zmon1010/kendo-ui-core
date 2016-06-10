@@ -247,7 +247,7 @@ editor_module("editor with immutables enabled clipboard", {
     setup: function() {
         editor = $("#editor-fixture").data("kendoEditor");
         editor.options.immutables = true;
-        editor._initializeImmutableElements();
+        editor._initializeImmutables();
     },
 
     teardown: function() {
