@@ -87,9 +87,14 @@ var ListFormatter = Class.extend({
         return name == "ul" || name == "ol" || name == "dl";
     },
 
+    immutables: function () {
+        return this.editor && !!this.editor.options.immutables;
+    },
+
     wrap: function(list, nodes) {
         var li = dom.create(list.ownerDocument, "li"),
-            i, node;
+            i, node,
+            isImmutable = this.immutables() ? Editor.Immutables.immutable : $.noop;;
 
         for (i = 0; i < nodes.length; i++) {
             node = nodes[i];
@@ -121,7 +126,9 @@ var ListFormatter = Class.extend({
 
             if (dom.isBlock(node)) {
                 list.appendChild(li);
-                dom.unwrap(node);
+                if (!isImmutable(node)) {
+                    dom.unwrap(node);
+                }
                 li = li.cloneNode(false);
             }
         }
@@ -306,8 +313,7 @@ var ListFormatter = Class.extend({
             section,
             node,
             l = nodes.length,
-            immutables = this.editor && this.editor.options.immutables,
-            immutableParent = immutables ? Editor.Immutables.immutableParent : $.noop;
+            immutableParent = this.immutables() ? Editor.Immutables.immutableParent : $.noop;
         
         function addLastSection() {
             if (lastSection) {
@@ -320,19 +326,14 @@ var ListFormatter = Class.extend({
         
         // split nodes into sections that need to be different lists
         for (i = 0; i < l; i++) {
-            node = nodes[i];
-            if (immutableParent(node)) {
+            node = immutableParent(nodes[i]) || nodes[i];
+            section = dom.closestEditable(node, ["td","body"]);
+            if (!lastSection || section != lastSection) {
                 addLastSection();
-                lastSection = lastNodes = undefined;
+                lastNodes = [node];
+                lastSection = section;
             } else {
-                section = dom.closestEditable(node, ["td","body"]);
-                if (!lastSection || section != lastSection) {
-                    addLastSection();
-                    lastNodes = [node];
-                    lastSection = section;
-                } else {
-                    lastNodes.push(node);
-                }
+                lastNodes.push(node);
             }
         }
 

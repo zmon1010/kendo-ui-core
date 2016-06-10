@@ -142,7 +142,7 @@ test("apply over immutable element", function() {
     setupImmutables();
 
     formatter.apply([editor.body.firstChild.firstChild]);
-    equal(editor.value(), immutableHtml);
+    equal(editor.value(), '<ul><li>' + immutableHtml + '</li></ul>');
 });
 
 test("apply over paragraphs and immutable element", function() {
@@ -151,7 +151,7 @@ test("apply over paragraphs and immutable element", function() {
     var paragraphs = $(editor.body).find("p");
 
     formatter.apply([paragraphs[0].firstChild, paragraphs[1].firstChild, paragraphs[2].firstChild]);
-    equal(editor.value(), '<ul><li>foo 1</li></ul>' + immutableHtml + '<ul><li>foo 2</li></ul>');
+    equal(editor.value(), '<ul><li>foo 1</li><li>' + immutableHtml + '</li><li>foo 2</li></ul>');
 });
 
 test("apply converts ul to ol", function() {
