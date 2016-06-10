@@ -218,7 +218,7 @@
                     // formula as text (without the starting `=`).
                     value = "=" + formula;
                 } else OUT: { // jshint ignore:line
-                    if (existingFormat && typeof value == "number") {
+                    if (existingFormat && type == "date") {
                         // check if we could parse back the displayed value.
                         // https://github.com/telerik/kendo/issues/5335
                         var t1 = kendo.spreadsheet.formatting.text(value, existingFormat);

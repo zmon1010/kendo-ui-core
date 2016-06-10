@@ -721,11 +721,13 @@
     });
 
     test("range.input returns number when the numeric format cannot be parsed back", function(){
-        sheet.range("A1")
+        var r = sheet.range("A1")
             .value(1231231231)
             .format(" _(* #,##0.00_);_(* (#,##0.00);_(* \"\"-\"\"_)");
 
-        equal(sheet.range("A1").input(), 1231231231);
+        equal(r.input(), 1231231231);
+        r.value(900);
+        equal(r.input(), 900);
     });
 
     test("range.input handles time", function(){
