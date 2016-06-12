@@ -70,6 +70,7 @@
 - listview.edittemplate
 - listview.alttemplate
 - listview.pageable
+- map.layers.datasource
 - maskedtextbox.rules
 - menu.animation
 - menu.datasource

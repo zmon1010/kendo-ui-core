@@ -1,0 +1,21 @@
+:options:
+    - :name: center
+      :merge: true
+      :type: double[]
+
+    - :name: layers.extent
+      :merge: true
+      :type: double[]
+
+    - :name: layers.subdomains
+      :merge: true
+      :type: string[]
+
+    - :name: layerdefaults.tile.subdomains
+      :merge: true
+      :type: string[]
+
+    - :name: markers.location
+      :merge: true
+      :type: double[]
+

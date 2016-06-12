@@ -223,6 +223,7 @@ namespace :generate do
                 'docs/api/javascript/dataviz/ui/barcode.md',
                 'docs/api/javascript/dataviz/ui/chart.md',
                 'docs/api/javascript/dataviz/ui/lineargauge.md',
+                'docs/api/javascript/dataviz/ui/map.md',
                 'docs/api/javascript/dataviz/ui/qrcode.md',
                 'docs/api/javascript/dataviz/ui/radialgauge.md',
                 'docs/api/javascript/dataviz/ui/sparkline.md',
