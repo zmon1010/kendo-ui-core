@@ -439,7 +439,7 @@
 
             if (this.editor.canInsertRef(false) && object.ref) {
                 this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightedRefs());
-                this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
+                this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection, event.shiftKey);
                 event.preventDefault();
                 return;
             } else {
