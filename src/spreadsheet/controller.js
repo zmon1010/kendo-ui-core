@@ -39,6 +39,7 @@
         "shift+:alphanum": "edit",
         ":alphanum": "edit",
         "ctrl+:alphanum": "ctrl",
+        "alt+ctrl+:alphanum": "edit",
         ":edit": "edit"
     };
 

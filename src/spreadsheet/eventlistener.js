@@ -120,7 +120,7 @@
         handleEvent: function(e, name) {
             var eventKey = "";
 
-            e.mod = Mac ? e.metaKey : e.ctrlKey;
+            e.mod = Mac ? e.metaKey : (e.ctrlKey && !e.altKey);
 
             if (e.altKey) {
                 eventKey += "alt+";
