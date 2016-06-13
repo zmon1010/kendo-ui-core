@@ -655,7 +655,7 @@
             var len = 0, str;
 
             function add(ch) {
-                if (sep && len && len % 3 === 0 && ch != " ") {
+                if (sep && len && len % 3 === 0 && /^[0-9]$/.test(ch)) {
                     str = culture.numberFormat[","] + str;
                 }
                 str = ch + str;
