@@ -47,8 +47,7 @@
                             name = Component.Name,
                             id = Component.Id,
                             type = "checkbox",
-                            value = "true",
-                            @class = "k-checkbox"
+                            value = "true"
                         })
                         .ToggleAttribute("checked", "checked", Component.Checked)
                         .Attributes(Component.GetUnobtrusiveValidationAttributes())

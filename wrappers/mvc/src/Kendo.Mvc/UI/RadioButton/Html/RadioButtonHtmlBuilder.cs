@@ -53,8 +53,7 @@
                     name = Component.Name,
                     id = RenderId(),
                     type = "radio",
-                    value = value,
-                    @class = "k-radio"
+                    value = value
                 })
                 .ToggleAttribute("checked", "checked", Component.Checked || modelChecked)
                 .Attributes(Component.GetUnobtrusiveValidationAttributes())
