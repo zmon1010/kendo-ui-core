@@ -1931,7 +1931,15 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 function getPageZoomStyle() {
-                    return parseFloat($(document.documentElement).css("zoom") || 1) * parseFloat($(document.body).css("zoom") || 1);
+                    var docZoom = parseFloat($(document.documentElement).css("zoom"));
+                    if (isNaN(docZoom)) {
+                        docZoom = 1;
+                    }
+                    var bodyZoom = parseFloat($(document.body).css("zoom"));
+                    if (isNaN(bodyZoom)) {
+                        bodyZoom = 1;
+                    }
+                    return parseFloat(docZoom) * parseFloat(bodyZoom);
                 }
 
                 var clientX = e.clientX / getPageZoomStyle(),
