@@ -124,6 +124,9 @@
             this.tabstrip = view.tabstrip;
             this.sheetsbar = view.sheetsbar;
 
+            view.nameEditor.bind("enter", this.onNameEditorEnter.bind(this));
+            view.nameEditor.bind("cancel", this.onNameEditorCancel.bind(this));
+
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
             this.editor.bind("activate", this.onEditorActivate.bind(this));
@@ -318,7 +321,7 @@
                 editor.value(workbook._inputForRef(sheet.activeCell()));
             }
 
-            var ref = sheet.selection()._ref;
+            var ref = sheet.selection()._ref.simplify();
             var def = this._workbook.nameForRef(ref, sheet.name());
             this.view.nameEditor.value(def.name);
         },
@@ -1024,6 +1027,44 @@
             }.bind(this);
 
             this.executeRequest(executeDialog, e);
+        },
+
+        onNameEditorEnter: function() {
+            var ref;
+            var workbook = this._workbook;
+            var sheet = workbook.activeSheet();
+            var name = this.view.nameEditor.value();
+
+            // 1. does it look like a reference, or already defined
+            // name?  If so, just select it (don't define/modify any
+            // names)
+            ref = kendo.spreadsheet.calc.parseReference(name, true) || workbook.nameValue(name);
+            if (ref instanceof kendo.spreadsheet.Ref) {
+                if (ref.sheet && ref.sheet.toLowerCase() != sheet.name().toLowerCase()) {
+                    // reference points to another sheet, select it if found
+                    var tmp = workbook.sheetByName(ref.sheet);
+                    if (tmp) {
+                        workbook.activeSheet(tmp);
+                        sheet = tmp;
+                    }
+                }
+                sheet.range(ref).select();
+                return;
+            }
+
+            ref = sheet.selection()._ref.clone().simplify().setSheet(sheet.name());
+
+            // XXX: should we check if a name is already defined for this range, and update it instead?
+            // Excel just adds a new one, and provides a more complete Name Manager dialog.
+            //var def = workbook.nameForRef(ref, sheet.name());
+
+            // just define new name
+            workbook.defineName(name, ref);
+
+            this.clipboardElement.focus();
+        },
+        onNameEditorCancel: function() {
+            this.clipboardElement.focus();
         }
     });
 

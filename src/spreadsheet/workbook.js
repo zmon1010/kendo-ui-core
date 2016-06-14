@@ -413,7 +413,6 @@
                 sheet = ref.sheet;
             }
             sheet = sheet.toLowerCase();
-            ref = ref.simplify();
             var str = ref + "";
             for (var name in this._names) {
                 var def = this._names[name];

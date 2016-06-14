@@ -4,6 +4,7 @@ var spreadsheet = $("#spreadsheet").kendoSpreadsheet({
 }).data("kendoSpreadsheet");
 
 var sheet = spreadsheet.activeSheet();
+spreadsheet.insertSheet();
 var calc = kendo.spreadsheet.calc;
 
 function fill(sheet, data) {
