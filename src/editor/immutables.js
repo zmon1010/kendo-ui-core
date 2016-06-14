@@ -8,7 +8,8 @@
         Editor = kendo.ui.editor,
         dom = Editor.Dom,
         template = kendo.template,
-        RangeUtils = Editor.RangeUtils;
+        RangeUtils = Editor.RangeUtils,
+        IMMUTABALE = "k-immutable";
 
     var rootCondition = function(node) {
         return $(node).is("body,.k-editor");
@@ -54,39 +55,40 @@
         },
 
         serialize: function(node) {
-            var value = "";
-            var custom = this.options.serialization && this.options.serialization.custom;
-            var serializationTemplate = this.options.serialization && this.options.serialization.template;
+            var result = this._toHtml(node);
             var id = this.randomId();
-
             this.serializedImmutables[id] = node;
-            if (serializationTemplate) {
-                value = template(serializationTemplate)(node);
-                if (value.indexOf('k-immutable') === -1) {
-                    value = value.replace(/>/, ' k-immutable="' + id + '">');
-                }
-            } else if (custom) {
-                value = custom(node);
-                if (value.indexOf('k-immutable') === -1) {
-                    value = value.replace(/>/, ' k-immutable="' + id + '">');
-                }
-            } else {
-                var tagName = dom.name(node);
-                value = '<' + tagName + ' k-immutable="' + id + '"></' + tagName + '>';
+            if (result.indexOf(IMMUTABALE) === -1) {
+                result = result.replace(/>/, ' ' + IMMUTABALE + '="' + id + '">');
             }
+            return result;
+        },
 
-            return value;
+        _toHtml: function(node){
+            var serialization = this.options.serialization;
+            var serializationType = typeof serialization;
+            var nodeName;
+
+            switch (serializationType) {
+                case "string":
+                    return template(serialization)(node);
+                case "function":
+                    return serialization(node);
+                default:
+                    nodeName = dom.name(node);
+                    return "<" + nodeName + "></" + nodeName + ">";
+            }
         },
 
         deserialize: function(node) {
             var that = this;
-            var custom = this.options.deserialization && this.options.deserialization.custom;
+            var deserialization = this.options.deserialization;
 
-            $('[k-immutable]', node).each(function() {
-                var id = this.getAttribute('k-immutable');
+            $('[' + IMMUTABALE+ ']', node).each(function() {
+                var id = this.getAttribute(IMMUTABALE);
                 var immutable = that.serializedImmutables[id];
-                if (custom) {
-                    custom(this, immutable);
+                if (kendo.isFunction(deserialization)) {
+                    deserialization(this, immutable);
                 }
                 $(this).replaceWith(immutable);
             });
