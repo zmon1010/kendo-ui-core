@@ -134,7 +134,7 @@
         getData: function(ref) {
             var single = ref instanceof CellRef;
             if (ref instanceof NameRef) {
-                single = this.workbook.nameValue(ref) instanceof CellRef;
+                single = this.workbook.nameValue(ref.name) instanceof CellRef;
             }
             var data = this.getRefCells(ref).map(function(cell){
                 return cell.value;

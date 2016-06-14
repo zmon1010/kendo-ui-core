@@ -40,6 +40,7 @@
         "./spreadsheet/filtermenu",
         "./spreadsheet/editor",
         "./spreadsheet/autofill",
+        "./spreadsheet/nameeditor",
         "./spreadsheet/print"
     ], f);
 })(function(){

@@ -145,3 +145,6 @@ sheet.range("G14").validation({
     comparerType: "greaterThan",
     from: 10
 });
+
+spreadsheet._workbook.defineName("Foo", kendo.spreadsheet.calc.parseReference("Sheet1!A1:C3"));
+sheet.range("D3").input("=SUM(foo)");

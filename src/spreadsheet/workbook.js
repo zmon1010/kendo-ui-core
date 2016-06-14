@@ -408,15 +408,37 @@
             })(0);
         },
 
+        nameForRef: function(ref, sheet) {
+            if (sheet === undefined) {
+                sheet = ref.sheet;
+            }
+            sheet = sheet.toLowerCase();
+            ref = ref.simplify();
+            var str = ref + "";
+            for (var name in this._names) {
+                var def = this._names[name];
+                var val = def.value;
+                if (val instanceof kendo.spreadsheet.Ref) {
+                    if (sheet == val.sheet.toLowerCase()) {
+                        if (val + "" == str) {
+                            return { name: def.name, def: def };
+                        }
+                    }
+                }
+            }
+            return { name: str };
+        },
+
         defineName: function(name, value, hidden) {
-            this._names[name] = { value: value, hidden: hidden };
+            this._names[name.toLowerCase()] = { value: value, hidden: hidden, name: name };
         },
 
         undefineName: function(name) {
-            delete this._names[name];
+            delete this._names[name.toLowerCase()];
         },
 
         nameValue: function(name) {
+            name = name.toLowerCase();
             if (name in this._names) {
                 return this._names[name].value;
             }

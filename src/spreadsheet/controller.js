@@ -317,6 +317,10 @@
                 editor.enable(sheet.selection().enable() !== false);
                 editor.value(workbook._inputForRef(sheet.activeCell()));
             }
+
+            var ref = sheet.selection()._ref;
+            var def = this._workbook.nameForRef(ref, sheet.name());
+            this.view.nameEditor.value(def.name);
         },
 
         onScroll: function() {
