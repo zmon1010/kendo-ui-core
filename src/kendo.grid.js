@@ -1939,7 +1939,7 @@ var __meta__ = { // jshint ignore:line
                     if (isNaN(bodyZoom)) {
                         bodyZoom = 1;
                     }
-                    return parseFloat(docZoom) * parseFloat(bodyZoom);
+                    return docZoom * bodyZoom;
                 }
 
                 var clientX = e.clientX / getPageZoomStyle(),
