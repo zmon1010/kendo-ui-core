@@ -1230,11 +1230,11 @@
         },
 
         _compileValidation: function(row, col, validation) {
-            if (validation.from !== null || validation.from !== undefined) {
+            if (validation.from != null) { // jshint ignore: line
                 validation.from = (validation.from + "").replace(/^=/, "");
             }
 
-            if (validation.to !== null || validation.to !== undefined) {
+            if (validation.to != null) { // jshint ignore: line
                 validation.to = (validation.to + "").replace(/^=/, "");
             }
 
