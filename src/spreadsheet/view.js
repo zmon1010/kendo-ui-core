@@ -34,7 +34,7 @@
         colHeaderContextMenu: "k-spreadsheet-col-header-context-menu"
     };
 
-    var VIEW_MESAGES = kendo.spreadsheet.messages.view = {
+    kendo.spreadsheet.messages.view = {
         errors: {
             openUnsupported: "Unsupported format. Please select an .xlsx file.",
             shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet.",
@@ -528,7 +528,9 @@
 
             this.element = element;
 
-            this.options = $.extend(true, {}, this.options, options);
+            this.options = $.extend(true, {
+                messages: kendo.spreadsheet.messages.view
+            }, this.options, options);
 
             this._chrome();
 
@@ -621,7 +623,7 @@
         },
 
         _tabstrip: function() {
-            var messages = VIEW_MESAGES.tabs;
+            var messages = this.options.messages.tabs;
             var options = $.extend(true, { home: true, insert: true, data: true }, this.options.toolbar);
             var tabs = [];
 
@@ -956,7 +958,7 @@
         },
 
         showError: function(options, callback) {
-            var errorMessages = VIEW_MESAGES.errors;
+            var errorMessages = this.options.messages.errors;
 
             if (kendo.spreadsheet.dialogs.registered(options.type)) {
                 this.openDialog(options.type, {

@@ -89,6 +89,7 @@
                 this.element.addClass(Spreadsheet.classNames.wrapper);
 
                 this._view = new View(this.element, {
+                    messages: this.options.messages.view,
                     toolbar: this.options.toolbar,
                     sheetsbar:this.options.sheetsbar
                 });
@@ -318,6 +319,7 @@
                     proxyURL: "",
                     fileName: "Workbook.xlsx"
                 },
+                messages: {},
                 pdf: {
                     // which part of the workbook to be exported
                     area      : "workbook",
