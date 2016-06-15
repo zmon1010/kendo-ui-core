@@ -24,7 +24,11 @@ var __meta__ = { // jshint ignore:line
         COMPLETE = "complete",
         CANCEL = "cancel",
         PROGRESS = "progress",
-        REMOVE = "remove";
+        REMOVE = "remove",
+        VALIDATIONERRORS = "validationErrors",
+        INVALIDMAXFILESIZE = "invalidMaxFileSize",
+        INVALIDMINFILESIZE = "invalidMinFileSize",
+        INVALIDFILEEXTENSION = "invalidFileExtension";
 
     var Upload = Widget.extend({
         init: function(element, options) {
@@ -90,6 +94,11 @@ var __meta__ = { // jshint ignore:line
         ],
 
         options: {
+            validation: {
+                allowedExtensions: [],
+                maxFileSize: 0,
+                minFileSize: 0
+            },
             name: "Upload",
             enabled: true,
             multiple: true,
@@ -114,7 +123,10 @@ var __meta__ = { // jshint ignore:line
                 "statusWarning": "warning",
                 "statusFailed": "failed",
                 "headerStatusUploading": "Uploading...",
-                "headerStatusUploaded": "Done"
+                "headerStatusUploaded": "Done",
+                "invalidMaxFileSize": "File size too large.",
+                "invalidMinFileSize": "File size too small",
+                "invalidFileExtension": "File type not allowed."
             }
         },
 
@@ -322,8 +334,9 @@ var __meta__ = { // jshint ignore:line
             var input = $(e.target);
             var files = assignGuidToFiles(that._inputFiles(input), that._isAsyncNonBatch());
 
-            var prevented = that.trigger(SELECT, { files: files });
+            validateFiles(files, that.options.validation);
 
+            var prevented = that.trigger(SELECT, { files: files });
             if (prevented) {
                 that._addInput(input);
                 input.remove();
@@ -345,11 +358,26 @@ var __meta__ = { // jshint ignore:line
                     files.splice(1, files.length - 1);
                 }
 
+                validateFiles(files, that.options.validation);
+
                 var prevented = that.trigger(SELECT, { files: files });
                 if (!prevented) {
                     that._module.onSelect({target : $(".k-dropzone", that.wrapper) }, files);
                 }
             }
+        },
+
+        _filesContainValidationErrors: function(files) {
+            var hasErrors = false;
+
+            $(files).each(function(index, file){
+                if(file[VALIDATIONERRORS] && file[VALIDATIONERRORS].length > 0) {
+                    hasErrors = true;
+                    return false;
+                }
+            });
+
+            return hasErrors;
         },
 
         _isAsyncNonBatch: function () {
@@ -415,6 +443,70 @@ var __meta__ = { // jshint ignore:line
             return defaultTemplate;
         },
 
+        _prepareDefaultSingleFileEntryTemplate: function(data) {
+            var that = this;
+            var file = data.fileNames[0];
+            var fileSize = getTotalFilesSizeMessage(data.fileNames);
+            var errors = file[VALIDATIONERRORS];
+            var template = "<li class='k-file'><span class='k-progress'></span>";
+
+            if(errors && errors.length > 0) {
+                template += "<span class='k-icon k-fileErrorIcon'></span>" +
+                "<span class='k-filename k-fileError' title='" + file.name + "'>" + file.name + "</span>" +
+                "<span>" + that.localization[errors[0]] + "</span>";
+            } else {
+                template += "<span class='k-icon'></span><span class='k-fileExt'>" + file.extension.substring(1) + "</span>" +
+                "<span class='k-filename' title='" + file.name + "'>" + file.name + "</span>" +
+                "<span class='k-filesize'>" + fileSize + "</span>";
+            }
+
+            template += "<strong class='k-upload-status'></strong>";
+
+            return $(template);
+        },
+
+        _prepareDefaultMultipleFileEntriesTemplate: function(data) {
+            var that = this;
+            var files = data.fileNames;
+            var filesHaveValidationErrors = that._filesContainValidationErrors(files);
+            var totalFileSize = getTotalFilesSizeMessage(files);
+            var template = "<li class='k-file'><span class='k-progress'></span>";
+            var i, currentFile;
+
+            if(filesHaveValidationErrors) {
+                template += "<span class='k-icon k-multipleFilesErrorIcon'></span>";
+            } else {
+                template += "<span class='k-icon k-multipleFilesIcon'></span>";
+            }
+
+            files.sort(function(a, b){
+                if(a[VALIDATIONERRORS]) { return -1; }
+
+                if (b[VALIDATIONERRORS]) { return 1; }
+
+                return 0;
+            })
+
+            for(i = 0; i < files.length; i++) {
+                currentFile = files[i];
+                if(currentFile[VALIDATIONERRORS] && currentFile[VALIDATIONERRORS].length > 0) {
+                    template += "<span class='k-filename k-fileError' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
+                } else {
+                    template += "<span class='k-filename' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
+                }
+            }
+
+            if(filesHaveValidationErrors) {
+                template += "<span>Invalid files(s). Please check file upload requirements.</span>";
+            } else {
+                template += "<span>Total: " + files.length + " files, " + totalFileSize + "</span>";
+            }
+
+            template += "<strong class='k-upload-status'></strong>";
+
+            return $(template);
+        },
+
         _enqueueFile: function(name, data) {
             var that = this;
             var existingFileEntries;
@@ -438,7 +530,9 @@ var __meta__ = { // jshint ignore:line
             existingFileEntries = $(".k-file", fileList);
 
             if (!template) {
-                fileEntry = that._prepareDefaultFileEntryTemplate(name, data);
+                fileEntry = data.fileNames.length === 1
+                                ? that._prepareDefaultSingleFileEntryTemplate(data)
+                                : that._prepareDefaultMultipleFileEntriesTemplate(data);
             } else {
                 templateData = that._prepareTemplateData(name, data);
                 template = kendo.template(template);
@@ -563,14 +657,16 @@ var __meta__ = { // jshint ignore:line
             var that = this;
 
             if (!that.wrapper.hasClass("k-state-disabled")) {
-                var button = $(e.target).closest(".k-upload-action"),
-                    icon = button.find(".k-icon"),
-                    fileEntry = button.closest(".k-file"),
-                    eventArgs = { files: fileEntry.data("fileNames") };
+                var button = $(e.target).closest(".k-upload-action");
+                var icon = button.find(".k-icon");
+                var fileEntry = button.closest(".k-file");
+                var files = fileEntry.data("fileNames");
+                var hasValidationErrors = that._filesContainValidationErrors(files);
+                var eventArgs = { files: files };
 
                 if (icon.hasClass("k-i-delete")) {
                     if (!that.trigger(REMOVE, eventArgs)) {
-                        that._module.onRemove({target : $(fileEntry, that.wrapper)}, eventArgs.data);
+                        that._module.onRemove({target : $(fileEntry, that.wrapper)}, eventArgs.data, !hasValidationErrors);
                     }
                 } else if (icon.hasClass("k-i-cancel")) {
                     that.trigger(CANCEL, eventArgs);
@@ -708,16 +804,16 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+//TODO Update after design
         _updateHeaderUploadStatus: function() {
             var that = this;
             var localization = that.localization;
             var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error');
-            var failedUploads;
-            var headerUploadStatus;
-            var headerUploadStatusIcon;
+            var currentlyInvalid = $('.k-fileError', that.wrapper);
+            var failedUploads, headerUploadStatus, headerUploadStatusIcon;
 
-            if (currentlyUploading.length === 0) {
-                failedUploads = $('.k-file.k-file-error', that.wrapper);
+            if (currentlyUploading.length === 0 || currentlyInvalid.length > 0) {
+                failedUploads = $('.k-file.k-file-error, .k-fileError', that.wrapper); //k-fileError is fake class for invalid files
 
                 headerUploadStatus = $('.k-upload-status-total', that.wrapper);
                 headerUploadStatusIcon = $('.k-icon', headerUploadStatus)
@@ -892,16 +988,26 @@ var __meta__ = { // jshint ignore:line
 
             upload._addInput(sourceInput);
 
-            var file = upload._enqueueFile(getFileName(sourceInput), {
-                "relatedInput" : sourceInput, "fileNames": files
-            });
+            var fileData = { "fileNames": files };
+
+            if(upload._filesContainValidationErrors(files)) {
+                sourceInput.remove();
+            } else {
+                fileData.relatedInput = sourceInput;
+            }
+
+            var file = upload._enqueueFile(getFileName(sourceInput), fileData);
 
             upload._fileAction(file, REMOVE);
         },
 
         onRemove: function(e) {
             var fileEntry = getFileEntry(e);
-            fileEntry.data("relatedInput").remove();
+            var relatedInput = fileEntry.data("relatedInput");
+
+            if(relatedInput) {
+                relatedInput.remove();
+            }
 
             this.upload._removeFileEntry(fileEntry);
         }
@@ -918,12 +1024,13 @@ var __meta__ = { // jshint ignore:line
 
     iframeUploadModule.prototype = {
         onSelect: function(e, files) {
-            var upload = this.upload,
-                sourceInput = $(e.target);
+            var upload = this.upload;
+            var sourceInput = $(e.target);
+            var hasValidationErrors = upload._filesContainValidationErrors(files);
 
-            var fileEntry = this.prepareUpload(sourceInput, files);
+            var fileEntry = this.prepareUpload(sourceInput, files, hasValidationErrors);
 
-            if (upload.options.async.autoUpload) {
+            if (upload.options.async.autoUpload && !hasValidationErrors) {
                 this.performUpload(fileEntry);
             } else {
                 if (upload._supportsRemove()) {
@@ -934,35 +1041,42 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        prepareUpload: function(sourceInput, files) {
+        prepareUpload: function(sourceInput, files, hasValidationErrors) {
             var upload = this.upload;
             var activeInput = $(upload.element);
             var name = upload.options.async.saveField || sourceInput.attr("name");
+            var fileEntry, fileData, iframe, form;
 
             upload._addInput(sourceInput);
-
             sourceInput.attr("name", name);
 
-            var iframe = this.createFrame(upload.name + "_" + Upload._frameId++);
-            this.registerFrame(iframe);
+            if(!hasValidationErrors) {
+                iframe = this.createFrame(upload.name + "_" + Upload._frameId++);
+                this.registerFrame(iframe);
 
-            var form = this.createForm(upload.options.async.saveUrl, iframe.attr("name"))
-                .append(activeInput);
+                form = this.createForm(upload.options.async.saveUrl, iframe.attr("name"))
+                           .append(activeInput);
 
-            var fileEntry = upload._enqueueFile(
-                getFileName(sourceInput),
-                { "frame": iframe, "relatedInput": activeInput, "fileNames": files });
+                fileData = { "frame": iframe, "relatedInput": activeInput, "fileNames": files };
+            } else {
+                sourceInput.remove();
 
-            iframe
-                .data({ "form": form, "file": fileEntry });
+                fileData = { "fileNames": files };
+            }
+
+            fileEntry = upload._enqueueFile(getFileName(sourceInput), fileData);
+
+            if(iframe) {
+                iframe.data({ "form": form, "file": fileEntry });
+            }
 
             return fileEntry;
         },
 
         performUpload: function(fileEntry) {
-            var e = { files: fileEntry.data("fileNames") },
-                iframe = fileEntry.data("frame"),
-                upload = this.upload;
+            var e = { files: fileEntry.data("fileNames") };
+            var iframe = fileEntry.data("frame");
+            var upload = this.upload;
 
             if (!upload.trigger(UPLOAD, e)) {
                 upload._hideUploadButton();
@@ -1001,12 +1115,14 @@ var __meta__ = { // jshint ignore:line
 
         onSaveSelected: function() {
             var module = this;
+            var upload = module.upload;
 
             $(".k-file", this.element).each(function() {
-                var fileEntry = $(this),
-                    started = isFileUploadStarted(fileEntry);
+                var fileEntry = $(this);
+                var started = isFileUploadStarted(fileEntry);
+                var hasValidationErrors = upload._filesContainValidationErrors(fileEntry.data("fileNames"));
 
-                if (!started) {
+                if (!started && !hasValidationErrors) {
                     module.performUpload(fileEntry);
                 }
             });
@@ -1063,8 +1179,8 @@ var __meta__ = { // jshint ignore:line
 
         onRemove: function(e, data, shouldSendRemoveRequest) {
             var fileEntry = getFileEntry(e);
-
             var iframe = fileEntry.data("frame");
+
             if (iframe) {
                 this.unregisterFrame(iframe);
                 this.upload._removeFileEntry(fileEntry);
@@ -1144,14 +1260,19 @@ var __meta__ = { // jshint ignore:line
 
     formDataUploadModule.prototype = {
         onSelect: function(e, files) {
-            var upload = this.upload,
-                module = this,
-                sourceElement = $(e.target),
-                fileEntries = this.prepareUpload(sourceElement, files);
+            var upload = this.upload;
+            var module = this;
+            var sourceElement = $(e.target);
+            var fileEntries = this.prepareUpload(sourceElement, files);
+            var hasValidationErrors;
 
             $.each(fileEntries, function() {
+                hasValidationErrors = upload._filesContainValidationErrors($(this.data("fileNames")));
+debugger;
                 if (upload.options.async.autoUpload) {
-                    module.performUpload(this);
+                    if(!hasValidationErrors) {
+                        module.performUpload(this);
+                    }
                 } else {
                     if (upload._supportsRemove()) {
                         upload._fileAction(this, REMOVE);
@@ -1176,17 +1297,16 @@ var __meta__ = { // jshint ignore:line
         },
 
         enqueueFiles: function(files) {
-            var upload = this.upload,
-                name,
-                i,
-                filesLength = files.length,
-                currentFile,
-                fileEntry,
-                fileEntries = [];
+            var upload = this.upload;
+            var name;
+            var i;
+            var filesLength = files.length;
+            var currentFile;
+            var fileEntry;
+            var fileEntries = [];
 
             if (upload.options.async.batch === true) {
-                name = $.map(files, function(file) { return file.name; })
-                       .join(", ");
+                name = $.map(files, function(file) { return file.name; }).join(", ");
 
                 fileEntry = upload._enqueueFile(name, { fileNames: files });
                 fileEntry.data("files", files);
@@ -1243,12 +1363,14 @@ var __meta__ = { // jshint ignore:line
 
         onSaveSelected: function() {
             var module = this;
+            var upload = module.upload;
 
             $(".k-file", this.element).each(function() {
-                var fileEntry = $(this),
-                    started = isFileUploadStarted(fileEntry);
+                var fileEntry = $(this);
+                var started = isFileUploadStarted(fileEntry);
+                var hasValidationErrors = upload._filesContainValidationErrors(fileEntry.data("fileNames"));
 
-                if (!started) {
+                if (!started && !hasValidationErrors) {
                     module.performUpload(fileEntry);
                 }
             });
@@ -1419,7 +1541,7 @@ var __meta__ = { // jshint ignore:line
         return {
             name: kendo.htmlEncode(fileName),
             extension: getFileExtension(fileName),
-            size: rawFile.size || rawFile.fileSize,
+            size: typeof rawFile.size == "number" ? rawFile.size : rawFile.fileSize, //rawFile.size || rawFile.fileSize,
             rawFile: rawFile
         };
     }
@@ -1442,6 +1564,68 @@ var __meta__ = { // jshint ignore:line
 
             return file;
         });
+    }
+
+    function validateFiles(files, validationInfo) {
+        var allowedExtensions = $.map(validationInfo.allowedExtensions, function(ext, index){
+            return ext.toLowerCase();
+        });
+        var maxFileSize = validationInfo.maxFileSize;
+        var minFileSize = validationInfo.minFileSize;
+
+        for(var i = 0; i < files.length; i++) {
+            validateFileExtension(files[i], allowedExtensions);
+            validateFileSize(files[i], minFileSize, maxFileSize);
+        }
+    }
+
+    function validateFileExtension(file, allowedExtensions) {
+        if(allowedExtensions.length > 0) {
+            if(allowedExtensions.indexOf(file.extension.toLowerCase()) < 0) {
+                file.validationErrors = file.validationErrors || [];
+                if($.inArray(INVALIDFILEEXTENSION, file.validationErrors) === -1) {
+                    file.validationErrors.push(INVALIDFILEEXTENSION);
+                }
+            }
+        }
+    }
+
+    function validateFileSize(file, minFileSize, maxFileSize) {
+        if(minFileSize !== 0 && file.size < minFileSize) {
+            file.validationErrors = file.validationErrors || [];
+            if($.inArray(INVALIDMINFILESIZE, file.validationErrors) === -1) {
+                file.validationErrors.push(INVALIDMINFILESIZE);
+            }
+        }
+
+        if(maxFileSize !== 0 && file.size > maxFileSize) {
+            file.validationErrors = file.validationErrors || [];
+            if($.inArray(INVALIDMAXFILESIZE, file.validationErrors) === -1) {
+                file.validationErrors.push(INVALIDMAXFILESIZE);
+            }
+        }
+    }
+
+    function getTotalFilesSizeMessage(files) {
+        var totalSize = 0;
+
+        if(typeof files[0].size == "number") {
+            for(var i = 0; i < files.length; i++) {
+                if(files[i].size) {
+                    totalSize += files[i].size;
+                }
+            }
+        } else {
+            return "";
+        }
+
+        totalSize /= 1024;
+
+        if(totalSize < 1024) {
+            return totalSize.toFixed(2) + "KB";
+        } else {
+            return (totalSize / 1024).toFixed(2) + " MB";
+        }
     }
 
     function shouldRemoveFileEntry(upload) {
