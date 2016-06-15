@@ -14,6 +14,7 @@
     var viewClassNames = {
         view: "k-spreadsheet-view",
         fixedContainer: "k-spreadsheet-fixed-container",
+        editContainer: "k-spreadsheet-edit-container",
         scroller: "k-spreadsheet-scroller",
         viewSize: "k-spreadsheet-view-size",
         clipboard: "k-spreadsheet-clipboard",
@@ -1012,6 +1013,8 @@
             if (focus && this.scrollIntoView(focus)) {
                 return;
             }
+
+            this.wrapper.toggleClass(viewClassNames.editContainer, this.editor.isActive());
 
             var grid = sheet._grid;
 
