@@ -290,6 +290,12 @@ namespace Kendo.Mvc.UI
                     }
 
                     var editorHtml = htmlHelper.Editor(column.Field).ToHtmlString();
+                    var validationMessage = htmlHelper.ValidationMessage(column.Field);
+
+                    if (validationMessage != null)
+                    {
+                        editorHtml = string.Concat(editorHtml, validationMessage);
+                    }
 
                     if (IsInClientTemplate)
                     {
