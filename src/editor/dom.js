@@ -297,7 +297,9 @@ var Dom = {
 
         return node.className == "k-marker" || (Dom.is(node, 'br') && (node.className == "k-br" || attr._moz_dirty || attr._moz_editor_bogus_node));
     },
-
+    tableCell: function(node) {
+        return Dom.is(node, "td") || Dom.is(node, "th");
+    },
     significantNodes: function(nodes) {
         return $.grep(nodes, function(child) {
             var name = Dom.name(child);

@@ -9,6 +9,7 @@
         dom = Editor.Dom,
         template = kendo.template,
         RangeUtils = Editor.RangeUtils,
+        complexBlocks = ["ul", "ol", "tbody", "thead", "table"],
         IMMUTABALE = "k-immutable";
 
     var rootCondition = function(node) {
@@ -132,9 +133,26 @@
             if (!range.collapsed) {
                 cancelDeleting = !this.canDeleteSelection(range);
             } else {
-                var nextImmutable = this.nextImmutable(range, del);
-                if (nextImmutable) {
-                    this._removeImmutable(nextImmutable, range);
+                var immutable = this.nextImmutable(range, del);
+                if (immutable && backspace) {
+                    var closestSelectionLi = dom.closest(range.commonAncestorContainer, "li");
+                    if (closestSelectionLi) {
+                        var closestImmutableLi = dom.closest(immutable, "li");
+                        if (closestImmutableLi && closestImmutableLi !== closestSelectionLi) {
+                            return cancelDeleting;
+                        }
+                    }
+                }
+                if (immutable && !dom.tableCell(immutable)) {
+                    if (dom.parentOfType(immutable, complexBlocks) === dom.parentOfType(range.commonAncestorContainer, complexBlocks)) {
+                        while (immutable && immutable.parentNode.childNodes.length == 1) {
+                            immutable = immutable.parentNode;
+                        }
+                        if (dom.tableCell(immutable)) {
+                            return cancelDeleting;
+                        }
+                        this._removeImmutable(immutable, range);
+                    }
                     cancelDeleting = true;
                 }
             }
@@ -149,6 +167,11 @@
             var commonContainer = range.commonAncestorContainer;
             if (dom.isBom(commonContainer) || ((forwards && RangeUtils.isEndOf(range, commonContainer)) || (!forwards && RangeUtils.isStartOf(range, commonContainer)))) {
                 var next = this._nextNode(commonContainer, forwards);
+                if (next && dom.isBlock(next) && !immutableParent(next)) {
+                    while (next && next.children && next.children[forwards ? 0 : next.children.length - 1]) {
+                        next = next.children[forwards ? 0 : next.children.length - 1];
+                    }
+                }
                 return immutableParent(next);
             }
         },
