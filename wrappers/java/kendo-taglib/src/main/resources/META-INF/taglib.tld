@@ -11709,7 +11709,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -11880,7 +11880,7 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
     </tag>
 
     <tag>
-        <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>comboBox-change</name>
         <tag-class>com.kendoui.taglib.combobox.ChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12215,31 +12215,31 @@ makes a HTTP request for every CRUD operation.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.</description>
+            <description>If set to true, the data source will leave the aggregate calculation to the remote service. By default, the data source calculates aggregates client-side.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverAggregates</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.By default the filter is sent to the server following jQuery's conventions.For example the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.</description>
+            <description>If set to true, the data source will leave the filtering implementation to the remote service. By default, the data source performs filtering client-side.By default, the filter is sent to the server following jQuery's conventions.For example, the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverFiltering</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.By default the group is sent to the server following jQuery's conventions.For example the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.</description>
+            <description>If set to true, the data source will leave the grouping implementation to the remote service. By default, the data source performs grouping client-side.By default, the group is sent to the server following jQuery's conventions.For example, the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverGrouping</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.</description>
+            <description>If set to true, the data source will leave the data item paging implementation to the remote service. By default, the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverPaging</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.By default the sort is sent to the server following jQuery's conventions.For example the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.</description>
+            <description>If set to true, the data source will leave the data item sorting implementation to the remote service. By default, the data source performs sorting client-side.By default, the sort is sent to the server following jQuery's conventions.For example, the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverSorting</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -18497,7 +18497,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -18668,7 +18668,7 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
     </tag>
 
     <tag>
-        <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>dropDownList-change</name>
         <tag-class>com.kendoui.taglib.dropdownlist.ChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
