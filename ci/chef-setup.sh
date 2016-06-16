@@ -4,10 +4,9 @@ set -e
 if grep -q 'Ubuntu' /proc/version
 then
     apt-get install -y python-software-properties
-    apt-get update -y
-
-    apt-get install -y ruby1.9.3 build-essential
-    gem install chef --version '~> 11' --no-ri --no-rdoc
+    apt-get update -y	
+    apt-get install -y ruby2.3 build-essential
+    gem install chef --version '~> 12' --no-ri --no-rdoc
 elif grep -q 'Red Hat' /proc/version
 then
     yum update -y
@@ -25,9 +24,9 @@ then
 
     # Ruby
     cd /tmp
-    wget -nc http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p374.tar.gz
-    tar xzf ruby-1.9.3-p374.tar.gz
-    cd ruby-1.9.3-p374
+    wget -nc http://ftp.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
+    tar xzf ruby-2.3.0.tar.gz
+    cd ruby-2.3.0.tar.gz
     ./configure --prefix=/usr/local --enable-shared --disable-install-doc --with-opt-dir=/usr/local/lib
     make
     make install

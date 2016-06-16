@@ -1,10 +1,10 @@
-package "php5-cli"
-package "php5-fpm"
-package "php5-gd"
-package "php5-sqlite"
-package "php5-json"
+package "php-cli"
+package "php-fpm"
+package "php-gd"
+package "php-sqlite3"
+package "php-json"
 
-template "/etc/php5/fpm/pool.d/www.conf" do
+template "/etc/php/7.0/fpm/pool.d/www.conf" do
     source "workstation.conf.erb"
     variables({
         :process_user => "www-data",
@@ -12,11 +12,11 @@ template "/etc/php5/fpm/pool.d/www.conf" do
     })
 end
 
-service "php5-fpm" do
+service "php7.0-fpm" do
     case node["platform"]
     when "ubuntu"
-        if node["platform_version"].to_f >= 13.04
-            provider Chef::Provider::Service::Upstart
+        if node["platform_version"].to_f >= 15.00
+            provider Chef::Provider::Service::Systemd
         end
     end
     action :restart
