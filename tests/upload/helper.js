@@ -55,10 +55,17 @@ function simulateMultipleFileSelect() {
     );
 }
 
+function simulateMultipleFileSelectWithFileInfo(files) {
+    var uploadInstance = $("#uploadInstance").data("kendoUpload");
+    uploadInstance._onInputChange({
+        target: { files: files }
+    });
+}
+
 function getFileListMock() {
     return [
-        { name: "first.txt", size: 1 },
-        { name: "second.txt", size: 2 }
+        { name: "first.txt", size: 1, extension: ".txt" },
+        { name: "second.txt", size: 2, extension: ".txt" }
     ];
 }
 

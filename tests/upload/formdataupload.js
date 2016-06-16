@@ -154,6 +154,7 @@ test("current input is hidden after choosing a file", function() {
 test("list element is created for each selected file", function() {
     uploadInstance._inputFiles = function () { return getFileListMock() };
     simulateFileSelect();
+    
     equal($(".k-upload-files li.k-file", uploadInstance.wrapper).length, 2);
 });
 
@@ -342,6 +343,8 @@ var removeApiTestParams = {
 };
 
 removeApi(removeApiTestParams);
+
+validation(removeApiTestParams);
 
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -809,7 +812,7 @@ test("data-uid value is the same for the list item and all selected files", func
     equal(listItemUid, secondFileUid);
 });
 
-test("file names are rendered for multiple files", function() {
+test("file names are rendered for multiple files", 2, function() {
     uploadInstance._inputFiles = function () { return getFileListMock() };
     simulateFileSelect();
 
@@ -817,7 +820,8 @@ test("file names are rendered for multiple files", function() {
         function() { return $(this).text(); }
     );
 
-    equal(fileNames[0], "first.txt, second.txt");
+    equal(fileNames[0], "first.txt");
+    equal(fileNames[1], "second.txt");
 });
 
 test("files are passed to populateFormData", 2, function() {

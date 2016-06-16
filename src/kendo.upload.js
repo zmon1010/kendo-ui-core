@@ -424,38 +424,37 @@ var __meta__ = { // jshint ignore:line
             return templateData;
         },
 
-        _prepareDefaultFileEntryTemplate: function(name, data) {
-            var extension = "";
-            var defaultTemplate = $("<li class='k-file'>" +
-                    "<span class='k-progress'></span>" +
-                    "<span class='k-icon'></span>" +
-                    "<span class='k-filename' title='" + name + "'>" + name + "</span>" +
-                    "<strong class='k-upload-status'></strong>" +
-                    "</li>");
+        // _prepareDefaultFileEntryTemplate: function(name, data) {
+        //     var extension = "";
+        //     var defaultTemplate = $("<li class='k-file'>" +
+        //             "<span class='k-progress'></span>" +
+        //             "<span class='k-icon'></span>" +
+        //             "<span class='k-filename' title='" + name + "'>" + name + "</span>" +
+        //             "<strong class='k-upload-status'></strong>" +
+        //             "</li>");
 
-            if (data.fileNames.length == 1 && !!data.fileNames[0].extension) {
-                extension = data.fileNames[0].extension.substring(1);
-                $('.k-icon', defaultTemplate).addClass('k-i-' + extension);
-            }
-            else if (data.fileNames.length > 1) {
-                $('.k-icon', defaultTemplate).addClass('k-i-files');
-            }
-            return defaultTemplate;
-        },
+        //     if (data.fileNames.length == 1 && !!data.fileNames[0].extension) {
+        //         extension = data.fileNames[0].extension.substring(1);
+        //         $('.k-icon', defaultTemplate).addClass('k-i-' + extension);
+        //     }
+        //     return defaultTemplate;
+        // },
 
         _prepareDefaultSingleFileEntryTemplate: function(data) {
             var that = this;
             var file = data.fileNames[0];
             var fileSize = getTotalFilesSizeMessage(data.fileNames);
             var errors = file[VALIDATIONERRORS];
-            var template = "<li class='k-file'><span class='k-progress'></span>";
+            var template = "";
 
             if(errors && errors.length > 0) {
-                template += "<span class='k-icon k-fileErrorIcon'></span>" +
+                template += "<li class='k-file k-file-invalid'><span class='k-progress'></span>" +
+                "<span class='k-icon k-fileErrorIcon'></span>" +
                 "<span class='k-filename k-fileError' title='" + file.name + "'>" + file.name + "</span>" +
-                "<span>" + that.localization[errors[0]] + "</span>";
+                "<span class='k-validation-message'>" + that.localization[errors[0]] + "</span>";
             } else {
-                template += "<span class='k-icon'></span><span class='k-fileExt'>" + file.extension.substring(1) + "</span>" +
+                template += "<li class='k-file'><span class='k-progress'></span>" +
+                "<span class='k-icon'></span><span class='k-fileExt'>" + file.extension.substring(1) + "</span>" +
                 "<span class='k-filename' title='" + file.name + "'>" + file.name + "</span>" +
                 "<span class='k-filesize'>" + fileSize + "</span>";
             }
@@ -470,13 +469,15 @@ var __meta__ = { // jshint ignore:line
             var files = data.fileNames;
             var filesHaveValidationErrors = that._filesContainValidationErrors(files);
             var totalFileSize = getTotalFilesSizeMessage(files);
-            var template = "<li class='k-file'><span class='k-progress'></span>";
+            var template = "";
             var i, currentFile;
 
             if(filesHaveValidationErrors) {
-                template += "<span class='k-icon k-multipleFilesErrorIcon'></span>";
+                template += "<li class='k-file k-file-invalid'><span class='k-progress'></span>" +
+                    "<span class='k-icon k-multipleFilesErrorIcon'></span>";
             } else {
-                template += "<span class='k-icon k-multipleFilesIcon'></span>";
+                template += "<li class='k-file'><span class='k-progress'></span>" +
+                    "<span class='k-icon k-multipleFilesIcon'></span>";
             }
 
             files.sort(function(a, b){
@@ -485,7 +486,7 @@ var __meta__ = { // jshint ignore:line
                 if (b[VALIDATIONERRORS]) { return 1; }
 
                 return 0;
-            })
+            });
 
             for(i = 0; i < files.length; i++) {
                 currentFile = files[i];
@@ -497,9 +498,9 @@ var __meta__ = { // jshint ignore:line
             }
 
             if(filesHaveValidationErrors) {
-                template += "<span>Invalid files(s). Please check file upload requirements.</span>";
+                template += "<span class='k-validation-message'>Invalid files(s). Please check file upload requirements.</span>";
             } else {
-                template += "<span>Total: " + files.length + " files, " + totalFileSize + "</span>";
+                template += "<span class='k-file-information'>Total: " + files.length + " files, " + totalFileSize + "</span>";
             }
 
             template += "<strong class='k-upload-status'></strong>";
@@ -530,9 +531,11 @@ var __meta__ = { // jshint ignore:line
             existingFileEntries = $(".k-file", fileList);
 
             if (!template) {
-                fileEntry = data.fileNames.length === 1
-                                ? that._prepareDefaultSingleFileEntryTemplate(data)
-                                : that._prepareDefaultMultipleFileEntriesTemplate(data);
+                if(data.fileNames.length === 1) {
+                    fileEntry = that._prepareDefaultSingleFileEntryTemplate(data);
+                } else {
+                    fileEntry = that._prepareDefaultMultipleFileEntriesTemplate(data);
+                }
             } else {
                 templateData = that._prepareTemplateData(name, data);
                 template = kendo.template(template);
@@ -570,14 +573,14 @@ var __meta__ = { // jshint ignore:line
         _removeFileEntry: function(fileEntry) {
             var that = this;
             var fileList = fileEntry.closest(".k-upload-files");
-            var allFiles;
-            var allCompletedFiles;
+            var allFiles, allCompletedFiles, allInvalidFiles;
 
             fileEntry.remove();
             allFiles = $(".k-file", fileList);
             allCompletedFiles = $(".k-file-success, .k-file-error", fileList);
+            allInvalidFiles = $(".k-file-invalid", fileList);
 
-            if (allCompletedFiles.length === allFiles.length) {
+            if (allCompletedFiles.length === allFiles.length || allInvalidFiles.length === allFiles.length) {
                 this._hideUploadButton();
             }
 
@@ -1268,16 +1271,21 @@ var __meta__ = { // jshint ignore:line
 
             $.each(fileEntries, function() {
                 hasValidationErrors = upload._filesContainValidationErrors($(this.data("fileNames")));
-debugger;
+
                 if (upload.options.async.autoUpload) {
                     if(!hasValidationErrors) {
                         module.performUpload(this);
+                    } else if (upload._supportsRemove()) {
+                        upload._fileAction(this, REMOVE);
                     }
                 } else {
                     if (upload._supportsRemove()) {
                         upload._fileAction(this, REMOVE);
                     }
-                    upload._showUploadButton();
+
+                    if(!hasValidationErrors) {
+                        upload._showUploadButton();
+                    }
                 }
             });
         },
@@ -1567,7 +1575,7 @@ debugger;
     }
 
     function validateFiles(files, validationInfo) {
-        var allowedExtensions = $.map(validationInfo.allowedExtensions, function(ext, index){
+        var allowedExtensions = $.map(validationInfo.allowedExtensions, function(ext){
             return ext.toLowerCase();
         });
         var maxFileSize = validationInfo.maxFileSize;
@@ -1622,7 +1630,7 @@ debugger;
         totalSize /= 1024;
 
         if(totalSize < 1024) {
-            return totalSize.toFixed(2) + "KB";
+            return totalSize.toFixed(2) + " KB";
         } else {
             return (totalSize / 1024).toFixed(2) + " MB";
         }
