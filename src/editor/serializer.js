@@ -166,7 +166,7 @@ var Serializer = {
 
     domToXhtml: function(root, options) {
         var result = [];
-        var immutables = options.immutables;
+        var immutables = options && options.immutables;
 
         function semanticFilter(attributes) {
             return $.grep(attributes, function(attr) {

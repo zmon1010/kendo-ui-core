@@ -51,7 +51,7 @@
         init: function (editor) {
             this.editor = editor;
             this.serializedImmutables = {};
-            this.options = $.extend({}, editor.options.immutables);
+            this.options = $.extend({}, editor && editor.options && editor.options.immutables);
         },
 
         serialize: function(node) {

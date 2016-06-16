@@ -105,7 +105,7 @@ var LinkCommand = Command.extend({
             this.async = true;
         } else {
             this.exec = function() {
-                this.formatter.immutables = that.immutables();
+                this.formatter.immutables = that && that.immutables();
                 this.formatter.apply(options.range, {
                     href: options.url,
                     innerHTML: options.text || options.url,
