@@ -67,6 +67,9 @@ namespace Kendo.Mvc.Examples
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Configure Kendo UI
+            app.UseKendo(env);
         }
     }
 }

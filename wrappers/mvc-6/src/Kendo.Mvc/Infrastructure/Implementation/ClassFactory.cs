@@ -10,12 +10,17 @@ namespace Kendo.Mvc.Infrastructure.Implementation
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Emit;
-    using Microsoft.Extensions.CompilationAbstractions;
-    using Microsoft.Dnx.Compilation.CSharp;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.DependencyModel;
+    using System.Collections.Concurrent;
+    using System.Reflection.PortableExecutable;
 
-    internal class ClassFactory
+    /// <summary>
+    /// Internal helper class used to generate dynamic classes
+    /// </summary>
+    public class ClassFactory
     {
-        public static readonly ClassFactory Instance = new ClassFactory();
+        public static ClassFactory Instance { get; private set; }
 
 #if !NET452
         private readonly FactoryLoadContext _assemblyLoadContext;
@@ -23,6 +28,8 @@ namespace Kendo.Mvc.Infrastructure.Implementation
 
         private int classCount;
         private readonly ReaderWriterLockSlim rwLock;
+        private readonly IHostingEnvironment _environment;
+        private readonly ConcurrentDictionary<string, AssemblyMetadata> _metadataFileCache;
         private static string TO_STRING_METHOD_TEMPLATE =
            "public override string ToString() " +
             "{" +
@@ -40,14 +47,21 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             "return sb.ToString(); " +
         "}";
 
-        private ClassFactory()
+        public static void Create(IHostingEnvironment env)
+        {
+            Instance = new ClassFactory(env);
+        }
+
+        private ClassFactory(IHostingEnvironment env)
         {
 #if !NET452
             _assemblyLoadContext = new FactoryLoadContext();
 #endif
 
             rwLock = new ReaderWriterLockSlim();
-        }
+            _environment = env;
+            _metadataFileCache = new ConcurrentDictionary<string, AssemblyMetadata>(StringComparer.OrdinalIgnoreCase);
+    }
 
         public Type GetDynamicClass(IEnumerable<DynamicProperty> properties)
         {
@@ -129,38 +143,61 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         {
             var references = new List<MetadataReference>();
 
-#if !NET452
-            var libraryExporter = CompilationServices.Default.LibraryExporter;
-            var libraryExport = libraryExporter.GetExport("System");
-            if (libraryExport != null)
+#if NET452
+            references.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
+#else
+            var context = GetDependencyContext();
+            if (context != null)
             {
-                foreach (var metadataReference in libraryExport.MetadataReferences)
+                for (var i = 0; i < context.CompileLibraries.Count; i++)
                 {
-                    var roslynReference = metadataReference as IRoslynMetadataReference;
-                    if (roslynReference != null)
+                    var library = context.CompileLibraries[i];
+                    IEnumerable<string> referencePaths;
+                    try
                     {
-                        references.Add(roslynReference.MetadataReference);
-                        break;
+                        referencePaths = library.ResolveReferencePaths();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        continue;
                     }
 
-                    var fileMetadataReference = metadataReference as IMetadataFileReference;
-                    if (fileMetadataReference != null)
-                    {
-                        var metadata = AssemblyMetadata.CreateFromStream(File.OpenRead(fileMetadataReference.Path));
-                        references.Add(metadata.GetReference());
-                        break;
-                    }
+                    references.AddRange(referencePaths.Select(CreateMetadataFileReference));
                 }
             }
-#else
-            references.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
 #endif
+
             if (references.Count == 0)
             {
                 throw new InvalidOperationException("Unable to create MetadataReference");
             }
 
             return references;
+        }
+
+        private MetadataReference CreateMetadataFileReference(string path)
+        {
+            var metadata = _metadataFileCache.GetOrAdd(path, _ =>
+            {
+                using (var stream = File.OpenRead(path))
+                {
+                    var moduleMetadata = ModuleMetadata.CreateFromStream(stream, PEStreamOptions.PrefetchMetadata);
+                    return AssemblyMetadata.Create(moduleMetadata);
+                }
+            });
+
+            return metadata.GetReference(filePath: path);
+        }
+
+        private DependencyContext GetDependencyContext()
+        {
+            if (_environment.ApplicationName != null)
+            {
+                var applicationAssembly = Assembly.Load(new AssemblyName(_environment.ApplicationName));
+                return DependencyContext.Load(applicationAssembly);
+            }
+
+            return null;
         }
 
         private PropertyDeclarationSyntax DeclareDynamicProperty(DynamicProperty property)
