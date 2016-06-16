@@ -22,7 +22,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
     {
         public static ClassFactory Instance { get; private set; }
 
-#if !NET452
+#if !NET451
         private readonly FactoryLoadContext _assemblyLoadContext;
 #endif
 
@@ -54,7 +54,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
 
         private ClassFactory(IHostingEnvironment env)
         {
-#if !NET452
+#if !NET451
             _assemblyLoadContext = new FactoryLoadContext();
 #endif
 
@@ -91,7 +91,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                 {
                     ms.Seek(0, SeekOrigin.Begin);
 
-#if NET452
+#if NET451
                     var assembly = Assembly.Load(ms.ToArray());
                     return assembly.GetType(typeName);
 #else
@@ -143,7 +143,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         {
             var references = new List<MetadataReference>();
 
-#if NET452
+#if NET451
             references.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
 #else
             var context = GetDependencyContext();
