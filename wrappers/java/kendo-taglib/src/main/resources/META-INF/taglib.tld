@@ -22394,7 +22394,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
 
 
     <tag>
-        <description>The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+        <description>The configuration of the grid columns. An array of JavaScript objects or strings. JavaScript objects are interpreted as column configurations. Strings are interpreted as the
 field to which the column is bound. The grid will create a column for every item of the array.</description>
         <name>grid-columns</name>
         <tag-class>com.kendoui.taglib.grid.ColumnsTag</tag-class>
@@ -22402,7 +22402,7 @@ field to which the column is bound. The grid will create a column for every item
     </tag>
 
     <tag>
-        <description>The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+        <description>The configuration of the grid columns. An array of JavaScript objects or strings. JavaScript objects are interpreted as column configurations. Strings are interpreted as the
 field to which the column is bound. The grid will create a column for every item of the array.</description>
         <name>grid-column</name>
         <tag-class>com.kendoui.taglib.grid.ColumnTag</tag-class>
