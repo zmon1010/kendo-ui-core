@@ -75,6 +75,7 @@ var __meta__ = { // jshint ignore:line
 
             that.wrapper
             .on("click", ".k-upload-action", $.proxy(that._onFileAction, that))
+            .on("click", ".k-clear-selected", $.proxy(that._onClearSelected, that))
             .on("click", ".k-upload-selected", $.proxy(that._onUploadSelected, that));
 
             if(that.element.val()) {
@@ -116,7 +117,8 @@ var __meta__ = { // jshint ignore:line
                 "cancel": "Cancel",
                 "retry": "Retry",
                 "remove": "Remove",
-                "uploadSelectedFiles": "Upload files",
+                "clearSelectedFiles": "Clear",
+                "uploadSelectedFiles": "Upload",
                 "dropFilesHere": "drop files here to upload",
                 "statusUploading": "uploading",
                 "statusUploaded": "uploaded",
@@ -696,6 +698,17 @@ var __meta__ = { // jshint ignore:line
             return false;
         },
 
+        _onClearSelected: function() {
+            var that = this;
+            var wrapper = that.wrapper;
+
+            if(!wrapper.hasClass("k-state-disabled")) {
+                that.clearAllFiles();
+            }
+
+            return false;
+        },
+
         _onFileProgress: function(e, percentComplete) {
             var progressPct;
 
@@ -773,18 +786,23 @@ var __meta__ = { // jshint ignore:line
         },
 
         _showUploadButton: function() {
-            var uploadButton = $(".k-upload-selected", this.wrapper);
+            var that = this;
+            var uploadButton = $(".k-upload-selected", that.wrapper);
+            var clearButton = $(".k-clear-selected", that.wrapper);
+
             if (uploadButton.length === 0) {
-                uploadButton =
-                    this._renderAction("", this.localization.uploadSelectedFiles)
-                    .addClass("k-upload-selected");
+                uploadButton = that._renderAction("", this.localization.uploadSelectedFiles)
+                                   .addClass("k-upload-selected");
+
+                clearButton = that._renderAction("", this.localization.clearSelectedFiles)
+                                  .addClass("k-clear-selected");
             }
 
-            this.wrapper.append(uploadButton);
+            this.wrapper.append(clearButton, uploadButton);
         },
 
         _hideUploadButton: function() {
-            $(".k-upload-selected", this.wrapper).remove();
+            $(".k-upload-selected, .k-clear-selected", this.wrapper).remove();
         },
 
         _showHeaderUploadStatus: function() {
