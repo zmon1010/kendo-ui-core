@@ -538,6 +538,10 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     fileEntry = that._prepareDefaultMultipleFileEntriesTemplate(data);
                 }
+
+                if(existingFileEntries.length % 2 === 1) {
+                    fileEntry.addClass("k-alt");
+                }
             } else {
                 templateData = that._prepareTemplateData(name, data);
                 template = kendo.template(template);

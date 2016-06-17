@@ -52,7 +52,22 @@ test("empty progress bar is rendered", function() {
     var uploadInstance = createUpload();
     simulateFileSelect();
     equal($(".k-upload-files li.k-file .k-progress", uploadInstance.wrapper).length, 1);
-})
+});
+
+test("Odd files does not have k-alt class", function() {
+    var uploadInstance = createUpload();
+    simulateFileSelect();
+
+    ok($(".k-file", uploadInstance.wrapper).hasClass("k-alt") === false);
+});
+
+test("Even files have k-alt class", function() {
+    var uploadInstance = createUpload();
+    simulateFileSelect();
+    simulateFileSelect();
+
+    ok($(".k-file:last", uploadInstance.wrapper).hasClass("k-alt"));
+});
 
 test("disable prevents selection", function () {
     var uploadInstance = createUpload();
