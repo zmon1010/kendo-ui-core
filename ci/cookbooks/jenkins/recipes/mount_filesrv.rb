@@ -22,10 +22,10 @@ end
 
 directory "/mnt/kendo-iis"
 
-mount "/mnt/kendo-iis" do
-    device "//KendoIIS/shares"
-    fstype "cifs"
-    options access_options
-    pass 0
-    action [:mount, :enable]
-end
+#mount "/mnt/kendo-iis" do
+#    device "//KendoIIS/shares"
+#    fstype "cifs"
+#    options access_options
+#    pass 0
+#    action [:mount, :enable]
+#end
