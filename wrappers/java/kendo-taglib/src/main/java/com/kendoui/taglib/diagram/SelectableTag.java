@@ -65,6 +65,14 @@ public class SelectableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("key", value);
     }
 
+    public boolean getMultiple() {
+        return (Boolean)getProperty("multiple");
+    }
+
+    public void setMultiple(boolean value) {
+        setProperty("multiple", value);
+    }
+
 //<< Attributes
 
 }

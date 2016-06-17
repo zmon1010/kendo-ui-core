@@ -16044,6 +16044,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Specifies if the multiple selection should be enabled.</description>
+            <name>multiple</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
 
     </tag>
 
