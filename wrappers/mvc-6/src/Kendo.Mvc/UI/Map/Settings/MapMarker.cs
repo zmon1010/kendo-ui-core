@@ -1,6 +1,3 @@
-using Kendo.Mvc.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,11 +8,30 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class MapMarker 
     {
+        private MapMarkerTooltip tooltip;
+
+        public MapMarkerTooltip Tooltip
+        {
+            get
+            {
+                if (tooltip == null)
+                {
+                    tooltip = new MapMarkerTooltip(Map.ViewContext);
+                }
+
+                return tooltip;
+            }
+        }
+
         public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
-            // Do manual serialization here
+            var tooltip = Tooltip.Serialize();
+            if (tooltip.Any())
+            {
+                settings["tooltip"] = tooltip;
+            }
 
             return settings;
         }

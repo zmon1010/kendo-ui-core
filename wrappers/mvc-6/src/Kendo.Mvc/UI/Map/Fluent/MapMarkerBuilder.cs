@@ -20,6 +20,14 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// The tooltip options for this marker.
+        /// </summary>
+        /// <param name="configurator">The action that configures the tooltip.</param>
+        public MapMarkerBuilder Tooltip(Action<MapMarkerTooltipBuilder> configurator)
+        {
+            configurator(new MapMarkerTooltipBuilder(Container.Tooltip));
+            return this;
+        }
     }
 }
