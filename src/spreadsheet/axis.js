@@ -18,6 +18,22 @@
             this._refresh();
         },
 
+        adjust: function(start, delta) {
+            // adjust this axis for insert/remove rows/cols operation
+            if (delta < 0) {
+                // removing -- copy from start+|delta| to start
+                this.values.copy(start - delta, this._count - 1, start);
+                this._hidden.copy(start - delta, this._count - 1, start);
+            } else {
+                // adding -- copy from start to start+delta, and set
+                // values for inserted things to default.
+                this.values.copy(start, this._count, start + delta);
+                this._hidden.copy(start, this._count, start + delta);
+                this.values.value(start, start + delta - 1, this._value);
+                this._hidden.value(start, start + delta - 1, 0);
+            }
+        },
+
         toJSON: function(field, positions) {
             var values = [];
 

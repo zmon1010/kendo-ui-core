@@ -262,17 +262,9 @@
             if (selection !== kendo.spreadsheet.NULLREF) {
                 this.select(selection);
             }
-            // adjust column widths or row heights
+            // adjust column widths or row heights and hidden attribute
             var axis = operation == "col" ? this._columns : this._rows;
-            if (delta < 0) {
-                // removing -- copy from start+|delta| to start
-                axis.values.copy(start - delta, axis._count - 1, start);
-            } else {
-                // adding -- copy from start to start+delta, and set
-                // values for inserted things to default.
-                axis.values.copy(start, axis._count, start + delta);
-                axis.values.value(start, start + delta - 1, axis._value);
-            }
+            axis.adjust(start, delta);
         },
 
         _forFormulas: function(callback) {
