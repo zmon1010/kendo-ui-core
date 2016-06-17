@@ -35,24 +35,24 @@
     });
 
     test("_render(tasks) sets view range", function() {
-        var original = timeline.view().range;
+        var original = timeline.view()._range;
 
         stub(timeline.view(), {
-            range: function(range) {
+            _range: function(range) {
                 original.apply(this, arguments);
             }
         });
 
         timeline._render(tasks);
 
-        ok(timeline.view().calls("range"));
+        ok(timeline.view().calls("_range"));
     });
 
     test("_render(tasks) calls view range() method with tasks range", 2, function() {
-        var original = timeline.view().range;
+        var original = timeline.view()._range;
 
         stub(timeline.view(), {
-            range: function(range) {
+            _range: function(range) {
                 equal(kendo.toString(range.start, "yyyy/MM/dd"), "2014/04/15");
                 equal(kendo.toString(range.end, "yyyy/MM/dd"), "2014/04/17");
 
@@ -65,10 +65,10 @@
 
     test("_render([empty]) calls view range() method with range of today's date", 2, function() {
         var today = new Date();
-        var original = timeline.view().range;
+        var original = timeline.view()._range;
 
         stub(timeline.view(), {
-            range: function(range) {
+            _range: function(range) {
                 equal(kendo.toString(range.start, "yyyy/MM/dd"), kendo.toString(today, "yyyy/MM/dd"));
                 equal(kendo.toString(range.end, "yyyy/MM/dd"), kendo.toString(today, "yyyy/MM/dd"));
 
@@ -78,7 +78,6 @@
 
         timeline._render([]);
     });
-
 
     test("rows table created", function() {
         timeline._render(tasks);
@@ -439,6 +438,57 @@
         renderTask();
 
         ok(timeline.view().content.find(".k-task-wrap").length);
+    });
+
+    test("wrapper not rendered when it is before custom view range", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/19"),
+            end: new Date("2014/04/20")
+        };
+
+        timeline.view("day");
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is after custom view range", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/16")
+        };
+
+        timeline.view("day");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper rendered when its end is in the custom view range", function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/16"),
+            end: new Date("2014/04/17 10:00")
+        };
+
+        timeline.view("day");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(taskWrap.find(".k-task-start").length);
+        ok(taskWrap.find(".k-task-end").length);
+        ok(taskWrap.length);
     });
 
     test("dependency drag handles rendered", function() {

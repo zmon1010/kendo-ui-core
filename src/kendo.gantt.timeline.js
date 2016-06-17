@@ -440,11 +440,11 @@ var __meta__ = { // jshint ignore:line
                     );
                 }
 
-                row.children.push(cell);
-
+                if (task.start <= this.end && task.end >= this.start) {
+                    row.children.push(cell);
+                    addCoordinates(i);
+                }
                 rows.push(row);
-
-                addCoordinates(i);
             }
 
             return this._createTable(1, rows, { className: GanttView.styles.tasksTable });
@@ -1396,7 +1396,7 @@ var __meta__ = { // jshint ignore:line
             end = new Date(end);
 
             while (start < end) {
-                slotEnd = kendo.date.nextDay(start);
+                slotEnd = Math.min(end, kendo.date.nextDay(start));
 
                 isWorkDay = this._isWorkDay(start);
 
@@ -1596,12 +1596,21 @@ var __meta__ = { // jshint ignore:line
             resizeTooltipFormat: "h:mm tt ddd, MMM d"
         },
 
-        range: function(range) {
+        _range: function(range) {
+            var optionsRange = this.options.range;
             this.start = kendo.date.getDate(range.start);
             this.end = kendo.date.getDate(range.end);
 
             if (kendo.date.getMilliseconds(range.end) > 0 || this.end.getTime() === this.start.getTime()) {
                 this.end = kendo.date.addDays(this.end, 1);
+            }
+
+            if (optionsRange && optionsRange.start) {
+                this.start = optionsRange.start;
+            }
+
+            if (optionsRange && optionsRange.end) {
+                this.end = optionsRange.end;
             }
         },
 
@@ -1650,7 +1659,7 @@ var __meta__ = { // jshint ignore:line
             resizeTooltipFormat: "h:mm tt ddd, MMM d"
         },
 
-        range: function(range) {
+        _range: function(range) {
             var calendarInfo = this.calendarInfo();
             var firstDay = calendarInfo.firstDay;
             var rangeEnd = range.end;
@@ -1692,7 +1701,7 @@ var __meta__ = { // jshint ignore:line
             resizeTooltipFormat: "dddd, MMM d, yyyy"
         },
 
-        range: function(range) {
+        _range: function(range) {
             this.start = kendo.date.firstDayOfMonth(range.start);
             this.end = kendo.date.addDays(kendo.date.getDate(kendo.date.lastDayOfMonth(range.end)), 1);
         },
@@ -1726,7 +1735,7 @@ var __meta__ = { // jshint ignore:line
             resizeTooltipFormat: "dddd, MMM d, yyyy"
         },
 
-        range: function(range) {
+        _range: function(range) {
             this.start = kendo.date.firstDayOfMonth(new Date(range.start.setMonth(0)));
             this.end = kendo.date.firstDayOfMonth(new Date(range.end.setMonth(12))); //set month to first month of next year
         },
@@ -2029,7 +2038,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _range: function(tasks) {
+        _tasksRange: function(tasks) {
             var startOrder = {
                 field: "start",
                 dir: "asc"
@@ -2054,11 +2063,11 @@ var __meta__ = { // jshint ignore:line
 
         _render: function(tasks) {
             var view = this.view();
-            var range = this._range(tasks);
+            var range = this._tasksRange(tasks);
 
             this._tasks = tasks;
 
-            view.range(range);
+            view._range(range);
 
             view.renderLayout();
 
