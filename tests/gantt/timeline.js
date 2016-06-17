@@ -398,6 +398,18 @@
         equal(view._slots.length, 2);
     });
 
+    test("custom start and end slot count weekview", function () {
+        view = dayView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/04/17 12:00")
+        };
+
+        view.renderLayout();
+
+        equal(view._slots.length, 2);
+    });
+
     test("range() with equal start and end", 2, function() {
         view = dayView();
         var range = {
@@ -943,6 +955,42 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
     });
     
+    test("custom start range is set", 2, function () {
+        view = weekView();
+
+        view.options.range = {
+            start: new Date("2014/04/19"),
+        };
+
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/23")
+        };
+
+        view._range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/19");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
+    });
+
+    test("custom end range is set", 2, function () {
+        view = weekView();
+
+        view.options.range = {
+            end: new Date("2014/04/19"),
+        };
+
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/23")
+        };
+
+        view._range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/19");
+    });
+
     test("range() sets view range to containing weeks when end is the same day as week start", 2, function() {
         view = weekView();
         var range = {

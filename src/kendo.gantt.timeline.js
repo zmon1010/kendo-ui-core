@@ -1396,7 +1396,7 @@ var __meta__ = { // jshint ignore:line
             end = new Date(end);
 
             while (start < end) {
-                slotEnd = Math.min(end, kendo.date.nextDay(start));
+                slotEnd = end < kendo.date.nextDay(start) ? end : kendo.date.nextDay(start);
 
                 isWorkDay = this._isWorkDay(start);
 
@@ -1660,6 +1660,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _range: function(range) {
+            var optionsRange = this.options.range;
             var calendarInfo = this.calendarInfo();
             var firstDay = calendarInfo.firstDay;
             var rangeEnd = range.end;
@@ -1670,6 +1671,14 @@ var __meta__ = { // jshint ignore:line
 
             this.start = kendo.date.getDate(kendo.date.dayOfWeek(range.start, firstDay, -1));
             this.end = kendo.date.getDate(kendo.date.dayOfWeek(rangeEnd, firstDay, 1));
+
+            if (optionsRange && optionsRange.start) {
+                this.start = kendo.date.getDate(optionsRange.start);
+            }
+
+            if (optionsRange && optionsRange.end) {
+                this.end = kendo.date.getDate(optionsRange.end);
+            }
         },
 
         _createSlots: function() {

@@ -491,6 +491,57 @@
         ok(taskWrap.length);
     });
 
+    test("wrapper not rendered when it is before custom view range in weekview", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/19"),
+            end: new Date("2014/04/20")
+        };
+
+        timeline.view("week");
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is after custom view range in weekview", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/16")
+        };
+
+        timeline.view("week");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper rendered when its end is in the custom view range in weekview", function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/16"),
+            end: new Date("2014/04/17 10:00")
+        };
+
+        timeline.view("week");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(taskWrap.find(".k-task-start").length);
+        ok(taskWrap.find(".k-task-end").length);
+        ok(taskWrap.length);
+    });
+
     test("dependency drag handles rendered", function() {
         var taskWrap;
 
