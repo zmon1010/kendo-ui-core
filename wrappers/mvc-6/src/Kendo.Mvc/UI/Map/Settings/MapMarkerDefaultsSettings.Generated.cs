@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class MapMarkerDefaultsSettings 
     {
-        public MapMarkerDefaultsTooltipSettings Tooltip { get; } = new MapMarkerDefaultsTooltipSettings();
-
         public MapMarkersShape? Shape { get; set; }
 
 
@@ -21,12 +19,6 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            var tooltip = Tooltip.Serialize();
-            if (tooltip.Any())
-            {
-                settings["tooltip"] = tooltip;
-            }
 
             return settings;
         }

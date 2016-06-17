@@ -96,19 +96,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The default Kendo UI Tooltip options for data-bound markers.
-        /// </summary>
-        /// <param name="configurator">The configurator for the tooltip setting.</param>
-        public MapLayerBuilder Tooltip(Action<MapLayerTooltipSettingsBuilder> configurator)
-        {
-
-            Container.Tooltip.Map = Container.Map;
-            configurator(new MapLayerTooltipSettingsBuilder(Container.Tooltip));
-
-            return this;
-        }
-
-        /// <summary>
         /// The maximum symbol size for bubble layer symbols.
         /// </summary>
         /// <param name="value">The value for MaxSize</param>

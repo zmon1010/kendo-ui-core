@@ -15,8 +15,6 @@ namespace Kendo.Mvc.UI
 
         public string Title { get; set; }
 
-        public MapMarkerTooltipSettings Tooltip { get; } = new MapMarkerTooltipSettings();
-
         public MapMarkersShape? Shape { get; set; }
 
 
@@ -34,12 +32,6 @@ namespace Kendo.Mvc.UI
             if (Title?.HasValue() == true)
             {
                 settings["title"] = Title;
-            }
-
-            var tooltip = Tooltip.Serialize();
-            if (tooltip.Any())
-            {
-                settings["tooltip"] = tooltip;
             }
 
             return settings;

@@ -27,8 +27,6 @@ namespace Kendo.Mvc.UI
 
         public string TitleField { get; set; }
 
-        public MapLayerTooltipSettings Tooltip { get; } = new MapLayerTooltipSettings();
-
         public double? MaxSize { get; set; }
 
         public double? MinSize { get; set; }
@@ -100,12 +98,6 @@ namespace Kendo.Mvc.UI
             if (TitleField?.HasValue() == true)
             {
                 settings["titleField"] = TitleField;
-            }
-
-            var tooltip = Tooltip.Serialize();
-            if (tooltip.Any())
-            {
-                settings["tooltip"] = tooltip;
             }
 
             if (MaxSize.HasValue)

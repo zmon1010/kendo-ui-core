@@ -31,19 +31,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Kendo UI Tooltip options for this marker.
-        /// </summary>
-        /// <param name="configurator">The configurator for the tooltip setting.</param>
-        public MapMarkerBuilder Tooltip(Action<MapMarkerTooltipSettingsBuilder> configurator)
-        {
-
-            Container.Tooltip.Map = Container.Map;
-            configurator(new MapMarkerTooltipSettingsBuilder(Container.Tooltip));
-
-            return this;
-        }
-
-        /// <summary>
         /// The marker shape. Supported shapes are "pin" and "pinTarget".
         /// </summary>
         /// <param name="value">The value for Shape</param>

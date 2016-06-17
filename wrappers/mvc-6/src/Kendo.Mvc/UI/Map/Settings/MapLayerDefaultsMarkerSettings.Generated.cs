@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class MapLayerDefaultsMarkerSettings 
     {
-        public MapLayerDefaultsMarkerTooltipSettings Tooltip { get; } = new MapLayerDefaultsMarkerTooltipSettings();
-
         public double? Opacity { get; set; }
 
         public MapMarkersShape? Shape { get; set; }
@@ -23,12 +21,6 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            var tooltip = Tooltip.Serialize();
-            if (tooltip.Any())
-            {
-                settings["tooltip"] = tooltip;
-            }
 
             if (Opacity.HasValue)
             {

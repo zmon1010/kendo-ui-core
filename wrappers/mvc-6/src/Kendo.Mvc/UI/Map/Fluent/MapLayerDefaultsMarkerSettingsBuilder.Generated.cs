@@ -11,19 +11,6 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The default Kendo UI Tooltip options for all marker layers.
-        /// </summary>
-        /// <param name="configurator">The configurator for the tooltip setting.</param>
-        public MapLayerDefaultsMarkerSettingsBuilder Tooltip(Action<MapLayerDefaultsMarkerTooltipSettingsBuilder> configurator)
-        {
-
-            Container.Tooltip.Map = Container.Map;
-            configurator(new MapLayerDefaultsMarkerTooltipSettingsBuilder(Container.Tooltip));
-
-            return this;
-        }
-
-        /// <summary>
         /// The the opacity of all marker layers.
         /// </summary>
         /// <param name="value">The value for Opacity</param>
