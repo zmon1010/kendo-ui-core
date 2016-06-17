@@ -33,7 +33,11 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         private static string TO_STRING_METHOD_TEMPLATE =
            "public override string ToString() " +
             "{" +
+#if NET451
             "var props = this.GetType().GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public); " +
+#else
+            "var props = System.Reflection.TypeExtensions.GetProperties(this.GetType(), System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public); " +
+#endif
             "var sb = new System.Text.StringBuilder();" +
             "sb.Append(\"{\"); " +
             "for (int i = 0; i < props.Length; i++) " +
@@ -96,6 +100,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                     return assembly.GetType(typeName);
 #else
                     var assembly = _assemblyLoadContext.Load(ms);
+                    return assembly.GetType(typeName);
 #endif
 
                 }
@@ -125,8 +130,10 @@ namespace Kendo.Mvc.Infrastructure.Implementation
 
         private CompilationUnitSyntax DeclareCompilationUnit()
         {
-            return SyntaxFactory.CompilationUnit()
-              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.IdentifierName("System")));
+            var unit = SyntaxFactory.CompilationUnit();
+            unit.AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.IdentifierName("System")));
+
+            return unit;
         }
 
         private CSharpCompilation CreateCompilation(SyntaxTree syntaxTree)
