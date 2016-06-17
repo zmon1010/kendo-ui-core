@@ -5,7 +5,7 @@ if grep -q 'Ubuntu' /proc/version
 then
     apt-get install -y python-software-properties
     apt-get update -y	
-    apt-get install -y ruby2.3 build-essential
+    apt-get install -y ruby=1:2.3.0+1 ruby-dev build-essential
     gem install chef --version '~> 12' --no-ri --no-rdoc
 elif grep -q 'Red Hat' /proc/version
 then
