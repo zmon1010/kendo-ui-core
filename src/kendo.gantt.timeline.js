@@ -1711,8 +1711,17 @@ var __meta__ = { // jshint ignore:line
         },
 
         _range: function(range) {
+            var optionsRange = this.options.range;
             this.start = kendo.date.firstDayOfMonth(range.start);
             this.end = kendo.date.addDays(kendo.date.getDate(kendo.date.lastDayOfMonth(range.end)), 1);
+
+            if (optionsRange && optionsRange.start) {
+                this.start = kendo.date.getDate(optionsRange.start);
+            }
+
+            if (optionsRange && optionsRange.end) {
+                this.end = kendo.date.getDate(optionsRange.end);
+            }
         },
 
         _createSlots: function() {
