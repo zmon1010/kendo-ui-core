@@ -34,6 +34,7 @@
     - include: a/monit/main.yml
     - include: a/modulus.yml
 #    - include: a/tomcat.yml
-#    - name: current
+
     - include: a/android-sdk.yml
-    - include: a/screenshot.yml
+    - name: current
+      include: a/screenshot.yml

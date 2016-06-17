@@ -1,6 +1,12 @@
 ---
 # vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
-- apt: ia32-libs
+- apt: name={{item}} state=latest
+  with_items:
+    - libc6-i386
+    - lib32stdc++6
+    - lib32gcc1
+    - lib32ncurses5
+    - lib32z1
 
 - file:  name=/usr/share/selenium-server/ state=directory force=yes
 
@@ -27,8 +33,8 @@
     dest: "{{selenium_libs}}selenium-java-2.31.0.zip"
     mode: 0755
 - name: Unzip Selenium Java libraries
-  shell: bash -c "unzip selenium-java-2.31.0.zip && mv selenium-2.31.0/selenium-2.31.0/* . && rm -rf selenium-2.31.0/ "
-    args:
-      chdir: "{{selenium_lib}}"
-      creates: selenium-java-2.31.0.jar
+  shell: bash -c "unzip selenium-java-2.31.0.zip && mv selenium-2.31.0/selenium-2.31.0/* . && rm -rf selenium-2.31.0/"
+  args:
+    chdir: "{{selenium_libs}}"
+    creates: selenium-java-2.31.0.jar
 

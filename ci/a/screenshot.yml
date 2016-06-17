@@ -2,7 +2,8 @@
 # vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
 - name: installs needed packages
   apt: name=imagemagick state=latest
-  get: {{item}} state=latest
+- name: installs some gems  
+  gem: name={{item}} state=latest
   with_items:
     - thin
     - sinatra
