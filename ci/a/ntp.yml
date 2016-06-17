@@ -1,0 +1,4 @@
+---
+- apt: name=ntp state=latest
+- copy: src=a/ntp.conf dest=/etc/ntp.conf
+- service: name=ntp state=restarted
