@@ -19,7 +19,7 @@
        - xauth
        - firefox
        - lftp
-       - mаvеn
+       - maven
     - include: "{{ansible_home}}/ntp.yml"
     - include: "{{ansible_home}}/ruby.yml"
     - include: "{{ansible_home}}/nginx.yml"
