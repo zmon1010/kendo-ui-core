@@ -62,7 +62,7 @@ kendo.PDFMixin = {
         }
 
         var options = this.options.pdf;
-        options.multiPage = options.allPages;
+        options.multiPage = options.multiPage || options.allPages;
 
         this._drawPDF(progress)
         .then(function(root) {
