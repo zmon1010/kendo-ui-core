@@ -65,12 +65,70 @@
             this.forEachSelectedColumn(function(sheet, index) {
                 sheet.hideColumn(index);
             });
+            var sheet = this._sheet;
+            var ref = sheet.select().toRangeRef();
+            var left = ref.topLeft.col;
+            var right = ref.bottomRight.col;
+            var sel = null;
+            while (true) {
+                var hasRight = right < sheet._columns._count;
+                var hasLeft = left >= 0;
+                if (!hasLeft && !hasRight) {
+                    break;
+                }
+                if (hasRight && !sheet.isHiddenColumn(right)) {
+                    sel = right;
+                    break;
+                }
+                if (hasLeft && !sheet.isHiddenColumn(left)) {
+                    sel = left;
+                    break;
+                }
+                left--;
+                right++;
+            }
+            if (sel !== null) {
+                ref = new kendo.spreadsheet.RangeRef(
+                    new kendo.spreadsheet.CellRef(0, sel),
+                    new kendo.spreadsheet.CellRef(sheet._rows._count - 1, sel)
+                );
+                sheet.range(ref).select();
+            }
         },
 
         hideSelectedRows: function() {
             this.forEachSelectedRow(function(sheet, index) {
                 sheet.hideRow(index);
             });
+            var sheet = this._sheet;
+            var ref = sheet.select().toRangeRef();
+            var top = ref.topLeft.row;
+            var bottom = ref.bottomRight.row;
+            var sel = null;
+            while (true) {
+                var hasBottom = bottom < sheet._rows._count;
+                var hasTop = top >= 0;
+                if (!hasTop && !hasBottom) {
+                    break;
+                }
+                if (hasBottom && !sheet.isHiddenRow(bottom)) {
+                    sel = bottom;
+                    break;
+                }
+                if (hasTop && !sheet.isHiddenRow(top)) {
+                    sel = top;
+                    break;
+                }
+                top--;
+                bottom++;
+            }
+            if (sel !== null) {
+                ref = new kendo.spreadsheet.RangeRef(
+                    new kendo.spreadsheet.CellRef(sel, 0),
+                    new kendo.spreadsheet.CellRef(sel, sheet._columns._count - 1)
+                );
+                sheet.range(ref).select();
+            }
         },
 
         unhideSelectedColumns: function() {
