@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MediaPlayer</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="../src/kendo.core.js"></script>
+    <script type="text/javascript" src="../src/kendo.data.js"></script>
+    <script type="text/javascript" src="../src/kendo.userevents.js"></script>
+    <script type="text/javascript" src="../src/kendo.draganddrop.js"></script>
+    <script type="text/javascript" src="../src/kendo.slider.js"></script>
+
+    <script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
+
+
+
+</head>
+<body>
+    <div id="player1"> </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var mnyDataSource = new kendo.data.DataSource({
+                data: [
+                  { name: "video1", url: ".//video/justCode" },
+                  { name: "video2", url: "something invalid" }
+                ]
+            });
+
+
+            $("#player1").kendoMediaPlayer(
+                {
+                    dataSource: mnyDataSource
+                }
+             );
+        });
+    </script>
+
+
+</body>
+</html>
