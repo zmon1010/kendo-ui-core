@@ -593,6 +593,57 @@
         ok(taskWrap.length);
     });
 
+    test("wrapper not rendered when it is before custom view range in yearview", 3, function () {
+        var taskWrap;
+
+        timeline.view("year");
+        timeline.view().options.range = {
+            start: new Date("2013/02/20"),
+            end: new Date("2014/02/20")
+        };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is after custom view range in yearview", 3, function () {
+        var taskWrap;
+
+        timeline.view().options.range = {
+            start: new Date("2014/05/15"),
+            end: new Date("2014/07/16")
+        };
+
+        timeline.view("year");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper rendered when its end is in the custom view range in yearview", function () {
+        var taskWrap;
+
+        timeline.view().options.range = {
+            start: new Date("2014/01/16"),
+            end: new Date("2014/04/17 10:00")
+        };
+
+        timeline.view("year");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(taskWrap.find(".k-task-start").length);
+        ok(taskWrap.find(".k-task-end").length);
+        ok(taskWrap.length);
+    });
+
     test("dependency drag handles rendered", function() {
         var taskWrap;
 

@@ -1481,19 +1481,28 @@ var __meta__ = { // jshint ignore:line
 
         _years: function(start, end) {
             var slotEnd;
+            var monthSpan;
+            var endMonth;
             var slots = [];
-
+           
             start = new Date(start);
             end = new Date(end);
 
             while (start < end) {
                 slotEnd = new Date(start);
-                slotEnd.setFullYear(slotEnd.getFullYear() + 1);
+                slotEnd = kendo.date.firstDayOfMonth(new Date(slotEnd.setMonth(12)));
+
+                if (slotEnd >= end) {
+                    slotEnd = end;
+                }
+
+                endMonth = slotEnd.getMonth() || 12;
+                monthSpan = endMonth - start.getMonth();
 
                 slots.push({
                     start: start,
                     end: slotEnd,
-                    span: 12
+                    span: monthSpan
                 });
 
                 start = slotEnd;
@@ -1754,8 +1763,19 @@ var __meta__ = { // jshint ignore:line
         },
 
         _range: function(range) {
+            var optionsRange = this.options.range;
             this.start = kendo.date.firstDayOfMonth(new Date(range.start.setMonth(0)));
             this.end = kendo.date.firstDayOfMonth(new Date(range.end.setMonth(12))); //set month to first month of next year
+
+            if (optionsRange && optionsRange.start) {
+                var startMonth = optionsRange.start.getMonth();
+                this.start = kendo.date.firstDayOfMonth(new Date(optionsRange.start.setMonth(startMonth)));
+            }
+
+            if (optionsRange && optionsRange.end) {
+                var endMonth = new Date(optionsRange.end);
+                this.end = kendo.date.firstDayOfMonth(new Date(endMonth.setMonth(endMonth.getMonth() + 1)));
+            }
         },
 
         _createSlots: function() {
