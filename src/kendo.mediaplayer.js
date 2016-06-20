@@ -132,6 +132,14 @@
                                     .bind(ERROR, that._errorHandler);
             },
 
+            _unbindDataSource: function () {
+                var that = this;
+
+                that.dataSource.unbind(CHANGE, that._refreshHandler)
+                                .unbind(PROGRESS, that._progressHandler)
+                                .unbind(ERROR, that._errorHandler);
+            },
+
             _refresh: function () {
                 var data = this.dataSource.data()
                 if (data && data[0]) {
