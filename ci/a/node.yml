@@ -8,6 +8,8 @@
   apt_repository: repo='deb-src https://deb.nodesource.com/node_4.x trusty main'
 - name: Install node packages
   apt: name=nodejs state=latest
+  apt: name=npm
+- shell: ln -fs `which nodejs` /usr/bin/node
 - npm: name=grunt-cli global=yes
 - npm: name=gulp global=yes
 - npm: name=jshint global=yes

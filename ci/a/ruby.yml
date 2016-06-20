@@ -1,8 +1,8 @@
 ---
 # vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
-- apt: name='ruby' version='1:2.3.0+1'
-- apt: name='ruby-dev'
+- apt: name=ruby=1:2.3.0+1
+- apt: name=ruby-dev
 - apt: name=bundler
 - apt: name=libxml2-dev
 - apt: name=libxslt1-dev
-- gem: name=rake version='0.9.2.2'
+- gem: name=rake version=10.5.0

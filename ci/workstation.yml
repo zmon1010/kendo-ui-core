@@ -16,18 +16,6 @@
     - include: a/mono.yml
     - apt: name=xvfb
     - apt: name=xauth
-    - name: Install PHP
-      apt: name={{item}} state=latest
-      with_items:
-        - php5-cli
-        - php5-fpm
-        - php5-gd
-        - php5-sqlite
-        - php5-json
-    - name: Configure FPM
-      template: src=a/fpm-www.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf
-      notify:
-        - restart php5-fpm
-    - service: name=php5-fpm state=started enabled=yes
+    - include: a/php-fpm.yml	    
   handlers:
     - service: name=php5-fpm state=restarted
