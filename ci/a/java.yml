@@ -2,7 +2,6 @@
 # vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
 - name: Install add-apt-repostory
   apt: name=software-properties-common state=latest
-
 - name: Add Oracle Java Repository
   apt_repository: repo='ppa:webupd8team/java'
 
@@ -12,7 +11,6 @@
 - name: Install Oracle Java 8
   apt: name={{item}} state=latest
   with_items:
-    - oracle-java8-installer
-    - ca-certificates
-    - oracle-java8-set-default
-
+  - oracle-java8-installer
+  - ca-certificates
+  - oracle-java8-set-default

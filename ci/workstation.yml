@@ -4,6 +4,7 @@
   vars:
     php_process_user: www-data
     php_process_group: www-data
+    apt_file_dir: /etc/apt/sources.list.d/
   remote_user: petyo
   sudo: yes
   tasks:
@@ -30,6 +31,3 @@
     - service: name=php5-fpm state=started enabled=yes
   handlers:
     - service: name=php5-fpm state=restarted
-
-
-
