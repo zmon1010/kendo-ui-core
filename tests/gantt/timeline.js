@@ -12,7 +12,7 @@
     var YearView = kendo.ui.GanttYearView;
 
     var headerTree;
-    
+
     module("Initialization", {
         setup: function() {
             element = $("<div/>");
@@ -1586,6 +1586,83 @@
         view.renderLayout();
 
         equal(view._slots[1].length, 14);
+    });
+
+    test("custom start slot count",3 , function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view._range(range);
+
+        view.renderLayout();
+       
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 16);
+    });
+
+    test("custom end slot count",3 , function () {
+        view = monthView();
+        view.options.range = {
+            end: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view._range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 14);
+    });
+
+    test("custom start and end slot count", function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2015/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view._range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 13);
+        equal(view._slots[1].length, 53);
+    });
+
+    test("custom start and end slot count new year", function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/12/15 10:00"),
+            end: new Date("2015/01/05 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view._range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 2);
+        equal(view._slots[1].length, 4);
+        equal(view._slots[0][0].span, 17);
     });
 
     module("Year View", {

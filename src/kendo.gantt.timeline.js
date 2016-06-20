@@ -1451,6 +1451,7 @@ var __meta__ = { // jshint ignore:line
 
         _months: function(start, end) {
             var slotEnd;
+            var endMonth;
             var slots = [];
             var daySlots;
             var span;
@@ -1460,7 +1461,8 @@ var __meta__ = { // jshint ignore:line
 
             while (start < end) {
                 slotEnd = new Date(start);
-                slotEnd.setMonth(slotEnd.getMonth() + 1);
+                endMonth = kendo.date.firstDayOfMonth(new Date(slotEnd.setMonth(slotEnd.getMonth() + 1)));
+                slotEnd = end < endMonth ? end : endMonth;
 
                 daySlots = this._days(start, slotEnd);
                 span = daySlots.length;
