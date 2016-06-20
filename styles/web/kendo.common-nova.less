@@ -278,6 +278,19 @@
     padding: 0 2.571em 0 0;
 }
 
+.k-combobox > .k-dropdown-wrap > .k-i-close {
+    right: 3.2em;
+}
+
+.k-multiselect > .k-multiselect-wrap > .k-i-close {
+    top: @grid-size/2 + 2px;    
+}
+
+.k-autocomplete > .k-i-close, 
+.k-multiselect > .k-multiselect-wrap > .k-i-close {
+    margin-right: 10px;
+}
+
 .k-picker-wrap .k-select,
 .k-numeric-wrap .k-select,
 .k-dropdown-wrap .k-select
@@ -1136,6 +1149,11 @@ form.k-filter-menu .k-textbox {
 .k-multiselect-wrap .k-state-hover .k-i-close,
 .k-multiselect-wrap .k-button:not(.k-state-disabled):hover .k-i-close {
     background-position: -48px -16px;
+}
+
+/* Clear button */
+.k-multiselect-wrap > .k-i-close {
+    background-position: -32px -16px;
 }
 
 .k-multiselect-wrap .k-i-arrow-s,

@@ -83,6 +83,19 @@ span.k-selectbox .k-input {
     padding: 0.143em 0;;
 }
 
+.k-combobox > .k-dropdown-wrap > .k-i-close {
+    right: 2.3em;
+}
+
+.k-autocomplete,
+.k-combobox > .k-dropdown-wrap {
+    &.k-state-border-down {
+       > .k-i-close {
+           margin-top: -1px;
+        }
+    } 
+}
+
 .k-picker-wrap .k-select,
 .k-numeric-wrap .k-select,
 .k-dropdown-wrap .k-select
