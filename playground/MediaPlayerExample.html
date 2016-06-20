@@ -21,7 +21,7 @@
 
             var mnyDataSource = new kendo.data.DataSource({
                 data: [
-                  { name: "video1", url: ".//video/justCode" },
+                  { name: "video1", url: ".//video/justCode.mp4" },
                   { name: "video2", url: "something invalid" }
                 ]
             });
@@ -32,9 +32,12 @@
                     dataSource: mnyDataSource
                 }
              );
+            
         });
     </script>
 
+    <input type="button" value="Play" onclick="(function(){  $('#player1').data('kendoMediaPlayer').play()})(); return false;" />
 
+    <input type="button" value="Pause" onclick="(function(){  $('#player1').data('kendoMediaPlayer').pause()})(); return false;" />
 </body>
 </html>

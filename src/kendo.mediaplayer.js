@@ -20,7 +20,9 @@
         extend = $.extend,
         proxy = $.proxy,
         each = $.each,
-        templates = {},
+        templates = {
+            html5Player: "<video class='k-mediaplayer-media' width='320' height='240'> </video>"
+        },
         rendering = {},
         DataSource = kendo.data.DataSource;
 
@@ -34,6 +36,8 @@
                 Widget.fn.init.call(that, element, options);
 
                 options = that.options;
+
+                that._createHtml5Player();
 
                 that._dataSource();
 
@@ -75,6 +79,12 @@
                 }
             },
 
+            _createHtml5Player() {
+                var that = this;
+                that.element.append(templates.html5Player);
+                that._media = that.element.find(".k-mediaplayer-media")[0];
+            },
+
             setOptions: function (options) {
                 if ("dataSource" in options) {
                     this._initData(options);
@@ -92,11 +102,15 @@
             },
 
             play: function () {
+                this._media.play();
                 return this;
             },
+
             pause: function () {
+                this._media.pause();
                 return this;
             },
+
             fullScreen: function (value) {
                 return this;
             },
@@ -119,6 +133,13 @@
             },
 
             _refresh: function () {
+                var data = this.dataSource.data()
+                if (data && data[0]) {
+
+                    var sourceElement = document.createElement("source");
+                    sourceElement.setAttribute("src", data[0].url);
+                    this.element.find(".k-mediaplayer-media").append(sourceElement);
+                }
             },
 
             _error: function () {
