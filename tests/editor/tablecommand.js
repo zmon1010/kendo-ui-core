@@ -2,6 +2,10 @@
 
 var editor;
 var TableCommand = kendo.ui.editor.TableCommand;
+var PERCENTAGE = "%";
+var TD = "td";
+var WIDTH = "width";
+var range;
 
 editor_module("editor table command", {
     setup: function() {
@@ -21,17 +25,31 @@ function execTableCommand(options) {
     return command;
 }
 
-var range, command;
+function stripColumnAttributes(html) {
+    return html.replace(/\sstyle=\"width\:\d*%?\;\"/gi, "");
+}
 
 test("exec createTable creates table at cursor", function() {
     range = createRangeFromText(editor, 'foo||');
 
     execTableCommand({ range:range });
 
-    equal(editor.value(), "foo<table><tbody><tr><td></td></tr></tbody></table>");
+    equal(stripColumnAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
 });
 
-test("exec createTable creates table with given row/columns", function() {
+test("exec createTable creates table with given rows", function() {
+    editor.value("foo");
+
+    range = editor.createRange();
+    range.setStart(editor.body.firstChild, 0);
+    range.collapse(true);
+
+    execTableCommand({ range: range, rows: 3, columns: 2 });
+
+    equal(stripColumnAttributes(editor.value()), "<table><tbody><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table>foo");
+});
+
+test("exec createTable creates table with given columns", function() {
     editor.value("foo");
 
     range = editor.createRange();
@@ -40,7 +58,7 @@ test("exec createTable creates table with given row/columns", function() {
 
     execTableCommand({ range:range, rows: 1, columns: 2 });
 
-    equal(editor.value(), "<table><tbody><tr><td></td><td></td></tr></tbody></table>foo");
+    equal(stripColumnAttributes(editor.value()), "<table><tbody><tr><td></td><td></td></tr></tbody></table>foo");
 });
 
 function stripAttr(html) {
@@ -68,7 +86,7 @@ test("exec splits paragraph", function() {
 
     execTableCommand({ range:range });
 
-    equal(editor.value(), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
+    equal(stripColumnAttributes(editor.value()), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
 });
 
 test("first cell is focused after insertion", function() {
@@ -82,7 +100,7 @@ test("first cell is focused after insertion", function() {
 
     range.insertNode(editor.document.createElement("a"));
 
-    equal(editor.value(), "foo<table><tbody><tr><td><a></a></td></tr></tbody></table>");
+    equal(stripColumnAttributes(editor.value()), "foo<table><tbody><tr><td><a></a></td></tr></tbody></table>");
 });
 
 test("table holds its position after undo/redo", function() {
@@ -95,7 +113,43 @@ test("table holds its position after undo/redo", function() {
 
     editor.exec("redo");
 
-    equal(editor.value().replace(/<br[^>]*>/g, ""), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
+    equal(stripColumnAttributes(editor.value()).replace(/<br[^>]*>/g, ""), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
+});
+
+editor_module("editor table command", {
+    setup: function() {
+        editor = $("#editor-fixture").data("kendoEditor");
+        editor.value("");
+        range = editor.createRange();
+    }
+});
+
+test("creates one column with width equal to 100%", function() {
+    execTableCommand({ rows: 1, columns: 1, range: range });
+
+    equal("100%", $(editor.body).find(TD)[0].style.width);
+});
+
+test("creates 4 columns with width equal to 25%", function() {
+    var columns = [];
+
+    execTableCommand({ rows: 1, columns: 4, range: range });
+
+    columns = $(editor.body).find(TD);
+    for (var i = 0; i < columns.length; i++) {
+        equal("25%", $(editor.body).find(TD)[0].style.width);
+    }
+});
+
+test("creates 3 columns with width roughly equal to 33.3%", function() {
+    var columns = [];
+
+    execTableCommand({ rows: 1, columns: 3, range: range });
+
+    columns = $(editor.body).find(TD);
+    for (var i = 0; i < columns.length; i++) {
+        roughlyEqual("33.3333%", columns[i].style.width, 0.01);
+    }
 });
 
 }());
