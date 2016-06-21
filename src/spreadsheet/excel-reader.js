@@ -334,7 +334,9 @@
                                 value = kendo.parseDate(value);
                             }
 
-                            range.value(value);
+                            if (value != null) {
+                                range.value(value);
+                            }
                         }
                     }
                 } else if (tag == "cols") {
@@ -515,20 +517,19 @@
 
     function readStrings(zip) {
         var strings = [];
-        var current;
+        var current = null;
         parse(zip, "xl/sharedStrings.xml", {
-            enter: function() {
-                if (this.is(SEL_SHARED_STRING)) {
-                    current = "";
-                }
-            },
             leave: function() {
                 if (this.is(SEL_SHARED_STRING)) {
                     strings.push(current);
+                    current = null;
                 }
             },
             text: function(text) {
                 if (this.is(SEL_TEXT)) {
+                    if (current == null) {
+                        current = "";
+                    }
                     current += text;
                 }
             }
