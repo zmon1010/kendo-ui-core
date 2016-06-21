@@ -2432,6 +2432,22 @@ var __meta__ = { // jshint ignore:line
             return this.timeline.view(type);
         },
 
+        range: function (range) {
+            var dataSource = this.dataSource;
+
+            if (range) {
+                this.view().options.range = {
+                    start: range.start,
+                    end: range.end
+                }
+
+                this.timeline._render(dataSource.taskTree());
+                this.timeline._renderDependencies(this.dependencies.view());
+            }
+
+            return this.view().options.range;
+        },
+
         dataItem: function(value) {
             if (!value) {
                 return null;

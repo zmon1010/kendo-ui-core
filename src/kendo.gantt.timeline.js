@@ -1675,6 +1675,7 @@ var __meta__ = { // jshint ignore:line
             var calendarInfo = this.calendarInfo();
             var firstDay = calendarInfo.firstDay;
             var rangeEnd = range.end;
+            var endDay;
 
             if (firstDay === rangeEnd.getDay()) {
                 rangeEnd.setDate(rangeEnd.getDate() + 7);
@@ -1688,7 +1689,13 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (optionsRange && optionsRange.end) {
-                this.end = kendo.date.getDate(optionsRange.end);
+                endDay = new Date(optionsRange.end);
+
+                if (kendo.date.getDate(endDay) < optionsRange.end) {
+                    this.end = kendo.date.getDate(new Date(endDay.setDate(endDay.getDate() + 1)));
+                } else {
+                    this.end = kendo.date.getDate(endDay);
+                }
             }
         },
 
@@ -1768,15 +1775,18 @@ var __meta__ = { // jshint ignore:line
             var optionsRange = this.options.range;
             this.start = kendo.date.firstDayOfMonth(new Date(range.start.setMonth(0)));
             this.end = kendo.date.firstDayOfMonth(new Date(range.end.setMonth(12))); //set month to first month of next year
+            var startMonth;
+            var firstDayOfMonth;
 
             if (optionsRange && optionsRange.start) {
-                var startMonth = optionsRange.start.getMonth();
+                startMonth = optionsRange.start.getMonth();
                 this.start = kendo.date.firstDayOfMonth(new Date(optionsRange.start.setMonth(startMonth)));
             }
 
             if (optionsRange && optionsRange.end) {
-                var endMonth = new Date(optionsRange.end);
-                this.end = kendo.date.firstDayOfMonth(new Date(endMonth.setMonth(endMonth.getMonth() + 1)));
+                firstDayOfMonth = kendo.date.firstDayOfMonth(optionsRange.end);
+
+                this.end = firstDayOfMonth.setMonth(firstDayOfMonth.getMonth() + 1);
             }
         },
 

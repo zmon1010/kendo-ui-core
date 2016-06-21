@@ -129,6 +129,21 @@
         ok(gantt.timeline.calls("view"));
     });
 
+    test("range('range') calls timeline's view method", function () {
+        gantt = new Gantt(element);
+
+        stub(gantt.timeline, "_render");
+
+        var range = {
+            start: new Date("2014/01/16"),
+            end: new Date("2014/09/17 10:00")
+        };
+
+        gantt.range(range);
+
+        ok(gantt.timeline.calls("_render"));
+    });
+
     test("removeTask() triggers remove event", 1, function() {
         setupGantt({
             data: [

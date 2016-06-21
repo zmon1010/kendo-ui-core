@@ -512,8 +512,8 @@
         var taskWrap;
 
         timeline.options.range = {
-            start: new Date("2014/04/15"),
-            end: new Date("2014/04/16")
+            start: new Date("2014/04/5"),
+            end: new Date("2014/04/6")
         };
 
         timeline.view("week");
