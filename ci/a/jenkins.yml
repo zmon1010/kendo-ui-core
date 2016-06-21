@@ -1,8 +1,0 @@
----
-# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
-- name: Add Jenkins key
-  apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
-- name: Add Jenkins repo
-  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/'
-- name: Install Jenkins
-  apt: pkg=jenkins state=installed

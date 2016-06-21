@@ -5,6 +5,7 @@
     php_process_user: www-data
     php_process_group: www-data
     apt_file_dir: /etc/apt/sources.list.d/
+    jenkins_host: localhost
   remote_user: petyo
   sudo: yes
   tasks:
@@ -13,7 +14,8 @@
     - include: a/google-chrome.yml
     - include: a/node.yml
     - include: a/java.yml
-    - include: a/jenkins.yml
+    - name: jenkins
+      include: a/jenkins/main.yml
     - include: a/mono.yml
     - apt: name=xvfb
     - apt: name=xauth
