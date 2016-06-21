@@ -10,6 +10,29 @@
         template = kendo.template,
         RangeUtils = Editor.RangeUtils,
         complexBlocks = ["ul", "ol", "tbody", "thead", "table"],
+        toolsToBeUpdated = [
+            "bold",
+            "italic",
+            "underline",
+            "strikethrough",
+            "superscript",
+            "subscript",
+            "forecolor",
+            "backcolor",
+            "fontname",
+            "fontnize",
+            "createlink",
+            "unlink",
+            "autolink",
+            "addcolumnleft",
+            "addcolumnright",
+            "addrowabove",
+            "addrowbelow",
+            "deleterow",
+            "deletecolumn",
+            "mergecells",
+            "formatting",
+            "cleanformatting" ],
         IMMUTABALE = "k-immutable";
 
     var rootCondition = function(node) {
@@ -202,7 +225,8 @@
     Immutables.immutable = immutable;
     Immutables.immutableParent = immutableParent;
     Immutables.trimImmutableContainers = trimImmutableContainers;
-    
+    Immutables.toolsToBeUpdated = toolsToBeUpdated;
+
     Editor.Immutables = Immutables;
 })(window.kendo.jQuery);
 
