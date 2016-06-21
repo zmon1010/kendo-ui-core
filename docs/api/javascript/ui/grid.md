@@ -1322,6 +1322,11 @@ The fields which can be used in the template are:
 * data - provides access to all available aggregates, e.g. `data.fieldName1.sum` or `data.fieldName2.average`
 * group - provides information for the current group. An object with two fields - `field` and `value`.
 
+> **Important**
+>
+> If the template is declared as a function the group field is accessible only through the data field,
+> e.g. `data.fieldName1.group.value`.
+
 #### Example - set the group header template
 
     <div id="grid"></div>
