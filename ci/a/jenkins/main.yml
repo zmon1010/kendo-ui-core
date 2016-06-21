@@ -1,27 +1,36 @@
 ---
 # vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
-#- name: Add Jenkins key
-#  apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
-#- name: Add Jenkins repo
-#  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/'
-#- name: Update cache
-#  apt: update_cache=yes 
-#- name: Install Jenkins
-#  apt: pkg=jenkins state=installed
-#- copy: 
-#    src: a/jenkins/files/config.xml 
-#    dest: /var/lib/jenkins 
-#    force: yes 
-#    owner: jenkins 
-#    mode: 0600 
-#    group: nogroup
-#- template: 
-#    src: a/jenkins/files/jenkins.model.JenkinsLocationConfiguration.xml.j2 
-#    dest: /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
-#    owner: jenkins
-#    mode: 0600
-#    group: nogroup
 
-#- include: a/jenkins/set_user.yml
-#- include: a/jenkins/mount_filesrv.yml
+- name: Add Jenkins key
+  apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
+
+- name: Add Jenkins repo
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/'
+
+- name: Update cache
+  apt: update_cache=yes 
+
+- name: Install Jenkins
+  apt: pkg=jenkins state=installed
+
+- copy: 
+    src: a/jenkins/files/config.xml 
+    dest: /var/lib/jenkins 
+    force: yes 
+    owner: jenkins 
+    mode: 0600 
+    group: nogroup
+
+- template: 
+    src: a/jenkins/files/jenkins.model.JenkinsLocationConfiguration.xml.j2 
+    dest: /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
+    owner: jenkins
+    mode: 0600
+    group: nogroup
+
+- set_fact: jenkins_url="http://localhost:8080/build/"
+
+- include: a/jenkins/set_user.yml
+- include: a/jenkins/mount_filesrv.yml
 - include: a/jenkins/set_plugins.yml
+- include: a/jenkins/build_tasks.yml
