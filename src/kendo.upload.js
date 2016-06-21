@@ -265,6 +265,7 @@ var __meta__ = { // jshint ignore:line
             var fileData = {
                 target: $(fileEntry, that.wrapper)
             };
+            var allFiles;
 
             if(that.options.async.saveUrl) {
                 if($(fileEntry).hasClass("k-file-progress")) {
@@ -273,7 +274,13 @@ var __meta__ = { // jshint ignore:line
                     that._module.onRemove(fileData, {}, shouldSendRemoveRequest);
                 }
 
-                that._updateHeaderUploadStatus();
+                allFiles = $(".k-file", that.wrapper);
+
+                if(allFiles.length === 0) {
+                    that._hideHeaderUploadstatus();
+                } else {
+                    that._updateHeaderUploadStatus();
+                }
             } else {
                 that._module.onRemove(fileData, {}, shouldSendRemoveRequest);
             }
@@ -850,10 +857,6 @@ var __meta__ = { // jshint ignore:line
             var currentlyInvalid = $('.k-file-invalid', that.wrapper);
             var failedUploads, headerUploadStatusIcon;
 
-            if(headerUploadStatus.length === 0) {
-                that._showHeaderUploadStatus();
-            }
-
             if (currentlyUploading.length === 0 || currentlyInvalid.length > 0) {
                 failedUploads = $('.k-file.k-file-error, .k-file.k-file-invalid', that.wrapper);
 
@@ -1083,6 +1086,8 @@ var __meta__ = { // jshint ignore:line
                 //upload._showHeaderUploadStatus();
                 if(!hasValidationErrors) {
                     upload._showUploadButton();
+                } else {
+                    upload._updateHeaderUploadStatus();
                 }
             }
         },
@@ -1334,6 +1339,8 @@ var __meta__ = { // jshint ignore:line
 
                     if(!hasValidationErrors) {
                         upload._showUploadButton();
+                    } else {
+                        upload._updateHeaderUploadStatus();
                     }
                 }
             });
