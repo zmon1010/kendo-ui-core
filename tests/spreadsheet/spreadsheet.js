@@ -368,6 +368,26 @@
         spreadsheet._controller.onDialogRequest({ options: {}});
     });
 
+    test("editor value is set when revert action is received", 1, function() {
+        spreadsheet._workbook._view.editor.value = function() {
+            ok(true);
+        }
+
+        spreadsheet._controller.enableEditor(true, true, {
+            action: "revert"
+        });
+    });
+
+    test("editor value is not set when close action is received", 0, function() {
+        spreadsheet._workbook._view.editor.value = function() {
+            ok(false);
+        }
+
+        spreadsheet._controller.enableEditor(true, true, {
+            action: "close"
+        });
+    });
+
     test("edit errors clear last command queue", 1, function() {
         spreadsheet._lastCommandRequest = {
             callback: function() {

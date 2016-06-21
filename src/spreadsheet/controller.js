@@ -878,7 +878,7 @@
         },
 
         onEditorEsc: function() {
-            this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet()._viewActiveCell()));
+            this.resetEditorValue();
             this.editor.deactivate();
 
             this.clipboardElement.focus();
@@ -931,6 +931,10 @@
         },
 
 ////////////////////////////////////////////////////////////////////
+        resetEditorValue: function() {
+            this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet()._viewActiveCell()));
+        },
+
         deactivateEditor: function(callback, options) {
             var viewEditor = this.view.editor;
 
@@ -957,7 +961,11 @@
             this.enableEditor(false);
         },
 
-        enableEditor: function(enable, focusLastActive) {
+        enableEditor: function(enable, focusLastActive, event) {
+            if (event && event.action === "revert") {
+                this.resetEditorValue();
+            }
+
             enable = enable === undefined || enable;
 
             this._enableEditorEvents(enable);

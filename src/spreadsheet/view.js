@@ -962,9 +962,18 @@
             var errorMessages = this.options.messages.errors;
 
             if (kendo.spreadsheet.dialogs.registered(options.type)) {
-                this.openDialog(options.type, {
+                var dialogOptions = {
                     close: callback
-                });
+                };
+
+                if (options.type === "validationError") {
+                    dialogOptions = $.extend(dialogOptions, {
+                        title: options.title || "Error",
+                        text: options.body ? options.body : errorMessages[options.type]
+                    });
+                }
+
+                this.openDialog(options.type, dialogOptions);
             } else {
                 this.openDialog("message", {
                     title : options.title || "Error",
