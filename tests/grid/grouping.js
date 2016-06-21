@@ -810,4 +810,18 @@
         equal(grid.tbody.find("tr>td:last").text(), "foo : 2 count: 1");
     });
 
+    test("groupFooterTemplate function using aggregates", function() {
+        var grid = new Grid(table(), {
+            dataSource: {
+                data: [{foo: "1", bar: "bar"}],
+                group: { field: "foo", aggregates: [ { field: "foo", aggregate: "count" } ]}
+            },
+            columns: [ { field: "foo", groupFooterTemplate: function(data) {
+                equal(data.foo.group.field, "foo");
+                equal(data.foo.group.value, 1);
+            }
+            } ]
+        });
+    });
+
 })();
