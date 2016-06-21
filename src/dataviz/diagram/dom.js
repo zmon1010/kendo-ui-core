@@ -3071,6 +3071,8 @@
                         scroller.scrollTo(pan.x, pan.y);
                         that._updateAdorners();
                     }
+                } else {
+                    return this._pan.times(-1);
                 }
             },
 

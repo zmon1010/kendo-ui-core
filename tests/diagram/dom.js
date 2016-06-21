@@ -1174,6 +1174,20 @@
             diagram.pan()
         });
 
+        test("pan returns current pan offset if a point is not passed", function() {
+            var result = diagram.pan();
+
+            equal(result.x, 0);
+            equal(result.y, 0);
+
+            diagram.pan(new Point(100, 200));
+
+            result = diagram.pan();
+
+            equal(result.x, 100);
+            equal(result.y, 200);
+        });
+
     })();
     // ------------------------------------------------------------
     (function() {
