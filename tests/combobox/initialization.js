@@ -87,7 +87,6 @@ test("include arrow after input.k-input", function(){
    ok(spanArrow.hasClass("k-select"));
    ok(arrow.is("span"));
    ok(arrow.hasClass("k-icon k-i-arrow-s"));
-   equal(arrow.html(), "select");
 });
 
 test("text input should keep the visible input empty on init", function() {
