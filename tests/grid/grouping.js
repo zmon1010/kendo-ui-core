@@ -798,5 +798,16 @@
         equal(footers.eq(2).find("td:not(.k-group-cell):first").text(), 3);
     });
 
+    test("groupFooterTemplate using aggregates", function() {
+        var grid = new Grid(table(), {
+            dataSource: {
+                data: [{foo: "1", bar: "bar"}, {foo: "2", bar: "baz"}],
+                group: { field: "foo", aggregates: [ { field: "foo", aggregate: "count" } ]}
+            },
+            columns: [ { field: "foo", groupFooterTemplate: "#= group.field # : #= group.value # count: #=count#"  } ]
+        });
+
+        equal(grid.tbody.find("tr>td:last").text(), "foo : 2 count: 1");
+    });
 
 })();
