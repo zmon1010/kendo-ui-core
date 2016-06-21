@@ -56,7 +56,9 @@
 }
 
 .k-tabstrip-left > .k-tabstrip-items .k-loading,
-.k-tabstrip-right > .k-tabstrip-items .k-loading
+.k-tabstrip-right > .k-tabstrip-items .k-loading,
+.k-tabstrip-left > .k-tabstrip-items .k-i-loading,
+.k-tabstrip-right > .k-tabstrip-items .k-i-loading
 {
     display: none;
 }
@@ -148,7 +150,9 @@
 }
 
 .k-autocomplete .k-loading,
-.k-multiselect .k-loading
+.k-multiselect .k-loading,
+.k-autocomplete .k-i-loading,
+.k-multiselect .k-i-loading
 {
     bottom: 10px;
 }
@@ -611,16 +615,20 @@ div.k-window-content {
 
 .k-i-close,
 .k-delete,
-.k-group-delete {
+.k-group-delete,
+.k-i-delete,
+.k-i-group-delete {
     background-position: -32px -16px;
 }
 
 .k-multiselect {
-    .k-delete {
+    .k-delete,
+    .k-i-delete {
         margin-top: -2px;
     }
 
-    .k-button:not(.k-state-disabled):hover .k-delete {
+    .k-button:not(.k-state-disabled):hover .k-delete,
+    .k-button:not(.k-state-disabled):hover .k-i-delete {
         background-position: -160px -80px;
     }
 }

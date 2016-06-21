@@ -78,7 +78,8 @@ input.k-textbox,
     padding: 0;
 }
 
-.k-tabstrip-items .k-loading.k-complete
+.k-tabstrip-items .k-loading.k-complete,
+.k-tabstrip-items .k-i-loading.k-complete
 {
     display:none;
 }
@@ -260,7 +261,9 @@ input.k-textbox,
 }
 
 .k-autocomplete .k-loading,
-.k-multiselect .k-loading
+.k-multiselect .k-loading,
+.k-autocomplete .k-i-loading,
+.k-multiselect .k-i-loading
 {
     bottom: 10px;
 }
@@ -884,13 +887,17 @@ span.k-tooltip
 
 .k-i-close,
 .k-delete,
-.k-group-delete {
+.k-group-delete,
+.k-i-delete,
+.k-i-group-delete {
     background-position: -32px -16px;
 }
 
 .k-multiselect {
     .k-delete,
-    .k-state-hover .k-delete {
+    .k-state-hover .k-delete,
+    .k-i-delete,
+    .k-state-hover .k-i-delete {
         background-position: -32px -16px;
     }
 }
@@ -902,15 +909,18 @@ span.k-tooltip
 }
 
 .k-treeview {
-    .k-minus {
+    .k-minus,
+    .k-i-minus {
         background-position: 0 -32px;
     }
 
-    .k-plus {
+    .k-plus,
+    .k-i-plus {
         background-position: 0 -16px;
     }
 
-    .k-loading {
+    .k-loading,
+    .k-i-loading {
         background-position: 50%;
     }
 }
@@ -943,7 +953,8 @@ span.k-tooltip
     }
 }
 
-.k-grid .k-delete {
+.k-grid .k-delete,
+.k-grid .k-i-delete {
     background-position: -32px -16px;
 }
 
