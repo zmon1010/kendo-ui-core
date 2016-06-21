@@ -38,13 +38,13 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
         equal($(".k-i-delete", uploadInstance.wrapper).length, 1);
     });
 
-    test("remove icon is not rendered if remove action is not configured", function() {
+    test("remove icon is rendered even if remove action is not configured", function() {
         var uploadInstance = createUpload(noAutoConfig);
         uploadInstance = createUpload({ async: {"saveUrl":'javascript:;', autoUpload: false } });
 
         simulateFileSelect();
 
-        equal($(".k-i-delete", uploadInstance.wrapper).length, 0);
+        equal($(".k-delete", uploadInstance.wrapper).length, 1);
     });
 
     test("clicking remove should remove file entry", function() {

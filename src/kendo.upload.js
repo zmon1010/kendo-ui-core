@@ -30,6 +30,12 @@ var __meta__ = { // jshint ignore:line
         INVALIDMINFILESIZE = "invalidMinFileSize",
         INVALIDFILEEXTENSION = "invalidFileExtension";
 
+    var headerStatusIcon = {
+        loading: "k-loading",
+        warning: "k-warning",
+        success: "k-i-tick"
+    };
+
     var Upload = Widget.extend({
         init: function(element, options) {
             var that = this;
@@ -127,7 +133,7 @@ var __meta__ = { // jshint ignore:line
                 "headerStatusUploading": "Uploading...",
                 "headerStatusUploaded": "Done",
                 "invalidMaxFileSize": "File size too large.",
-                "invalidMinFileSize": "File size too small",
+                "invalidMinFileSize": "File size too small.",
                 "invalidFileExtension": "File type not allowed."
             }
         },
@@ -538,10 +544,6 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     fileEntry = that._prepareDefaultMultipleFileEntriesTemplate(data);
                 }
-
-                if(existingFileEntries.length % 2 === 1) {
-                    fileEntry.addClass("k-alt");
-                }
             } else {
                 templateData = that._prepareTemplateData(name, data);
                 template = kendo.template(template);
@@ -594,6 +596,8 @@ var __meta__ = { // jshint ignore:line
                 fileList.remove();
                 that.wrapper.addClass("k-upload-empty");
                 that._hideHeaderUploadstatus();
+            } else {
+                that._updateHeaderUploadStatus();
             }
         },
 
@@ -810,22 +814,30 @@ var __meta__ = { // jshint ignore:line
         },
 
         _showHeaderUploadStatus: function() {
-            var localization = this.localization;
-            var dropZone = $(".k-dropzone", this.wrapper);
-            var headerUploadStatus = $('.k-upload-status-total', this.wrapper);
+            var that = this;
+            var localization = that.localization;
+            var dropZone = $(".k-dropzone", that.wrapper);
+            var headerUploadStatus = $('.k-upload-status-total', that.wrapper);
+            var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error, .k-file-invalid');
 
             if (headerUploadStatus.length !== 0) {
                 headerUploadStatus.remove();
             }
 
-            headerUploadStatus = '<strong class="k-upload-status k-upload-status-total">' + localization.headerStatusUploading +
-            '<span class="k-icon k-i-loading">' + localization.statusUploading + '</span>' +
-            '</strong>';
+            headerUploadStatus = '<strong class="k-upload-status k-upload-status-total"><span class="k-icon"></span></strong>';
+
+            if(currentlyUploading.length !== 0) {
+                headerUploadStatus = $(headerUploadStatus).append(localization.headerStatusUploading);
+                headerUploadStatus.find(".k-icon").addClass(headerStatusIcon.loading).text(localization.statusUploading);
+            } else {
+                headerUploadStatus = $(headerUploadStatus).append(localization.headerStatusUploaded);
+                headerUploadStatus.find(".k-icon").addClass(headerStatusIcon.warning).text(localization.statusWarning);
+            }
 
             if (dropZone.length > 0) {
                 dropZone.append(headerUploadStatus);
             } else {
-                $('.k-upload-button', this.wrapper).after(headerUploadStatus);
+                $('.k-upload-button', that.wrapper).after(headerUploadStatus);
             }
         },
 
@@ -833,21 +845,25 @@ var __meta__ = { // jshint ignore:line
         _updateHeaderUploadStatus: function() {
             var that = this;
             var localization = that.localization;
-            var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error');
-            var currentlyInvalid = $('.k-fileError', that.wrapper);
-            var failedUploads, headerUploadStatus, headerUploadStatusIcon;
+            var headerUploadStatus = $('.k-upload-status-total', this.wrapper);
+            var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error, .k-file-invalid');
+            var currentlyInvalid = $('.k-file-invalid', that.wrapper);
+            var failedUploads, headerUploadStatusIcon;
+
+            if(headerUploadStatus.length === 0) {
+                that._showHeaderUploadStatus();
+            }
 
             if (currentlyUploading.length === 0 || currentlyInvalid.length > 0) {
-                failedUploads = $('.k-file.k-file-error, .k-fileError', that.wrapper); //k-fileError is fake class for invalid files
+                failedUploads = $('.k-file.k-file-error, .k-file.k-file-invalid', that.wrapper);
 
                 headerUploadStatus = $('.k-upload-status-total', that.wrapper);
-                headerUploadStatusIcon = $('.k-icon', headerUploadStatus)
-                                              .removeClass('k-loading k-warning k-i-tick')
-                                              .addClass((failedUploads.length !== 0) ? 'k-warning' : 'k-i-tick')
+                headerUploadStatusIcon = $('.k-icon', headerUploadStatus).removeClass().addClass("k-icon")
+                                              .addClass(failedUploads.length !== 0 ? headerStatusIcon.warning : headerStatusIcon.success)
                                               .text((failedUploads.length !== 0) ? localization.statusWarning : localization.statusUploaded);
 
-                headerUploadStatus.text(that.localization.headerStatusUploaded)
-                                  .append(headerUploadStatusIcon);
+                headerUploadStatus.html(headerUploadStatusIcon)
+                                  .append(that.localization.headerStatusUploaded);
             }
         },
 
@@ -1055,14 +1071,19 @@ var __meta__ = { // jshint ignore:line
 
             var fileEntry = this.prepareUpload(sourceInput, files, hasValidationErrors);
 
-            if (upload.options.async.autoUpload && !hasValidationErrors) {
-                this.performUpload(fileEntry);
-            } else {
-                if (upload._supportsRemove()) {
-                    this.upload._fileAction(fileEntry, REMOVE);
+            if (upload.options.async.autoUpload) {
+                if(!hasValidationErrors) {
+                    this.performUpload(fileEntry);
+                } else {
+                    upload._fileAction(fileEntry, REMOVE);
+                    upload._showHeaderUploadStatus();
                 }
-
-                upload._showUploadButton();
+            } else {
+                upload._fileAction(fileEntry, REMOVE);
+                //upload._showHeaderUploadStatus();
+                if(!hasValidationErrors) {
+                    upload._showUploadButton();
+                }
             }
         },
 
@@ -1203,15 +1224,22 @@ var __meta__ = { // jshint ignore:line
         },
 
         onRemove: function(e, data, shouldSendRemoveRequest) {
+            var module = this;
+            var upload = module.upload;
             var fileEntry = getFileEntry(e);
             var iframe = fileEntry.data("frame");
 
             if (iframe) {
-                this.unregisterFrame(iframe);
-                this.upload._removeFileEntry(fileEntry);
-                this.cleanupFrame(iframe);
+                module.unregisterFrame(iframe);
+                upload._removeFileEntry(fileEntry);
+                module.cleanupFrame(iframe);
             } else {
-                removeUploadedFile(fileEntry, this.upload, data, shouldSendRemoveRequest);
+                if (fileEntry.hasClass("k-file-success")) {
+                    removeUploadedFile(fileEntry, upload, data, shouldSendRemoveRequest);
+                } else {
+                    upload._removeFileEntry(fileEntry);
+                }
+                //removeUploadedFile(fileEntry, this.upload, data, shouldSendRemoveRequest);
             }
         },
 
@@ -1297,13 +1325,12 @@ var __meta__ = { // jshint ignore:line
                 if (upload.options.async.autoUpload) {
                     if(!hasValidationErrors) {
                         module.performUpload(this);
-                    } else if (upload._supportsRemove()) {
+                    } else {
                         upload._fileAction(this, REMOVE);
+                        upload._showHeaderUploadStatus();
                     }
                 } else {
-                    if (upload._supportsRemove()) {
-                        upload._fileAction(this, REMOVE);
-                    }
+                    upload._fileAction(this, REMOVE);
 
                     if(!hasValidationErrors) {
                         upload._showUploadButton();
@@ -1418,12 +1445,14 @@ var __meta__ = { // jshint ignore:line
         },
 
         onRemove: function(e, data, shouldSendRemoveRequest) {
+            var module = this;
+            var upload = module.upload;
             var fileEntry = getFileEntry(e);
 
             if (fileEntry.hasClass("k-file-success")) {
-                removeUploadedFile(fileEntry, this.upload, data, shouldSendRemoveRequest);
+                removeUploadedFile(fileEntry, upload, data, shouldSendRemoveRequest);
             } else {
-                this.removeFileEntry(fileEntry);
+                module.removeFileEntry(fileEntry);
             }
         },
 

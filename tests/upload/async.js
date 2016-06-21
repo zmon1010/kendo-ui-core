@@ -127,6 +127,45 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         equal($(".k-upload-status-total .k-i-tick", uploadInstance.wrapper).text(), "uploaded");
     });
 
+    test("Header status icon is displayed when selecting invalid file", function() {
+        var uploadInstance = createUpload({
+            validation: {
+                allowedExtensions: [".txt"]
+            }
+        });
+
+        simulateFileSelect("invalid.png");
+
+        equal($(".k-upload-status-total .k-warning", uploadInstance.wrapper).length, 1);
+    });
+
+    test("Header status icon is updated when selecting invalid file after valid", function() {
+        var uploadInstance = createUpload({
+            validation: {
+                allowedExtensions: [".txt"]
+            }
+        });
+
+        simulateUpload();
+        simulateFileSelect("invalid.png");
+
+        equal($(".k-upload-status-total .k-warning", uploadInstance.wrapper).length, 1);
+    });
+
+    test("Header status icon is updated when only successfully uploaded files are left", function() {
+        var uploadInstance = createUpload({
+            validation: {
+                allowedExtensions: [".txt"]
+            }
+        });
+
+        simulateUpload();
+        simulateFileSelect("invalid.png");
+        simulateRemoveClick(1);
+
+        equal($(".k-upload-status-total .k-i-tick", uploadInstance.wrapper).length, 1);
+    });
+
     test("k-file-progress is rendered when upload starts", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
