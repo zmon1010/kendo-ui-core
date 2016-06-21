@@ -750,33 +750,55 @@ var __meta__ = { // jshint ignore:line
         },
 
         _onUploadSuccess: function(e, response, xhr) {
+            var that = this;
             var fileEntry = getFileEntry(e);
 
-            this._fileState(fileEntry, "uploaded");
-            fileEntry.removeClass('k-file-progress').addClass('k-file-success');
-            this._updateHeaderUploadStatus();
-
-            this.trigger(SUCCESS, {
+            var prevented = that.trigger(SUCCESS, {
                 files: fileEntry.data("fileNames"),
                 response: response,
                 operation: "upload",
                 XMLHttpRequest: xhr
             });
 
-            if (this._supportsRemove()) {
-                this._fileAction(fileEntry, REMOVE);
+            if(prevented) {
+                that._setUploadErrorState(fileEntry);
             } else {
-                this._clearFileAction(fileEntry);
+                that._fileState(fileEntry, "uploaded");
+                fileEntry.removeClass('k-file-progress').addClass('k-file-success');
+                that._updateHeaderUploadStatus();
+
+                if (that._supportsRemove()) {
+                    that._fileAction(fileEntry, REMOVE);
+                } else {
+                    that._clearFileAction(fileEntry);
+                }
             }
 
-            this._checkAllComplete();
+            that._checkAllComplete();
         },
 
         _onUploadError: function(e, xhr) {
+            var that = this;
             var fileEntry = getFileEntry(e);
+
+            that._setUploadErrorState(fileEntry);
+
+            that.trigger(ERROR, {
+                operation: "upload",
+                files: fileEntry.data("fileNames"),
+                XMLHttpRequest: xhr
+            });
+
+            logToConsole("Server response: " + xhr.responseText);
+
+            that._checkAllComplete();
+        },
+
+        _setUploadErrorState: function(fileEntry) {
+            var that = this;
             var uploadPercentage = $('.k-upload-pct', fileEntry);
 
-            this._fileState(fileEntry, "failed");
+            that._fileState(fileEntry, "failed");
             fileEntry.removeClass('k-file-progress').addClass('k-file-error');
             $('.k-progress', fileEntry).width("100%");
 
@@ -788,16 +810,6 @@ var __meta__ = { // jshint ignore:line
 
             this._updateHeaderUploadStatus();
             this._fileAction(fileEntry, "retry");
-
-            this.trigger(ERROR, {
-                operation: "upload",
-                files: fileEntry.data("fileNames"),
-                XMLHttpRequest: xhr
-            });
-
-            logToConsole("Server response: " + xhr.responseText);
-
-            this._checkAllComplete();
         },
 
         _showUploadButton: function() {
@@ -1700,7 +1712,7 @@ var __meta__ = { // jshint ignore:line
 
     function removeUploadedFile(fileEntry, upload, data, shouldSendRemoveRequest) {
         if (!upload._supportsRemove()) {
-            if(shouldRemoveFileEntry(upload)) {
+            if(shouldRemoveFileEntry(upload) || !shouldSendRemoveRequest) {
                 upload._removeFileEntry(fileEntry);
             }
 
@@ -1718,14 +1730,16 @@ var __meta__ = { // jshint ignore:line
 
         upload._submitRemove(fileNames, data,
             function onSuccess(data, textStatus, xhr) {
-                upload._removeFileEntry(fileEntry);
-
-                upload.trigger(SUCCESS, {
+                var prevented = upload.trigger(SUCCESS, {
                     operation: "remove",
                     files: files,
                     response: data,
                     XMLHttpRequest: xhr
                 });
+
+                if(!prevented) {
+                    upload._removeFileEntry(fileEntry);
+                }
             },
 
             function onError(xhr) {
