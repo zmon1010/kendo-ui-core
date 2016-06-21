@@ -2439,7 +2439,7 @@ var __meta__ = { // jshint ignore:line
                 this.view().options.range = {
                     start: range.start,
                     end: range.end
-                }
+                };
 
                 this.timeline._render(dataSource.taskTree());
                 this.timeline._renderDependencies(this.dependencies.view());
