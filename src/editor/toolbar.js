@@ -684,9 +684,7 @@
             var that = this,
                 editor = that._editor,
                 range = editor.getRange(),
-                nodes = kendo.ui.editor.RangeUtils.textNodes(range),
-                immutables = editor.options.immutables,
-                immutableParent = immutables ? editorNS.Immutables.immutableParent(range.commonAncestorContainer) : null;
+                nodes = kendo.ui.editor.RangeUtils.textNodes(range);
 
             if (!nodes.length) {
                 nodes = [range.startContainer];
@@ -694,11 +692,13 @@
 
             that.items().each(function() {
                 var tool = that.tools[that._toolName(this)];
-                if (tool && tool.update) {
-                    var ui = ($(this));
-                    tool.update(ui, nodes);
-                    if (immutables) {
-                        that._updateImmutablesState(tool, ui, immutableParent);
+                if (tool) {
+                    var ui = $(this);
+                    if (tool.update) {
+                        tool.update(ui, nodes);
+                    }
+                    if (editor.options.immutables) {
+                        that._updateImmutablesState(tool, ui, editor._immutableParent);
                     }
                 }
             });

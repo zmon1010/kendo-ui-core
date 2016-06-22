@@ -302,8 +302,16 @@
 
         _selectionChange: function() {
             this._selectionStarted = false;
+            this.saveImmutableParent();
             this.saveSelection();
             this.trigger("select", {});
+        },
+
+        saveImmutableParent: function(range) {
+            if (this.options.immutables) {
+                range = range || this.getRange();
+                this._immutableParent = kendo.ui.editor.Immutables.immutableParent(range.commonAncestorContainer);
+            }
         },
 
         _resizable: function() {
