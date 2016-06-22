@@ -15,6 +15,7 @@
         ToolTemplate = editorNS.ToolTemplate,
         RestorePoint = editorNS.RestorePoint,
         Marker = editorNS.Marker,
+        browser = kendo.support.browser,
         extend = $.extend;
 
 function finishUpdate(editor, startRestorePoint) {
@@ -25,6 +26,11 @@ function finishUpdate(editor, startRestorePoint) {
     editor.undoRedoStack.push(command);
 
     return endRestorePoint;
+}
+
+function selected(node, range) { 
+    return range.startContainer === node && range.endContainer === node && 
+	    range.startOffset == 0 && range.endOffset == node.childNodes.length 
 }
 
 var Command = Class.extend({
@@ -173,8 +179,13 @@ var TypingHandler = Class.extend({
 
         if (!evt.isDefaultPrevented() && isTypingKey && !keyboard.isTypingInProgress()) {
             var range = editor.getRange();
+            var body = editor.body;
             that.startRestorePoint = new RestorePoint(range);
 
+            if (browser.webkit && !range.collapsed && selected(body, range)) {
+                body.innerHTML = "";
+            }
+            
             keyboard.startTyping(function () {
                 that.endRestorePoint = finishUpdate(editor, that.startRestorePoint);
             });
@@ -466,6 +477,24 @@ var SystemHandler = Class.extend({
 
         return false;
     }
+});
+
+var SelectAllHandler = Class.extend({
+    init: function(editor) {
+        this.editor = editor;
+    },
+
+    keydown: function (e) {
+        if (!browser.webkit || e.isDefaultPrevented() || 
+            !(e.ctrlKey && e.keyCode == 65 && !e.altKey && !e.shiftKey)) {
+            return;
+        }
+        var editor = this.editor;
+        var range = editor.getRange();
+        range.selectNodeContents(editor.body);
+        editor.selectRange(range);
+    },
+    keyup: $.noop
 });
 
 var Keyboard = Class.extend({
@@ -1665,6 +1694,7 @@ extend(editorNS, {
     TypingHandler: TypingHandler,
     SystemHandler: SystemHandler,
     BackspaceHandler: BackspaceHandler,
+    SelectAllHandler: SelectAllHandler,
     Keyboard: Keyboard,
     Clipboard: Clipboard,
     Cleaner: Cleaner,
