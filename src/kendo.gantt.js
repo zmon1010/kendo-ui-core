@@ -2434,18 +2434,23 @@ var __meta__ = { // jshint ignore:line
 
         range: function (range) {
             var dataSource = this.dataSource;
+            var view = this.view();
+            var timeline = this.timeline;
 
             if (range) {
-                this.view().options.range = {
+                view.options.range = {
                     start: range.start,
                     end: range.end
                 };
 
-                this.timeline._render(dataSource.taskTree());
-                this.timeline._renderDependencies(this.dependencies.view());
+                timeline._render(dataSource.taskTree());
+                timeline._renderDependencies(this.dependencies.view());
             }
 
-            return this.view().options.range;
+            return {
+                start: view.start,
+                end: view.end
+            };
         },
 
         dataItem: function(value) {

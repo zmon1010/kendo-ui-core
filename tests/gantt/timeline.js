@@ -1625,6 +1625,25 @@
         equal(view._slots[0][0].span, 16);
     });
 
+    test("custom end slot count exact date", 3, function () {
+        view = monthView();
+        view.options.range = {
+            end: new Date("2014/04/15")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view._range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 14);
+    });
+
     test("custom end slot count",3 , function () {
         view = monthView();
         view.options.range = {
@@ -1641,7 +1660,7 @@
 
         equal(view._slots[0].length, 1);
         equal(view._slots[1].length, 3);
-        equal(view._slots[0][0].span, 14);
+        equal(view._slots[0][0].span, 15);
     });
 
     test("custom start and end slot count", function () {
