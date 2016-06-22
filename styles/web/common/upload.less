@@ -114,7 +114,43 @@ html .k-upload
     .sprite-hoverable(7, 18);
 }
 
-.k-filename
+.k-file-extension-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 28px;
+    height: 38px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: red;
+    vertical-align: bottom;
+}
+
+.k-file-extension-wrapper:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: solid;
+    margin-top: -1px;
+    margin-right: -1px;
+
+    background: #fff;
+    border-color: transparent;
+    border-bottom-color: red;
+    border-left-color: red;
+}
+
+.k-file-extension {
+    position: absolute;
+    bottom: 0;
+    line-height: normal;
+}
+
+.k-file-name
 {
     position: relative;
     display: inline-block;
