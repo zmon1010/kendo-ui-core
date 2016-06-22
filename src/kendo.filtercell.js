@@ -341,11 +341,11 @@ var __meta__ = { // jshint ignore:line
             if ((currentFilter.value !== undefined && currentFilter.value !== null) || (isNonValueFilter(currentFilter) && !this._clearInProgress)) {
                 expression.filters.push(currentFilter);
 
-                prevented = that.trigger(CHANGE, { filter: expression });
+                prevented = that.trigger(CHANGE, { filter: expression, field: that.options.field });
             }
 
             if (that._clearInProgress) {
-                prevented = that.trigger(CHANGE, { filter: null });
+                prevented = that.trigger(CHANGE, { filter: null, field: that.options.field });
             }
 
             if (prevented) {

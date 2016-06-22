@@ -553,7 +553,7 @@ var __meta__ = { // jshint ignore:line
                         field: that.field,
                         title: that.title,
                         change: function(e) {
-                            if (that.trigger("filtering", { filter: e.filter })) {
+                            if (that.trigger("filtering", { filter: e.filter, field: e.field })) {
                                 e.preventDefault();
                             }
                         }
