@@ -240,7 +240,8 @@
             that.keyboard = new editorNS.Keyboard([
                 new editorNS.BackspaceHandler(that),
                 new editorNS.TypingHandler(that),
-                new editorNS.SystemHandler(that)
+                new editorNS.SystemHandler(that),
+                new editorNS.SelectAllHandler(that)
             ]);
 
             that.clipboard = new editorNS.Clipboard(this);

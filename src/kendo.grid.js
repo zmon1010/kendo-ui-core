@@ -5549,7 +5549,7 @@ var __meta__ = { // jshint ignore:line
                     }
                 },
                 filterHandler = function(e) {
-                    if (that.trigger("filter", { filter: e.filter })) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
                         e.preventDefault();
                     }
                 },
@@ -5634,7 +5634,7 @@ var __meta__ = { // jshint ignore:line
                     focusTable(element.closest("table"), true);
                 },
                 filterHandler = function(e) {
-                    if (that.trigger("filter", { filter: e.filter })) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
                         e.preventDefault();
                     }
                 },
@@ -5708,7 +5708,7 @@ var __meta__ = { // jshint ignore:line
                 filterable = that.options.filterable,
                 rowheader = that.thead.find(".k-filter-row"),
                 filterHandler = function(e) {
-                    if (that.trigger("filter", { filter: e.filter })) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
                         e.preventDefault();
                     }
                 };
@@ -6890,12 +6890,12 @@ var __meta__ = { // jshint ignore:line
                 text = (column.title || field) + ': ' + formatGroupValue(group.value, column.format, column.values, column.encoded),
                 footerDefaults = that._groupAggregatesDefaultObject || {},
                 aggregates = extend({}, footerDefaults, group.aggregates),
-                data = extend({}, { field: group.field, value: group.value, aggregates: aggregates }, group.aggregates[group.field]),
+                headerData = extend({}, { field: group.field, value: group.value, aggregates: aggregates }, group.aggregates[group.field]),
                 groupFooterTemplate = templates.groupFooterTemplate,
                 groupItems = group.items;
 
             if (template) {
-                text  = typeof template === FUNCTION ? template(data) : kendo.template(template)(data);
+                text  = typeof template === FUNCTION ? template(headerData) : kendo.template(template)(headerData);
             }
 
             html += groupHeaderBuilder(colspan, level, text);
@@ -6909,7 +6909,14 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (groupFooterTemplate) {
-                html += groupFooterTemplate(aggregates);
+                var footerData = {};
+                for (var aggregate in aggregates) {
+                    footerData[aggregate] = extend({}, aggregates[aggregate],
+                        { group: { field: group.field, value: group.value } }
+                    );
+                }
+
+                html += groupFooterTemplate(footerData);
             }
             return html;
         },

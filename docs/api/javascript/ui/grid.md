@@ -1279,6 +1279,7 @@ and the current group value is displayed.
 The fields which can be used in the template are:
 
 * value - the current group value
+* field - the current group field
 * average - the value of the "average" aggregate (if specified)
 * count - the value of the "count" aggregate (if specified)
 * max - the value of the "max" aggregate (if specified)
@@ -1319,6 +1320,12 @@ The fields which can be used in the template are:
 * min - the value of the "min" aggregate (if specified)
 * sum - the value of the "sum" aggregate (if specified)
 * data - provides access to all available aggregates, e.g. `data.fieldName1.sum` or `data.fieldName2.average`
+* group - provides information for the current group. An object with two fields - `field` and `value`.
+
+> **Important**
+>
+> If the template is declared as a function the group field is accessible only through the data field,
+> e.g. `data.fieldName1.group.value`.
 
 #### Example - set the group header template
 
@@ -1329,6 +1336,29 @@ The fields which can be used in the template are:
         { field: "name" },
         { field: "age",
           groupFooterTemplate: "Total: #= count #"
+        }
+      ],
+      dataSource: {
+        data: [
+          { name: "Jane Doe", age: 30 },
+          { name: "John Doe", age: 30 }
+        ],
+        group: { field: "age", aggregates: [ { field: "age", aggregate: "count" }] }
+      }
+    });
+    </script>
+
+#### Example - set the group header template as function
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [
+        { field: "name" },
+        { field: "age",
+          groupFooterTemplate: function(e) {
+              return "Total: " + e.age.count;
+          }
         }
       ],
       dataSource: {
@@ -8635,6 +8665,10 @@ The event handler function context (available via the `this` keyword) will be se
 ##### e.filter `Object`
 
 The selected filter descriptor. If `null` the filter has been cleared for example by click on the `clear` button.
+
+##### e.field `String`
+
+The field for which the filter is constructed.
 
 ##### e.preventDefault `Function`
 
