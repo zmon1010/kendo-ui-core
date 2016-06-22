@@ -30,7 +30,7 @@ function finishUpdate(editor, startRestorePoint) {
 
 function selected(node, range) { 
     return range.startContainer === node && range.endContainer === node && 
-	    range.startOffset == 0 && range.endOffset == node.childNodes.length 
+	    range.startOffset === 0 && range.endOffset == node.childNodes.length;
 }
 
 var Command = Class.extend({
