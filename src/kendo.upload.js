@@ -465,13 +465,13 @@ var __meta__ = { // jshint ignore:line
             if(errors && errors.length > 0) {
                 template += "<li class='k-file k-file-invalid'><span class='k-progress'></span>" +
                 "<span class='k-icon k-fileErrorIcon'></span>" +
-                "<span class='k-filename k-fileError' title='" + file.name + "'>" + file.name + "</span>" +
-                "<span class='k-validation-message'>" + that.localization[errors[0]] + "</span>";
+                "<span class='k-file-name k-fileError' title='" + file.name + "'>" + file.name + "</span>" +
+                "<span class='k-file-validation-message'>" + that.localization[errors[0]] + "</span>";
             } else {
                 template += "<li class='k-file'><span class='k-progress'></span>" +
-                "<span class='k-icon'></span><span class='k-fileExt'>" + file.extension.substring(1) + "</span>" +
-                "<span class='k-filename' title='" + file.name + "'>" + file.name + "</span>" +
-                "<span class='k-filesize'>" + fileSize + "</span>";
+                "<span class='k-file-extension'>" + file.extension.substring(1) + "</span>" +
+                "<span class='k-file-name' title='" + file.name + "'>" + file.name + "</span>" +
+                "<span class='k-file-size'>" + fileSize + "</span>";
             }
 
             template += "<strong class='k-upload-status'></strong>";
@@ -506,14 +506,14 @@ var __meta__ = { // jshint ignore:line
             for(i = 0; i < files.length; i++) {
                 currentFile = files[i];
                 if(currentFile[VALIDATIONERRORS] && currentFile[VALIDATIONERRORS].length > 0) {
-                    template += "<span class='k-filename k-fileError' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
+                    template += "<span class='k-file-name k-fileError' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
                 } else {
-                    template += "<span class='k-filename' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
+                    template += "<span class='k-file-name' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
                 }
             }
 
             if(filesHaveValidationErrors) {
-                template += "<span class='k-validation-message'>Invalid files(s). Please check file upload requirements.</span>";
+                template += "<span class='k-file-validation-message'>Invalid files(s). Please check file upload requirements.</span>";
             } else {
                 template += "<span class='k-file-information'>Total: " + files.length + " files, " + totalFileSize + "</span>";
             }
