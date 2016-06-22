@@ -35,24 +35,24 @@
     });
 
     test("_render(tasks) sets view range", function() {
-        var original = timeline.view()._range;
+        var original = timeline.view().range;
 
         stub(timeline.view(), {
-            _range: function(range) {
+            range: function(range) {
                 original.apply(this, arguments);
             }
         });
 
         timeline._render(tasks);
 
-        ok(timeline.view().calls("_range"));
+        ok(timeline.view().calls("range"));
     });
 
     test("_render(tasks) calls view range() method with tasks range", 2, function() {
-        var original = timeline.view()._range;
+        var original = timeline.view().range;
 
         stub(timeline.view(), {
-            _range: function(range) {
+            range: function(range) {
                 equal(kendo.toString(range.start, "yyyy/MM/dd"), "2014/04/15");
                 equal(kendo.toString(range.end, "yyyy/MM/dd"), "2014/04/17");
 
@@ -65,10 +65,10 @@
 
     test("_render([empty]) calls view range() method with range of today's date", 2, function() {
         var today = new Date();
-        var original = timeline.view()._range;
+        var original = timeline.view().range;
 
         stub(timeline.view(), {
-            _range: function(range) {
+            range: function(range) {
                 equal(kendo.toString(range.start, "yyyy/MM/dd"), kendo.toString(today, "yyyy/MM/dd"));
                 equal(kendo.toString(range.end, "yyyy/MM/dd"), kendo.toString(today, "yyyy/MM/dd"));
 

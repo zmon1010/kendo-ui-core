@@ -1606,7 +1606,7 @@ var __meta__ = { // jshint ignore:line
             resizeTooltipFormat: "h:mm tt ddd, MMM d"
         },
 
-        _range: function(range) {
+        range: function(range) {
             var optionsRange = this.options.range;
             this.start = kendo.date.getDate(range.start);
             this.end = kendo.date.getDate(range.end);
@@ -1671,7 +1671,7 @@ var __meta__ = { // jshint ignore:line
             resizeTooltipFormat: "h:mm tt ddd, MMM d"
         },
 
-        _range: function(range) {
+        range: function(range) {
             var optionsRange = this.options.range;
             var calendarInfo = this.calendarInfo();
             var firstDay = calendarInfo.firstDay;
@@ -1729,7 +1729,7 @@ var __meta__ = { // jshint ignore:line
             resizeTooltipFormat: "dddd, MMM d, yyyy"
         },
 
-        _range: function(range) {
+        range: function(range) {
             var optionsRange = this.options.range;
             var endDay;
             this.start = kendo.date.firstDayOfMonth(range.start);
@@ -1779,7 +1779,7 @@ var __meta__ = { // jshint ignore:line
             resizeTooltipFormat: "dddd, MMM d, yyyy"
         },
 
-        _range: function(range) {
+        range: function(range) {
             var optionsRange = this.options.range;
             var firstDayOfMonth;
             this.start = kendo.date.firstDayOfMonth(new Date(range.start.setMonth(0)));
@@ -2094,7 +2094,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _tasksRange: function(tasks) {
+        _range: function (tasks) {
             var startOrder = {
                 field: "start",
                 dir: "asc"
@@ -2119,11 +2119,11 @@ var __meta__ = { // jshint ignore:line
 
         _render: function(tasks) {
             var view = this.view();
-            var range = this._tasksRange(tasks);
+            var range = this._range(tasks);
 
             this._tasks = tasks;
 
-            view._range(range);
+            view.range(range);
 
             view.renderLayout();
 

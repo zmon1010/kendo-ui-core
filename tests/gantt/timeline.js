@@ -335,7 +335,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
@@ -349,7 +349,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/14");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
@@ -363,7 +363,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
@@ -380,7 +380,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
@@ -396,7 +396,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view._slots[1].length, 3);
@@ -415,7 +415,7 @@
             end: new Date("2014/04/15")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/16");
@@ -428,7 +428,7 @@
             end: new Date("2014/04/17 15:45:00")
         };
         
-        view._range(range);
+        view.range(range);
 
         equal(kendo.date.getMilliseconds(view.start), 0);
         equal(kendo.date.getMilliseconds(view.end), 0);
@@ -441,7 +441,7 @@
             end: new Date("2014/04/17 15:45:00")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
     });
@@ -453,7 +453,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
     });
@@ -494,7 +494,7 @@
             end: new Date("2014/04/23")
         };
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("table").width(), view._tableWidth);
@@ -507,7 +507,7 @@
             end: new Date("2014/04/23")
         };
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr").length, 2);
@@ -521,7 +521,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").eq(0).text(), "12:00 AM");
@@ -534,7 +534,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 48);
@@ -549,7 +549,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 18);
@@ -566,7 +566,7 @@
             workDayStart: new Date(1980, 1, 1, 10, 0, 0),
             workDayEnd: new Date(1980, 1, 1, 14, 0, 0)
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 8);
@@ -581,7 +581,7 @@
         view = dayView({
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 24);
@@ -598,7 +598,7 @@
             workWeekStart: 5,
             workWeekEnd: 6
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 48);
@@ -614,7 +614,7 @@
             showWorkHours: true,
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 9);
@@ -629,7 +629,7 @@
         view = dayView({
             hourSpan: 5
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 10);
@@ -642,7 +642,7 @@
         };
 
         view = dayView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th")[0].colSpan, 1);
@@ -657,7 +657,7 @@
         view = dayView({
             hourSpan: 5
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th")[0].colSpan, 1);
@@ -670,7 +670,7 @@
         };
 
         view = dayView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         ok(view.header.find("tr:last th").eq(0).hasClass("k-nonwork-hour"));
@@ -684,7 +684,7 @@
         };
 
         view = dayView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").eq(0).text(), "Tue 4/15");
@@ -697,7 +697,7 @@
         };
         
         view = dayView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").length, 8);
@@ -712,7 +712,7 @@
         view = dayView({
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").length, 6);
@@ -729,7 +729,7 @@
             workWeekStart: 2,
             workWeekEnd: 4
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").length, 4);
@@ -742,7 +742,7 @@
         };
 
         view = dayView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 24);
@@ -757,7 +757,7 @@
         view = dayView({
             showWorkHours: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 9);
@@ -772,7 +772,7 @@
         view = dayView({
             hourSpan: 2
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 12);
@@ -787,7 +787,7 @@
         view = dayView({
             hourSpan: 7
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 4);
@@ -803,7 +803,7 @@
             showWorkHours: true,
             hourSpan: 4
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 3);
@@ -816,7 +816,7 @@
         };
 
         view = dayView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         ok(view.header.find("tr:first th").eq(2).hasClass("k-nonwork-hour"));
@@ -946,7 +946,7 @@
             end: new Date("2014/04/23")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
@@ -964,7 +964,7 @@
             end: new Date("2014/04/23")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/19");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
@@ -982,7 +982,7 @@
             end: new Date("2014/04/23")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/19");
@@ -1000,7 +1000,7 @@
             end: new Date("2014/04/23")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/20");
@@ -1013,7 +1013,7 @@
             end: new Date("2014/04/27")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/05/04");
@@ -1054,7 +1054,7 @@
             end: new Date("2014/04/23")
         };
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("table").width(), view._tableWidth);
@@ -1067,7 +1067,7 @@
         };
 
         view = weekView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr").length, 2);
@@ -1080,7 +1080,7 @@
         };
 
         view = weekView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").eq(0).text(), "Sun 4/13");
@@ -1093,7 +1093,7 @@
         };
 
         view = weekView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 14);
@@ -1108,7 +1108,7 @@
         view = weekView({
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 10);
@@ -1125,7 +1125,7 @@
             workWeekStart: 2,
             workWeekEnd: 4
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 6);
@@ -1138,7 +1138,7 @@
         };
 
         view = weekView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th")[0].colSpan, 1);
@@ -1151,7 +1151,7 @@
         };
 
         view = weekView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         ok(view.header.find("tr:last th").eq(0).hasClass("k-nonwork-hour"));
@@ -1164,7 +1164,7 @@
         };
 
         view = weekView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").eq(0).text(), "Sun 4/13 - Sat 4/19");
@@ -1179,7 +1179,7 @@
         view = weekView({
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").eq(0).text(), "Mon 4/14 - Fri 4/18");
@@ -1192,7 +1192,7 @@
         };
 
         view = weekView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").length, 2);
@@ -1205,7 +1205,7 @@
         };
 
         view = weekView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 7);
@@ -1220,7 +1220,7 @@
         view = weekView({
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 5);
@@ -1267,7 +1267,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view._slots[1].length, 4);
@@ -1341,7 +1341,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/01");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/05/01");
@@ -1383,7 +1383,7 @@
             end: new Date("2014/04/23")
         };
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("table").width(), view._tableWidth);
@@ -1396,7 +1396,7 @@
         };
 
         view = monthView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr").length, 2);
@@ -1410,7 +1410,7 @@
         };
 
         view = monthView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").eq(0).text(), "Tue 4/01 - Sat 4/05");
@@ -1423,7 +1423,7 @@
         };
 
         view = monthView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").eq(0).text(), "Tue 4/01 - Sat 4/05");
@@ -1436,7 +1436,7 @@
         };
 
         view = monthView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").eq(4).text(), "Sun 4/27 - Wed 4/30");
@@ -1449,7 +1449,7 @@
         };
 
         view = monthView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 6);
@@ -1466,7 +1466,7 @@
             workWeekEnd: 4,
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 5);
@@ -1483,7 +1483,7 @@
             workWeekEnd: 5,
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 5);
@@ -1496,7 +1496,7 @@
         };
 
         view = monthView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th")[0].colSpan, 2);
@@ -1516,7 +1516,7 @@
         view = monthView({
             showWorkDays: true
         });
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th")[0].colSpan, 1);
@@ -1534,7 +1534,7 @@
         };
 
         view = monthView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").eq(0).text(), "Aug");
@@ -1548,7 +1548,7 @@
 
         view = monthView();
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").length, 3);
@@ -1562,7 +1562,7 @@
 
         view = monthView();
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 31);
@@ -1580,7 +1580,7 @@
             showWorkDays: true
         });
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 21);
@@ -1599,7 +1599,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
@@ -1616,7 +1616,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
        
@@ -1635,7 +1635,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
@@ -1654,7 +1654,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
@@ -1674,7 +1674,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
@@ -1693,7 +1693,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
@@ -1758,7 +1758,7 @@
             end: new Date("2015/04/17")
         };
 
-        view._range(range);
+        view.range(range);
 
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/01/01");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2016/01/01");
@@ -1786,7 +1786,7 @@
             end: new Date("2014/04/17")
         };
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("table").width(), view._tableWidth);
@@ -1799,7 +1799,7 @@
         };
 
         view = yearView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr").length, 2);
@@ -1813,7 +1813,7 @@
         };
 
         view = yearView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").eq(0).text(), "Jan");
@@ -1827,7 +1827,7 @@
         };
 
         view = yearView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th").length, 12);
@@ -1840,7 +1840,7 @@
         };
 
         view = yearView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:last th:first")[0].colSpan, 1);
@@ -1856,7 +1856,7 @@
         };
 
         view = yearView();
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").eq(0).text(), "2014");
@@ -1870,7 +1870,7 @@
 
         view = yearView();
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th").length, 2);
@@ -1884,7 +1884,7 @@
 
         view = yearView();
 
-        view._range(range);
+        view.range(range);
         view.renderLayout();
 
         equal(view.header.find("tr:first th")[0].colSpan, 12);
@@ -1901,7 +1901,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
@@ -1919,7 +1919,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
@@ -1938,7 +1938,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
@@ -1957,7 +1957,7 @@
             start: new Date("2014/04/1"),
             end: new Date("2014/04/2")
         };
-        view._range(range);
+        view.range(range);
 
         view.renderLayout();
 
