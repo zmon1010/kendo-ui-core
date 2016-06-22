@@ -564,7 +564,7 @@
         }
     });
 
-    test("filter triggers change event", 3, function(){
+    test("filter triggers change event", 4, function(){
         var dataSource = new kendo.data.DataSource({
             data: [
                 { foo: 1 },
@@ -576,6 +576,7 @@
         widget = setup({
             dataSource: dataSource,
             change: function(e) {
+                equal(e.field, "foo");
                 equal(e.filter.filters[0].operator, "eq");
                 equal(e.filter.filters[0].value, 2);
                 equal(e.filter.filters[0].field, "foo");

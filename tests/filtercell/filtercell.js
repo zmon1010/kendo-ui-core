@@ -548,13 +548,14 @@
         equal(filterCell.wrapper.find("input").val(), "");
     });
 
-    test("triggers change event when filter is change passing current filter descriptor", 4, function() {
+    test("triggers change event when filter is change passing current filter descriptor", 5, function() {
         var dataSource = new kendo.data.DataSource({});
 
         filterCell = setup(dom, {
             dataSource: dataSource,
             field: "foo",
             change: function(e) {
+                equal(e.field, "foo");
                 equal(e.filter.logic, "and");
                 equal(e.filter.filters[0].value, "bar");
                 equal(e.filter.filters[0].field, "foo");
@@ -581,7 +582,7 @@
         ok(!dataSource.filter());
     });
 
-    test("clear triggers change event with null filter", 2, function() {
+    test("clear triggers change event with null filter", 3, function() {
         var dataSource = new kendo.data.DataSource({});
 
         filterCell = setup(dom, {
@@ -589,6 +590,7 @@
             field: "foo",
             change: function(e) {
                 equal(e.filter, null);
+                equal(e.field, "foo");
             }
         });
 

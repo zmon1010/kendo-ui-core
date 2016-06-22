@@ -152,10 +152,11 @@
         equal(dataSource.filter().filters[0].operator, "startswith");
     });
 
-    test("submitting the form raises change event passing the current filter expression", 4, function() {
+    test("submitting the form raises change event passing the current filter expression", 5, function() {
         filterMenu = setup(dom, {
             dataSource: dataSource,
             change: function(e) {
+                equal(e.field, "foo");
                 equal(e.filter.logic, "and");
                 equal(e.filter.filters[0].value, "bar");
                 equal(e.filter.filters[0].field, "foo");

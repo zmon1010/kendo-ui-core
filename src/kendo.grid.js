@@ -5549,7 +5549,7 @@ var __meta__ = { // jshint ignore:line
                     }
                 },
                 filterHandler = function(e) {
-                    if (that.trigger("filter", { filter: e.filter })) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
                         e.preventDefault();
                     }
                 },
@@ -5634,7 +5634,7 @@ var __meta__ = { // jshint ignore:line
                     focusTable(element.closest("table"), true);
                 },
                 filterHandler = function(e) {
-                    if (that.trigger("filter", { filter: e.filter })) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
                         e.preventDefault();
                     }
                 },
@@ -5708,7 +5708,7 @@ var __meta__ = { // jshint ignore:line
                 filterable = that.options.filterable,
                 rowheader = that.thead.find(".k-filter-row"),
                 filterHandler = function(e) {
-                    if (that.trigger("filter", { filter: e.filter })) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
                         e.preventDefault();
                     }
                 };
