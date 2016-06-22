@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kendo.Mvc.Examples.Models
 {
@@ -28,5 +27,16 @@ namespace Kendo.Mvc.Examples.Models
         public long Pop2020 { get; set; }
         public long Pop2025 { get; set; }
         public long Pop2050 { get; set; }
+
+        [NotMapped]
+        public double[] Location
+        {
+            get
+            {
+                return new double[] { Latitude, Longitude };
+            }
+
+            private set { }
+        }
     }
 }
