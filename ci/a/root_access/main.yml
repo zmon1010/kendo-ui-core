@@ -1,0 +1,6 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: create .ssh directory for root
+  file: path=/root/.ssh state=directory force=yes
+- name: copy files to /root/.ssh
+  copy: src=a/root_access/files/ssh/ dest=/root/.ssh/ owner=root group=root mode=0600

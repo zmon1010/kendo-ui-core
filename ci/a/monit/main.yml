@@ -1,0 +1,11 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: install monit
+  apt: name={{item}} state=latest
+  with_items:
+    - monit
+    - thin
+
+- name: copy monitrc
+  copy: src=a/monit/files/monitrc dest=/etc/monit/ mode=0600
+- service: name=monit state=restarted

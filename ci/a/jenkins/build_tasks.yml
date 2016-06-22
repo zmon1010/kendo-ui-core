@@ -8,5 +8,5 @@
     owner: jenkins
     group: nogroup
     mode: 0600
-- command: chmod +x a/_set_tasks.sh
-- command: a/_set_tasks.sh {{jenkins_url}}
+- command: chmod +x a/jenkins/_set_tasks.sh
+- command: a/jenkins/_set_tasks.sh {{jenkins_url}}

@@ -9,6 +9,16 @@
   remote_user: petyo
   sudo: yes
   tasks:
+    - name: Install list of packages
+      apt: name={{item}} state=latest
+      with_items:
+       - zip
+       - p7zip
+       - xvfb
+       - xauth
+       - firefox
+       - lftp
+    - include: a/ntp.yml
     - include: a/ruby.yml
     - include: a/nginx.yml
     - include: a/google-chrome.yml
@@ -17,8 +27,13 @@
     - name: jenkins
       include: a/jenkins/main.yml
     - include: a/mono.yml
-    - apt: name=xvfb
-    - apt: name=xauth
-    - include: a/php-fpm.yml	    
-  handlers:
-    - service: name=php5-fpm state=restarted
+    - include: a/php-fpm.yml
+    - include: a/selenium.yml
+    - include: a/root_access/main.yml
+    - include: a/node_services.yml
+    - include: a/monit/main.yml
+    - include: a/modulus.yml
+#    - include: a/tomcat.yml
+#    - name: current
+#      include: a/android_sdk.yml
+#    - include: a/screenshot.yml 	    

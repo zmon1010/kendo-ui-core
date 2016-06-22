@@ -1,0 +1,8 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: check for modulus
+  shell: bash -c "which modulus || echo '0'"
+  register: which_output
+- name: install modulus
+  shell: npm install -g modulus
+  when: which_output.stdout == "0"

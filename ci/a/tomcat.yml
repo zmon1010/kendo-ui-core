@@ -1,0 +1,14 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: install tomcat
+  apt: name={{item}} state=latest
+  with_items:
+     - tomcat7
+     - tomcat7-admin
+  environment: 
+     CATALINA_HOME: /var/lib/tomcat7
+#- name: set links for tomcat
+#  file: src=/var/lib/tomcat7/conf dest=/usr/share/tomcat7conf state=link
+#  file: src=/etc/tomcat7/policy.d/03catalina.policy dest=/usr/share/tomcat7conf/catalina.policy state=link
+#  file: src=/var/log/tomcat7 dest=/usr/share/tomcat7log state=link
+#- service: name=tomcat7 state=enabled
