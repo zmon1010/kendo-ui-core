@@ -229,7 +229,7 @@ SPREADSHEET_CONTENT = {
 
 
 file KENDO_CONFIG_FILE do |t|
-    sh "./node_modules/.bin/grunt download_builder:config"
+    sh "./node_modules/.bin/gulp download-builder"
 end
 
 # Rake tasks
