@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -20,6 +19,17 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Configures the data source of the map layer.
+        /// </summary>
+        /// <param name="configurator">The configuration of the data source.</param>
+        /// <returns></returns>
+        public MapLayerBuilder DataSource(Action<MapLayerDataSourceBuilder> configurator)
+        {
+            Container.DataSource = new DataSource(Container.Map.ModelMetadataProvider);
+            configurator(new MapLayerDataSourceBuilder(Container.DataSource, Container.Map.ViewContext, Container.Map.UrlGenerator));
+
+            return this;
+        }
     }
 }

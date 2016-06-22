@@ -10,6 +10,8 @@ namespace Kendo.Mvc.UI
     {
         private MapMarkerTooltip tooltip;
 
+        public DataSource DataSource { get; set; }
+
         public MapMarkerTooltip Tooltip {
             get
             {
@@ -25,6 +27,11 @@ namespace Kendo.Mvc.UI
         public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
+
+            if (DataSource != null)
+            {
+                settings["dataSource"] = DataSource.ToJson();
+            }
 
             var tooltip = Tooltip.Serialize();
             if (tooltip.Any())
