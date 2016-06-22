@@ -79,7 +79,6 @@
         timeline._render([]);
     });
 
-
     test("rows table created", function() {
         timeline._render(tasks);
 
@@ -439,6 +438,210 @@
         renderTask();
 
         ok(timeline.view().content.find(".k-task-wrap").length);
+    });
+
+    test("wrapper not rendered when it is before custom view range", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/19"),
+            end: new Date("2014/04/20")
+        };
+
+        timeline.view("day");
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is after custom view range", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/16")
+        };
+
+        timeline.view("day");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper rendered when its end is in the custom view range", function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/16"),
+            end: new Date("2014/04/17 10:00")
+        };
+
+        timeline.view("day");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(taskWrap.find(".k-task-start").length);
+        ok(taskWrap.find(".k-task-end").length);
+        ok(taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is before custom view range in weekview", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/19"),
+            end: new Date("2014/04/20")
+        };
+
+        timeline.view("week");
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is after custom view range in weekview", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/5"),
+            end: new Date("2014/04/6")
+        };
+
+        timeline.view("week");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper rendered when its end is in the custom view range in weekview", function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/04/16"),
+            end: new Date("2014/04/17 10:00")
+        };
+
+        timeline.view("week");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(taskWrap.find(".k-task-start").length);
+        ok(taskWrap.find(".k-task-end").length);
+        ok(taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is before custom view range in monthview", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/01/19"),
+            end: new Date("2014/03/20")
+        };
+
+        timeline.view("month");
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is after custom view range in monthview", 3, function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/05/15"),
+            end: new Date("2014/07/16")
+        };
+
+        timeline.view("month");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper rendered when its end is in the custom view range in monthview", function () {
+        var taskWrap;
+
+        timeline.options.range = {
+            start: new Date("2014/01/16"),
+            end: new Date("2014/04/17 10:00")
+        };
+
+        timeline.view("month");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(taskWrap.find(".k-task-start").length);
+        ok(taskWrap.find(".k-task-end").length);
+        ok(taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is before custom view range in yearview", 3, function () {
+        var taskWrap;
+
+        timeline.view("year");
+        timeline.view().options.range = {
+            start: new Date("2013/02/20"),
+            end: new Date("2014/02/20")
+        };
+
+        renderTask();
+
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper not rendered when it is after custom view range in yearview", 3, function () {
+        var taskWrap;
+
+        timeline.view().options.range = {
+            start: new Date("2014/05/15"),
+            end: new Date("2014/07/16")
+        };
+
+        timeline.view("year");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(!taskWrap.find(".k-task-start").length);
+        ok(!taskWrap.find(".k-task-end").length);
+        ok(!taskWrap.length);
+    });
+
+    test("wrapper rendered when its end is in the custom view range in yearview", function () {
+        var taskWrap;
+
+        timeline.view().options.range = {
+            start: new Date("2014/01/16"),
+            end: new Date("2014/04/17 10:00")
+        };
+
+        timeline.view("year");
+        renderTask();
+        taskWrap = timeline.view().content.find(".k-task-wrap");
+
+        ok(taskWrap.find(".k-task-start").length);
+        ok(taskWrap.find(".k-task-end").length);
+        ok(taskWrap.length);
     });
 
     test("dependency drag handles rendered", function() {

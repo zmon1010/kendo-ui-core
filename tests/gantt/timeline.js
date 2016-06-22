@@ -12,7 +12,7 @@
     var YearView = kendo.ui.GanttYearView;
 
     var headerTree;
-    
+
     module("Initialization", {
         setup: function() {
             element = $("<div/>");
@@ -340,6 +340,73 @@
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
     });
+
+    test("custom start range", 2, function () {
+        view = dayView();
+        view.options.range = {start: new Date("2014/04/14")};
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/17")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/14");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
+    });
+
+    test("custom end range", 2, function () {
+        view = dayView();
+        view.options.range = { end: new Date("2014/04/18") };
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/17")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
+    });
+
+    test("custom start and end range", 2, function () {
+        view = dayView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/04/18 10:00")
+        };
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/17")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
+    });
+
+    test("custom start and end slot count", function () {
+        view = dayView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/04/15 13:00")
+        };
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+        view.renderLayout();
+
+        equal(view._slots[1].length, 3);
+    });
+
+   
+
+  
+
+   
 
     test("range() with equal start and end", 2, function() {
         view = dayView();
@@ -811,7 +878,6 @@
         timeline.destroy();
     });
 
-
     module("Week View", {
         setup: function() {
             element = $(
@@ -886,6 +952,60 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
     });
     
+    test("custom start range is set", 2, function () {
+        view = weekView();
+
+        view.options.range = {
+            start: new Date("2014/04/19"),
+        };
+
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/23")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/19");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
+    });
+
+    test("custom end range is set to exact date", 2, function () {
+        view = weekView();
+
+        view.options.range = {
+            end: new Date("2014/04/19"),
+        };
+
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/23")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/19");
+    });
+
+    test("custom end range is not set to exact date", 2, function () {
+        view = weekView();
+
+        view.options.range = {
+            end: new Date("2014/04/19 00:01"),
+        };
+
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/23")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/20");
+    });
+
     test("range() sets view range to containing weeks when end is the same day as week start", 2, function() {
         view = weekView();
         var range = {
@@ -927,7 +1047,6 @@
         equal(view._calculateTableWidth(), 200);
     });
 
-
     test("renderLayout() creates table with correct width", function() {
         view = weekView();
         var range = {
@@ -953,7 +1072,6 @@
 
         equal(view.header.find("tr").length, 2);
     });
-
 
     test("renderLayout() creates day headers with correct text", function() {
         var range = {
@@ -1038,7 +1156,6 @@
 
         ok(view.header.find("tr:last th").eq(0).hasClass("k-nonwork-hour"));
     });
-
 
     test("renderLayout() creates week headers with correct text", function() {
         var range = {
@@ -1140,6 +1257,21 @@
         timeline.destroy();
     });
 
+    test("custom start and end slot count weekview", function () {
+        view = weekView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/04/18 12:00")
+        };
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+        view.renderLayout();
+
+        equal(view._slots[1].length, 4);
+    });
 
     module("Month View", {
         setup: function() {
@@ -1456,6 +1588,119 @@
         equal(view.header.find("tr:first th")[2].colSpan, 23);
     });
 
+    test("custom start and end slot count monthview", function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/07/17 12:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[1].length, 14);
+    });
+
+    test("custom start slot count",3 , function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+       
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 16);
+    });
+
+    test("custom end slot count exact date", 3, function () {
+        view = monthView();
+        view.options.range = {
+            end: new Date("2014/04/15")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 14);
+    });
+
+    test("custom end slot count",3 , function () {
+        view = monthView();
+        view.options.range = {
+            end: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 15);
+    });
+
+    test("custom start and end slot count", function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2015/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 13);
+        equal(view._slots[1].length, 53);
+    });
+
+    test("custom start and end slot count new year", function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/12/15 10:00"),
+            end: new Date("2015/01/05 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 2);
+        equal(view._slots[1].length, 4);
+        equal(view._slots[0][0].span, 17);
+    });
 
     module("Year View", {
         setup: function() {
@@ -1644,6 +1889,80 @@
 
         equal(view.header.find("tr:first th")[0].colSpan, 12);
         equal(view.header.find("tr:first th")[1].colSpan, 12);
+    });
+
+    test("custom start slot count", function () {
+        view = yearView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 9);
+    });
+
+    test("custom end slot count", function () {
+        view = yearView();
+        view.options.range = {
+            end: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 4);
+    });
+
+    test("custom start and end slot count to end of the month", function () {
+        view = yearView();
+        view.options.range = {
+            start: new Date("2014/05/15 10:00"),
+            end: new Date("2015/05/31 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 2);
+        equal(view._slots[1].length, 13);
+    });
+
+    test("custom start and end slot count to start of the month", function () {
+        view = yearView();
+        view.options.range = {
+            start: new Date("2014/05/15 10:00"),
+            end: new Date("2015/06/01 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 2);
+        equal(view._slots[1].length, 14);
     });
 
 }());

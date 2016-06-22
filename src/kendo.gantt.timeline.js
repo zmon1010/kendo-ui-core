@@ -411,40 +411,39 @@ var __meta__ = { // jshint ignore:line
                 position.borderWidth = taskBorderWidth;
 
                 row = kendoDomElement("tr", null);
+                if (task.start <= this.end && task.end >= this.start) {
+                    cell = kendoDomElement("td", null, [this._renderTask(tasks[i], position)]);
 
-                cell = kendoDomElement("td", null, [this._renderTask(tasks[i], position)]);
+                    if (task[resourcesField] && task[resourcesField].length) {
+                        if (isRtl) {
+                            resourcesPosition = this._tableWidth - position.left;
+                        } else {
+                            resourcesPosition = Math.max((position.width || size.clientWidth), 0) + position.left;
+                        }
 
-                if (task[resourcesField] && task[resourcesField].length) {
-                    if (isRtl) {
-                        resourcesPosition = this._tableWidth - position.left;
-                    } else {
-                        resourcesPosition = Math.max((position.width || size.clientWidth), 0) + position.left;
+                        resourceStyle = {
+                            width: (this._tableWidth - (resourcesPosition + resourcesMargin)) + "px"
+                        };
+
+                        resourceStyle[isRtl ? "right" : "left"] = resourcesPosition + "px";
+
+                        if (calculatedSize) {
+                            resourceStyle.height = calculatedSize.cell + "px";
+                        }
+
+                        cell.children.push(kendoDomElement("div",
+                            {
+                                className: styles.resourcesWrap,
+                                style: resourceStyle
+                            },
+                            this._renderResources(task[resourcesField], className[i % 2]))
+                        );
                     }
 
-                    resourceStyle = {
-                        width: (this._tableWidth - (resourcesPosition + resourcesMargin)) + "px"
-                    };
-
-                    resourceStyle[isRtl ? "right" : "left"] = resourcesPosition + "px";
-
-                    if (calculatedSize) {
-                        resourceStyle.height = calculatedSize.cell + "px";
-                    }
-
-                    cell.children.push(kendoDomElement("div",
-                        {
-                            className: styles.resourcesWrap,
-                            style: resourceStyle
-                        },
-                        this._renderResources(task[resourcesField], className[i % 2]))
-                    );
+                    row.children.push(cell);
+                    addCoordinates(i);
                 }
-
-                row.children.push(cell);
-
                 rows.push(row);
-
-                addCoordinates(i);
             }
 
             return this._createTable(1, rows, { className: GanttView.styles.tasksTable });
@@ -1396,7 +1395,7 @@ var __meta__ = { // jshint ignore:line
             end = new Date(end);
 
             while (start < end) {
-                slotEnd = kendo.date.nextDay(start);
+                slotEnd = end < kendo.date.nextDay(start) ? end : kendo.date.nextDay(start);
 
                 isWorkDay = this._isWorkDay(start);
 
@@ -1451,6 +1450,7 @@ var __meta__ = { // jshint ignore:line
 
         _months: function(start, end) {
             var slotEnd;
+            var endMonth;
             var slots = [];
             var daySlots;
             var span;
@@ -1460,7 +1460,8 @@ var __meta__ = { // jshint ignore:line
 
             while (start < end) {
                 slotEnd = new Date(start);
-                slotEnd.setMonth(slotEnd.getMonth() + 1);
+                endMonth = kendo.date.firstDayOfMonth(new Date(slotEnd.setMonth(slotEnd.getMonth() + 1)));
+                slotEnd = end < endMonth ? end : endMonth;
 
                 daySlots = this._days(start, slotEnd);
                 span = daySlots.length;
@@ -1481,19 +1482,28 @@ var __meta__ = { // jshint ignore:line
 
         _years: function(start, end) {
             var slotEnd;
+            var monthSpan;
+            var endMonth;
             var slots = [];
-
+           
             start = new Date(start);
             end = new Date(end);
 
             while (start < end) {
                 slotEnd = new Date(start);
-                slotEnd.setFullYear(slotEnd.getFullYear() + 1);
+                slotEnd = kendo.date.firstDayOfMonth(new Date(slotEnd.setMonth(12)));
+
+                if (slotEnd >= end) {
+                    slotEnd = end;
+                }
+
+                endMonth = slotEnd.getMonth() || 12;
+                monthSpan = endMonth - start.getMonth();
 
                 slots.push({
                     start: start,
                     end: slotEnd,
-                    span: 12
+                    span: monthSpan
                 });
 
                 start = slotEnd;
@@ -1597,11 +1607,22 @@ var __meta__ = { // jshint ignore:line
         },
 
         range: function(range) {
+            var optionsRange = this.options.range;
             this.start = kendo.date.getDate(range.start);
             this.end = kendo.date.getDate(range.end);
 
             if (kendo.date.getMilliseconds(range.end) > 0 || this.end.getTime() === this.start.getTime()) {
                 this.end = kendo.date.addDays(this.end, 1);
+            }
+
+            if (optionsRange && optionsRange.start) {
+                this.start = kendo.date.getDate(optionsRange.start);
+                this.start.setHours(optionsRange.start.getHours());
+            }
+
+            if (optionsRange && optionsRange.end) {
+                this.end = kendo.date.getDate(optionsRange.end);
+                this.end.setHours(optionsRange.end.getHours());
             }
         },
 
@@ -1651,9 +1672,11 @@ var __meta__ = { // jshint ignore:line
         },
 
         range: function(range) {
+            var optionsRange = this.options.range;
             var calendarInfo = this.calendarInfo();
             var firstDay = calendarInfo.firstDay;
             var rangeEnd = range.end;
+            var endDay;
 
             if (firstDay === rangeEnd.getDay()) {
                 rangeEnd.setDate(rangeEnd.getDate() + 7);
@@ -1661,6 +1684,20 @@ var __meta__ = { // jshint ignore:line
 
             this.start = kendo.date.getDate(kendo.date.dayOfWeek(range.start, firstDay, -1));
             this.end = kendo.date.getDate(kendo.date.dayOfWeek(rangeEnd, firstDay, 1));
+
+            if (optionsRange && optionsRange.start) {
+                this.start = kendo.date.getDate(optionsRange.start);
+            }
+
+            if (optionsRange && optionsRange.end) {
+                endDay = new Date(optionsRange.end);
+
+                if (kendo.date.getDate(endDay) < optionsRange.end) {
+                    this.end = kendo.date.getDate(new Date(endDay.setDate(endDay.getDate() + 1)));
+                } else {
+                    this.end = kendo.date.getDate(endDay);
+                }
+            }
         },
 
         _createSlots: function() {
@@ -1693,8 +1730,24 @@ var __meta__ = { // jshint ignore:line
         },
 
         range: function(range) {
+            var optionsRange = this.options.range;
+            var endDay;
             this.start = kendo.date.firstDayOfMonth(range.start);
             this.end = kendo.date.addDays(kendo.date.getDate(kendo.date.lastDayOfMonth(range.end)), 1);
+
+            if (optionsRange && optionsRange.start) {
+                this.start = kendo.date.getDate(optionsRange.start);
+            }
+
+            if (optionsRange && optionsRange.end) {
+                endDay = new Date(optionsRange.end);
+
+                if (kendo.date.getDate(endDay) < optionsRange.end) {
+                    this.end = kendo.date.getDate(new Date(endDay.setDate(endDay.getDate() + 1)));
+                } else {
+                    this.end = kendo.date.getDate(endDay);
+                }
+            }
         },
 
         _createSlots: function() {
@@ -1727,8 +1780,20 @@ var __meta__ = { // jshint ignore:line
         },
 
         range: function(range) {
+            var optionsRange = this.options.range;
+            var firstDayOfMonth;
             this.start = kendo.date.firstDayOfMonth(new Date(range.start.setMonth(0)));
             this.end = kendo.date.firstDayOfMonth(new Date(range.end.setMonth(12))); //set month to first month of next year
+
+            if (optionsRange && optionsRange.start) {
+                this.start = kendo.date.firstDayOfMonth(optionsRange.start);
+            }
+
+            if (optionsRange && optionsRange.end) {
+                firstDayOfMonth = kendo.date.firstDayOfMonth(optionsRange.end);
+
+                this.end = kendo.date.getDate(new Date(firstDayOfMonth.setMonth(firstDayOfMonth.getMonth() + 1)));
+            }
         },
 
         _createSlots: function() {
@@ -2029,7 +2094,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _range: function(tasks) {
+        _range: function (tasks) {
             var startOrder = {
                 field: "start",
                 dir: "asc"
