@@ -2074,6 +2074,8 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (type) {
+                    extend(this.options.range, this.options.range, view.range);
+
                     view = new type(this.wrapper, trimOptions(extend(true, {
                         headerTree: this._headerTree,
                         taskTree: this._taskTree,
