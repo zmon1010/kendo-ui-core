@@ -89,7 +89,11 @@ var ParagraphCommand = Command.extend({
             parent, previous, next,
             emptyParagraphContent = editorNS.emptyElementContent,
             paragraph, marker, li, heading, rng,
-            shouldTrim = this.shouldTrim(range);
+            shouldTrim;
+
+        this.expandImmutablesIn(range);
+
+        shouldTrim = this.shouldTrim(range);
 
         range.deleteContents();
         marker = this._insertMarker(doc, range);
@@ -213,6 +217,8 @@ var NewLineCommand = Command.extend({
 
     exec: function () {
         var range = this.getRange();
+        this.expandImmutablesIn(range);
+
         var br = dom.create(RangeUtils.documentFromRange(range), 'br');
         var filler;
         var browser = kendo.support.browser;

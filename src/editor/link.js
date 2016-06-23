@@ -155,14 +155,7 @@ var LinkCommand = Command.extend({
         var messages = this.editor.options.messages;
         this._initialText = "";
         this._range = this.lockRange(true);
-
-        var immutables = this.immutables();
-        this.formatter.immutables = immutables;
-        if (immutables && Editor.Immutables.trimImmutableContainers(this._range.cloneRange())) {
-            dom.windowFromDocument(RangeUtils.documentFromRange(this._range)).focus();
-            this.releaseRange(this._range);
-            return;
-        }
+        this.formatter.immutables = this.immutables();
 
         var nodes = textNodes(this._range);
         var a = nodes.length ? this.formatter.finder.findSuitable(nodes[0]) : null;

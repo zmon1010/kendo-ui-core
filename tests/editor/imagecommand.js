@@ -363,10 +363,13 @@ editor_module("editor with immutables enabled image command", {
 });
 
 
-test('exec command in immutable parent does nothing', function() {
+test('exec command in immutable parent deletes it', function() {
     var range = createRangeFromText(editor, '<span contenteditable="false">f|o|o</span>');
     execImageCommandOnRange(range);
-    equal(editor.value(), '<span contenteditable="false">foo</span>');
+
+    $('#k-editor-image-url').val('foo');
+    $('.k-dialog-insert').click();
+    equal(editor.value(), '<img alt="" src="foo" />');
 });
 
 test('clicking insert inserts image before partially selected immutable, if url is set', function() {
@@ -375,7 +378,7 @@ test('clicking insert inserts image before partially selected immutable, if url 
 
     $('#k-editor-image-url').val('foo');
     $('.k-dialog-insert').click();
-    equal(editor.value(), 'test <img alt="" src="foo" /><span contenteditable="false">foo</span>');
+    equal(editor.value(), 'test <img alt="" src="foo" />');
 });
 
 test('clicking insert inserts image after partially selected immutable, if url is set', function() {
@@ -384,7 +387,7 @@ test('clicking insert inserts image after partially selected immutable, if url i
 
     $('#k-editor-image-url').val('foo');
     $('.k-dialog-insert').click();
-    equal(editor.value(), 'test <span contenteditable="false">foo</span><img alt="" src="foo" />');
+    equal(editor.value(), 'test <img alt="" src="foo" />');
 });
 
 test('clicking insert inserts image between partially selected immutable, if url is set', function() {
@@ -393,7 +396,7 @@ test('clicking insert inserts image between partially selected immutable, if url
 
     $('#k-editor-image-url').val('foo');
     $('.k-dialog-insert').click();
-    equal(editor.value(), 'test <span contenteditable="false">foo</span><img alt="" src="foo" /><span contenteditable="false">foo</span>');
+    equal(editor.value(), 'test <img alt="" src="foo" />');
 });
 
 }());

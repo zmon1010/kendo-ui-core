@@ -163,46 +163,47 @@ editor_module("editor with immutables true table command", {
     }
 });
 
-test("exec does not change content, when selection is in immutable", function() {
+test("exec the immutable in which the selection is", function() {
     range = createRangeFromText(editor, '<div contenteditable="false">|foo|bar</div>');
     execTableCommand({ range:range });
-    equal(editor.value(), '<div contenteditable="false">foobar</div>');
+    equal(editor.value(), '<table><tbody><tr><td></td></tr></tbody></table>');
 });
 
-test("exec does not change content, when selection is in immutable inline element", function() {
+test("exec deletest immutable inline element in which the selection is", function() {
     range = createRangeFromText(editor, '<span contenteditable="false">|foo|bar</span>');
     execTableCommand({ range:range });
-    equal(editor.value(), '<span contenteditable="false">foobar</span>');
+    equal(editor.value(), '<table><tbody><tr><td></td></tr></tbody></table>');
 });
 
-test("exec  when selection is in partially selected immutable start container", function() {
+test("exec when selection is in partially selected immutable start container", function() {
     range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div> text |text');
     execTableCommand({ range:range });
-    equal(editor.value(), '<div contenteditable="false">foobar</div><table><tbody><tr><td></td></tr></tbody></table>text');
+    equal(editor.value(), '<table><tbody><tr><td></td></tr></tbody></table>text');
 });
 
-test("exec  when selection is in partially selected only block child in immutable start container", function() {
+test("exec when selection is in partially selected only block child in immutable start container", function() {
     range = createRangeFromText(editor, '<div contenteditable="false"><div>foo|bar</div></div> text |text');
     execTableCommand({ range:range });
-    equal(editor.value(), '<div contenteditable="false"><div>foobar</div></div><table><tbody><tr><td></td></tr></tbody></table>text');
+    equal(editor.value(), '<table><tbody><tr><td></td></tr></tbody></table>text');
 });
 
-test("exec  when selection is in partially selected immutable end container", function() {
-    range = createRangeFromText(editor, ' text| text<div contenteditable="false">foo|bar</div>');
+test("exec when selection is in partially selected immutable end container", function() {
+    range = createRangeFromText(editor, 'text |text<div contenteditable="false">foo|bar</div>');
     execTableCommand({ range:range });
-    equal(editor.value(), 'text<table><tbody><tr><td></td></tr></tbody></table><div contenteditable="false">foobar</div>');
+    equal(editor.value(), 'text <table><tbody><tr><td></td></tr></tbody></table>');
 });
 
-test("exec  when selection is in partially selected immutable start and end containers", function() {
+test("exec when selection is in partially selected immutable start and end containers", function() {
     range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div>test text<div contenteditable="false">foo|bar</div>');
     execTableCommand({ range:range });
-    equal(editor.value(), '<div contenteditable="false">foobar</div><table><tbody><tr><td></td></tr></tbody></table><div contenteditable="false">foobar</div>');
+    equal(editor.value(), '<table><tbody><tr><td></td></tr></tbody></table>');
 });
 
-test("exec  when selection is in partially selected immutable start and end containers and paragraph is in between", function() {
+
+test("exec when selection is in partially selected immutable start and end containers and paragraph is in between", function() {
     range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div><p>test text</p><div contenteditable="false">foo|bar</div>');
     execTableCommand({ range:range });
-    equal(editor.value(), '<div contenteditable="false">foobar</div><table><tbody><tr><td></td></tr></tbody></table><div contenteditable="false">foobar</div>');
+    equal(editor.value(), '<table><tbody><tr><td></td></tr></tbody></table>');
 });
 
 }());

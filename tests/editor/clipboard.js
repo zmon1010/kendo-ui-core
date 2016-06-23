@@ -267,23 +267,23 @@ function pasteIn(target, initialContent, content) {
     target.clipboard.paste(content);
 }
 
-test("paste in inline immutable parent does nothing", function() {
+test("paste in inline immutable parent deletes the container", function() {
     pasteIn(editor, '<strong contenteditable="false">fo||o</strong>', 'baz');
-    equal(editor.value(), '<strong contenteditable="false">foo</strong>');
+    equal(editor.value(), 'baz');
 });
 
 test("paste in partially selected inline immutable parent", function() {
     pasteIn(editor, 'test |text<strong contenteditable="false">fo|o</strong>', 'baz');
-    equal(editor.value(), 'test baz<strong contenteditable="false">foo</strong>');
+    equal(editor.value(), 'test baz');
 });
 
 test("paste in partially selected block immutable parent", function() {
     pasteIn(editor, 'test |text<div contenteditable="false">fo|o</div>', 'baz');
-    equal(editor.value(), 'test baz<div contenteditable="false">foo</div>');
+    equal(editor.value(), 'test baz');
 });
 
 test("paste in partially selected block immutable with a single block child", function() {
     pasteIn(editor, 'test |text<div contenteditable="false"><div>fo|o</div></div>', 'baz');
-    equal(editor.value(), 'test baz<div contenteditable="false"><div>foo</div></div>');
+    equal(editor.value(), 'test baz');
 });
 }());

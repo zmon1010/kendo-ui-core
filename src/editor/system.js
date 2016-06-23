@@ -82,6 +82,12 @@ var Command = Class.extend({
 
     immutables: function(){
         return this.editor && this.editor.options.immutables;
+    },
+
+    expandImmutablesIn: function(range) {
+        if (this.immutables()) {
+            kendo.ui.editor.Immutables.expandImmutablesIn(range);
+        }
     }
 });
 
@@ -117,10 +123,6 @@ var InsertHtmlCommand = Command.extend({
         var body = editor.body;
         var startRestorePoint = new RestorePoint(range, body);
         var html = options.html || options.value || '';
-
-        if (this.immutables() && editorNS.Immutables.trimImmutableContainers(range)) {
-            return;
-        }
 
         editor.selectRange(range);
 
@@ -884,9 +886,7 @@ var Clipboard = Class.extend({
             return;
         }
 
-        if (this.trimImmutableContainers()) {
-            return;
-        }
+        this.expandImmutablesIn();
 
         this._contentModification(
             function beforePaste(editor, range) {
@@ -941,10 +941,30 @@ var Clipboard = Class.extend({
         );
     },
 
-    trimImmutableContainers: function(){
-        if (this.editor && this.editor.options.immutables) {
-            var range = this.editor.getRange();
-            return editorNS.Immutables.trimImmutableContainers(range) || this.editor.selectRange(range);
+    expandImmutablesIn: function(range){
+        var editor = this.editor;
+        if (editor && editor.options.immutables) {
+            var body = editor.body;
+            range = range || editor.getRange();
+            kendo.ui.editor.Immutables.expandImmutablesIn(range);
+            if (range.startContainer === body && range.startOffset === 0) {
+                var doc = body.ownerDocument;
+                var bomNode = doc.createTextNode("\ufeff");
+                body.insertBefore(bomNode, body.childNodes[0]);
+                range.setStartBefore(bomNode);
+            }
+            editor.selectRange(range);
+        }
+    },
+
+    cleanImmutableParent: function() {
+        var editor = this.editor;
+        var immutableParent = editor && editor._immutableParent;
+        if (immutableParent) {
+            try {
+                immutableParent.parentNode.removeChild(immutableParent);
+            } catch (e) { }
+            editor._immutableParent = null;
         }
     },
 
@@ -970,10 +990,8 @@ var Clipboard = Class.extend({
     paste: function (html, options) {
         var editor = this.editor,
             i, l;
-        
-        if (this.trimImmutableContainers()) {
-            return;
-        }
+
+        this.expandImmutablesIn();
 
         options = extend({ clean: false, split: true }, options);
 
@@ -998,6 +1016,7 @@ var Clipboard = Class.extend({
         editor.focus();
         var range = editor.getRange();
         range.deleteContents();
+        this.cleanImmutableParent();
 
         if (range.startContainer == editor.document) {
             range.selectNodeContents(editor.body);

@@ -47,30 +47,20 @@
         return dom.closestBy(node, immutable, rootCondition);
     };
 
-    var trimImmutableContainers = function(range) {
+    var expandImmutablesIn = function(range) {
         var startImmutableParent = immutableParent(range.startContainer);
         var endImmutableParent = immutableParent(range.endContainer);
-        var rangeInImmutable = false;
 
-        if (startImmutableParent && startImmutableParent === endImmutableParent){
-            rangeInImmutable = true;
-        } else if (startImmutableParent || endImmutableParent) {
+        if (startImmutableParent || endImmutableParent) {
             if (startImmutableParent){
-                range.setStartAfter(startImmutableParent);
+                range.setStartBefore(startImmutableParent);
             }
             if (endImmutableParent){
-                range.setEndBefore(endImmutableParent);
-            }
-
-            var nodes = RangeUtils.editableTextNodes(range);
-            if (nodes.length === 0){
-                rangeInImmutable = true;
+                range.setEndAfter(endImmutableParent);
             }
         }
-
-        return rangeInImmutable;
     };
-    
+
     var Immutables = Class.extend({
         init: function (editor) {
             this.editor = editor;
@@ -224,7 +214,7 @@
 
     Immutables.immutable = immutable;
     Immutables.immutableParent = immutableParent;
-    Immutables.trimImmutableContainers = trimImmutableContainers;
+    Immutables.expandImmutablesIn = expandImmutablesIn;
     Immutables.toolsToBeUpdated = toolsToBeUpdated;
 
     Editor.Immutables = Immutables;
