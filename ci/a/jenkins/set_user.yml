@@ -16,7 +16,7 @@
       - netrc
 - name: copy ssh dir for jenkins
   copy:
-    src: a/jenkins/files/ssh
+    src: a/jenkins/files/ssh/
     dest: /var/lib/jenkins/.ssh
     directory_mode: 755
     owner: jenkins
