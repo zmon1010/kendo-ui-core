@@ -87,6 +87,7 @@ var Command = Class.extend({
     expandImmutablesIn: function(range) {
         if (this.immutables()) {
             kendo.ui.editor.Immutables.expandImmutablesIn(range);
+            this.restorePoint = new RestorePoint(range);
         }
     }
 });
