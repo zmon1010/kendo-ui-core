@@ -341,6 +341,12 @@ function withAngularTests(moduleName, func) {
 
 }
 
+window.skip = function(name) {
+    test(name, 0, function() {
+        console.warn("TEST SKIPPED: " + name);
+    });
+};
+
 var ngTestModule = $.noop, ngTest = $.noop, ngScope;
 
 (function() {
