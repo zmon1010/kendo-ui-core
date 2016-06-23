@@ -76,7 +76,11 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (that._supportsDrop()) {
-                that._setupDropZone();
+                if(that.options.dropZone !== "") {
+                    that._setupCustomDropZone();
+                } else {
+                    that._setupDropZone();
+                }
             }
 
             that.wrapper
@@ -101,11 +105,6 @@ var __meta__ = { // jshint ignore:line
         ],
 
         options: {
-            validation: {
-                allowedExtensions: [],
-                maxFileSize: 0,
-                minFileSize: 0
-            },
             name: "Upload",
             enabled: true,
             multiple: true,
@@ -135,7 +134,13 @@ var __meta__ = { // jshint ignore:line
                 "invalidMaxFileSize": "File size too large.",
                 "invalidMinFileSize": "File size too small.",
                 "invalidFileExtension": "File type not allowed."
-            }
+            },
+            validation: {
+                allowedExtensions: [],
+                maxFileSize: 0,
+                minFileSize: 0
+            },
+            dropZone: ""
         },
 
         setOptions: function(options) {
@@ -167,11 +172,16 @@ var __meta__ = { // jshint ignore:line
 
         destroy: function() {
             var that = this;
+            var customDropZone = $(that.options.dropZone);
 
             $(document)
                 .add($(".k-dropzone", that.wrapper))
                 .add(that.wrapper.closest("form"))
                 .off(that._ns);
+
+            if(customDropZone.length > 0) {
+                customDropZone.off(that._ns);
+            }
 
             $(that.element).off(NS);
 
@@ -924,10 +934,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         _supportsDrop: function() {
-            var userAgent = this._userAgent().toLowerCase(),
-                isChrome = /chrome/.test(userAgent),
-                isSafari = !isChrome && /safari/.test(userAgent),
-                isWindowsSafari = isSafari && /windows/.test(userAgent);
+            var userAgent = this._userAgent().toLowerCase();
+            var isChrome = /chrome/.test(userAgent);
+            var isSafari = !isChrome && /safari/.test(userAgent);
+            var isWindowsSafari = isSafari && /windows/.test(userAgent);
 
             return !isWindowsSafari && this._supportsFormData() && (this.options.async.saveUrl);
         },
@@ -939,14 +949,14 @@ var __meta__ = { // jshint ignore:line
         _setupDropZone: function() {
             var that = this;
 
-            $(".k-upload-button", this.wrapper).wrap("<div class='k-dropzone'></div>");
+            $(".k-upload-button", that.wrapper).wrap("<div class='k-dropzone'></div>");
 
             var ns = that._ns;
             var dropZone = $(".k-dropzone", that.wrapper)
                 .append($("<em>" + that.localization.dropFilesHere + "</em>"))
                 .on("dragenter" + ns, stopEvent)
                 .on("dragover" + ns, function(e) { e.preventDefault(); })
-                .on("drop" + ns, $.proxy(this._onDrop, this));
+                .on("drop" + ns, $.proxy(that._onDrop, that));
 
             bindDragEventWrappers(dropZone, ns,
                 function() {
@@ -956,9 +966,44 @@ var __meta__ = { // jshint ignore:line
                 },
                 function() { dropZone.removeClass("k-dropzone-hovered"); });
 
+            that._bindDocumentDragEventWrappers(dropZone);
+        },
+
+        _setupCustomDropZone: function() {
+            var that = this;
+            var dropZone = $(that.options.dropZone);
+
+            if(dropZone.length === 0) { return; }
+
+            $(".k-upload-button", that.wrapper).wrap("<div class='k-dropzone'></div>");
+
+            var ns = that._ns;
+            dropZone.on("dragenter" + ns, stopEvent)
+                    .on("dragover" + ns, function(e) { e.preventDefault(); })
+                    .on("drop" + ns, $.proxy(that._onDrop, that));
+
+            bindDragEventWrappers(dropZone, ns,
+                function(e) {
+                    if (!that.wrapper.hasClass("k-state-disabled")) {
+                        dropZone.removeClass("k-dropzone-hovered");
+                        $(e.target).addClass("k-dropzone-hovered");
+                    }
+                },
+                function() {
+                    dropZone.removeClass("k-dropzone-hovered");
+                }
+            );
+
+            that._bindDocumentDragEventWrappers(dropZone);
+        },
+
+        _bindDocumentDragEventWrappers: function(dropZone) {
+            var that = this;
+            var ns = that._ns;
+
             bindDragEventWrappers($(document), ns,
                 function() {
-                    if (!dropZone.closest('.k-upload').hasClass("k-state-disabled")) {
+                    if (!that.wrapper.hasClass("k-state-disabled")) {
                         dropZone.addClass("k-dropzone-active");
                         dropZone.closest('.k-upload').removeClass('k-upload-empty');
                     }
@@ -968,7 +1013,8 @@ var __meta__ = { // jshint ignore:line
                     if ($('li.k-file', dropZone.closest('.k-upload')).length === 0) {
                         dropZone.closest('.k-upload').addClass('k-upload-empty');
                     }
-                });
+                }
+            );
         },
 
         _supportsRemove: function() {
@@ -1790,8 +1836,8 @@ var __meta__ = { // jshint ignore:line
         var hideInterval, lastDrag;
 
         element
-            .on("dragenter" + namespace, function() {
-                onDragEnter();
+            .on("dragenter" + namespace, function(e) {
+                onDragEnter(e);
                 lastDrag = new Date();
 
                 if (!hideInterval) {

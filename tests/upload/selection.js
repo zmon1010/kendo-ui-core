@@ -45,7 +45,7 @@ test("upload list is hidden when showFileList is false", function() {
 test("file name is rendered", function() {
     var uploadInstance = createUpload();
     simulateFileSelect();
-    equal($(".k-upload-files .k-file .k-filename", uploadInstance.wrapper).text(), "first.txt");
+    equal($(".k-upload-files .k-file .k-file-name", uploadInstance.wrapper).text(), "first.txt");
 });
 
 test("empty progress bar is rendered", function() {
@@ -181,6 +181,6 @@ test("Invalid files message is displayed when multiple files selected at once an
         {name: "second.png", size: 2000}
     ]);
 
-    equal($(".k-validation-message", uploadInstance.wrapper).text(), "Invalid files(s). Please check file upload requirements.");
+    equal($(".k-file-validation-message", uploadInstance.wrapper).text(), "Invalid files(s). Please check file upload requirements.");
 });
 }

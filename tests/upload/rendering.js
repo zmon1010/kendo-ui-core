@@ -63,12 +63,12 @@ test("remove icon is rendered", function() {
 
 test("file name is rendered", function() {
     simulateFileSelect();
-    equal($(".k-filename", uploadInstance.wrapper).text(), "first.txt");
+    equal($(".k-file-name", uploadInstance.wrapper).text(), "first.txt");
 });
 
 test("file name is rendered as tooltip", function() {
     simulateFileSelect();
-    equal($(".k-filename", uploadInstance.wrapper).attr("title"), "first.txt");
+    equal($(".k-file-name", uploadInstance.wrapper).attr("title"), "first.txt");
 });
 
 // -----------------------------------------------------------------------------------

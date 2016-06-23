@@ -54,7 +54,7 @@ function validation(params) {
 
         simulateFileSelect("second.png");
 
-        equal($(".k-file span.k-validation-message").text(), uploadInstance.localization.invalidFileExtension);
+        equal($(".k-file span.k-file-validation-message").text(), uploadInstance.localization.invalidFileExtension);
     });
 
     test("Upload with max file size validation adds validation error", 2, function() {
@@ -81,7 +81,7 @@ function validation(params) {
 
         simulateSingleFileSelect("first.png", 2);
 
-        equal($(".k-file span.k-validation-message").text(), uploadInstance.localization.invalidMaxFileSize);
+        equal($(".k-file span.k-file-validation-message").text(), uploadInstance.localization.invalidMaxFileSize);
     });
 
     test("Upload with min file size validation adds validation error", 2, function() {
@@ -108,7 +108,7 @@ function validation(params) {
 
         simulateSingleFileSelect("first.png", 1);
 
-        equal($(".k-file span.k-validation-message").text(), uploadInstance.localization.invalidMinFileSize);
+        equal($(".k-file span.k-file-validation-message").text(), uploadInstance.localization.invalidMinFileSize);
     });
 
     test("Upload file extension validation works for multiple allowed extensions", 3, function() {

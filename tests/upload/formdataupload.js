@@ -167,11 +167,11 @@ test("data-uid attribute for list element has the same value as the file uid", f
     equal(listItemUid, fileUid);
 });
 
-test("file names are rendered for multiple files", function() {
+test("file names are rendered for multiple files", 2, function() {
     uploadInstance._inputFiles = function () { return getFileListMock() };
     simulateFileSelect();
 
-    var fileNames = $(".k-filename", uploadInstance.wrapper).map(function() { return $(this).text(); });
+    var fileNames = $(".k-file-name", uploadInstance.wrapper).map(function() { return $(this).text(); });
 
     equal(fileNames[0], "first.txt");
     equal(fileNames[1], "second.txt");
@@ -816,7 +816,7 @@ test("file names are rendered for multiple files", 2, function() {
     uploadInstance._inputFiles = function () { return getFileListMock() };
     simulateFileSelect();
 
-    var fileNames = $(".k-filename", uploadInstance.wrapper).map(
+    var fileNames = $(".k-file-name", uploadInstance.wrapper).map(
         function() { return $(this).text(); }
     );
 

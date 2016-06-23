@@ -36,7 +36,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateFileSelect();
 
-        equal($(".k-upload-files .k-file > span.k-icon", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-files .k-file > span.k-file-extension", uploadInstance.wrapper).length, 1);
     });
 
     test("remove icon is rendered upon success", function() {
