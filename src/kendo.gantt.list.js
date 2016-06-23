@@ -92,7 +92,7 @@ var __meta__ = { // jshint ignore:line
     function blurActiveElement() {
         var activeElement = kendo._activeElement();
 
-        if (activeElement.nodeName.toLowerCase() !== "body") {
+        if (activeElement && activeElement.nodeName.toLowerCase() !== "body") {
             $(activeElement).blur();
         }
     }
