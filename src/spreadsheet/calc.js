@@ -1402,7 +1402,7 @@
                 format += "." + repeat("0", m[1] || m[5] ? 2 : m[4].length - 1);
             }
             if (m[1]) {
-                format = '"' + m[1].replace(/-/, "") + '"' + format;
+                format = '"' + m[1] + '"' + format;
             }
             if (m[5]) {
                 format = format + '"' + m[5] + '"';
