@@ -35,5 +35,5 @@
     - include: a/modulus.yml
 #    - include: a/tomcat.yml
 #    - name: current
-    - include: a/android_sdk.yml
+    - include: a/android-sdk.yml
     - include: a/screenshot.yml
