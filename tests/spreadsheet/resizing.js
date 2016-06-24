@@ -35,29 +35,29 @@
         return ref;
     }
 
-    test("renders the resize handler for column", function() {
+    test("renders the resize handle for column", function() {
         sheet.positionResizeHandle(new CellRef(-Infinity, 0)); // first column
         var pane = spreadsheet._workbook._view.panes[0];
         pane._currentView = DUMMY_VIEW;
 
-        var handle = pane.renderResizeHandler();
+        var handle = pane.renderResizeHandle();
 
         equal(handle.attr.style.height, "10px");
         equal(handle.attr.style.width, "7px");
-        equal(handle.attr.className, "k-resize-handle");
+        equal(handle.attr.className, "k-resize-handle k-horizontal-resize");
         equal(handle.attr.style.left, "6.5px");
     });
 
-    test("renders the resize handler for row", function() {
+    test("renders the resize handle for row", function() {
         sheet.positionResizeHandle(new CellRef(0, -Infinity)); // first row
         var pane = spreadsheet._workbook._view.panes[0];
         pane._currentView = DUMMY_VIEW;
 
-        var handle = pane.renderResizeHandler();
+        var handle = pane.renderResizeHandle();
 
         equal(handle.attr.style.height, "7px");
         equal(handle.attr.style.width, "10px");
-        equal(handle.attr.className, "k-resize-handle");
+        equal(handle.attr.className, "k-resize-handle k-vertical-resize");
         equal(handle.attr.style.top, "16.5px");
     });
 

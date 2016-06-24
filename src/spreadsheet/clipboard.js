@@ -123,7 +123,7 @@
         },
 
         isExternal: function() {
-            return this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
+            return !this._isInternal();
         },
 
         parse: function(data) {
