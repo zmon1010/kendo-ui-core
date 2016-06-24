@@ -677,12 +677,12 @@
 
                 var row = origin.row;
                 state.data.forEach(function(data, dr){
-                    if (clipboard && sheet.isHiddenRow(state.ref.row + dr)) {
+                    if (clipboard && !clipboard.external() && sheet.isHiddenRow(state.ref.row + dr)) {
                         return;
                     }
                     var col = origin.col;
                     data.forEach(function(cellState, dc){
-                        if (clipboard && sheet.isHiddenColumn(state.ref.col + dc)) {
+                        if (clipboard && !clipboard.external() && sheet.isHiddenColumn(state.ref.col + dc)) {
                             return;
                         }
                         var range = clipboard ? sheet.range(row, col)
