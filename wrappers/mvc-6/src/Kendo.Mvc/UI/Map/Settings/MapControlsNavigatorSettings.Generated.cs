@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class MapControlsNavigatorSettings 
     {
-        public MapControlsNavigatorPosition? Position { get; set; }
+        public MapControlPosition? Position { get; set; }
 
         public bool? Enabled { get; set; }
 

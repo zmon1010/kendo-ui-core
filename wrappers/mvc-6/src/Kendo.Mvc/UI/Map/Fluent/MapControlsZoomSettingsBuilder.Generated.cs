@@ -11,10 +11,10 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The position of the zoom control. Predefined values are "topLeft", "topRight", "left", "bottomRight", "bottomLeft".
+        /// Specifies the position of the zoom control.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public MapControlsZoomSettingsBuilder Position(MapControlsZoomPosition value)
+        public MapControlsZoomSettingsBuilder Position(MapControlPosition value)
         {
             Container.Position = value;
             return this;

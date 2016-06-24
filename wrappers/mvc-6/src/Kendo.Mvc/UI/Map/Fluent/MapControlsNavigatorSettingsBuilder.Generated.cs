@@ -11,10 +11,10 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The position of the navigator control. Predefined values are "topLeft", "topRight", "left", "bottomRight", "bottomLeft".
+        /// Specifies the position of the navigation control.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public MapControlsNavigatorSettingsBuilder Position(MapControlsNavigatorPosition value)
+        public MapControlsNavigatorSettingsBuilder Position(MapControlPosition value)
         {
             Container.Position = value;
             return this;

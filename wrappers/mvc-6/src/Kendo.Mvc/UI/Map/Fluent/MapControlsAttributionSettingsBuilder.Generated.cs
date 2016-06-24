@@ -11,10 +11,10 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// The position of the attribution control. Predefined values are "topLeft", "topRight", "left", "bottomRight", "bottomLeft".
+        /// Specifies the position of the attribtion control.
         /// </summary>
         /// <param name="value">The value for Position</param>
-        public MapControlsAttributionSettingsBuilder Position(MapControlsAttributionPosition value)
+        public MapControlsAttributionSettingsBuilder Position(MapControlPosition value)
         {
             Container.Position = value;
             return this;
