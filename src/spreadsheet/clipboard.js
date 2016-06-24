@@ -106,10 +106,6 @@
             } else {
                 state = this.parse(this._external);
                 this.origin = getSourceRef(state);
-                var range = sheet.range(this.pasteRef());
-                if (range.enable()) {
-                    range.clear();
-                }
             }
             var pasteRef = this.pasteRef();
             sheet.range(pasteRef).setState(state, this);
