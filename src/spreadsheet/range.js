@@ -677,12 +677,12 @@
 
                 var row = origin.row;
                 state.data.forEach(function(data, dr){
-                    if (clipboard && !clipboard.external() && sheet.isHiddenRow(state.ref.row + dr)) {
+                    if (clipboard && !clipboard.isExternal() && sheet.isHiddenRow(state.ref.row + dr)) {
                         return;
                     }
                     var col = origin.col;
                     data.forEach(function(cellState, dc){
-                        if (clipboard && !clipboard.external() && sheet.isHiddenColumn(state.ref.col + dc)) {
+                        if (clipboard && !clipboard.isExternal() && sheet.isHiddenColumn(state.ref.col + dc)) {
                             return;
                         }
                         var range = clipboard ? sheet.range(row, col)
@@ -702,7 +702,7 @@
                                 // formula.  Go through the lower level setter rather
                                 // than range.value(...), because range.value will clear
                                 // the formula!  chicken and egg issues.
-                                if (clipboard && clipboard.external()) {
+                                if (clipboard && clipboard.isExternal()) {
                                     // https://github.com/telerik/kendo-ui-core/issues/1688
                                     // if we have a paste from external source, we should parse the
                                     // value as if it were inputted.  This allows to treat numbers
