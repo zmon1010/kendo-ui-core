@@ -480,8 +480,8 @@ var __meta__ = { // jshint ignore:line
             } else {
                 template += "<li class='k-file'><span class='k-progress'></span>" +
                 "<span class='k-file-extension-wrapper'><span class='k-file-extension'>" + file.extension.substring(1) + "</span></span>" +
-                "<span class='k-file-name' title='" + file.name + "'>" + file.name + "</span>" +
-                "<span class='k-file-size'>" + fileSize + "</span>";
+                "<span class='k-file-name-size-wrapper'><span class='k-file-name' title='" + file.name + "'>" + file.name + "</span>" +
+                "<span class='k-file-size'>" + fileSize + "</span></span>";
             }
 
             template += "<strong class='k-upload-status'></strong>";
