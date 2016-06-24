@@ -71,13 +71,13 @@
     test("opening error dialog without text loads default text for type", 1, function() {
         spreadsheet._view.showError({ type: "validationError"});
 
-        equal($(document.activeElement).closest(".k-spreadsheet-message").text(), "The value that you entered violates the validation rules set on the cell.OK");
+        equal($(document.activeElement).closest(".k-spreadsheet-message").text(), "The value that you entered violates the validation rules set on the cell.RetryRevert");
     });
 
     test("opening error dialog with text loads it instead of default message for type", 1, function() {
         spreadsheet._view.showError({ type: "validationError", body: "Custom message."});
 
-        equal($(document.activeElement).closest(".k-spreadsheet-message").text(), "Custom message.OK");
+        equal($(document.activeElement).closest(".k-spreadsheet-message").text(), "Custom message.RetryRevert");
     });
 
     test("closing error dialog calls the provided callback", 1, function() {
@@ -86,6 +86,40 @@
         });
 
         $(".k-spreadsheet-message .k-button").trigger("click");
+    });
+
+    test("error dialog callback receive revert action as event parameter", 1, function() {
+        spreadsheet._view.showError(
+            { body: "Foo", type: "validationError" },
+            function(enable, focusLastActive, event) {
+                equal(event.action, "revert");
+            }.bind(this, true, true)
+        );
+
+        $(".k-spreadsheet-message .k-button:not(.k-primary)").trigger("click");
+    });
+
+    test("error dialog callback receive close action as event parameter", 1, function() {
+        spreadsheet._view.showError(
+            { body: "Foo", type: "validationError" },
+            function(enable, focusLastActive, event) {
+                equal(event.action, "close");
+            }.bind(this, true, true)
+        );
+
+        $(".k-spreadsheet-message .k-button").trigger("click", {kur: 12321});
+    });
+
+    test("error dialog have retry button", 1, function() {
+        spreadsheet._view.showError({ body: "Foo", type: "validationError" });
+
+        equal($(".k-spreadsheet-message .k-button.k-primary").text(), "Retry");
+    });
+
+    test("error dialog have revert button", 1, function() {
+        spreadsheet._view.showError({ body: "Foo", type: "validationError"});
+
+        equal($(".k-spreadsheet-message .k-button:not(.k-primary)").text(), "Revert");
     });
 
     var viewModel;

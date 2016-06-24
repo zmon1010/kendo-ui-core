@@ -12238,6 +12238,7 @@ var __meta__ = { // jshint ignore:line
                         stopPropagation: true,
                         multiTouch: true,
                         fastTap: true,
+                        press: proxy(that._press, that),
                         start: proxy(that._start, that),
                         move: proxy(that._move, that),
                         end: proxy(that._end, that),
@@ -12323,6 +12324,18 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _press: function(e) {
+            var handle;
+            if (this._state) {
+                handle = this._state.moveTarget;
+            } else {
+                var target = $(e.event.target);
+                handle = target.parents(".k-handle").add(target).first();
+            }
+
+            handle.addClass("k-handle-active");
+        },
+
         _move: function(e) {
             if (!this._state) {
                 return;
@@ -12380,12 +12393,18 @@ var __meta__ = { // jshint ignore:line
         },
 
         _end: function() {
-            var that = this,
-                range = that._state.range;
+            var range = this._state.range;
 
-            delete that._state;
-            that.set(range.from, range.to);
-            that.trigger(SELECT_END, that._rangeEventArgs(range));
+            if (this._state) {
+                var moveTarget = this._state.moveTarget;
+                if (moveTarget) {
+                    moveTarget.removeClass("k-handle-active");
+                }
+                delete this._state;
+            }
+
+            this.set(range.from, range.to);
+            this.trigger(SELECT_END, this._rangeEventArgs(range));
         },
 
         _gesturechange: function(e) {

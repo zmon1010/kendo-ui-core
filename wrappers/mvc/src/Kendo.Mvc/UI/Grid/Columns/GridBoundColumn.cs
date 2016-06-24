@@ -446,7 +446,7 @@ namespace Kendo.Mvc.UI
                                    .SelectMemberDescriptors()
                                    .Any(filter => filter.Member.IsCaseInsensitiveEqual(Member));
 
-                builder.Decorators.Add(new GridFilterCellDecorator(filtered));
+                builder.Decorators.Add(new GridFilterCellDecorator(filtered, Grid.Filterable.Messages.Filter));
             }
 
             return builder;

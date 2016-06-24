@@ -97,7 +97,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.
+    * If set to true, the data source will leave the aggregate calculation to the remote service. By default, the data source calculates aggregates client-side.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -106,7 +106,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.By default the filter is sent to the server following jQuery's conventions.For example the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.
+    * If set to true, the data source will leave the filtering implementation to the remote service. By default, the data source performs filtering client-side.By default, the filter is sent to the server following jQuery's conventions.For example, the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -115,7 +115,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.By default the group is sent to the server following jQuery's conventions.For example the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.
+    * If set to true, the data source will leave the grouping implementation to the remote service. By default, the data source performs grouping client-side.By default, the group is sent to the server following jQuery's conventions.For example, the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -124,7 +124,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.
+    * If set to true, the data source will leave the data item paging implementation to the remote service. By default, the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -133,7 +133,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * If set to true the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.By default the sort is sent to the server following jQuery's conventions.For example the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.
+    * If set to true, the data source will leave the data item sorting implementation to the remote service. By default, the data source performs sorting client-side.By default, the sort is sent to the server following jQuery's conventions.For example, the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */

@@ -30,6 +30,7 @@ navigation:
         position: 1
     "controls/data-management/grid/how-to/AngularJS":
         title: "AngularJS"
+        position: 1
     "controls/data-management/grid/how-to/Editing":
         title: "Editing"
         position: 2
@@ -543,6 +544,9 @@ baseurl: /kendo-ui
 
 ## The Kendo UI version used
 cdnVersion: "2016.2.607"
+
+## The MVC Core version used
+mvcCoreVersion: "2016.2.616"
 
 ## Assign layout and category per different paths
 defaults:

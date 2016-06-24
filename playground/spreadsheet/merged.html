@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+     requireSync([
+         "../../src/jquery.js",
+         "../../src/kendo.dom.js",
+         "../../src/kendo.spreadsheet.js",
+         "../../src/kendo.window.js"
+     ]);
+    </script>
+    <script src="../../src/jszip.js"></script>
+    <style type="text/css">
+     body {
+       font: 14px Arial,sans-serif;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="spreadsheet"></div>
+    <script>
+     spreadsheet = $("#spreadsheet").kendoSpreadsheet({
+         rows: 5,
+         columns: 5
+     }).getKendoSpreadsheet();
+     sheet = spreadsheet.activeSheet();
+     sheet.batch(function(){
+         sheet.range("A1:E5").input('=ROW() & ":" & COLUMN()');
+         sheet.range("B1:D1").merge().value("TEST TEST TEST TEST");
+         sheet.range("B2:D4").background("#fea").merge();
+         sheet.hideColumn(1);
+         sheet.hideColumn(2);
+         sheet.hideColumn(3);
+     }, { recalc: true });
+    </script>
+  </body>
+</html>

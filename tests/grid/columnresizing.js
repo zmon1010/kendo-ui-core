@@ -4,11 +4,6 @@
         DataSource = kendo.data.DataSource,
         indicatorWidth = 3;
 
-    function triggerTouchEvent(element, type, info) {
-        info.target = element;
-        return element.trigger($.Event(type, { originalEvent: { changedTouches: [ info ] }}));
-    }
-
     module("grid column resize", {
         setup: function() {
             kendo.UserEvents.minHold(50);

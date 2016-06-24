@@ -30,6 +30,46 @@ test('typing handler keydown creates start restore point if typing', function() 
     ok(undefined !== handler.startRestorePoint);
 });
 
+function setStartTypingKeyboard() {
+    editor.keyboard = {
+        isTypingKey: function () { return true; },
+        startTyping: function () {},
+        isTypingInProgress: function() { return false; }
+    };
+}
+
+function selectAndType(range){
+    var handler = new TypingHandler(editor);
+    withMock(editor, "getRange", function() { return range; }, function() {
+        handler.keydown();
+    });
+}
+var testContent = "<p><em>test</em></p> <p><em>test</em></p>";
+
+if (kendo.support.browser.webkit) {
+    test('typing handler keydown deletes all content if all selected', function() {
+        setStartTypingKeyboard();
+        var body = editor.body;
+        body.innerHTML = testContent;
+        var range = {collapsed: false, commonAncestorContainer: body, startContainer: body, endContainer: body, startOffset: 0, endOffset: body.childNodes.length};
+
+        selectAndType(range);
+
+        ok(body.innerHTML == "");
+    });
+
+    test('typing handler keydown does not delete the content if not all is selected', function() {
+        setStartTypingKeyboard();
+        var body = editor.body;
+        body.innerHTML = testContent;
+        var range = {collapsed: false, commonAncestorContainer: body, startContainer: body, endContainer: body, startOffset: 0, endOffset: 1};
+
+        selectAndType(range);
+
+        ok(body.innerHTML == testContent);
+    });
+}
+
 test('typing handler keydown calls startTyping', function() {
     var callback;
 

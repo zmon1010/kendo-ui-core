@@ -229,7 +229,7 @@ var __meta__ = { // jshint ignore:line
             if (!force) {
                 dataSource.filter(expression);
             } else {
-                dataSource.read({ filter: expression });
+                dataSource.read(dataSource._mergeState({ filter: expression }));
             }
         },
 
@@ -528,7 +528,8 @@ var __meta__ = { // jshint ignore:line
 
             list.css({
                 fontFamily: wrapper.css("font-family"),
-                width: width
+                width: this.options.autoWidth ? "auto" : width,
+                minWidth: width
             })
             .data(WIDTH, width);
 

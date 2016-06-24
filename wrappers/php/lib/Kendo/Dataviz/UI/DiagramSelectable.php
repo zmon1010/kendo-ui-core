@@ -6,6 +6,15 @@ class DiagramSelectable extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * Specifies if the multiple selection should be enabled.
+    * @param boolean $value
+    * @return \Kendo\Dataviz\UI\DiagramSelectable
+    */
+    public function multiple($value) {
+        return $this->setProperty('multiple', $value);
+    }
+
+    /**
     * Defines the selection stroke configuration.
     * @param \Kendo\Dataviz\UI\DiagramSelectableStroke|array $value
     * @return \Kendo\Dataviz\UI\DiagramSelectable

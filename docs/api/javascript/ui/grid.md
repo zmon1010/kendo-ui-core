@@ -133,7 +133,7 @@ Defines the width of the column resize handle in pixels. Apply a larger value fo
 
 ### columns `Array`
 
-The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+The configuration of the grid columns. An array of JavaScript objects or strings. JavaScript objects are interpreted as column configurations. Strings are interpreted as the
 [field](#configuration-columns.field) to which the column is bound. The grid will create a column for every item of the array.
 
 > If this setting is **not** specified the grid will create a column for every field of the data item.
@@ -1279,12 +1279,13 @@ and the current group value is displayed.
 The fields which can be used in the template are:
 
 * value - the current group value
+* field - the current group field
 * average - the value of the "average" aggregate (if specified)
 * count - the value of the "count" aggregate (if specified)
 * max - the value of the "max" aggregate (if specified)
 * min - the value of the "min" aggregate (if specified)
 * sum - the value of the "sum" aggregate (if specified)
-* aggregates - all of the aggregate (if specified) values for the current group
+* aggregates - provides access to all available aggregates, e.g. `aggregates.fieldName1.sum` or `aggregates.fieldName2.average`
 
 #### Example - set the group header template
 
@@ -1318,6 +1319,13 @@ The fields which can be used in the template are:
 * max - the value of the "max" aggregate (if specified)
 * min - the value of the "min" aggregate (if specified)
 * sum - the value of the "sum" aggregate (if specified)
+* data - provides access to all available aggregates, e.g. `data.fieldName1.sum` or `data.fieldName2.average`
+* group - provides information for the current group. An object with two fields - `field` and `value`.
+
+> **Important**
+>
+> If the template is declared as a function the group field is accessible only through the data field,
+> e.g. `data.fieldName1.group.value`.
 
 #### Example - set the group header template
 
@@ -1328,6 +1336,29 @@ The fields which can be used in the template are:
         { field: "name" },
         { field: "age",
           groupFooterTemplate: "Total: #= count #"
+        }
+      ],
+      dataSource: {
+        data: [
+          { name: "Jane Doe", age: 30 },
+          { name: "John Doe", age: 30 }
+        ],
+        group: { field: "age", aggregates: [ { field: "age", aggregate: "count" }] }
+      }
+    });
+    </script>
+
+#### Example - set the group header template as function
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [
+        { field: "name" },
+        { field: "age",
+          groupFooterTemplate: function(e) {
+              return "Total: " + e.age.count;
+          }
         }
       ],
       dataSource: {
@@ -6475,6 +6506,8 @@ When using multicolumn headers, using an index is not allowed. In such scenarios
 > The method ignores and does not resize [hidden](#configuration-columns.hidden) columns.
 >
 > Auto-fitting all columns at once is a resource-intensive operation and is not recommended. A better option is to auto-fit only a few columns that have the most variable content in terms of length. Alternatively, disable scrolling and allow the [browser to adjust all column widths automatically](/controls/data-management/grid/appearance#widths), according to their content.
+>
+> Use `autoFitColumn` only after the Grid has been databound. Executing the method immediately after Grid initialization makes no sense and can lead to undesired behavior.
 
 #### Example - autofit a column by index
 
@@ -7380,6 +7413,8 @@ A string, DOM element or jQuery object which represents the table row(s) or cell
 #### Returns
 
 `jQuery` the selected table rows or cells.
+
+> If the Grid is using frozen (locked) columns and row selection, the `select` method will return **two** table row elements for each selected item. This is because the frozen columns feature works with the separate tables for the frozen and non-frozen columns. Each pair of table row elements that correspond to the same data item, will have the same `data-uid` attribute value. One of the table rows will be a descendant of `div.k-grid-content-locked` and the other one will be a descendant of `div.k-grid-content`. The two `div`s are siblings in the Grid DOM structure.
 
 #### Example - select the first and second table rows
 
@@ -8630,6 +8665,10 @@ The event handler function context (available via the `this` keyword) will be se
 ##### e.filter `Object`
 
 The selected filter descriptor. If `null` the filter has been cleared for example by click on the `clear` button.
+
+##### e.field `String`
+
+The field for which the filter is constructed.
 
 ##### e.preventDefault `Function`
 

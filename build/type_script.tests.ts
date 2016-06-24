@@ -38,3 +38,16 @@ $(() => {
 
     genericWidget.options.foo = true;
 });
+
+$(() => {
+    var draw = kendo.drawing;
+    var geom = kendo.geometry;
+
+    var circle = new draw.Circle(
+        new geom.Circle([ 100, 100 ], 80),
+        { stroke: { color: "red", width: 1 } }
+    );
+
+    var chart = <kendo.dataviz.ui.Chart>$("#chart").data("kendoChart");
+    chart.surface.draw(circle);
+});

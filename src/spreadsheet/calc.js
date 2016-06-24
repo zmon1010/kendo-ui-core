@@ -1383,9 +1383,15 @@
         var comma = culture.numberFormat[","];
         var dot = culture.numberFormat["."];
         var currency = culture.numberFormat.currency.symbol;
-        var rx = new RegExp("^(\\" + currency + "\\s*)?(\\d+(\\" + comma + "\\d{3})*(\\" + dot + "\\d+)?)(\\s*\\" + currency + ")?$");
+        var rx = getNumberRegexp(currency, comma, dot);
+        var sign = 1;
+        if (/-/.test(input)) {
+            input = input.replace(/-/, "");
+            sign = -1;
+        }
         if ((m = rx.exec(input))) {
             var value = m[2]
+                .replace(/\s+/g, "")
                 .replace(new RegExp("\\" + comma, "g"), "")
                 .replace(dot, "."); // depending on culture, dot might be ','
             var format = "#";
@@ -1404,10 +1410,25 @@
             return {
                 type   : "number",
                 format : format == "#" ? null : format,
-                value  : parseFloat(value)
+                value  : sign * parseFloat(value)
             };
         }
     });
+
+    var NUMBER_FORMAT_RX = {};
+    function getNumberRegexp(currency, comma, dot) {
+        var id = currency + comma + dot;
+        var rx = NUMBER_FORMAT_RX[id];
+        if (!rx) {
+            rx = "^\\s*(CUR\\s*)?(\\d+(COM\\d{3})*(DOT\\d+)?)(\\s*CUR)?\\s*$";
+            rx = rx.replace(/CUR/g, "\\" + currency)
+                .   replace(/DOT/g, "\\" + dot)
+                .   replace(/COM/g, "\\" + comma);
+            rx = new RegExp(rx);
+            NUMBER_FORMAT_RX[id] = rx;
+        }
+        return rx;
+    }
 
     function repeat(str, len) {
         var out = "";

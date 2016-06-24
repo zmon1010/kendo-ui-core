@@ -70,3 +70,4 @@ demos/mvc/content/all-scripts.txt
 demos/**/bin
 demos/mvc/packages
 web.config
+**/.vs

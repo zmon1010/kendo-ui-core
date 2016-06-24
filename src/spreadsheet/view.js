@@ -14,6 +14,7 @@
     var viewClassNames = {
         view: "k-spreadsheet-view",
         fixedContainer: "k-spreadsheet-fixed-container",
+        editContainer: "k-spreadsheet-edit-container",
         scroller: "k-spreadsheet-scroller",
         viewSize: "k-spreadsheet-view-size",
         clipboard: "k-spreadsheet-clipboard",
@@ -961,9 +962,18 @@
             var errorMessages = this.options.messages.errors;
 
             if (kendo.spreadsheet.dialogs.registered(options.type)) {
-                this.openDialog(options.type, {
+                var dialogOptions = {
                     close: callback
-                });
+                };
+
+                if (options.type === "validationError") {
+                    dialogOptions = $.extend(dialogOptions, {
+                        title: options.title || "Error",
+                        text: options.body ? options.body : errorMessages[options.type]
+                    });
+                }
+
+                this.openDialog(options.type, dialogOptions);
             } else {
                 this.openDialog("message", {
                     title : options.title || "Error",
@@ -1012,6 +1022,8 @@
             if (focus && this.scrollIntoView(focus)) {
                 return;
             }
+
+            this.wrapper.toggleClass(viewClassNames.editContainer, this.editor.isActive());
 
             var grid = sheet._grid;
 

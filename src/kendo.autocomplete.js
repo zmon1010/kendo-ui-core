@@ -53,7 +53,7 @@ var __meta__ = { // jshint ignore:line
         return text.split(separator)[indexOfWordAtCaret(caretIdx, text, separator)];
     }
 
-    function replaceWordAtCaret(caretIdx, text, word, separator) {
+    function replaceWordAtCaret(caretIdx, text, word, separator, defaultSeparator) {
         var words = text.split(separator);
 
         words.splice(indexOfWordAtCaret(caretIdx, text, separator), 1, word);
@@ -62,7 +62,7 @@ var __meta__ = { // jshint ignore:line
             words.push("");
         }
 
-        return words.join(separator);
+        return words.join(defaultSeparator);
     }
 
     var AutoComplete = List.extend({
@@ -84,6 +84,7 @@ var __meta__ = { // jshint ignore:line
 
             that._wrapper();
             that._loader();
+            that._clearButton();
 
             that._dataSource();
             that._ignoreCase();
@@ -115,6 +116,7 @@ var __meta__ = { // jshint ignore:line
                     "aria-haspopup": true
                 });
 
+            that._clear.on("click" + ns, proxy(that._clearClick, that));
             that._enable();
 
             that._old = that._accessor();
@@ -260,6 +262,7 @@ var __meta__ = { // jshint ignore:line
             var that = this;
 
             that.element.off(ns);
+            that._clear.off(ns);
             that.wrapper.off(ns);
 
             List.fn.destroy.call(that);
@@ -277,7 +280,7 @@ var __meta__ = { // jshint ignore:line
             var that = this,
             options = that.options,
             ignoreCase = options.ignoreCase,
-            separator = options.separator,
+            separator = that._separator(),
             length;
 
             word = word || that._accessor();
@@ -303,6 +306,13 @@ var __meta__ = { // jshint ignore:line
                     field: options.dataTextField,
                     ignoreCase: ignoreCase
                 });
+                this.one("close", function(){
+                    var value = that.value().split(separator).join(that._defaultSeparator());
+                    if(value && value !== '') {
+                        that.value(value);
+                    }
+                });
+
             }
         },
 
@@ -312,7 +322,7 @@ var __meta__ = { // jshint ignore:line
                 value = that._accessor(),
                 element = that.element[0],
                 caretIdx = caret(element)[0],
-                separator = that.options.separator,
+                separator = that._separator(),
                 words = value.split(separator),
                 wordIndex = indexOfWordAtCaret(caretIdx, value, separator),
                 selectionEnd = caretIdx,
@@ -398,6 +408,11 @@ var __meta__ = { // jshint ignore:line
             caret(element, element.val().length);
         },
 
+        _clearClick: function() {
+            this.value(null);
+            this.trigger("change");
+        },
+
         _resetFocusItem: function() {
             var index = this.options.highlightFirst ? 0 : -1;
 
@@ -474,7 +489,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _selectValue: function(dataItem) {
-            var separator = this.options.separator;
+            var separator = this._separator();
             var text = "";
 
             if (dataItem) {
@@ -486,7 +501,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (separator) {
-                text = replaceWordAtCaret(caret(this.element)[0], this._accessor(), text, separator);
+                text = replaceWordAtCaret(caret(this.element)[0], this._accessor(), text, separator, this._defaultSeparator());
             }
 
             this._prev = text;
@@ -496,12 +511,13 @@ var __meta__ = { // jshint ignore:line
 
         _change: function() {
             var that = this;
-            var value = that.value();
+            var value = that.value().split(that._separator()).join(that._defaultSeparator());
             var trigger = value !== List.unifyType(that._old, typeof value);
 
             var valueUpdated = trigger && !that._typing;
             var itemSelected = that._oldText !== value;
 
+            that.value(value);
             if (valueUpdated || itemSelected) {
                 // trigger the DOM change event so any subscriber gets notified
                 that.element.trigger(CHANGE);
@@ -653,6 +669,22 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _separator: function() {
+            var separator = this.options.separator;
+            if (separator instanceof Array) {
+               return new RegExp(separator.join("|"), 'gi');
+            }
+            return separator;
+        },
+
+        _defaultSeparator: function() {
+            var separator = this.options.separator;
+            if (separator instanceof Array) {
+                return separator[0];
+            }
+            return separator;
+        },
+
         _search: function () {
             var that = this;
             clearTimeout(that._typingTimeout);
@@ -673,6 +705,13 @@ var __meta__ = { // jshint ignore:line
 
         _loader: function() {
             this._loading = $('<span class="k-icon k-loading" style="display:none"></span>').insertAfter(this.element);
+        },
+
+        _clearButton: function() {
+            this._clear = $('<span unselectable="on" class="k-icon k-i-close" title="clear"></span>').attr({
+                "role": "button",
+                "tabIndex": -1
+            }).insertAfter(this.element);
         },
 
         _toggleHover: function(e) {

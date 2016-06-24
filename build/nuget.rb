@@ -76,9 +76,15 @@ namespace :nuget do
     end
 
     desc "Upload NuGet packages to nuget.org"
-    task :upload do
-        upload_nuget "KendoUICore.#{VERSION}.nupkg"
+    task :upload => [:upload_kendo_core, :upload_mvc_core]
 
+    desc "Upload Kendo UI Core NuGet packages to nuget.org"
+    task :upload_kendo_core do
+        upload_nuget "KendoUICore.#{VERSION}.nupkg"
+    end
+
+    desc "Upload MVC Core NuGet packages to nuget.org"
+    task :upload_mvc_core do
         # Only while MVC6 is in beta!
         upload_nuget "Kendo.Mvc.#{VERSION}.nupkg"
     end

@@ -32,6 +32,8 @@ namespace Kendo.Mvc.UI
 
         public bool Enabled { get; set; }
 
+        public bool? Multiple { get; set; }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
             //>> Serialization
@@ -44,6 +46,11 @@ namespace Kendo.Mvc.UI
             if (Key.HasValue)
             {
                 json["key"] = Key;
+            }
+
+            if (Multiple.HasValue)
+            {
+                json["multiple"] = Multiple;
             }
                 
         //<< Serialization

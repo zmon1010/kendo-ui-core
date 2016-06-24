@@ -289,14 +289,14 @@
         task1 = new kendo.data.GanttTask({
             title: "Task 1",
             percentComplete: 50,
-            start: new Date("2014/04/15 12:00"),
-            end: new Date("2014/04/15 14:00")
+            start: new Date("2014/04/15 8:00"),
+            end: new Date("2014/04/15 9:00")
         });
         task2 = new kendo.data.GanttTask({
             title: "Task 2",
             percentComplete: 50,
-            start: new Date("2014/04/15 16:00"),
-            end: new Date("2014/04/15 17:00")
+            start: new Date("2014/04/15 8:00"),
+            end: new Date("2014/04/15 9:00")
         });
 
         timeline._render([task1, task2]);

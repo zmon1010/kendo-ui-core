@@ -151,6 +151,14 @@
         equal(sheet.range("C1").formula().toString(), "sum(A1:B1)");
     });
 
+    test("Pasting from external source keeps cell formatting", function(){
+        sheet.range("A1").format("#,#.00").value("1111").select();
+        clipboard.external({ html: "<table><td>1234</td></table>" });
+        clipboard.paste();
+        equal(sheet.range("A1").value(), 1234);
+        equal(sheet.range("A1").format(), "#,#.00");
+    });
+
     test("Pasting from filtered range does not include hidden values", function(){
         sheet.range("A1:A3").values([
             [ 1 ], [ 2 ], [ 3 ]

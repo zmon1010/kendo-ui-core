@@ -63,6 +63,8 @@
             var array = item.parent();
             var index = array.indexOf(item);
             array.splice(index, 1);
+
+            $scope.selectedItem = undefined;
           };
     })
 </script>

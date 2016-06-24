@@ -44,7 +44,7 @@
             var ref = this.pasteRef();
             var status = {canPaste: true};
             if (ref === kendo.spreadsheet.NULLREF) {
-                var external = this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
+                var external = this.isExternal();
                 status.pasteOnMerged = this.intersectsMerged();
                 status.canPaste = status.pasteOnMerged ? false : external;
                 return status;
@@ -76,6 +76,8 @@
             var sheet = this.workbook.activeSheet();
             this.origin = sheet.select();
             this.contents = sheet.selection().getState();
+            delete this._external.html;
+            delete this._external.plain;
         },
 
         cut: function() {
@@ -106,7 +108,6 @@
             } else {
                 state = this.parse(this._external);
                 this.origin = getSourceRef(state);
-                sheet.range(this.pasteRef()).clear();
             }
             var pasteRef = this.pasteRef();
             sheet.range(pasteRef).setState(state, this);
@@ -119,6 +120,10 @@
             } else {
                 return this._external;
             }
+        },
+
+        isExternal: function() {
+            return this._external.hasOwnProperty("html") || this._external.hasOwnProperty("plain");
         },
 
         parse: function(data) {

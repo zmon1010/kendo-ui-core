@@ -33,4 +33,22 @@
         ok(manager.includesHiddenColumns(getRef("A:D")));
     });
 
+    test("hideSelectedRows updates selection", function(){
+        sheet.range("C:C").select();
+        manager.hideSelectedColumns();
+        equal(sheet.select()+"", "D1:D200");
+        sheet.range("B:B").select();
+        manager.hideSelectedColumns();
+        equal(sheet.select()+"", "A1:A200");
+    });
+
+    test("hideSelectedColumns updates selection", function(){
+        sheet.range("4:4").select();
+        manager.hideSelectedRows();
+        equal(sheet.select()+"", "A5:AX5");
+        sheet.range("3:3").select();
+        manager.hideSelectedRows();
+        equal(sheet.select()+"", "A2:AX2");
+    });
+
 })();

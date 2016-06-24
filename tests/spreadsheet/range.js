@@ -745,6 +745,27 @@
         equal(r.format(), "mm:ss.00");
     });
 
+    test("range.input handles various numeric formats", function(){
+        var r = sheet.range("A1");
+        function test(input, value, format) {
+            r.format(null);
+            r.input(input);
+            equal(r.value(), value);
+            if (format != null) {
+                equal(r.format(), format);
+            }
+        }
+        test("$1234", 1234, '"$"#,#');
+        test("-$1234", -1234, '"$"#,#');
+        test("$-1,234", -1234, '"$"#,#');
+        test("$-1,234.00", -1234, '"$"#,#.00');
+        test("-$1234.00", -1234, '"$"#,#.00');
+        test("1234$", 1234, '#,#"$"');
+        test("-1,234$", -1234, '#,#"$"');
+        test("-1,234$", -1234, '#,#"$"');
+        test("-1234.00$", -1234, '#,#.00"$"');
+    });
+
     test("range.input handles '=foo+", function(){
         var r = sheet.range("A1");
         r.format("@");

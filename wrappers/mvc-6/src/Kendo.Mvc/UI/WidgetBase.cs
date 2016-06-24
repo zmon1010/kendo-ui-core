@@ -283,6 +283,11 @@ namespace Kendo.Mvc.UI
             UrlGenerator = GetService<IUrlGenerator>();
 
             ((IViewContextAware)HtmlHelper).Contextualize(ViewContext);
+
+            if (Generator == null)
+            {
+                throw( new Exception("Kendo services are not registered. Please call services.AddKendo() in ConfigureServices method of your project."));
+            }
         }
 
         protected TService GetService<TService>()

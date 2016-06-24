@@ -15,6 +15,8 @@
         save: "Save",
         cancel: "Cancel",
         remove: "Remove",
+        retry: "Retry",
+        revert: "Revert",
         okText: "OK",
         formatCellsDialog: {
             title: "Format",
@@ -226,7 +228,9 @@
             return this._dialog;
         },
         _onDialogClose: function() {
-            this.trigger("close");
+            this.trigger("close", {
+                action: this._action
+            });
         },
         _onDialogActivate: function() {
             this.trigger("activate");
@@ -248,6 +252,8 @@
             this.close();
         },
         close: function() {
+            this._action = "close";
+
             this.dialog().close();
         }
     });
@@ -553,6 +559,53 @@
     });
 
     kendo.spreadsheet.dialogs.register("message", MessageDialog);
+
+    var ValidationErrorDialog = SpreadsheetDialog.extend({
+        options: {
+            className: "k-spreadsheet-message",
+            title: "",
+            messageId: "",
+            text: "",
+            template:
+            "<div class='k-spreadsheet-message-content' data-bind='text: text' />" +
+            "<div class='k-action-buttons'>" +
+            "<button class='k-button k-primary' data-bind='click: close'>" +
+                "#= messages.retry #" +
+            "</button>" +
+            "<button class='k-button' data-bind='click: revert'>" +
+                "#= messages.revert #" +
+            "</button>" +
+            "</div>"
+        },
+        open: function() {
+            SpreadsheetDialog.fn.open.call(this);
+
+            var options = this.options;
+            var text = options.text;
+
+            if (options.messageId) {
+                text = kendo.getter(options.messageId, true)(kendo.spreadsheet.messages.dialogs);
+            }
+
+            kendo.bind(this.dialog().element, {
+                text: text,
+                close: this.close.bind(this),
+                revert: this.revert.bind(this)
+            });
+        },
+        activate: function(e) {
+            e.sender.dialog().element
+                .find(".k-button")
+                .focus();
+        },
+        revert: function () {
+            this._action = "revert";
+
+            this.dialog().close();
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("validationError", ValidationErrorDialog);
 
     var FontFamilyDialog = SpreadsheetDialog.extend({
         init: function(options) {

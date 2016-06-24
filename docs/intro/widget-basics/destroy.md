@@ -18,9 +18,9 @@ Every Kendo UI widget has a `destroy` method which:
 The Window widget is an exception, as it represents a detached popup on its own.
 1. Destroys all child widgets with the help of [`kendo.destroy()` method](/api/framework/kendo#methods-destroy).
 
-## Destroy Widgets
+## Options
 
-### Destroy a Widget Manually
+### Destroy Widgets Manually
 
 You may wish to manually destroy widgets in several possible cases:
 
@@ -49,9 +49,13 @@ The example below demonstrates how to destroy and remove a Kendo UI Grid widget.
 	</script>
 
 <!--*-->
-### Destroy a Widget Automatically
+### Destroy Widgets Automatically
 
 Kendo UI widgets are destroyed automatically when the web page is unloaded.
+
+### Destroy Widgets Created via MVVM
+
+To properly destroy widgets [created declaratively]({% slug dataattributes_configuration_installation %}) via the [Kendo UI MVVM mechanism]({% slug overview_mvvmpattern_kendoui %}), use the [`kendo.unbind()`](/api/javascript/kendo#methods-unbind) instead of the `destroy()` method of the widgets.
 
 ### Destroy Multiple Widgets
 

@@ -20,8 +20,9 @@ var kendo = window.kendo,
     InsertHtmlCommand = Editor.InsertHtmlCommand,
     BlockFormatFinder = Editor.BlockFormatFinder,
     registerTool = Editor.EditorUtils.registerTool;
+var template = kendo.template;
 
-var editableCell = "<td>" + Editor.emptyElementContent + "</td>";
+var columnTemplate = "<td style='width:#=width#%;'>#=content#</td>";
 
 var tableFormatFinder = new BlockFormatFinder([{tags:["table"]}]);
 
@@ -29,9 +30,13 @@ var TableCommand = InsertHtmlCommand.extend({
     _tableHtml: function(rows, columns) {
         rows = rows || 1;
         columns = columns || 1;
+        var columnHtml = template(columnTemplate)({ width: 100 / columns, content: Editor.emptyElementContent });
 
         return "<table class='k-table' data-last>" +
-                   new Array(rows + 1).join("<tr>" + new Array(columns + 1).join(editableCell) + "</tr>") +
+                    new Array(rows + 1).join(
+                    "<tr>" +
+                        new Array(columns + 1).join(columnHtml) +
+                    "</tr>") +
                "</table>";
     },
 

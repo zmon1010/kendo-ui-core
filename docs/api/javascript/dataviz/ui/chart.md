@@ -4626,7 +4626,7 @@ The supported values are:
       categoryAxis: {
         notes: {
           icon: {
-            shape: "triangle"
+            type: "triangle"
           },
           data: [{ value: 1 }]
         }
@@ -25540,7 +25540,7 @@ Setting it to `false` will force the automatic axis range to snap to 0.
           xAxis: {
             narrowRange: true
           },
-          xAxis: {
+          yAxis: {
             narrowRange: true
           }
         });
@@ -34250,4 +34250,3 @@ The widget instance which fired the event.
     var chart = $("#chart").data("kendoChart");
     chart.bind("zoomStart", chart_zoomStart);
     </script>
-
