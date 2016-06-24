@@ -205,3 +205,19 @@ function assertEvent(element, options) {
     equal(selector, event.selector);
     equal(namespace, event.namespace);
 }
+
+/* exported roughlyEqual */
+function roughlyEqual(actual, expected, precision) {
+    var valueAndUnitRegex = /(\d+\.?\d*)(.*)/i;
+    var actualParsed = valueAndUnitRegex.exec(actual);
+    var expectedParsed = valueAndUnitRegex.exec(expected);
+    var actualValue = actualParsed[1];
+    var expectedValue = expectedParsed[1];
+    var unitForActual = actualParsed[2];
+    var unitForExpected = expectedParsed[2];
+
+    var isEqual = (unitForActual === unitForExpected) && (Math.abs(actualValue - expectedValue) <= precision);
+    var failMessage = (isEqual ? "" : "{expected: " + expected + ", actual: " + actual + "}");
+
+    ok(isEqual, failMessage);
+}
