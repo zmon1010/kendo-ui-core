@@ -4,8 +4,9 @@
   vars:
     php_process_user: www-data
     php_process_group: www-data
-    apt_file_dir: /etc/apt/sources.list.d/
+    apt_file_dir: /etc/apt/sources.list.d
     jenkins_host: localhost
+    ansible_home: a
   remote_user: petyo
   sudo: yes
   tasks:
@@ -19,23 +20,23 @@
        - firefox
        - lftp
        - mаvеn
-    - include: a/ntp.yml
-    - include: a/ruby.yml
-    - include: a/nginx.yml
-    - include: a/google-chrome.yml
-    - include: a/node.yml
-    - include: a/java.yml
+    - include: "{{ansible_home}}/ntp.yml"
+    - include: "{{ansible_home}}/ruby.yml"
+    - include: "{{ansible_home}}/nginx.yml"
+    - include: "{{ansible_home}}/google-chrome.yml"
+    - include: "{{ansible_home}}/node.yml"
+    - include: "{{ansible_home}}/java.yml"
     - name: jenkins
-      include: a/jenkins/main.yml
-    - include: a/mono.yml
-    - include: a/php-fpm.yml
-    - include: a/selenium.yml
-    - include: a/root_access/main.yml
-    - include: a/node_services.yml
-    - include: a/monit/main.yml
-    - include: a/modulus.yml
+      include: "{{ansible_home}}/jenkins/main.yml"
+    - include: "{{ansible_home}}/mono.yml"
+    - include: "{{ansible_home}}/php-fpm.yml"
+    - include: "{{ansible_home}}/selenium.yml"
+    - include: "{{ansible_home}}/root_access/main.yml"
+    - include: "{{ansible_home}}/node_services.yml"
+    - include: "{{ansible_home}}/monit/main.yml"
+    - include: "{{ansible_home}}/modulus.yml"
 #    - include: a/tomcat.yml
 
-    - include: a/android-sdk.yml
+    - include: "{{ansible_home}}/android-sdk.yml"
     - name: current
-      include: a/screenshot.yml
+      include: "{{ansible_home}}/screenshot.yml"

@@ -1,7 +1,7 @@
 ---
 # vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
 - name: Does the Google apt file exist?
-  command: test -f /etc/apt/sources.list.d/google-chrome.list
+  command: "test -f {{apt_file_dir}}/google-chrome.list"
   register: google_apt_exists
   ignore_errors: True
 
@@ -10,7 +10,7 @@
   when: google_apt_exists.rc == 1
 
 - name: Add Google Chrome repo
-  copy: content="deb http://dl.google.com/linux/chrome/deb/ stable main" dest=/etc/apt/sources.list.d/google-chrome.list owner=root group=root mode=644
+  copy: content="deb http://dl.google.com/linux/chrome/deb/ stable main" dest="{{apt_file_dir}}/google-chrome.list" owner=root group=root mode=644
   when: google_apt_exists.rc == 1
 
 - name: Update apt cache
