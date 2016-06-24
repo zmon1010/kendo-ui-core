@@ -12,27 +12,23 @@
 
 - set_fact: selenium_libs="/usr/share/selenium-libs/"
 
-- file:  name={{selenium_libs}} state=directory force=yes
+- file:  name="{{selenium_libs}}" state=directory force=yes
 
 
 - name: Get junit-4.11.jar
   get_url: 
     url:  http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar
-    dest: {{selenium_libs}}junit-4.11.jar
+    dest: "{{selenium_libs}}junit-4.11.jar"
     mode: 0755
  
 - name: Get selenium-java libs
   get_url: 
     url:  https://selenium.googlecode.com/files/selenium-java-2.31.0.zip
-    dest: {{selenium_libs}}selenium-java-2.31.0.zip
+    dest: "{{selenium_libs}}selenium-java-2.31.0.zip"
     mode: 0755
+- name: Unzip Selenium Java libraries
+  shell: bash -c "unzip selenium-java-2.31.0.zip && mv selenium-2.31.0/selenium-2.31.0/* . && rm -rf selenium-2.31.0/ "
+    args:
+      chdir: "{{selenium_lib}}"
+      creates: selenium-java-2.31.0.jar
 
-#bash "Unzip Selenium Java libraries" do
-#    cwd selenium_libs
-#    code %Q{
-#        unzip selenium-java-2.31.0.zip
-#        mv selenium-2.31.0/selenium-2.31.0/* .
-#        rm -rf selenium-2.31.0/
-#    }
-#    creates "#{selenium_libs}selenium-java-2.31.0.jar"
-#end
