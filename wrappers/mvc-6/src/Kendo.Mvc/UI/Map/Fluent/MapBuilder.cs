@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI.Fluent
         public MapBuilder(Map component) : base(component)
         {
         }
-
-        // Place custom settings here
     }
 }
 
