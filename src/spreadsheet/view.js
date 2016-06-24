@@ -25,6 +25,8 @@
         filterRange: "k-filter-range",
         filterButton: "k-spreadsheet-filter",
         filterButtonActive: "k-state-active",
+        horizontalResize: "k-horizontal-resize",
+        verticalResize: "k-vertical-resize",
         icon: "k-icon k-font-icon",
         iconFilterDefault: "k-i-arrow-s",
         sheetsBar: "k-spreadsheet-sheets-bar",
@@ -1023,7 +1025,15 @@
                 return;
             }
 
-            this.wrapper.toggleClass(viewClassNames.editContainer, this.editor.isActive());
+            var resizeDirection =
+                !sheet.resizingInProgress() ? "none" :
+                sheet.resizeHandlePosition().col === -Infinity ? "column" :
+                "row";
+
+            this.wrapper
+                .toggleClass(viewClassNames.editContainer, this.editor.isActive())
+                .toggleClass(viewClassNames.horizontalResize, resizeDirection == "row")
+                .toggleClass(viewClassNames.verticalResize, resizeDirection == "column");
 
             var grid = sheet._grid;
 
@@ -1187,6 +1197,8 @@
         bottom: "k-bottom",
         left: "k-left",
         resizeHandle: "k-resize-handle",
+        columnResizeHandle: "k-column-resize-handle",
+        rowResizeHandle: "k-row-resize-handle",
         resizeHint: "k-resize-hint",
         resizeHintHandle: "k-resize-hint-handle",
         resizeHintMarker: "k-resize-hint-marker",
@@ -1300,7 +1312,7 @@
 
                 if (view.ref.intersects(ref)) {
                     if (!sheet.resizeHintPosition()) {
-                        children.push(this.renderResizeHandler());
+                        children.push(this.renderResizeHandle());
                     }
                 }
             }
@@ -1398,10 +1410,11 @@
             return cont;
         },
 
-        renderResizeHandler: function() {
+        renderResizeHandle: function() {
             var sheet = this._sheet;
             var ref = sheet.resizeHandlePosition();
             var rectangle = this._rectangle(ref);
+            var classNames = [ Pane.classNames.resizeHandle ];
 
             var style;
             if (ref.col !== -Infinity) {
@@ -1411,6 +1424,7 @@
                     left: rectangle.right - RESIZE_HANDLE_WIDTH/2  + "px",
                     top: "0px"
                 };
+                classNames.push(viewClassNames.horizontalResize);
             } else {
                 style = {
                     height: RESIZE_HANDLE_WIDTH + "px",
@@ -1418,9 +1432,10 @@
                     top: rectangle.bottom - RESIZE_HANDLE_WIDTH/2  + "px",
                     left: "0px"
                 };
+                classNames.push(viewClassNames.verticalResize);
             }
             return kendo.dom.element("div", {
-                className: Pane.classNames.resizeHandle,
+                className: classNames.join(" "),
                 style: style
             });
         },
