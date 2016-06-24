@@ -18,7 +18,7 @@
        - xauth
        - firefox
        - lftp
-       - mvn
+       - mаvеn
     - include: a/ntp.yml
     - include: a/ruby.yml
     - include: a/nginx.yml
