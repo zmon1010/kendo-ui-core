@@ -682,9 +682,12 @@
 
         refreshTools: function() {
             var that = this,
+                editorNS = kendo.ui.editor,
                 editor = that._editor,
                 range = editor.getRange(),
-                nodes = kendo.ui.editor.RangeUtils.textNodes(range);
+                nodes = editorNS.RangeUtils.textNodes(range),
+                immutables = editor.options.immutables,
+                immutablesContext = immutables && editorNS.Immutables.immutablesContext(range);
 
             if (!nodes.length) {
                 nodes = [range.startContainer];
@@ -697,16 +700,16 @@
                     if (tool.update) {
                         tool.update(ui, nodes);
                     }
-                    if (editor.options.immutables) {
-                        that._updateImmutablesState(tool, ui, editor._immutableParent);
+
+                    if (immutables) {
+                        that._updateImmutablesState(tool, ui, immutablesContext);
                     }
                 }
             });
-
             this.update();
         },
 
-        _updateImmutablesState: function(tool, ui, immutableParent) {
+        _updateImmutablesState: function(tool, ui, immutablesContext) {
             var name = tool.name;
             var uiElement = ui;
 
@@ -716,7 +719,7 @@
             }
 
             if (trackImmutables) {
-                var display = immutableParent ? "none" : "";
+                var display = immutablesContext ? "none" : "";
                 if (!ui.is(".k-tool")) {
                     var uiData = ui.data();
                     for (var key in uiData) {

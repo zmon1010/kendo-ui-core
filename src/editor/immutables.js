@@ -61,6 +61,18 @@
         }
     };
 
+    var immutablesContext = function(range) {
+        if (immutableParent(range.commonAncestorContainer)) {
+            return true;
+        } else if(immutableParent(range.startContainer) || immutableParent(range.endContainer)){
+            var editableNodes = RangeUtils.editableTextNodes(range);
+            if (editableNodes.length === 0){
+                return true;
+            }
+        }
+        return false;
+    };
+
     var Immutables = Class.extend({
         init: function (editor) {
             this.editor = editor;
@@ -215,6 +227,7 @@
     Immutables.immutable = immutable;
     Immutables.immutableParent = immutableParent;
     Immutables.expandImmutablesIn = expandImmutablesIn;
+    Immutables.immutablesContext = immutablesContext;
     Immutables.toolsToBeUpdated = toolsToBeUpdated;
 
     Editor.Immutables = Immutables;

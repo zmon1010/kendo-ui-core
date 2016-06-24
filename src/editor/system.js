@@ -958,17 +958,6 @@ var Clipboard = Class.extend({
         }
     },
 
-    cleanImmutableParent: function() {
-        var editor = this.editor;
-        var immutableParent = editor && editor._immutableParent;
-        if (immutableParent) {
-            try {
-                immutableParent.parentNode.removeChild(immutableParent);
-            } catch (e) { }
-            editor._immutableParent = null;
-        }
-    },
-
     splittableParent: function(block, node) {
         var parentNode, body;
 
@@ -1017,7 +1006,6 @@ var Clipboard = Class.extend({
         editor.focus();
         var range = editor.getRange();
         range.deleteContents();
-        this.cleanImmutableParent();
 
         if (range.startContainer == editor.document) {
             range.selectNodeContents(editor.body);
