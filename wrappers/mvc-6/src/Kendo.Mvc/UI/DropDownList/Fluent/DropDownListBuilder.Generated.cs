@@ -102,6 +102,26 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+        /// </summary>
+        /// <param name="value">The value for FooterTemplate</param>
+        public DropDownListBuilder FooterTemplate(string value)
+        {
+            Container.FooterTemplate = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+        /// </summary>
+        /// <param name="value">The ID of the template element for FooterTemplate</param>
+        public DropDownListBuilder FooterTemplateId(string templateId)
+        {
+            Container.FooterTemplateId = templateId;
+            return this;
+        }
+
+        /// <summary>
         /// The template used to render the groups. By default the widget displays only the value of the group.
         /// </summary>
         /// <param name="value">The value for GroupTemplate</param>

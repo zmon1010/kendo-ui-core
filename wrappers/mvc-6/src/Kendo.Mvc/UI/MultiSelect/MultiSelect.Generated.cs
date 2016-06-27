@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public bool? AutoClose { get; set; }
 
+        public bool? ClearButton { get; set; }
+
         public string DataTextField { get; set; }
 
         public string DataValueField { get; set; }
@@ -26,6 +28,10 @@ namespace Kendo.Mvc.UI
         public string FixedGroupTemplate { get; set; }
 
         public string FixedGroupTemplateId { get; set; }
+
+        public string FooterTemplate { get; set; }
+
+        public string FooterTemplateId { get; set; }
 
         public string GroupTemplate { get; set; }
 
@@ -80,6 +86,11 @@ namespace Kendo.Mvc.UI
                 settings["autoClose"] = AutoClose;
             }
 
+            if (ClearButton.HasValue)
+            {
+                settings["clearButton"] = ClearButton;
+            }
+
             if (DataTextField?.HasValue() == true)
             {
                 settings["dataTextField"] = DataTextField;
@@ -111,6 +122,19 @@ namespace Kendo.Mvc.UI
             else if (FixedGroupTemplate.HasValue())
             {
                 settings["fixedGroupTemplate"] = FixedGroupTemplate;
+            }
+
+            if (FooterTemplateId.HasValue())
+            {
+                settings["footerTemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, FooterTemplateId
+                    )
+                };
+            }
+            else if (FooterTemplate.HasValue())
+            {
+                settings["footerTemplate"] = FooterTemplate;
             }
 
             if (GroupTemplateId.HasValue())

@@ -29,6 +29,10 @@ namespace Kendo.Mvc.UI
 
         public string FixedGroupTemplateId { get; set; }
 
+        public string FooterTemplate { get; set; }
+
+        public string FooterTemplateId { get; set; }
+
         public string GroupTemplate { get; set; }
 
         public string GroupTemplateId { get; set; }
@@ -120,6 +124,19 @@ namespace Kendo.Mvc.UI
             else if (FixedGroupTemplate.HasValue())
             {
                 settings["fixedGroupTemplate"] = FixedGroupTemplate;
+            }
+
+            if (FooterTemplateId.HasValue())
+            {
+                settings["footerTemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, FooterTemplateId
+                    )
+                };
+            }
+            else if (FooterTemplate.HasValue())
+            {
+                settings["footerTemplate"] = FooterTemplate;
             }
 
             if (GroupTemplateId.HasValue())

@@ -10,6 +10,16 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
+        /// Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
+        /// </summary>
+        /// <param name="value">The value for ClearButton</param>
+        public AutoCompleteBuilder ClearButton(bool value)
+        {
+            Container.ClearButton = value;
+            return this;
+        }
+
+        /// <summary>
         /// The field of the data item used when searching for suggestions.  This is the text that will be displayed in the list of matched results.
         /// </summary>
         /// <param name="value">The value for DataTextField</param>
@@ -67,6 +77,26 @@ namespace Kendo.Mvc.UI.Fluent
         public AutoCompleteBuilder FixedGroupTemplateId(string templateId)
         {
             Container.FixedGroupTemplateId = templateId;
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+        /// </summary>
+        /// <param name="value">The value for FooterTemplate</param>
+        public AutoCompleteBuilder FooterTemplate(string value)
+        {
+            Container.FooterTemplate = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+        /// </summary>
+        /// <param name="value">The ID of the template element for FooterTemplate</param>
+        public AutoCompleteBuilder FooterTemplateId(string templateId)
+        {
+            Container.FooterTemplateId = templateId;
             return this;
         }
 
