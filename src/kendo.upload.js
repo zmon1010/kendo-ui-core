@@ -308,6 +308,9 @@ var __meta__ = { // jshint ignore:line
                 extension = data.fileNames[0].extension.substring(1);
                 $('.k-icon', defaultTemplate).addClass('k-i-' + extension);
             }
+            else if (data.fileNames.length > 1) {
+                $('.k-icon', defaultTemplate).addClass('k-i-files');
+            }
             return defaultTemplate;
         },
 
