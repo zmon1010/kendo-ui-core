@@ -352,11 +352,16 @@ var __meta__ = { // jshint ignore:line
                     .toggleClass("k-splitbar-static-" + orientation,
                         !draggable && !prevCollapsible && !nextCollapsible)
                     .html(
-                        catIconIf("k-collapse-prev", prevCollapsible && !prevCollapsed && !nextCollapsed) +
-                        catIconIf("k-expand-prev", prevCollapsible && prevCollapsed && !nextCollapsed) +
-                        catIconIf("k-resize-handle", draggable) +
-                        catIconIf("k-collapse-next", nextCollapsible && !nextCollapsed && !prevCollapsed) +
-                        catIconIf("k-expand-next", nextCollapsible && nextCollapsed && !prevCollapsed)
+                        catIconIf("k-collapse-prev k-i-sarrow-n", prevCollapsible && !prevCollapsed && !nextCollapsed && orientation == "vertical") +
+                        catIconIf("k-collapse-prev k-i-sarrow-w", prevCollapsible && !prevCollapsed && !nextCollapsed && orientation == "horizontal") +
+                        catIconIf("k-expand-prev k-i-sarrow-n", prevCollapsible && prevCollapsed && !nextCollapsed && orientation == "vertical") +
+                        catIconIf("k-expand-prev k-i-sarrow-w", prevCollapsible && prevCollapsed && !nextCollapsed && orientation == "horziontal") +
+                        catIconIf("k-resize-handle k-i-hbar", draggable && orientation == "vertical") +
+                        catIconIf("k-resize-handle k-i-vbar", draggable && orientation == "horizontal") +
+                        catIconIf("k-collapse-next k-i-arrow-s", nextCollapsible && !nextCollapsed && !prevCollapsed && orientation == "vertical") +
+                        catIconIf("k-collapse-next k-i-arrow-e", nextCollapsible && !nextCollapsed && !prevCollapsed && orientation == "horziontal") +
+                        catIconIf("k-expand-next k-i-arrow-s", nextCollapsible && nextCollapsed && !prevCollapsed && orientation == "vertical") +
+                        catIconIf("k-expand-next k-i-arrow-e", nextCollapsible && nextCollapsed && !prevCollapsed && orientation == "horziontal")
                     );
 
             if (!draggable && !prevCollapsible && !nextCollapsible) {
