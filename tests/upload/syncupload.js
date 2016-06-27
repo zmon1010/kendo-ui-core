@@ -74,7 +74,7 @@ test("list element is created for the selected file", function() {
 
 test("status icon is rendered always", function() {
     simulateFileSelect();
-    equal($(".k-upload-files li.k-file > .k-file-extension", uploadInstance.wrapper).length, 1);
+    equal($(".k-upload-files li.k-file span.k-file-extension", uploadInstance.wrapper).length, 1);
 });
 
 test("clicking remove should remove file entry", function() {

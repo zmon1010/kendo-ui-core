@@ -32,11 +32,18 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         equal($(".k-i-delete", uploadInstance.wrapper).length, 0);
     });
 
+    test("status icon wrapper is rendered", function() {
+        var uploadInstance = createUpload();
+        simulateFileSelect();
+
+        equal($(".k-upload-files .k-file span.k-file-extension-wrapper", uploadInstance.wrapper).length, 1);
+    });
+
     test("status icon is rendered", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
 
-        equal($(".k-upload-files .k-file > span.k-file-extension", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-files .k-file span.k-file-extension", uploadInstance.wrapper).length, 1);
     });
 
     test("remove icon is rendered upon success", function() {
@@ -183,8 +190,8 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
     test("uploading status text is rendered when upload starts", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
-
-        equal($(".k-upload-files .k-file > .k-icon", uploadInstance.wrapper).text(), "uploading");
+        
+        equal($(".k-upload-files .k-file span.k-file-state", uploadInstance.wrapper).text(), "uploading");
     });
 
     test("k-file-success is rendered upon success", function() {
@@ -197,8 +204,8 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
     test("uploaded status text is rendered upon success", function() {
         var uploadInstance = createUpload();
         simulateUpload();
-
-        equal($(".k-upload-files .k-file > .k-icon", uploadInstance.wrapper).text(), "uploaded");
+        
+        equal($(".k-upload-files .k-file span.k-file-state", uploadInstance.wrapper).text(), "uploaded");
     });
 
     test("k-file-error is rendered upon upload error", function() {
@@ -212,7 +219,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateUploadWithResponse(errorResponse);
 
-        equal($(".k-upload-files .k-file > .k-icon", uploadInstance.wrapper).text(), "failed");
+        equal($(".k-upload-files .k-file span.k-file-state", uploadInstance.wrapper).text(), "failed");
     });
 
     test("retry button is rendered upon upload error", function() {

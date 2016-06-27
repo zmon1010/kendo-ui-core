@@ -479,7 +479,10 @@ var __meta__ = { // jshint ignore:line
                 "<span class='k-file-validation-message'>" + that.localization[errors[0]] + "</span>";
             } else {
                 template += "<li class='k-file'><span class='k-progress'></span>" +
-                "<span class='k-file-extension-wrapper'><span class='k-file-extension'>" + file.extension.substring(1) + "</span></span>" +
+                "<span class='k-file-extension-wrapper'>" +
+                    "<span class='k-file-extension'>" + file.extension.substring(1) + "</span>" +
+                    "<span class='k-file-state'></span>" +    
+                "</span>" +
                 "<span class='k-file-name-size-wrapper'><span class='k-file-name' title='" + file.name + "'>" + file.name + "</span>" +
                 "<span class='k-file-size'>" + fileSize + "</span></span>";
             }
@@ -658,7 +661,7 @@ var __meta__ = { // jshint ignore:line
                 currentState = states[stateKey];
 
             if (currentState) {
-                $(".k-icon:not(.k-i-delete, .k-i-cancel, .k-i-retry)", fileEntry).text(currentState.text);
+                $("span.k-file-state", fileEntry).text(currentState.text);
             }
         },
 
