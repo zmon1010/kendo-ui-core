@@ -52,6 +52,15 @@ Help topic showing how cascading functionality works
     }
 
     /**
+    * Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
+    * @param boolean $value
+    * @return \Kendo\UI\ComboBox
+    */
+    public function clearButton($value) {
+        return $this->setProperty('clearButton', $value);
+    }
+
+    /**
     * Sets the data source of the ComboBox.
     * @param array|\Kendo\Data\DataSource $value
     * @return \Kendo\UI\ComboBox
@@ -126,6 +135,28 @@ The supported filter values are startswith, endswith and contains.
     */
     public function fixedGroupTemplate($value) {
         return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the footerTemplate option of the ComboBox.
+    * The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\ComboBox
+    */
+    public function footerTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('footerTemplate', $value);
+    }
+
+    /**
+    * Sets the footerTemplate option of the ComboBox.
+    * The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+    * @param string $value The template content.
+    * @return \Kendo\UI\ComboBox
+    */
+    public function footerTemplate($value) {
+        return $this->setProperty('footerTemplate', $value);
     }
 
     /**

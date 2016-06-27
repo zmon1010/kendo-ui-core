@@ -128,6 +128,28 @@ The supported filter values are startswith, endswith and contains.
     }
 
     /**
+    * Sets the footerTemplate option of the DropDownList.
+    * The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function footerTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('footerTemplate', $value);
+    }
+
+    /**
+    * Sets the footerTemplate option of the DropDownList.
+    * The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+    * @param string $value The template content.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function footerTemplate($value) {
+        return $this->setProperty('footerTemplate', $value);
+    }
+
+    /**
     * Sets the groupTemplate option of the DropDownList.
     * The template used to render the groups. By default the widget displays only the value of the group.
     * @param string $value The id of the element which represents the kendo template.
