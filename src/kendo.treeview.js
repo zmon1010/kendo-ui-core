@@ -263,11 +263,11 @@ var __meta__ = { // jshint ignore:line
                 .on("mouseleave" + NS, clickableItems, function () { $(this).removeClass(KSTATEHOVER); })
                 .on(CLICK + NS, clickableItems, proxy(that._click, that))
                 .on("dblclick" + NS, ".k-in:not(.k-state-disabled)", proxy(that._toggleButtonClick, that))
-                .on(CLICK + NS, ".k-plus,.k-minus", proxy(that._toggleButtonClick, that))
+                .on(CLICK + NS, ".k-i-expand,.k-i-collapse", proxy(that._toggleButtonClick, that))
                 .on("keydown" + NS, proxy(that._keydown, that))
                 .on("focus" + NS, proxy(that._focus, that))
                 .on("blur" + NS, proxy(that._blur, that))
-                .on("mousedown" + NS, ".k-in,.k-checkbox-wrapper :checkbox,.k-plus,.k-minus", proxy(that._mousedown, that))
+                .on("mousedown" + NS, ".k-in,.k-checkbox-wrapper :checkbox,.k-i-expand,.k-i-collapse", proxy(that._mousedown, that))
                 .on("change" + NS, ".k-checkbox-wrapper :checkbox", proxy(that._checkboxChange, that))
                 .on("click" + NS, ".k-checkbox-wrapper :checkbox", proxy(that._checkboxClick, that))
                 .on("click" + NS, ".k-request-retry", proxy(that._retryRequest, that))
@@ -521,14 +521,14 @@ var __meta__ = { // jshint ignore:line
                     var result = "k-icon";
 
                     if (item.expanded !== true) {
-                        result += " k-plus";
+                        result += " k-i-expand";
                     } else {
-                        result += " k-minus";
+                        result += " k-i-collapse";
                     }
 
-                    if (item.enabled === false) {
-                        result += "-disabled";
-                    }
+                    // if (item.enabled === false) {
+                    //     result += "-disabled";
+                    // }
 
                     return result;
                 },
@@ -576,7 +576,7 @@ var __meta__ = { // jshint ignore:line
                     "# var url = " + fieldAccessor("url") + "(item); #" +
                     "<div class='#= r.cssClass(data.group, item) #'>" +
                         "# if (item.hasChildren) { #" +
-                            "<span class='#= r.toggleButtonClass(item) #' role='presentation' />" +
+                            "<span class='#= r.toggleButtonClass(item) #'/>" +
                         "# } #" +
 
                         "# if (data.treeview.checkboxes) { #" +
@@ -607,7 +607,7 @@ var __meta__ = { // jshint ignore:line
                     "</li>"
                 ),
                 loading: templateNoWith(
-                    "<div class='k-icon k-loading' /> #: data.messages.loading #"
+                    "<div class='k-icon k-i-loading' /> #: data.messages.loading #"
                 ),
                 retry: templateNoWith(
                     "#: data.messages.requestFailed # " +
@@ -907,6 +907,10 @@ var __meta__ = { // jshint ignore:line
 
         _mousedown: function(e) {
             var node = $(e.currentTarget).closest(NODE);
+
+            if (node.is("[aria-disabled='true']")) {
+                return;
+            }
 
             this._clickTarget = node;
             this.current(node);
@@ -1273,7 +1277,7 @@ var __meta__ = { // jshint ignore:line
 
             // toggle button
             if (group.length || node.attr("data-hasChildren") == "true") {
-                wrapper.children(".k-icon").removeClass("k-plus k-minus k-plus-disabled k-minus-disabled")
+                wrapper.children(".k-icon").removeClass("k-i-expand k-i-collapse")
                     .addClass(templates.toggleButtonClass(nodeData));
 
                 group.addClass("k-group");
@@ -1773,7 +1777,11 @@ var __meta__ = { // jshint ignore:line
         toggle: function (node, expand) {
             node = $(node);
 
-            if (!nodeIcon(node).is(".k-minus,.k-plus,.k-minus-disabled,.k-plus-disabled")) {
+            if (node.is("[aria-disabled='true']")) {
+                return;
+            }
+
+            if (!nodeIcon(node).is(".k-i-expand, .k-i-collapse")) {
                 return;
             }
 
@@ -1843,7 +1851,7 @@ var __meta__ = { // jshint ignore:line
                     element.empty();
                 }
             } else {
-                nodeIcon(node).toggleClass("k-loading", showProgress).removeClass("k-i-refresh");
+                nodeIcon(node).toggleClass("k-i-loading", showProgress).removeClass("k-i-refresh");
             }
         },
 
