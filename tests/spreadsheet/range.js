@@ -764,6 +764,9 @@
         test("-1,234$", -1234, '#,#"$"');
         test("-1,234$", -1234, '#,#"$"');
         test("-1234.00$", -1234, '#,#.00"$"');
+
+        // this one should be left as is (string)
+        test("123-456", "123-456");
     });
 
     test("range.input handles '=foo+", function(){

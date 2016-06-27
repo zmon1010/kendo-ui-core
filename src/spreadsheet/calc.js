@@ -924,6 +924,10 @@
         }
     }
 
+    function isWhitespace(ch) {
+        return " \t\n\xa0\u200b".indexOf(ch) >= 0;
+    }
+
     function RawTokenStream(input, options) {
         var tokens = [], index = 0;
         var readWhile = input.readWhile;
@@ -955,10 +959,6 @@
 
         function isPunc(ch) {
             return "!;(){}[]".indexOf(ch) >= 0;
-        }
-
-        function isWhitespace(ch) {
-            return " \t\n\xa0\u200b".indexOf(ch) >= 0;
         }
 
         function readNumber() {
@@ -1378,52 +1378,82 @@
     // Support numeric formats with thousands separator and/or currency symbol, like `1,234,567.00`,
     // `$1234`, `123,456.78 $` etc.  I apologize for this code.
     registerFormatParser(function(input){
-        var m;
+        var m, n;
         var culture = kendo.culture();
         var comma = culture.numberFormat[","];
         var dot = culture.numberFormat["."];
         var currency = culture.numberFormat.currency.symbol;
-        var rx = getNumberRegexp(currency, comma, dot);
+        var rxnum = getNumberRegexp(comma, dot);
+        var rxcur = new RegExp("^\\s*\\" + currency + "\\s*");
         var sign = 1;
-        if (/-/.test(input)) {
-            input = input.replace(/-/, "");
+        var format = "";
+        var suffix = "";
+        var has_currency = false;
+
+        input = InputStream(input.replace(/^\s+|\s+$/g, ""));
+
+        // has minus before currency?
+        if (input.skip(/^-\s*/)) {
             sign = -1;
         }
-        if ((m = rx.exec(input))) {
-            var value = m[2]
-                .replace(/\s+/g, "")
-                .replace(new RegExp("\\" + comma, "g"), "")
-                .replace(dot, "."); // depending on culture, dot might be ','
-            var format = "#";
-            if (m[1] || m[3] || m[5]) {
-                format += ",#";
-            }
-            if (m[4]) {
-                format += "." + repeat("0", m[1] || m[5] ? 2 : m[4].length - 1);
-            }
-            if (m[1]) {
-                format = '"' + m[1] + '"' + format;
-            }
-            if (m[5]) {
-                format = format + '"' + m[5] + '"';
-            }
-            return {
-                type   : "number",
-                format : format == "#" ? null : format,
-                value  : sign * parseFloat(value)
-            };
+
+        // has currency before number?
+        if ((m = input.skip(rxcur))) {
+            has_currency = true;
+            format += '"' + m[0] + '"';
         }
+
+        // has minus after currency?
+        if (input.skip(/^-\s*/)) {
+            if (sign < 0) {
+                return null;    // not a number
+            }
+            sign = -1;
+        }
+
+        // read the number itself
+        if (!(n = input.skip(rxnum))) {
+            return null;        // not a number
+        }
+        format += "#";
+
+        // has currency after number?
+        if ((m = input.skip(rxcur))) {
+            if (has_currency) {
+                return null;    // either before or after, not both.
+            }
+            has_currency = true;
+            suffix = '"' + m[0] + '"';
+        }
+
+        if (!input.eof()) {
+            return null;        // should anything else follow, not a number
+        }
+
+        if (n[2] || has_currency) {
+            format += ",#";
+        }
+        if (n[3]) {
+            format += "." + repeat("0", n[3].length - 1);
+        }
+        var value = n[0]
+            .replace(new RegExp("\\" + comma, "g"), "")
+            .replace(new RegExp("\\" + dot, "g"), ".");
+
+        return {
+            type: "number",
+            format: format + suffix,
+            value: sign * parseFloat(value)
+        };
     });
 
     var NUMBER_FORMAT_RX = {};
-    function getNumberRegexp(currency, comma, dot) {
-        var id = currency + comma + dot;
+    function getNumberRegexp(comma, dot) {
+        var id = comma + dot;
         var rx = NUMBER_FORMAT_RX[id];
         if (!rx) {
-            rx = "^\\s*(CUR\\s*)?(\\d+(COM\\d{3})*(DOT\\d+)?)(\\s*CUR)?\\s*$";
-            rx = rx.replace(/CUR/g, "\\" + currency)
-                .   replace(/DOT/g, "\\" + dot)
-                .   replace(/COM/g, "\\" + comma);
+            rx = "^(\\d+(COM\\d{3})*(DOT\\d+)?)";
+            rx = rx.replace(/DOT/g, "\\" + dot).replace(/COM/g, "\\" + comma);
             rx = new RegExp(rx);
             NUMBER_FORMAT_RX[id] = rx;
         }
