@@ -94,6 +94,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("animation", value);
     }
 
+    public boolean getClearButton() {
+        return (Boolean)getProperty("clearButton");
+    }
+
+    public void setClearButton(boolean value) {
+        setProperty("clearButton", value);
+    }
+
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
     }
@@ -136,6 +144,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
 
     public void setFixedGroupTemplate(java.lang.String value) {
         setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getFooterTemplate() {
+        return (java.lang.String)getProperty("footerTemplate");
+    }
+
+    public void setFooterTemplate(java.lang.String value) {
+        setProperty("footerTemplate", value);
     }
 
     public java.lang.String getGroupTemplate() {
@@ -202,11 +218,11 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("popup", value);
     }
 
-    public java.lang.String getSeparator() {
-        return (java.lang.String)getProperty("separator");
+    public java.lang.Object getSeparator() {
+        return (java.lang.Object)getProperty("separator");
     }
 
-    public void setSeparator(java.lang.String value) {
+    public void setSeparator(java.lang.Object value) {
         setProperty("separator", value);
     }
 

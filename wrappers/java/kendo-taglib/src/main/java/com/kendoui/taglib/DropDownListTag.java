@@ -178,6 +178,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("fixedGroupTemplate", value);
     }
 
+    public java.lang.String getFooterTemplate() {
+        return (java.lang.String)getProperty("footerTemplate");
+    }
+
+    public void setFooterTemplate(java.lang.String value) {
+        setProperty("footerTemplate", value);
+    }
+
     public java.lang.String getGroupTemplate() {
         return (java.lang.String)getProperty("groupTemplate");
     }

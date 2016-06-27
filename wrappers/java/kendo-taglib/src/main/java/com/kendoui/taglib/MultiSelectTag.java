@@ -113,6 +113,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setProperty("autoClose", value);
     }
 
+    public boolean getClearButton() {
+        return (Boolean)getProperty("clearButton");
+    }
+
+    public void setClearButton(boolean value) {
+        setProperty("clearButton", value);
+    }
+
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
     }
@@ -163,6 +171,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setFixedGroupTemplate(java.lang.String value) {
         setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getFooterTemplate() {
+        return (java.lang.String)getProperty("footerTemplate");
+    }
+
+    public void setFooterTemplate(java.lang.String value) {
+        setProperty("footerTemplate", value);
     }
 
     public java.lang.String getGroupTemplate() {
