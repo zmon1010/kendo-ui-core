@@ -5,6 +5,7 @@ using Kendo.Mvc.Examples.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace Kendo.Mvc.Examples
 {
@@ -33,7 +34,9 @@ namespace Kendo.Mvc.Examples
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             // Add MVC services to the services container.
-            services.AddMvc();
+            services
+                .AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             // Add Kendo UI services to the services container
             services.AddKendo();
