@@ -87,7 +87,6 @@ html .k-upload
 }
 
 .k-dropzone .k-upload-status-total {
-    color: red !important;
     top: 50%;
     transform: translateY(-50%);
 }
@@ -104,12 +103,9 @@ html .k-upload
 }
 
 .k-upload .k-upload-selected {
-        border-left-width: 1px;
+    border-left-width: 1px;
     border-left-style: solid;
-    border-left-color: #d5d5d5;
     margin-left: -1px;
-
-    color: #ff6358;
 }
 
 .k-upload .k-fail
@@ -139,23 +135,21 @@ html .k-upload
 }
 
 .k-file-extension-wrapper,
-.k-file-name-size-wrapper {
+.k-file-name-size-wrapper,
+.k-multiple-files-extension-wrapper {
     display: inline-block;
-    //border: 1px solid purple;
 }
 
-.k-file-extension-wrapper {
+.k-file-extension-wrapper,
+.k-multiple-files-extension-wrapper {
     position: relative;
     width: 28px;
     height: 38px;
     border-width: 2px;
     border-style: solid;
-    border-color: #d6d6d6;
     vertical-align: top;
-
     font-size: .57em;
     text-transform: uppercase;
-    color: #d6d6d6;
 }
 
 .k-file-state {
@@ -167,23 +161,32 @@ html .k-upload
     margin-left: 1em;
 }
 
-.k-file-extension-wrapper:before {
+.k-file-extension-wrapper:before,
+.k-multiple-files-extension-wrapper:before,
+.k-multiple-files-extension-wrapper:after {
     position: absolute;
-    top: -1px;
-    right: -1px;
     content: "";
     display: inline-block;
+    border-style: solid;
+}
+
+.k-file-extension-wrapper:before,
+.k-multiple-files-extension-wrapper:before {    
+    top: -1px;
+    right: -1px;    
     width: 0;
     height: 0;
     border-width: 6px;
-    border-style: solid;
     margin-top: -1px;
     margin-right: -1px;
+}
 
-    background: #fff;
-    border-color: transparent;
-    border-bottom-color: #d6d6d6;
-    border-left-color: #d6d6d6;
+.k-multiple-files-extension-wrapper:after {
+    top: -6px;
+    left: -6px;
+    width: 15px;
+    height: 35px;
+    border-width: 2px 0 0 2px;   
 }
 
 .k-file-extension {
@@ -199,27 +202,21 @@ html .k-upload
     display: block;   
 }
 
-.k-file-name
-{
+.k-file-name {
     position: relative;
     min-width: 10em;
     max-width: 16.667em;
     vertical-align: middle;
-    //margin-left: 1em;
     line-height: 1.2em;
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.k-file-size {
+.k-file-size,
+.k-file-information {
     font-size: .78em;
     line-height: 1.5em;
-    //margin-left: 1.273em;
-
-    color: #909090;
-
 }
 
 .k-upload-status
