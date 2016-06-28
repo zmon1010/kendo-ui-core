@@ -110,6 +110,18 @@
             set;
         }
 
+        public string FooterTemplate
+        {
+            get;
+            set;
+        }
+
+        public string FooterTemplateId
+        {
+            get;
+            set;
+        }
+
         public int? MinLength
         {
             get;
@@ -129,11 +141,11 @@
         }
 
         public VirtualSettings VirtualSettings
-        { 
-            get; 
-            set; 
+        {
+            get;
+            set;
         }
-       
+
         public IUrlGenerator UrlGenerator
         {
             get;
@@ -223,6 +235,15 @@
             else if (!string.IsNullOrEmpty(HeaderTemplate))
             {
                 options["headerTemplate"] = HeaderTemplate;
+            }
+
+            if (!string.IsNullOrEmpty(FooterTemplateId))
+            {
+                options["footerTemplate"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, FooterTemplateId) };
+            }
+            else if (!string.IsNullOrEmpty(FooterTemplate))
+            {
+                options["footerTemplate"] = FooterTemplate;
             }
 
             if (MinLength != null)
