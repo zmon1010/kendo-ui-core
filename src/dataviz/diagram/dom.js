@@ -125,13 +125,13 @@
         var defaultButtons = {
             cancel: {
                 text: "Cancel",
-                imageClass: "k-cancel",
+                imageClass: "k-i-cancel",
                 className: "k-diagram-cancel",
                 iconClass: "k-icon"
             },
             update: {
                 text: "Update",
-                imageClass: "k-update",
+                imageClass: "k-i-update",
                 className: "k-diagram-update",
                 iconClass: "k-icon"
             }
