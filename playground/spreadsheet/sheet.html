@@ -20,12 +20,24 @@
      .k-spreadsheet-name-editor-wrapper {
        padding: 0 5px;
        width: 7em;
+       position: relative;
      }
      .k-spreadsheet-name-editor input {
        width: 100%;
        box-sizing: border-box;
        border: 1px solid red;
        padding: 2px 5px;
+     }
+     .k-spreadsheet-name-editor .k-icon {
+       position: absolute;
+       right: 5px;
+       top: 50%;
+       transform: translateY(-50%);
+       opacity: 0.7;
+       cursor: pointer;
+     }
+     .k-spreadsheet-name-editor .k-icon:hover {
+       opacity: 1;
      }
     </style>
   </head>

@@ -664,6 +664,7 @@
 
         workbook: function(workbook) {
             this._workbook = workbook;
+            this.nameEditor._workbook = workbook;
         },
 
         sheet: function(sheet) {

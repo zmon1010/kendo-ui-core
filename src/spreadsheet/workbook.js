@@ -444,6 +444,12 @@
             return null;
         },
 
+        forEachName: function(func) {
+            for (var i in this._names) {
+                func(i, this._names[i]);
+            }
+        },
+
         adjustNames: function(affectedSheet, forRow, start, delta) {
             affectedSheet = affectedSheet.toLowerCase();
             Object.keys(this._names).forEach(function(name){
