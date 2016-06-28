@@ -179,6 +179,28 @@ all data items which begin with the current widget value are displayed in the su
     }
 
     /**
+    * Sets the noDataTemplate option of the AutoComplete.
+    * Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function noDataTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('noDataTemplate', $value);
+    }
+
+    /**
+    * Sets the noDataTemplate option of the AutoComplete.
+    * Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+    * @param string $value The template content.
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function noDataTemplate($value) {
+        return $this->setProperty('noDataTemplate', $value);
+    }
+
+    /**
     * The hint displayed by the widget when it is empty. Not set by default.
     * @param string $value
     * @return \Kendo\UI\AutoComplete

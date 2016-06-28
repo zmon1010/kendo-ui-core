@@ -208,6 +208,28 @@ The supported filter values are startswith, endswith and contains.
     }
 
     /**
+    * Sets the noDataTemplate option of the DropDownList.
+    * Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function noDataTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('noDataTemplate', $value);
+    }
+
+    /**
+    * Sets the noDataTemplate option of the DropDownList.
+    * Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+    * @param string $value The template content.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function noDataTemplate($value) {
+        return $this->setProperty('noDataTemplate', $value);
+    }
+
+    /**
     * The options that will be used for the popup initialization. For more details about the available options
 refer to Popup documentation.
     * @param \Kendo\UI\DropDownListPopup|array $value
