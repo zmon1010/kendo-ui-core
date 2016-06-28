@@ -202,6 +202,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("minLength", value);
     }
 
+    public java.lang.String getNoDataTemplate() {
+        return (java.lang.String)getProperty("noDataTemplate");
+    }
+
+    public void setNoDataTemplate(java.lang.String value) {
+        setProperty("noDataTemplate", value);
+    }
+
     public java.lang.String getPlaceholder() {
         return (java.lang.String)getProperty("placeholder");
     }

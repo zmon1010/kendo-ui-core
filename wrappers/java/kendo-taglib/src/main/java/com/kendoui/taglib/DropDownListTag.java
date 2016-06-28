@@ -234,6 +234,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("minLength", value);
     }
 
+    public java.lang.String getNoDataTemplate() {
+        return (java.lang.String)getProperty("noDataTemplate");
+    }
+
+    public void setNoDataTemplate(java.lang.String value) {
+        setProperty("noDataTemplate", value);
+    }
+
     public java.lang.Object getOptionLabel() {
         return (java.lang.Object)getProperty("optionLabel");
     }

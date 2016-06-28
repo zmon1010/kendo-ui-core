@@ -245,6 +245,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setProperty("minLength", value);
     }
 
+    public java.lang.String getNoDataTemplate() {
+        return (java.lang.String)getProperty("noDataTemplate");
+    }
+
+    public void setNoDataTemplate(java.lang.String value) {
+        setProperty("noDataTemplate", value);
+    }
+
     public java.lang.String getPlaceholder() {
         return (java.lang.String)getProperty("placeholder");
     }
