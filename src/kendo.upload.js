@@ -474,9 +474,14 @@ var __meta__ = { // jshint ignore:line
 
             if(errors && errors.length > 0) {
                 template += "<li class='k-file k-file-invalid'><span class='k-progress'></span>" +
-                "<span class='k-icon k-fileErrorIcon'></span>" +
-                "<span class='k-file-name k-fileError' title='" + file.name + "'>" + file.name + "</span>" +
-                "<span class='k-file-validation-message'>" + that.localization[errors[0]] + "</span>";
+                "<span class='k-file-invalid-extension-wrapper'>" +
+                    "<span class='k-file-invalid-icon'>!</span>" +
+                    "<span class='k-file-state'></span>" +
+                "</span>" +
+                "<span class='k-file-name-size-wrapper'>" +
+                    "<span class='k-file-name k-file-name-invalid' title='" + file.name + "'>" + file.name + "</span>" +
+                    "<span class='k-file-validation-message'>" + that.localization[errors[0]] + "</span>" +
+                "</span>";
             } else {
                 template += "<li class='k-file'><span class='k-progress'></span>" +
                 "<span class='k-file-extension-wrapper'>" +
@@ -502,12 +507,11 @@ var __meta__ = { // jshint ignore:line
 
             if(filesHaveValidationErrors) {
                 template += "<li class='k-file k-file-invalid'><span class='k-progress'></span>" +
-                    "<span class='k-multiple-files-extension-wrapper'>";
-                    //"<span class='k-icon k-multipleFilesErrorIcon'></span>";
+                    "<span class='k-multiple-files-invalid-extension-wrapper'>" +
+                    "<span class='k-file-invalid-icon'>!</span>";
             } else {
                 template += "<li class='k-file'><span class='k-progress'></span>" +
                     "<span class='k-multiple-files-extension-wrapper'>";
-                    //"<span class='k-icon k-multipleFilesIcon'></span>";
             }
 
             template += "<span class='k-file-state'></span></span>";
@@ -524,7 +528,7 @@ var __meta__ = { // jshint ignore:line
             for(i = 0; i < files.length; i++) {
                 currentFile = files[i];
                 if(currentFile[VALIDATIONERRORS] && currentFile[VALIDATIONERRORS].length > 0) {
-                    template += "<span class='k-file-name k-fileError' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
+                    template += "<span class='k-file-name k-file-name-invalid' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
                 } else {
                     template += "<span class='k-file-name' title='" + currentFile.name + "'>" + currentFile.name + "</span>";
                 }
