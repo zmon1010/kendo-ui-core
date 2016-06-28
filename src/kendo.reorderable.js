@@ -21,9 +21,9 @@ var __meta__ = { // jshint ignore:line
         hint = $(hint);
 
         if (denied) {
-            hint.find(".k-drag-status").removeClass("k-add").addClass("k-denied");
+            hint.find(".k-drag-status").removeClass("k-i-add").addClass("k-i-denied");
         } else {
-            hint.find(".k-drag-status").removeClass("k-denied").addClass("k-add");
+            hint.find(".k-drag-status").removeClass("k-i-denied").addClass("k-i-add");
         }
     }
 
@@ -125,7 +125,7 @@ var __meta__ = { // jshint ignore:line
                         that._elements = that.element.find(that.draggable.options.filter);
                     },
                     drag: function(e) {
-                        if (!that._dropTarget || this.hint.find(".k-drag-status").hasClass("k-denied")) {
+                        if (!that._dropTarget || this.hint.find(".k-drag-status").hasClass("k-i-denied")) {
                             return;
                         }
 
