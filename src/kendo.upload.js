@@ -502,11 +502,15 @@ var __meta__ = { // jshint ignore:line
 
             if(filesHaveValidationErrors) {
                 template += "<li class='k-file k-file-invalid'><span class='k-progress'></span>" +
-                    "<span class='k-icon k-multipleFilesErrorIcon'></span>";
+                    "<span class='k-multiple-files-extension-wrapper'>";
+                    //"<span class='k-icon k-multipleFilesErrorIcon'></span>";
             } else {
                 template += "<li class='k-file'><span class='k-progress'></span>" +
-                    "<span class='k-icon k-multipleFilesIcon'></span>";
+                    "<span class='k-multiple-files-extension-wrapper'>";
+                    //"<span class='k-icon k-multipleFilesIcon'></span>";
             }
+
+            template += "<span class='k-file-state'></span></span>";
 
             files.sort(function(a, b){
                 if(a[VALIDATIONERRORS]) { return -1; }
@@ -516,6 +520,7 @@ var __meta__ = { // jshint ignore:line
                 return 0;
             });
 
+            template += "<span class='k-file-name-size-wrapper'>";
             for(i = 0; i < files.length; i++) {
                 currentFile = files[i];
                 if(currentFile[VALIDATIONERRORS] && currentFile[VALIDATIONERRORS].length > 0) {
@@ -531,7 +536,7 @@ var __meta__ = { // jshint ignore:line
                 template += "<span class='k-file-information'>Total: " + files.length + " files, " + totalFileSize + "</span>";
             }
 
-            template += "<strong class='k-upload-status'></strong>";
+            template += "</span><strong class='k-upload-status'></strong>";
 
             return $(template);
         },
