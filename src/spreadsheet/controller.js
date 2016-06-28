@@ -1052,14 +1052,14 @@
                 return;
             }
 
-            ref = sheet.selection()._ref.clone().simplify().setSheet(sheet.name());
+            ref = sheet.selection()._ref.clone().simplify().setSheet(sheet.name(), true);
 
             // XXX: should we check if a name is already defined for this range, and update it instead?
             // Excel just adds a new one, and provides a more complete Name Manager dialog.
             //var def = workbook.nameForRef(ref, sheet.name());
 
             // just define new name
-            workbook.defineName(name, ref);
+            workbook.defineName(new kendo.spreadsheet.NameRef(name), ref);
 
             this.clipboardElement.focus();
         },

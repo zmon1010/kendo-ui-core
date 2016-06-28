@@ -311,6 +311,7 @@
             }
             this._sheets = [];
             this._sheetsSearchCache = {};
+            this._names = {};
         },
 
         fromJSON: function(json) {
@@ -418,9 +419,10 @@
                 var def = this._names[name];
                 var val = def.value;
                 if (val instanceof kendo.spreadsheet.Ref) {
-                    if (sheet == val.sheet.toLowerCase()) {
+                    if ((val.sheet && sheet == val.sheet.toLowerCase()) ||
+                        (!val.sheet && !sheet)) {
                         if (val + "" == str) {
-                            return { name: def.name, def: def };
+                            return def;
                         }
                     }
                 }
@@ -428,8 +430,14 @@
             return { name: str };
         },
 
-        defineName: function(name, value, hidden) {
-            this._names[name.toLowerCase()] = { value: value, hidden: hidden, name: name };
+        defineName: function(ref, value, hidden) {
+            var name = ref + "";
+            this._names[name.toLowerCase()] = {
+                value  : value,
+                hidden : hidden,
+                name   : name,
+                ref    : ref
+            };
         },
 
         undefineName: function(name) {
@@ -453,11 +461,14 @@
         adjustNames: function(affectedSheet, forRow, start, delta) {
             affectedSheet = affectedSheet.toLowerCase();
             Object.keys(this._names).forEach(function(name){
-                var ref = this.nameValue(name);
-                if (ref instanceof kendo.spreadsheet.Ref &&
-                    ref.sheet.toLowerCase() == affectedSheet) {
-                    ref = ref.adjust(null, null, null, null, forRow, start, delta);
-                    this.defineName(name, ref);
+                var def = this._names[name];
+                var x = def.value;
+                if (x instanceof kendo.spreadsheet.Ref &&
+                    x.sheet.toLowerCase() == affectedSheet) {
+                    def.value = x.adjust(null, null, null, null, forRow, start, delta);
+                }
+                else if (x instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                    x.adjust(affectedSheet, forRow ? "row" : "col", start, delta);
                 }
             }, this);
         },

@@ -93,8 +93,21 @@
             text: function(text) {
                 var attrs = this.is(SEL_DEFINED_NAME);
                 if (attrs && !(bool(attrs["function"]) || bool(attrs.vbProcedure))) {
-                    var ref = parseReference(text, true);
-                    workbook.defineName(attrs.name, ref, bool(attrs.hidden));
+                    var localSheetId = attrs.localSheetId;
+                    var sheet = null;
+                    if (localSheetId != null) {
+                        sheet = items[localSheetId].options.name;
+                    }
+                    var exp = kendo.spreadsheet.calc.parseFormula(sheet, 0, 0, text);
+                    var value;
+                    if (exp.ast instanceof kendo.spreadsheet.Ref) {
+                        value = exp.ast;
+                    } else {
+                        value = kendo.spreadsheet.calc.compile(exp);
+                    }
+                    var nameref = new kendo.spreadsheet.NameRef(attrs.name)
+                        .setSheet(sheet, !!sheet);
+                    workbook.defineName(nameref, value, bool(attrs.hidden));
                 }
             }
         });

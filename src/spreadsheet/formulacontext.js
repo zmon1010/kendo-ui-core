@@ -19,7 +19,7 @@
             this.workbook = workbook;
         },
 
-        getRefCells: function(ref, hiddenInfo) {
+        getRefCells: function(ref, hiddenInfo, fsheet, frow, fcol) {
             var sheet, formula, value, i;
             if (ref instanceof CellRef) {
                 sheet = this.workbook.sheetByName(ref.sheet);
@@ -115,28 +115,40 @@
             if (ref instanceof UnionRef) {
                 var a = [];
                 for (i = 0; i < ref.refs.length; ++i) {
-                    a = a.concat(this.getRefCells(ref.refs[i], hiddenInfo));
+                    a = a.concat(this.getRefCells(ref.refs[i], hiddenInfo, fsheet, frow, fcol));
                 }
                 return a;
             }
             if (ref instanceof NameRef) {
-                var val = this.workbook.nameValue(ref.name);
+                var val;
+                if (ref.hasSheet()) {
+                    // qualified name
+                    val = this.workbook.nameValue(ref.print());
+                } else {
+                    // try local name
+                    val = this.workbook.nameValue(fsheet + "!" + ref.name);
+                    if (val == null) {
+                        // try global name
+                        val = this.workbook.nameValue(ref.name);
+                    }
+                }
                 if (val instanceof Ref) {
-                    return this.getRefCells(val, hiddenInfo);
+                    val = val.absolute(frow, fcol);
+                    return this.getRefCells(val, hiddenInfo, fsheet, frow, fcol);
                 }
                 return [{
-                    value: new kendo.spreadsheet.calc.runtime.CalcError("NAME")
+                    value: val == null ? new kendo.spreadsheet.calc.runtime.CalcError("NAME") : val
                 }];
             }
             return [];
         },
 
-        getData: function(ref) {
+        getData: function(ref, fsheet, frow, fcol) {
             var single = ref instanceof CellRef;
             if (ref instanceof NameRef) {
                 single = this.workbook.nameValue(ref.name) instanceof CellRef;
             }
-            var data = this.getRefCells(ref).map(function(cell){
+            var data = this.getRefCells(ref, false, fsheet, frow, fcol).map(function(cell){
                 return cell.value;
             });
             return single ? data[0] : data;

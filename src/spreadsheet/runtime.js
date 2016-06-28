@@ -236,11 +236,13 @@
         },
 
         getRefCells: function(refs, hiddenInfo) {
-            return this.ss.getRefCells(refs, hiddenInfo);
+            var f = this.formula;
+            return this.ss.getRefCells(refs, hiddenInfo, f.sheet, f.row, f.col);
         },
 
         getRefData: function(ref) {
-            return this.ss.getData(ref);
+            var f = this.formula;
+            return this.ss.getData(ref, f.sheet, f.row, f.col);
         },
 
         workbook: function() {
