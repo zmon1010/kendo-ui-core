@@ -525,6 +525,10 @@
         equal(exp.ast.print(0, 0), "'The Sheet':Man!$C$3:$D$4");
         var exp = calc.parse(Sheet1, 0, 0, "='The Sheet':'Man'!R[3]C[3]:R5C5");
         equal(exp.ast.print(0, 0), "'The Sheet':Man!D4:$E$5");
+        var exp = calc.parse(Sheet1, 0, 0, "=RC2");
+        equal(exp.ast.print(0, 0), "$B1");
+        var exp = calc.parse(Sheet1, 0, 0, "=R2C");
+        equal(exp.ast.print(0, 0), "A$2");
     });
 
     test("parseReference", function(){

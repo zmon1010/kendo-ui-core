@@ -988,6 +988,9 @@
         }
 
         function getRC(a, b, c) {
+            if (!a && !b && !c) {
+                return 0;
+            }
             if ((!a && !c) || (a && c)) {
                 var negative = a && /-$/.test(a);
                 var num = parseInt(b, 10);
@@ -1002,7 +1005,7 @@
         }
 
         function readSymbol() {
-            var m = input.lookingAt(/^R(\[-?)?([0-9]+)(\])?C(\[-?)?([0-9]+)(\])?/i);
+            var m = input.lookingAt(/^R(\[-?)?([0-9]+)?(\])?C(\[-?)?([0-9]+)?(\])?/i);
             if (m) {
                 var row = getRC(m[1], m[2], m[3]);
                 var col = getRC(m[4], m[5], m[6]);
@@ -1012,7 +1015,10 @@
                         type: "rc",
                         row: row,
                         col: col,
-                        rel: (m[4] ? 1 : 0) | (m[1] ? 2 : 0)
+                        rel: ((m[4] || !(m[4] || m[5] || m[6]) ? 1 : 0) // col
+                              |
+                              (m[1] || !(m[1] || m[2] || m[3]) ? 2 : 0) // row
+                             )
                     };
                 }
             }
