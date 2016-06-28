@@ -47,6 +47,10 @@ namespace Kendo.Mvc.UI
 
         public double? MinLength { get; set; }
 
+        public string NoDataTemplate { get; set; }
+
+        public string NoDataTemplateId { get; set; }
+
         public string Placeholder { get; set; }
 
         public ComboBoxPopupSettings Popup { get; } = new ComboBoxPopupSettings();
@@ -173,6 +177,19 @@ namespace Kendo.Mvc.UI
             if (MinLength.HasValue)
             {
                 settings["minLength"] = MinLength;
+            }
+
+            if (NoDataTemplateId.HasValue())
+            {
+                settings["noDataTemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, NoDataTemplateId
+                    )
+                };
+            }
+            else if (NoDataTemplate.HasValue())
+            {
+                settings["noDataTemplate"] = NoDataTemplate;
             }
 
             if (Placeholder?.HasValue() == true)

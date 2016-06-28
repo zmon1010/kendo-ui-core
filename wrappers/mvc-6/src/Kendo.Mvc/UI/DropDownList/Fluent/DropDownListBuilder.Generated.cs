@@ -172,6 +172,26 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+        /// </summary>
+        /// <param name="value">The value for NoDataTemplate</param>
+        public DropDownListBuilder NoDataTemplate(string value)
+        {
+            Container.NoDataTemplate = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+        /// </summary>
+        /// <param name="value">The ID of the template element for NoDataTemplate</param>
+        public DropDownListBuilder NoDataTemplateId(string templateId)
+        {
+            Container.NoDataTemplateId = templateId;
+            return this;
+        }
+
+        /// <summary>
         /// The options that will be used for the popup initialization. For more details about the available options
 		/// refer to Popup documentation.
         /// </summary>

@@ -531,7 +531,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The chart series outliers configuration.
+        /// The chart series outliers configuration. Applies to mild outliers. Also check series.extremes.
         /// </summary>
         /// <param name="configurator">The configurator for the outliers setting.</param>
         public ChartSeriesBuilder<T> Outliers(Action<ChartSeriesOutliersSettingsBuilder<T>> configurator)
@@ -544,7 +544,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The chart series extremes configuration.
+        /// The chart series extremes configuration. Applies to extreme outliers. Also check series.outliers.
         /// </summary>
         /// <param name="configurator">The configurator for the extremes setting.</param>
         public ChartSeriesBuilder<T> Extremes(Action<ChartSeriesExtremesSettingsBuilder<T>> configurator)

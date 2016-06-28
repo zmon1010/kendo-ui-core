@@ -191,6 +191,26 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+        /// </summary>
+        /// <param name="value">The value for NoDataTemplate</param>
+        public MultiSelectBuilder NoDataTemplate(string value)
+        {
+            Container.NoDataTemplate = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+        /// </summary>
+        /// <param name="value">The ID of the template element for NoDataTemplate</param>
+        public MultiSelectBuilder NoDataTemplateId(string templateId)
+        {
+            Container.NoDataTemplateId = templateId;
+            return this;
+        }
+
+        /// <summary>
         /// The hint displayed by the widget when it is empty. Not set by default.
         /// </summary>
         /// <param name="value">The value for Placeholder</param>
