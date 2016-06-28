@@ -1312,6 +1312,22 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _scrollToDate: function (date) {
+            var viewStart = this.start;
+            var viewEnd = this.end;
+            var offset;
+
+            if (date > viewStart && date < viewEnd) {
+                offset = this._offset(date);
+
+                if (kendo.support.isRtl(this.element)) {
+                    offset = this._tableWidth - offset;
+                }
+
+                kendo.scrollLeft(this.content, offset)
+            }
+        },
+
         _timeSlots: function() {
             if (!this._slots || !this._slots.length) {
                 return [];
@@ -2075,6 +2091,7 @@ var __meta__ = { // jshint ignore:line
 
                 if (type) {
                     extend(this.options.range, this.options.range, view.range);
+                    this.options.date = view.date || this.options.date;
 
                     view = new type(this.wrapper, trimOptions(extend(true, {
                         headerTree: this._headerTree,
@@ -2122,6 +2139,7 @@ var __meta__ = { // jshint ignore:line
         _render: function(tasks) {
             var view = this.view();
             var range = this._range(tasks);
+            var date = view.options.date;
 
             this._tasks = tasks;
 
@@ -2130,6 +2148,10 @@ var __meta__ = { // jshint ignore:line
             view.renderLayout();
 
             view.render(tasks);
+
+            if (date) {
+                view._scrollToDate(date);
+            }
         },
 
         _renderDependencies: function(dependencies) {

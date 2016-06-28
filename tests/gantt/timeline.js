@@ -1,5 +1,5 @@
 ﻿(function() {
-
+    var gantt;
     var element;
     var timeline;
     var view;
@@ -1965,4 +1965,81 @@
         equal(view._slots[1].length, 14);
     });
 
+
+    module("Gantt Date", {
+        setup: function () {
+            element = $("<div />").appendTo(QUnit.fixture);
+        },
+        teardown: function () {
+            kendo.destroy(element);
+        }
+    });
+
+    function setupGantt(userOptions) {
+        task = new kendo.data.GanttTask({
+            title: "Task",
+            start: new Date("2014/04/15 12:00"),
+            end: new Date("2014/04/15 14:00")
+        });
+
+        var options = extend({}, {
+           
+           
+            snap: false,
+            views: ["day"],
+            showWorkHours: false,
+            dataSource: [task]
+        }, userOptions);
+
+        gantt = new kendo.ui.Gantt(element, options);
+        timeline = gantt.timeline;
+    }
+
+    test("set custom date scrolls to slot day view", function () {
+        setupGantt({
+            date: new Date("2014/04/14"), views: ["day"],
+            range: {
+                start: new Date("2014/04/1"),
+                end: new Date("2014/04/15")
+            },
+        });
+
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set custom date scrolls to slot week view", function () {
+        setupGantt({
+            date: new Date("2014/04/14"), views: ["week"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/04/15")
+            },
+        });
+
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set custom date scrolls to slot month view", function () {
+        setupGantt({
+            date: new Date("2014/09/14"), views: ["month"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/10/15")
+            },
+        });
+
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/09/14")));
+    });
+
+    test("set custom date scrolls to slot year view", function () {
+        setupGantt({
+            date: new Date("2014/08/14"), views: ["year"],
+            range: {
+                start: new Date("2010/01/1"),
+                end: new Date("2015/10/15")
+            }
+        });
+
+        equal(kendo.scrollLeft(gantt.view().content), Math.floor(gantt.view()._offset(new Date("2014/08/14"))));
+    });
 }());
