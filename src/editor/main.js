@@ -433,7 +433,8 @@
                     ".k-table td{min-width:1px;padding:.2em .3em;}" +
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
-                    ".k-table .k-resize-handle{position:absolute;height: 25px;cursor:col-resize;z-index:2;}" +
+                    ".k-table td >.k-resize-handle{position:absolute;height: 14px;width:10px;cursor:col-resize;z-index:2;}" +
+                    ".k-table td > .k-resize-handle > .k-resize-hint-marker{width:2px;height:100%;margin:0 auto;background-color:#00b0ff;display:none;opacity:0.6;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +

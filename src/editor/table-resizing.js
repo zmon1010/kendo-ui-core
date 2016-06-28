@@ -20,12 +20,17 @@
 
     var NS = ".kendoEditor";
     var RESIZE_HANDLE_CLASS = ".k-resize-handle";
+    var RESIZE_HINT_MARKER_CLASS = ".k-resize-hint-marker";
+
     var COLUMN = "column";
     var COMMA = ",";
+    var MOUSE_DOWN = "mousedown";
     var MOUSE_MOVE = "mousemove";
+    var MOUSE_UP = "mouseup";
     var PERCENTAGE = "%";
     var STRING = "string";
     var TABLE = "table";
+    var TBODY = "tbody";
     var TD = "td";
     var TH = "th";
     var TR = "tr";
@@ -139,7 +144,7 @@
                 height: 10,
                 template:
                     '<div class="k-resize-handle">' +
-                        '<div class="k-resize-handle-inner"></div>' +
+                        '<div class="k-resize-hint-marker"></div>' +
                     '</div>'
             }
         },
@@ -178,50 +183,46 @@
                         that._createResizeHandle(column);
                         that._initResizable(column);
                     }
-                    else {
-                        if (that.resizingInProgress()) {
-                            resizeHandle.hide();
-                        }
-                        else {
-                            resizeHandle.show();
-                        }
-                    }
                 }
                 else {
                     that._createResizeHandle(column);
                     that._initResizable(column);
                 }
             }
-            else {
-                if (resizeHandle) {
-                    resizeHandle.hide();
-                }
-            }
         },
 
         _createResizeHandle: function(column) {
             var that = this;
+            var tableBody = $(that.element).children(TBODY);
             var options = that.options;
             var handleOptions = options.handle;
             var handleWidth = handleOptions.width;
 
             if (!that.resizeHandle) {
-                that.resizeHandle = $(handleOptions.template);
-                column.append(that.resizeHandle);
+                that.resizeHandle = $(handleOptions.template).appendTo(column);
             }
 
             that.resizeHandle.css({
-                top: column.position().top,
+                top: tableBody.position().top,
                 left: column.offset().left + column[0].offsetWidth - (handleWidth / 2),
                 width: handleWidth,
-                height: column[0].offsetHeight
+                height: tableBody.height()
             })
             .data(COLUMN, column[0])
-            .show();
+            .show()
+            .on(MOUSE_DOWN + NS, function() {
+                $(this).children(RESIZE_HINT_MARKER_CLASS).show();
+            })
+            .on(MOUSE_UP +NS, function() {
+                $(this).children(RESIZE_HINT_MARKER_CLASS).hide();
+            })
+            .children(RESIZE_HINT_MARKER_CLASS).hide();
         },
 
         _initResizable: function(column) {
             var that = this;
+            var handleWidth = that.options.handle ? that.options.handle.width : 0;
+            var min = that.options.min;
 
             if (that.resizable) {
                 that.resizable.destroy();
@@ -230,6 +231,18 @@
             that.resizable = $(column).kendoResizable({
                 handle: RESIZE_HANDLE_CLASS,
                 resize: function(e) {
+                    var resizable = this;
+                    var column = $(resizable.element);
+                    var columnWidth = column.outerWidth();
+                    var columnLeftOffset = column.offset().left;
+                    var adjacentColumn = column.next();
+                    var adjacentColumnWidth = adjacentColumn ? adjacentColumn.outerWidth() : 0;
+                    var leftOffset = constrain(e.x.location, columnLeftOffset + min, columnLeftOffset + columnWidth + adjacentColumnWidth - handleWidth - min);
+
+                    $(that.resizeHandle).css({ left: leftOffset });
+                },
+
+                resizeend: function(e) {
                     var resizable = this;
                     var column = resizable.element;
                     var columnWidth = getColumnWidth(column[0]);
@@ -241,8 +254,7 @@
                     that._resizeColumn(column, newWidth);
                     that._resizeTopAndBottomColumns(column, newWidth);
                     that._resizeAdjacentColumns(column.index(), columnWidth, adjacentColumnWidth, deltaWidth);
-                },
-                resizeend: function() {
+
                     that.resizeHandle.off(NS).remove();
                     that.resizeHandle = null;
                 }

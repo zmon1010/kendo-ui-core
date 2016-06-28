@@ -4,11 +4,13 @@
     var columnResizing;
     var fixture;
     var options;
-    var table;
+    var tableElement;
     var tableWidth;
     var FIXTURE_SELECTOR = "#qunit-fixture";
     var HANDLE_SELECTOR = ".k-resize-handle";
+    var MARKER_SELECTOR = ".k-resize-hint-marker";
     var FIRST_COLUMN = "td:first";
+    var SECOND_COLUMN = "tr:first td:nth-child(2)";
     var PX = "px";
     var DOT = ".";
     var NS = "kendoEditor";
@@ -21,8 +23,9 @@
     var PERCENTAGE = "%";
     var ROW = "tr";
     var COLUMN = "td";
+    var TBODY = "tbody";
     var TABLE_HTML =
-        '<table id="table" class="k-table" style="width: 400px">' +
+        '<table id="table" class="k-table" style="width: 400px";padding:20px;>' +
             '<tr id="row1" class="row">' +
                 '<td id="col11" class="col" style="width:100px;">col 11</td>' +
                 '<td id="col12" class="col" style="width:100px;">col 12</td>' +
@@ -43,12 +46,12 @@
             '</tr>' +
         '</table>';
     var TABLE_IN_PERCENTAGES =
-        '<table id="table" class="k-table" style="width:200px";>' +
+        '<table id="table" class="k-table" style="width:200px";padding:30px;>' +
             '<tr id="row1" class="row">' +
                 '<td id="col11" class="col" style="width:25%;border:1px solid red;">col 11</td>' +
                 '<td id="col12" class="col" style="width:25%;border:1px solid red;">col 12</td>' +
                 '<td id="col13" class="col" style="width:25%;border:1px solid red;">col 13</td>' +
-                '<td id="col13" class="col" style="width:25%;border:1px solid red;">col 13</td>' +
+                '<td id="col13" class="col" style="width:25%;border:1px solid red;">col 14</td>' +
             '</tr>' +
             '<tr id="row2" class="row">' +
                 '<td id="col21" class="col" style="width:25%;border:1px solid red;">col 21</td>' +
@@ -57,18 +60,26 @@
                 '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 23</td>' +
             '</tr>' +
             '<tr id="row3" class="row">' +
-                '<td id="col21" class="col" style="width:25%;border:1px solid red;">col 21</td>' +
-                '<td id="col22" class="col" style="width:25%;border:1px solid red;">col 22</td>' +
-                '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 23</td>' +
-                '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 23</td>' +
+                '<td id="col21" class="col" style="width:25%;border:1px solid red;">col 31</td>' +
+                '<td id="col22" class="col" style="width:25%;border:1px solid red;">col 32</td>' +
+                '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 33</td>' +
+                '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 34</td>' +
             '</tr>' +
             '<tr id="row4" class="row">' +
-                '<td id="col21" class="col" style="width:25%;border:1px solid red;">col 21</td>' +
-                '<td id="col22" class="col" style="width:25%;border:1px solid red;">col 22</td>' +
-                '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 23</td>' +
-                '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 23</td>' +
+                '<td id="col21" class="col" style="width:25%;border:1px solid red;">col 41</td>' +
+                '<td id="col22" class="col" style="width:25%;border:1px solid red;">col 42</td>' +
+                '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 43</td>' +
+                '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 44</td>' +
             '</tr>' +
         '</table>';
+
+    function resizeColumn(column, from, to) {
+        triggerBorderHover(column);
+
+        triggerResize(column, from, to);
+
+        $(column[0].ownerDocument.documentElement).trigger($.Event(MOUSE_UP));
+    }
 
     function triggerBorderHover(element) {
         triggerEvent(element, {
@@ -87,13 +98,22 @@
         var from = from || 0;
         var to = to || 0;
 
-        resizeHandle.trigger($.Event(MOUSE_DOWN, {
-            pageX: position.left + from,
-            pageY: 0
-        }));
+        triggerResizeStart(element, from, to);
 
         doc.trigger($.Event(MOUSE_MOVE, {
             pageX: position.left + to,
+            pageY: 0
+        }));
+    }
+
+    function triggerResizeStart(element, from, to) {
+        var resizeHandle = element.find(HANDLE_SELECTOR);
+        var position = resizeHandle.position();
+        var from = from || 0;
+        var to = to || 0;
+
+        resizeHandle.trigger($.Event(MOUSE_DOWN, {
+            pageX: position.left + from,
             pageY: 0
         }));
     }
@@ -108,16 +128,8 @@
         $(element).trigger(options);
     }
 
-    function resizeColumn(column, from, to) {
-        triggerBorderHover(column);
-
-        triggerResize(column, from, to);
-
-        $(column[0].ownerDocument.documentElement).trigger($.Event(MOUSE_UP));
-    }
-
     function getColumnWidths(table, columnIndex) {
-        var columns = $(table).find(ROW).children(COLUMN)
+        var columns = $(tableElement).find(ROW).children(COLUMN)
             .filter(function() {
                 return ($(this).index() === columnIndex);
             });
@@ -137,7 +149,7 @@
 
     module("editor column resizing", {
         setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
         },
 
         teardown: function() {
@@ -153,9 +165,9 @@
     });
 
     test("resizing should be initialized with table element", function() {
-        columnResizing = new ColumnResizing(table, {});
+        columnResizing = new ColumnResizing(tableElement, {});
 
-        equal(columnResizing.element, table);
+        equal(columnResizing.element, tableElement);
     });
 
     test("resizing should be initialized with default options", function() {
@@ -167,12 +179,12 @@
                 height: 10,
                 template:
                     '<div class="k-resize-handle">' +
-                        '<div class="k-resize-handle-inner"></div>' +
-                      '</div>'
+                        '<div class="k-resize-hint-marker"></div>' +
+                    '</div>'
             }
         };
 
-        columnResizing = new ColumnResizing(table, {});
+        columnResizing = new ColumnResizing(tableElement, {});
 
         deepEqual(columnResizing.options, options);
     });
@@ -180,7 +192,7 @@
     test("resizing should be initialized with custom tags", function() {
         var options = { tags: ["th"] };
 
-        columnResizing = new ColumnResizing(table, options);
+        columnResizing = new ColumnResizing(tableElement, options);
 
         deepEqual(columnResizing.options.tags, ["th"]);
     });
@@ -188,27 +200,28 @@
     test("resizing should be initialized with an array of tags", function() {
         var options = { tags: "tag" };
 
-        columnResizing = new ColumnResizing(table, options);
+        columnResizing = new ColumnResizing(tableElement, options);
 
         deepEqual(columnResizing.options.tags, ["tag"]);
     });
 
     test("mousemove handlers should be attached to all columns", function() {
-        columnResizing = new ColumnResizing(table, {});
+        columnResizing = new ColumnResizing(tableElement, {});
 
-        assertEvent(table, { type: MOUSE_MOVE, selector: "td,th", namespace: NS });
+        assertEvent(tableElement, { type: MOUSE_MOVE, selector: "td,th", namespace: NS });
     });
 
     test("mousemove handlers should be attached to custom tags", function() {
-        columnResizing = new ColumnResizing(table, { tags: ["th", "td"] });
+        columnResizing = new ColumnResizing(tableElement, { tags: ["th", "td"] });
 
-        assertEvent(table, { type: MOUSE_MOVE, selector: "th,td", namespace: NS });
+        assertEvent(tableElement, { type: MOUSE_MOVE, selector: "th,td", namespace: NS });
     });
 
     module("editor column resizing", {
         setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {});
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
+            options = columnResizing.options;
         },
 
         teardown: function() {
@@ -221,7 +234,7 @@
 
         triggerBorderHover(cell);
 
-        ok(cell.children(HANDLE_SELECTOR).length === 1);
+        equal(cell.children(HANDLE_SELECTOR).length, 1);
     });
 
     test("hovering the border of the first cell multiple times should append only one resize handle", function() {
@@ -231,7 +244,7 @@
         triggerBorderHover(cell);
         triggerBorderHover(cell);
 
-        ok(cell.children(HANDLE_SELECTOR).length === 1);
+        equal(cell.children(HANDLE_SELECTOR).length, 1);
     });
 
     test("hovering the last cell should not create resize handle", function() {
@@ -239,18 +252,7 @@
 
         triggerBorderHover(cell);
 
-        ok(cell.children(HANDLE_SELECTOR).length === 0);
-    });
-
-    module("editor column resizing", {
-        setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {});
-        },
-
-        teardown: function() {
-            kendo.destroy(QUnit.fixture);
-        }
+        equal(cell.children(HANDLE_SELECTOR).length, 0);
     });
 
     test("resize handle should be stored as a reference", function() {
@@ -271,12 +273,32 @@
         roughlyEqual(columnResizing.resizeHandle.css("left"), cellWidth + leftOffset - (columnResizing.options.handle.width / 2) + PX, 0.01);
     });
 
+    test("resize handle left offset should not be lower than min", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var cellWidth = cell.outerWidth();
+        var leftOffset = cell.offset().left;
+
+        triggerResize(cell, leftOffset + cellWidth, leftOffset + cellWidth - MAX);
+
+        equal(columnResizing.resizeHandle.css("left"), leftOffset + options.min + PX);
+    });
+
+    test("resize handle left offset should not be greater than max", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var cellWidth = cell[0].offsetWidth;
+        var leftOffset = cell.offset().left;
+
+        triggerResize(cell, leftOffset + cellWidth, leftOffset + cellWidth + MAX);
+
+        equal(columnResizing.resizeHandle.css("left"), leftOffset + cellWidth + cell.next().outerWidth() - options.handle.width - options.min + PX);
+    });
+
     test("resize handle top offset should be set", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
 
         triggerBorderHover(cell);
 
-        roughlyEqual(columnResizing.resizeHandle.css("top"), cell.position().top + PX, 0.00001);
+        equal(columnResizing.resizeHandle.css("top"), $(tableElement).find(TBODY).position().top + PX);
     });
 
     test("resize handle width should be set", function() {
@@ -287,12 +309,12 @@
         equal(columnResizing.resizeHandle.css("width"), columnResizing.options.handle.width + PX);
     });
 
-    test("resize handle height should be equal to cell height", function() {
+    test("resize handle height should be equal to table body height", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
 
         triggerBorderHover(cell);
 
-        equal(columnResizing.resizeHandle.css("height"), cell[0].offsetHeight + PX);
+        equal(columnResizing.resizeHandle.css("height"), $(tableElement).find(TBODY).css("height"));
     });
 
     test("resize handle should be shown on hover", function() {
@@ -310,11 +332,10 @@
 
         triggerEvent(cell, {
             type: MOUSE_MOVE,
-            clientX: 0,
-            clientY: 0
+            pageX: MAX
         });
 
-        equal(columnResizing.resizeHandle.css("display"), "none");
+        equal(columnResizing.resizeHandle.css("display"), "block");
     });
 
     test("resize handle should store data about resizing cell", function() {
@@ -343,7 +364,7 @@
 
         triggerBorderHover(secondCell);
 
-        ok(cell.find(HANDLE_SELECTOR).length === 0);
+        equal(cell.find(HANDLE_SELECTOR).length, 0);
     });
 
     test("resize handle should be appended to the column when resizing a different column", function() {
@@ -353,38 +374,91 @@
 
         triggerBorderHover(secondCell);
 
-        ok(secondCell.find(HANDLE_SELECTOR).length === 1);
+        equal(secondCell.find(HANDLE_SELECTOR).length, 1);
     });
 
     test("existing resize handle should be shown when hovering a column", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
-        columnResizing.resizeHandle = $("<div class='k-resize-handle' style='display: none;' />").appendTo(cell);
 
         triggerBorderHover(cell);
 
-        ok(columnResizing.resizeHandle.css("display") === "block");
+        equal(columnResizing.resizeHandle.css("display"), "block");
     });
 
-    test("existing resize handle should be hidden while resizing", function() {
+    test("existing resize handle should be shown while resizing", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
-        columnResizing.resizeHandle = $("<div class='k-resize-handle' style='display: none;' />").appendTo(cell);
         columnResizing.resizingInProgress = function() { return true; };
 
         triggerResize(cell, initialWidth, initialWidth + 10);
 
-        ok(columnResizing.resizeHandle.css("display") === "none");
+        equal(columnResizing.resizeHandle.css("display"), "block");
     });
 
     test("existing resize handle should be shown if resizing is not in progress", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
-        columnResizing.resizeHandle = $("<div class='k-resize-handle' style='display: none;' />").appendTo(cell);
         columnResizing.resizingInProgress = function() { return false; };
 
         triggerResize(cell, initialWidth, initialWidth + 10);
 
-        ok(columnResizing.resizeHandle.css("display") === "block");
+        equal(columnResizing.resizeHandle.css("display"), "block");
+    });
+
+    module("editor column resizing", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("resize hint marker should not be visible on column border hover", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerBorderHover(cell);
+
+        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
+    });
+
+    test("resize hint marker should be visible on resize start", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        var initialWidth = cell.outerWidth();
+        triggerBorderHover(cell);
+
+        triggerResizeStart(cell, initialWidth, initialWidth + 10);
+
+        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+    });
+
+    test("resize hint marker should be visible while resizing", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        var initialWidth = cell.outerWidth();
+
+        triggerResize(cell, initialWidth, initialWidth + 10);
+
+        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+    });
+
+    test("resize hint marker should be visible on resize handle mouse down", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        triggerBorderHover(cell);
+
+        triggerEvent(columnResizing.resizeHandle, { type: MOUSE_DOWN });
+
+        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+    });
+
+    test("resize hint marker should not be visible on resize handle mouse up", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        triggerBorderHover(cell);
+
+        triggerEvent(columnResizing.resizeHandle, { type: MOUSE_UP });
+
+        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
     });
 
     editor_module("editor column resizing", {
@@ -407,18 +481,17 @@
         var table = $(editor.body).find("#table")[0];
         var tableResizing = editor.tableResizing = new TableResizing(table, {});
         var columnResizing = tableResizing.columnResizing;
-        var column = $(columnResizing.element).find(FIRST_COLUMN);
-        triggerBorderHover(column, { type: MOUSE_ENTER });
+        triggerBorderHover($(columnResizing.element).find(FIRST_COLUMN));
 
         triggerEvent(table, { type: MOUSE_LEAVE });
 
-        ok($(columnResizing.element).find(HANDLE_SELECTOR).length === 0);
+        equal($(columnResizing.element).find(HANDLE_SELECTOR).length, 0);
     });
 
     module("editor column resizing", {
         setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {});
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
         },
 
         teardown: function() {
@@ -429,13 +502,13 @@
     test("destroy should detach event handlers", function() {
         columnResizing.destroy();
 
-        ok(jQueryEvents(columnResizing.element) === undefined);
+        equal(jQueryEvents(columnResizing.element), undefined);
     });
 
     test("destroy should set element to null", function() {
         columnResizing.destroy();
 
-        ok(columnResizing.element === null);
+        equal(columnResizing.element, null);
     });
 
     test("destroy should remove resize handle from DOM", function() {
@@ -443,7 +516,7 @@
 
         columnResizing.destroy();
 
-        ok($(columnResizing.element).find(HANDLE_SELECTOR).length === 0);
+        equal($(columnResizing.element).find(HANDLE_SELECTOR).length, 0);
     });
 
     test("destroy should call resizable destroy", function() {
@@ -460,14 +533,14 @@
 
         columnResizing.destroy();
 
-        ok(columnResizing.resizable === null);
+        equal(columnResizing.resizable, null);
     });
 
     module("editor column resizable", {
         setup: function() {
             fixture = $(FIXTURE_SELECTOR);
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {});
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
         },
 
         teardown: function() {
@@ -527,8 +600,8 @@
     module("editor column resizing in pixels", {
         setup: function() {
             fixture = $(FIXTURE_SELECTOR);
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {});
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
             options = columnResizing.options;
             tableWidth = $(columnResizing.element).outerWidth();
         },
@@ -596,7 +669,7 @@
 
         resizeColumn(cell, initialWidth, initialWidth + 10);
 
-        ok(cell.children(HANDLE_SELECTOR).length === 0);
+        equal(cell.children(HANDLE_SELECTOR).length, 0);
     });
 
     test("resize handle reference should be removed on resize end", function() {
@@ -605,7 +678,7 @@
 
         resizeColumn(cell, cell[0].offsetWidth, cell[0].offsetWidth + 10);
 
-        ok(columnResizing.resizeHandle === null);
+        equal(columnResizing.resizeHandle, null);
     });
 
     test("all columns with the same index in other rows should be resized", function() {
@@ -714,8 +787,8 @@
 
     module("editor column resizing", {
         setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {});
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
         },
 
         teardown: function() {
@@ -755,8 +828,8 @@
 
     module("editor column resizing in percentages", {
         setup: function() {
-            table = $(TABLE_IN_PERCENTAGES).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(table, {});
+            tableElement = $(TABLE_IN_PERCENTAGES).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
             options = columnResizing.options;
         },
 
@@ -771,7 +844,7 @@
     test("should resize column in percentages", function() {
         var cell = $(columnResizing.element).find("tr:first td:nth-child(2)");
         var differenceInPixels = 20;
-        var differenceInPercentages = (differenceInPixels / $(table).outerWidth()) * 100;
+        var differenceInPercentages = (differenceInPixels / $(tableElement).outerWidth()) * 100;
         var initialWidthInPixels = cell.width();
         var initialWidthInPercentages = parseFloat(cell[0].style.width);
 
@@ -805,9 +878,9 @@
         var cellIndex = cell.index();
         var rows = $(columnResizing.element).find(ROW);
         var differenceInPixels = 20;
-        var differenceInPercentages = (differenceInPixels / $(table).outerWidth()) * 100;
+        var differenceInPercentages = (differenceInPixels / $(tableElement).outerWidth()) * 100;
         var initialWidthInPixels = cell.width();
-        var initialAdjacentColumnWidths = getColumnWidths(table, cellIndex + 1);
+        var initialAdjacentColumnWidths = getColumnWidths(tableElement, cellIndex + 1);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
@@ -821,9 +894,9 @@
         var cellIndex = cell.index();
         var rows = $(columnResizing.element).find(ROW);
         var differenceInPixels = 20;
-        var differenceInPercentages = (differenceInPixels /  $(table).outerWidth()) * 100;
+        var differenceInPercentages = (differenceInPixels /  $(tableElement).outerWidth()) * 100;
         var initialWidthInPixels = cell.width();
-        var initialAdjacentColumnWidths = getColumnWidths(table, cellIndex + 1);
+        var initialAdjacentColumnWidths = getColumnWidths(tableElement, cellIndex + 1);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
         
@@ -838,7 +911,7 @@
         var rows = $(columnResizing.element).find(ROW);
         var initialWidthInPixels = cell.width();
         var initialWidthInPercentages = parseFloat(cell[0].style.width);
-        var initialAdjacentColumnWidths = getColumnWidths(table, cellIndex);
+        var initialAdjacentColumnWidths = getColumnWidths(tableElement, cellIndex);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + MAX);
 
@@ -866,7 +939,7 @@
         var rows = $(columnResizing.element).find(ROW);
         var initialWidthInPixels = cell.width();
         var initialWidthInPercentages = parseFloat(cell[0].style.width);
-        var initialAdjacentColumnWidths = getColumnWidths(table, cellIndex + 1);
+        var initialAdjacentColumnWidths = getColumnWidths(tableElement, cellIndex + 1);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + (-1) * MAX);
         
