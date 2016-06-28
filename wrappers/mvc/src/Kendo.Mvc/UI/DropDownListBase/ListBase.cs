@@ -122,6 +122,18 @@
             set;
         }
 
+        public string NoDataTemplate
+        {
+            get;
+            set;
+        }
+
+        public string NoDataTemplateId
+        {
+            get;
+            set;
+        }
+
         public int? MinLength
         {
             get;
@@ -244,6 +256,15 @@
             else if (!string.IsNullOrEmpty(FooterTemplate))
             {
                 options["footerTemplate"] = FooterTemplate;
+            }
+
+            if (!string.IsNullOrEmpty(NoDataTemplateId))
+            {
+                options["noDataTemplate"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, NoDataTemplateId) };
+            }
+            else if (!string.IsNullOrEmpty(NoDataTemplate))
+            {
+                options["noDataTemplate"] = NoDataTemplate;
             }
 
             if (MinLength != null)
