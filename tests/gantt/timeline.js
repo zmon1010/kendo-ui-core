@@ -2042,4 +2042,64 @@
 
         equal(kendo.scrollLeft(gantt.view().content), Math.floor(gantt.view()._offset(new Date("2014/08/14"))));
     });
+
+    test("set date() scrolls to slot day view", 2, function () {
+        setupGantt({
+            views: ["day"],
+            range: {
+                start: new Date("2014/04/1"),
+                end: new Date("2014/04/15")
+            },
+        });
+
+        var date = new Date("2014/04/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set date() scrolls to slot week view", 2, function () {
+        setupGantt({
+            views: ["week"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/04/15")
+            },
+        });
+
+        var date = new Date("2014/04/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set date() scrolls to slot month view", function () {
+        setupGantt({
+            views: ["month"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/10/15")
+            },
+        });
+
+        var date = new Date("2014/09/14")
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/09/14")));
+    });
+
+    test("set date() scrolls to slot year view", function () {
+        setupGantt({
+            date: new Date("2014/08/14"), views: ["year"],
+            range: {
+                start: new Date("2010/01/1"),
+                end: new Date("2015/10/15")
+            }
+        });
+
+        var date = new Date("2014/08/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), Math.floor(gantt.view()._offset(new Date("2014/08/14"))));
+    });
 }());

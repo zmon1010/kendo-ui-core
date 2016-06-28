@@ -1324,7 +1324,7 @@ var __meta__ = { // jshint ignore:line
                     offset = this._tableWidth - offset;
                 }
 
-                kendo.scrollLeft(this.content, offset)
+                kendo.scrollLeft(this.content, offset);
             }
         },
 

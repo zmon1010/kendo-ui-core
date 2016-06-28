@@ -2453,6 +2453,17 @@ var __meta__ = { // jshint ignore:line
             };
         },
 
+        date: function (date) {
+            var view = this.view();
+
+            if (date) {
+                view.options.date = date;
+                view._scrollToDate(date);
+            }
+
+            return view.options.date;
+        },
+
         dataItem: function(value) {
             if (!value) {
                 return null;

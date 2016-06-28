@@ -165,7 +165,7 @@
         ok(draggable.hint.hasClass("k-rtl"));
     });
 
-    module("Gantt Date", {
+    module("Gantt Date rtl ", {
         setup: function () {
             rtl = $('<div class="k-rtl"/>').appendTo(QUnit.fixture);
             element = $("<div/>").appendTo(rtl);
@@ -239,8 +239,75 @@
                 end: new Date("2015/10/15")
             }
         });
+        console.log(kendo.scrollLeft(gantt.view().content) , gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14")));
+        var isScrolled = kendo.scrollLeft(gantt.view().content) + 2 > gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14")) &&
+          kendo.scrollLeft(gantt.view().content) -2 < gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14")) ;
 
-        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - Math.floor(gantt.view()._offset(new Date("2014/08/14"))));
+        ok(isScrolled);
+    });
+
+    test("set date() scrolls to slot day view",2 , function () {
+        setupGantt({
+            views: ["day"],
+            range: {
+                start: new Date("2014/04/1"),
+                end: new Date("2014/04/15")
+            },
+        });
+
+        var date = new Date("2014/04/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set date() scrolls to slot week view",2, function () {
+        setupGantt({
+            views: ["week"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/04/15")
+            },
+        });
+
+        var date = new Date("2014/04/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set date() scrolls to slot month view", function () {
+        setupGantt({
+            views: ["month"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/10/15")
+            },
+        });
+
+        var date = new Date("2014/09/14")
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/09/14")));
+    });
+
+    test("set date() scrolls to slot year view", function () {
+        setupGantt({
+            date: new Date("2014/08/14"), views: ["year"],
+            range: {
+                start: new Date("2010/01/1"),
+                end: new Date("2015/10/15")
+            }
+        });
+
+        var date = new Date("2014/08/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+
+        var isScrolled = kendo.scrollLeft(gantt.view().content) + 2 > gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14")) &&
+            kendo.scrollLeft(gantt.view().content) -2 < gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14"));
+        
+        ok(isScrolled);
     });
 
 })();
