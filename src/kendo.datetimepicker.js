@@ -680,15 +680,10 @@ var __meta__ = { // jshint ignore:line
             }
 
             icons = icons.children();
-            that._dateIcon = icons.eq(0).attr({
-                "role": "button",
-                "aria-controls": that.dateView._dateViewID
-            });
 
-            that._timeIcon = icons.eq(1).attr({
-                "role": "button",
-                "aria-controls": that.timeView._timeViewID
-            });
+            icons = icons.children();
+            that._dateIcon = icons.eq(0).attr("aria-controls", that.dateView._dateViewID);
+            that._timeIcon = icons.eq(1).attr("aria-controls", that.timeView._timeViewID);
         },
 
         _wrapper: function() {
