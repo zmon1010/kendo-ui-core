@@ -80,7 +80,7 @@
             var toolOptions = tool.options;
 
             if (toolOptions && toolOptions.template) {
-                toolOptions.template.options.cssClass = "k-" + toolName;
+                toolOptions.template.options.cssClass = "k-i-" + kendo.toHyphens(toolName);
             }
 
             if (!tool.name) {
@@ -313,7 +313,7 @@
             var resizable = this.options.resizable;
             var isResizable = $.isPlainObject(resizable) ? (resizable.content === undefined || resizable.content === true) : resizable;
             if (isResizable && this.textarea) {
-                $("<div class='k-resize-handle'><span class='k-icon k-resize-se' /></div>")
+                $("<div class='k-resize-handle'><span class='k-icon k-i-resize-se' /></div>")
                     .insertAfter(this.textarea);
 
                 this.wrapper.kendoResizable(extend({}, this.options.resizable, {
