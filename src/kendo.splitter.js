@@ -250,7 +250,7 @@ var __meta__ = { // jshint ignore:line
             url = url || paneConfig.contentUrl;
 
             if (url) {
-                pane.append("<span class='k-icon k-loading k-pane-loading' />");
+                pane.append("<span class='k-icon k-i-loading k-pane-loading' />");
 
                 if (kendo.isLocalUrl(url)) {
                     jQuery.ajax({
