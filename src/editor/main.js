@@ -48,9 +48,10 @@
             '</tbody></table>',
 
         buttonTemplate:
+            '# var iconCssClass= "k-i-" + kendo.toHyphens(data.cssClass.replace("k-", ""));#' +
             '<a href="" role="button" class="k-tool"' +
             '#= data.popup ? " data-popup" : "" #' +
-            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= data.cssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
+            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= iconCssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
 
         colorPickerTemplate:
             '<div class="k-colorpicker #= data.cssClass #" />',
@@ -80,7 +81,7 @@
             var toolOptions = tool.options;
 
             if (toolOptions && toolOptions.template) {
-                toolOptions.template.options.cssClass = "k-i-" + kendo.toHyphens(toolName);
+                toolOptions.template.options.cssClass = "k-" + toolName;
             }
 
             if (!tool.name) {
