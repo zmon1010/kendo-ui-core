@@ -394,7 +394,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _fileAction: function(fileElement, actionKey) {
-            var classDictionary = { remove: "k-delete", cancel: "k-cancel", retry: "k-retry" };
+            var classDictionary = { remove: "k-i-delete", cancel: "k-i-cancel", retry: "k-i-retry" };
             var iconsClassDictionary = {remove: "k-i-close", cancel: "k-i-close", retry: "k-i-refresh"};
 
             if (!classDictionary.hasOwnProperty(actionKey)) {
@@ -433,7 +433,7 @@ var __meta__ = { // jshint ignore:line
                 currentState = states[stateKey];
 
             if (currentState) {
-                $(".k-icon:not(.k-delete, .k-cancel, .k-retry)", fileEntry).text(currentState.text);
+                $(".k-icon:not(.k-i-delete, .k-i-cancel, .k-i-retry)", fileEntry).text(currentState.text);
             }
         },
 
@@ -467,16 +467,16 @@ var __meta__ = { // jshint ignore:line
                     fileEntry = button.closest(".k-file"),
                     eventArgs = { files: fileEntry.data("fileNames") };
 
-                if (icon.hasClass("k-delete")) {
+                if (icon.hasClass("k-i-delete")) {
                     if (!that.trigger(REMOVE, eventArgs)) {
                         that._module.onRemove({target : $(fileEntry, that.wrapper)}, eventArgs.data);
                     }
-                } else if (icon.hasClass("k-cancel")) {
+                } else if (icon.hasClass("k-i-cancel")) {
                     that.trigger(CANCEL, eventArgs);
                     that._module.onCancel({ target: $(fileEntry, that.wrapper) });
                     this._checkAllComplete();
                     that._updateHeaderUploadStatus();
-                } else if (icon.hasClass("k-retry")) {
+                } else if (icon.hasClass("k-i-retry")) {
                     $(".k-warning", fileEntry).remove();
                     that._module.onRetry({ target: $(fileEntry, that.wrapper) });
                 }
@@ -553,9 +553,9 @@ var __meta__ = { // jshint ignore:line
             $('.k-progress', fileEntry).width("100%");
 
             if (uploadPercentage.length > 0) {
-                uploadPercentage.empty().removeClass('k-upload-pct').addClass('k-icon k-warning');
+                uploadPercentage.empty().removeClass('k-upload-pct').addClass('k-icon k-i-warning');
             } else {
-                $('.k-upload-status', fileEntry).prepend("<span class='k-icon k-warning'></span>");
+                $('.k-upload-status', fileEntry).prepend("<span class='k-icon k-i-warning'></span>");
             }
 
             this._updateHeaderUploadStatus();
@@ -597,7 +597,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             headerUploadStatus = '<strong class="k-upload-status k-upload-status-total">' + localization.headerStatusUploading +
-            '<span class="k-icon k-loading">' + localization.statusUploading + '</span>' +
+            '<span class="k-icon k-i-loading">' + localization.statusUploading + '</span>' +
             '</strong>';
 
             if (dropZone.length > 0) {
@@ -620,7 +620,7 @@ var __meta__ = { // jshint ignore:line
 
                 headerUploadStatus = $('.k-upload-status-total', that.wrapper);
                 headerUploadStatusIcon = $('.k-icon', headerUploadStatus)
-                                              .removeClass('k-loading')
+                                              .removeClass('k-i-loading')
                                               .addClass((failedUploads.length !== 0) ? 'k-warning' : "k-i-tick")
                                               .text((failedUploads.length !== 0) ? localization.statusWarning : localization.statusUploaded);
 
