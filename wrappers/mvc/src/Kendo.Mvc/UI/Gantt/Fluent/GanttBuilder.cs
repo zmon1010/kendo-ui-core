@@ -168,6 +168,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// If set to some date the timeline of the currently selected view is scrolled to start from this date.
+        /// </summary>
+        /// <param name="value">The value that configures the date.</param>
+        public GanttBuilder<TTaskModel,TDependenciesModel> Date(DateTime value)
+        {
+            container.Date = value;
+
+            return this;
+        }
+        
 
         /// <summary>
         /// If set to false the user won't be able to create, modify or delete tasks and dependencies.
@@ -308,6 +319,16 @@ namespace Kendo.Mvc.UI.Fluent
         public GanttBuilder<TTaskModel,TDependenciesModel> Pdf(Action<GanttPdfSettingsBuilder> configurator)
         {
             configurator(new GanttPdfSettingsBuilder(container.Pdf));
+            return this;
+        }
+        
+        /// <summary>
+        /// Configures the Kendo UI Gantt range settings.
+        /// </summary>
+        /// <param name="configurator">The action that configures the range.</param>
+        public GanttBuilder<TTaskModel,TDependenciesModel> Range(Action<GanttRangeSettingsBuilder> configurator)
+        {
+            configurator(new GanttRangeSettingsBuilder(container.Range));
             return this;
         }
         

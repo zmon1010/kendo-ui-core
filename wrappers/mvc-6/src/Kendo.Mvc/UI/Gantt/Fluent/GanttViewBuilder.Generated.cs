@@ -11,6 +11,19 @@ namespace Kendo.Mvc.UI.Fluent
         where TTaskModel : class, IGanttTask  where TDependenciesModel : class, IGanttDependency 
     {
         /// <summary>
+        /// Configures the view range settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the range setting.</param>
+        public GanttViewBuilder<TTaskModel, TDependenciesModel> Range(Action<GanttViewRangeSettingsBuilder<TTaskModel, TDependenciesModel>> configurator)
+        {
+
+            Container.Range.Gantt = Container.Gantt;
+            configurator(new GanttViewRangeSettingsBuilder<TTaskModel, TDependenciesModel>(Container.Range));
+
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the view will be initially selected by the Gantt widget. The default selected view is "day".
         /// </summary>
         /// <param name="value">The value for Selected</param>

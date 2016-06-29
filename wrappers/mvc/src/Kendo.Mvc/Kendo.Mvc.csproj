@@ -2703,4 +2703,10 @@
     <Compile Include="UI\Editor\Settings\EditorDeserializationSettings.cs" />
     <Compile Include="UI\Editor\Fluent\EditorDeserializationSettingsBuilder.cs" />
   </ItemGroup>
-</Project>
+  <ItemGroup>
+    <Compile Include="UI\Gantt\Settings\GanttRangeSettings.cs" />
+    <Compile Include="UI\Gantt\Fluent\GanttRangeSettingsBuilder.cs" />
+    <Compile Include="UI\Gantt\Settings\GanttViewRangeSettings.cs" />
+    <Compile Include="UI\Gantt\Fluent\GanttViewRangeSettingsBuilder.cs" />
+  </ItemGroup>
+ </Project>

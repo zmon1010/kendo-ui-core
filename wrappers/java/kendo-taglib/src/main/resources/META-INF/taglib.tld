@@ -21005,6 +21005,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>If set to some date the timeline of the currently selected view is scrolled to start from this date.</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
             <description>The data source of the widget which contains the dependencies. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.GanttDependencyDataSource
 instance.If the dependencies option is set to a JavaScript object or array the widget will initialize a new kendo.data.GanttDependencyDataSource instance using that value as data source configuration.If the dependencies option is an existing kendo.data.GanttDependencyDataSource instance the widget will use that instance and will not initialize a new one.</description>
             <name>dependencies</name>
@@ -21734,6 +21740,29 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
     <tag>
+        <description>Configures the Kendo UI Gantt range settings.</description>
+        <name>gantt-range</name>
+        <tag-class>com.kendoui.taglib.gantt.RangeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>If set to some date the timeline of all views will end to this date.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>If set to some date the timeline of all views will start from this date.</description>
+            <name>start</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>The configuration of the gantt resource(s). A gantt resource is optional metadata that can be associated
 with a gantt task.</description>
         <name>gantt-resources</name>
@@ -21920,6 +21949,28 @@ By default the Kendo UI Gantt widget displays "day", "week", and "month" views.<
             <type>java.lang.String</type>
         </attribute>
     </tag>
+
+    <tag>
+        <description>Configures the view range settings.</description>
+        <name>gantt-view-range</name>
+        <tag-class>com.kendoui.taglib.gantt.ViewRangeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>If set to some date the timeline of the view will end to this date.Overrides the range.end option of the gantt.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>If set to some date the timeline of the view will start from this date.Overrides the range.start option of the gantt.</description>
+            <name>start</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+
+    </tag>
+
 
 
     <tag>

@@ -6,6 +6,15 @@ class GanttView extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * Configures the view range settings.
+    * @param \Kendo\UI\GanttViewRange|array $value
+    * @return \Kendo\UI\GanttView
+    */
+    public function range($value) {
+        return $this->setProperty('range', $value);
+    }
+
+    /**
     * If set to true the view will be initially selected by the Gantt widget. The default selected view is "day".
     * @param boolean $value
     * @return \Kendo\UI\GanttView

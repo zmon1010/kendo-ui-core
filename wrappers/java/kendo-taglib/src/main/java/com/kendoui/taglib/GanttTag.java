@@ -77,6 +77,10 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
         setProperty("pdf", value);
     }
 
+    public void setRange(com.kendoui.taglib.gantt.RangeTag value) {
+        setProperty("range", value);
+    }
+
     public void setResources(com.kendoui.taglib.gantt.ResourcesTag value) {
         setProperty("resources", value);
     }
@@ -191,6 +195,14 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
 
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
+    }
+
+    public java.util.Date getDate() {
+        return (java.util.Date)getProperty("date");
+    }
+
+    public void setDate(java.util.Date value) {
+        setProperty("date", value);
     }
 
     public java.lang.Object getDependencies() {

@@ -12,10 +12,18 @@ namespace Kendo.Mvc.UI
         {
             //>> Initialization
         
+            Range = new GanttViewRangeSettings();
+                
         //<< Initialization
         }
 
         //>> Fields
+        
+        public GanttViewRangeSettings Range
+        {
+            get;
+            set;
+        }
         
         public bool? Selected { get; set; }
         
@@ -51,6 +59,11 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
+            var range = Range.ToJson();
+            if (range.Any())
+            {
+                json["range"] = range;
+            }
             if (Selected.HasValue)
             {
                 json["selected"] = Selected;

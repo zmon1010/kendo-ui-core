@@ -64,6 +64,15 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * If set to some date the timeline of the currently selected view is scrolled to start from this date.
+    * @param date $value
+    * @return \Kendo\UI\Gantt
+    */
+    public function date($value) {
+        return $this->setProperty('date', $value);
+    }
+
+    /**
     * The data source of the widget which contains the dependencies. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.GanttDependencyDataSource
 instance.If the dependencies option is set to a JavaScript object or array the widget will initialize a new kendo.data.GanttDependencyDataSource instance using that value as data source configuration.If the dependencies option is an existing kendo.data.GanttDependencyDataSource instance the widget will use that instance and will not initialize a new one.
     * @param |array| $value
@@ -179,6 +188,15 @@ instance.If the dependencies option is set to a JavaScript object or array the w
     */
     public function pdf($value) {
         return $this->setProperty('pdf', $value);
+    }
+
+    /**
+    * Configures the Kendo UI Gantt range settings.
+    * @param \Kendo\UI\GanttRange|array $value
+    * @return \Kendo\UI\Gantt
+    */
+    public function range($value) {
+        return $this->setProperty('range', $value);
     }
 
     /**

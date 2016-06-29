@@ -49,6 +49,10 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "gantt-view";
     }
 
+    public void setRange(com.kendoui.taglib.gantt.ViewRangeTag value) {
+        setProperty("range", value);
+    }
+
     public void setTimeHeaderTemplate(ViewTimeHeaderTemplateFunctionTag value) {
         setEvent("timeHeaderTemplate", value.getBody());
     }

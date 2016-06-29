@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class GanttView<TTaskModel, TDependenciesModel> where TTaskModel : class, IGanttTask  where TDependenciesModel : class, IGanttDependency 
     {
+        public GanttViewRangeSettings<TTaskModel, TDependenciesModel> Range { get; } = new GanttViewRangeSettings<TTaskModel, TDependenciesModel>();
+
         public bool? Selected { get; set; }
 
         public double? SlotSize { get; set; }
@@ -45,6 +47,12 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            var range = Range.Serialize();
+            if (range.Any())
+            {
+                settings["range"] = range;
+            }
 
             if (Selected.HasValue)
             {

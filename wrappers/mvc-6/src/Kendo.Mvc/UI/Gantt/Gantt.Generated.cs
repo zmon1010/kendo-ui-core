@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
 
         public GanttCurrentTimeMarkerSettings<TTaskModel, TDependenciesModel> CurrentTimeMarker { get; } = new GanttCurrentTimeMarkerSettings<TTaskModel, TDependenciesModel>();
 
+        public DateTime? Date { get; set; }
+
         public GanttEditableSettings<TTaskModel, TDependenciesModel> Editable { get; } = new GanttEditableSettings<TTaskModel, TDependenciesModel>();
 
         public bool? Navigatable { get; set; }
@@ -42,6 +44,8 @@ namespace Kendo.Mvc.UI
         public GanttMessagesSettings<TTaskModel, TDependenciesModel> Messages { get; } = new GanttMessagesSettings<TTaskModel, TDependenciesModel>();
 
         public GanttPdfSettings<TTaskModel, TDependenciesModel> Pdf { get; } = new GanttPdfSettings<TTaskModel, TDependenciesModel>();
+
+        public GanttRangeSettings<TTaskModel, TDependenciesModel> Range { get; } = new GanttRangeSettings<TTaskModel, TDependenciesModel>();
 
         public bool? Resizable { get; set; }
 
@@ -92,6 +96,11 @@ namespace Kendo.Mvc.UI
             else if (CurrentTimeMarker.Enabled.HasValue)
             {
                 settings["currentTimeMarker"] = CurrentTimeMarker.Enabled;
+            }
+
+            if (Date.HasValue)
+            {
+                settings["date"] = Date;
             }
 
 
@@ -150,6 +159,12 @@ namespace Kendo.Mvc.UI
             if (pdf.Any())
             {
                 settings["pdf"] = pdf;
+            }
+
+            var range = Range.Serialize();
+            if (range.Any())
+            {
+                settings["range"] = range;
             }
 
             if (Resizable.HasValue)
