@@ -2614,7 +2614,7 @@ namespace Kendo.Mvc.UI.Fluent
                 }
                 else if (model.GetType().IsEnumType())
                 {
-                    return Convert.ToString((int)model);
+                    return Convert.ToString(Convert.ToInt32(model));
                 }
             }
 
