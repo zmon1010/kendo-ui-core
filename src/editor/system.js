@@ -9,6 +9,7 @@
         Class = kendo.Class,
         editorNS = kendo.ui.editor,
         EditorUtils = editorNS.EditorUtils,
+        RangeUtils = editorNS.RangeUtils,
         registerTool = EditorUtils.registerTool,
         dom = editorNS.Dom,
         Tool = editorNS.Tool,
@@ -158,6 +159,72 @@ var InsertHtmlTool = Tool.extend({
     }
 });
 
+var tableCells = "td,th,caption";
+var tableCellsWrappers = "table,tbody,thead,tfoot,tr";
+var tableElements = tableCellsWrappers + "," + tableCells;
+var inTable = function (range) { return !range.collapsed && $(range.commonAncestorContainer).is(tableCellsWrappers); };
+var RemoveTableContent = Class.extend({
+    remove: function(range) {
+        var that = this;
+        var marker = new Marker();
+        marker.add(range, false);
+
+        var nodes = RangeUtils.getAll(range, function (node) { return $(node).is(tableElements); });
+        var doc = RangeUtils.documentFromRange(range);
+        var start = marker.start;
+        var end = marker.end;
+        var cellsTypes = tableCells.split(",");
+        var startCell = dom.parentOfType(start, cellsTypes);
+        var endCell = dom.parentOfType(end, cellsTypes);
+        that._removeContent(start, startCell, true);
+        that._removeContent(end, endCell, false);
+        $(nodes).each(function(i, node) {
+            node = $(node);
+            (node.is(tableCells) ? node : node.find(tableCells)).each(function(j, cell) {
+                cell.innerHTML = "&#65279;";
+            });
+        });
+        if (startCell && !start.previousSibling) {
+            dom.insertBefore(doc.createTextNode("\ufeff"), start);
+        }
+        if (endCell && !end.nextSibling) {
+            dom.insertAfter(doc.createTextNode("\ufeff"), end);
+        }
+        if (startCell) {
+            range.setStartBefore(start);
+        } else if (nodes[0]) {
+            startCell = $(nodes[0]);
+            startCell = startCell.is(tableCells) ? startCell : startCell.find(tableCells).first();
+            if (startCell.length) {
+                range.setStart(startCell.get(0), 0);
+            }
+        }
+        
+        range.collapse(true);
+
+        dom.remove(start);
+        dom.remove(end);
+    },
+    _removeContent: function (start, top, forwards) {
+        if (top) {
+            var sibling = forwards ? "nextSibling" : "previousSibling",
+                next,
+                getNext = function (node) {
+                    while (node && !node[sibling]) {
+                        node = node.parentNode;
+                    }
+                    return node && $.contains(top, node) ? node[sibling] : null;
+                };
+            start = getNext(start);
+            while (start) {
+                next = getNext(start);
+                dom.remove(start);
+                start = next;
+            }
+        }
+    }
+});
+
 var TypingHandler = Class.extend({
     init: function(editor) {
         this.editor = editor;
@@ -181,6 +248,12 @@ var TypingHandler = Class.extend({
             var range = editor.getRange();
             var body = editor.body;
             that.startRestorePoint = new RestorePoint(range);
+
+            if (inTable(range)) {
+                var removeTableContent = new RemoveTableContent(editor);
+                removeTableContent.remove(range);
+                editor.selectRange(range);
+            }
 
             if (browser.webkit && !range.collapsed && selected(body, range)) {
                 body.innerHTML = "";
