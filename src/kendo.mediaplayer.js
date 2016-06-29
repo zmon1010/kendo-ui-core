@@ -17,13 +17,13 @@
         ERROR = "error",
         ui = kendo.ui,
         Widget = kendo.ui.Widget,
-        extend = $.extend,
+        //extend = $.extend,
         proxy = $.proxy,
-        each = $.each,
+        //each = $.each,
         templates = {
-            html5Player: "<video class='k-mediaplayer-media' width='320' height='240'> </video>"
+            htmlPlayer: "<video class='k-mediaplayer-media' width='320' height='240'> </video>"
         },
-        rendering = {},
+        //rendering = {},
         DataSource = kendo.data.DataSource;
 
 
@@ -37,7 +37,7 @@
 
                 options = that.options;
 
-                that._createHtml5Player();
+                that._createHtmlPlayer();
 
                 that._dataSource();
 
@@ -64,7 +64,7 @@
             },
 
             _initData: function (options) {
-                var that = this;
+                //var that = this;
 
                 if (options.dataSource) {
                 }
@@ -79,9 +79,9 @@
                 }
             },
 
-            _createHtml5Player() {
+            _createHtmlPlayer: function () {
                 var that = this;
-                that.element.append(templates.html5Player);
+                that.element.append(templates.htmlPlayer);
                 that._media = that.element.find(".k-mediaplayer-media")[0];
             },
 
