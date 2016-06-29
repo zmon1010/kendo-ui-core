@@ -173,7 +173,7 @@
     test("resizing should be initialized with default options", function() {
         var options = {
             tags: ["td", "th"],
-            min: 5,
+            min: 20,
             handle: {
                 width: 10,
                 height: 10,
@@ -869,19 +869,21 @@
         var initialWidthInPixels = cell.width();
         var initialWidthInPercentages = parseFloat(cell[0].style.width);
         var adjacentColumnWidth = parseFloat(cell.next()[0].style.width);
+        var minInPercentages = (options.min / $(tableElement).outerWidth()) * 100;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + MAX);
 
-        equal(cell[0].style.width, (initialWidthInPercentages + adjacentColumnWidth - options.min) + PERCENTAGE);
+        equal(cell[0].style.width, (initialWidthInPercentages + adjacentColumnWidth - minInPercentages) + PERCENTAGE);
     });
 
     test("column width should not be lower than min", function() {
         var cell = $(columnResizing.element).find("tr:first td:nth-child(2)");
         var initialWidthInPixels = cell.width();
+        var minInPercentages = (options.min / $(tableElement).outerWidth()) * 100;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + (-1) * MAX);
 
-        equal(cell[0].style.width, options.min + PERCENTAGE);
+        equal(cell[0].style.width, minInPercentages + PERCENTAGE);
     });
 
     test("all columns with the same index in other rows should be resized", function() {
@@ -923,11 +925,12 @@
         var initialWidthInPixels = cell.width();
         var initialWidthInPercentages = parseFloat(cell[0].style.width);
         var initialAdjacentColumnWidths = getColumnWidths(tableElement, cellIndex);
+        var minInPercentages = (options.min / $(tableElement).outerWidth()) * 100;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + MAX);
 
         for (var i = 0; i < rows.length; i++) {
-            equal($(rows[i]).children()[cellIndex].style.width, (initialWidthInPercentages + initialAdjacentColumnWidths[i] - options.min) + PERCENTAGE);
+            equal($(rows[i]).children()[cellIndex].style.width, (initialWidthInPercentages + initialAdjacentColumnWidths[i] - minInPercentages) + PERCENTAGE);
         }
     });
 
@@ -936,11 +939,12 @@
         var cellIndex = cell.index();
         var rows = $(columnResizing.element).find(ROW);
         var initialWidthInPixels = cell.width();
+        var minInPercentages = (options.min / $(tableElement).outerWidth()) * 100;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + (-1) * MAX);
 
         for (var i = 0; i < rows.length; i++) {
-            equal($(rows[i]).children()[cellIndex].style.width, options.min + PERCENTAGE);
+            equal($(rows[i]).children()[cellIndex].style.width, minInPercentages + PERCENTAGE);
         }
     });
 
@@ -951,11 +955,12 @@
         var initialWidthInPixels = cell.width();
         var initialWidthInPercentages = parseFloat(cell[0].style.width);
         var initialAdjacentColumnWidths = getColumnWidths(tableElement, cellIndex + 1);
+        var minInPercentages = (options.min / $(tableElement).outerWidth()) * 100;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + (-1) * MAX);
         
         for (var i = 0; i < rows.length; i++) {
-            equal($(rows[i]).children()[cellIndex + 1].style.width, (initialWidthInPercentages + initialAdjacentColumnWidths[i] - options.min) + PERCENTAGE);
+            equal($(rows[i]).children()[cellIndex + 1].style.width, (initialWidthInPercentages + initialAdjacentColumnWidths[i] - minInPercentages) + PERCENTAGE);
         }
     });
 
@@ -964,11 +969,12 @@
         var cellIndex = cell.index();;
         var rows = $(columnResizing.element).find(ROW);
         var initialWidthInPixels = cell.width();
+        var minInPercentages = (options.min / $(tableElement).outerWidth()) * 100;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + MAX);
 
         for (var i = 0; i < rows.length; i++) {
-            equal($(rows[i]).children()[cellIndex + 1].style.width, options.min + PERCENTAGE);
+            equal($(rows[i]).children()[cellIndex + 1].style.width, minInPercentages + PERCENTAGE);
         }
     });
 

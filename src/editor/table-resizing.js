@@ -37,7 +37,11 @@
     var WIDTH = "width";
     var LAST_CHILD = ":last-child";
 
-    function constrain(value, lowerBound, upperBound) {
+    function constrain(options) {
+        var value = options.value;
+        var lowerBound = options.min;
+        var upperBound = options.max;
+
         return max(min(parseFloat(value), parseFloat(upperBound)), parseFloat(lowerBound));
     }
 
@@ -138,7 +142,7 @@
 
         options: {
             tags: [TD, TH],
-            min: 5,
+            min: 20,
             handle: {
                 width: 10,
                 height: 10,
@@ -248,11 +252,14 @@
                     var columnLeftOffset = column.offset().left;
                     var adjacentColumn = column.next();
                     var adjacentColumnWidth = adjacentColumn ? adjacentColumn.outerWidth() : 0;
-                    var leftOffset = constrain(e.x.location, columnLeftOffset + min, columnLeftOffset + columnWidth + adjacentColumnWidth - handleWidth - min);
+                    var leftOffset= constrain({
+                        value: e.x.location,
+                        min: columnLeftOffset + min,
+                        max: columnLeftOffset + columnWidth + adjacentColumnWidth - handleWidth - min
+                    });
 
                     $(that.resizeHandle).css({ left: leftOffset });
                 },
-
                 resizeend: function(e) {
                     var resizable = this;
                     var column = resizable.element;
@@ -276,6 +283,7 @@
             var that = this;
             var tableWidth = $(that.element).width();
             var min = that.options.min;
+            var minInPercentages = calculatePercentageRatio(min, tableWidth);
             var adjacentColumn = column.next();
             var adjacentColumnWidth = adjacentColumn[0] ? getColumnWidth(adjacentColumn[0]) : 0;
             var adjacentColumnWidthValue;
@@ -289,14 +297,22 @@
             if(inPercentages(columnWidth)) { 
                 differenceInPercentages = calculatePercentageRatio(deltaX, tableWidth);
                 adjacentColumnWidthValue = calculatePercentageRatio(adjacentColumnWidth, tableWidth);
-                newWidth = constrain(columnWidthValue + differenceInPercentages, min, abs(columnWidthValue + adjacentColumnWidthValue - min));
+                newWidth = constrain({
+                    value: columnWidthValue + differenceInPercentages,
+                    min: minInPercentages,
+                    max: abs(columnWidthValue + adjacentColumnWidthValue - minInPercentages)
+                });                
                 deltaWidth = toPercentages(newWidth - columnWidthValue);
                 newWidth = toPercentages(newWidth);
             }
             else {
                 columnWidthValue = column.width();
                 adjacentColumnWidthValue = adjacentColumn.width();
-                newWidth = constrain(columnWidthValue + deltaX, min, columnWidthValue + adjacentColumnWidthValue - min);
+                newWidth = constrain({
+                    value: columnWidthValue + deltaX,
+                    min: min,
+                    max: columnWidthValue + adjacentColumnWidthValue - min
+                });
                 deltaWidth = columnWidthValue - newWidth;
             }
 
@@ -356,6 +372,7 @@
             var tableWidth = $(that.element).width();
             var options = that.options;
             var min = options.min;
+            var minInPercentages = calculatePercentageRatio(min, tableWidth);
             var delta = (-1) * parseFloat(deltaWidth);
             var initialColumnWidthInPercentages = calculatePercentageRatio(initialColumnWidth, tableWidth);
             var adjacentColumnWidth;
@@ -363,12 +380,20 @@
 
             if (inPercentages(deltaWidth)) {
                 adjacentColumnWidth = calculatePercentageRatio(getColumnWidth(adjacentColumn, tableWidth));
-                newWidth = constrain(adjacentColumnWidth + delta, min, abs(initialColumnWidthInPercentages + adjacentColumnWidth - min));
+                newWidth = constrain({
+                    value:  adjacentColumnWidth + delta,
+                    min: minInPercentages,
+                    max: abs(initialColumnWidthInPercentages + adjacentColumnWidth - minInPercentages)
+                });
+
                 $(adjacentColumn).width(toPercentages(newWidth));
             }
             else {
-                newWidth = constrain(initialAdjacentColumnWidth + parseFloat(deltaWidth), min,
-                    abs(parseFloat(initialColumnWidth) + initialAdjacentColumnWidth - min));
+                newWidth = constrain({
+                    value: initialAdjacentColumnWidth + parseFloat(deltaWidth),
+                    min: min,
+                    max: abs(parseFloat(initialColumnWidth) + initialAdjacentColumnWidth - min)
+                });
 
                 $(adjacentColumn).width(toPercentages(calculatePercentageRatio(newWidth, tableWidth)));
             }
