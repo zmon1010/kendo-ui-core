@@ -247,7 +247,7 @@ var __meta__ = { // jshint ignore:line
                 link = element.addClass("k-with-icon k-filterable").find(".k-grid-filter");
 
                 if (!link[0]) {
-                    link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-filter">' + options.messages.filter + '</span></a>').find(".k-grid-filter");
+                    link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-i-filter">' + options.messages.filter + '</span></a>').find(".k-grid-filter");
                 }
 
                 link.attr("tabindex", -1).on("click" + NS, proxy(that._click, that));
