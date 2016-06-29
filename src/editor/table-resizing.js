@@ -117,7 +117,7 @@
             if ($(element).is(TABLE)) {
                 that.element = element;
 
-                $(element).on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), proxy(that._detectColumnBorderHover, that));
+                $(element).on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), proxy(that._detectColumnBorderHovering, that));
             }
         },
 
@@ -160,16 +160,12 @@
             return false;
         },
 
-        _detectColumnBorderHover: function(e) {
+        _detectColumnBorderHovering: function(e) {
             var that = this;
-            var handleWidth = that.options.handle.width;
             var column = $(e.currentTarget);
-            var offset = column.offset();
-            var borderLeftOffset = offset.left + column[0].offsetWidth;
-            var clientX = e.clientX;
             var resizeHandle = that.resizeHandle;
             
-            if (!column.is(LAST_CHILD) && (clientX > (borderLeftOffset - handleWidth)) && (clientX < (borderLeftOffset + handleWidth))) {
+            if (!column.is(LAST_CHILD) && that._columnBorderHovered(column, e.clientX)) {
                 if (resizeHandle) {
                     if (resizeHandle.data(COLUMN) && resizeHandle.data(COLUMN) !== column[0] && !that.resizingInProgress()) {
                         if (that.resizable) {
@@ -188,6 +184,21 @@
                     that._createResizeHandle(column);
                     that._initResizable(column);
                 }
+            }
+        },
+
+        _columnBorderHovered: function(column, clientX) {
+            var that = this;
+            var columnElement = column[0];
+            var handleWidth = that.options.handle.width;
+            var borderLeftOffset = column.offset().left + columnElement.offsetWidth;
+            var position = clientX + $(columnElement.ownerDocument).scrollLeft();
+
+            if ((position > (borderLeftOffset - handleWidth)) && (position < (borderLeftOffset + handleWidth))) {
+                return true;
+            }
+            else {
+                return false;
             }
         },
 

@@ -84,7 +84,7 @@
     function triggerBorderHover(element) {
         triggerEvent(element, {
             type: MOUSE_MOVE,
-            clientX: $(element).offset().left + $(element).outerWidth(),
+            clientX: $(element).offset().left + $(element).outerWidth() - $(element.ownerDocument).scrollLeft(),
             clientY: 0
         });
     }
@@ -486,6 +486,17 @@
         triggerEvent(table, { type: MOUSE_LEAVE });
 
         equal($(columnResizing.element).find(HANDLE_SELECTOR).length, 0);
+    });
+
+    test("hovering a scrolled editor document should create resize handle", function() {
+        var table = $(editor.body).find("#table")[0];
+        var tableResizing = editor.tableResizing = new TableResizing(table, {});
+        $(table).width($(editor.document).width() + 100);
+        $(editor.document).scrollLeft(20);
+
+        triggerBorderHover($(table).find(SECOND_COLUMN)[0]);
+
+        equal($(tableResizing.columnResizing.element).find(SECOND_COLUMN).children(HANDLE_SELECTOR).length, 1);
     });
 
     module("editor column resizing", {
