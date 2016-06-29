@@ -136,7 +136,7 @@ var __meta__ = { // jshint ignore:line
                     this._lastHover = itemContent.toggleClass(KSTATEHOVER, addChild);
 
                     if (addChild) {
-                        status = "k-i-aadd";
+                        status = "k-i-add";
                     } else {
                         position = hoveredItem.position();
                         position.top += insertOnTop ? 0 : itemHeight;
@@ -179,7 +179,7 @@ var __meta__ = { // jshint ignore:line
                 }
             });
 
-            if (status.indexOf("k-insert") !== 0) {
+            if (status.indexOf("k-i-insert") !== 0) {
                 this.dropHint.css(VISIBILITY, "hidden");
             }
 
