@@ -37,15 +37,15 @@ var __meta__ = { // jshint ignore:line
                             '<div class="k-toolbar-wrap">' +
                                 '# if (showUpload) { # ' +
                                     '<div class="k-widget k-upload"><div class="k-button k-button-icontext k-upload-button">' +
-                                        '<span class="k-icon k-add"></span>#=messages.uploadFile#<input type="file" name="file" /></div></div>' +
+                                        '<span class="k-icon k-i-add"></span>#=messages.uploadFile#<input type="file" name="file" /></div></div>' +
                                 '# } #' +
 
                                 '# if (showCreate) { #' +
-                                     '<button type="button" class="k-button k-button-icon"><span class="k-icon k-addfolder" /></button>' +
+                                     '<button type="button" class="k-button k-button-icon"><span class="k-icon k-i-add-folder" /></button>' +
                                 '# } #' +
 
                                 '# if (showDelete) { #' +
-                                    '<button type="button" class="k-button k-button-icon k-state-disabled"><span class="k-icon k-delete" /></button>&nbsp;' +
+                                    '<button type="button" class="k-button k-button-icon k-state-disabled"><span class="k-icon k-i-delete" /></button>&nbsp;' +
                                 '# } #' +
                             '</div>' +
                             '<div class="k-tiles-arrange">' +
@@ -200,8 +200,8 @@ var __meta__ = { // jshint ignore:line
             that.element.addClass("k-filebrowser");
 
             that.element
-                .on(CLICK + NS, ".k-filebrowser-toolbar button:not(.k-state-disabled):has(.k-delete)", proxy(that._deleteClick, that))
-                .on(CLICK + NS, ".k-filebrowser-toolbar button:not(.k-state-disabled):has(.k-addfolder)", proxy(that._addClick, that))
+                .on(CLICK + NS, ".k-filebrowser-toolbar button:not(.k-state-disabled):has(.k-i-delete)", proxy(that._deleteClick, that))
+                .on(CLICK + NS, ".k-filebrowser-toolbar button:not(.k-state-disabled):has(.k-i-add-folder)", proxy(that._addClick, that))
                 .on("keydown" + NS, "li.k-state-selected input", proxy(that._directoryKeyDown, that))
                 .on("blur" + NS, "li.k-state-selected input", proxy(that._directoryBlur, that));
 
@@ -613,7 +613,7 @@ var __meta__ = { // jshint ignore:line
                 selectable: true,
                 autoBind: false,
                 dataBinding: function(e) {
-                    that.toolbar.find(".k-delete").parent().addClass("k-state-disabled");
+                    that.toolbar.find(".k-i-delete").parent().addClass("k-state-disabled");
 
                     if (e.action === "remove" || e.action === "sync") {
                         e.preventDefault();
@@ -653,7 +653,7 @@ var __meta__ = { // jshint ignore:line
             var selected = this._selectedItem();
 
             if (selected) {
-                this.toolbar.find(".k-delete").parent().removeClass("k-state-disabled");
+                this.toolbar.find(".k-i-delete").parent().removeClass("k-state-disabled");
                 this.trigger(CHANGE, { selected: selected });
             }
         },
@@ -748,9 +748,9 @@ var __meta__ = { // jshint ignore:line
 
             html += kendo.attr("type") + '="${' + TYPEFIELD + '}">';
             html += '#if(' + TYPEFIELD + ' == "d") { #';
-            html += '<div class="k-thumb"><span class="k-icon k-folder"></span></div>';
+            html += '<div class="k-thumb"><span class="k-icon k-i-folder"></span></div>';
             html += "#}else{#";
-            html += '<div class="k-thumb"><span class="k-icon k-loading"></span></div>';
+            html += '<div class="k-thumb"><span class="k-icon k-i-loading"></span></div>';
             html += "#}#";
             html += '#if(' + TYPEFIELD + ' == "d") { #';
             html += '<input class="k-input" ' + kendo.attr("bind") + '="value:' + NAMEFIELD + '"/>';
@@ -765,9 +765,9 @@ var __meta__ = { // jshint ignore:line
 
             html += kendo.attr("type") + '="${' + TYPEFIELD + '}">';
             html += '#if(' + TYPEFIELD + ' == "d") { #';
-            html += '<div class="k-thumb"><span class="k-icon k-folder"></span></div>';
+            html += '<div class="k-thumb"><span class="k-icon k-i-folder"></span></div>';
             html += "#}else{#";
-            html += '<div class="k-thumb"><span class="k-icon k-file"></span></div>';
+            html += '<div class="k-thumb"><span class="k-icon k-i-file"></span></div>';
             html += "#}#";
             html += '<strong>${' + NAMEFIELD + '}</strong>';
             html += '#if(' + TYPEFIELD + ' == "f") { # <span class="k-filesize">${this.sizeFormatter(' + SIZEFIELD + ')}</span> #}#';
