@@ -1,43 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MediaPlayer</title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
-    <script type="text/javascript" src="../src/kendo.core.js"></script>
-    <script type="text/javascript" src="../src/kendo.data.js"></script>
-    <script type="text/javascript" src="../src/kendo.userevents.js"></script>
-    <script type="text/javascript" src="../src/kendo.draganddrop.js"></script>
-    <script type="text/javascript" src="../src/kendo.slider.js"></script>
+	<title>MediaPlayer</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="../src/kendo.core.js"></script>
+	<script type="text/javascript" src="../src/kendo.data.js"></script>
+	<script type="text/javascript" src="../src/kendo.userevents.js"></script>
+	<script type="text/javascript" src="../src/kendo.draganddrop.js"></script>
+	<script type="text/javascript" src="../src/kendo.slider.js"></script>
 
-    <script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
+	<script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
 
-
-
+	<link href="../styles/web/kendo.common.css" rel="stylesheet" type="text/css" />
+	<link href="../styles/web/kendo.default.css" rel="stylesheet" type="text/css" />
+	<style>
+		body {
+			font-size: 14px;
+		}
+	</style>
 </head>
 <body>
-    <div id="player1"> </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
+	<div id="player1"> </div>
+	<script type="text/javascript">
+		$(document).ready(function () {
 
-            var mnyDataSource = new kendo.data.DataSource({
-                data: [
+			var mnyDataSource = new kendo.data.DataSource({
+				data: [
                   { name: "video1", url: ".//video/justCode.mp4" },
                   { name: "video2", url: "something invalid" }
-                ]
-            });
+				]
+			});
 
 
-            $("#player1").kendoMediaPlayer(
+			$("#player1").kendoMediaPlayer(
                 {
-                    dataSource: mnyDataSource
+                	dataSource: mnyDataSource
                 }
              );
-            
-        });
-    </script>
 
-    <input type="button" value="Play" onclick="(function(){  $('#player1').data('kendoMediaPlayer').play()})(); return false;" />
+		});
+	</script>
 
-    <input type="button" value="Pause" onclick="(function(){  $('#player1').data('kendoMediaPlayer').pause()})(); return false;" />
+
+	<div class="k-mediaplayer k-widget" style="width: 510px; height: 286px;">
+		<video class="k-mediaplayer-media" width="510" height="287" autoplay muted>
+			<source src=".//video/justCode.mp4">
+		</video>
+
+		<div class="k-mediaplayer-titlebar">
+			<span class="k-title">Video Title</span>
+			<a role="button" class="k-icon k-font-icon k-i-playlist-open" style="float: right;">Open Playlist</a>
+		</div>
+
+		<div class="k-widget k-toolbar k-header k-mediaplayer-toolbar">
+			<div style="float: left;">
+				<a role="button" class="k-button k-button-icon" data-role="button"><span class="k-icon k-font-icon k-i-play">Play</span></a>
+				<a role="button" class="k-button k-button-icon" data-role="button"><span class="k-icon k-font-icon k-i-pause">Play</span></a>
+			</div>
+			<div style="float: right;">
+				<a role="button" class="k-button k-button-icon" data-role="button"><span class="k-icon k-font-icon k-i-HD">HD</span></a>
+				<a role="button" class="k-button k-button-icon" data-role="button"><span class="k-icon k-font-icon k-i-volume-high">Volume</span></a>
+				<a role="button" class="k-button k-button-icon" data-role="button"><span class="k-icon k-font-icon k-i-fullscreen-enter">Fullscreen</span></a>
+			</div>
+		</div>
+
+		<div style="height: 286px; margin-right: -280px;" class="k-mediaplayer-playlist">
+			<!--<div class="k-mediaplayer-playlist-button-wrapper">
+				<a role="button" class="k-button k-button-icon" data-role="button" style="width: 100%"><span class="k-icon k-font-icon k-i-arrow-n">Previous</span></a>
+			</div>-->
+			<ul class="k-list">
+				<li class="k-list-item k-active-item"><a title="Take a Tour of the Telerik Platform" href="#"><span class="k-image-wrap"><img alt="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg" src="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg"></span><span class="k-title">Take a Tour of the Telerik Platform</span></a></li>
+				<li class="k-list-item"><a title="Take a Tour of the Telerik Platform" href="#"><span class="k-image-wrap"><img alt="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg" src="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg"></span><span class="k-title">Take a Tour of the Telerik Platform</span></a></li>
+				<li class="k-list-item"><a title="Take a Tour of the Telerik Platform" href="#"><span class="k-image-wrap"><img alt="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg" src="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg"></span><span class="k-title">Take a Tour of the Telerik Platform</span></a></li>
+				<li class="k-list-item"><a title="Take a Tour of the Telerik Platform" href="#"><span class="k-image-wrap"><img alt="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg" src="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg"></span><span class="k-title">Take a Tour of the Telerik Platform</span></a></li>
+				<li class="k-list-item"><a title="Take a Tour of the Telerik Platform" href="#"><span class="k-image-wrap"><img alt="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg" src="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg"></span><span class="k-title">Take a Tour of the Telerik Platform</span></a></li>
+				<li class="k-list-item"><a title="Take a Tour of the Telerik Platform" href="#"><span class="k-image-wrap"><img alt="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg" src="https://i.ytimg.com/vi/rLtTuFbuf1c/default.jpg"></span><span class="k-title">Take a Tour of the Telerik Platform</span></a></li>
+			</ul>
+			<!--<div class="k-mediaplayer-playlist-button-wrapper">
+				<a role="button" class="k-button k-button-icon" data-role="button" style="width: 100%"><span class="k-icon k-font-icon k-i-arrow-s">Next</span></a>
+			</div>-->
+		</div>
+	</div>
+	<br />
+	<br />
+	<br />
+	font
+	<a role="button" class="k-button k-button-icon" data-role="button"><span class="k-icon k-font-icon k-i-arrow-e">Play</span></a>
+	<a role="button" class="k-button k-button-icon" data-role="button"><span class="k-icon k-font-icon k-i-move">Pause</span></a>
+	<br />
+	sprite
+
+
+	<input type="button" value="Play" onclick="(function(){  $('#player1').data('kendoMediaPlayer').play()})(); return false;" />
+
+	<input type="button" value="Pause" onclick="(function(){  $('#player1').data('kendoMediaPlayer').pause()})(); return false;" />
 </body>
 </html>

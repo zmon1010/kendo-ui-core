@@ -1,0 +1,172 @@
+﻿@font-face {
+	font-family: 'TelerikWebUI';
+	src: url('TelerikWebUI.eot');
+	src: url('TelerikWebUI.eot') format('embedded-opentype'),
+			url('TelerikWebUI.woff') format('woff'),
+			url('TelerikWebUI.ttf') format('truetype');
+}
+
+.k-mediaplayer {
+	position: relative;
+}
+
+.k-mediaplayer-titlebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	color: white;
+	padding: 5px;
+	//width: 100%;
+//	z-index: 200;
+}
+
+.k-mediaplayer-toolbar {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	right: 10px;
+	padding: 4px;
+}
+
+
+	.k-i-play,
+	.k-i-pause,
+	.k-i-HD,
+	.k-i-volume-mute,
+	.k-i-volume-low,
+	.k-i-volume-high,
+	.k-i-fullscreen-enter,
+	.k-i-fullscreen-exit,
+	.k-i-playlist-open,
+	.k-i-playlist-close {
+		&:before {
+			font-family: "TelerikWebUI";
+		}
+	}
+
+	.k-i-play:before {
+		content: "\e0e5";
+	}
+		
+	.k-i-pause:before {
+		content: "\e0e3";
+	}
+
+	.k-i-HD:before {content: "\e11e";}
+	.k-i-volume-low:before {content: "\e042";}
+	.k-i-volume-high:before {content: "\e042";}
+	.k-i-volume-mute:before {content: "\e040";}
+	.k-i-fullscreen-enter:before {content: "\e11c";}
+	.k-i-fullscreen-exit:before {content: "\e11d";}
+//	.k-i-share:before {content: "\e0df";}
+	.k-i-playlist-open:before,
+	.k-i-playlist-close:before { content: "\e11f";}
+
+	/*.rmpSubtitlesIcon,
+	.rmpSubtitlesActiveIcon {
+        &:before {
+		    content: "\e150";
+        }
+	}*/
+
+	.rmpPlaylistPrevIcon:before { // ??? 
+		content: "\e011";
+	}
+
+	.rmpPlaylistNextIcon:before {
+		content: "\e012";
+	}
+
+	/*.rmpCloseBannerIcon:before {
+		content: "\e038";
+	}*/
+
+
+
+
+//playlist
+	.k-mediaplayer-playlist {
+		position: absolute;
+
+		ul, li, h4 {
+			padding: 0;
+			margin: 0;
+		}
+
+		ul {
+			list-style-type: none;
+		}
+
+		a {
+			display: block;
+			overflow: hidden;
+			text-decoration: none;
+
+			img {
+				display: block;
+				width: 100px;
+				height: 54px;
+				border: 0 none;
+			}
+
+			span,
+			img {
+				cursor: pointer;
+			}
+		}
+
+		.rmpThumbWrap {
+			display: inline-block;
+		}
+
+		.rmpTitle {
+			display: block;
+			overflow: hidden;
+			text-align: left;
+			font-size: 0.929em;
+		}
+	}
+	//<<Common styles
+	//>>Vertical orientation
+	.k-mediaplayer-playlist {
+		top: 0px;
+		bottom: 0px;
+		right: 0;
+		z-index: 100;
+		width: 280px;
+		overflow: hidden;
+		overflow-y: auto;
+
+		.k-button {
+			padding: 0;
+			border-radius: 0;
+		}
+
+		ul {
+			position: relative;
+		}
+
+		li {
+			&:first-child {
+				border-top: 0 none;
+			}
+		}
+
+		a {
+			padding: 10px 15px;
+		}
+
+		.k-image-wrap {
+			float: left;
+			margin-right: 10px;
+			vertical-align: top;
+		}
+
+		.k-title {
+			max-height: 55px;
+		}
+		//>>NavButtons mode
+		//<<NavButtons mode
+	}
