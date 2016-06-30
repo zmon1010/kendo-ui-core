@@ -24,21 +24,20 @@ var ViewHtmlCommand = Command.extend({
     exec: function() {
         var that = this,
             editor = that.editor,
-            immutables = editor.immutables,
+            options = editor.options,
             messages = editor.options.messages,
             dialog = $(kendo.template(ViewHtmlCommand.template)(messages)).appendTo(document.body),
             textarea = ".k-editor-textarea",
             content;
         
-        editor._serializeImmutables = !!immutables;
+        options.serialization.immutables = editor.immutables;
         content = ViewHtmlCommand.indent(editor.value());
-        editor._serializeImmutables = false;
+        options.serialization.immutables = undefined;
 
         function apply(e) {
-
-            editor._deserializeImmutables = !!immutables;
+            options.deserialization.immutables = editor.immutables;
             editor.value(dialog.find(textarea).val());
-            editor._deserializeImmutables = false;
+            options.deserialization.immutables = undefined;
 
             close(e);
 

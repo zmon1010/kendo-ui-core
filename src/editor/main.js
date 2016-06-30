@@ -894,24 +894,14 @@
             var body = this.body,
                 editorNS = kendo.ui.editor,
                 options = this.options,
-                immutables = this.immutables,
-                currentHtml;
+                currentHtml = editorNS.Serializer.domToXhtml(body, options.serialization);
 
-            if (this._serializeImmutables) {
-                $.extend(options.serialization, { immutables: immutables });
-            }
-
-            currentHtml = editorNS.Serializer.domToXhtml(body, options.serialization);
             if (html === undefined) {
                 return currentHtml;
             }
 
             if (html == currentHtml) {
                 return;
-            }
-
-            if (this._deserializeImmutables) {
-                $.extend(options.deserialization, { immutables: immutables });
             }
 
             editorNS.Serializer.htmlToDom(html, body, options.deserialization);

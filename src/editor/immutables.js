@@ -83,7 +83,7 @@
         serialize: function(node) {
             var result = this._toHtml(node);
             var id = this.randomId();
-            this.serializedImmutables[id] = node;
+            this.serializedImmutables[id] = $(node).clone(true);
             if (result.indexOf(IMMUTABALE) === -1) {
                 result = result.replace(/>/, ' ' + IMMUTABALE + '="' + id + '">');
             }
