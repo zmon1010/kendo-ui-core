@@ -137,12 +137,25 @@ var InlineFormatter = Class.extend({
     apply: function (nodes) {
         var formatNodes = [];
         var i, l, node, formatNode;
+        var attributes = this.attributes;
+        var styleAttr = attributes ? attributes.style || {} : {}; 
 
         for (i = 0, l = nodes.length; i < l; i++) {
             node = nodes[i];
             formatNode = this.finder.findSuitable(node);
             if (formatNode) {
-                dom.attr(formatNode, this.attributes);
+                if (dom.is(formatNode, "font")) {
+                    if (styleAttr.color) {
+                        formatNode.removeAttribute("color");
+                    }
+                    if (styleAttr.fontName) {
+                        formatNode.removeAttribute("face");
+                    }
+                    if (styleAttr.fontSize) {
+                        formatNode.removeAttribute("size");
+                    }
+                }
+                dom.attr(formatNode, attributes);
             } else {
                 while (!dom.isBlock(node.parentNode) && node.parentNode.childNodes.length == 1 && node.parentNode.contentEditable !== 'true') {
                     node = node.parentNode;
@@ -338,7 +351,7 @@ var FontTool = DelayedExecutionTool.extend({
 
         // IE has single selection hence we are using select box instead of combobox
         this.type = (kendo.support.browser.msie || kendo.support.touch) ? "kendoDropDownList" : "kendoComboBox";
-        this.format = [{ tags: ["span"] }];
+        this.format = [{ tags: ["span", "font"] }];
         this.finder = new GreedyInlineFormatFinder(this.format, options.cssAttr);
     },
 
@@ -394,7 +407,7 @@ var ColorTool = Tool.extend({
     init: function(options) {
         Tool.fn.init.call(this, options);
 
-        this.format = [{ tags: ["span"] }];
+        this.format = [{ tags: ["span","font"]}];
         this.finder = new GreedyInlineFormatFinder(this.format, options.cssAttr);
     },
 

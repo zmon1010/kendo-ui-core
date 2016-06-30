@@ -293,17 +293,30 @@ test("BOM nodes are not accumulated when executing sequential commands", functio
     equal($("strong", editor.body)[0].childNodes.length, 1);
 });
 
-    test("format whitespace content", function() {
-        editor.value("some content");
-        var text = editor.body.firstChild;
-        var range = editor.createRange();
-        range.setStart(text, 4);
-        range.setEnd(text, 5);
-        editor.selectRange(range);
+test("format whitespace content", function() {
+    editor.value("some content");
+    var text = editor.body.firstChild;
+    var range = editor.createRange();
+    range.setStart(text, 4);
+    range.setEnd(text, 5);
+    editor.selectRange(range);
 
-        editor.exec("bold");
+    editor.exec("bold");
 
-        contentEqual(editor, "some<strong> </strong>content");
-    });
+    contentEqual(editor, "some<strong> </strong>content");
+});
+
+test("format fonts", function() {
+    QUnit.fixture.html('<font size="2">bar</font>');
+
+    var formatter = new InlineFormatter([{tags:["font"]}], {style:{fontSize:"large"}});
+    var font = fixture.firstChild;
+    
+    formatter.apply([font.firstChild]);
+        
+    equal(font.nodeName, "FONT");
+    notOk(font.size);
+    equal(font.style.fontSize, "large");
+});
 
 }());
