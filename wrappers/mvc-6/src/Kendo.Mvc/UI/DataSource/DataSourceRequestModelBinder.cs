@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
         {
             var request = CreateDataSourceRequest(bindingContext.ModelMetadata, bindingContext.ValueProvider, bindingContext.ModelName);
 
-            bindingContext.Result = ModelBindingResult.Success(bindingContext.ModelName ?? string.Empty, request);
+            bindingContext.Result = ModelBindingResult.Success(request);
 
             return TaskCache.CompletedTask;
         }

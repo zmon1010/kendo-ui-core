@@ -1,6 +1,6 @@
 {
   "version": "1.0.0-*",
-  "title": "Telerik UI for ASP.NET MVC 6 RC2 Final",
+  "title": "Telerik UI for ASP.NET MVC Core 1.0.0",
   "description": "Telerik UI for ASP.NET MVC provides server-side helpers for Kendo UI's JavaScript framework. It enables developers comfortable with the ASP.NET MVC framework to easily configure and work with Kendo UI via familiar server-side programming instead of relying solely on hand-coding of HTML and JavaScript.",
   "authors": [ "Telerik" ],
   "packOptions": {
@@ -11,14 +11,14 @@
     "requireLicenseAcceptance": true
   },
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Mvc.Core": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Mvc.Formatters.Xml": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Routing": "1.0.0-rc2-final",
-    "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc2-final",
-    "System.Linq.Queryable": "4.0.1-rc2-24027",
-    "System.Data.Common": "4.0.1-rc2-24027"
+    "Microsoft.AspNetCore.Mvc": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.Formatters.Xml": "1.0.0",
+    "Microsoft.AspNetCore.Routing": "1.0.0",
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
+    "System.Linq.Queryable": "4.0.1",
+    "System.Data.Common": "4.1.0"
   },
   "buildOptions": {
     "warningsAsErrors": false,
@@ -29,12 +29,13 @@
   },
   "frameworks": {
     "net451": { },
-    "netstandard1.5": {
+    "netstandard1.6": {
       "dependencies": {
-        "System.Reflection.TypeExtensions": "4.1.0-rc2-24027"
+        "System.Reflection.TypeExtensions": "4.1.0",
+        "System.Xml.XmlDocument": "4.0.1"
       },
       "imports": [
-        "portable-net451+win8"
+        "dnxcore50"
       ]
     }
   }
