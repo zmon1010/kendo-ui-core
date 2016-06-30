@@ -81,10 +81,13 @@ html .k-upload
     padding: 0;
 }
 
-.k-upload-status-total .k-icon
-{
-    margin-right: 2px;
-    background: red !important;
+.k-upload-status .k-warning {
+    display: none;
+}
+
+.k-upload-status-total .k-icon {
+    display: inline-block;
+    margin-right: 4px;
 }
 
 .k-dropzone .k-upload-status-total {
@@ -137,12 +140,16 @@ html .k-upload
 
 .k-file-extension-wrapper,
 .k-file-name-size-wrapper,
-.k-multiple-files-extension-wrapper {
+.k-multiple-files-extension-wrapper,
+.k-file-invalid-extension-wrapper,
+.k-multiple-files-invalid-extension-wrapper {
     display: inline-block;
 }
 
 .k-file-extension-wrapper,
-.k-multiple-files-extension-wrapper {
+.k-multiple-files-extension-wrapper,
+.k-file-invalid-extension-wrapper,
+.k-multiple-files-invalid-extension-wrapper {
     position: relative;
     width: 28px;
     height: 38px;
@@ -151,6 +158,11 @@ html .k-upload
     vertical-align: top;
     font-size: .57em;
     text-transform: uppercase;
+}
+
+.k-file-invalid-extension-wrapper,
+.k-multiple-files-invalid-extension-wrapper {
+    font-size: 1.2em;
 }
 
 .k-multiple-files-extension-wrapper {
@@ -168,7 +180,10 @@ html .k-upload
 
 .k-file-extension-wrapper:before,
 .k-multiple-files-extension-wrapper:before,
-.k-multiple-files-extension-wrapper:after {
+.k-multiple-files-extension-wrapper:after,
+.k-file-invalid-extension-wrapper:before,
+.k-multiple-files-invalid-extension-wrapper:before,
+.k-multiple-files-invalid-extension-wrapper:after {
     position: absolute;
     content: "";
     display: inline-block;
@@ -176,7 +191,9 @@ html .k-upload
 }
 
 .k-file-extension-wrapper:before,
-.k-multiple-files-extension-wrapper:before {    
+.k-multiple-files-extension-wrapper:before,
+.k-file-invalid-extension-wrapper:before,
+.k-multiple-files-invalid-extension-wrapper:before {    
     top: -1px;
     right: -1px;    
     width: 0;
@@ -186,7 +203,8 @@ html .k-upload
     margin-right: -1px;
 }
 
-.k-multiple-files-extension-wrapper:after {
+.k-multiple-files-extension-wrapper:after,
+.k-multiple-files-invalid-extension-wrapper:after {
     top: -6px;
     left: -6px;
     width: 15px;
@@ -194,12 +212,22 @@ html .k-upload
     border-width: 2px 0 0 2px;   
 }
 
-.k-file-extension {
+.k-file-extension,
+.k-file-invalid-icon {
     position: absolute;
     bottom: 0;
     line-height: normal;
+}
+
+.k-file-extension {
     margin-left: .375em;
     margin-bottom: .5em;
+}
+
+//k-file-invalid-icon
+.k-file-invalid-icon {
+    margin-left: 5px;
+    //font-size: 2em;
 }
 
 .k-file-name,
@@ -219,7 +247,8 @@ html .k-upload
 }
 
 .k-file-size,
-.k-file-information {
+.k-file-information,
+.k-file-validation-message {
     font-size: .78em;
     line-height: 1.5em;
 }
@@ -231,8 +260,7 @@ html .k-upload
     top: 0;
 }
 
-.k-upload-status .k-button,
-.k-upload-status .k-warning
+.k-upload-status .k-button
 {
     vertical-align: text-bottom;
 }

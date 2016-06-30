@@ -85,6 +85,7 @@
 @upload-success-text-color: @upload-success-background-color;
 @upload-error-background-color: @error;
 //@upload-error-text-color: contrast(@upload-error-background-color, lighten(@error, 70%), darken(@error, 50%), 0.5);
+@upload-invalid-color: lighten(@error, 29%);
 @upload-error-text-color: @upload-error-background-color;
 @task-summary-color: lighten(@widget-text-color, 25%);
 @task-summary-selected-color: lighten(@selected-background-color, 25%);
@@ -1284,10 +1285,26 @@ div.k-filebrowser-dropzone em
     border-color: @widget-border-color;
 }
 
+.k-file-invalid .k-file-name-invalid {
+    color: @error;
+}
+
+.k-file-invalid-extension-wrapper,
+.k-multiple-files-invalid-extension-wrapper {
+    color: @error;
+    border-color: @upload-invalid-color;
+}
+
 .k-file-extension-wrapper:before,
 .k-multiple-files-extension-wrapper:before {
     background-color: @widget-background-color;
     border-color: transparent transparent @widget-border-color @widget-border-color;
+}
+
+.k-file-invalid-extension-wrapper:before,
+.k-multiple-files-invalid-extension-wrapper:before {
+    background-color: @widget-background-color;
+    border-color: transparent transparent @upload-invalid-color @upload-invalid-color;
 }
 
 .k-multiple-files-extension-wrapper:after {
@@ -1295,8 +1312,14 @@ div.k-filebrowser-dropzone em
     border-left-color: @widget-border-color;
 }
 
+.k-multiple-files-invalid-extension-wrapper:after {
+    border-top-color: @upload-invalid-color;
+    border-left-color: @upload-invalid-color;
+}
+
 .k-file-size,
-.k-file-information {
+.k-file-information,
+.k-file-validation-message {
     color: @disabled-text-color;
 }
 
