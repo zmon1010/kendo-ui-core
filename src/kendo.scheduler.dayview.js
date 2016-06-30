@@ -200,7 +200,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         _currentTimeMarkerUpdater: function() {
-            var currentTime = new Date();
+            this._updateCurrentTimeMarker(new Date());
+        },
+
+        _updateCurrentTimeMarker: function(currentTime) {
             var options = this.options;
 
             if(options.currentTimeMarker.useLocalTimezone === false) {
