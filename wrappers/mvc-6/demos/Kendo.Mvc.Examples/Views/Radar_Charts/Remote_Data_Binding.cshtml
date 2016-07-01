@@ -7,8 +7,8 @@
         )        
         .DataSource(ds => ds.Read(read => read.Action("_BudgetReport", "Radar_Charts")))
         .Series(series => {
-            series.RadarLine(model => model.Budget);
-            series.RadarLine(model => model.Spending);
+            series.RadarLine(model => model.Budget).Name("Budget");
+            series.RadarLine(model => model.Spending).Name("Spending");
         })
         .CategoryAxis(axis => axis
             .Categories(model => model.Unit)
