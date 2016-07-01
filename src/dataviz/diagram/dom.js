@@ -4539,7 +4539,10 @@
             },
 
             edit: function() {
-                this.diagram.edit(this.selectedElements()[0]);
+                var selectedElemens = this.selectedElements();
+                if (selectedElemens.length === 1) {
+                    this.diagram.edit(selectedElemens[0]);
+                }
             },
 
             rotateClockwise: function(options) {

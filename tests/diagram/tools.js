@@ -162,6 +162,20 @@
     });
 
     // ------------------------------------------------------------
+    module("ToolBar / Actions / edit", {
+        teardown: function() {
+            diagram.destroy();
+        }
+    });
+
+    test("should not throw error if there isn't a selected shape", function() {
+       createDiagram();
+       var toolbar = diagram.toolbar;
+       diagram.toolBar.edit();
+       ok(true);
+    });
+
+    // ------------------------------------------------------------
     module("ToolBar / events / click", {
         teardown: function() {
             toolbar.destroy();
