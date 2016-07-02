@@ -114,7 +114,7 @@
                 var id = this.getAttribute(IMMUTABALE);
                 var immutable = that.serializedImmutables[id];
                 if (kendo.isFunction(deserialization)) {
-                    deserialization(this, immutable);
+                    deserialization(this, immutable[0]);
                 }
                 $(this).replaceWith(immutable);
             });
