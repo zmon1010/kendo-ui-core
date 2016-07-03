@@ -167,47 +167,39 @@ function getResultValue() {
     return stripColumnAttributes(editor.value());
 }
 
+function testTableCommandExecution(initialContent, expectedContent) {
+    range = createRangeFromText(editor, initialContent);
+    execTableCommand({range: range});
+    equal(getResultValue(editor.value()), expectedContent);
+}
+
 test("exec the immutable in which the selection is", function() {
-    range = createRangeFromText(editor, '<div contenteditable="false">|foo|bar</div>');
-    execTableCommand({ range:range });
-    equal(getResultValue(), '<table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('<div contenteditable="false">|foo|bar</div>',  '<table><tbody><tr><td></td></tr></tbody></table>');
 });
 
 test("exec deletest immutable inline element in which the selection is", function() {
-    range = createRangeFromText(editor, '<span contenteditable="false">|foo|bar</span>');
-    execTableCommand({ range:range });
-    equal(getResultValue(), '<table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('<span contenteditable="false">|foo|bar</span>','<table><tbody><tr><td></td></tr></tbody></table>');
 });
 
 test("exec when selection is in partially selected immutable start container", function() {
-    range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div> text |text');
-    execTableCommand({ range:range });
-    equal(getResultValue(), '<table><tbody><tr><td></td></tr></tbody></table>text');
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div> text |text','<table><tbody><tr><td></td></tr></tbody></table>text');
 });
 
 test("exec when selection is in partially selected only block child in immutable start container", function() {
-    range = createRangeFromText(editor, '<div contenteditable="false"><div>foo|bar</div></div> text |text');
-    execTableCommand({ range:range });
-    equal(getResultValue(), '<table><tbody><tr><td></td></tr></tbody></table>text');
+    testTableCommandExecution('<div contenteditable="false"><div>foo|bar</div></div> text |text','<table><tbody><tr><td></td></tr></tbody></table>text');
 });
 
 test("exec when selection is in partially selected immutable end container", function() {
-    range = createRangeFromText(editor, 'text |text<div contenteditable="false">foo|bar</div>');
-    execTableCommand({ range:range });
-    equal(getResultValue(), 'text <table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('text |text<div contenteditable="false">foo|bar</div>','text <table><tbody><tr><td></td></tr></tbody></table>');
 });
 
 test("exec when selection is in partially selected immutable start and end containers", function() {
-    range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div>test text<div contenteditable="false">foo|bar</div>');
-    execTableCommand({ range:range });
-    equal(getResultValue(), '<table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div>test text<div contenteditable="false">foo|bar</div>','<table><tbody><tr><td></td></tr></tbody></table>');
 });
 
 
 test("exec when selection is in partially selected immutable start and end containers and paragraph is in between", function() {
-    range = createRangeFromText(editor, '<div contenteditable="false">foo|bar</div><p>test text</p><div contenteditable="false">foo|bar</div>');
-    execTableCommand({ range:range });
-    equal(getResultValue(), '<table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div><p>test text</p><div contenteditable="false">foo|bar</div>','<table><tbody><tr><td></td></tr></tbody></table>');
 });
 
 }());
