@@ -77,6 +77,10 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setEvent("dataBound", value.getBody());
     }
 
+    public void setDeselect(DeselectFunctionTag value) {
+        setEvent("deselect", value.getBody());
+    }
+
     public void setFiltering(FilteringFunctionTag value) {
         setEvent("filtering", value.getBody());
     }
@@ -335,6 +339,18 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setDataBound(String value) {
         setProperty("dataBound", new Function(value));
+    }
+
+    public String getDeselect() {
+        Function property = ((Function)getProperty("deselect"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDeselect(String value) {
+        setProperty("deselect", new Function(value));
     }
 
     public String getFiltering() {

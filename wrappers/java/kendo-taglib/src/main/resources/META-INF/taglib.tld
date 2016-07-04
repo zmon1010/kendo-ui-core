@@ -26930,6 +26930,11 @@ A zero value means that a request will be made as soon as the user focuses the w
             <name>select</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <description>Fired when an item is deselected or tag is removed.</description>
+            <name>deselect</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
         <dynamic-attributes>true</dynamic-attributes>
     </tag>
 
@@ -27100,6 +27105,12 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
         <description>Fired when an item from the popup is selected by the user.</description>
         <name>multiSelect-select</name>
         <tag-class>com.kendoui.taglib.multiselect.SelectFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when an item is deselected or tag is removed.</description>
+        <name>multiSelect-deselect</name>
+        <tag-class>com.kendoui.taglib.multiselect.DeselectFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -27285,7 +27296,7 @@ top takes precedence over bottom and left takes precedence over right.</descript
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used.Compare with the format property.</description>
+            <description>Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used. If the user enters a number with a greater precision than is currently configured, the widget value will be rounded. For example, if decimals is 2 and the user inputs 12.346, the value will become 12.35. If the user inputs 12.99, the value will become 13.00.Compare with the format property.</description>
             <name>decimals</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
