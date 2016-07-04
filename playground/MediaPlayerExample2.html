@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- 
+!!! README FIRST !!!
+To enable proper compilation of the LESS files in the example you need to do the following:
+- Host the playground with IIS
+- Add LESS file to IIS MIME types
+  1) File location: %USERPROFILE%\Documents\IISExpress\config\applicationhost.config
+  OR
+  1) Add the MIME type via the IIS Manager
+  2) Less setting: <mimeMap fileExtension=".less" mimeType="text/css" />
+  3) If you need to reset IIS, open Administrator console and type "iisreset"
+-->
+<html>
+<head>
+	<title>MediaPlayer</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+	
+	<link href="../styles/web/kendo.common.less" rel="stylesheet/less" type="text/css" />
+	<link href="../styles/web/kendo.default.less" rel="stylesheet/less" type="text/css" />
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/2.6.1/less.min.js"></script>
+
+	<script type="text/javascript" src="../src/kendo.core.js"></script>
+	<script type="text/javascript" src="../src/kendo.data.js"></script>
+	<script type="text/javascript" src="../src/kendo.userevents.js"></script>
+	<script type="text/javascript" src="../src/kendo.draganddrop.js"></script>
+	<script type="text/javascript" src="../src/kendo.slider.js"></script>
+	<script type="text/javascript" src="../src/kendo.popup.js"></script>
+    <script type="text/javascript" src="../src/kendo.toolbar.js"></script>
+
+	<script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
+
+
+
+	<style>
+		body {
+			font-size: 14px;
+		}
+
+        @font-face {
+	        font-family: 'TelerikWebUI';
+            src: url('../styles/web/common/TelerikWebUI.eot');
+            src: url('../styles/web/common/TelerikWebUI.eot') format('embedded-opentype'),
+                url('../styles/web/common/TelerikWebUI.woff') format('woff'),
+                url('../styles/web/common/TelerikWebUI.ttf') format('truetype');
+        }
+
+		.k-mediaplayer .k-mediaplayer-seekbar {
+			position: absolute;
+			bottom: 60px;
+			left: 20px;
+			right: 10px;
+			padding: 4px;
+			opacity: 0.7;
+		}
+	</style>
+</head>
+<body>
+	<div id="player1" style="width: 510px; height: 286px;"> </div>
+
+	<!--<div id="player1" style="width: 800px; height: 400px;"> </div>-->
+	
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+            var mnyDataSource = new kendo.data.DataSource({
+                data: [
+                  { name: "video1", url: "http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg" },
+                  { name: "video2", url: "something invalid" }
+                ]
+            });
+
+
+			$("#player1").kendoMediaPlayer(
+                {
+                	dataSource: mnyDataSource
+                }
+             );
+
+			// $("#player2").kendoMediaPlayer(
+            //     {
+            //     	dataSource: mnyDataSource
+            //     }
+            //  );
+
+		});
+	</script>
+
+	<input type="button" value="Play" onclick="(function(){  $('#player1').data('kendoMediaPlayer').play()})(); return false;" />
+
+	<input type="button" value="Pause" onclick="(function(){  $('#player1').data('kendoMediaPlayer').pause()})(); return false;" />
+</body>
+</html>
