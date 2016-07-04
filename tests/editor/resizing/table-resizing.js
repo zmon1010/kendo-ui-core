@@ -28,6 +28,33 @@
                 '<td id="col33" class="col">+col 33</td>' +
             '</tr>' +
         '</table>';
+    var NESTED_TABLE_HTML =
+        '<table id="table" class="k-table">' +
+            '<tr id="row1" class="row">' +
+                '<td id="col11" class="col">' +
+                    '<table id="nestedTable" class="k-table">' +
+                        '<tr id="row1" class="row">' +
+                            '<td id="col11" class="col">col 11</td>' +
+                        '</tr>' +
+                        '<tr id="row2" class="row">' +
+                            '<td id="col21" class="col">col 21</td>' +
+                        '</tr>' +
+                    '</table>' +
+                '</td>' +
+                '<td id="col12" class="col">col 12</td>' +
+                '<td id="col13" class="col">col 13</td>' +
+            '</tr>' +
+            '<tr id="row2" class="row">' +
+                '<td id="col21" class="col">+col 21</td>' +
+                '<td id="col22" class="col">+col 22</td>' +
+                '<td id="col23" class="col">+col 23</td>' +
+            '</tr>' +
+            '<tr id="row3" class="row">' +
+                '<td id="col31" class="col">+col 31</td>' +
+                '<td id="col32" class="col">+col 32</td>' +
+                '<td id="col33" class="col">+col 33</td>' +
+            '</tr>' +
+        '</table>';
     var CONTENT_HTML = '<div id="wrapper">' + TABLE_HTML + '</div>';
 
     function triggerEvent(element, eventOptions) {
@@ -72,14 +99,6 @@
         triggerEvent(table, { type: MOUSE_ENTER });
 
         equal(editor.tableResizing.element, table);
-    });
-
-    test("hovering a table should initialize table resizing with empty options", function() {
-        var table = $(editor.body).find("#table")[0];
-
-        triggerEvent(table, { type: MOUSE_ENTER });
-
-        deepEqual(editor.tableResizing.options, {});
     });
 
     test("hovering a different table should destroy current table resizing", function() {
@@ -127,6 +146,75 @@
         equal(editor.tableResizing.destroy.callCount, 0);
     });
 
+    editor_module("editor table resizing", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.tableResizing = null;
+            tableElement = $(NESTED_TABLE_HTML).appendTo(editor.body)[0];
+        },
+
+        afterEach: function() {
+            if (editor) {
+                $(editor.body).find("*").remove();
+            }
+            removeMocksIn(editor.tableResizing);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("hovering a nested table should stop event propagation", function() {
+        var nestedTable = $(tableElement).find("#nestedTable")[0];
+        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+
+        $(nestedTable).trigger(enterEvent);
+
+        equal(enterEvent.isPropagationStopped(), true);
+    });
+
+    test("hovering a nested table should init new table resizing", function() {
+        var nestedTable = $(tableElement).find("#nestedTable")[0];
+        editor.tableResizing = new TableResizing(table, {});
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+
+        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
+        equal(editor.tableResizing.element, nestedTable);
+    });
+
+    test("hovering a nested table should destroy current table resizing", function() {
+        var nestedTable = $(tableElement).find("#nestedTable")[0];
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+
+        equal(destroySpy.calls("destroy"), 1);
+    });
+
+    test("leaving a nested table should stop event propagation", function() {
+        var nestedTable = $(tableElement).find("#nestedTable")[0];
+        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+
+        $(nestedTable).trigger(leaveEvent);
+
+        equal(leaveEvent.isPropagationStopped(), true);
+    });
+
+    test("leaving a nested table should init new table resizing with parent table", function() {
+        var nestedTable = $(tableElement).find("#nestedTable")[0];
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+
+        triggerEvent(nestedTable, { type: MOUSE_LEAVE });
+
+        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
+        equal(editor.tableResizing.element, tableElement);
+    });
+
     module("editor table resizing", {
         setup: function() {
             table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -138,14 +226,6 @@
             }
             kendo.destroy(QUnit.fixture);
         }
-    });
-
-    test("table resizing should be initialized with custom options", function() {
-        var options = { property: "value" };
-
-        tableResizing = new TableResizing(table, options);
-
-        ok(tableResizing.options, options);
     });
 
     test("column resizing should be initialized from table resizing", function() {

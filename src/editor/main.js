@@ -344,20 +344,32 @@
                 .on(MOUSE_ENTER + NS, TABLE, function(e) {
                     var table = e.currentTarget;
 
+                    e.stopPropagation();
+
                     if (editor.tableResizing) {
                         if (editor.tableResizing.element !== table) {
                             editor.tableResizing.destroy();
-                            editor.tableResizing = new kendo.ui.editor.TableResizing(table, {});
+                            editor.tableResizing = new kendo.ui.editor.TableResizing(table);
                         }
                     }
                     else {
-                        editor.tableResizing = new kendo.ui.editor.TableResizing(table, {});
+                        editor.tableResizing = new kendo.ui.editor.TableResizing(table);
                     }
                 })
-                .on(MOUSE_LEAVE + NS, TABLE, function() {
+                .on(MOUSE_LEAVE + NS, TABLE, function(e) {
+                    var parentTable;
+
+                    e.stopPropagation();
+
                     if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
+                        parentTable = $(editor.tableResizing.element).parents(TABLE)[0];
+                        
                         editor.tableResizing.destroy();
                         editor.tableResizing = null;
+
+                        if (parentTable) {
+                            editor.tableResizing = new kendo.ui.editor.TableResizing(parentTable);
+                        }
                     }
                 });
         },

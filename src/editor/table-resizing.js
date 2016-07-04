@@ -73,10 +73,8 @@
     }
 
     var TableResizing = Class.extend({
-        init: function(element, options) {
+        init: function(element) {
             var that = this;
-            
-            that._initOptions(options);
 
             if ($(element).is(TABLE)) {
                 that.element = element;
