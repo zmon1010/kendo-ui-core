@@ -87,9 +87,14 @@ var ListFormatter = Class.extend({
         return name == "ul" || name == "ol" || name == "dl";
     },
 
+    immutables: function () {
+        return this.editor && !!this.editor.options.immutables;
+    },
+
     wrap: function(list, nodes) {
         var li = dom.create(list.ownerDocument, "li"),
-            i, node;
+            i, node,
+            isImmutable = this.immutables() ? Editor.Immutables.immutable : $.noop;;
 
         for (i = 0; i < nodes.length; i++) {
             node = nodes[i];
@@ -121,7 +126,9 @@ var ListFormatter = Class.extend({
 
             if (dom.isBlock(node)) {
                 list.appendChild(li);
-                dom.unwrap(node);
+                if (!isImmutable(node)) {
+                    dom.unwrap(node);
+                }
                 li = li.cloneNode(false);
             }
         }
@@ -303,34 +310,35 @@ var ListFormatter = Class.extend({
             sections = [],
             lastSection,
             lastNodes,
-            section;
-
+            section,
+            node,
+            l = nodes.length,
+            immutableParent = this.immutables() ? Editor.Immutables.immutableParent : $.noop;
+        
+        function addLastSection() {
+            if (lastSection) {
+                sections.push({
+                    section: lastSection,
+                    nodes: lastNodes
+                });
+            }
+        }
+        
         // split nodes into sections that need to be different lists
-        do {
-            section = dom.closestEditable(nodes[i], ["td","body"]);
-
+        for (i = 0; i < l; i++) {
+            node = immutableParent(nodes[i]) || nodes[i];
+            section = dom.closestEditable(node, ["td","body"]);
             if (!lastSection || section != lastSection) {
-                if (lastSection) {
-                    sections.push({
-                        section: lastSection,
-                        nodes: lastNodes
-                    });
-                }
-
-                lastNodes = [nodes[i]];
+                addLastSection();
+                lastNodes = [node];
                 lastSection = section;
             } else {
-                lastNodes.push(nodes[i]);
+                lastNodes.push(node);
             }
+        }
 
-            i++;
-        } while (i < nodes.length);
-
-        sections.push({
-            section: lastSection,
-            nodes: lastNodes
-        });
-
+        addLastSection();
+        
         for (i = 0; i < sections.length; i++) {
             this.applyOnSection(sections[i].section, sections[i].nodes);
         }

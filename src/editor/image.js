@@ -143,6 +143,8 @@ var ImageCommand = Command.extend({
                 resizable: showBrowser
             };
 
+        this.expandImmutablesIn(range);
+
         function apply(e) {
             var element = dialog.element,
                 w = parseInt(element.find(KEDITORIMAGEWIDTH).val(), 10),

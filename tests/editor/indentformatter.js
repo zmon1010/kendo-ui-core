@@ -2,6 +2,7 @@
 
 var IndentFormatter = kendo.ui.editor.IndentFormatter;
 var TextNodeEnumerator = kendo.ui.editor.TextNodeEnumerator;
+var RangeUtils = kendo.ui.editor.RangeUtils;
 var editor;
 var formatter;
 
@@ -158,6 +159,68 @@ test("remove from indented lists with more than one item", function() {
     editor.value('<ul style="margin-left:60px"><li>foo</li><li>bar</li></ul>');
     formatter.remove([editor.body.firstChild.firstChild.firstChild, editor.body.firstChild.lastChild.firstChild]);
     equal(editor.value(), '<ul style="margin-left:30px;"><li>foo</li><li>bar</li></ul>');
+});
+
+editor_module("editor with immutables enabled indent formatter", {
+   setup: function() {
+       editor = $("#editor-fixture").data("kendoEditor");
+       formatter = new IndentFormatter();
+       formatter.immutables = true;
+   }
+});
+
+function getNodesFromText(text) {
+    var range = createRangeFromText(editor, text);
+    return RangeUtils.nodes(range);
+}
+
+test('apply to text in immutable inline node', function() {
+    var nodes = getNodesFromText('text <span contenteditable="false">|immutable| text</span>');
+    formatter.apply(nodes);
+    equal(editor.value(), '<p style="margin-left:30px;">text <span contenteditable="false">immutable text</span></p>');
+});
+
+test('apply to block element in immutable container', function() {
+    var nodes = getNodesFromText('<div contenteditable="false">text<div>|immutable| text</div>text</div>');
+    formatter.apply(nodes);
+    equal(editor.value(), '<div contenteditable="false" style="margin-left:30px;">text<div>immutable text</div>text</div>');
+});
+
+test('apply to first child wrapper block element in immutable container', function() {
+    var nodes = getNodesFromText('<div contenteditable="false"><div>|immutable| text</div></div>');
+    formatter.apply(nodes);
+    equal(editor.value(), '<div contenteditable="false" style="margin-left:30px;"><div>immutable text</div></div>');
+});
+
+test('apply to text surrounding immutable container', function() {
+    var nodes = getNodesFromText('|text <div contenteditable="false">immutable text</div>text|');
+    formatter.apply(nodes);
+    
+    equal(editor.value(), '<p style="margin-left:30px;">text </p><div contenteditable="false" style="margin-left:30px;">immutable text</div><p style="margin-left:30px;">text</p>');
+});
+
+test('remove to text in immutable inline node', function() {
+    var nodes = getNodesFromText('<p style="margin-left:30px;">text <span contenteditable="false">|immutable| text</span></p>');
+    formatter.remove(nodes);
+    equal(editor.value(), '<p>text <span contenteditable="false">immutable text</span></p>');
+});
+
+test('remove to block element in immutable container', function() {
+    var nodes = getNodesFromText('<div contenteditable="false" style="margin-left:30px;">text<div>|immutable| text</div>text</div>');
+    formatter.remove(nodes);
+    equal(editor.value(), '<div contenteditable="false">text<div>immutable text</div>text</div>');
+});
+
+test('remove to first child wrapper block element in immutable container', function() {
+    var nodes = getNodesFromText('<div contenteditable="false" style="margin-left:30px;"><div>|immutable| text</div></div>');
+    formatter.remove(nodes);
+    equal(editor.value(), '<div contenteditable="false"><div>immutable text</div></div>');
+});
+
+test('remove to indented elements including immutable container', function() {
+    var nodes = getNodesFromText('<p style="margin-left:30px;">|text </p><div contenteditable="false" style="margin-left:30px;">immutable text</div><p style="margin-left:30px;">text|</p>');
+    formatter.remove(nodes);
+    equal(editor.value(), '<p>text </p><div contenteditable="false">immutable text</div><p>text</p>');
 });
 
 }());

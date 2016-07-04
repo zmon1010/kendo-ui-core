@@ -152,4 +152,54 @@ test("creates 3 columns with width roughly equal to 33.3%", function() {
     }
 });
 
+editor_module("editor with immutables true table command", {
+    setup: function() {
+        editor = $("#editor-fixture").data("kendoEditor");
+        editor.options.immutables = true;
+        editor.focus();
+    },
+    teardown: function() {
+        $(".k-window,.k-overlay").remove();
+    }
+});
+
+function getResultValue() {
+    return stripColumnAttributes(editor.value());
+}
+
+function testTableCommandExecution(initialContent, expectedContent) {
+    range = createRangeFromText(editor, initialContent);
+    execTableCommand({range: range});
+    equal(getResultValue(editor.value()), expectedContent);
+}
+
+test("exec the immutable in which the selection is", function() {
+    testTableCommandExecution('<div contenteditable="false">|foo|bar</div>',  '<table><tbody><tr><td></td></tr></tbody></table>');
+});
+
+test("exec deletest immutable inline element in which the selection is", function() {
+    testTableCommandExecution('<span contenteditable="false">|foo|bar</span>','<table><tbody><tr><td></td></tr></tbody></table>');
+});
+
+test("exec when selection is in partially selected immutable start container", function() {
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div> text |text','<table><tbody><tr><td></td></tr></tbody></table>text');
+});
+
+test("exec when selection is in partially selected only block child in immutable start container", function() {
+    testTableCommandExecution('<div contenteditable="false"><div>foo|bar</div></div> text |text','<table><tbody><tr><td></td></tr></tbody></table>text');
+});
+
+test("exec when selection is in partially selected immutable end container", function() {
+    testTableCommandExecution('text |text<div contenteditable="false">foo|bar</div>','text <table><tbody><tr><td></td></tr></tbody></table>');
+});
+
+test("exec when selection is in partially selected immutable start and end containers", function() {
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div>test text<div contenteditable="false">foo|bar</div>','<table><tbody><tr><td></td></tr></tbody></table>');
+});
+
+
+test("exec when selection is in partially selected immutable start and end containers and paragraph is in between", function() {
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div><p>test text</p><div contenteditable="false">foo|bar</div>','<table><tbody><tr><td></td></tr></tbody></table>');
+});
+
 }());

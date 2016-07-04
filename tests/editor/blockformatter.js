@@ -281,4 +281,113 @@ test("applying left align to lists removes list-style-position", function() {
     equal(editor.value(), '<ul><li style="text-align:left;">foo</li></ul>');
 });
 
+editor_module("editor block formatter", {
+   setup: function() {
+       editor = $("#editor-fixture").data("kendoEditor");
+       QUnit.fixture.append('<div id="inline" contentEditable="true"></div>');
+       setupImmutables();
+   },
+   teardown: function() {
+       kendo.destroy(QUnit.fixture);
+   }
+});
+
+var setupImmutables = function() {
+    editor.options.immutables = true;
+    editor._initializeImmutables();
+    justifyRight.editor = editor;
+    justifyCenter.editor = editor;
+    justifyLeft.editor = editor;
+};
+
+var firstInnerChild = function(element){
+    while (element && element.firstChild ) {
+        element = element.firstChild;
+        if (element.nodeName == "BR") {
+            element = element.nextSibling;
+        }
+    }
+    return element;
+};
+
+var immutableHtml = '<span contenteditable="false">test</span>';
+
+test("toggle on immutable element", function() {
+    editor.value(immutableHtml);
+
+    var range = editor.createRange();
+    range.selectNode(firstInnerChild(editor.body));
+
+    justifyRight.toggle(range);
+
+    equal(editor.value(), '<span contenteditable="false" style="float:right;">test</span>');
+});
+
+test("toggle on immutable element in paragarph", function() {
+    editor.value('<p>' + immutableHtml + '</p>');
+
+    var range = editor.createRange();
+    range.selectNode(firstInnerChild(editor.body));
+
+    justifyRight.toggle(range);
+
+    equal(editor.value(), '<p><span contenteditable="false" style="float:right;">test</span></p>');
+});
+
+test("apply on immutable element and sibling element", function() {
+    editor.value(immutableHtml + '<p>foo</p>');
+
+    justifyRight.apply([ firstInnerChild(editor.body), firstInnerChild(editor.body.childNodes[1]) ]);
+
+    equal(editor.value(), '<span contenteditable="false" style="float:right;">test</span><p style="text-align:right;">foo</p>');
+});
+
+test("apply on immutable element and sibling text", function() {
+    editor.value(immutableHtml + 'foo');
+
+    justifyRight.apply([ editor.body.firstChild, editor.body.childNodes[1] ]);
+
+    equal(editor.value(), '<div style="text-align:right;"><span contenteditable="false" style="float:right;">test</span>foo</div>');
+});
+
+test("remove on immutable element", function() {
+    editor.value('<span contenteditable="false" style="float:right;">test</span>');
+
+    justifyRight.remove([firstInnerChild(editor.body)]);
+
+    equal(editor.value(), immutableHtml);
+});
+
+test("apply justifyCenter on immutable element", function() {
+    editor.value(immutableHtml);
+
+    justifyCenter.apply([ firstInnerChild(editor.body) ]);
+
+    equal(editor.value(), '<span contenteditable="false" style="display:block;margin-left:auto;margin-right:auto;">test</span>');
+});
+
+test("remove justifyCenter on immutable element", function() {
+    editor.value('<span contenteditable="false" style="display:block;margin-left:auto;margin-right:auto;">test</span>');
+
+    justifyCenter.remove([ firstInnerChild(editor.body) ]);
+
+    equal(editor.value(), immutableHtml);
+});
+
+test("apply justifyLeft on immutable element", function() {
+    editor.value(immutableHtml);
+
+    justifyLeft.apply([ firstInnerChild(editor.body) ]);
+
+    equal(editor.value(), '<span contenteditable="false" style="float:left;">test</span>');
+});
+
+test("remove justifyCenter on immutable element", function() {
+    editor.value('<span contenteditable="false" style="float:left;">test</span>');
+
+    justifyLeft.remove([ firstInnerChild(editor.body) ]);
+
+    equal(editor.value(), immutableHtml);
+});
+
 }());

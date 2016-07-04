@@ -100,4 +100,29 @@ test("selection algorithm skips whitespace nodes", function() {
     equal(editor.value(), "<table><tbody><tr><td><a></a>foo</td></tr></tbody></table>");
 });
 
+editor_module("editor immutables enabled delete column command", {
+   setup: function() {
+       editor = $("#editor-fixture").data("kendoEditor");
+       editor.options.immutables = true;
+   },
+
+   teardown: function() {
+       kendo.destroy(QUnit.fixture);
+   }
+});
+
+
+test("deleting column in immutable table should not be possible", function() {
+    range = createRangeFromText(editor, '<table contenteditable="false"><tbody><tr><td>f||oo</td></tr></tbody></table>');
+    execDeleteColumnCommand({ range:range });
+    equal(editor.value(), '<table contenteditable="false"><tbody><tr><td>foo</td></tr></tbody></table>');
+});
+
+
+test("deleting column in table child of immutable element should not be possible", function() {
+    range = createRangeFromText(editor, '<div contenteditable="false"><table><tbody><tr><td>f||oo</td></tr></tbody></table></div>');
+    execDeleteColumnCommand({ range:range });
+    equal(editor.value(), '<div contenteditable="false"><table><tbody><tr><td>foo</td></tr></tbody></table></div>');
+});
+
 }());

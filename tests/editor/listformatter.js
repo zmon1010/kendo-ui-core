@@ -130,6 +130,30 @@ test("apply over paragraph containing whitespace", function() {
     equal(editor.value(), '<ul><li>foo<strong>foo</strong> </li></ul>');
 });
 
+var immutableHtml = '<p contenteditable="false">immutable</p>';
+var setupImmutables = function() {
+    editor.options.immutables = true;
+    editor._initializeImmutables();
+    formatter.editor = editor;
+};
+
+test("apply over immutable element", function() {
+    editor.value(immutableHtml);
+    setupImmutables();
+
+    formatter.apply([editor.body.firstChild.firstChild]);
+    equal(editor.value(), '<ul><li>' + immutableHtml + '</li></ul>');
+});
+
+test("apply over paragraphs and immutable element", function() {
+    editor.value('<p>foo 1</p>' + immutableHtml + '<p>foo 2</p>');
+    setupImmutables();
+    var paragraphs = $(editor.body).find("p");
+
+    formatter.apply([paragraphs[0].firstChild, paragraphs[1].firstChild, paragraphs[2].firstChild]);
+    equal(editor.value(), '<ul><li>foo 1</li><li>' + immutableHtml + '</li><li>foo 2</li></ul>');
+});
+
 test("apply converts ul to ol", function() {
     editor.value('<ul><li>foo</li></ul>');
     formatter = new ListFormatter('ol');

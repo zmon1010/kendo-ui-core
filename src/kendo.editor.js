@@ -21,7 +21,8 @@
         "./editor/formatting",
         "./editor/toolbar",
         "./editor/tables",
-        "./editor/table-resizing"
+        "./editor/table-resizing",
+        "./editor/immutables"
     ], f);
 })(function(){
 

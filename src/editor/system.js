@@ -78,6 +78,17 @@ var Command = Class.extend({
         this.formatter.editor = this.editor;
         this.formatter.toggle(range);
         this.releaseRange(range);
+    },
+
+    immutables: function(){
+        return this.editor && this.editor.options.immutables;
+    },
+
+    expandImmutablesIn: function(range) {
+        if (this.immutables()) {
+            kendo.ui.editor.Immutables.expandImmutablesIn(range);
+            this.restorePoint = new RestorePoint(range);
+        }
     }
 });
 
@@ -463,12 +474,17 @@ var BackspaceHandler = Class.extend({
     },
     keydown: function(e) {
         var method, startRestorePoint;
-        var range = this.editor.getRange();
+        var editor = this.editor;
+        var range = editor.getRange();
         var keyCode = e.keyCode;
         var keys = kendo.keys;
         var backspace = keyCode === keys.BACKSPACE;
         var del = keyCode == keys.DELETE;
-
+        
+        if (editor.immutables && editor.immutables.keydown(e, range)) {
+            return;
+        }
+        
         if ((backspace || del) && !range.collapsed) {
             method = "_handleSelection";
         } else if (backspace) {
@@ -480,13 +496,13 @@ var BackspaceHandler = Class.extend({
         if (!method) {
             return;
         }
-
+        
         startRestorePoint = new RestorePoint(range);
-
+        
         if (this[method](range)) {
             e.preventDefault();
 
-            finishUpdate(this.editor, startRestorePoint);
+            finishUpdate(editor, startRestorePoint);
         }
     },
     keyup: $.noop
@@ -871,6 +887,8 @@ var Clipboard = Class.extend({
             return;
         }
 
+        this.expandImmutablesIn();
+
         this._contentModification(
             function beforePaste(editor, range) {
                 var clipboardNode = dom.create(editor.document, 'div', {
@@ -924,6 +942,22 @@ var Clipboard = Class.extend({
         );
     },
 
+    expandImmutablesIn: function(range){
+        var editor = this.editor;
+        if (editor && editor.options.immutables) {
+            var body = editor.body;
+            range = range || editor.getRange();
+            kendo.ui.editor.Immutables.expandImmutablesIn(range);
+            if (range.startContainer === body && range.startOffset === 0) {
+                var doc = body.ownerDocument;
+                var bomNode = doc.createTextNode("\ufeff");
+                body.insertBefore(bomNode, body.childNodes[0]);
+                range.setStartBefore(bomNode);
+            }
+            editor.selectRange(range);
+        }
+    },
+
     splittableParent: function(block, node) {
         var parentNode, body;
 
@@ -946,6 +980,8 @@ var Clipboard = Class.extend({
     paste: function (html, options) {
         var editor = this.editor,
             i, l;
+
+        this.expandImmutablesIn();
 
         options = extend({ clean: false, split: true }, options);
 

@@ -112,6 +112,8 @@ var FileCommand = Command.extend({
                 visible: false,
                 resizable: showBrowser
             };
+        
+        this.expandImmutablesIn(range);
 
         function apply(e) {
             var element = dialog.element,

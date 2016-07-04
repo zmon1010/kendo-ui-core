@@ -18,6 +18,7 @@ var kendo = window.kendo,
     InlineFormatter = Editor.InlineFormatter,
     InlineFormatFinder = Editor.InlineFormatFinder,
     textNodes = RangeUtils.textNodes,
+    editableTextNodes = RangeUtils.editableTextNodes,
     registerTool = Editor.EditorUtils.registerTool,
     keys = kendo.keys;
 
@@ -37,7 +38,7 @@ var LinkFormatter = Class.extend({
     },
 
     apply: function (range, attributes) {
-        var nodes = textNodes(range);
+        var nodes = this.immutables ? editableTextNodes(range) : textNodes(range);
         var markers, doc, formatter, a, parent;
 
         if (attributes.innerHTML) {
@@ -80,9 +81,11 @@ var LinkFormatter = Class.extend({
 
 var UnlinkCommand = Command.extend({
     init: function(options) {
+        var that = this;
         options.formatter = /** @ignore */ {
             toggle : function(range) {
-                new InlineFormatter([{ tags: ["a"]}]).remove(textNodes(range));
+                var nodes = that.immutables() ? editableTextNodes(range) : textNodes(range);
+                new InlineFormatter([{ tags: ["a"]}]).remove(nodes);
             }
         };
         this.options = options;
@@ -92,6 +95,7 @@ var UnlinkCommand = Command.extend({
 
 var LinkCommand = Command.extend({
     init: function(options) {
+        var that;
         this.options = options;
         Command.fn.init.call(this, options);
         this.formatter = new LinkFormatter();
@@ -101,6 +105,7 @@ var LinkCommand = Command.extend({
             this.async = true;
         } else {
             this.exec = function() {
+                this.formatter.immutables = that && that.immutables();
                 this.formatter.apply(options.range, {
                     href: options.url,
                     innerHTML: options.text || options.url,
@@ -148,11 +153,11 @@ var LinkCommand = Command.extend({
 
     exec: function () {
         var messages = this.editor.options.messages;
-
         this._initialText = "";
         this._range = this.lockRange(true);
-        var nodes = textNodes(this._range);
+        this.formatter.immutables = this.immutables();
 
+        var nodes = textNodes(this._range);
         var a = nodes.length ? this.formatter.finder.findSuitable(nodes[0]) : null;
         var img = nodes.length && dom.name(nodes[0]) == "img";
 

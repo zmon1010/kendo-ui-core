@@ -49,6 +49,8 @@ var IndentFormatter = Class.extend({
             targets = [],
             i, len, formatNode, parentList, sibling;
 
+        formatNodes = this.mapImmutables(formatNodes);
+
         if (formatNodes.length) {
             for (i = 0, len = formatNodes.length; i < len; i++) {
                 if (dom.is(formatNodes[i], "li")) {
@@ -110,10 +112,31 @@ var IndentFormatter = Class.extend({
         }
     },
 
+    mapImmutables: function(nodes){
+        if (!this.immutables) {
+            return nodes;
+        } else {
+            var immutables = [];
+            return $.map(nodes, function (node) {
+                var immutable = Editor.Immutables.immutableParent(node);
+                if (immutable) {
+                    if ($.inArray(immutable, immutables) === -1) {
+                        immutables.push(immutable);
+                    } else {
+                        return null;
+                    }
+                }
+                return immutable || node;
+            });
+        }
+    },
+
     remove: function(nodes) {
         var formatNodes = this.finder.findSuitable(nodes),
             targetNode, i, len, list, listParent, siblings,
             formatNode, marginLeft;
+
+        formatNodes = this.mapImmutables(formatNodes);
 
         for (i = 0, len = formatNodes.length; i < len; i++) {
             formatNode = $(formatNodes[i]);
@@ -164,10 +187,13 @@ var IndentFormatter = Class.extend({
 
 var IndentCommand = Command.extend({
     init: function(options) {
+        var that = this;
         options.formatter = /** @ignore */ {
-            toggle : function(range) {
-                new IndentFormatter().apply(RangeUtils.nodes(range));
-            }
+            toggle : $.proxy(function(range) {
+                var indentFormatter = new IndentFormatter();
+                indentFormatter.immutables = this.editor && this.editor.options.immutables;
+                indentFormatter.apply(RangeUtils.nodes(range));
+            }, that)
         };
         Command.fn.init.call(this, options);
     }
@@ -175,10 +201,13 @@ var IndentCommand = Command.extend({
 
 var OutdentCommand = Command.extend({
     init: function(options) {
+        var that = this;
         options.formatter = {
-            toggle : function(range) {
-                new IndentFormatter().remove(RangeUtils.nodes(range));
-            }
+            toggle : $.proxy(function(range) {
+                var indentFormatter = new IndentFormatter();
+                indentFormatter.immutables = this.editor && this.editor.options.immutables;
+                indentFormatter.remove(RangeUtils.nodes(range));
+            }, that)
         };
         Command.fn.init.call(this, options);
     }
@@ -193,20 +222,33 @@ var OutdentTool = Tool.extend({
 
     initialize: function(ui, options) {
         Tool.fn.initialize.call(this, ui, options);
+
+        $.extend(this.options, {
+            immutables: options.editor && options.editor.options.immutables
+        });
+
         ui.addClass("k-state-disabled");
     },
 
     update: function (ui, nodes) {
-        var suitable = this.finder.findSuitable(nodes),
-            isOutdentable, listParentsCount, i, len;
+        var suitableNodes = this.finder.findSuitable(nodes),
+            isOutdentable, listParentsCount, i, len, suitable, immutableParent;
+        for (i = 0, len = suitableNodes.length; i < len; i++) {
+            suitable = suitableNodes[i];
 
-        for (i = 0, len = suitable.length; i < len; i++) {
-            isOutdentable = indent(suitable[i]);
+            if (this.options.immutables) {
+                immutableParent = Editor.Immutables.immutableParent(suitable);
+                if (immutableParent) {
+                    suitable = immutableParent;
+                }
+            }
+
+            isOutdentable = indent(suitable);
 
             if (!isOutdentable) {
-                listParentsCount = $(suitable[i]).parents("ul,ol").length;
-                isOutdentable = (dom.is(suitable[i], "li") && (listParentsCount > 1 || indent(suitable[i].parentNode))) ||
-                                (dom.ofType(suitable[i], ["ul","ol"]) && listParentsCount > 0);
+                listParentsCount = $(suitable).parents("ul,ol").length;
+                isOutdentable = (dom.is(suitable, "li") && (listParentsCount > 1 || indent(suitable.parentNode))) ||
+                                (dom.ofType(suitable, ["ul","ol"]) && listParentsCount > 0);
             }
 
             if (isOutdentable) {

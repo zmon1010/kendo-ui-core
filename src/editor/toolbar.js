@@ -682,22 +682,60 @@
 
         refreshTools: function() {
             var that = this,
+                editorNS = kendo.ui.editor,
                 editor = that._editor,
                 range = editor.getRange(),
-                nodes = kendo.ui.editor.RangeUtils.textNodes(range);
+                nodes = editorNS.RangeUtils.textNodes(range),
+                immutables = editor.options.immutables,
+                immutablesContext = immutables && editorNS.Immutables.immutablesContext(range);
 
             if (!nodes.length) {
                 nodes = [range.startContainer];
             }
 
-            that.items().each(function () {
+            that.items().each(function() {
                 var tool = that.tools[that._toolName(this)];
-                if (tool && tool.update) {
-                    tool.update($(this), nodes);
+                if (tool) {
+                    var ui = $(this);
+                    if (tool.update) {
+                        tool.update(ui, nodes);
+                    }
+
+                    if (immutables) {
+                        that._updateImmutablesState(tool, ui, immutablesContext);
+                    }
                 }
             });
-
             this.update();
+        },
+
+        _updateImmutablesState: function(tool, ui, immutablesContext) {
+            var name = tool.name;
+            var uiElement = ui;
+
+            var trackImmutables = tool.options.trackImmutables;
+            if (trackImmutables === undefined) {
+                trackImmutables = $.inArray(name, editorNS.Immutables.toolsToBeUpdated) > -1;
+            }
+
+            if (trackImmutables) {
+                var display = immutablesContext ? "none" : "";
+                if (!ui.is(".k-tool")) {
+                    var uiData = ui.data();
+                    for (var key in uiData) {
+                        if (key.match(/^kendo[A-Z][a-zA-Z]*/)) {
+                            var widget = uiData[key];
+                            uiElement = widget.wrapper;
+                            break;
+                        }
+                    }
+                }
+                uiElement.css("display", display);
+                var groupUi = uiElement.closest("li");
+                if (groupUi.children(":visible").length === 0) {
+                    groupUi.css("display", display);
+                }
+            }
         },
 
         update: function() {

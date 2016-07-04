@@ -279,7 +279,9 @@ var Dom = {
             return entity ? '&'+entity+';' : c;
         });
     },
-
+    isBom: function(node) {
+        return node && node.nodeType === 3 && /^[\ufeff]+$/.test(node.nodeValue);
+    },
     stripBom: function(text) {
         return (text || "").replace(bom, "");
     },
@@ -295,7 +297,9 @@ var Dom = {
 
         return node.className == "k-marker" || (Dom.is(node, 'br') && (node.className == "k-br" || attr._moz_dirty || attr._moz_editor_bogus_node));
     },
-
+    tableCell: function(node) {
+        return Dom.is(node, "td") || Dom.is(node, "th");
+    },
     significantNodes: function(nodes) {
         return $.grep(nodes, function(child) {
             var name = Dom.name(child);
@@ -477,6 +481,16 @@ var Dom = {
             node = node.parentNode;
         }
 
+        return node;
+    },
+    
+    closestBy: function(node, condition, rootCondition) {
+        while (node && !condition(node)) {
+            if (rootCondition && rootCondition(node)){
+                return null;
+            }
+            node = node.parentNode;
+        }
         return node;
     },
 

@@ -68,6 +68,7 @@ var FormattingTool = DelayedExecutionTool.extend({
     },
 
     command: function (args) {
+        var that = this;
         var item = args.value;
 
         item = this.toFormattingItem(item);
@@ -88,6 +89,7 @@ var FormattingTool = DelayedExecutionTool.extend({
                     formatter = new Editor.GreedyBlockFormatter(format);
                 }
 
+                formatter.editor = that.editor;
                 return formatter;
             }
         });
@@ -98,6 +100,8 @@ var FormattingTool = DelayedExecutionTool.extend({
         var options = this.options;
         var toolName = options.name;
         var that = this;
+
+        that.editor = editor;
 
         ui.width(options.width);
 
@@ -215,11 +219,15 @@ var CleanFormatCommand = Command.extend({
 
 
         for(var c = nodes.length - 1; c >= 0; c--) {
-            this.clean(nodes[c]);
+            var node = nodes[c];
+            if (!this.immutableParent(node)) {
+                this.clean(node);
+            }
         }
 
         this.releaseRange(range);
     },
+
     clean: function(node) {
         if (!node || dom.isMarker(node)) {
             return;
@@ -254,6 +262,10 @@ var CleanFormatCommand = Command.extend({
         if ($.inArray(name, this.tagsToClean) > -1) {
             dom.unwrap(node);
         }
+    },
+
+    immutableParent: function(node) {
+        return this.immutables() && Editor.Immutables.immutableParent(node);
     }
 });
 
