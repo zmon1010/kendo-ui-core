@@ -104,9 +104,8 @@
             for (var pending = formulas.length, i = 0; i < formulas.length; ++i) {
                 fetch(formulas[i]);
             }
-            function fetch(cell) { // jshint ignore:line, because you are stupid.
-                cell.formula.exec(context.ss, function(){
-
+            function fetch(formula) { // jshint ignore:line, because you are stupid.
+                formula.exec(context.ss, function(){
                     if (!--pending) {
                         f.call(context);
                     }
@@ -115,9 +114,10 @@
             function add(a) {
                 for (var i = 0; i < a.length; ++i) {
                     var cell = a[i];
-
                     if (cell.formula) {
-                        formulas.push(cell);
+                        formulas.push(cell.formula);
+                    } else if (cell.value instanceof Formula) {
+                        formulas.push(cell.value);
                     }
                 }
                 return true;

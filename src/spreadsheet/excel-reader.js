@@ -98,16 +98,11 @@
                     if (localSheetId != null) {
                         sheet = items[localSheetId].options.name;
                     }
-                    var exp = kendo.spreadsheet.calc.parseFormula(sheet, 0, 0, text);
-                    var value;
-                    if (exp.ast instanceof kendo.spreadsheet.Ref) {
-                        value = exp.ast;
-                    } else {
-                        value = kendo.spreadsheet.calc.compile(exp);
+                    var name = attrs.name;
+                    if (sheet) {
+                        name = "'" + sheet.replace(/\'/g, "\\'") + "'!" + name;
                     }
-                    var nameref = new kendo.spreadsheet.NameRef(attrs.name)
-                        .setSheet(sheet, !!sheet);
-                    workbook.defineName(nameref, value, bool(attrs.hidden));
+                    workbook.defineName(name, text, sheet, bool(attrs.hidden));
                 }
             }
         });

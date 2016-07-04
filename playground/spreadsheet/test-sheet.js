@@ -142,18 +142,23 @@ sheet.batch(function(){
 
     sheet.range("A15").format(" _(* #,##0.00_);_(* (#,##0.00);_(* \"\"-\"\"_)").value(1231231231);
 
-    spreadsheet._workbook.defineName("Foo", kendo.spreadsheet.calc.parseReference("Sheet1!A1:C3"));
-    spreadsheet._workbook.defineName("Bar", kendo.spreadsheet.calc.parseReference("Sheet1!A1, Sheet1!B2, Sheet1!C3"));
+    spreadsheet._workbook.defineName("Foo", "Sheet1!$A$1:$C$3");
+    spreadsheet._workbook.defineName("Bar", "Sheet1!$A$1, Sheet1!$B$2, Sheet1!$C$3");
+    spreadsheet._workbook.defineName("TEST", "SUM($A$1:$C$3)", "Sheet1");
+    spreadsheet._workbook.defineName("Const_PI", "3.14");
+    spreadsheet._workbook.defineName("Const_Str", '"this is string"');
     sheet.range("D3").input("=SUM(foo)");
 
-sheet.range("G14").validation({
-    dataType: "number",
-    allowNulls: false,
-    comparerType: "greaterThan",
-    from: 10
-});
+    sheet.range("G14").validation({
+        dataType: "number",
+        allowNulls: false,
+        comparerType: "greaterThan",
+        from: 10
+    });
 
-spreadsheet._workbook.defineName("Foo", kendo.spreadsheet.calc.parseReference("Sheet1!A1:C3"));
-sheet.range("D3").input("=SUM(foo)");
+    spreadsheet._workbook.defineName("Foo", kendo.spreadsheet.calc.parseReference("Sheet1!A1:C3"));
+    sheet.range("D3").input("=SUM(foo)");
+
+    sheet.range("F16").input("=TEST+TEST");
 
 }, { recalc: true });

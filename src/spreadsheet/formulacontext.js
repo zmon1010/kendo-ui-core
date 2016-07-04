@@ -149,7 +149,11 @@
                 single = this.workbook.nameValue(ref.name) instanceof CellRef;
             }
             var data = this.getRefCells(ref, false, fsheet, frow, fcol).map(function(cell){
-                return cell.value;
+                var val = cell.value;
+                if (val instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                    val = val.value;
+                }
+                return val;
             });
             return single ? data[0] : data;
         },

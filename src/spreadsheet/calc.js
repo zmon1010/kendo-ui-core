@@ -297,6 +297,28 @@
         }
     }
 
+    function parseNameDefinition(name, def, sheet) {
+        var nameRef = parseFormula(sheet, 0, 0, name);
+        if (!(nameRef.ast instanceof NameRef)) {
+            throw new ParseError("Not a name");
+        }
+        nameRef = nameRef.ast;
+
+        var defAST = parseFormula(sheet || nameRef.sheet, 0, 0, def);
+        if (defAST.ast instanceof spreadsheet.Ref) {
+            def = defAST.ast;   // single reference
+        } else if (/^(?:str|num|bool|error)$/.test(defAST.ast.type)) {
+            def = defAST.ast.value; // constant
+        } else {
+            def = makeFormula(defAST); // formula
+        }
+
+        return {
+            name: nameRef,
+            value: def
+        };
+    }
+
     function makePrinter(exp) {
         return makeClosure("function(row, col){return(" + print(exp.ast, exp, 0) + ")}");
         function print(node, parent, prec) { // jshint ignore:line, because you are stupid.
@@ -1322,6 +1344,7 @@
         }
     }
 
+    exports.parseNameDefinition = parseNameDefinition;
     exports.parseFormula = parseFormula;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;

@@ -430,13 +430,14 @@
             return { name: str };
         },
 
-        defineName: function(ref, value, hidden) {
-            var name = ref + "";
+        defineName: function(name, value, sheet, hidden) {
+            var x = kendo.spreadsheet.calc.parseNameDefinition(name, value, sheet);
+            name = x.name.print();
             this._names[name.toLowerCase()] = {
-                value  : value,
+                value  : x.value,
                 hidden : hidden,
                 name   : name,
-                ref    : ref
+                ref    : x.name
             };
         },
 
