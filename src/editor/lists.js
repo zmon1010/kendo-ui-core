@@ -94,7 +94,7 @@ var ListFormatter = Class.extend({
     wrap: function(list, nodes) {
         var li = dom.create(list.ownerDocument, "li"),
             i, node,
-            isImmutable = this.immutables() ? Editor.Immutables.immutable : $.noop;;
+            isImmutable = this.immutables() ? Editor.Immutables.immutable : $.noop;
 
         for (i = 0; i < nodes.length; i++) {
             node = nodes[i];
