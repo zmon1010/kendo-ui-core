@@ -882,7 +882,7 @@
             {
                 skip(3);
                 var x = toCell(c);
-                if (!x) {
+                if (!x || !isFinite(x.row)) {
                     x = new NameRef(c.value);
                 }
                 return addPos(x.setSheet(a.value, true), a, c);
