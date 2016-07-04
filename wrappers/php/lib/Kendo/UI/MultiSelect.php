@@ -444,6 +444,20 @@ refer to Popup documentation.
         return $this->setProperty('select', $value);
     }
 
+    /**
+    * Sets the deselect event of the MultiSelect.
+    * Fired when an item is deselected or tag is removed.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function deselect($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('deselect', $value);
+    }
+
 
 //<< Properties
 }
