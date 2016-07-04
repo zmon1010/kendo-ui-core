@@ -29,6 +29,11 @@ namespace :tests do
         end
     end
 
+    desc "Run tests in jQuery 3.0.0"
+    task :jquery3 => DEPS do
+        gulp_xvfb "ci", "--junit-results=jquery-3.0.0-test-results.xml", "--single-run=true", "--jquery=3.0.0", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
+    end
+
     desc "Run tests in firefox"
     task :firefox => DEPS do
         gulp_xvfb "ci", "--junit-results=firefox-test-results.xml", "--single-run=true", "--browser=Firefox", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
