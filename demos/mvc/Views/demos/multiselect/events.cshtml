@@ -31,8 +31,15 @@
 
             function onSelect(e) {
                 if ("kendoConsole" in window) {
-                    var dataItem = this.dataSource.view()[e.item.index()];
+                    var dataItem = e.dataItem;
                     kendoConsole.log("event :: select (" + dataItem.text + " : " + dataItem.value + ")" );
+                }
+            };
+
+            function onDeselect(e) {
+                if ("kendoConsole" in window) {
+                    var dataItem = e.dataItem;
+                    kendoConsole.log("event :: deselect (" + dataItem.text + " : " + dataItem.value + ")" );
                 }
             };
 
@@ -58,6 +65,7 @@
                 dataSource: data,
                 dataBound: onDataBound,
                 filtering: onFiltering,
+                deselect: onDeselect,
                 select: onSelect,
                 change: onChange,
                 close: onClose,
