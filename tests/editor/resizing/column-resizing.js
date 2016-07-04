@@ -11,6 +11,7 @@
     var MARKER_SELECTOR = ".k-resize-hint-marker";
     var FIRST_COLUMN = "td:first";
     var SECOND_COLUMN = "tr:first td:nth-child(2)";
+    var LAST_COLUMN = "tr:first td:last";
     var PX = "px";
     var DOT = ".";
     var NS = "kendoEditor";
@@ -27,22 +28,22 @@
     var TABLE_HTML =
         '<table id="table" class="k-table" style="width: 400px";padding:20px;>' +
             '<tr id="row1" class="row">' +
-                '<td id="col11" class="col" style="width:100px;">col 11</td>' +
-                '<td id="col12" class="col" style="width:100px;">col 12</td>' +
-                '<td id="col13" class="col" style="width:100px;">col 13</td>' +
-                '<td id="col14" class="col" style="width:100px;">col 14</td>' +
+                '<td id="col11" class="col" style="width:100px;border:1px solid red;">col 11</td>' +
+                '<td id="col12" class="col" style="width:100px;border:1px solid red;">col 12</td>' +
+                '<td id="col13" class="col" style="width:100px;border:1px solid red;">col 13</td>' +
+                '<td id="col14" class="col" style="width:100px;border:1px solid red;">col 14</td>' +
             '</tr>' +
             '<tr id="row2" class="row">' +
-                '<td id="col21" class="col" style="width:100px;">col 21</td>' +
-                '<td id="col22" class="col" style="width:100px;">col 22</td>' +
-                '<td id="col23" class="col" style="width:100px;">col 23</td>' +
-                '<td id="col24" class="col" style="width:100px;">col 24</td>' +
+                '<td id="col21" class="col" style="width:100px;border:1px solid red;">col 21</td>' +
+                '<td id="col22" class="col" style="width:100px;border:1px solid red;">col 22</td>' +
+                '<td id="col23" class="col" style="width:100px;border:1px solid red;">col 23</td>' +
+                '<td id="col24" class="col" style="width:100px;border:1px solid red;">col 24</td>' +
             '</tr>' +
             '<tr id="row3" class="row">' +
-                '<td id="col31" class="col" style="width:100px;">col 31</td>' +
-                '<td id="col32" class="col" style="width:100px;">col 32</td>' +
-                '<td id="col33" class="col" style="width:100px;">col 33</td>' +
-                '<td id="col34" class="col" style="width:100px;">col 34</td>' +
+                '<td id="col31" class="col" style="width:100px;border:1px solid red;">col 31</td>' +
+                '<td id="col32" class="col" style="width:100px;border:1px solid red;">col 32</td>' +
+                '<td id="col33" class="col" style="width:100px;border:1px solid red;">col 33</td>' +
+                '<td id="col34" class="col" style="width:100px;border:1px solid red;">col 34</td>' +
             '</tr>' +
         '</table>';
     var TABLE_IN_PERCENTAGES =
@@ -73,24 +74,27 @@
             '</tr>' +
         '</table>';
 
-    function resizeColumn(column, from, to) {
-        triggerBorderHover(column);
+    function resizeColumn(column, from, to, options) {
+        triggerBorderHover(column, options);
 
-        triggerResize(column, from, to);
+        triggerResize(column, from, to, options);
 
         $(column[0].ownerDocument.documentElement).trigger($.Event(MOUSE_UP));
     }
 
-    function triggerBorderHover(element) {
+    function triggerBorderHover(element, options) {
+        var rtl = (options || {}).rtl;
+        var width = rtl ? 0 : $(element).outerWidth();
+
         triggerEvent(element, {
             type: MOUSE_MOVE,
-            clientX: $(element).offset().left + $(element).outerWidth() - $(element.ownerDocument).scrollLeft(),
+            clientX: $(element).offset().left + width - $(element.ownerDocument).scrollLeft(),
             clientY: 0
         });
     }
 
-    function triggerResize(element, from, to) {
-        triggerBorderHover(element);
+    function triggerResize(element, from, to, options) {
+        triggerBorderHover(element, options);
 
         var doc = $(element[0].ownerDocument.documentElement);
         var resizeHandle = element.find(HANDLE_SELECTOR);
@@ -171,9 +175,10 @@
     });
 
     test("resizing should be initialized with default options", function() {
-        var options = {
+        var defaultOptions = {
             tags: ["td", "th"],
             min: 20,
+            rtl: false,
             handle: {
                 width: 10,
                 height: 10,
@@ -186,7 +191,7 @@
 
         columnResizing = new ColumnResizing(tableElement, {});
 
-        deepEqual(columnResizing.options, options);
+        deepEqual(columnResizing.options, defaultOptions);
     });
 
     test("resizing should be initialized with custom tags", function() {
@@ -343,7 +348,7 @@
 
         triggerBorderHover(cell);
 
-        ok(columnResizing.resizeHandle.data("column") == cell[0]);
+        equal(columnResizing.resizeHandle.data("column"), cell[0]);
     });
 
     test("resize handle should be recreated when resizing a different column", function() {
@@ -388,6 +393,7 @@
     test("existing resize handle should be shown while resizing", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
+        columnResizing.resizeHandle = $(columnResizing.options.handle.template).appendTo(cell).show();
         columnResizing.resizingInProgress = function() { return true; };
 
         triggerResize(cell, initialWidth, initialWidth + 10);
@@ -398,6 +404,7 @@
     test("existing resize handle should be shown if resizing is not in progress", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
+        columnResizing.resizeHandle = $(columnResizing.options.handle.template).appendTo(cell).show();
         columnResizing.resizingInProgress = function() { return false; };
 
         triggerResize(cell, initialWidth, initialWidth + 10);
@@ -796,7 +803,7 @@
         }
     });
 
-    module("editor column resizing", {
+    module("editor column resizing resizingInProgress", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
             columnResizing = new ColumnResizing(tableElement, {});
@@ -810,7 +817,7 @@
         }
     });
 
-    test("resizingInProgress should be false on resize start", function() {
+    test("should be false on resize start", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
 
@@ -819,7 +826,7 @@
         ok(columnResizing.resizingInProgress() === false);
     });
 
-    test("resizingInProgress should be true during resizing", function() {
+    test("should be true during resizing", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
 
@@ -828,7 +835,7 @@
         ok(columnResizing.resizingInProgress() === true);
     });
 
-    test("resizingInProgress should be false after resize end", function() {
+    test("should be false after resize end", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
 
@@ -993,5 +1000,109 @@
         for (var i = 0; i < otherColumns.length; i++) {
             equal(otherColumns[i].style.width, columnWidths[i] + PERCENTAGE);
         }
+    });
+
+    module("editor column resizing rtl", {
+        setup: function() {
+            var wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(wrapper);
+            columnResizing = new ColumnResizing(tableElement, { rtl: true });
+            options = columnResizing.options;
+        },
+
+        teardown: function() {
+            if (columnResizing) {
+                columnResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+    
+    test("hovering the border of the first cell should create resize handle", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerBorderHover(cell, { rtl: true });
+
+        equal(cell.children(HANDLE_SELECTOR).length, 1);
+    });
+
+    test("hovering the border of the last cell should not create resize handle", function() {
+        var cell = $(columnResizing.element).find(LAST_COLUMN);
+
+        triggerBorderHover(cell, { rtl: true });
+
+        equal(cell.children(HANDLE_SELECTOR).length, 0);
+    });
+
+    module("editor column resizing rtl", {
+        setup: function() {
+            var wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(wrapper);
+            columnResizing = new ColumnResizing(tableElement, { rtl: true });
+            options = columnResizing.options;
+        },
+
+        teardown: function() {
+            if (columnResizing) {
+                columnResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("resize handle left offset should be set", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var leftOffset = cell.offset().left;
+
+        triggerBorderHover(cell, { rtl: true });
+
+        equal(columnResizing.resizeHandle.css("left"), leftOffset - (options.handle.width / 2) + PX);
+    });
+
+    test("resize handle left offset should be increased while resizing", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var leftOffset = cell.offset().left;
+        var differenceInPixels = 10;
+
+        triggerResize(cell, 0, differenceInPixels, { rtl: true });
+
+        equal(columnResizing.resizeHandle.css("left"), leftOffset + differenceInPixels - (options.handle.width / 2) + PX);
+    });
+
+    test("resize handle left offset should be decreased while resizing", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var leftOffset = cell.offset().left;
+        var differenceInPixels = (-1) * 10;
+
+        triggerResize(cell, 0, differenceInPixels, { rtl: true });
+
+        equal(columnResizing.resizeHandle.css("left"), leftOffset + differenceInPixels - (options.handle.width / 2) + PX);
+    });
+    test("resize handle left offset should not be lower than min", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var leftOffset = cell.offset().left;
+        var adjacentColumnWidth = cell.next().outerWidth();
+
+        triggerResize(cell, 0, (-1) * MAX, { rtl: true });
+
+        equal(columnResizing.resizeHandle.css("left"), leftOffset - adjacentColumnWidth + options.min + PX);
+    });
+
+    test("resize handle left offset should not be greater than max", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var initialWidth = cell[0].offsetWidth;
+        var leftOffset = cell.offset().left;
+
+        triggerResize(cell, 0, MAX, { rtl: true });
+
+        equal(columnResizing.resizeHandle.css("left"), leftOffset + initialWidth - options.handle.width - options.min + PX);
+    });
+
+    test("resize handle top offset should be set", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+
+        triggerBorderHover(cell, { rtl: true });
+
+        equal(columnResizing.resizeHandle.css("top"), $(tableElement).find(TBODY).position().top + PX);
     });
 })();

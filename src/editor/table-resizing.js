@@ -73,12 +73,14 @@
     }
 
     var TableResizing = Class.extend({
-        init: function(element) {
+        init: function(element, options) {
             var that = this;
+
+            that._initOptions(options);
 
             if ($(element).is(TABLE)) {
                 that.element = element;
-                that.columnResizing = new ColumnResizing(element, {});
+                that.columnResizing = new ColumnResizing(element, that.options);
             }
         },
 
@@ -98,11 +100,16 @@
             }
         },
 
+        options: {
+            rtl: false
+        },
+
         resizingInProgress: function() {
             var that = this;
+            var columnResizing = that.columnResizing;
 
-            if (that.columnResizing) {
-                return !!that.columnResizing.resizingInProgress();
+            if (columnResizing) {
+                return !!columnResizing.resizingInProgress();
             }
 
             return false;
@@ -118,7 +125,6 @@
 
             if ($(element).is(TABLE)) {
                 that.element = element;
-
                 $(element).on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), proxy(that._detectColumnBorderHovering, that));
             }
         },
@@ -141,6 +147,7 @@
         options: {
             tags: [TD, TH],
             min: 20,
+            rtl: false,
             handle: {
                 width: 10,
                 height: 10,
@@ -166,10 +173,10 @@
             var that = this;
             var column = $(e.currentTarget);
             var resizeHandle = that.resizeHandle;
-            
-            if (!column.is(LAST_CHILD) && that._columnBorderHovered(column, e.clientX)) {
+
+            if (!that.resizingInProgress() && !column.is(LAST_CHILD) && that._columnBorderHovered(column, e.clientX)) {
                 if (resizeHandle) {
-                    if (resizeHandle.data(COLUMN) && resizeHandle.data(COLUMN) !== column[0] && !that.resizingInProgress()) {
+                    if (resizeHandle.data(COLUMN) && resizeHandle.data(COLUMN) !== column[0]) {
                         if (that.resizable) {
                             that.resizable.destroy();
                             that.resizable = null;
@@ -191,12 +198,12 @@
 
         _columnBorderHovered: function(column, clientX) {
             var that = this;
-            var columnElement = column[0];
-            var handleWidth = that.options.handle.width;
-            var borderLeftOffset = column.offset().left + columnElement.offsetWidth;
-            var position = clientX + $(columnElement.ownerDocument).scrollLeft();
+            var options = that.options;
+            var handleWidth = options.handle.width;
+            var borderLeftOffset = column.offset().left + (options.rtl ? 0 : column.outerWidth());
+            var mousePosition = clientX + $(column[0].ownerDocument).scrollLeft();
 
-            if ((position > (borderLeftOffset - handleWidth)) && (position < (borderLeftOffset + handleWidth))) {
+            if ((mousePosition > (borderLeftOffset - handleWidth)) && (mousePosition < (borderLeftOffset + handleWidth))) {
                 return true;
             }
             else {
@@ -217,7 +224,7 @@
 
             that.resizeHandle.css({
                 top: tableBody.position().top,
-                left: column.offset().left + column[0].offsetWidth - (handleWidth / 2),
+                left: column.offset().left + (options.rtl ? 0 : column.outerWidth()) - (handleWidth / 2),
                 width: handleWidth,
                 height: tableBody.height()
             })
@@ -234,8 +241,6 @@
 
         _initResizable: function(column) {
             var that = this;
-            var handleWidth = that.options.handle ? that.options.handle.width : 0;
-            var min = that.options.min;
 
             if (that.resizable) {
                 that.resizable.destroy();
@@ -246,17 +251,23 @@
                 resize: function(e) {
                     var resizable = this;
                     var column = $(resizable.element);
+                    var columnResizing = that;
+                    var options = columnResizing.options;
+                    var handleWidth = options.handle ? options.handle.width : 0;
+                    var min = options.min;
+                    var rtl = options.rtl;
                     var columnWidth = column.outerWidth();
                     var columnLeftOffset = column.offset().left;
                     var adjacentColumn = column.next();
                     var adjacentColumnWidth = adjacentColumn ? adjacentColumn.outerWidth() : 0;
-                    var leftOffset= constrain({
+                    
+                    var leftOffset = constrain({
                         value: e.x.location,
-                        min: columnLeftOffset + min,
-                        max: columnLeftOffset + columnWidth + adjacentColumnWidth - handleWidth - min
+                        min: abs(columnLeftOffset - (rtl ? adjacentColumnWidth : 0) + min),
+                        max: abs(columnLeftOffset + columnWidth + (rtl ? 0 : adjacentColumnWidth) - handleWidth - min)
                     });
 
-                    $(that.resizeHandle).css({ left: leftOffset });
+                    $(columnResizing.resizeHandle).css({ left: leftOffset });
                 },
                 resizeend: function(e) {
                     var resizable = this;
