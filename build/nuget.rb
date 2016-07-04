@@ -53,8 +53,8 @@ namespace :nuget do
         suffix = ".Trial" if options[:trial]
 
         packages = mvc_versions.map { |mvc_version| "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}.nupkg" }
-        packages << "Kendo.Mvc.#{VERSION}.nupkg"
-        packages << "Kendo.Mvc.#{VERSION}.symbols.nupkg"
+        packages << "#{MVC6_PACKAGE_BASENAME}.nupkg"
+        packages << "#{MVC6_PACKAGE_BASENAME}.symbols.nupkg"
 
         packages.join(" ")
     end
@@ -86,6 +86,6 @@ namespace :nuget do
     desc "Upload MVC Core NuGet packages to nuget.org"
     task :upload_mvc_core do
         # Only while MVC6 is in beta!
-        upload_nuget "Kendo.Mvc.#{VERSION}.nupkg"
+        upload_nuget "#{MVC6_PACKAGE_BASENAME}.nupkg"
     end
 end
