@@ -346,7 +346,7 @@ else
             file.write proj
         end
 
-        sh "cd #{MVC6_SRC_ROOT} && dotnet pack --no-build"
+        sh "cd #{MVC6_SRC_ROOT} && dotnet pack --no-build --configuration Release"
     end
 
     file MVC6_NUGET_SYMBOLS => MVC6_NUGET
