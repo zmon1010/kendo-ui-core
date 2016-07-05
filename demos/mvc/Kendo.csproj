@@ -1226,6 +1226,7 @@
     </Content>
     <Content Include="Views\demos\editor\paste-cleanup.cshtml" />
     <Content Include="Views\demos\drawing\tooltip.cshtml" />
+    <Content Include="Views\demos\editor\immutable-elements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

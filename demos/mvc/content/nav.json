@@ -1625,7 +1625,6 @@
             {
                 "text": "Paste Cleanup",
                 "url": "editor/paste-cleanup",
-                "new": true,
                 "title": {
                     "kendo-ui": "Paste cleanup options demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
                     "aspnet-mvc": "Paste cleanup options demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
@@ -1642,6 +1641,26 @@
                     "!mvc-core"
                 ]
             },
+          {
+            "text": "Immutable Elements",
+            "url": "editor/immutable-elements",
+            "new": true,
+            "title": {
+              "kendo-ui": "Immutable Elements demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
+              "aspnet-mvc": "Immutable Elements demo demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
+            },
+            "meta": {
+              "kendo-ui": "This example shows how you can use immutable elements in Kendo UI Editor's",
+              "aspnet-mvc": "This example shows how you can use immutable elements in ASP.NET MVC Editor"
+            },
+            "description": {
+              "kendo-ui": "<p>The <strong>Kendo UI Editor</strong> widget and its <strong>Immutable Elements</strong> feature enables you to predefine elements in the content area that cannot be edited by the end user.&nbsp;</p><p>This demo shows a use case where a mail form is to be edited.﻿ You can see also:</p><ol><li>﻿How to enable the Immutable Elements—﻿by using the&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables'>immutables option</a>;</li><li>How to define the HTML elements that cannot be edited—by adding the ﻿<strong>contenteditable='false'</strong> attribute;</li><li>﻿How to use the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.serialization'>immutables.serialization</a>&nbsp;and&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.deserialization'>immutables.deserialization</a>&nbsp;option to change the data shown in the&nbsp;<strong>﻿viewHtml</strong>﻿ dialog and enable end user to control the CSS text-align property from there;</li><li>How to define default styles for the immutable elements;</li><li>And how to define styles when an immutable element is selected to improve UX.</li></ol>",
+              "aspnet-mvc": "<p>The ASP.NET MVC web editor and its <strong>Immutable Elements</strong> feature enables you to predefine elements in the content area that cannot be edited by the end user.&nbsp;</p><p>This demo shows a use case where a mail form is to be edited.﻿ You can see also:</p><ol><li>﻿How to enable the Immutable Elements—﻿by using the&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables'>immutables option</a>;</li><li>How to define the HTML elements that cannot be edited—by adding the ﻿<strong>contenteditable='false'</strong> attribute;</li><li>﻿How to use the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.serialization'>immutables.serialization</a>&nbsp;and&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.deserialization'>immutables.deserialization</a>&nbsp;option to change the data shown in the&nbsp;<strong>﻿viewHtml</strong>﻿ dialog and enable end user to control the CSS text-align property from there;</li><li>How to define default styles for the immutable elements;</li><li>And how to define styles when an immutable element is selected to improve UX.</li></ol>"
+            },
+            "packages": [
+              "!mvc-core"
+            ]
+          },
             {
                 "text": "Events",
                 "url": "editor/events",
