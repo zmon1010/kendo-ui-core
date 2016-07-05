@@ -854,12 +854,11 @@ var __meta__ = { // jshint ignore:line
             $(".k-upload-selected, .k-clear-selected", this.wrapper).remove();
         },
 
-        _showHeaderUploadStatus: function() {
+        _showHeaderUploadStatus: function(isUploading) {
             var that = this;
             var localization = that.localization;
             var dropZone = $(".k-dropzone", that.wrapper);
             var headerUploadStatus = $('.k-upload-status-total', that.wrapper);
-            var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error, .k-file-invalid');
 
             if (headerUploadStatus.length !== 0) {
                 headerUploadStatus.remove();
@@ -867,7 +866,7 @@ var __meta__ = { // jshint ignore:line
 
             headerUploadStatus = '<strong class="k-upload-status k-upload-status-total"><span class="k-icon"></span></strong>';
 
-            if(currentlyUploading.length !== 0) {
+            if(isUploading) {
                 headerUploadStatus = $(headerUploadStatus).append(localization.headerStatusUploading);
                 headerUploadStatus.find(".k-icon").addClass(headerStatusIcon.loading).text(localization.statusUploading);
             } else {
@@ -882,7 +881,6 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-//TODO Update after design
         _updateHeaderUploadStatus: function() {
             var that = this;
             var localization = that.localization;
@@ -984,8 +982,6 @@ var __meta__ = { // jshint ignore:line
         _setupCustomDropZone: function() {
             var that = this;
             var dropZone = $(that.options.dropZone);
-
-            if(dropZone.length === 0) { return; }
 
             $(".k-upload-button", that.wrapper).wrap("<div class='k-dropzone'></div>");
 
@@ -1149,11 +1145,11 @@ var __meta__ = { // jshint ignore:line
                     this.performUpload(fileEntry);
                 } else {
                     upload._fileAction(fileEntry, REMOVE);
-                    upload._showHeaderUploadStatus();
+                    upload._showHeaderUploadStatus(false);
                 }
             } else {
                 upload._fileAction(fileEntry, REMOVE);
-                //upload._showHeaderUploadStatus();
+
                 if(!hasValidationErrors) {
                     upload._showUploadButton();
                 } else {
@@ -1201,7 +1197,7 @@ var __meta__ = { // jshint ignore:line
 
             if (!upload.trigger(UPLOAD, e)) {
                 upload._hideUploadButton();
-                upload._showHeaderUploadStatus();
+                upload._showHeaderUploadStatus(true);
 
                 iframe.appendTo(document.body);
 
@@ -1402,7 +1398,7 @@ var __meta__ = { // jshint ignore:line
                         module.performUpload(this);
                     } else {
                         upload._fileAction(this, REMOVE);
-                        upload._showHeaderUploadStatus();
+                        upload._showHeaderUploadStatus(false);
                     }
                 } else {
                     upload._fileAction(this, REMOVE);
@@ -1473,7 +1469,7 @@ var __meta__ = { // jshint ignore:line
             if (!upload.trigger(UPLOAD, e)) {
                 upload._fileAction(fileEntry, CANCEL);
                 upload._hideUploadButton();
-                upload._showHeaderUploadStatus();
+                upload._showHeaderUploadStatus(true);
 
                 if (e.formData) {
                     formData = e.formData;
