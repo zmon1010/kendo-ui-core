@@ -422,8 +422,6 @@ var __meta__ = { // jshint ignore:line
                 var fileEntry = that._enqueueFile(currentFile.name, { fileNames: [ currentFile ] });
                 fileEntry.addClass("k-file-success").data("files", [ files[idx] ]);
 
-                $(".k-progress", fileEntry).width('100%');
-
                 if (!that.options.template) {
                     $(".k-upload-status", fileEntry).prepend("<span class='k-upload-pct'>100%</span>");
                 }
