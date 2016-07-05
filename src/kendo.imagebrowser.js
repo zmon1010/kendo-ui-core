@@ -281,7 +281,7 @@ var __meta__ = { // jshint ignore:line
                    $(this).prev().remove().end().addClass("k-image").fadeIn();
                });
 
-            element.find(".k-loading").after(img);
+            element.find(".k-i-loading").after(img);
 
             if (isFunction(thumbnailUrl)) {
                 thumbnailUrl = thumbnailUrl(that.path(), encodeURIComponent(name));

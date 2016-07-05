@@ -183,7 +183,7 @@
             }
         });
 
-        var icon = treeview.find(".k-plus");
+        var icon = treeview.find(".k-i-expand");
 
         equal(icon.length, 1);
     });
@@ -216,7 +216,7 @@
         treeviewObject.toggle(treeview.find(".k-item"));
 
         equal(treeview.find(".k-item").length, 2);
-        equal(treeview.find(".k-minus").length, 1);
+        equal(treeview.find(".k-i-collapse").length, 1);
     });
 
     test("Sorting the datasource sorts the treeview", function() {

@@ -236,7 +236,7 @@
                 { name: "file2", type: "f", size: 142 }
             ]);
 
-        equal(browser.listView.element.find(".k-file").length, 2);
+        equal(browser.listView.element.find(".k-i-file").length, 2);
     });
 
 
@@ -401,8 +401,8 @@
 
         clickAt(browser.list.find("li[data-type=d]"));
 
-        ok(browser.toolbar.find("button:has(span.k-delete)").length);
-        ok(!browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"));
+        ok(browser.toolbar.find("button:has(span.k-i-delete)").length);
+        ok(!browser.toolbar.find("button:has(span.k-i-delete)").hasClass("k-state-disabled"));
     });
 
 
@@ -411,7 +411,7 @@
 
         clickAt(browser.list.find("li[data-type=f]"));
 
-        ok(!browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"));
+        ok(!browser.toolbar.find("button:has(span.k-i-delete)").hasClass("k-state-disabled"));
     });
 
     test("rebinding disables the delete button", function() {
@@ -420,7 +420,7 @@
         clickAt(browser.list.find("li[data-type=f]"));
         browser.dataSource.read();
 
-        ok(browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"))
+        ok(browser.toolbar.find("button:has(span.k-i-delete)").hasClass("k-state-disabled"))
     });
 
     test("value contains the path diffrent then the base path", function() {
@@ -468,7 +468,7 @@
 
         clickAt(browser.list.find("li[data-type=f]"));
 
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
 
         ok(remove.calls("remove"));
     });
@@ -488,7 +488,7 @@
 
         clickAt(browser.list.find("li[data-type=f]"));
 
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
     });
 
     test("delete button does not trigger listView remove method if no item is selected", function() {
@@ -496,7 +496,7 @@
             remove = stub(browser.list.data("kendoListView"), "remove"),
             showMessage = stub(browser, "_showMessage");// suppress the alert for poping
 
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
 
         ok(!remove.calls("remove"));
     });
@@ -507,7 +507,7 @@
             showMessage = stub(browser, { _showMessage: function() { return true; } });
 
         clickAt(browser.list.find("li[data-type=f]"));
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
 
         ok(remove.calls("remove"));
         ok(showMessage.calls("_showMessage"));
@@ -521,7 +521,7 @@
             showMessage = stub(browser, { _showMessage: function() { return false; } });
 
         clickAt(browser.list.find("li[data-type=f]"));
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
 
         ok(!remove.calls("remove"));
     });
@@ -751,7 +751,7 @@
         browser._showMessage = function() { return true};// suppress the alert for poping
 
         clickAt(browser.list.find("li[data-type=d]"));
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
     });
 
     test("double clicking a image triggers apply event", 1, function() {
@@ -780,7 +780,7 @@
             }
         });
 
-        ok(!browser.element.find(".k-delete").length);
+        ok(!browser.element.find(".k-i-delete").length);
     });
 
     test("create new folder button is not displayed if create url is not set", function() {

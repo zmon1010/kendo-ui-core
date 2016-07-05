@@ -30,8 +30,8 @@ function finishUpdate(editor, startRestorePoint) {
 }
 
 function selected(node, range) { 
-    return range.startContainer === node && range.endContainer === node && 
-	    range.startOffset === 0 && range.endOffset == node.childNodes.length;
+    return range.startContainer === node && range.endContainer === node &&
+        range.startOffset === 0 && range.endOffset == node.childNodes.length;
 }
 
 var Command = Class.extend({
@@ -607,7 +607,7 @@ var SelectAllHandler = Class.extend({
     },
 
     keydown: function (e) {
-        if (!browser.webkit || e.isDefaultPrevented() || 
+        if (!browser.webkit || e.isDefaultPrevented() ||
             !(e.ctrlKey && e.keyCode == 65 && !e.altKey && !e.shiftKey)) {
             return;
         }

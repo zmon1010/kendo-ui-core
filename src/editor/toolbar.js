@@ -679,7 +679,7 @@
 
             if (tool[0]) {
                 var toolname = tool[0];
-                if (toolname.indexOf("k-i") >=0) {
+                if (toolname.indexOf("k-i-") >=0) {
                     return kendo.toCamelCase(toolname.substring(toolname.indexOf("k-i-") + 4));
                 }
                 else {

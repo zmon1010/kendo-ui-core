@@ -702,7 +702,7 @@
         var editButton = button("edit");
         equal(editButton.length, 1);
         equal(editButton.text(), "Edit");
-        equal(editButton.find(".k-icon.k-edit").length, 1);
+        equal(editButton.find(".k-icon.k-i-edit").length, 1);
     });
 
     test("command column with multiple buttons renders them all", function() {
@@ -914,7 +914,7 @@
 
         var filterButton = dom.find("th.k-header a.k-grid-filter");
         equal(filterButton.length, 1);
-        equal(filterButton.find("span.k-icon.k-filter").length, 1);
+        equal(filterButton.find("span.k-icon.k-i-filter").length, 1);
     });
 
     test("links for filtering and sorting are rendered independent", function() {

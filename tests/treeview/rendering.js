@@ -70,7 +70,7 @@
         var element = fromHtml("<ul><li data-kendo-expanded='true'>foo<ul><li>bar</li></ul></li></ul>"),
             wrapper = element.find("div:first");
 
-        equal(wrapper.find("span.k-icon.k-minus").length, 1);
+        equal(wrapper.find("span.k-icon.k-i-collapse").length, 1);
         equal(element.find(".k-group:not(.k-treeview-lines)").length, 1);
     });
 
@@ -296,7 +296,7 @@
             ] }
         ]);
 
-        equal(treeview.find(".k-icon.k-plus").length, 1);
+        equal(treeview.find(".k-icon.k-i-expand").length, 1);
     });
 
     test("renders minus icon if item is expanded", function() {
@@ -306,36 +306,7 @@
             ] }
         ]);
 
-        equal(treeview.find(".k-icon.k-minus").length, 1);
-    });
-
-    test("renders disabled plus icon if item is disabled", function() {
-        treeview.kendoTreeView([
-            { text: "foo", enabled: false, items: [
-                { text: "bar" }
-            ] }
-        ]);
-
-        var icon = treeview.find(".k-icon");
-
-        ok(icon.hasClass("k-plus-disabled"));
-        ok(!icon.hasClass("k-plus"));
-    });
-
-    test("renders disabled minus icon if item is disabled and expanded", function() {
-        treeview.kendoTreeView({
-            animation: false,
-            dataSource: [
-                { text: "foo", enabled: false, expanded: true, items: [
-                    { text: "bar" }
-                ] }
-            ]
-        });
-
-        var icon = treeview.find(".k-icon");
-
-        ok(icon.hasClass("k-minus-disabled"));
-        ok(!icon.hasClass("k-minus"));
+        equal(treeview.find(".k-icon.k-i-collapse").length, 1);
     });
 
     test("does not render group, if there are no sub-items", function() {

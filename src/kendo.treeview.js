@@ -526,10 +526,6 @@ var __meta__ = { // jshint ignore:line
                         result += " k-i-collapse";
                     }
 
-                    // if (item.enabled === false) {
-                    //     result += "-disabled";
-                    // }
-
                     return result;
                 },
                 groupAttributes: function(group) {
@@ -902,6 +898,12 @@ var __meta__ = { // jshint ignore:line
         },
 
         _toggleButtonClick: function (e) {
+            var node = $(e.currentTarget).closest(NODE);
+
+            if (node.is("[aria-disabled='true']")) {
+                return;
+            }
+
             this.toggle($(e.target).closest(NODE));
         },
 
@@ -1776,10 +1778,6 @@ var __meta__ = { // jshint ignore:line
 
         toggle: function (node, expand) {
             node = $(node);
-
-            if (node.is("[aria-disabled='true']")) {
-                return;
-            }
 
             if (!nodeIcon(node).is(".k-i-expand, .k-i-collapse")) {
                 return;

@@ -372,8 +372,8 @@
         filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
 
         equal(filterCell.input.val(), "");
-        filterCell.element.find(".k-icon.k-i-close").click();
-        ok(!filterCell.element.find(".k-icon.k-i-close").is(":visible"));
+        filterCell.element.find(".k-button .k-icon.k-i-close").click();
+        ok(!filterCell.element.find(".k-button .k-icon.k-i-close").is(":visible"));
     });
 
 
