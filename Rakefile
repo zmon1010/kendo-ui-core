@@ -723,7 +723,7 @@ namespace :build do
         nugets = []
 
         NUGETS.each do |nuget|
-            if nuget.match(/Kendo.Mvc/)
+            if nuget.match(/AspNet.Core/)
                 name = nuget;
             else
                 name = nuget.pathmap("%n") + ".#{VERSION}.nupkg";
