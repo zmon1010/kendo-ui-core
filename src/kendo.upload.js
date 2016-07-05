@@ -719,7 +719,7 @@ var __meta__ = { // jshint ignore:line
                     that._updateHeaderUploadStatus();
                 } else if (icon.hasClass("k-i-retry")) {
                     $(".k-warning", fileEntry).remove();
-                    $(".k-progress", fileEntry).show();
+                    $(".k-progress", fileEntry).finish().show();
                     that._module.onRetry({ target: $(fileEntry, that.wrapper) });
                 }
             }
@@ -844,7 +844,9 @@ var __meta__ = { // jshint ignore:line
         _hideUploadProgress: function(fileEntry) {
             $(".k-progress", fileEntry)
                 .delay(PROGRESSHIDEDELAY)
-                .fadeOut(PROGRESSHIDEDURATION);
+                .fadeOut(PROGRESSHIDEDURATION, function() {
+                    $(this).css("width", "0%");
+                });
         },
 
         _showUploadButton: function() {
