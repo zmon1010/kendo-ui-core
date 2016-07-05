@@ -21,7 +21,7 @@
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties project_1json__JSONSchema="http://json.schemastore.org/project-1.0.0-rc1" />
+      <UserProperties project_1json__JSONSchema="http://json.schemastore.org/project-1.0.0-rc2" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" />
