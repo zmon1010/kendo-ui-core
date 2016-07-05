@@ -337,7 +337,16 @@ else
 
     # MVC6 package
     file MVC6_NUGET => MVC6_SOURCES do
-        sh "cd #{MVC6_SRC_ROOT} && dotnet restore && dotnet pack --configuration Release"
+        sh "cd #{MVC6_SRC_ROOT} && dotnet restore && dotnet build --configuration Release"
+
+        projpath = File.join(MVC6_SRC_ROOT, 'project.json')
+        proj = File.read(projpath)
+        proj.sub!('"name": "Kendo.Mvc"', '"name": "Telerik.UI.for.AspNet.Core"')
+        File.open(projpath, 'w') do |file|
+            file.write proj
+        end
+
+        sh "cd #{MVC6_SRC_ROOT} && dotnet pack --no-build"
     end
 
     file MVC6_NUGET_SYMBOLS => MVC6_NUGET

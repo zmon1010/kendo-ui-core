@@ -54,7 +54,7 @@ def update_nuget_reference name
     return unless File.exists? name
 
     content = File.read(name)
-    content.gsub!(/"Telerik.UI.for.AspNet.Core": ".*"/, '"Telerik.UI.for.AspNet.Core": "' + VERSION + '"')
+    content.sub!(/"Kendo.Mvc": ".*"/, '"Telerik.UI.for.AspNet.Core": "' + VERSION + '"')
 
     puts "Updating examples NuGet reference to #{VERSION}"
 
