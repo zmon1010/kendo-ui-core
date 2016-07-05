@@ -1,3 +1,9 @@
+def load_template(filename)
+    path = File.join(File.dirname(__FILE__), "templates", filename)
+
+    ERB.new(File.read(path), 0, '%<>')
+end
+
 module CodeGen::PHP::Wrappers
 
     module Options
@@ -72,7 +78,7 @@ COMPOSITE_OPTION_PROPERTIES = ERB.new(%{//>> Properties
 <% end %><% end %>
 //<< Properties}, 0, '<%>')
 
-    COMPOSITE_OPTION = ERB.new(File.read("build/codegen/lib/php/composite_option.php.erb"), 0, '%<>')
+    COMPOSITE_OPTION = load_template("composite_option.php.erb")
 
     class CompositeOption < CodeGen::PHP::CompositeOption
         include Options
@@ -235,7 +241,7 @@ ARRAY_SETTER = ERB.new(%{
         include CodeGen::PHP::ArrayItem
     end
 
-    COMPONENT = ERB.new(File.read("build/codegen/lib/php/component.php.erb"), 0, '%<>')
+    COMPONENT = load_template("component.php.erb")
 
 COMPONENT_PROPERTIES = ERB.new(%{//>> Properties
 <%= unique_options.map { |option| option.to_setter }.join %><%= events.map { |events| events.to_setter }.join %>

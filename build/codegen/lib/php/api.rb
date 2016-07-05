@@ -476,6 +476,15 @@ Adds one or more <%= item.php_class %> to the <%= owner.php_class %>.
 
         def initialize(path)
             @path = path
+
+            # copy widget topic template
+            widget_topic = "#{@path}Kendo/UI/Widget.md"
+            widget_template = File.join(File.dirname(__FILE__), "templates", "widget.md")
+
+            unless File.exists? widget_topic
+                ensure_path(widget_topic)
+                File.write(widget_topic, File.read(widget_template))
+            end
         end
 
         def component(component)
