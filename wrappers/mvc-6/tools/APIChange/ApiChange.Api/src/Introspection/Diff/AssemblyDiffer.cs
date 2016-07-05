@@ -73,7 +73,7 @@ namespace ApiChange.Api.Introspection
 
             ListDiffer<TypeDefinition> differ = new ListDiffer<TypeDefinition>( ShallowTypeComapare );
 
-            differ.Diff(typesV1, typesV2, OnAddedType, OnRemovedType);
+            //differ.Diff(typesV1, typesV2, OnAddedType, OnRemovedType);
 
             DiffTypes(typesV1, typesV2, queries);
 

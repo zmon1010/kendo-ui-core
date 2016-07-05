@@ -439,8 +439,7 @@ namespace ApiChange.Api.Introspection
                 return false;
             }
 
-            return x.FullName == y.FullName &&
-                   x.Scope.IsEqual(y.Scope);
+            return x.FullName == y.FullName;
         }
 
         static bool Contains(this Collection<TypeReference> interfaces, TypeReference itfTypeRef)
