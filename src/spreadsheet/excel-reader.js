@@ -102,7 +102,7 @@
                     if (sheet) {
                         name = "'" + sheet.replace(/\'/g, "\\'") + "'!" + name;
                     }
-                    workbook.defineName(name, text, sheet, bool(attrs.hidden));
+                    workbook.defineName(name, text, bool(attrs.hidden));
                 }
             }
         });

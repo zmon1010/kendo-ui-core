@@ -23,6 +23,7 @@
     });
 
     var spreadsheet = kendo.spreadsheet;
+    var Ref = spreadsheet.Ref;
     var calc = spreadsheet.calc;
     var runtime = calc.runtime;
     var CalcError = runtime.CalcError;
@@ -58,6 +59,12 @@
             var cell = this.data[this.id(row, col)];
             if (!cell) {
                 this.data[this.id(row, col)] = cell = {};
+            }
+            if (value instanceof Ref) {
+                value = this.getData(value);
+                if (Array.isArray(value)) {
+                    value = value[0];
+                }
             }
             cell.value = value;
             return true;
@@ -104,6 +111,8 @@
                 }];
             }
             return [];
+        },
+        nameValue: function(name) {
         },
         getData: function(ref) {
             if (!(ref instanceof spreadsheet.Ref)) {

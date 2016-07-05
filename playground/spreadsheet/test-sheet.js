@@ -144,10 +144,14 @@ sheet.batch(function(){
 
     spreadsheet._workbook.defineName("Foo", "Sheet1!$A$1:$C$3");
     spreadsheet._workbook.defineName("Bar", "Sheet1!$A$1, Sheet1!$B$2, Sheet1!$C$3");
-    spreadsheet._workbook.defineName("TEST", "SUM($A$1:$C$3)", "Sheet1");
-    spreadsheet._workbook.defineName("Const_PI", "3.14");
-    spreadsheet._workbook.defineName("Const_Str", '"this is string"');
+    spreadsheet._workbook.defineName("TEST", "SUM($A$1:$C$3)", true);
+    spreadsheet._workbook.defineName("Sheet1!Const_PI", "3.14", true);
+    spreadsheet._workbook.defineName("Const_Str", '"this is string"', true);
+    spreadsheet._workbook.defineName("TESTREL", "SUM(R[-2]C[-2]:R[-1]C[-1])", true);
+    spreadsheet._workbook.defineName("TOTAL", "SUM(R1C[0]:R[-1]C[0])", true);
     sheet.range("D3").input("=SUM(foo)");
+    sheet.range("D4").input("=SUM(Bar)");
+    sheet.range("C4").input("=TESTREL");
 
     sheet.range("G14").validation({
         dataType: "number",
@@ -160,5 +164,8 @@ sheet.batch(function(){
     sheet.range("D3").input("=SUM(foo)");
 
     sheet.range("F16").input("=TEST+TEST");
+    sheet.range("G20").input("=TOTAL");
+    sheet.range("G19").input("=Const_PI");
+    sheet.range("20:20").background("#fea").bold(true);
 
 }, { recalc: true });

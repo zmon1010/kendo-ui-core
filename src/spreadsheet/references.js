@@ -61,6 +61,10 @@
 
     var Ref = Class.extend({
         type: "ref",
+        sheet: "",
+        clone: function() {
+            return this;
+        },
         hasSheet: function() {
             return this._hasSheet;
         },
@@ -215,9 +219,6 @@
         init: function NullRef(){},
         print: function() {
             return "#NULL!";
-        },
-        clone: function() {
-            return this;
         },
         eq: function(ref) {
             return ref === this;
@@ -445,9 +446,6 @@
             }
         },
         intersect: function(ref) {
-            if (ref === NULL) {
-                return ref;
-            }
             if (ref instanceof CellRef) {
                 return this._containsCell(ref) ? ref : NULL;
             }
@@ -457,7 +455,7 @@
             if (ref instanceof UnionRef) {
                 return ref.intersect(this);
             }
-            throw new Error("Unknown reference");
+            return NULL;        // can't handle NameRef-s here.
         },
         simplify: function() {
             if (this.isCell()) {

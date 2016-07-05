@@ -54,11 +54,6 @@
             var self = this;
             if (val instanceof Ref) {
                 self.resolveCells([ val ], function(){
-                    val = self.getRefData(val);
-                    if (Array.isArray(val)) {
-                        // got a Range, we should return a single value
-                        val = val[0];
-                    }
                     self._resolve(val);
                 });
             } else {
@@ -73,6 +68,9 @@
         _resolve: function(val) {
             if (val === undefined) {
                 val = null;
+            }
+            if (Array.isArray(val)) {
+                val = this.asMatrix(val);
             }
             var f = this.formula;
             f.value = val;
@@ -116,8 +114,6 @@
                     var cell = a[i];
                     if (cell.formula) {
                         formulas.push(cell.formula);
-                    } else if (cell.value instanceof Formula) {
-                        formulas.push(cell.value);
                     }
                 }
                 return true;
@@ -143,6 +139,24 @@
                 return f.apply(this, ret);
             }
             return ret;
+        },
+
+        fetchName: function(ref, callback) {
+            var f = this.formula;
+            var val = this.ss.nameValue(ref, f.sheet, f.row, f.col);
+            if (val instanceof Formula) {
+                // clone and relocate to calling formula, so that relative references in a named
+                // formula would work as expected.
+                val = val.clone(f.sheet, f.row, f.col, true);
+
+                // XXX: I don't like this dependency here; basically we only need ss.onFormula to
+                // return true and do nothing else.
+                var ss = new spreadsheet.ValidationFormulaContext(this.ss.workbook);
+
+                val.exec(ss, callback, this);
+            } else {
+                callback(val == null ? new CalcError("NAME") : val);
+            }
         },
 
         force: function(val) {
@@ -517,12 +531,12 @@
             this.onReady = [];
             this.pending = false;
         },
-        clone: function(sheet, row, col) {
+        clone: function(sheet, row, col, forceRefs) {
             var lcsheet = sheet.toLowerCase();
             var refs = this.refs;
-            if (lcsheet != this.sheet.toLowerCase()) {
+            if (forceRefs || lcsheet != this.sheet.toLowerCase()) {
                 refs = refs.map(function(ref){
-                    if (!ref.hasSheet() && ref.sheet.toLowerCase() != lcsheet) {
+                    if (!ref.hasSheet() && (!ref.sheet || ref.sheet.toLowerCase() != lcsheet)) {
                         ref = ref.clone().setSheet(sheet);
                     }
                     return ref;
@@ -1443,6 +1457,12 @@
     }).args([
         [ "*value", "anything!" ]
     ]);
+
+    /* -----[ resolve NameRef-s ]----- */
+
+    FUNCS[",getname"] = function(callback, args) {
+        this.fetchName(args[0], callback);
+    };
 
     /// utils
 

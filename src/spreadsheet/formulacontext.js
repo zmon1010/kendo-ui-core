@@ -120,20 +120,9 @@
                 return a;
             }
             if (ref instanceof NameRef) {
-                var val;
-                if (ref.hasSheet()) {
-                    // qualified name
-                    val = this.workbook.nameValue(ref.print());
-                } else {
-                    // try local name
-                    val = this.workbook.nameValue(fsheet + "!" + ref.name);
-                    if (val == null) {
-                        // try global name
-                        val = this.workbook.nameValue(ref.name);
-                    }
-                }
+                var val = this.nameValue(ref, fsheet, frow, fcol);
+                // XXX: revise this
                 if (val instanceof Ref) {
-                    val = val.absolute(frow, fcol);
                     return this.getRefCells(val, hiddenInfo, fsheet, frow, fcol);
                 }
                 return [{
@@ -141,6 +130,25 @@
                 }];
             }
             return [];
+        },
+
+        nameValue: function(ref, fsheet, frow, fcol) {
+            var val;
+            if (ref.hasSheet()) {
+                // qualified name
+                val = this.workbook.nameValue(ref.print());
+            } else {
+                // try local name
+                val = this.workbook.nameValue(fsheet + "!" + ref.name);
+                if (val == null) {
+                    // try global name
+                    val = this.workbook.nameValue(ref.name);
+                }
+            }
+            if (val instanceof Ref) {
+                val = val.absolute(frow, fcol);
+            }
+            return val;
         },
 
         getData: function(ref, fsheet, frow, fcol) {
@@ -166,6 +174,15 @@
                 // could have been deleted or modified in the mean time,
                 // if the formula was asynchronous.  ignore this result.
                 return false;
+            }
+
+            // formulas may return references.  if a range or union,
+            // we'll just save the first cell.
+            if (value instanceof Ref) {
+                value = this.getData(value, f.sheet, row, col);
+                if (Array.isArray(value)) {
+                    value = value[0];
+                }
             }
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
