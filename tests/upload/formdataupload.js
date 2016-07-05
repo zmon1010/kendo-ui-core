@@ -1019,8 +1019,8 @@ test("remove icon is rendered for each file entry", function() {
     equal($(".k-i-delete", uploadInstance.wrapper).length, 2);
 });
 
-test("initial file entries have progress-bar with 100% width", function(){
-    equal($(".k-file .k-progress", uploadInstance.wrapper)[0].style.width, "100%");
+test("initial file entries have progress-bar with 0% width", function(){
+    equal($(".k-file .k-progress", uploadInstance.wrapper)[0].style.width, "");
 });
 
 test("k-upload-pct text is '100%'  for each initially rendered file entry", function(){
