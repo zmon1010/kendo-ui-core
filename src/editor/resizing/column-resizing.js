@@ -1,5 +1,5 @@
 (function(f, define) {
-    define(["./main", "../kendo.resizable"], f);
+    define(["../main", "../../kendo.resizable"], f);
 })(function() {
 
 (function(kendo, undefined) {
@@ -71,50 +71,6 @@
         var width = columnStyleWidth !== "" ? columnStyleWidth : $(column).width();
         return width;
     }
-
-    var TableResizing = Class.extend({
-        init: function(element, options) {
-            var that = this;
-
-            that._initOptions(options);
-
-            if ($(element).is(TABLE)) {
-                that.element = element;
-                that.columnResizing = new ColumnResizing(element, that.options);
-            }
-        },
-
-        destroy: function() {
-            var that = this;
-            var element = that.element;
-            var columnResizing = that.columnResizing;
-            
-            if (columnResizing) {
-                columnResizing.destroy();
-                that.columnResizing = null;
-            }
-
-            if (element) {
-                $(element).off(NS);
-                that.element = null;
-            }
-        },
-
-        options: {
-            rtl: false
-        },
-
-        resizingInProgress: function() {
-            var that = this;
-            var columnResizing = that.columnResizing;
-
-            if (columnResizing) {
-                return !!columnResizing.resizingInProgress();
-            }
-
-            return false;
-        }
-    });
 
     var ColumnResizing = Class.extend({
         init: function(element, options) {
@@ -411,7 +367,6 @@
     });
 
     extend(Editor, {
-        TableResizing: TableResizing,
         ColumnResizing: ColumnResizing
     });
 
