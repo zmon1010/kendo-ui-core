@@ -176,6 +176,7 @@
     <Compile Include="UI\DataSource\WebApiDataSourceBuilderTests.cs" />
     <Compile Include="UI\DatePicker\DatePickerClientEventsBuilderTests.cs" />
     <Compile Include="UI\Diagram\Serialization\DiagramTests.cs" />
+    <Compile Include="UI\Editor\ImmutablesBuilderTests.cs" />
     <Compile Include="UI\Editor\PasteCleanupBuilderTests.cs" />
     <Compile Include="UI\Fluent\PDFSettingsBuilderTests.cs" />
     <Compile Include="UI\Gantt\GanttAssignmentsTests.cs" />

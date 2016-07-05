@@ -143,6 +143,7 @@ module CodeGen::MVC::Wrappers
         'editor.stylesheets',
         'editor.content',
         'editor.pdf',
+        'editor.immutables.deserialization',
         'colorpicker.palette',
         'colorpicker.tilesize',
         'diagram.shapedefaults.visual',
