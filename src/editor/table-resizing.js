@@ -273,7 +273,8 @@
                     var resizable = this;
                     var column = resizable.element;
                     var columnWidth = getColumnWidth(column[0]);
-                    var resizingData = that._calculateResizingData(column, e.x.initialDelta);
+                    var rtlModifier = that.options.rtl ? (-1) : 1;
+                    var resizingData = that._calculateResizingData(column, rtlModifier * e.x.initialDelta);
                     var newWidth = resizingData.newWidth;
                     var deltaWidth = resizingData.deltaWidth;
                     var adjacentColumnWidth = resizingData.adjacentColumnWidth;

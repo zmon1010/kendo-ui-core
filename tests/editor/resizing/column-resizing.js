@@ -1105,4 +1105,65 @@
 
         equal(columnResizing.resizeHandle.css("top"), $(tableElement).find(TBODY).position().top + PX);
     });
+
+    module("editor column resizing rtl", {
+        setup: function() {
+            var wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(wrapper);
+            columnResizing = new ColumnResizing(tableElement, { rtl: true });
+            options = columnResizing.options;
+        },
+
+        teardown: function() {
+            if (columnResizing) {
+                columnResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("cell width should be increased when resizing", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        var differenceInPixels = (-1) * 60;
+        var differenceInPercentages = (differenceInPixels / tableWidth) * 100;
+        var initialWidthInPixels = cell.width();
+        var initialWidthInPercentages = (initialWidthInPixels / tableWidth) * 100;
+
+        resizeColumn(cell, 0, differenceInPixels, { rtl: true });
+
+        equal(cell[0].style.width, (initialWidthInPercentages + (-1) * differenceInPercentages) + PERCENTAGE);
+    });
+
+    test("cell width should be decreased when resizing", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        var differenceInPixels = 60;
+        var differenceInPercentages = (differenceInPixels / tableWidth) * 100;
+        var initialWidthInPixels = cell.width();
+        var initialWidthInPercentages = (initialWidthInPixels / tableWidth) * 100;
+
+        resizeColumn(cell, 0, differenceInPixels, { rtl: true });
+
+        roughlyEqual(cell[0].style.width, (initialWidthInPercentages - differenceInPercentages) + PERCENTAGE, 2);
+    });
+
+    test("cell width should not be lower than min", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        var minInPercentages = (options.min / tableWidth) * 100;
+
+        resizeColumn(cell, 0, MAX, { rtl: true });
+
+        equal(cell[0].style.width, minInPercentages + PERCENTAGE);
+    });
+
+    test("cell width should not be greater than the sum of column and adjacent column width", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        var initialWidthInPixels = cell.width();
+        var initialWidthInPercentages = (initialWidthInPixels / tableWidth) * 100;
+        var adjacentColumnWidthInPercentages = (cell.next().width() / tableWidth) * 100;
+        var minInPercentages = (options.min / tableWidth) * 100;
+
+        resizeColumn(cell, 0, (-1) * MAX, { rtl: true });
+
+        equal(cell[0].style.width, (initialWidthInPercentages + adjacentColumnWidthInPercentages - minInPercentages) + PERCENTAGE, 2);
+    });
 })();
