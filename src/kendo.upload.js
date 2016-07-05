@@ -28,7 +28,9 @@ var __meta__ = { // jshint ignore:line
         VALIDATIONERRORS = "validationErrors",
         INVALIDMAXFILESIZE = "invalidMaxFileSize",
         INVALIDMINFILESIZE = "invalidMinFileSize",
-        INVALIDFILEEXTENSION = "invalidFileExtension";
+        INVALIDFILEEXTENSION = "invalidFileExtension",
+        PROGRESSHIDEDELAY = 1000,
+        PROGRESSHIDEDURATION = 2000;
 
     var headerStatusIcon = {
         loading: "k-loading",
@@ -717,6 +719,7 @@ var __meta__ = { // jshint ignore:line
                     that._updateHeaderUploadStatus();
                 } else if (icon.hasClass("k-i-retry")) {
                     $(".k-warning", fileEntry).remove();
+                    $(".k-progress", fileEntry).show();
                     that._module.onRetry({ target: $(fileEntry, that.wrapper) });
                 }
             }
@@ -796,6 +799,8 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
+            that._hideUploadProgress(fileEntry);
+
             that._checkAllComplete();
         },
 
@@ -812,6 +817,8 @@ var __meta__ = { // jshint ignore:line
             });
 
             logToConsole("Server response: " + xhr.responseText);
+
+            that._hideUploadProgress(fileEntry);
 
             that._checkAllComplete();
         },
@@ -832,6 +839,12 @@ var __meta__ = { // jshint ignore:line
 
             this._updateHeaderUploadStatus();
             this._fileAction(fileEntry, "retry");
+        },
+
+        _hideUploadProgress: function(fileEntry) {
+            $(".k-progress", fileEntry)
+                .delay(PROGRESSHIDEDELAY)
+                .fadeOut(PROGRESSHIDEDURATION);
         },
 
         _showUploadButton: function() {
