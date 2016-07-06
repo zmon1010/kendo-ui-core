@@ -23,7 +23,9 @@
     }
 </style>
 
-<kendo:editor name="editor" style="height:400px" tag="div">
+<kendo:editor name="editor" style="height:400px" tag="div" select="onSelect">
+	<kendo:editor-immutables serialization="# return immutablesSerialization(data); #" deserialization="immutablesDeserialization" />
+    <kendo:editor-serialization custom="customSerialization" />
     <kendo:editor-value>
          <div class="headerField" contenteditable="false" style="font-size:32px; color: #078e23; text-align:center;">
              <p>Company Name</p>
@@ -83,6 +85,34 @@
         var editor = $("#editor").getKendoEditor();
         editor.options.pasteCleanup[this.value] = this.checked;
     });
+    
+    function immutablesSerialization(node){
+    	$("[contenteditable='false']", editor.body).removeClass("selected-immutable");
+        var immutableName = node.className || node.nodeName.toLowerCase();
+        var textAlign = node.style.textAlign;
+        var result = textAlign ?
+                        kendo.format("<{0} style='text-align:{1};'></{0}>", immutableName, textAlign) :
+                        kendo.format("<{0}></{0}>", immutableName);
+
+        return result;
+    }
+    
+    function immutablesDeserialization(node, immutable){
+    	immutable.style.textAlign = node.style.textAlign;
+    }
+    
+    function onSelect(e){
+    	var editor = e.sender;
+        var selection = e.sender.getSelection();
+        var selectedNode = selection.anchorNode;
+
+        $("[contenteditable='false']", editor.body).removeClass("selected-immutable");
+        $(selectedNode).closest("[contenteditable='false']").addClass("selected-immutable");
+    }
+    
+    function customSerialization(html){
+    	return html.replace(/selected-immutable/, "");
+    }
 </script>
 
 </div>
