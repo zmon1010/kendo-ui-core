@@ -130,6 +130,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("enable", value);
     }
 
+    public boolean getEnforceMinLength() {
+        return (Boolean)getProperty("enforceMinLength");
+    }
+
+    public void setEnforceMinLength(boolean value) {
+        setProperty("enforceMinLength", value);
+    }
+
     public java.lang.String getFilter() {
         return (java.lang.String)getProperty("filter");
     }

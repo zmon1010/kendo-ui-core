@@ -82,6 +82,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+        /// </summary>
+        /// <param name="value">The value for EnforceMinLength</param>
+        public DropDownListBuilder EnforceMinLength(bool value)
+        {
+            Container.EnforceMinLength = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+        /// </summary>
+        public DropDownListBuilder EnforceMinLength()
+        {
+            Container.EnforceMinLength = true;
+            return this;
+        }
+
+        /// <summary>
         /// The template used to render the fixed header group. By default the widget displays only the value of the current group.
         /// </summary>
         /// <param name="value">The value for FixedGroupTemplate</param>

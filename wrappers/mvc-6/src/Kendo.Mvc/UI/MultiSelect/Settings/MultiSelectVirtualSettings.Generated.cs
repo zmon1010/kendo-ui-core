@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public double? ItemHeight { get; set; }
 
+        public string MapValueTo { get; set; }
+
         public ClientHandlerDescriptor ValueMapper { get; set; }
 
         public bool? Enabled { get; set; }
@@ -26,6 +28,11 @@ namespace Kendo.Mvc.UI
             if (ItemHeight.HasValue)
             {
                 settings["itemHeight"] = ItemHeight;
+            }
+
+            if (MapValueTo?.HasValue() == true)
+            {
+                settings["mapValueTo"] = MapValueTo;
             }
 
             if (ValueMapper?.HasValue() == true)

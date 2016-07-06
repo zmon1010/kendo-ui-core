@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
 
         public bool? Enable { get; set; }
 
+        public bool? EnforceMinLength { get; set; }
+
         public string Filter { get; set; }
 
         public string FixedGroupTemplate { get; set; }
@@ -88,6 +90,11 @@ namespace Kendo.Mvc.UI
             if (Enable.HasValue)
             {
                 settings["enable"] = Enable;
+            }
+
+            if (EnforceMinLength.HasValue)
+            {
+                settings["enforceMinLength"] = EnforceMinLength;
             }
 
             if (Filter?.HasValue() == true)

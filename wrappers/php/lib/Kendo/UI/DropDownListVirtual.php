@@ -16,6 +16,15 @@ If the developer does not specify one, the framework will automatically set item
     }
 
     /**
+    * The changes introduced with the Kendo UI R3 2016 release enable you to determine if the valueMapper must resolve a value to an index or a value to a dataItem. This is configured through the mapValueTo option that accepts two possible values - "index" or "dataItem". By default, the mapValueTo is set to "index", which does not affect the current behavior of the virtualization process.For more information, refer to the article on virtualization.
+    * @param string $value
+    * @return \Kendo\UI\DropDownListVirtual
+    */
+    public function mapValueTo($value) {
+        return $this->setProperty('mapValueTo', $value);
+    }
+
+    /**
     * Sets the valueMapper option of the DropDownListVirtual.
     * The valueMapper function is mandatory for the functionality of the virtualized widget.
 The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.

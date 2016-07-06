@@ -50,6 +50,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+        /// </summary>
+        /// <param name="value">The value for EnforceMinLength</param>
+        public AutoCompleteBuilder EnforceMinLength(bool value)
+        {
+            Container.EnforceMinLength = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+        /// </summary>
+        public AutoCompleteBuilder EnforceMinLength()
+        {
+            Container.EnforceMinLength = true;
+            return this;
+        }
+
+        /// <summary>
         /// The filtering method used to determine the suggestions for the current value. The default filter is "startswith" -
 		/// all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.
         /// </summary>

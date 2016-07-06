@@ -67,6 +67,15 @@ class AutoComplete extends \Kendo\UI\Widget {
     }
 
     /**
+    * If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+    * @param boolean $value
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function enforceMinLength($value) {
+        return $this->setProperty('enforceMinLength', $value);
+    }
+
+    /**
     * The filtering method used to determine the suggestions for the current value. The default filter is "startswith" -
 all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.
     * @param string $value
