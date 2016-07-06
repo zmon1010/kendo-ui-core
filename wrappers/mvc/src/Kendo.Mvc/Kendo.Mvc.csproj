@@ -2709,4 +2709,4 @@
     <Compile Include="UI\Gantt\Settings\GanttViewRangeSettings.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttViewRangeSettingsBuilder.cs" />
   </ItemGroup>
- </Project>
+ <ItemGroup><Compile Include="UI\Editor\Settings\EditorImmutablesSettings.cs" /><Compile Include="UI\Editor\Fluent\EditorImmutablesSettingsBuilder.cs" /></ItemGroup></Project>

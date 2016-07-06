@@ -108,6 +108,15 @@ This property has been introduced in internal builds after 2014.1.319.
     }
 
     /**
+    * If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
+    * @param boolean|\Kendo\UI\EditorImmutables|array $value
+    * @return \Kendo\UI\Editor
+    */
+    public function immutables($value) {
+        return $this->setProperty('immutables', $value);
+    }
+
+    /**
     * Allows custom stylesheets to be included within the editing area. This setting is applicable only when the Editor is initialized from a textarea
 and a contenteditable iframe is generated.
     * @param array $value

@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI.Tests
             var value = true;
 
             editor.PasteCleanup.KeepNewLines = value;
-            
+
             editor.AssertSettings(settings =>
             {
                 var pasteCleanup = (IDictionary<string, object>) settings["pasteCleanup"];
@@ -53,7 +53,7 @@ namespace Kendo.Mvc.UI.Tests
             var value = true;
 
             editor.Pdf.AvoidLinks = value;
-            
+
             editor.AssertSettings(settings =>
             {
                 ((IDictionary<string, object>) settings["pdf"])["avoidLinks"].ShouldEqual(value);
@@ -75,7 +75,7 @@ namespace Kendo.Mvc.UI.Tests
             var values = new List<string> { "value1", "value2" };
 
             editor.StyleSheets = values;
-            
+
             editor.AssertSettings(settings =>
             {
                 settings["stylesheets"].ShouldEqual(values);
@@ -99,6 +99,55 @@ namespace Kendo.Mvc.UI.Tests
             editor.AssertSettings(settings =>
             {
                 settings.ContainsKey("tools").ShouldBeTrue();
+            });
+        }
+
+        [Fact]
+        public void Default_Immutables_should_not_be_serialized()
+        {
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("immutables").ShouldBeFalse();
+            });
+        }
+
+        [Fact]
+        public void Immutables_set_should_be_serialized_With_Enabled_Set()
+        {
+            editor.Immutables.Enabled = true;
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("immutables").ShouldBeTrue();
+            });
+        }
+
+        [Fact]
+        public void Immutables_set_should_be_serialized_With_Serialization_Set()
+        {
+            editor.Immutables.Serialization = "<div></div>";
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("immutables").ShouldBeTrue();
+            });
+        }
+
+        [Fact]
+        public void Immutables_set_should_be_serialized_With_SerializationHandler_Set()
+        {
+            editor.Immutables.SerializationHandler = new ClientHandlerDescriptor { HandlerName = "foo" };
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("immutables").ShouldBeTrue();
+            });
+        }
+
+        [Fact]
+        public void Immutables_set_should_be_serialized_With_Deserialization_Set()
+        {
+            editor.Immutables.Deserialization = new ClientHandlerDescriptor { HandlerName = "foo" };
+            editor.AssertSettings(settings =>
+            {
+                settings.ContainsKey("immutables").ShouldBeTrue();
             });
         }
     }

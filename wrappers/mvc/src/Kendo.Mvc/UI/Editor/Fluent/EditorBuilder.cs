@@ -311,6 +311,37 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
+        /// </summary>
+        public EditorBuilder Immutables()
+        {
+            return Immutables(true);
+        }
+
+        /// <summary>
+        /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the immutables option.</param>
+        public EditorBuilder Immutables(bool enabled)
+        {
+            container.Immutables.Enabled = enabled;
+            return this;
+        }
+
+        
+        /// <summary>
+        /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
+        /// </summary>
+        /// <param name="configurator">The action that configures the immutables.</param>
+        public EditorBuilder Immutables(Action<EditorImmutablesSettingsBuilder> configurator)
+        {
+            container.Immutables.Enabled = true;
+            
+            configurator(new EditorImmutablesSettingsBuilder(container.Immutables));
+            return this;
+        }
+        
         //<< Fields
     }
 }
