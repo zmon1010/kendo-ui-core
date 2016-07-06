@@ -15,6 +15,13 @@ namespace Kendo.Mvc.UI.Html.Tests
         }
 
         [Fact]
+        public void Serializes_with_no_map()
+        {
+            defaults.Map = null;
+            defaults.Serialize().ShouldNotBeNull();
+        }
+
+        [Fact]
         public void Serializes_symbol_type()
         {
             defaults.Symbol = MapSymbol.Circle;

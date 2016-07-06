@@ -20,7 +20,14 @@ namespace Kendo.Mvc.UI.Html.Tests
         {
             layer.Serialize().ContainsKey("dataSource").ShouldBeFalse();
         }
-        
+
+        [Fact]
+        public void Serializes_with_no_map()
+        {
+            layer.Map = null;
+            layer.Serialize().ShouldNotBeNull();
+        }
+
         [Fact]
         public void Serializes_datasource()
         {

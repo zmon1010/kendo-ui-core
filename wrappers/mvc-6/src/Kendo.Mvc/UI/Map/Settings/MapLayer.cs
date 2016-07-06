@@ -1,4 +1,5 @@
 using Kendo.Mvc.Extensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,10 +8,8 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI MapLayer class
     /// </summary>
-    public partial class MapLayer
+    public partial class MapLayer : MapBaseLayerSettings
     {
-        private MapMarkerTooltip tooltip;
-
         public DataSource DataSource { get; set; }
 
         public string ShapeName { get; set; }
@@ -19,15 +18,11 @@ namespace Kendo.Mvc.UI
 
         public ClientHandlerDescriptor SymbolHandler { get; set; }
 
-        public MapMarkerTooltip Tooltip {
+        protected override ViewContext ViewContext
+        {
             get
             {
-                if (tooltip == null)
-                {
-                    tooltip = new MapMarkerTooltip(Map.ViewContext);
-                }
-
-                return tooltip;
+                return Map?.ViewContext;
             }
         }
 
@@ -63,11 +58,7 @@ namespace Kendo.Mvc.UI
                 settings["symbol"] = Symbol.ToString().ToLowerInvariant();
             }
 
-            var tooltip = Tooltip.Serialize();
-            if (tooltip.Any())
-            {
-                settings["tooltip"] = tooltip;
-            }
+            SerializeTooltip(settings);
 
             return settings;
         }

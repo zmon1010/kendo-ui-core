@@ -15,6 +15,13 @@ namespace Kendo.Mvc.UI.Html.Tests
         }
 
         [Fact]
+        public void Serializes_with_no_map()
+        {
+            marker.Map = null;
+            marker.Serialize().ShouldNotBeNull();
+        }
+
+        [Fact]
         public void Serializes_shape_type()
         {
             marker.Shape = MapMarkersShape.Pin;
