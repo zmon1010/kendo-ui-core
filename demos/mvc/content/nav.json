@@ -9686,10 +9686,7 @@
                 "meta": {
                     "kendo-ui": "With this demo built with Kendo UI, you will be able to find out how Kendo UI Map widget can be implemented for tile maps.",
                     "aspnet-mvc": "With this demo built with ASP.NET MVC, you will be able to find out how ASP.NET MVC Map control can be implemented for tile maps."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Bing tile layer",
@@ -9701,10 +9698,7 @@
                 "meta": {
                     "kendo-ui": "This demo demostrates how you can use Bing tile layer in your Hendo UI HTML5 Map.",
                     "aspnet-mvc": "This demo demostrates how you can use Bing tile layer in your ASP.NET MVC Map."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Bubble layer",
@@ -9715,10 +9709,7 @@
                 "meta": {
                     "kendo-ui": "This demo illustrates how to bind a Kendo UI bubble map layer to remote data."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Binding to GeoJSON",
@@ -9731,10 +9722,7 @@
                     "kendo-ui": "This demo illustrates how to bind a Kendo UI map layer to GeoJSON shapes.",
                     "aspnet-mvc": "This demo illustrates how to bind an ASP.NET MVC map layer to GeoJSON shapes."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Binding markers to remote data",
@@ -9747,10 +9735,7 @@
                     "kendo-ui": "This demo illustrates how to bind a Kendo UI marker layer.",
                     "aspnet-mvc": "This demo illustrates how to bind a ASP.NET MVC marker layer."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Export",
@@ -9760,10 +9745,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo shows how to export maps to PDF, PNG Images or SVG and save them directly in the browser."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Events",
@@ -9776,10 +9758,7 @@
                     "kendo-ui": "This sample demonstrates the events which are specific to Kendo UI Map component.",
                     "aspnet-mvc": "This sample demonstrates the events which are specific to ASP.NET MVC Map component."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "API",
@@ -9792,10 +9771,7 @@
                     "kendo-ui": "This sample demonstrates the public methods which are specific to Kendo UI Map component.",
                     "aspnet-mvc": "This sample demonstrates the public methods which are specific to ASP.NET MVC Map component."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "AngularJS",
