@@ -41,11 +41,9 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
 
 MVC6_PACKAGE_BASENAME = "Telerik.UI.for.AspNet.Core.#{VERSION}"
 MVC6_REDIST = FileList["#{MVC6_PACKAGE_BASENAME}.nupkg"]
-            .include("#{MVC6_PACKAGE_BASENAME}.symbols.nupkg")
             .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
 
 MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.nupkg"
-MVC6_NUGET_SYMBOLS = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.symbols.nupkg"
 
 rule 'Kendo.Mvc.xml' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll'
 
@@ -234,7 +232,6 @@ namespace :mvc do
         MVC_BIN_ROOT + 'Release-MVC5-Trial/Kendo.Mvc.dll',
         MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll',
         MVC6_NUGET,
-        MVC6_NUGET_SYMBOLS,
         'dist/binaries/',
         'dist/binaries/demos/Kendo.Mvc.Examples/bin/',
         'dist/binaries/mvc-6/'
@@ -337,19 +334,18 @@ else
 
     # MVC6 package
     file MVC6_NUGET => MVC6_SOURCES do
-        sh "cd #{MVC6_SRC_ROOT} && dotnet restore && dotnet build --configuration Release"
+        outpkg = File.join('bin', 'Release', "Kendo.Mvc.#{VERSION}.nupkg")
+        newpkg = File.join('bin', 'Release', "#{MVC6_PACKAGE_BASENAME}.nupkg")
+        sh <<-SHELL
+            cd #{MVC6_SRC_ROOT}
 
-        projpath = File.join(MVC6_SRC_ROOT, 'project.json')
-        proj = File.read(projpath)
-        proj.sub!('"name": "Kendo.Mvc"', '"name": "Telerik.UI.for.AspNet.Core"')
-        File.open(projpath, 'w') do |file|
-            file.write proj
-        end
+            dotnet restore && dotnet pack --configuration Release
 
-        sh "cd #{MVC6_SRC_ROOT} && dotnet pack --no-build --configuration Release"
+            mv #{outpkg} #{newpkg}
+            unzip -p #{newpkg} Kendo.Mvc.nuspec | sed 's/<id>Kendo.Mvc</<id>Telerik.UI.for.AspNet.Core</' > Kendo.Mvc.nuspec
+            zip #{newpkg} Kendo.Mvc.nuspec && rm Kendo.Mvc.nuspec
+        SHELL
     end
-
-    file MVC6_NUGET_SYMBOLS => MVC6_NUGET
 
     tree :to => 'dist/binaries/mvc-6/',
          :from => MVC6_REDIST,
