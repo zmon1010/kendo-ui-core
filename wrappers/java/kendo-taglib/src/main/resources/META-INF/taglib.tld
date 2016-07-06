@@ -18797,6 +18797,12 @@ This property has been introduced in internal builds after 2014.1.319.</descript
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.</description>
+            <name>immutables</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>If enabled, the editor renders a resize handle to allow users to resize it.</description>
             <name>resizable</name>
             <rtexprvalue>true</rtexprvalue>
@@ -19785,6 +19791,41 @@ If function is assigned, the current path and image name will be provided.</desc
         <body-content>JSP</body-content>
     </tag>
 
+
+    <tag>
+        <description>If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.</description>
+        <name>editor-immutables</name>
+        <tag-class>com.kendoui.taglib.editor.ImmutablesTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Callback that allows custom deserialization of an immutable element. The callback accepts two arguments. The DOM element representing the immutable element in the html view and the immutable DOM element, which will be restored.</description>
+            <name>deserialization</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Kendo template or a callback that allows custom serialization of an immutable element. The callback accepts DOM element as only parameter and is expected to return the HTML source of a DOM element.</description>
+            <name>serialization</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Kendo template or a callback that allows custom serialization of an immutable element. The callback accepts DOM element as only parameter and is expected to return the HTML source of a DOM element.</description>
+        <name>editor-immutables-serialization</name>
+        <tag-class>com.kendoui.taglib.editor.ImmutablesSerializationFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Callback that allows custom deserialization of an immutable element. The callback accepts two arguments. The DOM element representing the immutable element in the html view and the immutable DOM element, which will be restored.</description>
+        <name>editor-immutables-deserialization</name>
+        <tag-class>com.kendoui.taglib.editor.ImmutablesDeserializationFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Defines the text of the labels that are shown within the editor. Used primarily for localization.</description>

@@ -68,6 +68,10 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("imageBrowser", value);
     }
 
+    public void setImmutables(com.kendoui.taglib.editor.ImmutablesTag value) {
+        setProperty("immutables", value);
+    }
+
     public void setMessages(com.kendoui.taglib.editor.MessagesTag value) {
         setProperty("messages", value);
     }
@@ -144,6 +148,14 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setEncoded(boolean value) {
         setProperty("encoded", value);
+    }
+
+    public boolean getImmutables() {
+        return (Boolean)getProperty("immutables");
+    }
+
+    public void setImmutables(boolean value) {
+        setProperty("immutables", value);
     }
 
     public boolean getResizable() {

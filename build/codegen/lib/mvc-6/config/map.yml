@@ -1,0 +1,36 @@
+:options:
+    - :name: center
+      :merge: true
+      :type: double[]
+
+    - :name: layers.extent
+      :merge: true
+      :type: double[]
+
+    - :name: layers.subdomains
+      :merge: true
+      :type: string[]
+
+    - :name: layerdefaults.tile.subdomains
+      :merge: true
+      :type: string[]
+
+    - :name: markers.location
+      :merge: true
+      :type: double[]
+
+    - :name: controls.attribution.position
+      :description: Specifies the position of the attribtion control.
+      :type: String
+      :enum_type: MapControlPosition
+
+    - :name: controls.navigator.position
+      :description: Specifies the position of the navigation control.
+      :type: String
+      :enum_type: MapControlPosition
+
+    - :name: controls.zoom.position
+      :description: Specifies the position of the zoom control.
+      :type: String
+      :enum_type: MapControlPosition
+

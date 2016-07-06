@@ -61,7 +61,7 @@ public class SerializerTest {
 
     @Test
     public void jsonSerializesCommaSeparatedKeyValuePairsForTheGetters() throws IOException {
-        assertEquals("{\"foo\":1,\"bar\":2}", serializer.json(new Object() {
+        String serialized =  serializer.json(new Object() {
             @SuppressWarnings("unused")
             public int getFoo() {
                 return 1;
@@ -71,7 +71,11 @@ public class SerializerTest {
             public int getBar() {
                 return 2;
             }
-        }));
+        });
+        assertTrue(serialized.startsWith("{"));
+	assertTrue(serialized.contains("\"foo\":1"));
+	assertTrue(serialized.contains("\"bar\":2"));
+	assertTrue(serialized.endsWith("}"));
     }
 
     @Test

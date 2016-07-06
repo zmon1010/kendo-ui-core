@@ -27,6 +27,8 @@ namespace Kendo.Mvc.UI
 
         public EditorSerializationSettings Serialization { get; } = new EditorSerializationSettings();
 
+        public EditorImmutablesSettings Immutables { get; } = new EditorImmutablesSettings();
+
         public List<EditorTool> Tools { get; set; } = new List<EditorTool>();
 
         public EditorImageBrowserSettings ImageBrowser { get; } = new EditorImageBrowserSettings();
@@ -90,6 +92,16 @@ namespace Kendo.Mvc.UI
             if (serialization.Any())
             {
                 settings["serialization"] = serialization;
+            }
+
+            var immutables = Immutables.Serialize();
+            if (immutables.Any())
+            {
+                settings["immutables"] = immutables;
+            }
+            else if (Immutables.Enabled.HasValue)
+            {
+                settings["immutables"] = Immutables.Enabled;
             }
 
             var tools = Tools.Select(i => i.Serialize());

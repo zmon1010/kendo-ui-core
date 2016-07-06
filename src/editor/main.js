@@ -22,6 +22,7 @@
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
 
+    var rtlEnabled = false;
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
     var NS = ".kendoEditor";
@@ -190,6 +191,8 @@
             that.options = deepExtend({}, that.options, options);
             that.options.tools = that.options.tools.slice();
 
+            rtlEnabled = kendo.support.isRtl(element);
+
             element = that.element;
             domElement = element[0];
 
@@ -235,7 +238,7 @@
 
             that._resizable();
             that._initializeContentElement(that);
-            that._initTableResizing();
+            that._initializeTableResizing();
 
             that.keyboard = new editorNS.Keyboard([
                 new editorNS.BackspaceHandler(that),
@@ -337,7 +340,7 @@
             }
         },
 
-        _initTableResizing: function() {
+        _initializeTableResizing: function() {
             var editor = this;
 
             $(editor.body)
@@ -349,11 +352,11 @@
                     if (editor.tableResizing) {
                         if (editor.tableResizing.element !== table) {
                             editor.tableResizing.destroy();
-                            editor.tableResizing = new kendo.ui.editor.TableResizing(table);
+                            editor.tableResizing = new kendo.ui.editor.TableResizing(table, { rtl: rtlEnabled });
                         }
                     }
                     else {
-                        editor.tableResizing = new kendo.ui.editor.TableResizing(table);
+                        editor.tableResizing = new kendo.ui.editor.TableResizing(table, { rtl: rtlEnabled });
                     }
                 })
                 .on(MOUSE_LEAVE + NS, TABLE, function(e) {
@@ -368,7 +371,7 @@
                         editor.tableResizing = null;
 
                         if (parentTable) {
-                            editor.tableResizing = new kendo.ui.editor.TableResizing(parentTable);
+                            editor.tableResizing = new kendo.ui.editor.TableResizing(parentTable, { rtl: rtlEnabled });
                         }
                     }
                 });

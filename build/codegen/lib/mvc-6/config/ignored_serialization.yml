@@ -22,6 +22,10 @@
 - numerictextbox.min
 - numerictextbox.step
 - numerictextbox.value
+- map.layerdefaults.marker.shape
+- map.layers.shape
+- map.markers.shape
+- map.markerdefaults.shape
 - maskedtextbox.enabled
 - treelist.selectable
 - treelist.selectable.mode

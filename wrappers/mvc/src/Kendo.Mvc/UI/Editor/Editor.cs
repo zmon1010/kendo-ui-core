@@ -44,6 +44,8 @@ namespace Kendo.Mvc.UI
         
             Deserialization = new EditorDeserializationSettings();
                 
+            Immutables = new EditorImmutablesSettings();
+                
             PasteCleanup = new EditorPasteCleanupSettings();
                 
             Resizable = new EditorResizableSettings();
@@ -76,6 +78,12 @@ namespace Kendo.Mvc.UI
         }
         
         public EditorSerializationSettings Serialization
+        {
+            get;
+            set;
+        }
+        
+        public EditorImmutablesSettings Immutables
         {
             get;
             set;
@@ -202,6 +210,14 @@ namespace Kendo.Mvc.UI
             {
                 json["serialization"] = serialization;
             }
+            var immutables = Immutables.ToJson();
+            if (immutables.Any())
+            {
+                json["immutables"] = immutables;
+            } else if (Immutables.Enabled != false) {
+                json["immutables"] = Immutables.Enabled;
+            }
+
         //<< Serialization
 
             var pdf = Pdf.ToJson();

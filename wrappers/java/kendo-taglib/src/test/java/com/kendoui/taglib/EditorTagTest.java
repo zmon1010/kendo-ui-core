@@ -1,6 +1,6 @@
 package com.kendoui.taglib;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.spy;
 import java.io.IOException;
 
@@ -20,6 +20,10 @@ public class EditorTagTest {
     
     @Test
     public void createElementCreatesTextarea() throws IOException {
-        assertEquals("<textarea id=\"foo\" name=\"foo\"></textarea>", tag.html().outerHtml());         
+	String tagHtml = tag.html().outerHtml();
+ 	assertTrue(tagHtml.startsWith("<textarea"));
+ 	assertTrue(tagHtml.endsWith("</textarea>"));
+ 	assertTrue(tagHtml.contains("id=\"foo\""));
+ 	assertTrue(tagHtml.contains("name=\"foo\""));         
     }
 }

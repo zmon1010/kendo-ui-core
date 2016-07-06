@@ -70,6 +70,11 @@
 - listview.edittemplate
 - listview.alttemplate
 - listview.pageable
+- map.layerdefaults.marker.tooltip
+- map.layers.datasource
+- map.layers.tooltip
+- map.markerdefaults.tooltip
+- map.markers.tooltip
 - maskedtextbox.rules
 - menu.animation
 - menu.datasource
