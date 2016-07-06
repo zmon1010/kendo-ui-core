@@ -306,6 +306,10 @@
     <Compile Include="Infrastructure\Implementation\Signature.cs" />
     <Compile Include="Infrastructure\IRouteDataCache.cs" />
     <Compile Include="Infrastructure\Licensing.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicense.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicenseProvider.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicenseStatus.cs" />
+    <Compile Include="Infrastructure\Licensing\RegistryUtilities.cs" />
     <Compile Include="Resources\Messages.bg-BG.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2709,4 +2713,8 @@
     <Compile Include="UI\Gantt\Settings\GanttViewRangeSettings.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttViewRangeSettingsBuilder.cs" />
   </ItemGroup>
- <ItemGroup><Compile Include="UI\Editor\Settings\EditorImmutablesSettings.cs" /><Compile Include="UI\Editor\Fluent\EditorImmutablesSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Editor\Settings\EditorImmutablesSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorImmutablesSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>

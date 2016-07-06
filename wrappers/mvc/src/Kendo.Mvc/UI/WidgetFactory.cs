@@ -19,14 +19,16 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Creates the fluent API builders of the Kendo UI widgets
     /// </summary>
+    [LicenseProvider(typeof(Kendo.Mvc.Infrastructure.Licensing.KendoLicenseProvider))]
     public class WidgetFactory : IHideObjectMembers
     {
         public WidgetFactory(HtmlHelper htmlHelper)
         {
-
             HtmlHelper = htmlHelper;
             Initializer = DI.Current.Resolve<IJavaScriptInitializer>();
             UrlGenerator = DI.Current.Resolve<IUrlGenerator>();
+
+            LicenseManager.Validate(GetType());
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
