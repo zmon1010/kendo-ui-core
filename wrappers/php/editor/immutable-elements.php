@@ -97,11 +97,6 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 
 <script>
-    $(".paste-option:checkbox").on("click", function() {
-        var editor = $("#editor").getKendoEditor();
-        editor.options.pasteCleanup[this.value] = this.checked;
-    });
-    
     function immutablesSerialization(node){
     	$("[contenteditable='false']", editor.body).removeClass("selected-immutable");
         var immutableName = node.className || node.nodeName.toLowerCase();
