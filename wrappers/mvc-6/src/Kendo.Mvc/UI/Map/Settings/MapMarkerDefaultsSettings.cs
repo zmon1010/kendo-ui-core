@@ -10,7 +10,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI MapMarkerDefaultsSettings class
     /// </summary>
-    public partial class MapMarkerDefaultsSettings : MapBaseLayerSettings
+    public partial class MapMarkerDefaultsSettings : MapBaseLayerSettings, IMapMarkersShapeSettings
     {
         public string ShapeName { get; set; }
 
@@ -27,16 +27,7 @@ namespace Kendo.Mvc.UI
             var settings = SerializeSettings();
 
             SerializeTooltip(settings);
-
-            if (ShapeName.HasValue())
-            {
-                settings["shape"] = ShapeName;
-            }
-            else if (Shape.HasValue)
-            {
-                var shapeName = Shape.ToString();
-                settings["shape"] = shapeName.ToLowerInvariant()[0] + shapeName.Substring(1);
-            }
+            this.SerializeShape(settings);
 
             return settings;
         }

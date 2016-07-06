@@ -8,7 +8,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI MapLayer class
     /// </summary>
-    public partial class MapLayer : MapBaseLayerSettings
+    public partial class MapLayer : MapBaseLayerSettings, IMapMarkersShapeSettings
     {
         public DataSource DataSource { get; set; }
 
@@ -35,16 +35,6 @@ namespace Kendo.Mvc.UI
                 settings["dataSource"] = DataSource.ToJson();
             }
 
-            if (ShapeName.HasValue())
-            {
-                settings["shape"] = ShapeName;
-            }
-            else if (Shape.HasValue)
-            {
-                var shapeName = Shape.ToString();
-                settings["shape"] = shapeName.ToLowerInvariant()[0] + shapeName.Substring(1);
-            }
-
             if (SymbolHandler != null)
             {
                 settings["symbol"] = SymbolHandler;
@@ -59,6 +49,7 @@ namespace Kendo.Mvc.UI
             }
 
             SerializeTooltip(settings);
+            this.SerializeShape(settings);
 
             return settings;
         }
