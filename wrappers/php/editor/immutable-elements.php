@@ -21,8 +21,19 @@ require_once '../lib/Kendo/Autoload.php';
 </style>
 
 <?php
+    $immutables = new \Kendo\UI\EditorImmutables();
+    $immutables->serializationHandler("immutablesSerialization")
+               ->deserialization("immutablesDeserialization");
+     
+    $editorSerialization = new \Kendo\UI\EditorSerialization();
+    $editorSerialization->custom("customSerialization");
+
+    
     $editor = new \Kendo\UI\Editor('editor');
     $editor->tag('div');
+    $editor->immutables($immutables);
+    $editor->select("onSelect");
+    $editor->serialization($editorSerialization);
     // enable all tools
     $editor->addTool(
         "bold",
@@ -84,6 +95,41 @@ require_once '../lib/Kendo/Autoload.php';
 
     echo $editor->render();
 ?>
+
+<script>
+    $(".paste-option:checkbox").on("click", function() {
+        var editor = $("#editor").getKendoEditor();
+        editor.options.pasteCleanup[this.value] = this.checked;
+    });
+    
+    function immutablesSerialization(node){
+    	$("[contenteditable='false']", editor.body).removeClass("selected-immutable");
+        var immutableName = node.className || node.nodeName.toLowerCase();
+        var textAlign = node.style.textAlign;
+        var result = textAlign ?
+                        kendo.format("<{0} style='text-align:{1};'></{0}>", immutableName, textAlign) :
+                        kendo.format("<{0}></{0}>", immutableName);
+
+        return result;
+    }
+    
+    function immutablesDeserialization(node, immutable){
+    	immutable.style.textAlign = node.style.textAlign;
+    }
+    
+    function onSelect(e){
+    	var editor = e.sender;
+        var selection = e.sender.getSelection();
+        var selectedNode = selection.anchorNode;
+
+        $("[contenteditable='false']", editor.body).removeClass("selected-immutable");
+        $(selectedNode).closest("[contenteditable='false']").addClass("selected-immutable");
+    }
+    
+    function customSerialization(html){
+    	return html.replace(/selected-immutable/, "");
+    }
+</script>
 
 <?php require_once '../include/footer.php'; ?>
 
