@@ -82,9 +82,7 @@ var ListFormatter = Class.extend({
     },
 
     isList: function(node) {
-        var name = dom.name(node);
-
-        return name == "ul" || name == "ol" || name == "dl";
+        return dom.list(node);
     },
 
     immutables: function () {
@@ -297,7 +295,11 @@ var ListFormatter = Class.extend({
         }
 
         this.wrap(formatNode, ancestors);
-
+        
+        while (dom.isBom(formatNode.nextSibling)) {
+            dom.remove(formatNode.nextSibling);
+        }
+        
         if (!dom.is(formatNode, tag)) {
             dom.changeTag(formatNode, tag);
         }

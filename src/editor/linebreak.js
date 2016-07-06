@@ -109,7 +109,7 @@ var ParagraphCommand = Command.extend({
             if (dom.emptyNode(li)) {
                 paragraph = dom.create(doc, 'p');
 
-                if (li.nextSibling) {
+                if (dom.next(li)) {
                     rng = range.cloneRange();
                     rng.selectNode(li);
 
@@ -117,7 +117,7 @@ var ParagraphCommand = Command.extend({
                 }
 
                 dom.insertAfter(paragraph, li.parentNode);
-                dom.remove(li.parentNode.childNodes.length == 1 ? li.parentNode : li);
+                dom.remove(li.parentNode.children.length == 1 ? li.parentNode : li);
                 paragraph.innerHTML = emptyParagraphContent;
                 next = paragraph;
             }

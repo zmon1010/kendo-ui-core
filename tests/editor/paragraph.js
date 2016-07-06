@@ -164,6 +164,15 @@ test("exec handles li containing BOM nodes", function() {
     equal(editor.body.firstChild.nodeName.toLowerCase(), 'p');
 });
 
+test('exec handles li containing BOM node and spaces around li', function() {
+    var range = createRangeFromText(editor, '<ul> <li>||&#65279;</li> </ul>');
+    
+    createParagraphCommand(range).exec();
+
+    equal(editor.value(), '');
+    equal(editor.body.firstChild.nodeName.toLowerCase(), 'p');
+});
+
 test('exec removes br', function() {
     editor.value('foo<br/>bar');
     var range = editor.createRange();

@@ -285,9 +285,9 @@ var Dom = {
     stripBom: function(text) {
         return (text || "").replace(bom, "");
     },
-
+    
     stripBomNode: function(node) {
-        if(node && node.nodeType === 3 && node.nodeValue === '\ufeff') {
+        if(Dom.isBom(node)) {
             node.parentNode.removeChild(node);
         }
     },
@@ -376,6 +376,11 @@ var Dom = {
 
     isInline: function(node) {
         return inline[Dom.name(node)];
+    },
+
+    list: function(node) {
+        var name = node ? Dom.name(node) : "";
+        return name == "ul" || name == "ol" || name == "dl";
     },
 
     scrollContainer: function(doc) {

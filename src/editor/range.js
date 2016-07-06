@@ -809,11 +809,14 @@ var Marker = Class.extend({
 
     addCaret: function (range) {
         var that = this;
+        var caret = that.caret = dom.create(RangeUtils.documentFromRange(range), 'span', { className: 'k-marker' });
+        range.insertNode(caret);
+        
+        dom.stripBomNode(caret.previousSibling);
+        dom.stripBomNode(caret.nextSibling);
 
-        that.caret = dom.create(RangeUtils.documentFromRange(range), 'span', { className: 'k-marker' });
-        range.insertNode(that.caret);
-        range.selectNode(that.caret);
-        return that.caret;
+        range.selectNode(caret);
+        return caret;
     },
 
     removeCaret: function (range) {

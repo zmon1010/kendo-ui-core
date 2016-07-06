@@ -301,6 +301,8 @@ var BackspaceHandler = Class.extend({
     _addCaret: function(container) {
         var caret = dom.create(this.editor.document, "a");
         dom.insertAt(container, caret, 0);
+        dom.stripBomNode(caret.previousSibling);
+        dom.stripBomNode(caret.nextSibling);
         return caret;
     },
     _restoreCaret: function(caret) {
@@ -464,6 +466,7 @@ var BackspaceHandler = Class.extend({
 
         while (src.firstChild) {
             if (dest.nodeType == 1) {
+                dest = dom.list(dest) ? dest.children[dest.children.length - 1] : dest;
                 dest.appendChild(src.firstChild);
             } else {
                 dest.parentNode.appendChild(src.firstChild);
