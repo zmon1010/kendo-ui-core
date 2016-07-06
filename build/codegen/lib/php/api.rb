@@ -297,7 +297,7 @@ Sets the data source of the <%= name %>.
 
 ##### $value `\\Kendo\\Data\\HierarchicalDataSource|array`
 
-#### Example - using [\\Kendo\\Data\\HierarchicalDataSource](/api/php/kendo/data/hierarchicaldatasource)
+#### Example - using [\\Kendo\\Data\\HierarchicalDataSource](/api/php/Kendo/Data/HierarchicalDataSource)
 
     <?php
     <%= owner.variable %> = <%= owner.value %>;
