@@ -1008,6 +1008,35 @@
             equal(chart._plotArea.categoryAxis.options.categories[0], "A");
         });
 
+        test("clears original option if null is passed", function() {
+            setupChart({
+                valueAxis: {
+                    min: 1
+                }
+            });
+
+            chart.setOptions({
+                valueAxis: {
+                    min: null
+                }
+            });
+            ok(chart.options.valueAxis.min === undefined);
+        });
+
+        test("clears original option if undefined is passed", function() {
+            setupChart({
+                valueAxis: {
+                    majorUnit: 1
+                }
+            });
+            chart.setOptions({
+                valueAxis: {
+                    majorUnit: undefined
+                }
+            });
+            ok(chart.options.valueAxis.majorUnit === undefined);
+        });
+
     })();
 
     // ------------------------------------------------------------

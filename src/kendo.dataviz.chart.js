@@ -1625,6 +1625,7 @@ var __meta__ = { // jshint ignore:line
 
             options.dataSource = undefined;
 
+            clearMissingValues(chart._originalOptions, options);
             chart._originalOptions = deepExtend(chart._originalOptions, options);
             chart.options = deepExtend({}, chart._originalOptions);
             chart._sourceSeries = null;
@@ -13859,6 +13860,28 @@ var __meta__ = { // jshint ignore:line
                 state.depth--;
             }
         });
+    }
+
+    function clearMissingValues(originalOptions, options) {
+        var fieldValue, originalValue, field, nullValue;
+
+        for (field in options) {
+            fieldValue = options[field];
+            originalValue = originalOptions[field];
+            if (defined(originalValue)) {
+                nullValue = fieldValue === null;
+                if ((nullValue || !defined(fieldValue))) {
+                    delete originalOptions[field];
+                    if (nullValue) {
+                        delete options[field];
+                    }
+                } else if (originalValue && isPlainObject(fieldValue)) {
+                    if (isPlainObject(fieldValue)) {
+                        clearMissingValues(originalValue, fieldValue);
+                    }
+                }
+            }
+        }
     }
 
     // Exports ================================================================
