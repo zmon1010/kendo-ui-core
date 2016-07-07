@@ -560,6 +560,7 @@
             var editor = this;
             var doc;
             var blurTrigger;
+            var mousedownTrigger;
 
             if (editor.textarea) {
                 editor.window = editor._createContentElement(editor.options.stylesheets);
@@ -567,6 +568,7 @@
                 editor.body = doc.body;
 
                 blurTrigger = editor.window;
+                mousedownTrigger = doc;
 
                 this._registerHandler(doc, "mouseup", proxy(this._mouseup, this));
             } else {
@@ -575,11 +577,13 @@
                 editor.body = editor.element[0];
 
                 blurTrigger = editor.body;
+                mousedownTrigger = editor.body;
 
                 editor.toolbar.decorateFrom(editor.body);
             }
 
             this._registerHandler(blurTrigger, "blur", proxy(this._blur, this));
+            this._registerHandler(mousedownTrigger, "mousedown ", proxy(this._mousedown, this));
 
             try {
                 doc.execCommand("enableInlineTableEditing", null, false);
@@ -670,21 +674,6 @@
 
                     editor.keyboard.keyup(e);
                 },
-                "mousedown": function(e) {
-                    editor._selectionStarted = true;
-
-                    // handle middle-click and ctrl-click on links
-                    if (browser.gecko) {
-                        return;
-                    }
-
-                    var target = $(e.target);
-
-                    if ((e.which == 2 || (e.which == 1 && e.ctrlKey)) &&
-                        target.is("a[href]")) {
-                        window.open(target.attr("href"), "_new");
-                    }
-                },
                 "click": function(e) {
                     var dom = kendo.ui.editor.Dom, range;
 
@@ -724,6 +713,23 @@
 
             if (that.options.immutables){
                 that.immutables = new editorNS.Immutables(that);
+            }
+        },
+        
+        _mousedown: function (e) {
+            var editor = this;
+            editor._selectionStarted = true;
+
+            // handle middle-click and ctrl-click on links
+            if (browser.gecko) {
+                return;
+            }
+
+            var target = $(e.target);
+            
+            if ((e.which == 2 || (e.which == 1 && e.ctrlKey)) &&
+                target.is("a[href]")) {
+                window.open(target.attr("href"), "_new");
             }
         },
 

@@ -130,6 +130,14 @@ asyncTest('mouseup raises selection change', function() {
     }, 100);
 });
 
+asyncTest('mouseup on editor document raises selection change', function() {
+    $(editor.document).mousedown().mouseup();
+    setTimeout(function() {
+        ok(changeRaised);
+        start();
+    }, 100);
+});
+
 test('down arrow raises selection change', function() {
     keyup(40);
 
