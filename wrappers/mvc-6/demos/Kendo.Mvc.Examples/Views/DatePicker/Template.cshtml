@@ -1,4 +1,4 @@
- <div class="demo-section k-content">
+<div class="demo-section k-content">
     <h4>Birthday Calendar</h4>
     @(Html.Kendo().DatePicker()
           .Name("datepicker")
@@ -30,3 +30,14 @@
         }
     };
 </script>
+
+<style>
+    .birthday {
+        background: transparent url('@Url.Content("~/shared/web/calendar/cake.png")') no-repeat 0 50%;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+        margin-right: 3px;
+    }
+</style>
