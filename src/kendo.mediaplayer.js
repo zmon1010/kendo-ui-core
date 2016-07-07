@@ -77,7 +77,7 @@
             
                 options = this.options;
                 
-                that._createHtmlPlayer(options);
+                this._createHtmlPlayer(options);
 
                 this._createTitlebar(options);
 
@@ -289,7 +289,7 @@
                     });
 					
                 if (options.autoPlay) {
-                    $(that._media).attr("autoplay", "");   
+                    $(this._media).attr("autoplay", "");   
                 }		
 				
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;
