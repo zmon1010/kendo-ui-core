@@ -1327,7 +1327,7 @@ var __meta__ = { // jshint ignore:line
 
             this._autoExpandable = null;
 
-            this._refreshHandler = this._errorHandler = this._progressHandler = null;
+            this._refreshHandler = this._errorHandler = this._progressHandler = this._dataSourceFetchProxy = null;
 
             this.thead =
                 this.content =
@@ -1466,11 +1466,10 @@ var __meta__ = { // jshint ignore:line
                 ", ." + classNames.iconExpand +
                 ", ." + classNames.refresh;
             var retryButton = DOT + classNames.retry;
-            var dataSource = this.dataSource;
 
             this.element
                 .on(MOUSEDOWN+ NS, icons, proxy(this._toggleChildren, this))
-                .on(CLICK + NS, retryButton, proxy(dataSource.fetch, dataSource))
+                .on(CLICK + NS, retryButton, this._dataSourceFetchProxy)
                 .on(CLICK + NS, ".k-button[data-command]", proxy(this._commandClick, this));
         },
 
@@ -2767,6 +2766,10 @@ var __meta__ = { // jshint ignore:line
             ds.bind(CHANGE, this._refreshHandler);
             ds.bind(ERROR, this._errorHandler);
             ds.bind(PROGRESS, this._progressHandler);
+
+            this._dataSourceFetchProxy = proxy(function() {
+                this.dataSource.fetch();
+            }, this);
         },
 
         setDataSource: function(dataSource) {
