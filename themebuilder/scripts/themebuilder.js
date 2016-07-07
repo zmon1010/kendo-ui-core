@@ -78,6 +78,8 @@
 
                 ui.ComboBox.fn.init.call(this, element, options);
 
+                this.text(this.value());
+
                 this.list.width(210);
                 this.popup.options.origin = "bottom right";
                 this.popup.options.position = "top right";
