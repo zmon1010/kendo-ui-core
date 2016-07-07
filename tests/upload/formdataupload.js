@@ -1190,7 +1190,7 @@ test("files selected prior to initialization issue postFormData", function(){
             stubXHR();
             simulateFileSelect();
 
-            equal(headers["Accept"], "*/*; q=0.5; application/json");
+            equal(headers["Accept"], "*/*; q=0.5, application/json");
         });
     })();
 })();

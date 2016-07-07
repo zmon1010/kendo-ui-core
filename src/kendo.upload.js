@@ -117,7 +117,7 @@ var __meta__ = { // jshint ignore:line
                 removeVerb: "POST",
                 autoUpload: true,
                 withCredentials: true,
-                accept: "*/*; q=0.5; application/json"
+                accept: "*/*; q=0.5, application/json"
             },
             localization: {
                 "select": "Select files...",
