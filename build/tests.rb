@@ -20,8 +20,8 @@ namespace :tests do
     end
 
     task :spreadsheet => ["spreadsheet:binaries"] do
-        msbuild SPREADSHEET_ROOT  + '/Telerik.Web.Spreadsheet.sln', "/p:Configuration=Debug-NET45"
-        sh "build/xunit-2.0/xunit.console.exe #{SPREADSHEET_ROOT }/Telerik.Web.Spreadsheet.Tests/bin/Debug-NET45/Telerik.Web.Spreadsheet.Tests.dll"
+        msbuild SPREADSHEET_ROOT  + '/Telerik.Web.Spreadsheet.sln', "/p:Configuration=Debug"
+        sh "build/xunit-2.0/xunit.console.exe #{SPREADSHEET_ROOT }/Telerik.Web.Spreadsheet.Tests/bin/Debug/Telerik.Web.Spreadsheet.Tests.dll"
     end
 
     desc "Run tests in supported jQuery versions"
