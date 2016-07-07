@@ -116,9 +116,19 @@ var ParagraphCommand = Command.extend({
                     RangeUtils.split(rng, li.parentNode);
                 }
 
-                dom.insertAfter(paragraph, li.parentNode);
-                dom.remove(li.parentNode.children.length == 1 ? li.parentNode : li);
-                paragraph.innerHTML = emptyParagraphContent;
+                var parentNode = li.parentNode;
+                var parentChildrenLength = li.parentNode.children.length;
+                var firstChild = parentChildrenLength > 1 && li.childNodes.length == 1 && li.children[0];
+
+                dom.insertAfter(paragraph, parentNode);
+                dom.remove(parentChildrenLength == 1 ? li.parentNode : li);
+
+                if (firstChild && firstChild !== marker) {
+                    paragraph.appendChild(firstChild);
+                    paragraph.appendChild(marker);
+                } else {
+                    paragraph.innerHTML = emptyParagraphContent;
+                }
                 next = paragraph;
             }
         } else if (heading && this._blankAfter(marker)) {

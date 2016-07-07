@@ -123,6 +123,15 @@ test('exec when in last li and it is empty', function() {
     equal(editor.value(), '<ul><li>foo</li></ul><p>&nbsp;</p>');
 });
 
+test('exec when in last li and it is empty with a single span child', function() {
+    editor.value('<ul><li>foo</li><li><span style="color:red;"></span></li></ul>');
+    var range = editor.createRange();
+    range.selectNodeContents(editor.body.firstChild.lastChild.firstChild);
+    var command = createParagraphCommand(range);
+    command.exec();
+    equal(editor.value(), '<ul><li>foo</li></ul><p><span style="color:red;"></span></p>');
+});
+
 test('exec in empty list item preserves line breaks in others', function() {
     editor.value('<ul><li>fo<br />o</li><li></li><li>ba<br />r</li></ul>');
     var range = editor.createRange();
