@@ -18,11 +18,12 @@
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
 
-    var NS = ".kendoEditor";
+    var NS = ".kendoEditorColumnResizing";
     var RESIZE_HANDLE_CLASS = ".k-resize-handle";
     var RESIZE_HINT_MARKER_CLASS = ".k-resize-hint-marker";
 
     var COLUMN = "column";
+    var CONTENT_EDITABLE = "contenteditable";
     var COMMA = ",";
     var MOUSE_DOWN = "mousedown";
     var MOUSE_MOVE = "mousemove";
@@ -36,6 +37,9 @@
     var TR = "tr";
     var WIDTH = "width";
     var LAST_CHILD = ":last-child";
+    var TRUE = "true";
+    var FALSE = "false";
+    var UNDEFINED = "undefined";
 
     function constrain(options) {
         var value = options.value;
@@ -76,7 +80,8 @@
         init: function(element, options) {
             var that = this;
 
-            that._initOptions(options);
+            that.options = extend({}, that.options, options);
+
             that.options.tags = isArray(that.options.tags) ? that.options.tags : [that.options.tags];
 
             if ($(element).is(TABLE)) {
@@ -89,24 +94,21 @@
             var that = this;
 
             if (that.element) {
-                $(that.element).find(RESIZE_HANDLE_CLASS).off(NS).remove();
                 $(that.element).off(NS);
                 that.element = null;
             }
 
-            if (that.resizable) {
-                that.resizable.destroy();
-                that.resizable = null;
-            }
+            that._destroyResizable();
+            that._destroyResizeHandle();
         },
 
         options: {
             tags: [TD, TH],
             min: 20,
+            rootElement: null,
             rtl: false,
             handle: {
                 width: 10,
-                height: 10,
                 template:
                     '<div class="k-resize-handle">' +
                         '<div class="k-resize-hint-marker"></div>' +
@@ -125,30 +127,53 @@
             return false;
         },
 
+        _destroyResizable: function() {
+            var that = this;
+
+            if (that.resizable) {
+                that.resizable.destroy();
+                that.resizable = null;
+            }
+        },
+
         _detectColumnBorderHovering: function(e) {
             var that = this;
             var column = $(e.currentTarget);
             var resizeHandle = that.resizeHandle;
 
-            if (!that.resizingInProgress() && !column.is(LAST_CHILD) && that._columnBorderHovered(column, e.clientX)) {
-                if (resizeHandle) {
-                    if (resizeHandle.data(COLUMN) && resizeHandle.data(COLUMN) !== column[0]) {
-                        if (that.resizable) {
-                            that.resizable.destroy();
-                            that.resizable = null;
+            if (!that.resizingInProgress()) {
+                if (!column.is(LAST_CHILD) && that._columnBorderHovered(column, e.clientX)) {
+                    that._setRootElementEditing(FALSE);
+
+                    if (resizeHandle) {
+                        if (resizeHandle.data(COLUMN) && resizeHandle.data(COLUMN) !== column[0]) {
+                            that._destroyResizable();
+                            that._destroyResizeHandle();
+                            that._createResizeHandle(column);
+                            that._initResizable(column);
                         }
-
-                        that.resizeHandle.off(NS).remove();
-                        that.resizeHandle = null;
-
+                    }
+                    else {
                         that._createResizeHandle(column);
                         that._initResizable(column);
                     }
                 }
                 else {
-                    that._createResizeHandle(column);
-                    that._initResizable(column);
+                    if (resizeHandle) {
+                        that._setRootElementEditing(TRUE);
+                        that._destroyResizable();
+                        that._destroyResizeHandle();
+                    }
                 }
+            }
+        },
+
+        _setRootElementEditing: function(enabled) {
+            var that = this;
+            var rootElement = $(that.options.rootElement);
+
+            if (rootElement && (typeof(rootElement.attr(CONTENT_EDITABLE)) !== UNDEFINED)) {
+                rootElement.attr(CONTENT_EDITABLE, enabled);
             }
         },
 
@@ -195,12 +220,19 @@
             .children(RESIZE_HINT_MARKER_CLASS).hide();
         },
 
+        _destroyResizeHandle: function() {
+            var that = this;
+
+            if (that.resizeHandle) {
+                that.resizeHandle.off(NS).remove();
+                that.resizeHandle = null;
+            }
+        },
+
         _initResizable: function(column) {
             var that = this;
 
-            if (that.resizable) {
-                that.resizable.destroy();
-            }
+            that._destroyResizable();
 
             that.resizable = $(column).kendoResizable({
                 handle: RESIZE_HANDLE_CLASS,
@@ -239,8 +271,8 @@
                     that._resizeTopAndBottomColumns(column, newWidth);
                     that._resizeAdjacentColumns(column.index(), columnWidth, adjacentColumnWidth, deltaWidth);
 
-                    that.resizeHandle.off(NS).remove();
-                    that.resizeHandle = null;
+                    that._destroyResizeHandle();
+                    that._setRootElementEditing(TRUE);
                 }
             }).data("kendoResizable");
         },

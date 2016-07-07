@@ -101,12 +101,12 @@
         equal(editor.tableResizing.element, table);
     });
 
-    test("hovering a table should initialize table resizing with default options", function() {
+    test("hovering a table should initialize table resizing with custom options", function() {
         var table = $(editor.body).find("#table")[0];
 
         triggerEvent(table, { type: MOUSE_ENTER });
 
-        deepEqual(editor.tableResizing.options, { rtl: false });
+        deepEqual(editor.tableResizing.options, { rtl: false, rootElement: editor.body });
     });
 
     test("hovering a different table should destroy current table resizing", function() {
@@ -130,7 +130,7 @@
         equal(tableResizing.destroy.callCount, 0);
     });
 
-    test("moving out of a table should destroy table resizing", function() {
+    test("leaving a table should destroy table resizing", function() {
         var table = $(editor.body).find("#table")[0];
         editor.tableResizing = new TableResizing(table, {});
         editor.tableResizing.resizingInProgress = function() { return false; };
@@ -143,7 +143,7 @@
         equal(editor.tableResizing, null);
     });
 
-    test("moving out of a table should not destroy table resizing if resizing is in progress", function() {
+    test("leaving a table should not destroy table resizing if resizing is in progress", function() {
         var table = $(editor.body).find("#table")[0];
         editor.tableResizing = new TableResizing(table, {});
         editor.tableResizing.resizingInProgress = function() { return true; };
@@ -237,15 +237,19 @@
     });
 
     test("table resizing should be initialized with default options", function() {
+        var defaultOptions = {
+            rtl: false,
+            rootElement: null
+        };
         tableResizing = new TableResizing(table);
 
-        deepEqual(tableResizing.options, { rtl: false });
+        deepEqual(tableResizing.options, defaultOptions);
     });
 
     test("table resizing should be initialized with custom options", function() {
         tableResizing = new TableResizing(table, { rtl: true });
 
-        deepEqual(tableResizing.options, { rtl: true });
+        deepEqual(tableResizing.options.rtl, true);
     });
 
     module("editor table resizing", {
@@ -267,10 +271,13 @@
         ok(tableResizing.columnResizing instanceof kendo.ui.editor.ColumnResizing);
     });
 
-    test("column resizing should not be initialized with custom options", function() {
-        tableResizing = new TableResizing(table, { rtl: true });
+    test("column resizing should be initialized with custom table resizing options", function() {
+        var options = {
+            rootElement: "element"
+        };
+        tableResizing = new TableResizing(table, options);
 
-        equal(tableResizing.columnResizing.options.rtl, true);
+        deepEqual(tableResizing.columnResizing.options.rootElement, "element");
     });
 
     test("column resizing should be initialized with table element", function() {

@@ -6,15 +6,19 @@
     var options;
     var tableElement;
     var tableWidth;
+    var wrapper;
     var FIXTURE_SELECTOR = "#qunit-fixture";
     var HANDLE_SELECTOR = ".k-resize-handle";
     var MARKER_SELECTOR = ".k-resize-hint-marker";
     var FIRST_COLUMN = "td:first";
     var SECOND_COLUMN = "tr:first td:nth-child(2)";
     var LAST_COLUMN = "tr:first td:last";
+    var CONTENT_EDITABLE = "contenteditable";
     var PX = "px";
     var DOT = ".";
-    var NS = "kendoEditor";
+    var FALSE = "false";
+    var TRUE = "true";
+    var NS = "kendoEditorColumnResizing";
     var MAX = 123456;
     var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
@@ -178,10 +182,10 @@
         var defaultOptions = {
             tags: ["td", "th"],
             min: 20,
+            rootElement: null,
             rtl: false,
             handle: {
                 width: 10,
-                height: 10,
                 template:
                     '<div class="k-resize-handle">' +
                         '<div class="k-resize-hint-marker"></div>' +
@@ -330,17 +334,14 @@
         equal(columnResizing.resizeHandle.css("display"), "block");
     });
 
-    test("resize handle should be hidden when leaving the cell border", function() {
+    test("resize handle should be removed when leaving the cell border", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         triggerBorderHover(cell);
         $(columnResizing.resizeHandle).show();
 
-        triggerEvent(cell, {
-            type: MOUSE_MOVE,
-            pageX: MAX
-        });
+        triggerEvent(cell, { type: MOUSE_MOVE, pageX: MAX });
 
-        equal(columnResizing.resizeHandle.css("display"), "block");
+        equal(cell.find(HANDLE_SELECTOR).length, 0);
     });
 
     test("resize handle should store data about resizing cell", function() {
@@ -382,6 +383,17 @@
         equal(secondCell.find(HANDLE_SELECTOR).length, 1);
     });
 
+    module("editor column resizing", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
     test("existing resize handle should be shown when hovering a column", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
 
@@ -390,10 +402,20 @@
         equal(columnResizing.resizeHandle.css("display"), "block");
     });
 
-    test("existing resize handle should be shown while resizing", function() {
+    test("existing resize handle should be shown when hovering a cell for a second time", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        triggerBorderHover(cell);
+        triggerEvent(cell, { type: MOUSE_MOVE, pageX: MAX });
+
+        triggerBorderHover(cell);
+
+        equal(columnResizing.resizeHandle.css("display"), "block");
+    });
+
+    test("existing resize handle should be shown when resizing is in progress", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
-        columnResizing.resizeHandle = $(columnResizing.options.handle.template).appendTo(cell).show();
+        triggerBorderHover(cell);
         columnResizing.resizingInProgress = function() { return true; };
 
         triggerResize(cell, initialWidth, initialWidth + 10);
@@ -401,10 +423,10 @@
         equal(columnResizing.resizeHandle.css("display"), "block");
     });
 
-    test("existing resize handle should be shown if resizing is not in progress", function() {
+    test("existing resize handle should be shown when resizing is not in progress", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         var initialWidth = cell.outerWidth();
-        columnResizing.resizeHandle = $(columnResizing.options.handle.template).appendTo(cell).show();
+        triggerBorderHover(cell);
         columnResizing.resizingInProgress = function() { return false; };
 
         triggerResize(cell, initialWidth, initialWidth + 10);
@@ -552,6 +574,93 @@
         columnResizing.destroy();
 
         equal(columnResizing.resizable, null);
+    });
+
+    module("editor column resizing", {
+        setup: function() {
+            wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(wrapper);
+            columnResizing = new ColumnResizing(tableElement, { rootElement: wrapper });
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("hovering the border of a cell should disable editing in the root element", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+
+        triggerBorderHover(cell);
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), FALSE);
+    });
+
+    test("hovering the border of a cell should disable the editing in editable root element", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        $(wrapper).removeAttr(CONTENT_EDITABLE);
+        $(wrapper).removeAttr(CONTENT_EDITABLE, "");
+
+        triggerBorderHover(cell);
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), undefined);
+    });
+
+    test("hovering the border of a cell should not disable editing in non-editable root element", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        $(wrapper).removeAttr(CONTENT_EDITABLE);
+
+        triggerBorderHover(cell);
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), undefined);
+    });
+
+    test("leaving the border of a cell should enable editing in the root element", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        triggerBorderHover(cell);
+
+        triggerEvent(cell, { type: MOUSE_MOVE, pageX: MAX });
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), TRUE);
+    });
+
+    test("leaving a cell should not change editing of the root element when resizing is in progress", function() {
+        var editable = $(columnResizing.options.rootElement).attr(CONTENT_EDITABLE);
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        columnResizing.resizingInProgress = function() { return true; };
+        triggerBorderHover(cell);
+
+        triggerEvent(cell, { type: MOUSE_MOVE, pageX: MAX });
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), editable);
+    });
+
+    test("leaving a cell should enable editing in the root element when resizing is not progress", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        columnResizing.resizingInProgress = function() { return false; };
+        triggerBorderHover(cell);
+
+        triggerEvent(cell, { type: MOUSE_MOVE, pageX: MAX });
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), TRUE);
+    });
+
+    test("resizing a column should not change the editing of the root element", function() {
+        var editable = $(columnResizing.options.rootElement).attr(CONTENT_EDITABLE);
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        var initialWidth = cell.outerWidth();
+
+        resizeColumn(cell, initialWidth, initialWidth + 10);
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), editable);
+    });
+
+    test("destroy should enable editing in the root element", function() {
+        var resizable = columnResizing.resizable = new kendo.ui.Resizable($("<div />")[0], {});
+
+        columnResizing.destroy();
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), TRUE);
     });
 
     module("editor column resizable", {

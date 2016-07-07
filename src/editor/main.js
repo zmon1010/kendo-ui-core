@@ -343,6 +343,13 @@
         _initializeTableResizing: function() {
             var editor = this;
 
+            function initTableResizing(editorWidget, tableElement) {
+                editorWidget.tableResizing = new kendo.ui.editor.TableResizing(tableElement, {
+                    rtl: rtlEnabled,
+                    rootElement: editorWidget.body
+                });
+            }
+
             $(editor.body)
                 .on(MOUSE_ENTER + NS, TABLE, function(e) {
                     var table = e.currentTarget;
@@ -352,11 +359,11 @@
                     if (editor.tableResizing) {
                         if (editor.tableResizing.element !== table) {
                             editor.tableResizing.destroy();
-                            editor.tableResizing = new kendo.ui.editor.TableResizing(table, { rtl: rtlEnabled });
+                            initTableResizing(editor, table);
                         }
                     }
                     else {
-                        editor.tableResizing = new kendo.ui.editor.TableResizing(table, { rtl: rtlEnabled });
+                        initTableResizing(editor, table);
                     }
                 })
                 .on(MOUSE_LEAVE + NS, TABLE, function(e) {
@@ -371,7 +378,7 @@
                         editor.tableResizing = null;
 
                         if (parentTable) {
-                            editor.tableResizing = new kendo.ui.editor.TableResizing(parentTable, { rtl: rtlEnabled });
+                            initTableResizing(editor, parentTable);
                         }
                     }
                 });
@@ -452,7 +459,7 @@
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
                     ".k-table td >.k-resize-handle{position:absolute;height: 14px;width:10px;cursor:col-resize;z-index:2;}" +
-                    ".k-table td > .k-resize-handle > .k-resize-hint-marker{width:2px;height:100%;margin:0 auto;background-color:#00b0ff;display:none;opacity:0.6;}" +
+                    ".k-table td > .k-resize-handle > .k-resize-hint-marker{width:2px;height:100%;margin:0 auto;background-color:#00b0ff;display:none;opacity:0.8;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +

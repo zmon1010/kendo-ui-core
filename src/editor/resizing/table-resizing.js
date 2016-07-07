@@ -17,7 +17,7 @@
         init: function(element, options) {
             var that = this;
 
-            that._initOptions(options);
+            that.options = extend({}, that.options, options);
 
             if ($(element).is(TABLE)) {
                 that.element = element;
@@ -42,7 +42,8 @@
         },
 
         options: {
-            rtl: false
+            rtl: false,
+            rootElement: null
         },
 
         resizingInProgress: function() {
