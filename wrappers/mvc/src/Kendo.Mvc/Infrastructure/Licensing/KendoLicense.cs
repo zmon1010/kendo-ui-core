@@ -8,6 +8,8 @@ namespace Kendo.Mvc.Infrastructure.Licensing
         private const int TRIAL_DURATION = 30;
         private const string TRIAL_START_KEY_PERFIX = "Telerik";
         private const string TRIAL_LAST_KEY_PERFIX = "TelerikLast";
+        private const string REGISTRY_SUB_KEY = "Software\\Telerik\\MVC";
+        private const string REGISTRY_SECONDARY_SUB_KEY = "Software\\Microsoft\\MSNT";
 
         private int? _trialDaysLeft = null;
 
@@ -64,15 +66,41 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             string registryKeyString = string.Concat(TRIAL_START_KEY_PERFIX, AssemblyVersion);
             DateTime trialStart = DateTime.MinValue;
 
-            if (RegistryUtilities.RegistryKeyExists(registryKeyString))
+            string trialStartHash = RegistryUtilities.ReadRegistryString(
+                REGISTRY_SECONDARY_SUB_KEY,
+                registryKeyString.GetHashCode().ToString());
+
+            if (RegistryUtilities.RegistryKeyExists(
+                REGISTRY_SUB_KEY,
+                registryKeyString))
             {
-                trialStart = RegistryUtilities.ReadRegistryString(registryKeyString, DateTime.MinValue);
+                DateTime registeredTrialStart = RegistryUtilities.ReadRegistryDate(
+                    REGISTRY_SUB_KEY,
+                    registryKeyString,
+                    DateTime.MinValue);
+
+                if (trialStartHash != null &&
+                    trialStartHash.Equals(registeredTrialStart.GetHashCode().ToString()))
+                {
+                    trialStart = registeredTrialStart;
+                }
             }
             else
             {
-                trialStart = DateTime.Now;
+                if (trialStartHash == null)
+                {
+                    trialStart = DateTime.Now;
 
-                RegistryUtilities.SaveRegistryString(registryKeyString, trialStart);
+                    RegistryUtilities.SaveRegistryDate(
+                        REGISTRY_SUB_KEY,
+                        registryKeyString,
+                        trialStart);
+
+                    RegistryUtilities.SaveRegistryString(
+                        REGISTRY_SECONDARY_SUB_KEY,
+                        registryKeyString.GetHashCode().ToString(),
+                        trialStart.GetHashCode().ToString());
+                }
             }
 
             return trialStart;
@@ -82,11 +110,18 @@ namespace Kendo.Mvc.Infrastructure.Licensing
         {
             string registryKeyString = string.Concat(TRIAL_LAST_KEY_PERFIX, AssemblyVersion);
             DateTime trialLastUse = DateTime.Now;
-            DateTime lastRegisteredUse = RegistryUtilities.ReadRegistryString(registryKeyString, DateTime.MinValue);
+
+            DateTime lastRegisteredUse = RegistryUtilities.ReadRegistryDate(
+                REGISTRY_SUB_KEY,
+                registryKeyString,
+                DateTime.MinValue);
 
             if (lastRegisteredUse == DateTime.MinValue || lastRegisteredUse < trialLastUse)
             {
-                RegistryUtilities.SaveRegistryString(registryKeyString, trialLastUse);
+                RegistryUtilities.SaveRegistryDate(
+                    REGISTRY_SUB_KEY,
+                    registryKeyString,
+                    trialLastUse);
             }
             else
             {

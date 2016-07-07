@@ -6,81 +6,78 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 {
     internal static class RegistryUtilities
     {
-        private const string REGISTRY_SUB_KEY = "Software\\Telerik\\MVC";
-
-        internal static bool RegistryKeyExists(string registryKeyString)
+        internal static bool RegistryKeyExists(string registrySubKey, string key)
         {
-            // TODO Add second check
+            string registryStringValue = RegistryUtilities.ReadRegistryString(registrySubKey, key);
 
-            bool keyExists = false;
-            string encodedKeyString = RegistryUtilities.EncodeString(registryKeyString);
-
-            try
-            {
-                using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(REGISTRY_SUB_KEY))
-                {
-                    keyExists = registryKey != null;
-
-                    if (registryKey != null)
-                    {
-                        string value = registryKey.GetValue(encodedKeyString) as string;
-                        keyExists = (value == null ? false : value.Length > 0);
-                    }
-                }
-            }
-            catch
-            {
-                keyExists = false;
-            }
+            bool keyExists = registryStringValue != null;
 
             return keyExists;
         }
 
-        internal static void SaveRegistryString(string key, DateTime date)
+        internal static void SaveRegistryDate(string registrySubKey, string key, DateTime date)
+        {
+            RegistryUtilities.SaveRegistryString(registrySubKey, key, date.ToBinary().ToString());
+        }
+
+        internal static void SaveRegistryString(string registrySubKey, string key, string valueString)
         {
             try
             {
-                using (RegistryKey registryKey = Registry.CurrentUser.CreateSubKey(REGISTRY_SUB_KEY))
+                using (RegistryKey registryKey = Registry.CurrentUser.CreateSubKey(registrySubKey))
                 {
                     if (registryKey != null)
                     {
-                        var encodedDateString = RegistryUtilities.EncodeString(date.ToBinary().ToString());
+                        var encodedValueString = RegistryUtilities.EncodeString(valueString);
                         string encodedKeyString = RegistryUtilities.EncodeString(key);
 
-                        registryKey.SetValue(encodedKeyString, encodedDateString);
+                        registryKey.SetValue(encodedKeyString, encodedValueString);
                     }
                 }
             }
             catch { }
         }
 
-        internal static DateTime ReadRegistryString(string key, DateTime defaultValue)
+        internal static DateTime ReadRegistryDate(string registrySubKey, string key, DateTime defaultValue)
         {
             DateTime result = defaultValue;
 
+            string dateString = RegistryUtilities.ReadRegistryString(registrySubKey, key);
+
+            if (dateString != null)
+            {
+                long dateBinary = defaultValue.ToBinary();
+
+                if (long.TryParse(dateString, out dateBinary))
+                {
+                    result = DateTime.FromBinary(dateBinary);
+                }
+            }
+
+            return result;
+        }
+
+        internal static string ReadRegistryString(string registrySubKey, string key)
+        {
+            string result = null;
+
             try
             {
-                using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(REGISTRY_SUB_KEY))
+                using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(registrySubKey))
                 {
                     if (registryKey != null)
                     {
                         string encodedKeyString = RegistryUtilities.EncodeString(key);
-                        string dateString = registryKey.GetValue(encodedKeyString) as string;
 
-                        dateString = RegistryUtilities.DecodeString(dateString);
+                        string encodedResult = registryKey.GetValue(encodedKeyString) as string;
 
-                        long dateBinary = defaultValue.ToBinary();
-
-                        if (long.TryParse(dateString, out dateBinary))
-                        {
-                            result = DateTime.FromBinary(dateBinary);
-                        }
+                        result = RegistryUtilities.DecodeString(encodedResult);
                     }
                 }
             }
             catch
             {
-                result = defaultValue;
+                result = null;
             }
 
             return result;
