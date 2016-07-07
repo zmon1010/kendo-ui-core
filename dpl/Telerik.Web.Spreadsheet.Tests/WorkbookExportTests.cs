@@ -72,7 +72,7 @@ namespace Telerik.Web.Spreadsheet.Tests
         public void ToDocument_exports_cell_double_value()
         {
             var value = GetValue(1, 3);
-            Assert.Equal("2.71", value.RawValue);
+            Assert.Equal("2.71", value.RawValue.Trim());
             Assert.Equal(CellValueType.Number, value.ValueType);
         }
 

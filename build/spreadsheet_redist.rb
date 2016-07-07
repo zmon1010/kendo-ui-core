@@ -7,7 +7,7 @@ def copy_dpl_binaries
     source_dir = "#{DPL_DIST}\\#{branch}\\Binaries"
     puts "Copying DPL Binaries from #{source_dir}."
 
-    {'WPF40' => { :dest => 'NET40' }, 'WPF45' => { :dest => 'NET45' }}.each do |key, value|
+    {'Net40' => { :dest => 'NET40' }}.each do |key, value|
         ['Dev', 'Trial'].each do |license|
             suffix = license == 'Trial' ? '-Trial' : '';
             dest = "dpl\\lib\\#{value[:dest]}#{suffix}\\"
