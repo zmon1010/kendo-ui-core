@@ -29,13 +29,12 @@ To enable proper compilation of the LESS files in the example you need to do the
 
 	<script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
 
-
-
 	<style>
 		body {
 			font-size: 14px;
 		}
 
+		/*Temporary workaround for the icon font*/
         @font-face {
 	        font-family: 'TelerikWebUI';
             src: url('../styles/web/common/TelerikWebUI.eot');
@@ -44,6 +43,7 @@ To enable proper compilation of the LESS files in the example you need to do the
                 url('../styles/web/common/TelerikWebUI.ttf') format('truetype');
         }
 
+		/*Temporary workaround for positioning of the slider (seekbar)*/
 		.k-mediaplayer .k-mediaplayer-seekbar {
 			position: absolute;
 			bottom: 60px;
@@ -51,6 +51,11 @@ To enable proper compilation of the LESS files in the example you need to do the
 			right: 10px;
 			padding: 4px;
 			opacity: 0.7;
+		}
+
+		/*Temporary workaround for portrait images, to make the image fill (crop) the available space */
+		.k-mediaplayer-playlist a img {
+    		object-fit: cover !important;
 		}
 	</style>
 </head>
@@ -60,23 +65,24 @@ To enable proper compilation of the LESS files in the example you need to do the
 	<!--<div id="player1" style="width: 800px; height: 400px;"> </div>-->
 	
 	<script type="text/javascript">
-		$(document).ready(function () {
-
-            var mnyDataSource = new kendo.data.DataSource({
+		$(document).ready(function () {			
+            var myDataSource = new kendo.data.DataSource({
                 data: [
-                  { name: "video1", url: "http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg" },
-                  { name: "video2", url: "something invalid" }
+                  { title: "Big Buck Bunny", poster:"http://static4.opensubtitles.org/gfx/thumbs/7/0/2/4/1254207.jpg", url: "http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg" },
+				  { title: "Elephants Dream", poster: "http://iv1.lisimg.com/image/300164/450full-elephants-dream-poster.jpg", url: "http://video.webmfiles.org/elephants-dream.webm"},
+                  { title: "Just Code", poster:"video/images/JustCode.png", url: "video/justCode.mp4" },
+                  { title: "Costa Rica", poster:"video/images/youtubeLogo.png", url: "video/CostaRica.mp4" },
+                  { title: "App Builder", poster:"video/images/AppBuilder.png", url: "video/appBuilder.mp4" },
+                  { title: "Test Studio", poster:"video/images/TestStudio.png", url: "video/testStudio.mp4" }
                 ]
             });
 
 
-			$("#player1").kendoMediaPlayer(
-                {
-                	dataSource: myDataSource,
-					playlist: true,
-					autoPlay: true
-                }
-             );
+			$("#player1").kendoMediaPlayer({
+				dataSource: myDataSource,
+				playlist: true,
+				autoPlay: true
+			});
 
 			// $("#player2").kendoMediaPlayer(
             //     {
@@ -84,11 +90,18 @@ To enable proper compilation of the LESS files in the example you need to do the
             //     }
             //  );
 
+			// $("#player1").kendoMediaPlayer(
+            //     {
+            //     	dataSource: myDataSource,
+			// 		playlist: {hidden: false, button: false}
+            //     }
+            //  );
+
+			/*Temporary workaround for playlist background color*/
+			setTimeout(function() {
+				$(".k-mediaplayer-playlist").css("background-color", $(".k-mediaplayer-toolbar").css("background-color"));
+			}, 200);
 		});
 	</script>
-
-	<input type="button" value="Play" onclick="(function(){  $('#player1').data('kendoMediaPlayer').play()})(); return false;" />
-
-	<input type="button" value="Pause" onclick="(function(){  $('#player1').data('kendoMediaPlayer').pause()})(); return false;" />
 </body>
 </html>
