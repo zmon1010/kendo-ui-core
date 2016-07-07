@@ -334,17 +334,29 @@ else
 
     # MVC6 package
     file MVC6_NUGET => MVC6_SOURCES do
-        outpkg = File.join('bin', 'Release', "Kendo.Mvc.#{VERSION}.nupkg")
-        newpkg = File.join('bin', 'Release', "#{MVC6_PACKAGE_BASENAME}.nupkg")
-        sh <<-SHELL
-            cd #{MVC6_SRC_ROOT}
+        sh "cd #{MVC6_SRC_ROOT} && dotnet restore && dotnet pack --configuration Release"
 
-            dotnet restore && dotnet pack --configuration Release
+        binpath = File.join(MVC6_SRC_ROOT, 'bin', 'Release')
+        outpkg = File.join(binpath, "Kendo.Mvc.#{VERSION}.nupkg")
+        newpkg = File.join(binpath, "#{MVC6_PACKAGE_BASENAME}.nupkg")
 
-            mv #{outpkg} #{newpkg}
-            unzip -p #{newpkg} Kendo.Mvc.nuspec | sed 's/<id>Kendo.Mvc</<id>Telerik.UI.for.AspNet.Core</' > Kendo.Mvc.nuspec
-            zip #{newpkg} Kendo.Mvc.nuspec && rm Kendo.Mvc.nuspec
-        SHELL
+        buffer = Zip::OutputStream.write_buffer do |out|
+            Zip::File.open(outpkg) do |zip_file|
+                zip_file.entries.each do |file|
+                    content = file.get_input_stream.read
+                    if file.name == 'Kendo.Mvc.nuspec'
+                        puts 'Updating package id to Telerik.UI.for.AspNet.Core'
+                        content = content.sub('<id>Kendo.Mvc</id>', '<id>Telerik.UI.for.AspNet.Core</id>')
+                    end
+
+                    out.put_next_entry(file.name)
+                    out.write content
+                end
+            end
+        end
+
+        puts "Writing #{newpkg}"
+        File.open(newpkg, "wb") {|f| f.write(buffer.string) }
     end
 
     tree :to => 'dist/binaries/mvc-6/',
