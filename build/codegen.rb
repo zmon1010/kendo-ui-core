@@ -261,7 +261,6 @@ namespace :generate do
                 'docs/api/javascript/ui/treelist.md',
                 'docs/api/javascript/ui/treeview.md',
                 'docs/api/javascript/ui/toolbar.md',
-                'docs/api/javascript/ui/tooltip.md',
                 'docs/api/javascript/ui/upload.md',
                 'docs/api/javascript/ui/window.md',
                 'docs/api/javascript/ui/splitter.md',
