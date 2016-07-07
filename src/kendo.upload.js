@@ -1108,18 +1108,23 @@ var __meta__ = { // jshint ignore:line
         onSelect: function(e, files) {
             var upload = this.upload;
             var sourceInput = $(e.target);
+            var filesContainErrors = upload._filesContainValidationErrors(files);
 
             upload._addInput(sourceInput);
 
             var fileData = { "fileNames": files };
 
-            if(upload._filesContainValidationErrors(files)) {
+            if(filesContainErrors) {
                 sourceInput.remove();
             } else {
                 fileData.relatedInput = sourceInput;
             }
 
             var file = upload._enqueueFile(getFileName(sourceInput), fileData);
+
+            if(filesContainErrors) {
+                upload._hideUploadProgress(file);
+            }
 
             upload._fileAction(file, REMOVE);
         },
@@ -1168,6 +1173,10 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     upload._updateHeaderUploadStatus();
                 }
+            }
+
+            if(hasValidationErrors) {
+                upload._hideUploadProgress(fileEntry);
             }
         },
 
@@ -1421,6 +1430,10 @@ var __meta__ = { // jshint ignore:line
                     } else {
                         upload._updateHeaderUploadStatus();
                     }
+                }
+
+                if(hasValidationErrors) {
+                    upload._hideUploadProgress(this);
                 }
             });
         },
