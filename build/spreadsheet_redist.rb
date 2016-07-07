@@ -28,7 +28,7 @@ namespace :spreadsheet do
     task :redist => 'spreadsheet:assembly_version' do
         copy_dpl_binaries
 
-        ['Release', 'Release-NET45', 'Release-Trial', 'Release-NET45-Trial'].each do |configuration|
+        ['Release', 'Release-Trial'].each do |configuration|
             msbuild SPREADSHEET_SRC_ROOT + '/Telerik.Web.Spreadsheet.csproj', "/p:Configuration=#{configuration}"
         end
 
