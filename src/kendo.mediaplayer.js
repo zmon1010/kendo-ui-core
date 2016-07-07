@@ -56,7 +56,7 @@
             
                 options = that.options;
                 
-                that._createHtmlPlayer();
+                that._createHtmlPlayer(options);
 
                 that._createTitlebar();
 
@@ -210,7 +210,7 @@
                 slider._resize();
             },
 
-            _createHtmlPlayer: function () {
+            _createHtmlPlayer: function (options) {
                 var that = this;
                 wrapper.append(templates.htmlPlayer);
                 that._media = wrapper.find(DOT + MEDIA)[0];
@@ -218,6 +218,11 @@
                     width: wrapper.width(),
                     height: wrapper.height() 
                 });
+
+                if (options.autoPlay) {
+                    $(that._media).attr("autoplay", "");   
+                }
+
                 that._media.ontimeupdate = proxy(that._mediaTimeUpdate, that);
                 that._media.ondurationchange = proxy(that._mediaDurationChange, that);                
             },
