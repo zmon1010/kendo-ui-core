@@ -27,6 +27,11 @@ var __meta__ = { // jshint ignore:line
                 '</a>' +
              '</div>',  { useWithBlock:false }),
         hint = function(target) {
+            var title = target.attr(kendo.attr("title"));
+            if (title) {
+                title = kendo.htmlEncode(title);
+            }
+
             return $('<div class="k-header k-drag-clue" />')
                 .css({
                     width: target.width(),
@@ -36,7 +41,7 @@ var __meta__ = { // jshint ignore:line
                     paddingTop: target.css("paddingTop"),
                     paddingBottom: target.css("paddingBottom")
                 })
-                .html(kendo.htmlEncode(target.attr(kendo.attr("title"))) || target.attr(kendo.attr("field")))
+                .html(title || target.attr(kendo.attr("field")))
                 .prepend('<span class="k-icon k-drag-status k-denied" />');
         },
         dropCue = $('<div class="k-grouping-dropclue"/>');
