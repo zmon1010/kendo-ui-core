@@ -13,6 +13,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             // TODO Add second check
 
             bool keyExists = false;
+            string encodedKeyString = RegistryUtilities.EncodeString(registryKeyString);
 
             try
             {
@@ -22,7 +23,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 
                     if (registryKey != null)
                     {
-                        string value = registryKey.GetValue(registryKeyString) as string;
+                        string value = registryKey.GetValue(encodedKeyString) as string;
                         keyExists = (value == null ? false : value.Length > 0);
                     }
                 }
@@ -43,9 +44,10 @@ namespace Kendo.Mvc.Infrastructure.Licensing
                 {
                     if (registryKey != null)
                     {
-                        // TODO Encode date differently
+                        var encodedDateString = RegistryUtilities.EncodeString(date.ToBinary().ToString());
+                        string encodedKeyString = RegistryUtilities.EncodeString(key);
 
-                        registryKey.SetValue(key, date.ToBinary());
+                        registryKey.SetValue(encodedKeyString, encodedDateString);
                     }
                 }
             }
@@ -62,9 +64,10 @@ namespace Kendo.Mvc.Infrastructure.Licensing
                 {
                     if (registryKey != null)
                     {
-                        // TODO Encode date differently
+                        string encodedKeyString = RegistryUtilities.EncodeString(key);
+                        string dateString = registryKey.GetValue(encodedKeyString) as string;
 
-                        string dateString = registryKey.GetValue(key) as string;
+                        dateString = RegistryUtilities.DecodeString(dateString);
 
                         long dateBinary = defaultValue.ToBinary();
 

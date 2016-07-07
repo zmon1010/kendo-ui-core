@@ -62,18 +62,17 @@ namespace Kendo.Mvc.Infrastructure.Licensing
         private DateTime GetTrialStart()
         {
             string registryKeyString = string.Concat(TRIAL_START_KEY_PERFIX, AssemblyVersion);
-            string encodedKeyString = RegistryUtilities.EncodeString(registryKeyString);
             DateTime trialStart = DateTime.MinValue;
 
-            if (RegistryUtilities.RegistryKeyExists(encodedKeyString))
+            if (RegistryUtilities.RegistryKeyExists(registryKeyString))
             {
-                trialStart = RegistryUtilities.ReadRegistryString(encodedKeyString, DateTime.MinValue);
+                trialStart = RegistryUtilities.ReadRegistryString(registryKeyString, DateTime.MinValue);
             }
             else
             {
                 trialStart = DateTime.Now;
 
-                RegistryUtilities.SaveRegistryString(encodedKeyString, trialStart);
+                RegistryUtilities.SaveRegistryString(registryKeyString, trialStart);
             }
 
             return trialStart;
@@ -82,13 +81,12 @@ namespace Kendo.Mvc.Infrastructure.Licensing
         private DateTime GetTrialLastUse()
         {
             string registryKeyString = string.Concat(TRIAL_LAST_KEY_PERFIX, AssemblyVersion);
-            string encodedKeyString = RegistryUtilities.EncodeString(registryKeyString);
             DateTime trialLastUse = DateTime.Now;
-            DateTime lastRegisteredUse = RegistryUtilities.ReadRegistryString(encodedKeyString, DateTime.MinValue);
+            DateTime lastRegisteredUse = RegistryUtilities.ReadRegistryString(registryKeyString, DateTime.MinValue);
 
             if (lastRegisteredUse == DateTime.MinValue || lastRegisteredUse < trialLastUse)
             {
-                RegistryUtilities.SaveRegistryString(encodedKeyString, trialLastUse);
+                RegistryUtilities.SaveRegistryString(registryKeyString, trialLastUse);
             }
             else
             {

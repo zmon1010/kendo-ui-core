@@ -46,7 +46,10 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 
             if (license.TrialDaysLeft < 0)
             {
-                throw new LicenseException(license.Type);
+                string message = "The trial version of Telerik UI for ASP.NET MVC by Progress has expired. " +
+                    "Purchase the commercial version now to get access to all product updates, bug fixes, and Telerik expert support. ";
+
+                throw new LicenseException(license.Type, null, message);
             }
 
             return license;
