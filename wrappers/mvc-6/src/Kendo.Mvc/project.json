@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "2016.3.707",
   "name": "Kendo.Mvc",
   "title": "Telerik UI for ASP.NET MVC Core 1.0.0",
   "description": "Telerik UI for ASP.NET MVC provides server-side helpers for Kendo UI's JavaScript framework. It enables developers comfortable with the ASP.NET MVC framework to easily configure and work with Kendo UI via familiar server-side programming instead of relying solely on hand-coding of HTML and JavaScript.",
@@ -23,6 +23,7 @@
   },
   "buildOptions": {
     "warningsAsErrors": false,
+    "keyFile": "Kendo.snk",
     "xmlDoc": false,
     "embed": {
       "include": [ "*.resources" ]

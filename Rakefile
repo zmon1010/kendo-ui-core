@@ -63,6 +63,7 @@ ROOT_MAP = {
     'src/styles' => /dist\/styles\//,
     'src/Kendo.Mvc/Kendo.Mvc' => 'wrappers/mvc/src/Kendo.Mvc/',
     'src/Kendo.Mvc/packages' => 'wrappers/mvc/packages/',
+    'src/AspNet.Core/Kendo.Mvc' => 'wrappers/mvc-6/src/Kendo.Mvc/',
     'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => 'dpl/Telerik.Web.Spreadsheet/',
     'src/Telerik.Web.Spreadsheet/lib' => 'dpl/lib/',
     'apptemplates' => 'demos/apptemplates',
@@ -447,6 +448,11 @@ bundle :name => 'aspnetmvc.commercial-source',
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
+            'src/AspNet.Core/Kendo.Mvc' => FileList['wrappers/mvc-6/src/Kendo.Mvc/**/*']
+                .exclude('**/bin/**/*')
+                .exclude('**/obj/**/*')
+                .exclude('**/*.snk')
+                .exclude('**/*.user'),
             'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => FileList[SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/**/*']
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
@@ -458,6 +464,8 @@ bundle :name => 'aspnetmvc.commercial-source',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
            'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
@@ -497,6 +505,11 @@ bundle :name => 'aspnetmvc.internal.commercial-source',
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
+            'src/AspNet.Core/Kendo.Mvc' => FileList['wrappers/mvc-6/src/Kendo.Mvc/**/*']
+                .exclude('**/bin/**/*')
+                .exclude('**/obj/**/*')
+                .exclude('**/*.snk')
+                .exclude('**/*.user'),
             'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => FileList[SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/**/*']
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
@@ -508,6 +521,8 @@ bundle :name => 'aspnetmvc.internal.commercial-source',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',

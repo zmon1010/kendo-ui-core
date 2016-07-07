@@ -369,6 +369,9 @@ end
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk",
               :from => 'wrappers/mvc/src/shared/Source.snk'
 
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/AspNet.Core/Kendo.Mvc/Kendo.snk",
+              :from => 'wrappers/mvc/src/shared/Source.snk'
+
     # Copy CommonAssemblyInfo.cs because the 'shared' folder is not distributed
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs",
               :from => 'wrappers/mvc/src/shared/CommonAssemblyInfo.cs'
@@ -400,9 +403,16 @@ end
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc.sln",
               :from => 'wrappers/mvc/Kendo.Mvc.sln'
 
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/AspNet.Core/Kendo.Mvc.sln",
+              :from => 'wrappers/mvc-6/Kendo.Mvc.sln'
+
     # Patch the solution - leave only the Kendo.Mvc project
 
     file "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc.sln" do |t|
+        patch_solution t
+    end
+
+    file "dist/bundles/aspnetmvc.#{bundle}/src/AspNet.Core/Kendo.Mvc.sln" do |t|
         patch_solution t
     end
 end
