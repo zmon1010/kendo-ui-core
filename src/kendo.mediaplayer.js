@@ -21,6 +21,7 @@
         TITLE = "k-title",
         TOOLBAR = "k-mediaplayer-toolbar",
         SLIDER = "k-mediaplayer-seekbar",
+        VOLUME_SLIDER = "k-mediaplayer-volume",
         MEDIA = "k-mediaplayer-media",
         DOT = ".",
         ui = kendo.ui,
@@ -37,7 +38,20 @@
             toolBar: "<div class='" + TOOLBAR + "'> </div>",
             toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
             slider: "<input class='" + SLIDER + "' value='0' />",
-            toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #"
+            volumeSlider: "<input class='" + VOLUME_SLIDER + "' value='70' />",
+            toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #",
+            playlistButton: "<a role='button' class='k-icon k-font-icon " + PLAYLIST_OPEN + "' style='float: right;''>Open Playlist</a>",
+            playlist: template("<div style='height: 286px; margin-right: -280px;'' class='" + PLAYLIST + "'>" + 
+                                    "<ul class='k-list'>" +
+                                        "#= renderPlaylistItems(data) #" +
+                                    "</ul>" +
+                                "</div>"),
+            playlistItem: template("<li class='k-list-item k-active-item'>" +
+                                        "<a title='#= title #' href='\\#'>" +
+                                            "<span class='k-image-wrap'>" +
+                                                "<img alt='#= poster #' src='#= poster #'>" +
+                                            "</span>" +
+                                            "<span class='k-title'>#= title #</span></a></li>")
         },
         rendering = {
             renderPlaylistButton: function (options) {
@@ -81,9 +95,11 @@
 
                 this._createTitlebar(options);
 
-                this._createToolbar();
+                this._createToolbar(options);
 
                 this._createSlider();
+
+                //this._createVolumeSlider();
 
                 this._dataSource();
 
@@ -167,6 +183,22 @@
                 }
             },
 
+            _createVolumeSlider: function() {
+                var volumeSliderlement = wrapper.find(DOT + VOLUME_SLIDER);
+                if (volumeSliderlement.length === 0) {
+                    wrapper.append(templates.volumeSlider);
+                    volumeSliderlement = $(DOT + VOLUME_SLIDER);
+                    volumeSlider = new ui.Slider(volumeSliderlement[0], {
+                        smallStep: 1,
+                        orientation: "horizontal",
+                        min: 0,
+                        max: 100,
+                        tickPlacement: "none",
+                        showButtons: false
+                    });
+                }
+            },
+
             _createPlaylist: function (data) {
                 var playlistElement = wrapper.find(DOT + PLAYLIST);
                 if (playlistElement.length === 0) {
@@ -195,10 +227,12 @@
                     wrapper.find(DOT + MEDIA + " > source").remove();
                     wrapper.find(DOT + MEDIA).attr("src", currentItem.url);
                     this.play();
+                    wrapper.find("#play").children().first().removeClass(STATE_PLAY)
+                                                            .addClass(STATE_PAUSE);
                 }
             },
 
-            _createToolbar: function () {
+            _createToolbar: function (options) {
                 var toolBarElement = wrapper.find(DOT + TOOLBAR);
                 if (toolBarElement.length === 0) { 
                     this._toolbarClickHandler = proxy(this._toolbarClick, this);                    
@@ -210,6 +244,7 @@
                         click: this._toolbarClickHandler,
                         items: [
                             { type: "button", id: "play", spriteCssClass: "k-icon k-font-icon k-i-play" },
+                            { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
                             { type: "separator" },
                             { 
                                 id: "timeTemplate",
@@ -220,6 +255,11 @@
                     toolBarElement.width("auto");
                     currentTimeElement = toolBarElement.find("#currentTime");
                     durationElement = toolBarElement.find("#duration");
+                    if (options.autoPlay) {
+                        wrapper.find("#play").children().first()
+                            .removeClass(STATE_PLAY)
+                            .addClass(STATE_PAUSE); 
+                    }
                 } 
             },
 
@@ -289,7 +329,8 @@
                     });
 					
                 if (options.autoPlay) {
-                    $(this._media).attr("autoplay", "");   
+                    $(this._media).attr("autoplay", "");  
+                    
                 }		
 				
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;

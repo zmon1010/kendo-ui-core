@@ -43,20 +43,26 @@ To enable proper compilation of the LESS files in the example you need to do the
                 url('../styles/web/common/TelerikWebUI.ttf') format('truetype');
         }
 
-		/*Temporary workaround for positioning of the slider (seekbar)*/
-		.k-mediaplayer .k-mediaplayer-seekbar {
-			position: absolute;
-			bottom: 60px;
-			left: 20px;
-			right: 10px;
-			padding: 4px;
-			opacity: 0.7;
-		}
-
 		/*Temporary workaround for portrait images, to make the image fill (crop) the available space */
 		.k-mediaplayer-playlist a img {
     		object-fit: cover !important;
 		}
+
+		/*Temporary workaround for the toolbar height*/
+		.k-mediaplayer-toolbar {
+		padding-top: 0;
+		padding-bottom: 0;
+		}
+
+		/*Temporary workaround for positioning of the slider (seekbar)*/
+		.k-mediaplayer .k-mediaplayer-seekbar {
+		position: absolute;
+		bottom: 55px;
+		left: 20px;
+		right: 10px;
+		opacity: 0.7;
+		}
+
 	</style>
 </head>
 <body>
