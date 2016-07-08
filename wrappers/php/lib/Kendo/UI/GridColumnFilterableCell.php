@@ -42,7 +42,7 @@ class GridColumnFilterableCell extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswith", "endswith", "contains".
+    * Specifies the AutoComplete filter option. The possible values are the same as the ones for the AutoComplete filter option - "startswith", "endswith", "contains". The "contains" operator performs a case-insensitive search. To perform a case-sensitive filtering, set a custom filtering function through the dataSource.filter.operator option.
     * @param string $value
     * @return \Kendo\UI\GridColumnFilterableCell
     */

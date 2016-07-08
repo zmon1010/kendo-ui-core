@@ -22885,9 +22885,7 @@ for all columns when filtering is enabled via the filterable option.Can be set t
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Specifies custom dataSource for the AutoComplete when type of the column is string.  Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
-instance.
-If the dataSource options is missing the options of the Grid's dataSource will be used.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
+            <description>Specifies a custom dataSource for the AutoComplete when the type of the column is string. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array, or an existing kendo.data.DataSource instance.It is not recommended that you use the same dataSource instance for the Grid and the AutoComplete because it causes negative side effects.If the dataSource options is missing, a new cloned instance of the Grid's dataSource will be used.If the dataSource option is an existing kendo.data.DataSource instance, the widget will use that instance and will not initialize a new one.</description>
             <name>dataSource</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -22935,7 +22933,7 @@ If the dataSource options is missing the options of the Grid's dataSource will b
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswith", "endswith", "contains".</description>
+            <description>Specifies the AutoComplete filter option. The possible values are the same as the ones for the AutoComplete filter option - "startswith", "endswith", "contains". The "contains" operator performs a case-insensitive search. To perform a case-sensitive filtering, set a custom filtering function through the dataSource.filter.operator option.</description>
             <name>suggestionOperator</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
