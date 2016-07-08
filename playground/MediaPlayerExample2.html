@@ -15,9 +15,23 @@ To enable proper compilation of the LESS files in the example you need to do the
 	<title>MediaPlayer</title>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
 	
+	<script>
+		less = {
+			env: "production",
+			logLevel: 0,
+			async: true,
+			fileAsync: true,
+			poll: 1000
+		};
+	</script>
+
 	<link href="../styles/web/kendo.common.less" rel="stylesheet/less" type="text/css" />
 	<link href="../styles/web/kendo.default.less" rel="stylesheet/less" type="text/css" />
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/2.6.1/less.min.js"></script>
+
+	<script type="text/javascript">
+		less.pageLoadFinished.then(function() { initialize(); });
+	</script>
 
 	<script type="text/javascript" src="../src/kendo.core.js"></script>
 	<script type="text/javascript" src="../src/kendo.data.js"></script>
@@ -50,39 +64,38 @@ To enable proper compilation of the LESS files in the example you need to do the
 
 		/*Temporary workaround for the toolbar height*/
 		.k-mediaplayer-toolbar {
-		padding-top: 0;
-		padding-bottom: 0;
+			padding-top: 0;
+			padding-bottom: 0;
 		}
 
 		/*Temporary workaround for positioning of the slider (seekbar)*/
 		.k-mediaplayer .k-mediaplayer-seekbar {
-		position: absolute;
-		bottom: 55px;
-		left: 20px;
-		right: 10px;
-		opacity: 0.7;
+			position: absolute;
+			bottom: 55px;
+			left: 20px;
+			right: 10px;
+			opacity: 0.7;
 		}
 
 	</style>
 </head>
 <body>
 	<div id="player1" style="width: 510px; height: 286px;"> </div>
-
-	<!--<div id="player1" style="width: 800px; height: 400px;"> </div>-->
-	
 	<script type="text/javascript">
-		$(document).ready(function () {			
+
+		function initialize() {
             var myDataSource = new kendo.data.DataSource({
                 data: [
                   { title: "Big Buck Bunny", poster:"http://static4.opensubtitles.org/gfx/thumbs/7/0/2/4/1254207.jpg", url: "http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg" },
 				  { title: "Elephants Dream", poster: "http://iv1.lisimg.com/image/300164/450full-elephants-dream-poster.jpg", url: "http://video.webmfiles.org/elephants-dream.webm"},
-                  { title: "Just Code", poster:"video/images/JustCode.png", url: "video/justCode.mp4" },
+				  { title: "Lego", poster: "http://i.imgur.com/WHwKxLn.png", url: "http://techslides.com/demos/sample-videos/small.ogv" },
+				  { title: "Sample holder", poster: "http://i.imgur.com/CgRMQ5q.png", url:"http://openspim.org/images/2/20/10_Sample_holder.ogv"},
+                  { title: "Just Code", poster:"http://i.imgur.com/D463uk4.png", url: "video/justCode.mp4" },
                   { title: "Costa Rica", poster:"video/images/youtubeLogo.png", url: "video/CostaRica.mp4" },
                   { title: "App Builder", poster:"video/images/AppBuilder.png", url: "video/appBuilder.mp4" },
                   { title: "Test Studio", poster:"video/images/TestStudio.png", url: "video/testStudio.mp4" }
                 ]
             });
-
 
 			$("#player1").kendoMediaPlayer({
 				dataSource: myDataSource,
@@ -90,24 +103,13 @@ To enable proper compilation of the LESS files in the example you need to do the
 				autoPlay: true
 			});
 
-			// $("#player2").kendoMediaPlayer(
-            //     {
-            //     	dataSource: mnyDataSource
-            //     }
-            //  );
-
-			// $("#player1").kendoMediaPlayer(
-            //     {
-            //     	dataSource: myDataSource,
-			// 		playlist: {hidden: false, button: false}
-            //     }
-            //  );
-
 			/*Temporary workaround for playlist background color*/
-			setTimeout(function() {
-				$(".k-mediaplayer-playlist").css("background-color", $(".k-mediaplayer-toolbar").css("background-color"));
-			}, 200);
-		});
+			$(".k-mediaplayer-playlist").css("background-color", $(".k-mediaplayer-toolbar").css("background-color"));
+		}
+
+		/* OPTIONS USAGE EXAMPLES */
+		// 		playlist: {hidden: true}
+		// 		playlist: {hidden: false, button: false}
 	</script>
 </body>
 </html>
