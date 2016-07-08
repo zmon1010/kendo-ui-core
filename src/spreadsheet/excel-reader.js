@@ -260,11 +260,14 @@
                 else if (this.is(SEL_COL)) {
                     var start = integer(attrs.min) - 1;
                     var stop = Math.min(nCols, integer(attrs.max)) - 1;
+                    var width;
                     if (attrs.width) {
-                        var width = toColWidth(parseFloat(attrs.width));
-                        sheet._columns.values.value(start, stop, width);
+                        width = toColWidth(parseFloat(attrs.width));
+                        if (width !== 0) {
+                            sheet._columns.values.value(start, stop, width);
+                        }
                     }
-                    if (attrs.hidden === "1") {
+                    if (attrs.hidden === "1" || width === 0) {
                         for (var ci = start; ci <= stop; ci++) {
                             sheet.hideColumn(ci);
                         }
@@ -272,12 +275,14 @@
                 }
                 else if (this.is(SEL_ROW)) {
                     var row = integer(attrs.r) - 1;
-
+                    var height;
                     if (attrs.ht) {
-                        var height = toRowHeight(parseFloat(attrs.ht));
-                        sheet._rows.values.value(row, row, height);
+                        height = toRowHeight(parseFloat(attrs.ht));
+                        if (height !== 0) {
+                            sheet._rows.values.value(row, row, height);
+                        }
                     }
-                    if (attrs.hidden === "1") {
+                    if (attrs.hidden === "1" || height === 0) {
                         sheet.hideRow(row);
                     }
                 }
