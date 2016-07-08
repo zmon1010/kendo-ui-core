@@ -116,7 +116,11 @@ var ParagraphCommand = Command.extend({
                     RangeUtils.split(rng, li.parentNode);
                 }
 
-                $("br[_moz_dirty]", li).remove();
+                var br = $("br", li);
+                if (br.length == 1) {
+                    br.remove();
+                }
+
                 var parentNode = li.parentNode;
                 var parentChildrenLength = li.parentNode.children.length;
                 var firstChild = parentChildrenLength > 1 && li.childNodes.length == 1 && li.children[0];
