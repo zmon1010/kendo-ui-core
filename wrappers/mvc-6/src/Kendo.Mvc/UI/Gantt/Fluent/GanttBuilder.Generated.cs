@@ -71,7 +71,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to some date the timeline of the currently selected view is scrolled to start from this date.
+        /// If set to some date and that is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.
         /// </summary>
         /// <param name="value">The value for Date</param>
         public GanttBuilder<TTaskModel, TDependenciesModel> Date(DateTime value)

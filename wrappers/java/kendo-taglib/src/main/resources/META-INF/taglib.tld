@@ -21082,7 +21082,7 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>If set to some date the timeline of the currently selected view is scrolled to start from this date.</description>
+            <description>If set to some date and that is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.</description>
             <name>date</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>
