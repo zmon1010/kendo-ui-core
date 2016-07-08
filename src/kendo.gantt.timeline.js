@@ -2090,15 +2090,20 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (type) {
-                    extend(this.options.range, this.options.range, view.range);
-                    this.options.date = view.date || this.options.date;
+                    var newRange = {};
+                    extend(newRange, this.options.range, view.range);
+
+                    var newDate = view.date || this.options.date;
 
                     view = new type(this.wrapper, trimOptions(extend(true, {
                         headerTree: this._headerTree,
                         taskTree: this._taskTree,
                         dependencyTree: this._dependencyTree,
                         calculatedSize: this._calculatedSize
-                    }, view, this.options)));
+                    }, view, this.options, {
+                        date: newDate,
+                        range: newRange
+                    })));
                 } else {
                     throw new Error("There is no such view");
                 }
