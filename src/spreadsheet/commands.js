@@ -171,6 +171,7 @@
             try {
                 range.link(null);
                 range.input(value);
+                range._adjustRowHeight();
 
                 var validationState = range._getValidationState();
                 if (validationState) {
