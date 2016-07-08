@@ -899,8 +899,11 @@ var Clipboard = Class.extend({
                         innerHTML: "\ufeff"
                     });
                 var browser = kendo.support.browser;
+                var body = editor.body;
 
-                editor.body.appendChild(clipboardNode);
+                this._decoreateClipboardNode(clipboardNode, body);
+
+                body.appendChild(clipboardNode);
 
                 // text ranges are slow in IE10-, DOM ranges are buggy in IE9-10
                 if (browser.msie && browser.version < 11) {
@@ -910,9 +913,9 @@ var Clipboard = Class.extend({
                     editor.selectRange(r);
                     var textRange = editor.document.body.createTextRange();
                     textRange.moveToElementText(clipboardNode);
-                    $(editor.body).unbind('paste');
+                    $(body).unbind('paste');
                     textRange.execCommand('Paste');
-                    $(editor.body).bind('paste', $.proxy(this.onpaste, this));
+                    $(body).bind('paste', $.proxy(this.onpaste, this));
                 } else {
                     var clipboardRange = editor.createRange();
                     clipboardRange.selectNodeContents(clipboardNode);
@@ -943,6 +946,40 @@ var Clipboard = Class.extend({
                 this._triggerPaste(html, { clean: true });
             }
         );
+    },
+
+    _decoreateClipboardNode: function(node, body) {
+        if (browser.msie) {
+            //node inherits BODY styles and this causes the browser to add additional 
+            var documentElement = $(body.ownerDocument.documentElement);
+            node = $(node);
+            node.css({
+                borderWidth : "0px",
+                position : "absolute",
+                overflow : "hidden",
+                margin : "0",
+                padding : "0",
+                width : "0px",
+                height : "0px",
+                fontVariant : "normal",
+                fontWeight : "normal",
+                lineSpacing : "normal",
+                lineHeight : "normal",
+                textDecoration : "none"
+            });
+            var color = documentElement.css("color");
+            if (color) {
+                node.css("color", color);
+            }
+            var fontFamily = documentElement.css("fontFamily");
+            if (fontFamily) {
+                node.css("fontFamily", fontFamily);
+            }
+            var fontSize = documentElement.css("fontSize");
+            if (fontSize) {
+                node.css("fontSize", fontSize);
+            }
+        }
     },
 
     expandImmutablesIn: function(range){
