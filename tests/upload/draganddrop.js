@@ -4,7 +4,7 @@ var uploadInstance,
     Upload = kendo.ui.Upload;
 
 function createUpload(options) {
-    removeHTML();
+    //removeHTML();
 
     copyUploadPrototype();
 
@@ -165,23 +165,15 @@ module("Upload / Drag and drop / Custom Drop Zone", {
         Upload.prototype._supportsFormData = function() { return true; };
         copyUploadPrototype();
         $("<div id='myCustomDropZone'>content</div>").appendTo(QUnit.fixture);
+        $("<div id='mySecondCustomDropZone'>content</div>").appendTo(QUnit.fixture);
     },
     teardown: moduleTeardown
 });
 
-test("Custom drop zone is initialized when specified", function(){
-    var isInitialized = false;
-    Upload.prototype._setupCustomDropZone = function() { isInitialized = true };
 
-    uploadInstance = createUpload({
-        dropZone: $("#myCustomDropZone")
-    });
-
-    ok(isInitialized);
-});
 
 test("select event fires on drop on custom drop zone", 1, function() {
-    uploadInstance = createUpload({ 
+    uploadInstance = createUpload({
         "select" : (function() { ok(true); }),
         dropZone: $("#myCustomDropZone")
     });
@@ -190,11 +182,11 @@ test("select event fires on drop on custom drop zone", 1, function() {
 });
 
 test("select event fired on drop on custom drop zone can be cancelled", 1, function() {
-    uploadInstance = createUpload({ 
+    uploadInstance = createUpload({
         "select" : (function(e) { e.preventDefault(); }),
         dropZone: $("#myCustomDropZone")
     });
-    
+
     simulateDrop([ { name: "first.txt", size: 1 } ]);
 
     equal($(".k-file", uploadInstance.wrapper).length, 0);
@@ -203,7 +195,7 @@ test("select event fired on drop on custom drop zone can be cancelled", 1, funct
 test("select event is not fired on drop on custom drop zone when the widget is disabled", 1, function() {
     var isFired = false;
 
-    uploadInstance = createUpload({ 
+    uploadInstance = createUpload({
         "select" : (function() { isFired = true; }),
         enabled: false,
         dropZone: $("#myCustomDropZone")
@@ -220,12 +212,45 @@ test("dropping file on custom drop zone when the widget is disabled does not add
         enabled: false,
         dropZone: $("#myCustomDropZone")
     });
-    
-    
+
+
     simulateDrop([ { name: "first.txt", size: 1 } ]);
 
     equal($(".k-file", uploadInstance.wrapper).length, 0);
 });
+    
+test("drag file should activate both dropzones", 1, function() {
+    debugger;
+    uploadInstance = createUpload({
+        dropZone: $("#myCustomDropZone,#mySecondCustomDropZone")
+    });
+    $(document).trigger("dragenter");
+    equal($(".k-dropzone-active", QUnit.fixture).length, 2);
+});
 
+asyncTest("dragend file should deactivate both dropzones", 1, function() {
+  
+    uploadInstance = createUpload({
+        dropZone: $("#myCustomDropZone,#mySecondCustomDropZone")
+    });
+    $(document).trigger("dragenter");
+
+    setTimeout(function(){
+        equal($(".k-dropzone-active", QUnit.fixture).length, 0);
+        start();
+    },150);
+    $(document).trigger("dragleave");
+});
+    
+test("Custom drop zone is initialized when specified", function(){
+    var isInitialized = false;
+    Upload.prototype._setupCustomDropZone = function() { isInitialized = true };
+
+    uploadInstance = createUpload({
+        dropZone: $("#myCustomDropZone")
+    });
+
+    ok(isInitialized);
+});
 })();
 

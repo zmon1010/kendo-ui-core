@@ -6,6 +6,7 @@ function copyUploadPrototype() {
 }
 
 function createHTML() {
+   $("#testbed_container").remove();
    var html = '<div id="testbed_container"><div id="prototype" style="display:none">' +
         '<div class="k-widget k-upload k-header k-upload-empty">' +
             '<div class="k-button k-upload-button">' +

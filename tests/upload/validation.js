@@ -214,5 +214,30 @@ function validation(params) {
         equal($(".k-file", uploadInstance.wrapper).length, 0);
     });
 
+    test("Upload clears validation errors on a new try", function() {
+        var uploadInstance = createUpload($.extend({}, noAutoConfig, {
+            validation: {
+                allowedExtensions: [".jpg"],
+                minFileSize: 2
+            }
+        }));
+        var allFiles;
 
+        simulateSingleFileSelect("first.png", 1);
+        allFiles = uploadInstance.getFiles();
+
+        ok(allFiles[0].validationErrors);
+        equal(allFiles[0].validationErrors.length, 2);
+
+        simulateRemoveClick(0);
+        allFiles = uploadInstance.getFiles();
+        
+        notOk(allFiles.length);
+
+        simulateSingleFileSelect("first.jpg", 3);
+
+        allFiles = uploadInstance.getFiles();
+
+        notOk(allFiles[0].validationErrors);
+    });
 }
