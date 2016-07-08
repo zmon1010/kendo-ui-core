@@ -44,6 +44,7 @@ To enable proper compilation of the LESS files in the example you need to do the
 	<script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
 
 	<style>
+
 		body {
 			font-size: 14px;
 		}
@@ -77,12 +78,27 @@ To enable proper compilation of the LESS files in the example you need to do the
 			opacity: 0.7;
 		}
 
+		#fullscreen,
+		#volume,
+		#hdbutton
+		{
+			float: right;
+		}
+
+		.k-mediaplayer .k-mediaplayer-volume {
+			position: absolute;
+			bottom: 60px;
+			left: 415px;
+			height: 70px;
+			right: 10px;
+			opacity: 0.7;
+		}
+
 	</style>
 </head>
 <body>
 	<div id="player1" style="width: 510px; height: 286px;"> </div>
 	<script type="text/javascript">
-
 		function initialize() {
             var myDataSource = new kendo.data.DataSource({
                 data: [
@@ -100,7 +116,8 @@ To enable proper compilation of the LESS files in the example you need to do the
 			$("#player1").kendoMediaPlayer({
 				dataSource: myDataSource,
 				playlist: true,
-				autoPlay: true
+				autoPlay: true,
+				mute: true
 			});
 
 			/*Temporary workaround for playlist background color*/

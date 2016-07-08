@@ -38,7 +38,7 @@
             toolBar: "<div class='" + TOOLBAR + "'> </div>",
             toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
             slider: "<input class='" + SLIDER + "' value='0' />",
-            volumeSlider: "<input class='" + VOLUME_SLIDER + "' value='70' />",
+            volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
             toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #",
             playlistButton: "<a role='button' class='k-icon k-font-icon " + PLAYLIST_OPEN + "' style='float: right;''>Open Playlist</a>",
             playlist: template("<div style='height: 286px; margin-right: -280px;'' class='" + PLAYLIST + "'>" + 
@@ -99,7 +99,7 @@
 
                 this._createSlider();
 
-                //this._createVolumeSlider();
+                this._createVolumeSlider(options);
 
                 this._dataSource();
 
@@ -183,16 +183,19 @@
                 }
             },
 
-            _createVolumeSlider: function() {
-                var volumeSliderlement = wrapper.find(DOT + VOLUME_SLIDER);
+            _createVolumeSlider: function(options) {
+                volumeSliderlement = wrapper.find(DOT + VOLUME_SLIDER);
                 if (volumeSliderlement.length === 0) {
+                    this._volumeDraggingHandler = proxy(this._volumeDragging, this);
                     wrapper.append(templates.volumeSlider);
                     volumeSliderlement = $(DOT + VOLUME_SLIDER);
                     volumeSlider = new ui.Slider(volumeSliderlement[0], {
                         smallStep: 1,
-                        orientation: "horizontal",
+                        orientation: "vertical",
+                        value: options.mute ? 0 : 60,
                         min: 0,
                         max: 100,
+                        slide: this._volumeDraggingHandler,
                         tickPlacement: "none",
                         showButtons: false
                     });
@@ -244,12 +247,14 @@
                         click: this._toolbarClickHandler,
                         items: [
                             { type: "button", id: "play", spriteCssClass: "k-icon k-font-icon k-i-play" },
-                            { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
                             { type: "separator" },
                             { 
                                 id: "timeTemplate",
                                 template: templates.toolBarTime
-                            }
+                            },
+                            { type: "button", id: "fullscreen", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" },
+                            { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
+                            { type: "button", id: "hdbutton", spriteCssClass: "k-icon k-font-icon k-i-HD" }
                         ]
                     });
                     toolBarElement.width("auto");
@@ -281,6 +286,10 @@
                             .addClass(STATE_PLAY);   
                     }
                 }
+
+                if (e.id === "volume") {
+                    
+                }
             },
 
             _sliderDragging: function(e) {
@@ -291,6 +300,10 @@
                 var tzOffset = timeZoneSec * 1000;
                 this._isDragging = false;
                 this._media.currentTime = this._timeToSec(e.value - tzOffset);
+            },
+
+            _volumeDragging: function(e) {
+                this._media.volume = e.value / 100;
             },
 
             _mediaTimeUpdate: function(e) {
@@ -331,7 +344,15 @@
                 if (options.autoPlay) {
                     $(this._media).attr("autoplay", "");  
                     
-                }		
+                }
+
+                if (options.mute) {
+                    this._media.volume = 0.0;  
+                }
+                else{
+                    this._media.volume = 0.6;
+                }
+
 				
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;
                 this._media.ondurationchange = this._mediaDurationChangeHandler; 
@@ -355,6 +376,7 @@
                 this._toolbarClickHandler = null;
                 this._sliderDragChangeHandler = null;
                 this._sliderDraggingHandler = null;
+                this._volumeDraggingHandler = null;
 
                 this.element.off(ns);
                 this.element.find(DOT + PLAYLIST + "> ul > li").off(ns);
