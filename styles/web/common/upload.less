@@ -96,13 +96,6 @@ html .k-upload
     transform: translateY(-50%);
 }
 
-.k-ie8,
-.k-ie9 {
-    .k-dropzone .k-upload-status-total {
-        top: 1.5em;
-    }
-}
-
 .k-upload .k-clear-selected ,
 .k-upload .k-upload-selected {
     display: inline-block;
@@ -134,10 +127,6 @@ html .k-upload
     border-style: solid;
     border-width: 0 0 1px;
     padding: .65em .17em .65em 1em;
-}
-
-.k-file-invalid {
-   // padding-bottom: .6em;
 }
 
 .k-file .k-icon
@@ -240,10 +229,8 @@ html .k-upload
     max-width: 100%;
 }
 
-//k-file-invalid-icon
 .k-file-invalid-icon {
     margin-left: 5px;
-    //font-size: 2em;
 }
 
 .k-file-name,
@@ -304,6 +291,17 @@ html .k-upload
 .k-ie8 .k-upload-status-total
 {
     line-height: 29px;
+}
+
+.k-ie8,
+.k-ie9 {
+    .k-upload-status-total {
+        top: 1.5em;
+
+        > .k-icon {
+            margin-top: -3px;
+        }
+    }
 }
 
 .k-upload-action {
