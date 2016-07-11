@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 
 namespace Kendo.Mvc.Infrastructure.Licensing
@@ -6,10 +7,12 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 	internal class KendoLicense : System.ComponentModel.License
     {
         private const int TRIAL_DURATION = 30;
+        private const int TRIAL_EXTENSION = 30;
         private const string TRIAL_START_KEY_PERFIX = "Telerik";
         private const string TRIAL_LAST_KEY_PERFIX = "TelerikLast";
         private const string REGISTRY_SUB_KEY = "Software\\Telerik\\MVC";
         private const string REGISTRY_SECONDARY_SUB_KEY = "Software\\Microsoft\\MSNT";
+        private const string APP_SETTINGS_TRIAL_KEY = "Kendo.Mvc.UI.TrialKey";
 
         private int? _trialDaysLeft = null;
 
@@ -38,6 +41,22 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             }
         }
 
+        internal int TrialDuration
+        {
+            get
+            {
+                var trialKey = ConfigurationManager.AppSettings[APP_SETTINGS_TRIAL_KEY];
+
+                if (!string.IsNullOrEmpty(trialKey) &&
+                    trialKey.Equals(RegistryUtilities.EncodeString(AssemblyVersion.GetHashCode().ToString())))
+                {
+                    return TRIAL_DURATION + TRIAL_EXTENSION;
+                }
+
+                return TRIAL_DURATION;
+            }
+        }
+
         internal int TrialDaysLeft
         {
             get
@@ -55,7 +74,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
                 DateTime trialStart = GetTrialStart();
                 DateTime trialLastUse = GetTrialLastUse();
 
-                _trialDaysLeft = TRIAL_DURATION - ((int)trialLastUse.Subtract(trialStart).TotalDays);
+                _trialDaysLeft = TrialDuration - ((int)trialLastUse.Subtract(trialStart).TotalDays);
 
                 return _trialDaysLeft.Value;
             }
