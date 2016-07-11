@@ -1,0 +1,27 @@
+<div id="example">
+
+    <div class="demo-section k-content">
+        <h4>Number rounding</h4>
+        <input id="round_numeric" style="width: 100%;" value="12.55" />
+        (number value will not be rounded)
+    </div>
+
+    <div class="demo-section k-content">
+        <h4>Restrict decimals</h4>
+        <input id="restrict_numeric" style="width: 100%;" value="12.5" />
+        (fraction is restricted up to 2 digits)
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#round_numeric").kendoNumericTextBox({
+              round: false
+            });
+
+            $("#restrict_numeric").kendoNumericTextBox({
+              restrictDecimals: true
+            });
+        });
+    </script>
+
+</div>

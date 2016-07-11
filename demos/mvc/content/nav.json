@@ -3731,6 +3731,16 @@
                 }
             },
             {
+                "text": "Precision",
+                "url": "numerictextbox/precision",
+                "title": {
+                    "kendo-ui": "The precision features of Kendo UI Numeric TextBox | Kendo UI Web demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the precision functionality of KendoNumericTextBox component."
+                }
+            },
+            {
                 "text": "Events",
                 "url": "numerictextbox/events",
                 "title": {
