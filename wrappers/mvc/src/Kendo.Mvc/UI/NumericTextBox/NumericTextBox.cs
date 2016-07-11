@@ -47,6 +47,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public bool? RestrictDecimals
+        {
+            get;
+            set;
+        }
+
+        public bool? Round
+        {
+            get;
+            set;
+        }
+
         public string Format
         {
             get;
@@ -126,6 +138,16 @@ namespace Kendo.Mvc.UI
             if (Decimals != null)
             {
                 options["decimals"] = Decimals;
+            }
+
+            if (RestrictDecimals != null)
+            {
+                options["restrictDecimals"] = RestrictDecimals;
+            }
+
+            if (Round != null)
+            {
+                options["round"] = Round;
             }
 
             writer.Write(Initializer.Initialize(Selector, "NumericTextBox", options));

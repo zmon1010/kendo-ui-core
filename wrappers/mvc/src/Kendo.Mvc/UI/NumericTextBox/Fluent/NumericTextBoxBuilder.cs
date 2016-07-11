@@ -63,6 +63,30 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Enables or disables the restriction of the decimals length
+        /// </summary>
+        /// <param name="restrictDecimals"></param>
+        /// <returns></returns>
+        public NumericTextBoxBuilder<T> RestrictDecimals(bool restrictDecimals)
+        {
+            Component.RestrictDecimals = restrictDecimals;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Enables or disables the rounding of the widget value
+        /// </summary>
+        /// <param name="round"></param>
+        /// <returns></returns>
+        public NumericTextBoxBuilder<T> Round(bool round)
+        {
+            Component.Round = round;
+
+            return this;
+        }
+
+        /// <summary>
         /// Enables or disables the spin buttons.
         /// </summary>
         /// <param name="allowSpinner"></param>
