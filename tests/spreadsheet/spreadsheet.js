@@ -11,7 +11,7 @@
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
 
-            spreadsheet = new kendo.ui.Spreadsheet(element, { });
+            initSpreadsheet(element, { rows: 10, columns: 10, toolbar: false });
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -197,27 +197,6 @@
         spreadsheet.bind("render", function() {
             ok(true);
         }).autoRefresh(false).autoRefresh(true);
-    });
-
-    test("loads sheets from options", function() {
-        kendo.destroy(QUnit.fixture);
-        spreadsheet = new kendo.ui.Spreadsheet(element, {
-            sheets: [
-                {
-                    rows: [
-                        {
-                            cells: [
-                                {
-                                    background: "red"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        });
-
-        equal(spreadsheet.activeSheet().range("A1").background(), "red");
     });
 
     test("insertSheet method calls corresponding method in workbook", function () {
@@ -473,4 +452,26 @@
         initSpreadsheet(element, { sheetsbar: false });
         ok(element.find('[data-role="sheetsbar"]').length == 0);
     });
+
+    test("loads sheets from options", function() {
+        initSpreadsheet(element, {
+            toolbar: false,
+            sheets: [
+                {
+                    rows: [
+                        {
+                            cells: [
+                                {
+                                    background: "red"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(spreadsheet.activeSheet().range("A1").background(), "red");
+    });
+
 })();
