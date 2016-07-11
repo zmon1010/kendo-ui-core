@@ -80,6 +80,35 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.
+        /// </summary>
+        /// <param name="value">The value for RestrictDecimals</param>
+        public NumericTextBoxBuilder<T> RestrictDecimals(bool value)
+        {
+            Container.RestrictDecimals = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.
+        /// </summary>
+        public NumericTextBoxBuilder<T> RestrictDecimals()
+        {
+            Container.RestrictDecimals = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether the value should be rounded or truncated. The length of the fraction is defined by the decimals value.
+        /// </summary>
+        /// <param name="value">The value for Round</param>
+        public NumericTextBoxBuilder<T> Round(bool value)
+        {
+            Container.Round = value;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies whether the up and down spin buttons should be rendered
         /// </summary>
         /// <param name="value">The value for Spinners</param>

@@ -45,6 +45,16 @@ namespace Kendo.Mvc.TagHelpers
         public string Placeholder { get; set; }
 
         /// <summary>
+        /// Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.
+        /// </summary>
+        public bool? RestrictDecimals { get; set; }
+
+        /// <summary>
+        /// Specifies whether the value should be rounded or truncated. The length of the fraction is defined by the decimals value.
+        /// </summary>
+        public bool? Round { get; set; }
+
+        /// <summary>
         /// Specifies whether the up and down spin buttons should be rendered
         /// </summary>
         public bool? Spinners { get; set; }
@@ -97,6 +107,16 @@ namespace Kendo.Mvc.TagHelpers
             if (Placeholder?.HasValue() == true)
             {
                 settings["placeholder"] = Placeholder;
+            }
+
+            if (RestrictDecimals.HasValue)
+            {
+                settings["restrictDecimals"] = RestrictDecimals;
+            }
+
+            if (Round.HasValue)
+            {
+                settings["round"] = Round;
             }
 
             if (Spinners.HasValue)
