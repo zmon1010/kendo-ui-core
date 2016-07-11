@@ -170,8 +170,17 @@ module("Upload / Drag and drop / Custom Drop Zone", {
     teardown: moduleTeardown
 });
 
+//Try to move that test last and it will work
+test("Custom drop zone is initialized when specified", function(){
+    var isInitialized = false;
+    Upload.prototype._setupCustomDropZone = function() { isInitialized = true };
 
+    uploadInstance = createUpload({
+        dropZone: $("#myCustomDropZone")
+    });
 
+    ok(isInitialized);
+});
 test("select event fires on drop on custom drop zone", 1, function() {
     uploadInstance = createUpload({
         "select" : (function() { ok(true); }),
@@ -242,15 +251,6 @@ asyncTest("dragend file should deactivate both dropzones", 1, function() {
     $(document).trigger("dragleave");
 });
     
-test("Custom drop zone is initialized when specified", function(){
-    var isInitialized = false;
-    Upload.prototype._setupCustomDropZone = function() { isInitialized = true };
 
-    uploadInstance = createUpload({
-        dropZone: $("#myCustomDropZone")
-    });
-
-    ok(isInitialized);
-});
 })();
 
