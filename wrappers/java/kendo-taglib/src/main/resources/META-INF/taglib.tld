@@ -12400,7 +12400,7 @@ odata version 4 and "signalr".</description>
         </attribute>
         <attribute>
             <description>The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "isnull" (is equal to null), "isnotnull" (is not equal to null), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
-"startswith", "endswith", "contains", "isempty", "isnotempty". The last five are supported only for string fields.</description>
+"startswith", "endswith", "contains", "doesnotcontain", "isempty", "isnotempty". The last five are supported only for string fields.</description>
             <name>operator</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
