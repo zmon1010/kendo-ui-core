@@ -115,6 +115,22 @@ public class NumericTextBoxTag extends WidgetTag /* interfaces *//* interfaces *
         setProperty("placeholder", value);
     }
 
+    public boolean getRestrictDecimals() {
+        return (Boolean)getProperty("restrictDecimals");
+    }
+
+    public void setRestrictDecimals(boolean value) {
+        setProperty("restrictDecimals", value);
+    }
+
+    public boolean getRound() {
+        return (Boolean)getProperty("round");
+    }
+
+    public void setRound(boolean value) {
+        setProperty("round", value);
+    }
+
     public boolean getSpinners() {
         return (Boolean)getProperty("spinners");
     }

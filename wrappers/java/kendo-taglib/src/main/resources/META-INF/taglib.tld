@@ -27419,6 +27419,18 @@ top takes precedence over bottom and left takes precedence over right.</descript
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.</description>
+            <name>restrictDecimals</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the value should be rounded or truncated. The length of the fraction is defined by the decimals value.</description>
+            <name>round</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies whether the up and down spin buttons should be rendered</description>
             <name>spinners</name>
             <rtexprvalue>true</rtexprvalue>
