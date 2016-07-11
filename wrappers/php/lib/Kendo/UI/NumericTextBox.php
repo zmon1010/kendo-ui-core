@@ -76,6 +76,24 @@ class NumericTextBox extends \Kendo\UI\Widget {
     }
 
     /**
+    * Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.
+    * @param boolean $value
+    * @return \Kendo\UI\NumericTextBox
+    */
+    public function restrictDecimals($value) {
+        return $this->setProperty('restrictDecimals', $value);
+    }
+
+    /**
+    * Specifies whether the value should be rounded or truncated. The length of the fraction is defined by the decimals value.
+    * @param boolean $value
+    * @return \Kendo\UI\NumericTextBox
+    */
+    public function round($value) {
+        return $this->setProperty('round', $value);
+    }
+
+    /**
     * Specifies whether the up and down spin buttons should be rendered
     * @param boolean $value
     * @return \Kendo\UI\NumericTextBox
