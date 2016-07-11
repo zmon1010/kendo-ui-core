@@ -20,7 +20,7 @@
             "forecolor",
             "backcolor",
             "fontname",
-            "fontnize",
+            "fontsize",
             "createlink",
             "unlink",
             "autolink",
