@@ -73,7 +73,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the selectd tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.
+        /// Specifies the selected tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.
         /// </summary>
         /// <param name="value">The value for Value</param>
         public TabStripBuilder Value(string value)

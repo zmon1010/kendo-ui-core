@@ -43913,7 +43913,7 @@ A fade animation is highly recommended with any of the non-default tab position 
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies the selectd tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.</description>
+            <description>Specifies the selected tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
