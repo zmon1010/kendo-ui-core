@@ -356,9 +356,10 @@
             var names = Object.keys(this._names).map(function(name){
                 var def = this._names[name];
                 var val = def.value;
-                if (val instanceof kendo.spreadsheet.Ref ||
-                    val instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                if (val instanceof kendo.spreadsheet.Ref) {
                     val = val.print(0, 0);
+                } else if (val instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                    val = val.print();
                 }
                 return {
                     value  : val,
