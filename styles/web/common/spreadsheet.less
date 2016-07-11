@@ -70,7 +70,7 @@
     @formula-input-padding: (@formula-bar-height - @formula-input-height) / 2;
 
     .k-spreadsheet-formula-bar {
-        border-width: 0 1px 1px;
+        border-width: 0 1px 0 1px;
         border-style: solid;
         padding-left: 31px; // XXX: Move to code
         position: relative;
@@ -80,11 +80,11 @@
             .use-font-icon();
             content: "\e659";
             display: block;
-            height: @formula-input-height;
-            top: @formula-input-padding;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             border-width: 0 1px 0 0;
             border-style: solid;
-            position: absolute;
             width: 24px;
             margin-left: -24px;
         }

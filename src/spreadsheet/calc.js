@@ -15,6 +15,7 @@
     /* jshint latedef: nofunc */
 
     var spreadsheet = kendo.spreadsheet;
+    var Ref = spreadsheet.Ref;
     var RangeRef = spreadsheet.RangeRef;
     var CellRef = spreadsheet.CellRef;
     var NameRef = spreadsheet.NameRef;
@@ -300,17 +301,19 @@
     function parseNameDefinition(name, def) {
         var nameRef = parseFormula(null, 0, 0, name);
         if (!(nameRef.ast instanceof NameRef)) {
-            throw new ParseError("Not a name");
+            throw new ParseError("Invalid name: " + name);
         }
         nameRef = nameRef.ast;
 
-        var defAST = parseFormula(nameRef.sheet, 0, 0, def);
-        if (defAST.ast instanceof spreadsheet.Ref) {
-            def = defAST.ast;   // single reference
-        } else if (/^(?:str|num|bool|error)$/.test(defAST.ast.type)) {
-            def = defAST.ast.value; // constant
-        } else {
-            def = makeFormula(defAST); // formula
+        if (!(def instanceof Ref)) {
+            var defAST = parseFormula(nameRef.sheet, 0, 0, def);
+            if (defAST.ast instanceof Ref) {
+                def = defAST.ast;   // single reference
+            } else if (/^(?:str|num|bool|error)$/.test(defAST.ast.type)) {
+                def = defAST.ast.value; // constant
+            } else {
+                def = makeFormula(defAST); // formula
+            }
         }
 
         return {

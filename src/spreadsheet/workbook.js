@@ -419,8 +419,7 @@
                 var def = this._names[name];
                 var val = def.value;
                 if (val instanceof kendo.spreadsheet.Ref) {
-                    if ((val.sheet && sheet == val.sheet.toLowerCase()) ||
-                        (!val.sheet && !sheet)) {
+                    if (!val.sheet || (val.sheet && sheet == val.sheet.toLowerCase())) {
                         if (val + "" == str) {
                             return def;
                         }
@@ -451,6 +450,18 @@
                 return this._names[name].value;
             }
             return null;
+        },
+
+        nameDefinition: function(name, def) {
+            name = name.toLowerCase();
+            if (arguments.length > 1) {
+                if (def === undefined) {
+                    delete this._names[name];
+                } else {
+                    this._names[name] = def;
+                }
+            }
+            return this._names[name];
         },
 
         forEachName: function(func) {

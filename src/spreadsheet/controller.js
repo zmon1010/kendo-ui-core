@@ -126,6 +126,8 @@
 
             view.nameEditor.bind("enter", this.onNameEditorEnter.bind(this));
             view.nameEditor.bind("cancel", this.onNameEditorCancel.bind(this));
+            view.nameEditor.bind("select", this.onNameEditorSelect.bind(this));
+            view.nameEditor.bind("delete", this.onNameEditorDelete.bind(this));
 
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
@@ -1059,11 +1061,40 @@
             //var def = workbook.nameForRef(ref, sheet.name());
 
             // just define new name
-            workbook.defineName(new kendo.spreadsheet.NameRef(name), ref);
+            this._execute({
+                command: "DefineNameCommand",
+                options: { name: name, value: ref }
+            });
 
             this.clipboardElement.focus();
         },
         onNameEditorCancel: function() {
+            this.clipboardElement.focus();
+        },
+        onNameEditorSelect: function(ev) {
+            var name = ev.name;
+            var workbook = this._workbook;
+            var sheet = workbook.activeSheet();
+            var ref = workbook.nameValue(name);
+            if (ref instanceof kendo.spreadsheet.Ref) {
+                if (ref.sheet && ref.sheet.toLowerCase() != sheet.name().toLowerCase()) {
+                    // reference points to another sheet, select it if found
+                    var tmp = workbook.sheetByName(ref.sheet);
+                    if (tmp) {
+                        workbook.activeSheet(tmp);
+                        sheet = tmp;
+                    }
+                }
+                sheet.range(ref).select();
+                return;
+            }
+            this.clipboardElement.focus();
+        },
+        onNameEditorDelete: function(ev) {
+            this._execute({
+                command: "DeleteNameCommand",
+                options: { name: ev.name }
+            });
             this.clipboardElement.focus();
         }
     });

@@ -155,6 +155,13 @@
 
                 val.exec(ss, callback, this);
             } else {
+                if (val instanceof Ref) {
+                    // relocate for relative refs
+                    val = val.absolute(f.row, f.col);
+                    if (!val.sheet) {
+                        val.sheet = f.sheet;
+                    }
+                }
                 callback(val == null ? new CalcError("NAME") : val);
             }
         },

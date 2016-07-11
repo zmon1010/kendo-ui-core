@@ -18,18 +18,24 @@
         init: function(element, options) {
             kendo.ui.Widget.call(this, element, options);
             element.addClass(CLASS_NAMES.input);
-            this.input = $("<input />").appendTo(element)
+            var input = this.input = $("<input />").appendTo(element)
                 .on("keydown", this._on_keyDown.bind(this))
                 .on("focus", this._on_focus.bind(this));
             var icon = $("<span class='k-icon k-i-arrow-s'></span>")
                 .appendTo(element);
             icon.on("click", function(){
-                var data = [];
+                var data = [], selected = [];
                 this._workbook.forEachName(function(_, def){
-                    data.push({ name: def.name, value: def.value });
+                    if (!def.hidden && def.value instanceof kendo.spreadsheet.Ref) {
+                        data.push({ name: def.name });
+                        if (def.name == input.val()) {
+                            selected.push(data.length - 1);
+                        }
+                    }
                 });
                 var dataSource = new kendo.data.DataSource({ data: data });
                 this.listWidget().setDataSource(dataSource);
+                this.listWidget().select(selected);
                 dataSource.read();
                 this._popup.open();
             }.bind(this));
@@ -42,33 +48,36 @@
             }
         },
         listWidget: function() {
-            if (!this._list) {
-                this._list = new kendo.ui.StaticList(
-                    $("<ul />")
-                        .addClass(CLASS_NAMES.list)
-                        .insertAfter(this.input),
+            var list = this._list;
+            if (!list) {
+                list = this._list = new kendo.ui.StaticList(
+                    $("<ul class='" + CLASS_NAMES.list + "' />").insertAfter(this.input),
                     {
                         autoBind: false,
                         selectable: true,
                         change: this._on_listChange.bind(this),
                         dataValueField: "name",
-                        template: "#:data.name#"
+                        template: "#:data.name#<a class='k-button-delete' href='\\#'><span class='k-icon k-i-close'></span></a>"
                     }
                 );
-                this._popup = new kendo.ui.Popup(this._list.element, {
+                this._popup = new kendo.ui.Popup(list.element, {
                     anchor: this.element
                 });
+                list.element
+                    .on("click", ".k-button-delete", function(ev){
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        var item = $(ev.target).closest(".k-item");
+                        item = list.dataItemByIndex(item.data("offsetIndex"));
+                        this._deleteItem(item.name);
+                    }.bind(this));
             }
-            return this._list;
+            return list;
         },
-        // blur: function() {
-        //     this.input.blur();
-        // },
-        // focus: function() {
-        //     this.input.focus();
-        //     this.input.select();
-        // },
-
+        _deleteItem: function(name) {
+            this._popup.close();
+            this.trigger("delete", { name: name });
+        },
         _on_keyDown: function(ev) {
             switch (ev.keyCode) {
               case 27:
@@ -84,7 +93,11 @@
             this._prevValue = this.input.val();
         },
         _on_listChange: function() {
-            
+            var name = this._list.value()[0];
+            if (name) {
+                this._popup.close();
+                this.trigger("select", { name: name });
+            }
         }
     });
 
