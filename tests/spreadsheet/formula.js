@@ -601,7 +601,7 @@
         testOne("=A2", "R[-3]C[-4]");
         testOne("=B1", "R[-4]C[-3]");
         testOne("=B2", "R[-3]C[-3]");
-        testOne("=$C$3", "R3C3");
+        testOne("=$C$3", "$C$3");
         testOne("=$C3", "R[-2]C3");
         testOne("=C$3", "R3C[-2]");
         testOne("=C3", "R[-2]C[-2]");
@@ -1386,7 +1386,7 @@
                 A8  : "A1",
                 A9  : "#VALUE!",
                 A10 : "R[0]C[0]",
-                B10 : "R1C1",
+                B10 : "$A$1",
                 A11 : "A1",
                 A12 : "Sheet2!A1",
                 A13 : "Sheet2!$A$1",

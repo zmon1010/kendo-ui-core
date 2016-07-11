@@ -267,7 +267,7 @@
         },
         print: function(trow, tcol) {
             var col = this.col, row = this.row, rel = this.rel, abs;
-            if (trow == null) {
+            if (trow == null && rel) {
                 var sheet = this.hasSheet() ? displaySheet(this.sheet) + "!" : "";
                 if (isFinite(col)) {
                     col = rel & 1 ? ("C[" + col + "]") : ("C" + (col + 1));

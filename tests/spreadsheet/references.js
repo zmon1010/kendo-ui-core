@@ -15,15 +15,15 @@
     }
 
     test("RangeRef resize left", function() {
-        equal(ref.resize({ left: 1 }).print(), 'R1C2:R2C2');
+        equal(ref.resize({ left: 1 }).print(), '$B$1:$B$2');
     });
 
     test("RangeRef resize left beyond boundary", function() {
-        equal(ref.resize({ left: -1 }).print(), 'R1C1:R2C2');
+        equal(ref.resize({ left: -1 }).print(), '$A$1:$B$2');
     });
 
     test("RangeRef resize right", function() {
-        equal(ref.resize({ right: 1 }).print(), 'R1C1:R2C3');
+        equal(ref.resize({ right: 1 }).print(), '$A$1:$C$2');
     });
 
     test("RangeRef resize right to empty", function() {
@@ -89,7 +89,7 @@
             rows.push(ref.print());
         });
 
-        equal(rows.toString(), "R1C1:R1C3,R2C1:R2C3,R3C1:R3C3");
+        equal(rows.toString(), "$A$1:$C$1,$A$2:$C$2,$A$3:$C$3");
     });
 
     test("contains works with an array of refs", function() {
@@ -110,6 +110,6 @@
             rows.push(ref.print());
         });
 
-        equal(rows.toString(), "R1C1:R3C1,R1C2:R3C2,R1C3:R3C3");
+        equal(rows.toString(), "$A$1:$A$3,$B$1:$B$3,$C$1:$C$3");
     });
 })();
