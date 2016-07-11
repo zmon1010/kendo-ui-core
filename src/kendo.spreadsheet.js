@@ -346,6 +346,22 @@
                 }
             },
 
+            defineName: function(name, value, hidden) {
+                return this._workbook.defineName(name, value, hidden);
+            },
+
+            undefineName: function(name) {
+                return this._workbook.undefineName(name);
+            },
+
+            nameValue: function(name) {
+                return this._workbook.nameValue(name);
+            },
+
+            forEachName: function(func) {
+                return this._workbook.forEachName(func);
+            },
+
             events: [
                 "pdfExport",
                 "excelExport",
