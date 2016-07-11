@@ -187,6 +187,12 @@
         }).autoRefresh(false).activeSheet().trigger("change");
     });
 
+    test("bold command triggers change", function() {
+        spreadsheet.bind("change", function() {
+            ok(true);
+        }).activeSheet().range("A1").bold(true);
+    });
+
     test("setting autoRefresh to true renders the spreadhseet", 1, function() {
         spreadsheet.bind("render", function() {
             ok(true);

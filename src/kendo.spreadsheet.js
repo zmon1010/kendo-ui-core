@@ -119,7 +119,7 @@
                     this.refresh(e);
                 }
 
-                if (e.recalc && e.ref) {
+                if ((e.recalc || e.value) && e.ref) {
                     var range = new kendo.spreadsheet.Range(e.ref, this.activeSheet());
 
                     this.trigger("change", { range: range });
