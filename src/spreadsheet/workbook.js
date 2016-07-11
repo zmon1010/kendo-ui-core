@@ -342,17 +342,37 @@
             } else {
                 this.activeSheet(this._sheets[0]);
             }
+
+            if (json.names) {
+                json.names.forEach(function(def){
+                    this.defineName(def.name, def.value, def.hidden);
+                }, this);
+            }
         },
 
         toJSON: function() {
             this.resetFormulas();
             this.resetValidations();
+            var names = Object.keys(this._names).map(function(name){
+                var def = this._names[name];
+                var val = def.value;
+                if (val instanceof kendo.spreadsheet.Ref ||
+                    val instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                    val = val.print(0, 0);
+                }
+                return {
+                    value  : val,
+                    hidden : def.hidden,
+                    name   : def.name
+                };
+            }, this);
             return {
                 activeSheet: this.activeSheet().name(),
                 sheets: this._sheets.map(function(sheet) {
                     sheet.recalc(this._context);
                     return sheet.toJSON();
-                }, this)
+                }, this),
+                names: names
             };
         },
 
@@ -435,8 +455,7 @@
             this._names[name.toLowerCase()] = {
                 value  : x.value,
                 hidden : hidden,
-                name   : name,
-                ref    : x.name
+                name   : name
             };
         },
 
