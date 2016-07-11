@@ -99,13 +99,19 @@ var WORKBOOK = kendo.template(
       '# } #' +
   '# } #' +
   '</sheets>' +
-  '# if (definedNames.length) { #' +
+  '# if (filterNames.length || userNames.length) { #' +
   '<definedNames>' +
-  ' # for (var di = 0; di < definedNames.length; di++) { #' +
-  '<definedName name="_xlnm._FilterDatabase" hidden="1" localSheetId="${definedNames[di].localSheetId}">' +
-  '${definedNames[di].name}!$${definedNames[di].from}:$${definedNames[di].to}' +
+
+  ' # for (var di = 0; di < filterNames.length; di++) { #' +
+  '<definedName name="_xlnm._FilterDatabase" hidden="1" localSheetId="${filterNames[di].localSheetId}">' +
+  '${filterNames[di].name}!$${filterNames[di].from}:$${filterNames[di].to}' +
   '</definedName>' +
   ' # } #' +
+
+  ' # for (var i = 0; i < userNames.length; ++i) { #' +
+  '<definedName name="${userNames[i].name}" hidden="${userNames[i].hidden ? 1 : 0}">${userNames[i].value}</definedName>' +
+  ' # } #' +
+
   '</definedNames>' +
   '# } #' +
   '<calcPr calcId="145621" />' +
@@ -675,7 +681,7 @@ var Workbook = kendo.Class.extend({
 
         xl.file("workbook.xml", WORKBOOK({
             sheets: this._sheets,
-            definedNames: $.map(this._sheets, function(sheet, index) {
+            filterNames: $.map(this._sheets, function(sheet, index) {
                 var options = sheet.options;
                 var filter = options.filter;
                 if (filter && typeof filter.from !== "undefined" && typeof filter.to !== "undefined") {
@@ -686,7 +692,8 @@ var Workbook = kendo.Class.extend({
                         to: $ref(filterRowIndex(options), filter.to)
                     };
                 }
-            })
+            }),
+            userNames: this.options.names || []
         }));
 
         var worksheets = xl.folder("worksheets");
