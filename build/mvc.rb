@@ -39,11 +39,12 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
             .include(MVC6_SRC_ROOT + '**/*.snk')
             .include(MVC6_SRC_ROOT + '**/*.json')
 
-MVC6_PACKAGE_BASENAME = "Telerik.UI.for.AspNet.Core.#{VERSION}"
-MVC6_REDIST = FileList["#{MVC6_PACKAGE_BASENAME}.nupkg"]
+MVC6_PACKAGE_BASENAME = "Telerik.UI.for.AspNet.Core"
+MVC6_REDIST = FileList["#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg", "#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg"]
             .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
 
-MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.nupkg"
+MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg"
+MVC6_NUGET_TRIAL = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg"
 
 rule 'Kendo.Mvc.xml' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll'
 
@@ -338,30 +339,42 @@ else
 
         binpath = File.join(MVC6_SRC_ROOT, 'bin', 'Release')
         outpkg = File.join(binpath, "Kendo.Mvc.#{VERSION}.nupkg")
-        newpkg = File.join(binpath, "#{MVC6_PACKAGE_BASENAME}.nupkg")
+        newpkg = File.join(binpath, "#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg")
 
-        buffer = Zip::OutputStream.write_buffer do |out|
-            Zip::File.open(outpkg) do |zip_file|
-                zip_file.entries.each do |file|
-                    content = file.get_input_stream.read
-                    if file.name == 'Kendo.Mvc.nuspec'
-                        puts 'Updating package id to Telerik.UI.for.AspNet.Core'
-                        content = content.sub('<id>Kendo.Mvc</id>', '<id>Telerik.UI.for.AspNet.Core</id>')
-                    end
+        update_package_id(outpkg, newpkg, 'Kendo.Mvc', 'Telerik.UI.for.AspNet.Core');
+    end
 
-                    out.put_next_entry(file.name)
-                    out.write content
-                end
-            end
-        end
+    file MVC6_NUGET_TRIAL => MVC6_NUGET do
+        binpath = File.join(MVC6_SRC_ROOT, 'bin', 'Release')
+        outpkg = File.join(binpath, "Kendo.Mvc.#{VERSION}.nupkg")
+        newpkg = File.join(binpath, "#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg")
 
-        puts "Writing #{newpkg}"
-        File.open(newpkg, "wb") {|f| f.write(buffer.string) }
+        update_package_id(outpkg, newpkg, 'Kendo.Mvc', 'Telerik.UI.for.AspNet.Core.Trial');
     end
 
     tree :to => 'dist/binaries/mvc-6/',
          :from => MVC6_REDIST,
          :root => MVC6_SRC_ROOT + 'bin/Release/'
+end
+
+def update_package_id(in_file, out_file, old_id, new_id)
+    buffer = Zip::OutputStream.write_buffer do |out|
+        Zip::File.open(in_file) do |zip_file|
+            zip_file.entries.each do |file|
+                content = file.get_input_stream.read
+                if file.name == "#{old_id}.nuspec"
+                    puts "Updating package id to #{new_id}"
+                    content = content.sub("<id>#{old_id}</id>", "<id>#{new_id}</id>")
+                end
+
+                out.put_next_entry(file.name)
+                out.write content
+            end
+        end
+    end
+
+    puts "Writing #{out_file}"
+    File.open(out_file, "wb") {|f| f.write(buffer.string) }
 end
 
 ['commercial-source', 'internal.commercial-source'].each do |bundle|
