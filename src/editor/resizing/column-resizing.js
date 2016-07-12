@@ -377,7 +377,7 @@
             var newWidth;
 
             if (inPercentages(deltaWidth)) {
-                adjacentColumnWidth = calculatePercentageRatio(getColumnWidth(adjacentColumn, tableWidth));
+                adjacentColumnWidth = calculatePercentageRatio(getColumnWidth(adjacentColumn), tableWidth);
                 newWidth = constrain({
                     value:  adjacentColumnWidth + delta,
                     min: minInPercentages,

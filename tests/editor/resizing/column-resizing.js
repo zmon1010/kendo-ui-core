@@ -77,6 +77,27 @@
                 '<td id="col23" class="col" style="width:25%;border:1px solid red;">col 44</td>' +
             '</tr>' +
         '</table>';
+    var TABLE_IN_PIXELS_AND_PERCENTAGES =
+        '<table id="table" class="k-table" style="width: 400px";>' +
+            '<tr id="row1" class="row">' +
+                '<td id="col11" class="col" style="width:100px;border:1px solid red;">col 11</td>' +
+                '<td id="col12" class="col" style="width:25%;border:1px solid red;">col 12</td>' +
+                '<td id="col13" class="col" style="width:100px;border:1px solid red;">col 13</td>' +
+                '<td id="col14" class="col" style="width:100px;border:1px solid red;">col 14</td>' +
+            '</tr>' +
+            '<tr id="row2" class="row">' +
+                '<td id="col21" class="col" style="width:100px;border:1px solid red;">col 21</td>' +
+                '<td id="col22" class="col" style="width:25%;border:1px solid red;">col 22</td>' +
+                '<td id="col23" class="col" style="width:100px;border:1px solid red;">col 23</td>' +
+                '<td id="col24" class="col" style="width:100px;border:1px solid red;">col 24</td>' +
+            '</tr>' +
+            '<tr id="row3" class="row">' +
+                '<td id="col31" class="col" style="width:100px;border:1px solid red;">col 31</td>' +
+                '<td id="col32" class="col" style="width:25%;border:1px solid red;">col 32</td>' +
+                '<td id="col33" class="col" style="width:100px;border:1px solid red;">col 33</td>' +
+                '<td id="col34" class="col" style="width:100px;border:1px solid red;">col 34</td>' +
+            '</tr>' +
+        '</table>';
 
     function resizeColumn(column, from, to, options) {
         triggerBorderHover(column, options);
@@ -1108,6 +1129,39 @@
 
         for (var i = 0; i < otherColumns.length; i++) {
             equal(otherColumns[i].style.width, columnWidths[i] + PERCENTAGE);
+        }
+    });
+
+    module("editor column resizing in mixed units", {
+        setup: function() {
+            tableElement = $(TABLE_IN_PIXELS_AND_PERCENTAGES).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {});
+            options = columnResizing.options;
+        },
+
+        teardown: function() {
+            if (columnResizing) {
+                columnResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("adjacent columns in pixels should be resized", function() {
+        var cell = $(columnResizing.element).find("tr:first td:nth-child(2)");
+        var cellIndex = cell.index();
+        var rows = $(columnResizing.element).find(ROW);
+        var differenceInPixels = 20;
+        var differenceInPercentages = (differenceInPixels / $(tableElement).outerWidth()) * 100;
+        var initialWidthInPixels = cell.width();
+        var initialAdjacentColumnWidths= $.map(getColumnWidths(tableElement, cellIndex + 1), function(item, index) {
+            return (item / $(tableElement).outerWidth() * 100);
+        });
+
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
+
+        for (var i = 0; i < rows.length; i++) {
+            equal($(rows[i]).children()[cellIndex + 1].style.width, (initialAdjacentColumnWidths[i] - differenceInPercentages) + PERCENTAGE);
         }
     });
 
