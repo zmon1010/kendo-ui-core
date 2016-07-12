@@ -3,13 +3,17 @@
     <div class="demo-section k-content">
         <h4>Number rounding</h4>
         <input id="round_numeric" style="width: 100%;" value="12.55" />
-        (number value will not be rounded)
+        <span class="info-text">
+            (fraction is just truncated after the 2nd digit)
+        </span>
     </div>
 
     <div class="demo-section k-content">
         <h4>Restrict decimals</h4>
         <input id="restrict_numeric" style="width: 100%;" value="12.5" />
-        (fraction is restricted up to 2 digits)
+        <span class="info-text">
+            (limit fraction length up to 2 digits)
+        </span>
     </div>
 
     <script>
@@ -23,5 +27,13 @@
             });
         });
     </script>
-
 </div>
+
+<style>
+    .info-text {
+        color: #999;
+        opacity: .7;
+        font-style: italic;
+        padding-left: .3em;
+    }
+</style>

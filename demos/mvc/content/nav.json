@@ -3733,6 +3733,7 @@
             {
                 "text": "Precision",
                 "url": "numerictextbox/precision",
+                "new": "true",
                 "title": {
                     "kendo-ui": "The precision features of Kendo UI Numeric TextBox | Kendo UI Web demo"
                 },
