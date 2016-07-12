@@ -104,13 +104,25 @@ html .k-upload
     line-height: 1em;
     padding: 1.214em 0;
     border: 0;
-    border-radius: 0;
 }
 
 .k-upload .k-upload-selected {
     border-left-width: 1px;
     border-left-style: solid;
     margin-left: -1px;
+}
+
+.k-upload .k-clear-selected {
+    border-radius: 0 0 0 4px;
+}
+
+.k-upload .k-upload-selected {
+    border-radius: 0 0 4px 0;
+}
+
+.k-upload-files ~ .k-clear-selected,
+.k-upload-files ~ .k-upload-selected {
+    margin-top: -5px;
 }
 
 .k-upload .k-fail
