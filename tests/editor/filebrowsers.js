@@ -36,6 +36,7 @@
         },
         afterEach: function () {
             removeMocksIn(kendo.ui);
+            $(".k-window").remove();
         }
     });
 
