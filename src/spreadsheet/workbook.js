@@ -10,6 +10,7 @@
     var $ = kendo.jQuery;
     var Formula = kendo.spreadsheet.calc.runtime.Formula;
     var Ref = kendo.spreadsheet.Ref;
+    var CalcError = kendo.spreadsheet.CalcError;
 
     var Workbook = kendo.Observable.extend({
         init: function(options, view) {
@@ -375,6 +376,10 @@
                     val = val.print(0, 0);
                 } else if (val instanceof Formula) {
                     val = val.print();
+                } else if (val instanceof CalcError) {
+                    val = val + "";
+                } else {
+                    val = JSON.stringify(val);
                 }
                 return {
                     value     : val,
