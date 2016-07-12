@@ -1,3 +1,5 @@
+using System.Web.Mvc;
+
 namespace Kendo.Mvc.UI
 {
     public class MediaPlayerHtmlBuilder<T> where T : class
@@ -19,8 +21,7 @@ namespace Kendo.Mvc.UI
         /// <returns></returns>
         public IHtmlNode Build()
         {
-            var html = new HtmlElement("div");
-
+            var html = new HtmlElement("div", TagRenderMode.SelfClosing).Attributes(new { name = this.MediaPlayer.Name, id = this.MediaPlayer.Id });
             var tagName = MediaPlayer.TagName;
             if (string.IsNullOrEmpty(tagName))
             {
