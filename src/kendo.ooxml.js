@@ -109,7 +109,9 @@ var WORKBOOK = kendo.template(
   ' # } #' +
 
   ' # for (var i = 0; i < userNames.length; ++i) { #' +
-  '<definedName name="${userNames[i].name}" hidden="${userNames[i].hidden ? 1 : 0}">${userNames[i].value}</definedName>' +
+  '<definedName name="${userNames[i].name}" hidden="${userNames[i].hidden ? 1 : 0}"' +
+    ' # if (userNames[i].localSheetId != null) { # localSheetId="${userNames[i].localSheetId}" # } #' +
+  '>${userNames[i].value}</definedName>' +
   ' # } #' +
 
   '</definedNames>' +
@@ -679,21 +681,32 @@ var Workbook = kendo.Class.extend({
         var xlRels = xl.folder("_rels");
         xlRels.file("workbook.xml.rels", WORKBOOK_RELS({ count: sheetCount }));
 
+        var sheetIds = {};
+
         xl.file("workbook.xml", WORKBOOK({
             sheets: this._sheets,
             filterNames: $.map(this._sheets, function(sheet, index) {
                 var options = sheet.options;
+                var sheetName = (options.name || options.title || "Sheet" + (index + 1));
+                sheetIds[sheetName.toLowerCase()] = index;
                 var filter = options.filter;
                 if (filter && typeof filter.from !== "undefined" && typeof filter.to !== "undefined") {
                     return {
                         localSheetId: index,
-                        name: (options.name || options.title || "Sheet" + (index + 1)),
+                        name: sheetName,
                         from: $ref(filterRowIndex(options), filter.from),
                         to: $ref(filterRowIndex(options), filter.to)
                     };
                 }
             }),
-            userNames: this.options.names || []
+            userNames: $.map(this.options.names, function(def){
+                return {
+                    name: def.localName,
+                    localSheetId: def.sheet ? sheetIds[def.sheet.toLowerCase()] : null,
+                    value: def.value,
+                    hidden: def.hidden
+                };
+            })
         }));
 
         var worksheets = xl.folder("worksheets");

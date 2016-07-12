@@ -362,9 +362,14 @@
                     val = val.print();
                 }
                 return {
-                    value  : val,
-                    hidden : def.hidden,
-                    name   : def.name
+                    value     : val,
+                    hidden    : def.hidden,
+                    name      : def.name,
+
+                    // these two are not really useful in
+                    // deserialization, but are handy in OOXML export.
+                    sheet     : def.nameref.sheet,
+                    localName : def.nameref.name
                 };
             }, this);
             return {
@@ -454,9 +459,10 @@
             var x = kendo.spreadsheet.calc.parseNameDefinition(name, value);
             name = x.name.print();
             this._names[name.toLowerCase()] = {
-                value  : x.value,
-                hidden : hidden,
-                name   : name
+                value   : x.value,
+                hidden  : hidden,
+                name    : name,
+                nameref : x.name
             };
         },
 
