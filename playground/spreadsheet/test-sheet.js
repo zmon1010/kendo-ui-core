@@ -142,15 +142,15 @@ sheet.batch(function(){
 
     sheet.range("A15").format(" _(* #,##0.00_);_(* (#,##0.00);_(* \"\"-\"\"_)").value(1231231231);
 
-    spreadsheet._workbook.defineName("Foo", "Sheet1!$A$1:$C$3");
-    spreadsheet._workbook.defineName("Bar", "Sheet1!$A$1, Sheet1!$B$2, Sheet1!$C$3");
-    spreadsheet._workbook.defineName("NoSheet", "$B$2:$D$5");
-    spreadsheet._workbook.defineName("TEST", "SUM($A$1:$C$3)", true);
-    spreadsheet._workbook.defineName("Sheet1!Const_PI", "3.14", true);
-    spreadsheet._workbook.defineName("Const_Str", '"this is string"', true);
-    spreadsheet._workbook.defineName("TESTREL", "SUM(R[-2]C[-2]:R[-1]C[-1])", true);
-    spreadsheet._workbook.defineName("TOTAL", "SUM(R1C:R[-1]C)", true);
-    spreadsheet._workbook.defineName("Das_Ist_Long_Name", "$G$1:$G$20");
+    spreadsheet.defineName("Foo", "Sheet1!$A$1:$C$3");
+    spreadsheet.defineName("Bar", "Sheet1!$A$1, Sheet1!$B$2, Sheet1!$C$3");
+    spreadsheet.defineName("NoSheet", "$B$2:$D$5");
+    spreadsheet.defineName("TEST", "SUM($A$1:$C$3)", true);
+    spreadsheet.defineName("Sheet1!Const_PI", "3.14", true);
+    spreadsheet.defineName("Const_Str", '"this is string"', true);
+    spreadsheet.defineName("TESTREL", "SUM(Sheet1!R[-2]C[-2]:R[-1]C[-1])", true);
+    spreadsheet.defineName("TOTAL", "SUM(Sheet1!R1C:R[-1]C)", true);
+    spreadsheet.defineName("Das_Ist_Long_Name", "$G$1:$G$20");
     sheet.range("D3").input("=SUM(foo)");
     sheet.range("D4").input("=SUM(Bar)");
     sheet.range("C4").input("=TESTREL");

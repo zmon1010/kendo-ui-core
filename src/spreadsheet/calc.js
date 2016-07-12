@@ -81,7 +81,7 @@
             var m;
             if ((m = /^(\$)?([a-z]+)(\$)?(\d+)$/i.exec(name))) {
                 var row = getrow(m[4]), col = getcol(m[2]);
-                if (row <= 1048576 && col <= 16383) {
+                if (row < 0x100000 && col < 0x4000) {
                     return new CellRef(getrow(m[4]), getcol(m[2]));
                 }
                 // no NameRef-s from this function
@@ -323,7 +323,7 @@
     }
 
     function makePrinter(exp) {
-        return makeClosure("function(row, col){return(" + print(exp.ast, exp, 0) + ")}");
+        return makeClosure("function(row, col, mod){return(" + print(exp.ast, exp, 0) + ")}");
         function print(node, parent, prec) { // jshint ignore:line, because you are stupid.
             switch (node.type) {
               case "num":
@@ -334,7 +334,7 @@
               case "str":
                 return JSON.stringify(JSON.stringify(node.value));
               case "ref":
-                return "this.refs[" + node.index + "].print(row, col)";
+                return "this.refs[" + node.index + "].print(row, col, mod)";
               case "prefix":
                 return withParens(function(){
                     return JSON.stringify(node.op) + " + " + print(node.exp, node, OPERATORS[node.op]);

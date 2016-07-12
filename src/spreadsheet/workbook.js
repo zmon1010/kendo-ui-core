@@ -372,10 +372,8 @@
             var names = Object.keys(this._names).map(function(name){
                 var def = this._names[name];
                 var val = def.value;
-                if (val instanceof Ref) {
-                    val = val.print(0, 0);
-                } else if (val instanceof Formula) {
-                    val = val.print();
+                if (val instanceof Ref || val instanceof Formula) {
+                    val = val.print(0, 0, true);
                 } else if (val instanceof CalcError) {
                     val = val + "";
                 } else {
