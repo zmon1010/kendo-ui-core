@@ -214,13 +214,14 @@ var ImageCommand = Command.extend({
         if (showBrowser) {
             this._imageBrowser = new kendo.ui.ImageBrowser(
                 dialog.element.find(".k-imagebrowser"),
-                extend({}, imageBrowser, {
-                    change: function() {
-                        dialog.element.find(KEDITORIMAGEURL).val(this.value());
-                    },
-                    apply: apply
-                })
+                extend({}, imageBrowser)
             );
+
+            this._imageBrowser.bind("change", function () {
+                dialog.element.find(KEDITORIMAGEURL).val(this.value());
+            });
+
+            this._imageBrowser.bind("apply", apply);
         }
 
         dialog.center().open();
