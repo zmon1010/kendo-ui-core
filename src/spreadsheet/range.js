@@ -711,7 +711,11 @@
                                     // invalid Formula and display #ERROR, like G.S. does, so in
                                     // case of a parse error we'll just set the value as string.
                                     try {
-                                        range.input(cellState.value);
+                                        if (cellState.value == null) { // jshint ignore:line
+                                            range._set("value", null);
+                                        } else {
+                                            range.input(cellState.value);
+                                        }
                                     } catch(ex) {
                                         range._set("value", cellState.value);
                                     }
