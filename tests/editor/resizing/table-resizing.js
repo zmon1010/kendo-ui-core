@@ -236,7 +236,7 @@
         }
     });
 
-    test("table resizing should be initialized with default options", function() {
+    test("should be initialized with default options", function() {
         var defaultOptions = {
             rtl: false,
             rootElement: null
@@ -246,13 +246,13 @@
         deepEqual(tableResizing.options, defaultOptions);
     });
 
-    test("table resizing should be initialized with custom options", function() {
+    test("should be initialized with custom options", function() {
         tableResizing = new TableResizing(table, { rtl: true });
 
         deepEqual(tableResizing.options.rtl, true);
     });
 
-    module("editor table resizing", {
+    module("editor table resizing column resizing", {
         setup: function() {
             table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
         },
@@ -265,13 +265,13 @@
         }
     });
 
-    test("column resizing should be initialized from table resizing", function() {
+    test("should be initialized from table resizing", function() {
         tableResizing = new TableResizing(table, {});
 
         ok(tableResizing.columnResizing instanceof kendo.ui.editor.ColumnResizing);
     });
 
-    test("column resizing should be initialized with custom table resizing options", function() {
+    test("should be initialized with custom table resizing options", function() {
         var options = {
             rootElement: "element"
         };
@@ -280,13 +280,13 @@
         deepEqual(tableResizing.columnResizing.options.rootElement, "element");
     });
 
-    test("column resizing should be initialized with table element", function() {
+    test("should be initialized with table element", function() {
         tableResizing = new TableResizing(table, {});
 
         equal(tableResizing.columnResizing.element, table);
     });
 
-    module("editor table resizing", {
+    module("editor table resizing destroy", {
         setup: function() {
             table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
             tableResizing = new TableResizing(table, {});
@@ -300,7 +300,7 @@
         }
     });
 
-    test("destroy should call column resizing destroy", function() {
+    test("should call column resizing destroy", function() {
         var columnResizing = tableResizing.columnResizing;
         trackMethodCall(columnResizing, "destroy");
 
@@ -309,13 +309,13 @@
         equal(columnResizing.destroy.callCount, 1);
     });
 
-    test("destroy should detach event handlers", function() {
+    test("should detach event handlers", function() {
         tableResizing.destroy();
 
         ok(jQueryEvents(tableResizing.element) === undefined);
     });
 
-    module("editor table resizing", {
+    module("editor table resizing resizingInProgress", {
         setup: function() {
             table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
             tableResizing = new TableResizing(table, {});
@@ -329,7 +329,7 @@
         }
     });
 
-    test("resizingInProgress should be true while resizing columns", function() {
+    test("should be true while resizing columns", function() {
         var columnResizing = tableResizing.columnResizing = new ColumnResizing(tableResizing.element, {});
 
         columnResizing.resizable = { resizing: true, destroy: $.noop };
@@ -337,7 +337,7 @@
         equal(tableResizing.resizingInProgress(), true);
     });
 
-    test("resizingInProgress should be false when column resizing is stopped", function() {
+    test("should be false when column resizing is stopped", function() {
         var columnResizing = tableResizing.columnResizing = new ColumnResizing(tableResizing.element, {});
 
         columnResizing.resizable = { resizing: false, destroy: $.noop };
