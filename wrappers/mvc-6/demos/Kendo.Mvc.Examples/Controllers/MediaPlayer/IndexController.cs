@@ -10,23 +10,29 @@ namespace Kendo.Mvc.Examples.Controllers
     {
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult Videos_Read([DataSourceRequest] DataSourceRequest request)
-        {
             List<Video> videos = new List<Video>();
             videos.Add(new Video()
             {
-                 url= "http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg",
-                 Title = "Act a fool"
+                url = @"/shared/web/mediaplayer/Video1.mp4",
+                title = "Digital Transformation: A New Way of Thinking",
+                poster = @"/shared/web/mediaplayer/Video1.jpg"
+
             });
             videos.Add(new Video()
             {
-                url = "https://www.youtube.com/watch?v=vr7Xy8POfEM&list=PLhyyDxxabfF9bN4zPBDP1I5tt5oWr4ZtB&index=2",
-                Title = "Няма чакай"
+                url = @"/shared/web/mediaplayer/Video2.mp4",
+                title = "Learn How York Solved Its Database Problem",
+                poster = @"/shared/web/mediaplayer/Video2.jpg"
             });
-            return Json(videos.ToDataSourceResult(request));
+            videos.Add(new Video()
+            {
+                url = @"/shared/web/mediaplayer/Video3.mp4",
+                title = "A Clear Vision for Digital Transformation",
+                poster = @"/shared/web/mediaplayer/Video3.jpg"
+            });
+            ViewBag.Videos = videos;
+
+            return View();
         }
     }
 }

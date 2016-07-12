@@ -1,13 +1,7 @@
 ﻿@using Kendo.Mvc.UI
 
-@(Html.Kendo().DataSource<Video>()
-    .Name("dataSource1")
-    .Ajax(dataSource => dataSource
-       .Read(read => read.Action("Videos_Read", "MediaPlayer"))
-       .ServerOperation(false)
-    )
-)
-
 @(Html.Kendo().MediaPlayer<Video>()
-      .Name("MediaPlayer").DataSource("dataSource1")
+      .AutoPlay(true)
+      .Playlist(true)
+      .Name("MediaPlayer").BindTo((IEnumerable<Video>)ViewBag.Videos)
 )

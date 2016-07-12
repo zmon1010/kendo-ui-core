@@ -1,7 +1,7 @@
 <div class="demo-section k-content">
-
-    @(Html.Kendo().MediaPlayer<object>()
-        .Name("mediaplayer")
+    @(Html.Kendo().MediaPlayer<Kendo.Mvc.Examples.Models.Video>()
+      .AutoPlay(true)
+      .Playlist(true)
+      .Name("MediaPlayer").BindTo((IEnumerable<Kendo.Mvc.Examples.Models.Video>)ViewBag.Videos)
     )
-
 </div> 
