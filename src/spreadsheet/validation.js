@@ -75,7 +75,7 @@
         }
 
         validationHandler = function (valueToCompare) { //add 'valueFormat' arg when add isDate comparer
-            var toValue = this.to && this.to.value ? this.to.value : undefined;
+            var toValue = this.to && this.to_value ? this.to_value : undefined;
 
             if (valueToCompare === null || valueToCompare === "") {
                 if (this.allowNulls) {
@@ -84,14 +84,14 @@
                     this.value = false;
                 }
             } else if (this.dataType == "custom") {
-                this.value = comparer(valueToCompare, this.from.value,  toValue);
+                this.value = comparer(valueToCompare, this.from_value,  toValue);
             } else if (this.dataType == "list") {
                 var data = this._getListData();
 
                 this.value = comparer(valueToCompare, data, toValue);
             } else {
                 //TODO: TYPE CHECK IS REQUIRED ONLY FOR DATE TYPE WHEN SPECIAL COMPARER (ISDATE) IS USED
-                this.value = comparer(valueToCompare, this.from.value,  toValue);
+                this.value = comparer(valueToCompare, this.from_value,  toValue);
             }
 
             return this.value;
@@ -141,8 +141,8 @@
         },
 
         _formatMessages: function(format) {
-            var from = this.from ? this.from.value : "";
-            var to = this.to ? this.to.value : "";
+            var from = this.from ? this.from_value : "";
+            var to = this.to ? this.to_value : "";
 
             var fromFormula = this.from ? this.from.toString() : "";
             var toFormula = this.to ? this.to.toString() : "";
@@ -175,11 +175,11 @@
         },
 
         _getListData: function() {
-            if (!this.from.value || !this.from.value.data) {
+            if (!this.from_value || !this.from_value.data) {
                 return [];
             }
 
-            var cube = this.from.value.data;
+            var cube = this.from_value.data;
             var i;
             var y;
             var data = [];
@@ -217,8 +217,18 @@
         exec: function(ss, compareValue, compareFormat, callback) {
             var self = this;
 
-            var calculateFromCallBack = function() {
+            function getValue(val) {
+                if (val instanceof kendo.spreadsheet.Ref) {
+                    val = ss.getData(val);
+                    if (Array.isArray(val)) {
+                        val = val[0];
+                    }
+                }
+                return val;
+            }
 
+            var calculateFromCallBack = function(val) {
+                self.from_value = getValue(val);
                 self.value = self.handler.call(self, compareValue, compareFormat);
                 self._setMessages();
                 if (callback) {
@@ -227,7 +237,8 @@
             };
 
             if (self.to) {
-                self.to.exec(ss, function() {
+                self.to.exec(ss, function(val) {
+                    self.to_value = getValue(val);
                     self.from.exec(ss, calculateFromCallBack);
                 });
             } else {
