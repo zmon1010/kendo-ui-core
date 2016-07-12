@@ -2,7 +2,7 @@
     var TableResizing = kendo.ui.editor.TableResizing;
     var ColumnResizing = kendo.ui.editor.ColumnResizing;
     var editor;
-    var table;
+    var tableElement;
     var tableResizing;
     var DOT = ".";
     var HANDLE_SELECTOR = ".k-resize-handle";
@@ -10,6 +10,7 @@
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
+    var SOUTHEAST = "southeast";
     var TABLE_HTML =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
@@ -73,7 +74,7 @@
             editor.tableResizing = null;
             $(editor.body).append($(CONTENT_HTML)[0]);
             $(TABLE_HTML).attr("id", "table2").appendTo(editor.body)[0];
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
         },
 
         afterEach: function() {
@@ -106,7 +107,8 @@
 
         triggerEvent(table, { type: MOUSE_ENTER });
 
-        deepEqual(editor.tableResizing.options, { rtl: false, rootElement: editor.body });
+        equal(editor.tableResizing.options.rtl, false);
+        equal(editor.tableResizing.options.rootElement, editor.body);
     });
 
     test("hovering a different table should destroy current table resizing", function() {
@@ -182,7 +184,7 @@
 
     test("hovering a nested table should init new table resizing", function() {
         var nestedTable = $(tableElement).find("#nestedTable")[0];
-        editor.tableResizing = new TableResizing(table, {});
+        editor.tableResizing = new TableResizing(tableElement, {});
         triggerEvent(tableElement, { type: MOUSE_ENTER });
 
         triggerEvent(nestedTable, { type: MOUSE_ENTER });
@@ -225,7 +227,7 @@
 
     module("editor table resizing", {
         setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
             },
 
         teardown: function() {
@@ -239,22 +241,25 @@
     test("should be initialized with default options", function() {
         var defaultOptions = {
             rtl: false,
-            rootElement: null
+            rootElement: null,
+            handles: [{
+                direction: SOUTHEAST
+            }]
         };
-        tableResizing = new TableResizing(table);
+        tableResizing = new TableResizing(tableElement);
 
         deepEqual(tableResizing.options, defaultOptions);
     });
 
     test("should be initialized with custom options", function() {
-        tableResizing = new TableResizing(table, { rtl: true });
+        tableResizing = new TableResizing(tableElement, { rtl: true });
 
         deepEqual(tableResizing.options.rtl, true);
     });
 
     module("editor table resizing column resizing", {
         setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
         },
 
         teardown: function() {
@@ -266,7 +271,7 @@
     });
 
     test("should be initialized from table resizing", function() {
-        tableResizing = new TableResizing(table, {});
+        tableResizing = new TableResizing(tableElement, {});
 
         ok(tableResizing.columnResizing instanceof kendo.ui.editor.ColumnResizing);
     });
@@ -275,21 +280,21 @@
         var options = {
             rootElement: "element"
         };
-        tableResizing = new TableResizing(table, options);
+        tableResizing = new TableResizing(tableElement, options);
 
         deepEqual(tableResizing.columnResizing.options.rootElement, "element");
     });
 
     test("should be initialized with table element", function() {
-        tableResizing = new TableResizing(table, {});
+        tableResizing = new TableResizing(tableElement, {});
 
-        equal(tableResizing.columnResizing.element, table);
+        equal(tableResizing.columnResizing.element, tableElement);
     });
 
     module("editor table resizing destroy", {
         setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            tableResizing = new TableResizing(table, {});
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableResizing = new TableResizing(tableElement, {});
         },
 
         teardown: function() {
@@ -315,10 +320,24 @@
         ok(jQueryEvents(tableResizing.element) === undefined);
     });
 
+    test("should call resize handles destroy", function() {
+        var destroySpies = [];
+        tableResizing.showResizeHandles();
+        for (var i = 0; i < tableResizing.handles.length; i++) {
+            destroySpies.push(spy(tableResizing.handles[i], "destroy"));
+        }
+
+        tableResizing.destroy();
+
+        for (var i = 0; i < destroySpies.length; i++) {
+            equal(destroySpies[i].calls("destroy"), 1);
+        }
+    });
+
     module("editor table resizing resizingInProgress", {
         setup: function() {
-            table = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            tableResizing = new TableResizing(table, {});
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableResizing = new TableResizing(tableElement, {});
         },
 
         teardown: function() {
@@ -343,5 +362,83 @@
         columnResizing.resizable = { resizing: false, destroy: $.noop };
 
         equal(tableResizing.resizingInProgress(), false);
+    });
+
+    module("editor table resizing resize handle", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableResizing = new TableResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            if (tableResizing) {
+                tableResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should be of type TableResizeHandle", function() {
+        tableResizing.showResizeHandles();
+
+        for (var i = 0; i < tableResizing.handles.length; i++) {
+            ok(tableResizing.handles[i] instanceof kendo.ui.editor.TableResizeHandle);
+        }
+    });
+
+    test("should be initialized with custom options", function() {
+        var customOptions = {
+            appendTo: tableResizing.options.rootElement,
+            direction: "southeast",
+            resizableElement: tableResizing.element
+        };
+
+        tableResizing.showResizeHandles();
+
+        equal(tableResizing.handles[0].options.appendTo, customOptions.appendTo);
+        equal(tableResizing.handles[0].options.direction, customOptions.direction);
+        equal(tableResizing.handles[0].options.resizableElement, customOptions.resizableElement);
+    });
+
+    test("should be shown on table click", function() {
+        tableResizing.showResizeHandles();
+        var showSpy = spy(tableResizing.handles[0], "show");
+
+        triggerEvent(tableResizing.element, { type: "click" });
+
+        equal(showSpy.calls("show"), 1);
+    });
+
+    test("should call resize handle show() on showResizeHandles()", function() {
+        tableResizing.showResizeHandles();
+        var showSpy = spy(tableResizing.handles[0], "show");
+
+        tableResizing.showResizeHandles();
+
+        equal(showSpy.calls("show"), 1);
+    });
+
+    module("editor table resizing", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableResizing = new TableResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            if (tableResizing) {
+                tableResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("click event on editor body should be removed on destroy", function() {
+        tableResizing.destroy();
+
+        equal(jQueryEventsInfo(tableResizing.options.rootElement, "click"), undefined);
     });
 })();

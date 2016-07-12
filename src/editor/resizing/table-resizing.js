@@ -1,16 +1,20 @@
 (function(f, define) {
-    define(["../main", "./column-resizing"], f);
+    define(["../main", "./column-resizing", "./table-resize-handle"], f);
 })(function() {
 
 (function(kendo, undefined) {
     var $ = kendo.jQuery;
     var extend = $.extend;
+    var proxy = $.proxy;
 
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
     var ColumnResizing = Editor.ColumnResizing;
+    var TableResizeHandle = Editor.TableResizeHandle;
 
-    var NS = ".kendoEditor";
+    var NS = ".kendoEditorTableResizing";
+    var CLICK = "click";
+    var SOUTHEAST = "southeast";
     var TABLE = "table";
 
     var TableResizing = Class.extend({
@@ -18,10 +22,12 @@
             var that = this;
 
             that.options = extend({}, that.options, options);
+            that.handles = [];
 
             if ($(element).is(TABLE)) {
                 that.element = element;
                 that.columnResizing = new ColumnResizing(element, that.options);
+                $(that.options.rootElement).on(CLICK + NS, TABLE, proxy(that.showResizeHandles, that));
             }
         },
 
@@ -35,15 +41,20 @@
                 that.columnResizing = null;
             }
 
-            if (element) {
-                $(element).off(NS);
-                that.element = null;
-            }
+            $(element).off(NS);
+            that.element = null;
+
+            $(that.options.rootElement).off(NS);
+
+            that._destroyResizeHandles();
         },
 
         options: {
             rtl: false,
-            rootElement: null
+            rootElement: null,
+            handles: [{
+                direction: SOUTHEAST
+            }]
         },
 
         resizingInProgress: function() {
@@ -55,6 +66,52 @@
             }
 
             return false;
+        },
+
+        showResizeHandles: function() {
+            var that = this;
+
+            that._initResizeHandles();
+            that._showResizeHandles();
+        },
+
+        _initResizeHandles: function() {
+            var that = this;
+            var options = that.options;
+            var resizeHandles = that.options.handles;
+            var length = resizeHandles.length;
+            var i;
+
+            if (that.handles.length > 0) {
+                return;
+            }
+
+            for (i = 0; i < length; i++) {
+                that.handles.push(new TableResizeHandle(extend({
+                    appendTo: options.rootElement,
+                    resizableElement: that.element
+                }, resizeHandles[i])));
+            }
+        },
+
+        _destroyResizeHandles: function() {
+            var that = this;
+            var length = that.handles ? that.handles.length : 0;
+
+            for (var i = 0; i < length; i++) {
+                that.handles[i].destroy();
+            }
+        },
+
+        _showResizeHandles: function() {
+            var that = this;
+            var handles = that.handles || [];
+            var length = handles.length;
+            var i;
+
+            for (i = 0; i < length; i++) {
+                that.handles[i].show();
+            }
         }
     });
 
