@@ -25,7 +25,7 @@
                 .appendTo(element);
             icon.on("click", function(){
                 var data = [], selected = [];
-                this._workbook.forEachName(function(_, def){
+                this._workbook.forEachName(function(def){
                     if (!def.hidden && def.value instanceof kendo.spreadsheet.Ref) {
                         data.push({ name: def.name });
                         if (def.name == input.val()) {

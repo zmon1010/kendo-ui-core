@@ -208,6 +208,13 @@
 
         valid: function() {
             return false;
+        },
+
+        renameSheet: function(oldSheetName, newSheetName) {
+            if (this.sheet && this.sheet.toLowerCase() == oldSheetName.toLowerCase()) {
+                this.sheet = newSheetName;
+                return true;
+            }
         }
     });
 
@@ -232,6 +239,10 @@
         ref: "name",
         init: function NameRef(name){
             this.name = name;
+        },
+        clone: function() {
+            return new NameRef(this.name)
+                .setSheet(this.sheet, this.hasSheet());
         },
         print: function() {
             var ret = displaySheet(this.name);
@@ -864,6 +875,11 @@
                 }
             }
             return true;
+        },
+        renameSheet: function(oldSheetName, newSheetName) {
+            this.refs.forEach(function(ref){
+                ref.renameSheet(oldSheetName, newSheetName);
+            });
         }
     });
 

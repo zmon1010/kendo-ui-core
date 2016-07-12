@@ -139,7 +139,8 @@
                 val = this.workbook.nameValue(ref.print());
             } else {
                 // try local name
-                val = this.workbook.nameValue(fsheet + "!" + ref.name);
+                ref = ref.clone().setSheet(fsheet, true);
+                val = this.workbook.nameValue(ref.print());
                 if (val == null) {
                     // try global name
                     val = this.workbook.nameValue(ref.name);

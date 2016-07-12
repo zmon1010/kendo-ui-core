@@ -608,9 +608,7 @@
                 this.sheet = newSheetName;
             }
             this.refs.forEach(function(ref){
-                if (ref.sheet.toLowerCase() == oldSheetName) {
-                    ref.sheet = newSheetName;
-                }
+                ref.renameSheet(oldSheetName, newSheetName);
             });
         },
         adjust: function(affectedSheet, operation, start, delta) {

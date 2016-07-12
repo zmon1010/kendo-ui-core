@@ -8,6 +8,8 @@
     }
 
     var $ = kendo.jQuery;
+    var Formula = kendo.spreadsheet.calc.runtime.Formula;
+    var Ref = kendo.spreadsheet.Ref;
 
     var Workbook = kendo.Observable.extend({
         init: function(options, view) {
@@ -250,10 +252,10 @@
         },
 
         renameSheet: function(sheet, newSheetName) {
-            var oldSheetName = sheet.name();
+            var oldSheetName = sheet.name().toLowerCase();
 
             if (!newSheetName ||
-                oldSheetName === newSheetName) {
+                oldSheetName === newSheetName.toLowerCase()) {
                 return;
             }
 
@@ -271,6 +273,19 @@
                     formula.renameSheet(oldSheetName, newSheetName);
                 });
             });
+
+            this.forEachName(function(def, name){
+                // 1. redefine sheet-local names
+                if (def.nameref.renameSheet(oldSheetName, newSheetName)) {
+                    this.undefineName(name);
+                    def.name = def.nameref.print();
+                    this.nameDefinition(def.name, def);
+                }
+                // 2. if the value is reference or formula, update it
+                if (def.value instanceof Ref || def.value instanceof Formula) {
+                    def.value.renameSheet(oldSheetName, newSheetName);
+                }
+            }.bind(this));
 
             sheet._name(newSheetName);
 
@@ -356,9 +371,9 @@
             var names = Object.keys(this._names).map(function(name){
                 var def = this._names[name];
                 var val = def.value;
-                if (val instanceof kendo.spreadsheet.Ref) {
+                if (val instanceof Ref) {
                     val = val.print(0, 0);
-                } else if (val instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                } else if (val instanceof Formula) {
                     val = val.print();
                 }
                 return {
@@ -444,7 +459,7 @@
             for (var name in this._names) {
                 var def = this._names[name];
                 var val = def.value;
-                if (val instanceof kendo.spreadsheet.Ref) {
+                if (val instanceof Ref) {
                     if (!val.sheet || (val.sheet && sheet == val.sheet.toLowerCase())) {
                         if (val + "" == str) {
                             return def;
@@ -491,9 +506,9 @@
         },
 
         forEachName: function(func) {
-            for (var i in this._names) {
-                func(i, this._names[i]);
-            }
+            Object.keys(this._names).forEach(function(name){
+                func(this._names[name], name);
+            }, this);
         },
 
         adjustNames: function(affectedSheet, forRow, start, delta) {
@@ -501,11 +516,11 @@
             Object.keys(this._names).forEach(function(name){
                 var def = this._names[name];
                 var x = def.value;
-                if (x instanceof kendo.spreadsheet.Ref &&
+                if (x instanceof Ref &&
                     x.sheet.toLowerCase() == affectedSheet) {
                     def.value = x.adjust(null, null, null, null, forRow, start, delta);
                 }
-                else if (x instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                else if (x instanceof Formula) {
                     x.adjust(affectedSheet, forRow ? "row" : "col", start, delta);
                 }
             }, this);
