@@ -167,10 +167,9 @@
 
             _createSlider: function() {
                 var sliderElement = wrapper.find(DOT + SLIDER);
-                if (sliderElement.length === 0) {
+                if (!this._slider) {
                     this._sliderDragChangeHandler = proxy(this._sliderDragChange, this);
                     this._sliderDraggingHandler = proxy(this._sliderDragging, this);
-                    wrapper.append(templates.slider);
                     sliderElement = wrapper.find(DOT + SLIDER);
 
                     this._slider = new ui.Slider(sliderElement[0], {
@@ -246,7 +245,12 @@
                     toolBarElement.width($(DOT + MEDIA).width());
                     this._toolBar = new ui.ToolBar(toolBarElement, {
                         click: this._toolbarClickHandler,
+                        resizable: false,
                         items: [
+                            { 
+                                id: "seekBarTemplate",
+                                template: templates.slider
+                            },
                             { type: "button", id: "play", spriteCssClass: "k-icon k-font-icon k-i-play" },
                             { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
                             { 
