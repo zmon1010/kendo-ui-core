@@ -603,12 +603,12 @@
         },
 
         _chrome: function() {
-            var table = $("<table cellspacing='0' cellpadding='0' style='border-collapse: collapse; width: 100%;'><tr><td class='k-spreadsheet-name-editor-wrapper'></td><td class='k-spreadsheet-formula-bar-wrapper'></td></tr></table>").prependTo(this.element);
+            var wrapper = $("<div class='k-spreadsheet-action-bar' />").prependTo(this.element);
 
-            var nameEditor = $("<div />").prependTo(table.find("td").eq(0));
+            var nameEditor = $("<div class='k-spreadsheet-name-editor' />").appendTo(wrapper);
             this.nameEditor = new kendo.spreadsheet.NameEditor(nameEditor);
 
-            var formulaBar = $("<div />").prependTo(table.find("td").eq(1));
+            var formulaBar = $("<div />").appendTo(wrapper);
             this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar);
 
             if (this.options.toolbar) {
