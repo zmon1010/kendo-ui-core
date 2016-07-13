@@ -27,10 +27,12 @@
         ui = kendo.ui,
         ns = ".kendoMediaPlayer",
         baseTime = new Date(1970,0,1),  
-        timeZoneSec = baseTime.getTimezoneOffset() * 60;                
+        timeZoneSec = baseTime.getTimezoneOffset() * 60;
+        defaultVolumeValue = 60;                
         Widget = kendo.ui.Widget,
         //extend = $.extend,
         proxy = $.proxy,
+        savedVolumeValue = null,
         //each = $.each,
         templates = {
             htmlPlayer: "<video class='" + MEDIA + "'> </video>",
@@ -192,7 +194,7 @@
                     volumeSliderElement.width(50);
                     this._volumeSlider = new ui.Slider(volumeSliderElement[0], {
                         smallStep: 1,
-                        value: options.mute ? 0 : 60,
+                        value: options.mute ? 0 : defaultVolumeValue,
                         min: 0,
                         max: 100,
                         slide: this._volumeDraggingHandler,
@@ -290,7 +292,7 @@
                 }
 
                 if (e.id === "volume") {
-                    
+                    this.mute(this._volumeSlider.value() !== 0);
                 }
             },
 
@@ -305,7 +307,7 @@
             },
 
             _volumeDragging: function(e) {
-                this._media.volume = e.value / 100;
+                this.volume(e.value);
             },
 
             _mediaTimeUpdate: function(e) {
@@ -463,6 +465,16 @@
                 }
                 this._media.volume = value / 100; 
                 this._volumeSlider.value(value);
+            },
+
+            mute: function (muted) { 
+                if (muted) {
+                    savedVolumeValue = this._volumeSlider.value();
+                    this.volume(0);
+                }
+                else{
+                    this.volume(savedVolumeValue || defaultVolumeValue);
+                }
             },
 
             _dataSource: function () {
