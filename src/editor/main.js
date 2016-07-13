@@ -359,7 +359,7 @@
 
                     if (editor.tableResizing) {
                         if (editor.tableResizing.element !== table && !editor.tableResizing.resizingInProgress()) {
-                            editor.tableResizing.destroy();
+                            editor._destroyTableResizing();
                             initTableResizing(editor, table);
                         }
                     }
@@ -376,12 +376,25 @@
                         parentTable = $(editor.tableResizing.element).parents(TABLE)[0];
                         
                         if (parentTable) {
-                            editor.tableResizing.destroy();
-                            editor.tableResizing = null;
+                            editor._destroyTableResizing();
                             initTableResizing(editor, parentTable);
                         }
                     }
+                })
+                .on(MOUSE_LEAVE + NS, function() {
+                    if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
+                        editor._destroyTableResizing();
+                    }
                 });
+        },
+
+        _destroyTableResizing: function() {
+            var editor = this;
+
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+                editor.tableResizing = null;
+            }
         },
 
         _wrapTextarea: function() {
@@ -883,9 +896,7 @@
 
             this.toolbar.destroy();
 
-            if (editor.tableResizing) {
-                editor.tableResizing.destroy();
-            }
+            editor._destroyTableResizing();
 
             kendo.destroy(this.wrapper);
         },

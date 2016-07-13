@@ -265,6 +265,45 @@
         equal(destroySpy.calls("destroy"), 1);
     });
 
+    editor_module("editor table resizing", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.tableResizing = null;
+            tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
+            anotherTable = $(TABLE_HTML).attr("id", "table2").appendTo(editor.body)[0];
+        },
+
+        afterEach: function() {
+            if (editor) {
+                $(editor.body).find("*").remove();
+            }
+            removeMocksIn(editor.tableResizing);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("leaving the editor content should not destroy table resizing if resizing is in progress", function() {
+        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+        editor.tableResizing.resizingInProgress = function() { return true; };
+
+        $(editor.body).trigger(leaveEvent);
+
+        equal(destroySpy.calls("destroy"), 0);
+    });
+
+    test("leaving the editor content should destroy table resizing if resizing is not in progress", function() {
+        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+        editor.tableResizing.resizingInProgress = function() { return false; };
+
+        $(editor.body).trigger(leaveEvent);
+
+        equal(destroySpy.calls("destroy"), 1);
+    });
+
     module("editor table resizing", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
