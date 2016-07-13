@@ -174,8 +174,10 @@ var FileCommand = Command.extend({
                 extend({}, fileBrowser)
             );
 
-            that._fileBrowser.bind("change", function () {
-                dialog.element.find(KEDITORFILEURL).val(this.value());
+            that._fileBrowser.bind("change", function (ev) {
+                if (ev.selected.get("type") === "f") {
+                    dialog.element.find(KEDITORFILEURL).val(this.value());
+                }
             } );
 
             that._fileBrowser.bind("apply", apply);

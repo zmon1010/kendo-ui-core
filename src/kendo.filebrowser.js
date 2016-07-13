@@ -641,13 +641,10 @@ var __meta__ = { // jshint ignore:line
 
         _listViewChange: function() {
             var selected = this._selectedItem();
-
+            
             if (selected) {
                 this.toolbar.find(".k-delete").parent().removeClass("k-state-disabled");
-
-                if (selected.get(TYPEFIELD) === "f") {
-                    this.trigger(CHANGE);
-                }
+                this.trigger(CHANGE, { selected: selected });
             }
         },
 
