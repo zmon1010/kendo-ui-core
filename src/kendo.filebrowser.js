@@ -393,19 +393,21 @@ var __meta__ = { // jshint ignore:line
                 fileName = e.files[0].name,
                 fileNameField = NAMEFIELD,
                 sizeField = SIZEFIELD,
-                model;
+                file;
 
             if (filterRegExp.test(fileName)) {
                 e.data = { path: that.path() };
 
-                model = that._createFile(fileName);
+                file = that._createFile(fileName);
 
-                if (!model) {
+                if (!file) {
                     e.preventDefault();
                 } else {
                     that.upload.one("success", function(e) {
+                        var model = that._insertFileToList(file);
                         model.set(fileNameField, e.response[that._getFieldName(fileNameField)]);
                         model.set(sizeField, e.response[that._getFieldName(sizeField)]);
+
                         that._tiles = that.listView.items().filter("[" + kendo.attr("type") + "=f]");
                     });
                 }
@@ -438,27 +440,16 @@ var __meta__ = { // jshint ignore:line
 
         _createFile: function(fileName) {
             var that = this,
-                idx,
-                length,
-                index = 0,
                 model = {},
                 typeField = TYPEFIELD,
-                view = that.dataSource.view(),
                 file = that._findFile(fileName);
 
             if (file) {
                 if (!that._showMessage(kendo.format(that.options.messages.overwriteFile, fileName), "confirm")) {
                     return null;
                 } else {
-                    file._forceReload = true;
+                    file._override = true;
                     return file;
-                }
-            }
-
-            for (idx = 0, length = view.length; idx < length; idx++) {
-                if (view[idx].get(typeField) === "f") {
-                    index = idx;
-                    break;
                 }
             }
 
@@ -466,7 +457,25 @@ var __meta__ = { // jshint ignore:line
             model[NAMEFIELD] = fileName;
             model[SIZEFIELD] = 0;
 
-            return that.dataSource.insert(++index, model);
+            return model;
+        },
+
+        _insertFileToList: function(model) {
+            if(model._override) {
+                return model;
+            }
+
+            var dataSource = this.dataSource;
+            var view = dataSource.view();
+
+            for (var i = 0, length = view.length; i < length; i++) {
+                if (view[i].get(TYPEFIELD) === "f") {
+                    index = i;
+                    break;
+                }
+            }
+
+            return dataSource.insert(++index, model);
         },
 
         createDirectory: function() {

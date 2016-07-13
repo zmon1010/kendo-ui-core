@@ -169,21 +169,24 @@ var __meta__ = { // jshint ignore:line
                 fileName = e.files[0].name,
                 fileNameField = NAMEFIELD,
                 sizeField = SIZEFIELD,
-                model;
+                file;
 
             if (filterRegExp.test(fileName)) {
                 e.data = { path: that.path() };
 
-                model = that._createFile(fileName);
+                file = that._createFile(fileName);
 
-                if (!model) {
+                if (!file) {
                     e.preventDefault();
                 } else {
-                    model._uploading = true;
+                    file._uploading = true;
                     that.upload.one("success", function(e) {
-                        delete model._uploading;
+                        delete file._uploading;
+
+                        var model = that._insertFileToList(file);
                         model.set(fileNameField, e.response[that._getFieldName(fileNameField)]);
                         model.set(sizeField, e.response[that._getFieldName(sizeField)]);
+
                         that._tiles = that.listView.items().filter("[" + kendo.attr("type") + "=f]");
                         that._scroll();
                     });
@@ -288,9 +291,9 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 thumbnailUrl = thumbnailUrl + urlJoin + "path=" + encodeURIComponent(that.path() + name);
-                if (dataItem._forceReload) {
+                if (dataItem._override) {
                     thumbnailUrl += "&_=" + new Date().getTime();
-                    delete dataItem._forceReload;
+                    delete dataItem._override;
                 }
             }
 
