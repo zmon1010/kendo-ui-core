@@ -28,11 +28,9 @@
         ns = ".kendoMediaPlayer",
         baseTime = new Date(1970,0,1),  
         timeZoneSec = baseTime.getTimezoneOffset() * 60;
-        defaultVolumeValue = 60;                
         Widget = kendo.ui.Widget,
         //extend = $.extend,
         proxy = $.proxy,
-        savedVolumeValue = null,
         //each = $.each,
         templates = {
             htmlPlayer: "<video class='" + MEDIA + "'> </video>",
@@ -193,7 +191,6 @@
                     volumeSliderElement.width(50);
                     this._volumeSlider = new ui.Slider(volumeSliderElement[0], {
                         smallStep: 1,
-                        value: options.mute ? 0 : defaultVolumeValue,
                         min: 0,
                         max: 100,
                         slide: this._volumeDraggingHandler,
@@ -243,6 +240,7 @@
                     wrapper.append(templates.toolBar);
                     toolBarElement = $(DOT + TOOLBAR);
                     toolBarElement.width($(DOT + MEDIA).width());
+                    var context = this;
                     this._toolBar = new ui.ToolBar(toolBarElement, {
                         click: this._toolbarClickHandler,
                         resizable: false,
@@ -296,7 +294,7 @@
                 }
 
                 if (e.id === "volume") {
-                    this.mute(this._volumeSlider.value() !== 0);
+                    this.mute(!this._media.muted);
                 }
             },
 
@@ -355,15 +353,10 @@
                     $(this._media).attr("autoplay", "");  
                 }
 
-                if (options.mute) {
-                    this._media.volume = 0.0;  
-                }
-                else{
-                    this._media.volume = 0.6;
-                }
+                this._media.muted = options.mute;
                
                 $(wrapper)
-                    .on("mousemove" + ns, this._mouseMoveHandler)                
+                    // .on("mousemove" + ns, this._mouseMoveHandler)                
 				    .on("mouseenter" + ns + " mouseleave" + ns, this._mouseInOutHandler);
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;
                 this._media.ondurationchange = this._mediaDurationChangeHandler;
@@ -373,18 +366,18 @@
                 this._uiDisplay(e.type === "mouseenter");
             },
 
-            _mouseMove: function (e) {
-                var context = this;
-                if (this._mouseMoveTimer) {
-                    clearTimeout(this._mouseMoveTimer);
-                    this._mouseMoveTimer = 0;
-                }
-                this._uiDisplay(true);
+            // _mouseMove: function (e) {
+            //     var context = this;
+            //     if (this._mouseMoveTimer) {
+            //         clearTimeout(this._mouseMoveTimer);
+            //         this._mouseMoveTimer = 0;
+            //     }
+            //     this._uiDisplay(true);
                 
-                this._mouseMoveTimer = setTimeout(function () {
-                    context._uiDisplay(false);
-                } , 3000); 
-            },
+            //     this._mouseMoveTimer = setTimeout(function () {
+            //         context._uiDisplay(false);
+            //     } , 1000); 
+            // },
 
             _uiDisplay: function (show) {
                 var animationSpeed = 'fast';
@@ -472,13 +465,28 @@
             },
 
             mute: function (muted) { 
+                if (typeof muted === 'undefined') {
+                    return this._media.muted;
+                }
+                this._media.muted = muted;
                 if (muted) {
-                    savedVolumeValue = this._volumeSlider.value();
-                    this.volume(0);
+                    this._volumeSlider.value(0);
                 }
-                else{
-                    this.volume(savedVolumeValue || defaultVolumeValue);
+                else {
+                    this._volumeSlider.value(this._media.volume * 100);
                 }
+            },
+
+            isEnded: function () {
+                return this._media.ended;
+            },
+
+            isPaused: function () {
+                return this._media.paused;
+            },
+
+            isPlaying: function () {
+                return !this._media.paused;
             },
 
             _dataSource: function () {
