@@ -358,15 +358,15 @@
         equal(search.calls("search"), 1);
     });
 
-    test("clicking on directory does not trigger the change event", 1, function() {
+    test("clicking on directory triggers the change event", 2, function() {
         var browser = setup({
             change: function() {
-                ok(false);
+                ok(true);
             }
         });
 
         clickAt(browser.list.find("li[data-type=d]"));
-
+        
         ok(!browser.value());
     });
 
