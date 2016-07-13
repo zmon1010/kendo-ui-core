@@ -40,8 +40,11 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
             .include(MVC6_SRC_ROOT + '**/*.json')
 
 MVC6_PACKAGE_BASENAME = "Telerik.UI.for.AspNet.Core"
-MVC6_REDIST = FileList["#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg", "#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg"]
-            .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
+MVC6_REDIST_COMMERCIAL = FileList["#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg"]
+                         .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
+MVC6_REDIST_TRIAL = FileList["#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg"]
+                    .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
+MVC6_REDIST = FileList[MVC6_REDIST_COMMERCIAL, MVC6_REDIST_TRIAL]
 
 MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg"
 MVC6_NUGET_TRIAL = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg"
