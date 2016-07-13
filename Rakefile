@@ -72,7 +72,6 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/',
     'wrappers/aspnetmvc/Binaries/Mvc4' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Binaries/Mvc5' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/',
-    'wrappers/aspnetmvc/Binaries/Mvc6' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
     'spreadsheet/' => 'dpl/',
@@ -170,8 +169,7 @@ require './build/localization'
 MVC_BINARIES = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => MVC3_DLL,
     'wrappers/aspnetmvc/Binaries/Mvc4' => MVC4_DLL,
-    'wrappers/aspnetmvc/Binaries/Mvc5' => MVC5_DLL,
-    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST
+    'wrappers/aspnetmvc/Binaries/Mvc5' => MVC5_DLL
 }
 
 MVC_CONTENT = {
