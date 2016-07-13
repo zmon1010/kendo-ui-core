@@ -78,20 +78,16 @@ To enable proper compilation of the LESS files in the example you need to do the
 			opacity: 0.7;
 		}
 
+		/*Temporary workaround for the initial width of the volume slider*/
+		.k-mediaplayer-volume {
+			margin-left: 15px !important;
+			margin-right: 15px !important;
+		}
+
 		#fullscreen,
-		#volume,
 		#hdbutton
 		{
 			float: right;
-		}
-
-		.k-mediaplayer .k-mediaplayer-volume {
-			position: absolute;
-			bottom: 60px;
-			left: 415px;
-			height: 70px;
-			right: 10px;
-			opacity: 0.7;
 		}
 
 	</style>

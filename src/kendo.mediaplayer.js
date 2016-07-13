@@ -65,7 +65,7 @@
                 var html = "",
                     i = 0;
                 
-                for (var i = 0; i < data.length; i++) {
+                for (i; i < data.length; i++) {
                     var item = data[i];
                     html += templates.playlistItem({
                                 title: item.title,
@@ -77,7 +77,6 @@
             }
         },
         DataSource = kendo.data.DataSource;
-
 
         var MediaPlayer = Widget.extend({
             init: function (element, options) {
@@ -151,11 +150,12 @@
             },
 
             _createTitlebar: function(options) {
-                titleBar = wrapper.find(DOT + TITLEBAR);
-                if (titleBar.length === 0) {
+                this._titleBar = wrapper.find(DOT + TITLEBAR);
+                if (this._titleBar.length === 0) {
                     this._playlistButtonClickHandler = proxy(this._playlistButtonClick, this);
                     wrapper.append(templates.titleBar(extend(options, rendering)));
                     wrapper.find(DOT + PLAYLIST_OPEN).on("click" + ns, this._playlistButtonClickHandler);
+                    this._titleBar = wrapper.find(DOT + TITLEBAR);
                 }
             },
 
@@ -169,8 +169,9 @@
                     this._sliderDragChangeHandler = proxy(this._sliderDragChange, this);
                     this._sliderDraggingHandler = proxy(this._sliderDragging, this);
                     wrapper.append(templates.slider);
-                    sliderElement = $(DOT + SLIDER);
-                    slider = new ui.Slider(sliderElement[0], {
+                    sliderElement = wrapper.find(DOT + SLIDER);
+
+                    this._slider = new ui.Slider(sliderElement[0], {
                         smallStep: 1000,
                         tickPlacement: "none",
                         showButtons: false,
@@ -184,14 +185,13 @@
             },
 
             _createVolumeSlider: function(options) {
-                volumeSliderlement = wrapper.find(DOT + VOLUME_SLIDER);
-                if (volumeSliderlement.length === 0) {
+                var volumeSliderElement = wrapper.find(DOT + VOLUME_SLIDER);
+                if (!this._volumeSlider) {
                     this._volumeDraggingHandler = proxy(this._volumeDragging, this);
-                    wrapper.append(templates.volumeSlider);
-                    volumeSliderlement = $(DOT + VOLUME_SLIDER);
-                    volumeSlider = new ui.Slider(volumeSliderlement[0], {
+                    volumeSliderElement = $(DOT + VOLUME_SLIDER);
+                    volumeSliderElement.width(50);
+                    this._volumeSlider = new ui.Slider(volumeSliderElement[0], {
                         smallStep: 1,
-                        orientation: "vertical",
                         value: options.mute ? 0 : 60,
                         min: 0,
                         max: 100,
@@ -217,7 +217,7 @@
             _resetTime: function(){
                 this._media.currentTime = 0;
                 this._mediaTimeUpdate();
-                $.grep(toolBar.options.items, function(e) { return !!e.template; }).template = templates.toolBarTime; 
+                $.grep(this._toolBar.options.items, function(e) { return !!e.template; }).template = templates.toolBarTime; 
             },
 
             _playlistItemClick: function (e) {
@@ -242,18 +242,20 @@
                     wrapper.append(templates.toolBar);
                     toolBarElement = $(DOT + TOOLBAR);
                     toolBarElement.width($(DOT + MEDIA).width());
-                    toolBar = new ui.ToolBar(toolBarElement, {
-                        resizable: true, 
+                    this._toolBar = new ui.ToolBar(toolBarElement, {
                         click: this._toolbarClickHandler,
                         items: [
                             { type: "button", id: "play", spriteCssClass: "k-icon k-font-icon k-i-play" },
-                            { type: "separator" },
+                            { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
+                            { 
+                                id: "volumeTemplate",
+                                template: templates.volumeSlider
+                            },
                             { 
                                 id: "timeTemplate",
                                 template: templates.toolBarTime
                             },
                             { type: "button", id: "fullscreen", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" },
-                            { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
                             { type: "button", id: "hdbutton", spriteCssClass: "k-icon k-font-icon k-i-HD" }
                         ]
                     });
@@ -310,19 +312,19 @@
                 var currentTime = this._msToTime(this._media.currentTime);
                 currentTimeElement.text(kendo.toString(currentTime, 'HH:mm:ss'));
                 if (!this._isDragging) {
-                    slider.value((this._media.currentTime + timeZoneSec) * 1000);
+                    this._slider.value((this._media.currentTime + timeZoneSec) * 1000);
                 }
             },
 
             _mediaDurationChange: function(e) {
                 var durationTime = this._msToTime(this._media.duration);
                 durationElement.text(kendo.toString(durationTime, 'HH:mm:ss'));
-                slider.setOptions({
+                this._slider.setOptions({
                     min: baseTime.getTime(),
                     max: durationTime.getTime()
                 });
-                slider._distance = Math.round(slider.options.max - slider.options.min);
-                slider._resize();
+                this._slider._distance = Math.round(this._slider.options.max - this._slider.options.min);
+                this._slider._resize();
 
                 if (!this._isFirstRun) {
                     this._resetTime();
@@ -330,9 +332,11 @@
                 }
             },
 
-             _createHtmlPlayer: function (options) {
+            _createHtmlPlayer: function (options) {
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
+                this._mouseMoveHandler = proxy(this._mouseMove, this);
+                this._mouseInOutHandler = proxy(this._mouseInOut, this);
                 wrapper.append(templates.htmlPlayer);
                 this._media = wrapper.find(DOT + MEDIA)[0];
                 $(this._media)
@@ -343,7 +347,6 @@
 					
                 if (options.autoPlay) {
                     $(this._media).attr("autoplay", "");  
-                    
                 }
 
                 if (options.mute) {
@@ -352,10 +355,38 @@
                 else{
                     this._media.volume = 0.6;
                 }
-
-				
+               
+                $(wrapper)
+                    .on("mousemove" + ns, this._mouseMoveHandler)                
+				    .on("mouseenter" + ns + " mouseleave" + ns, this._mouseInOutHandler);
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;
-                this._media.ondurationchange = this._mediaDurationChangeHandler; 
+                this._media.ondurationchange = this._mediaDurationChangeHandler;
+            },
+
+            _mouseInOut: function (e) {
+                this._uiDisplay(e.type === "mouseenter");
+            },
+
+            _mouseMove: function (e) {
+                var context = this;
+                if (this._mouseMoveTimer) {
+                    clearTimeout(this._mouseMoveTimer);
+                    this._mouseMoveTimer = 0;
+                }
+                this._uiDisplay(true);
+                
+                this._mouseMoveTimer = setTimeout(function () {
+                    context._uiDisplay(false);
+                } , 3000); 
+            },
+
+            _uiDisplay: function (show) {
+                var animationSpeed = 'fast';
+                var state = +show;
+                //titleBar.stop().animate({opacity:state}, animationSpeed);
+                this._titleBar.fadeTo(animationSpeed, state);
+                this._toolBar.element.fadeTo(animationSpeed, state);
+                this._slider.wrapper.fadeTo(animationSpeed, state);
             },
 
             setOptions: function (options) {
@@ -368,6 +399,13 @@
             destroy: function () {
                 Widget.fn.destroy.call(this);
 
+                this.element.off(ns);
+                this.element.find(DOT + PLAYLIST + "> ul > li").off(ns);
+                this.element.find(DOT + PLAYLIST_OPEN).off(ns);
+
+                this._mouseMoveHandler = null;
+                this._mouseInOutHandler = null;
+
                 this._unbindDataSource();
 
                 this._playlistItemClickHandler = null;
@@ -378,18 +416,27 @@
                 this._sliderDraggingHandler = null;
                 this._volumeDraggingHandler = null;
 
-                this.element.off(ns);
-                this.element.find(DOT + PLAYLIST + "> ul > li").off(ns);
-                this.element.find(DOT + PLAYLIST_OPEN).off(ns);
-
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
                 this._media.ondurationchange = this._mediaDurationChangeHandler = null;
+                this._mouseMoveTimer = null;
+                clearTimeout(this._mouseMoveTimer);
 
                 kendo.destroy(this.element);
             },
 
+            seek: function (ms) {
+                this._media.currentTime = ms / 1000;
+                return this;
+            },
+
             play: function () {
                 this._media.play();
+                return this;
+            },
+
+            stop: function() {
+                this._media.pause();
+                this._media.currentTime = 0;
                 return this;
             },
 
@@ -398,8 +445,24 @@
                 return this;
             },
 
+            toolbar: function() {
+                return this._toolBar;
+            },
+
+            titlebar: function() {
+                return this._titleBar;
+            },
+
             fullScreen: function (value) {
                 return this;
+            },
+
+            volume: function (value) { 
+                if (typeof value === 'undefined') {
+                    return this._media.volume;
+                }
+                this._media.volume = value / 100; 
+                this._volumeSlider.value(value);
             },
 
             _dataSource: function () {
@@ -443,7 +506,7 @@
             },
 
             _progress: function () {
-            },
+            }
 
         });
 
