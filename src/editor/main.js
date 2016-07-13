@@ -358,7 +358,7 @@
                     e.stopPropagation();
 
                     if (editor.tableResizing) {
-                        if (editor.tableResizing.element !== table) {
+                        if (editor.tableResizing.element !== table && !editor.tableResizing.resizingInProgress()) {
                             editor.tableResizing.destroy();
                             initTableResizing(editor, table);
                         }
@@ -375,10 +375,9 @@
                     if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
                         parentTable = $(editor.tableResizing.element).parents(TABLE)[0];
                         
-                        editor.tableResizing.destroy();
-                        editor.tableResizing = null;
-
                         if (parentTable) {
+                            editor.tableResizing.destroy();
+                            editor.tableResizing = null;
                             initTableResizing(editor, parentTable);
                         }
                     }

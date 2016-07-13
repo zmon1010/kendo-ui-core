@@ -4,6 +4,7 @@
     var editor;
     var tableElement;
     var tableResizing;
+    var anotherTable;
     var DOT = ".";
     var HANDLE_SELECTOR = ".k-resize-handle";
     var NS = "kendoEditor";
@@ -132,7 +133,7 @@
         equal(tableResizing.destroy.callCount, 0);
     });
 
-    test("leaving a table should destroy table resizing", function() {
+    test("leaving a table should not destroy table resizing", function() {
         var table = $(editor.body).find("#table")[0];
         editor.tableResizing = new TableResizing(table, {});
         editor.tableResizing.resizingInProgress = function() { return false; };
@@ -141,8 +142,8 @@
 
         triggerEvent(table, { type: MOUSE_LEAVE });
 
-        equal(mock.destroy.callCount, 1);
-        equal(editor.tableResizing, null);
+        equal(mock.destroy.callCount, 0);
+        notEqual(editor.tableResizing, null);
     });
 
     test("leaving a table should not destroy table resizing if resizing is in progress", function() {
@@ -223,6 +224,45 @@
 
         ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
         equal(editor.tableResizing.element, tableElement);
+    });
+
+    editor_module("editor table resizing", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.tableResizing = null;
+            tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
+            anotherTable = $(TABLE_HTML).attr("id", "table2").appendTo(editor.body)[0];
+        },
+
+        afterEach: function() {
+            if (editor) {
+                $(editor.body).find("*").remove();
+            }
+            removeMocksIn(editor.tableResizing);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("hovering another table while resizing is in progress should not destroy current table resizing", function() {
+        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+        editor.tableResizing.resizingInProgress = function() { return true; };
+
+        $(anotherTable).trigger(enterEvent);
+
+        equal(destroySpy.calls("destroy"), 0);
+    });
+
+    test("hovering another table while resizing is not in progress should destroy current table resizing", function() {
+        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+        editor.tableResizing.resizingInProgress = function() { return false; };
+
+        $(anotherTable).trigger(enterEvent);
+
+        equal(destroySpy.calls("destroy"), 1);
     });
 
     module("editor table resizing", {
