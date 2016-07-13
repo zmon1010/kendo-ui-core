@@ -3797,6 +3797,19 @@
                 }
             },
             {
+                "text": "Range Validation",
+                "url": "numerictextbox/validation",
+				"isNew": true,
+                "title": {
+                    "kendo-ui": "Range validation in Kendo UI NumericTextBox",
+                    "aspnet-mvc": "Range validation in ASP.NET MVC NumericTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "The value in Kendo UI NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how.",
+                    "aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how."
+                }
+            },
+            {
                 "text": "MVVM",
                 "url": "numerictextbox/mvvm",
                 "title": {
