@@ -34,9 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 
 $tile_layer = new \Kendo\Dataviz\UI\MapLayer();
-$tile_layer->type("tile")
-      ->urlTemplate("http://otile3.mqcdn.com/tiles/1.0.0/sat/#= zoom #/#= x #/#= y #.png")
-      ->attribution("Tiles &copy; <a href='http://www.mapquest.com/' target='_blank'>MapQuest</a>");
+$layer->type("tile")
+      ->urlTemplate("http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png")
+      ->subdomains(array('a', 'b', 'c'))
+      ->attribution("&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>");
 
 $transport = new \Kendo\Data\DataSourceTransport();
 $transport->read(array('url' => 'bubble-layer.php', 'type' => 'POST', 'dataType' => 'json'));
