@@ -159,6 +159,19 @@ test('toRange returns root node contents', function() {
     equal(restorePointRange.endOffset, 3);
 });
 
+test('restorePoint body', function() {
+    editor.value('<p contentEditable="false">foo</p>');
+
+    var range = editor.createRange();
+    var p = $(editor.body).find("p").get(0);
+    range.setStart(p.firstChild, 1);
+    range.setEnd(p.firstChild, 3);
+
+    var restorePoint = new RestorePoint(range);
+
+    equal(restorePoint.body, editor.body);
+});
+
 test('toRange returns different start and end containers', function() {
 
     editor.value('<p>foo</p><p>bar</p>');

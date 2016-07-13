@@ -95,20 +95,6 @@
             removeMocksIn(Immutables.fn);
         }
     });
-
-    test("typing when selection starts from immutable element", function() {
-        setUpKeyboard(typingKeyCode);
-        setUpRange(immutable.firstChild, 2, paragraph2.firstChild, 2);
-
-        ok(immutables._cancelTyping(ev, range));
-    });
-    
-    test("typing when selection ends in immutable element", function() {
-        setUpKeyboard(typingKeyCode);
-        setUpRange(paragraph1.firstChild, 2, immutable.firstChild, 2);
-
-        ok(immutables._cancelTyping(ev, range));
-    });
     
     test("delete by backspace when selection is after immutable element should delete immutable element", function() {
         setUpKeyboard(backspaceKeyCode);
@@ -176,5 +162,12 @@
 
         ok(immutables._cancelDeleting(ev, range));
         ok(Immutables.fn._removeImmutable.called);
+    });
+
+    test("deleting with selection", function() {
+        setUpKeyboard(backspaceKeyCode);
+        setUpRange(immutable.firstChild, 2, paragraph2.firstChild, 2);
+
+        notOk(immutables._cancelDeleting(ev, range));
     });
 }());

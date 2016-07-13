@@ -20,7 +20,7 @@
         extend = $.extend;
 
 function finishUpdate(editor, startRestorePoint) {
-    var endRestorePoint = editor.selectionRestorePoint = new RestorePoint(editor.getRange());
+    var endRestorePoint = editor.selectionRestorePoint = new RestorePoint(editor.getRange(), editor.body);
     var command = new GenericCommand(startRestorePoint, endRestorePoint);
     command.editor = editor;
 
@@ -37,7 +37,7 @@ function selected(node, range) {
 var Command = Class.extend({
     init: function(options) {
         this.options = options;
-        this.restorePoint = new RestorePoint(options.range);
+        this.restorePoint = new RestorePoint(options.range, options.body);
         this.marker = new Marker();
         this.formatter = options.formatter;
     },
@@ -87,7 +87,7 @@ var Command = Class.extend({
     expandImmutablesIn: function(range) {
         if (this.immutables()) {
             kendo.ui.editor.Immutables.expandImmutablesIn(range);
-            this.restorePoint = new RestorePoint(range);
+            this.restorePoint = new RestorePoint(range, this.editor.body);
         }
     }
 });
@@ -258,7 +258,7 @@ var TypingHandler = Class.extend({
         if (!evt.isDefaultPrevented() && isTypingKey && !keyboard.isTypingInProgress()) {
             var range = editor.getRange();
             var body = editor.body;
-            that.startRestorePoint = new RestorePoint(range);
+            that.startRestorePoint = new RestorePoint(range, body);
 
             if (inTable(range)) {
                 var removeTableContent = new RemoveTableContent(editor);
@@ -269,7 +269,12 @@ var TypingHandler = Class.extend({
             if (browser.webkit && !range.collapsed && selected(body, range)) {
                 body.innerHTML = "";
             }
-            
+
+            if (editor.immutables && editorNS.Immutables.immutablesContext(range)) {
+                var backspaceHandler = new editorNS.BackspaceHandler(editor);
+                backspaceHandler.deleteSelection(range);
+            }
+
             keyboard.startTyping(function () {
                 that.endRestorePoint = finishUpdate(editor, that.startRestorePoint);
             });
@@ -401,6 +406,7 @@ var BackspaceHandler = Class.extend({
         var ancestor = range.commonAncestorContainer;
         var table = dom.closest(ancestor, "table");
         var emptyParagraphContent = editorNS.emptyElementContent;
+        var editor = this.editor;
 
         if (/t(able|body)/i.test(dom.name(ancestor))) {
             range.selectNode(table);
@@ -409,6 +415,10 @@ var BackspaceHandler = Class.extend({
         var marker = new Marker();
         marker.add(range, false);
 
+        if (editor.immutables) {
+            this._handleImmutables(marker);
+        }
+        
         range.setStartAfter(marker.start);
         range.setEndBefore(marker.end);
 
@@ -431,7 +441,7 @@ var BackspaceHandler = Class.extend({
 
         this._join(start, end);
 
-        dom.insertAfter(this.editor.document.createTextNode("\ufeff"), marker.start);
+        dom.insertAfter(editor.document.createTextNode("\ufeff"), marker.start);
         marker.remove(range);
 
         start = range.startContainer;
@@ -442,9 +452,26 @@ var BackspaceHandler = Class.extend({
 
         range.collapse(true);
 
-        this.editor.selectRange(range);
+        editor.selectRange(range);
 
         return true;
+    },
+    _handleImmutables: function (marker) {
+        var immutableParent = editorNS.Immutables.immutableParent;
+        var startImmutable = immutableParent(marker.start);
+        var endImmutable = immutableParent(marker.start);
+        if (startImmutable) {
+            dom.insertBefore(marker.start, startImmutable);
+        }
+        if (endImmutable) {
+            dom.insertAfter(marker.end, endImmutable);
+        }
+        if (startImmutable) {
+            dom.remove(startImmutable);
+        }
+        if (endImmutable && endImmutable.parentNode) {
+            dom.remove(endImmutable);
+        }
     },
     _root: function(node) {
         while (node && node.parentNode && dom.name(node.parentNode) != "body") {
@@ -487,7 +514,7 @@ var BackspaceHandler = Class.extend({
         if (editor.immutables && editor.immutables.keydown(e, range)) {
             return;
         }
-        
+
         if ((backspace || del) && !range.collapsed) {
             method = "_handleSelection";
         } else if (backspace) {
@@ -499,14 +526,17 @@ var BackspaceHandler = Class.extend({
         if (!method) {
             return;
         }
-        
-        startRestorePoint = new RestorePoint(range);
+
+        startRestorePoint = new RestorePoint(range, editor.body);
         
         if (this[method](range)) {
             e.preventDefault();
 
             finishUpdate(editor, startRestorePoint);
         }
+    },
+    deleteSelection: function (range) {
+        this._handleSelection(range);
     },
     keyup: $.noop
 });
@@ -540,7 +570,7 @@ var SystemHandler = Class.extend({
                 keyboard.endTyping(true);
             }
 
-            that.startRestorePoint = new RestorePoint(editor.getRange());
+            that.startRestorePoint = new RestorePoint(editor.getRange(), editor.body);
             return true;
         }
 
@@ -755,7 +785,7 @@ var Clipboard = Class.extend({
         this._inProgress = true;
 
         range = editor.getRange();
-        restorePoint = new RestorePoint(range);
+        restorePoint = new RestorePoint(range, editor.body);
 
         dom.persistScrollTop(editor.document);
 

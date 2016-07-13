@@ -739,7 +739,7 @@ var RestorePoint = Class.extend({
     getEditable: function(range) {
         var root = range.commonAncestorContainer;
 
-        while (root && (root.nodeType == 3 || root.attributes && !root.attributes.contentEditable)) {
+        while (root && (root.nodeType == 3 || root.attributes && (!root.attributes.contentEditable || root.attributes.contentEditable.nodeValue.toLowerCase() == "false"))) {
             root = root.parentNode;
         }
 

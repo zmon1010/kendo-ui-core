@@ -103,6 +103,22 @@ test('typing handler keydown when table content is selected', function() {
     ok(body.innerHTML == "<table><tbody><tr><td>\ufeff</td></tr><tr><td>\ufeff</td></tr><tr><td>\ufeff</td></tr></tbody></table>");
 });
 
+test('typing handler keydown when selection is in immutable element', function() {
+    setStartTypingKeyboard();
+    var body = editor.body;
+    body.innerHTML = "<p contenteditable='false'>immutable</p><p>test</p>";
+    editor.immutables = {};
+    var range = editor.createRange(editor.document);
+    var immutable = $(body).find("p[contenteditable]").get(0);
+    range.setStart(immutable.firstChild, 2);
+    range.setEnd(immutable.firstChild, 2);
+
+    selectAndType(range);
+
+    delete editor.immutables;
+    ok(body.innerHTML == "\ufeff<p>test</p>");
+});
+
 test('typing handler keydown calls startTyping', function() {
     var callback;
 

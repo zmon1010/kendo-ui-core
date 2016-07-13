@@ -502,7 +502,7 @@
                     });
 
                     editor._spellCorrectTimeout = setTimeout(function() {
-                        beforeCorrection = new kendo.ui.editor.RestorePoint(editor.getRange());
+                        beforeCorrection = new kendo.ui.editor.RestorePoint(editor.getRange(), editor.body);
                         falseTrigger = false;
                     }, 10);
                 },
@@ -947,7 +947,7 @@
                 body = this.body;
 
             if (container == body || $.contains(body, container)) {
-                this.selectionRestorePoint = new kendo.ui.editor.RestorePoint(range);
+                this.selectionRestorePoint = new kendo.ui.editor.RestorePoint(range, body);
             }
         },
 
@@ -1072,7 +1072,7 @@
                 range = that.getRange();
 
                 if (tool.command) {
-                    command = tool.command(extend({ range: range }, params));
+                    command = tool.command(extend({ range: range, body: that.body }, params));
                 }
 
                 prevented = that.trigger("execute", { name: name, command: command });

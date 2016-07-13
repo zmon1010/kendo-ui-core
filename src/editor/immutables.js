@@ -73,6 +73,11 @@
         return false;
     };
 
+    var deletingKey = function (keyCode) {
+        var keys = kendo.keys;
+        return keyCode === keys.BACKSPACE || keyCode == keys.DELETE;
+    };
+
     var Immutables = Class.extend({
         init: function (editor) {
             this.editor = editor;
@@ -132,18 +137,22 @@
         },
 
         keydown: function(e, range) {
-            if (this._cancelTyping(e, range) || this._cancelDeleting(e, range)) {
+            var isDeleting = deletingKey(e.keyCode);
+            var shouldCancelEvent = (isDeleting && this._cancelDeleting(e, range)) || 
+                (!isDeleting && this._cancelTyping(e, range));
+            
+            if (shouldCancelEvent) {
                 e.preventDefault();
                 return true;
             }
-            return false;
         },
-        
+
         _cancelTyping: function(e, range) {
             var editor = this.editor;
             var keyboard = editor.keyboard;
-            
-            return keyboard.isTypingKey(e) && !keyboard.typingInProgress && !this.canDeleteSelection(range);
+
+            return range.collapsed && !keyboard.typingInProgress && 
+                keyboard.isTypingKey(e) && immutablesContext(range);
         },
         
         _cancelDeleting: function(e, range) {
@@ -155,9 +164,10 @@
                 return false;
             }
             var cancelDeleting = false;
-            if (!range.collapsed) {
-                cancelDeleting = !this.canDeleteSelection(range);
-            } else {
+            if (range.collapsed) {
+                if (immutablesContext(range)) {
+                    return true;
+                }
                 var immutable = this.nextImmutable(range, del);
                 if (immutable && backspace) {
                     var closestSelectionLi = dom.closest(range.commonAncestorContainer, "li");
@@ -184,10 +194,6 @@
             return cancelDeleting;
         },
         
-        canDeleteSelection: function(range) {
-            return !immutableParent(range.startContainer) && !immutableParent(range.endContainer); 
-        },
-        
         nextImmutable: function(range, forwards) {
             var commonContainer = range.commonAncestorContainer;
             if (dom.isBom(commonContainer) || ((forwards && RangeUtils.isEndOf(range, commonContainer)) || (!forwards && RangeUtils.isStartOf(range, commonContainer)))) {
@@ -202,9 +208,10 @@
         },
         
         _removeImmutable: function(immutable, range) {
-            var startRestorePoint = new Editor.RestorePoint(range);
+            var editor = this.editor;
+            var startRestorePoint = new Editor.RestorePoint(range, editor.body);
             dom.remove(immutable);
-            Editor._finishUpdate(this.editor, startRestorePoint);
+            Editor._finishUpdate(editor, startRestorePoint);
         },
         
         _nextNode: function(node, forwards) {
