@@ -11286,32 +11286,6 @@
                 "packages": [
                     "!mvc-core"
                 ]
-            },
-            {
-                "text": "Cuteness.io",
-                "url": "mobile-apps/cuteness",
-                "title": {
-                    "kendo-ui": "Cuteness.io"
-                },
-                "meta": {
-                    "kendo-ui": "Cuteness.io"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
-            },
-            {
-                "text": "Sushi",
-                "url": "mobile-apps/sushi",
-                "title": {
-                    "kendo-ui": "Sushi (mobile)"
-                },
-                "meta": {
-                    "kendo-ui": "Sushi (mobile)"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
             }
         ]
     }
