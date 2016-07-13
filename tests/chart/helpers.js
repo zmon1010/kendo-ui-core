@@ -831,21 +831,21 @@
         );
     });
 
-    tzTest("Sofia", "Adding hours skips DST end", function() {
-        deepEqual(addDuration(new Date("2012/10/28 02:00"), 2, "hours"),
+    tzTest("Sofia", "Adding hours includes DST end", function() {
+        deepEqual(addDuration(new Date("2012/10/28 02:00"), 3, "hours"),
              new Date("2012/10/28 04:00:00")
         );
     });
 
-    tzTest("Sofia", "Adding minutes does not include duplicate DST end", function() {
-        deepEqual(addDuration(new Date("2012/10/28 02:00"), 180, "minutes"),
-             new Date("2012/10/28 05:00:00")
+    tzTest("Sofia", "Adding minutes includes duplicate DST end", function() {
+        deepEqual(addDuration(new Date("2012/10/28 02:00"), 3 * 60, "minutes"),
+             new Date("2012/10/28 04:00:00")
         );
     });
 
-    tzTest("Sofia", "Adding seconds does not include duplicate DST end", function() {
+    tzTest("Sofia", "Adding seconds includes duplicate DST end", function() {
         deepEqual(addDuration(new Date("2012/10/28 02:00"), 180 * 60, "seconds"),
-             new Date("2012/10/28 05:00:00")
+             new Date("2012/10/28 04:00:00")
         );
     });
 
