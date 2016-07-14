@@ -41,7 +41,7 @@
                 attribution: "Population data from Nordpil and UN Population Division.",
                 style: {
                     fill: {
-                        color: "#fff",
+                        color: "#00f",
                         opacity: 0.4
                     },
                     stroke: {
@@ -69,7 +69,7 @@
             }
 
             activeShape = e.shape;
-            activeShape.options.set("stroke", { width: 1.5, color: "#fff" });
+            activeShape.options.set("stroke", { width: 1.5, color: "#00f" });
 
             $("#info").html(template(e.shape.dataItem));
         }

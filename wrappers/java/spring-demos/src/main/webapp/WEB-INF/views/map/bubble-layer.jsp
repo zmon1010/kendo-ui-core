@@ -42,7 +42,7 @@
                  </kendo:dataSource-transport>
              </kendo:dataSource>
              <kendo:map-layer-style>
-                <kendo:map-layer-style-fill color="#fff" opacity="0.4"/>
+                <kendo:map-layer-style-fill color="#00f" opacity="0.4"/>
                 <kendo:map-layer-style-stroke width="0" />
              </kendo:map-layer-style>
         </kendo:map-layer>
@@ -60,7 +60,7 @@
         }
 
         activeShape = e.shape;
-        activeShape.options.set("stroke", { width: 1.5, color: "#fff" });
+        activeShape.options.set("stroke", { width: 1.5, color: "#00f" });
 
         $("#info").html(template(e.shape.dataItem));
     }

@@ -28,7 +28,7 @@
             layers.Add()
                 .Type(MapLayerType.Bubble)
                 .Style(style => style
-                    .Fill(fill => fill.Color("#fff").Opacity(0.4))
+                    .Fill(fill => fill.Color("#00f").Opacity(0.4))
                     .Stroke(stroke => stroke.Width(0))
                 )
                 .DataSource(dataSource => dataSource
@@ -64,7 +64,7 @@
             }
 
             activeShape = e.shape;
-            activeShape.options.set("stroke", { width: 1.5, color: "#fff" });
+            activeShape.options.set("stroke", { width: 1.5, color: "#00f" });
 
             $("#info").html(template(e.shape.dataItem));
         }

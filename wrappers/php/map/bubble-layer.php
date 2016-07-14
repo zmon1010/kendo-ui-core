@@ -46,7 +46,7 @@ $dataSource = new \Kendo\Data\DataSource();
 $dataSource->transport($transport);
 
 $style = new \Kendo\Dataviz\UI\MapLayerStyle();
-$style->fill(array('color' => '#fff', 'opacity' => 0.4))
+$style->fill(array('color' => '#00f', 'opacity' => 0.4))
       ->stroke(array('width' => 0));
 
 $bubble_layer = new \Kendo\Dataviz\UI\MapLayer();
@@ -99,7 +99,7 @@ function onShapeMouseEnter(e) {
     }
 
     activeShape = e.shape;
-    activeShape.options.set("stroke", { width: 1.5, color: "#fff" });
+    activeShape.options.set("stroke", { width: 1.5, color: "#00f" });
 
     $("#info").html(template(e.shape.dataItem));
 }
