@@ -225,6 +225,7 @@
                 if (currentItem) {
                     this._updateToolbarTitle(currentItem);
                     this._resetTime();
+                    this._currentItem = currentItem.uid;
                     wrapper.find(DOT + MEDIA + " > source").remove();
                     wrapper.find(DOT + MEDIA).attr("src", currentItem.url);
                     this.play();
@@ -296,6 +297,21 @@
                 if (e.id === "volume") {
                     this.mute(!this._media.muted);
                 }
+
+                if (e.id === "hdbutton") {
+                    this._toggleHD();
+                }
+            },
+
+            _toggleHD: function(e) {
+                var currentItem = this.dataSource.getByUid(this._currentItem);
+                var media = $(this._media);
+                var isHD = currentItem.hdurl === media.attr("src");
+                var currentTime = this._media.currentTime;
+                if (currentItem.hdurl && currentItem.hdurl.length > 0) {
+                    media.attr("src",  isHD ? currentItem.url : currentItem.hdurl);
+                    this._media.currentTime = currentTime;
+                }
             },
 
             _sliderDragging: function(e) {
@@ -345,8 +361,8 @@
                 this._media = wrapper.find(DOT + MEDIA)[0];
                 $(this._media)
                     .css({
-                        width: wrapper.width(),
-                        height: wrapper.height() 
+                        width: "100%",
+                        height: "100%" 
                     });
 					
                 if (options.autoPlay) {
@@ -513,7 +529,7 @@
             _refresh: function () {
                 var data = this.dataSource.data();
                 if (data && data[0]) {
-
+                    this._currentItem = data[0].uid;
                     if (this.options.playlist) {
                         this._createPlaylist(data);
                     }
