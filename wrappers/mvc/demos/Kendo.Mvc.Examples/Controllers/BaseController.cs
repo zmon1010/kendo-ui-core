@@ -120,30 +120,31 @@ namespace Kendo.Mvc.Examples.Controllers
         //    return Regex.IsMatch(Request.UserAgent, "(blackberry|bb1\\w?;|playbook|meego;\\s*nokia|android|silk|iphone|ipad|ipod|windows phone|Mobile.*Firefox)", RegexOptions.IgnoreCase);
         //}
 
-        //protected void SetTheme() {
-        //    var theme = "material";
-        //    var themeParam = HttpContext.Request.QueryString["theme"];
-        //    var themeCookie = HttpContext.Request.Cookies["theme"];
+        protected void SetTheme()
+        {
+            var theme = "material";
+            var themeParam = HttpContext.Request.QueryString["theme"];
+            var themeCookie = HttpContext.Request.Cookies["theme"];
 
-        //    if (themeParam != null && Regex.IsMatch(themeParam, "[a-z0-9\\-]+", RegexOptions.IgnoreCase))
-        //    {
-        //        theme = themeParam;
+            if (themeParam != null && Regex.IsMatch(themeParam, "[a-z0-9\\-]+", RegexOptions.IgnoreCase))
+            {
+                theme = themeParam;
 
-        //        // update cookie
-        //        HttpCookie cookie = new HttpCookie("theme");
-        //        cookie.Value = theme;
-        //        this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
-        //    }
-        //    else if (themeCookie != null)
-        //    {
-        //        theme = themeCookie.Value;
-        //    }
+                // update cookie
+                HttpCookie cookie = new HttpCookie("theme");
+                cookie.Value = theme;
+                this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+            }
+            else if (themeCookie != null)
+            {
+                theme = themeCookie.Value;
+            }
 
-        //    var CommonFileCookie = HttpContext.Request.Cookies["commonFile"];
+            var CommonFileCookie = HttpContext.Request.Cookies["commonFile"];
 
-        //    ViewBag.Theme = theme;
-        //    ViewBag.CommonFile = CommonFileCookie == null ? "common-material" : CommonFileCookie.Value;
-        //}
+            ViewBag.Theme = theme;
+            ViewBag.CommonFile = CommonFileCookie == null ? "common-material" : CommonFileCookie.Value;
+        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

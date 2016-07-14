@@ -18,7 +18,7 @@ namespace Kendo.Mvc.Examples.Controllers
             //LoadNavigation();
             LoadCategories();
 
-            //SetTheme();
+            SetTheme();
 
             return View();
         }
