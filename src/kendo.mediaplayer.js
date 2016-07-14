@@ -25,6 +25,10 @@
         SLIDER = "k-mediaplayer-seekbar",
         VOLUME_SLIDER = "k-mediaplayer-volume",
         MEDIA = "k-mediaplayer-media",
+        PLAYLIST_OPEN = "k-i-playlist-open",
+        PLAYLIST = "k-mediaplayer-playlist",
+        YTPLAYER = "k-ytplayer",
+        YTPLAYER_ID = "ytplayer",
         DOT = ".",
         ui = kendo.ui,
         ns = ".kendoMediaPlayer",
@@ -38,6 +42,7 @@
             htmlPlayer: "<video class='" + MEDIA + "'> </video>",
             titleBar: "<div class='" + TITLEBAR + "'><span class='" + TITLE + "'>Video Title</span><a role='button' class='k-icon k-font-icon k-i-playlist-open' style='float: right;''>Open Playlist</a></div>",
             toolBar: "<div class='" + TOOLBAR + "'> </div>",
+            youtubePlayer: "<div class='" + YTPLAYER + "' id='ytplayer'> </div>",
             toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
             slider: "<input class='" + SLIDER + "' value='0' />",
             volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
@@ -92,7 +97,9 @@
             
                 options = this.options;
                 
-                this._createHtmlPlayer(options);
+                if (!options.youtubeApiKey) {
+                    this._createHtmlPlayer(options);
+                }
 
                 this._createTitlebar(options);
 
@@ -368,6 +375,78 @@
                 }
             },
 
+            _createYoutubePlayer: function (options) {
+                wrapper.append(templates.youtubePlayer);
+                this._ytPlayer = wrapper.find(DOT + YTPLAYER)[0];
+                $(this._ytPlayer)
+                    .css({
+                        width: wrapper.width(),
+                        height: wrapper.height() 
+                    });
+
+                if (!window.YT || !window.YT.Player)
+                {
+                    $.getScript("https://www.youtube.com/iframe_api");
+                    this._youtubeApiReadyHandler = proxy(this._youtubeApiReady, this);
+                    window.onYouTubeIframeAPIReady = this._youtubeApiReadyHandler;
+                }
+                else
+                {
+                    this._configurePlayer(options);
+                }
+            },
+
+            _youtubeApiReady: function () {
+                this._configurePlayer(this.options);
+            },
+
+            _configurePlayer: function (options) {
+                var vars = {
+                    'autoplay': options.autoPlay ? 1 : 0,
+                    'wmode': 'transparent',
+                    'controls': 0,
+                    'rel': 0,
+                    'showinfo': 0
+                };
+
+                this._onPlayerReadyHandler = proxy(this._onPlayerReady, this);
+                this._onPlayerStateChangeHandler = proxy(this._onPlayerStateChange, this);
+
+                /*jshint unused:false */
+                var player = new window.YT.Player(YTPLAYER_ID, {
+                    height: wrapper.height(),
+                    width: wrapper.width(),
+                    videoId: this.getMediaId(options),
+                    playerVars: vars,
+                    events: {
+                        'onReady': this._onPlayerReadyHandler,
+                        'onStateChange': this._onPlayerStateChangeHandler
+                    }
+                });
+            },
+
+            _onPlayerReady: function (event){
+                this._media = event.target;
+            },
+
+            _onPlayerStateChange: function (event){
+                //IF NECESSARY
+                //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state 
+            },
+
+            getMediaId: function (options){
+                var result = options.ytFile.url;
+                var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+                var match = result.match(regExp);
+
+                if (match && match[7].length == 11)
+                {
+                    result = match[7];
+                }
+
+                return result;
+            },
+
             _createHtmlPlayer: function (options) {
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
@@ -446,6 +525,9 @@
                 this._sliderDragChangeHandler = null;
                 this._sliderDraggingHandler = null;
                 this._volumeDraggingHandler = null;
+                this._youtubeApiReadyHandler = null;
+                this._onPlayerReadyHandler = null;
+                this._onPlayerStateChangeHandler = null;
 
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
                 this._media.ondurationchange = this._mediaDurationChangeHandler = null;
@@ -597,6 +679,10 @@
 
                     this._updateToolbarTitle(data[0]);
                     
+                    if (this.options.youtubeApiKey) {
+                        this._createYoutubePlayer(extend(this.options, { ytFile: data[0] }));                    
+                    }
+
                     var sourceElement = document.createElement("source");
                     sourceElement.setAttribute("src", data[0].url);
                     wrapper.find(DOT + MEDIA).append(sourceElement);
