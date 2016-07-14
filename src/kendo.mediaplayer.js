@@ -13,6 +13,8 @@
     (function ($, undefined) {
         var kendo = window.kendo,
         CHANGE = "change",
+        FULLSCREEN_ENTER = "k-i-fullscreen-enter",
+        FULLSCREEN_EXIT = "k-i-fullscreen-exit",
         PROGRESS = "progress",
         ERROR = "error",
         STATE_PLAY = "k-i-play",
@@ -294,6 +296,20 @@
                     }
                 }
 
+                if(e.id === "fullscreen"){
+                    if(this._isInFullScreen){
+                        target
+                            .removeClass(FULLSCREEN_EXIT)
+                            .addClass(FULLSCREEN_ENTER);
+                       this.fullScreen(false);
+                    } else {
+                        target
+                            .removeClass(FULLSCREEN_ENTER)
+                            .addClass(FULLSCREEN_EXIT);
+                        this.fullScreen(true);
+                    }
+                }
+
                 if (e.id === "volume") {
                     this.mute(!this._media.muted);
                 }
@@ -468,8 +484,53 @@
                 return this._titleBar;
             },
 
-            fullScreen: function (value) {
-                return this;
+            fullScreen: function (enterFullScreen) {
+                var element = this.element.get(0);
+                if(enterFullScreen){
+                    this._width = this.element.width();
+                    this._height = this.element.height();
+                    // Handles the case when the action is triggered by code and not user iteraction
+                    this.element.width("100%").height("100%").css({
+                         position: "fixed",
+                         top: 0,
+                         left: 0
+                    });
+
+                    if (element.requestFullscreen) {
+                        element.requestFullscreen();
+                    } else if (element.webkitRequestFullscreen) {
+                        element.webkitRequestFullscreen();
+                    } else if (element.mozRequestFullScreen) {
+                        element.mozRequestFullScreen();
+                    } else if (element.msRequestFullscreen) {
+                        element.msRequestFullscreen();
+                    } 
+                    this._isInFullScreen = true;
+                }else{
+                    
+                    if (document.cancelFullscreen) {
+                        document.cancelFullscreen();
+                    } else if (document.webkitCancelFullScreen) {
+                        document.webkitCancelFullScreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.msCancelFullscreen) {
+                        document.msCancelFullscreen();
+                    } else if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                    // Handles the case when the action is triggered by code and not user iteraction
+                    this.element.css({
+                        position: "relative",
+                        top: null,
+                        left: null
+                    });
+                    this.element.width(this._width);
+                    this.element.height(this._height);
+                    this._isInFullScreen = false;
+                }
             },
 
             volume: function (value) { 
