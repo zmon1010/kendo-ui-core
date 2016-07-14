@@ -13,7 +13,14 @@
     var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
     var MOUSE_UP = "mouseup";
+    var EAST = "east";
+    var NORTH = "north";
+    var NORTHEAST = "northeast";
+    var NORTHWEST = "northwest";
+    var SOUTH = "south";
     var SOUTHEAST = "southeast";
+    var SOUTHWEST = "southwest";
+    var WEST = "west";
     var TABLE_HTML =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
@@ -394,7 +401,21 @@
             rtl: false,
             rootElement: null,
             handles: [{
+                direction: EAST
+            }, {
+                direction: NORTH
+            }, {
+                direction: NORTHEAST
+            }, {
+                direction: NORTHWEST
+            }, {
+                direction: SOUTH
+            }, {
                 direction: SOUTHEAST
+            }, {
+                direction: SOUTHWEST
+            }, {
+                direction: WEST
             }]
         };
         tableResizing = new TableResizing(tableElement);
@@ -542,7 +563,7 @@
     test("should be initialized with custom options", function() {
         var customOptions = {
             appendTo: tableResizing.options.rootElement,
-            direction: "southeast",
+            direction: "east",
             resizableElement: tableResizing.element
         };
 

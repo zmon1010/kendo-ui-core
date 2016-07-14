@@ -15,7 +15,14 @@
 
     var NS = ".kendoEditorTableResizing";
     var CLICK = "click";
+    var EAST = "east";
+    var NORTH = "north";
+    var NORTHEAST = "northeast";
+    var NORTHWEST = "northwest";
+    var SOUTH = "south";
     var SOUTHEAST = "southeast";
+    var SOUTHWEST = "southwest";
+    var WEST = "west";
     var TABLE = "table";
 
     var TableResizing = Class.extend({
@@ -54,7 +61,21 @@
             rtl: false,
             rootElement: null,
             handles: [{
+                direction: EAST
+            }, {
+                direction: NORTH
+            }, {
+                direction: NORTHEAST
+            }, {
+                direction: NORTHWEST
+            }, {
+                direction: SOUTH
+            }, {
                 direction: SOUTHEAST
+            }, {
+                direction: SOUTHWEST
+            }, {
+                direction: WEST
             }]
         },
 

@@ -17,12 +17,26 @@
     var MOUSE_UP = "mouseup";
     var NS = ".kendoEditorTableResizeHandle";
     var HALF_INSIDE = "halfInside";
+    var EAST = "east";
+    var NORTH = "north";
+    var NORTHEAST = "northeast";
+    var NORTHWEST = "northwest";
+    var SOUTH = "south";
     var SOUTHEAST = "southeast";
+    var SOUTHWEST = "southwest";
+    var WEST = "west";
     var TABLE = "table";
 
     function getDirectionClass(direction) {
         var directionClasses = {
-            "southeast": "k-resize-se"
+            "east": "k-resize-e",
+            "north": "k-resize-n",
+            "northeast": "k-resize-ne",
+            "northwest": "k-resize-nw",
+            "south": "k-resize-s",
+            "southeast": "k-resize-se",
+            "southwest": "k-resize-sw",
+            "west": "k-resize-w"
         };
 
         return directionClasses[direction];
@@ -183,6 +197,86 @@
         return PositioningStrategyFactory.current.create(options);
     };
 
+    var EastPositioningStrategy = HandlePositioningStrategy.extend({
+        calculatePosition: function() {
+            var that = this;
+            var resizableElement = $(that.options.resizableElement);
+            var offset = resizableElement.offset();
+            var position = {
+                left: offset.left + resizableElement.outerWidth(),
+                top: offset.top + (resizableElement.outerHeight() / 2)
+            };
+
+            return position;
+        }
+    });
+
+    PositioningStrategyFactory.current.register(EAST, EastPositioningStrategy);
+
+    var NorthPositioningStrategy = HandlePositioningStrategy.extend({
+        calculatePosition: function() {
+            var that = this;
+            var resizableElement = $(that.options.resizableElement);
+            var offset = resizableElement.offset();
+            var position = {
+                left: offset.left + (resizableElement.outerWidth() / 2),
+                top: offset.top
+            };
+
+            return position;
+        }
+    });
+
+    PositioningStrategyFactory.current.register(NORTH, NorthPositioningStrategy);
+
+    var NortheastPositioningStrategy = HandlePositioningStrategy.extend({
+        calculatePosition: function() {
+            var that = this;
+            var resizableElement = $(that.options.resizableElement);
+            var offset = resizableElement.offset();
+            var position = {
+                left: offset.left + resizableElement.outerWidth(),
+                top: offset.top
+            };
+
+            return position;
+        }
+    });
+
+    PositioningStrategyFactory.current.register(NORTHEAST, NortheastPositioningStrategy);
+
+    var NorthwestPositioningStrategy = HandlePositioningStrategy.extend({
+        calculatePosition: function() {
+            var that = this;
+            var resizableElement = $(that.options.resizableElement);
+            var offset = resizableElement.offset();
+            var position = {
+                left: offset.left,
+                top: offset.top
+            };
+
+            return position;
+        }
+    });
+
+    PositioningStrategyFactory.current.register(NORTHWEST, NorthwestPositioningStrategy);
+
+    var SouthPositioningStrategy = HandlePositioningStrategy.extend({
+        calculatePosition: function() {
+            var that = this;
+            var resizableElement = $(that.options.resizableElement);
+            var offset = resizableElement.offset();
+            var position = {
+                left: offset.left + (resizableElement.outerWidth() / 2),
+                top: offset.top + resizableElement.outerHeight()
+            };
+
+            return position;
+        }
+    });
+
+    PositioningStrategyFactory.current.register(SOUTH, SouthPositioningStrategy);
+
     var SoutheastPositioningStrategy = HandlePositioningStrategy.extend({
         calculatePosition: function() {
             var that = this;
@@ -198,6 +292,38 @@
     });
 
     PositioningStrategyFactory.current.register(SOUTHEAST, SoutheastPositioningStrategy);
+
+    var SouthwestPositioningStrategy = HandlePositioningStrategy.extend({
+        calculatePosition: function() {
+            var that = this;
+            var resizableElement = $(that.options.resizableElement);
+            var offset = resizableElement.offset();
+            var position = {
+                left: offset.left,
+                top: offset.top + resizableElement.outerHeight()
+            };
+
+            return position;
+        }
+    });
+
+    PositioningStrategyFactory.current.register(SOUTHWEST, SouthwestPositioningStrategy);
+
+    var WestPositioningStrategy = HandlePositioningStrategy.extend({
+        calculatePosition: function() {
+            var that = this;
+            var resizableElement = $(that.options.resizableElement);
+            var offset = resizableElement.offset();
+            var position = {
+                left: offset.left,
+                top: offset.top + (resizableElement.outerHeight() / 2)
+            };
+
+            return position;
+        }
+    });
+
+    PositioningStrategyFactory.current.register(WEST, WestPositioningStrategy);
 
     extend(Editor, {
         TableResizeHandle: TableResizeHandle
