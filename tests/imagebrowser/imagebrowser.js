@@ -660,21 +660,21 @@
         deepEqual(browser._createFile("foo"), model);
     });
 
-    test("createFile sets _forceReload model field", function() {
+    test("createFile sets _override model field", function() {
         var browser = setup({}, [{ name: "foo", type: "f" }]);
         browser._showMessage = function() { return true; };
 
         var model = browser._createFile("foo");
 
-        equal(model._forceReload, true);
+        equal(model._override, true);
     });
 
-    test("loadImage adds unique parameter to thumbnailUrl if _forceReload is true", function() {
+    test("loadImage adds unique parameter to thumbnailUrl if _override is true", function() {
         var browser = setup({ transport: { thumbnailUrl: "foo" } }, [{ name: "foo", type: "f" }]);
         browser._showMessage = function() { return true; };
 
         var model = browser.dataSource.at(0);
-        model._forceReload = true;
+        model._override = true;
 
         browser._loadImage(browser._tiles.eq(0));
         var url = browser._tiles.find("img").attr("src");
@@ -682,15 +682,15 @@
         ok(/&_=\d+/.test(url));
     });
 
-    test("loadImage deletes item _forceReload field", function() {
+    test("loadImage deletes item _override field", function() {
         var browser = setup({ transport: { thumbnailUrl: "foo" } }, [{ name: "foo", type: "f" }]);
         browser._showMessage = function() { return true; };
 
         var model = browser.dataSource.at(0);
-        model._forceReload = true;
+        model._override = true;
 
         browser._loadImage(browser._tiles.eq(0));
-        ok(model._forceReload === undefined);
+        ok(model._override === undefined);
     });
 
     test("loadImage encodes path", function() {
