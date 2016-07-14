@@ -461,6 +461,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _insertFileToList: function(model) {
+            var index;
             if(model._override) {
                 return model;
             }
@@ -650,7 +651,7 @@ var __meta__ = { // jshint ignore:line
 
         _listViewChange: function() {
             var selected = this._selectedItem();
-            
+
             if (selected) {
                 this.toolbar.find(".k-delete").parent().removeClass("k-state-disabled");
                 this.trigger(CHANGE, { selected: selected });
