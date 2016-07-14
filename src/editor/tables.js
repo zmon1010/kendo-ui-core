@@ -12,14 +12,15 @@ var kendo = window.kendo,
     EditorUtils = Editor.EditorUtils,
     RangeUtils = Editor.RangeUtils,
     Command = Editor.Command,
-    NS = ".kendoEditor",
+    NS = "kendoEditor",
     ACTIVESTATE = "k-state-active",
     SELECTEDSTATE = "k-state-selected",
     Tool = Editor.Tool,
     ToolTemplate = Editor.ToolTemplate,
     InsertHtmlCommand = Editor.InsertHtmlCommand,
     BlockFormatFinder = Editor.BlockFormatFinder,
-    registerTool = Editor.EditorUtils.registerTool;
+    registerTool = Editor.EditorUtils.registerTool,
+    getTouches = kendo.getTouches;
 var template = kendo.template;
 
 var columnTemplate = "<td style='width:#=width#%;'>#=content#</td>";
@@ -168,15 +169,16 @@ var InsertTableTool = PopupTool.extend({
             };
         }
 
-        element
-            .on("mousemove" + NS, function(e) {
+        element.autoApplyNS(NS)
+            .on("mousemove", function(e) {
                 that._setTableSize(tableFromLocation(e));
             })
-            .on("mouseleave" + NS, function() {
+            .on("mouseleave", function() {
                 that._setTableSize();
             })
-            .on("mouseup" + NS, function(e) {
-                that._exec(tableFromLocation(e));
+            .on("up", function(e) {
+                var touch = getTouches(e)[0];
+                that._exec(tableFromLocation(touch.location));
             });
     },
 
@@ -275,7 +277,7 @@ var InsertTableTool = PopupTool.extend({
 
     _close: function() {
         PopupTool.fn._close.call(this);
-        this.popup().element.off(NS);
+        this.popup().element.off("." + NS);
     },
 
     update: function (ui, nodes) {
