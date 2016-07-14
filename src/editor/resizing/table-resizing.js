@@ -7,6 +7,7 @@
     var extend = $.extend;
     var proxy = $.proxy;
 
+    var browser = kendo.support.browser;
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
     var ColumnResizing = Editor.ColumnResizing;
@@ -71,8 +72,11 @@
         showResizeHandles: function() {
             var that = this;
 
-            that._initResizeHandles();
-            that._showResizeHandles();
+            //table resizing is natively supported in IE and Firefox
+            if (!browser.msie && !browser.mozilla) {
+                that._initResizeHandles();
+                that._showResizeHandles();
+            }
         },
 
         _initResizeHandles: function() {
