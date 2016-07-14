@@ -95,14 +95,14 @@ var __meta__ = { // jshint ignore:line
 
             if (!container.length) {
                 // dragging outside of allowed elements
-                status = "k-denied";
+                status = "k-i-denied";
                 this._removeTouchHover();
             } else if (source[0] == target[0] || options.contains(source[0], target[0])) {
                 // dragging item within itself
-                status = "k-denied";
+                status = "k-i-denied";
             } else {
                 // moving or reordering item
-                status = "k-insert-middle";
+                status = "k-i-insert-middle";
 
                 itemData = options.itemFromTarget(target);
                 hoveredItem = itemData.item;
@@ -136,7 +136,7 @@ var __meta__ = { // jshint ignore:line
                     this._lastHover = itemContent.toggleClass(KSTATEHOVER, addChild);
 
                     if (addChild) {
-                        status = "k-add";
+                        status = "k-i-add";
                     } else {
                         position = hoveredItem.position();
                         position.top += insertOnTop ? 0 : itemHeight;
@@ -146,11 +146,11 @@ var __meta__ = { // jshint ignore:line
                             (options.dropHintContainer(hoveredItem));
 
                         if (insertOnTop && itemData.first) {
-                            status = "k-insert-top";
+                            status = "k-i-insert-top";
                         }
 
                         if (insertOnBottom && itemData.last) {
-                            status = "k-insert-bottom";
+                            status = "k-i-insert-bottom";
                         }
                     }
                 } else if (target[0] != this.dropHint[0]) {
@@ -160,9 +160,9 @@ var __meta__ = { // jshint ignore:line
 
                     if (!$.contains(this.element[0], container[0])) {
                         // moving node to different element
-                        status = "k-add";
+                        status = "k-i-add";
                     } else {
-                        status = "k-denied";
+                        status = "k-i-denied";
                     }
                 }
             }
@@ -179,7 +179,7 @@ var __meta__ = { // jshint ignore:line
                 }
             });
 
-            if (status.indexOf("k-insert") !== 0) {
+            if (status.indexOf("k-i-insert") !== 0) {
                 this.dropHint.css(VISIBILITY, "hidden");
             }
 
@@ -214,7 +214,7 @@ var __meta__ = { // jshint ignore:line
                 originalEvent: e.originalEvent,
                 source: source[0],
                 destination: destination[0],
-                valid: this._hintStatus() != "k-denied",
+                valid: this._hintStatus() != "k-i-denied",
                 setValid: function(newValid) {
                     this.valid = newValid;
                 },

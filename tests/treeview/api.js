@@ -23,7 +23,6 @@
 
         treeviewObject.enable(node, false);
 
-        equal(node.find(".k-plus-disabled").length, 1);
         ok(node.find(".k-in").hasClass("k-state-disabled"));
     });
 
@@ -38,7 +37,6 @@
 
         treeviewObject.enable(node);
 
-        equal(node.find(".k-plus").length, 1);
         ok(!node.find(".k-in").hasClass("k-state-disabled"));
     });
 
@@ -207,7 +205,7 @@
         equal(treeviewObject.text(appendedNode), "bar");
         ok(appendedNode.find(">div").hasClass("k-bot"));
         ok(appendedNode.hasClass("k-last"));
-        equal(root.find(">div>.k-minus.k-icon").length, 1);
+        equal(root.find(">div>.k-icon.k-i-collapse").length, 1);
     });
 
     test("append(nodeData, parentNode) appends new node to parent with existing group", function() {
@@ -1068,7 +1066,7 @@
 
         treeviewObject.expandPath([ 1 ], start);
 
-        ok(treeview.find(".k-loading").length);
+        ok(treeview.find(".k-i-loading").length);
     });
 
     asyncTest("expandPath calls callback if expanded node has no children", function() {

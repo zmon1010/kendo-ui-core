@@ -236,7 +236,7 @@
                 { name: "file2", type: "f", size: 142 }
             ]);
 
-        equal(browser.listView.element.find(".k-file").length, 2);
+        equal(browser.listView.element.find(".k-i-file").length, 2);
     });
 
 
@@ -358,15 +358,15 @@
         equal(search.calls("search"), 1);
     });
 
-    test("clicking on directory does not trigger the change event", 1, function() {
+    test("clicking on directory triggers the change event", 2, function() {
         var browser = setup({
             change: function() {
-                ok(false);
+                ok(true);
             }
         });
 
         clickAt(browser.list.find("li[data-type=d]"));
-
+        
         ok(!browser.value());
     });
 
@@ -401,8 +401,8 @@
 
         clickAt(browser.list.find("li[data-type=d]"));
 
-        ok(browser.toolbar.find("button:has(span.k-delete)").length);
-        ok(!browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"));
+        ok(browser.toolbar.find("button:has(span.k-i-delete)").length);
+        ok(!browser.toolbar.find("button:has(span.k-i-delete)").hasClass("k-state-disabled"));
     });
 
 
@@ -411,7 +411,7 @@
 
         clickAt(browser.list.find("li[data-type=f]"));
 
-        ok(!browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"));
+        ok(!browser.toolbar.find("button:has(span.k-i-delete)").hasClass("k-state-disabled"));
     });
 
     test("rebinding disables the delete button", function() {
@@ -420,7 +420,7 @@
         clickAt(browser.list.find("li[data-type=f]"));
         browser.dataSource.read();
 
-        ok(browser.toolbar.find("button:has(span.k-delete)").hasClass("k-state-disabled"))
+        ok(browser.toolbar.find("button:has(span.k-i-delete)").hasClass("k-state-disabled"))
     });
 
     test("value contains the path diffrent then the base path", function() {
@@ -468,7 +468,7 @@
 
         clickAt(browser.list.find("li[data-type=f]"));
 
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
 
         ok(remove.calls("remove"));
     });
@@ -488,7 +488,7 @@
 
         clickAt(browser.list.find("li[data-type=f]"));
 
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
     });
 
     test("delete button does not trigger listView remove method if no item is selected", function() {
@@ -496,7 +496,7 @@
             remove = stub(browser.list.data("kendoListView"), "remove"),
             showMessage = stub(browser, "_showMessage");// suppress the alert for poping
 
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
 
         ok(!remove.calls("remove"));
     });
@@ -507,7 +507,7 @@
             showMessage = stub(browser, { _showMessage: function() { return true; } });
 
         clickAt(browser.list.find("li[data-type=f]"));
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
 
         ok(remove.calls("remove"));
         ok(showMessage.calls("_showMessage"));
@@ -521,7 +521,7 @@
             showMessage = stub(browser, { _showMessage: function() { return false; } });
 
         clickAt(browser.list.find("li[data-type=f]"));
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
 
         ok(!remove.calls("remove"));
     });
@@ -660,21 +660,21 @@
         deepEqual(browser._createFile("foo"), model);
     });
 
-    test("createFile sets _forceReload model field", function() {
+    test("createFile sets _override model field", function() {
         var browser = setup({}, [{ name: "foo", type: "f" }]);
         browser._showMessage = function() { return true; };
 
         var model = browser._createFile("foo");
 
-        equal(model._forceReload, true);
+        equal(model._override, true);
     });
 
-    test("loadImage adds unique parameter to thumbnailUrl if _forceReload is true", function() {
+    test("loadImage adds unique parameter to thumbnailUrl if _override is true", function() {
         var browser = setup({ transport: { thumbnailUrl: "foo" } }, [{ name: "foo", type: "f" }]);
         browser._showMessage = function() { return true; };
 
         var model = browser.dataSource.at(0);
-        model._forceReload = true;
+        model._override = true;
 
         browser._loadImage(browser._tiles.eq(0));
         var url = browser._tiles.find("img").attr("src");
@@ -682,15 +682,15 @@
         ok(/&_=\d+/.test(url));
     });
 
-    test("loadImage deletes item _forceReload field", function() {
+    test("loadImage deletes item _override field", function() {
         var browser = setup({ transport: { thumbnailUrl: "foo" } }, [{ name: "foo", type: "f" }]);
         browser._showMessage = function() { return true; };
 
         var model = browser.dataSource.at(0);
-        model._forceReload = true;
+        model._override = true;
 
         browser._loadImage(browser._tiles.eq(0));
-        ok(model._forceReload === undefined);
+        ok(model._override === undefined);
     });
 
     test("loadImage encodes path", function() {
@@ -751,7 +751,7 @@
         browser._showMessage = function() { return true};// suppress the alert for poping
 
         clickAt(browser.list.find("li[data-type=d]"));
-        browser.toolbar.find(".k-delete").click();
+        browser.toolbar.find(".k-i-delete").click();
     });
 
     test("double clicking a image triggers apply event", 1, function() {
@@ -780,7 +780,7 @@
             }
         });
 
-        ok(!browser.element.find(".k-delete").length);
+        ok(!browser.element.find(".k-i-delete").length);
     });
 
     test("create new folder button is not displayed if create url is not set", function() {

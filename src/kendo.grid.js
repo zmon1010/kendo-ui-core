@@ -447,43 +447,43 @@ var __meta__ = { // jshint ignore:line
     var defaultCommands = {
         create: {
             text: "Add new record",
-            imageClass: "k-add",
+            imageClass: "k-i-add",
             className: "k-grid-add",
             iconClass: "k-icon"
         },
         cancel: {
             text: "Cancel changes",
-            imageClass: "k-cancel",
+            imageClass: "k-i-cancel",
             className: "k-grid-cancel-changes",
             iconClass: "k-icon"
         },
         save: {
             text: "Save changes",
-            imageClass: "k-update",
+            imageClass: "k-i-update",
             className: "k-grid-save-changes",
             iconClass: "k-icon"
         },
         destroy: {
             text: "Delete",
-            imageClass: "k-delete",
+            imageClass: "k-i-delete",
             className: "k-grid-delete",
             iconClass: "k-icon"
         },
         edit: {
             text: "Edit",
-            imageClass: "k-edit",
+            imageClass: "k-i-edit",
             className: "k-grid-edit",
             iconClass: "k-icon"
         },
         update: {
             text: "Update",
-            imageClass: "k-update",
+            imageClass: "k-i-update",
             className: "k-primary k-grid-update",
             iconClass: "k-icon"
         },
         canceledit: {
             text: "Cancel",
-            imageClass: "k-cancel",
+            imageClass: "k-i-cancel",
             className: "k-grid-cancel",
             iconClass: "k-icon"
         },
@@ -2211,7 +2211,7 @@ var __meta__ = { // jshint ignore:line
                                 paddingBottom: target.css("paddingBottom")
                             })
                             .html(title || target.attr(kendo.attr("field")) || target.text())
-                            .prepend('<span class="k-icon k-drag-status k-denied" />');
+                            .prepend('<span class="k-icon k-drag-status k-i-denied" />');
                     }
                 }).data("kendoDraggable");
             }
@@ -3397,8 +3397,8 @@ var __meta__ = { // jshint ignore:line
                 nextRow = newRow.next();
                 if (nextRow.hasClass("k-detail-row") && nextRow.is(":visible")) {
                     newRow.find(".k-hierarchy-cell .k-icon")
-                        .removeClass("k-plus")
-                        .addClass("k-minus");
+                        .removeClass("k-i-expand")
+                        .addClass("k-i-collapse");
                 }
             }
         },
@@ -5929,7 +5929,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (hasDetails) {
-                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-plus" href="\\#" tabindex="-1"></a></td>';
+                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-i-expand" href="\\#" tabindex="-1"></a></td>';
                 }
 
                 for (idx = 0; idx < length; idx++) {
@@ -6243,17 +6243,17 @@ var __meta__ = { // jshint ignore:line
                 throw new Error("Having both detail template and locked columns is not supported");
             }
 
-            that.table.on(CLICK + NS, ".k-hierarchy-cell .k-plus, .k-hierarchy-cell .k-minus", function(e) {
+            that.table.on(CLICK + NS, ".k-hierarchy-cell .k-i-expand, .k-hierarchy-cell .k-i-collapse", function(e) {
                 var button = $(this),
-                    expanding = button.hasClass("k-plus"),
+                    expanding = button.hasClass("k-i-expand"),
                     masterRow = button.closest("tr.k-master-row"),
                     detailRow,
                     detailTemplate = that.detailTemplate,
                     data,
                     hasDetails = that._hasDetails();
 
-                button.toggleClass("k-plus", !expanding)
-                    .toggleClass("k-minus", expanding);
+                button.toggleClass("k-i-expand", !expanding)
+                    .toggleClass("k-i-collapse", expanding);
 
                 detailRow = masterRow.next();
 
@@ -6309,11 +6309,11 @@ var __meta__ = { // jshint ignore:line
         },
 
         expandRow: function(tr) {
-            $(tr).find('> td .k-plus, > td .k-i-expand').click();
+            $(tr).find('> td .k-i-expand').click();
         },
 
         collapseRow: function(tr) {
-            $(tr).find('> td .k-minus, > td .k-i-collapse').click();
+            $(tr).find('> td .k-i-collapse').click();
         },
 
         _createHeaderCells: function(columns, rowSpan) {
@@ -7016,7 +7016,7 @@ var __meta__ = { // jshint ignore:line
                         that.expandGroup(tr);
                     }
 
-                    if (tr.hasClass("k-master-row") && tr.find(".k-icon").hasClass("k-minus")) {
+                    if (tr.hasClass("k-master-row") && tr.find(".k-icon").hasClass("k-i-collapse")) {
                         tr.next().show();
                         relatedGroup.eq(idx + 1).show();
                     }

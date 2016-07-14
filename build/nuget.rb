@@ -53,8 +53,7 @@ namespace :nuget do
         suffix = ".Trial" if options[:trial]
 
         packages = mvc_versions.map { |mvc_version| "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}.nupkg" }
-        packages << "#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg"
-        packages << "#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg"
+        packages << "#{MVC6_PACKAGE_BASENAME}#{suffix}.#{VERSION}.nupkg"
 
         packages.join(" ")
     end

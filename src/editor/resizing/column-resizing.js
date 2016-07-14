@@ -1,13 +1,11 @@
 (function(f, define) {
-    define(["../main", "../../kendo.resizable"], f);
+    define(["../main", "../../kendo.resizable", "./resizing-utils"], f);
 })(function() {
 
 (function(kendo, undefined) {
     var global = window;
     var math = global.Math;
     var abs = math.abs;
-    var min = math.min;
-    var max = math.max;
     var parseFloat = global.parseFloat;
 
     var $ = kendo.jQuery;
@@ -17,64 +15,31 @@
 
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
+    var ResizingUtils = Editor.ResizingUtils;
+    var constrain = ResizingUtils.constrain;
+    var getElementWidth = ResizingUtils.getElementWidth;
+    var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
+    var inPercentages = ResizingUtils.inPercentages;
+    var toPercentages = ResizingUtils.toPercentages;
+    var setContentEditable = ResizingUtils.setContentEditable;
 
     var NS = ".kendoEditorColumnResizing";
     var RESIZE_HANDLE_CLASS = ".k-resize-handle";
     var RESIZE_HINT_MARKER_CLASS = ".k-resize-hint-marker";
 
     var COLUMN = "column";
-    var CONTENT_EDITABLE = "contenteditable";
     var COMMA = ",";
     var MOUSE_DOWN = "mousedown";
     var MOUSE_MOVE = "mousemove";
     var MOUSE_UP = "mouseup";
-    var PERCENTAGE = "%";
-    var STRING = "string";
     var TABLE = "table";
     var TBODY = "tbody";
     var TD = "td";
     var TH = "th";
     var TR = "tr";
-    var WIDTH = "width";
     var LAST_CHILD = ":last-child";
     var TRUE = "true";
     var FALSE = "false";
-    var UNDEFINED = "undefined";
-
-    function constrain(options) {
-        var value = options.value;
-        var lowerBound = options.min;
-        var upperBound = options.max;
-
-        return max(min(parseFloat(value), parseFloat(upperBound)), parseFloat(lowerBound));
-    }
-
-    function calculatePercentageRatio(value, total) {
-        var result;
-
-        if (inPercentages(value)) {
-            result = parseFloat(value);
-        }
-        else {
-            result = (parseFloat(value) / total) * 100;
-        }
-
-        return result;
-    }
-
-    function inPercentages(value) {
-        return (typeof(value) === STRING && value.indexOf(PERCENTAGE) !== -1);
-    }
-
-    function toPercentages(value) {
-        return (parseFloat(value) + PERCENTAGE);
-    }
-
-    function getColumnWidth(column) {
-        var columnStyleWidth = column.style[WIDTH];
-        var width = columnStyleWidth !== "" ? columnStyleWidth : $(column).width();
-        return width;
-    }
 
     var ColumnResizing = Class.extend({
         init: function(element, options) {
@@ -140,10 +105,11 @@
             var that = this;
             var column = $(e.currentTarget);
             var resizeHandle = that.resizeHandle;
+            var rootElement = that.options.rootElement;
 
             if (!that.resizingInProgress()) {
                 if (!column.is(LAST_CHILD) && that._columnBorderHovered(column, e.clientX)) {
-                    that._setRootElementEditing(FALSE);
+                    setContentEditable(rootElement, FALSE);
 
                     if (resizeHandle) {
                         if (resizeHandle.data(COLUMN) && resizeHandle.data(COLUMN) !== column[0]) {
@@ -160,20 +126,11 @@
                 }
                 else {
                     if (resizeHandle) {
-                        that._setRootElementEditing(TRUE);
+                        setContentEditable(rootElement, TRUE);
                         that._destroyResizable();
                         that._destroyResizeHandle();
                     }
                 }
-            }
-        },
-
-        _setRootElementEditing: function(enabled) {
-            var that = this;
-            var rootElement = $(that.options.rootElement);
-
-            if (rootElement && (typeof(rootElement.attr(CONTENT_EDITABLE)) !== UNDEFINED)) {
-                rootElement.attr(CONTENT_EDITABLE, enabled);
             }
         },
 
@@ -260,8 +217,10 @@
                 resizeend: function(e) {
                     var resizable = this;
                     var column = resizable.element;
-                    var columnWidth = getColumnWidth(column[0]);
-                    var rtlModifier = that.options.rtl ? (-1) : 1;
+                    var columnWidth = getElementWidth(column[0]);
+                    var options = that.options;
+                    var rootElement = options.rootElement;
+                    var rtlModifier = options.rtl ? (-1) : 1;
                     var resizingData = that._calculateResizingData(column, rtlModifier * e.x.initialDelta);
                     var newWidth = resizingData.newWidth;
                     var deltaWidth = resizingData.deltaWidth;
@@ -272,7 +231,7 @@
                     that._resizeAdjacentColumns(column.index(), columnWidth, adjacentColumnWidth, deltaWidth);
 
                     that._destroyResizeHandle();
-                    that._setRootElementEditing(TRUE);
+                    setContentEditable(rootElement, TRUE);
                 }
             }).data("kendoResizable");
         },
@@ -283,9 +242,9 @@
             var min = that.options.min;
             var minInPercentages = calculatePercentageRatio(min, tableWidth);
             var adjacentColumn = column.next();
-            var adjacentColumnWidth = adjacentColumn[0] ? getColumnWidth(adjacentColumn[0]) : 0;
+            var adjacentColumnWidth = adjacentColumn[0] ? getElementWidth(adjacentColumn[0]) : 0;
             var adjacentColumnWidthValue;
-            var columnWidth = getColumnWidth(column[0]);
+            var columnWidth = getElementWidth(column[0]);
             var columnWidthValue = parseFloat(columnWidth);
             var differenceInPercentages;
             var deltaWidth;
@@ -377,7 +336,7 @@
             var newWidth;
 
             if (inPercentages(deltaWidth)) {
-                adjacentColumnWidth = calculatePercentageRatio(getColumnWidth(adjacentColumn), tableWidth);
+                adjacentColumnWidth = calculatePercentageRatio(getElementWidth(adjacentColumn), tableWidth);
                 newWidth = constrain({
                     value:  adjacentColumnWidth + delta,
                     min: minInPercentages,

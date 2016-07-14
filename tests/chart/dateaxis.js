@@ -391,6 +391,48 @@
             equal(dateAxis.categoryIndex(new Date("2016/03/28"), null), 1);
         });
 
+        tzTest("Sofia", "returns correct index for hours baseUnit during DST", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2016/03/27 2:00"), new Date("2016/03/28")
+                ],
+                baseUnit: "hours"
+            });
+
+            equal(dateAxis.categoryIndex(new Date("2016/03/27 4:00"), null), 1);
+
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2011/10/30 03:00"), new Date("2011/10/31")
+                ],
+                baseUnit: "hours"
+            });
+
+            equal(dateAxis.categoryIndex(new Date("2011/10/30 04:00"), null), 2);
+        });
+
+        tzTest("Sofia", "returns correct index for minutes baseUnit during DST", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2016/03/27 2:00"), new Date("2016/03/28")
+                ],
+                baseUnit: "minutes",
+                baseUnitStep: 60
+            });
+
+            equal(dateAxis.categoryIndex(new Date("2016/03/27 4:00"), null), 1);
+
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2011/10/30 03:00"), new Date("2011/10/31")
+                ],
+                baseUnit: "minutes",
+                baseUnitStep: 60
+            });
+
+            equal(dateAxis.categoryIndex(new Date("2011/10/30 04:00"), null), 2);
+        });
+
         // ------------------------------------------------------------
         module("Date Category Axis / Min-Max values", {
             setup: function() {
@@ -1677,6 +1719,19 @@
             equal(dateAxis.options.baseUnitStep, 1);
         });
 
+        tzTest("Sofia", "includes fall DST hour", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2011/10/30 03:00"), new Date("2011/10/30 04:00")
+                ],
+                baseUnit: "minutes",
+                baseUnitStep: 60
+            });
+            var dstHour = dateAxis.options.categories[1];
+            equal(dateAxis.options.categories.length, 3);
+            deepEqual(dstHour, new Date( new Date(2011, 9, 30, 3, 59, 59, 999).getTime() + 1));
+        });
+
         // ------------------------------------------------------------
         module("Date Category Axis / Base unit / Seconds");
 
@@ -2027,6 +2082,18 @@
             });
 
             equal(dateAxis.options.baseUnit, "days");
+        });
+
+        tzTest("Sofia", "includes fall DST hour", function() {
+            createDateCategoryAxis({
+                categories: [
+                    new Date("2011/10/30 03:00"), new Date("2011/10/30 04:00")
+                ],
+                baseUnit: "houts"
+            });
+            var dstHour = dateAxis.options.categories[1];
+            equal(dateAxis.options.categories.length, 3);
+            deepEqual(dstHour, new Date( new Date(2011, 9, 30, 3, 59, 59, 999).getTime() + 1));
         });
 
         // ------------------------------------------------------------

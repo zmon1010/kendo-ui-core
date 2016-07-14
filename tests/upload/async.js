@@ -13,15 +13,15 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
     test("k-upload-empty class is removed when file is selected", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
-        
+
         ok(!$(uploadInstance.wrapper).is(".k-upload-empty"));
     });
 
     test("k-upload-empty class is added again when file list is empty", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
-        $(".k-cancel", uploadInstance.wrapper).trigger("click");
-        
+        $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
+
         ok($(uploadInstance.wrapper).is(".k-upload-empty"));
     });
 
@@ -29,13 +29,13 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload( { async: { saveUrl: "javascript:;", removeUrl: null } } );
 
         simulateUpload();
-        equal($(".k-delete", uploadInstance.wrapper).length, 0);
+        equal($(".k-i-delete", uploadInstance.wrapper).length, 0);
     });
 
     test("status icon is rendered", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
-        
+
         equal($(".k-upload-files .k-file > span.k-icon", uploadInstance.wrapper).length, 1);
     });
 
@@ -43,21 +43,21 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateUpload();
 
-        equal($(".k-delete", uploadInstance.wrapper).length, 1);
+        equal($(".k-i-delete", uploadInstance.wrapper).length, 1);
     });
 
     test("k-upload-status-total shows loading icon when upload starts", function(){
         var uploadInstance = createUpload();
         simulateFileSelect();
 
-        equal($(".k-upload-status-total .k-loading", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-status-total .k-i-loading", uploadInstance.wrapper).length, 1);
     });
 
     test("k-upload-status-total loading icon span contains correct text when upload starts", function(){
         var uploadInstance = createUpload();
         simulateFileSelect();
 
-        equal($(".k-upload-status-total .k-loading", uploadInstance.wrapper).text(), "uploading");
+        equal($(".k-upload-status-total .k-i-loading", uploadInstance.wrapper).text(), "uploading");
     });
 
     test("k-upload-status-total contains correct text when upload starts", function(){
@@ -71,7 +71,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateUpload();
         simulateFileSelect();
-        $(".k-cancel", uploadInstance.wrapper).trigger("click");
+        $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
         equal($(".k-upload-status-total", uploadInstance.wrapper).clone().children().remove().end().text(), "Done");
     });
 
@@ -79,7 +79,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateUpload();
         simulateFileSelect();
-        $(".k-cancel", uploadInstance.wrapper).trigger("click");
+        $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
         equal($(".k-upload-status-total .k-i-tick", uploadInstance.wrapper).length, 1);
     });
 
@@ -88,7 +88,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
 
         simulateUploadWithResponse(errorResponse);
         simulateFileSelect();
-        $(".k-cancel", uploadInstance.wrapper).trigger("click");
+        $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
         equal($(".k-upload-status-total .k-warning", uploadInstance.wrapper).length, 1);
     });
 
@@ -130,7 +130,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
     test("k-file-progress is rendered when upload starts", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
-        
+
         equal($(".k-upload-files li.k-file-progress", uploadInstance.wrapper).length, 1);
     });
 
@@ -144,21 +144,21 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
     test("uploading status text is rendered when upload starts", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
-        
+
         equal($(".k-upload-files .k-file > .k-icon", uploadInstance.wrapper).text(), "uploading");
     });
 
     test("k-file-success is rendered upon success", function() {
         var uploadInstance = createUpload();
         simulateUpload();
-        
+
         equal($(".k-upload-files li.k-file-success", uploadInstance.wrapper).length, 1);
     });
 
     test("uploaded status text is rendered upon success", function() {
         var uploadInstance = createUpload();
         simulateUpload();
-        
+
         equal($(".k-upload-files .k-file > .k-icon", uploadInstance.wrapper).text(), "uploaded");
     });
 
@@ -180,7 +180,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateUploadWithResponse(errorResponse);
 
-        equal($(".k-upload-files li.k-file .k-upload-action .k-retry", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-files li.k-file .k-upload-action .k-i-retry", uploadInstance.wrapper).length, 1);
     });
 
     test("clicking remove should call remove action", function() {
@@ -249,14 +249,14 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
     test("cancel icon is rendered", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
-        equal($(".k-upload-files li.k-file button.k-upload-action span.k-cancel", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-files li.k-file button.k-upload-action span.k-i-cancel", uploadInstance.wrapper).length, 1);
     });
 
     test("cancel icon is cleared upon success", function() {
         var uploadInstance = createUpload();
         simulateUpload();
 
-        equal($(".k-cancel", uploadInstance.wrapper).length, 0);
+        equal($(".k-i-cancel", uploadInstance.wrapper).length, 0);
     });
 
     test("Progress event is raised", 1, function() {
@@ -297,7 +297,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
 
         uploadInstance._module.performUpload = function() { performUploadCalled = true; };
 
-        $(".k-retry", uploadInstance.wrapper).trigger("click");
+        $(".k-i-retry", uploadInstance.wrapper).trigger("click");
 
         ok(performUploadCalled);
     });

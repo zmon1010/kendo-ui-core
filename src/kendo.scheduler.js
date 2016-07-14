@@ -798,7 +798,7 @@ var __meta__ = { // jshint ignore:line
         },
         destroy: {
             text: "Delete",
-            imageClass: "k-delete",
+            imageClass: "k-i-delete",
             className: "k-primary k-scheduler-delete",
             iconClass: "k-icon"
         }

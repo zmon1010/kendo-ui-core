@@ -32,8 +32,9 @@
            shapeMouseEnter="onShapeMouseEnter" reset="onReset">
     <kendo:map-layers>
         <kendo:map-layer type="tile"
-            urlTemplate="http://otile3.mqcdn.com/tiles/1.0.0/sat/#= zoom #/#= x #/#= y #.png"
-            attribution="Tiles &copy; <a href='http://www.mapquest.com/' target='_blank'>MapQuest</a>" />
+            urlTemplate="http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png"
+            subdomains="<%= new String[] { \"a\", \"b\", \"c\" } %>"
+            attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>" />
         <kendo:map-layer type="bubble" locationField="location" valueField="pop2010">
              <kendo:dataSource>
                  <kendo:dataSource-transport>
@@ -41,7 +42,7 @@
                  </kendo:dataSource-transport>
              </kendo:dataSource>
              <kendo:map-layer-style>
-                <kendo:map-layer-style-fill color="#fff" opacity="0.4"/>
+                <kendo:map-layer-style-fill color="#00f" opacity="0.4"/>
                 <kendo:map-layer-style-stroke width="0" />
              </kendo:map-layer-style>
         </kendo:map-layer>
@@ -59,7 +60,7 @@
         }
 
         activeShape = e.shape;
-        activeShape.options.set("stroke", { width: 1.5, color: "#fff" });
+        activeShape.options.set("stroke", { width: 1.5, color: "#00f" });
 
         $("#info").html(template(e.shape.dataItem));
     }

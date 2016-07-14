@@ -17,16 +17,19 @@
         Widget = kendo.ui.Widget,
         os = kendo.support.mobileOS,
         browser = kendo.support.browser,
+        contains = $.contains,
         extend = $.extend,
         proxy = $.proxy,
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
-
+    
     var rtlEnabled = false;
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
+    var MOUSE_UP = "mouseup";
     var NS = ".kendoEditor";
     var TABLE = "table";
+    var UNDEFINED = "undefined";
 
     // options can be: template (as string), cssClass, title, defaultValue
     var ToolTemplate = Class.extend({
@@ -48,9 +51,10 @@
             '</tbody></table>',
 
         buttonTemplate:
+            '# var iconCssClass= "k-i-" + kendo.toHyphens(data.cssClass.replace("k-", ""));#' +
             '<a href="" role="button" class="k-tool"' +
             '#= data.popup ? " data-popup" : "" #' +
-            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= data.cssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
+            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= iconCssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
 
         colorPickerTemplate:
             '<div class="k-colorpicker #= data.cssClass #" />',
@@ -313,7 +317,7 @@
             var resizable = this.options.resizable;
             var isResizable = $.isPlainObject(resizable) ? (resizable.content === undefined || resizable.content === true) : resizable;
             if (isResizable && this.textarea) {
-                $("<div class='k-resize-handle'><span class='k-icon k-resize-se' /></div>")
+                $("<div class='k-resize-handle'><span class='k-icon k-i-resize-se' /></div>")
                     .insertAfter(this.textarea);
 
                 this.wrapper.kendoResizable(extend({}, this.options.resizable, {
@@ -357,8 +361,8 @@
                     e.stopPropagation();
 
                     if (editor.tableResizing) {
-                        if (editor.tableResizing.element !== table) {
-                            editor.tableResizing.destroy();
+                        if (editor.tableResizing.element !== table && !editor.tableResizing.resizingInProgress()) {
+                            editor._destroyTableResizing();
                             initTableResizing(editor, table);
                         }
                     }
@@ -374,14 +378,37 @@
                     if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
                         parentTable = $(editor.tableResizing.element).parents(TABLE)[0];
                         
-                        editor.tableResizing.destroy();
-                        editor.tableResizing = null;
-
                         if (parentTable) {
+                            editor._destroyTableResizing();
                             initTableResizing(editor, parentTable);
                         }
                     }
+                })
+                .on(MOUSE_LEAVE + NS, function() {
+                    if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
+                        editor._destroyTableResizing();
+                    }
+                })
+                .on(MOUSE_UP + NS, function(e) {
+                    var tableResizing = editor.tableResizing;
+                    var element = tableResizing ? tableResizing.element : null;
+                    var target = e.target;
+                    var dataAttribute = $(target).data(TABLE);
+                    var dataCondition = typeof(dataAttribute) === UNDEFINED || (typeof(dataAttribute) !== UNDEFINED && dataAttribute !== element);
+
+                    if (tableResizing && !tableResizing.resizingInProgress() && dataCondition && element !== target && !contains(element, target)) {
+                        editor._destroyTableResizing();
+                    }
                 });
+        },
+
+        _destroyTableResizing: function() {
+            var editor = this;
+
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+                editor.tableResizing = null;
+            }
         },
 
         _wrapTextarea: function() {
@@ -460,6 +487,15 @@
                     ".k-table p{margin:0;padding:0;}" +
                     ".k-table td >.k-resize-handle{position:absolute;height: 14px;width:10px;cursor:col-resize;z-index:2;}" +
                     ".k-table td > .k-resize-handle > .k-resize-hint-marker{width:2px;height:100%;margin:0 auto;background-color:#00b0ff;display:none;opacity:0.8;}" +
+                    ".k-table-resize-handle{position:absolute;background-color:#fff;border:1px solid #000;z-index:2;width:8px;height:8px;}" +
+                    ".k-resize-e{cursor:e-resize;}" +
+                    ".k-resize-n{cursor:n-resize;}" +
+                    ".k-resize-ne{cursor:ne-resize;}" +
+                    ".k-resize-nw{cursor:nw-resize;}" +
+                    ".k-resize-s{cursor:s-resize;}" +
+                    ".k-resize-se{cursor:se-resize;}" +
+                    ".k-resize-sw{cursor:sw-resize;}" +
+                    ".k-resize-w{cursor:w-resize;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +
@@ -883,9 +919,7 @@
 
             this.toolbar.destroy();
 
-            if (editor.tableResizing) {
-                editor.tableResizing.destroy();
-            }
+            editor._destroyTableResizing();
 
             kendo.destroy(this.wrapper);
         },

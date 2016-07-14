@@ -38,7 +38,7 @@
             ]
         });
 
-        $(".k-plus", treeview).trigger("click");
+        $(".k-i-expand", treeview).trigger("click");
 
         equal(handler.calls, 1);
         equal(eventArgs(handler).node, $(".k-item")[0]);
@@ -54,7 +54,7 @@
             ]
         });
 
-        $(".k-minus", treeview).trigger("click");
+        $(".k-i-collapse", treeview).trigger("click");
 
         equal(handler.calls, 1);
         equal(eventArgs(handler).node, $(".k-item")[0]);
@@ -140,7 +140,7 @@
         var e = eventArgs(handler);
         equal(treeviewObject.text(e.sourceNode), "bar");
         ok(e.setStatusClass);
-        equal(e.statusClass, "add");
+        equal(e.statusClass, "i-add");
         ok(e.pageX);
         ok(e.pageY);
     });

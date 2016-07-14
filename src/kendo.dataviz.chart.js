@@ -13329,7 +13329,9 @@ var __meta__ = { // jshint ignore:line
                 result = new Date(date.getFullYear(), date.getMonth(), date.getDate() + value);
                 kendo.date.adjustDST(result, hours);
             } else if (unit === HOURS) {
-                result = addTicks(new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()), value * TIME_PER_HOUR);
+                date = new Date(date);
+                date.setUTCMinutes(0, 0, 0);
+                result = addTicks(date, value * TIME_PER_HOUR);
             } else if (unit === MINUTES) {
                 result = addTicks(date, value * TIME_PER_MINUTE);
 
@@ -13385,10 +13387,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function dateDiff(a, b) {
-        var diff = a.getTime() - b,
-            offsetDiff = a.getTimezoneOffset() - b.getTimezoneOffset();
-
-        return diff - (offsetDiff * diff > 0 ? offsetDiff * TIME_PER_MINUTE : 0);
+        return a.getTime() - b;
     }
 
     function absoluteDateDiff(a, b) {
@@ -13399,11 +13398,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function addTicks(date, ticks) {
-        var tzOffsetBefore = date.getTimezoneOffset(),
-            result = new Date(date.getTime() + ticks),
-            tzOffsetDiff = result.getTimezoneOffset() - tzOffsetBefore;
-
-        return new Date(result.getTime() + ((ticks * tzOffsetDiff) > 0 ? tzOffsetDiff * TIME_PER_MINUTE : 0));
+        return new Date(date.getTime() + ticks);
     }
 
     function duration(a, b, unit) {

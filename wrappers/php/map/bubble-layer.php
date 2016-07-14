@@ -34,9 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once '../include/header.php';
 
 $tile_layer = new \Kendo\Dataviz\UI\MapLayer();
-$tile_layer->type("tile")
-      ->urlTemplate("http://otile3.mqcdn.com/tiles/1.0.0/sat/#= zoom #/#= x #/#= y #.png")
-      ->attribution("Tiles &copy; <a href='http://www.mapquest.com/' target='_blank'>MapQuest</a>");
+$layer->type("tile")
+      ->urlTemplate("http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png")
+      ->subdomains(array('a', 'b', 'c'))
+      ->attribution("&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>");
 
 $transport = new \Kendo\Data\DataSourceTransport();
 $transport->read(array('url' => 'bubble-layer.php', 'type' => 'POST', 'dataType' => 'json'));
@@ -45,7 +46,7 @@ $dataSource = new \Kendo\Data\DataSource();
 $dataSource->transport($transport);
 
 $style = new \Kendo\Dataviz\UI\MapLayerStyle();
-$style->fill(array('color' => '#fff', 'opacity' => 0.4))
+$style->fill(array('color' => '#00f', 'opacity' => 0.4))
       ->stroke(array('width' => 0));
 
 $bubble_layer = new \Kendo\Dataviz\UI\MapLayer();
@@ -98,7 +99,7 @@ function onShapeMouseEnter(e) {
     }
 
     activeShape = e.shape;
-    activeShape.options.set("stroke", { width: 1.5, color: "#fff" });
+    activeShape.options.set("stroke", { width: 1.5, color: "#00f" });
 
     $("#info").html(template(e.shape.dataItem));
 }

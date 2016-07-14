@@ -210,15 +210,17 @@ var ImageCommand = Command.extend({
             .find(KEDITORIMAGEWIDTH).val(imageWidth).end()
             .find(KEDITORIMAGEHEIGHT).val(imageHeight).end()
             .data("kendoWindow");
-
+        
         if (showBrowser) {
             this._imageBrowser = new kendo.ui.ImageBrowser(
                 dialog.element.find(".k-imagebrowser"),
                 extend({}, imageBrowser)
             );
 
-            this._imageBrowser.bind("change", function () {
-                dialog.element.find(KEDITORIMAGEURL).val(this.value());
+            this._imageBrowser.bind("change", function (ev) {
+                if (ev.selected.get("type") === "f") {
+                    dialog.element.find(KEDITORIMAGEURL).val(this.value());
+                }
             });
 
             this._imageBrowser.bind("apply", apply);

@@ -7,7 +7,7 @@ function uploadCancel(createUpload) {
         });
 
         simulateFileSelect();
-        $(".k-cancel", uploadInstance.wrapper).trigger("click");
+        $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
     });
 
     test("cancel event arguments contain list of files", function() {
@@ -19,7 +19,7 @@ function uploadCancel(createUpload) {
         });
 
         simulateFileSelect();
-        $(".k-cancel", uploadInstance.wrapper).trigger("click");
+        $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
 
         assertSelectedFile(files);
     });
@@ -32,6 +32,6 @@ function uploadCancel(createUpload) {
         });
 
         simulateFileSelect();
-        $(".k-cancel", uploadInstance.wrapper).trigger("click");
+        $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
     });
 }

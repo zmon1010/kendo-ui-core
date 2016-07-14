@@ -1168,7 +1168,7 @@
             showButton: true,
             useCustomMessages: false,
             errorTemplate:
-                '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-warning"> </span>' +
+                '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-i-warning"> </span>' +
                 '#= message #<div class="k-callout k-callout-n"></div></div>',
             template:
                 '<div class="k-edit-form-container">' +

@@ -522,12 +522,13 @@
             if (editor) {
                 $(editor.body).find("*").remove();
             }
+            editor.tableResizing.destroy();
             removeMocksIn(editor.tableResizing);
             kendo.destroy(QUnit.fixture);
         }
     });
 
-    test("moving out of a table should remove column resize handle", function() {
+    test("moving out of a table should not remove column resize handle", function() {
         var table = $(editor.body).find("#table")[0];
         var tableResizing = editor.tableResizing = new TableResizing(table, {});
         var columnResizing = tableResizing.columnResizing;
@@ -535,7 +536,7 @@
 
         triggerEvent(table, { type: MOUSE_LEAVE });
 
-        equal($(columnResizing.element).find(HANDLE_SELECTOR).length, 0);
+        equal($(columnResizing.element).find(HANDLE_SELECTOR).length, 1);
     });
 
     test("hovering a scrolled editor document should create resize handle", function() {

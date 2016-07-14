@@ -344,6 +344,11 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _clearFilter: function() {
+            $(this.filterInput).val("");
+            Select.fn._clearFilter.call(this);
+        },
+
         value: function(value) {
             var that = this;
             var listView = that.listView;
@@ -564,7 +569,7 @@ var __meta__ = { // jshint ignore:line
             if (!that._prevent) {
                 clearTimeout(that._typingTimeout);
 
-                if (filtered && focusedItem && !that.trigger("select", { dataItem: dataItem, item: focusedItem })) {
+                if (!filtered && focusedItem && !that.trigger("select", { dataItem: dataItem, item: focusedItem })) {
                     that._select(focusedItem, !that.dataSource.view().length);
                 }
 
@@ -673,6 +678,10 @@ var __meta__ = { // jshint ignore:line
 
             if ((altKey && key === keys.UP) || key === keys.ESC) {
                 that._focusElement(that.wrapper);
+            }
+
+            if (that._state === STATE_FILTER && key === keys.ESC) {
+                that._clearFilter();
             }
 
             if (key === keys.ENTER && that._typingTimeout && that.filterInput && isPopupVisible) {
@@ -1132,7 +1141,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (this._isFilterEnabled()) {
-                icon = '<span unselectable="on" class="k-icon k-i-search">select</span>';
+                icon = '<span class="k-icon k-i-search"></span>';
 
                 this.filterInput = $('<input class="k-textbox"/>')
                                       .attr({
@@ -1156,7 +1165,7 @@ var __meta__ = { // jshint ignore:line
             span = wrapper.find(SELECTOR);
 
             if (!span[0]) {
-                wrapper.append('<span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">&nbsp;</span><span unselectable="on" class="k-select"><span unselectable="on" class="k-icon k-i-arrow-s">select</span></span></span>')
+                wrapper.append('<span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">&nbsp;</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-s"></span></span></span>')
                        .append(that.element);
 
                 span = wrapper.find(SELECTOR);

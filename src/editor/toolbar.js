@@ -677,7 +677,16 @@
                 return !/^k-(widget|tool|tool-icon|icon|state-hover|header|combobox|dropdown|selectbox|colorpicker)$/i.test(x);
             });
 
-            return tool[0] ? tool[0].substring(tool[0].lastIndexOf("-") + 1) : "custom";
+            if (tool[0]) {
+                var toolname = tool[0];
+                if (toolname.indexOf("k-i-") >=0) {
+                    return kendo.toCamelCase(toolname.substring(toolname.indexOf("k-i-") + 4));
+                }
+                else {
+                    return toolname.substring(toolname.lastIndexOf("-") + 1);
+                }
+            }
+            return "custom";
         },
 
         refreshTools: function() {

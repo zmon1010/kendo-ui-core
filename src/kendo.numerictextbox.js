@@ -293,7 +293,7 @@ var __meta__ = { // jshint ignore:line
             arrows = element.siblings(".k-icon");
 
             if (!arrows[0]) {
-                arrows = $(buttonHtml("n", options.upArrowText) + buttonHtml("s", options.downArrowText))
+                arrows = $(buttonHtml("increase", options.upArrowText) + buttonHtml("decrease", options.downArrowText))
                         .insertAfter(element);
 
                 arrows.wrapAll('<span class="k-select"/>');
@@ -644,10 +644,15 @@ var __meta__ = { // jshint ignore:line
         },
 
         _placeholder: function(value) {
-            this._text.val(value);
+            var input = this._text;
+
+            input.val(value);
             if (!placeholderSupported && !value) {
-                this._text.val(this.options.placeholder);
+                input.val(this.options.placeholder);
             }
+
+            input.attr("title", input.attr("title") || input.val());
+            input.attr("aria-title", input.attr("title") || input.val());
         },
 
         _wrapper: function() {
@@ -692,8 +697,9 @@ var __meta__ = { // jshint ignore:line
         }
     });
 
-    function buttonHtml(className, text) {
-        return '<span unselectable="on" class="k-link"><span unselectable="on" class="k-icon k-i-arrow-' + className + '" title="' + text + '">' + text + '</span></span>';
+    function buttonHtml(direction, text) {
+        var className = "k-i-arrow-" + (direction === "increase" ? "n" : "s");
+        return '<span unselectable="on" class="k-link k-link-' + direction + '" aria-label="' + text + '"><span unselectable="on" class="k-icon ' + className + '"></span></span>';
     }
 
     function truncate(value, precision) {

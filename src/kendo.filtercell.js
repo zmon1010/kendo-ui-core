@@ -271,7 +271,7 @@ var __meta__ = { // jshint ignore:line
                 valuePrimitive: true
             }).data("kendoDropDownList");
 
-            this.operatorDropDown.wrapper.find(".k-i-arrow-s").removeClass("k-i-arrow-s").addClass("k-filter");
+            this.operatorDropDown.wrapper.find(".k-i-arrow-s").removeClass("k-i-arrow-s").addClass("k-i-filter");
         },
 
         initSuggestDataSource: function(options) {
