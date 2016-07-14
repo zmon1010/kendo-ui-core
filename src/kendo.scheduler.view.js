@@ -212,15 +212,15 @@ var __meta__ = { // jshint ignore:line
             return this._daySlotCollections.length;
         },
 
-        daySlotByPosition: function(x, y) {
-            return this._slotByPosition(x, y, this._daySlotCollections);
+        daySlotByPosition: function(x, y, byDate) {
+            return this._slotByPosition(x, y, this._daySlotCollections, byDate);
         },
 
         timeSlotByPosition: function(x, y) {
             return this._slotByPosition(x, y, this._timeSlotCollections);
         },
 
-        _slotByPosition: function(x, y, collections) {
+        _slotByPosition: function(x, y, collections, byDate) {
            for (var collectionIndex = 0; collectionIndex < collections.length; collectionIndex++) {
                var collection = collections[collectionIndex];
 
@@ -228,11 +228,14 @@ var __meta__ = { // jshint ignore:line
                    var slot = collection.at(slotIndex);
                    var width = slot.offsetWidth;
                    var height = slot.offsetHeight;
+                   var nextSlot;
 
                    var horizontalEnd = slot.offsetLeft + width;
                    var verticalEnd =  slot.offsetTop + height;
 
-                   var nextSlot =  collection.at(slotIndex+1);
+                   if (!byDate) {
+                        nextSlot =  collection.at(slotIndex + 1);
+                   }
 
                    if (nextSlot) {
                        if (nextSlot.offsetLeft != slot.offsetLeft) {
@@ -1819,8 +1822,12 @@ var __meta__ = { // jshint ignore:line
             this.groupedResources = result;
         },
 
-        _createColumnsLayout: function(resources, inner, template) {
-            return createLayoutConfiguration("columns", resources, inner, template);
+        _createDateLayout: function(dates, inner) {
+            return createDateLayoutConfiguration("rows", dates, inner);
+        },
+
+        _createColumnsLayout: function(resources, inner, template, dates) {
+            return createLayoutConfiguration("columns", resources, inner, template, dates);
         },
 
         _groupOrientation: function() {
@@ -1832,8 +1839,8 @@ var __meta__ = { // jshint ignore:line
             return this.groupedResources.length && this._groupOrientation() === "vertical";
         },
 
-        _createRowsLayout: function(resources, inner, template) {
-            return createLayoutConfiguration("rows", resources, inner, template);
+        _createRowsLayout: function(resources, inner, template, dates) {
+            return createLayoutConfiguration("rows", resources, inner, template, dates);
         },
 
         selectionByElement: function() {
@@ -2152,28 +2159,50 @@ var __meta__ = { // jshint ignore:line
         return columns;
     }
 
-    function createLayoutConfiguration(name, resources, inner, template) {
-        var resource = resources[0];
-        if (resource) {
-            var configuration = [];
+    function createDateLayoutConfiguration(name, dates, inner) {
+         var configuration = [];
 
-            var data = resource.dataSource.view();
+        $.each(dates, function(index, item) { 
+            var obj = {
+                text: item.text,
+                className: "k-slot-cell"
+            };
+            obj[name] = inner; 
+            configuration.push(obj);
+        });
 
-            for (var dataIndex = 0; dataIndex < data.length; dataIndex++) {
-                var obj = {
-                    text: template({
-                        text: kendo.htmlEncode(kendo.getter(resource.dataTextField)(data[dataIndex])),
-                        color: kendo.getter(resource.dataColorField)(data[dataIndex]),
-                        field: resource.field,
-                        title: resource.title,
-                        name: resource.name,
-                        value:kendo.getter(resource.dataValueField)(data[dataIndex])
-                    }),
-                    className: "k-slot-cell"
-                };
-                obj[name] = createLayoutConfiguration(name, resources.slice(1), inner, template);
+        return configuration;
+    }
 
-                configuration.push(obj);
+    function createLayoutConfiguration(name, resources, inner, template, dates) {
+        var resource = resources[0];     
+        var configuration = [];
+
+        if (resource) {  
+            if (dates && inner) {         
+                $.each(dates, function(index, item) {
+                    item[name] = createLayoutConfiguration(name, resources, null, template);
+                });
+                configuration = dates;
+            } else {
+                var data = resource.dataSource.view();
+
+                for (var dataIndex = 0; dataIndex < data.length; dataIndex++) {
+                    var obj = {
+                        text: template({
+                            text: kendo.htmlEncode(kendo.getter(resource.dataTextField)(data[dataIndex])),
+                            color: kendo.getter(resource.dataColorField)(data[dataIndex]),
+                            field: resource.field,
+                            title: resource.title,
+                            name: resource.name,
+                            value:kendo.getter(resource.dataValueField)(data[dataIndex])
+                        }),
+                        className: "k-slot-cell"
+                    };
+                    obj[name] = createLayoutConfiguration(name, resources.slice(1), inner, template);
+
+                    configuration.push(obj);
+                }
             }
             return configuration;
         }
