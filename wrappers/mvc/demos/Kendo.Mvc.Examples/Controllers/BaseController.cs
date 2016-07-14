@@ -56,21 +56,6 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public String CurrentProduct()
         {
-            //string product = "kendo-ui";
-
-            //// Mono/FastCGI Nginx support
-            //if (!string.IsNullOrEmpty(Request.ServerVariables["HTTP_X_KENDO"]))
-            //{
-            //    product = Request.ServerVariables["HTTP_X_KENDO"];
-            //}
-
-            //if (!string.IsNullOrEmpty(Request.ServerVariables["X-KENDO"]))
-            //{
-            //    product = Request.ServerVariables["X-KENDO"];
-            //}
-
-            //return product;
-
             return "aspnet-mvc";
         }
 
@@ -92,12 +77,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public string CurrentNavProduct()
         {
-            return new Dictionary<string, string> {
-                {"aspnet-mvc", "mvc"},
-                {"kendo-ui", "online"},
-                {"php-ui", "php"},
-                {"jsp-ui", "jsp"}
-            }[CurrentProduct()];
+            return "mvc";
         }
 
         //protected void LoadNavigation()

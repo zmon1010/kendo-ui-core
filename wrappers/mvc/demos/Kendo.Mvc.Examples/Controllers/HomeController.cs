@@ -15,7 +15,6 @@ namespace Kendo.Mvc.Examples.Controllers
             ViewBag.Theme = "material";
             ViewBag.CommonFile = "common-material";
 
-            //LoadNavigation();
             LoadCategories();
 
             SetTheme();
