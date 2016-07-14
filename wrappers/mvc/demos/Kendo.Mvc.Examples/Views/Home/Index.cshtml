@@ -1,64 +1,248 @@
 ﻿@{
-    Layout = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.SuppressFooter = true;
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Telerik UI for ASP.NET MVC - Offline Examples</title>
-    <link href="@Url.Content("~/Content/shared/suite.css")" rel="stylesheet">
-    <style>
-        #page > h2 {
-            padding: 2em 0 0;
+
+@*@Html.Partial("WebSearchScript")*@
+<div id="layout-search-wrapper" class="search-wrapper">
+    <div class="search">
+        <input id="example-search" placeholder="Search demos" autofocus />
+    </div>
+</div>
+
+<div id="overview">
+    <div id="overview-widgets">
+        @switch ((string)ViewBag.Product)
+            {
+                case "kendo-ui":
+                <h1>Kendo UI<sup>&reg;</sup> <strong>Components</strong></h1>
+                break;
+            case "aspnet-mvc":
+                <h1>ASP.NET MVC <strong>Components</strong></h1>
+                break;
+            case "php-ui":
+                <h1>PHP <strong>Components</strong></h1>
+                break;
+            case "jsp-ui":
+                <h1>JSP <strong>Components</strong></h1>
+                break;
         }
-        .box h2 a:hover {
-            text-decoration: none;
-        }
-        .box h2 span {
-            display: block;
-            font-size: .7em;
-        }
-        #page > ul > li.box {
-            clear: none;
-            display: inline-block;
-            float: none;
-            min-width: 290px;
-            max-width: 300px;
-        }
-        hr {
-            height: 1px;
-            line-height: 1px;
-            background: #DFDFDF;
-            border: 0;
-        }
-        #page .suite .imgPlate,
-        #page .suite .box {
-            border-width: 0;
-            box-shadow: none;
-        }
-        #page .suite {
-            text-align: center;
-        }
-        #page .suite .box h2 {
-            margin-top: 1em;
-        }
-    </style>
-</head>
-<body>
-    <h1 class="header">Telerik UI for ASP.NET MVC</h1>
-    <div id="page">
-        <div class="suites">
-            <div class="suite-column">
-                <h2>Telerik UI for ASP.NET MVC Demos</h2>
-                <img src="../../Content/shared/demos-mobile.png" />
-                <a href="@(Url.RouteUrl("Default", new { controller = "Suite"}))">Launch ASP.NET MVC Demos</a>
+        <div id="most-popular">
+            <div class="popular-widgets">
+                <h2>Most popular</h2>
+                <ul class="overview-col">
+                    <li><a href="@Url.Widget("grid")">Grid</a></li>
+                    <li><a href="@Url.Widget("editor")">Editor</a></li>
+                    <li><a href="@Url.Widget("scheduler")">Scheduler</a></li>
+                    <li><a href="@Url.Widget("bar-charts")">Bar Charts</a></li>
+                    <li><a href="@Url.Widget("line-charts")">Line Charts</a></li>
+                    <li><a href="@Url.Widget("financial")">Stock Charts</a></li>
+                    <li><a href="@Url.Widget("dropdownlist")">DropDownList</a></li>
+                    <li><a href="@Url.Widget("window")">Window</a></li>
+                    <li><a href="@Url.Widget("upload")">Upload</a></li>
+                    <li><a href="@Url.Widget("treeview")">TreeView</a></li>
+                </ul>
             </div>
-            <div class="suite-column">
-                <h2>Kendo UI Professional Demos</h2>
-                <img src="../../Content/shared/demos-web.png" />
-                <a href="html/index.html">Launch HTML/JS Demos</a>
+            <div class="qr-code">
+
+                <h2>View on mobile device</h2>
+                <div id="mobileDemosQR"></div>
+
+                <script type="text/javascript">
+                    $(function() {
+                        $("#mobileDemosQR").kendoQRCode({
+                            value: window.location.href,
+                            size: 110,
+                            color: "#333333",
+                            border: {
+                                color: "#666666",
+                                width: 1
+                            }
+                        });
+                    });
+                </script>
             </div>
         </div>
+        <div id="widgets-all">
+
+            @{
+                var columns = new[] {
+                new [] {
+                    "Data Management",
+                    "Editors"
+                },
+                new [] {
+                    "Charts",
+                    "Gauges"
+                },
+                new [] {
+                    "Barcodes",
+                    "Diagrams & Maps",
+                    "Scheduling",
+                    "Framework"
+                },
+                new [] {
+                    "Layout",
+                    "Navigation",
+                    "Interactivity & UX"
+                }
+            };
+
+                var categories = (IEnumerable<IGrouping<string, NavigationWidget>>)ViewBag.Categories;
+            }
+
+            @{ int colNumber = 1; }
+
+            @foreach (var column in columns)
+            {<ul class="overview-col col-four">
+                    @foreach (var columnCategory in column)
+                    {
+                        var category = categories.FirstOrDefault(c => c.Key == columnCategory);
+                        if (category.Any(c => c.ShouldInclude))
+                        {
+                            <li class="widget">
+                                <h2>@category.Key</h2>
+                                <ul>
+                                    @foreach (var widget in category)
+                                    {
+                                        if (widget.ShouldInclude)
+                                        {
+                                            <li>@Html.WidgetLink(widget, (string)ViewBag.NavProduct)</li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                    @if (colNumber == 4)
+                    {
+                        switch ((string)ViewBag.Product)
+                        {
+                            case "kendo-ui":
+                                <li class="widget" style="padding-bottom: 0;">
+                                    <h2>Hybrid UI</h2>
+                                    <ul>
+                                        <li><a href="http://demos.telerik.com/@ViewBag.Product/m" target="_blank">Launch Demos</a></li>
+                                    </ul>
+                                </li>
+                                break;
+                            case "aspnet-mvc":
+
+                                break;
+                            case "php-ui":
+
+                                break;
+                            case "jsp-ui":
+
+                                break;
+                        }
+                    }
+                </ul>
+
+                colNumber++;
+            }
+        </div>
     </div>
-</body>
-</html>
+    <div id="applications-and-tools">
+        @if (ViewBag.Product == "kendo-ui")
+            {
+            <div id="overview-applications">
+                <h1>Sample Applications</h1>
+                <ul>
+                    <li class="application">
+                        <a href="./bootstrap/">
+                            <img src="@Url.Content("~/content/shared/images/dashboards/bootstrap.png")" alt="Kendo UI Bootstrap" class="application-image" />
+                            <p>Kendo UI<sup>&reg;</sup> ♥ Bootstrap</p>
+                        </a>
+                    </li>
+                    <li class="application">
+                        <a href="./websushi/">
+                            <img src="@Url.Content("~/content/shared/images/dashboards/spa.png")" alt="Single-Page Application" class="application-image" />
+                            <p>Single-Page Application</p>
+                        </a>
+                    </li>
+                    <li class="application">
+                        <a href="./aeroviewr/">
+                            <img src="@Url.Content("~/content/shared/images/dashboards/image-gallery.png")" alt="Image Gallery" class="application-image" />
+                            <p>Image Gallery</p>
+                        </a>
+                    </li>
+                    <li class="application">
+                        <a href="./html5-diagram-sample-app">
+                            <img src="@Url.Content("~/content/shared/images/dashboards/diagram.png")" alt="Sample Diagram Tool" class="application-image" />
+                            <p>Sample Diagram Tool</p>
+                        </a>
+                    </li>
+                    <li class="application">
+                        <a href="./financial/stock-history">
+                            <img src="@Url.Content("~/content/shared/images/dashboards/stock-history.png")" alt="Stock History Dashboard" class="application-image" />
+                            <p>Stock History Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="application">
+                        <a href="../aspnet-mvc/html5-dashboard-sample-app/">
+                            <img src="@Url.Content("~/content/shared/images/dashboards/northwind.png")" alt="Telerik Northwind Dashboard" class="application-image" />
+                            <p>Telerik Northwind Dashboard</p>
+                        </a>
+                    </li>
+                    <!--        <li class="application">
+                                <a href="./mobile-apps/sushi/">
+                                     <img src="@Url.Content("~/content/shared/images/dashboards/sushi-bar.png")" class="application-image"/>
+                                     <p>Sushi Bar</p>
+                                </a>
+                            </li>
+                            <li class="application">
+                                <a href="./mobile-apps/cuteness/">
+                                     <img src="@Url.Content("~/content/shared/images/dashboards/reddit-viewer.png")" class="application-image"/>
+                                    <p>Mobile Reddit Viewer</p>
+                                </a>
+                            </li>-->
+                </ul>
+            </div>
+        }
+        @if (ViewBag.Product == "aspnet-mvc")
+        {
+            <div id="overview-applications">
+                <h1>Sample Applications</h1>
+                <ul>
+                    <li class="application">
+                        <a href="./bootstrap/">
+                            <img src="@Url.Content("~/content/shared/images/dashboards/bootstrap.png")" alt="Kendo UI Bootstrap" class="application-image" />
+                            <p>Kendo UI<sup>&reg;</sup> ♥ Bootstrap</p>
+                        </a>
+                    </li>
+                    <li class="application">
+                        <a href="./html5-dashboard-sample-app/">
+                            <img src="@Url.Content("~/content/shared/images/dashboards/northwind.png")" alt="Telerik Northwind Dashboard" class="application-image" />
+                            <p>Telerik Northwind Dashboard</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        }
+        <div id="overview-tools">
+            <h1>Tools</h1>
+            <ul>
+                @if (ViewBag.Product == "kendo-ui")
+                {
+                    <li>
+                        <a href="@Html.DojoRoot()">Interactive Dojo</a>
+                        <p>An environment designed to help you get up and running with  Kendo UI quickly.</p>
+                    </li>
+                }
+                <li>
+                    <a href="@Url.Action("Index", "ThemeBuilder")/">ThemeBuilder</a>
+                    <p>Create and modify themes for Kendo UI widgets.</p>
+                </li>
+                <li>
+                    <a href="https://chrome.google.com/webstore/detail/telerik-kendo-ui-chrome-i/npcmgpnfknjmndbbakdhchgibaajnlpe" target="_blank">Chrome Inspector</a>
+                    <p> Chrome Developer Tools Extension allowing you to inspect, debug and troubleshoot pages hosting Kendo UI widgets and framework components.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    @Html.Partial("Footer")
+</div>

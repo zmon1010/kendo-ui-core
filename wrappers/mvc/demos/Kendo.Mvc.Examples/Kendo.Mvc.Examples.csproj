@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AutoComplete\GroupingController.cs" />
     <Compile Include="Controllers\Bar_Charts\Pan_And_ZoomController.cs" />
     <Compile Include="Controllers\Bar_Charts\VisualsController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Box_Plot_Charts\VerticalController.cs" />
     <Compile Include="Controllers\Calendar\DisableDatesController.cs" />
     <Compile Include="Controllers\Chart_Api\ExportController.cs" />
@@ -719,6 +720,8 @@
     <Compile Include="Controllers\Window\IndexController.cs" />
     <Compile Include="Controllers\Window\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\Window\Right_To_Left_SupportController.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\UrlExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -766,6 +769,7 @@
     <Compile Include="Models\PrintMargins.cs" />
     <Compile Include="Models\PrintOptions.cs" />
     <Compile Include="Models\Scheduler\MeetingSignalRViewModel.cs" />
+    <Compile Include="Models\StyleGroups.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryService.cs" />
     <Compile Include="Models\WebMail.cs" />
@@ -922,6 +926,14 @@
     <Content Include="App_Data\Sample_log.ldf">
       <DependentUpon>Sample.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\shared\images\dashboards\bootstrap.png" />
+    <Content Include="Content\shared\images\dashboards\northwind.png" />
+    <Content Include="Content\shared\images\logos\aspnet-mvc.png" />
+    <Content Include="Content\shared\js\console.js" />
+    <Content Include="Content\shared\js\kendo-dojo.js" />
+    <Content Include="Content\shared\js\prettify.js" />
+    <Content Include="Content\shared\styles\examples.css" />
+    <Content Include="Content\shared\styles\tags.png" />
     <Content Include="Views\combobox\grouping.cshtml" />
     <Content Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\bar_charts\pan_and_zoom.cshtml" />
@@ -2901,6 +2913,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_MobileLayout.cshtml" />
     <Content Include="Views\Shared\_WebLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\Header.cshtml" />
+    <Content Include="Views\Shared\GoogleTagManager.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Shared\WebSearchScript.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
@@ -3623,6 +3640,7 @@
     <Content Include="Views\gantt\resources.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\shared\inspector\" />
     <Folder Include="Content\UserFiles\Images\icons\16\" />
     <Folder Include="Content\UserFiles\Images\icons\sports\" />
     <Folder Include="Content\UserFiles\Images\Menu\" />

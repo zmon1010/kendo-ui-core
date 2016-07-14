@@ -5,10 +5,21 @@ using System.Web.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
+            ViewBag.Product = CurrentProduct();
+            ViewBag.NavProduct = CurrentNavProduct();
+
+            ViewBag.Theme = "material";
+            ViewBag.CommonFile = "common-material";
+
+            //LoadNavigation();
+            LoadCategories();
+
+            //SetTheme();
+
             return View();
         }
 
