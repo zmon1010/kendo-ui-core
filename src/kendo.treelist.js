@@ -115,7 +115,7 @@ var __meta__ = { // jshint ignore:line
         gridContentWrap: "k-grid-content",
         gridFilter: "k-grid-filter",
         footerTemplate: "k-footer-template",
-        loading: "k-loading",
+        loading: "k-i-loading",
         refresh: "k-i-refresh",
         retry: "k-request-retry",
         selected: "k-state-selected",
@@ -124,18 +124,18 @@ var __meta__ = { // jshint ignore:line
         withIcon: "k-with-icon",
         filterable: "k-filterable",
         icon: "k-icon",
-        iconFilter: "k-filter",
+        iconFilter: "k-i-filter",
         iconCollapse: "k-i-collapse",
         iconExpand: "k-i-expand",
         iconHidden: "k-i-none",
         iconPlaceHolder: "k-icon k-i-none",
         input: "k-input",
-        dropPositions: "k-insert-top k-insert-bottom k-add k-insert-middle",
-        dropTop: "k-insert-top",
-        dropBottom: "k-insert-bottom",
-        dropAdd: "k-add",
-        dropMiddle: "k-insert-middle",
-        dropDenied: "k-denied",
+        dropPositions: "k-i-insert-top k-i-insert-bottom k-i-add k-i-insert-middle",
+        dropTop: "k-i-insert-top",
+        dropBottom: "k-i-insert-bottom",
+        dropAdd: "k-i-add",
+        dropMiddle: "k-i-insert-middle",
+        dropDenied: "k-i-denied",
         dragStatus: "k-drag-status",
         dragClue: "k-drag-clue",
         dragClueText: "k-clue-text"
@@ -143,32 +143,32 @@ var __meta__ = { // jshint ignore:line
 
     var defaultCommands = {
         create: {
-            imageClass: "k-add",
+            imageClass: "k-i-add",
             className: "k-grid-add",
             methodName: "addRow"
         },
         createchild: {
-            imageClass: "k-add",
+            imageClass: "k-i-add",
             className: "k-grid-add",
             methodName: "addRow"
         },
         destroy: {
-            imageClass: "k-delete",
+            imageClass: "k-i-delete",
             className: "k-grid-delete",
             methodName: "removeRow"
         },
         edit: {
-            imageClass: "k-edit",
+            imageClass: "k-i-edit",
             className: "k-grid-edit",
             methodName: "editRow"
         },
         update: {
-            imageClass: "k-update",
+            imageClass: "k-i-update",
             className: "k-primary k-grid-update",
             methodName: "saveRow"
         },
         canceledit: {
-            imageClass: "k-cancel",
+            imageClass: "k-i-cancel",
             className: "k-grid-cancel",
             methodName: "_cancelEdit"
         },
@@ -3076,7 +3076,7 @@ var __meta__ = { // jshint ignore:line
                         paddingBottom: target.css("paddingBottom")
                     })
                     .html(target.attr(kendo.attr("title")) || target.attr(kendo.attr("field")) || target.text())
-                    .prepend('<span class="k-icon k-drag-status k-denied" />');
+                    .prepend('<span class="k-icon k-drag-status k-i-denied" />');
                 }
             });
 

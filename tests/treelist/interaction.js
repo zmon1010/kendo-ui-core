@@ -26,7 +26,7 @@
     }
 
     function loadingIcons() {
-        return instance.content.find(".k-loading");
+        return instance.content.find(".k-i-loading");
     }
 
     function controlledRead() {
@@ -169,7 +169,7 @@
         instance.content.find(".k-i-collapse").mousedown();
 
         equal(instance.content.find(".k-i-expand").length, 0);
-        equal(instance.content.find(".k-loading").length, 1);
+        equal(instance.content.find(".k-i-loading").length, 1);
     });
 
     function statusHTML() {

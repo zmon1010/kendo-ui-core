@@ -242,11 +242,11 @@ var __meta__ = { // jshint ignore:line
                         }
                     },
                     drag: function(e) {
-                        var status = "k-denied";
+                        var status = "k-i-denied";
 
                         var setting = settingTargetFromNode(e.dropTarget);
                         if (setting && setting.validate(this.dataItem(e.sourceNode))) {
-                            status = "k-add";
+                            status = "k-i-add";
                         }
 
                         e.setStatusClass(status);

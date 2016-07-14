@@ -19,7 +19,7 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
         var uploadInstance = createUpload(noAutoConfig);
         simulateFileSelect();
 
-        equal($(".k-delete", uploadInstance.wrapper).length, 1);
+        equal($(".k-i-delete", uploadInstance.wrapper).length, 1);
     });
 
     test("remove icon is not rendered if remove action is not configured", function() {
@@ -28,7 +28,7 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
 
         simulateFileSelect();
 
-        equal($(".k-delete", uploadInstance.wrapper).length, 0);
+        equal($(".k-i-delete", uploadInstance.wrapper).length, 0);
     });
 
     test("clicking remove should remove file entry", function() {
@@ -90,7 +90,7 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
         simulateFileSelect();
         simulateFileSelect();
 
-        $(".k-delete:first", uploadInstance.wrapper).trigger("click");
+        $(".k-i-delete:first", uploadInstance.wrapper).trigger("click");
 
         equal($(".k-upload-selected", uploadInstance.wrapper).length, 1);
     });
@@ -106,7 +106,7 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
         var uploadInstance = createUpload(noAutoConfig);
         simulateFileSelect();
         $(".k-upload-selected").click();
-        
+
         equal($(".k-upload-status-total", uploadInstance.wrapper).length, 1);
     });
 

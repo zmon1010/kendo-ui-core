@@ -203,7 +203,7 @@ test('dynamic resizing: tools groups that do fit in the toolbar are visible', fu
 test('resizable toolbar creates overflowPopup', function() {
     var editor = textarea.kendoEditor(options).data("kendoEditor");
     var toolbar = editor.toolbar;
-    
+
     ok(toolbar.overflowPopup instanceof kendo.ui.Popup);
     ok(toolbar.overflowPopup.element.is("ul.k-editor-overflow-popup"));
 });
@@ -323,7 +323,7 @@ module("editor resizable toolbar keyboard navigation", {
 });
 
 function getTool(className) {
-    var tool = editor.toolbar.overflowPopup.element.find(".k-" + className);
+    var tool = editor.toolbar.overflowPopup.element.find(".k-" + className + ", .k-i-" + className);
 
     if (tool.hasClass("k-tool-icon")) {
         tool = tool.closest(".k-tool");
@@ -371,14 +371,14 @@ test('down arrow focuses last tool from next group in overflowPopup', function()
 
     getTool("strikethrough").focus().press(keys.DOWN);
 
-    ok(isToolActive("createTable"));
+    ok(isToolActive("create-table"));
 });
 
 test('up arrow focuses first tool from previous group in overflowPopup', function() {
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("createTable").focus().press(keys.UP);
+    getTool("create-table").focus().press(keys.UP);
 
     ok(isToolActive("strikethrough"));
 });
@@ -387,16 +387,16 @@ test('down arrow changes the activeElement when createTable tool has focus', fun
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("createTable").focus().press(keys.DOWN);
+    getTool("create-table").focus().press(keys.DOWN);
 
-    ok(isToolActive("justifyLeft"));
+    ok(isToolActive("justify-left"));
 });
 
 test('up arrow changes the activeElement when createTable tool has focus', function() {
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("createTable").focus().press(keys.UP);
+    getTool("create-table").focus().press(keys.UP);
 
     ok(isToolActive("strikethrough"));
 });

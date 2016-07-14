@@ -502,14 +502,14 @@ var __meta__ = { // jshint ignore:line
                         '# if (filterable) {#'+
                         '<li class="k-item k-include-item">'+
                             '<span class="k-link">'+
-                                '<span class="k-icon k-filter"></span>'+
+                                '<span class="k-icon k-i-filter"></span>'+
                                 '${messages.include}'+
                             '</span>'+
                         '</li>'+
                         '<li class="k-separator"></li>'+
                         '<li class="k-item k-filter-item">'+
                             '<span class="k-link">'+
-                                '<span class="k-icon k-filter"></span>'+
+                                '<span class="k-icon k-i-filter"></span>'+
                                 '${messages.filterFields}'+
                             '</span>'+
                             '<ul>'+

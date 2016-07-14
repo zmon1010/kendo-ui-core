@@ -48,9 +48,10 @@
             '</tbody></table>',
 
         buttonTemplate:
+            '# var iconCssClass= "k-i-" + kendo.toHyphens(data.cssClass.replace("k-", ""));#' +
             '<a href="" role="button" class="k-tool"' +
             '#= data.popup ? " data-popup" : "" #' +
-            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= data.cssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
+            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= iconCssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
 
         colorPickerTemplate:
             '<div class="k-colorpicker #= data.cssClass #" />',
@@ -313,7 +314,7 @@
             var resizable = this.options.resizable;
             var isResizable = $.isPlainObject(resizable) ? (resizable.content === undefined || resizable.content === true) : resizable;
             if (isResizable && this.textarea) {
-                $("<div class='k-resize-handle'><span class='k-icon k-resize-se' /></div>")
+                $("<div class='k-resize-handle'><span class='k-icon k-i-resize-se' /></div>")
                     .insertAfter(this.textarea);
 
                 this.wrapper.kendoResizable(extend({}, this.options.resizable, {

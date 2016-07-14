@@ -228,7 +228,7 @@
         ok(!draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-denied"));
+            .hasClass("k-i-denied"));
     });
 
     test("dragenter on denied target does not remove denied class", function() {
@@ -238,16 +238,16 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-denied"));
+            .hasClass("k-i-denied"));
     });
 
     test("dragleave removes position class", function() {
         var statusHint = draggable.hint.children(".k-drag-status");
 
-        statusHint.addClass("k-add");
+        statusHint.addClass("k-i-add");
         dragleave();
 
-        ok(!statusHint.hasClass("k-add"));
+        ok(!statusHint.hasClass("k-i-add"));
     });
 
     test("drop on possible target trigger update event", 1, function() {
@@ -311,7 +311,7 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-insert-top"));
+            .hasClass("k-i-insert-top"));
     });
 
     test("drag on upper part of target between two sibling set drop position class", function() {
@@ -327,7 +327,7 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-insert-middle"));
+            .hasClass("k-i-insert-middle"));
     });
 
     test("drag on upper part of target with greater orderId & same parent set update arguments", 3, function() {
@@ -400,7 +400,7 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-add"));
+            .hasClass("k-i-add"));
     });
 
     test("drag on middle part of target set update arguments", 2, function() {
@@ -434,7 +434,7 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-insert-bottom"));
+            .hasClass("k-i-insert-bottom"));
     });
 
     test("drag on bottom part of target between two sibling set drop position class", function() {
@@ -450,7 +450,7 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-insert-middle"));
+            .hasClass("k-i-insert-middle"));
     });
 
     test("drag on bottom part of target with greater orderId & same parent set update arguments", 3, function() {

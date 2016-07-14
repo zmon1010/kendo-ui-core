@@ -58,7 +58,7 @@ test('exec with node parameter calls exec', function() {
     var execArgs = [];
 
     withMock(editor, "exec", function() { execArgs = arguments; }, function() {
-        $('.k-bold', editor.wrapper).parent().click();
+        $('.k-i-bold', editor.wrapper).parent().click();
 
         equal(execArgs.length, 1);
         equal(execArgs[0], 'bold');
@@ -86,7 +86,7 @@ test('handle carret selection', function() {
 
     editor.trigger('select');
 
-    ok($('.k-bold', editor.wrapper).parent().hasClass('k-state-selected'));
+    ok($('.k-i-bold', editor.wrapper).parent().hasClass('k-state-selected'));
 });
 
 test('handle word selection', function() {
@@ -99,7 +99,7 @@ test('handle word selection', function() {
 
     editor.trigger('select');
 
-    ok($('.k-bold', editor.wrapper).parent().hasClass('k-state-selected'));
+    ok($('.k-i-bold', editor.wrapper).parent().hasClass('k-state-selected'));
 });
 
 test('handle mixed selection', function() {
@@ -113,7 +113,7 @@ test('handle mixed selection', function() {
 
     editor.trigger('select');
 
-    ok(!$('k-insertUnorderedList', editor.wrapper).hasClass('k-state-selected'));
+    ok(!$('k-i-insert-unordered-list', editor.wrapper).hasClass('k-state-selected'));
 });
 
 test('handle image selection', function() {
@@ -126,7 +126,7 @@ test('handle image selection', function() {
 
     editor.trigger('select');
 
-    ok($('.k-justifyRight', editor.wrapper).parent().hasClass('k-state-selected'));
+    ok($('.k-i-justify-right', editor.wrapper).parent().hasClass('k-state-selected'));
 });
 
 if (!kendo.support.browser.msie) {
@@ -239,7 +239,7 @@ function bindToMock(array, options) {
 }
 
 function getTool(className) {
-    var tool = dom.find(".k-" + className);
+    var tool = dom.find(".k-" + className + ", .k-i-" + className);
 
     if (tool.hasClass("k-tool-icon")) {
         tool = tool.closest(".k-tool");
@@ -254,7 +254,7 @@ test("expands tool configuration for default tool", function() {
 
     ok(toolbar.tools.bold);
     equal(toolbar.tools.bold.options.name, "bold");
-    equal(dom.find(".k-bold").length, 1);
+    equal(dom.find(".k-i-bold").length, 1);
 });
 
 test("expands tool configuration for custom tool", function() {
@@ -263,7 +263,7 @@ test("expands tool configuration for custom tool", function() {
     ok(toolbar.tools.foo);
     equal(toolbar.tools.foo.options.name, "foo");
     equal(toolbar.tools.foo.options.type, "button");
-    equal(dom.find(".k-foo").length, 1);
+    equal(dom.find(".k-i-foo").length, 1);
 });
 
 test("expands native tools", function() {
@@ -353,9 +353,9 @@ test("first and last buttons in groups get k-group-start/end classes", function(
     equal(dom.find(".k-group-start").length, 2);
     equal(dom.find(".k-group-end").length, 2);
     ok(getTool("bold").hasClass("k-group-start"));
-    ok(getTool("insertImage").hasClass("k-group-start"));
+    ok(getTool("insert-image").hasClass("k-group-start"));
     ok(getTool("underline").hasClass("k-group-end"));
-    ok(getTool("createLink").hasClass("k-group-end"));
+    ok(getTool("create-link").hasClass("k-group-end"));
 });
 
 test("hidden buttons do not end groups", function() {
@@ -363,10 +363,10 @@ test("hidden buttons do not end groups", function() {
         "createLink", "unlink"
     ]);
 
-    dom.find(".k-unlink").addClass(".k-state-disabled");
+    dom.find(".k-i-unlink").addClass(".k-state-disabled");
     toolbar.update();
 
-    ok(getTool("createLink").hasClass("k-group-end"));
+    ok(getTool("create-link").hasClass("k-group-end"));
 });
 
 test("shown groups do are the only group end", function() {
@@ -531,7 +531,7 @@ test("right arrow focuses tool in next group", function() {
 
     getTool("bold").press(keys.RIGHT);
 
-    ok(isToolActive("createLink"));
+    ok(isToolActive("create-link"));
 });
 
 test("right arrow focuses first tool in next group", function() {
@@ -539,7 +539,7 @@ test("right arrow focuses first tool in next group", function() {
 
     getTool("bold").press(keys.RIGHT);
 
-    ok(isToolActive("createLink"));
+    ok(isToolActive("create-link"));
 });
 
 test("left arrow focuses previous tool", function() {
@@ -553,7 +553,7 @@ test("left arrow focuses previous tool", function() {
 test("right arrow focuses tool in next group", function() {
     bindToMock([ "bold", "createLink" ]);
 
-    getTool("createLink").press(keys.LEFT);
+    getTool("create-link").press(keys.LEFT);
 
     ok(isToolActive("bold"));
 });

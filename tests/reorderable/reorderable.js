@@ -341,8 +341,8 @@
 
         moveOverDropTarget(div.children().eq(0), target);
 
-        ok(hint.find(".k-drag-status").hasClass("k-denied"), "drag hint is not in denied state");
-        ok(!hint.find(".k-drag-status").hasClass("k-add"), "drag hint is in add state");
+        ok(hint.find(".k-drag-status").hasClass("k-i-denied"), "drag hint is not in denied state");
+        ok(!hint.find(".k-drag-status").hasClass("k-i-add"), "drag hint is in add state");
     });
 
     test("drop cue is as not denied when in same container", function() {
@@ -362,8 +362,8 @@
 
         moveOverDropTarget(div.children().eq(0), target);
 
-        ok(!hint.find(".k-drag-status").hasClass("k-denied"), "drag hint is in denied state");
-        ok(hint.find(".k-drag-status").hasClass("k-add"), "drag hint is not in add state");
+        ok(!hint.find(".k-drag-status").hasClass("k-i-denied"), "drag hint is in denied state");
+        ok(hint.find(".k-drag-status").hasClass("k-i-add"), "drag hint is not in add state");
     });
 
     test("change event is not triggered when drag over containers is not allowed", function() {

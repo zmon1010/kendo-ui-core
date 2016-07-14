@@ -171,7 +171,7 @@ test("clicking cancel should remove file entry", function() {
     uploadInstance._module.stopUploadRequest = function() { requestStopped = true; };
 
     simulateFileSelect();
-    $(".k-cancel", uploadInstance.wrapper).trigger("click");
+    $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
 
     ok(requestStopped);
 });
@@ -296,7 +296,7 @@ test("postFormData is issued when clicking retry", function() {
     var postFormDataCalled = false;
     uploadInstance._module.postFormData = function() { postFormDataCalled = true; };
 
-    $(".k-retry", uploadInstance.wrapper).trigger("click");
+    $(".k-i-retry", uploadInstance.wrapper).trigger("click");
 
     ok(postFormDataCalled);
 });
@@ -427,7 +427,7 @@ test("clicking remove should call remove action for completed files", function()
     $(".k-upload-selected", uploadInstance.wrapper).trigger("click");
     uploadInstance._module.onRequestSuccess({ target: { responseText: "", status: 200 } }, $(".k-file", uploadInstance.wrapper));
 
-    $(".k-delete", uploadInstance.wrapper).trigger("click");
+    $(".k-i-delete", uploadInstance.wrapper).trigger("click");
     ok(removeCalled);
 });
 
@@ -509,7 +509,7 @@ asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, simulateRemo
 
         simulateUploadWithResponse(errorResponse);
 
-        $(".k-retry", uploadInstance.wrapper).trigger("click");
+        $(".k-i-retry", uploadInstance.wrapper).trigger("click");
 
         equal(lastFormData.myId, 2);
     });
@@ -814,7 +814,7 @@ test("files are passed to populateFormData", 2, function() {
 module("Upload / FormDataUpload / Templates / autoUpload = false", {
     setup: function() {
         moduleSetup();
-        uploadInstance = createUpload({ 
+        uploadInstance = createUpload({
             async: {"saveUrl": 'javascript:;', "removeUrl": 'javascript:;', autoUpload: false },
             template: "<div class='myTemplate'><span class='k-progress'></span><span class='fileInfo'>#=name# #=size# #=files[0].extension#</span><button type='button' class='k-upload-action'></button></div>"
         });
@@ -824,7 +824,7 @@ module("Upload / FormDataUpload / Templates / autoUpload = false", {
 
 test("k-upload-action button should contain remove icon", function() {
     simulateSingleFileSelect("image.jpg", 500);
-    equal($(".k-file button.k-upload-action > span.k-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
 });
 
 test("progress bar is rendered in the template", function() {
@@ -843,7 +843,7 @@ test("separate template is rendered for each of the selected files", function() 
 module("Upload / FormDataUpload / Templates / autoUpload = false / batch = true", {
     setup: function() {
         moduleSetup();
-        uploadInstance = createUpload({ 
+        uploadInstance = createUpload({
             async: {"saveUrl": 'javascript:;', "removeUrl": 'javascript:;', autoUpload: false, batch: true },
             template: "<div class='myTemplate'>" +
                       "<span class='fileInfo'><span class='fileName'>#=name#</span><span class='fileSize'>#=size#</span>" +
@@ -875,7 +875,7 @@ test("size represents the total size of the files", function() {
 module("Upload / FormDataUpload / Templates / autoUpload = true", {
     setup: function() {
         moduleSetup();
-        uploadInstance = createUpload({ 
+        uploadInstance = createUpload({
             async: {"saveUrl": 'javascript:;', "removeUrl": 'javascript:;' },
             template: "<div class='myTemplate'><span class='k-icon'></span><span class='fileInfo'>#=name# #=size# #=files[0].extension#</span><button type='button' class='k-upload-action'></button><span class='k-progress'></span></div>"
         });
@@ -885,7 +885,7 @@ module("Upload / FormDataUpload / Templates / autoUpload = true", {
 
 test("k-upload-action button should contain retry icon on unsuccessful upload", function(){
     simulateUploadWithResponse(errorResponse);
-    equal($(".k-file button.k-upload-action > span.k-retry", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-retry", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain retry title on unsuccessful upload", function(){
@@ -895,7 +895,7 @@ test("k-upload-action button should contain retry title on unsuccessful upload",
 
 test("k-upload-action button should contain remove icon on successful upload", function(){
     simulateUpload();
-    equal($(".k-file button.k-upload-action > span.k-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain remove title on successful upload", function(){
@@ -912,14 +912,14 @@ test("loading status icon is rendered while uploading", function(){
     var requestStopped = false;
     uploadInstance._module.stopUploadRequest = function() { requestStopped = true; };
     simulateFileSelect();
-    equal($('.k-icon.k-loading', uploadInstance.wrapper).length, 1);
+    equal($('.k-icon.k-i-loading', uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain cancel icon while uploading", function(){
     var requestStopped = false;
     uploadInstance._module.stopUploadRequest = function() { requestStopped = true; };
     simulateFileSelect();
-    equal($(".k-file button.k-upload-action > span.k-cancel", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-cancel", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain cancel title while uploading", function(){
@@ -942,7 +942,7 @@ test("progress bar is rendered in the template", function() {
 module("Upload / FormDataUpload / Initial files", {
     setup: function() {
         moduleSetup();
-        uploadInstance = createUpload({ 
+        uploadInstance = createUpload({
             async: {"saveUrl": 'javascript:;', "removeUrl": 'javascript:;' },
             files: [
                 { name: "test.doc", size: 50, extension: ".doc"},
@@ -982,7 +982,7 @@ test("file entries contain 'files' data", function(){
 });
 
 test("remove icon is rendered for each file entry", function() {
-    equal($(".k-delete", uploadInstance.wrapper).length, 2);
+    equal($(".k-i-delete", uploadInstance.wrapper).length, 2);
 });
 
 test("initial file entries have progress-bar with 100% width", function(){
@@ -998,7 +998,7 @@ test("k-upload-pct text is '100%'  for each initially rendered file entry", func
 module("Upload / FormDataUpload / Initial files without remove", {
     setup: function() {
         moduleSetup();
-        uploadInstance = createUpload({ 
+        uploadInstance = createUpload({
             async: {"saveUrl": 'javascript:;' },
             files: [
                 { name: "test.doc", size: 50, extension: ".doc"},
@@ -1010,7 +1010,7 @@ module("Upload / FormDataUpload / Initial files without remove", {
 });
 
 test("remove icon is not rendered for the file entries", function() {
-    equal($(".k-delete", uploadInstance.wrapper).length, 0);
+    equal($(".k-i-delete", uploadInstance.wrapper).length, 0);
 });
 
 // -----------------------------------------------------------------------------------
