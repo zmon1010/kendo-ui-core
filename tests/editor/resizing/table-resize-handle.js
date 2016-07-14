@@ -4,9 +4,15 @@
     var wrapper;
     var tableElement;
     var DOT = ".";
+    var CONTENT_EDITABLE = "contenteditable";
     var HANDLE_SELECTOR = ".k-table-resize-handle";
     var PX = "px";
+    var MOUSE_ENTER = "mouseenter";
+    var MOUSE_LEAVE = "mouseleave";
     var MOUSE_UP = "mouseup";
+    var SOUTHEAST = "southeast";
+    var TRUE = "true";
+    var FALSE = "false";
     var TABLE_HTML =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
@@ -39,11 +45,9 @@
     test("should be initialized with default optionsy", function() {
         var defaultOptions = {
             appendTo: null,
-            direction: "southeast",
+            direction: SOUTHEAST,
             resizableElement: null,
-            template: "<div class='k-table-resize-handle'></div>",
-            width: 20,
-            height: 20
+            template: "<div class='k-table-resize-handle' unselectable='on' contenteditable='false'></div>"
         };
 
         handle = new TableResizeHandle({});
@@ -98,14 +102,6 @@
         }
     });
 
-    test("should have default width", function() {
-        equal($(handle.element).css("width"), handle.options.width + PX);
-    });
-
-    test("should have default height", function() {
-        equal($(handle.element).css("height"), handle.options.width + PX);
-    });
-
     test("should have direction class", function() {
         equal($(handle.element).hasClass("k-resize-se"), true);
     });
@@ -132,9 +128,11 @@
 
     module("editor table resize handle events", {
         setup: function() {
+            wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
             handle = new TableResizeHandle({
                 appendTo: QUnit.fixture,
-                direction: "southeast"
+                direction: "southeast",
+                rootElement: wrapper
             });
             element = handle.element;
         },

@@ -1,5 +1,5 @@
 (function(f, define) {
-    define(["../main"], f);
+    define(["../main", "./resizing-utils"], f);
 })(function() {
 
 (function(kendo, undefined) {
@@ -31,32 +31,15 @@
     var TableResizeHandle = Class.extend({
         init: function(options) {
             var that = this;
-            var resizableElement;
 
             that.options = extend({}, that.options, options);
-
             that.element = $(that.options.template).appendTo(that.options.appendTo)[0];
 
-            $(that.element).addClass(getDirectionClass(that.options.direction));
+            that._addStyles();
+            that._attachEventHandlers();
+            that._initPositioningStrategy();
 
-            $(that.element).css({
-                width: that.options.width,
-                height: that.options.height
-            });
-
-            $(that.element).on(MOUSE_UP + NS, function(e) {
-                e.stopPropagation();
-            });
-
-            resizableElement = that.options.resizableElement;
-
-            $(that.element).data(TABLE, resizableElement);
-
-            that._positioningStrategy = HandlePositioningStrategy.create({
-                name: that.options.direction,
-                handle: that.element,
-                resizableElement: resizableElement
-            });
+            $(that.element).data(TABLE, that.options.resizableElement);
         },
 
         destroy: function() {
@@ -70,9 +53,7 @@
             appendTo: null,
             direction: SOUTHEAST,
             resizableElement: null,
-            template: "<div class='k-table-resize-handle'></div>",
-            width: 20,
-            height: 20
+            template: "<div class='k-table-resize-handle' unselectable='on' contenteditable='false'></div>"
         },
 
         show: function() {
@@ -88,6 +69,38 @@
             $(that.element).css({
                 left: position.left,
                 top: position.top
+            });
+        },
+
+        _attachEventHandlers: function() {
+            var that = this;
+
+            $(that.element)
+                .on(MOUSE_UP + NS, function(e) {
+                    e.stopPropagation();
+                });
+        },
+
+        _addStyles: function() {
+            var that = this;
+
+            $(that.element).addClass(getDirectionClass(that.options.direction));
+
+            $(that.element).css({
+                width: that.options.width,
+                height: that.options.height
+            });
+        },
+
+        _initPositioningStrategy: function() {
+            var that = this;
+            var options = that.options;
+            var resizableElement = that.options.resizableElement;
+
+            that._positioningStrategy = HandlePositioningStrategy.create({
+                name: options.direction,
+                handle: that.element,
+                resizableElement: resizableElement
             });
         }
     });

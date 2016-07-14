@@ -487,6 +487,15 @@
                     ".k-table p{margin:0;padding:0;}" +
                     ".k-table td >.k-resize-handle{position:absolute;height: 14px;width:10px;cursor:col-resize;z-index:2;}" +
                     ".k-table td > .k-resize-handle > .k-resize-hint-marker{width:2px;height:100%;margin:0 auto;background-color:#00b0ff;display:none;opacity:0.8;}" +
+                    ".k-table-resize-handle{position:absolute;background-color:#fff;border:1px solid #000;z-index:2;width:8px;height:8px;}" +
+                    ".k-resize-e{cursor:e-resize;}" +
+                    ".k-resize-n{cursor:n-resize;}" +
+                    ".k-resize-ne{cursor:ne-resize;}" +
+                    ".k-resize-nw{cursor:nw-resize;}" +
+                    ".k-resize-s{cursor:s-resize;}" +
+                    ".k-resize-se{cursor:se-resize;}" +
+                    ".k-resize-sw{cursor:sw-resize;}" +
+                    ".k-resize-w{cursor:w-resize;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +
