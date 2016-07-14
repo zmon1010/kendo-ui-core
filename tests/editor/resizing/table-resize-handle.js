@@ -2,9 +2,11 @@
     var TableResizeHandle = kendo.ui.editor.TableResizeHandle;
     var handle;
     var wrapper;
+    var tableElement;
     var DOT = ".";
     var HANDLE_SELECTOR = ".k-table-resize-handle";
     var PX = "px";
+    var MOUSE_UP = "mouseup";
     var TABLE_HTML =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
@@ -49,7 +51,7 @@
         deepEqual(handle.options, defaultOptions);
     });
 
-    test("should be initialized with custom optionsy", function() {
+    test("should be initialized with custom options", function() {
         var customOptions = {
             resizableElement: "element"
         };
@@ -106,6 +108,48 @@
 
     test("should have direction class", function() {
         equal($(handle.element).hasClass("k-resize-se"), true);
+    });
+
+    module("editor table resize handle data", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            handle = new TableResizeHandle({
+                appendTo: QUnit.fixture,
+                direction: "southeast",
+                resizableElement: tableElement
+            });
+            element = handle.element;
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set info about table", function() {
+        equal($(element).data("table"), tableElement);
+    });
+
+    module("editor table resize handle events", {
+        setup: function() {
+            handle = new TableResizeHandle({
+                appendTo: QUnit.fixture,
+                direction: "southeast"
+            });
+            element = handle.element;
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should stop event propagation on mouseup", function() {
+        var enterEvent = $.Event({ type: MOUSE_UP });
+
+        $(element).trigger(enterEvent);
+
+        equal(enterEvent.isPropagationStopped(), true);
     });
 
     module("editor table resize handle southeast position", {

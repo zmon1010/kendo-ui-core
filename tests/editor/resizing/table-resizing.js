@@ -6,11 +6,13 @@
     var tableResizing;
     var anotherTable;
     var DOT = ".";
+    var FIRST_COLUMN = "td:first";
     var HANDLE_SELECTOR = ".k-resize-handle";
     var NS = "kendoEditor";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
+    var MOUSE_UP = "mouseup";
     var SOUTHEAST = "southeast";
     var TABLE_HTML =
         '<table id="table" class="k-table">' +
@@ -302,6 +304,76 @@
         $(editor.body).trigger(leaveEvent);
 
         equal(destroySpy.calls("destroy"), 1);
+    });
+
+    editor_module("editor table resizing", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.tableResizing = null;
+            tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
+        },
+
+        afterEach: function() {
+            if (editor) {
+                $(editor.body).find("*").remove();
+            }
+
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+            }
+
+            removeMocksIn(editor.tableResizing);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("clicking on the resizing element should not destroy table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+
+        triggerEvent(tableElement, { type: MOUSE_UP });
+
+        equal(destroySpy.calls("destroy"), 0);
+    });
+
+    test("clicking on a child element should not destroy table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+
+        triggerEvent($(tableElement).find(FIRST_COLUMN)[0], { type: MOUSE_UP });
+
+        equal(destroySpy.calls("destroy"), 0);
+    });
+
+    test("clicking on the content while resizing is in progress should not destroy table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+        editor.tableResizing.resizingInProgress = function() { return true; };
+
+        triggerEvent(editor.body, { type: MOUSE_UP });
+
+        equal(destroySpy.calls("destroy"), 0);
+    });
+
+    test("clicking on the content while resizing is not in progress should destroy table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+        editor.tableResizing.resizingInProgress = function() { return false; };
+
+        triggerEvent(editor.body, { type: MOUSE_UP });
+
+        equal(destroySpy.calls("destroy"), 1);
+    });
+
+    test("clicking on an element with data attribute equal to table should not destroy table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+        editor.tableResizing.resizingInProgress = function() { return false; };
+        editor.tableResizing.showResizeHandles();
+
+        triggerEvent(editor.tableResizing.handles[0].element, { type: MOUSE_UP });
+
+        equal(destroySpy.calls("destroy"), 0);
     });
 
     module("editor table resizing", {

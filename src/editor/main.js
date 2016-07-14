@@ -17,16 +17,19 @@
         Widget = kendo.ui.Widget,
         os = kendo.support.mobileOS,
         browser = kendo.support.browser,
+        contains = $.contains,
         extend = $.extend,
         proxy = $.proxy,
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
-
+    
     var rtlEnabled = false;
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
+    var MOUSE_UP = "mouseup";
     var NS = ".kendoEditor";
     var TABLE = "table";
+    var UNDEFINED = "undefined";
 
     // options can be: template (as string), cssClass, title, defaultValue
     var ToolTemplate = Class.extend({
@@ -383,6 +386,17 @@
                 })
                 .on(MOUSE_LEAVE + NS, function() {
                     if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
+                        editor._destroyTableResizing();
+                    }
+                })
+                .on(MOUSE_UP + NS, function(e) {
+                    var tableResizing = editor.tableResizing;
+                    var element = tableResizing ? tableResizing.element : null;
+                    var target = e.target;
+                    var dataAttribute = $(target).data(TABLE);
+                    var dataCondition = typeof(dataAttribute) === UNDEFINED || (typeof(dataAttribute) !== UNDEFINED && dataAttribute !== element);
+
+                    if (tableResizing && !tableResizing.resizingInProgress() && dataCondition && element !== target && !contains(element, target)) {
                         editor._destroyTableResizing();
                     }
                 });

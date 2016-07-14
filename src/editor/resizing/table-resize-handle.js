@@ -14,9 +14,11 @@
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
 
+    var MOUSE_UP = "mouseup";
     var NS = ".kendoEditorTableResizeHandle";
     var HALF_INSIDE = "halfInside";
     var SOUTHEAST = "southeast";
+    var TABLE = "table";
 
     function getDirectionClass(direction) {
         var directionClasses = {
@@ -29,6 +31,7 @@
     var TableResizeHandle = Class.extend({
         init: function(options) {
             var that = this;
+            var resizableElement;
 
             that.options = extend({}, that.options, options);
 
@@ -41,10 +44,18 @@
                 height: that.options.height
             });
 
+            $(that.element).on(MOUSE_UP + NS, function(e) {
+                e.stopPropagation();
+            });
+
+            resizableElement = that.options.resizableElement;
+
+            $(that.element).data(TABLE, resizableElement);
+
             that._positioningStrategy = HandlePositioningStrategy.create({
                 name: that.options.direction,
                 handle: that.element,
-                resizableElement: that.options.resizableElement
+                resizableElement: resizableElement
             });
         },
 
