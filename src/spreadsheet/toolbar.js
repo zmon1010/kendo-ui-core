@@ -578,6 +578,7 @@
         init: function(options, toolbar) {
             var comboBox = $("<input />").kendoComboBox({
                 change: this._valueChange.bind(this),
+                clearButton: false,
                 dataSource: options.fontSizes || FONT_SIZES,
                 value: DEFAULT_FONT_SIZE
             }).data("kendoComboBox");
