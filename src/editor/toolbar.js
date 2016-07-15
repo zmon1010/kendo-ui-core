@@ -695,7 +695,7 @@
                 editor = that._editor,
                 range = editor.getRange(),
                 nodes = editorNS.RangeUtils.textNodes(range),
-                immutablesContext = that._immutableContext(range);
+                immutablesContext = that._immutablesContext(range);
 
             if (!nodes.length) {
                 nodes = [range.startContainer];
@@ -717,7 +717,7 @@
             this.update();
         },
 
-        _immutableContext: function(range) {
+        _immutablesContext: function(range) {
             if (this._editor.options.immutables) {
                 var editorNS = kendo.ui.editor;
                 if (range.collapsed) {
