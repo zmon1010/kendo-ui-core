@@ -130,9 +130,9 @@ If set to `true` the video will be played without sound
     });
     </script>
 
-### forwardSeek `Boolean` *(default: false)*
+### forwardSeek `Boolean` *(default: true)*
 
-If set to `true` the fowr
+If set to `false` the user will be prevented from seeking the video forward
 
 #### Example - enable full-screen
 
@@ -165,6 +165,90 @@ If set to `true` a playlist for the videos inside the data source will be create
     </script>
 
 ## Methods
+
+### fullScreen
+
+Forces the widget to enter\exit full-screen mode
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ]
+    });
+    // get a reference to the media player widget
+    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+    // force the widget to enter full-screen
+    mediaPlayer.fullScreen(true);
+    </script>
+
+### enterFullScreen `Boolean`
+
+The value that indicates whether the widget should enter\exit full-screen
+
+### isEnded
+
+Gets a value indicating whether the media has finished playing
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ]
+    });
+    // get a reference to the media player widget
+    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+    // check if the video has finished
+    mediaPlayer.isEnded();
+    </script>
+
+### isPaused
+
+Gets a value indicating whether the media is paused
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ]
+    });
+    // get a reference to the media player widget
+    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+    // check if the video has paused
+    mediaPlayer.isPaused();
+    </script> 
+
+### isPlaying
+
+Gets a value indicating whether the media is currently playing
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ]
+    });
+    // get a reference to the media player widget
+    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+    // check if the video is playing
+    mediaPlayer.isPlaying();
+    </script>     
 
 ### pause
 
@@ -211,29 +295,7 @@ Forces the video to start playing
     mediaPlayer.play();
     </script>
 
-### play
-
-Forces the video to start playing
-
-#### Example
-
-    <div id="mediaplayer" />
-    <script>
-    $("#mediaplayer").kendoMediaPlayer({
-        playlist: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
-            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
-            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
-        ]
-    });
-    // get a reference to the media player widget
-    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
-    // Starts the playing of the video
-    mediaPlayer.play();
-    </script>
-
-### Seek
+### seek
 
 Proceeds the video to a certain time
 
@@ -283,4 +345,178 @@ Stops the currently played video
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
     // Stop the video
     mediaPlayer.stop();
+    </script>
+
+### titlebar
+
+Gets a reference to the title bar
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        playlist: true,
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
+            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
+            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
+        ]
+    });
+    // get a reference to the media player widget
+    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+    // get a reference to the title bar
+    mediaPlayer.titlebar();
+    </script>
+
+### toolbar
+
+Gets a reference to the toolbar
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        playlist: true,
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
+            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
+            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
+        ]
+    });
+    // get a reference to the media player widget
+    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+    // get a reference to the toolbar
+    mediaPlayer.toolbar();
+    </script>
+
+## Events
+
+### end
+
+Fires when the media finishes playing.
+
+The event handler function context (available via the `this` keyword) will be set to the widget instance.
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ],
+        dataBound: function(){
+            //handle event
+        }
+    });
+    </script>
+
+### pause
+
+Fires when the media is paused.
+
+The event handler function context (available via the `this` keyword) will be set to the widget instance.
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ],
+        pause: function(){
+            //handle event
+        }
+    });
+    </script>
+
+### play
+
+Fires when the media begins playing.
+
+The event handler function context (available via the `this` keyword) will be set to the widget instance.
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ],
+        play: function(){
+            //handle event
+        }
+    });
+    </script>
+
+### ready
+
+Fires when loading is over and the widget is ready to start playing the media.
+
+The event handler function context (available via the `this` keyword) will be set to the widget instance.
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ],
+        ready: function(){
+            //handle event
+        }
+    });
+    </script>
+
+### timeChange
+
+Fires when the user selects a new play time.
+
+The event handler function context (available via the `this` keyword) will be set to the widget instance.
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ],
+        timeChange: function(){
+            //handle event
+        }
+    });
+    </script>
+
+### volumeChange
+
+This event if fired upon changing the volume level.
+
+The event handler function context (available via the `this` keyword) will be set to the widget instance.
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        dataSource: [					
+            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
+        ],
+        volumeChange: function(){
+            //handle event
+        }
+    });
     </script>
