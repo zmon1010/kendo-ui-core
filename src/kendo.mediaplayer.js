@@ -13,8 +13,17 @@
     (function ($, undefined) {
         var kendo = window.kendo,
         CHANGE = "change",
+        END = "end",
+        PAUSE = "pause",
+        PLAY = "play",
+        READY = "ready",
+        TIMECHANGE = "timeChange",
+        VOLUMECHANGE = "volumeChange", 
         FULLSCREEN_ENTER = "k-i-fullscreen-enter",
         FULLSCREEN_EXIT = "k-i-fullscreen-exit",
+        MUTE = "k-i-volume-mute",
+        LOW_VOLUME = "k-i-volume-low",
+        HIGH_VOLUME = "k-i-volume-high",
         PROGRESS = "progress",
         ERROR = "error",
         STATE_PLAY = "k-i-play",
@@ -119,7 +128,12 @@
             },
 
             events: [
-
+                END,
+                PAUSE,
+                PLAY,
+                READY,
+                TIMECHANGE,
+                VOLUMECHANGE    
             ],
 
             options: {
@@ -130,7 +144,8 @@
                 volume: 100,
                 fullScreen: false,
                 mute: false,
-                forwardSeek: false
+                forwardSeek: true,
+                playlist: false
             },
 
             _initData: function (options) {
@@ -196,13 +211,16 @@
                 var volumeSliderElement = wrapper.find(DOT + VOLUME_SLIDER);
                 if (!this._volumeSlider) {
                     this._volumeDraggingHandler = proxy(this._volumeDragging, this);
+                    this._volumeChangeHandler = proxy(this._volumeChange, this);
                     volumeSliderElement = $(DOT + VOLUME_SLIDER);
                     volumeSliderElement.width(50);
                     this._volumeSlider = new ui.Slider(volumeSliderElement[0], {
                         smallStep: 1,
                         min: 0,
                         max: 100,
+                        value : this.options.volume,
                         slide: this._volumeDraggingHandler,
+                        change: this._volumeChangeHandler,
                         tickPlacement: "none",
                         showButtons: false
                     });
@@ -222,7 +240,13 @@
             },
 
             _resetTime: function(){
-                this._media.currentTime = 0;
+                if(this._youTubeVideo)
+                {
+                    this._media.seekTo(0, true);
+                }else{
+                    this._media.currentTime = 0;
+                }
+                
                 this._mediaTimeUpdate();
                 $.grep(this._toolBar.options.items, function(e) { return !!e.template; }).template = templates.toolBarTime; 
             },
@@ -286,7 +310,7 @@
 
             _toolbarClick: function (e) {
                 var target = $(e.target).children().first();
-                var isPaused = this._media.paused;
+                var isPaused = this._paused;
 
                 if (e.id === "play") {
                     if (isPaused) {
@@ -318,7 +342,7 @@
                 }
 
                 if (e.id === "volume") {
-                    this.mute(!this._media.muted);
+                    this.mute(!this._muted);
                 }
 
                 if (e.id === "hdbutton") {
@@ -347,20 +371,43 @@
                 this._media.currentTime = this._timeToSec(e.value - tzOffset);
             },
 
-            _volumeDragging: function(e) {
-                this.volume(e.value);
-            },
+            _changeVolumeButtonImage:function(volume)
+            {
+                var $volumeElement = this.toolbar().element.find("#volume > span");
+                var cssClass = this.toolbar().element.find("#volume > span").attr("class");
+                cssClass = cssClass.substring(0, cssClass.lastIndexOf(" "));
 
-            _mediaTimeUpdate: function(e) {
-                var currentTime = this._msToTime(this._media.currentTime);
-                currentTimeElement.text(kendo.toString(currentTime, 'HH:mm:ss'));
-                if (!this._isDragging) {
-                    this._slider.value((this._media.currentTime + timeZoneSec) * 1000);
+                if(volume === 0)
+                {
+                    $volumeElement.attr("class",cssClass + " " + MUTE);
+                }else if(volume > 0 && volume < 51){
+                    $volumeElement.attr("class",cssClass + " " + LOW_VOLUME);
+                }else{
+                    $volumeElement.attr("class",cssClass + " " + HIGH_VOLUME);
                 }
             },
 
+            _volumeDragging: function(e) {
+                this.volume(e.value);
+                this._changeVolumeButtonImage(e.value);
+            },
+
+            _volumeChange: function(e) {
+                this.volume(e.value);
+                this._changeVolumeButtonImage(e.value);
+            },
+
+            _mediaTimeUpdate: function(e) {
+                var currentTime = this._msToTime((this._youTubeVideo)? this._media.getCurrentTime(): this._media.currentTime);
+                currentTimeElement.text(kendo.toString(currentTime, 'HH:mm:ss'));
+                if (!this._isDragging) {
+                    this._slider.value((currentTime + timeZoneSec) * 1000);
+                }
+                return this.isPlaying();
+            },
+
             _mediaDurationChange: function(e) {
-                var durationTime = this._msToTime(this._media.duration);
+                var durationTime = this._msToTime((this._youTubeVideo)? this._media.getDuration() : this._media.duration);
                 durationElement.text(kendo.toString(durationTime, 'HH:mm:ss'));
                 this._slider.setOptions({
                     min: baseTime.getTime(),
@@ -376,6 +423,10 @@
             },
 
             _createYoutubePlayer: function (options) {
+                this.timers = {};
+                this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
+                this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
+
                 wrapper.append(templates.youtubePlayer);
                 this._ytPlayer = wrapper.find(DOT + YTPLAYER)[0];
                 $(this._ytPlayer)
@@ -396,6 +447,29 @@
                 }
             },
 
+            _poll: function (name, callback, interval, context)
+            {
+                var that = this;
+
+                if (that.timers[name] != null)
+                {
+                    clearTimeout(that.timers[name]);
+                }
+
+                that.timers[name] = setTimeout((function (context)
+                {
+                    return function callLater()
+                    {
+                        if (callback.call(context))
+                        {
+                            that.timers[name] = setTimeout(callLater, interval);
+                        }
+                    };
+                })(context), interval);
+
+                return that.timers[name];
+            },
+
             _youtubeApiReady: function () {
                 this._configurePlayer(this.options);
             },
@@ -409,7 +483,7 @@
                     'showinfo': 0
                 };
 
-                this._onPlayerReadyHandler = proxy(this._onPlayerReady, this);
+                this._onYouTubePlayerReady = proxy(this._onYouTubePlayerReady, this);
                 this._onPlayerStateChangeHandler = proxy(this._onPlayerStateChange, this);
 
                 /*jshint unused:false */
@@ -419,19 +493,70 @@
                     videoId: this.getMediaId(options),
                     playerVars: vars,
                     events: {
-                        'onReady': this._onPlayerReadyHandler,
+                        'onReady': this._onYouTubePlayerReady,
                         'onStateChange': this._onPlayerStateChangeHandler
                     }
                 });
             },
 
-            _onPlayerReady: function (event){
+            _onYouTubePlayerReady: function (event){
                 this._media = event.target;
+                this._media.getIframe().style.width = "100%";
+                this._media.getIframe().style.height = "100%";
+                this._youTubeVideo = true;
+            },
+
+            _onReady:function (event){
+
+            },
+
+            _onEnd:function (event){
+
+            },
+
+            _onPlay:function (event){
+
+            },
+
+            _onPause:function (event){
+
+            },
+
+            _onTimeChange:function (event){
+
+            },
+
+            _onVolumeChange:function (event){
+
             },
 
             _onPlayerStateChange: function (event){
                 //IF NECESSARY
                 //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state 
+                if (event.data == 0)
+                {		
+				    this._media.cueVideoById(this.getMediaId());
+                    this._media.seekTo(0, true);
+				    this._media.pauseVideo();
+				    this._slider.value(0);
+                    this.trigger(END);
+                }
+                else if (event.data == 1)
+                {
+                    this._media.setVolume(this.volume());
+                    this._media.playVideo();
+                    this.trigger(PLAY);
+                    this._poll("progress", this._mediaTimeUpdate, 500, this);
+                }
+                else if (event.data == 2)
+                {
+                    this._media.pauseVideo();
+                    this.trigger(PAUSE);
+                }
+                else if (event.data == 5)
+                {
+                    this.trigger(READY);
+                }
             },
 
             getMediaId: function (options){
@@ -512,7 +637,7 @@
                 this.element.off(ns);
                 this.element.find(DOT + PLAYLIST + "> ul > li").off(ns);
                 this.element.find(DOT + PLAYLIST_OPEN).off(ns);
-
+                this.timers = null;
                 this._mouseMoveHandler = null;
                 this._mouseInOutHandler = null;
 
@@ -525,8 +650,9 @@
                 this._sliderDragChangeHandler = null;
                 this._sliderDraggingHandler = null;
                 this._volumeDraggingHandler = null;
+                this._volumeChangeHandler = null;
                 this._youtubeApiReadyHandler = null;
-                this._onPlayerReadyHandler = null;
+                this._onYouTubePlayerReady = null;
                 this._onPlayerStateChangeHandler = null;
 
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
@@ -538,23 +664,48 @@
             },
 
             seek: function (ms) {
-                this._media.currentTime = ms / 1000;
+                if(this._youTubeVideo){
+                    if (ms + 3 >= this._media.getDuration() | 0) {
+        		        //avoid infinite bad request loop in youtube player.
+        		        this._media.seekTo(this._media.getDuration() - 3 | 0, true);
+        	        } else {
+        		        this._media.seekTo(ms, true);
+        	        }
+                }else{
+                    this._media.currentTime = ms / 1000;
+                }
+                
                 return this;
             },
 
             play: function () {
-                this._media.play();
+                if(this._youTubeVideo){
+                    this._media.playVideo();
+                }else{
+                    this._media.play();
+                }
+                this._paused = false;
                 return this;
             },
 
             stop: function() {
-                this._media.pause();
-                this._media.currentTime = 0;
+                if(this._youTubeVideo){
+                    this._media.stopVideo();
+                }else{
+                    this._media.pause();
+                    this._media.currentTime = 0;
+                }
+          
                 return this;
             },
 
             pause: function () {
-                this._media.pause();
+                if(this._youTubeVideo){
+                    this._media.pauseVideo();
+                }else{
+                    this._media.pause();
+                }
+                this._paused = true;
                 return this;
             },
 
@@ -577,7 +728,6 @@
                          top: 0,
                          left: 0
                     });
-
                     if (element.requestFullscreen) {
                         element.requestFullscreen();
                     } else if (element.webkitRequestFullscreen) {
@@ -617,35 +767,53 @@
 
             volume: function (value) { 
                 if (typeof value === 'undefined') {
-                    return this._media.volume;
+                    return (typeof this._volume !== 'undefined') ? this._volume: this._volume = this.options.volume;
                 }
-                this._media.volume = value / 100; 
+                this._volume = value; 
+                if(this._youTubeVideo){
+                    this._media.setVolume(this._volume);
+                }else{
+                    this._media.volume = this._volume / 100;
+                }
+
                 this._volumeSlider.value(value);
             },
 
             mute: function (muted) { 
                 if (typeof muted === 'undefined') {
-                    return this._media.muted;
+                    return this._muted;
                 }
-                this._media.muted = muted;
+                this._muted = muted;
+                if(this._youTubeVideo){
+                    if(muted)
+                    {
+                        this._media.mute();
+                    }else{
+                        this._media.unMute();
+                    }
+                }else{
+                    this._media.muted = muted;
+                }
+
                 if (muted) {
                     this._volumeSlider.value(0);
                 }
                 else {
-                    this._volumeSlider.value(this._media.volume * 100);
+                    this._volumeSlider.value(this._media.volume || this._media.getVolume());
                 }
+                this._changeVolumeButtonImage(this._volumeSlider.value());
             },
 
             isEnded: function () {
-                return this._media.ended;
+                return this._ended;
             },
 
             isPaused: function () {
-                return this._media.paused;
+                return this._paused;
             },
 
             isPlaying: function () {
-                return !this._media.paused;
+                return !this._paused;
             },
 
             _dataSource: function () {
