@@ -695,8 +695,7 @@
                 editor = that._editor,
                 range = editor.getRange(),
                 nodes = editorNS.RangeUtils.textNodes(range),
-                immutables = editor.options.immutables,
-                immutablesContext = immutables && editorNS.Immutables.immutablesContext(range);
+                immutablesContext = that._immutableContext(range);
 
             if (!nodes.length) {
                 nodes = [range.startContainer];
@@ -710,12 +709,23 @@
                         tool.update(ui, nodes);
                     }
 
-                    if (immutables) {
+                    if (editor.options.immutables) {
                         that._updateImmutablesState(tool, ui, immutablesContext);
                     }
                 }
             });
             this.update();
+        },
+
+        _immutableContext: function(range) {
+            if (this._editor.options.immutables) {
+                var editorNS = kendo.ui.editor;
+                if (range.collapsed) {
+                    return editorNS.Immutables.immutablesContext(range);
+                } else {
+                    return editorNS.RangeUtils.editableTextNodes(range).length === 0;
+                }
+            }
         },
 
         _updateImmutablesState: function(tool, ui, immutablesContext) {

@@ -38,11 +38,11 @@
     var rootCondition = function(node) {
         return $(node).is("body,.k-editor");
     };
-    
+
     var immutable = function(node) {
         return node.getAttribute && node.getAttribute("contenteditable") == "false";
     };
-    
+
     var immutableParent = function (node) {
         return dom.closestBy(node, immutable, rootCondition);
     };
@@ -138,9 +138,9 @@
 
         keydown: function(e, range) {
             var isDeleting = deletingKey(e.keyCode);
-            var shouldCancelEvent = (isDeleting && this._cancelDeleting(e, range)) || 
+            var shouldCancelEvent = (isDeleting && this._cancelDeleting(e, range)) ||
                 (!isDeleting && this._cancelTyping(e, range));
-            
+
             if (shouldCancelEvent) {
                 e.preventDefault();
                 return true;
@@ -151,15 +151,15 @@
             var editor = this.editor;
             var keyboard = editor.keyboard;
 
-            return range.collapsed && !keyboard.typingInProgress && 
+            return range.collapsed && !keyboard.typingInProgress &&
                 keyboard.isTypingKey(e) && immutablesContext(range);
         },
-        
+
         _cancelDeleting: function(e, range) {
             var keys = kendo.keys;
             var backspace = e.keyCode === keys.BACKSPACE;
             var del = e.keyCode == keys.DELETE;
-            
+
             if (!backspace && !del) {
                 return false;
             }
@@ -193,7 +193,7 @@
             }
             return cancelDeleting;
         },
-        
+
         nextImmutable: function(range, forwards) {
             var commonContainer = range.commonAncestorContainer;
             if (dom.isBom(commonContainer) || ((forwards && RangeUtils.isEndOf(range, commonContainer)) || (!forwards && RangeUtils.isStartOf(range, commonContainer)))) {
@@ -206,29 +206,29 @@
                 return immutableParent(next);
             }
         },
-        
+
         _removeImmutable: function(immutable, range) {
             var editor = this.editor;
             var startRestorePoint = new Editor.RestorePoint(range, editor.body);
             dom.remove(immutable);
             Editor._finishUpdate(editor, startRestorePoint);
         },
-        
+
         _nextNode: function(node, forwards) {
             var sibling = forwards ? "nextSibling" : "previousSibling";
-			var current = node, next;
-			while(current && !next) {
+            var current = node, next;
+            while(current && !next) {
                 next = current[sibling];
                 if (next && dom.isDataNode(next) && /^\s|[\ufeff]$/.test(next.nodeValue)){
                     current = next;
                     next = current[sibling];
                 }
                 if (!next){
-                    current = current.parentNode;    
+                    current = current.parentNode;
                 }
-			}
-			return next;
-		}
+            }
+            return next;
+        }
     });
 
     Immutables.immutable = immutable;
@@ -240,4 +240,4 @@
     Editor.Immutables = Immutables;
 })(window.kendo.jQuery);
 
-}, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); }); 
+}, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
