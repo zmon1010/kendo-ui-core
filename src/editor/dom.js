@@ -421,6 +421,19 @@ var Dom = {
         persistedScrollTop = Dom.scrollContainer(doc).scrollTop;
     },
 
+    offset: function (target, offsetParent) {
+        var result = {top: target.offsetTop, left: target.offsetLeft};
+        var parent = target.offsetParent;
+
+        while (parent && (!offsetParent || Dom.isAncestorOf(offsetParent, parent))) {
+            result.top += parent.offsetTop;
+            result.left += parent.offsetLeft;
+            parent = parent.offsetParent;
+        }
+
+        return result;
+    },
+
     restoreScrollTop: function(doc) {
         if (typeof persistedScrollTop == "number") {
             Dom.scrollContainer(doc).scrollTop = persistedScrollTop;   

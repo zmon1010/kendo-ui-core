@@ -935,6 +935,11 @@ var Clipboard = Class.extend({
 
                 body.appendChild(clipboardNode);
 
+                //Browser scrolls to clipboardNode
+                if (browser.webkit) {
+                    this._moveToCaretPosition(clipboardNode, range);
+                }
+
                 // text ranges are slow in IE10-, DOM ranges are buggy in IE9-10
                 if (browser.msie && browser.version < 11) {
                     e.preventDefault();
@@ -970,7 +975,7 @@ var Clipboard = Class.extend({
 
                     html += this.innerHTML;
                 });
-
+                
                 containers.remove();
 
                 this._triggerPaste(html, { clean: true });
@@ -979,18 +984,25 @@ var Clipboard = Class.extend({
     },
 
     _decoreateClipboardNode: function(node, body) {
+        if (!browser.msie && !browser.webkit) {
+            return;
+        }
+
+        node = $(node);
+        node.css({
+            borderWidth : "0px",
+            width : "0px", 
+            height : "0px", 
+            overflow: "hidden",
+            margin : "0",
+            padding : "0"
+        });
+
         if (browser.msie) {
             //node inherits BODY styles and this causes the browser to add additional 
             var documentElement = $(body.ownerDocument.documentElement);
-            node = $(node);
+            
             node.css({
-                borderWidth : "0px",
-                position : "absolute",
-                overflow : "hidden",
-                margin : "0",
-                padding : "0",
-                width : "0px",
-                height : "0px",
                 fontVariant : "normal",
                 fontWeight : "normal",
                 lineSpacing : "normal",
@@ -1010,6 +1022,60 @@ var Clipboard = Class.extend({
                 node.css("fontSize", fontSize);
             }
         }
+    },
+    _moveToCaretPosition: function(node, range) {
+        var that = this;
+        var body = that.editor.body;
+        var nodeOffset = dom.offset(node, body);
+        var caretOffset = that._caretOffset(range, body);
+        var translateX = caretOffset.left - nodeOffset.left;
+        var translateY = caretOffset.top - nodeOffset.top;
+        var translate = "translate(" + translateX + "px," + translateY + "px)";
+
+        $(node).css({
+            "-webkit-transform": translate,
+            "transform" : translate
+        });
+    },
+    _caretOffset: function (range, body) {
+        var editor = this.editor;
+        var caret = dom.create(editor.document, 'span', { innerHTML: "\ufeff" });
+        var startContainer = range.startContainer;
+        var rangeChanged;
+
+        if (range.collapsed) {
+            var isStartTextNode = dom.isDataNode(startContainer);
+            if (isStartTextNode && (dom.isBom(startContainer) || range.startOffset === 0)) {
+                dom.insertBefore(caret, startContainer);
+            } else if(isStartTextNode && range.startOffset === startContainer.length) {
+                dom.insertAfter(caret, startContainer);
+            } else {
+                range.insertNode(caret);
+                rangeChanged = true;
+            }
+        } else {
+            startContainer = startContainer === body ?
+                startContainer.childNodes[range.startOffset] : startContainer;
+            dom.insertBefore(caret, startContainer);
+        }
+
+        var offset = dom.offset(caret, body);
+        var prev = caret.previousSibling;
+        var next = caret.nextSibling;
+
+        dom.remove(caret);
+        
+        if(rangeChanged && dom.isDataNode(prev) && dom.isDataNode(next) && !dom.isBom(prev) && !dom.isBom(next)) {
+            var prevLength = prev.length;
+            next.data = prev.data + next.data;
+            range.setStart(next, prevLength);
+            dom.remove(prev);
+
+            range.collapse(true);
+            editor.selectRange(range);
+        }
+
+        return offset;
     },
 
     expandImmutablesIn: function(range){
