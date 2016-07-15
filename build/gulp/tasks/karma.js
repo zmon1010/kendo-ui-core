@@ -15,14 +15,17 @@ var TESTS = require(glob.sync('../../test-paths-*.js', { cwd: __dirname })[0]);
 var browserOption = argv.browser;
 var testsOption = argv.tests;
 var jqueryOption = argv.jquery;
+var excludeOption = argv.exclude;
 
-var tests, jquery, browsers;
+var tests, jquery, browsers, exclude;
 
 if (testsOption) {
     tests = [ testsOption ];
 } else {
     tests = [ "tests/!(download-builder)/**/*.js" ];
 }
+
+exclude = excludeOption ? [excludeOption] : [];
 
 if (jqueryOption) {
     jquery = "http://code.jquery.com/jquery-" + jqueryOption + ".min.js";
@@ -66,7 +69,8 @@ var defaultOptions = {
     },
     captureTimeout: 60000,
     browserNoActivityTimeout: 30000,
-    singleRun: argv['single-run']
+    singleRun: argv['single-run'],
+    exclude:exclude
 };
 
 var flavours = {
