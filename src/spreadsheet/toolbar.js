@@ -1105,12 +1105,6 @@
             element.addClass("k-spreadsheet-tabstrip");
             this._quickAccessButtons();
 
-            this.quickAccessToolBar.on("click", ".k-button", function(e) {
-                var action = $(e.currentTarget).attr("title").toLowerCase();
-
-                this.trigger("action", { action: action });
-            }.bind(this));
-
             this.toolbars = {};
 
             var tabs = options.dataSource;
@@ -1166,7 +1160,7 @@
             this.quickAccessToolBar.on("click", ".k-button", function(e) {
                 e.preventDefault();
 
-                var action = $(e.currentTarget).attr("title").toLowerCase();
+                var action = $(e.currentTarget).attr("data-action");
                 this.action({ action: action });
             }.bind(this));
 
