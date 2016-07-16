@@ -789,7 +789,7 @@ test("multiple css properties are persisted", function() {
 
         equal(editor.value(), '<p>foo</p><p contenteditable="false">immutable content</p>');
     });
-    
+
     test('immutable container is deserialized when callback options is apssed', function() {
         setEditorImmutables({
             deserialization: function(node, immutableNode) { immutableNode.style.backgroundColor = "red"; }
@@ -808,4 +808,12 @@ test("multiple css properties are persisted", function() {
 
         equal(editor.value(), '<p>foo</p><p contenteditable="false" style="background-color:red;">immutable content</p>');
     });
+
+    test('k-br is added after the last immutable element', function() {
+        editor.value('<p>foo</p><p contenteditable="false">immutable content</p>');
+        var lastChild = editor.body.lastChild;
+        equal(lastChild.nodeName, "BR");
+        ok($(lastChild).hasClass("k-br"));
+    });
+
 }());

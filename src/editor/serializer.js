@@ -19,6 +19,7 @@ var cssDeclaration = /(\*?[-#\/\*\\\w]+(?:\[[0-9a-z_-]+\])?)\s*:\s*((?:'(?:\\'|.
 var sizzleAttr = /^sizzle-\d+/i;
 var scriptAttr = /^k-script-/i;
 var onerrorRe = /\s*onerror\s*=\s*(?:'|")?([^'">\s]*)(?:'|")?/i;
+var br = '<br class="k-br">';
 
 var div = document.createElement("div");
 div.innerHTML = " <hr>";
@@ -28,11 +29,7 @@ var isFunction = $.isFunction;
 
 var Serializer = {
     toEditableHtml: function(html) {
-        var br = '<br class="k-br">';
-
-        html = html || "";
-
-        return html
+        return (html || "")
             .replace(/<!\[CDATA\[(.*)?\]\]>/g, "<!--[CDATA[$1]]-->")
             .replace(/<(\/?)script([^>]*)>/ig, "<$1k:script$2>")
             .replace(/<img([^>]*)>/ig, function(match) {
@@ -42,6 +39,13 @@ var Serializer = {
             .replace(/^<(table|blockquote)/i, br + '<$1')
             .replace(/^[\s]*(&nbsp;|\u00a0)/i, '$1')
             .replace(/<\/(table|blockquote)>$/i, '</$1>' + br);
+    },
+
+    _toEditableImmutables: function(body) {
+        var lastChild = body.lastChild;
+        if (lastChild && Editor.Immutables.immutable(lastChild)) {
+            $(body).append(br);
+        }
     },
 
     _fillEmptyElements: function(body) {
@@ -157,6 +161,8 @@ var Serializer = {
         Serializer._fillEmptyElements(root);
 
         Serializer._removeSystemElements(root);
+
+        Serializer._toEditableImmutables(root);
 
         // add k-table class to all tables
         $("table", root).addClass("k-table");
