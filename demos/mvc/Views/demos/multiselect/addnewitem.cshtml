@@ -1,0 +1,83 @@
+<div id="example">
+    <div class="demo-section k-content">
+        <h4>Find a product</h4>
+        <select id="products" style="width: 100%;"></select>
+    </div>
+
+    <script id="noDataTemplate" type="text/x-kendo-tmpl">
+        <div>
+            No data found. Do you want to add new item - '#: instance.input.val() #' ?
+        </div>
+        <br />
+        <button class="k-button" onclick="addNew('#: instance.element[0].id #', '#: instance.input.val() #')">Add new item</button>
+    </script>
+
+    <script>
+        function addNew(widgetId, value) {
+            var widget = $("#" + widgetId).getKendoMultiSelect();
+            var dataSource = widget.dataSource;
+            var oldValue = widget.value();
+
+            if (confirm("Are you sure?")) {
+                widget.value([]);
+
+                dataSource.add({
+                    ProductID: 0,
+                    ProductName: value
+                });
+
+                dataSource.one("sync", function() {
+                    var newValue = dataSource.at(dataSource.view().length - 1).ProductID;
+
+                    widget.value(oldValue.concat([newValue]));
+                });
+
+                dataSource.sync();
+            }
+        };
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var crudServiceBaseUrl = "//demos.telerik.com/kendo-ui/service";
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read:  {
+                        url: crudServiceBaseUrl + "/Products",
+                        dataType: "jsonp"
+                    },
+                    create: {
+                        url: crudServiceBaseUrl + "/Products/Create",
+                        dataType: "jsonp"
+                    },
+                    parameterMap: function(options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                batch: true,
+                schema: {
+                    model: {
+                        id: "ProductID",
+                        fields: {
+                            ProductID: { editable: false, nullable: true },
+                            ProductName: { validation: { required: true } },
+                            UnitPrice: { type: "number", validation: { required: true, min: 1} },
+                            Discontinued: { type: "boolean" },
+                            UnitsInStock: { type: "number", validation: { min: 0, required: true } }
+                        }
+                    }
+                }
+            });
+
+            $("#products").kendoMultiSelect({
+                filter: "startswith",
+                dataTextField: "ProductName",
+                dataValueField: "ProductID",
+                dataSource: dataSource,
+                noDataTemplate: $("#noDataTemplate").html()
+            });
+        });
+    </script>
+</div>
