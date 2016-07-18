@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Models
 {
     public class NavigationWidget : NavigationItem
     {
+        public string Api { get; set; }
         public string ThumbnailUrl { get; set; }
         public string Category { get; set; }
         public string SpriteCssClass { get; set; }

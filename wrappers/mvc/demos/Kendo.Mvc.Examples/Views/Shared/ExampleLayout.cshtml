@@ -162,13 +162,8 @@
 
         </div>
 
-        @*<div id="codeStrip">
+        <div id="codeStrip">
             <div class="buttons-wrap">
-                @if (ViewBag.Product == "kendo-ui")
-                {
-                    <button type="button" class="try-kendo"><span class="k-icon"></span>Edit this example</button>
-                }
-
                 @if (!string.IsNullOrEmpty(ViewBag.Api))
                 {
                     <a class="documentation-link k-link" href="@ViewBag.Api">API Reference</a>
@@ -221,13 +216,13 @@
                        });
                    })();
 
-               dojo.configuration = {
+               @*dojo.configuration = {
                    url: "@Html.DojoRoot()",
                    cdnRoot: '@Html.CdnRoot()'
-               };
+               };*@
                 </script>
             }
-        </div>*@
+        </div>
     }
     <div id="resources-technologies" class="box">
         @if (ViewBag.Forum != null || ViewBag.Documentation != null || ViewBag.CodeLibrary != null)

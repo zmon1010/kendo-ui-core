@@ -1,6 +1,7 @@
 ﻿using Kendo.Mvc.Examples.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
@@ -21,7 +22,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
             //ViewBag.Theme = "material";
             //ViewBag.CommonFile = "common-material";
-            
+
             //ViewBag.Section = section;
             //ViewBag.Example = example;
 
@@ -41,11 +42,11 @@ namespace Kendo.Mvc.Examples.Controllers
 
             ViewBag.Description = Description(ViewBag.Product, currentExample, currentWidget);
 
-            //var exampleFiles = new List<ExampleFile>();
-            //exampleFiles.AddRange(SourceCode(product, section, example));
-            //exampleFiles.AddRange(AdditionalSources(currentWidget.Sources, product));
-            //exampleFiles.AddRange(AdditionalSources(currentExample.Sources, product));
-            //ViewBag.ExampleFiles = exampleFiles.Where(file => file.Exists(Server));
+            var exampleFiles = new List<ExampleFile>();
+            exampleFiles.AddRange(SourceCode());
+            exampleFiles.AddRange(AdditionalSources(currentWidget.Sources));
+            exampleFiles.AddRange(AdditionalSources(currentExample.Sources));
+            ViewBag.ExampleFiles = exampleFiles.Where(file => file.Exists(Server));
 
             //if (ViewBag.Mobile)
             //{
@@ -55,33 +56,18 @@ namespace Kendo.Mvc.Examples.Controllers
             //    }
             //}
 
-            //var api = currentExample.Api ?? ViewBag.CurrentWidget.Api;
-            //if (!string.IsNullOrEmpty(api))
-            //{
-            //    if (product == "kendo-ui")
-            //    {
-            //        ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/" + api;
-            //    }
-            //    else if (product == "php-ui")
-            //    {
-            //        ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/php/kendo/ui" + Regex.Replace(api, "(web|dataviz|mobile)", "");
-            //    }
-            //    else if (product == "jsp-ui")
-            //    {
-            //        ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/jsp" + Regex.Replace(api, "(web|dataviz|mobile)", "");
-            //    }
-            //    else if (product == "aspnet-mvc")
-            //    {
-            //        if (api == "web/validator")
-            //        {
-            //            ViewBag.Api = "http://docs.telerik.com/kendo-ui/aspnet-mvc/validation";
-            //        }
-            //        else
-            //        {
-            //            ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/aspnet-mvc/kendo.mvc.ui.fluent" + Regex.Replace(api, "(web|dataviz)", "").Replace("mobile/", "/mobile") + "builder";
-            //        }
-            //    }
-            //}
+            var api = currentExample.Api ?? ViewBag.CurrentWidget.Api;
+            if (!string.IsNullOrEmpty(api))
+            {
+                if (api == "web/validator")
+                {
+                    ViewBag.Api = "http://docs.telerik.com/kendo-ui/aspnet-mvc/validation";
+                }
+                else
+                {
+                    ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/aspnet-mvc/kendo.mvc.ui.fluent" + Regex.Replace(api, "(web|dataviz)", "").Replace("mobile/", "/mobile") + "builder";
+                }
+            }
 
             if (currentWidget.Documentation != null && currentWidget.Documentation.ContainsKey(product))
             {
@@ -186,6 +172,28 @@ namespace Kendo.Mvc.Examples.Controllers
             }
 
             return null;
+        }
+
+        private IEnumerable<ExampleFile> SourceCode()
+        {
+            var section = ControllerContext.RouteData.GetRequiredString("controller").ToLower();
+            var example = ControllerContext.RouteData.GetRequiredString("action").ToLower().Replace("_", "-");
+
+            IFrameworkDescription framework = new AspNetMvcDescription();
+
+            return framework.GetFiles(Server, example, section);
+        }
+
+        private IEnumerable<ExampleFile> AdditionalSources(IDictionary<string, IEnumerable<ExampleFile>> sources)
+        {
+            var files = new List<ExampleFile>();
+
+            if (sources != null && sources.ContainsKey("aspnet-mvc"))
+            {
+                files.AddRange(sources["aspnet-mvc"]);
+            }
+
+            return files;
         }
     }
 }

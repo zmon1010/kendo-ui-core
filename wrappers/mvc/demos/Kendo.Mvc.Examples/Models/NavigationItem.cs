@@ -11,6 +11,7 @@ namespace Kendo.Mvc.Examples.Models
         public IDictionary<string, string> Title { get; set; }
         public IDictionary<string, string> Meta { get; set; }
         public IDictionary<string, string> Description { get; set; }
+        public IDictionary<string, IEnumerable<ExampleFile>> Sources { get; set; }
         public string[] Packages { get; set; }
 
         public bool ShouldInclude(string package = "mvc")

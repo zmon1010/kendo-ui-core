@@ -233,6 +233,7 @@
     <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
     <Compile Include="Controllers\WordsProcessing\IndexController.cs" />
     <Compile Include="Controllers\PdfProcessing\IndexController.cs" />
@@ -729,6 +730,7 @@
     <Compile Include="Helpers\HyphenatedRouteHandler.cs" />
     <Compile Include="ModelBinders\CultureAwareDateTimeModelBinder.cs" />
     <Compile Include="ModelBinders\CultureAwareDecimalModelBinder.cs" />
+    <Compile Include="Models\AspNetMvcDescription.cs" />
     <Compile Include="Models\BarChartsLocalDataViewModel.cs" />
     <Compile Include="Models\BaseUnit.cs" />
     <Compile Include="Models\BubbleChartsGroupedDataViewModel.cs" />
@@ -740,6 +742,8 @@
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="Models\Chart\ChartCategoryPoint.cs" />
     <Compile Include="Models\Chart\ChartScatterPoint.cs" />
+    <Compile Include="Models\ExampleFile.cs" />
+    <Compile Include="Models\IFrameworkDescription.cs" />
     <Compile Include="Models\SpreadsheetProductService.cs" />
     <Compile Include="Models\SpreadsheetProductViewModel.cs" />
     <Compile Include="Models\Diagram\DiagramConnectionService.cs" />
@@ -2790,7 +2794,6 @@
     <Content Include="Content\nav.json" />
     <Content Include="Views\Shared\MusicStore.cshtml" />
     <Content Include="Views\Shared\PlayMusic.cshtml" />
-    <Content Include="Views\Shared\_Source.cshtml" />
     <Content Include="Views\gantt\index.cshtml" />
     <Content Include="Views\range_bar_charts\local_data_binding.cshtml" />
     <Content Include="Views\range_bar_charts\remote_data_binding.cshtml" />
