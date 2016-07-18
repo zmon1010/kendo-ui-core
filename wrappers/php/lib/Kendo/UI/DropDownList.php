@@ -218,7 +218,8 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * Sets the noDataTemplate option of the DropDownList.
-    * Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\DropDownList
     */
@@ -230,7 +231,8 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * Sets the noDataTemplate option of the DropDownList.
-    * Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The template content.
     * @return \Kendo\UI\DropDownList
     */

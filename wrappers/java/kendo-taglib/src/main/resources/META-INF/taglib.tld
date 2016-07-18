@@ -123,7 +123,8 @@ all data items which begin with the current widget value are displayed in the su
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.</description>
+            <description>The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.</description>
             <name>noDataTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -11715,7 +11716,8 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.</description>
+            <description>The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.</description>
             <name>noDataTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18526,7 +18528,8 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.</description>
+            <description>The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.</description>
             <name>noDataTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -26938,7 +26941,8 @@ A zero value means that a request will be made as soon as the user focuses the w
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.</description>
+            <description>The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.</description>
             <name>noDataTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

@@ -226,7 +226,8 @@ A zero value means that a request will be made as soon as the user focuses the w
 
     /**
     * Sets the noDataTemplate option of the MultiSelect.
-    * Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\MultiSelect
     */
@@ -238,7 +239,8 @@ A zero value means that a request will be made as soon as the user focuses the w
 
     /**
     * Sets the noDataTemplate option of the MultiSelect.
-    * Specifies a static HTML content, which will be displayed if no results are found or the underlying data source is empty. The popup will open when 'noDataTemplate' is defined.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
     * @param string $value The template content.
     * @return \Kendo\UI\MultiSelect
     */
