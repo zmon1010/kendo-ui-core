@@ -36,6 +36,7 @@
         MEDIA = "k-mediaplayer-media",
         PLAYLIST_OPEN = "k-i-playlist-open",
         PLAYLIST = "k-mediaplayer-playlist",
+        OVERLAY = "k-mediaplayer-overlay",
         YTPLAYER = "k-ytplayer",
         YTPLAYER_ID = "ytplayer",
         DOT = ".",
@@ -600,7 +601,7 @@
                 }
 
                 if (!this._videoOverlay) {
-                    wrapper.append("<div class='k-mediaplayer-overlay'></div>");
+                    wrapper.append("<div class='" + OVERLAY + "'></div>");
                     this._videoOverlay = wrapper.find(".k-mediaplayer-overlay")
                         .on("click" + ns, this._mouseClickHanlder)
                         .css({
@@ -672,9 +673,14 @@
             destroy: function () {
                 Widget.fn.destroy.call(this);
 
+                if (!this.isPaused()) {
+                    this.pause();
+                }
+                
                 this.element.off(ns);
                 this.element.find(DOT + PLAYLIST + "> ul > li").off(ns);
                 this.element.find(DOT + PLAYLIST_OPEN).off(ns);
+                this.element.find(DOT + OVERLAY).off(ns);
                 this.timers = null;
                 this._mouseMoveHandler = null;
                 this._mouseInOutHandler = null;
@@ -696,6 +702,9 @@
 
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
                 this._media.ondurationchange = this._mediaDurationChangeHandler = null;
+
+                this._media.destroy();
+
                 this._mouseMoveTimer = null;
                 clearTimeout(this._mouseMoveTimer);
 
