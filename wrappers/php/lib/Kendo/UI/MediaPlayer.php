@@ -73,7 +73,7 @@ data source is fired.
     }
 
     /**
-    * If set to true the fowr
+    * If set to false the user will be prevented from seeking the video forward
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -88,6 +88,90 @@ data source is fired.
     */
     public function playlist($value) {
         return $this->setProperty('playlist', $value);
+    }
+
+    /**
+    * Sets the end event of the MediaPlayer.
+    * Fires when the media finishes playing.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function end($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('end', $value);
+    }
+
+    /**
+    * Sets the pause event of the MediaPlayer.
+    * Fires when the media is paused.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function pause($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('pause', $value);
+    }
+
+    /**
+    * Sets the play event of the MediaPlayer.
+    * Fires when the media begins playing.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function play($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('play', $value);
+    }
+
+    /**
+    * Sets the ready event of the MediaPlayer.
+    * Fires when loading is over and the widget is ready to start playing the media.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function ready($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('ready', $value);
+    }
+
+    /**
+    * Sets the timeChange event of the MediaPlayer.
+    * Fires when the user selects a new play time.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function timeChange($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('timeChange', $value);
+    }
+
+    /**
+    * Sets the volumeChange event of the MediaPlayer.
+    * This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function volumeChange($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('volumeChange', $value);
     }
 
 

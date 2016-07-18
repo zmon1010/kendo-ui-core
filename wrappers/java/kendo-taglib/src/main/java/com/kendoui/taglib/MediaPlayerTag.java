@@ -43,6 +43,30 @@ public class MediaPlayerTag extends WidgetTag /* interfaces */implements DataBou
         return "mediaPlayer";
     }
 
+    public void setEnd(EndFunctionTag value) {
+        setEvent("end", value.getBody());
+    }
+
+    public void setPause(PauseFunctionTag value) {
+        setEvent("pause", value.getBody());
+    }
+
+    public void setPlay(PlayFunctionTag value) {
+        setEvent("play", value.getBody());
+    }
+
+    public void setReady(ReadyFunctionTag value) {
+        setEvent("ready", value.getBody());
+    }
+
+    public void setTimeChange(TimeChangeFunctionTag value) {
+        setEvent("timeChange", value.getBody());
+    }
+
+    public void setVolumeChange(VolumeChangeFunctionTag value) {
+        setEvent("volumeChange", value.getBody());
+    }
+
     public boolean getAutoBind() {
         return (Boolean)getProperty("autoBind");
     }
@@ -109,6 +133,78 @@ public class MediaPlayerTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setVolume(float value) {
         setProperty("volume", value);
+    }
+
+    public String getEnd() {
+        Function property = ((Function)getProperty("end"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setEnd(String value) {
+        setProperty("end", new Function(value));
+    }
+
+    public String getPause() {
+        Function property = ((Function)getProperty("pause"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setPause(String value) {
+        setProperty("pause", new Function(value));
+    }
+
+    public String getPlay() {
+        Function property = ((Function)getProperty("play"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setPlay(String value) {
+        setProperty("play", new Function(value));
+    }
+
+    public String getReady() {
+        Function property = ((Function)getProperty("ready"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setReady(String value) {
+        setProperty("ready", new Function(value));
+    }
+
+    public String getTimeChange() {
+        Function property = ((Function)getProperty("timeChange"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setTimeChange(String value) {
+        setProperty("timeChange", new Function(value));
+    }
+
+    public String getVolumeChange() {
+        Function property = ((Function)getProperty("volumeChange"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVolumeChange(String value) {
+        setProperty("volumeChange", new Function(value));
     }
 
 //<< Attributes
