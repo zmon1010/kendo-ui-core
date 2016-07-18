@@ -13,6 +13,7 @@
     var ColumnResizing = Editor.ColumnResizing;
     var TableResizeHandle = Editor.TableResizeHandle;
 
+    var DRAG = "drag";
     var NS = ".kendoEditorTableResizing";
     var CLICK = "click";
     var EAST = "east";
@@ -90,12 +91,19 @@
             return false;
         },
 
+        resize: function() {
+            var that = this;
+
+            that.showResizeHandles();
+        },
+
         showResizeHandles: function() {
             var that = this;
 
             //table resizing is natively supported in IE and Firefox
             if (!browser.msie && !browser.mozilla) {
                 that._initResizeHandles();
+                that._bindToResizeHandlesEvents();
                 that._showResizeHandles();
             }
         },
@@ -136,6 +144,17 @@
 
             for (i = 0; i < length; i++) {
                 that.handles[i].show();
+            }
+        },
+
+        _bindToResizeHandlesEvents: function() {
+            var that = this;
+            var handles = that.handles || [];
+            var length = handles.length;
+            var i;
+
+            for (i = 0; i < length; i++) {
+                that.handles[i].bind(DRAG, proxy(that.resize, that));
             }
         }
     });

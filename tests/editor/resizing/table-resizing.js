@@ -9,9 +9,11 @@
     var FIRST_COLUMN = "td:first";
     var HANDLE_SELECTOR = ".k-resize-handle";
     var NS = "kendoEditor";
+    var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
+    var MOUSE_UP = "mouseup";
     var MOUSE_UP = "mouseup";
     var EAST = "east";
     var NORTH = "north";
@@ -76,6 +78,33 @@
         }, eventOptions || {});
 
         $(element).trigger(options);
+    }
+
+    function triggerResize(element, from, to, options) {
+        var doc = $((element[0] || element).ownerDocument.documentElement);
+        var resizeHandle = $(element);
+        var position = resizeHandle.position();
+        var from = from || 0;
+        var to = to || 0;
+
+        triggerResizeStart(element, from, to);
+
+        doc.trigger($.Event(MOUSE_MOVE, {
+            pageX: position.left + to,
+            pageY: position.top + to,
+        }));
+    }
+
+    function triggerResizeStart(element, from, to) {
+        var resizeHandle = $(element);
+        var position = resizeHandle.position();
+        var from = from || 0;
+        var to = to || 0;
+
+        resizeHandle.trigger($.Event(MOUSE_DOWN, {
+            pageX: position.left + from,
+            pageY: position.top + from
+        }));
     }
 
     editor_module("editor table resizing", {
@@ -536,6 +565,53 @@
         equal(tableResizing.resizingInProgress(), false);
     });
 
+    module("editor table resizing", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableResizing = new TableResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            if (tableResizing) {
+                tableResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("click event on editor body should be removed on destroy", function() {
+        tableResizing.destroy();
+
+        equal(jQueryEventsInfo(tableResizing.options.rootElement, "click"), undefined);
+    });
+
+    module("editor table resizing resize", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            tableResizing = new TableResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            if (tableResizing) {
+                tableResizing.destroy();
+            }
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should call showResizeHandles()", function() {
+        tableResizing.showResizeHandles();
+        var showSpy = spy(tableResizing, "showResizeHandles");
+
+        tableResizing.resize();
+
+        equal(showSpy.calls("showResizeHandles"), 1);
+    });
+
     module("editor table resizing resize handle", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -592,25 +668,32 @@
         equal(showSpy.calls("show"), 1);
     });
 
-    module("editor table resizing", {
-        setup: function() {
-            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            tableResizing = new TableResizing(tableElement, {
-                rootElement: QUnit.fixture
-            });
-        },
+    test("should call resize() on resize handle drag event", function() {
+        var resizeSpy = spy(tableResizing, "resize");
+        tableResizing.showResizeHandles();
 
-        teardown: function() {
-            if (tableResizing) {
-                tableResizing.destroy();
-            }
-            kendo.destroy(QUnit.fixture);
-        }
+        triggerResize(tableResizing.handles[0].element, 0, 20);
+
+        equal(resizeSpy.calls("resize"), 1);
     });
 
-    test("click event on editor body should be removed on destroy", function() {
-        tableResizing.destroy();
+    test("should call resize() with deltaX argument on resize handle drag event", function() {
+        var resizeSpy = spy(tableResizing, "resize");
+        var deltaX = 20;
+        tableResizing.showResizeHandles();
 
-        equal(jQueryEventsInfo(tableResizing.options.rootElement, "click"), undefined);
+        triggerResize(tableResizing.handles[0].element, 0, deltaX);
+
+        equal(resizeSpy.args("resize")[0]["deltaX"], deltaX);
+    });
+
+    test("should call resize() with deltaY argument on resize handle drag event", function() {
+        var resizeSpy = spy(tableResizing, "resize");
+        var deltaY = 30;
+        tableResizing.showResizeHandles();
+
+        triggerResize(tableResizing.handles[0].element, 0, deltaY);
+
+        equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
     });
 })();
