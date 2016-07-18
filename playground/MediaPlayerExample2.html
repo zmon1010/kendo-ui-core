@@ -97,11 +97,13 @@ To enable proper compilation of the LESS files in the example you need to do the
 
 			$("#player1").kendoMediaPlayer({
 				dataSource: myDataSource,
-				playlist: false,
+				playlist: true,
 				autoPlay: true,
 				mute: false,
 				youtubeApiKey: "AIzaSyD06CB0PoPP2JOffY53lYlOzxm6NtEWG9o"
 			});
+
+			window.player1 = $("#player1").data("kendoMediaPlayer");
 
 			/*Temporary workaround for playlist background color*/
 			$(".k-mediaplayer-playlist").css("background-color", $(".k-mediaplayer-toolbar").css("background-color"));

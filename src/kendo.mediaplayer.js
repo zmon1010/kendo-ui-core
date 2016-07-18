@@ -44,7 +44,12 @@
         baseTime = new Date(1970,0,1),  
         timeZoneSec = baseTime.getTimezoneOffset() * 60;
         Widget = kendo.ui.Widget,
-        //extend = $.extend,
+        timeFormats = { 
+            short: "mm:ss",
+            long: "HH:mm:ss"
+        }
+        template = kendo.template,
+        extend = $.extend,
         proxy = $.proxy,
         //each = $.each,
         templates = {
@@ -342,7 +347,8 @@
                 }
 
                 if (e.id === "volume") {
-                    this.mute(!this._muted);
+                    var muted = this._media.muted || this._media.isMuted();
+                    this.mute(!muted);
                 }
 
                 if (e.id === "hdbutton") {
@@ -399,7 +405,7 @@
 
             _mediaTimeUpdate: function(e) {
                 var currentTime = this._msToTime((this._youTubeVideo)? this._media.getCurrentTime(): this._media.currentTime);
-                currentTimeElement.text(kendo.toString(currentTime, 'HH:mm:ss'));
+                currentTimeElement.text(kendo.toString(currentTime, this._timeFormat));
                 if (!this._isDragging) {
                     this._slider.value((currentTime + timeZoneSec) * 1000);
                 }
@@ -408,7 +414,10 @@
 
             _mediaDurationChange: function(e) {
                 var durationTime = this._msToTime((this._youTubeVideo)? this._media.getDuration() : this._media.duration);
-                durationElement.text(kendo.toString(durationTime, 'HH:mm:ss'));
+
+                this._timeFormat = durationTime.getHours() === 0 ? timeFormats.short : timeFormats.long;
+
+                durationElement.text(kendo.toString(durationTime, this._timeFormat));
                 this._slider.setOptions({
                     min: baseTime.getTime(),
                     max: durationTime.getTime()
@@ -476,7 +485,7 @@
 
             _configurePlayer: function (options) {
                 var vars = {
-                    'autoplay': options.autoPlay ? 1 : 0,
+                    'autoplay': +options.autoPlay,
                     'wmode': 'transparent',
                     'controls': 0,
                     'rel': 0,
@@ -490,7 +499,7 @@
                 var player = new window.YT.Player(YTPLAYER_ID, {
                     height: wrapper.height(),
                     width: wrapper.width(),
-                    videoId: this.getMediaId(options),
+                    videoId: this._getMediaId(options),
                     playerVars: vars,
                     events: {
                         'onReady': this._onYouTubePlayerReady,
@@ -504,6 +513,7 @@
                 this._media.getIframe().style.width = "100%";
                 this._media.getIframe().style.height = "100%";
                 this._youTubeVideo = true;
+                this._mediaDurationChangeHandler();
             },
 
             _onReady:function (event){
@@ -533,33 +543,35 @@
             _onPlayerStateChange: function (event){
                 //IF NECESSARY
                 //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state 
-                if (event.data == 0)
+                if (event.data === 0)
                 {		
-				    this._media.cueVideoById(this.getMediaId());
+				    this._media.cueVideoById(this._getMediaId());
                     this._media.seekTo(0, true);
 				    this._media.pauseVideo();
 				    this._slider.value(0);
                     this.trigger(END);
                 }
-                else if (event.data == 1)
+                else if (event.data === 1)
                 {
                     this._media.setVolume(this.volume());
                     this._media.playVideo();
                     this.trigger(PLAY);
                     this._poll("progress", this._mediaTimeUpdate, 500, this);
+                    this._paused = false; 
                 }
-                else if (event.data == 2)
+                else if (event.data === 2)
                 {
                     this._media.pauseVideo();
                     this.trigger(PAUSE);
+                    this._paused = true;
                 }
-                else if (event.data == 5)
+                else if (event.data === 5)
                 {
                     this.trigger(READY);
                 }
             },
 
-            getMediaId: function (options){
+            _getMediaId: function (options){
                 var result = options.ytFile.url;
                 var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
                 var match = result.match(regExp);
@@ -664,15 +676,16 @@
             },
 
             seek: function (ms) {
-                if(this._youTubeVideo){
-                    if (ms + 3 >= this._media.getDuration() | 0) {
+                var seconds = ms / 1000;
+                if (this._youTubeVideo) {
+                    if (seconds + 3 >= this._media.getDuration() | 0) {
         		        //avoid infinite bad request loop in youtube player.
         		        this._media.seekTo(this._media.getDuration() - 3 | 0, true);
         	        } else {
-        		        this._media.seekTo(ms, true);
+        		        this._media.seekTo(seconds, true);
         	        }
-                }else{
-                    this._media.currentTime = ms / 1000;
+                } else {
+                    this._media.currentTime = seconds;
                 }
                 
                 return this;
@@ -681,7 +694,7 @@
             play: function () {
                 if(this._youTubeVideo){
                     this._media.playVideo();
-                }else{
+                } else{
                     this._media.play();
                 }
                 this._paused = false;
@@ -691,11 +704,11 @@
             stop: function() {
                 if(this._youTubeVideo){
                     this._media.stopVideo();
-                }else{
+                } else{
                     this._media.pause();
                     this._media.currentTime = 0;
                 }
-          
+                this._paused = true;
                 return this;
             },
 
@@ -781,17 +794,17 @@
 
             mute: function (muted) { 
                 if (typeof muted === 'undefined') {
-                    return this._muted;
+                    return this._media.muted || this._media.isMuted();
                 }
-                this._muted = muted;
-                if(this._youTubeVideo){
-                    if(muted)
-                    {
+                if (this._youTubeVideo) {
+                    if (muted) {
                         this._media.mute();
-                    }else{
+                    }
+                    else {
                         this._media.unMute();
                     }
-                }else{
+                }
+                else {
                     this._media.muted = muted;
                 }
 
@@ -805,7 +818,10 @@
             },
 
             isEnded: function () {
-                return this._ended;
+                var currentTime = this._msToTime((this._youTubeVideo)? this._media.getCurrentTime(): this._media.currentTime);
+                var durationTime = this._msToTime((this._youTubeVideo)? this._media.getDuration() : this._media.duration);
+
+                return (this._paused && currentTime === durationTime);
             },
 
             isPaused: function () {
