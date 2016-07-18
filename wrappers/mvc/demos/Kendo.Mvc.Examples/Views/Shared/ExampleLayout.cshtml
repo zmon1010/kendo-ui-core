@@ -123,59 +123,6 @@
         </script>
     </div>
 
-    <!--widget inspector-->
-    <script>
-    $(document).ready(function(){
-
-        function kendoWidgetInstance(el) {
-            el = $(el);
-            return kendo.widgetInstance(el, kendo.ui) ||
-                kendo.widgetInstance(el, kendo.mobile.ui) ||
-                kendo.widgetInstance(el, kendo.dataviz.ui);
-        }
-
-        var widgets = [];
-        var datasource = [];
-
-        function haveWidget(w) {
-            for (var i = widgets.length; --i >= 0;)
-                if (widgets[i] === w) return true;
-            return false;
-        }
-
-        $("#exampleWrap *").each(function(){
-            var w = kendoWidgetInstance(this);
-            if (w && !haveWidget(w)) {
-                datasource.push({
-                    name   : w.options.name,
-                    index  : widgets.length
-                });
-                widgets.push(w);
-            }
-        });
-
-        if (widgets.length == 0) {
-            $("#inspector-container, .inspector-tab").hide();
-        } else if (kendo.ui.Inspector) {
-            $("#inspector-widgets").kendoDropDownList({
-                dataSource     : datasource,
-                dataTextField  : "name",
-                dataValueField : "index",
-                value          : 0,
-                change         : function() {
-                    inspector.reset(widgets[this.value()]);
-                }
-            });
-            var inspector = $("#inspector").kendoInspector({
-                showPicker : false,
-                showEvents : false,
-                docBaseUrl : "@ViewBag.Api",
-                widget     : widgets[0]
-            }).data("kendoInspector");
-        }
-
-    })</script>
-    <!--/widget inspector-->
 
 
     @{
@@ -240,25 +187,11 @@
                         {
                             <li>@file.Name</li>
                         }
-                        <!--[if gte IE 8]>-->
-                        <li class="inspector-tab">Widget configuration</li>
-                        <!--<![endif]-->
                     </ul>
                     @foreach (ExampleFile file in examples)
                     {
                         <div></div>
                     }
-                    <!--[if gte IE 8]>-->
-                    <div>
-                        <div id="inspector-container">
-                            <div id="inspector-header">
-                                <label for="inspector-widgets">Select widget to inspect</label>
-                                <select id="inspector-widgets"></select>
-                            </div>
-                            <div id="inspector"></div>
-                        </div>
-                    </div>
-                    <!--<![endif]-->
                 </div>
                 <script>
                    (function () {
