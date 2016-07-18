@@ -696,7 +696,13 @@
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
                 this._media.ondurationchange = this._mediaDurationChangeHandler = null;
 
-                this._media.destroy();
+                if (this._youTubeVideo) {
+                    this._media.destroy();
+                } 
+                else {
+                    this._media.src = "";
+                    this._media.remove();
+                }
 
                 this._mouseMoveTimer = null;
                 clearTimeout(this._mouseMoveTimer);
@@ -862,8 +868,8 @@
             },
 
             isEnded: function () {
-                var currentTime = this._msToTime((this._youTubeVideo)? this._media.getCurrentTime(): this._media.currentTime);
-                var durationTime = this._msToTime((this._youTubeVideo)? this._media.getDuration() : this._media.duration);
+                var currentTime = this._youTubeVideo ? this._media.getCurrentTime(): this._media.currentTime;
+                var durationTime = this._youTubeVideo ? this._media.getDuration() : this._media.duration;
 
                 return (this._paused && currentTime === durationTime);
             },
