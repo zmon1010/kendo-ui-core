@@ -80,10 +80,10 @@ namespace Kendo.Mvc.Examples.Controllers
             return "mvc";
         }
 
-        //protected void LoadNavigation()
-        //{
-        //    ViewBag.Navigation = LoadWidgets();
-        //}
+        protected void LoadNavigation()
+        {
+            ViewBag.Navigation = LoadWidgets();
+        }
 
         protected IEnumerable<NavigationWidget> LoadWidgets()
         {

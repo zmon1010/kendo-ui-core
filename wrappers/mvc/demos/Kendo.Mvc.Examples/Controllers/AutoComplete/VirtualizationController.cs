@@ -8,7 +8,7 @@
     using System.Web.Mvc;
     using System.Collections.Generic;
 
-    public partial class AutoCompleteController : Controller
+    public partial class AutoCompleteController
     {
         public ActionResult Virtualization()
         {

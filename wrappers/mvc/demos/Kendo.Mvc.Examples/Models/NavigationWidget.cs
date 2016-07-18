@@ -14,6 +14,9 @@ namespace Kendo.Mvc.Examples.Models
         public bool New { get; set; }
         public bool Beta { get; set; }
         public bool Pro { get; set; }
+        public IDictionary<string, string> Documentation { get; set; }
+        public IDictionary<string, string> Forum { get; set; }
+        public IDictionary<string, string> CodeLibrary { get; set; }
         public List<NavigationExample> Items { get; set; }
     }
 }

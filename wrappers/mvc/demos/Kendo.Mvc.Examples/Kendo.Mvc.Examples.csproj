@@ -230,6 +230,7 @@
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
+    <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
@@ -2789,8 +2790,6 @@
     <Content Include="Content\nav.json" />
     <Content Include="Views\Shared\MusicStore.cshtml" />
     <Content Include="Views\Shared\PlayMusic.cshtml" />
-    <Content Include="Views\Shared\_MobileNavigation.cshtml" />
-    <Content Include="Views\Shared\_Navigation.cshtml" />
     <Content Include="Views\Shared\_Source.cshtml" />
     <Content Include="Views\gantt\index.cshtml" />
     <Content Include="Views\range_bar_charts\local_data_binding.cshtml" />
@@ -2908,13 +2907,12 @@
     <Content Include="Views\editor\paste_cleanup.cshtml" />
     <Content Include="Views\editor\immutable_elements.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_MobileLayout.cshtml" />
-    <Content Include="Views\Shared\_WebLayout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\GoogleTagManager.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\WebSearchScript.cshtml" />
+    <Content Include="Views\Shared\ExampleLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

@@ -13,47 +13,50 @@ namespace Kendo.Extensions
 {
     public static class HtmlExtensions
     {
-        //        public static IHtmlString ExampleLink(this HtmlHelper html, NavigationExample example)
-        //        {
-        //            var href = html.ExampleUrl(example);
+        public static IHtmlString ExampleLink(this HtmlHelper html, NavigationExample example)
+        {
+            var href = html.ExampleUrl(example);
 
-        //            var className = "";
+            var className = "";
 
-        //            if (example.New) {
-        //                className += "new-example";
-        //            }
+            if (example.New)
+            {
+                className += "new-example";
+            }
 
-        //            var routeData = html.ViewContext.RouteData;
-        //            var currentAction = routeData.Values["section"];
-        //            var currentController = routeData.Values["example"];
-        //            if (href.EndsWith(currentAction + "/" + currentController))
-        //            {
-        //                className += " active";
-        //            }
+            var routeData = html.ViewContext.RouteData;
+            var currentAction = routeData.Values["section"];
+            var currentController = routeData.Values["example"];
+            if (href.EndsWith(currentAction + "/" + currentController))
+            {
+                className += " active";
+            }
 
-        //            StringBuilder link = new StringBuilder();
+            StringBuilder link = new StringBuilder();
 
-        //            link.Append("<a ");
+            link.Append("<a ");
 
-        //            if (!String.IsNullOrEmpty(className)) {
-        //                link.Append("class=\"" + className + "\" ");
-        //            }
+            if (!String.IsNullOrEmpty(className))
+            {
+                link.Append("class=\"" + className + "\" ");
+            }
 
-        //            if (example.External) {
-        //                link.Append("rel=\"external\"");
-        //            }
+            if (example.External)
+            {
+                link.Append("rel=\"external\"");
+            }
 
-        //            link.Append("href=\"" + href + "\">");
+            link.Append("href=\"" + href + "\">");
 
-        //            if (example.New)
-        //            {
-        //                link.Append("<span class=\"new-widget\"></span>");
-        //            }
+            if (example.New)
+            {
+                link.Append("<span class=\"new-widget\"></span>");
+            }
 
-        //            link.Append(example.Text).Append("</a>");
+            link.Append(example.Text).Append("</a>");
 
-        //            return html.Raw(link.ToString());
-        //        }
+            return html.Raw(link.ToString());
+        }
 
         public static string ExampleUrl(this HtmlHelper html, NavigationExample example)
         {
@@ -62,14 +65,15 @@ namespace Kendo.Extensions
             return new UrlHelper(html.ViewContext.RequestContext).ExampleUrl(sectionAndExample[0], sectionAndExample[1]);
         }
 
-        //        public static string ProductExampleUrl(this HtmlHelper html, NavigationExample example, string product)
-        //        {
-        //            var viewBag = html.ViewContext.Controller.ViewBag;
+        public static string ProductExampleUrl(this HtmlHelper html, NavigationExample example, string product)
+        {
+            var viewBag = html.ViewContext.Controller.ViewBag;
 
-        //            var currentProduct = (string)viewBag.Product;
+            var currentProduct = (string)viewBag.Product;
 
-        //            return html.ExampleUrl(example).Replace(currentProduct, product);
-        //        }
+            // TODO Set Url to other live website
+            return html.ExampleUrl(example).Replace(currentProduct, product);
+        }
 
         //        public static String CdnRoot(this HtmlHelper html)
         //        {

@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
 
-    public partial class AutoCompleteController : Controller
+    public partial class AutoCompleteController
     {
         public ActionResult Api()
         {
