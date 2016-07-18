@@ -3804,10 +3804,6 @@
     <Content Include="Content\shared\fonts\Roboto-Regular-Web.woff" />
     <Content Include="Content\shared\KendoUI.ttf" />
     <Content Include="Content\shared\KendoUI.woff" />
-    <Content Include="Content\web\16x16\Thumbs.db" />
-    <Content Include="Content\web\24x24\Thumbs.db" />
-    <Content Include="Content\web\32x32\Thumbs.db" />
-    <Content Include="Content\web\48x48\Thumbs.db" />
     <Content Include="Content\web\datasource\internet-users.json" />
     <Content Include="Content\web\datasource\top250movies.json" />
     <EntityDeploy Include="Models\Sample.edmx">

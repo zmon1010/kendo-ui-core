@@ -1234,10 +1234,6 @@
   <ItemGroup>
     <None Include="content\dataviz\js\price-performance.json" />
     <None Include="content\dataviz\js\spain-electricity.json" />
-    <None Include="content\web\16x16\Thumbs.db" />
-    <None Include="content\web\24x24\Thumbs.db" />
-    <None Include="content\web\32x32\Thumbs.db" />
-    <None Include="content\web\48x48\Thumbs.db" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-WINDOWS|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release-WINDOWS|AnyCPU'">
     <ProjectReference Include="..\..\dpl\Telerik.Web.Spreadsheet\Telerik.Web.Spreadsheet.csproj">
