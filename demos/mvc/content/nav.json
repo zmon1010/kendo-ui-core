@@ -89,6 +89,7 @@
             {
                 "text": "Customizing templates",
                 "url": "autocomplete/template",
+                "isUpdated": true,
                 "title": {
                     "kendo-ui": "Templates customization in Kendo UI AutoComplete",
                     "aspnet-mvc": "Templates customization in ASP.NET MVC AutoComplete"
@@ -757,6 +758,7 @@
             {
                 "text": "Customizing templates",
                 "url": "combobox/template",
+                "isUpdated": true,
                 "title": {
                     "kendo-ui": "Demo for customizing jQuery ComboBox Templates | Kendo UI Web Demos",
                     "aspnet-mvc": "Demo for customizing ASP.NET MVC ComboBox Templates"
@@ -1302,6 +1304,7 @@
             {
                 "text": "Customizing templates",
                 "url": "dropdownlist/template",
+                "isUpdated": true,
                 "title": {
                     "kendo-ui": "Customize items in Kendo UI DropDownList component",
                     "aspnet-mvc": "Customize items in ASP.NET MVC DropDownList component"
@@ -3463,6 +3466,7 @@
             {
                 "text": "Customizing templates",
                 "url": "multiselect/template",
+                "isUpdated": true,
                 "title": {
                     "kendo-ui": "Templates customization of Kendo UI MultiSelect widget",
                     "aspnet-mvc": "Templates customization of ASP.NET MVC MultiSelect control"
