@@ -2162,10 +2162,12 @@ var __meta__ = { // jshint ignore:line
     function createDateLayoutConfiguration(name, dates, inner) {
          var configuration = [];
 
-        $.each(dates, function(index, item) { 
+         $.each(dates, function(index, item) {
+            var className = item.className ? "k-slot-cell " + item.className : "k-slot-cell";
+
             var obj = {
                 text: item.text,
-                className: "k-slot-cell"
+                className: className
             };
             obj[name] = inner; 
             configuration.push(obj);

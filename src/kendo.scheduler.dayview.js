@@ -1164,6 +1164,7 @@ var __meta__ = { // jshint ignore:line
 
         _render: function(dates) {
             var that = this;
+            var byDate = that.options.group && that.options.group.byDate;
 
             dates = dates || [];
 
@@ -1187,12 +1188,22 @@ var __meta__ = { // jshint ignore:line
                 this._allDayHeaderHeight = allDayHeader.first()[0].clientHeight;
             }
 
-            that.datesHeader.on("click" + NS, ".k-nav-day", function(e) {
+            that.element.on("click" + NS, ".k-nav-day", function(e) {
                 var th = $(e.currentTarget).closest("th");
-
                 var offset = th.offset();
+                var additioanlWidth = 0;
+                var additionalHeight = th.outerHeight();
 
-                var slot = that._slotByPosition(offset.left, offset.top + th.outerHeight());
+                if (byDate) {
+                    if (that._isVerticallyGrouped()) {
+                        additioanlWidth = that.times.outerWidth();
+                        additionalHeight = 0;
+                    } else {
+                        additionalHeight = that.datesHeader.outerHeight();
+                    }
+                }
+
+                var slot = that._slotByPosition(offset.left + additioanlWidth, offset.top + additionalHeight);
 
                 that.trigger("navigate", { view: "day", date: slot.startDate() });
             });
