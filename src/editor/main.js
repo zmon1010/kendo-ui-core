@@ -22,7 +22,7 @@
         proxy = $.proxy,
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
-    
+
     var rtlEnabled = false;
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
@@ -377,7 +377,7 @@
 
                     if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
                         parentTable = $(editor.tableResizing.element).parents(TABLE)[0];
-                        
+
                         if (parentTable) {
                             editor._destroyTableResizing();
                             initTableResizing(editor, parentTable);
@@ -672,12 +672,11 @@
                         var offset = range[left ? "startOffset" : "endOffset"];
                         var direction = left ? -1 : 1;
 
-                        if (left) {
-                            offset -= 1;
-                        }
+                        var next = offset + direction;
+                        var nextChar = left ? next : offset;
 
-                        if (offset + direction > 0 && container.nodeType == 3 && container.nodeValue[offset] == "\ufeff") {
-                            range.setStart(container, offset + direction);
+                        if (container.nodeType == 3 && container.nodeValue[nextChar] == "\ufeff") {
+                            range.setStart(container, next);
                             range.collapse(true);
                             editor.selectRange(range);
                         }
@@ -759,7 +758,7 @@
                 that.immutables = new editorNS.Immutables(that);
             }
         },
-        
+
         _mousedown: function (e) {
             var editor = this;
             editor._selectionStarted = true;
@@ -770,7 +769,7 @@
             }
 
             var target = $(e.target);
-            
+
             if ((e.which == 2 || (e.which == 1 && e.ctrlKey)) &&
                 target.is("a[href]")) {
                 window.open(target.attr("href"), "_new");
@@ -1190,9 +1189,10 @@
 
     var bomFill = browser.msie && browser.version < 9 ? '\ufeff' : '';
     var emptyElementContent = '\ufeff';
+    var emptyTableCellContent = emptyElementContent;
 
-    if (browser.msie && browser.version == 10) {
-        emptyElementContent = ' '; // allow up/down arrows to focus empty rows
+    if(browser.msie) {
+        emptyTableCellContent = browser.version < 11 ? "" : "<br/>";
     }
 
     extend(kendo.ui, {
@@ -1202,7 +1202,8 @@
             Tool: Tool,
             FormatTool: FormatTool,
             _bomFill: bomFill,
-            emptyElementContent: emptyElementContent
+            emptyElementContent: emptyElementContent,
+            emptyTableCellContent: emptyTableCellContent
         }
     });
 

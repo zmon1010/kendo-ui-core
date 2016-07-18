@@ -65,12 +65,12 @@ function stripAttr(html) {
     return html.replace(/<(\w+)[^>]*>/i, "<$1>");
 }
 
-test("empty table cells have the empty element content", function() {
+test("empty table cells have the empty table cell content", function() {
     range = createRangeFromText(editor, '||');
 
     execTableCommand({ range:range });
 
-    equal(stripAttr(editor.document.getElementsByTagName("td")[0].innerHTML), stripAttr(kendo.ui.editor.emptyElementContent));
+    equal(stripAttr(editor.document.getElementsByTagName("td")[0].innerHTML), stripAttr(kendo.ui.editor.emptyTableCellContent));
 });
 
 test("table has k-table class", function() {

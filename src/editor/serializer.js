@@ -59,7 +59,12 @@ var Serializer = {
                 }
 
                 if (node.nodeType == 1 && !dom.empty[dom.name(node)]) {
-                    node.innerHTML = kendo.ui.editor.emptyElementContent;
+                    if(dom.is(node, "td")) {
+                        node.innerHTML = kendo.ui.editor.emptyTableCellContent;
+                    }
+                    else {
+                        node.innerHTML = kendo.ui.editor.emptyElementContent;
+                    }
                 }
             }
         });

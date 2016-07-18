@@ -31,7 +31,7 @@ var TableCommand = InsertHtmlCommand.extend({
     _tableHtml: function(rows, columns) {
         rows = rows || 1;
         columns = columns || 1;
-        var columnHtml = template(columnTemplate)({ width: 100 / columns, content: Editor.emptyElementContent });
+        var columnHtml = template(columnTemplate)({ width: 100 / columns, content: Editor.emptyTableCellContent });
 
         return "<table class='k-table' data-last>" +
                     new Array(rows + 1).join(
@@ -311,7 +311,7 @@ var InsertRowCommand = Command.extend({
         newRow = row.cloneNode(true);
 
         for (var i = 0; i < row.cells.length; i++) {
-            newRow.cells[i].innerHTML = Editor.emptyElementContent;
+            newRow.cells[i].innerHTML = Editor.emptyTableCellContent;
         }
 
         if (this.options.position == "before") {
@@ -346,7 +346,7 @@ var InsertColumnCommand = Command.extend({
             cell = rows[i].cells[columnIndex];
 
             newCell = cell.cloneNode();
-            newCell.innerHTML = Editor.emptyElementContent;
+            newCell.innerHTML = Editor.emptyTableCellContent;
 
             if (position == "before") {
                 dom.insertBefore(newCell, cell);
