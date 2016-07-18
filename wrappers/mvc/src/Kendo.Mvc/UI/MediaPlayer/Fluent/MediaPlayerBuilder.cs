@@ -136,7 +136,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the fowr
+        /// If set to false the user will be prevented from seeking the video forward
         /// </summary>
         /// <param name="value">The value for ForwardSeek</param>
         public MediaPlayerBuilder<T> ForwardSeek(bool value)
@@ -170,6 +170,26 @@ namespace Kendo.Mvc.UI.Fluent
         public MediaPlayerBuilder<T> Playlist()
         {
             Component.Playlist = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the client-side events.
+        /// </summary>
+        /// <param name="configurator">The client events action.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().MediaPlayer()
+        ///       .Name("MediaPlayer")
+        ///       .Events(events => events
+        ///           .End("onEnd")
+        ///       )
+        /// )
+        /// </code>
+        /// </example>
+        public MediaPlayerBuilder<T> Events(Action<MediaPlayerEventBuilder> configurator)
+        {
+            configurator(new MediaPlayerEventBuilder(Component.Events));
             return this;
         }
     }

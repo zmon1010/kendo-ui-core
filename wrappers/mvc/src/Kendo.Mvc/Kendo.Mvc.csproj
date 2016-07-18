@@ -855,6 +855,7 @@
     <Compile Include="UI\Grid\Settings\AllowCopySettings.cs" />
     <Compile Include="UI\Grid\Settings\GridNoRecordsSettings.cs" />
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerBuilder.cs" />
+    <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerEventBuilder.cs" />
     <Compile Include="UI\MediaPlayer\Html\MediaPlayerHtmlBuilder.cs" />
     <Compile Include="UI\MediaPlayer\MediaPlayer.cs" />
     <Compile Include="UI\MobileApplication\Fluent\MobileApplicationIconBuilder.cs" />
