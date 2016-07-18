@@ -11,11 +11,11 @@
                     <div kendo-grid k-options="detailGridOptions(dataItem)"></div>
                 </div>
                 <div>
-                    <ul>
-                        <li>Country: <input ng-model="dataItem.Country" /></li>
-                        <li>City: <input ng-model="dataItem.City" /></li>
-                        <li>Address: {{dataItem.Address}}</li>
-                        <li>Home phone: {{dataItem.HomePhone}}</li>
+                    <ul class="contact-info-form">
+                        <li><label>Country:</label> <input class="k-textbox" ng-model="dataItem.Country" /></li>
+                        <li><label>City:</label> <input class="k-textbox" ng-model="dataItem.City" /></li>
+                        <li><label>Address:</label> {{dataItem.Address}}</li>
+                        <li><label>Home phone:</label> {{dataItem.HomePhone}}</li>
                     </ul>
                 </div>
                 </kendo-tabstrip>
@@ -25,6 +25,25 @@
 
     </div>
 </div>
+
+<style>
+  .contact-info-form {
+    list-style-type: none;
+    margin: 30px 0;
+    padding: 0;
+  }
+
+  .contact-info-form li {
+    margin: 10px 0;
+  }
+
+  .contact-info-form label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    font-weight: bold;
+  }
+</style>
 
 <script>
     angular.module("KendoDemos", [ "kendo.directives" ])
