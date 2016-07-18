@@ -42,8 +42,15 @@ var Serializer = {
     },
 
     _toEditableImmutables: function(body) {
-        var lastChild = body.lastChild;
-        if (lastChild && Editor.Immutables.immutable(lastChild)) {
+        var firstChild = body.firstChild,
+            lastChild = body.lastChild,
+            immutable = Editor.Immutables.immutable;
+
+        if (firstChild && immutable(firstChild)) {
+            $(body).prepend(br);
+        }
+
+        if (lastChild && immutable(lastChild)) {
             $(body).append(br);
         }
     },

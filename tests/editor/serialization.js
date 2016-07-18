@@ -816,4 +816,10 @@ test("multiple css properties are persisted", function() {
         ok($(lastChild).hasClass("k-br"));
     });
 
+    test('k-br is added before the first immutable element', function() {
+        editor.value('<p contenteditable="false">immutable content</p>');
+        var firstChild = editor.body.firstChild;
+        equal(firstChild.nodeName, "BR");
+        ok($(firstChild).hasClass("k-br"));
+    });
 }());
