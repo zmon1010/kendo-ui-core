@@ -84,15 +84,6 @@ namespace Kendo.Extensions
         //#endif
         //        }
 
-        public static String DojoRoot(this HtmlHelper html)
-        {
-#if DEBUG
-            return "http://127.0.0.1:3000/";
-#else
-                    return ConfigurationManager.AppSettings["DOJO_ROOT"];
-#endif
-        }
-
         public static IHtmlString WidgetLink(this HtmlHelper html, NavigationWidget widget, string product)
         {
             var viewBag = html.ViewContext.Controller.ViewBag;

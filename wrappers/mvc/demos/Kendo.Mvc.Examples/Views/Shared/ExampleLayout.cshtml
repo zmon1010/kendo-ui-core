@@ -216,10 +216,6 @@
                        });
                    })();
 
-               @*dojo.configuration = {
-                   url: "@Html.DojoRoot()",
-                   cdnRoot: '@Html.CdnRoot()'
-               };*@
                 </script>
             }
         </div>
@@ -274,10 +270,6 @@
 <script>
     $(window).on("resize", function() {
       kendo.resize($(".k-chart"));
-    });
-
-    $(".try-kendo").click(function(e) {
-        window.dojo.postSnippet($('#source-code-1').data('html'), window.location.href);
     });
 
     setTimeout(function(){ prettyPrint(); }, 100);
