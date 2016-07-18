@@ -47,7 +47,7 @@
         timeFormats = { 
             short: "mm:ss",
             long: "HH:mm:ss"
-        }
+        },
         template = kendo.template,
         extend = $.extend,
         proxy = $.proxy,
@@ -111,9 +111,7 @@
             
                 options = this.options;
                 
-                if (!options.youtubeApiKey) {
-                    this._createHtmlPlayer(options);
-                }
+                this._initializePlayer(options);
 
                 this._createTitlebar(options);
 
@@ -584,11 +582,42 @@
                 return result;
             },
 
+            _mouseClick: function(e) {
+                if (this.isPaused()) {
+                     this.play();
+                } else {
+                    this.pause();
+                }
+            },
+
+            _initializePlayer: function (options) {
+                this._mouseMoveHandler = proxy(this._mouseMove, this);
+                this._mouseInOutHandler = proxy(this._mouseInOut, this);
+                this._mouseClickHanlder = proxy(this._mouseClick, this);
+
+                if (!options.youtubeApiKey) {
+                    this._createHtmlPlayer(options);
+                }
+
+                if (!this._videoOverlay) {
+                    wrapper.append("<div class='k-mediaplayer-overlay'></div>");
+                    this._videoOverlay = wrapper.find(".k-mediaplayer-overlay")
+                        .on("click" + ns, this._mouseClickHanlder)
+                        .css({
+                            width: this.element.width(),
+                            height: this.element.height()
+                        }); 
+                }
+
+                $(wrapper)
+                    // .on("mousemove" + ns, this._mouseMoveHandler)                
+				    .on("mouseenter" + ns + " mouseleave" + ns, this._mouseInOutHandler);
+                   
+            },
+
             _createHtmlPlayer: function (options) {
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
-                this._mouseMoveHandler = proxy(this._mouseMove, this);
-                this._mouseInOutHandler = proxy(this._mouseInOut, this);
                 wrapper.append(templates.htmlPlayer);
                 this._media = wrapper.find(DOT + MEDIA)[0];
                 $(this._media)
@@ -602,10 +631,7 @@
                 }
 
                 this._media.muted = options.mute;
-               
-                $(wrapper)
-                    // .on("mousemove" + ns, this._mouseMoveHandler)                
-				    .on("mouseenter" + ns + " mouseleave" + ns, this._mouseInOutHandler);
+
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;
                 this._media.ondurationchange = this._mediaDurationChangeHandler;
             },
@@ -652,6 +678,7 @@
                 this.timers = null;
                 this._mouseMoveHandler = null;
                 this._mouseInOutHandler = null;
+                this._mouseClickHanlder = null;
 
                 this._unbindDataSource();
 
