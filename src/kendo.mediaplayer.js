@@ -266,8 +266,6 @@
                     wrapper.find(DOT + MEDIA + " > source").remove();
                     wrapper.find(DOT + MEDIA).attr("src", currentItem.url);
                     this.play();
-                    wrapper.find("#play").children().first().removeClass(STATE_PLAY)
-                                                            .addClass(STATE_PAUSE);
                 }
             },
 
@@ -309,6 +307,8 @@
                             .removeClass(STATE_PLAY)
                             .addClass(STATE_PAUSE); 
                     }
+
+                    this._playButton = toolBarElement.find("#play.k-button.k-button-icon span");
                 } 
             },
 
@@ -319,15 +319,9 @@
                 if (e.id === "play") {
                     if (isPaused) {
                         this.play();
-                        target
-                            .removeClass(STATE_PLAY)
-                            .addClass(STATE_PAUSE);                        
                     } 
                     else {
                         this.pause();
-                        target
-                            .removeClass(STATE_PAUSE)
-                            .addClass(STATE_PLAY);   
                     }
                 }
 
@@ -676,7 +670,7 @@
                 if (!this.isPaused()) {
                     this.pause();
                 }
-                
+
                 this.element.off(ns);
                 this.element.find(DOT + PLAYLIST + "> ul > li").off(ns);
                 this.element.find(DOT + PLAYLIST_OPEN).off(ns);
@@ -734,6 +728,11 @@
                     this._media.play();
                 }
                 this._paused = false;
+
+                this._playButton
+                    .removeClass(STATE_PLAY)
+                    .addClass(STATE_PAUSE); 
+
                 return this;
             },
 
@@ -745,6 +744,11 @@
                     this._media.currentTime = 0;
                 }
                 this._paused = true;
+
+                this._playButton
+                    .removeClass(STATE_PAUSE)
+                    .addClass(STATE_PLAY);   
+
                 return this;
             },
 
@@ -755,6 +759,11 @@
                     this._media.pause();
                 }
                 this._paused = true;
+
+                this._playButton
+                    .removeClass(STATE_PAUSE)
+                    .addClass(STATE_PLAY);   
+
                 return this;
             },
 
