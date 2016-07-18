@@ -1191,8 +1191,8 @@
     var emptyElementContent = '\ufeff';
     var emptyTableCellContent = emptyElementContent;
 
-    if(browser.msie) {
-        emptyTableCellContent = browser.version < 11 ? "" : "<br/>";
+    if(browser.msie && browser.version == 10) {
+        emptyTableCellContent = "&nbsp;";
     }
 
     extend(kendo.ui, {
