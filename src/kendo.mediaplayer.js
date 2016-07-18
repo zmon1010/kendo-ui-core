@@ -124,6 +124,8 @@
 
                 this._dataSource();
 
+                this._timers = {};
+
                 if (this.options.autoBind) {
                     this.dataSource.fetch();
                 }
@@ -361,13 +363,28 @@
             },
 
             _sliderDragging: function(e) {
+                if(!this.options.forwardSeek && (e.sender.value() < e.value)) {
+                    this._shouldCancelSlideChange = true;
+                    this._sliderValue = e.sender.value();
+                }
                 this._isDragging = true;
             },
 
             _sliderDragChange: function(e) {
+                var that = this;
+                var slider = e.sender;
                 var tzOffset = timeZoneSec * 1000;
-                this._isDragging = false;
-                this._media.currentTime = this._timeToSec(e.value - tzOffset);
+                that._isDragging = false;
+                if(that._shouldCancelSlideChange) {
+                    setTimeout(function() {
+                        that._shouldCancelSlideChange = false;
+                        slider.value(that._sliderValue);
+                    },1);
+                }else if(this._youTubeVideo) {
+                    that._media.seekTo(that._timeToSec(e.value - tzOffset));
+                }else{
+                    that._media.currentTime = that._timeToSec(e.value - tzOffset);
+                }
             },
 
             _changeVolumeButtonImage:function(volume)
@@ -397,8 +414,9 @@
             },
 
             _mediaTimeUpdate: function(e) {
-                var currentTime = this._msToTime((this._youTubeVideo)? this._media.getCurrentTime(): this._media.currentTime);
-                currentTimeElement.text(kendo.toString(currentTime, this._timeFormat));
+                var currentTime = (this._youTubeVideo)? this._media.getCurrentTime(): this._media.currentTime;
+                var timeInMs = this._msToTime(currentTime);
+                currentTimeElement.text(kendo.toString(timeInMs, this._timeFormat));
                 if (!this._isDragging) {
                     this._slider.value((currentTime + timeZoneSec) * 1000);
                 }
@@ -425,7 +443,6 @@
             },
 
             _createYoutubePlayer: function (options) {
-                this.timers = {};
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
 
@@ -453,23 +470,23 @@
             {
                 var that = this;
 
-                if (that.timers[name] != null)
+                if (that._timers[name] != null)
                 {
-                    clearTimeout(that.timers[name]);
+                    clearTimeout(that._timers[name]);
                 }
 
-                that.timers[name] = setTimeout((function (context)
+                that._timers[name] = setTimeout((function (context)
                 {
                     return function callLater()
                     {
                         if (callback.call(context))
                         {
-                            that.timers[name] = setTimeout(callLater, interval);
+                            that._timers[name] = setTimeout(callLater, interval);
                         }
                     };
                 })(context), interval);
 
-                return that.timers[name];
+                return that._timers[name];
             },
 
             _youtubeApiReady: function () {
@@ -509,38 +526,14 @@
                 this._mediaDurationChangeHandler();
             },
 
-            _onReady:function (event){
-
-            },
-
-            _onEnd:function (event){
-
-            },
-
-            _onPlay:function (event){
-
-            },
-
-            _onPause:function (event){
-
-            },
-
-            _onTimeChange:function (event){
-
-            },
-
-            _onVolumeChange:function (event){
-
-            },
-
             _onPlayerStateChange: function (event){
                 //IF NECESSARY
                 //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state 
                 if (event.data === 0)
                 {		
-				    this._media.cueVideoById(this._getMediaId());
+				    this._media.cueVideoById(this._getMediaId(extend(this.options, { ytFile: this.dataSource.getByUid(this._currentItem) })));
                     this._media.seekTo(0, true);
-				    this._media.pauseVideo();
+				    this.pause();
 				    this._slider.value(0);
                     this.trigger(END);
                 }
@@ -587,7 +580,8 @@
 
             _initializePlayer: function (options) {
                 this._mouseMoveHandler = proxy(this._mouseMove, this);
-                this._mouseInOutHandler = proxy(this._mouseInOut, this);
+                this._mouseInHandler = proxy(this._mouseIn, this);
+                this._mouseOutHandler = proxy(this._mouseOut, this);
                 this._mouseClickHanlder = proxy(this._mouseClick, this);
 
                 if (!options.youtubeApiKey) {
@@ -606,7 +600,9 @@
 
                 $(wrapper)
                     // .on("mousemove" + ns, this._mouseMoveHandler)                
-				    .on("mouseenter" + ns + " mouseleave" + ns, this._mouseInOutHandler);
+				    .on("mouseenter" + ns , this._mouseInHandler)
+                    .on("mouseleave" + ns , this._mouseOutHandler)
+                    .on("mousemove" + ns , this._mouseMoveHandler);
                    
             },
 
@@ -631,30 +627,32 @@
                 this._media.ondurationchange = this._mediaDurationChangeHandler;
             },
 
-            _mouseInOut: function (e) {
-                this._uiDisplay(e.type === "mouseenter");
+            _mouseIn: function (e) {
+                this._uiDisplay(true);
             },
 
-            // _mouseMove: function (e) {
-            //     var context = this;
-            //     if (this._mouseMoveTimer) {
-            //         clearTimeout(this._mouseMoveTimer);
-            //         this._mouseMoveTimer = 0;
-            //     }
-            //     this._uiDisplay(true);
-                
-            //     this._mouseMoveTimer = setTimeout(function () {
-            //         context._uiDisplay(false);
-            //     } , 1000); 
-            // },
+            _mouseOut: function (e) {
+                this._poll("mouseIdle", this._mouseIdle, 3000, this);
+            },
 
-            _uiDisplay: function (show) {
-                var animationSpeed = 'fast';
-                var state = +show;
+            _mouseIdle: function () {
+                this._uiDisplay(false);
+                return false;
+            },
+
+            _mouseMove: function (e) {
+                if(!(this._titleBar.is(':animated') || this._toolBar.element.is(':animated') ||this._slider.wrapper.is(':animated'))){
+                    this._uiDisplay(true);
+                }
+                this._poll("mouseIdle", this._mouseIdle, 3000, this);
+            },
+
+            _uiDisplay: function (state) {
+                var animationSpeed = 'slow';
                 //titleBar.stop().animate({opacity:state}, animationSpeed);
-                this._titleBar.fadeTo(animationSpeed, state);
-                this._toolBar.element.fadeTo(animationSpeed, state);
-                this._slider.wrapper.fadeTo(animationSpeed, state);
+                this._titleBar.stop().animate({opacity:+state}, animationSpeed);
+                this._toolBar.element.stop().animate({opacity:+state}, animationSpeed);
+                this._slider.wrapper.stop().animate({opacity:+state}, animationSpeed);
             },
 
             setOptions: function (options) {
@@ -675,9 +673,10 @@
                 this.element.find(DOT + PLAYLIST + "> ul > li").off(ns);
                 this.element.find(DOT + PLAYLIST_OPEN).off(ns);
                 this.element.find(DOT + OVERLAY).off(ns);
-                this.timers = null;
+                this._timers = null;
                 this._mouseMoveHandler = null;
-                this._mouseInOutHandler = null;
+                this._mouseOutHandler = null;
+                this._mouseInHandler = null;
                 this._mouseClickHanlder = null;
 
                 this._unbindDataSource();
