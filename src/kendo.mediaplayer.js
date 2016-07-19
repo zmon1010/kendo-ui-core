@@ -12,107 +12,105 @@
 
     (function ($, undefined) {
         var kendo = window.kendo,
-        CHANGE = "change",
-        END = "end",
-        PAUSE = "pause",
-        PLAY = "play",
-        READY = "ready",
-        TIMECHANGE = "timeChange",
-        VOLUMECHANGE = "volumeChange", 
-        FULLSCREEN_ENTER = "k-i-fullscreen-enter",
-        FULLSCREEN_EXIT = "k-i-fullscreen-exit",
-        MUTE = "k-i-volume-mute",
-        LOW_VOLUME = "k-i-volume-low",
-        HIGH_VOLUME = "k-i-volume-high",
-        PROGRESS = "progress",
-        ERROR = "error",
-        STATE_PLAY = "k-i-play",
-        STATE_PAUSE = "k-i-pause",
-        TITLEBAR = "k-mediaplayer-titlebar",
-        TITLE = "k-title",
-        TOOLBAR = "k-mediaplayer-toolbar",
-        SLIDER = "k-mediaplayer-seekbar",
-        VOLUME_SLIDER = "k-mediaplayer-volume",
-        MEDIA = "k-mediaplayer-media",
-        PLAYLIST_OPEN = "k-i-playlist-open",
-        PLAYLIST = "k-mediaplayer-playlist",
-        OVERLAY = "k-mediaplayer-overlay",
-        YTPLAYER = "k-mediaplayer-yt",
-        YTPLAYER_ID = "ytplayer",
-        DOT = ".",
-        ui = kendo.ui,
-        ns = ".kendoMediaPlayer",
-        baseTime = new Date(1970,0,1),  
-        timeZoneSec = baseTime.getTimezoneOffset() * 60;
-        Widget = kendo.ui.Widget,
-        timeFormats = { 
-            short: "mm:ss",
-            long: "HH:mm:ss"
-        },
-        template = kendo.template,
-        extend = $.extend,
-        proxy = $.proxy,
-        //each = $.each,
-        templates = {
-            htmlPlayer: "<video class='" + MEDIA + "'> </video>",
-            titleBar: template("<div class='" + TITLEBAR + "'><span class='" + TITLE + "'>Video Title</span> #= renderPlaylistButton(data) # </div>"),
-            toolBar: "<div class='" + TOOLBAR + "'> </div>",
-            youtubePlayer: "<div class='" + YTPLAYER + "' id='ytplayer'> </div>",
-            toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
-            slider: "<input class='" + SLIDER + "' value='0' />",
-            volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
-            toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #",
-            playlistButton: "<a role='button' class='k-icon k-font-icon " + PLAYLIST_OPEN + "' style='float: right;''>Open Playlist</a>",
-            playlist: template("<div style='height: 286px; margin-right: -280px;'' class='" + PLAYLIST + "'>" + 
-                                    "<ul class='k-list'>" +
-                                        "#= renderPlaylistItems(data) #" +
-                                    "</ul>" +
-                                "</div>"),
-            playlistItem: template("<li class='k-list-item k-active-item'>" +
-                                        "<a title='#= title #' href='\\#'>" +
-                                            "<span class='k-image-wrap'>" +
-                                                "<img alt='#= poster #' src='#= poster #'>" +
-                                            "</span>" +
-                                            "<span class='k-title'>#= title #</span></a></li>")
-        },
-        rendering = {
-            renderPlaylistButton: function (options) {
-              if (options.playlist && !(options.playlist.button === false)) {
-                  return templates.playlistButton;
-              }
-              return "";
+            CHANGE = "change",
+            END = "end",
+            PAUSE = "pause",
+            PLAY = "play",
+            READY = "ready",
+            TIMECHANGE = "timeChange",
+            VOLUMECHANGE = "volumeChange",
+            FULLSCREEN_ENTER = "k-i-fullscreen-enter",
+            FULLSCREEN_EXIT = "k-i-fullscreen-exit",
+            MUTE = "k-i-volume-mute",
+            LOW_VOLUME = "k-i-volume-low",
+            HIGH_VOLUME = "k-i-volume-high",
+            PROGRESS = "progress",
+            ERROR = "error",
+            STATE_PLAY = "k-i-play",
+            STATE_PAUSE = "k-i-pause",
+            TITLEBAR = "k-mediaplayer-titlebar",
+            TITLE = "k-title",
+            TOOLBAR = "k-mediaplayer-toolbar",
+            SLIDER = "k-mediaplayer-seekbar",
+            VOLUME_SLIDER = "k-mediaplayer-volume",
+            MEDIA = "k-mediaplayer-media",
+            PLAYLIST_OPEN = "k-i-playlist-open",
+            PLAYLIST = "k-mediaplayer-playlist",
+            OVERLAY = "k-mediaplayer-overlay",
+            YTPLAYER = "k-mediaplayer-yt",
+            YTPLAYER_ID = "ytplayer",
+            DOT = ".",
+            ui = kendo.ui,
+            ns = ".kendoMediaPlayer",
+            baseTime = new Date(1970, 0, 1),
+            timeZoneSec = baseTime.getTimezoneOffset() * 60,
+            Widget = kendo.ui.Widget,
+            timeFormats = {
+                shortTime: "mm:ss",
+                longTime: "HH:mm:ss"
             },
+            template = kendo.template,
+            extend = $.extend,
+            proxy = $.proxy,
+            //each = $.each,
+            templates = {
+                htmlPlayer: "<video class='" + MEDIA + "'> </video>",
+                titleBar: template("<div class='" + TITLEBAR + "'><span class='" + TITLE + "'>Video Title</span> #= renderPlaylistButton(data) # </div>"),
+                toolBar: "<div class='" + TOOLBAR + "'> </div>",
+                youtubePlayer: "<div class='" + YTPLAYER + "' id='ytplayer'> </div>",
+                toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
+                slider: "<input class='" + SLIDER + "' value='0' />",
+                volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
+                toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #",
+                playlistButton: "<a role='button' class='k-icon k-font-icon " + PLAYLIST_OPEN + "' style='float: right;''>Open Playlist</a>",
+                playlist: template("<div style='height: 286px; margin-right: -280px;'' class='" + PLAYLIST + "'>" +
+                    "<ul class='k-list'>" +
+                    "#= renderPlaylistItems(data) #" +
+                    "</ul>" +
+                    "</div>"),
+                playlistItem: template("<li class='k-list-item k-active-item'>" +
+                    "<a title='#= title #' href='\\#'>" +
+                    "<span class='k-image-wrap'>" +
+                    "<img alt='#= poster #' src='#= poster #'>" +
+                    "</span>" +
+                    "<span class='k-title'>#= title #</span></a></li>")
+            },
+            rendering = {
+                renderPlaylistButton: function (options) {
+                    if (options.playlist && options.playlist.button === true) {
+                        return templates.playlistButton;
+                    }
+                    return "";
+                },
 
-            renderPlaylistItems: function (data) {
-                var html = "",
-                    i = 0;
-                
-                for (i; i < data.length; i++) {
-                    var item = data[i];
-                    html += templates.playlistItem({
-                                title: item.title,
-                                poster: item.poster
-                            });
+                renderPlaylistItems: function (data) {
+                    var html = "",
+                        i = 0;
+
+                    for (i; i < data.length; i++) {
+                        var item = data[i];
+                        html += templates.playlistItem({
+                            title: item.title,
+                            poster: item.poster
+                        });
+                    }
+
+                    return html;
                 }
-
-                return html;
-            }
-        },
-        DataSource = kendo.data.DataSource;
+            },
+            DataSource = kendo.data.DataSource;
 
         var MediaPlayer = Widget.extend({
             init: function (element, options) {
-                wrapper = $(element),
+                this.wrapper = $(element);
 
                 options = $.isArray(options) ? { dataSource: options } : options;
 
                 Widget.fn.init.call(this, element, options);
 
-                wrapper.addClass("k-mediaplayer k-widget");
-            
+                this.wrapper.addClass("k-mediaplayer k-widget");
+
                 options = this.options;
-                
-                //this._initializePlayer(options);
 
                 this._createTitlebar(options);
 
@@ -120,7 +118,7 @@
 
                 this._createSlider();
 
-                this._createVolumeSlider(options);
+                this._createVolumeSlider();
 
                 this._dataSource();
 
@@ -139,7 +137,7 @@
                 PLAY,
                 READY,
                 TIMECHANGE,
-                VOLUMECHANGE    
+                VOLUMECHANGE
             ],
 
             options: {
@@ -168,37 +166,37 @@
                 }
             },
 
-            _msToTime: function(ms) {
+            _msToTime: function (ms) {
                 var time = new Date(baseTime.getTime());
                 time.setSeconds(ms);
                 return time;
             },
 
-            _timeToSec: function(time) {
+            _timeToSec: function (time) {
                 var curTime = new Date(time).getTime();
                 return curTime / 1000;
             },
 
-            _createTitlebar: function(options) {
-                this._titleBar = wrapper.find(DOT + TITLEBAR);
+            _createTitlebar: function (options) {
+                this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 if (this._titleBar.length === 0) {
                     this._playlistButtonClickHandler = proxy(this._playlistButtonClick, this);
-                    wrapper.append(templates.titleBar(extend(options, rendering)));
-                    wrapper.find(DOT + PLAYLIST_OPEN).on("click" + ns, this._playlistButtonClickHandler);
-                    this._titleBar = wrapper.find(DOT + TITLEBAR);
+                    this.wrapper.append(templates.titleBar(extend(options, rendering)));
+                    this.wrapper.find(DOT + PLAYLIST_OPEN).on("click" + ns, this._playlistButtonClickHandler);
+                    this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 }
             },
 
             _playlistButtonClick: function () {
-                wrapper.find(DOT + PLAYLIST).toggle();
+                this.wrapper.find(DOT + PLAYLIST).toggle();
             },
 
-            _createSlider: function() {
-                var sliderElement = wrapper.find(DOT + SLIDER);
+            _createSlider: function () {
+                var sliderElement = this.wrapper.find(DOT + SLIDER);
                 if (!this._slider) {
                     this._sliderDragChangeHandler = proxy(this._sliderDragChange, this);
                     this._sliderDraggingHandler = proxy(this._sliderDragging, this);
-                    sliderElement = wrapper.find(DOT + SLIDER);
+                    sliderElement = this.wrapper.find(DOT + SLIDER);
 
                     this._slider = new ui.Slider(sliderElement[0], {
                         smallStep: 1000,
@@ -213,8 +211,8 @@
                 }
             },
 
-            _createVolumeSlider: function(options) {
-                var volumeSliderElement = wrapper.find(DOT + VOLUME_SLIDER);
+            _createVolumeSlider: function () {
+                var volumeSliderElement = this.wrapper.find(DOT + VOLUME_SLIDER);
                 if (!this._volumeSlider) {
                     this._volumeDraggingHandler = proxy(this._volumeDragging, this);
                     this._volumeChangeHandler = proxy(this._volumeChange, this);
@@ -224,7 +222,7 @@
                         smallStep: 1,
                         min: 0,
                         max: 100,
-                        value : this.options.volume,
+                        value: this.options.volume,
                         slide: this._volumeDraggingHandler,
                         change: this._volumeChangeHandler,
                         tickPlacement: "none",
@@ -234,26 +232,26 @@
             },
 
             _createPlaylist: function (data) {
-                var playlistElement = wrapper.find(DOT + PLAYLIST);
+                var playlistElement = this.wrapper.find(DOT + PLAYLIST);
                 if (playlistElement.length === 0) {
                     this._playlistItemClickHandler = proxy(this._playlistItemClick, this);
-                    wrapper.append(templates.playlist(extend(this.options, { data: data }, rendering)));
-                    wrapper.find(DOT + PLAYLIST + "> ul > li").on("click" + ns, this._playlistItemClickHandler);
+                    this.wrapper.append(templates.playlist(extend(this.options, { data: data }, rendering)));
+                    this.wrapper.find(DOT + PLAYLIST + "> ul > li").on("click" + ns, this._playlistItemClickHandler);
                     if (this.options.playlist.hidden) {
-                        wrapper.find(DOT + PLAYLIST).hide();
+                        this.wrapper.find(DOT + PLAYLIST).hide();
                     }
                 }
             },
 
-            _resetTime: function(){
-                if(this._youTubeVideo) {
+            _resetTime: function () {
+                if (this._youTubeVideo) {
                     this._ytmedia.seekTo(0, true);
-                } else{
+                } else {
                     this._media.currentTime = 0;
                 }
-                
+
                 this._mediaTimeUpdate();
-                $.grep(this._toolBar.options.items, function(e) { return !!e.template; }).template = templates.toolBarTime; 
+                $.grep(this._toolBar.options.items, function (e) { return !!e.template; }).template = templates.toolBarTime;
             },
 
             _isYouTubeUrl: function (url) {
@@ -264,24 +262,24 @@
                 var oldPlayer = this._youTubeVideo;
                 this.stop();
 
-                this._youTubeVideo = this._isYouTubeUrl(url); 
+                this._youTubeVideo = this._isYouTubeUrl(url);
 
                 if (oldPlayer !== this._youTubeVideo) {
-                        wrapper.find(DOT + YTPLAYER).toggle();
-                        wrapper.find(DOT + MEDIA).toggle();
+                    this.wrapper.find(DOT + YTPLAYER).toggle();
+                    this.wrapper.find(DOT + MEDIA).toggle();
                 }
 
                 this._currentUrl = url;
 
                 if (this._youTubeVideo) {
-				    this._ytmedia.loadVideoById(this._getMediaId());
-                } 
+                    this._ytmedia.loadVideoById(this._getMediaId());
+                }
                 else {
                     if (!this._media) {
-                        this._initializePlayer(this.options);
+                        this._initializePlayer();
                     }
-                    wrapper.find(DOT + MEDIA + " > source").remove();
-                    wrapper.find(DOT + MEDIA).attr("src", url);
+                    this.wrapper.find(DOT + MEDIA + " > source").remove();
+                    this.wrapper.find(DOT + MEDIA).attr("src", url);
                 }
             },
 
@@ -300,28 +298,27 @@
             },
 
             _createToolbar: function (options) {
-                var toolBarElement = wrapper.find(DOT + TOOLBAR);
-                if (toolBarElement.length === 0) { 
-                    this._toolbarClickHandler = proxy(this._toolbarClick, this);                    
-                    wrapper.append(templates.toolBar);
+                var toolBarElement = this.wrapper.find(DOT + TOOLBAR);
+                if (toolBarElement.length === 0) {
+                    this._toolbarClickHandler = proxy(this._toolbarClick, this);
+                    this.wrapper.append(templates.toolBar);
                     toolBarElement = $(DOT + TOOLBAR);
                     toolBarElement.width($(DOT + MEDIA).width());
-                    var context = this;
                     this._toolBar = new ui.ToolBar(toolBarElement, {
                         click: this._toolbarClickHandler,
                         resizable: false,
                         items: [
-                            { 
+                            {
                                 id: "seekBarTemplate",
                                 template: templates.slider
                             },
                             { type: "button", id: "play", spriteCssClass: "k-icon k-font-icon k-i-play" },
                             { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
-                            { 
+                            {
                                 id: "volumeTemplate",
                                 template: templates.volumeSlider
                             },
-                            { 
+                            {
                                 id: "timeTemplate",
                                 template: templates.toolBarTime
                             },
@@ -330,20 +327,20 @@
                         ]
                     });
                     toolBarElement.width("auto");
-                    currentTimeElement = toolBarElement.find("#currentTime");
-                    durationElement = toolBarElement.find("#duration");
+                    this._currentTimeElement = toolBarElement.find("#currentTime");
+                    this._durationElement = toolBarElement.find("#duration");
                     if (options.autoPlay) {
-                        wrapper.find("#play").children().first()
+                        this.wrapper.find("#play").children().first()
                             .removeClass(STATE_PLAY)
-                            .addClass(STATE_PAUSE); 
+                            .addClass(STATE_PAUSE);
                     }
 
                     this._playButton = toolBarElement.find("#play.k-button.k-button-icon span");
-                } 
+                }
             },
 
             _updateToolbarTitle: function (item) {
-                var title = wrapper.find(DOT + TITLEBAR + ">" + DOT + TITLE);
+                var title = this.wrapper.find(DOT + TITLEBAR + ">" + DOT + TITLE);
                 title.text(item.title);
             },
 
@@ -354,18 +351,18 @@
                 if (e.id === "play") {
                     if (isPaused) {
                         this.play();
-                    } 
+                    }
                     else {
                         this.pause();
                     }
                 }
 
-                if(e.id === "fullscreen"){
-                    if(this._isInFullScreen){
+                if (e.id === "fullscreen") {
+                    if (this._isInFullScreen) {
                         target
                             .removeClass(FULLSCREEN_EXIT)
                             .addClass(FULLSCREEN_ENTER);
-                       this.fullScreen(false);
+                        this.fullScreen(false);
                     } else {
                         target
                             .removeClass(FULLSCREEN_ENTER)
@@ -384,84 +381,82 @@
                 }
             },
 
-            _toggleHD: function(e) {
+            _toggleHD: function () {
                 var currentItem = this.dataSource.getByUid(this._currentItem);
                 var media = $(this._media);
                 var isHD = currentItem.hdurl === media.attr("src");
                 var currentTime = this._media.currentTime;
                 if (currentItem.hdurl && currentItem.hdurl.length > 0) {
-                    media.attr("src",  isHD ? currentItem.url : currentItem.hdurl);
+                    media.attr("src", isHD ? currentItem.url : currentItem.hdurl);
                     this._media.currentTime = currentTime;
                 }
             },
 
-            _sliderDragging: function(e) {
-                if(!this.options.forwardSeek && (e.sender.value() < e.value)) {
+            _sliderDragging: function (e) {
+                if (!this.options.forwardSeek && (e.sender.value() < e.value)) {
                     this._shouldCancelSlideChange = true;
                     this._sliderValue = e.sender.value();
                 }
                 this._isDragging = true;
             },
 
-            _sliderDragChange: function(e) {
+            _sliderDragChange: function (e) {
                 var that = this;
                 var slider = e.sender;
                 var tzOffset = timeZoneSec * 1000;
                 that._isDragging = false;
-                if(that._shouldCancelSlideChange) {
-                    setTimeout(function() {
+                if (that._shouldCancelSlideChange) {
+                    setTimeout(function () {
                         that._shouldCancelSlideChange = false;
                         slider.value(that._sliderValue);
-                    },1);
-                }else if(this._youTubeVideo) {
+                    }, 1);
+                } else if (this._youTubeVideo) {
                     that._ytmedia.seekTo(that._timeToSec(e.value - tzOffset));
-                }else{
+                } else {
                     that._media.currentTime = that._timeToSec(e.value - tzOffset);
                 }
             },
 
-            _changeVolumeButtonImage:function(volume)
-            {
+            _changeVolumeButtonImage: function (volume) {
                 var $volumeElement = this.toolbar().element.find("#volume > span");
                 var cssClass = this.toolbar().element.find("#volume > span").attr("class");
                 cssClass = cssClass.substring(0, cssClass.lastIndexOf(" "));
 
-                if(volume === 0)
-                {
-                    $volumeElement.attr("class",cssClass + " " + MUTE);
-                }else if(volume > 0 && volume < 51){
-                    $volumeElement.attr("class",cssClass + " " + LOW_VOLUME);
-                }else{
-                    $volumeElement.attr("class",cssClass + " " + HIGH_VOLUME);
+                if (volume === 0) {
+                    $volumeElement.attr("class", cssClass + " " + MUTE);
+                } else if (volume > 0 && volume < 51) {
+                    $volumeElement.attr("class", cssClass + " " + LOW_VOLUME);
+                } else {
+                    $volumeElement.attr("class", cssClass + " " + HIGH_VOLUME);
                 }
             },
 
-            _volumeDragging: function(e) {
+            _volumeDragging: function (e) {
                 this.volume(e.value);
                 this._changeVolumeButtonImage(e.value);
             },
 
-            _volumeChange: function(e) {
+            _volumeChange: function (e) {
                 this.volume(e.value);
                 this._changeVolumeButtonImage(e.value);
             },
 
-            _mediaTimeUpdate: function(e) {
-                var currentTime = (this._youTubeVideo)? this._ytmedia.getCurrentTime(): this._media.currentTime;
+            _mediaTimeUpdate: function () {
+                var currentTime = (this._youTubeVideo) ? this._ytmedia.getCurrentTime() : this._media.currentTime;
                 var timeInMs = this._msToTime(currentTime);
-                currentTimeElement.text(kendo.toString(timeInMs, this._timeFormat));
+                this._currentTimeElement.text(kendo.toString(timeInMs, this._timeFormat));
                 if (!this._isDragging) {
                     this._slider.value((currentTime + timeZoneSec) * 1000);
                 }
                 return this.isPlaying();
             },
 
-            _mediaDurationChange: function(e) {
-                var durationTime = this._msToTime((this._youTubeVideo)? this._ytmedia.getDuration() : this._media.duration);
+            _mediaDurationChange: function () {
+                var durationTime = this._msToTime((this._youTubeVideo) ? this._ytmedia.getDuration() : this._media.duration);
 
-                this._timeFormat = durationTime.getHours() === 0 ? timeFormats.short : timeFormats.long;
+                this._timeFormat = durationTime.getHours() === 0 ? timeFormats.shortTime : timeFormats.longTime;
 
-                durationElement.text(kendo.toString(durationTime, this._timeFormat));
+                this._durationElement.text(kendo.toString(durationTime, this._timeFormat));
                 this._slider.setOptions({
                     min: baseTime.getTime(),
                     max: durationTime.getTime()
@@ -480,40 +475,33 @@
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
 
                 this._videoOverlay.after(templates.youtubePlayer);
-                this._ytPlayer = wrapper.find(DOT + YTPLAYER)[0];
+                this._ytPlayer = this.wrapper.find(DOT + YTPLAYER)[0];
                 $(this._ytPlayer)
                     .css({
-                        width: wrapper.width(),
-                        height: wrapper.height() 
+                        width: this.wrapper.width(),
+                        height: this.wrapper.height()
                     });
 
-                if (!window.YT || !window.YT.Player)
-                {
+                if (!window.YT || !window.YT.Player) {
                     $.getScript("https://www.youtube.com/iframe_api");
                     this._youtubeApiReadyHandler = proxy(this._youtubeApiReady, this);
                     window.onYouTubeIframeAPIReady = this._youtubeApiReadyHandler;
                 }
-                else
-                {
+                else {
                     this._configurePlayer(options);
                 }
             },
 
-            _poll: function (name, callback, interval, context)
-            {
+            _poll: function (name, callback, interval, context) {
                 var that = this;
 
-                if (that._timers[name] != null)
-                {
+                if (that._timers[name] !== null) {
                     clearTimeout(that._timers[name]);
                 }
 
-                that._timers[name] = setTimeout((function (context)
-                {
-                    return function callLater()
-                    {
-                        if (callback.call(context))
-                        {
+                that._timers[name] = setTimeout((function (context) {
+                    return function callLater() {
+                        if (callback.call(context)) {
                             that._timers[name] = setTimeout(callLater, interval);
                         }
                     };
@@ -540,8 +528,8 @@
 
                 /*jshint unused:false */
                 var player = new window.YT.Player(YTPLAYER_ID, {
-                    height: wrapper.height(),
-                    width: wrapper.width(),
+                    height: this.wrapper.height(),
+                    width: this.wrapper.width(),
                     videoId: this._getMediaId(),
                     playerVars: vars,
                     events: {
@@ -551,7 +539,7 @@
                 });
             },
 
-            _onYouTubePlayerReady: function (event){
+            _onYouTubePlayerReady: function (event) {
                 this._ytmedia = event.target;
                 this._ytmedia.getIframe().style.width = "100%";
                 this._ytmedia.getIframe().style.height = "100%";
@@ -559,14 +547,14 @@
                 this._mediaDurationChangeHandler();
             },
 
-            _onPlayerStateChange: function (event){
+            _onPlayerStateChange: function (event) {
                 //IF NECESSARY
                 //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state 
-                if (event.data === 0) {		
-				    //this._ytmedia.cueVideoById(this._getMediaId(extend(this.options, { ytFile: this.dataSource.getByUid(this._currentItem) })));
+                if (event.data === 0) {
+                    //this._ytmedia.cueVideoById(this._getMediaId(extend(this.options, { ytFile: this.dataSource.getByUid(this._currentItem) })));
                     this._ytmedia.seekTo(0, true);
-				    this.pause();
-				    this._slider.value(0);
+                    this.pause();
+                    this._slider.value(0);
                     this.trigger(END);
                 }
                 else if (event.data === 1) {
@@ -574,7 +562,7 @@
                     this._ytmedia.playVideo();
                     this.trigger(PLAY);
                     this._poll("progress", this._mediaTimeUpdate, 500, this);
-                    this._paused = false; 
+                    this._paused = false;
                 }
                 else if (event.data === 2) {
                     this._ytmedia.pauseVideo();
@@ -586,7 +574,7 @@
                 }
             },
 
-            _getMediaId: function (){
+            _getMediaId: function () {
                 var result = this._currentUrl;
                 var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
                 var match = result.match(regExp);
@@ -598,36 +586,36 @@
                 return result;
             },
 
-            _mouseClick: function(e) {
+            _mouseClick: function () {
                 if (this.isPaused()) {
-                     this.play();
+                    this.play();
                 } else {
                     this.pause();
                 }
             },
 
-            _initializePlayer: function (options) {
+            _initializePlayer: function () {
                 if (!this._mouseMoveHandler) {
                     this._mouseMoveHandler = proxy(this._mouseMove, this);
                     this._mouseInHandler = proxy(this._mouseIn, this);
                     this._mouseOutHandler = proxy(this._mouseOut, this);
 
-                    $(wrapper)
-                        .on("mouseenter" + ns , this._mouseInHandler)
-                        .on("mouseleave" + ns , this._mouseOutHandler)
-                        .on("mousemove" + ns , this._mouseMoveHandler);
+                    $(this.wrapper)
+                        .on("mouseenter" + ns, this._mouseInHandler)
+                        .on("mouseleave" + ns, this._mouseOutHandler)
+                        .on("mousemove" + ns, this._mouseMoveHandler);
                 }
 
                 if (!this._videoOverlay) {
                     this._mouseClickHanlder = proxy(this._mouseClick, this);
-                    wrapper.append("<div class='" + OVERLAY + "'></div>");
-                    this._videoOverlay = wrapper.find(".k-mediaplayer-overlay")
+                    this.wrapper.append("<div class='" + OVERLAY + "'></div>");
+                    this._videoOverlay = this.wrapper.find(".k-mediaplayer-overlay")
                         .on("click" + ns, this._mouseClickHanlder);
-                }    
+                }
 
                 if (this._youTubeVideo) {
                     this._createYoutubePlayer(this.options);
-                } 
+                }
                 else {
                     this._createHtmlPlayer(this.options);
                 }
@@ -637,15 +625,15 @@
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
                 this._videoOverlay.after(templates.htmlPlayer);
-                this._media = wrapper.find(DOT + MEDIA)[0];
+                this._media = this.wrapper.find(DOT + MEDIA)[0];
                 $(this._media)
                     .css({
                         width: "100%",
-                        height: "100%" 
+                        height: "100%"
                     });
-					
+
                 if (options.autoPlay) {
-                    $(this._media).attr("autoplay", "");  
+                    $(this._media).attr("autoplay", "");
                 }
 
                 this._media.muted = options.mute;
@@ -654,11 +642,11 @@
                 this._media.ondurationchange = this._mediaDurationChangeHandler;
             },
 
-            _mouseIn: function (e) {
+            _mouseIn: function () {
                 this._uiDisplay(true);
             },
 
-            _mouseOut: function (e) {
+            _mouseOut: function () {
                 this._poll("mouseIdle", this._mouseIdle, 3000, this);
             },
 
@@ -667,8 +655,8 @@
                 return false;
             },
 
-            _mouseMove: function (e) {
-                if(!(this._titleBar.is(':animated') || this._toolBar.element.is(':animated') || this._slider.wrapper.is(':animated'))){
+            _mouseMove: function () {
+                if (!(this._titleBar.is(':animated') || this._toolBar.element.is(':animated') || this._slider.wrapper.is(':animated'))) {
                     this._uiDisplay(true);
                 }
                 this._poll("mouseIdle", this._mouseIdle, 3000, this);
@@ -676,10 +664,9 @@
 
             _uiDisplay: function (state) {
                 var animationSpeed = 'slow';
-                //titleBar.stop().animate({opacity:state}, animationSpeed);
-                this._titleBar.stop().animate({opacity:+state}, animationSpeed);
-                this._toolBar.element.stop().animate({opacity:+state}, animationSpeed);
-                this._slider.wrapper.stop().animate({opacity:+state}, animationSpeed);
+                this._titleBar.stop().animate({ opacity: +state }, animationSpeed);
+                this._toolBar.element.stop().animate({ opacity: +state }, animationSpeed);
+                this._slider.wrapper.stop().animate({ opacity: +state }, animationSpeed);
             },
 
 
@@ -726,7 +713,7 @@
 
                 if (this._youTubeVideo) {
                     this._ytmedia.destroy();
-                } 
+                }
                 else {
                     this._media.src = "";
                     this._media.remove();
@@ -742,37 +729,37 @@
                 var seconds = ms / 1000;
                 if (this._youTubeVideo) {
                     if (seconds + 3 >= this._media.getDuration() | 0) {
-        		        //avoid infinite bad request loop in youtube player.
-        		        this._media.seekTo(this._media.getDuration() - 3 | 0, true);
-        	        } else {
-        		        this._media.seekTo(seconds, true);
-        	        }
+                        //avoid infinite bad request loop in youtube player.
+                        this._media.seekTo(this._media.getDuration() - 3 | 0, true);
+                    } else {
+                        this._media.seekTo(seconds, true);
+                    }
                 } else {
                     this._media.currentTime = seconds;
                 }
-                
+
                 return this;
             },
 
             play: function () {
-                if(this._youTubeVideo){
+                if (this._youTubeVideo) {
                     this._ytmedia.playVideo();
-                } else{
+                } else {
                     this._media.play();
                 }
                 this._paused = false;
 
                 this._playButton
                     .removeClass(STATE_PLAY)
-                    .addClass(STATE_PAUSE); 
+                    .addClass(STATE_PAUSE);
 
                 return this;
             },
 
-            stop: function() {
-                if (this._youTubeVideo){
+            stop: function () {
+                if (this._youTubeVideo) {
                     this._ytmedia.stopVideo();
-                } else{
+                } else {
                     this._media.pause();
                     this._media.currentTime = 0;
                 }
@@ -780,44 +767,44 @@
 
                 this._playButton
                     .removeClass(STATE_PAUSE)
-                    .addClass(STATE_PLAY);   
+                    .addClass(STATE_PLAY);
 
                 return this;
             },
 
             pause: function () {
-                if(this._youTubeVideo){
+                if (this._youTubeVideo) {
                     this._ytmedia.pauseVideo();
-                }else{
+                } else {
                     this._media.pause();
                 }
                 this._paused = true;
 
                 this._playButton
                     .removeClass(STATE_PAUSE)
-                    .addClass(STATE_PLAY);   
+                    .addClass(STATE_PLAY);
 
                 return this;
             },
 
-            toolbar: function() {
+            toolbar: function () {
                 return this._toolBar;
             },
 
-            titlebar: function() {
+            titlebar: function () {
                 return this._titleBar;
             },
 
             fullScreen: function (enterFullScreen) {
                 var element = this.element.get(0);
-                if(enterFullScreen){
+                if (enterFullScreen) {
                     this._width = this.element.width();
                     this._height = this.element.height();
                     // Handles the case when the action is triggered by code and not user iteraction
                     this.element.width("100%").height("100%").css({
-                         position: "fixed",
-                         top: 0,
-                         left: 0
+                        position: "fixed",
+                        top: 0,
+                        left: 0
                     });
                     if (element.requestFullscreen) {
                         element.requestFullscreen();
@@ -827,10 +814,10 @@
                         element.mozRequestFullScreen();
                     } else if (element.msRequestFullscreen) {
                         element.msRequestFullscreen();
-                    } 
+                    }
                     this._isInFullScreen = true;
-                }else{
-                    
+                } else {
+
                     if (document.cancelFullscreen) {
                         document.cancelFullscreen();
                     } else if (document.webkitCancelFullScreen) {
@@ -856,21 +843,21 @@
                 }
             },
 
-            volume: function (value) { 
+            volume: function (value) {
                 if (typeof value === 'undefined') {
-                    return (typeof this._volume !== 'undefined') ? this._volume: this._volume = this.options.volume;
+                    return (typeof this._volume !== 'undefined') ? this._volume : this._volume = this.options.volume;
                 }
-                this._volume = value; 
-                if(this._youTubeVideo){
+                this._volume = value;
+                if (this._youTubeVideo) {
                     this._ytmedia.setVolume(this._volume);
-                }else{
+                } else {
                     this._media.volume = this._volume / 100;
                 }
 
                 this._volumeSlider.value(value);
             },
 
-            mute: function (muted) { 
+            mute: function (muted) {
                 if (typeof muted === 'undefined') {
                     return (this._media && this._media.muted) || this._ytmedia.isMuted();
                 }
@@ -896,7 +883,7 @@
             },
 
             isEnded: function () {
-                var currentTime = this._youTubeVideo ? this._ytmedia.getCurrentTime(): this._media.currentTime;
+                var currentTime = this._youTubeVideo ? this._ytmedia.getCurrentTime() : this._media.currentTime;
                 var durationTime = this._youTubeVideo ? this._ytmedia.getDuration() : this._media.duration;
 
                 return (this._paused && currentTime === durationTime);
@@ -920,20 +907,20 @@
                 }
 
                 this.dataSource = DataSource.create(this.options.dataSource)
-                                    .bind(CHANGE, this._refreshHandler)
-                                    .bind(PROGRESS, this._progressHandler)
-                                    .bind(ERROR, this._errorHandler);
+                    .bind(CHANGE, this._refreshHandler)
+                    .bind(PROGRESS, this._progressHandler)
+                    .bind(ERROR, this._errorHandler);
             },
 
             _unbindDataSource: function () {
                 this.dataSource.unbind(CHANGE, this._refreshHandler)
-                                .unbind(PROGRESS, this._progressHandler)
-                                .unbind(ERROR, this._errorHandler);
+                    .unbind(PROGRESS, this._progressHandler)
+                    .unbind(ERROR, this._errorHandler);
             },
 
             _refresh: function () {
                 var data = this.dataSource.data();
-                if (data && data[0]) {                    
+                if (data && data[0]) {
                     this._currentItem = data[0].uid;
                     this._currentUrl = data[0].url;
 
@@ -944,12 +931,8 @@
                     this._updateToolbarTitle(data[0]);
                     this._youTubeVideo = this._isYouTubeUrl(this._currentUrl);
                     if (this._youTubeVideo) {
-                        this._initializePlayer(this.options);                                            
+                        this._initializePlayer();
                     }
-
-                    // var sourceElement = document.createElement("source");
-                    // sourceElement.setAttribute("src", data[0].url);
-                    // wrapper.find(DOT + MEDIA).append(sourceElement);
                 }
             },
 
