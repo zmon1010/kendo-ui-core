@@ -141,7 +141,12 @@
                 "meta": {
                     "kendo-ui": "Check out this demo to see how to create new item in Kendo UI AutoComplete.",
                     "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC AutoComplete."
-                }
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "RTL support",
@@ -835,7 +840,12 @@
                 "meta": {
                     "kendo-ui": "Check out this demo to see how to create new item in Kendo UI ComboBox.",
                     "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC ComboBox."
-                }
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "RTL support",
@@ -1394,7 +1404,12 @@
                 "meta": {
                     "kendo-ui": "Check out this demo to see how to create new item in Kendo UI DropDownList.",
                     "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC DropDownList."
-                }
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "RTL support",
@@ -3550,7 +3565,12 @@
                 "meta": {
                     "kendo-ui": "Check out this demo to see how to create new item in Kendo UI MultiSelect.",
                     "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC MultiSelect."
-                }
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Tag mode",
