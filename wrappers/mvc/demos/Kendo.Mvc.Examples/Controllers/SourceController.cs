@@ -5,7 +5,7 @@ using IOFile = System.IO.File;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public class SourceController : BaseController
+    public class SourceController : Controller
     {
         public ActionResult Index(string path)
         {

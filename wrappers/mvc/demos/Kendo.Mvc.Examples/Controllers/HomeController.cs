@@ -1,24 +1,16 @@
-﻿using Kendo.Mvc.Examples.Models;
+﻿using Kendo.Mvc.Examples.ActionFilters;
+using Kendo.Mvc.Examples.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
+        [Home]
         public ActionResult Index()
         {
-            ViewBag.Product = CurrentProduct();
-            ViewBag.NavProduct = CurrentNavProduct();
-
-            ViewBag.Theme = "material";
-            ViewBag.CommonFile = "common-material";
-
-            LoadCategories();
-
-            SetTheme();
-
             return View();
         }
 

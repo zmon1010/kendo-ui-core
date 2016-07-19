@@ -162,6 +162,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\ActionFilterAttributeBase.cs" />
+    <Compile Include="ActionFilters\HomeAttribute.cs" />
+    <Compile Include="ActionFilters\DemoAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ModelBinderConfig.cs" />
@@ -171,7 +174,6 @@
     <Compile Include="Controllers\AutoComplete\GroupingController.cs" />
     <Compile Include="Controllers\Bar_Charts\Pan_And_ZoomController.cs" />
     <Compile Include="Controllers\Bar_Charts\VisualsController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Box_Plot_Charts\VerticalController.cs" />
     <Compile Include="Controllers\Calendar\DisableDatesController.cs" />
     <Compile Include="Controllers\Chart_Api\ExportController.cs" />
@@ -230,7 +232,6 @@
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
-    <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\SourceController.cs" />

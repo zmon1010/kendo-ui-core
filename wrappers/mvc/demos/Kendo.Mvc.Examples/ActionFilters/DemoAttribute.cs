@@ -4,31 +4,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
-namespace Kendo.Mvc.Examples.Controllers
+namespace Kendo.Mvc.Examples.ActionFilters
 {
-    public abstract class DemoController : BaseController
+    public class DemoAttribute : ActionFilterAttributeBase
     {
-        private List<string> examplesUrl = new List<string>();
-
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-
-            var product = "aspnet-mvc";
-
-            ViewBag.ShowCodeStrip = true;
-            ViewBag.Product = "aspnet-mvc";
-            ViewBag.NavProduct = "mvc";
-
-            //ViewBag.Theme = "material";
-            //ViewBag.CommonFile = "common-material";
-
-            //ViewBag.Section = section;
-            //ViewBag.Example = example;
-
-            SetTheme();
-            LoadNavigation();
-            LoadCategories();
 
             FindCurrentExample();
 
@@ -46,7 +28,7 @@ namespace Kendo.Mvc.Examples.Controllers
             exampleFiles.AddRange(SourceCode());
             exampleFiles.AddRange(AdditionalSources(currentWidget.Sources));
             exampleFiles.AddRange(AdditionalSources(currentExample.Sources));
-            ViewBag.ExampleFiles = exampleFiles.Where(file => file.Exists(Server));
+            ViewBag.ExampleFiles = exampleFiles.Where(file => file.Exists(Controller.Server));
 
             //if (ViewBag.Mobile)
             //{
@@ -69,19 +51,19 @@ namespace Kendo.Mvc.Examples.Controllers
                 }
             }
 
-            if (currentWidget.Documentation != null && currentWidget.Documentation.ContainsKey(product))
+            if (currentWidget.Documentation != null && currentWidget.Documentation.ContainsKey(ViewBag.Product))
             {
-                ViewBag.Documentation = "http://docs.telerik.com/kendo-ui/" + currentWidget.Documentation[product];
+                ViewBag.Documentation = "http://docs.telerik.com/kendo-ui/" + currentWidget.Documentation[ViewBag.Product];
             }
 
-            if (currentWidget.Forum != null && currentWidget.Forum.ContainsKey(product))
+            if (currentWidget.Forum != null && currentWidget.Forum.ContainsKey(ViewBag.Product))
             {
-                ViewBag.Forum = "http://www.telerik.com/forums/" + currentWidget.Forum[product];
+                ViewBag.Forum = "http://www.telerik.com/forums/" + currentWidget.Forum[ViewBag.Product];
             }
 
-            if (currentWidget.CodeLibrary != null && currentWidget.CodeLibrary.ContainsKey(product))
+            if (currentWidget.CodeLibrary != null && currentWidget.CodeLibrary.ContainsKey(ViewBag.Product))
             {
-                ViewBag.CodeLibrary = "http://www.telerik.com/support/code-library/" + currentWidget.CodeLibrary[product];
+                ViewBag.CodeLibrary = "http://www.telerik.com/support/code-library/" + currentWidget.CodeLibrary[ViewBag.Product];
             }
         }
 
@@ -152,8 +134,8 @@ namespace Kendo.Mvc.Examples.Controllers
 
         private bool IsCurrentExample(string url)
         {
-            var section = ControllerContext.RouteData.GetRequiredString("controller").ToLower();
-            var example = ControllerContext.RouteData.GetRequiredString("action").ToLower().Replace("_", "-");
+            var section = Controller.ControllerContext.RouteData.GetRequiredString("controller").ToLower();
+            var example = Controller.ControllerContext.RouteData.GetRequiredString("action").ToLower().Replace("_", "-");
 
             var components = url.Split('/');
 
@@ -174,17 +156,17 @@ namespace Kendo.Mvc.Examples.Controllers
             return null;
         }
 
-        private IEnumerable<ExampleFile> SourceCode()
+        protected IEnumerable<ExampleFile> SourceCode()
         {
-            var section = ControllerContext.RouteData.GetRequiredString("controller").ToLower();
-            var example = ControllerContext.RouteData.GetRequiredString("action").ToLower().Replace("_", "-");
+            var section = Controller.ControllerContext.RouteData.GetRequiredString("controller").ToLower();
+            var example = Controller.ControllerContext.RouteData.GetRequiredString("action").ToLower().Replace("_", "-");
 
             IFrameworkDescription framework = new AspNetMvcDescription();
 
-            return framework.GetFiles(Server, example, section);
+            return framework.GetFiles(Controller.Server, example, section);
         }
 
-        private IEnumerable<ExampleFile> AdditionalSources(IDictionary<string, IEnumerable<ExampleFile>> sources)
+        protected IEnumerable<ExampleFile> AdditionalSources(IDictionary<string, IEnumerable<ExampleFile>> sources)
         {
             var files = new List<ExampleFile>();
 
@@ -195,5 +177,6 @@ namespace Kendo.Mvc.Examples.Controllers
 
             return files;
         }
+
     }
 }
