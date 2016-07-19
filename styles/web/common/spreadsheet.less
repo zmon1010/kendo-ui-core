@@ -361,7 +361,15 @@ textarea.k-spreadsheet-clipboard {
     }
 }
 
+div.k-spreadsheet-window {
+    padding: 1.167em .75em .75em;
+}
+
 .k-spreadsheet-window {
+    .k-edit-form-container {
+        width: 100%;
+    }
+
     .k-root-tabs {
         border-width: 0;
         margin: -1em -1em 0;
@@ -401,11 +409,29 @@ textarea.k-spreadsheet-clipboard {
     }
 
     .k-edit-label {
-        width: 20%;
+        width: 27%;
+        margin: 0 0 0 .75em;
     }
 
     .k-edit-field {
-        width: 70%;
+        width: 67%;
+        margin: 0 .917em 0 0;
+
+        > .k-radio-label {
+            margin-right: 1.25em;
+            vertical-align: baseline;
+        }
+
+        > .k-radio-label:before,
+        > .k-radio-label:after {
+            margin-top: -1px;
+        }
+    }
+
+    .k-edit-label,
+    .k-edit-field {
+        padding: 0;
+        line-height: 3em;
     }
 
     .k-edit-field .k-textbox,
@@ -834,4 +860,24 @@ textarea.k-spreadsheet-clipboard {
         left: 50%;
         transform: translate(-50%, -50%);
     }
+}
+
+.hint-wrapper {
+    margin-top: 1em;
+}
+
+.hint-wrapper:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin-left: -.917em;
+    padding-right: .917em;
+    padding-left: .917em;
+}
+
+.k-edit-form-container > div:after {
+    display: block;
+    content: "";
+    clear: both;
 }
