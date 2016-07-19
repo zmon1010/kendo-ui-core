@@ -5,16 +5,19 @@
     var tableElement;
     var tableResizing;
     var anotherTable;
+    var wrapper;
     var DOT = ".";
     var FIRST_COLUMN = "td:first";
     var HANDLE_SELECTOR = ".k-resize-handle";
     var NS = "kendoEditor";
+    var MAX = 123456;
     var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
     var MOUSE_UP = "mouseup";
     var MOUSE_UP = "mouseup";
+    var PX = "px";
     var EAST = "east";
     var NORTH = "north";
     var NORTHEAST = "northeast";
@@ -429,6 +432,7 @@
         var defaultOptions = {
             rtl: false,
             rootElement: null,
+            min: 50,
             handles: [{
                 direction: EAST
             }, {
@@ -692,8 +696,56 @@
         var deltaY = 30;
         tableResizing.showResizeHandles();
 
-        triggerResize(tableResizing.handles[0].element, 0, deltaY);
+        triggerResize(tableResizing.handles[1].element, 0, deltaY);
 
         equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
+    });
+
+    module("editor table resizing resize", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
+            tableElement = $(QUnit.fixture).find("#table");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should change width", function() {
+        var initialWidth = tableElement.width();
+        var deltaX = 20;
+
+        tableResizing.resize({ deltaX: deltaX });
+
+        equal(tableElement.css("width"), initialWidth + deltaX + PX);
+    });
+
+    test("should change width when style width is smaller", function() {
+        tableElement.css("width", "1px");
+        var initialWidth = tableElement.width();
+        var deltaX = 20;
+
+        tableResizing.resize({ deltaX: deltaX });
+
+        equal(tableElement.css("width"), initialWidth + deltaX + PX);
+    });
+
+    test("should not set width lower than min", function() {
+        tableResizing.resize({ deltaX: (-1) * MAX });
+
+        ok(parseFloat(tableElement.css("width")) >= tableResizing.options.min);
+    });
+
+    test("should not set width greater than parent width", function() {
+        wrapper.outerWidth($(tableElement).outerWidth() + 40);
+
+        tableResizing.resize({ deltaX: MAX });
+
+        equal(tableElement.css("width"), wrapper.outerWidth() + PX);
     });
 })();

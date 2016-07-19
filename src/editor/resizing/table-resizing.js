@@ -1,8 +1,11 @@
 (function(f, define) {
-    define(["../main", "./column-resizing", "./table-resize-handle"], f);
+    define(["../main", "./column-resizing", "./table-resize-handle", "./resizing-utils"], f);
 })(function() {
 
 (function(kendo, undefined) {
+    var global = window;
+    var parseFloat = global.parseFloat;
+
     var $ = kendo.jQuery;
     var extend = $.extend;
     var proxy = $.proxy;
@@ -12,6 +15,9 @@
     var Class = kendo.Class;
     var ColumnResizing = Editor.ColumnResizing;
     var TableResizeHandle = Editor.TableResizeHandle;
+    var ResizingUtils = Editor.ResizingUtils;
+    var constrain = ResizingUtils.constrain;
+    var getElementWidth = ResizingUtils.getElementWidth;
 
     var DRAG = "drag";
     var NS = ".kendoEditorTableResizing";
@@ -25,6 +31,7 @@
     var SOUTHWEST = "southwest";
     var WEST = "west";
     var TABLE = "table";
+    var WIDTH = "width";
 
     var TableResizing = Class.extend({
         init: function(element, options) {
@@ -61,6 +68,7 @@
         options: {
             rtl: false,
             rootElement: null,
+            min: 50,
             handles: [{
                 direction: EAST
             }, {
@@ -91,10 +99,43 @@
             return false;
         },
 
-        resize: function() {
+        resize: function(args) {
+            var that = this;
+            var deltas = extend({}, {
+                deltaX: 0,
+                deltaY: 0
+            }, args);
+
+            that._resize(deltas);
+            that.showResizeHandles();
+        },
+
+        _resize: function(deltas) {
             var that = this;
 
-            that.showResizeHandles();
+            that._resizeWidth(deltas.deltaX);
+        },
+
+        _resizeWidth: function(deltaX) {
+            var that = this;
+            var element = $(that.element);
+            var styleWidth = element[0].style[WIDTH];
+            var elementWidth = element.width();
+            var deltaWidth = parseFloat(deltaX);
+            var currentWidth = styleWidth !== "" ? parseFloat(styleWidth) : 0;
+            var constrainedWidth;
+
+            if (currentWidth < elementWidth) {
+                currentWidth = elementWidth;
+            }
+
+            constrainedWidth = constrain({
+                value: currentWidth + deltaWidth,
+                min: that.options.min,
+                max: element.parent().outerWidth()
+            });
+
+            element.width(constrainedWidth);
         },
 
         showResizeHandles: function() {
@@ -103,7 +144,6 @@
             //table resizing is natively supported in IE and Firefox
             if (!browser.msie && !browser.mozilla) {
                 that._initResizeHandles();
-                that._bindToResizeHandlesEvents();
                 that._showResizeHandles();
             }
         },
@@ -125,6 +165,8 @@
                     resizableElement: that.element
                 }, resizeHandles[i])));
             }
+
+            that._bindToResizeHandlesEvents();
         },
 
         _destroyResizeHandles: function() {
