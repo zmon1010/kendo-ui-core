@@ -337,7 +337,7 @@ test("toggle on immutable element in paragarph", function() {
 test("apply on immutable element and sibling element", function() {
     editor.value(immutableHtml + '<p>foo</p>');
 
-    justifyRight.apply([ firstInnerChild(editor.body), firstInnerChild(editor.body.childNodes[1]) ]);
+    justifyRight.apply([ firstInnerChild(editor.body), firstInnerChild(editor.body.childNodes[2]) ]);
 
     equal(editor.value(), '<span contenteditable="false" style="float:right;">test</span><p style="text-align:right;">foo</p>');
 });
@@ -345,7 +345,7 @@ test("apply on immutable element and sibling element", function() {
 test("apply on immutable element and sibling text", function() {
     editor.value(immutableHtml + 'foo');
 
-    justifyRight.apply([ editor.body.firstChild, editor.body.childNodes[1] ]);
+    justifyRight.apply([ firstInnerChild(editor.body), editor.body.childNodes[2] ]);
 
     equal(editor.value(), '<div style="text-align:right;"><span contenteditable="false" style="float:right;">test</span>foo</div>');
 });

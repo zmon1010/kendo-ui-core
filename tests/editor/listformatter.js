@@ -141,7 +141,7 @@ test("apply over immutable element", function() {
     editor.value(immutableHtml);
     setupImmutables();
 
-    formatter.apply([editor.body.firstChild.firstChild]);
+    formatter.apply([editor.body.firstChild.nextSibling.firstChild]);
     equal(editor.value(), '<ul><li>' + immutableHtml + '</li></ul>');
 });
 
