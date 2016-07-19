@@ -17,11 +17,14 @@
     var TableResizeHandle = Editor.TableResizeHandle;
     var ResizingUtils = Editor.ResizingUtils;
     var constrain = ResizingUtils.constrain;
-    var getElementWidth = ResizingUtils.getElementWidth;
 
+    var CLICK = "click";
     var DRAG = "drag";
     var NS = ".kendoEditorTableResizing";
-    var CLICK = "click";
+    var MIN = "min";
+    var OUTER = "outer";
+    var TABLE = "table";
+
     var EAST = "east";
     var NORTH = "north";
     var NORTHEAST = "northeast";
@@ -30,8 +33,9 @@
     var SOUTHEAST = "southeast";
     var SOUTHWEST = "southwest";
     var WEST = "west";
-    var TABLE = "table";
-    var WIDTH = "width";
+
+    var WIDTH = "Width";
+    var HEIGHT = "Height";
 
     var TableResizing = Class.extend({
         init: function(element, options) {
@@ -68,7 +72,8 @@
         options: {
             rtl: false,
             rootElement: null,
-            min: 50,
+            minWidth: 50,
+            minHeight: 50,
             handles: [{
                 direction: EAST
             }, {
@@ -106,36 +111,28 @@
                 deltaY: 0
             }, args);
 
-            that._resize(deltas);
+            that._resizeDimension(WIDTH, deltas.deltaX);
+            that._resizeDimension(HEIGHT, deltas.deltaY);
+
             that.showResizeHandles();
         },
 
-        _resize: function(deltas) {
-            var that = this;
-
-            that._resizeWidth(deltas.deltaX);
-        },
-
-        _resizeWidth: function(deltaX) {
+        _resizeDimension: function(dimension, delta) {
             var that = this;
             var element = $(that.element);
-            var styleWidth = element[0].style[WIDTH];
-            var elementWidth = element.width();
-            var deltaWidth = parseFloat(deltaX);
-            var currentWidth = styleWidth !== "" ? parseFloat(styleWidth) : 0;
-            var constrainedWidth;
+            var style = element[0].style;
+            var dimensionLowercase = dimension.toLowerCase();
+            var styleValue = style[dimensionLowercase] !== "" ? parseFloat(style[dimensionLowercase]) : 0;
+            var computedStyleValue = element[dimensionLowercase]();
+            var currentValue = styleValue < computedStyleValue ? computedStyleValue : styleValue;
 
-            if (currentWidth < elementWidth) {
-                currentWidth = elementWidth;
-            }
-
-            constrainedWidth = constrain({
-                value: currentWidth + deltaWidth,
-                min: that.options.min,
-                max: element.parent().outerWidth()
+            var constrainedValue = constrain({
+                value: currentValue + parseFloat(delta),
+                min: that.options[MIN + dimension],
+                max: element.parent()[OUTER + dimension]()
             });
 
-            element.width(constrainedWidth);
+            element[dimensionLowercase](constrainedValue);
         },
 
         showResizeHandles: function() {

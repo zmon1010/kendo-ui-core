@@ -432,7 +432,8 @@
         var defaultOptions = {
             rtl: false,
             rootElement: null,
-            min: 50,
+            minWidth: 50,
+            minHeight: 50,
             handles: [{
                 direction: EAST
             }, {
@@ -701,7 +702,7 @@
         equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
     });
 
-    module("editor table resizing resize", {
+    module("editor table resizing resize width", {
         setup: function() {
             wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
             tableElement = $(QUnit.fixture).find("#table");
@@ -738,7 +739,7 @@
     test("should not set width lower than min", function() {
         tableResizing.resize({ deltaX: (-1) * MAX });
 
-        ok(parseFloat(tableElement.css("width")) >= tableResizing.options.min);
+        ok(parseFloat(tableElement.css("width")) >= tableResizing.options.minWidth);
     });
 
     test("should not set width greater than parent width", function() {
@@ -747,5 +748,53 @@
         tableResizing.resize({ deltaX: MAX });
 
         equal(tableElement.css("width"), wrapper.outerWidth() + PX);
+    });
+
+    module("editor table resizing resize height", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("height", "100%");
+            tableElement = $(QUnit.fixture).find("#table");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should change height", function() {
+        var initialHeight = tableElement.height();
+        var deltaY = 20;
+
+        tableResizing.resize({ deltaY: deltaY });
+
+        equal(tableElement.css("height"), initialHeight + deltaY + PX);
+    });
+
+    test("should change height when style height is smaller", function() {
+        tableElement.css("height", "1px");
+        var initialHeight = tableElement.height();
+        var deltaY = 20;
+
+        tableResizing.resize({ deltaY: deltaY });
+
+        equal(tableElement.css("height"), initialHeight + deltaY + PX);
+    });
+
+    test("should not set height lower than min", function() {
+        tableResizing.resize({ deltaY: (-1) * MAX });
+
+        ok(parseFloat(tableElement.css("height")) >= tableResizing.options.minHeight);
+    });
+
+    test("should not set height greater than parent height", function() {
+        wrapper.outerHeight($(tableElement).outerHeight() + 20);
+
+        tableResizing.resize({ deltaY: MAX });
+
+        equal(tableElement.css("height"), wrapper.outerHeight() + PX);
     });
 })();
