@@ -10,6 +10,7 @@
 
     public partial class DropDownListController : Controller
     {
+        [Demo]
         public ActionResult Virtualization()
         {
             return View();

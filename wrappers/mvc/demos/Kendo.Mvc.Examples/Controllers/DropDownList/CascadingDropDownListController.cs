@@ -6,6 +6,7 @@
 
     public partial class DropDownListController : Controller
     {
+        [Demo]
         public ActionResult CascadingDropDownList()
         {
             return View();

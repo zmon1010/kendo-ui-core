@@ -1,4 +1,4 @@
-﻿namespace Kendo.Mvc.Examples.ActionFilters
+﻿namespace Kendo.Mvc.Examples.Controllers
 {
     public class HomeAttribute : ActionFilterAttributeBase
     {

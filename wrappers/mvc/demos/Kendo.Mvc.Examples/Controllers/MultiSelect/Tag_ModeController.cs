@@ -4,6 +4,7 @@
 
     public partial class MultiSelectController : Controller
     {
+        [Demo]
         public ActionResult Tag_Mode()
         {
             return View();

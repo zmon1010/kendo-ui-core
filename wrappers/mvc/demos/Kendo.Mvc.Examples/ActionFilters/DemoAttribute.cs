@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
-namespace Kendo.Mvc.Examples.ActionFilters
+namespace Kendo.Mvc.Examples.Controllers
 {
     public class DemoAttribute : ActionFilterAttributeBase
     {

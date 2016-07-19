@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using IOFile = System.IO.File;
 
-namespace Kendo.Mvc.Examples.ActionFilters
+namespace Kendo.Mvc.Examples.Controllers
 {
     public abstract class ActionFilterAttributeBase : ActionFilterAttribute
     {
