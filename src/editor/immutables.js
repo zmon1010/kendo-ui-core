@@ -86,12 +86,17 @@
         },
 
         serialize: function(node) {
-            var result = this._toHtml(node);
-            var id = this.randomId();
-            this.serializedImmutables[id] = $(node).clone(true);
+            var result = this._toHtml(node),
+                id;
+
             if (result.indexOf(IMMUTABALE) === -1) {
+                id = this.randomId();
                 result = result.replace(/>/, ' ' + IMMUTABALE + '="' + id + '">');
+            } else {
+                id = result.match(/k-immutable\s*=\s*['"](.*)['"]/)[1];
             }
+
+            this.serializedImmutables[id] = $(node).clone(true);
             return result;
         },
 
