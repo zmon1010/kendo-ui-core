@@ -404,7 +404,7 @@ var __meta__ = { // jshint ignore:line
 
        _slotByPosition: function(x, y) {
            var slot;
-           var byDate = this.options.group &&  this.options.group.byDate;
+           var byDate = this.options.group &&  this.options.group.date;
            var offset;
 
            if (this._isVerticallyGrouped()) {
@@ -469,7 +469,7 @@ var __meta__ = { // jshint ignore:line
 
        _groupCount: function() {
             var resources = this.groupedResources;
-            var byDate = this.options.group && this.options.group.byDate;
+            var byDate = this.options.group && this.options.group.date;
 
             if (resources.length) {
                 if (this._groupOrientation() === "vertical") {
@@ -491,7 +491,7 @@ var __meta__ = { // jshint ignore:line
 
         _columnCountInResourceView: function() {
             var resources = this.groupedResources;
-            var byDate = this.options.group && this.options.group.byDate;
+            var byDate = this.options.group && this.options.group.date;
 
             if (!resources.length || this._isVerticallyGrouped()) {
                 if (byDate) {
@@ -511,7 +511,7 @@ var __meta__ = { // jshint ignore:line
         _timeSlotGroups: function(groupCount, columnCount) {
             var interval = this._timeSlotInterval();
             var verticalViews = groupCount;
-            var byDate = this.options.group && this.options.group.byDate;
+            var byDate = this.options.group && this.options.group.date;
             var tableRows = this.content.find("tr:not(.k-scheduler-header-all-day)");        
             var group, time, rowIndex, cellIndex;
 
@@ -601,7 +601,7 @@ var __meta__ = { // jshint ignore:line
         _daySlotGroups: function(groupCount, columnCount) {
             var tableRows, cellIndex;
             var verticalViews = groupCount;
-            var byDate = this.options.group && this.options.group.byDate;
+            var byDate = this.options.group && this.options.group.date;
 
             if (this._isVerticallyGrouped()) {
                 if (byDate) {
@@ -852,7 +852,7 @@ var __meta__ = { // jshint ignore:line
             var rows = [];
             var options = this.options;
             var that = this;
-            var byDate = options.group && options.group.byDate;
+            var byDate = options.group && options.group.date;
 
             for (var idx = 0; idx < dates.length; idx++) {
                 var column = {};
@@ -1022,7 +1022,7 @@ var __meta__ = { // jshint ignore:line
             var allDaySlotTemplate = this.allDaySlotTemplate;
             var isVerticalGroupped = false;
             var allDayVerticalGroupRow;
-            var byDate = options.group && options.group.byDate;
+            var byDate = options.group && options.group.date;
             var dateID = 0;
 
             if (resources.length) {
@@ -1038,18 +1038,16 @@ var __meta__ = { // jshint ignore:line
                     if (options.allDaySlot) {
                         allDayVerticalGroupRow = function (groupIndex) {
                             var result = '<tr class="k-scheduler-header-all-day">';
+                            var dateGroupIndex = byDate ? 0 : groupIndex;
+                            var resources = function() {
+                                return that._resourceBySlot({ groupIndex: dateGroupIndex });
+                            };        
 
                             if (byDate) {                             
-                                for (var dateGroupIndex = 0; dateGroupIndex < groupsCount; dateGroupIndex++) { 
-                                    var resources = function() {
-                                        return that._resourceBySlot({ groupIndex: dateGroupIndex });
-                                    };                         
-                                    result += "<td>" + allDaySlotTemplate({ date: dates[dateGroupIndex], resources: resources }) + "</td>";
+                                for (; dateGroupIndex < groupsCount; dateGroupIndex++) {                                  
+                                    result += "<td>" + allDaySlotTemplate({ date: dates[dateID], resources: resources }) + "</td>";
                                 }
-                            } else {
-                                  var resources = function() {
-                                        return that._resourceBySlot({ groupIndex: groupIndex });
-                                    };
+                            } else {                             
                                 for (var idx = 0; idx < dates.length; idx++) {
                                     result += "<td>" + allDaySlotTemplate({ date: dates[idx], resources: resources }) + "</td>";
                                 }
@@ -1123,7 +1121,7 @@ var __meta__ = { // jshint ignore:line
             var classes = "";
             var tmplDate;
             var slotTemplate = this.slotTemplate;
-            var byDate = this.options.group && this.options.group.byDate;
+            var byDate = this.options.group && this.options.group.date;
             var isVerticalGroupped = this._groupOrientation() === "vertical";
             var resources = function(groupIndex) {
                 return function() {
@@ -1164,7 +1162,7 @@ var __meta__ = { // jshint ignore:line
 
         _render: function(dates) {
             var that = this;
-            var byDate = that.options.group && that.options.group.byDate;
+            var byDate = that.options.group && that.options.group.date;
 
             dates = dates || [];
 
@@ -1284,6 +1282,10 @@ var __meta__ = { // jshint ignore:line
 
         inRange: function(options) {
             var inRange = SchedulerView.fn.inRange.call(this, options);
+
+            if (options.isAllDay) {
+                return inRange;
+            }
 
             var startTime = getMilliseconds(this.startTime());
             var endTime = getMilliseconds(this.endTime()) || kendo.date.MS_PER_DAY;
@@ -1583,7 +1585,7 @@ var __meta__ = { // jshint ignore:line
 
         _renderEvents: function(events, groupIndex) {
             var allDayEventContainer = this.datesHeader.find(".k-scheduler-header-wrap > div");
-            var byDate = this.options.group && this.options.group.byDate;
+            var byDate = this.options.group && this.options.group.date;
             var event;
 
             var idx;
