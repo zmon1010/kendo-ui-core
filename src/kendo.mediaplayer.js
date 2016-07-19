@@ -55,7 +55,7 @@
         //each = $.each,
         templates = {
             htmlPlayer: "<video class='" + MEDIA + "'> </video>",
-            titleBar: "<div class='" + TITLEBAR + "'><span class='" + TITLE + "'>Video Title</span><a role='button' class='k-icon k-font-icon k-i-playlist-open' style='float: right;''>Open Playlist</a></div>",
+            titleBar: template("<div class='" + TITLEBAR + "'><span class='" + TITLE + "'>Video Title</span> #= renderPlaylistButton(data) # </div>"),
             toolBar: "<div class='" + TOOLBAR + "'> </div>",
             youtubePlayer: "<div class='" + YTPLAYER + "' id='ytplayer'> </div>",
             toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
@@ -312,6 +312,11 @@
 
                     this._playButton = toolBarElement.find("#play.k-button.k-button-icon span");
                 } 
+            },
+
+            _updateToolbarTitle: function (item) {
+                var title = wrapper.find(DOT + TITLEBAR + ">" + DOT + TITLE);
+                title.text(item.title);
             },
 
             _toolbarClick: function (e) {

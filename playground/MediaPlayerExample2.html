@@ -76,6 +76,21 @@ To enable proper compilation of the LESS files in the example you need to do the
 			padding-bottom: 0;
 		}
 
+		/*Temporary workaround for positioning of the slider (seekbar)*/
+		.k-mediaplayer .k-mediaplayer-seekbar {
+			position: absolute;
+			bottom: 55px;
+			left: 20px;
+			right: 10px;
+			opacity: 0.7;
+		}
+
+		/*Temporary workaround for the initial width of the volume slider*/
+		.k-mediaplayer-volume {
+			margin-left: 15px !important;
+			margin-right: 15px !important;
+		}
+
 		#fullscreen,
 		#hdbutton
 		{
@@ -91,7 +106,7 @@ To enable proper compilation of the LESS files in the example you need to do the
             var myDataSource = new kendo.data.DataSource({
                 data: [
                   { title: "Youtube Video", url: "https://www.youtube.com/watch?v=vGKeA3xUzxU" },
-                  { title: "Big Buck Bunny", poster:"http://static4.opensubtitles.org/gfx/thumbs/7/0/2/4/1254207.jpg", url: "http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg" },
+                  { title: "Big Buck Bunny", poster:"http://static4.opensubtitles.org/gfx/thumbs/7/0/2/4/1254207.jpg", url: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4", hdurl: "http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg" },
 				  { title: "Elephants Dream", poster: "http://iv1.lisimg.com/image/300164/450full-elephants-dream-poster.jpg", url: "http://video.webmfiles.org/elephants-dream.webm"},
 				  { title: "Lego", poster: "http://i.imgur.com/WHwKxLn.png", url: "http://techslides.com/demos/sample-videos/small.ogv" },
 				  { title: "Sample holder", poster: "http://i.imgur.com/CgRMQ5q.png", url:"http://openspim.org/images/2/20/10_Sample_holder.ogv"},
