@@ -18,8 +18,6 @@
             var dataSource = widget.dataSource;
 
             if (confirm("Are you sure?")) {
-                widget.value("");
-
                 dataSource.add({
                     ProductID: 0,
                     ProductName: value
@@ -38,6 +36,7 @@
         $(document).ready(function() {
             var crudServiceBaseUrl = "//demos.telerik.com/kendo-ui/service";
             var dataSource = new kendo.data.DataSource({
+                batch: true,
                 transport: {
                     read:  {
                         url: crudServiceBaseUrl + "/Products",
@@ -53,16 +52,12 @@
                         }
                     }
                 },
-                batch: true,
                 schema: {
                     model: {
                         id: "ProductID",
                         fields: {
-                            ProductID: { editable: false, nullable: true },
-                            ProductName: { validation: { required: true } },
-                            UnitPrice: { type: "number", validation: { required: true, min: 1} },
-                            Discontinued: { type: "boolean" },
-                            UnitsInStock: { type: "number", validation: { min: 0, required: true } }
+                            ProductID: { type: "number" },
+                            ProductName: { type: "string" }
                         }
                     }
                 }
