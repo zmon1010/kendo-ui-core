@@ -2,9 +2,31 @@
     <div class="demo-section k-content">
         <div id="mediaplayer"></div>
     </div>
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
-            $("#mediaplayer").kendoMediaPlayer()({
+
+            var videos = new kendo.data.DataSource({
+                data: [{
+                    title: "Digital Transformation: A New Way of Thinking",
+                    poster: "../content/web/mediaplayer/Video1.jpg",
+                    url: "../content/web/mediaplayer/Video1.mp4"
+                },
+                {
+                    title: "Learn How York Solved Its Database Problem",
+                    poster: "../content/web/mediaplayer/Video2.jpg",
+                    url: "../content/web/mediaplayer/Video2.mp4"
+                },
+                {
+                    title: "A Clear Vision for Digital Transformation",
+                    poster: "../content/web/mediaplayer/Video3.jpg",
+                    url: "../content/web/mediaplayer/Video3.mp4"
+                }]
+            });
+
+            $("#mediaplayer").kendoMediaPlayer({
+                dataSource: videos,
+                playlist: true,
+                autoPlay: true
             });
         });
     </script>
