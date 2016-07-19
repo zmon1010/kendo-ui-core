@@ -5598,6 +5598,18 @@
                     "aspnet-mvc": "This ASP.NET MVC demo shows how end users of your app can intuitively use keyboard navigation in ASP.NET MVC TabStrip."
                 }
             },
+			{
+                "text": "Sortable closable",
+                "url": "tabstrip/sortable-closable",
+                "title": {
+                    "kendo-ui": "Sortable closable Kendo UI TabStrip",
+                    "aspnet-mvc": "Sortable-closable ASP.NET MVC TabStrip"
+                },
+                "meta": {
+                    "kendo-ui": "This Kendo UI demo shows how implement custom logic that allows end users to reorder or close a tab in Kendo UI TabStrip.",
+                    "aspnet-mvc": "This ASP.NET MVC demo shows how implement custom logic that allows end users to reorder or close a tab in ASP.NET MVC TabStrip."
+                }
+            },
             {
                 "text": "MVVM",
                 "url": "tabstrip/mvvm",
