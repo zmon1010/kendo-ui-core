@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Scatter_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Smooth_Scatter_Line()
         {
             return View();

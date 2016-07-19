@@ -10,6 +10,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class PivotGridController : Controller
     {
+        [Demo]
         public ActionResult Excel_Export()
         {
             return View();

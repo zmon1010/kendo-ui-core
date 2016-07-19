@@ -10,6 +10,7 @@
 
     public partial class SchedulerController
     {
+        [Demo]
         public ActionResult Restriction()
         {
             var meetings = new List<MeetingViewModel> {

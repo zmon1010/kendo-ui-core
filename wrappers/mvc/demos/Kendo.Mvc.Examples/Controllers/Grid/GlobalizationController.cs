@@ -18,6 +18,7 @@ namespace Kendo.Mvc.Examples.Controllers
             base.Initialize(requestContext);
         }
 
+        [Demo]
         public ActionResult Globalization()
         {
             return View(productService.Read());

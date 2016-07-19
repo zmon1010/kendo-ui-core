@@ -9,6 +9,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class TooltipController : Controller
     {
+        [Demo]
         public ActionResult Ajax()
         {
             return View();

@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Radar_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Grouped_Data()
         {
             return View();

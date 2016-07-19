@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SparklinesController : Controller
     {
+        [Demo]
         public ActionResult Index()
         {
             ViewBag.PressureData = new double[] {

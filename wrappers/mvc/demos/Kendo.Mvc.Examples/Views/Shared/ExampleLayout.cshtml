@@ -5,6 +5,9 @@
 
     string navProduct = ViewBag.NavProduct;
 }
+@section HeadContent {
+    @RenderSection("HeadContent", false)
+}
 <script>
     window.kendoTheme = "@ViewBag.Theme";
     window.kendoCommonFile = "@ViewBag.CommonFile";

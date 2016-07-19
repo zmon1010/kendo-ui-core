@@ -13,6 +13,7 @@
 
     public partial class SchedulerController
     {
+        [Demo]
         public ActionResult WebApi()
         {
             return View();

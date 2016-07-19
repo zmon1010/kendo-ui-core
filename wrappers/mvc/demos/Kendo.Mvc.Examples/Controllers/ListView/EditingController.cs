@@ -11,6 +11,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class ListViewController : Controller
     {
+        [Demo]
         public ActionResult Editing()
         {
             return View(productService.Read());

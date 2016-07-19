@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SortableController : Controller
     {
+        [Demo]
         public ActionResult Sortable_Panels()
         {
             return View();

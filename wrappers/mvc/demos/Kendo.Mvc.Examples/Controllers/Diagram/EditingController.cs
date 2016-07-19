@@ -20,6 +20,7 @@ namespace Kendo.Mvc.Examples.Controllers
             connectionService = new DiagramConnectionService();
         }
 
+        [Demo]
         public ActionResult Editing()
         {
             return View();

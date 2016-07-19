@@ -11,6 +11,7 @@
 
     public partial class ListViewController : Controller
     {
+        [Demo]
         public ActionResult Custom_DataSource()
         {
             return View();
