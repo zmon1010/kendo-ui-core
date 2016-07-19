@@ -8,10 +8,10 @@ namespace Kendo.Mvc.Tests.Data
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Infrastructure;
     using Kendo.Mvc.Infrastructure.Implementation;
-    using UI.Tests;
     using Xunit;
     using Microsoft.AspNetCore.Hosting;
     using Moq;
+    using Mvc.UI;
 
     public class QueryableExtensionsTests
     {
@@ -305,7 +305,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest(), (person) => new Person { Name = person.ID.ToString() });
+            var result = people.ToDataSourceResult(new DataSourceRequest(), (person) => new Person { Name = person.ID.ToString() });
 
             result.Data.Cast<Person>().ElementAt(0).Name.ShouldEqual(people.First().ID.ToString());
         }
@@ -315,7 +315,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest(), (person) => new PersonViewModel { Name = person.ID.ToString() });
+            var result = people.ToDataSourceResult(new DataSourceRequest(), (person) => new PersonViewModel { Name = person.ID.ToString() });
 
             result.Data.Cast<PersonViewModel>();
         }
@@ -325,7 +325,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest() { Page = 1, PageSize = 1, Groups = new[] { new GroupDescriptor { Member = "Name" } } },
+            var result = people.ToDataSourceResult(new DataSourceRequest() { Page = 1, PageSize = 1, Groups = new[] { new GroupDescriptor { Member = "Name" } } },
                 (person) => new Person { Name = person.ID.ToString() });
 
             result.Data.Cast<AggregateFunctionsGroup>().First().Items.Cast<Person>().First().Name.ShouldEqual(people.First().ID.ToString());
@@ -336,7 +336,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest() { Page = 1, PageSize = 1, Groups = new[] { new GroupDescriptor { Member = "Name" }, new GroupDescriptor { Member = "ID" } } },
+            var result = people.ToDataSourceResult(new DataSourceRequest() { Page = 1, PageSize = 1, Groups = new[] { new GroupDescriptor { Member = "Name" }, new GroupDescriptor { Member = "ID" } } },
                 (person) => new Person { Name = person.ID.ToString() });
 
             result.Data.Cast<AggregateFunctionsGroup>().First().Items.Cast<AggregateFunctionsGroup>()
