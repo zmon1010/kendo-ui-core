@@ -16,14 +16,19 @@
     var ColumnResizing = Editor.ColumnResizing;
     var TableResizeHandle = Editor.TableResizeHandle;
     var ResizingUtils = Editor.ResizingUtils;
+    var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
     var constrain = ResizingUtils.constrain;
+    var inPercentages = ResizingUtils.inPercentages;
+    var toPercentages = ResizingUtils.toPercentages;
 
     var CLICK = "click";
     var DRAG = "drag";
     var NS = ".kendoEditorTableResizing";
+    var MAX_PERCENTAGE_VALUE = 100;
     var MIN = "min";
-    var OUTER = "outer";
     var TABLE = "table";
+    var WIDTH = "Width";
+    var HEIGHT = "Height";
 
     var EAST = "east";
     var NORTH = "north";
@@ -33,9 +38,6 @@
     var SOUTHEAST = "southeast";
     var SOUTHWEST = "southwest";
     var WEST = "west";
-
-    var WIDTH = "Width";
-    var HEIGHT = "Height";
 
     var TableResizing = Class.extend({
         init: function(element, options) {
@@ -122,15 +124,30 @@
             var element = $(that.element);
             var style = element[0].style;
             var dimensionLowercase = dimension.toLowerCase();
-            var styleValue = style[dimensionLowercase] !== "" ? parseFloat(style[dimensionLowercase]) : 0;
+            var styleValue = style[dimensionLowercase];
+            var dimensionValue = styleValue !== "" ? parseFloat(styleValue) : 0;
             var computedStyleValue = element[dimensionLowercase]();
-            var currentValue = styleValue < computedStyleValue ? computedStyleValue : styleValue;
+            var currentValue = dimensionValue < computedStyleValue ? computedStyleValue : dimensionValue;
+            var constrainedValue;
 
-            var constrainedValue = constrain({
-                value: currentValue + parseFloat(delta),
-                min: that.options[MIN + dimension],
-                max: element.parent()[OUTER + dimension]()
-            });
+            if (inPercentages(styleValue)) {
+                constrainedValue = constrain({
+                    value: dimensionValue + calculatePercentageRatio(delta, computedStyleValue),
+                    min: calculatePercentageRatio(that.options[MIN + dimension], computedStyleValue),
+                    max: MAX_PERCENTAGE_VALUE
+                });
+
+                constrainedValue = toPercentages(constrainedValue);
+            }
+            else {
+                constrainedValue = constrain({
+                    value: currentValue + parseFloat(delta),
+                    min: that.options[MIN + dimension],
+                    max: element.parent()[dimensionLowercase]()
+                });
+
+                element[dimensionLowercase](constrainedValue);
+            }
 
             element[dimensionLowercase](constrainedValue);
         },

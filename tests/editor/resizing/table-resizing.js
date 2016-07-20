@@ -17,6 +17,7 @@
     var MOUSE_MOVE = "mousemove";
     var MOUSE_UP = "mouseup";
     var MOUSE_UP = "mouseup";
+    var PERCENTAGE = "%";
     var PX = "px";
     var EAST = "east";
     var NORTH = "north";
@@ -29,19 +30,19 @@
     var TABLE_HTML =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
-                '<td id="col11" class="col">col 11</td>' +
-                '<td id="col12" class="col">col 12</td>' +
-                '<td id="col13" class="col">col 13</td>' +
+                '<td id="col11" class="col" style="border:1px solid blue;">col 11</td>' +
+                '<td id="col12" class="col" style="border:1px solid blue;">col 12</td>' +
+                '<td id="col13" class="col" style="border:1px solid blue;">col 13</td>' +
             '</tr>' +
             '<tr id="row2" class="row">' +
-                '<td id="col21" class="col">+col 21</td>' +
-                '<td id="col22" class="col">+col 22</td>' +
-                '<td id="col23" class="col">+col 23</td>' +
+                '<td id="col21" class="col" style="border:1px solid blue;">+col 21</td>' +
+                '<td id="col22" class="col" style="border:1px solid blue;">+col 22</td>' +
+                '<td id="col23" class="col" style="border:1px solid blue;">+col 23</td>' +
             '</tr>' +
             '<tr id="row3" class="row">' +
-                '<td id="col31" class="col">+col 31</td>' +
-                '<td id="col32" class="col">+col 32</td>' +
-                '<td id="col33" class="col">+col 33</td>' +
+                '<td id="col31" class="col" style="border:1px solid blue;">+col 31</td>' +
+                '<td id="col32" class="col" style="border:1px solid blue;">+col 32</td>' +
+                '<td id="col33" class="col" style="border:1px solid blue;">+col 33</td>' +
             '</tr>' +
         '</table>';
     var NESTED_TABLE_HTML =
@@ -717,13 +718,22 @@
         }
     });
 
-    test("should change width", function() {
+    test("should increase width", function() {
         var initialWidth = tableElement.width();
         var deltaX = 20;
 
         tableResizing.resize({ deltaX: deltaX });
 
         equal(tableElement.css("width"), initialWidth + deltaX + PX);
+    });
+
+    test("should decrease width", function() {
+        var initialWidth = tableElement.width();
+        var deltaX = 20;
+
+        tableResizing.resize({ deltaX: (-1) * deltaX });
+
+        equal(tableElement.css("width"), initialWidth + (-1) * deltaX + PX);
     });
 
     test("should change width when style width is smaller", function() {
@@ -743,16 +753,68 @@
     });
 
     test("should not set width greater than parent width", function() {
-        wrapper.outerWidth($(tableElement).outerWidth() + 40);
+        wrapper.css("padding", "20px");
 
         tableResizing.resize({ deltaX: MAX });
 
-        equal(tableElement.css("width"), wrapper.outerWidth() + PX);
+        equal(tableElement[0].style.width, wrapper.width() + PX);
+    });
+
+    module("editor table resizing resize width in percentages", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("width", "400px").css("border", "1px solid red");
+            tableElement = $(QUnit.fixture).find("#table").css("width", "50%");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should increase width", function() {
+        var initialWidthInPixels = tableElement.width();
+        var initialWidthInPercentages = parseFloat(tableElement[0].style.width);
+        var differenceInPixels = 40;
+        var differenceInPercentages = (differenceInPixels / initialWidthInPixels) * 100;
+
+        tableResizing.resize({ deltaX: differenceInPixels });
+
+        equal(tableElement[0].style.width, initialWidthInPercentages + differenceInPercentages + PERCENTAGE);
+    });
+
+    test("should decrease width", function() {
+        var initialWidthInPixels = tableElement.width();
+        var initialWidthInPercentages = parseFloat(tableElement[0].style.width);
+        var differenceInPixels = 40;
+        var differenceInPercentages = (differenceInPixels / initialWidthInPixels) * 100;
+
+        tableResizing.resize({ deltaX: (-1) * differenceInPixels });
+
+        equal(tableElement[0].style.width, initialWidthInPercentages + (-1) * differenceInPercentages + PERCENTAGE);
+    });
+
+    test("should should not be lower than min", function() {
+        var initialWidthInPixels = tableElement.width();
+        var minInPercentages = (tableResizing.options.minWidth / initialWidthInPixels) * 100;
+
+        tableResizing.resize({ deltaX: (-1) * MAX });
+
+        ok(parseFloat(tableElement[0].style.width) >= minInPercentages);
+    });
+
+    test("should should not be lower than max", function() {
+        tableResizing.resize({ deltaX: MAX });
+
+        equal(tableElement[0].style.width, "100%");
     });
 
     module("editor table resizing resize height", {
         setup: function() {
-            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("height", "100%");
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("height", "800px");
             tableElement = $(QUnit.fixture).find("#table");
             tableResizing = new TableResizing(tableElement[0], {
                 rootElement: QUnit.fixture
@@ -765,7 +827,7 @@
         }
     });
 
-    test("should change height", function() {
+    test("should increase height", function() {
         var initialHeight = tableElement.height();
         var deltaY = 20;
 
@@ -774,6 +836,14 @@
         equal(tableElement.css("height"), initialHeight + deltaY + PX);
     });
 
+    test("should decrease height", function() {
+        var initialHeight = tableElement.height();
+        var deltaY = 20;
+
+        tableResizing.resize({ deltaY: (-1) * deltaY });
+
+        equal(tableElement[0].style.height, initialHeight + (-1) *  deltaY + PX);
+    });
     test("should change height when style height is smaller", function() {
         tableElement.css("height", "1px");
         var initialHeight = tableElement.height();
@@ -796,5 +866,57 @@
         tableResizing.resize({ deltaY: MAX });
 
         equal(tableElement.css("height"), wrapper.outerHeight() + PX);
+    });
+
+    module("editor table resizing resize height in percentages", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("height", "400px").css("border", "1px solid red");
+            tableElement = $(QUnit.fixture).find("#table").css("height", "50%");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should increase height", function() {
+        var initialHeightInPixels = tableElement.height();
+        var initialHeightInPercentages = parseFloat(tableElement[0].style.height);
+        var differenceInPixels = 40;
+        var differenceInPercentages = (differenceInPixels / initialHeightInPixels) * 100;
+
+        tableResizing.resize({ deltaY: differenceInPixels });
+
+        equal(tableElement[0].style.height, initialHeightInPercentages + differenceInPercentages + PERCENTAGE);
+    });
+
+    test("should decrease height", function() {
+        var initialHeightInPixels = tableElement.height();
+        var initialHeightInPercentages = parseFloat(tableElement[0].style.height);
+        var differenceInPixels = 40;
+        var differenceInPercentages = (differenceInPixels / initialHeightInPixels) * 100;
+
+        tableResizing.resize({ deltaY: (-1) * differenceInPixels });
+
+        equal(tableElement[0].style.height, initialHeightInPercentages + (-1) * differenceInPercentages + PERCENTAGE);
+    });
+
+    test("should should not be lower than min", function() {
+        var initialHeightInPixels = tableElement.height();
+        var minInPercentages = (tableResizing.options.minHeight / initialHeightInPixels) * 100;
+
+        tableResizing.resize({ deltaY: (-1) * MAX });
+
+        ok(parseFloat(tableElement[0].style.height) >= minInPercentages);
+    });
+
+    test("should should not be lower than max", function() {
+        tableResizing.resize({ deltaY: MAX });
+
+        equal(tableElement[0].style.height, "100%");
     });
 })();
