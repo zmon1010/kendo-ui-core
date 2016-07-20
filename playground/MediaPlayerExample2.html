@@ -11,10 +11,11 @@ To enable proper compilation of the LESS files in the example you need to do the
   3) If you need to reset IIS, open Administrator console and type "iisreset"
 -->
 <html>
+
 <head>
 	<title>MediaPlayer</title>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.3.js"></script>
-	
+
 	<script>
 		less = {
 			env: "production",
@@ -24,6 +25,8 @@ To enable proper compilation of the LESS files in the example you need to do the
 			poll: 1000
 		};
 	</script>
+
+	<link href='//fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet'>
 
 	<link href="../styles/web/kendo.common.less" rel="stylesheet/less" type="text/css" />
 	<link href="../styles/web/kendo.default.less" rel="stylesheet/less" type="text/css" />
@@ -39,88 +42,85 @@ To enable proper compilation of the LESS files in the example you need to do the
 	<script type="text/javascript" src="../src/kendo.draganddrop.js"></script>
 	<script type="text/javascript" src="../src/kendo.slider.js"></script>
 	<script type="text/javascript" src="../src/kendo.popup.js"></script>
-    <script type="text/javascript" src="../src/kendo.toolbar.js"></script>
+	<script type="text/javascript" src="../src/kendo.toolbar.js"></script>
 
 	<script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
 
 	<style>
-
 		body {
-			font-size: 14px;
+			font-size: 12px;
+			/*Temporary workaround for UI font*/
+			font-family: 'Roboto', sans-serif;
 		}
-
 		/*Temporary workaround for the overlay*/
+		
 		.k-mediaplayer-overlay {
 			position: absolute;
 			width: 100%;
 			height: 100%;
 		}
-
 		/*Temporary workaround for the icon font*/
-        @font-face {
-	        font-family: 'TelerikWebUI';
-            src: url('../styles/web/common/TelerikWebUI.eot');
-            src: url('../styles/web/common/TelerikWebUI.eot') format('embedded-opentype'),
-                url('../styles/web/common/TelerikWebUI.woff') format('woff'),
-                url('../styles/web/common/TelerikWebUI.ttf') format('truetype');
-        }
-
-		/*Temporary workaround for portrait images, to make the image fill (crop) the available space */
-		.k-mediaplayer-playlist a img {
-    		object-fit: cover !important;
+		
+		@font-face {
+			font-family: 'TelerikWebUI';
+			src: url('../styles/web/common/TelerikWebUI.eot');
+			src: url('../styles/web/common/TelerikWebUI.eot') format('embedded-opentype'), url('../styles/web/common/TelerikWebUI.woff') format('woff'), url('../styles/web/common/TelerikWebUI.ttf') format('truetype');
 		}
-
+		/*Temporary workaround for portrait images, to make the image fill (crop) the available space */
+		
+		.k-mediaplayer-playlist a img {
+			object-fit: cover !important;
+		}
 		/*Temporary workaround for the toolbar height*/
+		
 		.k-mediaplayer-toolbar {
 			padding-top: 0;
 			padding-bottom: 0;
 		}
-
 		/*Temporary workaround for positioning of the slider (seekbar)*/
+		
 		.k-mediaplayer .k-mediaplayer-seekbar {
 			position: absolute;
-			bottom: 55px;
+			bottom: 40px;
 			left: 20px;
 			right: 10px;
 			opacity: 0.7;
 		}
-
 		/*Temporary workaround for the initial width of the volume slider*/
+		
 		.k-mediaplayer-volume {
 			margin-left: 15px !important;
 			margin-right: 15px !important;
 		}
-
 		/*Temporary workaround for z-index*/
+		
 		.k-mediaplayer-titlebar,
-		.k-mediaplayer-toolbar,
-		.k-mediaplayer-playlist
-		{
-			z-index: 2;	
+		.k-mediaplayer-toolbar {
+			z-index: 2;
 		}
-
 		/*Temporary workaround for z-index and overlay size*/
+		
 		.k-mediaplayer-overlay {
 			z-index: 1;
 			width: 100%;
 			height: 100%;
 		}
-
-
+		
 		#fullscreen,
-		#hdbutton
-		{
+		#hdbutton {
 			float: right;
 		}
-
 	</style>
 </head>
+
 <body>
 	<div id="player1" style="width: 510px; height: 286px;"> </div>
+	<div id="consoleOutput" style="width: 510px; height: 300px; background-color: #ccc"></div>
 	<script type="text/javascript">
 		function initialize() {
             var myDataSource = new kendo.data.DataSource({
                 data: [
+				  { title: "Roxette - What's She Like?", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k", poster: "https://i.ytimg.com/vi/O13fsGJv8dQ/hqdefault.jpg" },
 				  { title: "Sepultura - Territory DRUM Cover", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k", poster: "https://i.ytimg.com/vi/Pca2qOEHHpU/maxresdefault.jpg" },
                   { title: "Dalshabet - Big Baby Baby", url: "https://www.youtube.com/watch?v=vGKeA3xUzxU", poster: "https://s-media-cache-ak0.pinimg.com/736x/1e/bd/18/1ebd18cf578aaed5f6eacfc79a44d461.jpg" },
 				  { title: "Gus Drax - Altitudes (Jason Becker Cover)", url: "https://www.youtube.com/watch?v=BmjAsjGbdXk", poster: "https://i.ytimg.com/vi/y-F3m8_R9fs/hqdefault.jpg" },
@@ -137,7 +137,15 @@ To enable proper compilation of the LESS files in the example you need to do the
 
 			$("#player1").kendoMediaPlayer({
 				dataSource: myDataSource,
-				playlist: true,
+				playlist: { 
+					button: true 
+				},
+				end: onEnd,
+				pause: onPause,
+				play: onPlay,
+				ready: onReady,
+				timeChange: onTimeChange,
+				volumeChange: onVolumeChange,
 				autoPlay: true,
 				mute: false,
 				youtubeApiKey: "AIzaSyD06CB0PoPP2JOffY53lYlOzxm6NtEWG9o"
@@ -149,9 +157,29 @@ To enable proper compilation of the LESS files in the example you need to do the
 			$(".k-mediaplayer-playlist").css("background-color", $(".k-mediaplayer-toolbar").css("background-color"));
 		}
 
+		function onEnd(e) {
+			$("#consoleOutput").append("onEnd<br/>");
+		}
+		function onPause(e) {
+			$("#consoleOutput").append("onPause<br/>");
+		}
+		function onPlay(e) {
+			$("#consoleOutput").append("onPlay<br/>");
+		}
+		function onReady(e) {
+			$("#consoleOutput").append("onReady<br/>");
+		}		
+		function onTimeChange(e) {
+			$("#consoleOutput").append("onTimeChange<br/>");
+		}
+		function onVolumeChange(e) {
+			$("#consoleOutput").append("onVolumeChange<br/>");
+		}
+
 		/* OPTIONS USAGE EXAMPLES */
 		// 		playlist: {hidden: true}
 		// 		playlist: {hidden: false, button: false}
 	</script>
 </body>
+
 </html>

@@ -188,7 +188,9 @@
             },
 
             _playlistButtonClick: function () {
-                this.wrapper.find(DOT + PLAYLIST).toggle();
+                this.wrapper.find(DOT + PLAYLIST)
+                    .stop()
+                    .fadeToggle("slow");
             },
 
             _createSlider: function () {
@@ -552,7 +554,7 @@
                 //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state 
                 if (event.data === 0) {
                     //this._ytmedia.cueVideoById(this._getMediaId(extend(this.options, { ytFile: this.dataSource.getByUid(this._currentItem) })));
-                    this._ytmedia.seekTo(0, true);
+                    this.seek(0);
                     this.pause();
                     this._slider.value(0);
                     this.trigger(END);
@@ -664,11 +666,16 @@
 
             _uiDisplay: function (state) {
                 var animationSpeed = 'slow';
-                this._titleBar.stop().animate({ opacity: +state }, animationSpeed);
-                this._toolBar.element.stop().animate({ opacity: +state }, animationSpeed);
-                this._slider.wrapper.stop().animate({ opacity: +state }, animationSpeed);
+                var uiElements = this._titleBar
+                    .add(this._toolBar.element)
+                    .add(this._slider.wrapper);
+                if (state) {
+                    uiElements.fadeIn(animationSpeed);
+                } 
+                else {
+                    uiElements.fadeOut(animationSpeed);
+                } 
             },
-
 
             setOptions: function (options) {
                 if ("dataSource" in options) {
