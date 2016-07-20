@@ -19854,15 +19854,15 @@ If function is assigned, the current path and image name will be provided.</desc
 
 
     <tag>
-        <description>Kendo template or a callback that allows custom serialization of an immutable element. The callback accepts DOM element as only parameter and is expected to return the HTML source of a DOM element.</description>
-        <name>editor-immutables-serialization</name>
-        <tag-class>com.kendoui.taglib.editor.ImmutablesSerializationFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
         <description>Callback that allows custom deserialization of an immutable element. The callback accepts two arguments. The DOM element representing the immutable element in the html view and the immutable DOM element, which will be restored.</description>
         <name>editor-immutables-deserialization</name>
         <tag-class>com.kendoui.taglib.editor.ImmutablesDeserializationFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Kendo template or a callback that allows custom serialization of an immutable element. The callback accepts DOM element as only parameter and is expected to return the HTML source of a DOM element.</description>
+        <name>editor-immutables-serialization</name>
+        <tag-class>com.kendoui.taglib.editor.ImmutablesSerializationFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 

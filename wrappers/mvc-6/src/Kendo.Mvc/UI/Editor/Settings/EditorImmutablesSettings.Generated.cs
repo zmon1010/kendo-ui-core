@@ -11,10 +11,10 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class EditorImmutablesSettings 
     {
+        public ClientHandlerDescriptor Deserialization { get; set; }
+
         public string Serialization { get; set; }
         public ClientHandlerDescriptor SerializationHandler { get; set; }
-
-        public ClientHandlerDescriptor Deserialization { get; set; }
 
         public bool? Enabled { get; set; }
 
@@ -23,6 +23,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (Deserialization?.HasValue() == true)
+            {
+                settings["deserialization"] = Deserialization;
+            }
 
             if (SerializationHandler?.HasValue() == true)
             {
@@ -33,11 +38,6 @@ namespace Kendo.Mvc.UI
                settings["serialization"] = Serialization;
             }
 
-
-            if (Deserialization?.HasValue() == true)
-            {
-                settings["deserialization"] = Deserialization;
-            }
 
             return settings;
         }

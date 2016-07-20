@@ -55,12 +55,12 @@ public class ImmutablesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "editor-immutables";
     }
 
-    public void setSerialization(ImmutablesSerializationFunctionTag value) {
-        setEvent("serialization", value.getBody());
-    }
-
     public void setDeserialization(ImmutablesDeserializationFunctionTag value) {
         setEvent("deserialization", value.getBody());
+    }
+
+    public void setSerialization(ImmutablesSerializationFunctionTag value) {
+        setEvent("serialization", value.getBody());
     }
 
     public String getDeserialization() {

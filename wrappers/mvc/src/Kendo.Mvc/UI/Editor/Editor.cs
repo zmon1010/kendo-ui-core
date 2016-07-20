@@ -65,6 +65,12 @@ namespace Kendo.Mvc.UI
         
         public string Domain { get; set; }
         
+        public EditorImmutablesSettings Immutables
+        {
+            get;
+            set;
+        }
+        
         public EditorPasteCleanupSettings PasteCleanup
         {
             get;
@@ -78,12 +84,6 @@ namespace Kendo.Mvc.UI
         }
         
         public EditorSerializationSettings Serialization
-        {
-            get;
-            set;
-        }
-        
-        public EditorImmutablesSettings Immutables
         {
             get;
             set;
@@ -192,6 +192,14 @@ namespace Kendo.Mvc.UI
                 json["domain"] = Domain;
             }
             
+            var immutables = Immutables.ToJson();
+            if (immutables.Any())
+            {
+                json["immutables"] = immutables;
+            } else if (Immutables.Enabled != false) {
+                json["immutables"] = Immutables.Enabled;
+            }
+
             var pasteCleanup = PasteCleanup.ToJson();
             if (pasteCleanup.Any())
             {
@@ -210,14 +218,6 @@ namespace Kendo.Mvc.UI
             {
                 json["serialization"] = serialization;
             }
-            var immutables = Immutables.ToJson();
-            if (immutables.Any())
-            {
-                json["immutables"] = immutables;
-            } else if (Immutables.Enabled != false) {
-                json["immutables"] = Immutables.Enabled;
-            }
-
         //<< Serialization
 
             var pdf = Pdf.ToJson();

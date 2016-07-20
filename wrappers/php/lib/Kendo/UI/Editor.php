@@ -63,6 +63,15 @@ This property has been introduced in internal builds after 2014.1.319.
     }
 
     /**
+    * If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
+    * @param boolean|\Kendo\UI\EditorImmutables|array $value
+    * @return \Kendo\UI\Editor
+    */
+    public function immutables($value) {
+        return $this->setProperty('immutables', $value);
+    }
+
+    /**
     * Defines the text of the labels that are shown within the editor. Used primarily for localization.
     * @param \Kendo\UI\EditorMessages|array $value
     * @return \Kendo\UI\Editor
@@ -105,15 +114,6 @@ This property has been introduced in internal builds after 2014.1.319.
     */
     public function serialization($value) {
         return $this->setProperty('serialization', $value);
-    }
-
-    /**
-    * If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
-    * @param boolean|\Kendo\UI\EditorImmutables|array $value
-    * @return \Kendo\UI\Editor
-    */
-    public function immutables($value) {
-        return $this->setProperty('immutables', $value);
     }
 
     /**

@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public bool? Encoded { get; set; }
 
+        public EditorImmutablesSettings Immutables { get; } = new EditorImmutablesSettings();
+
         public EditorMessagesSettings Messages { get; } = new EditorMessagesSettings();
 
         public EditorPasteCleanupSettings PasteCleanup { get; } = new EditorPasteCleanupSettings();
@@ -26,8 +28,6 @@ namespace Kendo.Mvc.UI
         public EditorResizableSettings Resizable { get; } = new EditorResizableSettings();
 
         public EditorSerializationSettings Serialization { get; } = new EditorSerializationSettings();
-
-        public EditorImmutablesSettings Immutables { get; } = new EditorImmutablesSettings();
 
         public List<EditorTool> Tools { get; set; } = new List<EditorTool>();
 
@@ -58,6 +58,16 @@ namespace Kendo.Mvc.UI
             if (Encoded.HasValue)
             {
                 settings["encoded"] = Encoded;
+            }
+
+            var immutables = Immutables.Serialize();
+            if (immutables.Any())
+            {
+                settings["immutables"] = immutables;
+            }
+            else if (Immutables.Enabled.HasValue)
+            {
+                settings["immutables"] = Immutables.Enabled;
             }
 
             var messages = Messages.Serialize();
@@ -92,16 +102,6 @@ namespace Kendo.Mvc.UI
             if (serialization.Any())
             {
                 settings["serialization"] = serialization;
-            }
-
-            var immutables = Immutables.Serialize();
-            if (immutables.Any())
-            {
-                settings["immutables"] = immutables;
-            }
-            else if (Immutables.Enabled.HasValue)
-            {
-                settings["immutables"] = Immutables.Enabled;
             }
 
             var tools = Tools.Select(i => i.Serialize());
