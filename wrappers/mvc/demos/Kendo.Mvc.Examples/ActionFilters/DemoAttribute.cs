@@ -158,7 +158,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
         protected IEnumerable<ExampleFile> SourceCode()
         {
-            var section = Controller.ControllerContext.RouteData.GetRequiredString("controller").ToLower();
+            var section = Controller.ControllerContext.RouteData.GetRequiredString("controller").ToLower().Replace("_", "-");
             var example = Controller.ControllerContext.RouteData.GetRequiredString("action").ToLower().Replace("_", "-");
 
             IFrameworkDescription framework = new AspNetMvcDescription();

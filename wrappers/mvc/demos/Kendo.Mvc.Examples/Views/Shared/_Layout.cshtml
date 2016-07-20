@@ -52,9 +52,5 @@
     @Html.Partial("Header")
     @Html.Partial("GoogleTagManager")
     @RenderBody()
-    @if (ViewBag.SuppressFooter == null || !ViewBag.SuppressFooter)
-    {
-        @Html.Partial("Footer")
-    }
 </body>
 </html>
