@@ -34,9 +34,6 @@ namespace Kendo.Mvc.Examples.Controllers
             ViewBag.Product = "aspnet-mvc";
             ViewBag.NavProduct = "mvc";
 
-            //ViewBag.Theme = "material";
-            //ViewBag.CommonFile = "common-material";
-
             SetTheme();
             LoadNavigation();
             LoadCategories();
