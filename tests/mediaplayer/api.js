@@ -2,7 +2,7 @@
     var MediaPlayer = kendo.ui.MediaPlayer,
         div;
 
-    module("kendo.ui.MediaPlayer initialization", {
+    module("kendo.ui.MediaPlayer API", {
         setup: function() {
             div = $("<div />").appendTo(QUnit.fixture); 
             mediaPlayer = new MediaPlayer(div);
@@ -46,13 +46,6 @@
         mediaPlayer.stop();
         ok(playButton.hasClass("k-i-play"));
     });  
-
-    test("isEnded should return true when video has reached its end", function() {
-        mediaPlayer.pause();
-        mediaPlayer._media.duration = 60; //sec
-        mediaPlayer.seek(60 * 1000); //ms
-        ok(mediaPlayer.isEnded());
-    });
 
     test("isPlaying should return correct result in all states", function () {
         var passed = 0;

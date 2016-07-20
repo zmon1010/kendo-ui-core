@@ -6,6 +6,24 @@
         setup: function() {
             div = $("<div />").appendTo(QUnit.fixture); 
             mediaPlayer = new MediaPlayer(div);
+            htmlPlayerMock = {
+                _isPlaying: false,
+                muted: false,
+                currentTime: 0,
+                duration: 0,
+                volume: 0,
+
+                play: function() {
+                    _isPlaying = true;
+                },
+                pause: function() {
+                    _isPlaying = false;
+                },
+                remove: function() {
+                }
+            };
+            mediaPlayer._media = htmlPlayerMock;
+            mediaPlayer._currentUrl = "http://something.mp4";
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);

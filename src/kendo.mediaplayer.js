@@ -34,8 +34,6 @@
             SLIDER = "k-mediaplayer-seekbar",
             VOLUME_SLIDER = "k-mediaplayer-volume",
             MEDIA = "k-mediaplayer-media",
-            PLAYLIST_OPEN = "k-i-playlist-open",
-            PLAYLIST = "k-mediaplayer-playlist",
             OVERLAY = "k-mediaplayer-overlay",
             YTPLAYER = "k-mediaplayer-yt",
             YTPLAYER_ID = "ytplayer",
@@ -50,53 +48,17 @@
                 longTime: "HH:mm:ss"
             },
             template = kendo.template,
-            extend = $.extend,
             proxy = $.proxy,
             //each = $.each,
             templates = {
                 htmlPlayer: "<video class='" + MEDIA + "'> </video>",
-                titleBar: template("<div class='" + TITLEBAR + "'><span class='" + TITLE + "'>Video Title</span> #= renderPlaylistButton(data) # </div>"),
+                titleBar: template("<div class='" + TITLEBAR + "'><span class='" + TITLE + "'>Video Title</span></div>"),
                 toolBar: "<div class='" + TOOLBAR + "'> </div>",
                 youtubePlayer: "<div class='" + YTPLAYER + "' id='ytplayer'> </div>",
                 toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
                 slider: "<input class='" + SLIDER + "' value='0' />",
                 volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
-                toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #",
-                playlistButton: "<a role='button' class='k-icon k-font-icon " + PLAYLIST_OPEN + "' style='float: right;''>Open Playlist</a>",
-                playlist: template("<div style='height: 286px; margin-right: -280px;'' class='" + PLAYLIST + "'>" +
-                    "<ul class='k-list'>" +
-                    "#= renderPlaylistItems(data) #" +
-                    "</ul>" +
-                    "</div>"),
-                playlistItem: template("<li class='k-list-item k-active-item'>" +
-                    "<a title='#= title #' href='\\#'>" +
-                    "<span class='k-image-wrap'>" +
-                    "<img alt='#= poster #' src='#= poster #'>" +
-                    "</span>" +
-                    "<span class='k-title'>#= title #</span></a></li>")
-            },
-            rendering = {
-                renderPlaylistButton: function (options) {
-                    if (options.playlist && options.playlist.button === true) {
-                        return templates.playlistButton;
-                    }
-                    return "";
-                },
-
-                renderPlaylistItems: function (data) {
-                    var html = "",
-                        i = 0;
-
-                    for (i; i < data.length; i++) {
-                        var item = data[i];
-                        html += templates.playlistItem({
-                            title: item.title,
-                            poster: item.poster
-                        });
-                    }
-
-                    return html;
-                }
+                toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #"
             },
             DataSource = kendo.data.DataSource;
 
@@ -112,7 +74,7 @@
 
                 options = this.options;
 
-                this._createTitlebar(options);
+                this._createTitlebar();
 
                 this._createToolbar(options);
 
@@ -148,8 +110,7 @@
                 volume: 100,
                 fullScreen: false,
                 mute: false,
-                forwardSeek: true,
-                playlist: false
+                forwardSeek: true
             },
 
             _initData: function (options) {
@@ -177,20 +138,11 @@
                 return curTime / 1000;
             },
 
-            _createTitlebar: function (options) {
+            _createTitlebar: function () {
                 this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 if (this._titleBar.length === 0) {
-                    this._playlistButtonClickHandler = proxy(this._playlistButtonClick, this);
-                    this.wrapper.append(templates.titleBar(extend(options, rendering)));
-                    this.wrapper.find(DOT + PLAYLIST_OPEN).on("click" + ns, this._playlistButtonClickHandler);
                     this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 }
-            },
-
-            _playlistButtonClick: function () {
-                this.wrapper.find(DOT + PLAYLIST)
-                    .stop()
-                    .fadeToggle("slow");
             },
 
             _createSlider: function () {
@@ -233,18 +185,6 @@
                 }
             },
 
-            _createPlaylist: function (data) {
-                var playlistElement = this.wrapper.find(DOT + PLAYLIST);
-                if (playlistElement.length === 0) {
-                    this._playlistItemClickHandler = proxy(this._playlistItemClick, this);
-                    this.wrapper.append(templates.playlist(extend(this.options, { data: data }, rendering)));
-                    this.wrapper.find(DOT + PLAYLIST + "> ul > li").on("click" + ns, this._playlistItemClickHandler);
-                    if (this.options.playlist.hidden) {
-                        this.wrapper.find(DOT + PLAYLIST).hide();
-                    }
-                }
-            },
-
             _resetTime: function () {
                 if (this._youTubeVideo) {
                     this._ytmedia.seekTo(0, true);
@@ -282,20 +222,6 @@
                     }
                     this.wrapper.find(DOT + MEDIA + " > source").remove();
                     this.wrapper.find(DOT + MEDIA).attr("src", url);
-                }
-            },
-
-            _playlistItemClick: function (e) {
-                var item = $(e.target).parents("li");
-                var data = this.dataSource.data();
-                var currentItem = data[item.index()];
-                if (currentItem) {
-                    this._updateToolbarTitle(currentItem);
-                    this._resetTime();
-                    this._currentItem = currentItem.uid;
-                    this._changePlayerUrl(currentItem.url);
-
-                    this.play();
                 }
             },
 
@@ -580,21 +506,21 @@
                     this._slider.value(0);
                     this._paused = false;
                     this._playButton
-                    .removeClass(STATE_PAUSE)
-                    .addClass(STATE_PLAY);
+                        .removeClass(STATE_PAUSE)
+                        .addClass(STATE_PLAY);
                     this.trigger(END);
-                    if(this.options.autoRepeat){
+                    if (this.options.autoRepeat) {
                         this.play();
                     }
                 }
                 else if (event.data === 1) {
                     this._ytmedia.setVolume(this.volume());
-                    if(this._sliderChangeFired) {
+                    if (this._sliderChangeFired) {
                         this._sliderChangeFired = false;
-                    }else {
+                    } else {
                         this.trigger(PLAY);
                     }
-                    
+
                     this._poll("progress", this._mediaTimeUpdate, 500, this);
                     this._paused = false;
                 }
@@ -671,7 +597,7 @@
                 this._media.ondurationchange = this._mediaDurationChangeHandler;
                 this._media.oncanplay = this._mediaCanPlayHandler;
                 this._media.onplay = this._mediaPlayHandler;
-                this._media.onended  = this._mediaEndedHandler;
+                this._media.onended = this._mediaEndedHandler;
             },
 
             _mouseIn: function () {
@@ -701,10 +627,10 @@
                     .add(this._slider.wrapper);
                 if (state) {
                     uiElements.fadeIn(animationSpeed);
-                } 
+                }
                 else {
                     uiElements.fadeOut(animationSpeed);
-                } 
+                }
             },
 
             setOptions: function (options) {
@@ -722,8 +648,6 @@
                 }
 
                 this.element.off(ns);
-                this.element.find(DOT + PLAYLIST + "> ul > li").off(ns);
-                this.element.find(DOT + PLAYLIST_OPEN).off(ns);
                 this.element.find(DOT + OVERLAY).off(ns);
                 this._timers = null;
                 this._mouseMoveHandler = null;
@@ -732,9 +656,6 @@
                 this._mouseClickHanlder = null;
 
                 this._unbindDataSource();
-
-                this._playlistItemClickHandler = null;
-                this._playlistButtonClickHandler = null;
 
                 this._toolbarClickHandler = null;
                 this._sliderDragChangeHandler = null;
@@ -749,7 +670,7 @@
                 this._media.ondurationchange = this._mediaDurationChangeHandler = null;
                 this._media.oncanplay = this._mediaCanPlayHandler = null;
                 this._media.onplay = this._mediaPlayHandler = null;
-                this._media.onended  = this._mediaEndedHandler = null;
+                this._media.onended = this._mediaEndedHandler = null;
 
                 if (this._youTubeVideo) {
                     this._ytmedia.destroy();
@@ -916,16 +837,16 @@
                     this._volumeSlider.value(0);
                 }
                 else {
-                    this._volumeSlider.value((this._media && this._media.volume*100) || this._ytmedia.getVolume());
+                    this._volumeSlider.value((this._media && this._media.volume * 100) || this._ytmedia.getVolume());
                 }
                 this.trigger(VOLUMECHANGE);
                 this._changeVolumeButtonImage(this._volumeSlider.value());
             },
 
             isEnded: function () {
-                if(this._youTubeVideo) {
+                if (this._youTubeVideo) {
                     return this._ytmedia.getPlayerState() === 0;
-                }else {
+                } else {
                     return this._media.ended;
                 }
             },
@@ -964,10 +885,6 @@
                 if (data && data[0]) {
                     this._currentItem = data[0].uid;
                     this._currentUrl = data[0].url;
-
-                    if (this.options.playlist) {
-                        this._createPlaylist(data);
-                    }
 
                     this._updateToolbarTitle(data[0]);
                     this._youTubeVideo = this._isYouTubeUrl(this._currentUrl);
