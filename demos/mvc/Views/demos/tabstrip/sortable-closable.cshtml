@@ -68,6 +68,10 @@
 
                 var item = $(e.target).closest(".k-item");
                 tabstrip.remove(item.index());
+
+                if (tabstrip.items().length > 0 && item.hasClass('k-state-active')) {
+                    tabstrip.select(0);
+                }
             });
         };
 
