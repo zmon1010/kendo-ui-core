@@ -1,8 +1,11 @@
 (function(f, define) {
-    define(["../main", "./column-resizing", "./table-resize-handle"], f);
+    define(["../main", "./column-resizing", "./table-resize-handle", "./resizing-utils"], f);
 })(function() {
 
 (function(kendo, undefined) {
+    var global = window;
+    var parseFloat = global.parseFloat;
+
     var $ = kendo.jQuery;
     var extend = $.extend;
     var proxy = $.proxy;
@@ -12,9 +15,21 @@
     var Class = kendo.Class;
     var ColumnResizing = Editor.ColumnResizing;
     var TableResizeHandle = Editor.TableResizeHandle;
+    var ResizingUtils = Editor.ResizingUtils;
+    var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
+    var constrain = ResizingUtils.constrain;
+    var inPercentages = ResizingUtils.inPercentages;
+    var toPercentages = ResizingUtils.toPercentages;
 
-    var NS = ".kendoEditorTableResizing";
     var CLICK = "click";
+    var DRAG = "drag";
+    var NS = ".kendoEditorTableResizing";
+    var MAX_PERCENTAGE_VALUE = 100;
+    var MIN = "min";
+    var TABLE = "table";
+    var WIDTH = "Width";
+    var HEIGHT = "Height";
+
     var EAST = "east";
     var NORTH = "north";
     var NORTHEAST = "northeast";
@@ -23,7 +38,6 @@
     var SOUTHEAST = "southeast";
     var SOUTHWEST = "southwest";
     var WEST = "west";
-    var TABLE = "table";
 
     var TableResizing = Class.extend({
         init: function(element, options) {
@@ -60,6 +74,8 @@
         options: {
             rtl: false,
             rootElement: null,
+            minWidth: 50,
+            minHeight: 50,
             handles: [{
                 direction: EAST
             }, {
@@ -90,6 +106,52 @@
             return false;
         },
 
+        resize: function(args) {
+            var that = this;
+            var deltas = extend({}, {
+                deltaX: 0,
+                deltaY: 0
+            }, args);
+
+            that._resizeDimension(WIDTH, deltas.deltaX);
+            that._resizeDimension(HEIGHT, deltas.deltaY);
+
+            that.showResizeHandles();
+        },
+
+        _resizeDimension: function(dimension, delta) {
+            var that = this;
+            var element = $(that.element);
+            var style = element[0].style;
+            var dimensionLowercase = dimension.toLowerCase();
+            var styleValue = style[dimensionLowercase];
+            var dimensionValue = styleValue !== "" ? parseFloat(styleValue) : 0;
+            var computedStyleValue = element[dimensionLowercase]();
+            var currentValue = dimensionValue < computedStyleValue ? computedStyleValue : dimensionValue;
+            var constrainedValue;
+
+            if (inPercentages(styleValue)) {
+                constrainedValue = constrain({
+                    value: dimensionValue + calculatePercentageRatio(delta, computedStyleValue),
+                    min: calculatePercentageRatio(that.options[MIN + dimension], computedStyleValue),
+                    max: MAX_PERCENTAGE_VALUE
+                });
+
+                constrainedValue = toPercentages(constrainedValue);
+            }
+            else {
+                constrainedValue = constrain({
+                    value: currentValue + parseFloat(delta),
+                    min: that.options[MIN + dimension],
+                    max: element.parent()[dimensionLowercase]()
+                });
+
+                element[dimensionLowercase](constrainedValue);
+            }
+
+            element[dimensionLowercase](constrainedValue);
+        },
+
         showResizeHandles: function() {
             var that = this;
 
@@ -117,6 +179,8 @@
                     resizableElement: that.element
                 }, resizeHandles[i])));
             }
+
+            that._bindToResizeHandlesEvents();
         },
 
         _destroyResizeHandles: function() {
@@ -136,6 +200,17 @@
 
             for (i = 0; i < length; i++) {
                 that.handles[i].show();
+            }
+        },
+
+        _bindToResizeHandlesEvents: function() {
+            var that = this;
+            var handles = that.handles || [];
+            var length = handles.length;
+            var i;
+
+            for (i = 0; i < length; i++) {
+                that.handles[i].bind(DRAG, proxy(that.resize, that));
             }
         }
     });
