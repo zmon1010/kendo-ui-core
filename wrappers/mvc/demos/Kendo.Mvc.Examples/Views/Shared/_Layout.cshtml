@@ -9,8 +9,7 @@
     <link href='//fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet'>
     <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" />
     <link rel="canonical" href="@(Request.Url.Scheme + "://" + Request.Url.Authority + Request.Url.AbsolutePath)" />
-    @foreach (string styleName in (ViewBag.Mobile == true ?
-        Kendo.Mvc.Examples.Models.StyleGroups.Mobile : Kendo.Mvc.Examples.Models.StyleGroups.All))
+    @foreach (string styleName in Kendo.Mvc.Examples.Models.StyleGroups.All)
     {
         @Html.StyleLink(styleName, (string)ViewBag.Theme, (string)ViewBag.CommonFile)
     }

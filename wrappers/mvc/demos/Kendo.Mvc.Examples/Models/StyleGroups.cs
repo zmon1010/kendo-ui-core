@@ -13,12 +13,5 @@ namespace Kendo.Mvc.Examples.Models
             "kendo.CURRENT_THEME.min.css",
             "kendo.CURRENT_THEME.mobile.min.css"
         };
-
-        public static readonly IList<string> Mobile = new string[]
-        {
-            "kendo.common-nova.min.css",
-            "kendo.nova.min.css",
-            "kendo.mobile.nova.min.css"
-        };
     }
 }

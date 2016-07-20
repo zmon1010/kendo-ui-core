@@ -30,14 +30,6 @@ namespace Kendo.Mvc.Examples.Controllers
             exampleFiles.AddRange(AdditionalSources(currentExample.Sources));
             ViewBag.ExampleFiles = exampleFiles.Where(file => file.Exists(Controller.Server));
 
-            //if (ViewBag.Mobile)
-            //{
-            //    if (currentExample.Url.StartsWith("adaptive") && IsMobileDevice())
-            //    {
-            //        return Redirect(Url.RouteUrl("MobileDeviceIndex"));
-            //    }
-            //}
-
             var api = currentExample.Api ?? ViewBag.CurrentWidget.Api;
             if (!string.IsNullOrEmpty(api))
             {
@@ -99,8 +91,6 @@ namespace Kendo.Mvc.Examples.Controllers
                 return;
             }
 
-            //ViewBag.Mobile = (currentWidget.Mobile && !current.DisableInMobile) || current.Mobile;
-            //ViewBag.MobileAngular = currentWidget.Mobile && current.Url.IndexOf("angular") > 0;
             ViewBag.CurrentExample = current;
 
             if (current.Title != null)
