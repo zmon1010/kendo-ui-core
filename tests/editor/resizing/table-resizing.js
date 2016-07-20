@@ -405,6 +405,8 @@
         equal(destroySpy.calls("destroy"), 1);
     });
 
+//table resize handles are natively supported in IE and Firefox
+if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("clicking on an element with data attribute equal to table should not destroy table resizing", function() {
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.tableResizing, "destroy");
@@ -415,6 +417,7 @@
 
         equal(destroySpy.calls("destroy"), 0);
     });
+}
 
     module("editor table resizing", {
         setup: function() {
@@ -527,6 +530,8 @@
         ok(jQueryEvents(tableResizing.element) === undefined);
     });
 
+//table resize handles are natively supported in IE and Firefox
+if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should call resize handles destroy", function() {
         var destroySpies = [];
         tableResizing.showResizeHandles();
@@ -540,7 +545,7 @@
             equal(destroySpies[i].calls("destroy"), 1);
         }
     });
-
+}
     module("editor table resizing resizingInProgress", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -618,6 +623,8 @@
         equal(showSpy.calls("showResizeHandles"), 1);
     });
 
+//table resize handles are natively supported in IE and Firefox
+if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     module("editor table resizing resize handle", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -636,7 +643,6 @@
 
     test("should be of type TableResizeHandle", function() {
         tableResizing.showResizeHandles();
-
         for (var i = 0; i < tableResizing.handles.length; i++) {
             ok(tableResizing.handles[i] instanceof kendo.ui.editor.TableResizeHandle);
         }
@@ -702,7 +708,7 @@
 
         equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
     });
-
+}
     module("editor table resizing resize width", {
         setup: function() {
             wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
