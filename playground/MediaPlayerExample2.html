@@ -176,10 +176,40 @@ To enable proper compilation of the LESS files in the example you need to do the
 			$("#consoleOutput").append("onVolumeChange<br/>");
 		}
 
+		function playVideo(){
+			window.player1.play();
+		}
+
+		function pauseVideo(){
+			window.player1.pause();
+		}
+
+		function stopVideo(){
+			window.player1.stop();
+		}
+
+		function isPaused(){
+			$("#consoleOutput").append(window.player1.isPaused().toString());
+		}
+
+		function isEnded(){
+			$("#consoleOutput").append(window.player1.isEnded().toString());
+		}
+
+		function isPlaying(){
+			$("#consoleOutput").append(window.player1.isPlaying().toString());
+		}
+
 		/* OPTIONS USAGE EXAMPLES */
 		// 		playlist: {hidden: true}
 		// 		playlist: {hidden: false, button: false}
 	</script>
+	<button onclick="playVideo();">Play</button>
+	<button onclick="pauseVideo();">Pause</button>
+	<button onclick="stopVideo();">Stop</button>
+	<button onclick="isPaused();">isPaused</button>
+	<button onclick="isEnded();">isEnded</button>
+	<button onclick="isPlaying();">isPlaying</button>
 </body>
 
 </html>

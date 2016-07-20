@@ -348,7 +348,7 @@
 
             _toolbarClick: function (e) {
                 var target = $(e.target).children().first();
-                var isPaused = this._paused;
+                var isPaused = target.hasClass(STATE_PLAY);
 
                 if (e.id === "play") {
                     if (isPaused) {
@@ -406,6 +406,7 @@
                 var that = this;
                 var slider = e.sender;
                 var tzOffset = timeZoneSec * 1000;
+                that._sliderChangeFired = true;
                 that._isDragging = false;
                 if (that._shouldCancelSlideChange) {
                     setTimeout(function () {
@@ -417,6 +418,8 @@
                 } else {
                     that._media.currentTime = that._timeToSec(e.value - tzOffset);
                 }
+                that.trigger(TIMECHANGE);
+                that._preventPlay = true;
             },
 
             _changeVolumeButtonImage: function (volume) {
@@ -436,11 +439,13 @@
             _volumeDragging: function (e) {
                 this.volume(e.value);
                 this._changeVolumeButtonImage(e.value);
+                this.trigger(VOLUMECHANGE);
             },
 
             _volumeChange: function (e) {
                 this.volume(e.value);
                 this._changeVolumeButtonImage(e.value);
+                this.trigger(VOLUMECHANGE);
             },
 
             _mediaTimeUpdate: function () {
@@ -450,7 +455,25 @@
                 if (!this._isDragging) {
                     this._slider.value((currentTime + timeZoneSec) * 1000);
                 }
+
                 return this.isPlaying();
+            },
+
+            _mediaEnded: function () {
+                this._playButton
+                    .removeClass(STATE_PAUSE)
+                    .addClass(STATE_PLAY);
+                this._currentTimeElement.text(kendo.toString(this._msToTime(0), this._timeFormat));
+                this._slider.value((0 + timeZoneSec) * 1000);
+                this.trigger(END);
+            },
+
+            _mediaPlay: function () {
+                this.trigger(PLAY);
+            },
+
+            _mediaReady: function () {
+                this.trigger(READY);
             },
 
             _mediaDurationChange: function () {
@@ -547,32 +570,36 @@
                 this._ytmedia.getIframe().style.height = "100%";
                 this._youTubeVideo = true;
                 this._mediaDurationChangeHandler();
+                this.trigger(READY);
             },
 
             _onPlayerStateChange: function (event) {
                 //IF NECESSARY
                 //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state 
                 if (event.data === 0) {
-                    //this._ytmedia.cueVideoById(this._getMediaId(extend(this.options, { ytFile: this.dataSource.getByUid(this._currentItem) })));
-                    this.seek(0);
-                    this.pause();
                     this._slider.value(0);
+                    this._paused = false;
+                    this._playButton
+                    .removeClass(STATE_PAUSE)
+                    .addClass(STATE_PLAY);
                     this.trigger(END);
+                    if(this.options.autoRepeat){
+                        this.play();
+                    }
                 }
                 else if (event.data === 1) {
                     this._ytmedia.setVolume(this.volume());
-                    this._ytmedia.playVideo();
-                    this.trigger(PLAY);
+                    if(this._sliderChangeFired) {
+                        this._sliderChangeFired = false;
+                    }else {
+                        this.trigger(PLAY);
+                    }
+                    
                     this._poll("progress", this._mediaTimeUpdate, 500, this);
                     this._paused = false;
                 }
                 else if (event.data === 2) {
-                    this._ytmedia.pauseVideo();
-                    this.trigger(PAUSE);
                     this._paused = true;
-                }
-                else if (event.data === 5) {
-                    this.trigger(READY);
                 }
             },
 
@@ -626,6 +653,9 @@
             _createHtmlPlayer: function (options) {
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
+                this._mediaEndedHandler = proxy(this._mediaEnded, this);
+                this._mediaCanPlayHandler = proxy(this._mediaReady, this);
+                this._mediaPlayHandler = proxy(this._mediaPlay, this);
                 this._videoOverlay.after(templates.htmlPlayer);
                 this._media = this.wrapper.find(DOT + MEDIA)[0];
                 $(this._media)
@@ -634,14 +664,14 @@
                         height: "100%"
                     });
 
-                if (options.autoPlay) {
-                    $(this._media).attr("autoplay", "");
-                }
 
                 this._media.muted = options.mute;
 
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;
                 this._media.ondurationchange = this._mediaDurationChangeHandler;
+                this._media.oncanplay = this._mediaCanPlayHandler;
+                this._media.onplay = this._mediaPlayHandler;
+                this._media.onended  = this._mediaEndedHandler;
             },
 
             _mouseIn: function () {
@@ -717,6 +747,9 @@
 
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
                 this._media.ondurationchange = this._mediaDurationChangeHandler = null;
+                this._media.oncanplay = this._mediaCanPlayHandler = null;
+                this._media.onplay = this._mediaPlayHandler = null;
+                this._media.onended  = this._mediaEndedHandler = null;
 
                 if (this._youTubeVideo) {
                     this._ytmedia.destroy();
@@ -735,11 +768,11 @@
             seek: function (ms) {
                 var seconds = ms / 1000;
                 if (this._youTubeVideo) {
-                    if (seconds + 3 >= this._media.getDuration() | 0) {
+                    if (seconds + 3 >= this._ytmedia.getDuration() | 0) {
                         //avoid infinite bad request loop in youtube player.
-                        this._media.seekTo(this._media.getDuration() - 3 | 0, true);
+                        this._ytmedia.seekTo(this._ytmedia.getDuration() - 3 | 0, true);
                     } else {
-                        this._media.seekTo(seconds, true);
+                        this._ytmedia.seekTo(seconds, true);
                     }
                 } else {
                     this._media.currentTime = seconds;
@@ -775,7 +808,7 @@
                 this._playButton
                     .removeClass(STATE_PAUSE)
                     .addClass(STATE_PLAY);
-
+                this.trigger(END);
                 return this;
             },
 
@@ -786,11 +819,10 @@
                     this._media.pause();
                 }
                 this._paused = true;
-
                 this._playButton
                     .removeClass(STATE_PAUSE)
                     .addClass(STATE_PLAY);
-
+                this.trigger(PAUSE);
                 return this;
             },
 
@@ -884,16 +916,18 @@
                     this._volumeSlider.value(0);
                 }
                 else {
-                    this._volumeSlider.value((this._media && this._media.volume) || this._ytmedia.getVolume());
+                    this._volumeSlider.value((this._media && this._media.volume*100) || this._ytmedia.getVolume());
                 }
+                this.trigger(VOLUMECHANGE);
                 this._changeVolumeButtonImage(this._volumeSlider.value());
             },
 
             isEnded: function () {
-                var currentTime = this._youTubeVideo ? this._ytmedia.getCurrentTime() : this._media.currentTime;
-                var durationTime = this._youTubeVideo ? this._ytmedia.getDuration() : this._media.duration;
-
-                return (this._paused && currentTime === durationTime);
+                if(this._youTubeVideo) {
+                    return this._ytmedia.getPlayerState() === 0;
+                }else {
+                    return this._media.ended;
+                }
             },
 
             isPaused: function () {
@@ -901,7 +935,7 @@
             },
 
             isPlaying: function () {
-                return !this._paused;
+                return !this.isEnded() && !this._paused;
             },
 
             _dataSource: function () {
