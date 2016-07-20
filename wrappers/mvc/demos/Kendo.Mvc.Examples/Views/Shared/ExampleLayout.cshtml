@@ -95,7 +95,7 @@
 <div id="main">
     <a href="#" id="sidebar-toggle"><span></span></a>
 
-    @*@Html.Partial("ThemeChooser")*@
+    @Html.Partial("ThemeChooser")
 
     <h1 id="exampleTitle">
         @if (ViewBag.CurrentExample != null)
@@ -111,7 +111,9 @@
 
         @* Add missing mobile IF from other site *@
         @{
-            @RenderBody()
+            <div id="example">
+                @RenderBody()
+            </div>
 
             if (ViewBag.Description != null)
             {

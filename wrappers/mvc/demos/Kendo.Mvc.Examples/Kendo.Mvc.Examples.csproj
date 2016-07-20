@@ -2917,6 +2917,7 @@
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\WebSearchScript.cshtml" />
     <Content Include="Views\Shared\ExampleLayout.cshtml" />
+    <Content Include="Views\Shared\ThemeChooser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
