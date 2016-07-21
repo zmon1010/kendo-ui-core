@@ -41,11 +41,6 @@ namespace Kendo.Extensions
                 link.Append("class=\"" + className + "\" ");
             }
 
-            if (example.External)
-            {
-                link.Append("rel=\"external\"");
-            }
-
             link.Append("href=\"" + href + "\">");
 
             if (example.New)

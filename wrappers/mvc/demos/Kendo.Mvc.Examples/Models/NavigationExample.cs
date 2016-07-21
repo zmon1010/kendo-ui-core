@@ -7,7 +7,6 @@ namespace Kendo.Mvc.Examples.Models
     {
         public string Url { get; set; }
         public bool New { get; set; }
-        public bool External { get; set; }
         public string Group { get; set; }
         public string Api { get; set; }
     }
