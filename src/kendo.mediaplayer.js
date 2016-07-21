@@ -130,6 +130,8 @@
                 this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 if (this._titleBar.length === 0) {
                     this._titleBar = this.wrapper.find(DOT + TITLEBAR);
+                    this.wrapper.append(templates.titleBar);
+                    this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 }
             },
 
@@ -204,26 +206,30 @@
                     this.wrapper.find(DOT + MEDIA).toggle();
                 }
 
-                
+
                 if (!this._ytmedia && this._youTubeVideo) {
                     this._createYoutubePlayer();
                 }
-                else if (!this._media && !this._youTubeVideo){
+                else if (!this._media && !this._youTubeVideo) {
                     this._createHtmlPlayer();
                 }
 
                 if (!this._youTubeVideo) {
                     this.wrapper.find(DOT + MEDIA + " > source").remove();
                     this.wrapper.find(DOT + MEDIA).attr("src", this._currentUrl());
+
+                    if (this.options.autoPlay) {
+                        this.play();
+                    }
                 }
                 else if (this._ytmedia) {
-                    if (this.options.autoPlay){
+                    if (this.options.autoPlay) {
                         this._ytmedia.loadVideoById(this._getMediaId());
                         this._playButton
                             .removeClass(STATE_PLAY)
                             .addClass(STATE_PAUSE);
                     }
-                    else{
+                    else {
                         this._ytmedia.cueVideoById(this._getMediaId());
                         this._playButton
                             .removeClass(STATE_PAUSE)
@@ -511,12 +517,17 @@
                 this._ytmedia.getIframe().style.height = "100%";
                 this._youTubeVideo = true;
                 this._mediaDurationChangeHandler();
-                if (this.options.autoPlay){
+                if (this.options.autoPlay) {
                     this._ytmedia.loadVideoById(this._getMediaId());
                 }
-                else{
+                else {
                     this._ytmedia.cueVideoById(this._getMediaId());
                 }
+
+                if (this.options.mute) {
+                    this.mute(true);
+                }
+
                 this.trigger(READY);
             },
 
@@ -880,7 +891,7 @@
                 if (isArray(value)) {
                     this.dropdown().setDataSource(value)
                         .wrapper.show();
-                } 
+                }
                 else {
                     this.dropdown().wrapper.hide();
                 }

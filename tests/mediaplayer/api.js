@@ -5,7 +5,7 @@
     module("kendo.ui.MediaPlayer API", {
         setup: function() {
             div = $("<div />").appendTo(QUnit.fixture); 
-            mediaPlayer = new MediaPlayer(div);
+            mediaPlayer = new MediaPlayer(div, { media: { title: "fakeTitle", source: "fakeUrl.mp4" } });
             htmlPlayerMock = {
                 _isPlaying: false,
                 muted: false,

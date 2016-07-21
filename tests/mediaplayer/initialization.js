@@ -5,7 +5,7 @@
     module("kendo.ui.MediaPlayer initialization", {
         setup: function() {
             div = $("<div />").appendTo(QUnit.fixture); 
-            mediaPlayer = new MediaPlayer(div);
+            mediaPlayer = new MediaPlayer(div, { media: { title: "fakeTitle", source: "fakeUrl.mp4" } });
             htmlPlayerMock = {
                 _isPlaying: false,
                 muted: false,
@@ -23,7 +23,6 @@
                 }
             };
             mediaPlayer._media = htmlPlayerMock;
-            mediaPlayer._currentUrl = "http://something.mp4";
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -66,11 +65,15 @@
         }));
     });
     
-    test("adds hd toolbar button", function() {
+    test("adds dropdown template to toolbar", function() {
         ok(mediaPlayer.toolbar().options.items.find(function(el) { 
-            return el.id === "hdbutton"; 
+            return el.id === "videoQuality"; 
         }));
     });
+
+    test("adds dropdown widget to toolbar", function() {
+        ok(mediaPlayer.dropdown() instanceof kendo.ui.DropDownList);
+    });    
 
     test("adds fullscreen toolbar button", function() {
         ok(mediaPlayer.toolbar().options.items.find(function(el) { 
