@@ -831,7 +831,8 @@
                     return (typeof this._mediaData !== 'undefined') ? this._mediaData : this._mediaData = this.options.media;
                 }
                 this._mediaData = value;
-                this._refresh();
+
+                this._changePlayerUrl(this._mediaData.url);
             },
 
             isPaused: function () {
