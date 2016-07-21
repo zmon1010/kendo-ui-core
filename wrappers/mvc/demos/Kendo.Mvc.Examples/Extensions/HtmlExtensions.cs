@@ -67,22 +67,20 @@ namespace Kendo.Extensions
 
         public static string ProductExampleUrl(this HtmlHelper html, NavigationExample example, string product)
         {
-            var viewBag = html.ViewContext.Controller.ViewBag;
+            var sectionAndExample = example.Url.Split('/');
 
-            var currentProduct = (string)viewBag.Product;
+            var url = string.Join("/", LiveSamplesRoot, product, sectionAndExample[0]);
 
-            // TODO Set Url to other live website
-            return html.ExampleUrl(example).Replace(currentProduct, product);
+            return url;
         }
 
-        //        public static String CdnRoot(this HtmlHelper html)
-        //        {
-        //#if DEBUG
-        //            return "http://kendo.cdn.telerik.com/2015.3.930";
-        //#else
-        //            return ConfigurationManager.AppSettings["CDN_ROOT"];
-        //#endif
-        //        }
+        public static string LiveSamplesRoot
+        {
+            get
+            {
+                return "http://demos.telerik.com";
+            }
+        }
 
         public static IHtmlString WidgetLink(this HtmlHelper html, NavigationWidget widget, string product)
         {
@@ -137,13 +135,6 @@ namespace Kendo.Extensions
 
             return html.Raw(link.ToString());
         }
-
-        //        public static bool MergesWithNext(this HtmlHelper html, string category)
-        //        {
-        //            category = category.ToLower();
-
-        //            return category.Contains("applications") || category.Contains("gauges") || category.Contains("financial") || category.Contains("geoviz");
-        //        }
 
         public static string StyleRel(this HtmlHelper html, string styleName)
         {

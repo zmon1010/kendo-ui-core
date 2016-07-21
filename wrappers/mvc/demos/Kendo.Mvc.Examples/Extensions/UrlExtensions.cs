@@ -8,16 +8,6 @@ namespace Kendo.Extensions
 {
     public static class UrlExtensions
     {
-        //public static string ContentOrEmpty(this UrlHelper url, string contentUrl)
-        //{
-        //    if (string.IsNullOrEmpty(contentUrl))
-        //    {
-        //        return "";
-        //    }
-
-        //    return url.Content(contentUrl);
-        //}
-
         public static string Widget(this UrlHelper url, string widget)
         {
             return url.ExampleUrl(widget, "index");
