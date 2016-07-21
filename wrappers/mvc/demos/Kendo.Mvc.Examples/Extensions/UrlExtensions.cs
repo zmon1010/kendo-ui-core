@@ -18,15 +18,10 @@ namespace Kendo.Extensions
             return url.Action(example, widget);
         }
 
-        //public static string Script(this UrlHelper url, string file)
-        //{
-        //    return ResourceUrl(url, "js", file, IsAbsoluteUrl(file));
-        //}
-
-        //public static string Script(this UrlHelper url, string file, bool isAbosoluteUrl)
-        //{
-        //    return ResourceUrl(url, "js", file, isAbosoluteUrl);
-        //}
+        public static string Script(this UrlHelper url, string file)
+        {
+            return ResourceUrl(url, "js", file, IsAbsoluteUrl(file));
+        }
 
         public static string Style(this UrlHelper url, string file, string theme, string commonFile)
         {
@@ -43,7 +38,12 @@ namespace Kendo.Extensions
         private static string ResourceUrl(UrlHelper url, string assetType, string file, bool isAbsoluteUrl)
         {
 #if DEBUG
-            return url.Content(string.Format("~/content/web/{1}", assetType, file));
+            if (assetType == "styles")
+            {
+                return url.Content(string.Format("~/content/web/{0}", file));
+            }
+
+            return url.Content(string.Format("~/Scripts/{0}", file));
 #else
             if (isAbsoluteUrl == true)
             {

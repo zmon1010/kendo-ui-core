@@ -774,6 +774,7 @@
     <Compile Include="Models\PrintMargins.cs" />
     <Compile Include="Models\PrintOptions.cs" />
     <Compile Include="Models\Scheduler\MeetingSignalRViewModel.cs" />
+    <Compile Include="Models\ScriptGroups.cs" />
     <Compile Include="Models\StyleGroups.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryService.cs" />
@@ -937,7 +938,9 @@
     <Content Include="Content\shared\js\kendo-dojo.js" />
     <Content Include="Content\shared\js\prettify.js" />
     <Content Include="Content\shared\styles\examples.css" />
+    <Content Include="Content\shared\styles\horizontal-ruler-bottom.png" />
     <Content Include="Content\shared\styles\tags.png" />
+    <Content Include="Content\shared\styles\units.png" />
     <Content Include="Views\combobox\grouping.cshtml" />
     <Content Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\bar_charts\pan_and_zoom.cshtml" />

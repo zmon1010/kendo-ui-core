@@ -16,8 +16,17 @@
 
     <link href="@Url.Content("~/content/shared/styles/examples.css")" rel="stylesheet" />
 
-    <script src="@Url.Content("~/bundles/jquery")"></script>
-    <script src="@Url.Content("~/bundles/kendo")"></script>
+
+    @foreach (string scriptName in Kendo.Mvc.Examples.Models.ScriptGroups.All)
+    {
+        if (scriptName.Contains("jszip") && ViewBag.CurrentExample != null
+        && !ViewBag.CurrentExample.Text.Contains("Excel") && !ViewBag.CurrentExample.Url.Contains("spreadsheet"))
+        {
+            continue;
+        }
+
+        <script src="@Url.Script(scriptName)"></script>
+    }
     <script src="@Url.Content("~/bundles/demo")"></script>
 
     <script>
