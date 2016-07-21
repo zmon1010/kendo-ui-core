@@ -127,7 +127,7 @@ To enable proper compilation of the LESS files in the example you need to do the
     <div id="player1" style="width: 510px; height: 286px;"> </div>
     <div id="consoleOutput" style="width: 510px; height: 300px; background-color: #ccc"></div>
 
-    <div id="listView"></div>
+    <div id="listView" style="position:absolute; top:0; right: 0; height: 600px; width:600px; overflow: auto;"></div>
 
     <script type="text/x-kendo-template" id="template">
         <div class="video">
@@ -169,6 +169,7 @@ To enable proper compilation of the LESS files in the example you need to do the
             $("#listView").kendoListView({
                 dataSource: dataSource,
                 selectable: true,
+				scrollable: true,
                 change: onChange,
                 template: kendo.template($("#template").html())
             });
@@ -181,15 +182,16 @@ To enable proper compilation of the LESS files in the example you need to do the
                 timeChange: onTimeChange,
                 volumeChange: onVolumeChange,
                 autoPlay: true,
-                mute: false,
-                media: { 
-					title: "Roxette - What's She Like?", 
-					//url: "https://www.youtube.com/watch?v=cjFy5AYxx7k"
-					source: [
-						{ quality: "HQ1", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k" },
-						{ quality: "HQ2", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k" }
-					] 
-				}
+                mute: false
+				// ,
+                // media: { 
+				// 	title: "Roxette - What's She Like?", 
+				// 	source: "https://www.youtube.com/watch?v=cjFy5AYxx7k"
+					// source: [
+					// 	{ quality: "HQ1", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k" },
+					// 	{ quality: "HQ2", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k" }
+					// ] 
+				// }
             });
 
             window.player1 = $("#player1").data("kendoMediaPlayer");

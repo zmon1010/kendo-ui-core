@@ -286,14 +286,18 @@
 
             _createDropDown: function () {
                 var dropDownElement = this.wrapper.find(DOT + VIDEO_QUALITY);
+                var media = this.media();
                 if (typeof dropDownElement.data("kendoDropDownList") === "undefined") {
                     this._dropDownSelectHandler = proxy(this._dropDownSelect, this);
                     this._dropDown = new ui.DropDownList(dropDownElement, {
                         dataTextField: "quality",
                         dataValueField: "url",
-                        dataSource: this.media().source,
                         select: this._dropDownSelectHandler
                     });
+
+                    if (this.options.media && isArray(media.source)) {
+                        this._dropDown.setDataSource(media.source);
+                    }
                 }
             },
 
@@ -312,6 +316,11 @@
             _toolbarClick: function (e) {
                 var target = $(e.target).children().first();
                 var isPaused = target.hasClass(STATE_PLAY);
+
+                if (!this.options.media) {
+                    return;
+                }
+
                 if (e.id === "play") {
                     if (isPaused) {
                         this.play();
@@ -342,6 +351,10 @@
             },
 
             _sliderDragging: function (e) {
+                if (!this.options.media) {
+                    return;
+                }
+                
                 if (!this.options.forwardSeek && (e.sender.value() < e.value)) {
                     this._shouldCancelSlideChange = true;
                     this._sliderValue = e.sender.value();
@@ -353,6 +366,11 @@
                 var that = this;
                 var slider = e.sender;
                 var tzOffset = timeZoneSec * 1000;
+
+                if (!this.options.media) {
+                    return;
+                }
+
                 that._sliderChangeFired = true;
                 that._isDragging = false;
                 if (that._shouldCancelSlideChange) {
@@ -384,12 +402,18 @@
             },
 
             _volumeDragging: function (e) {
+                if (!this.options.media) {
+                    return;
+                }
                 this.volume(e.value);
                 this._changeVolumeButtonImage(e.value);
                 this.trigger(VOLUMECHANGE);
             },
 
             _volumeChange: function (e) {
+                if (!this.options.media) {
+                    return;
+                }
                 this.volume(e.value);
                 this._changeVolumeButtonImage(e.value);
                 this.trigger(VOLUMECHANGE);
@@ -888,8 +912,8 @@
                     return (typeof this._mediaData !== 'undefined') ? this._mediaData : this._mediaData = this.options.media;
                 }
 
-                if (isArray(value)) {
-                    this.dropdown().setDataSource(value)
+                if (isArray(value.source)) {
+                    this.dropdown().setDataSource(value.source)
                         .wrapper.show();
                 }
                 else {
@@ -912,6 +936,8 @@
             _refresh: function () {
                 var data = this.media();
                 if (data) {
+                    this.dropdown().wrapper.toggle(isArray(data));
+
                     this._updateToolbarTitle(data);
                     this._youTubeVideo = this._isYouTubeUrl();
                     this._initializePlayer();
