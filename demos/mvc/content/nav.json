@@ -89,7 +89,7 @@
             {
                 "text": "Customizing templates",
                 "url": "autocomplete/template",
-                "isUpdated": true,
+                "new": true,
                 "title": {
                     "kendo-ui": "Templates customization in Kendo UI AutoComplete",
                     "aspnet-mvc": "Templates customization in ASP.NET MVC AutoComplete"
@@ -98,6 +98,24 @@
                     "kendo-ui": "With this Kendo UI AutoComplete demo, you can learn how to customize the template of the widget.",
                     "aspnet-mvc": "With this ASP.NET MVC AutoComplete demo, you can learn how to customize the template of the control."
                 }
+            },
+            {
+                "text": "Add new item",
+                "url": "autocomplete/addnewitem",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Add new item in Kendo UI AutoComplete",
+                    "aspnet-mvc": "Add new item in ASP.NET MVC AutoComplete"
+                },
+                "meta": {
+                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI AutoComplete.",
+                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC AutoComplete."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Custom data source",
@@ -129,24 +147,6 @@
                     "kendo-ui": "The API Functions of Kendo UI Autocomplete widget give you the option to set a specific value, attribute a value for the string, starting with a symbol or a digit.",
                     "aspnet-mvc": "The API Functions of ASP.NET MVC Autocomplete give you the option to set a specific value, attribute a value for the string, starting with a symbol or a digit."
                 }
-            },
-            {
-                "text": "Add new item",
-                "url": "autocomplete/addnewitem",
-                "isNew": true,
-                "title": {
-                    "kendo-ui": "Add new item in Kendo UI AutoComplete",
-                    "aspnet-mvc": "Add new item in ASP.NET MVC AutoComplete"
-                },
-                "meta": {
-                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI AutoComplete.",
-                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC AutoComplete."
-                },
-                "packages": [
-                    "!mvc",
-                    "!jsp",
-                    "!php"
-                ]
             },
             {
                 "text": "RTL support",
@@ -776,7 +776,7 @@
             {
                 "text": "Customizing templates",
                 "url": "combobox/template",
-                "isUpdated": true,
+                "new": true,
                 "title": {
                     "kendo-ui": "Demo for customizing jQuery ComboBox Templates | Kendo UI Web Demos",
                     "aspnet-mvc": "Demo for customizing ASP.NET MVC ComboBox Templates"
@@ -797,6 +797,24 @@
                     "kendo-ui": "This demo shows how the cascading Kendo UI ComboBox control would fit any web application or website.",
                     "aspnet-mvc": "This demo shows how the cascading ASP.NET MVC ComboBox control would fit any web application or website."
                 }
+            },
+            {
+                "text": "Add new item",
+                "url": "combobox/addnewitem",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Add new item in Kendo UI ComboBox",
+                    "aspnet-mvc": "Add new item in ASP.NET MVC ComboBox"
+                },
+                "meta": {
+                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI ComboBox.",
+                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC ComboBox."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Custom data source",
@@ -828,24 +846,6 @@
                     "kendo-ui": "This sample shows all API functions for Kendo UI ComboBox widget.",
                     "aspnet-mvc": "This sample shows all API functions for Telerik ASP.NET MVC ComboBox control."
                 }
-            },
-            {
-                "text": "Add new item",
-                "url": "combobox/addnewitem",
-                "isNew": true,
-                "title": {
-                    "kendo-ui": "Add new item in Kendo UI ComboBox",
-                    "aspnet-mvc": "Add new item in ASP.NET MVC ComboBox"
-                },
-                "meta": {
-                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI ComboBox.",
-                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC ComboBox."
-                },
-                "packages": [
-                    "!mvc",
-                    "!jsp",
-                    "!php"
-                ]
             },
             {
                 "text": "RTL support",
@@ -1340,7 +1340,7 @@
             {
                 "text": "Customizing templates",
                 "url": "dropdownlist/template",
-                "isUpdated": true,
+                "new": true,
                 "title": {
                     "kendo-ui": "Customize items in Kendo UI DropDownList component",
                     "aspnet-mvc": "Customize items in ASP.NET MVC DropDownList component"
@@ -1361,6 +1361,24 @@
                     "kendo-ui": "This demo shows how the cascading jQuery dropdown works in Kendo UI DropDownList widget.",
                     "aspnet-mvc": "This demo shows how the cascading ASP.NET MVC dropdown works in UI for ASP.NET MVC DropDownList control."
                 }
+            },
+            {
+                "text": "Add new item",
+                "url": "dropdownlist/addnewitem",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Add new item in Kendo UI DropDownList",
+                    "aspnet-mvc": "Add new item in ASP.NET MVC DropDownList"
+                },
+                "meta": {
+                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI DropDownList.",
+                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC DropDownList."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Custom data source",
@@ -1392,24 +1410,6 @@
                     "kendo-ui": "Explore API functions of Kendo UI DropDownList to find how to enable or disable the dropdown list, open and close it or just manipulate the items.",
                     "aspnet-mvc": "Explore API functions of ASP.NET MVC DropDownList to find how to enable or disable the dropdown list, open and close it or just manipulate the items."
                 }
-            },
-            {
-                "text": "Add new item",
-                "url": "dropdownlist/addnewitem",
-                "isNew": true,
-                "title": {
-                    "kendo-ui": "Add new item in Kendo UI DropDownList",
-                    "aspnet-mvc": "Add new item in ASP.NET MVC DropDownList"
-                },
-                "meta": {
-                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI DropDownList.",
-                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC DropDownList."
-                },
-                "packages": [
-                    "!mvc",
-                    "!jsp",
-                    "!php"
-                ]
             },
             {
                 "text": "RTL support",
@@ -3520,7 +3520,7 @@
             {
                 "text": "Customizing templates",
                 "url": "multiselect/template",
-                "isUpdated": true,
+                "new": true,
                 "title": {
                     "kendo-ui": "Templates customization of Kendo UI MultiSelect widget",
                     "aspnet-mvc": "Templates customization of ASP.NET MVC MultiSelect control"
@@ -3529,6 +3529,24 @@
                     "kendo-ui": "This Kendo UI MultiSelect demo shows how the template of the widget can be customized to change the appearance of items and tags.",
                     "aspnet-mvc": "This ASP.NET MVC MultiSelect demo shows how the template of the control can be customized to change the appearance of items and tags."
                 }
+            },
+            {
+                "text": "Add new item",
+                "url": "multiselect/addnewitem",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Add new item in Kendo UI MultiSelect",
+                    "aspnet-mvc": "Add new item in ASP.NET MVC MultiSelect"
+                },
+                "meta": {
+                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI MultiSelect.",
+                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC MultiSelect."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Events",
@@ -3553,24 +3571,6 @@
                     "kendo-ui": "In this demo you will find more about the API functions of Kendo UI MultiSelect widget.",
                     "aspnet-mvc": "In this demo you will find more about the API functions of ASP.NET MVC MultiSelect control."
                 }
-            },
-            {
-                "text": "Add new item",
-                "url": "multiselect/addnewitem",
-                "isNew": true,
-                "title": {
-                    "kendo-ui": "Add new item in Kendo UI MultiSelect",
-                    "aspnet-mvc": "Add new item in ASP.NET MVC MultiSelect"
-                },
-                "meta": {
-                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI MultiSelect.",
-                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC MultiSelect."
-                },
-                "packages": [
-                    "!mvc",
-                    "!jsp",
-                    "!php"
-                ]
             },
             {
                 "text": "Tag mode",
@@ -3875,7 +3875,7 @@
             {
                 "text": "Range Validation",
                 "url": "numerictextbox/validation",
-				"isNew": true,
+				"new": true,
                 "title": {
                     "kendo-ui": "Range validation in Kendo UI NumericTextBox",
                     "aspnet-mvc": "Range validation in ASP.NET MVC NumericTextBox"
