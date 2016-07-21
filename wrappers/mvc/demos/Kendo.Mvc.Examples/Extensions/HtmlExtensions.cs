@@ -85,36 +85,10 @@ namespace Kendo.Extensions
 
             var text = widget.Text;
 
-            if (widget.Tablet)
-            {
-                text += " (tablet)";
-            }
-
-            var className = "";
-
-            var pro = widget.Pro && product == "online";
-
-            if (pro && (widget.New || widget.Beta))
-            {
-                className = "multiple-tags";
-            }
-
             StringBuilder link = new StringBuilder();
-
-            link.Append("<a ");
-
-            if (!string.IsNullOrEmpty(className))
-            {
-                link.AppendFormat("class=\"{0}\" ", className);
-            }
-
-            link.AppendFormat("href=\"{0}\">", href);
+            
+            link.AppendFormat("<a href=\"{0}\">", href);
             link.Append(text);
-
-            if (pro)
-            {
-                link.Append("<span title=\"Available only in Kendo UI Professional\" class=\"pro-widget\"></span>");
-            }
 
             if (widget.Beta)
             {
