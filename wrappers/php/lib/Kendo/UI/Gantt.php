@@ -64,7 +64,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * If set to some date and that is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.
+    * If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.
     * @param date $value
     * @return \Kendo\UI\Gantt
     */

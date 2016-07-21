@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class GanttView<TTaskModel, TDependenciesModel> where TTaskModel : class, IGanttTask  where TDependenciesModel : class, IGanttDependency 
     {
+        public DateTime? Date { get; set; }
+
         public GanttViewRangeSettings<TTaskModel, TDependenciesModel> Range { get; } = new GanttViewRangeSettings<TTaskModel, TDependenciesModel>();
 
         public bool? Selected { get; set; }
@@ -47,6 +49,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (Date.HasValue)
+            {
+                settings["date"] = Date;
+            }
 
             var range = Range.Serialize();
             if (range.Any())

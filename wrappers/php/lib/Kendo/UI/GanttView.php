@@ -6,6 +6,15 @@ class GanttView extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.Overrides the date option of the gantt.
+    * @param date $value
+    * @return \Kendo\UI\GanttView
+    */
+    public function date($value) {
+        return $this->setProperty('date', $value);
+    }
+
+    /**
     * Configures the view range settings.
     * @param \Kendo\UI\GanttViewRange|array $value
     * @return \Kendo\UI\GanttView

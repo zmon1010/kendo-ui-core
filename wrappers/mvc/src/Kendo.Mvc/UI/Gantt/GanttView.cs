@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
+        public DateTime? Date { get; set; }
+        
         public GanttViewRangeSettings Range
         {
             get;
@@ -59,6 +61,11 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
+            if (Date.HasValue)
+            {
+                json["date"] = Date;
+            }
+                
             var range = Range.ToJson();
             if (range.Any())
             {

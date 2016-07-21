@@ -21085,7 +21085,7 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>If set to some date and that is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.</description>
+            <description>If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.</description>
             <name>date</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>
@@ -21974,6 +21974,12 @@ By default the Kendo UI Gantt widget displays "day", "week", and "month" views.<
         <tag-class>com.kendoui.taglib.gantt.ViewTag</tag-class>
 
         <body-content>JSP</body-content>
+        <attribute>
+            <description>If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.Overrides the date option of the gantt.</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
         <attribute>
             <description>The template used to render the day slots in "day" and "week" views.</description>
             <name>dayHeaderTemplate</name>

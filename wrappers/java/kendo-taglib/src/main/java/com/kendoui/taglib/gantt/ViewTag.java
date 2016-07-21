@@ -73,6 +73,14 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setEvent("yearHeaderTemplate", value.getBody());
     }
 
+    public java.util.Date getDate() {
+        return (java.util.Date)getProperty("date");
+    }
+
+    public void setDate(java.util.Date value) {
+        setProperty("date", value);
+    }
+
     public java.lang.String getDayHeaderTemplate() {
         return (java.lang.String)getProperty("dayHeaderTemplate");
     }
