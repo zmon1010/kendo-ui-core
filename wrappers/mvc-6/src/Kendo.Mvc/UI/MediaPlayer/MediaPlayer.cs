@@ -13,22 +13,11 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI MediaPlayer component
     /// </summary>
-    public partial class MediaPlayer<T> : WidgetBase
-        where T : class
+    public partial class MediaPlayer : WidgetBase
     {
         public MediaPlayer(ViewContext viewContext) : base(viewContext)
         {
-            DataSource = new DataSource(ModelMetadataProvider)
-            {
-                Type = DataSourceType.Ajax,
-                ServerAggregates = true,
-                ServerFiltering = true,
-                ServerGrouping = true,
-                ServerPaging = true,
-                ServerSorting = true
-            };
-
-            DataSource.ModelType(typeof(T));
+            this.Media = new MediaPlayerMedia();
         }
 
         protected override void WriteHtml(TextWriter writer)
@@ -43,30 +32,14 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
-
-            if (DataSourceId.HasValue())
+            if (Media.Source != null && !string.IsNullOrEmpty(Media.Title))
             {
-                settings["dataSourceId"] = DataSourceId;
+                settings["media"] = Media.ToJson();
             }
-            else
-            {
-                settings["dataSource"] = DataSource.ToJson();
-            }
-
             writer.Write(Initializer.Initialize(Selector, "MediaPlayer", settings));
         }
 
-        public DataSource DataSource
-        {
-            get;
-            private set;
-        }
-
-        public string DataSourceId
-        {
-            get;
-            set;
-        }
+        public MediaPlayerMedia Media { get; set; }
     }
 }
 

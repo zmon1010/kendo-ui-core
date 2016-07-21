@@ -1,7 +1,8 @@
 ﻿@using Kendo.Mvc.UI
 
-@(Html.Kendo().MediaPlayer<Video>()
+@(Html.Kendo().MediaPlayer()
       .AutoPlay(true)
-      .Playlist(true)
-      .Name("MediaPlayer").BindTo((IEnumerable<Video>)ViewBag.Videos)
+      .Media(m=>m.Title("Digital Transformation: A New Way of Thinking")
+      .Source(@"/shared/web/mediaplayer/Video1.mp4"))
+      .Name("MediaPlayer")
 )

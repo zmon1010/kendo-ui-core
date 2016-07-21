@@ -9,33 +9,24 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI MediaPlayer component
     /// </summary>
-    public partial class MediaPlayer<T> where T : class 
+    public partial class MediaPlayer 
     {
-        public bool? AutoBind { get; set; }
-
         public bool? AutoPlay { get; set; }
 
         public bool? AutoRepeat { get; set; }
 
-        public double? Volume { get; set; }
+        public bool? ForwardSeek { get; set; }
 
         public bool? FullScreen { get; set; }
 
         public bool? Mute { get; set; }
 
-        public bool? ForwardSeek { get; set; }
-
-        public bool? Playlist { get; set; }
+        public double? Volume { get; set; }
 
 
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
-
-            if (AutoBind.HasValue)
-            {
-                settings["autoBind"] = AutoBind;
-            }
 
             if (AutoPlay.HasValue)
             {
@@ -47,9 +38,9 @@ namespace Kendo.Mvc.UI
                 settings["autoRepeat"] = AutoRepeat;
             }
 
-            if (Volume.HasValue)
+            if (ForwardSeek.HasValue)
             {
-                settings["volume"] = Volume;
+                settings["forwardSeek"] = ForwardSeek;
             }
 
             if (FullScreen.HasValue)
@@ -62,14 +53,9 @@ namespace Kendo.Mvc.UI
                 settings["mute"] = Mute;
             }
 
-            if (ForwardSeek.HasValue)
+            if (Volume.HasValue)
             {
-                settings["forwardSeek"] = ForwardSeek;
-            }
-
-            if (Playlist.HasValue)
-            {
-                settings["playlist"] = Playlist;
+                settings["volume"] = Volume;
             }
 
             return settings;

@@ -7,34 +7,20 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring the Kendo UI MediaPlayer
     /// </summary>
-    public partial class MediaPlayerBuilder<T> : WidgetBuilderBase<MediaPlayer<T>, MediaPlayerBuilder<T>>
-        where T : class
+    public partial class MediaPlayerBuilder : WidgetBuilderBase<MediaPlayer, MediaPlayerBuilder>
+       
     {
-        public MediaPlayerBuilder(MediaPlayer<T> component) : base(component)
+        public MediaPlayerBuilder(MediaPlayer component) : base(component)
         {
         }
 
-        public MediaPlayerBuilder<T> DataSource(string dataSourceId)
+        /// <summary>
+        /// Specifies the object which holds the information about the media that will be played
+        /// </summary>
+        /// <param name="value">The value for Media</param>
+        public MediaPlayerBuilder Media(Action<MediaPlayerMediaBuilder> configurator)
         {
-            Component.DataSourceId = dataSourceId;
-            return this;
-        }
-
-        public MediaPlayerBuilder<T> DataSource(Action<DataSourceBuilder<T>> configurator)
-        {
-            configurator(new DataSourceBuilder<T>(Component.DataSource, Component.ViewContext, Component.UrlGenerator));
-            return this;
-        }
-
-        public MediaPlayerBuilder<T> BindTo(IEnumerable<T> dataSource)
-        {
-            Component.DataSource.Data = dataSource;
-            return this;
-        }
-
-        public MediaPlayerBuilder<T> BindTo(IEnumerable dataSource)
-        {
-            Component.DataSource.Data = dataSource;
+            configurator(new MediaPlayerMediaBuilder(Component));
             return this;
         }
     }

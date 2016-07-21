@@ -10,46 +10,6 @@ Represents the Kendo UI MediaPlayer widget. Inherits from [Widget](/api/javascri
 
 ## Configuration
 
-### dataSource `Object|Array|kendo.data.DataSource`
-
-The data source of the widget which is used render table rows. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing [kendo.data.DataSource](/api/javascript/data/datasource)
-instance.
-
-If the `dataSource` option is set to a JavaScript object or array the widget will initialize a new [kendo.data.DataSource](/api/javascript/data/datasource) instance using that value as data source configuration.
-
-If the `dataSource` option is an existing [kendo.data.DataSource](/api/javascript/data/datasource) instance the widget will use that instance and will **not** initialize a new one.
-
-#### Example - specify different prompt char
-
-    <div id="mediaplayer" />
-    <script>
-    $("#mediaplayer").kendoMediaPlayer({
-        dataSource: [					
-            { name: "video1", url: ".//video/video1.mp4" },
-            { name: "video2", url: ".//video/video2.mp4" }
-        ]
-    });
-    </script>
-
-### autoBind `Boolean` *(default: true)*
-
-If set to `false` the widget will not bind to the data source during initialization. In this case data binding will occur when the [change](/api/javascript/data/datasource#events-change) event of the
-data source is fired.
-
-> Setting `autoBind` to `false` is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source doesn't make more than one request to the remote service.
-
-#### Example - disable automatic binding
-
-    <div id="mediaplayer" />
-    <script>
-    $("#mediaplayer").kendoMediaPlayer({
-        autoBind: false,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
-    });
-    </script>
-
 ### autoPlay `Boolean` *(default: false)*
 
 If set to `true` the widget will start playing the video\vidoes after initializing
@@ -60,9 +20,7 @@ If set to `true` the widget will start playing the video\vidoes after initializi
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     </script>
 
@@ -75,58 +33,8 @@ If set to `true` the widget will start playing the video\vidoes after initializi
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
-    });
-    </script>
-
-### volume `Number` *(default: 100)*
-
-A value between 0 and 100 that specifies the volume of the video 
-
-#### Example - set volume
-
-    <div id="mediaplayer" />
-    <script>
-    $("#mediaplayer").kendoMediaPlayer({
-        volume: 50,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
-    });
-    </script>
-
-### fullScreen `Boolean` *(default: false)*
-
-If set to `true` the widget will enter in full-sreen mode
-
-#### Example - enable full-screen
-
-    <div id="mediaplayer" />
-    <script>
-    $("#mediaplayer").kendoMediaPlayer({
-        fullScreen: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
-    });
-    </script>
-
-### mute `Boolean` *(default: false)*
-
-If set to `true` the video will be played without sound
-
-#### Example - enable full-screen
-
-    <div id="mediaplayer" />
-    <script>
-    $("#mediaplayer").kendoMediaPlayer({
-        mute: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
+        autoRepeat: true,
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     </script>
 
@@ -140,27 +48,98 @@ If set to `false` the user will be prevented from seeking the video forward
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         forwardSeek: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
-    </script>
+    </script>    
 
-### playlist `Boolean` *(default: false)*
+### fullScreen `Boolean` *(default: false)*
 
-If set to `true` a playlist for the videos inside the data source will be created
+If set to `true` the widget will enter in full-sreen mode
 
 #### Example - enable full-screen
 
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        playlist: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
-            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
-            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
-        ]
+        fullScreen: true,
+        media: { title: "Video1", source: ".//video/video1.mp4" }
+    });
+    </script>
+
+### media `Object`
+
+The object which holds the information about the media that will be played by the control
+
+#### Example - specify a video
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        media: { title: "Video1", source: ".//video/video1.mp4" }
+    });
+    </script>
+
+### media.source `String`
+
+String or an array of objects that hold the URL\URLs to the videos
+
+#### Example - specify a video
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        media: { title: "Video1", source: ".//video/video1.mp4" }
+    });
+    </script>
+
+#### Example - specify a video with alternative sources
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        media: { title: "Video1", source: ".//video/video1.mp4" }] }
+    });
+    </script>
+
+### media.title `String`
+
+Specifies the title of the media that will be played
+
+#### Example - specify a video
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        media: { title: "Video1", source: ".//video/video1.mp4" }
+    });
+    </script>      
+
+### mute `Boolean` *(default: false)*
+
+If set to `true` the video will be played without sound
+
+#### Example - enable full-screen
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        mute: true,
+        media: { title: "Video1", source: ".//video/video1.mp4" }
+    });
+    </script>
+
+
+### volume `Number` *(default: 100)*
+
+A value between 0 and 100 that specifies the volume of the video 
+
+#### Example - set volume
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        volume: 50,
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     </script>
 
@@ -176,12 +155,12 @@ Forces the widget to enter\exit full-screen mode
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+    // check if the media player is currently in full-screen mode
+    mediaPlayer.fullScreen();
     // force the widget to enter full-screen
     mediaPlayer.fullScreen(true);
     </script>
@@ -200,9 +179,7 @@ Gets a value indicating whether the media has finished playing
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -220,9 +197,7 @@ Gets a value indicating whether the media is paused
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -240,9 +215,7 @@ Gets a value indicating whether the media is currently playing
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -259,13 +232,8 @@ Halts the video currently played video
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        playlist: true,
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
-            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
-            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -282,12 +250,7 @@ Forces the video to start playing
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        playlist: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
-            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
-            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -304,13 +267,8 @@ Proceeds the video to a certain time
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        playlist: true,
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
-            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
-            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -333,13 +291,8 @@ Stops the currently played video
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        playlist: true,
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
-            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
-            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -356,13 +309,8 @@ Gets a reference to the title bar
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        playlist: true,
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
-            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
-            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -379,13 +327,7 @@ Gets a reference to the toolbar
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        playlist: true,
-        autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" },
-            { title: "Digital Transformation: A New Way of Thinking", url: "https://www.youtube.com/watch?v=gNlya720gbk" },
-            { title: "Learn How York Solved Its Database Problem", url: "https://www.youtube.com/watch?v=_S63eCewxRg" }
-        ]
+        media: { title: "Video1", source: ".//video/video1.mp4" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -407,10 +349,8 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ],
-        dataBound: function(){
+        media: { title: "Video1", source: ".//video/video1.mp4" },
+        end: function(){
             //handle event
         }
     });
@@ -428,9 +368,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ],
+        media: { title: "Video1", source: ".//video/video1.mp4" },
         pause: function(){
             //handle event
         }
@@ -449,9 +387,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ],
+        media: { title: "Video1", source: ".//video/video1.mp4" },
         play: function(){
             //handle event
         }
@@ -470,9 +406,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ],
+        media: { title: "Video1", source: ".//video/video1.mp4" },
         ready: function(){
             //handle event
         }
@@ -491,9 +425,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ],
+        media: { title: "Video1", source: ".//video/video1.mp4" },
         timeChange: function(){
             //handle event
         }
@@ -512,9 +444,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        dataSource: [					
-            { title: "Progress: Transforming Experiences", url: "https://www.youtube.com/watch?v=QUjwpqkStOA" }
-        ],
+        media: { title: "Video1", source: ".//video/video1.mp4" },
         volumeChange: function(){
             //handle event
         }
