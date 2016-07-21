@@ -5557,9 +5557,13 @@
                     "aspnet-mvc": "Sortable-closable tabs in ASP.NET MVC TabStrip"
                 },
                 "meta": {
-                    "kendo-ui": "This Kendo UI demo shows how implement custom logic that allows end users to reorder or close a tab in Kendo UI TabStrip.",
-                    "aspnet-mvc": "This ASP.NET MVC demo shows how implement custom logic that allows end users to reorder or close a tab in ASP.NET MVC TabStrip."
-                }
+                    "kendo-ui": "This Kendo UI demo shows how implement custom logic that allows end users to reorder or close a tab in Kendo UI TabStrip."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Events",
