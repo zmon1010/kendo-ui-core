@@ -1,5 +1,5 @@
 (function (f, define) {
-    define(["./kendo.slider", "./kendo.toolbar"], f);
+    define(["./kendo.slider", "./kendo.toolbar", "./kendo.dropdownlist"], f);
 })(function () {
 
     var __meta__ = { // jshint ignore:line
@@ -7,7 +7,7 @@
         name: "MediaPlayer",
         category: "web",
         description: "",
-        depends: ["slider", "toolbar"]
+        depends: ["slider", "toolbar", "dropdownlist"]
     };
 
     (function ($, undefined) {
@@ -25,6 +25,7 @@
             LOW_VOLUME = "k-i-volume-low",
             HIGH_VOLUME = "k-i-volume-high",
             PROGRESS = "progress",
+            VIDEO_QUALITY = "k-mediaplayer-quality",
             ERROR = "error",
             STATE_PLAY = "k-i-play",
             STATE_PAUSE = "k-i-pause",
@@ -43,6 +44,7 @@
             baseTime = new Date(1970, 0, 1),
             timeZoneSec = baseTime.getTimezoneOffset() * 60,
             Widget = kendo.ui.Widget,
+            isArray = $.isArray,
             timeFormats = {
                 shortTime: "mm:ss",
                 longTime: "HH:mm:ss"
@@ -58,6 +60,7 @@
                 toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
                 slider: "<input class='" + SLIDER + "' value='0' />",
                 volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
+                qualityDropDown: "<input class='" + VIDEO_QUALITY + "' />",
                 toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #"
             };
 
@@ -71,9 +74,13 @@
 
                 options = this.options;
 
+                this._currentIndex = 0;
+
                 this._createTitlebar();
 
-                this._createToolbar(options);
+                this._createToolbar();
+
+                this._createDropDown();
 
                 this._createSlider();
 
@@ -82,6 +89,7 @@
                 this._timers = {};
 
                 this._mediaData = options.media;
+
                 this._refresh();
 
                 kendo.notify(this);
@@ -176,22 +184,25 @@
                 $.grep(this._toolBar.options.items, function (e) { return !!e.template; }).template = templates.toolBarTime;
             },
 
-            _isYouTubeUrl: function (url) {
-                return !!url.match("youtube.com/|youtu.be/");
+            _currentUrl: function () {
+                var media = this.media();
+                return isArray(media.source) ? media.source[this._currentIndex].url : media.source;
             },
 
-            _changePlayerUrl: function (url) {
+            _isYouTubeUrl: function () {
+                return !!this._currentUrl().match("youtube.com/|youtu.be/");
+            },
+
+            _setPlayerUrl: function () {
                 var oldPlayer = this._youTubeVideo;
                 this.stop();
 
-                this._youTubeVideo = this._isYouTubeUrl(url);
+                this._youTubeVideo = this._isYouTubeUrl();
 
                 if (oldPlayer !== this._youTubeVideo) {
                     this.wrapper.find(DOT + YTPLAYER).toggle();
                     this.wrapper.find(DOT + MEDIA).toggle();
                 }
-
-                this._currentUrl = url;
 
                 if (this._youTubeVideo) {
                     this._ytmedia.loadVideoById(this._getMediaId());
@@ -201,11 +212,11 @@
                         this._initializePlayer();
                     }
                     this.wrapper.find(DOT + MEDIA + " > source").remove();
-                    this.wrapper.find(DOT + MEDIA).attr("src", url);
+                    this.wrapper.find(DOT + MEDIA).attr("src", this._currentUrl());
                 }
             },
 
-            _createToolbar: function (options) {
+            _createToolbar: function () {
                 var toolBarElement = this.wrapper.find(DOT + TOOLBAR);
                 if (toolBarElement.length === 0) {
                     this._toolbarClickHandler = proxy(this._toolbarClick, this);
@@ -231,13 +242,17 @@
                                 template: templates.toolBarTime
                             },
                             { type: "button", id: "fullscreen", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" },
-                            { type: "button", id: "hdbutton", spriteCssClass: "k-icon k-font-icon k-i-HD" }
+                            {
+                                id: "videoQuality",
+                                template: templates.qualityDropDown
+                            }
                         ]
                     });
+
                     toolBarElement.width("auto");
                     this._currentTimeElement = toolBarElement.find("#currentTime");
                     this._durationElement = toolBarElement.find("#duration");
-                    if (options.autoPlay) {
+                    if (this.options.autoPlay) {
                         this.wrapper.find("#play").children().first()
                             .removeClass(STATE_PLAY)
                             .addClass(STATE_PAUSE);
@@ -245,6 +260,24 @@
 
                     this._playButton = toolBarElement.find("#play.k-button.k-button-icon span");
                 }
+            },
+
+            _createDropDown: function () {
+                var dropDownElement = this.wrapper.find(DOT + VIDEO_QUALITY);
+                if (typeof dropDownElement.data("kendoDropDownList") === "undefined") {
+                    this._dropDownSelectHandler = proxy(this._dropDownSelect, this);
+                    this._dropDown = new ui.DropDownList(dropDownElement, {
+                        dataTextField: "quality",
+                        dataValueField: "url",
+                        dataSource: this.media().source,
+                        select: this._dropDownSelectHandler
+                    });
+                }
+            },
+
+            _dropDownSelect: function (e) {
+                this._currentIndex = e.item.index();
+                this._setPlayerUrl();
             },
 
             _updateToolbarTitle: function (item) {
@@ -283,21 +316,6 @@
                     var muted = (this._media && this._media.muted) || this._ytmedia.isMuted();
                     this.mute(!muted);
                 }
-
-                if (e.id === "hdbutton") {
-                    this._toggleHD();
-                }
-            },
-
-            _toggleHD: function () {
-                //var currentItem = this.dataSource.getByUid(this._currentItem);
-                //var media = $(this._media);
-                //var isHD = currentItem.hdurl === media.attr("src");
-                //var currentTime = this._media.currentTime;
-                //if (currentItem.hdurl && currentItem.hdurl.length > 0) {
-                //    media.attr("src", isHD ? currentItem.url : currentItem.hdurl);
-                //    this._media.currentTime = currentTime;
-                //}
             },
 
             _sliderDragging: function (e) {
@@ -454,6 +472,8 @@
                     'showinfo': 0
                 };
 
+                console.log(vars.autoplay);
+
                 this._onYouTubePlayerReady = proxy(this._onYouTubePlayerReady, this);
                 this._onPlayerStateChangeHandler = proxy(this._onPlayerStateChange, this);
 
@@ -510,7 +530,7 @@
             },
 
             _getMediaId: function () {
-                var result = this._currentUrl;
+                var result = this._currentUrl();
                 var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
                 var match = result.match(regExp);
 
@@ -640,6 +660,7 @@
                 this._youtubeApiReadyHandler = null;
                 this._onYouTubePlayerReady = null;
                 this._onPlayerStateChangeHandler = null;
+                this._dropDownSelectHandler = null;
 
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
                 this._media.ondurationchange = this._mediaDurationChangeHandler = null;
@@ -724,6 +745,10 @@
 
             toolbar: function () {
                 return this._toolBar;
+            },
+
+            dropdown: function () {
+                return this._dropDown;
             },
 
             titlebar: function () {
@@ -830,9 +855,18 @@
                 if (typeof value === 'undefined') {
                     return (typeof this._mediaData !== 'undefined') ? this._mediaData : this._mediaData = this.options.media;
                 }
+
+                if (isArray(value)) {
+                    this.dropdown().setDataSource(value)
+                        .wrapper.show();
+                } 
+                else {
+                    this.dropdown().wrapper.hide();
+                }
+
                 this._mediaData = value;
 
-                this._changePlayerUrl(this._mediaData.url);
+                this._setPlayerUrl();
             },
 
             isPaused: function () {
@@ -846,13 +880,9 @@
             _refresh: function () {
                 var data = this.media();
                 if (data) {
-                    this._currentUrl = data.url;
-
                     this._updateToolbarTitle(data);
-                    this._youTubeVideo = this._isYouTubeUrl(this._currentUrl);
-                    if (this._youTubeVideo) {
-                        this._initializePlayer();
-                    }
+                    this._youTubeVideo = this._isYouTubeUrl();
+                    this._initializePlayer();
                 }
             },
 

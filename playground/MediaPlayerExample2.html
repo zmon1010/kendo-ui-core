@@ -42,6 +42,8 @@ To enable proper compilation of the LESS files in the example you need to do the
     <script type="text/javascript" src="../src/kendo.draganddrop.js"></script>
     <script type="text/javascript" src="../src/kendo.slider.js"></script>
     <script type="text/javascript" src="../src/kendo.popup.js"></script>
+	<script type="text/javascript" src="../src/kendo.list.js"></script>
+	<script type="text/javascript" src="../src/kendo.dropdownlist.js"></script>
     <script type="text/javascript" src="../src/kendo.toolbar.js"></script>
     <script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
 
@@ -100,13 +102,19 @@ To enable proper compilation of the LESS files in the example you need to do the
         .k-mediaplayer-toolbar {
             z-index: 2;
         }
+		
         /*Temporary workaround for z-index and overlay size*/
-
         .k-mediaplayer-overlay {
             z-index: 1;
             width: 100%;
             height: 100%;
         }
+
+        /*Temporary workaround for quality dropdown*/
+		.k-mediaplayer-quality {
+			width: 60px;
+			display: block;
+		}
 
         #fullscreen,
         #hdbutton {
@@ -150,7 +158,7 @@ To enable proper compilation of the LESS files in the example you need to do the
             function onChange() {
                 var data = dataSource.view(),
                     selected = $.map(this.select(), function (item) {
-                        return { "url": data[$(item).index()].url };
+                        return { "source": data[$(item).index()].url };
                     });
 
                 $("#player1").data("kendoMediaPlayer").media(selected[0]);
@@ -165,22 +173,23 @@ To enable proper compilation of the LESS files in the example you need to do the
                 template: kendo.template($("#template").html())
             });
 
-
-
-
             $("#player1").kendoMediaPlayer({
-                playlist: {
-                    button: true
-                },
                 end: onEnd,
                 pause: onPause,
                 play: onPlay,
                 ready: onReady,
                 timeChange: onTimeChange,
                 volumeChange: onVolumeChange,
-                autoPlay: true,
+                autoPlay: false,
                 mute: false,
-                media: { title: "Roxette - What's She Like?", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k", poster: "https://i.ytimg.com/vi/O13fsGJv8dQ/hqdefault.jpg" }
+                media: { 
+					title: "Roxette - What's She Like?", 
+					//url: "https://www.youtube.com/watch?v=cjFy5AYxx7k"
+					source: [
+						{ quality: "HQ1", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k" },
+						{ quality: "HQ2", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k" }
+					] // url[0].url  source[0].url
+				}
             });
 
             window.player1 = $("#player1").data("kendoMediaPlayer");
