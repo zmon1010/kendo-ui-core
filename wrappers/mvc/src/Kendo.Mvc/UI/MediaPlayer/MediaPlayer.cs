@@ -10,25 +10,12 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI MediaPlayer component
     /// </summary>
-    public class MediaPlayer<T> : WidgetBase
-        where T : class
+    public class MediaPlayer: WidgetBase
     {
         public MediaPlayer(ViewContext viewContext, IJavaScriptInitializer initializer, IUrlGenerator urlGenerator)
             : base(viewContext, initializer)
         {
-            UrlGenerator = urlGenerator;
-
-            DataSource = new DataSource()
-            {
-                Type = DataSourceType.Ajax,
-                ServerAggregates = true,
-                ServerFiltering = true,
-                ServerGrouping = true,
-                ServerPaging = true,
-                ServerSorting = true
-            };
-
-            DataSource.ModelType(typeof(T));
+            this.Media = new MediaPlayerMedia();
         }
         public string TagName
         {
@@ -43,7 +30,7 @@ namespace Kendo.Mvc.UI
 
         protected override void WriteHtml(HtmlTextWriter writer)
         {
-            var html = new MediaPlayerHtmlBuilder<T>(this).Build();
+            var html = new MediaPlayerHtmlBuilder(this).Build();
             writer.Write(html);
 
             base.WriteHtml(writer);
@@ -52,20 +39,6 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = new Dictionary<string, object>(Events);
-
-            if (DataSourceId.HasValue())
-            {
-                settings["dataSourceId"] = DataSourceId;
-            }
-            else
-            {
-                settings["dataSource"] = DataSource.ToJson();
-            }
-
-            if (AutoBind.HasValue)
-            {
-                settings["autoBind"] = AutoBind;
-            }
 
             if (AutoPlay.HasValue)
             {
@@ -97,27 +70,15 @@ namespace Kendo.Mvc.UI
                 settings["forwardSeek"] = ForwardSeek;
             }
 
-            if (Playlist.HasValue)
+            if (Media.Source != null && !string.IsNullOrEmpty(Media.Title))
             {
-                settings["playlist"] = Playlist;
+                settings["media"] = Media.ToJson();
             }
 
             writer.Write(Initializer.Initialize(Selector, "MediaPlayer", settings));
             base.WriteInitializationScript(writer);
         }
 
-        public DataSource DataSource
-        {
-            get;
-            private set;
-        }
-
-        public string DataSourceId
-        {
-            get;
-            set;
-        }
-        public bool? AutoBind { get; set; }
 
         public bool? AutoPlay { get; set; }
 
@@ -131,7 +92,8 @@ namespace Kendo.Mvc.UI
 
         public bool? ForwardSeek { get; set; }
 
-        public bool? Playlist { get; set; }
+        public MediaPlayerMedia Media { get; set; }
+
     }
 }
 

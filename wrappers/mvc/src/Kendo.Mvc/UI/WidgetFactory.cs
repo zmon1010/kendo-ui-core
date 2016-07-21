@@ -721,62 +721,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Creates a new <see cref="Kendo.Mvc.UI.MediaPlayer{T}"/> bound to the specified data item type.
+        /// Creates a new <see cref="Kendo.Mvc.UI.MediaPlayer"/>
         /// </summary>
         /// <example>
         /// <typeparam name="T">The type of the data item</typeparam>
         /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().MediaPlayer&lt;Order&gt;()
+        ///  &lt;%= Html.Kendo().MediaPlayer()
         ///             .Name("MediaPlayer")
-        ///             .BindTo(Model)
         /// %&gt;
         /// </code>
         /// </example>        
-        public virtual MediaPlayerBuilder<T> MediaPlayer<T>() where T : class
+        public virtual MediaPlayerBuilder MediaPlayer()
         {
-            return new MediaPlayerBuilder<T>(new MediaPlayer<T>(ViewContext, Initializer, UrlGenerator));
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="Kendo.Mvc.UI.MediaPlayer{T}"/> bound to the specified data source.
-        /// </summary>
-        /// <typeparam name="T">The type of the data item</typeparam>
-        /// <param name="dataSource">The data source.</param>
-        /// <example>
-        /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().MediaPlayer(Model)
-        ///             .Name("MediaPlayer")
-        /// %&gt;
-        /// </code>
-        /// </example>
-        public virtual MediaPlayerBuilder<T> MediaPlayer<T>(IEnumerable<T> dataSource) where T : class
-        {
-            MediaPlayerBuilder<T> builder = MediaPlayer<T>();
-
-            builder.Component.DataSource.Data = dataSource;
-
-            return builder;
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="Kendo.Mvc.UI.MediaPlayer{T}"/> bound an item in ViewData.
-        /// </summary>
-        /// <typeparam name="T">Type of the data item</typeparam>
-        /// <param name="dataSourceViewDataKey">The data source view data key.</param>
-        /// <example>
-        /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().MediaPlayer&lt;Order&gt;("orders")
-        ///             .Name("MediaPlayer")
-        /// %&gt;
-        /// </code>
-        /// </example>
-        public virtual MediaPlayerBuilder<T> MediaPlayer<T>(string dataSourceViewDataKey) where T : class
-        {
-            MediaPlayerBuilder<T> builder = MediaPlayer<T>();
-
-            builder.Component.DataSource.Data = ViewContext.ViewData.Eval(dataSourceViewDataKey) as IEnumerable<T>;
-
-            return builder;
+            return new MediaPlayerBuilder(new MediaPlayer(ViewContext, Initializer, UrlGenerator));
         }
 
         /// <summary>

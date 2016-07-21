@@ -236,6 +236,7 @@
     <Compile Include="UI\Map\Serialization\NavigatorSettingsTests.cs" />
     <Compile Include="UI\Map\Serialization\MapControlsSettingsTests.cs" />
     <Compile Include="UI\MediaPlayer\MediaPlayerEventsBuilderTests.cs" />
+    <Compile Include="UI\MediaPlayer\MediaPlayerMediaBuilderTests.cs" />
     <Compile Include="UI\MediaPlayer\MediaPlayerTestHelper.cs" />
     <Compile Include="UI\MediaPlayer\MediPlayerBuilderTests.cs" />
     <Compile Include="UI\PivotConfigurator\PivotConfiguratorBuilderTests.cs" />

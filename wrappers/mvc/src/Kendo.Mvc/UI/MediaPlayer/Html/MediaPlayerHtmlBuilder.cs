@@ -2,15 +2,15 @@ using System.Web.Mvc;
 
 namespace Kendo.Mvc.UI
 {
-    public class MediaPlayerHtmlBuilder<T> where T : class
+    public class MediaPlayerHtmlBuilder
     {
-        private readonly MediaPlayer<T> MediaPlayer;
+        private readonly MediaPlayer MediaPlayer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediaPlayerHtmlBuilder{T}" /> class.
+        /// Initializes a new instance of the <see cref="MediaPlayerHtmlBuilder" /> class.
         /// </summary>
         /// <param name="component">The MediaPlayer component.</param>
-        public MediaPlayerHtmlBuilder(MediaPlayer<T> MediaPlayer)
+        public MediaPlayerHtmlBuilder(MediaPlayer MediaPlayer)
         {
             this.MediaPlayer = MediaPlayer;
         }

@@ -8,14 +8,14 @@
 
     public static class MediaPlayerTestHelper
     {
-        public static MediaPlayer<Video> CreateMediaPlayer(ViewContext viewContext)
+        public static MediaPlayer CreateMediaPlayer(ViewContext viewContext)
         {
             viewContext = viewContext ?? TestHelper.CreateViewContext();
 
             var initializer = new Mock<IJavaScriptInitializer>();
             Mock<IUrlGenerator> urlGenerator = new Mock<IUrlGenerator>();
 
-            MediaPlayer<Video> mediaplayer = new MediaPlayer<Video>(viewContext, initializer.Object, urlGenerator.Object);
+            MediaPlayer mediaplayer = new MediaPlayer(viewContext, initializer.Object, urlGenerator.Object);
 
             return mediaplayer;
         }

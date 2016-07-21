@@ -2,10 +2,10 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 <div class="demo-section k-content">     
-    <%= Html.Kendo().MediaPlayer<Kendo.Mvc.Examples.Models.Video>()
+    <%= Html.Kendo().MediaPlayer()
         .AutoPlay(true)
-        .Playlist(true)
-        .Name("MediaPlayer").BindTo((IEnumerable<Kendo.Mvc.Examples.Models.Video>)ViewBag.Videos)
+        .Media(m=>m.Title("Digital Transformation: A New Way of Thinking").Source(@"\Content\web\mediaplayer\Video1.mp4"))
+        .Name("MediaPlayer")
     %>
-</div>
+</div> 
 </asp:Content>

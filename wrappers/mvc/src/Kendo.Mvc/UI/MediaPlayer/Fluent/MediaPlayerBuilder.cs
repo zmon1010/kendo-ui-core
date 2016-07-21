@@ -7,53 +7,17 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring the Kendo UI MediaPlayer
     /// </summary>
-    public class MediaPlayerBuilder<T> : WidgetBuilderBase<MediaPlayer<T>, MediaPlayerBuilder<T>>
-        where T : class
+    public class MediaPlayerBuilder : WidgetBuilderBase<MediaPlayer, MediaPlayerBuilder>
     {
-        public MediaPlayerBuilder(MediaPlayer<T> component) : base(component)
+        public MediaPlayerBuilder(MediaPlayer component) : base(component)
         {
-        }
-
-        public MediaPlayerBuilder<T> DataSource(string dataSourceId)
-        {
-            Component.DataSourceId = dataSourceId;
-            return this;
-        }
-
-        public MediaPlayerBuilder<T> DataSource(Action<DataSourceBuilder<T>> configurator)
-        {
-            configurator(new DataSourceBuilder<T>(Component.DataSource, Component.ViewContext, Component.UrlGenerator));
-            return this;
-        }
-
-        public MediaPlayerBuilder<T> BindTo(IEnumerable<T> dataSource)
-        {
-            Component.DataSource.Data = dataSource;
-            return this;
-        }
-
-        public MediaPlayerBuilder<T> BindTo(IEnumerable dataSource)
-        {
-            Component.DataSource.Data = dataSource;
-            return this;
-        }
-
-        /// <summary>
-        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-        /// data source is fired.
-        /// </summary>
-        /// <param name="value">The value for AutoBind</param>
-        public MediaPlayerBuilder<T> AutoBind(bool value)
-        {
-            Component.AutoBind = value;
-            return this;
         }
 
         /// <summary>
         /// If set to true the widget will start playing the video\vidoes after initializing
         /// </summary>
         /// <param name="value">The value for AutoPlay</param>
-        public MediaPlayerBuilder<T> AutoPlay(bool value)
+        public MediaPlayerBuilder AutoPlay(bool value)
         {
             Component.AutoPlay = value;
             return this;
@@ -62,7 +26,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the widget will start playing the video\vidoes after initializing
         /// </summary>
-        public MediaPlayerBuilder<T> AutoPlay()
+        public MediaPlayerBuilder AutoPlay()
         {
             Component.AutoPlay = true;
             return this;
@@ -72,7 +36,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the widget will start playing the video\vidoes after initializing
         /// </summary>
         /// <param name="value">The value for AutoRepeat</param>
-        public MediaPlayerBuilder<T> AutoRepeat(bool value)
+        public MediaPlayerBuilder AutoRepeat(bool value)
         {
             Component.AutoRepeat = value;
             return this;
@@ -81,19 +45,19 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the widget will start playing the video\vidoes after initializing
         /// </summary>
-        public MediaPlayerBuilder<T> AutoRepeat()
+        public MediaPlayerBuilder AutoRepeat()
         {
             Component.AutoRepeat = true;
             return this;
         }
 
         /// <summary>
-        /// A value between 0 and 100 that specifies the volume of the video
+        /// If set to false the user will be prevented from seeking the video forward
         /// </summary>
-        /// <param name="value">The value for Volume</param>
-        public MediaPlayerBuilder<T> Volume(double value)
+        /// <param name="value">The value for ForwardSeek</param>
+        public MediaPlayerBuilder ForwardSeek(bool value)
         {
-            Component.Volume = value;
+            Component.ForwardSeek = value;
             return this;
         }
 
@@ -101,7 +65,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the widget will enter in full-sreen mode
         /// </summary>
         /// <param name="value">The value for FullScreen</param>
-        public MediaPlayerBuilder<T> FullScreen(bool value)
+        public MediaPlayerBuilder FullScreen(bool value)
         {
             Component.FullScreen = value;
             return this;
@@ -110,7 +74,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the widget will enter in full-sreen mode
         /// </summary>
-        public MediaPlayerBuilder<T> FullScreen()
+        public MediaPlayerBuilder FullScreen()
         {
             Component.FullScreen = true;
             return this;
@@ -120,7 +84,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the video will be played without sound
         /// </summary>
         /// <param name="value">The value for Mute</param>
-        public MediaPlayerBuilder<T> Mute(bool value)
+        public MediaPlayerBuilder Mute(bool value)
         {
             Component.Mute = value;
             return this;
@@ -129,47 +93,19 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the video will be played without sound
         /// </summary>
-        public MediaPlayerBuilder<T> Mute()
+        public MediaPlayerBuilder Mute()
         {
             Component.Mute = true;
             return this;
         }
 
         /// <summary>
-        /// If set to false the user will be prevented from seeking the video forward
+        /// A value between 0 and 100 that specifies the volume of the video
         /// </summary>
-        /// <param name="value">The value for ForwardSeek</param>
-        public MediaPlayerBuilder<T> ForwardSeek(bool value)
+        /// <param name="value">The value for Volume</param>
+        public MediaPlayerBuilder Volume(double value)
         {
-            Component.ForwardSeek = value;
-            return this;
-        }
-
-        /// <summary>
-        /// If set to true the fowr
-        /// </summary>
-        public MediaPlayerBuilder<T> ForwardSeek()
-        {
-            Component.ForwardSeek = true;
-            return this;
-        }
-
-        /// <summary>
-        /// If set to true a playlist for the videos inside the data source will be created
-        /// </summary>
-        /// <param name="value">The value for Playlist</param>
-        public MediaPlayerBuilder<T> Playlist(bool value)
-        {
-            Component.Playlist = value;
-            return this;
-        }
-
-        /// <summary>
-        /// If set to true a playlist for the videos inside the data source will be created
-        /// </summary>
-        public MediaPlayerBuilder<T> Playlist()
-        {
-            Component.Playlist = true;
+            Component.Volume = value;
             return this;
         }
 
@@ -187,9 +123,19 @@ namespace Kendo.Mvc.UI.Fluent
         /// )
         /// </code>
         /// </example>
-        public MediaPlayerBuilder<T> Events(Action<MediaPlayerEventBuilder> configurator)
+        public MediaPlayerBuilder Events(Action<MediaPlayerEventBuilder> configurator)
         {
             configurator(new MediaPlayerEventBuilder(Component.Events));
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the object which holds the information about the media that will be played
+        /// </summary>
+        /// <param name="value">The value for Media</param>
+        public MediaPlayerBuilder Media(Action<MediaPlayerMediaBuilder> configurator)
+        {
+            configurator(new MediaPlayerMediaBuilder(Component));
             return this;
         }
     }
