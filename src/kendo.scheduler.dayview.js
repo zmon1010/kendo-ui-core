@@ -403,9 +403,7 @@ var __meta__ = { // jshint ignore:line
         },
 
        _slotByPosition: function(x, y) {
-           var slot;
-           var byDate = this.options.group &&  this.options.group.date;
-           var offset;
+           var slot, offset;
 
            if (this._isVerticallyGrouped()) {
                offset = this.content.offset();
@@ -429,7 +427,7 @@ var __meta__ = { // jshint ignore:line
            for (groupIndex = 0; groupIndex < this.groups.length; groupIndex++) {
                 group = this.groups[groupIndex];
 
-                slot = group.daySlotByPosition(x, y, byDate);
+                slot = group.daySlotByPosition(x, y, this._isGroupedByDate());
 
                 if (slot) {
                     return slot;
@@ -469,7 +467,7 @@ var __meta__ = { // jshint ignore:line
 
        _groupCount: function() {
             var resources = this.groupedResources;
-            var byDate = this.options.group && this.options.group.date;
+            var byDate = this._isGroupedByDate();
 
             if (resources.length) {
                 if (this._groupOrientation() === "vertical") {
@@ -491,7 +489,7 @@ var __meta__ = { // jshint ignore:line
 
         _columnCountInResourceView: function() {
             var resources = this.groupedResources;
-            var byDate = this.options.group && this.options.group.date;
+            var byDate = this._isGroupedByDate();
 
             if (!resources.length || this._isVerticallyGrouped()) {
                 if (byDate) {
@@ -511,7 +509,7 @@ var __meta__ = { // jshint ignore:line
         _timeSlotGroups: function(groupCount, columnCount) {
             var interval = this._timeSlotInterval();
             var verticalViews = groupCount;
-            var byDate = this.options.group && this.options.group.date;
+            var byDate = this._isGroupedByDate();
             var tableRows = this.content.find("tr:not(.k-scheduler-header-all-day)");        
             var group, time, rowIndex, cellIndex;
 
@@ -601,7 +599,7 @@ var __meta__ = { // jshint ignore:line
         _daySlotGroups: function(groupCount, columnCount) {
             var tableRows, cellIndex;
             var verticalViews = groupCount;
-            var byDate = this.options.group && this.options.group.date;
+            var byDate = this._isGroupedByDate();
 
             if (this._isVerticallyGrouped()) {
                 if (byDate) {
@@ -852,7 +850,7 @@ var __meta__ = { // jshint ignore:line
             var rows = [];
             var options = this.options;
             var that = this;
-            var byDate = options.group && options.group.date;
+            var byDate = that._isGroupedByDate();
 
             for (var idx = 0; idx < dates.length; idx++) {
                 var column = {};
@@ -1022,7 +1020,7 @@ var __meta__ = { // jshint ignore:line
             var allDaySlotTemplate = this.allDaySlotTemplate;
             var isVerticalGroupped = false;
             var allDayVerticalGroupRow;
-            var byDate = options.group && options.group.date;
+            var byDate = that._isGroupedByDate();
             var dateID = 0;
 
             if (resources.length) {
@@ -1121,7 +1119,6 @@ var __meta__ = { // jshint ignore:line
             var classes = "";
             var tmplDate;
             var slotTemplate = this.slotTemplate;
-            var byDate = this.options.group && this.options.group.date;
             var isVerticalGroupped = this._groupOrientation() === "vertical";
             var resources = function(groupIndex) {
                 return function() {
@@ -1143,7 +1140,7 @@ var __meta__ = { // jshint ignore:line
             tmplDate = kendo.date.getDate(dates[idx]);
             kendo.date.setTime(tmplDate, kendo.date.getMilliseconds(date));
 
-            content += slotTemplate({ date: tmplDate, resources: resources(isVerticalGroupped && !byDate  ? rowIdx : groupIdx) });
+            content += slotTemplate({ date: tmplDate, resources: resources(isVerticalGroupped && !that._isGroupedByDate()  ? rowIdx : groupIdx) });
             content += "</td>";
             return content;
         },
@@ -1162,7 +1159,6 @@ var __meta__ = { // jshint ignore:line
 
         _render: function(dates) {
             var that = this;
-            var byDate = that.options.group && that.options.group.date;
 
             dates = dates || [];
 
@@ -1192,7 +1188,7 @@ var __meta__ = { // jshint ignore:line
                 var additioanlWidth = 0;
                 var additionalHeight = th.outerHeight();
 
-                if (byDate) {
+                if (that._isGroupedByDate()) {
                     if (that._isVerticallyGrouped()) {
                         additioanlWidth = that.times.outerWidth();
                         additionalHeight = 0;
@@ -1585,7 +1581,7 @@ var __meta__ = { // jshint ignore:line
 
         _renderEvents: function(events, groupIndex) {
             var allDayEventContainer = this.datesHeader.find(".k-scheduler-header-wrap > div");
-            var byDate = this.options.group && this.options.group.date;
+            var byDate = this._isGroupedByDate();
             var event;
 
             var idx;
@@ -1804,14 +1800,30 @@ var __meta__ = { // jshint ignore:line
                 var date = reverse ? this.previousDate() : this.nextDate();
                 var start = selection.start;
                 var end = selection.end;
+                var verticalByDate = this._isGroupedByDate()  && this._isVerticallyGrouped();
+                var group = this.groups[selection.groupIndex];
+                var collection = reverse ? group._timeSlotCollections : group._getCollections(group.daySlotCollectionCount());
+                var slots = collection[collection.length - 1]._slots;
+                var slotIndex = (!reverse && !group.daySlotCollectionCount()) ? 0 : slots.length - 1;         
 
                 selection.start = new Date(date);
                 selection.end = new Date(date);
 
-                var endMilliseconds = selection.isAllDay ? MS_PER_DAY : getMilliseconds(end);
+                if (verticalByDate) { 
+                     var newStart = slots[slotIndex].startDate();
+                     var newEnd = slots[slotIndex].endDate();      
 
-                setTime(selection.start, getMilliseconds(start));
-                setTime(selection.end, endMilliseconds);
+                        setTime(selection.start, getMilliseconds(new Date(newStart)));
+                        setTime(selection.end, getMilliseconds(new Date(newEnd)));
+                        if(group.daySlotCollectionCount()){
+                            selection.isAllDay = !selection.isAllDay;
+                        }
+                } else {
+                      var endMilliseconds = selection.isAllDay ? MS_PER_DAY : getMilliseconds(end);
+
+                    setTime(selection.start, getMilliseconds(start));
+                    setTime(selection.end, endMilliseconds);
+                }         
 
                 if (!this._isVerticallyGrouped()) {
                     selection.groupIndex = reverse ? this.groups.length - 1 : 0;

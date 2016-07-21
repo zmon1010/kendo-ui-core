@@ -2528,4 +2528,685 @@
         deepEqual(selection.end, new Date(2013, 5, 3));
     });
 
+
+     function setupGroupedByDateScheduler(orientation, view) {
+        orientation = orientation || "horizontal";
+
+        scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date("2013/6/8"),
+            group: {
+                resources: ["ResourceName", "ResourceName2"],
+                date: true,
+                orientation: orientation
+            },
+            resources: [
+                {
+                    field: "rooms",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Room1", value: 1 },
+                        { text: "Room2", value: 2 }
+                    ]
+                },
+                {
+                    field: "persons",
+                    name: "ResourceName2",
+                    dataSource: [
+                        { text: "Fred", value: 1 },
+                        { text: "Barny", value: 2 }
+                    ]
+                }
+            ],
+            views: [ view || "week" ]
+        });
+    }
+
+     module("Horizontally grouped by date Multi Day View selection", {
+        setup: module_setup,
+        teardown: function() {
+            kendo.destroy(container);
+        }
+    });
+
+     test("View select method selects cell in first group", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+        var view = scheduler.view();
+
+        var start = new Date(2013, 5, 8, 1);
+        var end = new Date(2013, 5, 8, 1, 30);
+        var selection = {
+            end: end,
+            start: start,
+            events: [],
+            groupIndex: 0
+        };
+
+        view.select(selection);
+
+        var td = view.content.find(".k-state-selected")[0];
+
+        var slot = view.groups[0].ranges(start, start, false, false)[0].start;
+
+        equal(td, slot.element);
+    });
+
+      test("View moves selection to the next group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3, 23, 30),
+            end: new Date(2013, 5, 4),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 3, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 4));
+    });
+
+    test("View moves selection to the next date and group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3, 23, 30),
+            end: new Date(2013, 5, 4),
+            groupIndex: 3,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 4, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 5));
+    });
+
+     test("View moves selection to the next visible date and group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 8, 23, 00),
+            end: new Date(2013, 5, 8, 23, 30),
+            groupIndex: 3,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        deepEqual(selection.start,  new Date(2013, 5, 9, 23, 00));
+        deepEqual(selection.end, new Date(2013, 5, 9, 23, 30));
+    });
+
+     test("View moves allday selection to the next group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3),
+            end: new Date(2013, 5, 4),
+            isAllDay: true,
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 3));
+        deepEqual(selection.end, new Date(2013, 5, 4));
+    });
+
+    test("View moves allday selection to the next date and group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3),
+            end: new Date(2013, 5, 4),
+            isAllDay: true,
+            groupIndex: 3,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 4));
+        deepEqual(selection.end, new Date(2013, 5, 5));
+    });
+
+     test("View moves selection to the next date and group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 8),
+            end: new Date(2013, 5, 9),
+            isAllDay: true,
+            groupIndex: 3,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 9));
+        deepEqual(selection.end, new Date(2013, 5, 10));
+     });
+
+    test("View moves selection to the prev group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3, 23, 30),
+            end: new Date(2013, 5, 4),
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 3, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 4));
+    });
+
+    test("View moves selection to the prev date and group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3, 23, 30),
+            end: new Date(2013, 5, 4),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 2, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves selection to the prev visible date and group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 00),
+            end: new Date(2013, 5, 2, 23, 30),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        deepEqual(selection.start,  new Date(2013, 5, 1, 23, 00));
+        deepEqual(selection.end, new Date(2013, 5, 1, 23, 30));
+    });
+
+     test("View moves allday selection to the prev group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3),
+            end: new Date(2013, 5, 4),
+            isAllDay: true,
+            groupIndex: 2,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 3));
+        deepEqual(selection.end, new Date(2013, 5, 4));
+    });
+
+    test("View moves allday selection to the prev date and group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3),
+            end: new Date(2013, 5, 4),
+            isAllDay: true,
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 2));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves selection to the prev visible date and group slot", function() {
+        setupGroupedByDateScheduler();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2),
+            end: new Date(2013, 5, 3),
+            isAllDay: true,
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 1));
+        deepEqual(selection.end, new Date(2013, 5, 2));
+     });
+
+     module("Vertically grouped by date Multi Day View selection", {
+        setup: module_setup,
+        teardown: function() {
+            kendo.destroy(container);
+        }
+     });
+
+    
+      test("View moves selection to the next group slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 30),
+            end: new Date(2013, 5, 3),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 2, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves selection to the first group slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 30),
+            end: new Date(2013, 5, 3),
+            groupIndex: 3,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 2, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves selection to the prev group slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 30),
+            end: new Date(2013, 5, 3),
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 2, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves selection to the last group slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 30),
+            end: new Date(2013, 5, 3),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 2, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+
+
+     test("View moves allday selection to the next group slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2),
+            end: new Date(2013, 5, 3),
+            groupIndex: 0,
+            isAllDay: true,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 2));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves allday selection to the first group slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 30),
+            end: new Date(2013, 5, 3),
+            groupIndex: 3,
+            isAllDay: true,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 2));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves allday selection to the prev group slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 30),
+            end: new Date(2013, 5, 3),
+            groupIndex: 1,
+            isAllDay: true,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 2));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves allday selection to the last group slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2),
+            end: new Date(2013, 5, 3),
+            isAllDay: true,
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 2));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+    /////
+
+     test("View moves selection to the next date slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 30),
+            end: new Date(2013, 5, 3),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.DOWN);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 3));
+        deepEqual(selection.end, new Date(2013, 5, 4));
+    });
+
+     test("View moves selection to the first date slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3),
+            end: new Date(2013, 5, 4),
+            isAllDay: true,
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.UP);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 2, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves selection to the prev date slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 8, 23, 30),
+            end: new Date(2013, 5, 9),
+            isAllDay: false,
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.DOWN);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, true);
+        deepEqual(selection.start,  new Date(2013, 5, 9));
+        deepEqual(selection.end, new Date(2013, 5, 9));
+    });
+
+     test("View moves selection to the next date slot", function() {
+        setupGroupedByDateScheduler("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2),
+            end: new Date(2013, 5, 3),
+            isAllDay: true,
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.UP);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 1, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 1));
+    });
+
+     function setupGroupedByDateSchedulerNoALLDay(orientation, view) {
+        orientation = orientation || "horizontal";
+
+        scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date("2013/6/8"),
+            group: {
+                resources: ["ResourceName", "ResourceName2"],
+                date: true,
+                orientation: orientation
+            },
+            allDaySlot: false,
+            resources: [
+                {
+                    field: "rooms",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Room1", value: 1 },
+                        { text: "Room2", value: 2 }
+                    ]
+                },
+                {
+                    field: "persons",
+                    name: "ResourceName2",
+                    dataSource: [
+                        { text: "Fred", value: 1 },
+                        { text: "Barny", value: 2 }
+                    ]
+                }
+            ],
+            views: [ view || "week" ]
+        });
+    }
+
+     test("View moves selection to the next date slot not allday", function() {
+        setupGroupedByDateSchedulerNoALLDay("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 30),
+            end: new Date(2013, 5, 3),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.DOWN);
+
+        equal(selection.groupIndex, 0);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 3));
+        deepEqual(selection.end, new Date(2013, 5, 3, 0, 30));
+    });
+
+     test("View moves selection to the previous date slot not allday", function() {
+        setupGroupedByDateSchedulerNoALLDay("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 3),
+            end: new Date(2013, 5, 3, 0, 30),
+            isAllDay: false,
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.UP);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 2, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+    });
+
+     test("View moves selection to the prev date slot not allday", function() {
+        setupGroupedByDateSchedulerNoALLDay("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 8, 23, 30),
+            end: new Date(2013, 5, 9),
+            isAllDay: false,
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.DOWN);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 9));
+        deepEqual(selection.end, new Date(2013, 5, 9, 0, 30));
+    });
+
+     test("View moves selection to the next date slot not allday", function() {
+        setupGroupedByDateSchedulerNoALLDay("vertical");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2),
+            end: new Date(2013, 5, 3, 0, 30),
+            isAllDay: false,
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.UP);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 1, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 1));
+    });
 })();
