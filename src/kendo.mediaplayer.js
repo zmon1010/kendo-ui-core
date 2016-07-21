@@ -204,15 +204,31 @@
                     this.wrapper.find(DOT + MEDIA).toggle();
                 }
 
-                if (this._youTubeVideo) {
-                    this._ytmedia.loadVideoById(this._getMediaId());
+                
+                if (!this._ytmedia && this._youTubeVideo) {
+                    this._createYoutubePlayer();
                 }
-                else {
-                    if (!this._media) {
-                        this._initializePlayer();
-                    }
+                else if (!this._media && !this._youTubeVideo){
+                    this._createHtmlPlayer();
+                }
+
+                if (!this._youTubeVideo) {
                     this.wrapper.find(DOT + MEDIA + " > source").remove();
                     this.wrapper.find(DOT + MEDIA).attr("src", this._currentUrl());
+                }
+                else if (this._ytmedia) {
+                    if (this.options.autoPlay){
+                        this._ytmedia.loadVideoById(this._getMediaId());
+                        this._playButton
+                            .removeClass(STATE_PLAY)
+                            .addClass(STATE_PAUSE);
+                    }
+                    else{
+                        this._ytmedia.cueVideoById(this._getMediaId());
+                        this._playButton
+                            .removeClass(STATE_PAUSE)
+                            .addClass(STATE_PLAY);
+                    }
                 }
             },
 
@@ -276,8 +292,10 @@
             },
 
             _dropDownSelect: function (e) {
-                this._currentIndex = e.item.index();
-                this._setPlayerUrl();
+                if (this._currentIndex !== e.item.index()) {
+                    this._currentIndex = e.item.index();
+                    this._setPlayerUrl();
+                }
             },
 
             _updateToolbarTitle: function (item) {
@@ -288,7 +306,6 @@
             _toolbarClick: function (e) {
                 var target = $(e.target).children().first();
                 var isPaused = target.hasClass(STATE_PLAY);
-
                 if (e.id === "play") {
                     if (isPaused) {
                         this.play();
@@ -419,7 +436,7 @@
                 }
             },
 
-            _createYoutubePlayer: function (options) {
+            _createYoutubePlayer: function () {
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
 
@@ -437,7 +454,7 @@
                     window.onYouTubeIframeAPIReady = this._youtubeApiReadyHandler;
                 }
                 else {
-                    this._configurePlayer(options);
+                    this._configurePlayer();
                 }
             },
 
@@ -460,19 +477,17 @@
             },
 
             _youtubeApiReady: function () {
-                this._configurePlayer(this.options);
+                this._configurePlayer();
             },
 
-            _configurePlayer: function (options) {
+            _configurePlayer: function () {
                 var vars = {
-                    'autoplay': +options.autoPlay,
+                    'autoplay': +this.options.autoPlay,
                     'wmode': 'transparent',
                     'controls': 0,
                     'rel': 0,
                     'showinfo': 0
                 };
-
-                console.log(vars.autoplay);
 
                 this._onYouTubePlayerReady = proxy(this._onYouTubePlayerReady, this);
                 this._onPlayerStateChangeHandler = proxy(this._onPlayerStateChange, this);
@@ -496,6 +511,12 @@
                 this._ytmedia.getIframe().style.height = "100%";
                 this._youTubeVideo = true;
                 this._mediaDurationChangeHandler();
+                if (this.options.autoPlay){
+                    this._ytmedia.loadVideoById(this._getMediaId());
+                }
+                else{
+                    this._ytmedia.cueVideoById(this._getMediaId());
+                }
                 this.trigger(READY);
             },
 
@@ -576,7 +597,7 @@
                 }
             },
 
-            _createHtmlPlayer: function (options) {
+            _createHtmlPlayer: function () {
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
                 this._mediaEndedHandler = proxy(this._mediaEnded, this);
@@ -591,7 +612,7 @@
                     });
 
 
-                this._media.muted = options.mute;
+                this._media.muted = this.options.mute;
 
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;
                 this._media.ondurationchange = this._mediaDurationChangeHandler;
