@@ -1,5 +1,5 @@
 (function (f, define) {
-    define(["./kendo.data", "./kendo.slider", "./kendo.toolbar"], f);
+    define(["./kendo.slider", "./kendo.toolbar"], f);
 })(function () {
 
     var __meta__ = { // jshint ignore:line
@@ -7,7 +7,7 @@
         name: "MediaPlayer",
         category: "web",
         description: "",
-        depends: ["data", "slider", "toolbar"]
+        depends: ["slider", "toolbar"]
     };
 
     (function ($, undefined) {
@@ -59,14 +59,11 @@
                 slider: "<input class='" + SLIDER + "' value='0' />",
                 volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
                 toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #"
-            },
-            DataSource = kendo.data.DataSource;
+            };
 
         var MediaPlayer = Widget.extend({
             init: function (element, options) {
                 this.wrapper = $(element);
-
-                options = $.isArray(options) ? { dataSource: options } : options;
 
                 Widget.fn.init.call(this, element, options);
 
@@ -82,13 +79,10 @@
 
                 this._createVolumeSlider();
 
-                this._dataSource();
-
                 this._timers = {};
 
-                if (this.options.autoBind) {
-                    this.dataSource.fetch();
-                }
+                this._mediaData = options.media;
+                this._refresh();
 
                 kendo.notify(this);
             },
@@ -104,27 +98,13 @@
 
             options: {
                 name: "MediaPlayer",
-                autoBind: true,
                 autoPlay: false,
                 autoRepeat: false,
                 volume: 100,
                 fullScreen: false,
                 mute: false,
-                forwardSeek: true
-            },
-
-            _initData: function (options) {
-                if (options.dataSource) {
-                }
-            },
-
-            setDataSource: function (dataSource) {
-                this.options.dataSource = dataSource;
-                this._dataSource();
-
-                if (this.options.autoBind) {
-                    dataSource.fetch();
-                }
+                forwardSeek: true,
+                media: null
             },
 
             _msToTime: function (ms) {
@@ -310,14 +290,14 @@
             },
 
             _toggleHD: function () {
-                var currentItem = this.dataSource.getByUid(this._currentItem);
-                var media = $(this._media);
-                var isHD = currentItem.hdurl === media.attr("src");
-                var currentTime = this._media.currentTime;
-                if (currentItem.hdurl && currentItem.hdurl.length > 0) {
-                    media.attr("src", isHD ? currentItem.url : currentItem.hdurl);
-                    this._media.currentTime = currentTime;
-                }
+                //var currentItem = this.dataSource.getByUid(this._currentItem);
+                //var media = $(this._media);
+                //var isHD = currentItem.hdurl === media.attr("src");
+                //var currentTime = this._media.currentTime;
+                //if (currentItem.hdurl && currentItem.hdurl.length > 0) {
+                //    media.attr("src", isHD ? currentItem.url : currentItem.hdurl);
+                //    this._media.currentTime = currentTime;
+                //}
             },
 
             _sliderDragging: function (e) {
@@ -634,9 +614,6 @@
             },
 
             setOptions: function (options) {
-                if ("dataSource" in options) {
-                    this._initData(options);
-                }
                 Widget.fn.setOptions.call(this, options);
             },
 
@@ -654,8 +631,6 @@
                 this._mouseOutHandler = null;
                 this._mouseInHandler = null;
                 this._mouseClickHanlder = null;
-
-                this._unbindDataSource();
 
                 this._toolbarClickHandler = null;
                 this._sliderDragChangeHandler = null;
@@ -851,6 +826,14 @@
                 }
             },
 
+            media: function (value) {
+                if (typeof value === 'undefined') {
+                    return (typeof this._mediaData !== 'undefined') ? this._mediaData : this._mediaData = this.options.media;
+                }
+                this._mediaData = value;
+                this._refresh();
+            },
+
             isPaused: function () {
                 return this._paused;
             },
@@ -859,34 +842,12 @@
                 return !this.isEnded() && !this._paused;
             },
 
-            _dataSource: function () {
-                if (this.dataSource && this._refreshHandler) {
-                    this._unbindDataSource();
-                } else {
-                    this._refreshHandler = proxy(this._refresh, this);
-                    this._progressHandler = proxy(this._progress, this);
-                    this._errorHandler = proxy(this._error, this);
-                }
-
-                this.dataSource = DataSource.create(this.options.dataSource)
-                    .bind(CHANGE, this._refreshHandler)
-                    .bind(PROGRESS, this._progressHandler)
-                    .bind(ERROR, this._errorHandler);
-            },
-
-            _unbindDataSource: function () {
-                this.dataSource.unbind(CHANGE, this._refreshHandler)
-                    .unbind(PROGRESS, this._progressHandler)
-                    .unbind(ERROR, this._errorHandler);
-            },
-
             _refresh: function () {
-                var data = this.dataSource.data();
-                if (data && data[0]) {
-                    this._currentItem = data[0].uid;
-                    this._currentUrl = data[0].url;
+                var data = this.media();
+                if (data) {
+                    this._currentUrl = data.url;
 
-                    this._updateToolbarTitle(data[0]);
+                    this._updateToolbarTitle(data);
                     this._youTubeVideo = this._isYouTubeUrl(this._currentUrl);
                     if (this._youTubeVideo) {
                         this._initializePlayer();
