@@ -11,7 +11,7 @@ namespace Kendo.Mvc.Examples.Controllers
         {
             if (String.IsNullOrEmpty(path) || (
                     !path.StartsWith("~/Views") &&
-                    !path.StartsWith("~/src") &&
+                    !path.StartsWith("~/Models") &&
                     !path.StartsWith("~/content") &&
                     !path.StartsWith("~/Controllers")))
             {

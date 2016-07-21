@@ -58,7 +58,7 @@ namespace Kendo.Mvc.Examples.Models
                             yield return new ExampleFile
                             {
                                 Name = "ProductService.cs",
-                                Url = "~/models/ProductService.cs"
+                                Url = "~/Models/ProductService.cs"
                             };
                         }
 
@@ -67,7 +67,7 @@ namespace Kendo.Mvc.Examples.Models
                             yield return new ExampleFile
                             {
                                 Name = "SchedulerTaskService.cs",
-                                Url = "~/models/Scheduler/SchedulerTaskService.cs"
+                                Url = "~/Models/Scheduler/SchedulerTaskService.cs"
                             };
                         }
 
@@ -76,7 +76,7 @@ namespace Kendo.Mvc.Examples.Models
                             yield return new ExampleFile
                             {
                                 Name = "SchedulerMeetingService.cs",
-                                Url = "~/models/Scheduler/SchedulerMeetingService.cs"
+                                Url = "~/Models/Scheduler/SchedulerMeetingService.cs"
                             };
                         }
 
