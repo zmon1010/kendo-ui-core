@@ -10233,7 +10233,7 @@
         "api": "dataviz/qrcode",
         "documentation": {
             "kendo-ui": "getting-started/dataviz/qrcode/overview",
-            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/rqcode/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/qrcode/overview",
             "jsp-ui": "getting-started/using-kendo-with/jsp/tags/qrcode/overview",
             "php-ui": "getting-started/using-kendo-with/php/widgets/qrcode/overview"
         },

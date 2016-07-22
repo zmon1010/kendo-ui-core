@@ -322,7 +322,7 @@
         },
 		"description": {
             "kendo-ui": "<p>A logarithmic axis is a special numeric axis that transforms the actual values by using a logarithmic function with a particular base. A logarithmic axis is useful for displaying values that cover different orders of magnitude because it lets large values display together with small values in a more condensed scale than the default linear axis.</p> <p>This example represents how you can use a logarithmic axis for the Kendo UI area chart by setting the valueAxis-&gt; type attribute to log.</p>",
-			"aspnet-mvc": "<p>A logarithmic axis is a special numeric axis that transforms the actual values by using a logarithmic function with a particular base. A logarithmic axis is useful for displaying values that cover different orders of magnitude because it lets large values display together with small values in a more condensed scale than the default linear axis.</p> <p>This demo shows how you can use a logarithmic axis for the ASP.NET MVC Area Chart by setting the ValueAxis -&gt; Logarithmic() method. Òhe base of the logarithmic axis is defined by the interval between the major divisions, controlled by the ÌajorUnit property.</p>"
+			"aspnet-mvc": "<p>A logarithmic axis is a special numeric axis that transforms the actual values by using a logarithmic function with a particular base. A logarithmic axis is useful for displaying values that cover different orders of magnitude because it lets large values display together with small values in a more condensed scale than the default linear axis.</p> <p>This demo shows how you can use a logarithmic axis for the ASP.NET MVC Area Chart by setting the ValueAxis -&gt; Logarithmic() method. ï¿½he base of the logarithmic axis is defined by the interval between the major divisions, controlled by the ï¿½ajorUnit property.</p>"
 		},
         "requiresServer": "true"
       },
@@ -3872,7 +3872,7 @@
     "api": "dataviz/qrcode",
     "documentation": {
       "kendo-ui": "getting-started/dataviz/qrcode/overview",
-      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/rqcode/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/qrcode/overview",
       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/qrcode/overview",
       "php-ui": "getting-started/using-kendo-with/php/widgets/qrcode/overview"
     },
