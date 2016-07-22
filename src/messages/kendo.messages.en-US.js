@@ -354,6 +354,20 @@ $.extend(true, kendo.ui.NumericTextBox.prototype.options,{
 });
 }
 
+/* MediaPlayer messages */
+
+if (kendo.ui.MediaPlayer) {
+kendo.ui.MediaPlayer.prototype.options.messages =
+$.extend(true, kendo.ui.MediaPlayer.prototype.options.messages,{
+  "pause": "Pause video",
+  "play": "Play video",
+  "mute": "Toggle audio",
+  "volume": "Change volume",
+  "quality": "Change quality",
+  "fullscreen": "Toggle fullscreen"
+});
+}
+
 /* Pager messages */
 
 if (kendo.ui.Pager) {

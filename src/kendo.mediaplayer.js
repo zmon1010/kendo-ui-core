@@ -112,7 +112,15 @@
                 fullScreen: false,
                 mute: false,
                 forwardSeek: true,
-                media: null
+                media: null,
+                messages: {
+                    "pause": "Pause video",
+                    "play": "Play video",
+                    "mute": "Toggle audio",
+                    "volume": "Change volume",
+                    "quality": "Change quality",
+                    "fullscreen": "Toggle fullscreen"
+                }
             },
 
             _msToTime: function (ms) {
@@ -206,13 +214,7 @@
                     this.wrapper.find(DOT + MEDIA).toggle();
                 }
 
-
-                if (!this._ytmedia && this._youTubeVideo) {
-                    this._createYoutubePlayer();
-                }
-                else if (!this._media && !this._youTubeVideo) {
-                    this._createHtmlPlayer();
-                }
+                this._initializePlayer();
 
                 if (!this._youTubeVideo) {
                     this.wrapper.find(DOT + MEDIA + " > source").remove();
@@ -225,15 +227,17 @@
                 else if (this._ytmedia) {
                     if (this.options.autoPlay) {
                         this._ytmedia.loadVideoById(this._getMediaId());
-                        this._playButton
-                            .removeClass(STATE_PLAY)
-                            .addClass(STATE_PAUSE);
+                        this._playStateToggle(true);
+                        // this._playButton
+                        //     .removeClass(STATE_PLAY)
+                        //     .addClass(STATE_PAUSE);
                     }
                     else {
                         this._ytmedia.cueVideoById(this._getMediaId());
-                        this._playButton
-                            .removeClass(STATE_PAUSE)
-                            .addClass(STATE_PLAY);
+                        this._playStateToggle(true);
+                        // this._playButton
+                        //     .removeClass(STATE_PAUSE)
+                        //     .addClass(STATE_PLAY);
                     }
                 }
             },
@@ -271,16 +275,20 @@
                         ]
                     });
 
+                    toolBarElement.find("#volume").attr("title", this.options.messages.mute);
+                    toolBarElement.find("#fullscreen").attr("title", this.options.messages.fullscreen);
+                    toolBarElement.find("#volumeTemplate").attr("title", this.options.messages.volume);
+
                     toolBarElement.width("auto");
                     this._currentTimeElement = toolBarElement.find("#currentTime");
                     this._durationElement = toolBarElement.find("#duration");
-                    if (this.options.autoPlay) {
-                        this.wrapper.find("#play").children().first()
-                            .removeClass(STATE_PLAY)
-                            .addClass(STATE_PAUSE);
-                    }
-
                     this._playButton = toolBarElement.find("#play.k-button.k-button-icon span");
+                    if (this.options.autoPlay) {
+                        this._playStateToggle(true);
+                        // this.wrapper.find("#play").children().first()
+                        //     .removeClass(STATE_PLAY)
+                        //     .addClass(STATE_PAUSE);
+                    }
                 }
             },
 
@@ -298,6 +306,8 @@
                     if (this.options.media && isArray(media.source)) {
                         this._dropDown.setDataSource(media.source);
                     }
+
+                    this._dropDown.wrapper.attr("title", this.options.messages.quality);
                 }
             },
 
@@ -354,7 +364,7 @@
                 if (!this.options.media) {
                     return;
                 }
-                
+
                 if (!this.options.forwardSeek && (e.sender.value() < e.value)) {
                     this._shouldCancelSlideChange = true;
                     this._sliderValue = e.sender.value();
@@ -430,10 +440,30 @@
                 return this.isPlaying();
             },
 
+            _playStateToggle: function (play) {
+                if (typeof play === "undefined") {
+                    play = this._playButton.is(DOT + STATE_PLAY);
+                }
+
+                if (play) {
+                    this._playButton
+                        .removeClass(STATE_PLAY)
+                        .addClass(STATE_PAUSE)
+                        .attr("title", this.options.messages.pause);
+                }
+                else {
+                    this._playButton
+                        .removeClass(STATE_PAUSE)
+                        .addClass(STATE_PLAY)
+                        .attr("title", this.options.messages.play);
+                }
+            },
+
             _mediaEnded: function () {
-                this._playButton
-                    .removeClass(STATE_PAUSE)
-                    .addClass(STATE_PLAY);
+                // this._playButton
+                //     .removeClass(STATE_PAUSE)
+                //     .addClass(STATE_PLAY);
+                this._playStateToggle(false);
                 this._currentTimeElement.text(kendo.toString(this._msToTime(0), this._timeFormat));
                 this._slider.value((0 + timeZoneSec) * 1000);
                 this.trigger(END);
@@ -542,6 +572,7 @@
                 this._youTubeVideo = true;
                 this._mediaDurationChangeHandler();
                 if (this.options.autoPlay) {
+                    this._playStateToggle(true);
                     this._ytmedia.loadVideoById(this._getMediaId());
                 }
                 else {
@@ -561,9 +592,10 @@
                 if (event.data === 0) {
                     this._slider.value(0);
                     this._paused = false;
-                    this._playButton
-                        .removeClass(STATE_PAUSE)
-                        .addClass(STATE_PLAY);
+                    this._playStateToggle(true);
+                    // this._playButton
+                    //     .removeClass(STATE_PAUSE)
+                    //     .addClass(STATE_PLAY);
                     this.trigger(END);
                     if (this.options.autoRepeat) {
                         this.play();
@@ -624,10 +656,10 @@
                         .on("click" + ns, this._mouseClickHanlder);
                 }
 
-                if (this._youTubeVideo) {
+                if (!this._ytmedia && this._youTubeVideo) {
                     this._createYoutubePlayer(this.options);
                 }
-                else {
+                else if (!this._media && !this._youTubeVideo) {
                     this._createHtmlPlayer(this.options);
                 }
             },
@@ -762,9 +794,10 @@
                 }
                 this._paused = false;
 
-                this._playButton
-                    .removeClass(STATE_PLAY)
-                    .addClass(STATE_PAUSE);
+                this._playStateToggle(true);
+                // this._playButton
+                //     .removeClass(STATE_PLAY)
+                //     .addClass(STATE_PAUSE);
 
                 return this;
             },
@@ -772,15 +805,16 @@
             stop: function () {
                 if (this._youTubeVideo) {
                     this._ytmedia.stopVideo();
-                } else {
+                } else if (this._media) {
                     this._media.pause();
                     this._media.currentTime = 0;
                 }
                 this._paused = true;
 
-                this._playButton
-                    .removeClass(STATE_PAUSE)
-                    .addClass(STATE_PLAY);
+                this._playStateToggle(false);
+                // this._playButton
+                //     .removeClass(STATE_PAUSE)
+                //     .addClass(STATE_PLAY);
                 this.trigger(END);
                 return this;
             },
@@ -792,9 +826,10 @@
                     this._media.pause();
                 }
                 this._paused = true;
-                this._playButton
-                    .removeClass(STATE_PAUSE)
-                    .addClass(STATE_PLAY);
+                this._playStateToggle(false);
+                // this._playButton
+                //     .removeClass(STATE_PAUSE)
+                //     .addClass(STATE_PLAY);
                 this.trigger(PAUSE);
                 return this;
             },
