@@ -452,6 +452,9 @@ bundle :name => 'aspnetmvc.commercial-source',
             'src/styles' => SRC_CSS,
             'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
             'src/Kendo.Mvc/Kendo.Mvc' => FileList['wrappers/mvc/src/Kendo.Mvc/**/*']
+                .exclude('**/RegistryUtilities.cs')
+                .exclude('**/KendoLicense.cs')
+                .exclude('**/*.cs.source')
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
@@ -470,6 +473,7 @@ bundle :name => 'aspnetmvc.commercial-source',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
+           'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
            'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',

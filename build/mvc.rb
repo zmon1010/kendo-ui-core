@@ -392,6 +392,10 @@ end
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs",
               :from => 'wrappers/mvc/src/shared/CommonAssemblyInfo.cs'
 
+    # Copy CommonAssemblyInfo.cs because the 'shared' folder is not distributed
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs",
+              :from => 'wrappers/mvc/src/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs.source'
+
     # Copy Kendo.Mvc.csproj (needed for the next task)
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj",
               :from => 'wrappers/mvc/src/Kendo.Mvc/Kendo.Mvc.csproj'
