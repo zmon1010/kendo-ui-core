@@ -690,6 +690,7 @@
         }).appendTo(document.body);
 
         var surface = new Surface(container, options);
+        surface.suspendTracking();
         surface.draw(group);
 
         var promise = surface.image();
