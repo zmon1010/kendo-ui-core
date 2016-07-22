@@ -99,10 +99,6 @@ namespace Kendo.Mvc.Examples.Controllers
                 {
                     ViewBag.Title = current.Title["aspnet-mvc"];
                 }
-                else
-                {
-                    ViewBag.Title = current.Title["kendo-ui"];
-                }
             }
             else
             {
@@ -114,10 +110,6 @@ namespace Kendo.Mvc.Examples.Controllers
                 if (current.Meta.ContainsKey("aspnet-mvc"))
                 {
                     ViewBag.Meta = current.Meta["aspnet-mvc"];
-                }
-                else
-                {
-                    ViewBag.Meta = current.Meta["kendo-ui"];
                 }
             }
         }
