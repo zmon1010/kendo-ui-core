@@ -20,7 +20,7 @@ If set to `true` the widget will start playing the video\vidoes after initializi
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>
 
@@ -34,7 +34,7 @@ If set to `true` the widget will start playing the video\vidoes after initializi
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoRepeat: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>
 
@@ -48,7 +48,7 @@ If set to `false` the user will be prevented from seeking the video forward
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         forwardSeek: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>    
 
@@ -62,7 +62,7 @@ If set to `true` the widget will enter in full-sreen mode
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         fullScreen: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>
 
@@ -75,7 +75,7 @@ The object which holds the information about the media that will be played by th
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>
 
@@ -88,7 +88,7 @@ String or an array of objects that hold the URL\URLs to the videos
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>
 
@@ -97,7 +97,10 @@ String or an array of objects that hold the URL\URLs to the videos
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        media: { title: "Video1", source: ".//video/video1.mp4" }] }
+        media: { 
+            title: "Digital Transformation: A New Way of Thinking", 
+            source: [ { quality: "480p", url: "The480pVideoURL" }, { quality: "720p", url: "The720pVideoURL" } ]
+        }
     });
     </script>
 
@@ -110,7 +113,7 @@ Specifies the title of the media that will be played
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>      
 
@@ -124,7 +127,7 @@ If set to `true` the video will be played without sound
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         mute: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>
 
@@ -139,7 +142,7 @@ A value between 0 and 100 that specifies the volume of the video
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         volume: 50,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     </script>
 
@@ -155,7 +158,7 @@ Forces the widget to enter\exit full-screen mode
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -179,7 +182,7 @@ Gets a value indicating whether the media has finished playing
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -197,7 +200,7 @@ Gets a value indicating whether the media is paused
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -215,7 +218,7 @@ Gets a value indicating whether the media is currently playing
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -233,7 +236,7 @@ Halts the video currently played video
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -250,7 +253,7 @@ Forces the video to start playing
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -268,7 +271,7 @@ Proceeds the video to a certain time
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -292,7 +295,7 @@ Stops the currently played video
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -310,7 +313,7 @@ Gets a reference to the title bar
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -327,7 +330,7 @@ Gets a reference to the toolbar
     <div id="mediaplayer" />
     <script>
     $("#mediaplayer").kendoMediaPlayer({
-        media: { title: "Video1", source: ".//video/video1.mp4" }
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
     });
     // get a reference to the media player widget
     var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
@@ -349,7 +352,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" },
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" },
         end: function(){
             //handle event
         }
@@ -368,7 +371,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" },
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" },
         pause: function(){
             //handle event
         }
@@ -387,7 +390,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" },
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" },
         play: function(){
             //handle event
         }
@@ -406,7 +409,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" },
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" },
         ready: function(){
             //handle event
         }
@@ -425,7 +428,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" },
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" },
         timeChange: function(){
             //handle event
         }
@@ -444,7 +447,7 @@ The event handler function context (available via the `this` keyword) will be se
     <script>
     $("#mediaplayer").kendoMediaPlayer({
         autoPlay: true,
-        media: { title: "Video1", source: ".//video/video1.mp4" },
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" },
         volumeChange: function(){
             //handle event
         }
