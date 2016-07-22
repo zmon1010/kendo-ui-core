@@ -4,7 +4,7 @@
 <div class="demo-section k-content">     
     <%= Html.Kendo().MediaPlayer()
         .AutoPlay(true)
-        .Media(m=>m.Title("Digital Transformation: A New Way of Thinking").Source(@"\Content\web\mediaplayer\Video1.mp4"))
+        .Media(m=>m.Title("Digital Transformation: A New Way of Thinking").Source("https://www.youtube.com/watch?v=gNlya720gbk"))
         .Name("MediaPlayer")
     %>
 </div> 

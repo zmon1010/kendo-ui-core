@@ -4,14 +4,9 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:url value="/mediaplayer/videos" var="readUrl" />
-
 <demo:header />
-   <kendo:mediaPlayer name="mediaPlayer" autoPlay="true" playlist="true">
-     <kendo:dataSource>
-            <kendo:dataSource-transport>
-                <kendo:dataSource-transport-read url="${readUrl}"  />
-            </kendo:dataSource-transport>
-     </kendo:dataSource>
+   <kendo:mediaPlayer name="mediaPlayer" autoPlay="true">
+     <kendo:mediaPlayer-media title="Digital Transformation: A New Way of Thinking" source="https://www.youtube.com/watch?v=gNlya720gbk" >         
+     </kendo:mediaPlayer-media>
    </kendo:mediaPlayer>
 <demo:footer />

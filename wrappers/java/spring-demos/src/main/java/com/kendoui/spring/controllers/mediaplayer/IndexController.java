@@ -17,21 +17,10 @@ import com.kendoui.spring.models.Video;
 @Controller("mediaplayer-home-controller")
 @RequestMapping(value="/mediaplayer/")
 public class IndexController {
-    @Autowired 
-    private CustomerDao customer;
     
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public String index() {
         return "mediaplayer/index";
-    }
-    
-    @RequestMapping(value = "/videos", method = RequestMethod.GET)
-    public @ResponseBody List<Video> videos() {
-        List<Video> videos = new ArrayList<Video>();
-        videos.add(new Video("Digital Transformation: A New Way of Thinking","../resources/web/mediaplayer/Video1.mp4","../resources/web/mediaplayer/Video1.jpg"));
-        videos.add(new Video("Learn How York Solved Its Database Problem","../resources/web/mediaplayer/Video2.mp4","../resources/web/mediaplayer/Video2.jpg"));
-        videos.add(new Video("A Clear Vision for Digital Transformation","../resources/web/mediaplayer/Video3.mp4","../resources/web/mediaplayer/Video3.jpg"));
-        return videos;
     }
 }
 

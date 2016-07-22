@@ -6,8 +6,16 @@ package com.kendoui.taglib;
 
 import javax.servlet.jsp.JspException;
 
+import com.kendoui.taglib.json.Function;
+import com.kendoui.taglib.mediaplayer.EndFunctionTag;
+import com.kendoui.taglib.mediaplayer.PauseFunctionTag;
+import com.kendoui.taglib.mediaplayer.PlayFunctionTag;
+import com.kendoui.taglib.mediaplayer.ReadyFunctionTag;
+import com.kendoui.taglib.mediaplayer.TimeChangeFunctionTag;
+import com.kendoui.taglib.mediaplayer.VolumeChangeFunctionTag;
+
 @SuppressWarnings("serial")
-public class MediaPlayerTag extends WidgetTag /* interfaces */implements DataBoundWidget/* interfaces */ {
+public class MediaPlayerTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public MediaPlayerTag() {
         super("MediaPlayer");
@@ -43,6 +51,10 @@ public class MediaPlayerTag extends WidgetTag /* interfaces */implements DataBou
         return "mediaPlayer";
     }
 
+    public void setMedia(com.kendoui.taglib.mediaplayer.MediaTag value) {
+        setProperty("media", value);
+    }
+
     public void setEnd(EndFunctionTag value) {
         setEvent("end", value.getBody());
     }
@@ -67,14 +79,6 @@ public class MediaPlayerTag extends WidgetTag /* interfaces */implements DataBou
         setEvent("volumeChange", value.getBody());
     }
 
-    public boolean getAutoBind() {
-        return (Boolean)getProperty("autoBind");
-    }
-
-    public void setAutoBind(boolean value) {
-        setProperty("autoBind", value);
-    }
-
     public boolean getAutoPlay() {
         return (Boolean)getProperty("autoPlay");
     }
@@ -89,10 +93,6 @@ public class MediaPlayerTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setAutoRepeat(boolean value) {
         setProperty("autoRepeat", value);
-    }
-
-    public void setDataSource(DataSourceTag dataSource) {
-        setProperty("dataSource", dataSource);
     }
 
     public boolean getForwardSeek() {
@@ -117,14 +117,6 @@ public class MediaPlayerTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setMute(boolean value) {
         setProperty("mute", value);
-    }
-
-    public boolean getPlaylist() {
-        return (Boolean)getProperty("playlist");
-    }
-
-    public void setPlaylist(boolean value) {
-        setProperty("playlist", value);
     }
 
     public float getVolume() {
