@@ -153,12 +153,8 @@ namespace :mvc do
          :root => 'dist/styles'
 
     tree :to => MVC_DEMOS_ROOT + 'Content',
-         :from => 'demos/mvc/content/nav.json',
-         :root => 'demos/mvc/content/'
-
-    tree :to => MVC_DEMOS_ROOT + 'Content',
-         :from => 'demos/mvc/content/mobile-nav.json',
-         :root => 'demos/mvc/content/'
+         :from => 'wrappers/nav.json',
+         :root => 'wrappers/'
 
     tree :to => MVC_DEMOS_ROOT + 'Content/web',
          :from => DEMO_SHARED_ROOT + 'web/**/*',
