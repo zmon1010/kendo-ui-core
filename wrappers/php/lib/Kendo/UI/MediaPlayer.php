@@ -9,25 +9,6 @@ class MediaPlayer extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * Sets the data source of the MediaPlayer.
-    * @param array|\Kendo\Data\DataSource $value
-    * @return \Kendo\UI\MediaPlayer
-    */
-    public function dataSource($value) {
-        return $this->setProperty('dataSource', $value);
-    }
-
-    /**
-    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-data source is fired.
-    * @param boolean $value
-    * @return \Kendo\UI\MediaPlayer
-    */
-    public function autoBind($value) {
-        return $this->setProperty('autoBind', $value);
-    }
-
-    /**
     * If set to true the widget will start playing the video\vidoes after initializing
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
@@ -46,12 +27,12 @@ data source is fired.
     }
 
     /**
-    * A value between 0 and 100 that specifies the volume of the video
-    * @param float $value
+    * If set to false the user will be prevented from seeking the video forward
+    * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
     */
-    public function volume($value) {
-        return $this->setProperty('volume', $value);
+    public function forwardSeek($value) {
+        return $this->setProperty('forwardSeek', $value);
     }
 
     /**
@@ -64,6 +45,15 @@ data source is fired.
     }
 
     /**
+    * The object which holds the information about the media that will be played by the control
+    * @param \Kendo\UI\MediaPlayerMedia|array $value
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function media($value) {
+        return $this->setProperty('media', $value);
+    }
+
+    /**
     * If set to true the video will be played without sound
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
@@ -73,21 +63,12 @@ data source is fired.
     }
 
     /**
-    * If set to false the user will be prevented from seeking the video forward
-    * @param boolean $value
+    * A value between 0 and 100 that specifies the volume of the video
+    * @param float $value
     * @return \Kendo\UI\MediaPlayer
     */
-    public function forwardSeek($value) {
-        return $this->setProperty('forwardSeek', $value);
-    }
-
-    /**
-    * If set to true a playlist for the videos inside the data source will be created
-    * @param boolean $value
-    * @return \Kendo\UI\MediaPlayer
-    */
-    public function playlist($value) {
-        return $this->setProperty('playlist', $value);
+    public function volume($value) {
+        return $this->setProperty('volume', $value);
     }
 
     /**
