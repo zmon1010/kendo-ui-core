@@ -176,7 +176,8 @@ var InsertTableTool = PopupTool.extend({
             .on("mouseleave", function() {
                 that._setTableSize();
             })
-            .on("up", function(e) {
+            .on("down", function(e) {
+                e.preventDefault();
                 var touch = getTouches(e)[0];
                 that._exec(tableFromLocation(touch.location));
             });
