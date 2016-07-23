@@ -82,4 +82,15 @@
         ok(mediaPlayer.isPaused());
     });
 
+    test("changing player source using the media function should update the title", function () {
+        var titlebar = mediaPlayer.titlebar();
+        mediaPlayer.media({ source: "test.url", title: "new title" });
+        ok(titlebar.text() === "new title");
+    });
+
+    test("setting player source without title will still fallback to url when setting the titlebar text", function () {
+        var titlebar = mediaPlayer.titlebar();
+        mediaPlayer.media({ source: "test.url" });
+        ok(titlebar.text() === "test.url");
+    });
 })();

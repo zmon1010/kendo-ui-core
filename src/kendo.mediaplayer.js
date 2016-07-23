@@ -217,6 +217,7 @@
                 this._initializePlayer();
 
                 if (!this._youTubeVideo) {
+                    this._videoOverlay.show();
                     this.wrapper.find(DOT + MEDIA + " > source").remove();
                     this.wrapper.find(DOT + MEDIA).attr("src", this._currentUrl());
 
@@ -225,19 +226,16 @@
                     }
                 }
                 else if (this._ytmedia) {
+                    if (this._videoOverlay) {
+                        this._videoOverlay.hide();
+                    }
                     if (this.options.autoPlay) {
                         this._ytmedia.loadVideoById(this._getMediaId());
                         this._playStateToggle(true);
-                        // this._playButton
-                        //     .removeClass(STATE_PLAY)
-                        //     .addClass(STATE_PAUSE);
                     }
                     else {
                         this._ytmedia.cueVideoById(this._getMediaId());
                         this._playStateToggle(true);
-                        // this._playButton
-                        //     .removeClass(STATE_PAUSE)
-                        //     .addClass(STATE_PLAY);
                     }
                 }
             },
@@ -285,9 +283,6 @@
                     this._playButton = toolBarElement.find("#play.k-button.k-button-icon span");
                     if (this.options.autoPlay) {
                         this._playStateToggle(true);
-                        // this.wrapper.find("#play").children().first()
-                        //     .removeClass(STATE_PLAY)
-                        //     .addClass(STATE_PAUSE);
                     }
                 }
             },
@@ -316,11 +311,6 @@
                     this._currentIndex = e.item.index();
                     this._setPlayerUrl();
                 }
-            },
-
-            _updateToolbarTitle: function (item) {
-                var title = this.wrapper.find(DOT + TITLEBAR + ">" + DOT + TITLE);
-                title.text(item.title);
             },
 
             _toolbarClick: function (e) {
@@ -460,9 +450,6 @@
             },
 
             _mediaEnded: function () {
-                // this._playButton
-                //     .removeClass(STATE_PAUSE)
-                //     .addClass(STATE_PLAY);
                 this._playStateToggle(false);
                 this._currentTimeElement.text(kendo.toString(this._msToTime(0), this._timeFormat));
                 this._slider.value((0 + timeZoneSec) * 1000);
@@ -500,7 +487,7 @@
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
 
-                this._videoOverlay.after(templates.youtubePlayer);
+                this.wrapper.prepend(templates.youtubePlayer);
                 this._ytPlayer = this.wrapper.find(DOT + YTPLAYER)[0];
                 $(this._ytPlayer)
                     .css({
@@ -586,16 +573,18 @@
                 this.trigger(READY);
             },
 
+            _updateTitle: function () {
+                this.titlebar().text(this.media().title || this.media().source);
+            },
+
             _onPlayerStateChange: function (event) {
                 //IF NECESSARY
-                //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state 
+                //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state
+
                 if (event.data === 0) {
                     this._slider.value(0);
                     this._paused = false;
                     this._playStateToggle(true);
-                    // this._playButton
-                    //     .removeClass(STATE_PAUSE)
-                    //     .addClass(STATE_PLAY);
                     this.trigger(END);
                     if (this.options.autoRepeat) {
                         this.play();
@@ -614,6 +603,7 @@
                 }
                 else if (event.data === 2) {
                     this._paused = true;
+                    this.trigger(PAUSE);
                 }
             },
 
@@ -649,6 +639,15 @@
                         .on("mousemove" + ns, this._mouseMoveHandler);
                 }
 
+                if (!this._ytmedia && this._youTubeVideo) {
+                    this._createYoutubePlayer();
+                }
+                else if (!this._media && !this._youTubeVideo) {
+                    this._createHtmlPlayer();
+                }
+            },
+
+            _createHtmlPlayer: function () {
                 if (!this._videoOverlay) {
                     this._mouseClickHanlder = proxy(this._mouseClick, this);
                     this.wrapper.append("<div class='" + OVERLAY + "'></div>");
@@ -656,15 +655,6 @@
                         .on("click" + ns, this._mouseClickHanlder);
                 }
 
-                if (!this._ytmedia && this._youTubeVideo) {
-                    this._createYoutubePlayer(this.options);
-                }
-                else if (!this._media && !this._youTubeVideo) {
-                    this._createHtmlPlayer(this.options);
-                }
-            },
-
-            _createHtmlPlayer: function () {
                 this._mediaTimeUpdateHandler = proxy(this._mediaTimeUpdate, this);
                 this._mediaDurationChangeHandler = proxy(this._mediaDurationChange, this);
                 this._mediaEndedHandler = proxy(this._mediaEnded, this);
@@ -795,26 +785,20 @@
                 this._paused = false;
 
                 this._playStateToggle(true);
-                // this._playButton
-                //     .removeClass(STATE_PLAY)
-                //     .addClass(STATE_PAUSE);
 
                 return this;
             },
 
             stop: function () {
-                if (this._youTubeVideo) {
+                if (this._youTubeVideo && this._ytmedia) {
                     this._ytmedia.stopVideo();
-                } else if (this._media) {
+                } else if (this._media && !this._youTubeVideo) {
                     this._media.pause();
                     this._media.currentTime = 0;
                 }
                 this._paused = true;
 
                 this._playStateToggle(false);
-                // this._playButton
-                //     .removeClass(STATE_PAUSE)
-                //     .addClass(STATE_PLAY);
                 this.trigger(END);
                 return this;
             },
@@ -827,9 +811,6 @@
                 }
                 this._paused = true;
                 this._playStateToggle(false);
-                // this._playButton
-                //     .removeClass(STATE_PAUSE)
-                //     .addClass(STATE_PLAY);
                 this.trigger(PAUSE);
                 return this;
             },
@@ -957,6 +938,8 @@
 
                 this._mediaData = value;
 
+                this._updateTitle();
+
                 this._setPlayerUrl();
             },
 
@@ -973,7 +956,7 @@
                 if (data) {
                     this.dropdown().wrapper.toggle(isArray(data));
 
-                    this._updateToolbarTitle(data);
+                    this._updateTitle();
                     this._youTubeVideo = this._isYouTubeUrl();
                     this._initializePlayer();
                 }
