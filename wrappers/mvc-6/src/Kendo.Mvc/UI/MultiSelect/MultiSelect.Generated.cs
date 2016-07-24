@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public bool? AutoClose { get; set; }
 
+        public bool? ClearButton { get; set; }
+
         public string DataTextField { get; set; }
 
         public string DataValueField { get; set; }
@@ -23,9 +25,15 @@ namespace Kendo.Mvc.UI
 
         public bool? Enable { get; set; }
 
+        public bool? EnforceMinLength { get; set; }
+
         public string FixedGroupTemplate { get; set; }
 
         public string FixedGroupTemplateId { get; set; }
+
+        public string FooterTemplate { get; set; }
+
+        public string FooterTemplateId { get; set; }
 
         public string GroupTemplate { get; set; }
 
@@ -40,6 +48,10 @@ namespace Kendo.Mvc.UI
         public double? MinLength { get; set; }
 
         public double? MaxSelectedItems { get; set; }
+
+        public string NoDataTemplate { get; set; }
+
+        public string NoDataTemplateId { get; set; }
 
         public string Placeholder { get; set; }
 
@@ -80,6 +92,11 @@ namespace Kendo.Mvc.UI
                 settings["autoClose"] = AutoClose;
             }
 
+            if (ClearButton.HasValue)
+            {
+                settings["clearButton"] = ClearButton;
+            }
+
             if (DataTextField?.HasValue() == true)
             {
                 settings["dataTextField"] = DataTextField;
@@ -100,6 +117,11 @@ namespace Kendo.Mvc.UI
                 settings["enable"] = Enable;
             }
 
+            if (EnforceMinLength.HasValue)
+            {
+                settings["enforceMinLength"] = EnforceMinLength;
+            }
+
             if (FixedGroupTemplateId.HasValue())
             {
                 settings["fixedGroupTemplate"] = new ClientHandlerDescriptor {
@@ -111,6 +133,19 @@ namespace Kendo.Mvc.UI
             else if (FixedGroupTemplate.HasValue())
             {
                 settings["fixedGroupTemplate"] = FixedGroupTemplate;
+            }
+
+            if (FooterTemplateId.HasValue())
+            {
+                settings["footerTemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, FooterTemplateId
+                    )
+                };
+            }
+            else if (FooterTemplate.HasValue())
+            {
+                settings["footerTemplate"] = FooterTemplate;
             }
 
             if (GroupTemplateId.HasValue())
@@ -149,6 +184,19 @@ namespace Kendo.Mvc.UI
             if (MaxSelectedItems.HasValue)
             {
                 settings["maxSelectedItems"] = MaxSelectedItems;
+            }
+
+            if (NoDataTemplateId.HasValue())
+            {
+                settings["noDataTemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, NoDataTemplateId
+                    )
+                };
+            }
+            else if (NoDataTemplate.HasValue())
+            {
+                settings["noDataTemplate"] = NoDataTemplate;
             }
 
             if (Placeholder?.HasValue() == true)

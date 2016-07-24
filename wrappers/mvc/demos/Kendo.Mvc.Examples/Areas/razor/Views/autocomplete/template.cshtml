@@ -19,6 +19,7 @@
                         "<span>Photo</span>" +
                         "<span>Contact info</span>" +
                     "</div>")
+          .FooterTemplate("Total <strong>#: instance.dataSource.total() #</strong> items found")
           .Template("<span class=\"k-state-default\" style=\"background-image: url(" + Url.Content("~/Content/web/Customers/") + "#:data.CustomerID#.jpg" + ");\" ></span>" +
                     "<span class=\"k-state-default\"><h3>#: data.ContactName #</h3><p>#: data.CompanyName #</p></span>")
     )

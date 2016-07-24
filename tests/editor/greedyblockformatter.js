@@ -1,7 +1,7 @@
 (function(){
 
 var editor;
-
+var RangeUtils = kendo.ui.editor.RangeUtils;
 var GreedyBlockFormatter = kendo.ui.editor.GreedyBlockFormatter;
 
 editor_module("editor greedy block formatter", {
@@ -124,6 +124,46 @@ test("apply does not fail on empty table cells", function() {
     formatter.apply([td[0].firstChild, td[1].firstChild, td[2].firstChild]);
 
     equal(editor.value(), '<table><tbody><tr><td><h3>foo</h3></td><td></td><td><h3>bar</h3></td></tr></tbody></table>');
+});
+
+editor_module("editor greedy block formatter with immutables enabled", {
+   setup: function() {
+       editor = $("#editor-fixture").data("kendoEditor");
+   }
+});
+
+function getGreedyBlockFormatterImmutables(){
+    var formatter = new GreedyBlockFormatter([{ tags: ['h1'] }], {});
+    formatter.immutables = function() { return true; };
+    return formatter;
+}
+
+test('toggle to text in immutable block node', function() {
+    var range = createRangeFromText(editor, 'text <h2 contenteditable="false">|immutable| text</h2>');
+    var formatter = getGreedyBlockFormatterImmutables();
+    formatter.toggle(range);
+    equal(editor.value(), 'text <h2 contenteditable="false">immutable text</h2>');
+});
+
+test('toggle to text in firs block child of immutable block node', function() {
+    var range = createRangeFromText(editor, 'text <h2 contenteditable="false"><div>|immutable| text</div></h2>');
+    var formatter = getGreedyBlockFormatterImmutables();
+    formatter.toggle(range);
+    equal(editor.value(), 'text <h2 contenteditable="false"><div>immutable text</div></h2>');
+});
+
+test('toggle to text in a block node and an immutable block node', function() {
+    var range = createRangeFromText(editor, '<p>text |paragraph</p><h2 contenteditable="false">immutable| text</h2>');
+    var formatter = getGreedyBlockFormatterImmutables();
+    formatter.toggle(range);
+    equal(editor.value(), '<h1>text paragraph</h1><h2 contenteditable="false">immutable text</h2>');
+});
+
+test('toggle to text in an inline immutable node', function() {
+    var range = createRangeFromText(editor, '<h2>immutable<span contenteditable="false">immutable |inline| contentent</span> text</h2>');
+    var formatter = getGreedyBlockFormatterImmutables();
+    formatter.toggle(range);
+    equal(editor.value(), '<h1>immutable<span contenteditable="false">immutable inline contentent</span> text</h1>');
 });
 
 }());

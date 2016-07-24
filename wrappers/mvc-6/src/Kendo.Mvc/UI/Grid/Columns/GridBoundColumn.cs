@@ -10,12 +10,12 @@ namespace Kendo.Mvc.UI
     using System.Threading;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Resources;
-    using Microsoft.AspNet.Mvc.ModelBinding;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.Extensions.WebEncoders;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using System.Text.Encodings.Web;
     using System.Text;
-    using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public class GridBoundColumn<TModel, TValue> : GridColumnBase<TModel>, IGridBoundColumn/*, IGridTemplateColumn<TModel>*/ where TModel : class
     {
@@ -298,10 +298,10 @@ namespace Kendo.Mvc.UI
         {                                    
         }
 
-        public string GetEditor(IHtmlHelper helper, IHtmlEncoder encoder)
+        public string GetEditor(IHtmlHelper helper, HtmlEncoder encoder)
 		{
             var viewContext = Grid.ViewContext.ViewContextForType<TModel>(Grid.ModelMetadataProvider);
-            ((ICanHasViewContext)helper).Contextualize(viewContext);
+            ((IViewContextAware)helper).Contextualize(viewContext);
 
             AppendAdditionalViewData(viewContext.ViewData, Grid.Editable.DefaultDataItem());
 

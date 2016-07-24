@@ -7,6 +7,7 @@
 *.user
 *.mdb
 obj/
+**/Thumbs.db
 !**/References/*.dll
 !wrappers/mvc/packages/**/*.dll
 !plugins/KendoBootstrapper/packages/Newtonsoft.*/*/*/*.dll
@@ -70,3 +71,4 @@ demos/mvc/content/all-scripts.txt
 demos/**/bin
 demos/mvc/packages
 web.config
+**/.vs

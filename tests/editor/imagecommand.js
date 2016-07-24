@@ -351,4 +351,52 @@ test("persists markup around element", function() {
     equal(editor.value(), 'foo <img alt="" src="foo.jpg" />bar');
 });
 
+editor_module("editor with immutables enabled image command", {
+   setup: function() {
+       editor = $("#editor-fixture").data("kendoEditor");
+       editor.options.immutables = true;
+       editor._initializeImmutables();
+   },
+   teardown: function() {
+       $(".k-window-content").kendoWindow("destroy");
+   }
+});
+
+
+test('exec command in immutable parent deletes it', function() {
+    var range = createRangeFromText(editor, '<span contenteditable="false">f|o|o</span>');
+    execImageCommandOnRange(range);
+
+    $('#k-editor-image-url').val('foo');
+    $('.k-dialog-insert').click();
+    equal(editor.value(), '<img alt="" src="foo" />');
+});
+
+test('clicking insert inserts image before partially selected immutable, if url is set', function() {
+    var range = createRangeFromText(editor, 'test |text<span contenteditable="false">f|oo</span>');
+    execImageCommandOnRange(range);
+
+    $('#k-editor-image-url').val('foo');
+    $('.k-dialog-insert').click();
+    equal(editor.value(), 'test <img alt="" src="foo" />');
+});
+
+test('clicking insert inserts image after partially selected immutable, if url is set', function() {
+    var range = createRangeFromText(editor, 'test <span contenteditable="false">f|oo</span>test|');
+    execImageCommandOnRange(range);
+
+    $('#k-editor-image-url').val('foo');
+    $('.k-dialog-insert').click();
+    equal(editor.value(), 'test <img alt="" src="foo" />');
+});
+
+test('clicking insert inserts image between partially selected immutable, if url is set', function() {
+    var range = createRangeFromText(editor, 'test <span contenteditable="false">f|oo</span>test<span contenteditable="false">f|oo</span>');
+    execImageCommandOnRange(range);
+
+    $('#k-editor-image-url').val('foo');
+    $('.k-dialog-insert').click();
+    equal(editor.value(), 'test <img alt="" src="foo" />');
+});
+
 }());

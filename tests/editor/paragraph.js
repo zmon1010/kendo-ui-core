@@ -123,6 +123,33 @@ test('exec when in last li and it is empty', function() {
     equal(editor.value(), '<ul><li>foo</li></ul><p>&nbsp;</p>');
 });
 
+test('exec when in last li and it is empty with a single span child', function() {
+    editor.value('<ul><li>foo</li><li><span style="color:red;"></span></li></ul>');
+    var range = editor.createRange();
+    range.selectNodeContents(editor.body.firstChild.lastChild.firstChild);
+    var command = createParagraphCommand(range);
+    command.exec();
+    equal(editor.value(), '<ul><li>foo</li></ul><p><span style="color:red;"></span></p>');
+});
+
+test('exec when in last li and it is empty with a single span child and a br', function() {
+    editor.value('<ul><li>foo</li><li><span style="color:red;"></span><br></li></ul>');
+    var range = editor.createRange();
+    range.selectNodeContents(editor.body.firstChild.lastChild.firstChild);
+    var command = createParagraphCommand(range);
+    command.exec();
+    equal(editor.value(), '<ul><li>foo</li></ul><p><span style="color:red;"></span></p>');
+});
+
+test('exec when in last li and it is empty with a single span child and two br elements', function() {
+    editor.value('<ul><li>foo</li><li><span style="color:red;"></span><br><br></li></ul>');
+    var range = editor.createRange();
+    range.selectNodeContents(editor.body.firstChild.lastChild.firstChild);
+    var command = createParagraphCommand(range);
+    command.exec();
+    equal(editor.value(), '<ul><li>foo</li></ul><p>&nbsp;</p>');
+});
+
 test('exec in empty list item preserves line breaks in others', function() {
     editor.value('<ul><li>fo<br />o</li><li></li><li>ba<br />r</li></ul>');
     var range = editor.createRange();
@@ -160,6 +187,15 @@ test("exec handles li containing BOM nodes", function() {
     range.collapse(true);
     var command = createParagraphCommand(range);
     command.exec();
+    equal(editor.value(), '');
+    equal(editor.body.firstChild.nodeName.toLowerCase(), 'p');
+});
+
+test('exec handles li containing BOM node and spaces around li', function() {
+    var range = createRangeFromText(editor, '<ul> <li>||&#65279;</li> </ul>');
+    
+    createParagraphCommand(range).exec();
+
     equal(editor.value(), '');
     equal(editor.body.firstChild.nodeName.toLowerCase(), 'p');
 });

@@ -1,17 +1,21 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
-using Microsoft.AspNet.Routing;
-using Microsoft.Extensions.WebEncoders;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
+using System.Text.Encodings.Web;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
@@ -130,6 +134,29 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        /// <summary>
+        /// Gets a reference to the ValueProvider for the current ActionContext
+        /// </summary>
+        public IValueProvider ValueProvider
+        {
+            get
+            {
+                var optionsAccessor = ViewContext.GetService<IOptions<MvcOptions>>();
+                var providerFactories = optionsAccessor.Value.ValueProviderFactories.ToArray();
+
+                var actionContext = ViewContext.GetService<IActionContextAccessor>().ActionContext;
+                var factoryContext = new ValueProviderFactoryContext(actionContext);
+
+                for (var i = 0; i < providerFactories.Length; i++)
+                {
+                    var factory = providerFactories[i];
+                    factory.CreateValueProviderAsync(factoryContext);
+                }
+
+                return new CompositeValueProvider(factoryContext.ValueProviders);
+            }
+        }
+
         protected IKendoHtmlGenerator Generator { get; set; }
 
         public IUrlGenerator UrlGenerator
@@ -138,7 +165,7 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        public IHtmlEncoder HtmlEncoder
+        public HtmlEncoder HtmlEncoder
         {
             get;
             set;
@@ -250,11 +277,16 @@ namespace Kendo.Mvc.UI
         {            
             Generator = GetService<IKendoHtmlGenerator>();
             HtmlHelper = GetService<IHtmlHelper>();
-            HtmlEncoder = GetService<IHtmlEncoder>();
+            HtmlEncoder = GetService<HtmlEncoder>();
             ModelMetadataProvider = GetService<IModelMetadataProvider>();
             UrlGenerator = GetService<IUrlGenerator>();
 
-            ((ICanHasViewContext)HtmlHelper).Contextualize(ViewContext);
+            ((IViewContextAware)HtmlHelper).Contextualize(ViewContext);
+
+            if (Generator == null)
+            {
+                throw( new Exception("Kendo services are not registered. Please call services.AddKendo() in ConfigureServices method of your project."));
+            }
         }
 
         protected TService GetService<TService>()

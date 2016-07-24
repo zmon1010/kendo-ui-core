@@ -13,6 +13,7 @@
 
             this.view = view;
             this.formulaBar = view.formulaBar;
+            this._active = false;
 
             this.barInput = view.formulaBar.formulaInput;
             this.cellInput = view.formulaInput;

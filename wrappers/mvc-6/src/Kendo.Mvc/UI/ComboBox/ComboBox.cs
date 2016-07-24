@@ -1,4 +1,4 @@
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IO;
 using Kendo.Mvc.Extensions;
 using System.Text.RegularExpressions;

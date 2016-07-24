@@ -58,7 +58,7 @@ test("multiple attribute not rendered when multiple is not supported", function(
 
 test("remove icon is rendered", function() {
     simulateFileSelect();
-    equal($(".k-upload-files li.k-file button.k-upload-action span.k-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-upload-files li.k-file button.k-upload-action span.k-i-delete", uploadInstance.wrapper).length, 1);
 });
 
 test("file name is rendered", function() {

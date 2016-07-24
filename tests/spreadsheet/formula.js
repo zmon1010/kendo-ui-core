@@ -802,6 +802,17 @@
         });
     });
 
+    test("numeric operations parse numbers from strings", function(){
+        calcTest({
+            '="1" + 1'            : 2,
+            '="1,234.50" + 1'     : 1235.5,
+            '="$ 10,000.23" + 1'  : 10001.23,
+            '="1/2/2016" + 1'     : 42372,
+            '="true" + 1'         : "#VALUE!",
+            '="false" + 1'        : "#VALUE!",
+        });
+    });
+
     test("AVERAGE and AVERAGEA", function(){
         var ss = new Spreadsheet();
         ss.fill({

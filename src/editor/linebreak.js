@@ -89,7 +89,11 @@ var ParagraphCommand = Command.extend({
             parent, previous, next,
             emptyParagraphContent = editorNS.emptyElementContent,
             paragraph, marker, li, heading, rng,
-            shouldTrim = this.shouldTrim(range);
+            shouldTrim;
+
+        this.expandImmutablesIn(range);
+
+        shouldTrim = this.shouldTrim(range);
 
         range.deleteContents();
         marker = this._insertMarker(doc, range);
@@ -105,16 +109,31 @@ var ParagraphCommand = Command.extend({
             if (dom.emptyNode(li)) {
                 paragraph = dom.create(doc, 'p');
 
-                if (li.nextSibling) {
+                if (dom.next(li)) {
                     rng = range.cloneRange();
                     rng.selectNode(li);
 
                     RangeUtils.split(rng, li.parentNode);
                 }
 
-                dom.insertAfter(paragraph, li.parentNode);
-                dom.remove(li.parentNode.childNodes.length == 1 ? li.parentNode : li);
-                paragraph.innerHTML = emptyParagraphContent;
+                var br = $("br", li);
+                if (br.length == 1) {
+                    br.remove();
+                }
+
+                var parentNode = li.parentNode;
+                var parentChildrenLength = li.parentNode.children.length;
+                var firstChild = parentChildrenLength > 1 && li.childNodes.length == 1 && li.children[0];
+
+                dom.insertAfter(paragraph, parentNode);
+                dom.remove(parentChildrenLength == 1 ? li.parentNode : li);
+
+                if (firstChild && firstChild !== marker) {
+                    paragraph.appendChild(firstChild);
+                    paragraph.appendChild(marker);
+                } else {
+                    paragraph.innerHTML = emptyParagraphContent;
+                }
                 next = paragraph;
             }
         } else if (heading && this._blankAfter(marker)) {
@@ -213,6 +232,8 @@ var NewLineCommand = Command.extend({
 
     exec: function () {
         var range = this.getRange();
+        this.expandImmutablesIn(range);
+
         var br = dom.create(RangeUtils.documentFromRange(range), 'br');
         var filler;
         var browser = kendo.support.browser;

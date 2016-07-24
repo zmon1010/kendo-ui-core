@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +13,27 @@ namespace Kendo.Mvc.UI
     {
         public bool? Confirmation { get; set; }
 
+        public bool? Create { get; set; }
+
+        public bool? DependencyCreate { get; set; }
+
+        public bool? DependencyDestroy { get; set; }
+
+        public bool? DragPercentComplete { get; set; }
+
+        public bool? Destroy { get; set; }
+
+        public bool? Move { get; set; }
+
+        public bool? Reorder { get; set; }
+
+        public bool? Resize { get; set; }
+
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
+
+        public bool? Update { get; set; }
 
         public bool? Enabled { get; set; }
 
@@ -30,6 +48,46 @@ namespace Kendo.Mvc.UI
                 settings["confirmation"] = Confirmation;
             }
 
+            if (Create.HasValue)
+            {
+                settings["create"] = Create;
+            }
+
+            if (DependencyCreate.HasValue)
+            {
+                settings["dependencyCreate"] = DependencyCreate;
+            }
+
+            if (DependencyDestroy.HasValue)
+            {
+                settings["dependencyDestroy"] = DependencyDestroy;
+            }
+
+            if (DragPercentComplete.HasValue)
+            {
+                settings["dragPercentComplete"] = DragPercentComplete;
+            }
+
+            if (Destroy.HasValue)
+            {
+                settings["destroy"] = Destroy;
+            }
+
+            if (Move.HasValue)
+            {
+                settings["move"] = Move;
+            }
+
+            if (Reorder.HasValue)
+            {
+                settings["reorder"] = Reorder;
+            }
+
+            if (Resize.HasValue)
+            {
+                settings["resize"] = Resize;
+            }
+
             if (TemplateId.HasValue())
             {
                 settings["template"] = new ClientHandlerDescriptor {
@@ -41,6 +99,11 @@ namespace Kendo.Mvc.UI
             else if (Template.HasValue())
             {
                 settings["template"] = Template;
+            }
+
+            if (Update.HasValue)
+            {
+                settings["update"] = Update;
             }
 
             return settings;

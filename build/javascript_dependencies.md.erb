@@ -1,24 +1,38 @@
-% categories.each do |name, category|
-## <%= category["name"] %>
+---
+title: Script Files for <%= category["name"] %>
+page_title: Script Files for <%= category["name"] %> | Kendo UI Getting Started
+description: "Listing of required script files for the Kendo UI <%= category["name"] %>"
+slug: <%= category["slug"] %>
+position: <%= category["position"] %>
+---
 
-<%= category["description"] %>
+# Script Files for <%= category["name"] %>
 
+<%= category["description"] %>&nbsp;&nbsp;
+
+| Widget | Script files | Comments |
+| :---   | :---         | :---     |
 % category["components"].each do |component|
 % own_file = component["dependencies"].pop
-### <%= component["name"] %>
-1. jquery.js
+| [<%= component["name"] %>](<%= component["url"] %>) | jquery.js | |
 % component["dependencies"].each do |dependency|
-1. kendo.<%= dependency %>.js
+| | kendo.<%= dependency %>.js | |
 % end # deps
 % component["features"].each do |feature|
 % feature["dependencies"].each do |dependency|
 % unless component["dependencies"].include? dependency
-1. kendo.<%= dependency %>.js (<%= feature["name"] %> feature)
+| | kendo.<%= dependency %>.js | <%= feature["name"] %> feature |
 % end # unless
 % end # f/deps
 % end # features
-1. kendo.<%= own_file %>.js
-
+| | kendo.<%= own_file %>.js | |
 % end # components
 
+## See Also
+
+Articles listing the script files for other Kendo UI components:
+
+% categories.each do |cat|
+% next if cat["name"] == category["name"]
++ [Script Files for <%= cat["name"] %>]({% slug <%= cat["slug"] %> %})
 % end # categories

@@ -5,7 +5,7 @@
     using Kendo.Mvc.UI;
     using System.Linq;
     using Kendo.Mvc.Tests;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class ModelDescriptorTests
     {

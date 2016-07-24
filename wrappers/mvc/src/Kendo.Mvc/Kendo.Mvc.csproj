@@ -305,6 +305,11 @@
     <Compile Include="Infrastructure\Implementation\RouteDataCache.cs" />
     <Compile Include="Infrastructure\Implementation\Signature.cs" />
     <Compile Include="Infrastructure\IRouteDataCache.cs" />
+    <Compile Include="Infrastructure\Licensing.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicense.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicenseProvider.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicenseStatus.cs" />
+    <Compile Include="Infrastructure\Licensing\RegistryUtilities.cs" />
     <Compile Include="Resources\Messages.bg-BG.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2698,4 +2703,18 @@
     <Compile Include="UI\Editor\Settings\EditorPasteCleanupSettings.cs" />
     <Compile Include="UI\Editor\Fluent\EditorPasteCleanupSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Editor\Settings\EditorDeserializationSettings.cs" /><Compile Include="UI\Editor\Fluent\EditorDeserializationSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Editor\Settings\EditorDeserializationSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorDeserializationSettingsBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Gantt\Settings\GanttRangeSettings.cs" />
+    <Compile Include="UI\Gantt\Fluent\GanttRangeSettingsBuilder.cs" />
+    <Compile Include="UI\Gantt\Settings\GanttViewRangeSettings.cs" />
+    <Compile Include="UI\Gantt\Fluent\GanttViewRangeSettingsBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Editor\Settings\EditorImmutablesSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorImmutablesSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>

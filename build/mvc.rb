@@ -39,17 +39,15 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
             .include(MVC6_SRC_ROOT + '**/*.snk')
             .include(MVC6_SRC_ROOT + '**/*.json')
 
-MVC6_VERSION = "#{VERSION_YEAR}.#{VERSION_Q}.#{VERSION_DATE}"
+MVC6_PACKAGE_BASENAME = "Telerik.UI.for.AspNet.Core"
+MVC6_REDIST_COMMERCIAL = FileList["#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg"]
+                         .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
+MVC6_REDIST_TRIAL = FileList["#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg"]
+                    .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
+MVC6_REDIST = FileList[MVC6_REDIST_COMMERCIAL, MVC6_REDIST_TRIAL]
 
-# For the official release use:
-#MVC6_VERSION = VERSION
-
-MVC6_REDIST = FileList["Kendo.Mvc.#{MVC6_VERSION}.nupkg"]
-            .include("Kendo.Mvc.#{MVC6_VERSION}.symbols.nupkg")
-            .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
-
-MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/Kendo.Mvc.#{MVC6_VERSION}.nupkg"
-MVC6_NUGET_SYMBOLS = "#{MVC6_SRC_ROOT}bin/Release/Kendo.Mvc.#{MVC6_VERSION}.symbols.nupkg"
+MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg"
+MVC6_NUGET_TRIAL = "#{MVC6_SRC_ROOT}bin/Release/#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg"
 
 rule 'Kendo.Mvc.xml' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll'
 
@@ -111,7 +109,7 @@ MVC_DEMOS = FileList[MVC_DEMOS_ROOT + '**/*']
                         .sub('demos/mvc/content', MVC_DEMOS_ROOT + 'Content')
                 )
                 .include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll')
-                .include(FileList[SPREADSHEET_REDIST_NET45].pathmap(MVC_DEMOS_ROOT + 'bin/%f'))
+                .include(FileList[SPREADSHEET_REDIST_NET40].pathmap(MVC_DEMOS_ROOT + 'bin/%f'))
                 .exclude('**/System*.dll')
                 .exclude('**/*.csproj')
                 .exclude('**/*resources.dll')
@@ -128,9 +126,9 @@ class ProjectFileTask < Rake::FileTask
     def execute(args=nil)
         content = File.read(name)
 
-        content.gsub!(/"version": ".*"/, '"version": "' + MVC6_VERSION + '"')
+        content.sub!(/"version": ".*"/, '"version": "' + VERSION + '"')
 
-        puts "Updating project version to #{MVC6_VERSION}"
+        puts "Updating project version to #{VERSION}"
 
         File.open(name, 'w') do |file|
             file.write content
@@ -138,7 +136,7 @@ class ProjectFileTask < Rake::FileTask
     end
 
     def needed?
-        super || !File.read(name).include?(MVC6_VERSION)
+        super || !File.read(name).include?(VERSION)
     end
 end
 
@@ -225,7 +223,7 @@ namespace :mvc do
                                        MVC6_SRC_ROOT + 'project.json']
 
     desc('Copy the minified CSS and JavaScript to Content and Scripts folder')
-    task :assets => ['mvc:assets_js', 'mvc:assets_css', 'mvc_6:assets']
+    task :assets => ['mvc:assets_js', 'mvc:assets_css', 'mvc_6:assets', 'spreadsheet:binaries']
 
     desc('Build ASP.NET MVC binaries')
     task :binaries => [
@@ -238,7 +236,6 @@ namespace :mvc do
         MVC_BIN_ROOT + 'Release-MVC5-Trial/Kendo.Mvc.dll',
         MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll',
         MVC6_NUGET,
-        MVC6_NUGET_SYMBOLS,
         'dist/binaries/',
         'dist/binaries/demos/Kendo.Mvc.Examples/bin/',
         'dist/binaries/mvc-6/'
@@ -341,14 +338,46 @@ else
 
     # MVC6 package
     file MVC6_NUGET => MVC6_SOURCES do
-        sh "cd #{MVC6_SRC_ROOT} && dnu restore && dnu pack --configuration Release"
+        sh "cd #{MVC6_SRC_ROOT} && dotnet restore && dotnet pack --configuration Release"
+
+        binpath = File.join(MVC6_SRC_ROOT, 'bin', 'Release')
+        outpkg = File.join(binpath, "Kendo.Mvc.#{VERSION}.nupkg")
+        newpkg = File.join(binpath, "#{MVC6_PACKAGE_BASENAME}.#{VERSION}.nupkg")
+
+        update_package_id(outpkg, newpkg, 'Kendo.Mvc', 'Telerik.UI.for.AspNet.Core');
     end
 
-    file MVC6_NUGET_SYMBOLS => MVC6_NUGET
+    file MVC6_NUGET_TRIAL => MVC6_NUGET do
+        binpath = File.join(MVC6_SRC_ROOT, 'bin', 'Release')
+        outpkg = File.join(binpath, "Kendo.Mvc.#{VERSION}.nupkg")
+        newpkg = File.join(binpath, "#{MVC6_PACKAGE_BASENAME}.Trial.#{VERSION}.nupkg")
+
+        update_package_id(outpkg, newpkg, 'Kendo.Mvc', 'Telerik.UI.for.AspNet.Core.Trial');
+    end
 
     tree :to => 'dist/binaries/mvc-6/',
          :from => MVC6_REDIST,
          :root => MVC6_SRC_ROOT + 'bin/Release/'
+end
+
+def update_package_id(in_file, out_file, old_id, new_id)
+    buffer = Zip::OutputStream.write_buffer do |out|
+        Zip::File.open(in_file) do |zip_file|
+            zip_file.entries.each do |file|
+                content = file.get_input_stream.read
+                if file.name == "#{old_id}.nuspec"
+                    puts "Updating package id to #{new_id}"
+                    content = content.sub("<id>#{old_id}</id>", "<id>#{new_id}</id>")
+                end
+
+                out.put_next_entry(file.name)
+                out.write content
+            end
+        end
+    end
+
+    puts "Writing #{out_file}"
+    File.open(out_file, "wb") {|f| f.write(buffer.string) }
 end
 
 ['commercial-source', 'internal.commercial-source'].each do |bundle|
@@ -356,9 +385,16 @@ end
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk",
               :from => 'wrappers/mvc/src/shared/Source.snk'
 
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/AspNet.Core/Kendo.Mvc/Kendo.snk",
+              :from => 'wrappers/mvc/src/shared/Source.snk'
+
     # Copy CommonAssemblyInfo.cs because the 'shared' folder is not distributed
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs",
               :from => 'wrappers/mvc/src/shared/CommonAssemblyInfo.cs'
+
+    # Copy CommonAssemblyInfo.cs because the 'shared' folder is not distributed
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs",
+              :from => 'wrappers/mvc/src/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs.source'
 
     # Copy Kendo.Mvc.csproj (needed for the next task)
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj",
@@ -387,9 +423,16 @@ end
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc.sln",
               :from => 'wrappers/mvc/Kendo.Mvc.sln'
 
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/AspNet.Core/Kendo.Mvc.sln",
+              :from => 'wrappers/mvc-6/Kendo.Mvc.sln'
+
     # Patch the solution - leave only the Kendo.Mvc project
 
     file "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc.sln" do |t|
+        patch_solution t
+    end
+
+    file "dist/bundles/aspnetmvc.#{bundle}/src/AspNet.Core/Kendo.Mvc.sln" do |t|
         patch_solution t
     end
 end

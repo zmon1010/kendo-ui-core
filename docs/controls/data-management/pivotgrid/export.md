@@ -46,7 +46,7 @@ the [`rowHeaderTemplate`](/api/javascript/ui/pivotgrid#configuration-rowHeaderTe
 
 The [`excelExport`](/api/javascript/ui/grid#events-excelExport) event allows customization of the generated Excel document. The `workbook` event argument exposes the generated Excel workbook configuration.
 
-For a better understanding about how Excel documents work, check the [introductory help topic on Excel](/framework/excel/introduction#create-excel-document).
+For a better understanding about how Excel documents work, check the [introductory help topic on Excel]({% slug introduction_excelexport_kendoui %}}#create-excel-document).
 
 ### Templates
 
@@ -56,7 +56,7 @@ Kendo UI PivotGrid does not use [`dataCellTemplate`](/api/javascript/ui/pivotgri
 
 ### JavaScript "JSZip Is Not Found" Error
 
-Clicking the **Export to Excel** button or calling the `saveAsExcel` throws an exception if the JSZip JavaScript library is not found. o solve this issue, include JSZip in the page. For more information on this, see the [introductory help topic about exporting to Excel](/framework/excel/introduction#requirements).  
+Clicking the **Export to Excel** button or calling the `saveAsExcel` throws an exception if the JSZip JavaScript library is not found. o solve this issue, include JSZip in the page. For more information on this, see the [introductory help topic about exporting to Excel]({% slug introduction_excelexport_kendoui %}#requirements).  
 
 ### Export Not Working in Internet Explorer and Safari
 
@@ -93,16 +93,18 @@ The example below demonstrates how to specify the server proxy URL.
 
 ## Further Reading
 
-* [Learn More about Creating Excel Documents with Kendo UI](/framework/excel/introduction)
-* [Learn How to Save Files with Kendo UI](/framework/save-files/introduction)
-* [`kendo.ooxml.Workbook` API Reference](/api/javascript/ooxml/Workbook)
+* [Learn More about Creating Excel Documents with Kendo UI]({% slug introduction_excelexport_kendoui %}})
+* [Learn How to Save Files with Kendo UI]({% slug overview_savingfiles_kendoui %})
+* [API Reference: `kendo.ooxml.Workbook`](/api/javascript/ooxml/Workbook)
 
 ## See Also
 
-Other articles on Kendo UI PivotGrid:
+Other articles on the Kendo UI PivotGrid:
 
 * [Overview]({% slug overview_kendoui_pivotgrid_widget %})
 * [PivotConfigurator]({% slug overview_kendoui_pivotconfigurator_pivotgridwidget %})
 * [Fundamentals]({% slug fundamentals_pivotgrid_widget %})
 * [OLAP Cube Setup]({% slug olap_cube_setup_pivotgrid_widget %})
 * [Frequently Asked Questions]({% slug frequently_asked_questions_pivotgrid %})
+
+For how-to examples on the Kendo UI PivotGrid widget, browse its [**How To** documentation folder]({% slug howto_add_dimension_column_axis_pivotgrid %}).

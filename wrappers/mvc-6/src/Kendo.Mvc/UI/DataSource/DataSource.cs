@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.UI
 {

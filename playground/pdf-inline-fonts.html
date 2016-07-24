@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="inline-font.css" />
+    <script src="loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.pdf.js",
+         "./console.time.js",
+         "./test-pdf-helpers.js"
+     ]);
+    </script>
+    <script src="./pako.min.js"></script>
+    <style>
+     #test {
+       padding: 2em;
+       border: 2px solid red;
+       display: inline-block;
+       margin: 2em;
+       font-size: 30px;
+       font-family: "TEST";
+     }
+    </style>
+  </head>
+  <body>
+    <button onclick="pdf('#test')">PDF</button>
+    <div id="test">
+      Kendo ♥
+    </div>
+  </body>
+</html>

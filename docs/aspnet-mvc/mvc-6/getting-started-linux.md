@@ -145,13 +145,13 @@ As a result, the response demonstrated in the example below is delivered.
 
 ### Add NuGet Packages
 
-**Step 1.** Open the `project.json` file, using a text editor, and add the `Kendo.Mvc` dependency.
+**Step 1.** Open the `project.json` file, using a text editor, and add the `Telerik.UI.for.AspNet.Core` dependency.
 
 ###### Example
 
         "dependencies": {
             ...
-            "Kendo.Mvc": "2015.3.1120"
+            "Telerik.UI.for.AspNet.Core": "{{ site.mvcCoreVersion }}"
         }
 
 **Step 2.** Navigate to the project folder and restore the packages again.
@@ -160,12 +160,36 @@ As a result, the response demonstrated in the example below is delivered.
 
         dnu restore
 
-**Step 3.** Open `Startup.cs`, using a text editor (IDE), and locate the `ConfigureServices` method. Add the snippet demonstrated in the example below.
+**Step 3.** Open `Startup.cs`, using a text editor (IDE) and update it as described below.
+
+Locate the `ConfigureServices` method and add a call to `services.AddKendo` at the end.
 
 ###### Example
 
-        // Register UI for ASP.NET MVC helpers
-        services.AddKendo();
+        public void ConfigureServices(IServiceCollection services)
+        {
+            ...
+            // Maintain property names during serialization. See:
+            // https://github.com/aspnet/Announcements/issues/194
+            services
+                .AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
+            // Add Kendo UI services to the services container
+            services.AddKendo();
+        }
+
+Locate the `Configure` method and add a call to `app.UseKendo` at the end.
+
+###### Example
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            ...
+
+            // Configure Kendo UI
+            app.UseKendo(env);
+        }
 
 **Step 4.** Import the `Kendo.Mvc.UI` namespace in `~/Views/_ViewImports.cshtml`.
 

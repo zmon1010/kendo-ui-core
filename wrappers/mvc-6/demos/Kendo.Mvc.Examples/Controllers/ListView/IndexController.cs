@@ -4,7 +4,7 @@ using Kendo.Mvc.Examples.Models;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using System;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
@@ -42,9 +42,9 @@ namespace Kendo.Mvc.Examples.Controllers
             {
                 ProductID = product.ProductID,
                 ProductName = product.ProductName,
-                UnitPrice = product.UnitPrice ?? 0,
-                UnitsInStock = product.UnitsInStock ?? 0,
-                UnitsOnOrder = product.UnitsOnOrder ?? 0,
+                UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
+                UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(int),
+                UnitsOnOrder = product.UnitsOnOrder.HasValue ? product.UnitsOnOrder.Value : default(int),
                 Discontinued = product.Discontinued,
                 LastSupply = DateTime.Today
             });

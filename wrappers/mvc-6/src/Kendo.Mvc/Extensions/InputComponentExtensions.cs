@@ -1,5 +1,5 @@
 ﻿using Kendo.Mvc.UI;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 
 namespace Kendo.Mvc.Extensions

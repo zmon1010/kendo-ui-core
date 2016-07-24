@@ -39,6 +39,7 @@
         "shift+:alphanum": "edit",
         ":alphanum": "edit",
         "ctrl+:alphanum": "ctrl",
+        "alt+ctrl+:alphanum": "edit",
         ":edit": "edit"
     };
 
@@ -428,9 +429,18 @@
                 this.originFrame = object.pane;
             }
 
+            if (object.type === "editor") {
+                // XXX: canceling the edits, because they might not
+                // validate.  Not sure it's the Right Thing.
+                this.onEditorEsc();
+                this.openCustomEditor();
+                event.preventDefault();
+                return;
+            }
+
             if (this.editor.canInsertRef(false) && object.ref) {
                 this._workbook.activeSheet()._setFormulaSelections(this.editor.highlightedRefs());
-                this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection);
+                this.navigator.startSelection(object.ref, this._selectionMode, this.appendSelection, event.shiftKey);
                 event.preventDefault();
                 return;
             } else {
@@ -797,6 +807,10 @@
             this._scrollInterval = null;
         },
 
+        openCustomEditor: function() {
+            this.view.openCustomEditor();
+        },
+
         openFilterMenu: function(event) {
             var object = this.objectAt(event);
             var sheet = this._workbook.activeSheet();
@@ -864,7 +878,7 @@
         },
 
         onEditorEsc: function() {
-            this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet()._viewActiveCell()));
+            this.resetEditorValue();
             this.editor.deactivate();
 
             this.clipboardElement.focus();
@@ -917,6 +931,10 @@
         },
 
 ////////////////////////////////////////////////////////////////////
+        resetEditorValue: function() {
+            this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet()._viewActiveCell()));
+        },
+
         deactivateEditor: function(callback, options) {
             var viewEditor = this.view.editor;
 
@@ -943,7 +961,11 @@
             this.enableEditor(false);
         },
 
-        enableEditor: function(enable, focusLastActive) {
+        enableEditor: function(enable, focusLastActive, event) {
+            if (event && event.action === "revert") {
+                this.resetEditorValue();
+            }
+
             enable = enable === undefined || enable;
 
             this._enableEditorEvents(enable);

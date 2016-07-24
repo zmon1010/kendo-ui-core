@@ -62,6 +62,14 @@ public class VirtualTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("itemHeight", value);
     }
 
+    public java.lang.String getMapValueTo() {
+        return (java.lang.String)getProperty("mapValueTo");
+    }
+
+    public void setMapValueTo(java.lang.String value) {
+        setProperty("mapValueTo", value);
+    }
+
     public String getValueMapper() {
         Function property = ((Function)getProperty("valueMapper"));
         if (property != null) {

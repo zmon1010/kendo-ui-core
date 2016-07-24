@@ -12,9 +12,9 @@
             items.Add().Template("<label>POSITION:</label>");
             items.Add().Type(CommandType.ButtonGroup).Buttons(buttons =>
             {
-                buttons.Add().Text("Right").Togglable(true).Group("position");
-                buttons.Add().Text("Center").Togglable(true).Group("position").Selected(true);
                 buttons.Add().Text("Left").Togglable(true).Group("position");
+                buttons.Add().Text("Center").Togglable(true).Group("position").Selected(true);
+                buttons.Add().Text("Right").Togglable(true).Group("position");
             });
             items.Add().Type(CommandType.Separator);
             items.Add().Template("<label>BACKGROUND:</label><div type='color' id='background-picker'></div>");

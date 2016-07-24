@@ -31,7 +31,7 @@ var __meta__ = { // jshint ignore:line
         KWINDOWRESIZEHANDLES = ".k-resize-handle",
         KOVERLAY = ".k-overlay",
         KCONTENTFRAME = "k-content-frame",
-        LOADING = "k-loading",
+        LOADING = "k-i-loading",
         KHOVERSTATE = "k-state-hover",
         KFOCUSEDSTATE = "k-state-focused",
         MAXIMIZEDSTATE = "k-window-maximized",
@@ -235,13 +235,13 @@ var __meta__ = { // jshint ignore:line
             this.title(options.title);
 
             for (var i = 0; i < dimensions.length; i++) {
-                var value = options[dimensions[i]];
-                if (value && value != Infinity) {
+                var value = options[dimensions[i]] || "";
+                if (value != Infinity) {
                     wrapper.css(dimensions[i], value);
                 }
             }
 
-            if (maxHeight && maxHeight != Infinity) {
+            if (maxHeight != Infinity) {
                 this.element.css("maxHeight", maxHeight);
             }
 
@@ -252,6 +252,9 @@ var __meta__ = { // jshint ignore:line
                     wrapper.width(constrain(width, options.minWidth, options.maxWidth));
                 }
             }
+            else {
+                wrapper.width("");
+            }
 
             if (height) {
                 if (height.toString().indexOf("%") > 0) {
@@ -259,6 +262,9 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     wrapper.height(constrain(height, options.minHeight, options.maxHeight));
                 }
+            }
+            else {
+                wrapper.height("");
             }
 
             if (!options.visible) {
@@ -672,7 +678,7 @@ var __meta__ = { // jshint ignore:line
                 options = that.options,
                 showOptions = this._animationOptions("open"),
                 contentElement = wrapper.children(KWINDOWCONTENT),
-                overlay,
+                overlay, otherModalsVisible,
                 doc = $(document);
 
             if (!that.trigger(OPEN)) {
@@ -691,11 +697,12 @@ var __meta__ = { // jshint ignore:line
                 options.visible = true;
 
                 if (options.modal) {
-                    overlay = that._overlay(false);
+                    otherModalsVisible = !!that._modals().length;
+                    overlay = that._overlay(otherModalsVisible);
 
                     overlay.kendoStop(true, true);
 
-                    if (showOptions.duration && kendo.effects.Fade) {
+                    if (showOptions.duration && kendo.effects.Fade && !otherModalsVisible) {
                         var overlayFx = kendo.fx(overlay).fadeIn();
                         overlayFx.duration(showOptions.duration || 0);
                         overlayFx.endValue(0.5);
@@ -995,6 +1002,8 @@ var __meta__ = { // jshint ignore:line
 
                 that._onDocumentResize();
             });
+
+            return this;
         },
 
         minimize: function() {
@@ -1010,6 +1019,8 @@ var __meta__ = { // jshint ignore:line
 
                 that.options.isMinimized = true;
             });
+
+            return this;
         },
 
         pin: function(force) {
@@ -1250,8 +1261,8 @@ var __meta__ = { // jshint ignore:line
     templates = {
         wrapper: template("<div class='k-widget k-window' />"),
         action: template(
-            "<a role='button' href='\\#' class='k-window-action k-link'>" +
-                "<span role='presentation' class='k-icon k-i-#= name.toLowerCase() #'>#= name #</span>" +
+            "<a role='button' href='\\#' class='k-window-action k-link' aria-label='#= name #'>" +
+                "<span class='k-icon k-i-#= name.toLowerCase() #'></span>" +
             "</a>"
         ),
         titlebar: template(

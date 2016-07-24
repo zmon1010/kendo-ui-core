@@ -12,16 +12,18 @@ var kendo = window.kendo,
     EditorUtils = Editor.EditorUtils,
     RangeUtils = Editor.RangeUtils,
     Command = Editor.Command,
-    NS = ".kendoEditor",
+    NS = "kendoEditor",
     ACTIVESTATE = "k-state-active",
     SELECTEDSTATE = "k-state-selected",
     Tool = Editor.Tool,
     ToolTemplate = Editor.ToolTemplate,
     InsertHtmlCommand = Editor.InsertHtmlCommand,
     BlockFormatFinder = Editor.BlockFormatFinder,
-    registerTool = Editor.EditorUtils.registerTool;
+    registerTool = Editor.EditorUtils.registerTool,
+    getTouches = kendo.getTouches;
+var template = kendo.template;
 
-var editableCell = "<td>" + Editor.emptyElementContent + "</td>";
+var columnTemplate = "<td style='width:#=width#%;'>#=content#</td>";
 
 var tableFormatFinder = new BlockFormatFinder([{tags:["table"]}]);
 
@@ -29,9 +31,13 @@ var TableCommand = InsertHtmlCommand.extend({
     _tableHtml: function(rows, columns) {
         rows = rows || 1;
         columns = columns || 1;
+        var columnHtml = template(columnTemplate)({ width: 100 / columns, content: Editor.emptyTableCellContent });
 
         return "<table class='k-table' data-last>" +
-                   new Array(rows + 1).join("<tr>" + new Array(columns + 1).join(editableCell) + "</tr>") +
+                    new Array(rows + 1).join(
+                    "<tr>" +
+                        new Array(columns + 1).join(columnHtml) +
+                    "</tr>") +
                "</table>";
     },
 
@@ -163,15 +169,17 @@ var InsertTableTool = PopupTool.extend({
             };
         }
 
-        element
-            .on("mousemove" + NS, function(e) {
+        element.autoApplyNS(NS)
+            .on("mousemove", function(e) {
                 that._setTableSize(tableFromLocation(e));
             })
-            .on("mouseleave" + NS, function() {
+            .on("mouseleave", function() {
                 that._setTableSize();
             })
-            .on("mouseup" + NS, function(e) {
-                that._exec(tableFromLocation(e));
+            .on("down", function(e) {
+                e.preventDefault();
+                var touch = getTouches(e)[0];
+                that._exec(tableFromLocation(touch.location));
             });
     },
 
@@ -270,7 +278,7 @@ var InsertTableTool = PopupTool.extend({
 
     _close: function() {
         PopupTool.fn._close.call(this);
-        this.popup().element.off(NS);
+        this.popup().element.off("." + NS);
     },
 
     update: function (ui, nodes) {
@@ -294,12 +302,17 @@ var InsertRowCommand = Command.extend({
             td = td.parentNode;
         }
 
+        if (this.immutables() && Editor.Immutables.immutableParent(td)) {
+            return;
+        }
+
         row = td.parentNode;
+
         cellCount = row.children.length;
         newRow = row.cloneNode(true);
 
         for (var i = 0; i < row.cells.length; i++) {
-            newRow.cells[i].innerHTML = Editor.emptyElementContent;
+            newRow.cells[i].innerHTML = Editor.emptyTableCellContent;
         }
 
         if (this.options.position == "before") {
@@ -324,13 +337,17 @@ var InsertColumnCommand = Command.extend({
             newCell,
             position = this.options.position;
 
+        if (this.immutables() && Editor.Immutables.immutableParent(td)) {
+            return;
+        }
+
         columnIndex = dom.findNodeIndex(td, true);
 
         for (i = 0; i < rows.length; i++) {
             cell = rows[i].cells[columnIndex];
 
             newCell = cell.cloneNode();
-            newCell.innerHTML = Editor.emptyElementContent;
+            newCell.innerHTML = Editor.emptyTableCellContent;
 
             if (position == "before") {
                 dom.insertBefore(newCell, cell);
@@ -349,7 +366,13 @@ var DeleteRowCommand = Command.extend({
         var rows = RangeUtils.mapAll(range, function(node) {
             return $(node).closest("tr")[0];
         });
-        var table = dom.closest(rows[0], "table");
+        var row = rows[0];
+
+        if (this.immutables() && Editor.Immutables.immutableParent(row)) {
+            return;
+        }
+
+        var table = dom.closest(row, "table");
         var focusElement;
 
         if (table.rows.length <= rows.length) {
@@ -361,7 +384,7 @@ var DeleteRowCommand = Command.extend({
             dom.remove(table);
         } else {
             for (var i = 0; i < rows.length; i++) {
-                var row = rows[i];
+                row = rows[i];
                 dom.removeTextSiblings(row);
 
                 focusElement = dom.next(row) || dom.prev(row);
@@ -388,6 +411,10 @@ var DeleteColumnCommand = Command.extend({
             columnIndex = dom.findNodeIndex(td, true),
             columnCount = rows[0].cells.length,
             focusElement, i;
+
+        if (this.immutables() && Editor.Immutables.immutableParent(td)) {
+            return;
+        }
 
         if (columnCount == 1) {
             focusElement = dom.next(table);

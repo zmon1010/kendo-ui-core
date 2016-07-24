@@ -7,11 +7,6 @@
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
     }
 
-    function triggerTouchEvent(element, type, info) {
-        info.target = element;
-        return element.trigger($.Event(type, { originalEvent: { changedTouches: [ info ] }}));
-    }
-
     module("editing", {
         setup: function() {
             kendo.UserEvents.minHold(50);

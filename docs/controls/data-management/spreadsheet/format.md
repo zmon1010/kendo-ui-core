@@ -30,7 +30,7 @@ The example below demonstrates how to display positive numbers, or zero, in gree
 
     [Green]#.###;[Red]#.###
 
-The example below demonstrates how to display positive numbers in green, negative numbers in red, and the the "Zero" text in blue if the number is zero.
+The example below demonstrates how to display positive numbers in green, negative numbers in red, and the `"Zero"` text in blue if the number is zero.
 
 ###### Example
 
@@ -61,7 +61,7 @@ In this case it is not clear whether only up to four sections are allowed, of wh
 
 ### Default Format Strings
 
-The default format strings that are shown in the formatting drop-down are stored in the `kendo.spreadsheet.formatting` object.
+The default format strings that are shown in the formatting drop-down are stored in the `kendo.spreadsheet.formats` object.
 
 | FORMAT IDENTIFIER | VALUE                                                                         |
 |-------------------|-------------------------------------------------------------------------------|
@@ -75,7 +75,7 @@ The default format strings that are shown in the formatting drop-down are stored
 | dateTime          | Format value as date-time                                                     |
 | duration          | Format as elapsed duration (in hours / minutes / seconds)                     |
 
-You can use the above formats with the [`range` value method](/api/javascript/spreadsheet/range#methods-format), like this: `sheet.range("A1").format(kendo.spreadsheet.formatting.currency)`.
+You can use the above formats with the [`range` value method](/api/javascript/spreadsheet/range#methods-format), like this: `sheet.range("A1").format(kendo.spreadsheet.formats.currency)`.
 
 ### Text and Numbers
 
@@ -150,9 +150,11 @@ The Spreadsheet does not support the following options otherwise available in Ex
 
 ## See Also
 
-Other articles on Kendo UI Spreadsheet:
+Other articles on the Kendo UI Spreadsheet:
 
+* [Overview]({% slug overview_spreadsheet_widget %})
 * [Custom Functions]({% slug custom_functions_spreadsheet_widget %})
+* [Custom Cell Editors]({% slug custom_editors_spreadsheet_widget %})
 * [Store Data as JSON]({% slug loadand_saveas_json_spreadsheet_widget %})
 * [Export to Excel]({% slug export_toexcel_spreadsheet_widget %})
 * [Server-Side Processing]({% slug serverside_processing_spreadsheet_widget %})

@@ -54,9 +54,9 @@ def update_nuget_reference name
     return unless File.exists? name
 
     content = File.read(name)
-    content.gsub!(/"Kendo.Mvc": ".*"/, '"Kendo.Mvc": "' + MVC6_VERSION + '"')
+    content.sub!(/"Kendo.Mvc": ".*"/, '"Telerik.UI.for.AspNet.Core": "' + VERSION + '"')
 
-    puts "Updating examples NuGet reference to #{MVC6_VERSION}"
+    puts "Updating examples NuGet reference to #{VERSION}"
 
     File.open(name, 'w') do |file|
         file.write content

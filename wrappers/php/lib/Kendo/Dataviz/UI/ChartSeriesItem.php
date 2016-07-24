@@ -423,7 +423,7 @@ The last element is always created like a rectangle since there is no following 
     }
 
     /**
-    * The chart series outliers configuration.
+    * The chart series outliers configuration. Applies to mild outliers. Also check series.extremes.
     * @param \Kendo\Dataviz\UI\ChartSeriesItemOutliers|array $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */
@@ -432,7 +432,7 @@ The last element is always created like a rectangle since there is no following 
     }
 
     /**
-    * The chart series extremes configuration.
+    * The chart series extremes configuration. Applies to extreme outliers. Also check series.outliers.
     * @param \Kendo\Dataviz\UI\ChartSeriesItemExtremes|array $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */

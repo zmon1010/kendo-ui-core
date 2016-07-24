@@ -142,11 +142,11 @@
     </div>
    <div class="box wide">
         <div class="box-col">
-            <h4><input type="checkbox" id="dynamicSlope"/> Dynamic Slope</h4>
+            <h4>@Html.CheckBox("dynamicSlope") @Html.Label("dynamicSlope", "Dynamic Slope")</h4>
             <i>The slope for each segment depends on the ratio between the current and the next value</i>
         </div>
         <div class="box-col">
-            <h4><input type="checkbox" id="dynamicHeight"/> Dynamic Height</h4>
+            <h4>@Html.CheckBox("dynamicHeight") @Html.Label("dynamicHeight", "Dynamic Height")</h4>
             <i>The height of the segment is the overall percentage for that dataItem</i>
         </div>
         <div class="box-col">
@@ -165,20 +165,21 @@
             for (var idx in chartNames) {
                 var chart = $("#" + chartNames[idx]).data("kendoChart");
 
-                var options =
-                {
+                var options = {
                     seriesDefaults: {
-                        neckRatio: slider.value(),
-                        dynamicHeight : $('#dynamicHeight').is(':checked'),
-                        dynamicSlope : $('#dynamicSlope').is(':checked'),
-                        labels: {
-                            visible: true,
-                            background: "transparent",
-                            color:"white",
-                            format: "N0"
-                        },
+                        funnel: {
+                            neckRatio: slider.value(),
+                            dynamicHeight: $('#dynamicHeight').is(':checked'),
+                            dynamicSlope: $('#dynamicSlope').is(':checked'),
+                            labels: {
+                                visible: true,
+                                background: "transparent",
+                                color: "white",
+                                format: "N0"
+                            }
+                        }
                     }
-                }
+                };
 
                 chart.setOptions(options);
                 slider.enable(!options.seriesDefaults.dynamicSlope);

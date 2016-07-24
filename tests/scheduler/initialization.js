@@ -1064,7 +1064,7 @@
         equal(elements.length, 1);
     });
 
-    test("scheduler items() method returns week event", function() {
+    tzTest("Sofia", "scheduler items() method returns week event", function() {
         var scheduler = new Scheduler(container, {
             date: new Date("2013-06-05T10:00:00.000Z"),
             height: 100,

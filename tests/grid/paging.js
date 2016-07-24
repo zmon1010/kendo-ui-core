@@ -92,4 +92,55 @@
 
         deepEqual(grid.dataSource, scrollable.dataSource);
     });
+
+    test("page event is raised when page is change via the pager", 1, function() {
+
+        var grid = new Grid(table(), {
+            dataSource: {
+                data:[{text: 1, value: 1}, {text:2, value:2}],
+                pageSize: 1
+            },
+            pageable: true,
+            page: function(e) {
+                equal(e.page, 2);
+            }
+        });
+
+        grid.wrapper.find(".k-pager-wrap li:last > a").click();
+    });
+
+    test("resetting DataSource does remove detachs pager events", 1, function() {
+        var grid = new Grid(table(), {
+            pageable: true,
+            page: function() {
+                ok(true);
+            }
+        });
+
+        grid.setDataSource(new kendo.data.DataSource({
+            data:[{text: 1, value: 1}, {text:2, value:2}],
+            pageSize: 1
+        }));
+
+        grid.wrapper.find(".k-pager-wrap li:last > a").click();
+    });
+
+    test("preventing page event prevents DataSource state change", 1, function() {
+        var grid = new Grid(table(), {
+            dataSource: {
+                data:[{text: 1, value: 1}, {text:2, value:2}],
+                pageSize: 1
+            },
+            pageable: true,
+            page: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        grid.wrapper.find(".k-pager-wrap li:last > a").click();
+
+        equal(grid.dataSource.page(), 1);
+    });
+
+
 })();

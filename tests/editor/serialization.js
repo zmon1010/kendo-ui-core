@@ -715,4 +715,111 @@ test("multiple css properties are persisted", function() {
         equal(editor.value(), "new content", "update with custom");
     });
 
+    editor_module("editor serialization with immutables enabled", {
+        setup: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+        }
+    });
+
+    function setEditorImmutables(immutablesOptions) {
+        editor.options.immutables = immutablesOptions || true;
+        editor._initializeImmutables();
+        editor.immutables.randomId = function() { return 12345; };
+    }
+
+    test('immutable container is serialized to an empty node with the same tag name', function() {
+        setEditorImmutables();
+        editor.value('<p>foo</p><p contenteditable="false">immutable content</p>');
+        editor.options.serialization.immutables = editor.immutables;
+        equal(editor.value(), '<p>foo</p><p k-immutable="12345"></p>');
+    });
+
+    test('two immutable containers is serialized to an empty node with the same tag name', function() {
+        setEditorImmutables();
+        editor.value('<p>foo</p><p contenteditable="false">immutable content</p><p>foo</p><p contenteditable="false">immutable content</p>');
+        editor.options.serialization.immutables = editor.immutables;
+        equal(editor.value(), '<p>foo</p><p k-immutable="12345"></p><p>foo</p><p k-immutable="12345"></p>');
+    });
+
+    test('immutable container widht children is serialized to an empty node with the same tag name', function() {
+        setEditorImmutables();
+        editor.value('<div contenteditable="false">immutable <div>child div</div> content</div>');
+        editor.options.serialization.immutables = editor.immutables;
+        equal(editor.value(), '<div k-immutable="12345"></div>');
+    });
+
+    test('immutable container is serialized to a html string difeined in serialization callback', function() {
+        setEditorImmutables({
+            serialization: function() {
+                return '<ins></ins>';
+            }
+        });
+        editor.value('<p>foo</p><p contenteditable="false">immutable content</p>');
+        editor.options.serialization.immutables = editor.immutables;
+        equal(editor.value(), '<p>foo</p><ins k-immutable="12345"></ins>');
+    });
+
+    test('immutable container is serialized to a html string difeined in serialization template', function() {
+        setEditorImmutables({
+            serialization: "<#= data.nodeName # data=\"immutable-element\"></#= data.nodeName #>"
+        });
+        editor.value('<p>foo</p><p contenteditable="false">immutable content</p>');
+        editor.options.serialization.immutables = editor.immutables;
+        equal(editor.value(), '<p>foo</p><P data="immutable-element" k-immutable="12345"></P>');
+    });
+
+    editor_module("editor deserialization with immutables enabled", {
+        setup: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+        }
+    });
+
+    test('immutable container is deserialized', function() {
+        setEditorImmutables();
+        editor.value('<p>foo</p><p contenteditable="false">immutable content</p>');
+
+        var options = editor.options;
+        options.serialization.immutables = editor.immutables;
+        var value = editor.value();
+        options.serialization.immutables = null;
+
+        options.deserialization.immutables = editor.immutables;
+        editor.value(value);
+        options.deserialization.immutables = null;
+
+        equal(editor.value(), '<p>foo</p><p contenteditable="false">immutable content</p>');
+    });
+
+    test('immutable container is deserialized when callback options is apssed', function() {
+        setEditorImmutables({
+            deserialization: function(node, immutableNode) { immutableNode.style.backgroundColor = "red"; }
+        });
+
+        editor.value('<p>foo</p><p contenteditable="false">immutable content</p>');
+
+        var options = editor.options;
+        options.serialization.immutables = editor.immutables;
+        var value = editor.value();
+        options.serialization.immutables = null;
+
+        options.deserialization.immutables = editor.immutables;
+        editor.value(value);
+        options.deserialization.immutables = null;
+
+        equal(editor.value(), '<p>foo</p><p contenteditable="false" style="background-color:red;">immutable content</p>');
+    });
+
+    test('k-br is added after the last immutable element', function() {
+        editor.value('<p>foo</p><p contenteditable="false">immutable content</p>');
+        var lastChild = editor.body.lastChild;
+        equal(lastChild.nodeName, "BR");
+        ok($(lastChild).hasClass("k-br"));
+    });
+
+    test('k-br is added before the first immutable element', function() {
+        editor.value('<p contenteditable="false">immutable content</p>');
+        var firstChild = editor.body.firstChild;
+        equal(firstChild.nodeName, "BR");
+        ok($(firstChild).hasClass("k-br"));
+    });
 }());

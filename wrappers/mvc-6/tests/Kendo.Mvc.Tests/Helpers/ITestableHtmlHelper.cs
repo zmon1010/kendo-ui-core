@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures.Internal;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Kendo.Mvc.Tests
 {
-    public interface ITestableHtmlHelper : IHtmlHelper, ICanHasViewContext
+    public interface ITestableHtmlHelper : IHtmlHelper, IViewContextAware
     {
     }
 }

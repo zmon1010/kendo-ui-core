@@ -19,6 +19,7 @@
                                 '<span>Photo</span>' +
                                 '<span>Contact info</span>' +
                             '</div>',
+                        footerTemplate: 'Total #: instance.dataSource.total() # items found',
                         template: '<span class="k-state-default" style="background-image: url(\'../content/web/Customers/#:data.CustomerID#.jpg\')"></span>' +
                                   '<span class="k-state-default"><h3>#: data.ContactName #</h3><p>#: data.CompanyName #</p></span>',
                         dataSource: {
@@ -53,13 +54,17 @@
                     width: 50px;
                 }
 
+                .k-list-container > .k-footer {
+                    padding: 10px;
+                }
+
                 #customers-list .k-item {
                     line-height: 1em;
                     min-width: 300px;
                 }
-                
+
                 /* Material Theme padding adjustment*/
-                
+
                 .k-material #customers-list .k-item,
                 .k-material #customers-list .k-item.k-state-hover,
                 .k-materialblack #customers-list .k-item,

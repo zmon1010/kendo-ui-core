@@ -816,4 +816,16 @@
   <data name="Filter_SelectedItemsFormat" xml:space="preserve">
     <value>{0} selected items</value>
   </data>
+  <data name="Scheduler_View_Timeline" xml:space="preserve">
+    <value>Timeline</value>
+  </data>
+  <data name="Scheduler_View_TimelineMonth" xml:space="preserve">
+    <value>Timeline Month</value>
+  </data>
+  <data name="Scheduler_View_TimelineWeek" xml:space="preserve">
+    <value>Timeline Week</value>
+  </data>
+  <data name="Scheduler_View_TimelineWorkWeek" xml:space="preserve">
+    <value>Timeline Work Week</value>
+  </data>
 </root>

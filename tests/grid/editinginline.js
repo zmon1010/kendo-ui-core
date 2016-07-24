@@ -584,8 +584,8 @@
 
         grid.cancelRow();
 
-        ok(grid.table.find(".k-icon:first").hasClass("k-minus"));
-        ok(!grid.table.find(".k-icon:first").hasClass("k-plus"));
+        ok(grid.table.find(".k-icon:first").hasClass("k-i-collapse"));
+        ok(!grid.table.find(".k-icon:first").hasClass("k-i-expand"));
     });
 
     test("saveRow detaches button click handlers", function() {

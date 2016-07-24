@@ -30,6 +30,7 @@ navigation:
         position: 1
     "controls/data-management/grid/how-to/AngularJS":
         title: "AngularJS"
+        position: 1
     "controls/data-management/grid/how-to/Editing":
         title: "Editing"
         position: 2
@@ -154,6 +155,8 @@ navigation:
     "controls/hybrid/how-to":
         title: "How To"
         position: 23
+    "controls/hybrid/how-to/application":
+        title: "Application"
     "controls/hybrid/faq":
         title: "Frequently Asked Questions"
         position: 24
@@ -263,12 +266,15 @@ navigation:
         position: 10
     "aspnet-mvc/helpers/hybrid":
         title: "Hybrid UI"
+    "aspnet-mvc/how-to":
+        title: "How To"
+        position: 18
     "aspnet-mvc/troubleshoot":
         title: "Troubleshooting"
-        position: 18
+        position: 19
     "aspnet-mvc/tutorials":
         title: "Tutorials"
-        position: 19
+        position: 20
     "aspnet-mvc/tutorials/quickstart":
         title: "Quick Start Guide"
         position: 1
@@ -430,8 +436,10 @@ navigation:
         title: "Validator"
     "*autocomplete":
         title: "AutoComplete"
-    "*button":
+    "*/button":
         title: "Button"
+    "*/radiobutton":
+        title: "RadioButton"
     "*calendar":
         title: "Calendar"
     "*colorpalette":
@@ -460,13 +468,13 @@ navigation:
         title: "Spreadsheet"
     "*import-and-export-data":
         title: "Import and Export Data"
-        position: 4
+        position: 5
     "*localization-spreadsh":
         title: "Localization"
-        position: 5
+        position: 6
     "*end-user":
         title: "For the End User"
-        position: 6
+        position: 7
     "*listview":
         title: "ListView"
     "*maskedtextbox":
@@ -477,6 +485,8 @@ navigation:
         title: "MultiSelect"
     "*notification":
         title: "Notification"
+    "*popup":
+        title: "Popup"
     "*numerictextbox":
         title: "NumericTextBox"
     "*panelbar":
@@ -540,7 +550,10 @@ navigation:
 baseurl: /kendo-ui
 
 ## The Kendo UI version used
-cdnVersion: "2016.2.504"
+cdnVersion: "2016.2.607"
+
+## The MVC Core version used
+mvcCoreVersion: "2016.2.616"
 
 ## Assign layout and category per different paths
 defaults:

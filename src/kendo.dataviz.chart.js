@@ -1625,6 +1625,7 @@ var __meta__ = { // jshint ignore:line
 
             options.dataSource = undefined;
 
+            clearMissingValues(chart._originalOptions, options);
             chart._originalOptions = deepExtend(chart._originalOptions, options);
             chart.options = deepExtend({}, chart._originalOptions);
             chart._sourceSeries = null;
@@ -6105,6 +6106,10 @@ var __meta__ = { // jshint ignore:line
                     }
 
                     plotValue += this.plotValue(other);
+
+                    if (this.options.isStacked100) {
+                        plotValue = math.min(plotValue, 1);
+                    }
                 }
 
             }
@@ -9243,19 +9248,28 @@ var __meta__ = { // jshint ignore:line
                 charts = container.children,
                 clipBox = container.clipBox,
                 points, point,
-                i, j, length;
+                i, j, length,
+                label, note;
+
             for (i = 0; i < charts.length; i++) {
                 points = charts[i].points || {};
                 length = points.length;
 
                 for (j = 0; j < length; j++) {
                     point = points[j];
-                    if (point && point.label && point.label.options.visible) {
-                        if (point.overlapsBox(clipBox)) {
-                            if (point.label.alignToClipBox) {
-                                point.label.alignToClipBox(clipBox);
+                    if (point && point.overlapsBox && point.overlapsBox(clipBox)) {
+                        label = point.label;
+                        note = point.note;
+
+                        if (label && label.options.visible) {
+                            if (label.alignToClipBox) {
+                                label.alignToClipBox(clipBox);
                             }
-                            point.label.options.noclip = true;
+                            label.options.noclip = true;
+                        }
+
+                        if (note && note.options.visible) {
+                            note.options.noclip = true;
                         }
                     }
                 }
@@ -12225,6 +12239,7 @@ var __meta__ = { // jshint ignore:line
                         stopPropagation: true,
                         multiTouch: true,
                         fastTap: true,
+                        press: proxy(that._press, that),
                         start: proxy(that._start, that),
                         move: proxy(that._move, that),
                         end: proxy(that._end, that),
@@ -12310,6 +12325,18 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _press: function(e) {
+            var handle;
+            if (this._state) {
+                handle = this._state.moveTarget;
+            } else {
+                var target = $(e.event.target);
+                handle = target.parents(".k-handle").add(target).first();
+            }
+
+            handle.addClass("k-handle-active");
+        },
+
         _move: function(e) {
             if (!this._state) {
                 return;
@@ -12367,12 +12394,18 @@ var __meta__ = { // jshint ignore:line
         },
 
         _end: function() {
-            var that = this,
-                range = that._state.range;
+            var range = this._state.range;
 
-            delete that._state;
-            that.set(range.from, range.to);
-            that.trigger(SELECT_END, that._rangeEventArgs(range));
+            if (this._state) {
+                var moveTarget = this._state.moveTarget;
+                if (moveTarget) {
+                    moveTarget.removeClass("k-handle-active");
+                }
+                delete this._state;
+            }
+
+            this.set(range.from, range.to);
+            this.trigger(SELECT_END, this._rangeEventArgs(range));
         },
 
         _gesturechange: function(e) {
@@ -13296,7 +13329,9 @@ var __meta__ = { // jshint ignore:line
                 result = new Date(date.getFullYear(), date.getMonth(), date.getDate() + value);
                 kendo.date.adjustDST(result, hours);
             } else if (unit === HOURS) {
-                result = addTicks(new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()), value * TIME_PER_HOUR);
+                date = new Date(date);
+                date.setUTCMinutes(0, 0, 0);
+                result = addTicks(date, value * TIME_PER_HOUR);
             } else if (unit === MINUTES) {
                 result = addTicks(date, value * TIME_PER_MINUTE);
 
@@ -13352,10 +13387,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function dateDiff(a, b) {
-        var diff = a.getTime() - b,
-            offsetDiff = a.getTimezoneOffset() - b.getTimezoneOffset();
-
-        return diff - (offsetDiff * diff > 0 ? offsetDiff * TIME_PER_MINUTE : 0);
+        return a.getTime() - b;
     }
 
     function absoluteDateDiff(a, b) {
@@ -13366,11 +13398,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function addTicks(date, ticks) {
-        var tzOffsetBefore = date.getTimezoneOffset(),
-            result = new Date(date.getTime() + ticks),
-            tzOffsetDiff = result.getTimezoneOffset() - tzOffsetBefore;
-
-        return new Date(result.getTime() + ((ticks * tzOffsetDiff) > 0 ? tzOffsetDiff * TIME_PER_MINUTE : 0));
+        return new Date(date.getTime() + ticks);
     }
 
     function duration(a, b, unit) {
@@ -13827,6 +13855,28 @@ var __meta__ = { // jshint ignore:line
                 state.depth--;
             }
         });
+    }
+
+    function clearMissingValues(originalOptions, options) {
+        var fieldValue, originalValue, field, nullValue;
+
+        for (field in options) {
+            fieldValue = options[field];
+            originalValue = originalOptions[field];
+            if (defined(originalValue)) {
+                nullValue = fieldValue === null;
+                if ((nullValue || !defined(fieldValue))) {
+                    delete originalOptions[field];
+                    if (nullValue) {
+                        delete options[field];
+                    }
+                } else if (originalValue && isPlainObject(fieldValue)) {
+                    if (isPlainObject(fieldValue)) {
+                        clearMissingValues(originalValue, fieldValue);
+                    }
+                }
+            }
+        }
     }
 
     // Exports ================================================================

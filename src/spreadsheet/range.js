@@ -16,7 +16,7 @@
     var PROPERTIES = [
         "color", "fontFamily", "underline",
         "italic", "bold", "textAlign",
-        "verticalAlign", "background", "format", "link"
+        "verticalAlign", "background", "format", "link", "editor"
     ];
 
     var borders = {
@@ -186,12 +186,16 @@
                     var formula = null;
                     if (x.type == "exp") {
                         formula = kendo.spreadsheet.calc.compile(x);
-                    } else if (x.type == "date") {
-                        this.format(x.format || toExcelFormat(kendo.culture().calendar.patterns.d));
-                    } else if (x.type == "percent") {
-                        this.format(x.value*100 == (x.value*100|0) ? "0%" : "0.00%");
-                    } else if (x.format && !existingFormat) {
-                        this.format(x.format);
+                    } else if (existingFormat != "@") {
+                        if (x.type == "date") {
+                            this.format(x.format || toExcelFormat(kendo.culture().calendar.patterns.d));
+                        } else if (x.type == "percent") {
+                            this.format(x.value*100 == (x.value*100|0) ? "0%" : "0.00%");
+                        } else if (x.format && !existingFormat) {
+                            this.format(x.format);
+                        }
+                    } else if (x.type != "string") {
+                        x.value = value;
                     }
                     this.formula(formula);
                     if (!formula) {
@@ -214,15 +218,17 @@
                     // formula as text (without the starting `=`).
                     value = "=" + formula;
                 } else OUT: { // jshint ignore:line
-                    if (existingFormat && typeof value == "number") {
+                    if (existingFormat && type == "date") {
                         // check if we could parse back the displayed value.
                         // https://github.com/telerik/kendo/issues/5335
                         var t1 = kendo.spreadsheet.formatting.text(value, existingFormat);
                         x = kendo.spreadsheet.calc.parse(null, null, null, t1); // it's not a formula so we don't need sheet/row/col
-                        var t2 = kendo.spreadsheet.formatting.text(x.value, existingFormat);
-                        if (t1 == t2) {
-                            value = t1;
-                            break OUT; // jshint ignore:line
+                        if (typeof x.value == "number") {
+                            var t2 = kendo.spreadsheet.formatting.text(x.value, existingFormat);
+                            if (t1 == t2) {
+                                value = t1;
+                                break OUT; // jshint ignore:line
+                            }
                         }
                     }
                     if (type === "date") {
@@ -373,7 +379,7 @@
                     }
                 }
 
-                this._sheet.triggerChange({ recalc: true });
+                this._sheet.triggerChange({ recalc: true, ref: ref });
 
                 return this;
             }
@@ -671,12 +677,12 @@
 
                 var row = origin.row;
                 state.data.forEach(function(data, dr){
-                    if (clipboard && sheet.isHiddenRow(state.ref.row + dr)) {
+                    if (clipboard && !clipboard.isExternal() && sheet.isHiddenRow(state.ref.row + dr)) {
                         return;
                     }
                     var col = origin.col;
                     data.forEach(function(cellState, dc){
-                        if (clipboard && sheet.isHiddenColumn(state.ref.col + dc)) {
+                        if (clipboard && !clipboard.isExternal() && sheet.isHiddenColumn(state.ref.col + dc)) {
                             return;
                         }
                         var range = clipboard ? sheet.range(row, col)
@@ -696,7 +702,7 @@
                                 // formula.  Go through the lower level setter rather
                                 // than range.value(...), because range.value will clear
                                 // the formula!  chicken and egg issues.
-                                if (clipboard && clipboard.external()) {
+                                if (clipboard && clipboard.isExternal()) {
                                     // https://github.com/telerik/kendo-ui-core/issues/1688
                                     // if we have a paste from external source, we should parse the
                                     // value as if it were inputted.  This allows to treat numbers
@@ -705,7 +711,11 @@
                                     // invalid Formula and display #ERROR, like G.S. does, so in
                                     // case of a parse error we'll just set the value as string.
                                     try {
-                                        range.input(cellState.value);
+                                        if (cellState.value == null) { // jshint ignore:line
+                                            range._set("value", null);
+                                        } else {
+                                            range.input(cellState.value);
+                                        }
                                     } catch(ex) {
                                         range._set("value", cellState.value);
                                     }

@@ -173,6 +173,19 @@ Defines the field to be used to filter the data source. If not defined the [pare
     });
     </script>
 
+### clearButton `Boolean` *(default: true)*
+
+Unless this options is set to `false`, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
+
+#### Example - disable the clear button
+
+    <input id="combobox" />
+    <script>
+    $("#combobox").kendoComboBox({
+        clearButton: false
+    });
+    </script>
+
 ### dataSource `Object|Array|kendo.data.DataSource`
 
 The data source of the widget which is used to display a list of values. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing [kendo.data.DataSource](/api/javascript/data/datasource)
@@ -288,6 +301,34 @@ If set to `false` the widget will be disabled and will not allow user input. The
     });
     </script>
 
+### enforceMinLength `Boolean` *(default: false)*
+
+If set to `true` the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with [minLength](#configuration-minLength).
+
+#### Example - enforce minLength
+
+    <input id="combobox" />
+    <script>
+    $("#combobox").kendoComboBox({
+        placeholder: "Select product",
+        dataTextField: "ProductName",
+        dataValueField: "ProductID",
+        filter: "contains",
+        autoBind: false,
+        minLength: 3,
+        enforceMinLength: true,
+        dataSource: {
+            type: "odata",
+            serverFiltering: true,
+            transport: {
+                read: {
+                    url: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                }
+            }
+        }
+    });
+    </script>
+
 ### filter `String`*(default: "none")*
 
 The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
@@ -323,6 +364,31 @@ The [template](/api/javascript/kendo#methods-template) used to render the fixed 
                 }
             });
         });
+    </script>
+
+### footerTemplate `String|Function`
+
+The [template](/api/javascript/kendo#methods-template) used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+
+#### Parameters
+
+##### instance `Object`
+
+The widget instance.
+
+#### Example - specify footerTemplate as a string
+
+    <input id="combobox" />
+    <script>
+    $("#combobox").kendoComboBox({
+      dataSource: [
+        { id: 1, name: "Apples" },
+        { id: 2, name: "Oranges" }
+      ],
+      dataTextField: "name",
+      dataValueField: "id",
+      footerTemplate: 'Total <strong>#: instance.dataSource.total() #</strong> items found'
+    });
     </script>
 
 ### groupTemplate `String|Function`
@@ -416,6 +482,28 @@ The minimum number of characters the user must type before a search is performed
     <script>
     $("#combobox").kendoComboBox({
       minLength: 3
+    });
+    </script>
+
+### noDataTemplate `String|Function` *(default: "No results found.")*
+
+The [template](/api/javascript/kendo#methods-template) used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+
+> **Important** The popup will open when 'noDataTemplate' is defined
+
+#### Example - specify headerTemplate as a string
+
+    <input id="combobox" />
+    <script>
+    $("#combobox").kendoComboBox({
+      dataSource: [
+        { id: 1, name: "Apples" },
+        { id: 2, name: "Oranges" }
+      ],
+      dataTextField: "name",
+      dataValueField: "id",
+      noDataTemplate: 'No Data!'
     });
     </script>
 
@@ -697,6 +785,12 @@ For detailed information, refer to the [article on virtualization]({% slug virtu
 
 Specifies the height of the virtual item. All items in the virtualized list **must** have the same height.
 If the developer does not specify one, the framework will automatically set `itemHeight` based on the current theme and font size.
+
+### virtual.mapValueTo `String`*(default: "index")*
+
+The changes introduced with the Kendo UI R3 2016 release enable you to determine if the `valueMapper` must resolve a *value to an `index`* or a *value to a `dataItem`*. This is configured through the `mapValueTo` option that accepts two possible values - `"index"` or `"dataItem"`. By default, the `mapValueTo` is set to `"index"`, which does not affect the current behavior of the virtualization process.
+
+For more information, refer to the [article on virtualization]({% slug virtualization_kendoui_combobox_widget %}#value-mapping).
 
 ### virtual.valueMapper `Function`*(default: null)*
 
@@ -1391,7 +1485,7 @@ The value to set.
 
 ### change
 
-Fired when the value of the widget is changed by the user.
+Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.
 
 The event handler function context (available via the `this` keyword) will be set to the widget instance.
 
@@ -1624,6 +1718,10 @@ Fired when an item from the popup is selected by the user either with mouse/tap 
 
 #### Event Data
 
+##### e.dataItem `Object`
+
+The data item instance of the selected item.
+
 ##### e.item `jQuery`
 
 The jQuery object which represents the selected item.
@@ -1664,6 +1762,19 @@ The widget instance which fired the event.
     });
     var combobox = $("#combobox").data("kendoComboBox");
     combobox.bind("select", combobox_select);
+    </script>
+
+#### Example - prevent the item selection
+
+    <input id="combobox" />
+    <script>
+    $("#combobox").kendoComboBox({
+      dataSource: [ "Apples", "Oranges" ],
+      select: function(e) {
+        //call preventDefault() to prevent the selection
+        e.preventDefault();
+      }
+    });
     </script>
 
 ### cascade

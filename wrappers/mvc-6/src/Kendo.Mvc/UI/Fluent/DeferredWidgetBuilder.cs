@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNet.Mvc.Razor;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Extensions.WebEncoders;
+﻿using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Html;
+using System.Text.Encodings.Web;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -46,7 +46,7 @@ namespace Kendo.Mvc.UI.Fluent
             return ToComponent().ToHtmlString();
         }
 
-        public override void WriteTo(TextWriter writer, IHtmlEncoder encoder)
+        public override void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
             writer.Write(ToHtmlString());
         }

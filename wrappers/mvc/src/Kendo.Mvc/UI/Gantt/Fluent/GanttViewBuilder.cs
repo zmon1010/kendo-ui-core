@@ -20,6 +20,27 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.Overrides the date option of the gantt.
+        /// </summary>
+        /// <param name="value">The value that configures the date.</param>
+        public GanttViewBuilder Date(DateTime value)
+        {
+            container.Date = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Configures the view range settings.
+        /// </summary>
+        /// <param name="configurator">The action that configures the range.</param>
+        public GanttViewBuilder Range(Action<GanttViewRangeSettingsBuilder> configurator)
+        {
+            configurator(new GanttViewRangeSettingsBuilder(container.Range));
+            return this;
+        }
+        
+        /// <summary>
         /// If set to true the view will be initially selected by the Gantt widget. The default selected view is "day".
         /// </summary>
         /// <param name="value">The value that configures the selected.</param>

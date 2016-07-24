@@ -104,6 +104,8 @@ The configuration of the column command(s). If set the column would display a bu
 
 Custom commands are supported by specifying the [click](#configuration-columns.command.click) option.
 
+> A command column cannot be [expandable](#configuration-columns.expandable).
+> 
 > The built-in "edit", "createChild" and "destroy" commands work *only* if editing is enabled via the [editable](#configuration-editable) option. The "edit" command supports "inline" and "popup" editing modes.
 
 #### Example - set command as array of strings
@@ -371,6 +373,8 @@ If set to `true` the column value will be HTML-encoded before it is displayed. I
 ### columns.expandable `Boolean` *(default: false)*
 
 If set to `true` the column will show the icons that are used for expanding and collapsing child rows. By default, the first column of the TreeList is expandable.
+
+> An expandable column cannot hold [commands](#configuration-columns.command).
 
 #### Example - make the second column expandable
 
@@ -1190,12 +1194,13 @@ If the `dataSource` option is an existing `kendo.data.DataSource` instance, the 
           url: "http://demos.telerik.com/kendo-ui/service/products",
           dataType: "jsonp"
         }
-      },
-      pageSize: 10
+      }
     });
     $("#treelist").kendoTreeList({
       dataSource: dataSource,
-      pageable: true
+      columns: [
+        { field: "ProductName" }
+      ]
     });
     </script>
 
@@ -3411,6 +3416,10 @@ This method expands the row.
 ##### row `String|Element|jQuery`
 
 A string, DOM element or jQuery object which represents the table row. A string is treated as a jQuery selector.
+
+#### Returns
+
+`Promise`
 
 #### Example
 

@@ -52,6 +52,15 @@ Help topic showing how cascading functionality works
     }
 
     /**
+    * Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
+    * @param boolean $value
+    * @return \Kendo\UI\ComboBox
+    */
+    public function clearButton($value) {
+        return $this->setProperty('clearButton', $value);
+    }
+
+    /**
     * Sets the data source of the ComboBox.
     * @param array|\Kendo\Data\DataSource $value
     * @return \Kendo\UI\ComboBox
@@ -97,6 +106,15 @@ Help topic showing how cascading functionality works
     }
 
     /**
+    * If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+    * @param boolean $value
+    * @return \Kendo\UI\ComboBox
+    */
+    public function enforceMinLength($value) {
+        return $this->setProperty('enforceMinLength', $value);
+    }
+
+    /**
     * The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
 The supported filter values are startswith, endswith and contains.
     * @param string $value
@@ -126,6 +144,28 @@ The supported filter values are startswith, endswith and contains.
     */
     public function fixedGroupTemplate($value) {
         return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the footerTemplate option of the ComboBox.
+    * The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\ComboBox
+    */
+    public function footerTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('footerTemplate', $value);
+    }
+
+    /**
+    * Sets the footerTemplate option of the ComboBox.
+    * The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+    * @param string $value The template content.
+    * @return \Kendo\UI\ComboBox
+    */
+    public function footerTemplate($value) {
+        return $this->setProperty('footerTemplate', $value);
     }
 
     /**
@@ -193,6 +233,30 @@ The supported filter values are startswith, endswith and contains.
     */
     public function minLength($value) {
         return $this->setProperty('minLength', $value);
+    }
+
+    /**
+    * Sets the noDataTemplate option of the ComboBox.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\ComboBox
+    */
+    public function noDataTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('noDataTemplate', $value);
+    }
+
+    /**
+    * Sets the noDataTemplate option of the ComboBox.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * @param string $value The template content.
+    * @return \Kendo\UI\ComboBox
+    */
+    public function noDataTemplate($value) {
+        return $this->setProperty('noDataTemplate', $value);
     }
 
     /**
@@ -305,7 +369,7 @@ refer to Popup documentation.
 
     /**
     * Sets the change event of the ComboBox.
-    * Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ComboBox
     */

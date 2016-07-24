@@ -22,7 +22,7 @@ class NumericTextBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used.Compare with the format property.
+    * Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used. If the user enters a number with a greater precision than is currently configured, the widget value will be rounded. For example, if decimals is 2 and the user inputs 12.346, the value will become 12.35. If the user inputs 12.99, the value will become 13.00.Compare with the format property.
     * @param float $value
     * @return \Kendo\UI\NumericTextBox
     */
@@ -73,6 +73,24 @@ class NumericTextBox extends \Kendo\UI\Widget {
     */
     public function placeholder($value) {
         return $this->setProperty('placeholder', $value);
+    }
+
+    /**
+    * Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.
+    * @param boolean $value
+    * @return \Kendo\UI\NumericTextBox
+    */
+    public function restrictDecimals($value) {
+        return $this->setProperty('restrictDecimals', $value);
+    }
+
+    /**
+    * Specifies whether the value should be rounded or truncated. The length of the fraction is defined by the decimals value.
+    * @param boolean $value
+    * @return \Kendo\UI\NumericTextBox
+    */
+    public function round($value) {
+        return $this->setProperty('round', $value);
     }
 
     /**

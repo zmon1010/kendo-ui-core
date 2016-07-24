@@ -280,6 +280,78 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Footer template which will be rendered as a static footer of the popup element.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .FooterTemplate("Total <strong>#: instance.dataSource.total() #</strong> items found")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TDropDownBuilder FooterTemplate(string footerTemplate)
+        {
+            Component.FooterTemplate = footerTemplate;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
+        /// FooterTemplateId to be used for rendering the static footer of the popup element.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .FooterTemplateId("widgetFooterTemplateId")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TDropDownBuilder FooterTemplateId(string footerTemplateId)
+        {
+            Component.FooterTemplateId = footerTemplateId;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
+        /// No data template which will be rendered as a static no-data template of the popup element.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .NoDataTemplate("No Data!")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TDropDownBuilder NoDataTemplate(string noDataTemplate)
+        {
+            Component.NoDataTemplate = noDataTemplate;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
+        /// NoDataTemplateId to be used for rendering the static no-data template of the popup element.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .NoDataTemplateId("widgetNoDataTemplateId")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TDropDownBuilder NoDataTemplateId(string noDataTemplateId)
+        {
+            Component.NoDataTemplateId = noDataTemplateId;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
         /// Configures the popup settings of the widget.
         /// </summary>
         public TDropDownBuilder Popup(Action<PopupSettingsBuilder> popupAction)

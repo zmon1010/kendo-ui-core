@@ -2,7 +2,7 @@
 {
     using System;
     using Infrastructure;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface INavigationItemComponent<TItem> : INavigationItemContainer<TItem>
         where TItem : NavigationItem<TItem>

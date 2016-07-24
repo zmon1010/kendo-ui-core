@@ -2,8 +2,8 @@
 using Kendo.Mvc.UI;
 using System;
 using System.Data;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kendo.Mvc.Examples.Models.Gantt
 {

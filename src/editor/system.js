@@ -9,16 +9,18 @@
         Class = kendo.Class,
         editorNS = kendo.ui.editor,
         EditorUtils = editorNS.EditorUtils,
+        RangeUtils = editorNS.RangeUtils,
         registerTool = EditorUtils.registerTool,
         dom = editorNS.Dom,
         Tool = editorNS.Tool,
         ToolTemplate = editorNS.ToolTemplate,
         RestorePoint = editorNS.RestorePoint,
         Marker = editorNS.Marker,
+        browser = kendo.support.browser,
         extend = $.extend;
 
 function finishUpdate(editor, startRestorePoint) {
-    var endRestorePoint = editor.selectionRestorePoint = new RestorePoint(editor.getRange());
+    var endRestorePoint = editor.selectionRestorePoint = new RestorePoint(editor.getRange(), editor.body);
     var command = new GenericCommand(startRestorePoint, endRestorePoint);
     command.editor = editor;
 
@@ -27,10 +29,15 @@ function finishUpdate(editor, startRestorePoint) {
     return endRestorePoint;
 }
 
+function selected(node, range) { 
+    return range.startContainer === node && range.endContainer === node &&
+        range.startOffset === 0 && range.endOffset == node.childNodes.length;
+}
+
 var Command = Class.extend({
     init: function(options) {
         this.options = options;
-        this.restorePoint = new RestorePoint(options.range);
+        this.restorePoint = new RestorePoint(options.range, options.body);
         this.marker = new Marker();
         this.formatter = options.formatter;
     },
@@ -71,6 +78,17 @@ var Command = Class.extend({
         this.formatter.editor = this.editor;
         this.formatter.toggle(range);
         this.releaseRange(range);
+    },
+
+    immutables: function(){
+        return this.editor && this.editor.options.immutables;
+    },
+
+    expandImmutablesIn: function(range) {
+        if (this.immutables()) {
+            kendo.ui.editor.Immutables.expandImmutablesIn(range);
+            this.restorePoint = new RestorePoint(range, this.editor.body);
+        }
     }
 });
 
@@ -152,6 +170,72 @@ var InsertHtmlTool = Tool.extend({
     }
 });
 
+var tableCells = "td,th,caption";
+var tableCellsWrappers = "table,tbody,thead,tfoot,tr";
+var tableElements = tableCellsWrappers + "," + tableCells;
+var inTable = function (range) { return !range.collapsed && $(range.commonAncestorContainer).is(tableCellsWrappers); };
+var RemoveTableContent = Class.extend({
+    remove: function(range) {
+        var that = this;
+        var marker = new Marker();
+        marker.add(range, false);
+
+        var nodes = RangeUtils.getAll(range, function (node) { return $(node).is(tableElements); });
+        var doc = RangeUtils.documentFromRange(range);
+        var start = marker.start;
+        var end = marker.end;
+        var cellsTypes = tableCells.split(",");
+        var startCell = dom.parentOfType(start, cellsTypes);
+        var endCell = dom.parentOfType(end, cellsTypes);
+        that._removeContent(start, startCell, true);
+        that._removeContent(end, endCell, false);
+        $(nodes).each(function(i, node) {
+            node = $(node);
+            (node.is(tableCells) ? node : node.find(tableCells)).each(function(j, cell) {
+                cell.innerHTML = "&#65279;";
+            });
+        });
+        if (startCell && !start.previousSibling) {
+            dom.insertBefore(doc.createTextNode("\ufeff"), start);
+        }
+        if (endCell && !end.nextSibling) {
+            dom.insertAfter(doc.createTextNode("\ufeff"), end);
+        }
+        if (startCell) {
+            range.setStartBefore(start);
+        } else if (nodes[0]) {
+            startCell = $(nodes[0]);
+            startCell = startCell.is(tableCells) ? startCell : startCell.find(tableCells).first();
+            if (startCell.length) {
+                range.setStart(startCell.get(0), 0);
+            }
+        }
+        
+        range.collapse(true);
+
+        dom.remove(start);
+        dom.remove(end);
+    },
+    _removeContent: function (start, top, forwards) {
+        if (top) {
+            var sibling = forwards ? "nextSibling" : "previousSibling",
+                next,
+                getNext = function (node) {
+                    while (node && !node[sibling]) {
+                        node = node.parentNode;
+                    }
+                    return node && $.contains(top, node) ? node[sibling] : null;
+                };
+            start = getNext(start);
+            while (start) {
+                next = getNext(start);
+                dom.remove(start);
+                start = next;
+            }
+        }
+    }
+});
+
 var TypingHandler = Class.extend({
     init: function(editor) {
         this.editor = editor;
@@ -173,7 +257,23 @@ var TypingHandler = Class.extend({
 
         if (!evt.isDefaultPrevented() && isTypingKey && !keyboard.isTypingInProgress()) {
             var range = editor.getRange();
-            that.startRestorePoint = new RestorePoint(range);
+            var body = editor.body;
+            that.startRestorePoint = new RestorePoint(range, body);
+
+            if (inTable(range)) {
+                var removeTableContent = new RemoveTableContent(editor);
+                removeTableContent.remove(range);
+                editor.selectRange(range);
+            }
+
+            if (browser.webkit && !range.collapsed && selected(body, range)) {
+                body.innerHTML = "";
+            }
+
+            if (editor.immutables && editorNS.Immutables.immutablesContext(range)) {
+                var backspaceHandler = new editorNS.BackspaceHandler(editor);
+                backspaceHandler.deleteSelection(range);
+            }
 
             keyboard.startTyping(function () {
                 that.endRestorePoint = finishUpdate(editor, that.startRestorePoint);
@@ -206,6 +306,8 @@ var BackspaceHandler = Class.extend({
     _addCaret: function(container) {
         var caret = dom.create(this.editor.document, "a");
         dom.insertAt(container, caret, 0);
+        dom.stripBomNode(caret.previousSibling);
+        dom.stripBomNode(caret.nextSibling);
         return caret;
     },
     _restoreCaret: function(caret) {
@@ -304,6 +406,7 @@ var BackspaceHandler = Class.extend({
         var ancestor = range.commonAncestorContainer;
         var table = dom.closest(ancestor, "table");
         var emptyParagraphContent = editorNS.emptyElementContent;
+        var editor = this.editor;
 
         if (/t(able|body)/i.test(dom.name(ancestor))) {
             range.selectNode(table);
@@ -312,6 +415,10 @@ var BackspaceHandler = Class.extend({
         var marker = new Marker();
         marker.add(range, false);
 
+        if (editor.immutables) {
+            this._handleImmutables(marker);
+        }
+        
         range.setStartAfter(marker.start);
         range.setEndBefore(marker.end);
 
@@ -334,7 +441,7 @@ var BackspaceHandler = Class.extend({
 
         this._join(start, end);
 
-        dom.insertAfter(this.editor.document.createTextNode("\ufeff"), marker.start);
+        dom.insertAfter(editor.document.createTextNode("\ufeff"), marker.start);
         marker.remove(range);
 
         start = range.startContainer;
@@ -345,9 +452,26 @@ var BackspaceHandler = Class.extend({
 
         range.collapse(true);
 
-        this.editor.selectRange(range);
+        editor.selectRange(range);
 
         return true;
+    },
+    _handleImmutables: function (marker) {
+        var immutableParent = editorNS.Immutables.immutableParent;
+        var startImmutable = immutableParent(marker.start);
+        var endImmutable = immutableParent(marker.start);
+        if (startImmutable) {
+            dom.insertBefore(marker.start, startImmutable);
+        }
+        if (endImmutable) {
+            dom.insertAfter(marker.end, endImmutable);
+        }
+        if (startImmutable) {
+            dom.remove(startImmutable);
+        }
+        if (endImmutable && endImmutable.parentNode) {
+            dom.remove(endImmutable);
+        }
     },
     _root: function(node) {
         while (node && node.parentNode && dom.name(node.parentNode) != "body") {
@@ -369,6 +493,7 @@ var BackspaceHandler = Class.extend({
 
         while (src.firstChild) {
             if (dest.nodeType == 1) {
+                dest = dom.list(dest) ? dest.children[dest.children.length - 1] : dest;
                 dest.appendChild(src.firstChild);
             } else {
                 dest.parentNode.appendChild(src.firstChild);
@@ -379,11 +504,16 @@ var BackspaceHandler = Class.extend({
     },
     keydown: function(e) {
         var method, startRestorePoint;
-        var range = this.editor.getRange();
+        var editor = this.editor;
+        var range = editor.getRange();
         var keyCode = e.keyCode;
         var keys = kendo.keys;
         var backspace = keyCode === keys.BACKSPACE;
         var del = keyCode == keys.DELETE;
+        
+        if (editor.immutables && editor.immutables.keydown(e, range)) {
+            return;
+        }
 
         if ((backspace || del) && !range.collapsed) {
             method = "_handleSelection";
@@ -397,13 +527,16 @@ var BackspaceHandler = Class.extend({
             return;
         }
 
-        startRestorePoint = new RestorePoint(range);
-
+        startRestorePoint = new RestorePoint(range, editor.body);
+        
         if (this[method](range)) {
             e.preventDefault();
 
-            finishUpdate(this.editor, startRestorePoint);
+            finishUpdate(editor, startRestorePoint);
         }
+    },
+    deleteSelection: function (range) {
+        this._handleSelection(range);
     },
     keyup: $.noop
 });
@@ -437,7 +570,7 @@ var SystemHandler = Class.extend({
                 keyboard.endTyping(true);
             }
 
-            that.startRestorePoint = new RestorePoint(editor.getRange());
+            that.startRestorePoint = new RestorePoint(editor.getRange(), editor.body);
             return true;
         }
 
@@ -466,6 +599,24 @@ var SystemHandler = Class.extend({
 
         return false;
     }
+});
+
+var SelectAllHandler = Class.extend({
+    init: function(editor) {
+        this.editor = editor;
+    },
+
+    keydown: function (e) {
+        if (!browser.webkit || e.isDefaultPrevented() ||
+            !(e.ctrlKey && e.keyCode == 65 && !e.altKey && !e.shiftKey)) {
+            return;
+        }
+        var editor = this.editor;
+        var range = editor.getRange();
+        range.selectNodeContents(editor.body);
+        editor.selectRange(range);
+    },
+    keyup: $.noop
 });
 
 var Keyboard = Class.extend({
@@ -634,7 +785,7 @@ var Clipboard = Class.extend({
         this._inProgress = true;
 
         range = editor.getRange();
-        restorePoint = new RestorePoint(range);
+        restorePoint = new RestorePoint(range, editor.body);
 
         dom.persistScrollTop(editor.document);
 
@@ -769,6 +920,8 @@ var Clipboard = Class.extend({
             return;
         }
 
+        this.expandImmutablesIn();
+
         this._contentModification(
             function beforePaste(editor, range) {
                 var clipboardNode = dom.create(editor.document, 'div', {
@@ -776,8 +929,16 @@ var Clipboard = Class.extend({
                         innerHTML: "\ufeff"
                     });
                 var browser = kendo.support.browser;
+                var body = editor.body;
 
-                editor.body.appendChild(clipboardNode);
+                this._decoreateClipboardNode(clipboardNode, body);
+
+                body.appendChild(clipboardNode);
+
+                //Browser scrolls to clipboardNode
+                if (browser.webkit) {
+                    this._moveToCaretPosition(clipboardNode, range);
+                }
 
                 // text ranges are slow in IE10-, DOM ranges are buggy in IE9-10
                 if (browser.msie && browser.version < 11) {
@@ -787,9 +948,9 @@ var Clipboard = Class.extend({
                     editor.selectRange(r);
                     var textRange = editor.document.body.createTextRange();
                     textRange.moveToElementText(clipboardNode);
-                    $(editor.body).unbind('paste');
+                    $(body).unbind('paste');
                     textRange.execCommand('Paste');
-                    $(editor.body).bind('paste', $.proxy(this.onpaste, this));
+                    $(body).bind('paste', $.proxy(this.onpaste, this));
                 } else {
                     var clipboardRange = editor.createRange();
                     clipboardRange.selectNodeContents(clipboardNode);
@@ -814,12 +975,123 @@ var Clipboard = Class.extend({
 
                     html += this.innerHTML;
                 });
-
+                
                 containers.remove();
 
                 this._triggerPaste(html, { clean: true });
             }
         );
+    },
+
+    _decoreateClipboardNode: function(node, body) {
+        if (!browser.msie && !browser.webkit) {
+            return;
+        }
+
+        node = $(node);
+        node.css({
+            borderWidth : "0px",
+            width : "0px", 
+            height : "0px", 
+            overflow: "hidden",
+            margin : "0",
+            padding : "0"
+        });
+
+        if (browser.msie) {
+            //node inherits BODY styles and this causes the browser to add additional 
+            var documentElement = $(body.ownerDocument.documentElement);
+            
+            node.css({
+                fontVariant : "normal",
+                fontWeight : "normal",
+                lineSpacing : "normal",
+                lineHeight : "normal",
+                textDecoration : "none"
+            });
+            var color = documentElement.css("color");
+            if (color) {
+                node.css("color", color);
+            }
+            var fontFamily = documentElement.css("fontFamily");
+            if (fontFamily) {
+                node.css("fontFamily", fontFamily);
+            }
+            var fontSize = documentElement.css("fontSize");
+            if (fontSize) {
+                node.css("fontSize", fontSize);
+            }
+        }
+    },
+    _moveToCaretPosition: function(node, range) {
+        var that = this;
+        var body = that.editor.body;
+        var nodeOffset = dom.offset(node, body);
+        var caretOffset = that._caretOffset(range, body);
+        var translateX = caretOffset.left - nodeOffset.left;
+        var translateY = caretOffset.top - nodeOffset.top;
+        var translate = "translate(" + translateX + "px," + translateY + "px)";
+
+        $(node).css({
+            "-webkit-transform": translate,
+            "transform" : translate
+        });
+    },
+    _caretOffset: function (range, body) {
+        var editor = this.editor;
+        var caret = dom.create(editor.document, 'span', { innerHTML: "\ufeff" });
+        var startContainer = range.startContainer;
+        var rangeChanged;
+
+        if (range.collapsed) {
+            var isStartTextNode = dom.isDataNode(startContainer);
+            if (isStartTextNode && (dom.isBom(startContainer) || range.startOffset === 0)) {
+                dom.insertBefore(caret, startContainer);
+            } else if(isStartTextNode && range.startOffset === startContainer.length) {
+                dom.insertAfter(caret, startContainer);
+            } else {
+                range.insertNode(caret);
+                rangeChanged = true;
+            }
+        } else {
+            startContainer = startContainer === body ?
+                startContainer.childNodes[range.startOffset] : startContainer;
+            dom.insertBefore(caret, startContainer);
+        }
+
+        var offset = dom.offset(caret, body);
+        var prev = caret.previousSibling;
+        var next = caret.nextSibling;
+
+        dom.remove(caret);
+        
+        if(rangeChanged && dom.isDataNode(prev) && dom.isDataNode(next) && !dom.isBom(prev) && !dom.isBom(next)) {
+            var prevLength = prev.length;
+            next.data = prev.data + next.data;
+            range.setStart(next, prevLength);
+            dom.remove(prev);
+
+            range.collapse(true);
+            editor.selectRange(range);
+        }
+
+        return offset;
+    },
+
+    expandImmutablesIn: function(range){
+        var editor = this.editor;
+        if (editor && editor.options.immutables) {
+            var body = editor.body;
+            range = range || editor.getRange();
+            kendo.ui.editor.Immutables.expandImmutablesIn(range);
+            if (range.startContainer === body && range.startOffset === 0) {
+                var doc = body.ownerDocument;
+                var bomNode = doc.createTextNode("\ufeff");
+                body.insertBefore(bomNode, body.childNodes[0]);
+                range.setStartBefore(bomNode);
+            }
+            editor.selectRange(range);
+        }
     },
 
     splittableParent: function(block, node) {
@@ -844,6 +1116,8 @@ var Clipboard = Class.extend({
     paste: function (html, options) {
         var editor = this.editor,
             i, l;
+
+        this.expandImmutablesIn();
 
         options = extend({ clean: false, split: true }, options);
 
@@ -1665,6 +1939,7 @@ extend(editorNS, {
     TypingHandler: TypingHandler,
     SystemHandler: SystemHandler,
     BackspaceHandler: BackspaceHandler,
+    SelectAllHandler: SelectAllHandler,
     Keyboard: Keyboard,
     Clipboard: Clipboard,
     Cleaner: Cleaner,

@@ -1,4 +1,5 @@
 ﻿using Kendo.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -10,6 +11,8 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 services.Add(service);
             }
+
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             return services;
         }

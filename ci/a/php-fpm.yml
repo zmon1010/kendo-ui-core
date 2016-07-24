@@ -1,0 +1,15 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: Install PHP
+  apt: name={{ item }} state=latest
+  with_items:
+    - php-cli
+    - php-fpm
+    - php-gd
+    - php-sqlite3
+    - php-json
+- name: Configure FPM
+  template: src=a/fpm-www.conf.j2 dest=/etc/php/7.0/fpm/pool.d/www.conf
+  notify:
+    - restart php7.0-fpm
+- service: name=php7.0-fpm state=started enabled=yes

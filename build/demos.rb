@@ -29,30 +29,6 @@ OFFLINE_DEMO_TEMPLATE_OPTIONS = {
             ../content/spa/aeroviewr/css/aeroviewr.css
         )
     },
-    "/mobile-apps/sushi.html" => {
-        skip_back_button: true,
-        additional_code: <<-SCRIPT,
-            window.contentPath = "../content/mobile/apps/sushi";
-        SCRIPT
-        additional_scripts: %W(
-            ../content/mobile/apps/sushi/sushi.js
-        ),
-        additional_stylesheets: %W(
-            ../content/mobile/apps/sushi/css/style.css
-        )
-    },
-    "/mobile-apps/cuteness.html" => {
-        skip_back_button: true,
-        additional_code: <<-SCRIPT,
-            window.contentPath = "../content/mobile/apps/cuteness";
-        SCRIPT
-        additional_scripts: %W(
-            ../content/mobile/apps/cuteness/cuteness.js
-        ),
-        additional_stylesheets: %W(
-            ../content/mobile/apps/cuteness/css/style.css
-        )
-    },
     "/bootstrap/index.html" => {
         skip_back_button: true,
         additional_stylesheets: %W(

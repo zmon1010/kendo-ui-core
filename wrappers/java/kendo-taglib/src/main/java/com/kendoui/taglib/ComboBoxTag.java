@@ -118,6 +118,14 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("cascadeFromField", value);
     }
 
+    public boolean getClearButton() {
+        return (Boolean)getProperty("clearButton");
+    }
+
+    public void setClearButton(boolean value) {
+        setProperty("clearButton", value);
+    }
+
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
     }
@@ -154,6 +162,14 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("enable", value);
     }
 
+    public boolean getEnforceMinLength() {
+        return (Boolean)getProperty("enforceMinLength");
+    }
+
+    public void setEnforceMinLength(boolean value) {
+        setProperty("enforceMinLength", value);
+    }
+
     public java.lang.String getFilter() {
         return (java.lang.String)getProperty("filter");
     }
@@ -168,6 +184,14 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setFixedGroupTemplate(java.lang.String value) {
         setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getFooterTemplate() {
+        return (java.lang.String)getProperty("footerTemplate");
+    }
+
+    public void setFooterTemplate(java.lang.String value) {
+        setProperty("footerTemplate", value);
     }
 
     public java.lang.String getGroupTemplate() {
@@ -224,6 +248,14 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setMinLength(float value) {
         setProperty("minLength", value);
+    }
+
+    public java.lang.String getNoDataTemplate() {
+        return (java.lang.String)getProperty("noDataTemplate");
+    }
+
+    public void setNoDataTemplate(java.lang.String value) {
+        setProperty("noDataTemplate", value);
     }
 
     public java.lang.String getPlaceholder() {

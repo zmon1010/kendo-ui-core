@@ -19,14 +19,19 @@ var __meta__ = { // jshint ignore:line
         CHANGE = "change",
         indicatorTmpl = kendo.template('<div class="k-group-indicator" data-#=data.ns#field="${data.field}" data-#=data.ns#title="${data.title || ""}" data-#=data.ns#dir="${data.dir || "asc"}">' +
                 '<a href="\\#" class="k-link">' +
-                    '<span class="k-icon k-si-arrow-${(data.dir || "asc") == "asc" ? "n" : "s"}">(sorted ${(data.dir || "asc") == "asc" ? "ascending": "descending"})</span>' +
+                    '<span class="k-icon k-i-sarrow-${(data.dir || "asc") == "asc" ? "n" : "s"}">(sorted ${(data.dir || "asc") == "asc" ? "ascending": "descending"})</span>' +
                     '${data.title ? data.title: data.field}' +
                 '</a>' +
                 '<a class="k-button k-button-icon k-button-bare">' +
-                    '<span class="k-icon k-group-delete"></span>' +
+                    '<span class="k-icon k-i-group-delete"></span>' +
                 '</a>' +
              '</div>',  { useWithBlock:false }),
         hint = function(target) {
+            var title = target.attr(kendo.attr("title"));
+            if (title) {
+                title = kendo.htmlEncode(title);
+            }
+
             return $('<div class="k-header k-drag-clue" />')
                 .css({
                     width: target.width(),
@@ -36,8 +41,8 @@ var __meta__ = { // jshint ignore:line
                     paddingTop: target.css("paddingTop"),
                     paddingBottom: target.css("paddingBottom")
                 })
-                .html(kendo.htmlEncode(target.attr(kendo.attr("title"))) || target.attr(kendo.attr("field")))
-                .prepend('<span class="k-icon k-drag-status k-denied" />');
+                .html(title || target.attr(kendo.attr("field")))
+                .prepend('<span class="k-icon k-drag-status k-i-denied" />');
         },
         dropCue = $('<div class="k-grouping-dropclue"/>');
 
@@ -70,12 +75,12 @@ var __meta__ = { // jshint ignore:line
                     group: draggable.options.group,
                     dragenter: function(e) {
                         if (that._canDrag(e.draggable.currentTarget)) {
-                            e.draggable.hint.find(".k-drag-status").removeClass("k-denied").addClass("k-add");
+                            e.draggable.hint.find(".k-drag-status").removeClass("k-i-denied").addClass("k-i-add");
                             dropCue.css("top", dropCueOffsetTop(that.groupContainer)).css(horizontalCuePosition, 0).appendTo(that.groupContainer);
                         }
                     },
                     dragleave: function(e) {
-                        e.draggable.hint.find(".k-drag-status").removeClass("k-add").addClass("k-denied");
+                        e.draggable.hint.find(".k-drag-status").removeClass("k-i-add").addClass("k-i-denied");
                         dropCue.remove();
                     },
                     drop: function(e) {
@@ -120,7 +125,7 @@ var __meta__ = { // jshint ignore:line
 
                         intializePositions();
                         dropCue.css({top: dropCueOffsetTop(that.groupContainer), left: left}).appendTo(that.groupContainer);
-                        this.hint.find(".k-drag-status").removeClass("k-denied").addClass("k-add");
+                        this.hint.find(".k-drag-status").removeClass("k-i-denied").addClass("k-i-add");
                     },
                     dragend: function() {
                         that._dragEnd(this);
@@ -226,6 +231,8 @@ var __meta__ = { // jshint ignore:line
             that.groupContainer = that.element = that.draggable = null;
         },
 
+        events: ["change"],
+
         options: {
             name: "Groupable",
             filter: "th",
@@ -242,9 +249,11 @@ var __meta__ = { // jshint ignore:line
                     return $(item).attr(kendo.attr("field")) === field;
                 })[0];
         },
+
         buildIndicator: function(field, title, dir) {
             return indicatorTmpl({ field: field.replace(/"/g, "'"), dir: dir, title: title, ns: kendo.ns });
         },
+
         descriptors: function() {
             var that = this,
                 indicators = $(".k-group-indicator", that.groupContainer),
@@ -280,18 +289,26 @@ var __meta__ = { // jshint ignore:line
                 };
             });
         },
+
         _removeIndicator: function(indicator) {
             var that = this;
             indicator.remove();
             that._invalidateGroupContainer();
             that._change();
         },
+
         _change: function() {
             var that = this;
             if(that.dataSource) {
-                that.dataSource.group(that.descriptors());
+                var descriptors = that.descriptors();
+                if (that.trigger("change", { groups: descriptors })) {
+                    that.refresh();
+                    return;
+                }
+                that.dataSource.group(descriptors);
             }
         },
+
         _dropCuePosition: function(position) {
             var dropCuePositions = this._dropCuePositions;
             if(!dropCue.is(":visible") || dropCuePositions.length === 0) {

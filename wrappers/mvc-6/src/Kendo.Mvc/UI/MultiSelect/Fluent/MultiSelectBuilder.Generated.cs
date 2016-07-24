@@ -30,6 +30,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
+        /// </summary>
+        /// <param name="value">The value for ClearButton</param>
+        public MultiSelectBuilder ClearButton(bool value)
+        {
+            Container.ClearButton = value;
+            return this;
+        }
+
+        /// <summary>
         /// The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.
         /// </summary>
         /// <param name="value">The value for DataTextField</param>
@@ -70,6 +80,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+        /// </summary>
+        /// <param name="value">The value for EnforceMinLength</param>
+        public MultiSelectBuilder EnforceMinLength(bool value)
+        {
+            Container.EnforceMinLength = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+        /// </summary>
+        public MultiSelectBuilder EnforceMinLength()
+        {
+            Container.EnforceMinLength = true;
+            return this;
+        }
+
+        /// <summary>
         /// The template used to render the fixed header group. By default the widget displays only the value of the current group.
         /// </summary>
         /// <param name="value">The value for FixedGroupTemplate</param>
@@ -86,6 +115,26 @@ namespace Kendo.Mvc.UI.Fluent
         public MultiSelectBuilder FixedGroupTemplateId(string templateId)
         {
             Container.FixedGroupTemplateId = templateId;
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+        /// </summary>
+        /// <param name="value">The value for FooterTemplate</param>
+        public MultiSelectBuilder FooterTemplate(string value)
+        {
+            Container.FooterTemplate = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+        /// </summary>
+        /// <param name="value">The ID of the template element for FooterTemplate</param>
+        public MultiSelectBuilder FooterTemplateId(string templateId)
+        {
+            Container.FooterTemplateId = templateId;
             return this;
         }
 
@@ -157,6 +206,28 @@ namespace Kendo.Mvc.UI.Fluent
         public MultiSelectBuilder MaxSelectedItems(double value)
         {
             Container.MaxSelectedItems = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+		/// The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+        /// </summary>
+        /// <param name="value">The value for NoDataTemplate</param>
+        public MultiSelectBuilder NoDataTemplate(string value)
+        {
+            Container.NoDataTemplate = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+		/// The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+        /// </summary>
+        /// <param name="value">The ID of the template element for NoDataTemplate</param>
+        public MultiSelectBuilder NoDataTemplateId(string templateId)
+        {
+            Container.NoDataTemplateId = templateId;
             return this;
         }
 

@@ -174,6 +174,17 @@ For more information on how to format cell values, refer to [this example]({% sl
 
 Kendo UI Grid does not export its [detail template](/api/javascript/ui/grid#configuration-detailTemplate) for the same reason as it does not export its column templates. If the detail template contains another Grid, follow [the example on the detail Grid export]({% slug howto_exportto_excel_masterand_detail_grid %}).
 
+### Row Type
+
+Each row has a `type` field that can be used to distinguish between the various row types in the Grid.
+
+The possible values are:
+- `"header"`
+- `"footer"`
+- `"groupHeader"`
+- `"groupFooter"`
+- `"data"`
+
 ### Multiple Grids
 
 Each Grid is exported in a separate Excel sheet. For more information on how to export multiple Grids in a single Excel document, see [this example]({% slug howto_export_excel_multiple_grids_grid %}).
@@ -262,7 +273,8 @@ Internet Explorer 9 and Safari do not support the option for saving a file and r
 
 ## Known Limitations
 
-* As discussed in the previous section, exporting in older browsers, such as Internet Explorer 9 and Safari, requires the implementation of a server proxy. For more information on this, refer to [the `proxyUrl` configuration section](/api/javascript/ui/grid#configuration-excel.proxyURL).
+* The maximum size of the exported file has a system-specific limit. For large data sets, it is highly recommended that you use the server-side solution the [Document Processing Library](http://docs.telerik.com/devtools/document-processing/introduction) provides. The [RadSpreadStreamProcessing](http://docs.telerik.com/devtools/document-processing/libraries/radspreadstreamprocessing/overview) component is particularly suited for large data sets.
+* As discussed in the previous section, exporting in older browsers, such as Internet Explorer 9 and Safari, requires the implementation of a server proxy. For more information, refer to [the `proxyUrl` configuration section](/api/javascript/ui/grid#configuration-excel.proxyURL).
 * If you use Kendo UI Q2 2014 SP2 (2014.2.1008) or older, exporting requires a custom implementation and there are two ways to approach the task:
     * Use a server-side implementation to directly export the data that is otherwise displayed by the Grid.
     * Use a client-side implementation to export the table HTML markup or the dataSource items of the Grid.
@@ -283,7 +295,7 @@ Internet Explorer 9 and Safari do not support the option for saving a file and r
 
 ## See Also
 
-Other articles on Kendo UI Grid:
+Other articles on the Kendo UI Grid:
 
 * [Grid JavaScript API Reference](/api/javascript/ui/grid)
 * [Walkthrough of the Grid]({% slug walkthrough_kendoui_grid_widget %})
@@ -295,4 +307,4 @@ Other articles on Kendo UI Grid:
 * [Export the Grid in PDF]({% slug exporting_pdf_kendoui_grid_widget %})
 * [Print the Grid]({% slug exporting_pdf_kendoui_grid_widget %})
 
-For how-to examples on the Kendo UI Grid widget, browse [its How-to section]({% slug howto_bindto_telerik_backend_services_grid %}).
+For how-to examples on the Kendo UI Grid widget, browse its [**How To** documentation folder]({% slug howto_bindto_telerik_backend_services_grid %}).

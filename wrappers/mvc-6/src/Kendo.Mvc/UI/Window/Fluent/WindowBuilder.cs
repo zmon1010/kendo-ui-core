@@ -1,8 +1,9 @@
 using System;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -212,8 +213,10 @@ namespace Kendo.Mvc.UI.Fluent
 		}
 
 		public WindowBuilder LoadContentFrom(string actionName, string controllerName, RouteValueDictionary routeValues)
-		{			
-			var urlHelper = Container.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelper>();			
+		{
+            var factory = Container.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+
+            var urlHelper = factory.GetUrlHelper(Container.ViewContext);
 
 			return LoadContentFrom(urlHelper.Action(actionName, controllerName, routeValues));
 		}

@@ -39,7 +39,7 @@
             .BindTo(continents)
             .Events(e =>
             {
-                e.Change("onChange").Select("onSelect").Open("onOpen").Close("onClose").DataBound("onDataBound").Filtering("onFiltering");
+                e.Change("onChange").Select("onSelect").Deselect("onDeselect").Open("onOpen").Close("onClose").DataBound("onDataBound").Filtering("onFiltering");
             })
     %>
 </div>
@@ -67,8 +67,15 @@
 
     function onSelect(e) {
         if ("kendoConsole" in window) {
-            var dataItem = this.dataSource.view()[e.item.index()];
+            var dataItem = e.dataItem;
             kendoConsole.log("event :: select (" + dataItem.Text + " : " + dataItem.Value + ")");
+        }
+    }
+
+    function onDeselect(e) {
+        if ("kendoConsole" in window) {
+            var dataItem = e.dataItem;
+            kendoConsole.log("event :: deselect (" + dataItem.Text + " : " + dataItem.Value + ")");
         }
     }
 </script>

@@ -3,10 +3,10 @@ namespace Kendo.Mvc
     using System;
     using System.Linq;
     using Kendo.Mvc.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
-
+    using Microsoft.AspNetCore.Mvc.Routing;
     public class UrlGenerator : IUrlGenerator
     {
         public string Generate(ActionContext context, string url)
@@ -16,7 +16,9 @@ namespace Kendo.Mvc
 
         private IUrlHelper GetUrlHelper(ActionContext context)
         {
-            return context.HttpContext.RequestServices.GetRequiredService<IUrlHelper>();
+            var factory = context.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+
+            return factory.GetUrlHelper(context);
         }
 
         public string Generate(ActionContext context, INavigatable navigationItem, RouteValueDictionary routeValues)

@@ -6,9 +6,9 @@ namespace Kendo.Mvc.UI
     using System.Linq.Expressions;
     using System.Reflection;
     using Extensions;
-    using Microsoft.AspNet.Mvc.ModelBinding;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
-
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
     public class GridColumnGenerator<T> where T : class
     {
         private readonly Grid<T> grid;

@@ -247,7 +247,7 @@ var __meta__ = { // jshint ignore:line
                 link = element.addClass("k-with-icon k-filterable").find(".k-grid-filter");
 
                 if (!link[0]) {
-                    link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-filter">' + options.messages.filter + '</span></a>').find(".k-grid-filter");
+                    link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-i-filter">' + options.messages.filter + '</span></a>').find(".k-grid-filter");
                 }
 
                 link.attr("tabindex", -1).on("click" + NS, proxy(that._click, that));
@@ -569,6 +569,15 @@ var __meta__ = { // jshint ignore:line
         },
 
         filter: function(expression) {
+            var filters = this._stripFilters(expression.filters);
+            if (filters.length && this.trigger("change", {
+                    filter: { logic: expression.logic, filters: filters },
+                    field: this.field
+                })) {
+
+                return;
+            }
+
             expression = this._merge(expression);
 
             if (expression.filters.length) {
@@ -579,6 +588,10 @@ var __meta__ = { // jshint ignore:line
         clear: function() {
             var that = this,
                 expression = that.dataSource.filter() || { filters:[] };
+
+            if (this.trigger("change", { filter: null, field: that.field })) {
+                return;
+            }
 
             expression.filters = $.grep(expression.filters, function(filter) {
                 if (filter.filters) {
@@ -610,7 +623,7 @@ var __meta__ = { // jshint ignore:line
             this.clear();
 
             if (this.options.search){
-			    this.container.find("label").parent().show();
+                this.container.find("label").parent().show();
             }
             this._closeForm();
         },
@@ -659,7 +672,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        events: [ INIT ],
+        events: [ INIT, "change" ],
 
         options: {
             name: "FilterMenu",
@@ -799,7 +812,7 @@ var __meta__ = { // jshint ignore:line
                 "<div class='k-textbox k-space-right'>" +
                     "<input placeholder='#=messages.search#'/>" +
                     "<span class='k-icon k-font-icon k-i-search' />" +
-                    "</div>" + 
+                    "</div>" +
                 '#}#' +
                 '<ul class="k-multicheck-wrap"></ul>' +
                 '</li><li class="k-button-container">' +
@@ -863,7 +876,7 @@ var __meta__ = { // jshint ignore:line
             var link = element.addClass("k-with-icon k-filterable").find(".k-grid-filter");
 
             if (!link[0]) {
-                link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-filter"/></a>').find(".k-grid-filter");
+                link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-i-filter"/></a>').find(".k-grid-filter");
             }
 
             this._link = link.attr("tabindex", -1).on("click" + NS, proxy(this._click, this));
@@ -1145,6 +1158,10 @@ var __meta__ = { // jshint ignore:line
                 return { value: $(item).val(), operator: "eq", field: that.field };
             });
 
+            if (expression.filters.length && this.trigger("change", { filter: expression, field: that.field })) {
+                return;
+            }
+
             expression = this._merge(expression);
             if (expression.filters.length) {
                 this.dataSource.filter(expression);
@@ -1260,7 +1277,7 @@ var __meta__ = { // jshint ignore:line
                 right: "slide:right"
             }
         },
-        events: [ INIT, REFRESH]
+        events: [ INIT, REFRESH, "change"]
     });
 
     $.extend(FilterMultiCheck.fn, {

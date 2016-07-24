@@ -280,6 +280,30 @@
         ok(gantt.list.calls("_startEditHandler"));
     });
 
+    test("enter does not trigger edit when non editable", function () {
+        var content = gantt.list.content;
+
+        gantt.options.editable = false;
+
+        focusTable();
+        stub(gantt.list, "_startEditHandler");
+        keyDown(content.find("table"), keys.ENTER);
+
+        ok(!gantt.list.calls("_startEditHandler"));
+    });
+
+    test("enter does not trigger edit when editable update is false", function () {
+        var content = gantt.list.content;
+
+        gantt.options.editable = { update: false };
+
+        focusTable();
+        stub(gantt.list, "_startEditHandler");
+        keyDown(content.find("table"), keys.ENTER);
+
+        ok(!gantt.list.calls("_startEditHandler"));
+    });
+
     test("enter stopPropagation upon keyup", function() {
         var content = gantt.list.content;
         var eventInfo = {
@@ -319,6 +343,32 @@
         keyDown(content.find("table"), keys.DELETE);
 
         ok(gantt.calls("removeTask"));
+    });
+
+    test("delete does not remove selected task when editable false", 1, function() {
+        var content = gantt.list.content;
+
+        gantt.options.editable = false;
+
+        focusTable();
+        gantt.select("tr:first");
+        stub(gantt, "removeTask");
+        keyDown(content.find("table"), keys.DELETE);
+
+        ok(!gantt.calls("removeTask"));
+    });
+
+    test("delete does not remove selected task when editable destroy false", 1, function() {
+        var content = gantt.list.content;
+
+        gantt.options.editable = { destroy: false };
+
+        focusTable();
+        gantt.select("tr:first");
+        stub(gantt, "removeTask");
+        keyDown(content.find("table"), keys.DELETE);
+
+        ok(!gantt.calls("removeTask"));
     });
 
     test("delete does not call removeTask when no selection", function() {

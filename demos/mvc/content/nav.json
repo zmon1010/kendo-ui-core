@@ -89,6 +89,7 @@
             {
                 "text": "Customizing templates",
                 "url": "autocomplete/template",
+                "new": true,
                 "title": {
                     "kendo-ui": "Templates customization in Kendo UI AutoComplete",
                     "aspnet-mvc": "Templates customization in ASP.NET MVC AutoComplete"
@@ -97,6 +98,24 @@
                     "kendo-ui": "With this Kendo UI AutoComplete demo, you can learn how to customize the template of the widget.",
                     "aspnet-mvc": "With this ASP.NET MVC AutoComplete demo, you can learn how to customize the template of the control."
                 }
+            },
+            {
+                "text": "Add new item",
+                "url": "autocomplete/addnewitem",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Add new item in Kendo UI AutoComplete",
+                    "aspnet-mvc": "Add new item in ASP.NET MVC AutoComplete"
+                },
+                "meta": {
+                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI AutoComplete.",
+                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC AutoComplete."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Custom data source",
@@ -757,6 +776,7 @@
             {
                 "text": "Customizing templates",
                 "url": "combobox/template",
+                "new": true,
                 "title": {
                     "kendo-ui": "Demo for customizing jQuery ComboBox Templates | Kendo UI Web Demos",
                     "aspnet-mvc": "Demo for customizing ASP.NET MVC ComboBox Templates"
@@ -777,6 +797,24 @@
                     "kendo-ui": "This demo shows how the cascading Kendo UI ComboBox control would fit any web application or website.",
                     "aspnet-mvc": "This demo shows how the cascading ASP.NET MVC ComboBox control would fit any web application or website."
                 }
+            },
+            {
+                "text": "Add new item",
+                "url": "combobox/addnewitem",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Add new item in Kendo UI ComboBox",
+                    "aspnet-mvc": "Add new item in ASP.NET MVC ComboBox"
+                },
+                "meta": {
+                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI ComboBox.",
+                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC ComboBox."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Custom data source",
@@ -1302,6 +1340,7 @@
             {
                 "text": "Customizing templates",
                 "url": "dropdownlist/template",
+                "new": true,
                 "title": {
                     "kendo-ui": "Customize items in Kendo UI DropDownList component",
                     "aspnet-mvc": "Customize items in ASP.NET MVC DropDownList component"
@@ -1322,6 +1361,24 @@
                     "kendo-ui": "This demo shows how the cascading jQuery dropdown works in Kendo UI DropDownList widget.",
                     "aspnet-mvc": "This demo shows how the cascading ASP.NET MVC dropdown works in UI for ASP.NET MVC DropDownList control."
                 }
+            },
+            {
+                "text": "Add new item",
+                "url": "dropdownlist/addnewitem",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Add new item in Kendo UI DropDownList",
+                    "aspnet-mvc": "Add new item in ASP.NET MVC DropDownList"
+                },
+                "meta": {
+                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI DropDownList.",
+                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC DropDownList."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Custom data source",
@@ -1625,7 +1682,6 @@
             {
                 "text": "Paste Cleanup",
                 "url": "editor/paste-cleanup",
-                "new": true,
                 "title": {
                     "kendo-ui": "Paste cleanup options demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
                     "aspnet-mvc": "Paste cleanup options demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
@@ -1642,6 +1698,30 @@
                     "!mvc-core"
                 ]
             },
+          {
+            "text": "Immutable Elements",
+            "url": "editor/immutable-elements",
+            "new": true,
+            "title": {
+              "kendo-ui": "Immutable Elements demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
+              "aspnet-mvc": "Immutable Elements demo demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
+            },
+            "meta": {
+              "kendo-ui": "This example shows how you can use immutable elements in Kendo UI Editor's",
+              "aspnet-mvc": "This example shows how you can use immutable elements in ASP.NET MVC Editor"
+            },
+            "description": {
+              "kendo-ui": "<p>The <strong>Kendo UI Editor</strong> widget and its <strong>Immutable Elements</strong> feature enables you to predefine elements in the content area that cannot be edited by the end user.&nbsp;</p><p>This demo shows a use case where a mail form is to be edited. You can see also:</p><ol><li>How to enable the Immutable Elements—by using the&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables'>immutables option</a>;</li><li>How to define the HTML elements that cannot be edited—by adding the <strong>contenteditable='false'</strong> attribute;</li><li>How to use the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.serialization'>immutables.serialization</a>&nbsp;and&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.deserialization'>immutables.deserialization</a>&nbsp;option to change the data shown in the&nbsp;<strong>viewHtml</strong> dialog and enable end user to control the CSS text-align property from there;</li><li>How to define default styles for the immutable elements;</li><li>And how to define styles when an immutable element is selected to improve UX.</li></ol>",
+              "aspnet-mvc": "<p>The ASP.NET MVC web editor and its <strong>Immutable Elements</strong> feature enables you to predefine elements in the content area that cannot be edited by the end user.&nbsp;</p><p>This demo shows a use case where a mail form is to be edited. You can see also:</p><ol><li>How to enable the Immutable Elements—by using the&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables'>immutables option</a>;</li><li>How to define the HTML elements that cannot be edited—by adding the <strong>contenteditable='false'</strong> attribute;</li><li>How to use the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.serialization'>immutables.serialization</a>&nbsp;and&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.deserialization'>immutables.deserialization</a>&nbsp;option to change the data shown in the&nbsp;<strong>viewHtml</strong> dialog and enable end user to control the CSS text-align property from there;</li><li>How to define default styles for the immutable elements;</li><li>And how to define styles when an immutable element is selected to improve UX.</li></ol>"
+            },
+            "packages": [
+              "online",
+              "mvc",
+              "jsp",
+              "php",
+              "mvc-core"
+            ]
+          },
             {
                 "text": "Events",
                 "url": "editor/events",
@@ -2009,7 +2089,6 @@
             },
             {
                 "text": "Export to PDF",
-                "new": true,
                 "url": "grid/pdf-export",
                 "title": {
                     "kendo-ui": "Exporting to PDF"
@@ -2712,6 +2791,16 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo shows how to disable/enable editing in Kendo UI Spreadsheet provides for particular range"
+                }
+            },
+            {
+                "text": "Custom cell editors",
+                "url": "spreadsheet/custom-editors",
+                "title": {
+                    "kendo-ui": "Custom editors"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how to define your own custom cell editors"
                 }
             },
             {
@@ -3431,6 +3520,7 @@
             {
                 "text": "Customizing templates",
                 "url": "multiselect/template",
+                "new": true,
                 "title": {
                     "kendo-ui": "Templates customization of Kendo UI MultiSelect widget",
                     "aspnet-mvc": "Templates customization of ASP.NET MVC MultiSelect control"
@@ -3439,6 +3529,24 @@
                     "kendo-ui": "This Kendo UI MultiSelect demo shows how the template of the widget can be customized to change the appearance of items and tags.",
                     "aspnet-mvc": "This ASP.NET MVC MultiSelect demo shows how the template of the control can be customized to change the appearance of items and tags."
                 }
+            },
+            {
+                "text": "Add new item",
+                "url": "multiselect/addnewitem",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Add new item in Kendo UI MultiSelect",
+                    "aspnet-mvc": "Add new item in ASP.NET MVC MultiSelect"
+                },
+                "meta": {
+                    "kendo-ui": "Check out this demo to see how to create new item in Kendo UI MultiSelect.",
+                    "aspnet-mvc": "Check out this demo to see how to create new item in ASP.NET MVC MultiSelect."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Events",
@@ -3699,6 +3807,17 @@
                 }
             },
             {
+                "text": "Precision",
+                "url": "numerictextbox/precision",
+                "new": "true",
+                "title": {
+                    "kendo-ui": "The precision features of Kendo UI Numeric TextBox | Kendo UI Web demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the precision functionality of KendoNumericTextBox component."
+                }
+            },
+            {
                 "text": "Events",
                 "url": "numerictextbox/events",
                 "title": {
@@ -3751,6 +3870,19 @@
                 "meta": {
                     "kendo-ui": "The value in Kendo UI NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how.",
                     "aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how."
+                }
+            },
+            {
+                "text": "Range Validation",
+                "url": "numerictextbox/validation",
+				"new": true,
+                "title": {
+                    "kendo-ui": "Range validation in Kendo UI NumericTextBox",
+                    "aspnet-mvc": "Range validation in ASP.NET MVC NumericTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "The value in Kendo UI NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how.",
+                    "aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how."
                 }
             },
             {
@@ -5416,6 +5548,22 @@
                     "kendo-ui": "This sample shows auto scrollable tabs in the Kendo UI TabStrip.",
                     "aspnet-mvc": "This sample shows auto scrollable tabs in the ASP.NET MVC TabStrip."
                 }
+            },
+			{
+                "text": "Sortable closable tabs",
+                "url": "tabstrip/sortable-closable",
+                "title": {
+                    "kendo-ui": "Sortable closable tabs in Kendo UI TabStrip",
+                    "aspnet-mvc": "Sortable-closable tabs in ASP.NET MVC TabStrip"
+                },
+                "meta": {
+                    "kendo-ui": "This Kendo UI demo shows how implement custom logic that allows end users to reorder or close a tab in Kendo UI TabStrip."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
             },
             {
                 "text": "Events",
@@ -9677,10 +9825,7 @@
                 "meta": {
                     "kendo-ui": "With this demo built with Kendo UI, you will be able to find out how Kendo UI Map widget can be implemented for tile maps.",
                     "aspnet-mvc": "With this demo built with ASP.NET MVC, you will be able to find out how ASP.NET MVC Map control can be implemented for tile maps."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Bing tile layer",
@@ -9692,10 +9837,7 @@
                 "meta": {
                     "kendo-ui": "This demo demostrates how you can use Bing tile layer in your Hendo UI HTML5 Map.",
                     "aspnet-mvc": "This demo demostrates how you can use Bing tile layer in your ASP.NET MVC Map."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Bubble layer",
@@ -9706,10 +9848,7 @@
                 "meta": {
                     "kendo-ui": "This demo illustrates how to bind a Kendo UI bubble map layer to remote data."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Binding to GeoJSON",
@@ -9722,10 +9861,7 @@
                     "kendo-ui": "This demo illustrates how to bind a Kendo UI map layer to GeoJSON shapes.",
                     "aspnet-mvc": "This demo illustrates how to bind an ASP.NET MVC map layer to GeoJSON shapes."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Binding markers to remote data",
@@ -9738,10 +9874,7 @@
                     "kendo-ui": "This demo illustrates how to bind a Kendo UI marker layer.",
                     "aspnet-mvc": "This demo illustrates how to bind a ASP.NET MVC marker layer."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Export",
@@ -9751,10 +9884,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This demo shows how to export maps to PDF, PNG Images or SVG and save them directly in the browser."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Events",
@@ -9767,10 +9897,7 @@
                     "kendo-ui": "This sample demonstrates the events which are specific to Kendo UI Map component.",
                     "aspnet-mvc": "This sample demonstrates the events which are specific to ASP.NET MVC Map component."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "API",
@@ -9783,10 +9910,7 @@
                     "kendo-ui": "This sample demonstrates the public methods which are specific to Kendo UI Map component.",
                     "aspnet-mvc": "This sample demonstrates the public methods which are specific to ASP.NET MVC Map component."
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "AngularJS",
@@ -11250,32 +11374,6 @@
                 },
                 "meta": {
                     "kendo-ui": "Hybrid Framework Demos"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
-            },
-            {
-                "text": "Cuteness.io",
-                "url": "mobile-apps/cuteness",
-                "title": {
-                    "kendo-ui": "Cuteness.io"
-                },
-                "meta": {
-                    "kendo-ui": "Cuteness.io"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
-            },
-            {
-                "text": "Sushi",
-                "url": "mobile-apps/sushi",
-                "title": {
-                    "kendo-ui": "Sushi (mobile)"
-                },
-                "meta": {
-                    "kendo-ui": "Sushi (mobile)"
                 },
                 "packages": [
                     "!mvc-core"

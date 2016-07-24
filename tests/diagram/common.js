@@ -210,7 +210,6 @@
         setupDiagramDataSource: setupDiagramDataSource,
         setupEditableDiagram: setupEditableDiagram,
         Shapes: Shapes,
-        roughlyEqual: roughlyEqual,
         roughlyEqualPoint: roughlyEqualPoint,
         matrixEqual: matrixEqual,
         equalTranslate: equalTranslate,

@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +24,10 @@ namespace Kendo.Mvc.UI
         public T? Min { get; set; }
 
         public string Placeholder { get; set; }
+
+        public bool? RestrictDecimals { get; set; }
+
+        public bool? Round { get; set; }
 
         public bool? Spinners { get; set; }
 
@@ -63,6 +67,16 @@ namespace Kendo.Mvc.UI
             if (Placeholder?.HasValue() == true)
             {
                 settings["placeholder"] = Placeholder;
+            }
+
+            if (RestrictDecimals.HasValue)
+            {
+                settings["restrictDecimals"] = RestrictDecimals;
+            }
+
+            if (Round.HasValue)
+            {
+                settings["round"] = Round;
             }
 
             if (Spinners.HasValue)

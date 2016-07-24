@@ -1,0 +1,42 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- hosts: all
+  vars:
+    php_process_user: www-data
+    php_process_group: www-data
+    apt_file_dir: /etc/apt/sources.list.d
+    jenkins_host: localhost
+    ansible_home: a
+  remote_user: petyo
+  sudo: yes
+  tasks:
+    - name: Install list of packages
+      apt: name={{item}} state=latest
+      with_items:
+       - zip
+       - p7zip
+       - xvfb
+       - xauth
+       - firefox
+       - lftp
+       - maven
+    - include: "{{ansible_home}}/ntp.yml"
+    - include: "{{ansible_home}}/ruby.yml"
+    - include: "{{ansible_home}}/nginx.yml"
+    - include: "{{ansible_home}}/google-chrome.yml"
+    - include: "{{ansible_home}}/node.yml"
+    - include: "{{ansible_home}}/java.yml"
+    - name: jenkins
+      include: "{{ansible_home}}/jenkins/main.yml"
+    - include: "{{ansible_home}}/mono.yml"
+    - include: "{{ansible_home}}/php-fpm.yml"
+    - include: "{{ansible_home}}/selenium.yml"
+    - include: "{{ansible_home}}/root_access/main.yml"
+    - include: "{{ansible_home}}/node_services.yml"
+    - include: "{{ansible_home}}/monit/main.yml"
+    - include: "{{ansible_home}}/modulus.yml"
+#    - include: a/tomcat.yml
+
+    - include: "{{ansible_home}}/android-sdk.yml"
+    - name: current
+      include: "{{ansible_home}}/screenshot.yml"

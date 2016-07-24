@@ -113,58 +113,7 @@
     </div>
 </div>
 <script>
-    function createChart() {
-        $("#chart").kendoChart({
-            title: {
-                text: "The AIDA model"
-            },
-            legend: {
-                position: "top"
-            },
-            seriesDefaults: {
-                dynamicHeight: false,
-                labels: {
-                    template: "#= dataItem.category #",
-                    visible: true,
-                    font: "15px sans-serif",
-                    align: "center",
-                    position: "center",
-                    background: "transparent",
-                    color: "#000",
-                    padding: 5,
-                    border: {
-                        width: 1,
-                        dashType: "dot",
-                        color: "#000"
-                    },
-                    format: "N0"
-                }
-            },
-            series: [{
-                type: "funnel",
-                data: [{
-                    category: "Awareness",
-                    value: 4
-                }, {
-                    category: "Interest",
-                    value: 3
-                }, {
-                    category: "Desire",
-                    value: 2
-                }, {
-                    category: "Action",
-                    value: 1
-                }]
-            }],
-            tooltip: {
-                visible: true,
-                template: "#= category # - #= kendo.format('{0:P}', percentage) #"
-            }
-        });
-    }
-
     $(document).ready(function () {
-        createChart();
         $('#sizeSlider').kendoSlider({
             change: refresh,
             min: 1,
@@ -172,8 +121,6 @@
         });
         $('#color').kendoColorPicker({ change: refresh, value: "#000", buttons: false });
         $(".box").on("change", ":checkbox,:radio", refresh);
-
-        $(document).bind("kendo:skinChange", createChart);
     });
 
     function refresh() {
@@ -181,8 +128,6 @@
             slider = $('#sizeSlider').data("kendoSlider"),
             colorPicker = $('#color').data("kendoColorPicker"),
             showBorder = $('#showBorder').is(':checked'),
-            funnelSeries = chart.options.series[0],
-            labepOptions = funnelSeries.labels,
             labels = $("#labels").prop("checked"),
             alignInputs = $("input[name='alignType']"),
             alignLabels = alignInputs.filter(":checked").val(),
@@ -198,20 +143,22 @@
         };
 
         var seriesOptions = {
-            dynamicHeight: false,
-            labels: {
-                template: "#= dataItem.category #",
-                visible: labels,
-                font: slider.value() + "px sans-serif",
-                align: alignLabels,
-                position: position,
-                background: "transparent",
-                color: colorPicker.value(),
-                padding: 5,
-                border: borderOptions,
-                format: "N0"
+            funnel: {
+                dynamicHeight: false,
+                labels: {
+                    template: "#= dataItem.category #",
+                    visible: labels,
+                    font: slider.value() + "px sans-serif",
+                    align: alignLabels,
+                    position: position,
+                    background: "transparent",
+                    color: colorPicker.value(),
+                    padding: 5,
+                    border: borderOptions,
+                    format: "N0"
+                }
             }
-        }
+        };
 
         $('#showBorder').attr("disabled", !labels);
         alignInputs.attr("disabled", !labels);
@@ -222,6 +169,6 @@
         chart.setOptions({
             seriesDefaults: seriesOptions,
             transitions: false
-        })
+        });
     }
 </script>

@@ -19,7 +19,10 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
             {
                 string message = string.Format(
                     CultureInfo.CurrentCulture, "Child element with specified name: {0} cannot be found.", childName);
+
+#if NET451
                 Trace.WriteLine(message);
+#endif
 
                 return null;
             }

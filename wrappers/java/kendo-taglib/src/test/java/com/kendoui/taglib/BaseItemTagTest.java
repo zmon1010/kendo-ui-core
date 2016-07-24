@@ -1,6 +1,6 @@
 package com.kendoui.taglib;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 
@@ -37,8 +37,12 @@ public class BaseItemTagTest {
         Li element = new Li();
 
         tag.renderContents(element);
-        
-        assertEquals("<li><a class=\"k-link\" href=\"foo\">bar</a></li>", element.outerHtml());
+        String tagHtml = element.outerHtml();
+ 	assertTrue(tagHtml.startsWith("<li><a"));
+ 	assertTrue(tagHtml.endsWith(">bar</a></li>"));
+ 	assertTrue(tagHtml.contains("href=\"foo\""));
+ 	assertTrue(tagHtml.contains("class=\"k-link\""));
+	 
     }
     
     @Test
@@ -51,7 +55,12 @@ public class BaseItemTagTest {
 
         tag.renderContents(element);
         
-        assertEquals("<li><a class=\"k-link\" href=\"foo\"><span class=\"k-sprite foo\"></span>bar</a></li>", element.outerHtml());
+	String tagHtml = element.outerHtml();
+ 	assertTrue(tagHtml.startsWith("<li><a"));
+ 	assertTrue(tagHtml.endsWith("</span>bar</a></li>"));
+ 	assertTrue(tagHtml.contains("href=\"foo\""));
+ 	assertTrue(tagHtml.contains("class=\"k-link\""));
+        assertTrue(tagHtml.contains("class=\"k-sprite foo\""));        
     }
 
     @Test

@@ -171,7 +171,10 @@ var __meta__ = { // jshint ignore:line
         name: "timeline",
 
         _currentTimeMarkerUpdater: function() {
-            var currentTime = new Date();
+            this._updateCurrentTimeMarker(new Date());
+        },
+
+        _updateCurrentTimeMarker: function(currentTime) {
             var options = this.options;
 
             this.datesHeader.find("." + CURRENT_TIME_MARKER_CLASS).remove();
@@ -194,11 +197,11 @@ var __meta__ = { // jshint ignore:line
 
             for(var groupIndex = 0; groupIndex < groupsCount; groupIndex++) {
                 var currentGroup = this.groups[groupIndex];
-				
-				if (!currentGroup) {
-					return;
-				}
-				
+
+                if (!currentGroup) {
+                    return;
+                }
+
                 var utcCurrentTime = kendo.date.toUtcTime(currentTime);
                 var ranges = currentGroup.timeSlotRanges(utcCurrentTime, utcCurrentTime + 1);
 

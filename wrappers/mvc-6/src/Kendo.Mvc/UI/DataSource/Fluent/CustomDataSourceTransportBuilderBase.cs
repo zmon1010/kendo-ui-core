@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Kendo.Mvc.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
 
     /// <summary>

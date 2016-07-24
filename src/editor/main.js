@@ -17,10 +17,19 @@
         Widget = kendo.ui.Widget,
         os = kendo.support.mobileOS,
         browser = kendo.support.browser,
+        contains = $.contains,
         extend = $.extend,
         proxy = $.proxy,
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
+
+    var rtlEnabled = false;
+    var MOUSE_ENTER = "mouseenter";
+    var MOUSE_LEAVE = "mouseleave";
+    var MOUSE_UP = "mouseup";
+    var NS = ".kendoEditor";
+    var TABLE = "table";
+    var UNDEFINED = "undefined";
 
     // options can be: template (as string), cssClass, title, defaultValue
     var ToolTemplate = Class.extend({
@@ -42,9 +51,10 @@
             '</tbody></table>',
 
         buttonTemplate:
+            '# var iconCssClass= "k-i-" + kendo.toHyphens(data.cssClass.replace("k-", ""));#' +
             '<a href="" role="button" class="k-tool"' +
             '#= data.popup ? " data-popup" : "" #' +
-            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= data.cssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
+            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= iconCssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
 
         colorPickerTemplate:
             '<div class="k-colorpicker #= data.cssClass #" />',
@@ -185,6 +195,8 @@
             that.options = deepExtend({}, that.options, options);
             that.options.tools = that.options.tools.slice();
 
+            rtlEnabled = kendo.support.isRtl(element);
+
             element = that.element;
             domElement = element[0];
 
@@ -230,11 +242,13 @@
 
             that._resizable();
             that._initializeContentElement(that);
+            that._initializeTableResizing();
 
             that.keyboard = new editorNS.Keyboard([
                 new editorNS.BackspaceHandler(that),
                 new editorNS.TypingHandler(that),
-                new editorNS.SystemHandler(that)
+                new editorNS.SystemHandler(that),
+                new editorNS.SelectAllHandler(that)
             ]);
 
             that.clipboard = new editorNS.Clipboard(this);
@@ -264,6 +278,8 @@
                 "mousedown": function() { that._endTyping(); },
                 "mouseup": function() { that._mouseup(); }
             });
+
+            that._initializeImmutables();
 
             that.toolbar.resize();
 
@@ -301,7 +317,7 @@
             var resizable = this.options.resizable;
             var isResizable = $.isPlainObject(resizable) ? (resizable.content === undefined || resizable.content === true) : resizable;
             if (isResizable && this.textarea) {
-                $("<div class='k-resize-handle'><span class='k-icon k-resize-se' /></div>")
+                $("<div class='k-resize-handle'><span class='k-icon k-i-resize-se' /></div>")
                     .insertAfter(this.textarea);
 
                 this.wrapper.kendoResizable(extend({}, this.options.resizable, {
@@ -325,6 +341,73 @@
                         this.editor = null;
                     }
                 }));
+            }
+        },
+
+        _initializeTableResizing: function() {
+            var editor = this;
+
+            function initTableResizing(editorWidget, tableElement) {
+                editorWidget.tableResizing = new kendo.ui.editor.TableResizing(tableElement, {
+                    rtl: rtlEnabled,
+                    rootElement: editorWidget.body
+                });
+            }
+
+            $(editor.body)
+                .on(MOUSE_ENTER + NS, TABLE, function(e) {
+                    var table = e.currentTarget;
+
+                    e.stopPropagation();
+
+                    if (editor.tableResizing) {
+                        if (editor.tableResizing.element !== table && !editor.tableResizing.resizingInProgress()) {
+                            editor._destroyTableResizing();
+                            initTableResizing(editor, table);
+                        }
+                    }
+                    else {
+                        initTableResizing(editor, table);
+                    }
+                })
+                .on(MOUSE_LEAVE + NS, TABLE, function(e) {
+                    var parentTable;
+
+                    e.stopPropagation();
+
+                    if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
+                        parentTable = $(editor.tableResizing.element).parents(TABLE)[0];
+
+                        if (parentTable) {
+                            editor._destroyTableResizing();
+                            initTableResizing(editor, parentTable);
+                        }
+                    }
+                })
+                .on(MOUSE_LEAVE + NS, function() {
+                    if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
+                        editor._destroyTableResizing();
+                    }
+                })
+                .on(MOUSE_UP + NS, function(e) {
+                    var tableResizing = editor.tableResizing;
+                    var element = tableResizing ? tableResizing.element : null;
+                    var target = e.target;
+                    var dataAttribute = $(target).data(TABLE);
+                    var dataCondition = typeof(dataAttribute) === UNDEFINED || (typeof(dataAttribute) !== UNDEFINED && dataAttribute !== element);
+
+                    if (tableResizing && !tableResizing.resizingInProgress() && dataCondition && element !== target && !contains(element, target)) {
+                        editor._destroyTableResizing();
+                    }
+                });
+        },
+
+        _destroyTableResizing: function() {
+            var editor = this;
+
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+                editor.tableResizing = null;
             }
         },
 
@@ -389,6 +472,7 @@
                     "body{font-size:12px;font-family:Verdana,Geneva,sans-serif;margin-top:-1px;padding:1px .2em 0;" +
                     "word-wrap: break-word;-webkit-nbsp-mode: space;-webkit-line-break: after-white-space;" +
                     (kendo.support.isRtl(textarea) ? "direction:rtl;" : "") +
+                    (browser.msie || browser.edge ? "height:auto;" : "") +
                     "}" +
                     "h1{font-size:2em;margin:.67em 0}h2{font-size:1.5em}h3{font-size:1.16em}h4{font-size:1em}h5{font-size:.83em}h6{font-size:.7em}" +
                     "p{margin:0 0 1em;}.k-marker{display:none;}.k-paste-container,.Apple-style-span{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}" +
@@ -397,10 +481,21 @@
                     "a{color:#00a}" +
                     "code{font-size:1.23em}" +
                     "telerik\\3Ascript{display: none;}" +
-                    ".k-table{table-layout:fixed;width:100%;border-spacing:0;margin: 0 0 1em;}" +
+                    ".k-table{width:100%;border-spacing:0;margin: 0 0 1em;}" +
                     ".k-table td{min-width:1px;padding:.2em .3em;}" +
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
+                    ".k-table td >.k-resize-handle{position:absolute;height: 14px;width:10px;cursor:col-resize;z-index:2;}" +
+                    ".k-table td > .k-resize-handle > .k-resize-hint-marker{width:2px;height:100%;margin:0 auto;background-color:#00b0ff;display:none;opacity:0.8;}" +
+                    ".k-table-resize-handle{position:absolute;background-color:#fff;border:1px solid #000;z-index:2;width:5px;height:5px;}" +
+                    ".k-resize-e{cursor:e-resize;}" +
+                    ".k-resize-n{cursor:n-resize;}" +
+                    ".k-resize-ne{cursor:ne-resize;}" +
+                    ".k-resize-nw{cursor:nw-resize;}" +
+                    ".k-resize-s{cursor:s-resize;}" +
+                    ".k-resize-se{cursor:se-resize;}" +
+                    ".k-resize-sw{cursor:sw-resize;}" +
+                    ".k-resize-w{cursor:w-resize;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +
@@ -443,7 +538,7 @@
                     });
 
                     editor._spellCorrectTimeout = setTimeout(function() {
-                        beforeCorrection = new kendo.ui.editor.RestorePoint(editor.getRange());
+                        beforeCorrection = new kendo.ui.editor.RestorePoint(editor.getRange(), editor.body);
                         falseTrigger = false;
                     }, 10);
                 },
@@ -489,6 +584,8 @@
         },
 
         _deregisterHandlers: function() {
+            var editor = this;
+
             var handlers = this._handlers;
 
             for (var i = 0; i < handlers.length; i++) {
@@ -497,12 +594,17 @@
             }
 
             this._handlers = [];
+
+            $(editor.body)
+                .off(MOUSE_ENTER + NS)
+                .off(MOUSE_LEAVE + NS);
         },
 
         _initializeContentElement: function() {
             var editor = this;
             var doc;
             var blurTrigger;
+            var mousedownTrigger;
 
             if (editor.textarea) {
                 editor.window = editor._createContentElement(editor.options.stylesheets);
@@ -510,6 +612,7 @@
                 editor.body = doc.body;
 
                 blurTrigger = editor.window;
+                mousedownTrigger = doc;
 
                 this._registerHandler(doc, "mouseup", proxy(this._mouseup, this));
             } else {
@@ -518,11 +621,13 @@
                 editor.body = editor.element[0];
 
                 blurTrigger = editor.body;
+                mousedownTrigger = editor.body;
 
                 editor.toolbar.decorateFrom(editor.body);
             }
 
             this._registerHandler(blurTrigger, "blur", proxy(this._blur, this));
+            this._registerHandler(mousedownTrigger, "mousedown ", proxy(this._mousedown, this));
 
             try {
                 doc.execCommand("enableInlineTableEditing", null, false);
@@ -567,12 +672,11 @@
                         var offset = range[left ? "startOffset" : "endOffset"];
                         var direction = left ? -1 : 1;
 
-                        if (left) {
-                            offset -= 1;
-                        }
+                        var next = offset + direction;
+                        var nextChar = left ? next : offset;
 
-                        if (offset + direction > 0 && container.nodeType == 3 && container.nodeValue[offset] == "\ufeff") {
-                            range.setStart(container, offset + direction);
+                        if (container.nodeType == 3 && container.nodeValue[nextChar] == "\ufeff") {
+                            range.setStart(container, next);
                             range.collapse(true);
                             editor.selectRange(range);
                         }
@@ -613,21 +717,6 @@
 
                     editor.keyboard.keyup(e);
                 },
-                "mousedown": function(e) {
-                    editor._selectionStarted = true;
-
-                    // handle middle-click and ctrl-click on links
-                    if (browser.gecko) {
-                        return;
-                    }
-
-                    var target = $(e.target);
-
-                    if ((e.which == 2 || (e.which == 1 && e.ctrlKey)) &&
-                        target.is("a[href]")) {
-                        window.open(target.attr("href"), "_new");
-                    }
-                },
                 "click": function(e) {
                     var dom = kendo.ui.editor.Dom, range;
 
@@ -659,6 +748,32 @@
                     }, 10);
                 }
             });
+        },
+
+        _initializeImmutables: function(){
+            var that = this,
+                editorNS = kendo.ui.editor;
+
+            if (that.options.immutables){
+                that.immutables = new editorNS.Immutables(that);
+            }
+        },
+
+        _mousedown: function (e) {
+            var editor = this;
+            editor._selectionStarted = true;
+
+            // handle middle-click and ctrl-click on links
+            if (browser.gecko) {
+                return;
+            }
+
+            var target = $(e.target);
+
+            if ((e.which == 2 || (e.which == 1 && e.ctrlKey)) &&
+                target.is("a[href]")) {
+                window.open(target.attr("href"), "_new");
+            }
         },
 
         _mouseup: function() {
@@ -789,6 +904,8 @@
         },
 
         destroy: function() {
+            var editor = this;
+
             Widget.fn.destroy.call(this);
 
             this._endTyping(true);
@@ -800,6 +917,8 @@
             this._focusOutside();
 
             this.toolbar.destroy();
+
+            editor._destroyTableResizing();
 
             kendo.destroy(this.wrapper);
         },
@@ -861,7 +980,7 @@
                 body = this.body;
 
             if (container == body || $.contains(body, container)) {
-                this.selectionRestorePoint = new kendo.ui.editor.RestorePoint(range);
+                this.selectionRestorePoint = new kendo.ui.editor.RestorePoint(range, body);
             }
         },
 
@@ -986,7 +1105,7 @@
                 range = that.getRange();
 
                 if (tool.command) {
-                    command = tool.command(extend({ range: range }, params));
+                    command = tool.command(extend({ range: range, body: that.body }, params));
                 }
 
                 prevented = that.trigger("execute", { name: name, command: command });
@@ -1070,9 +1189,10 @@
 
     var bomFill = browser.msie && browser.version < 9 ? '\ufeff' : '';
     var emptyElementContent = '\ufeff';
+    var emptyTableCellContent = emptyElementContent;
 
-    if (browser.msie && browser.version == 10) {
-        emptyElementContent = ' '; // allow up/down arrows to focus empty rows
+    if(browser.msie && browser.version == 10) {
+        emptyTableCellContent = "&nbsp;";
     }
 
     extend(kendo.ui, {
@@ -1082,7 +1202,8 @@
             Tool: Tool,
             FormatTool: FormatTool,
             _bomFill: bomFill,
-            emptyElementContent: emptyElementContent
+            emptyElementContent: emptyElementContent,
+            emptyTableCellContent: emptyTableCellContent
         }
     });
 
@@ -1101,11 +1222,9 @@
             }
 
             var options = this.options.pdf;
-            var paperSize = options.paperSize;
 
             this._drawPDF(progress)
             .then(function(root) {
-                options.paperSize = "auto";
                 return kendo.drawing.exportPDF(root, options);
             })
             .done(function(dataURI) {
@@ -1115,7 +1234,6 @@
                     proxyURL: options.proxyURL,
                     forceProxy: options.forceProxy
                 });
-                options.paperSize = paperSize;
                 progress.resolve();
             })
             .fail(function(err) {
@@ -1126,6 +1244,6 @@
         };
     }
 
-})(window.jQuery);
+})(window.jQuery || window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

@@ -4,7 +4,7 @@
     "recipe[zsh]",
     "recipe[ruby]",
     "recipe[nodejs]",
-    "recipe[java]",
+    "recipe[java_wrapper]",
     "recipe[mono]",
     "recipe[nginx::workstation]",
     "recipe[php::workstation]",

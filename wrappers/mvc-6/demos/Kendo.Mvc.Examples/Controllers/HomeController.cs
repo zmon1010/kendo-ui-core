@@ -1,17 +1,22 @@
 ﻿using Kendo.Mvc.Examples.Models;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
     public class HomeController : Controller
     {
-        [FromServices]
         public IHostingEnvironment HostingEnvironment { get; set; }
+
+        public HomeController(IHostingEnvironment hostingEnvironment)
+        {
+            HostingEnvironment = hostingEnvironment;
+        }
 
         public IActionResult Index()
         {
@@ -31,9 +36,9 @@ namespace Kendo.Mvc.Examples.Controllers
             {
                 ProductID = product.ProductID,
                 ProductName = product.ProductName,
-                UnitPrice = product.UnitPrice ?? 0,
-                UnitsInStock = product.UnitsInStock ?? 0,
-                UnitsOnOrder = product.UnitsOnOrder ?? 0,
+                UnitPrice = product.UnitPrice.Value,
+                UnitsInStock = product.UnitsInStock.Value,
+                UnitsOnOrder = product.UnitsOnOrder.Value,
                 Discontinued = product.Discontinued
             });
 
@@ -47,7 +52,9 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public IEnumerable<CustomerViewModel> GetCustomers()
         {
-            var customers = new SampleEntitiesDataContext().Customers.Select(customer => new CustomerViewModel
+            var customers = new SampleEntitiesDataContext()
+                .Customers
+                .Select(customer => new CustomerViewModel
             {
                 CustomerID = customer.CustomerID,
                 CompanyName = customer.CompanyName,

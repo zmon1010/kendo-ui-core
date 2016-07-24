@@ -16,6 +16,50 @@ namespace Kendo.Mvc.UI.Fluent
             : base(events)
         {
         }
+        
+        /// <summary>
+        /// Defines the inline handler of the Deselect client-side event
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  @(Html.Kendo().MultiSelect()
+        ///            .Name("MultiSelect")
+        ///            .Events(events => events.Deselect(
+        ///                 @&lt;text&gt;
+        ///                 function(e) {
+        ///                     //event handling code
+        ///                 }
+        ///                 &lt;/text&gt;
+        ///            ))
+        /// )
+        /// </code>
+        /// </example>
+        public MultiSelectEventBuilder Deselect(Func<object, object> handler)
+        {
+            Handler("deselect", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the the Deselect client-side event.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  @(Html.Kendo().MultiSelect()
+        ///             .Name("MultiSelect")
+        ///             .Events(events => events.Deselect("deselect"))
+        /// )
+        /// </code>
+        /// </example>
+        public MultiSelectEventBuilder Deselect(string handler)
+        {
+            Handler("deselect", handler);
+
+            return this;
+        }
 
         /// <summary>
         /// Defines the inline handler of the Select client-side event

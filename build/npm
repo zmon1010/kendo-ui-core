@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Script should not be called directly, use rake bower:push
+
+npmgit="git --work-tree=$2 --git-dir=$2/.git"
+
+if [ ! -d $2 ]; then
+    git clone $1 $2
+else
+    $npmgit fetch
+    $npmgit reset --hard origin/master
+    $npmgit clean -dfx
+fi;
+
+rm -rf $2/* $2
+
+$npmgit add --all .
+$npmgit commit -m "Update to $VERSION"
+$npmgit tag -a "$VERSION" -m "$VERSION"
+$npmgit push origin master
+$npmgit push origin "$VERSION"

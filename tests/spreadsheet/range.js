@@ -720,6 +720,16 @@
         equal(sheet.range("A1").input(), "1/1/2015");
     });
 
+    test("range.input returns number when the numeric format cannot be parsed back", function(){
+        var r = sheet.range("A1")
+            .value(1231231231)
+            .format(" _(* #,##0.00_);_(* (#,##0.00);_(* \"\"-\"\"_)");
+
+        equal(r.input(), 1231231231);
+        r.value(900);
+        equal(r.input(), 900);
+    });
+
     test("range.input handles time", function(){
         var r = sheet.range("A1");
         r.input("10:30");
@@ -733,6 +743,30 @@
         r.input("10:30.55");
         equal(r.input(), "10:30.55");
         equal(r.format(), "mm:ss.00");
+    });
+
+    test("range.input handles various numeric formats", function(){
+        var r = sheet.range("A1");
+        function test(input, value, format) {
+            r.format(null);
+            r.input(input);
+            equal(r.value(), value);
+            if (format != null) {
+                equal(r.format(), format);
+            }
+        }
+        test("$1234", 1234, '"$"#,#');
+        test("-$1234", -1234, '"$"#,#');
+        test("$-1,234", -1234, '"$"#,#');
+        test("$-1,234.00", -1234, '"$"#,#.00');
+        test("-$1234.00", -1234, '"$"#,#.00');
+        test("1234$", 1234, '#,#"$"');
+        test("-1,234$", -1234, '#,#"$"');
+        test("-1,234$", -1234, '#,#"$"');
+        test("-1234.00$", -1234, '#,#.00"$"');
+
+        // this one should be left as is (string)
+        test("123-456", "123-456");
     });
 
     test("range.input handles '=foo+", function(){

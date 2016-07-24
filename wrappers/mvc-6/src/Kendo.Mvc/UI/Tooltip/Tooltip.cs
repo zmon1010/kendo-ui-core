@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,8 +57,15 @@ namespace Kendo.Mvc.UI
 
         public override void WriteInitializationScript(TextWriter writer)
         {
+            var settings = Serialize();
+
+            writer.Write(Initializer.InitializeFor(SanitizeSelector(Container), "Tooltip", settings));
+        }
+
+        public Dictionary<string, object> Serialize()
+        {
             var settings = SerializeSettings();
-            
+
             if (Filter.HasValue())
             {
                 settings["filter"] = SanitizeSelector(Filter);
@@ -80,7 +87,7 @@ namespace Kendo.Mvc.UI
 
             SerializeContent(settings);
 
-            writer.Write(Initializer.InitializeFor(SanitizeSelector(Container), "Tooltip", settings));
+            return settings;
         }
 
         private void SerializeContent(Dictionary<string, object> options)

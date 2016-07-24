@@ -1,7 +1,7 @@
 
 package "mono-fastcgi-server4"
 
-template '/etc/init/mono-fcgi.conf' do
+template '/lib/systemd/system/mono-fcgi.service' do
     owner 'www-data'
     group 'www-data'
     source 'workstation.conf.erb'
@@ -11,6 +11,6 @@ template '/etc/init/mono-fcgi.conf' do
 end
 
 service 'mono-fcgi' do
-    provider Chef::Provider::Service::Upstart
+    provider Chef::Provider::Service::Systemd
     action :restart
 end

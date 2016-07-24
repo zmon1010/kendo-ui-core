@@ -1,11 +1,12 @@
 ﻿using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.ModelBinding.Validation;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -48,14 +49,16 @@ namespace Kendo.Mvc.UI.Fluent
             return ExpressionHelper.GetExpressionText(expression);
         }
 
-        private Nullable<TValue> GetRangeValidationParameter<TValue>(IEnumerable<ModelClientValidationRule> rules, string parameter) where TValue : struct
+        private Nullable<TValue> GetRangeValidationParameter<TValue>(ModelExplorer explorer, string parameter) where TValue : struct
         {
-            var clientValidationsRules = rules.OfType<ModelClientValidationRangeRule>()
-                                              .Cast<ModelClientValidationRangeRule>();
+            var rangeAttribute = explorer.Metadata.ValidatorMetadata
+                .Where(attr => attr is RangeAttribute)
+                .FirstOrDefault() as RangeAttribute;
 
-            object value = null;
-            if (clientValidationsRules.Any() && clientValidationsRules.First().ValidationParameters.TryGetValue(parameter, out value))
+            if (rangeAttribute != null)
             {
+                object value = parameter == "min" ? rangeAttribute.Minimum : rangeAttribute.Maximum;
+
                 return (TValue)Convert.ChangeType(value, typeof(TValue));
             }
 
@@ -156,13 +159,16 @@ namespace Kendo.Mvc.UI.Fluent
             var explorer = GetModelExplorer(expression);
             var model = explorer.Model;
 
-            if (model != null && model.GetType().IsPredefinedType())
+            if (model != null)
             {
-                return Convert.ToString(model);
-            }
-            else if (model.GetType().IsEnumType())
-            {
-                return Convert.ToString((int)model);
+                if (model.GetType().IsPredefinedType())
+                {
+                    return Convert.ToString(model);
+                }
+                else if (model.GetType().IsEnumType())
+                {
+                    return Convert.ToString(Convert.ToInt32(model));
+                }
             }
 
             return null;

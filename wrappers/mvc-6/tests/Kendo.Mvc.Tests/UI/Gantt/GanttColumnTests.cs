@@ -3,8 +3,8 @@ using Xunit;
 using Kendo.Mvc.UI.Fluent;
 using Kendo.Mvc.Tests;
 using System.Collections.Generic;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.UI.Tests
 {

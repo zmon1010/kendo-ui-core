@@ -58,6 +58,15 @@
         htmlEqual(format(1234567), "1,234,567");
     });
 
+    test("thousands separator on negative numbers", function(){
+        var format = F.compile("#,#");
+        htmlEqual(format(-123), "-123");
+        htmlEqual(format(-1234), "-1,234");
+        htmlEqual(format(-12345), "-12,345");
+        htmlEqual(format(-123456), "-123,456");
+        htmlEqual(format(-1234567), "-1,234,567");
+    });
+
     test("thousands separator with decimals", function(){
         var format = F.compile("#,#.###");
         htmlEqual(format(0), ".");
@@ -278,6 +287,16 @@
 
         var format = F.compile(F.adjustDecimals('#,###.00 0000', -8));
         htmlEqual(format(12345.777777777), "12,346 ");
+    });
+
+    test("adjust decimals does not add unnecessary sections", function(){
+        equal(F.adjustDecimals("#,#.00", -1), "#,#.0");
+        equal(F.adjustDecimals("#,#.00", -2), "#,#");
+        equal(F.adjustDecimals("#,#.00", -3), "#,#");
+        equal(F.adjustDecimals("#,#.00", -2), "#,#");
+        equal(F.adjustDecimals("#,#", -1), "#,#");
+        equal(F.adjustDecimals("#,#", 1), "#,#.0");
+        equal(F.adjustDecimals("#,#", 2), "#,#.00");
     });
 
     test("does not error out when given string in number format", function(){

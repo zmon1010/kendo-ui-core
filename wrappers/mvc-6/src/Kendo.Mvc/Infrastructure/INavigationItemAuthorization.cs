@@ -1,7 +1,7 @@
 ﻿namespace Kendo.Mvc.Infrastructure
 {
-    using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Routing;
 
     public interface INavigationItemAuthorization
     {

@@ -44,6 +44,8 @@ namespace Kendo.Mvc.UI
         
             Deserialization = new EditorDeserializationSettings();
                 
+            Immutables = new EditorImmutablesSettings();
+                
             PasteCleanup = new EditorPasteCleanupSettings();
                 
             Resizable = new EditorResizableSettings();
@@ -62,6 +64,12 @@ namespace Kendo.Mvc.UI
         }
         
         public string Domain { get; set; }
+        
+        public EditorImmutablesSettings Immutables
+        {
+            get;
+            set;
+        }
         
         public EditorPasteCleanupSettings PasteCleanup
         {
@@ -184,6 +192,14 @@ namespace Kendo.Mvc.UI
                 json["domain"] = Domain;
             }
             
+            var immutables = Immutables.ToJson();
+            if (immutables.Any())
+            {
+                json["immutables"] = immutables;
+            } else if (Immutables.Enabled != false) {
+                json["immutables"] = Immutables.Enabled;
+            }
+
             var pasteCleanup = PasteCleanup.ToJson();
             if (pasteCleanup.Any())
             {

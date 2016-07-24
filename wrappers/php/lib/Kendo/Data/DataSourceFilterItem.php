@@ -34,7 +34,7 @@ class DataSourceFilterItem extends \Kendo\SerializableObject {
 
     /**
     * The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "isnull" (is equal to null), "isnotnull" (is not equal to null), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
-"startswith", "endswith", "contains", "isempty", "isnotempty". The last five are supported only for string fields.
+"startswith", "endswith", "contains", "doesnotcontain", "isempty", "isnotempty". The last five are supported only for string fields.
     * @param string $value
     * @return \Kendo\Data\DataSourceFilterItem
     */

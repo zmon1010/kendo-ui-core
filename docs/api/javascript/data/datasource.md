@@ -344,7 +344,7 @@ The logical operation to use when the `filter.filters` option is set. The suppor
 ### filter.operator `String`
 
 The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "isnull" (is equal to null), "isnotnull" (is not equal to null), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
-"startswith", "endswith", "contains", "isempty", "isnotempty". The last five are supported only for string fields.
+"startswith", "endswith", "contains", "doesnotcontain", "isempty", "isnotempty". The last five are supported only for string fields.
 
 #### Example - set the filter operator
 
@@ -366,6 +366,8 @@ The filter operator (comparison). The supported operators are: "eq" (equal to), 
 ### filter.value `Object`
 
 The value to which the [field](#configuration-filter.field) is compared. The value must be from the same type as the field.
+
+> By design, the `"\n"` is removed from the filter before the filtering is performed. That is why an `"\n"` identifier from the filter will not match data items whose corresponding fields contain new lines.
 
 #### Example - specify the filter value
     <script>
@@ -1023,6 +1025,16 @@ If set to an existing [kendo.data.Model](/api/javascript/data/model) instance th
 
 Executed before the server response is used. Use it to preprocess or parse the server response.
 
+#### Parameters
+
+##### response `Object|Array`
+
+The initially parsed server response that may need additional modifications.
+
+#### Returns
+
+`Array` The data items from the response.
+
 #### Example - data projection
 
     <script>
@@ -1131,9 +1143,11 @@ The type of the response. The supported values are "xml" and "json". By default 
 
 ### serverAggregates `Boolean` *(default: false)*
 
-If set to `true` the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.
+If set to `true`, the data source will leave the aggregate calculation to the remote service. By default, the data source calculates aggregates client-side.
 
-> Don't forget to set [schema.aggregates](#configuration-schema.aggregates) if you set `serverAggregates` to `true`.
+> Configure [`schema.aggregates`](#configuration-schema.aggregates) if you set `serverAggregates` to `true`.
+
+For more information and tips about client and server data operations, refer to the [introductory article on the DataSource]({% slug overview_kendoui_datasourcecomponent %}#mixed-data-operations-mode).
 
 #### Example - enable server aggregates
 
@@ -1154,18 +1168,20 @@ If set to `true` the data source will leave the aggregate calculation to the rem
 
 ### serverFiltering `Boolean` *(default: false)*
 
-If set to `true` the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.
+If set to `true`, the data source will leave the filtering implementation to the remote service. By default, the data source performs filtering client-side.
 
-By default the [filter](#configuration-filter) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
+By default, the [`filter`](#configuration-filter) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
 
-For example the filter `{ logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] }` is sent as:
+For example, the filter `{ logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] }` is sent as:
 
 *   filter[logic]: and
 *   filter[filters][0][field]: name
 *   filter[filters][0][operator]: startswith
 *   filter[filters][0][value]: Jane
 
-Use the [parameterMap](#configuration-transport.parameterMap) option to send the filter option in a different format.
+Use the [`parameterMap`](#configuration-transport.parameterMap) option to send the filter option in a different format.
+
+For more information and tips about client and server data operations, refer to the [introductory article on the DataSource]({% slug overview_kendoui_datasourcecomponent %}#mixed-data-operations-mode).
 
 #### Example - enable server filtering
 
@@ -1181,17 +1197,18 @@ Use the [parameterMap](#configuration-transport.parameterMap) option to send the
 
 ### serverGrouping `Boolean` *(default: false)*
 
-If set to `true` the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.
+If set to `true`, the data source will leave the grouping implementation to the remote service. By default, the data source performs grouping client-side.
 
-By default the [group](#configuration-group) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
+By default, the [`group`](#configuration-group) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
 
-For example the group `{ field: "category", dir: "desc" }` is sent as:
+For example, the group `{ field: "category", dir: "desc" }` is sent as:
 
 *   group[0][field]: category
 *   group[0][dir]: desc
 
+Use the [`parameterMap`](#configuration-transport.parameterMap) option to send the group option in a different format.
 
-Use the [parameterMap](#configuration-transport.parameterMap) option to send the group option in a different format.
+For more information and tips about client and server data operations, refer to the [introductory article on the DataSource]({% slug overview_kendoui_datasourcecomponent %}#mixed-data-operations-mode).
 
 #### Example - enable server grouping
 
@@ -1207,9 +1224,9 @@ Use the [parameterMap](#configuration-transport.parameterMap) option to send the
 
 ### serverPaging `Boolean` *(default: false)*
 
-If set to `true` the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.
+If set to `true`, the data source will leave the data item paging implementation to the remote service. By default, the data source performs paging client-side.
 
-> Don't forget to set [`schema.total`](#configuration-schema.total) if you set `serverPaging` to `true`. In addition, [`pageSize`](#configuration-pageSize) should be set no matter if paging is performed client-side or server-side.
+> Configure [`schema.total`](#configuration-schema.total) if you set `serverPaging` to `true`. In addition, [`pageSize`](#configuration-pageSize) should be set no matter if paging is performed client-side or server-side.
 
 The following options are sent to the server when server paging is enabled:
 
@@ -1218,7 +1235,9 @@ The following options are sent to the server when server paging is enabled:
 - skip - how many data items to skip
 - take - the number of data items to return (the same as `pageSize`)
 
-Use the [parameterMap](#configuration-transport.parameterMap) option to send the paging options in a different format.
+Use the [`parameterMap`](#configuration-transport.parameterMap) option to send the paging options in a different format.
+
+For more information and tips about client and server data operations, refer to the [introductory article on the DataSource]({% slug overview_kendoui_datasourcecomponent %}#mixed-data-operations-mode).
 
 #### Example - enable server paging
 
@@ -1236,16 +1255,18 @@ Use the [parameterMap](#configuration-transport.parameterMap) option to send the
 
 ### serverSorting `Boolean` *(default: false)*
 
-If set to `true` the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.
+If set to `true`, the data source will leave the data item sorting implementation to the remote service. By default, the data source performs sorting client-side.
 
-By default the [sort](#configuration-sort) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
+By default, the [`sort`](#configuration-sort) is sent to the server following jQuery's [conventions](http://api.jquery.com/jQuery.param/).
 
-For example the sort `{ field: "age", dir: "desc" }` is sent as:
+For example, the sort `{ field: "age", dir: "desc" }` is sent as:
 
 *   sort[0][field]: age
 *   sort[0][dir]: desc
 
-Use the [parameterMap](#configuration-transport.parameterMap) option to send the paging options in a different format.
+Use the [`parameterMap`](#configuration-transport.parameterMap) option to send the paging options in a different format.
+
+For more information and tips about client and server data operations, refer to the [introductory article on the DataSource]({% slug overview_kendoui_datasourcecomponent %}#mixed-data-operations-mode).
 
 #### Example - enable server sorting
 
@@ -2550,7 +2571,7 @@ If the value of `transport.update` is a string the data source uses this string 
     dataSource.fetch(function() {
       var product = dataSource.at(0);
       product.set("UnitPrice", 20);
-      dataSource.sync(); makes request to http://demos.telerik.com/kendo-ui/service/products/update
+      dataSource.sync(); //makes request to http://demos.telerik.com/kendo-ui/service/products/update
     });
     </script>
 
@@ -2925,6 +2946,8 @@ Cancels any pending changes in the data source. Deleted data items are restored,
 
 The optional data item (model). If specified only the changes of this data item will be discarded. If omitted all changes will be discarded.
 
+> Note that specifying a data item (model) for `cancelChanges` will not work if the data item was removed from the collection via `remove` method.
+
 #### Example - cancel all changes
     <script>
     var dataSource = new kendo.data.DataSource({
@@ -2986,7 +3009,7 @@ Every item from the array is wrapped in a [kendo.data.ObservableObject](/api/jav
 If the data source is grouped (via the [group](#configuration-group) option or the [group](#methods-group) method) and the [serverGrouping](#configuration-serverGrouping) is set to `true`
 the `data` method will return the group items.
 
-> The [schema.model](#configuration-schema.model) configuration will not be used to parse the set data items. The data should be parsed in advance.
+> The [schema.model](#configuration-schema.model) configuration will not be used to parse the set data items. The data should be parsed in advance and the values should be provided in the correct type - date values should be JavaScript Date objects, numeric values should be JavaScript numbers, etc.
 
 Compare with the [`view`](#methods-view) method, which will return the data items that correspond to the current page, filter, sort and group configuration.
 
@@ -4487,4 +4510,3 @@ The data source [configuration](#configuration).
       ]
     });
     </script>
-

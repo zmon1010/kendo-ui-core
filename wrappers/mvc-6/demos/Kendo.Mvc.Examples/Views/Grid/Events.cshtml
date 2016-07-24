@@ -9,10 +9,20 @@
         })
         .Pageable()
         .Sortable()
+        .Filterable()
+        .Groupable()
         .Selectable(selectable => selectable
             .Mode(GridSelectionMode.Multiple)
             .Type(GridSelectionType.Cell))
-        .Events(events => events.Change("onChange").DataBound("onDataBound").DataBinding("onDataBinding"))
+        .Events(events => events
+            .Change("onChange")
+            .DataBound("onDataBound")
+            .DataBinding("onDataBinding")
+            .Sort("onSorting")
+            .Group("onGrouping")
+            .Page("onPaging")
+            .Filter("onFiltering")
+            )
         .DataSource(dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("Products_Read", "Grid"))
@@ -47,6 +57,22 @@
 
     function onDataBinding(arg) {
         kendoConsole.log("Grid data binding");
+    }
+
+    function onSorting(arg) {
+        kendoConsole.log("Sorting on field: " + arg.sort.field + ", direction:" + (arg.sort.dir || "none"));
+    }
+
+    function onFiltering(arg) {
+        kendoConsole.log("Filter on " + kendo.stringify(arg.filter));
+    }
+
+    function onPaging(arg) {
+        kendoConsole.log("Paging to page index:" + arg.page);
+    }
+
+    function onGrouping(arg) {
+        kendoConsole.log("Group on " + kendo.stringify(arg.groups));
     }
 
 </script>

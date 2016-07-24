@@ -14,7 +14,7 @@ The [Kendo UI Drawing API](http://demos.telerik.com/kendo-ui/drawing/index) supp
 
 Using the `drawing.drawDOM` function you can draw a DOM element into a [`drawing.Group`](/api/dataviz/drawing/group), which you are then able to render with one of the supported backends into SVG, PDF, HTML5 `<canvas>`, or VML format.
 
-The DOM element must be appended to the document and must be visible, meaning that you cannot draw an element which has the `display: none`, or the `visibility: hidden` options. Assume that you have the following HTML in the page:
+The DOM element must be appended to the document and fully rendered, meaning that you cannot draw an element which has the `display: none`, or the `visibility: hidden` options. Assume that you have the following HTML in the page:
 
     <div id="drawMe" class="...">
       ... more HTML code here...
@@ -388,6 +388,49 @@ In this case, the DOM renderer will create a clone of the element so that it is 
 
 Images are safe to add here.
 
+### Off-Screen Content
+
+To produce different content for export, or keep it hidden from the user, position the container outside the screen.
+
+The container has to be fully rendered. For more information, see the section on [getting started](#getting-started).
+
+The example below uses an absolute positioning to move the container off the screen.
+
+###### Example
+
+    <style>
+      #content {
+        position: absolute;
+        width: 800px;
+        left: -10000px;
+        top: 0;
+      }
+    </style>
+    <script>
+        drawing.drawDOM("#content", {
+          paperSize: "A4",
+          margin: "2cm"
+        }).then(function(group){
+          drawing.pdf.saveAs(group, "filename.pdf");
+        });
+    </script>
+
+
+The `<kendo-pdf-document>` approach only works when multi-page documents are requested, that is, only when either of `forcePageBreak` or `paperSize` is given. To make it work in the cases when you need only a single page, pass some dummy value to the `forcePageBreak` such as `forcePageBreak: "-"`.
+
+In this case, the DOM renderer will create a clone of the element so that it is able to do the page-breaking without destroying the original content, and it will place it inside a custom `<kendo-pdf-document>` element, which is hidden from the view. Therefore, you can apply custom styles under `kendo-pdf-document` by restricting the rules to elements.
+
+###### Example
+
+    <style>
+      kendo-pdf-document p {
+        border: 2px solid black;
+        background: url("image.jpg");
+      }
+    </style>
+
+Images are safe to add here.
+
 ## Dimensions and CSS Units
 
 If you target PDF output, the only unit which is safe to use in CSS is `px`. Using `cm`, `in`, `mm`, `pt`, or any other than `px` will have unpredictable results. This section explains this counter-intuitive fact.
@@ -435,6 +478,7 @@ The HTML renderer has been tested in recent versions of Chrome, Firefox, Safari,
 - CSS box-shadow, text-shadow, and radial gradients are omitted. Linear gradients are supported.
 - Using browser zoom other than 100% is not supported.
 - Only border-style `solid` is rendered.
+- The `border-collapse:collapse` style of tables is not supported. Avoid using adjacent borders for separate table cells to prevent double borders in the PDF output.
 - Maximum document size is limited to 5080x5080mm (200x200 inches) by the PDF 1.5 specification. Larger files might not open in some viewers.
 - Shadow DOM is not rendered.
 - SVG referenced with the `<img>` tag will not render in Internet Explorer, because [IE taints the canvas](http://stackoverflow.com/questions/31484379/ie-canvas-datauri-security-error).

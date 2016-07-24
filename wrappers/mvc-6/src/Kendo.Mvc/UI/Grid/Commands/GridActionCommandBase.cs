@@ -3,7 +3,7 @@ namespace Kendo.Mvc.UI
 	using System.Collections.Generic;
 	using System.Linq;
 	using Kendo.Mvc.Extensions;
-	using Microsoft.AspNet.Routing;
+	using Microsoft.AspNetCore.Routing;
 
 	public abstract class GridActionCommandBase : IGridActionCommand
     {

@@ -793,6 +793,17 @@
             return "($"+name+" = this.force($"+name+"))";
         }
 
+        function forceNum() {
+            return "("
+                +     "(typeof " + force() + " == 'number') || "
+                +     "(typeof $"+name+" == 'boolean') || "
+                +     "(typeof $"+name+" == 'string' && !/^(?:=|true|false)/i.test($"+name+") ? ("
+                +       "tmp = kendo.spreadsheet.calc.parse(0, 0, 0, $"+name+"), "
+                +       "/^date|number|percent$/.test(tmp.type) ? ($"+name+" = +tmp.value, true) : false"
+                +     ") : false)"
+                +  ")";
+        }
+
         function typeCheck(type, allowError) {
             forced = false;
             var ret = "if (!(" + cond(type) + ")) { ";
@@ -855,33 +866,26 @@
                 }
                 throw new Error("Unknown array type condition: " + type[0]);
             }
-            if (type == "number") {
-                return "(typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean')";
+            if (type == "number" || type == "datetime") {
+                return forceNum();
             }
-            if (type == "integer") {
-                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') ? ($"+name+" |= 0, true) : false)";
-            }
-            if (type == "date") {
-                return "((typeof " + force() + " == 'number') ? ($"+name+" |= 0, true) : false)";
-            }
-            if (type == "datetime") {
-                return "(typeof " + force() + " == 'number')";
+            if (type == "integer" || type == "date") {
+                return "(" + forceNum() + " && (($"+name+" |= 0), true))";
             }
             if (type == "divisor") {
-                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && "
-                    + "($"+name+" == 0 ? ((err = 'DIV/0'), false) : true))";
+                return "(" + forceNum() + " && ($"+name+" == 0 ? ((err = 'DIV/0'), false) : true))";
             }
             if (type == "number+") {
-                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" >= 0 ? true : ((err = 'NUM'), false)))";
+                return "(" + forceNum() + " && ($"+name+" >= 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "integer+") {
-                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && (($"+name+" |= 0) >= 0 ? true : ((err = 'NUM'), false)))";
+                return "(" + forceNum() + " && (($"+name+" |= 0) >= 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "number++") {
-                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && ($"+name+" > 0 ? true : ((err = 'NUM'), false)))";
+                return "(" + forceNum() + " && ($"+name+" > 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "integer++") {
-                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && (($"+name+" |= 0 ) > 0) ? true : ((err = 'NUM'), false))";
+                return "(" + forceNum() + " && (($"+name+" |= 0) > 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "string") {
                 return "((typeof " + force() + " == 'string' || typeof $"+name+" == 'boolean' || typeof $"+name+" == 'number') ? ($"+name+" += '', true) : false)";

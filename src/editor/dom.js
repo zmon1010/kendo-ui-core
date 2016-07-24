@@ -279,13 +279,15 @@ var Dom = {
             return entity ? '&'+entity+';' : c;
         });
     },
-
+    isBom: function(node) {
+        return node && node.nodeType === 3 && /^[\ufeff]+$/.test(node.nodeValue);
+    },
     stripBom: function(text) {
         return (text || "").replace(bom, "");
     },
-
+    
     stripBomNode: function(node) {
-        if(node && node.nodeType === 3 && node.nodeValue === '\ufeff') {
+        if(Dom.isBom(node)) {
             node.parentNode.removeChild(node);
         }
     },
@@ -295,7 +297,9 @@ var Dom = {
 
         return node.className == "k-marker" || (Dom.is(node, 'br') && (node.className == "k-br" || attr._moz_dirty || attr._moz_editor_bogus_node));
     },
-
+    tableCell: function(node) {
+        return Dom.is(node, "td") || Dom.is(node, "th");
+    },
     significantNodes: function(nodes) {
         return $.grep(nodes, function(child) {
             var name = Dom.name(child);
@@ -374,6 +378,11 @@ var Dom = {
         return inline[Dom.name(node)];
     },
 
+    list: function(node) {
+        var name = node ? Dom.name(node) : "";
+        return name == "ul" || name == "ol" || name == "dl";
+    },
+
     scrollContainer: function(doc) {
         var wnd = Dom.windowFromDocument(doc),
             scrollContainer = (wnd.contentWindow || wnd).document || wnd.ownerDocument || wnd;
@@ -410,6 +419,19 @@ var Dom = {
 
     persistScrollTop: function(doc) {
         persistedScrollTop = Dom.scrollContainer(doc).scrollTop;
+    },
+
+    offset: function (target, offsetParent) {
+        var result = {top: target.offsetTop, left: target.offsetLeft};
+        var parent = target.offsetParent;
+
+        while (parent && (!offsetParent || Dom.isAncestorOf(offsetParent, parent))) {
+            result.top += parent.offsetTop;
+            result.left += parent.offsetLeft;
+            parent = parent.offsetParent;
+        }
+
+        return result;
     },
 
     restoreScrollTop: function(doc) {
@@ -477,6 +499,16 @@ var Dom = {
             node = node.parentNode;
         }
 
+        return node;
+    },
+    
+    closestBy: function(node, condition, rootCondition) {
+        while (node && !condition(node)) {
+            if (rootCondition && rootCondition(node)){
+                return null;
+            }
+            node = node.parentNode;
+        }
         return node;
     },
 

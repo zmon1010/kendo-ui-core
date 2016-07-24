@@ -3,7 +3,7 @@ title: Walkthrough
 page_title: Walkthrough | Kendo UI Grid
 description: "Learn how to create a grid, add an HTML table and control the features of the Kendo UI Grid widget."
 slug: walkthrough_kendoui_grid_widget
-position: 2
+position: 1
 ---
 
 # Walkthrough
@@ -283,8 +283,11 @@ Virtual scrolling loads the data from the remote data source as you scroll down 
 
 > **Important**  
 > * It is not recommended to use virtual scrolling together with grouping, hierarchy or editing. Virtual scrolling relies on calculating average row height, based on already loaded data, so having a large variance of row heights, or an unknown number of non-databound rows, such as group headers, may cause unexpected behavior.
+>
 > * A scrollable Grid with a set height needs to be visible when initialized. In this way the Grid can adjust the height of its scrollable data area in accordance with the total height of the widget. In certain scenarios the Grid may be invisible when initialized - for example, when placed inside an initially inactive TabStrip tab, or in another widget. In such cases there are generally two options: initialize the Grid while its element is still visible, or initialize the Grid in a suitable event of the parent widget, e.g. in the TabStrip `activate` event.
-> * Due to height-related browser limitations, which cannot be avoided, virtual scrolling works with up to a couple of million records. The exact number of records depends on the browser. Note that if you use a row count that is larger than, can produce unexpected widget behavior, or JavaScript errors. In such cases, revert to standard paging.
+>
+> * Due to height-related browser limitations, which cannot be avoided, virtual scrolling works with up to a couple of million records. The exact number of records depends on the browser. If you use a row count that is larger than the browser can handle, unexpected widget behavior or JavaScript errors could occur. In such cases, revert to standard paging.
+>
 > * Keyboard navigation does not work with virtual scrolling.
 
 ### Scrolling
@@ -507,6 +510,13 @@ By definition, the row template defines the row markup explicitly, while groupin
         });
     });
 
+#### Grouping with paging
+
+Paging occurs before grouping. Otherwise, you need to group the whole dataSource, which will greatly reduce the performance. As a result, the following behavior is exhibited:
+
+* The dataSource instance of the Grid is not aware whether there are items from the displayed groups on other pages.
+* If groups are collapsed, additional items and groups from other pages cannot be displayed below the rendered items and groups. The only possible workaround is to increase the page size.
+
 ### Sorting
 
 Sorting is supported in two formats: either single-column sorting, or multi-column sorting. To enable single column sorting, set the `sortable` option of the Grid to `true`. This will enable the default single-column sorting:
@@ -726,7 +736,7 @@ For more detailed information on printing the Grid, refer to [this article]({% s
 
 ## See Also
 
-Other articles on Kendo UI Grid:
+Other articles on the Kendo UI Grid:
 
 * [Grid JavaScript API Reference](/api/javascript/ui/grid)
 * [Editing Functionality]({% slug editing_kendoui_grid_widget %})
@@ -737,4 +747,4 @@ Other articles on Kendo UI Grid:
 * [Export the Grid in PDF]({% slug exporting_pdf_kendoui_grid_widget %})
 * [Print the Grid]({% slug exporting_pdf_kendoui_grid_widget %})
 
-For how-to examples on the Kendo UI Grid widget, browse [its How-to section]({% slug howto_bindto_telerik_backend_services_grid %}).
+For how-to examples on the Kendo UI Grid widget, browse its [**How To** documentation folder]({% slug howto_bindto_telerik_backend_services_grid %}).

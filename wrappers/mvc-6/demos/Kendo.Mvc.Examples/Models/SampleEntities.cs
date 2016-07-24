@@ -1,11 +1,16 @@
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System.IO;
 
 namespace Kendo.Mvc.Examples.Models
 {
     public partial class SampleEntitiesDataContext : DbContext
     {
+        public SampleEntitiesDataContext()
+            : base(new DbContextOptions<SampleEntitiesDataContext>())
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             var dataDirectory = Path.Combine(Startup.WebRootPath, "App_Data");

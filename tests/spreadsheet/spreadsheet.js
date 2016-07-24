@@ -11,7 +11,7 @@
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
 
-            spreadsheet = new kendo.ui.Spreadsheet(element, { });
+            initSpreadsheet(element, { rows: 10, columns: 10, toolbar: false });
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -193,27 +193,6 @@
         }).autoRefresh(false).autoRefresh(true);
     });
 
-    test("loads sheets from options", function() {
-        kendo.destroy(QUnit.fixture);
-        spreadsheet = new kendo.ui.Spreadsheet(element, {
-            sheets: [
-                {
-                    rows: [
-                        {
-                            cells: [
-                                {
-                                    background: "red"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        });
-
-        equal(spreadsheet.activeSheet().range("A1").background(), "red");
-    });
-
     test("insertSheet method calls corresponding method in workbook", function () {
         spreadsheet._workbook.insertSheet = function(options) {
             equal(options.index, 1);
@@ -368,6 +347,26 @@
         spreadsheet._controller.onDialogRequest({ options: {}});
     });
 
+    test("editor value is set when revert action is received", 1, function() {
+        spreadsheet._workbook._view.editor.value = function() {
+            ok(true);
+        }
+
+        spreadsheet._controller.enableEditor(true, true, {
+            action: "revert"
+        });
+    });
+
+    test("editor value is not set when close action is received", 0, function() {
+        spreadsheet._workbook._view.editor.value = function() {
+            ok(false);
+        }
+
+        spreadsheet._controller.enableEditor(true, true, {
+            action: "close"
+        });
+    });
+
     test("edit errors clear last command queue", 1, function() {
         spreadsheet._lastCommandRequest = {
             callback: function() {
@@ -447,4 +446,26 @@
         initSpreadsheet(element, { sheetsbar: false });
         ok(element.find('[data-role="sheetsbar"]').length == 0);
     });
+
+    test("loads sheets from options", function() {
+        initSpreadsheet(element, {
+            toolbar: false,
+            sheets: [
+                {
+                    rows: [
+                        {
+                            cells: [
+                                {
+                                    background: "red"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(spreadsheet.activeSheet().range("A1").background(), "red");
+    });
+
 })();

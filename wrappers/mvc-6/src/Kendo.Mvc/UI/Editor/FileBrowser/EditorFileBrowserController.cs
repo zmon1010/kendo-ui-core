@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Kendo.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity.Design.Internal;
+﻿using Microsoft.AspNetCore.Hosting;
 
 namespace Kendo.Mvc.UI
 {
@@ -18,6 +13,12 @@ namespace Kendo.Mvc.UI
             {
                 return EditorFileBrowserSettings.DefaultFileTypes;
             }
+        }
+
+        public EditorFileBrowserController(IHostingEnvironment hostingEnvironment)
+            : base(hostingEnvironment)
+        {
+
         }
     }
 }

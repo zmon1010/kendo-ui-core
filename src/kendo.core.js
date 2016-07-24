@@ -1040,7 +1040,7 @@ function pad(number, digits, end) {
         value = value.toString().split('e');
         value = +(value[0] + 'e' + (value[1] ? (+value[1] - precision) : -precision));
 
-        return value.toFixed(precision);
+        return value.toFixed(Math.min(precision, 20));
     };
 
     var toString = function(value, fmt, culture) {
@@ -1093,7 +1093,31 @@ function pad(number, digits, end) {
         longTimeZoneRegExp = /[+|\-]\d{1,2}:?\d{2}/,
         dateRegExp = /^\/Date\((.*?)\)\/$/,
         offsetRegExp = /[+-]\d*/,
-        formatsSequence = ["G", "g", "d", "F", "D", "y", "m", "T", "t"],
+        FORMATS_SEQUENCE = [ [], [ "G", "g", "F" ], [ "D", "d", "y", "m", "T", "t" ] ],
+        STANDARD_FORMATS = [
+            [
+            "yyyy-MM-ddTHH:mm:ss.fffffffzzz",
+            "yyyy-MM-ddTHH:mm:ss.fffffff",
+            "yyyy-MM-ddTHH:mm:ss.fffzzz",
+            "yyyy-MM-ddTHH:mm:ss.fff",
+            "ddd MMM dd yyyy HH:mm:ss",
+            "yyyy-MM-ddTHH:mm:sszzz",
+            "yyyy-MM-ddTHH:mmzzz",
+            "yyyy-MM-ddTHH:mmzz",
+            "yyyy-MM-ddTHH:mm:ss",
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy/MM/dd HH:mm:ss"
+            ], [
+            "yyyy-MM-ddTHH:mm",
+            "yyyy-MM-dd HH:mm",
+            "yyyy/MM/dd HH:mm"
+            ], [
+            "yyyy/MM/dd",
+            "yyyy-MM-dd",
+            "HH:mm:ss",
+            "HH:mm"
+            ]
+        ],
         numberRegExp = {
             2: /^\d{1,2}/,
             3: /^\d{1,3}/,
@@ -1454,6 +1478,23 @@ function pad(number, digits, end) {
         return sign * offset;
     }
 
+    function getDefaultFormats(culture) {
+        var length = math.max(FORMATS_SEQUENCE.length, STANDARD_FORMATS.length);
+        var patterns = culture.calendar.patterns;
+        var cultureFormats, formatIdx, idx;
+        var formats = [];
+
+        for (idx = 0; idx < length; idx++) {
+            cultureFormats = FORMATS_SEQUENCE[idx];
+            for (formatIdx = 0; formatIdx < cultureFormats.length; formatIdx++) {
+                formats.push(patterns[cultureFormats[formatIdx]]);
+            }
+            formats = formats.concat(STANDARD_FORMATS[idx]);
+        }
+
+        return formats;
+    }
+
     kendo.parseDate = function(value, formats, culture) {
         if (objectToString.call(value) === "[object Date]") {
             return value;
@@ -1461,7 +1502,7 @@ function pad(number, digits, end) {
 
         var idx = 0;
         var date = null;
-        var length, patterns;
+        var length;
         var tzoffset;
 
         if (value && value.indexOf("/D") === 0) {
@@ -1485,36 +1526,7 @@ function pad(number, digits, end) {
         culture = kendo.getCulture(culture);
 
         if (!formats) {
-            formats = [];
-            patterns = culture.calendar.patterns;
-            length = formatsSequence.length;
-
-            for (; idx < length; idx++) {
-                formats[idx] = patterns[formatsSequence[idx]];
-            }
-
-            idx = 0;
-
-            formats = [
-                "yyyy/MM/dd HH:mm:ss",
-                "yyyy/MM/dd HH:mm",
-                "yyyy/MM/dd",
-                "ddd MMM dd yyyy HH:mm:ss",
-                "yyyy-MM-ddTHH:mm:ss.fffffffzzz",
-                "yyyy-MM-ddTHH:mm:ss.fffzzz",
-                "yyyy-MM-ddTHH:mm:sszzz",
-                "yyyy-MM-ddTHH:mm:ss.fffffff",
-                "yyyy-MM-ddTHH:mm:ss.fff",
-                "yyyy-MM-ddTHH:mmzzz",
-                "yyyy-MM-ddTHH:mmzz",
-                "yyyy-MM-ddTHH:mm:ss",
-                "yyyy-MM-ddTHH:mm",
-                "yyyy-MM-dd HH:mm:ss",
-                "yyyy-MM-dd HH:mm",
-                "yyyy-MM-dd",
-                "HH:mm:ss",
-                "HH:mm"
-            ].concat(formats);
+            formats = getDefaultFormats(culture);
         }
 
         formats = isArray(formats) ? formats: [formats];
@@ -2232,10 +2244,17 @@ function pad(number, digits, end) {
 
         var result = element[type]();
 
+        if (support.mobileOS.android) {
+            // offset() is buggy in Android
+            result.top -= window.scrollY;
+            result.left -= window.scrollX;
+        }
+
         // IE10 touch zoom is living in a separate viewport
         if (support.browser.msie && (support.pointers || support.msPointers) && !positioned) {
-            result.top -= (window.pageYOffset - document.documentElement.scrollTop);
-            result.left -= (window.pageXOffset - document.documentElement.scrollLeft);
+            var sign = support.isRtl(element) ? 1 : -1;
+            result.top -= (window.pageYOffset + (sign * document.documentElement.scrollTop));
+            result.left -= (window.pageXOffset + (sign * document.documentElement.scrollLeft));
         }
 
         return result;
@@ -3042,7 +3061,7 @@ function pad(number, digits, end) {
                     containerScrollLeft = container.scrollLeft();
                     webkitCorrection = browser.webkit ? (!isRtl ? 0 : container[0].scrollWidth - container.width() - 2 * containerScrollLeft) : 0;
 
-                    mask = $("<div class='k-loading-mask'><span class='k-loading-text'>Loading...</span><div class='k-loading-image'/><div class='k-loading-color'/></div>")
+                    mask = $("<div class='k-loading-mask'><span class='k-loading-text'>" + kendo.ui.progress.messages.loading + "</span><div class='k-loading-image'/><div class='k-loading-color'/></div>")
                         .width("100%").height("100%")
                         .css("top", container.scrollTop())
                         .css(leftRight, Math.abs(containerScrollLeft) + webkitCorrection)
@@ -3118,6 +3137,10 @@ function pad(number, digits, end) {
             };
         }
     });
+
+    kendo.ui.progress.messages = {
+        loading: "Loading..."
+    };
 
     var ContainerNullObject = { bind: function () { return this; }, nullObject: true, options: {} };
 

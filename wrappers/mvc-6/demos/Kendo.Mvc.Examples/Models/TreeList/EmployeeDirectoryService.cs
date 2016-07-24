@@ -1,12 +1,12 @@
 ﻿namespace Kendo.Mvc.Examples.Models.TreeList
 {
-	using System.Linq;    
-	using Kendo.Mvc.UI;
-	using Microsoft.AspNet.Mvc.ModelBinding;
-	using Microsoft.Data.Entity;
-    using Extensions;   
+    using System.Linq;
+    using Kendo.Mvc.UI;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.EntityFrameworkCore;
+    using Extensions;
 
-	public static class EmployeeDirectoryIEnumerableExtensions
+    public static class EmployeeDirectoryIEnumerableExtensions
     {        
         public static EmployeeDirectoryModel ToEmployeeDirectoryModel(this EmployeeDirectory employee)
         {

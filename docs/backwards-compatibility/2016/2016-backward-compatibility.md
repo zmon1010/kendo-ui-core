@@ -14,7 +14,23 @@ slug: breakingchanges2016_kendoui
 
 #### Breaking Changes
 
-* **MultiSelect**: The widget with a 'single' tag mode will deselect all selected items on BACKSPACE/DELETE keyboard press. The previous behavior cannot be reverted.
+* **DropDownList**: The widget will clear the applied filter when ESC key is pressed.
+
+* **DropDownList**: The widget will not select the focused item on focusout when list is filtered.
+
+* **DropDownList/ComboBox/MultiSelect**: The widget will not update the OPTION [`selected`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option#attr-selected) attribute to keep the behavior of the  [`defaultSelected`](https://developer.mozilla.org/en/docs/Web/API/HTMLOptionElement#Properties) property. For more information, refer to this [Github issue](https://github.com/telerik/kendo-ui-core/issues/1660).
+
+* **MultiSelect**: The widget with a 'single' tag mode will deselect all selected items on **Backspace** or **Delete** keyboard press. The previous behavior is impossible to revert.
+
+* **DropDownList/ComboBox**: The widget will not bind on open if `autoBind` is set to `false` and `minLength` is set to a value higher than 1.
+
+* **Validator**: The email validation rule has been changed to match the [HTML5 specification suggests for browsers to use](https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address). If the previous behavior is required, the email validation rule should be overridden by [specifying a custom rule](/controls/editors/validator/overview#custom-rules-for-validation) with the `email` key.
+
+### Changes from 2016 R2
+
+#### Breaking Changes
+
+* **Scheduler**: The widget will use ',' separator for the `recurrenceException` values to conform the [RFC5545](http://tools.ietf.org/html/rfc5545#page-120) specs. More details can be found in this [forum thread](http://www.telerik.com/forums/breaking-change-recurrence-exceptions-delimiter-change).
 
 ## Kendo UI 2016 R2
 

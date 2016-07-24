@@ -454,6 +454,11 @@
             diagram._tap(tapEvent(10, 20));
         });
 
+        test("focuses diagram", function(e) {
+            diagram._tap(tapEvent(10, 20));
+            ok(diagram.element.is(kendo._activeElement()));
+        });
+
         // ------------------------------------------------------------
         module("Diagram / tap / mouse*", {
             setup: function() {
@@ -491,13 +496,13 @@
 
     // ------------------------------------------------------------
     (function() {
+        function trigger(name, x, y, which) {
+            var event = jQuery.Event(name, { pageX: x, pageY: y, which: which || 0});
+            diagram.scrollable.trigger(event);
+        }
+
         function move(x, y, which) {
-            diagram._mouseMove({
-                which: which || 0,
-                pageX: x,
-                pageY: y,
-                preventDefault: $.noop
-            });
+            trigger("mousemove", x, y, which);
         }
 
         module("Diagram / mousemove", {
@@ -540,8 +545,12 @@
                 ok(false);
             });
 
+            trigger("mousedown", 0, 0, 1);
+            move(10, 10, 1);
             move(150, 150, 1);
             move(0, 0, 1);
+            trigger("mouseup", 0, 0, 1);
+
             move(150, 150, 2);
             move(0, 0, 2);
             move(150, 150, 3);
@@ -1163,6 +1172,20 @@
             };
 
             diagram.pan()
+        });
+
+        test("pan returns current pan offset if a point is not passed", function() {
+            var result = diagram.pan();
+
+            equal(result.x, 0);
+            equal(result.y, 0);
+
+            diagram.pan(new Point(100, 200));
+
+            result = diagram.pan();
+
+            equal(result.x, 100);
+            equal(result.y, 200);
         });
 
     })();
@@ -2373,6 +2396,26 @@
 
         test("chooses closest connectors with route that does not overlap any other shapes", function() {
             equal(connection._resolvedSourceConnector.options.name, "Right");
+            equal(connection._resolvedTargetConnector.options.name, "Top");
+        });
+
+        test("chooses closest connectors with route that does not overlap any other shapes if using specific source connector", function() {
+            shape2.position({x: 100, y: 100});
+            shape3.position({x: 200, y: 100});
+
+            connection.source(shape1.getConnector("Right"));
+
+            equal(connection._resolvedSourceConnector.options.name, "Right");
+            equal(connection._resolvedTargetConnector.options.name, "Top");
+        });
+
+        test("chooses closest connectors with route that does not overlap any other shapes if using specific target connector", function() {
+            shape2.position({x: 100, y: 0});
+            shape3.position({x: 100, y: 110});
+
+            connection.target(shape3.getConnector("Top"));
+
+            equal(connection._resolvedSourceConnector.options.name, "Bottom");
             equal(connection._resolvedTargetConnector.options.name, "Top");
         });
 

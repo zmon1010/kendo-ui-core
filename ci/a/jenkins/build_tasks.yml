@@ -1,0 +1,12 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: copy jobs dir
+  copy:
+    src: a/jenkins/files/jobs/
+    dest: /tmp/jenkins-jobs/
+    directory_mode: 755
+    owner: jenkins
+    group: nogroup
+    mode: 0600
+- command: chmod +x a/jenkins/_set_tasks.sh
+- command: a/jenkins/_set_tasks.sh {{jenkins_url}}

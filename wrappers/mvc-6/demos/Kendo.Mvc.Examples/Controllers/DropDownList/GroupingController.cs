@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Examples.Models;

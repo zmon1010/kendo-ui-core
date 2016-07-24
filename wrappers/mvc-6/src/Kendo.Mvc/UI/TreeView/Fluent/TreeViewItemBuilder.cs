@@ -1,6 +1,6 @@
 namespace Kendo.Mvc.UI.Fluent
 {
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
     /// <summary>
     /// Defines the fluent interface for configuring child TreeView items.

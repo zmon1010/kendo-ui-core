@@ -1,0 +1,34 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: install zsh
+  apt: pkg=zsh state=installed
+- shell: chsh -s /bin/zsh jenkins
+- name: copy file for jenkins
+  copy:   
+    src: a/jenkins/files/{{item}} 
+    dest: /var/lib/jenkins/.{{item}}
+    owner: jenkins 
+    group: nogroup
+    mode: 0600
+  with_items:
+      - zshrc
+      - gitconfig
+      - netrc
+- name: copy ssh dir for jenkins
+  copy:
+    src: a/jenkins/files/ssh/
+    dest: /var/lib/jenkins/.ssh
+    directory_mode: 755
+    owner: jenkins
+    group: nogroup
+    mode: 0600
+- name: clear ff/chrome profiles
+  cron:
+    name: 'clear ff/chrome profiles'
+    user: jenkins
+    minute: '0'
+    hour: '23'
+    day: '*'
+    month: '*'
+    weekday: '*'
+    job: find /var/lib/jenkins/.mozilla/firefox -maxdepth 1 -type d -mtime +3 -exec rm -r {} && find /tmp/.com.google.Chrome.* -maxdepth 0 -type d -mtime +2 -exec rm -r {}      

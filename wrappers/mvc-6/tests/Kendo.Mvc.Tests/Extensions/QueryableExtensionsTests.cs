@@ -8,9 +8,10 @@ namespace Kendo.Mvc.Tests.Data
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Infrastructure;
     using Kendo.Mvc.Infrastructure.Implementation;
-    using Kendo.Mvc.UI.Tests.Data;
     using UI.Tests;
     using Xunit;
+    using Microsoft.AspNetCore.Hosting;
+    using Moq;
 
     public class QueryableExtensionsTests
     {
@@ -26,6 +27,12 @@ namespace Kendo.Mvc.Tests.Data
                 get;
                 set;
             }
+        }
+
+        public QueryableExtensionsTests()
+        {
+            var env = new Mock<IHostingEnvironment>();
+            ClassFactory.Create(env.Object);
         }
 
         [Fact]

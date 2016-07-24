@@ -1,23 +1,23 @@
-﻿using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc.ModelBinding.Validation;
-using Microsoft.AspNet.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.Extensions.OptionsModel;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Options;
 using System.Text;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.Rendering
 {
     public class KendoHtmlGenerator : IKendoHtmlGenerator
     {
-        private readonly ActionBindingContext _actionBindingContext;
+        private readonly IClientModelValidatorProvider _clientModelValidatorProvider;
+        private readonly ClientValidatorCache _clientValidatorCache;
         private readonly IModelMetadataProvider _metadataProvider;
         private readonly IServiceProvider _requestServices;
 
@@ -25,12 +25,15 @@ namespace Kendo.Mvc.Rendering
         /// Initializes a new instance of the <see cref="KendoHtmlGenerator"/> class.
         /// </summary>
         public KendoHtmlGenerator(
-            IActionBindingContextAccessor actionBindingContextAccessor,
             IModelMetadataProvider metadataProvider,
             IServiceProvider requestServices,
-            IOptions<MvcViewOptions> optionsAccessor)
+            IOptions<MvcViewOptions> optionsAccessor,
+            ClientValidatorCache clientValidatorCache)
         {
-            _actionBindingContext = actionBindingContextAccessor.ActionBindingContext;
+            var clientValidatorProviders = optionsAccessor.Value.ClientModelValidatorProviders;
+            _clientModelValidatorProvider = new CompositeClientModelValidatorProvider(clientValidatorProviders);
+            _clientValidatorCache = clientValidatorCache;
+
             _metadataProvider = metadataProvider;
             _requestServices = requestServices;
 
@@ -41,8 +44,8 @@ namespace Kendo.Mvc.Rendering
 
         public TagBuilder GenerateInput(
 		   ViewContext viewContext,
-		   ModelMetadata metadata,
-		   string id,
+           ModelExplorer modelExplorer,
+           string id,
 		   string name,
 		   object value,
 		   string format,
@@ -57,9 +60,12 @@ namespace Kendo.Mvc.Rendering
                 tagBuilder.MergeAttribute("type", type);
             }
 
-			var fullName = tagBuilder.Attributes["name"];
+            modelExplorer = modelExplorer ??
+                ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider);
+
+            var fullName = tagBuilder.Attributes["name"];
 			var valueParameter = FormatValue(value, format);
-			var useViewData = metadata == null && value == null;
+			var useViewData = modelExplorer.Metadata == null && value == null;
 			var attributeValue = (string)GetModelStateValue(viewContext, fullName, typeof(string));
 			if (attributeValue == null)
 			{
@@ -75,14 +81,14 @@ namespace Kendo.Mvc.Rendering
 				tagBuilder.AddCssClass(HtmlHelper.ValidationInputCssClassName);
 			}
 
-			tagBuilder.MergeAttributes(GetValidationAttributes(viewContext, metadata, name));
+            AddValidationAttributes(viewContext, tagBuilder, modelExplorer, name);
 
-			return tagBuilder;
+            return tagBuilder;
 		}
 
         private TagBuilder GenerateSelect(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             string multiple,
@@ -100,89 +106,89 @@ namespace Kendo.Mvc.Rendering
                 tagBuilder.AddCssClass(HtmlHelper.ValidationInputCssClassName);
             }
 
-            tagBuilder.MergeAttributes(GetValidationAttributes(viewContext, metadata, name));
+            AddValidationAttributes(viewContext, tagBuilder, modelExplorer, name);
 
             return tagBuilder;
         }
 
         public virtual TagBuilder GenerateColorInput(
 			ViewContext viewContext,
-			ModelMetadata metadata,
+			ModelExplorer modelExplorer,
 			string id,
 			string name,
 			object value,
 			IDictionary<string, object> htmlAttributes)
 		{
-			return GenerateInput(viewContext, metadata, id, name, value, null, "color", htmlAttributes);
+			return GenerateInput(viewContext, modelExplorer, id, name, value, null, "color", htmlAttributes);
 		}
 
         public virtual TagBuilder GenerateRangeInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
             IDictionary<string, object> htmlAttributes)
         {
-            return GenerateInput(viewContext, metadata, id, name, value, null, "range", htmlAttributes);
+            return GenerateInput(viewContext, modelExplorer, id, name, value, null, "range", htmlAttributes);
         }
 
         public virtual TagBuilder GenerateDateInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
             string format,
             IDictionary<string, object> htmlAttributes)
         {
-			return GenerateInput(viewContext, metadata, id, name, value, format, "date", htmlAttributes);
+			return GenerateInput(viewContext, modelExplorer, id, name, value, format, "date", htmlAttributes);
         }
 
         public virtual TagBuilder GenerateDateTimeInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
             string format,
             IDictionary<string, object> htmlAttributes)
         {            
-            return GenerateInput(viewContext, metadata, id, name, value, format, "datetime", htmlAttributes);
+            return GenerateInput(viewContext, modelExplorer, id, name, value, format, "datetime", htmlAttributes);
 		}
 
         public virtual TagBuilder GenerateTimeInput(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             object value,
             string format,
             IDictionary<string, object> htmlAttributes)
         {
-            return GenerateInput(viewContext, metadata, id, name, value, format, "time", htmlAttributes);
+            return GenerateInput(viewContext, modelExplorer, id, name, value, format, "time", htmlAttributes);
         }
 
         public virtual TagBuilder GenerateNumericInput(
 			ViewContext viewContext,
-			ModelMetadata metadata,
+			ModelExplorer modelExplorer,
 			string id,
 			string name,
 			object value,
 			string format,
 			IDictionary<string, object> htmlAttributes)
 		{			
-			return GenerateInput(viewContext, metadata, id, name, value, format, "number", htmlAttributes);
+			return GenerateInput(viewContext, modelExplorer, id, name, value, format, "number", htmlAttributes);
 		}
 
         public virtual TagBuilder GenerateMultiSelect(
             ViewContext viewContext,
-            ModelMetadata metadata,
+            ModelExplorer modelExplorer,
             string id,
             string name,
             IDictionary<string, object> htmlAttributes)
         {
-            return GenerateSelect(viewContext, metadata, id, name, "multiple", htmlAttributes);
+            return GenerateSelect(viewContext, modelExplorer, id, name, "multiple", htmlAttributes);
         }
 
         public virtual TagBuilder GenerateTag(
@@ -216,71 +222,60 @@ namespace Kendo.Mvc.Rendering
             return tagBuilder;
         }
 
-        // Only render attributes if client-side validation is enabled, and then only if we've
-        // never rendered validation for a field with this name in this form.
-        public virtual IDictionary<string, object> GetValidationAttributes(
+        /// <summary>
+        /// Adds validation attributes to the <paramref name="tagBuilder" /> if client validation
+        /// is enabled.
+        /// </summary>
+        /// <param name="viewContext">A <see cref="ViewContext"/> instance for the current scope.</param>
+        /// <param name="tagBuilder">A <see cref="TagBuilder"/> instance.</param>
+        /// <param name="modelExplorer">The <see cref="ModelExplorer"/> for the <paramref name="expression"/>.</param>
+        /// <param name="expression">Expression name, relative to the current model.</param>
+        protected virtual void AddValidationAttributes(
             ViewContext viewContext,
-            ModelMetadata metadata,
-            string name)
+            TagBuilder tagBuilder,
+            ModelExplorer modelExplorer,
+            string expression)
         {
+            // Only render attributes if client-side validation is enabled, and then only if we've
+            // never rendered validation for a field with this name in this form.
             var formContext = viewContext.ClientValidationEnabled ? viewContext.FormContext : null;
             if (formContext == null)
             {
-                return null;
+                return;
             }
 
-            var fullName = viewContext.GetFullHtmlFieldName(name);
+            var fullName = GetFullHtmlFieldName(viewContext, expression);
             if (formContext.RenderedField(fullName))
             {
-                return null;
+                return;
             }
 
             formContext.RenderedField(fullName, true);
-            var clientRules = GetClientValidationRules(viewContext, metadata, name);
 
-            return UnobtrusiveValidationAttributesGenerator.GetValidationAttributes(clientRules);
-        }
+            modelExplorer = modelExplorer ??
+                ExpressionMetadataProvider.FromStringExpression(expression, viewContext.ViewData, _metadataProvider);
 
-        protected virtual IEnumerable<ModelClientValidationRule> GetClientValidationRules(
-            ViewContext viewContext,
-            ModelMetadata metadata,
-            string name)
-        {
-            metadata = metadata ??
-                ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider).Metadata;
-
-            var validatorProviderContext = new ModelValidatorProviderContext(metadata);
-            _actionBindingContext.ValidatorProvider.GetValidators(validatorProviderContext);
-
-            return validatorProviderContext
-                .Validators.OfType<IClientModelValidator>()
-                .SelectMany(v => v.GetClientValidationRules(
-                    new ClientModelValidationContext(metadata, _metadataProvider, _requestServices)));
-        }
-
-        public RangeAttribute GetRangeValidationAttribute(
-            ViewContext viewContext,
-            ModelMetadata metadata,
-            string name)
-        {
-            metadata = metadata ??
-                ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider).Metadata;
-
-            var validatorProviderContext = new ModelValidatorProviderContext(metadata);
-            _actionBindingContext.ValidatorProvider.GetValidators(validatorProviderContext);
-
-            DataAnnotationsModelValidator rangeValidationRule = validatorProviderContext
-                .Validators
-                .OfType<DataAnnotationsModelValidator>()
-                .Cast<DataAnnotationsModelValidator>()
-                .First(rule => rule.Attribute is RangeAttribute);
-
-            if (rangeValidationRule != null)
+            var validators = _clientValidatorCache.GetValidators(modelExplorer.Metadata, _clientModelValidatorProvider);
+            if (validators.Count > 0)
             {
-                return rangeValidationRule.Attribute as RangeAttribute;
-            }
+                var validationContext = new ClientModelValidationContext(
+                    viewContext,
+                    modelExplorer.Metadata,
+                    _metadataProvider,
+                    tagBuilder.Attributes);
 
-            return null;
+                for (var i = 0; i < validators.Count; i++)
+                {
+                    var validator = validators[i];
+                    validator.AddValidation(validationContext);
+                }
+            }
+        }
+
+        internal static string GetFullHtmlFieldName(ViewContext viewContext, string expression)
+        {
+            var fullName = viewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(expression);
+            return fullName;
         }
 
         private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)
@@ -311,14 +306,14 @@ namespace Kendo.Mvc.Rendering
 
 		public TagBuilder GenerateTextInput(
 			ViewContext viewContext,
-			ModelMetadata metadata, 
+			ModelExplorer modelExplorer, 
 			string id, 
 			string name, 
 			object value, 
 			string format, 
 			IDictionary<string, object> htmlAttributes)
 		{
-			return GenerateInput(viewContext, metadata, id, name, value, format, "text", htmlAttributes);
+			return GenerateInput(viewContext, modelExplorer, id, name, value, format, "text", htmlAttributes);
 		}
 
         private bool IsValidCharacter(char c)

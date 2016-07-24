@@ -59,33 +59,22 @@
         // conditional, then there can be any number of them; if the last one is not conditional
         // then it will be interpreted as text format.
 
-        function addPlainText() {
-            sections.push({
-                cond: "text",
-                body: [ { type: "text" } ]
-            });
-        }
-
-        if (haveConditional) {
-            addPlainText();
-        }
-        else if (sections.length == 1) {
-            sections[0].cond = "num";
-            addPlainText();
-        }
-        else if (sections.length == 2) {
-            sections[0].cond = { op: ">=", value: 0 };
-            sections[1].cond = { op: "<", value: 0 };
-            addPlainText();
-        }
-        else if (sections.length >= 3) {
-            sections[0].cond = { op: ">", value: 0 };
-            sections[1].cond = { op: "<", value: 0 };
-            sections[2].cond = { op: "=", value: 0 };
-            addPlainText();
-            if (sections.length > 3) {
-                sections[3].cond = "text";
-                sections = sections.slice(0, 4);
+        if (!haveConditional) {
+            if (sections.length == 1) {
+                sections[0].cond = "num";
+            }
+            else if (sections.length == 2) {
+                sections[0].cond = { op: ">=", value: 0 };
+                sections[1].cond = { op: "<", value: 0 };
+            }
+            else if (sections.length >= 3) {
+                sections[0].cond = { op: ">", value: 0 };
+                sections[1].cond = { op: "<", value: 0 };
+                sections[2].cond = { op: "=", value: 0 };
+                if (sections.length > 3) {
+                    sections[3].cond = "text";
+                    sections = sections.slice(0, 4);
+                }
             }
         }
 
@@ -534,12 +523,15 @@
     }
 
     var CACHE = Object.create(null);
+    var TEXT = compileFormatPart({ cond: "text", body: [ { type: "text" } ] });
 
     function compile(format) {
         var f = CACHE[format];
         if (!f) {
             var tree = parse(format);
-            var code = tree.map(compileFormatPart).join("\n");
+            var code = tree.map(compileFormatPart);
+            code.push(TEXT);
+            code = code.join("\n");
             code = "'use strict'; return function(value, culture){ "
                 + "if (!culture) culture = kendo.culture(); "
                 + "var output = '', type = null, result = { body: [] }; " + code + "; return result; };";
@@ -663,7 +655,7 @@
             var len = 0, str;
 
             function add(ch) {
-                if (sep && len && len % 3 === 0 && ch != " ") {
+                if (sep && len && len % 3 === 0 && /^[0-9]$/.test(ch)) {
                     str = culture.numberFormat[","] + str;
                 }
                 str = ch + str;

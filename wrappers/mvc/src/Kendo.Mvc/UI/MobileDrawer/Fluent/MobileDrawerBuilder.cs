@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// If set to false, swiping the view will not activate the drawer. In this case, the drawer will only be open by a designated button
+        /// If set to false, swiping the view will not activate the drawer. In this case, the drawer will only be open by a designated button. should be disabled for browsers, which use side swiping gestures for back/forward navigation, such as iOS Safari. Otherwise, users should swipe from an inner part of the view, and not from the view edge.
         /// </summary>
         /// <param name="value">The value that configures the swipetoopen.</param>
         public MobileDrawerBuilder SwipeToOpen(bool value)

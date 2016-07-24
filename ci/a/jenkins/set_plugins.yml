@@ -1,0 +1,17 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- set_fact: jenkins_url="http://localhost:8080/build/" 
+- name: copy config for jenkins
+  copy:   
+    src: a/jenkins/files/config 
+    dest: /etc/default/jenkins
+    owner: root
+    group: root
+    mode: 0600
+- service: name=jenkins state=restarted
+- name: set jenkins plugins
+  shell: sleep 15
+- name: jenkins-cli download
+  get_url: url={{jenkins_url}}jnlpJars/jenkins-cli.jar dest=/tmp/jenkins-cli.jar force=yes
+- name: install jenkins plugins
+  shell: java -jar /tmp/jenkins-cli.jar -s {{jenkins_url}} install-plugin git github chucknorris android-emulator postbuildscript ansicolor parameterized-trigger workflow-aggregator slack

@@ -15,6 +15,8 @@
         save: "Save",
         cancel: "Cancel",
         remove: "Remove",
+        retry: "Retry",
+        revert: "Revert",
         okText: "OK",
         formatCellsDialog: {
             title: "Format",
@@ -110,7 +112,9 @@
                 showHint: "Show hint",
                 hintTitle: "Hint title",
                 hintMessage: "Hint message",
-                ignoreBlank: "Ignore blank"
+                ignoreBlank: "Ignore blank",
+                showListButton: "Display button to show list",
+                showCalendarButton: "Display button to show calendar"
             },
             placeholders: {
                 typeTitle: "Type title",
@@ -224,7 +228,9 @@
             return this._dialog;
         },
         _onDialogClose: function() {
-            this.trigger("close");
+            this.trigger("close", {
+                action: this._action
+            });
         },
         _onDialogActivate: function() {
             this.trigger("activate");
@@ -246,6 +252,8 @@
             this.close();
         },
         close: function() {
+            this._action = "close";
+
             this.dialog().close();
         }
     });
@@ -551,6 +559,53 @@
     });
 
     kendo.spreadsheet.dialogs.register("message", MessageDialog);
+
+    var ValidationErrorDialog = SpreadsheetDialog.extend({
+        options: {
+            className: "k-spreadsheet-message",
+            title: "",
+            messageId: "",
+            text: "",
+            template:
+            "<div class='k-spreadsheet-message-content' data-bind='text: text' />" +
+            "<div class='k-action-buttons'>" +
+            "<button class='k-button k-primary' data-bind='click: close'>" +
+                "#= messages.retry #" +
+            "</button>" +
+            "<button class='k-button' data-bind='click: revert'>" +
+                "#= messages.revert #" +
+            "</button>" +
+            "</div>"
+        },
+        open: function() {
+            SpreadsheetDialog.fn.open.call(this);
+
+            var options = this.options;
+            var text = options.text;
+
+            if (options.messageId) {
+                text = kendo.getter(options.messageId, true)(kendo.spreadsheet.messages.dialogs);
+            }
+
+            kendo.bind(this.dialog().element, {
+                text: text,
+                close: this.close.bind(this),
+                revert: this.revert.bind(this)
+            });
+        },
+        activate: function(e) {
+            e.sender.dialog().element
+                .find(".k-button")
+                .focus();
+        },
+        revert: function () {
+            this._action = "revert";
+
+            this.dialog().close();
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("validationError", ValidationErrorDialog);
 
     var FontFamilyDialog = SpreadsheetDialog.extend({
         init: function(options) {
@@ -1038,6 +1093,7 @@
             this.set("to", validation.to);
             this.set("type", validation.type);
             this.set("ignoreBlank", validation.allowNulls);
+            this.set("showButton", validation.showButton);
 
             if (validation.messageTemplate || validation.titleTemplate) {
                 this.hintMessageTemplate = validation.messageTemplate;
@@ -1061,7 +1117,8 @@
                 comparerType: this.comparer,
                 from: this.from,
                 to: this.to,
-                allowNulls: this.ignoreBlank
+                allowNulls: this.ignoreBlank,
+                showButton: this.showButton
             };
 
             if (this.useCustomMessages) {
@@ -1108,9 +1165,10 @@
             criterion: "any",
             type: "reject",
             ignoreBlank: true,
+            showButton: true,
             useCustomMessages: false,
             errorTemplate:
-                '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-warning"> </span>' +
+                '<div class="k-widget k-tooltip k-tooltip-validation" style="margin:0.5em"><span class="k-icon k-i-warning"> </span>' +
                 '#= message #<div class="k-callout k-callout-n"></div></div>',
             template:
                 '<div class="k-edit-form-container">' +
@@ -1190,11 +1248,30 @@
                         '</div>' +
                     '</div>' +
 
+                    '<div data-bind="visible: isList">' +
+                        '<div class="k-edit-field">' +
+                            '<input type="checkbox" name="showButton" id="showButton" class="k-checkbox" data-bind="checked: showButton"/>' +
+                            '<label for="showButton" class="k-checkbox-label">' +
+                                ' #: messages.validationDialog.labels.showListButton #' +
+                            '</label>' +
+                        '</div>' +
+                    "</div>" +
+
+                    '<div data-bind="visible: isDate">' +
+                        '<div class="k-edit-field">' +
+                            '<input type="checkbox" name="showButton" id="showButton" class="k-checkbox" data-bind="checked: showButton"/>' +
+                            '<label for="showButton" class="k-checkbox-label">' +
+                                ' #: messages.validationDialog.labels.showCalendarButton #' +
+                            '</label>' +
+                        '</div>' +
+                    "</div>" +
+
                     '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.ignoreBlank #:</label></div>' +
                         '<div class="k-edit-field">' +
                             '<input type="checkbox" name="ignoreBlank" id="ignoreBlank" class="k-checkbox" data-bind="checked: ignoreBlank"/>' +
-                            '<label class="k-checkbox-label" for="ignoreBlank"></label>' +
+                            '<label for="ignoreBlank" class="k-checkbox-label">' +
+                                ' #: messages.validationDialog.labels.ignoreBlank #' +
+                            '</label>' +
                         '</div>' +
                     '</div>' +
 
@@ -1252,6 +1329,7 @@
                 criteria: options.criteria.slice(0),
                 criterion: options.criterion,
                 ignoreBlank: options.ignoreBlank,
+                showButton: options.showButton,
                 apply: this.apply.bind(this),
                 close: this.close.bind(this),
                 remove: this.remove.bind(this)

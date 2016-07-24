@@ -81,13 +81,15 @@
         sheet.forEach(range, function(row, col, cell){
             var relrow = row - range.topLeft.row;
             var relcol = col - range.topLeft.col;
+            var rh = sheet.rowHeight(row);
+            var cw = sheet.columnWidth(col);
             if (!relcol) {
-                rowHeights.push(sheet.rowHeight(row));
+                rowHeights.push(rh);
             }
             if (!relrow) {
-                colWidths.push(sheet.columnWidth(col));
+                colWidths.push(cw);
             }
-            if (sheet.isHiddenColumn(col) || sheet.isHiddenRow(row)) {
+            if (sheet.isHiddenColumn(col) || sheet.isHiddenRow(row) || !rh || !cw) {
                 return;
             }
             var nonEmpty = options.forScreen || shouldDrawCell(cell);
@@ -205,9 +207,13 @@
                 }
                 cell.height = sheet._rows.sum(ref.topLeft.row, ref.bottomRight.row);
                 cell.width = sheet._columns.sum(ref.topLeft.col, ref.bottomRight.col);
-                cell.right = cell.left + cell.width;
-                cell.bottom = cell.top + cell.height;
-                cells.push(cell);
+                if (cell.height > 0 && cell.width > 0) {
+                    // zero means a fully hidden merged cell (all rows/columns are hidden)
+                    // https://github.com/telerik/kendo-ui-core/issues/1794
+                    cell.right = cell.left + cell.width;
+                    cell.bottom = cell.top + cell.height;
+                    cells.push(cell);
+                }
             });
         });
 

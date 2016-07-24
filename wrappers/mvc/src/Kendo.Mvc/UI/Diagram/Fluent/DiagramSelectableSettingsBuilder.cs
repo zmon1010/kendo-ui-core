@@ -41,6 +41,17 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Specifies if multiple selection should be enabled.
+        /// </summary>
+        /// <param name="value">The value that configures the multiple selection.</param>
+        public DiagramSelectableSettingsBuilder<TShapeModel, TConnectionModel> Multiple(bool value)
+        {
+            container.Multiple = value;
+
+            return this;
+        }
         
         //<< Fields
     }

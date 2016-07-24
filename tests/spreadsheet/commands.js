@@ -708,7 +708,7 @@
         var command = adjustDecimalsCommand({ value: -1 });
         command.exec();
 
-        equal(sheet.range("A1").format(), "#.0;@");
+        equal(sheet.range("A1").format(), "#.0");
     });
 
     test("removes decimal points", function() {
@@ -717,7 +717,7 @@
         var command = adjustDecimalsCommand({ value: +1 });
         command.exec();
 
-        equal(sheet.range("A1").format(), "#.00;@");
+        equal(sheet.range("A1").format(), "#.00");
     });
 
     test("can be undone", function() {
@@ -745,7 +745,7 @@
         var command = adjustDecimalsCommand({ value: +1 });
         command.exec();
 
-        equal(sheet.range("A1").format(), "#.0;@");
+        equal(sheet.range("A1").format(), "#.0");
     });
 
     module("SpreadSheet TextWrapCommand", moduleOptions);

@@ -27,7 +27,7 @@
         },
         replaceTheme: function(code, theme) {
             if (theme) {
-                code = code.replace(/default\.min\.css/g, theme + ".min.css");
+                code = code.replace(/default(\.mobile)?\.min\.css/g, theme + "$1.min.css");
             }
 
             return code;

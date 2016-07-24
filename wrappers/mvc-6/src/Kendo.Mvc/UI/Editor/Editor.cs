@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI
                 }
                 else
                 {
-                    writer.Write(HtmlEncoder.HtmlEncode(value));
+                    writer.Write(HtmlEncoder.Encode(value));
                 }
             }
             else if (ValueAction != null)

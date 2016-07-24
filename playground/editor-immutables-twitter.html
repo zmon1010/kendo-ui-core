@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>editor-immutables-twitter</title>
+        <meta name="viewport" content="width=device-width,user-scalable=1,initial-scale=1.0" />
+
+        <link rel="stylesheet" href="../dist/styles/web/kendo.common-bootstrap.css">
+        <link rel="stylesheet" href="../dist/styles/web/kendo.bootstrap.css">
+
+        <script src="loader.js"></script>
+        <script>
+            requireSync([
+                    "../src/jquery.js",
+                    "../src/kendo.editor.js"
+            ]);
+        </script>
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <style>
+            .k-editor [contenteditable=false] {
+                border: 1px dashed blue;
+            }
+        </style>
+    </head>
+    <body style="padding-top: 200px;">
+        <div id="example">
+        <!-- <textarea id="editor" rows="10" cols="30" style="width:90%;height:600px"></textarea> -->
+        <div id="editor" style="height: 500px;"></div>
+        <script type="text/javascript">
+            var theEditor;
+            var theBody;
+
+            function randomId(length) {
+                var result = '';
+                var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                for (var i = length || 10; i > 0; --i) {
+                    result += chars.charAt(Math.round(Math.random() * (chars.length - 1)));
+                }
+                return result;
+            };
+
+            $(function() {
+                var editor = $("#editor").kendoEditor({
+                    stylesheets: ["ContentArea.css"],
+                    immutables: {
+                        serialization: function(node) {
+                           var id = "twitt" + randomId();
+                           var firstChild = node.firstChild;
+                           if (firstChild.nodeName.toLowerCase() == "twitterwidget") {
+                               if (!theEditor.twitts) {
+                                    theEditor.twitts = {};
+                               }
+                               theEditor.twitts[id] = $(firstChild);
+                               return '<div k-immutable="' + id + '"></div>';
+                           }
+                            return "<div></div>"
+                        },
+                        deserialization: function (node, immutable) {
+                           id = node.getAttribute("k-immutable");
+                           if (id.indexOf("twitt") > -1) {
+                               $(immutable).children(":first").remove();
+                               theEditor.twitts[id].appendTo(immutable);
+                           }
+                        }
+                    },
+                    select: function() {
+                        theEditor.twitts = {};
+                    },
+                    value:
+                        'first line of text' +
+                        //'<h1 contenteditable="false">Header 1 text</h1>' +
+                        //'<span contenteditable="false">span 1 text</span>' +
+                        '<div style="width: 300px" class="twitter-container" contenteditable="false"><blockquote contenteditable="false" class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Craft bots 🤖 for Messenger, Slack &amp; Telegram with Flow XO. No code, visual designer. Handles demanding use cases 💪.<a href="https://t.co/fbRGMZ2unE">https://t.co/fbRGMZ2unE</a></p>&mdash; Flow XO (@FlowXO) <a href="https://twitter.com/FlowXO/status/740646670363283457">June 8, 2016</a></blockquote></div>' +
+                        '<span>span 2 text</span>',
+                    tools:
+                    [
+
+                        {
+                            name: "bold",
+                            trackImmutables: true
+                        },
+                        "italic",
+                        "underline",
+                        "strikethrough",
+                        "justifyLeft",
+                        "justifyCenter",
+                        "justifyRight",
+                        "justifyFull",
+                        "insertUnorderedList",
+                        "insertOrderedList",
+                        "indent",
+                        "outdent",
+                        "createLink",
+                        "unlink",
+                        "insertImage",
+                        "insertFile",
+                        "subscript",
+                        "superscript",
+                        "createTable",
+                        "addRowAbove",
+                        "addRowBelow",
+                        "addColumnLeft",
+                        "addColumnRight",
+                        "deleteRow",
+                        "deleteColumn",
+                        "viewHtml",
+                        "formatting",
+                        "cleanFormatting",
+                        "fontName",
+                        "fontSize",
+                        "foreColor",
+                        "backColor",
+                        {
+                            name: "insertHtml",
+                            items: [
+                                { text: "Signature", value: "<p>Regards,<br /> John Doe,<br /><a href='mailto:john.doe@example.com'>john.doe@example.com</a></p>" },
+                                { text: "Kendo online demos", value: " <a href='//demos.telerik.com/kendo-ui'>Kendo online demos</a> " }
+                            ]
+                        },
+                        "print",
+                        "pdf"
+                    ]
+                }).data("kendoEditor");
+
+                // show the toolbar
+                editor.toolbar.show();
+
+                // detach the handler which hides the toolbar
+                $(editor.body).addClass("k-state-active").off("focusout.kendoEditor");
+
+                theEditor = editor;
+                theBody = editor.body;
+            });
+        </script>
+    </div>
+    </body>
+</html>

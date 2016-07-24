@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used.Compare with the format property.
+        /// Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used. If the user enters a number with a greater precision than is currently configured, the widget value will be rounded. For example, if decimals is 2 and the user inputs 12.346, the value will become 12.35. If the user inputs 12.99, the value will become 13.00.Compare with the format property.
         /// </summary>
         /// <param name="value">The value for Decimals</param>
         public NumericTextBoxBuilder<T> Decimals(int value)
@@ -76,6 +76,35 @@ namespace Kendo.Mvc.UI.Fluent
         public NumericTextBoxBuilder<T> Placeholder(string value)
         {
             Container.Placeholder = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.
+        /// </summary>
+        /// <param name="value">The value for RestrictDecimals</param>
+        public NumericTextBoxBuilder<T> RestrictDecimals(bool value)
+        {
+            Container.RestrictDecimals = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.
+        /// </summary>
+        public NumericTextBoxBuilder<T> RestrictDecimals()
+        {
+            Container.RestrictDecimals = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether the value should be rounded or truncated. The length of the fraction is defined by the decimals value.
+        /// </summary>
+        /// <param name="value">The value for Round</param>
+        public NumericTextBoxBuilder<T> Round(bool value)
+        {
+            Container.Round = value;
             return this;
         }
 

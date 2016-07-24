@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using System.IO;
 
 namespace Kendo.Mvc.UI
@@ -32,9 +33,8 @@ namespace Kendo.Mvc.UI
 
         protected override void WriteHtml(TextWriter writer)
         {
-            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
-
-            var tag = Generator.GenerateInput(ViewContext, metadata, Id, Name, Value, string.Empty, string.Empty, HtmlAttributes);
+            var explorer = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+            var tag = Generator.GenerateInput(ViewContext, explorer, Id, Name, Value, string.Empty, string.Empty, HtmlAttributes);
 
             tag.AddCssClass("k-textbox");
 

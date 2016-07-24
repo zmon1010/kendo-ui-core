@@ -111,5 +111,45 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Value(nullFunction).ShouldBeSameAs(builder);
         }
+
+        [Fact]
+        public void Builder_should_set_Immutables()
+        {
+            var value = true;
+
+            builder.Immutables(true);
+
+            editor.Immutables.Enabled.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Builder_should_set_Immutables_Serialization()
+        {
+            string value = "<div></div>";
+
+            builder.Immutables(i => i.Serialization("<div></div>"));
+
+            editor.Immutables.Serialization.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Builder_should_set_Immutables_SerializationHandler()
+        {
+            string value = "foo";
+
+            builder.Immutables(i => i.SerializationHandler("foo"));
+
+            editor.Immutables.SerializationHandler.HandlerName.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void Builder_should_set_Immutables_Deserialization()
+        {
+            string value = "foo";
+
+            builder.Immutables(i => i.Deserialization("foo"));
+
+            editor.Immutables.Deserialization.HandlerName.ShouldEqual(value);
+        }
     }
 }

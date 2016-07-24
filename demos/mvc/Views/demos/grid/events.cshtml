@@ -20,6 +20,22 @@
                     kendoConsole.log("Grid data binding");
                 }
 
+                function onSorting(arg) {
+                    kendoConsole.log("Sorting on field: " + arg.sort.field + ", direction:" + (arg.sort.dir || "none"));
+                }
+
+                function onFiltering(arg) {
+                    kendoConsole.log("Filter on " + kendo.stringify(arg.filter));
+                }
+
+                function onPaging(arg) {
+                    kendoConsole.log("Paging to page index:" + arg.page);
+                }
+
+                function onGrouping(arg) {
+                    kendoConsole.log("Group on " + kendo.stringify(arg.groups));
+                }
+
                 $(document).ready(function () {
                     $("#grid").kendoGrid({
                         dataSource: {
@@ -38,6 +54,12 @@
                         selectable: "multiple cell",
                         pageable: true,
                         sortable: true,
+                        filterable: true,
+                        groupable: true,
+                        sort: onSorting,
+                        filter: onFiltering,
+                        group: onGrouping,
+                        page: onPaging,
                         columns: [
                             {
                                 field: "ProductName",

@@ -108,4 +108,14 @@ test("exec does not replace inline editor container", function() {
 
     equal(inline.value(), "<ul><li>foo</li></ul>");
 });
+
+test('apply on empty editor body - should not leave boms after list', function() {
+    var range = createRangeFromText(editor, '||');
+    var command = createListCommand({tag:'ul', range:range});
+    command.exec();
+
+    equal(editor.body.childNodes.length, 1);
+    equal(editor.value(), "<ul><li></li></ul>");
+});
+
 }());

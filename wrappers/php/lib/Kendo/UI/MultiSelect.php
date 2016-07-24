@@ -40,6 +40,15 @@ class MultiSelect extends \Kendo\UI\Widget {
     }
 
     /**
+    * Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
+    * @param boolean $value
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function clearButton($value) {
+        return $this->setProperty('clearButton', $value);
+    }
+
+    /**
     * Sets the data source of the MultiSelect.
     * @param array|\Kendo\Data\DataSource $value
     * @return \Kendo\UI\MultiSelect
@@ -85,6 +94,15 @@ class MultiSelect extends \Kendo\UI\Widget {
     }
 
     /**
+    * If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.
+    * @param boolean $value
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function enforceMinLength($value) {
+        return $this->setProperty('enforceMinLength', $value);
+    }
+
+    /**
     * The filtering method used to determine the suggestions for the current value. Filtration is turned of by default.
 The supported filter values are startswith, endswith and contains.
     * @param string $value
@@ -114,6 +132,28 @@ The supported filter values are startswith, endswith and contains.
     */
     public function fixedGroupTemplate($value) {
         return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the footerTemplate option of the MultiSelect.
+    * The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function footerTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('footerTemplate', $value);
+    }
+
+    /**
+    * Sets the footerTemplate option of the MultiSelect.
+    * The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+    * @param string $value The template content.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function footerTemplate($value) {
+        return $this->setProperty('footerTemplate', $value);
     }
 
     /**
@@ -182,6 +222,30 @@ A zero value means that a request will be made as soon as the user focuses the w
     */
     public function maxSelectedItems($value) {
         return $this->setProperty('maxSelectedItems', $value);
+    }
+
+    /**
+    * Sets the noDataTemplate option of the MultiSelect.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function noDataTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('noDataTemplate', $value);
+    }
+
+    /**
+    * Sets the noDataTemplate option of the MultiSelect.
+    * The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+    * @param string $value The template content.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function noDataTemplate($value) {
+        return $this->setProperty('noDataTemplate', $value);
     }
 
     /**
@@ -389,6 +453,20 @@ refer to Popup documentation.
         }
 
         return $this->setProperty('select', $value);
+    }
+
+    /**
+    * Sets the deselect event of the MultiSelect.
+    * Fired when an item is deselected or tag is removed.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function deselect($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('deselect', $value);
     }
 
 

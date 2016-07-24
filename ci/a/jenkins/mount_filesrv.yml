@@ -1,0 +1,20 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- apt: name=cifs-utils state=latest
+- set_fact: access_options="username=KendoBuildUser,password=5x1DP2nV3!vB,workgroup=telerik,uid=jenkins"
+- name: Creates directory
+  file: path={{item}} state=directory
+  with_items:
+      - /mnt/kendo-iis
+      - /mnt/Distributions    
+- name: mount demo shares
+  mount: fstype="cifs"
+         opts="{{access_options}}"
+         src="//KendoIIS.telerik.com/shares"
+         name="/mnt/kendo-iis"
+         state=mounted
+  mount: fstype="cifs"
+         opts="{{access_options}}"
+         src="//filesrvbg01/Distributions"
+         name="/mnt/Distributions"
+         state=mounted       

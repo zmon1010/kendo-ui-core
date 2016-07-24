@@ -63,6 +63,7 @@ ROOT_MAP = {
     'src/styles' => /dist\/styles\//,
     'src/Kendo.Mvc/Kendo.Mvc' => 'wrappers/mvc/src/Kendo.Mvc/',
     'src/Kendo.Mvc/packages' => 'wrappers/mvc/packages/',
+    'src/AspNet.Core/Kendo.Mvc' => 'wrappers/mvc-6/src/Kendo.Mvc/',
     'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => 'dpl/Telerik.Web.Spreadsheet/',
     'src/Telerik.Web.Spreadsheet/lib' => 'dpl/lib/',
     'apptemplates' => 'demos/apptemplates',
@@ -74,7 +75,6 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc6' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
-    'spreadsheet/binaries/net45' => 'dpl/Telerik.Web.Spreadsheet/bin/Release-NET45',
     'spreadsheet/' => 'dpl/',
     'wrappers/jsp/kendo-taglib' => 'wrappers/java/kendo-taglib/target/',
     'src/kendo-taglib' => 'wrappers/java/kendo-taglib/',
@@ -160,6 +160,7 @@ require 'tests'
 require 'codegen'
 require 'nuget'
 require 'bower'
+require 'npm'
 require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin/
 require 'playground'
 require 'vs_plugin'
@@ -169,8 +170,15 @@ require './build/localization'
 MVC_BINARIES = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => MVC3_DLL,
     'wrappers/aspnetmvc/Binaries/Mvc4' => MVC4_DLL,
-    'wrappers/aspnetmvc/Binaries/Mvc5' => MVC5_DLL,
-    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST
+    'wrappers/aspnetmvc/Binaries/Mvc5' => MVC5_DLL
+}
+
+MVC_CORE_BINARIES_COMMERCIAL = {
+    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST_COMMERCIAL
+}
+
+MVC_CORE_BINARIES_TRIAL = {
+    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST_TRIAL
 }
 
 MVC_CONTENT = {
@@ -222,13 +230,12 @@ APPTEMPLATES_CONTENT = FileList['demos/apptemplates/**/*'];
 
 SPREADSHEET_CONTENT = {
     'spreadsheet/binaries/net40' => SPREADSHEET_REDIST_NET40,
-    'spreadsheet/binaries/net45' => SPREADSHEET_REDIST_NET45,
     'spreadsheet/' => FileList[SPREADSHEET_ROOT + '/ReadMe.txt']
 }
 
 
 file KENDO_CONFIG_FILE do |t|
-    sh "./node_modules/.bin/grunt download_builder:config"
+    sh "./node_modules/.bin/gulp download-builder"
 end
 
 # Rake tasks
@@ -347,7 +354,7 @@ bundle :name => 'aspnetmvc.trial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
-       .merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
+       .merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT).merge(MVC_CORE_BINARIES_TRIAL),
        :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps_trial', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
@@ -383,7 +390,7 @@ bundle :name => 'aspnetmvc.hotfix.trial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
-       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT).merge(MVC_CORE_BINARIES_TRIAL),
        :post_build => ['mvc:copy_trials', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
@@ -413,7 +420,7 @@ bundle :name => 'aspnetmvc.commercial',
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
-       }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
+       }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
        :post_build => 'mvc_6:update_demo_deps_commercial',
        :prerequisites => [
            'mvc:assets',
@@ -445,9 +452,17 @@ bundle :name => 'aspnetmvc.commercial-source',
             'src/styles' => SRC_CSS,
             'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
             'src/Kendo.Mvc/Kendo.Mvc' => FileList['wrappers/mvc/src/Kendo.Mvc/**/*']
+                .exclude('**/RegistryUtilities.cs')
+                .exclude('**/KendoLicense.cs')
+                .exclude('**/*.cs.source')
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
+            'src/AspNet.Core/Kendo.Mvc' => FileList['wrappers/mvc-6/src/Kendo.Mvc/**/*']
+                .exclude('**/bin/**/*')
+                .exclude('**/obj/**/*')
+                .exclude('**/*.snk')
+                .exclude('**/*.user'),
             'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => FileList[SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/**/*']
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
@@ -458,7 +473,10 @@ bundle :name => 'aspnetmvc.commercial-source',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
+           'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
            'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
@@ -479,7 +497,7 @@ bundle :name => 'aspnetmvc.internal.commercial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
-       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
        :prerequisites => [
            'mvc:assets',
            'spreadsheet:binaries',
@@ -498,6 +516,11 @@ bundle :name => 'aspnetmvc.internal.commercial-source',
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
+            'src/AspNet.Core/Kendo.Mvc' => FileList['wrappers/mvc-6/src/Kendo.Mvc/**/*']
+                .exclude('**/bin/**/*')
+                .exclude('**/obj/**/*')
+                .exclude('**/*.snk')
+                .exclude('**/*.user'),
             'src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet' => FileList[SPREADSHEET_ROOT + '/Telerik.Web.Spreadsheet/**/*']
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
@@ -509,6 +532,8 @@ bundle :name => 'aspnetmvc.internal.commercial-source',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.sln',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Kendo.snk',
            'dist/bundles/aspnetmvc.internal.commercial-source/src/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet/Telerik.Web.Spreadsheet.csproj',
@@ -531,7 +556,7 @@ bundle :name => 'aspnetmvc.hotfix.commercial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
-       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test'
@@ -722,7 +747,7 @@ namespace :build do
         nugets = []
 
         NUGETS.each do |nuget|
-            if nuget.match(/Kendo.Mvc/)
+            if nuget.match(/AspNet.Core/)
                 name = nuget;
             else
                 name = nuget.pathmap("%n") + ".#{VERSION}.nupkg";

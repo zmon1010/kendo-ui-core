@@ -33,11 +33,11 @@ Below are listed the steps for you to follow when creating an ASP.NET Core MVC w
 
 **Step 1** Select **File** > **New Project**.
 
-**Step 2** Choose **Templates** > **Visual C#** > **Web** > **ASP.NET Web Application**.
+**Step 2** Choose **Templates** > **Visual C#** > **Web** > **ASP.NET Core Web Application (.NET Core)**.
 
 **Step 3** Set a name and location for the project.
 
-**Step 4** Select **ASP.NET 5 Preview Templates** > **Web Site** from the project templates.
+**Step 4** Select **ASP.NET Core Templates** > **Web Application** from the project templates.
 
 **Step 5** Click **OK** to create the project.
 
@@ -51,23 +51,47 @@ Set up the [Telerik NuGet Private Feed]({% slug aspnetmvc_nuget %}#set-up-nuget-
 
 ![NuGet package manager](images/manage-nuget-packages.png)
 
-**Step 2** Choose the [Telerik package source]({% slug aspnetmvc_nuget %}#set-up-nuget-package-source) and search for `Kendo.Mvc`. Preview releases are also available on `api.nuget.org`.
+**Step 2** Choose the [Telerik package source]({% slug aspnetmvc_nuget %}#set-up-nuget-package-source) and search for `Telerik.UI.for.AspNet.Core`.
 
-**Step 3** Install the `Kendo.Mvc` package version 2015.2.909 or later. This should add a line to you `project.json` similar to the one shown below.
+**Step 3** Install the `Telerik.UI.for.AspNet.Core` package. This should add a line to you `project.json` similar to the one shown below.
 
 ###### Example
 
         "dependencies": {
             ...
-            "Kendo.Mvc": "2016.1.301"
+            "Telerik.UI.for.AspNet.Core": "{{ site.mvcCoreVersion }}"
         }
 
-**Step 4** Open `Startup.cs` and locate the `ConfigureServices` method. Add the snippet from the example below.
+**Step 4** Open `Startup.cs`, using a text editor (IDE) and update it as described below.
+
+Locate the `ConfigureServices` method and add a call to `services.AddKendo` at the end.
 
 ###### Example
 
-        // Register UI for ASP.NET MVC helpers
-        services.AddKendo();
+        public void ConfigureServices(IServiceCollection services)
+        {
+            ...
+            // Maintain property names during serialization. See:
+            // https://github.com/aspnet/Announcements/issues/194
+            services
+                .AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
+            // Add Kendo UI services to the services container
+            services.AddKendo();
+        }
+
+Locate the `Configure` method and add a call to `app.UseKendo` at the end.
+
+###### Example
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            ...
+
+            // Configure Kendo UI
+            app.UseKendo(env);
+        }
 
 **Step 5** Import the `Kendo.Mvc.UI` namespace in `~/Views/_ViewImports.cshtml`.
 

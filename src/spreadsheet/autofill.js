@@ -224,6 +224,7 @@
             var n = q * s.len + r - s.begin;
             var value = s.f(n, i);
             var props = clone(properties[i]);
+            delete props.enable;
             if (value instanceof Formula) {
                 props.formula = value;
             } else {

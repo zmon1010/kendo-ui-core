@@ -124,5 +124,19 @@
 
             tag.Attribute("value").ShouldEqual(string.Format(customTextBox.Format, testValue));
         }
+
+        [Fact]
+        public void Build_should_not_clear_disabled_class_if_class_attribute_is_set()
+        {
+            TextBox<string> textBox = TextBoxTestHelper<string>.CreateTextBox();
+            textBox.Name = "TestName";
+            textBox.Enabled = false;
+            textBox.HtmlAttributes.Add("class","MyClass");
+
+            TextBoxHtmlBuilder<string> builder = new TextBoxHtmlBuilder<string>(textBox);
+            IHtmlNode tag = builder.Build();
+
+            tag.Attribute("class").ShouldEqual("k-textbox MyClass k-state-disabled");
+        }
     }
 }

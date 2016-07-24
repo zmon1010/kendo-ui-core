@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Html;
-using Microsoft.AspNet.Html.Abstractions;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.Extensions.WebEncoders;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Text.Encodings.Web;
 
 namespace Kendo.Mvc.UI
 {
@@ -58,7 +55,7 @@ namespace Kendo.Mvc.UI
             return this;
         }
 
-        public void WriteTo(TextWriter output, IHtmlEncoder encoder)
+        public void WriteTo(TextWriter output, HtmlEncoder encoder)
         {
             this.Content.WriteTo(output, encoder);
         }

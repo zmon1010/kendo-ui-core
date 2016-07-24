@@ -83,7 +83,7 @@ function arrayClose(a, b, tolerance) {
 function tzTest(tzAlias, testName, expected, callback ) {
     var TZ_NAMES = {
         "Brazil": ["BRST", "BRT", "South America Daylight Time", "South America Standard Time"],
-        "Sofia": ["EET", "EEST", "Eastern European Time", "Eastern European Summer Time"],
+        "Sofia": ["EET", "EEST", "Eastern European Time", "Eastern European Summer Time", "FLE"],
         "Moscow": ["MSK", "RTZ2", "Russia TZ 2 Standard Time"],
         "Pacific": ["PDT", "PST"]
     };
@@ -119,7 +119,7 @@ function tzTest(tzAlias, testName, expected, callback ) {
 
 function triggerTouchEvent(element, type, info) {
     info.target = element;
-    element.trigger($.Event(type, { originalEvent: { changedTouches: [ info ] }, preventDefault: $.noop }));
+    element.trigger($.Event(type, { originalEvent: { changedTouches: [ info ] }, preventDefault: $.noop, stopPropagation: $.noop }));
 }
 
 function press(element, x, y, id) {
@@ -164,7 +164,7 @@ function tap(element, x, y, id) {
 }
 
 function mousewheel(element, delta) {
-    $(element).trigger($.Event("mousewheel", { originalEvent: { detail: delta * 3 } }));
+    $(element).trigger($.Event("mousewheel", { originalEvent: { detail: delta * 3 }, preventDefault: $.noop, stopPropagation: $.noop }));
 }
 
 // Silence logging for the tests
@@ -340,6 +340,12 @@ function withAngularTests(moduleName, func) {
     func(runTest);
 
 }
+
+window.skip = function(name) {
+    test(name, 0, function() {
+        console.warn("TEST SKIPPED: " + name);
+    });
+};
 
 var ngTestModule = $.noop, ngTest = $.noop, ngScope;
 

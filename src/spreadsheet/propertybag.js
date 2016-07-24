@@ -94,7 +94,8 @@
             { property: Property, name: "wrap", value: null, sortable: true, serializable: true },
             { property: Property, name: "validation", value: null, sortable: false, serializable: true },
             { property: Property, name: "enable", value: null, sortable: false, serializable: true },
-            { property: Property, name: "link", value: null, sortable: false, serializable: true }
+            { property: Property, name: "link", value: null, sortable: false, serializable: true },
+            { property: Property, name: "editor", value: null, sortable: false, serializable: true }
         ],
 
         init: function(cellCount) {

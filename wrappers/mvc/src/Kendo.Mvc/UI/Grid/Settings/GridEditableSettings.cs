@@ -204,6 +204,7 @@ namespace Kendo.Mvc.UI
 
                 editorHtml = editorHtml.Trim()
                                 .Replace("\r\n", string.Empty)
+                                .Replace("\n", string.Empty)
                                 .Replace("</script>", "<\\/script>")
                                 .Replace("jQuery(\"#", "jQuery(\"\\\\#")
                                 .Replace("#", "\\#");

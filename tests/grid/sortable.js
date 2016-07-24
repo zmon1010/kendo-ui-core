@@ -156,4 +156,32 @@
         ok(row.find("th:last").data("kendoColumnSorter"));
     });
 
+    test("sorting triggers sort event", 2, function() {
+        var grid = new Grid(append("<table />"), {
+            sortable: true,
+            columns: ["text", "value"],
+            sort: function(e) {
+                equal(e.sort.field, "text");
+                equal(e.sort.dir, "asc");
+            }
+        });
+
+        grid.thead.find("th:first > a").click();
+    });
+
+    test("preventing sort event prevents setting sort descriptor to DataSource", 1, function() {
+        var grid = new Grid(append("<table />"), {
+            sortable: true,
+            columns: ["text", "value"],
+            sort: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        grid.thead.find("th:first > a").click();
+
+        ok(!grid.dataSource.sort(), "There is sort descriptors in the DataSource");
+    });
+
+
 })();

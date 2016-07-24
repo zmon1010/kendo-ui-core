@@ -50,7 +50,7 @@ function preview(e) {
     }
 
     #background {
-        background: transparent url(../../content/web/colorpicker/interior-bg.png) no-repeat;
+        background: transparent url(<%= Url.Content("~/content/web/colorpicker/interior-bg.png") %>) no-repeat;
         margin: 0 auto;
         width: 100%;
         height: 100%;

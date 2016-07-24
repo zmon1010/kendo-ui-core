@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Web.Mvc; 
+    using System.Web.Mvc;
 
     public class NumericTextBox<T> : WidgetBase, IInputComponent<T> where T : struct
     {
@@ -42,6 +42,18 @@ namespace Kendo.Mvc.UI
         }
 
         public int? Decimals
+        {
+            get;
+            set;
+        }
+
+        public bool? RestrictDecimals
+        {
+            get;
+            set;
+        }
+
+        public bool? Round
         {
             get;
             set;
@@ -126,6 +138,16 @@ namespace Kendo.Mvc.UI
             if (Decimals != null)
             {
                 options["decimals"] = Decimals;
+            }
+
+            if (RestrictDecimals != null)
+            {
+                options["restrictDecimals"] = RestrictDecimals;
+            }
+
+            if (Round != null)
+            {
+                options["round"] = Round;
             }
 
             writer.Write(Initializer.Initialize(Selector, "NumericTextBox", options));

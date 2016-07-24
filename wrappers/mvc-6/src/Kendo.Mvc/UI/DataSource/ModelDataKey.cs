@@ -4,7 +4,7 @@ namespace Kendo.Mvc.UI
     using System.Linq.Expressions;
 
     using Extensions;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class ModelDataKey<TModel, TValue> : IDataKey<TModel>
         where TModel : class

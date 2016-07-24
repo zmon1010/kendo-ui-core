@@ -1,17 +1,22 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNet.Razor.TagHelpers;
-using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Kendo.Mvc.Rendering;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
 using System.Text.RegularExpressions;
+using System.Linq;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kendo.Mvc.TagHelpers
 {
     public abstract class TagHelperBase : TagHelper
     {
         private static readonly Regex StringFormatExpression = new Regex(@"(?<=\{\d:)(.)*(?=\})", RegexOptions.Compiled);
+        protected const string MinimumValidator = "min";
+        protected const string MaximumValidator = "max";
 
         [HtmlAttributeNotBound]
         [ViewContext]
@@ -85,6 +90,22 @@ namespace Kendo.Mvc.TagHelpers
         protected ClientHandlerDescriptor CreateHandler(string handler)
         {
             return new ClientHandlerDescriptor { HandlerName = handler };
+        }
+
+        protected Nullable<TValue> GetRangeValidationParameter<TValue>(ModelExplorer explorer, string parameter) where TValue : struct
+        {
+            var rangeAttribute = explorer.Metadata.ValidatorMetadata
+                .Where(attr => attr is RangeAttribute)
+                .FirstOrDefault() as RangeAttribute;
+
+            if (rangeAttribute != null)
+            {
+                object value = parameter == "min" ? rangeAttribute.Minimum : rangeAttribute.Maximum;
+
+                return (TValue)Convert.ChangeType(value, typeof(TValue));
+            }
+
+            return null;
         }
 
         protected string ExtractEditFormat(string format)

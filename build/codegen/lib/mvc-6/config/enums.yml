@@ -278,6 +278,25 @@
         :member: Contains
         :description: Matches values containing the typed string
 
+- :type: MapControlPosition
+  :description: The position of the attribution control.
+  :values:
+      - :value: topLeft
+        :member: TopLeft
+        :description: Positions the control at the top left corner
+
+      - :value: topRight
+        :member: TopRight
+        :description: Positions the control at the top right corner
+
+      - :value: bottomRight
+        :member: BottomRight
+        :description: Positions the control at the bottom right corner
+
+      - :value: bottomLeft
+        :member: bottomLeft
+        :description: Positions the control at the bottom left corner
+
 - :type: SparklineType
   :description: Defines the possible series orientation.
   :values:

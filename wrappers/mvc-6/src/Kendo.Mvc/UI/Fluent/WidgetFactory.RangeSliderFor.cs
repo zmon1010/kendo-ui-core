@@ -9,10 +9,9 @@ namespace Kendo.Mvc.UI.Fluent
             where TValue : struct, IComparable
         {
             var explorer = GetModelExplorer(expression);
-            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
-            TValue? minimum = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
-            TValue? maximum = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
+            TValue? minimum = GetRangeValidationParameter<TValue>(explorer, MinimumValidator);
+            TValue? maximum = GetRangeValidationParameter<TValue>(explorer, MaximumValidator);
 
             var rangeSlider = RangeSlider<TValue>()
                                 .Expression(GetExpressionName(expression))

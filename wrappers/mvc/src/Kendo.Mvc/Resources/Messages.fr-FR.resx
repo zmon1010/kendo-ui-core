@@ -454,7 +454,7 @@
     <value>Description</value>
   </data>
   <data name="Scheduler_Editor_EditorTitle" xml:space="preserve">
-    <value>Event</value>
+    <value>Evènement</value>
   </data>
   <data name="Scheduler_Editor_End" xml:space="preserve">
     <value>Fin</value>
@@ -472,22 +472,22 @@
     <value>Début</value>
   </data>
   <data name="Scheduler_Editor_StartTimezone" xml:space="preserve">
-    <value>Start timezone</value>
+    <value>Demarrer le fuseau horaire</value>
   </data>
   <data name="Scheduler_Editor_Timezone" xml:space="preserve">
     <value> </value>
   </data>
   <data name="Scheduler_Editor_TimezoneEditorButton" xml:space="preserve">
-    <value>Time zone</value>
+    <value>Fuseau horaire</value>
   </data>
   <data name="Scheduler_Editor_TimezoneEditorTitle" xml:space="preserve">
-    <value>Timezones</value>
+    <value>Fuseaux horaires</value>
   </data>
   <data name="Scheduler_Editor_Title" xml:space="preserve">
     <value>Titre</value>
   </data>
   <data name="Scheduler_Event" xml:space="preserve">
-    <value>Event</value>
+    <value>Evènement</value>
   </data>
   <data name="Scheduler_Recurrence_DeleteRecurring" xml:space="preserve">
     <value>Voulez-vous supprimer seulement cet événement ou toute la série?</value>
@@ -586,28 +586,28 @@
     <value>année(ans)</value>
   </data>
   <data name="Scheduler_Recurrence_EditRecurring" xml:space="preserve">
-    <value>Do you want to edit only this event occurrence or the whole series?</value>
+    <value>Voulez-vous modifier uniquement cette occurrence d'un événement ou toute la série?</value>
   </data>
   <data name="Scheduler_Recurrence_EditWindowOccurrence" xml:space="preserve">
-    <value>Edit current occurrence</value>
+    <value>Modifier occurrence courante</value>
   </data>
   <data name="Scheduler_Recurrence_EditWindowSeries" xml:space="preserve">
-    <value>Edit the series</value>
+    <value>Modifier la série</value>
   </data>
   <data name="Scheduler_Recurrence_EditWindowTitle" xml:space="preserve">
-    <value>Edit Recurring Item</value>
+    <value>Modifier élément récurrent</value>
   </data>
   <data name="Scheduler_Save" xml:space="preserve">
     <value>Sauvegarder</value>
   </data>
   <data name="Scheduler_Time" xml:space="preserve">
-    <value>Time</value>
+    <value>Temps</value>
   </data>
   <data name="Scheduler_Today" xml:space="preserve">
     <value>Aujourd'hui</value>
   </data>
   <data name="Scheduler_View_Agenda" xml:space="preserve">
-    <value>Agenda</value>
+    <value>Ordre du jour</value>
   </data>
   <data name="Scheduler_View_Day" xml:space="preserve">
     <value>Jour</value>
@@ -682,7 +682,7 @@
     <value>drop files here to upload</value>
   </data>
   <data name="Upload_HeaderStatusUploaded" xml:space="preserve">
-    <value>Done</value>
+    <value>Terminé</value>
   </data>
   <data name="Upload_HeaderStatusUploading" xml:space="preserve">
     <value>Uploading...</value>
@@ -706,13 +706,13 @@
     <value>Update</value>
   </data>
   <data name="Scheduler_Editor_NoTimezone" xml:space="preserve">
-    <value>No timezone</value>
+    <value>Pas de fuseau horaire</value>
   </data>
   <data name="Scheduler_View_WorkWeek" xml:space="preserve">
-    <value>Work Week</value>
+    <value>Semaine de travail</value>
   </data>
   <data name="Scheduler_Recurrence_Editor_End_MobileLabel" xml:space="preserve">
-    <value>Ends</value>
+    <value>Prend fin</value>
   </data>
   <data name="Editor_InsertFile" xml:space="preserve">
     <value>Insert file</value>
@@ -763,7 +763,7 @@
     <value>Fields to include</value>
   </data>
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
-    <value>All events</value>
+    <value>Tous les évènements</value>
   </data>
   <data name="Grid_Excel" xml:space="preserve">
     <value>Exporter vers Excel</value>
@@ -800,5 +800,17 @@
   </data>
   <data name="Filter_Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Scheduler_View_Timeline" xml:space="preserve">
+    <value>Chronologie</value>
+  </data>
+  <data name="Scheduler_View_TimelineMonth" xml:space="preserve">
+    <value>Chronologie Mois</value>
+  </data>
+  <data name="Scheduler_View_TimelineWeek" xml:space="preserve">
+    <value>Chronologie Semaine</value>
+  </data>
+  <data name="Scheduler_View_TimelineWorkWeek" xml:space="preserve">
+    <value>Semaine de travail Chronologie</value>
   </data>
 </root>

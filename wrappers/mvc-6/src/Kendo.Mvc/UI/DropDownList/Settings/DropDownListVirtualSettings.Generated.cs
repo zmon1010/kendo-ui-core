@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,8 @@ namespace Kendo.Mvc.UI
     public partial class DropDownListVirtualSettings 
     {
         public double? ItemHeight { get; set; }
+
+        public string MapValueTo { get; set; }
 
         public ClientHandlerDescriptor ValueMapper { get; set; }
 
@@ -26,6 +28,11 @@ namespace Kendo.Mvc.UI
             if (ItemHeight.HasValue)
             {
                 settings["itemHeight"] = ItemHeight;
+            }
+
+            if (MapValueTo?.HasValue() == true)
+            {
+                settings["mapValueTo"] = MapValueTo;
             }
 
             if (ValueMapper?.HasValue() == true)

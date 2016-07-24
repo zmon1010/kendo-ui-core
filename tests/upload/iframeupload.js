@@ -170,7 +170,7 @@ asyncTest("input is moved back to the original form when it's submitted", functi
 asyncTest("clicking cancel should remove iframe", function() {
     uploadInstance._module.onIframeLoad = function() { };
     simulateFileSelect();
-    $(".k-cancel", uploadInstance.wrapper).trigger("click");
+    $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
 
     window.setTimeout(function() {
         equal($("#uploadInstance_0").length, 0);
@@ -181,7 +181,7 @@ asyncTest("clicking cancel should remove iframe", function() {
 asyncTest("clicking cancel should remove form", function() {
     uploadInstance._module.onIframeLoad = function() { };
     simulateFileSelect();
-    $(".k-cancel", uploadInstance.wrapper).trigger("click");
+    $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
 
     window.setTimeout(function() {
         equal($("form[action='" + uploadInstance.options.async.saveUrl + "']").length, 0);
@@ -192,7 +192,7 @@ asyncTest("clicking cancel should remove form", function() {
 asyncTest("clicking cancel should remove file entry", function() {
     uploadInstance._module.onIframeLoad = function() { };
     simulateFileSelect();
-    $(".k-cancel", uploadInstance.wrapper).trigger("click");
+    $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
 
     window.setTimeout(function() {
         equal($(".k-file", uploadInstance.wrapper).length, 0);
@@ -207,7 +207,7 @@ test("form is submitted when clicking retry", 1, function() {
         ok(true);
     }
 
-    $(".k-retry", uploadInstance.wrapper).trigger("click");
+    $(".k-i-retry", uploadInstance.wrapper).trigger("click");
 });
 
 test("frame is not destroyed on failure to allow retry", function() {
@@ -397,7 +397,7 @@ test("user data set in upload event is not duplicated after retry", function() {
     });
 
     simulateUploadWithResponse(errorResponse);
-    $(".k-retry", uploadInstance.wrapper).trigger("click");
+    $(".k-i-retry", uploadInstance.wrapper).trigger("click");
 
     equal($("form[target='uploadInstance_0'] input[name='myId']").length, 1);
 });
@@ -528,7 +528,7 @@ uploadRemoveEvent(testContext);
 module("Upload / IframeUpload / Templates / autoUpload = false", {
     setup: function() {
         moduleSetup();
-        uploadInstance = createUpload({ 
+        uploadInstance = createUpload({
             async: {"saveUrl": 'javascript:;', "removeUrl": 'javascript:;', autoUpload: false },
             template: "<span class='k-progress'></span><div class='myTemplate'>" +
                       "<span class='fileInfo'><span class='fileName'>#=name#</span><span class='fileSize'>#=size#</span>" +
@@ -541,7 +541,7 @@ module("Upload / IframeUpload / Templates / autoUpload = false", {
 
 test("k-upload-action button should contain remove icon", function() {
     simulateSingleFileSelect("image.jpg", 500);
-    equal($(".k-file button.k-upload-action > span.k-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain remove title", function(){
@@ -560,7 +560,7 @@ test("progress bar is rendered in the template", function() {
 module("Upload / IframeUpload / Templates / autoUpload = true", {
     setup: function() {
         moduleSetup();
-        uploadInstance = createUpload({ 
+        uploadInstance = createUpload({
             async: {"saveUrl": 'javascript:;', "removeUrl": 'javascript:;' },
             template: "<div class='myTemplate'><span class='k-icon'></span>" +
                       "<span class='fileInfo'><span class='fileName'>#=name#</span><span class='fileSize'>#=size#</span>" +
@@ -577,13 +577,13 @@ module("Upload / IframeUpload / Templates / autoUpload = true", {
 test("loading status icon is rendered while uploading", function(){
     uploadInstance._module.onIframeLoad = function() { };
     simulateFileSelect();
-    equal($('.k-icon.k-loading', uploadInstance.wrapper).length, 1);
+    equal($('.k-icon.k-i-loading', uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain cancel icon while uploading", function(){
     uploadInstance._module.onIframeLoad = function() { };
     simulateFileSelect();
-    equal($(".k-file button.k-upload-action > span.k-cancel", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-cancel", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain cancel title while uploading", function(){
@@ -600,7 +600,7 @@ test("progress bar is rendered in the template", function() {
 
 test("k-upload-action button should contain retry icon on unsuccessful upload", function(){
     simulateUploadWithResponse(errorResponse);
-    equal($(".k-file button.k-upload-action > span.k-retry", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-retry", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain retry title on unsuccessful upload", function(){
@@ -610,7 +610,7 @@ test("k-upload-action button should contain retry title on unsuccessful upload",
 
 test("k-upload-action button should contain remove icon on successful upload", function(){
     simulateUpload();
-    equal($(".k-file button.k-upload-action > span.k-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain remove title on successful upload", function(){

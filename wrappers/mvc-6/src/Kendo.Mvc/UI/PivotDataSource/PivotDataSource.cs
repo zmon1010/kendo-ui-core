@@ -5,7 +5,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class PivotDataSource : JsonObject
     {

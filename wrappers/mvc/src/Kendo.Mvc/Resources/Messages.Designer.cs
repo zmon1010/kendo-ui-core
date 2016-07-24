@@ -2041,6 +2041,42 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Timeline.
+        /// </summary>
+        public static string Scheduler_View_Timeline {
+            get {
+                return ResourceManager.GetString("Scheduler_View_Timeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeline Month.
+        /// </summary>
+        public static string Scheduler_View_TimelineMonth {
+            get {
+                return ResourceManager.GetString("Scheduler_View_TimelineMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeline Week.
+        /// </summary>
+        public static string Scheduler_View_TimelineWeek {
+            get {
+                return ResourceManager.GetString("Scheduler_View_TimelineWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeline Work Week.
+        /// </summary>
+        public static string Scheduler_View_TimelineWorkWeek {
+            get {
+                return ResourceManager.GetString("Scheduler_View_TimelineWorkWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Week.
         /// </summary>
         public static string Scheduler_View_Week {

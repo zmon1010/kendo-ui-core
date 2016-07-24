@@ -23,9 +23,27 @@ namespace Kendo.Mvc.UI
         
         public bool? Confirmation { get; set; }
         
+        public bool? Create { get; set; }
+        
+        public bool? DependencyCreate { get; set; }
+        
+        public bool? DependencyDestroy { get; set; }
+        
+        public bool? DragPercentComplete { get; set; }
+        
+        public bool? Destroy { get; set; }
+        
+        public bool? Move { get; set; }
+        
+        public bool? Reorder { get; set; }
+        
+        public bool? Resize { get; set; }
+        
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
+        
+        public bool? Update { get; set; }
         
         //<< Fields
 
@@ -36,6 +54,46 @@ namespace Kendo.Mvc.UI
             if (Confirmation.HasValue)
             {
                 json["confirmation"] = Confirmation;
+            }
+                
+            if (Create.HasValue)
+            {
+                json["create"] = Create;
+            }
+                
+            if (DependencyCreate.HasValue)
+            {
+                json["dependencyCreate"] = DependencyCreate;
+            }
+                
+            if (DependencyDestroy.HasValue)
+            {
+                json["dependencyDestroy"] = DependencyDestroy;
+            }
+                
+            if (DragPercentComplete.HasValue)
+            {
+                json["dragPercentComplete"] = DragPercentComplete;
+            }
+                
+            if (Destroy.HasValue)
+            {
+                json["destroy"] = Destroy;
+            }
+                
+            if (Move.HasValue)
+            {
+                json["move"] = Move;
+            }
+                
+            if (Reorder.HasValue)
+            {
+                json["reorder"] = Reorder;
+            }
+                
+            if (Resize.HasValue)
+            {
+                json["resize"] = Resize;
             }
                 
             if (!string.IsNullOrEmpty(TemplateId))
@@ -50,6 +108,11 @@ namespace Kendo.Mvc.UI
             else if (!string.IsNullOrEmpty(Template))
             {
                 json["template"] = Template;
+            }
+                
+            if (Update.HasValue)
+            {
+                json["update"] = Update;
             }
                 
         //<< Serialization

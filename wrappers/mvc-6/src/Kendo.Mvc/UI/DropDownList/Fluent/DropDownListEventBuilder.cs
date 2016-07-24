@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
         public DropDownListEventBuilder Change(string handler)
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public DropDownListEventBuilder Change(Func<object, object> handler)

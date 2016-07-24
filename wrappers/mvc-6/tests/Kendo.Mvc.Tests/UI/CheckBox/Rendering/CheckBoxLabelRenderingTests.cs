@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using Kendo.Mvc.Tests;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.ModelBinding.Metadata;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.Extensions.WebEncoders;
 using Moq;
 using Moq.Protected;
 using Xunit;
+using System.Text.Encodings.Web;
 
 namespace Kendo.Mvc.UI.Tests
 {

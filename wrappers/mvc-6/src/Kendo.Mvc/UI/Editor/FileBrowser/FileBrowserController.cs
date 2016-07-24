@@ -2,13 +2,11 @@
 using System.IO;
 using System.Linq;
 using Kendo.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Hosting;
-using Microsoft.Data.Entity.Design.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
 
 namespace Kendo.Mvc.UI
 {
@@ -17,17 +15,24 @@ namespace Kendo.Mvc.UI
         private readonly IDirectoryBrowser directoryBrowser;
         private readonly IDirectoryPermission permission;
 
-        public virtual IHostingEnvironment Server { get; set; }
-
-        protected FileBrowserController()
-            : this(DI.Current.Resolve<IDirectoryBrowser>(), DI.Current.Resolve<IDirectoryPermission>())
+        protected readonly IHostingEnvironment HostingEnvironment;
+        
+        protected FileBrowserController(IHostingEnvironment hostingEnvironment)
+            : this(DI.Current.Resolve<IDirectoryBrowser>(),
+                  DI.Current.Resolve<IDirectoryPermission>(), 
+                  hostingEnvironment)
         {
         }
 
-        protected FileBrowserController(IDirectoryBrowser directoryBrowser, IDirectoryPermission permission)
+        protected FileBrowserController(
+            IDirectoryBrowser directoryBrowser,
+            IDirectoryPermission permission,
+            IHostingEnvironment hostingEnvironment)
         {
             this.directoryBrowser = directoryBrowser;
+            this.directoryBrowser.HostingEnvironment = hostingEnvironment;
             this.permission = permission;
+            this.HostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -59,12 +64,12 @@ namespace Kendo.Mvc.UI
         [AcceptVerbs("POST")]
         public virtual ActionResult Create(string path, FileBrowserEntry entry)
         {
-            path = NormalizePath(path);
+            var fullPath = NormalizePath(path);
             var name = entry.Name;
 
-            if (name.HasValue() && AuthorizeCreateDirectory(path, name))
+            if (name.HasValue() && AuthorizeCreateDirectory(fullPath, name))
             {
-                var physicalPath = Path.Combine(Server.MapPath(path), name);
+                var physicalPath = Path.Combine(fullPath, name);
 
                 if (!Directory.Exists(physicalPath))
                 {
@@ -90,16 +95,14 @@ namespace Kendo.Mvc.UI
 
         public virtual JsonResult Read(string path)
         {
-            path = NormalizePath(path);
+            var fullPath = NormalizePath(path);
 
-            if (AuthorizeRead(path))
+            if (AuthorizeRead(fullPath))
             {
                 try
                 {
-                    directoryBrowser.Server = Server;
-
-                    var files = directoryBrowser.GetFiles(path, Filter);
-                    var directories = directoryBrowser.GetDirectories(path);
+                    var files = directoryBrowser.GetFiles(fullPath, Filter);
+                    var directories = directoryBrowser.GetDirectories(fullPath);
                     var result = files.Concat(directories);
 
                     return Json(result.ToArray());
@@ -125,18 +128,20 @@ namespace Kendo.Mvc.UI
 
         protected virtual bool CanAccess(string path)
         {
-            return permission.CanAccess(Path.GetFullPath(ContentPath), path);
+            var rootPath =  Path.GetFullPath(Path.Combine(this.HostingEnvironment.WebRootPath, ContentPath));
+
+            return permission.CanAccess(rootPath, path);
         }
 
         protected string NormalizePath(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
-                return Path.GetFullPath(ContentPath);
+                return Path.GetFullPath(Path.Combine(this.HostingEnvironment.WebRootPath, ContentPath));
             }
             else
             {
-                return Path.Combine(Path.GetFullPath(ContentPath), path);
+                return Path.GetFullPath(Path.Combine(this.HostingEnvironment.WebRootPath, ContentPath, path));
             }
         }
 
@@ -150,19 +155,19 @@ namespace Kendo.Mvc.UI
         [AcceptVerbs("POST")]
         public virtual ActionResult Destroy(string path, FileBrowserEntry entry)
         {
-            path = NormalizePath(path);
+            var fullPath = NormalizePath(path);
 
             if (entry != null)
             {
-                path = Path.Combine(path, entry.Name);
+                fullPath = Path.Combine(fullPath, entry.Name);
 
                 if (entry.EntryType == FileBrowserEntryType.File)
                 {
-                    DeleteFile(path);
+                    DeleteFile(fullPath);
                 }
                 else
                 {
-                    DeleteDirectory(path);
+                    DeleteDirectory(fullPath);
                 }
 
                 return Json(new object[0]);
@@ -197,12 +202,10 @@ namespace Kendo.Mvc.UI
             {
                 throw new Exception("Forbidden");
             }
-
-            var physicalPath = Server.MapPath(path);
-
-            if (System.IO.File.Exists(physicalPath))
+            
+            if (System.IO.File.Exists(path))
             {
-                System.IO.File.Delete(physicalPath);
+                System.IO.File.Delete(path);
             }
         }
 
@@ -212,12 +215,10 @@ namespace Kendo.Mvc.UI
             {
                 throw new Exception("Forbidden");
             }
-
-            var physicalPath = Server.MapPath(path);
-
-            if (Directory.Exists(physicalPath))
+            
+            if (Directory.Exists(path))
             {
-                Directory.Delete(physicalPath, true);
+                Directory.Delete(path, true);
             }
         }
 
@@ -232,11 +233,11 @@ namespace Kendo.Mvc.UI
         [AcceptVerbs("POST")]
         public virtual ActionResult Upload(string path, IFormFile file)
         {
-            path = NormalizePath(path);
+            var fullPath = NormalizePath(path);
 
-            if (AuthorizeUpload(path, file))
+            if (AuthorizeUpload(fullPath, file))
             {
-                SaveFile(file, path);
+                SaveFile(file, fullPath);
 
                 var result = new FileBrowserEntry
                 {
@@ -254,7 +255,11 @@ namespace Kendo.Mvc.UI
         {
             try
             {
-                file.SaveAs(Path.Combine(Server.MapPath(pathToSave), GetFileName(file)));
+                var path = Path.Combine(pathToSave, GetFileName(file));
+                using (var stream = System.IO.File.Create(path))
+                {
+                    file.CopyTo(stream);
+                }
             }
             catch (Exception ex)
             {

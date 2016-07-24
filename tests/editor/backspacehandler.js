@@ -253,4 +253,26 @@
         equal(editor.value(), '<ul><li>foo</li></ul><p><em><a></a></em></p>');
     });
 
+    test("removing empty paragraph should not insert bom and set caret after the li", function() {
+        var range = createRangeFromText(editor, '<ul><li>test</li></ul><p>||</p>');
+        editor.selectRange(range);
+        
+        handleBackspace();
+        
+        var list = $(editor.body).find("ul").get(0);
+        equal(list.childNodes.length, 1);
+    });
+
+    test("selection starts from immutable element", function() {
+        var range = createRangeFromText(editor, 'test<span contenteditable="false">immutab|le</span><span>test |test</span>');
+        editor.selectRange(range);
+
+        withMock(kendo.ui.Editor.fn, "selectRange", $.noop, function() {
+            editor.immutables = new kendo.ui.editor.Immutables(editor);
+            handleBackspace();
+            delete editor.immutables;
+        });
+        
+        notOk($(editor.body).find("[contenteditable]").length);
+    });
 }());

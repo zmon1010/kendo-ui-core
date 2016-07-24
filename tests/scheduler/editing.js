@@ -1197,6 +1197,48 @@
         equal(origin.recurrenceException, result);
     });
 
+    test("updating exception replaces ';' separator with ','", function() {
+        var now = new Date("2013/6/6 10:00");
+        now.setMilliseconds(0);
+
+        var exceptions = kendo.toString(kendo.timezone.apply(new Date("2013/6/7 10:00"), 0), "yyyyMMddTHHmmssZ") + ";" +
+                         kendo.toString(kendo.timezone.apply(new Date("2013/6/8 10:00"), 0), "yyyyMMddTHHmmssZ") + ";";
+
+        var scheduler = setup({
+            views: ["week"],
+            dataSource: {
+                data: [
+                    new SchedulerEvent({ id: 1, start: now, end: now, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: exceptions }),
+                    new SchedulerEvent({
+                        id: 2, recurrenceId: 1,
+                        start: new Date("2013/6/7 10:00"), end: new Date("2013/6/7 10:00"),
+                        title: "my exception 1"
+                    }),
+                    new SchedulerEvent({
+                        id: 3, recurrenceId: 1,
+                        start: new Date("2013/6/8 10:00"), end: new Date("2013/6/8 10:00"),
+                        title: "my exception 2"
+                    })
+                ]
+            }
+        });
+
+        var events = scheduler.element.find(".k-event"),
+            origin = scheduler.dataSource.at(0);
+
+        scheduler.editEvent(events.last().data("uid"));
+
+        $(".k-window .k-button:first").click();
+
+        scheduler.saveEvent();
+
+        var result = kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(1).start, 0), "yyyyMMddTHHmmssZ") + "," +
+                     kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(2).start, 0), "yyyyMMddTHHmmssZ") + "," +
+                     kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(3).start, 0), "yyyyMMddTHHmmssZ");
+
+        equal(origin.recurrenceException, result);
+    });
+
     test("Editing exception opens recurring dialog", function() {
         var scheduler = setup({
             views: ["week"],
@@ -1496,6 +1538,31 @@
         $(".k-window .k-button:last").click(); //cancel deletion
 
         ok(scheduler.dataSource.at(0).recurrenceRule);
+    });
+
+    test("cancel changes updates recurrenceException", function() {
+        var date = new Date(2013, 10, 10, 15, 0, 0),
+            secondDate = new Date(2013, 10, 11, 15, 0, 0),
+            thirdDate = new Date(2013, 10, 12, 15, 0, 0),
+            fourthDate = new Date(2013, 10, 13, 15, 0, 0),
+            recurrenceException = kendo.toString(kendo.timezone.apply(secondDate, 0), "yyyyMMddTHHmmssZ") + ";" +
+                                  kendo.toString(kendo.timezone.apply(fourthDate, 0), "yyyyMMddTHHmmssZ") + ";";
+
+        var scheduler = setup({
+            views: ["week"],
+            date: date,
+            dataSource: {
+                data: [
+                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException}),
+                    new SchedulerEvent({ id: 2, start: secondDate, end: secondDate, title: "my event", recurrenceId: "1" }),
+                    new SchedulerEvent({ id: 0, start: fourthDate, end: fourthDate, title: "my event", recurrenceId: "1" })
+                ]
+            }
+        });
+
+        scheduler.dataSource.cancelChanges(scheduler.dataSource.view()[2]);
+
+        equal(scheduler.dataSource.view()[0].recurrenceException, kendo.toString(kendo.timezone.apply(secondDate, 0), "yyyyMMddTHHmmssZ"));
     });
 
     module("Timezone editing", {

@@ -4626,7 +4626,7 @@ The supported values are:
       categoryAxis: {
         notes: {
           icon: {
-            shape: "triangle"
+            type: "triangle"
           },
           data: [{ value: 1 }]
         }
@@ -12587,7 +12587,7 @@ The rotation angle of the markers.
 
 ### series.outliers `Object`
 
-The chart series outliers configuration.
+The chart series outliers configuration. Applies to **mild** outliers. Also check [`series.extremes`](#configuration-series.extremes).
 
 #### Example - set the chart series outliers
 
@@ -12789,7 +12789,7 @@ The rotation angle of the outliers.
 
 ### series.extremes `Object`
 
-The chart series extremes configuration.
+The chart series extremes configuration. Applies to **extreme** outliers. Also check [`series.outliers`](#configuration-series.outliers).
 
 #### Example - set the chart series extremes
 
@@ -25540,7 +25540,7 @@ Setting it to `false` will force the automatic axis range to snap to 0.
           xAxis: {
             narrowRange: true
           },
-          xAxis: {
+          yAxis: {
             narrowRange: true
           }
         });
@@ -34250,4 +34250,3 @@ The widget instance which fired the event.
     var chart = $("#chart").data("kendoChart");
     chart.bind("zoomStart", chart_zoomStart);
     </script>
-

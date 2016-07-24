@@ -127,6 +127,8 @@ namespace Kendo.Mvc.UI
         {
             using (HtmlTextWriter textWriter = new HtmlTextWriter(ViewContext.Writer))
             {
+                WriteTrialMessage(textWriter);
+
                 WriteHtml(textWriter);
             }
         }
@@ -185,7 +187,11 @@ namespace Kendo.Mvc.UI
         {
             using (var output = new StringWriter())
             {
-                WriteHtml(new HtmlTextWriter(output));
+                var writer = new HtmlTextWriter(output);
+
+                WriteTrialMessage(writer);
+
+                WriteHtml(writer);
                 return output.ToString();
             }
         }
@@ -262,6 +268,14 @@ namespace Kendo.Mvc.UI
             html = HttpUtility.HtmlDecode(html);
 
             return MvcHtmlString.Create(html);
+        }
+
+        protected virtual void WriteTrialMessage(HtmlTextWriter writer)
+        {
+#if TRIAL
+            Kendo.Mvc.Licensing Licensing1 = new Kendo.Mvc.Licensing();
+            writer.Write(Licensing1.GetLicenseMessage());
+#endif
         }
     }
 }

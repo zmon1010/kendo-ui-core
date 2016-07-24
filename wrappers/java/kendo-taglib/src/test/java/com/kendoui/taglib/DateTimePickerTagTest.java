@@ -1,6 +1,6 @@
 package com.kendoui.taglib;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.spy;
 import java.io.IOException;
 
@@ -20,6 +20,10 @@ public class DateTimePickerTagTest {
     
     @Test
     public void createElementCreatedInputElement() throws IOException {
-        assertEquals("<input id=\"foo\" name=\"foo\" />", tag.html().outerHtml());         
+	String tagHtml = tag.html().outerHtml();
+ 	assertTrue(tagHtml.startsWith("<input"));
+ 	assertTrue(tagHtml.endsWith("/>"));
+ 	assertTrue(tagHtml.contains("id=\"foo\""));
+ 	assertTrue(tagHtml.contains("name=\"foo\""));
     }
 }

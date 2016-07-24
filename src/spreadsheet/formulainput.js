@@ -72,7 +72,8 @@
                 .on("keyup", this._keyup.bind(this))
                 .on("blur", this._blur.bind(this))
                 .on("input click", this._input.bind(this))
-                .on("focus", this._focus.bind(this));
+                .on("focus", this._focus.bind(this))
+                .on("paste", this._paste.bind(this));
         },
 
         options: {
@@ -312,6 +313,18 @@
         _focus: function() {
             this._focusTimeout = setTimeout(this._syntaxHighlight.bind(this));
             this.trigger("focus");
+        },
+
+        _paste: function(ev) {
+            ev.preventDefault();
+            var pos = this.getPos();
+            var clipboard = ev.originalEvent.clipboardData;
+            var text = clipboard.getData("text/plain");
+            var val = this.value();
+            val = val.substr(0, pos.begin) + text + val.substr(pos.end);
+            this.value(val);
+            this.setPos(pos.begin + text.length);
+            this.scale();
         },
 
         _move: function(key) {

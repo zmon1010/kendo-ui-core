@@ -6,7 +6,7 @@ class GridPageable extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The number of data items which will be displayed in the grid.
+    * The number of data items which will be displayed in the grid. This setting will not work if the Grid is assigned an already existing Kendo UI DataSource instance.
     * @param float $value
     * @return \Kendo\UI\GridPageable
     */

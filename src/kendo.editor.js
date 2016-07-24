@@ -20,7 +20,11 @@
         "./editor/viewhtml",
         "./editor/formatting",
         "./editor/toolbar",
-        "./editor/tables"
+        "./editor/tables",
+        "./editor/resizing/column-resizing",
+        "./editor/resizing/table-resizing",
+        "./editor/resizing/table-resize-handle",
+        "./editor/immutables"
     ], f);
 })(function(){
 

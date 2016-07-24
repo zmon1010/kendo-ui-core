@@ -463,26 +463,26 @@
         });
         var chkbxs = widget.container.find(":checkbox:not(.k-check-all)");
         equal(chkbxs.length,3);
-        
-		widget.searchTextBox[0].value = "striNg";
-        widget.search();		
+
+        widget.searchTextBox[0].value = "striNg";
+        widget.search();
         equal(widget.container.find("li").length , 4);
         equal(widget.container.find("li[style*='display: none']").length , 4);
-        
-		widget.searchTextBox[0].value = "some";
+
+        widget.searchTextBox[0].value = "some";
         widget.search();
         equal(widget.container.find("li[style*='display: none']").length , 3);
-        
-		widget.searchTextBox[0].value = "tring";
+
+        widget.searchTextBox[0].value = "tring";
         widget.search();
         equal(widget.container.find("li[style*='display: none']").length , 1);
-        
-		widget.searchTextBox[0].value = "me";
+
+        widget.searchTextBox[0].value = "me";
         widget.search();
         equal(widget.container.find("li[style*='display: none']").length , 2);
     });
-	
-	test("checkboxes are filtered case insensitive", function(){
+
+    test("checkboxes are filtered case insensitive", function(){
         widget = setup({
             dataSource: new kendo.data.DataSource({
                 data: [
@@ -497,22 +497,22 @@
         });
         var chkbxs = widget.container.find(":checkbox");
         equal(chkbxs.length,3);
-        
-		widget.searchTextBox[0].value = "striNg";
-        widget.search();		
+
+        widget.searchTextBox[0].value = "striNg";
+        widget.search();
         equal(widget.container.find("li").length , 3);
         equal(widget.container.find("li[style*='display: none']").length , 0);
-		
-		widget.searchTextBox[0].value = "Some";
+
+        widget.searchTextBox[0].value = "Some";
         widget.search();
         equal(widget.container.find("li[style*='display: none']").length , 1);
-		
-		widget.searchTextBox[0].value = "other";
+
+        widget.searchTextBox[0].value = "other";
         widget.search();
         equal(widget.container.find("li[style*='display: none']").length , 2);
-	});
-	
-	test("checkboxes are visible after Clear filter", function(){
+    });
+
+    test("checkboxes are visible after Clear filter", function(){
         widget = setup({
             dataSource: new kendo.data.DataSource({
                 data: [
@@ -524,15 +524,15 @@
             checkAll:true,
             search: true,
             ignoreCase: true
-        });        
-		widget.searchTextBox[0].value = "2";
-        widget.search();		
+        });
+        widget.searchTextBox[0].value = "2";
+        widget.search();
         equal(widget.container.find("li").length , 4);
-        equal(widget.container.find("li[style*='display: none']").length , 3);//CheckAll should not be visible if filtered	
+        equal(widget.container.find("li[style*='display: none']").length , 3);//CheckAll should not be visible if filtered
         widget._reset();
-		equal(widget.container.find("li").length , 4);
-        equal(widget.container.find("li[style*='display: none']").length , 0);		
-	});	
+        equal(widget.container.find("li").length , 4);
+        equal(widget.container.find("li[style*='display: none']").length , 0);
+    });
 
     test("filters numbers when using non cultures with comma as separator", function(){
         var dataSource = new kendo.data.DataSource({
@@ -562,5 +562,70 @@
         } finally {
             kendo.culture(culture);
         }
-	});
+    });
+
+    test("filter triggers change event", 4, function(){
+        var dataSource = new kendo.data.DataSource({
+            data: [
+                { foo: 1 },
+                { foo: 2 },
+                { foo: 3 }
+            ]
+        });
+
+        widget = setup({
+            dataSource: dataSource,
+            change: function(e) {
+                equal(e.field, "foo");
+                equal(e.filter.filters[0].operator, "eq");
+                equal(e.filter.filters[0].value, 2);
+                equal(e.filter.filters[0].field, "foo");
+            }
+        });
+
+        widget.form.find(":checkbox:not(.k-check-all)").eq(1).prop("checked", true);
+        widget.form.submit();
+    });
+
+    test("preventing change event does not filter dataSource", 1, function(){
+        var dataSource = new kendo.data.DataSource({
+            data: [
+                { foo: 1 },
+                { foo: 2 },
+                { foo: 3 }
+            ]
+        });
+
+        widget = setup({
+            dataSource: dataSource,
+            change: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        widget.form.find(":checkbox:not(.k-check-all)").eq(1).prop("checked", true);
+        widget.form.submit();
+
+        ok(!dataSource.filter());
+    });
+
+    test("change event is not raised for empty filter", 0, function(){
+        var dataSource = new kendo.data.DataSource({
+            data: [
+                { foo: 1 },
+                { foo: 2 },
+                { foo: 3 }
+            ]
+        });
+
+        widget = setup({
+            dataSource: dataSource,
+            change: function(e) {
+                ok(true);
+            }
+        });
+
+        widget.form.submit();
+    });
+
 })();

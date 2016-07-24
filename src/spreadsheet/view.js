@@ -14,6 +14,7 @@
     var viewClassNames = {
         view: "k-spreadsheet-view",
         fixedContainer: "k-spreadsheet-fixed-container",
+        editContainer: "k-spreadsheet-edit-container",
         scroller: "k-spreadsheet-scroller",
         viewSize: "k-spreadsheet-view-size",
         clipboard: "k-spreadsheet-clipboard",
@@ -24,6 +25,8 @@
         filterRange: "k-filter-range",
         filterButton: "k-spreadsheet-filter",
         filterButtonActive: "k-state-active",
+        horizontalResize: "k-horizontal-resize",
+        verticalResize: "k-vertical-resize",
         icon: "k-icon k-font-icon",
         iconFilterDefault: "k-i-arrow-s",
         sheetsBar: "k-spreadsheet-sheets-bar",
@@ -34,7 +37,7 @@
         colHeaderContextMenu: "k-spreadsheet-col-header-context-menu"
     };
 
-    var VIEW_MESAGES = kendo.spreadsheet.messages.view = {
+    kendo.spreadsheet.messages.view = {
         errors: {
             openUnsupported: "Unsupported format. Please select an .xlsx file.",
             shiftingNonblankCells: "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet.",
@@ -228,7 +231,7 @@
         style.height = height + "px";
 
         var data = cell.value, type = typeof data;
-        if (cell.format && data !== null) {
+        if (cell.format && data != null) { // jshint ignore:line
             data = kendo.spreadsheet.formatting.format(data, cell.format);
             if (data.__dataType) {
                 type = data.__dataType;
@@ -344,7 +347,7 @@
         }
 
         var data = cell.value, type = typeof data;
-        if (cell.format && data !== null) {
+        if (cell.format && data != null) { // jshint ignore:line
             data = kendo.spreadsheet.formatting.format(data, cell.format);
             if (data.__dataType) {
                 type = data.__dataType;
@@ -528,7 +531,9 @@
 
             this.element = element;
 
-            this.options = $.extend(true, {}, this.options, options);
+            this.options = $.extend(true, {
+                messages: kendo.spreadsheet.messages.view
+            }, this.options, options);
 
             this._chrome();
 
@@ -621,7 +626,7 @@
         },
 
         _tabstrip: function() {
-            var messages = VIEW_MESAGES.tabs;
+            var messages = this.options.messages.tabs;
             var options = $.extend(true, { home: true, insert: true, data: true }, this.options.toolbar);
             var tabs = [];
 
@@ -727,6 +732,17 @@
             return Math.abs(rectangle.right - x) < 8 && Math.abs(rectangle.bottom - y) < 8;
         },
 
+        isEditButton: function(x, y) {
+            var ed = this._sheet.activeCellCustomEditor();
+            if (ed) {
+                var r = this.activeCellRectangle();
+                // XXX: hard-coded button width (20)
+                if (x > r.right && x <= r.right + 20 && y >= r.top && y <= r.bottom) {
+                    return true;
+                }
+            }
+        },
+
         objectAt: function(x, y) {
             var grid = this._sheet._grid;
 
@@ -756,6 +772,8 @@
                 } else if (!selecting && y < grid._headerHeight) {
                     ref = new CellRef(-Infinity, column);
                     type = this.isColumnResizer(x, pane, ref) ? "columnresizehandle" : "columnheader";
+                } else if (this.isEditButton(x, y)) {
+                    type = "editor";
                 }
 
                 object = { type: type, ref: ref };
@@ -905,6 +923,28 @@
             this._dialogs.pop();
         },
 
+        openCustomEditor: function() {
+            var self = this;
+            var cell = self._sheet.activeCell().first();
+            var editor = self._sheet.activeCellCustomEditor();
+            var range = self._sheet.range(cell);
+            editor.edit({
+                range      : range,
+                rect       : self.activeCellRectangle(),
+                view       : this,
+                validation : this._sheet.validation(cell),
+                callback   : function(value, parse){
+                    self._executeCommand({
+                        command: "EditCommand",
+                        options: {
+                            property: parse ? "input" : "value",
+                            value: value
+                        }
+                    });
+                }
+            });
+        },
+
         openDialog: function(name, options) {
             var sheet = this._sheet;
             var ref = sheet.activeCell();
@@ -921,12 +961,21 @@
         },
 
         showError: function(options, callback) {
-            var errorMessages = VIEW_MESAGES.errors;
+            var errorMessages = this.options.messages.errors;
 
             if (kendo.spreadsheet.dialogs.registered(options.type)) {
-                this.openDialog(options.type, {
+                var dialogOptions = {
                     close: callback
-                });
+                };
+
+                if (options.type === "validationError") {
+                    dialogOptions = $.extend(dialogOptions, {
+                        title: options.title || "Error",
+                        text: options.body ? options.body : errorMessages[options.type]
+                    });
+                }
+
+                this.openDialog(options.type, dialogOptions);
             } else {
                 this.openDialog("message", {
                     title : options.title || "Error",
@@ -975,6 +1024,16 @@
             if (focus && this.scrollIntoView(focus)) {
                 return;
             }
+
+            var resizeDirection =
+                !sheet.resizingInProgress() ? "none" :
+                sheet.resizeHandlePosition().col === -Infinity ? "column" :
+                "row";
+
+            this.wrapper
+                .toggleClass(viewClassNames.editContainer, this.editor.isActive())
+                .toggleClass(viewClassNames.horizontalResize, resizeDirection == "row")
+                .toggleClass(viewClassNames.verticalResize, resizeDirection == "column");
 
             var grid = sheet._grid;
 
@@ -1138,6 +1197,8 @@
         bottom: "k-bottom",
         left: "k-left",
         resizeHandle: "k-resize-handle",
+        columnResizeHandle: "k-column-resize-handle",
+        rowResizeHandle: "k-row-resize-handle",
         resizeHint: "k-resize-hint",
         resizeHintHandle: "k-resize-hint-handle",
         resizeHintMarker: "k-resize-hint-marker",
@@ -1251,7 +1312,7 @@
 
                 if (view.ref.intersects(ref)) {
                     if (!sheet.resizeHintPosition()) {
-                        children.push(this.renderResizeHandler());
+                        children.push(this.renderResizeHandle());
                     }
                 }
             }
@@ -1349,10 +1410,11 @@
             return cont;
         },
 
-        renderResizeHandler: function() {
+        renderResizeHandle: function() {
             var sheet = this._sheet;
             var ref = sheet.resizeHandlePosition();
             var rectangle = this._rectangle(ref);
+            var classNames = [ Pane.classNames.resizeHandle ];
 
             var style;
             if (ref.col !== -Infinity) {
@@ -1362,6 +1424,7 @@
                     left: rectangle.right - RESIZE_HANDLE_WIDTH/2  + "px",
                     top: "0px"
                 };
+                classNames.push(viewClassNames.horizontalResize);
             } else {
                 style = {
                     height: RESIZE_HANDLE_WIDTH + "px",
@@ -1369,9 +1432,10 @@
                     top: rectangle.bottom - RESIZE_HANDLE_WIDTH/2  + "px",
                     left: "0px"
                 };
+                classNames.push(viewClassNames.verticalResize);
             }
             return kendo.dom.element("div", {
-                className: Pane.classNames.resizeHandle,
+                className: classNames.join(" "),
                 style: style
             });
         },
@@ -1554,18 +1618,37 @@
         },
 
         _addTable: function(collection, ref, className) {
-            var sheet = this._sheet;
-            var view = this._currentView;
+            var self = this;
+            var sheet = self._sheet;
+            var view = self._currentView;
 
             if (view.ref.intersects(ref)) {
+                var rectangle = self._rectangle(ref);
+                var ed = self._sheet.activeCellCustomEditor();
                 sheet.forEach(ref.collapse(), function(row, col, cell) {
-                    var rectangle = this._rectangle(ref);
                     cell.left = rectangle.left;
                     cell.top = rectangle.top;
                     cell.width = rectangle.width;
                     cell.height = rectangle.height;
                     drawCell(collection, cell, className, null, null, true);
-                }.bind(this));
+
+                    if (ed) {
+                        var btn = kendo.dom.element("div", {
+                            className: "k-button k-spreadsheet-editor-button",
+                            style: {
+                                left   : (cell.left + cell.width) + "px",
+                                top    : cell.top + "px",
+                                height : cell.height + "px"
+                            }
+                        });
+                        if (ed.icon) {
+                            btn.children.push(kendo.dom.element("span", {
+                                className: "k-icon " + ed.icon
+                            }));
+                        }
+                        collection.push(btn);
+                    }
+                });
             }
         },
 

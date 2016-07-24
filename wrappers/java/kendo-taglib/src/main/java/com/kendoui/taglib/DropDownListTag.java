@@ -162,6 +162,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("enable", value);
     }
 
+    public boolean getEnforceMinLength() {
+        return (Boolean)getProperty("enforceMinLength");
+    }
+
+    public void setEnforceMinLength(boolean value) {
+        setProperty("enforceMinLength", value);
+    }
+
     public java.lang.String getFilter() {
         return (java.lang.String)getProperty("filter");
     }
@@ -176,6 +184,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
 
     public void setFixedGroupTemplate(java.lang.String value) {
         setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getFooterTemplate() {
+        return (java.lang.String)getProperty("footerTemplate");
+    }
+
+    public void setFooterTemplate(java.lang.String value) {
+        setProperty("footerTemplate", value);
     }
 
     public java.lang.String getGroupTemplate() {
@@ -224,6 +240,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
 
     public void setMinLength(float value) {
         setProperty("minLength", value);
+    }
+
+    public java.lang.String getNoDataTemplate() {
+        return (java.lang.String)getProperty("noDataTemplate");
+    }
+
+    public void setNoDataTemplate(java.lang.String value) {
+        setProperty("noDataTemplate", value);
     }
 
     public java.lang.Object getOptionLabel() {

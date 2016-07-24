@@ -32,6 +32,25 @@
         equal(instance.dataSource.data().length, 2);
     });
 
+    test("refresh button calls DataSource fetch method", function() {
+        var dataSource = new kendo.data.TreeListDataSource({
+            transport: {
+                read: function(options) {
+                    options.error();
+                }
+            }
+        });
+        spy(dataSource, "fetch");
+
+        bindHtml("<div data-role='treelist' data-bind='source: dataSource' />", {
+            dataSource: dataSource
+        });
+
+        instance.element.find(".k-request-retry").click();
+
+        equal(dataSource.calls("fetch"), 2);
+    });
+
     test("pushing items into ObservableArray updates data source data", function() {
         var data = new kendo.data.ObservableArray(rootItems.slice());
         var dataSource = new kendo.data.TreeListDataSource({

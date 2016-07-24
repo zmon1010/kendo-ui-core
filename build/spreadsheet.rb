@@ -26,11 +26,8 @@ end
 SPREADSHEET_REDIST_BRANCH = BETA ? 'Stable' : 'Production'
 SPREADSHEET_REDIST_ROOT = ARCHIVE_ROOT + "/Telerik.Web.Spreadsheet/#{SPREADSHEET_REDIST_BRANCH}"
 SPREADSHEET_REDIST_NET40 = spreadsheet_dll_for('Release')
-SPREADSHEET_REDIST_NET45 = spreadsheet_dll_for('Release-NET45')
 SPREADSHEET_REDIST_NET40_TRIAL = spreadsheet_dll_for('Release-Trial')
-SPREADSHEET_REDIST_NET45_TRIAL = spreadsheet_dll_for('Release-NET45-Trial')
-SPREADSHEET_REDIST = FileList[SPREADSHEET_REDIST_NET40 + SPREADSHEET_REDIST_NET45 +
-                              SPREADSHEET_REDIST_NET40_TRIAL + SPREADSHEET_REDIST_NET45_TRIAL]
+SPREADSHEET_REDIST = FileList[SPREADSHEET_REDIST_NET40 + SPREADSHEET_REDIST_NET40_TRIAL]
 SPREADSHEET_ASSEMBLY_INFO = SPREADSHEET_SRC_ROOT + '/Properties/AssemblyInfo.cs'
 
 CLEAN.include(FileList[
@@ -64,10 +61,9 @@ CLEAN.include(FileList[
         File.write(t.name, sln)
     end
 
-    # Copy the DPL libraries for NET40/NET45
+    # Copy the DPL libraries for NET40
     libs = FileList[SPREADSHEET_ROOT + '/lib/Newtonsoft.Json.dll']
           .include(FileList[DPL_FILES].pathmap(SPREADSHEET_ROOT + "/lib/NET40/%f"))
-          .include(FileList[DPL_FILES].pathmap(SPREADSHEET_ROOT + "/lib/NET45/%f"))
 
     tree :to => "dist/bundles/aspnetmvc.#{bundle}/src/Telerik.Web.Spreadsheet/lib",
          :from => libs,
@@ -90,8 +86,6 @@ namespace :spreadsheet do
         {
             'Release' => 'NET40',
             'Release-Trial' => 'NET40-Trial',
-            'Release-NET45' => 'NET45',
-            'Release-NET45-Trial' => 'NET45-Trial'
         }.each do |build, target|
             src = SPREADSHEET_SRC_ROOT + "/bin/#{build}/Telerik.{Documents,Windows}.*"
             dest = SPREADSHEET_ROOT + "/lib/#{target}"
@@ -104,8 +98,7 @@ namespace :spreadsheet do
     task :copy_trials => ['spreadsheet:binaries'] do
         [ 'aspnetmvc.hotfix.trial', 'aspnetmvc.trial' ].each do |bundle|
             {
-                'Release-Trial' => 'net40',
-                'Release-NET45-Trial' => 'net45'
+                'Release-Trial' => 'net40'
             }.each do |build, target|
                 src = SPREADSHEET_SRC_ROOT + "/bin/#{build}/*"
                 dest = "dist/bundles/#{bundle}/spreadsheet/binaries/#{target}/"

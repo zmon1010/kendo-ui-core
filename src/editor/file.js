@@ -112,6 +112,8 @@ var FileCommand = Command.extend({
                 visible: false,
                 resizable: showBrowser
             };
+        
+        this.expandImmutablesIn(range);
 
         function apply(e) {
             var element = dialog.element,
@@ -169,13 +171,16 @@ var FileCommand = Command.extend({
         if (showBrowser) {
             that._fileBrowser = new kendo.ui.FileBrowser(
                 dialog.element.find(".k-filebrowser"),
-                extend({}, fileBrowser, {
-                    change: function() {
-                        dialog.element.find(KEDITORFILEURL).val(this.value());
-                    },
-                    apply: apply
-                })
+                extend({}, fileBrowser)
             );
+
+            that._fileBrowser.bind("change", function (ev) {
+                if (ev.selected.get("type") === "f") {
+                    dialog.element.find(KEDITORFILEURL).val(this.value());
+                }
+            } );
+
+            that._fileBrowser.bind("apply", apply);
         }
 
         dialog.center().open();

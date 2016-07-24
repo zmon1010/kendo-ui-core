@@ -49,6 +49,10 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "gantt-view";
     }
 
+    public void setRange(com.kendoui.taglib.gantt.ViewRangeTag value) {
+        setProperty("range", value);
+    }
+
     public void setTimeHeaderTemplate(ViewTimeHeaderTemplateFunctionTag value) {
         setEvent("timeHeaderTemplate", value.getBody());
     }
@@ -67,6 +71,14 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setYearHeaderTemplate(ViewYearHeaderTemplateFunctionTag value) {
         setEvent("yearHeaderTemplate", value.getBody());
+    }
+
+    public java.util.Date getDate() {
+        return (java.util.Date)getProperty("date");
+    }
+
+    public void setDate(java.util.Date value) {
+        setProperty("date", value);
     }
 
     public java.lang.String getDayHeaderTemplate() {

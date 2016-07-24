@@ -333,25 +333,33 @@
                 start = { x: fill.start().x , y: fill.start().y };
                 end   = { x: fill.end().x   , y: fill.end().y   };
             }
+
+            var stops = fill.stops.elements().map(function(stop){
+                var offset = stop.offset();
+                if (/%$/.test(offset)) {
+                    offset = parseFloat(offset) / 100;
+                } else {
+                    offset = parseFloat(offset);
+                }
+                var color = parseColor(stop.color());
+                color.a *= stop.opacity();
+                return {
+                    offset: offset,
+                    color: color
+                };
+            });
+
+            // Duplicats first and last stop to fix
+            // https://github.com/telerik/kendo-ui-core/issues/1782
+            stops.unshift(stops[0]);
+            stops.push(stops[stops.length - 1]);
+
             var gradient = {
-                type: isRadial ? "radial" : "linear",
-                start: start,
-                end: end,
-                userSpace: fill.userSpace(),
-                stops: fill.stops.elements().map(function(stop){
-                    var offset = stop.offset();
-                    if (/%$/.test(offset)) {
-                        offset = parseFloat(offset) / 100;
-                    } else {
-                        offset = parseFloat(offset);
-                    }
-                    var color = parseColor(stop.color());
-                    color.a *= stop.opacity();
-                    return {
-                        offset: offset,
-                        color: color
-                    };
-                })
+                userSpace : fill.userSpace(),
+                type      : isRadial ? "radial" : "linear",
+                start     : start,
+                end       : end,
+                stops     : stops
             };
             var box = element.rawBBox();
             var tl = box.topLeft(), size = box.getSize();

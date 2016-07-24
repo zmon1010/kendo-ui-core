@@ -297,7 +297,7 @@ Sets the data source of the <%= name %>.
 
 ##### $value `\\Kendo\\Data\\HierarchicalDataSource|array`
 
-#### Example - using [\\Kendo\\Data\\HierarchicalDataSource](/api/php/kendo/data/hierarchicaldatasource)
+#### Example - using [\\Kendo\\Data\\HierarchicalDataSource](/api/php/Kendo/Data/HierarchicalDataSource)
 
     <?php
     <%= owner.variable %> = <%= owner.value %>;
@@ -476,6 +476,23 @@ Adds one or more <%= item.php_class %> to the <%= owner.php_class %>.
 
         def initialize(path)
             @path = path
+
+            # copy widget topic template
+            widget_topic = "#{@path}Kendo/UI/Widget.md"
+            widget_template = File.join(File.dirname(__FILE__), "templates", "widget.md")
+
+            hierarchicaldatasource_topic = "#{@path}Kendo/Data/HierarchicalDataSource.md"
+            hierarchicaldatasource_template = File.join(File.dirname(__FILE__), "templates", "hierarchicaldatasource.md")
+            @topics_to_copy = [
+                                {"file" => widget_topic, "template" => widget_template},
+                                {"file" => hierarchicaldatasource_topic, "template" => hierarchicaldatasource_template}
+                              ]
+            @topics_to_copy.each do |topic|
+                unless File.exists? topic["file"]
+                    ensure_path(topic["file"])
+                    File.write(topic["file"], File.read(topic["template"]))
+                end
+            end
         end
 
         def component(component)

@@ -142,7 +142,7 @@
 
     kendo.spreadsheet.EditCommand = PropertyChangeCommand.extend({
         init: function(options) {
-            options.property = "input";
+            options.property = options.property || "input";
             PropertyChangeCommand.fn.init.call(this, options);
         },
         rejectState: function(validationState) {
@@ -155,41 +155,37 @@
                 type: "validationError"
             };
         },
+        getState: function() {
+            this._state = this.range().getState();
+        },
         exec: function() {
             var range = this.range();
             var value = this._value;
             this.getState();
+
+            if (this._property == "value") {
+                range.value(value);
+                return;
+            }
+
             try {
                 range.link(null);
                 range.input(value);
+                range._adjustRowHeight();
 
                 var validationState = range._getValidationState();
                 if (validationState) {
                     return this.rejectState(validationState);
                 }
-            } catch(ex1) {
-                if (ex1 instanceof kendo.spreadsheet.calc.ParseError) {
-                    // it's a formula. maybe a closing paren fixes it?
-                    try {
-                        range.input(value + ")");
-
-                        var validationState = range._getValidationState();
-                        if (validationState) {
-                            return this.rejectState(validationState);
-                        }
-                    } catch(ex2) {
-                        if (ex2 instanceof kendo.spreadsheet.calc.ParseError) {
-                            range.input("'" + value);
-
-                            return {
-                                title : "Error in formula",
-                                body  : ex1+"",
-                                reason: "error"
-                            };
-                        }
-                    }
+            } catch(ex) {
+                if (ex instanceof kendo.spreadsheet.calc.ParseError) {
+                    return {
+                        title : "Error in formula",
+                        body  : ex+"",
+                        reason: "error"
+                    };
                 } else {
-                    throw ex1;
+                    throw ex;
                 }
             }
         }

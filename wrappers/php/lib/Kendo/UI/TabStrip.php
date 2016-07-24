@@ -178,7 +178,7 @@ A fade animation is highly recommended with any of the non-default tab position 
     }
 
     /**
-    * Specifies the selectd tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.
+    * Specifies the selected tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.
     * @param string $value
     * @return \Kendo\UI\TabStrip
     */

@@ -1,0 +1,9 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: Creates selenium driver directory
+  file: path=/usr/share/selenium-server state=directory force=yes
+- name: Gets selenium-server-standalone-2.35.0.jar
+  get_url: 
+    url:  https://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar
+    dest: /usr/share/selenium-server/selenium-server-standalone.jar
+    mode: 0644

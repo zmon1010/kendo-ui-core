@@ -1,7 +1,7 @@
 ﻿namespace Kendo.Mvc.UI.Fluent.Tests
 {
     using Kendo.Mvc.Tests;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Xunit;
 
     public class PivotAjaxDataSourceBuilderTests

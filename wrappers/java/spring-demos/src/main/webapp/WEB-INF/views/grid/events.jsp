@@ -24,9 +24,26 @@
 	    function onDataBinding(arg) {
 	        kendoConsole.log("Grid data binding");
 	    }
+	    
+	    function onSorting(arg) {
+	        kendoConsole.log("Sorting on field: " + arg.sort.field + ", direction:" + (arg.sort.dir || "none"));
+	    }
+	    
+	    function onFiltering(arg) {
+	        kendoConsole.log("Filter on " + kendo.stringify(arg.filter));
+	    }
+	    
+	    function onPaging(arg) {
+	        kendoConsole.log("Paging to page index:" + arg.page);
+	    }
+	    
+	    function onGrouping(arg) {
+	        kendoConsole.log("Group on " + kendo.stringify(arg.groups));
+	    }
 	</script>
-        <kendo:grid name="grid" pageable="true" sortable="true" selectable="true"
-	    	change="onChange" dataBound="onDataBound" dataBinding="onDataBinding">
+        <kendo:grid name="grid" height="320px" pageable="true" sortable="true" selectable="true" filterable="true" groupable="true"
+	    	change="onChange" dataBound="onDataBound" dataBinding="onDataBinding"
+	    	sort="onSorting" filter="onFiltering" page="onPaging" group="onGrouping">
 	        <kendo:grid-columns>
 	            <kendo:grid-column title="Product Name" field="productName" />
 	            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" />

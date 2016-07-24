@@ -18,6 +18,7 @@
                                 '<span>Photo</span>' +
                                 '<span>Contact info</span>' +
                             '</div>',
+                        footerTemplate: 'Total #: instance.dataSource.total() # items found',
                         template: '<span class="k-state-default" style="background-image: url(\'../content/web/Customers/#:data.CustomerID#.jpg\')"></span>' +
                                   '<span class="k-state-default"><h3>#: data.ContactName #</h3><p>#: data.CompanyName #</p></span>',
                         dataSource: {
@@ -47,6 +48,10 @@
 
                 .dropdown-header > span:first-child {
                     width: 50px;
+                }
+
+                .k-list-container > .k-footer {
+                    padding: 10px;
                 }
 
                 #customers-list .k-item {

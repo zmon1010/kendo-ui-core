@@ -1,5 +1,5 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,8 @@ namespace Kendo.Mvc.UI
         public string Domain { get; set; }
 
         public bool? Encoded { get; set; }
+
+        public EditorImmutablesSettings Immutables { get; } = new EditorImmutablesSettings();
 
         public EditorMessagesSettings Messages { get; } = new EditorMessagesSettings();
 
@@ -56,6 +58,16 @@ namespace Kendo.Mvc.UI
             if (Encoded.HasValue)
             {
                 settings["encoded"] = Encoded;
+            }
+
+            var immutables = Immutables.Serialize();
+            if (immutables.Any())
+            {
+                settings["immutables"] = immutables;
+            }
+            else if (Immutables.Enabled.HasValue)
+            {
+                settings["immutables"] = Immutables.Enabled;
             }
 
             var messages = Messages.Serialize();

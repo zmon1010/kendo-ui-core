@@ -11,6 +11,29 @@ namespace Kendo.Mvc.UI.Fluent
         where TTaskModel : class, IGanttTask  where TDependenciesModel : class, IGanttDependency 
     {
         /// <summary>
+        /// If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.Overrides the date option of the gantt.
+        /// </summary>
+        /// <param name="value">The value for Date</param>
+        public GanttViewBuilder<TTaskModel, TDependenciesModel> Date(DateTime value)
+        {
+            Container.Date = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the view range settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the range setting.</param>
+        public GanttViewBuilder<TTaskModel, TDependenciesModel> Range(Action<GanttViewRangeSettingsBuilder<TTaskModel, TDependenciesModel>> configurator)
+        {
+
+            Container.Range.Gantt = Container.Gantt;
+            configurator(new GanttViewRangeSettingsBuilder<TTaskModel, TDependenciesModel>(Container.Range));
+
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the view will be initially selected by the Gantt widget. The default selected view is "day".
         /// </summary>
         /// <param name="value">The value for Selected</param>

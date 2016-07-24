@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.UI.Fluent
 {

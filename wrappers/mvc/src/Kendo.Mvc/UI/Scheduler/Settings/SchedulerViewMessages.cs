@@ -15,6 +15,14 @@
 
         private const string DefaultAgenda = "Agenda";
 
+        private const string DefaultTimeline = "Timeline";
+
+        private const string DefaultTimelineWeek = "TimelineWeek";
+
+        private const string DefaultTimelineWorkWeek = "TimelineWorkWeek";
+
+        private const string DefaultTimelineMonth = "TimelineMonth";
+
         public SchedulerViewMessages()
         {
             Day = Messages.Scheduler_View_Day;
@@ -26,6 +34,14 @@
             Month = Messages.Scheduler_View_Month;
 
             Agenda = Messages.Scheduler_View_Agenda;
+
+            Timeline = Messages.Scheduler_View_Timeline;
+
+            TimelineWeek = Messages.Scheduler_View_TimelineWeek;
+
+            TimelineWorkWeek = Messages.Scheduler_View_TimelineWorkWeek;
+
+            TimelineMonth = Messages.Scheduler_View_TimelineMonth;
         }
 
         public string Day { get; set; }
@@ -37,6 +53,14 @@
         public string Month { get; set; }
 
         public string Agenda { get; set; }
+
+        public string Timeline { get; set; }
+
+        public string TimelineWeek { get; set; }
+
+        public string TimelineWorkWeek { get; set; }
+
+        public string TimelineMonth { get; set; }
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -63,6 +87,26 @@
             if (Agenda != DefaultAgenda)
             {
                 json["agenda"] = Agenda;
+            }
+
+            if (Timeline != DefaultTimeline)
+            {
+                json["timeline"] = Timeline;
+            }
+
+            if (TimelineWeek != DefaultTimelineWeek)
+            {
+                json["timelineWeek"] = TimelineWeek;
+            }
+
+            if (TimelineWorkWeek != DefaultTimelineWorkWeek)
+            {
+                json["timelineWorkWeek"] = TimelineWorkWeek;
+            }
+
+            if (TimelineMonth != DefaultTimelineMonth)
+            {
+                json["timelineMonth"] = TimelineMonth;
             }
         }
     }

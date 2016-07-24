@@ -49,6 +49,8 @@ namespace Kendo.Mvc.UI
                 
             Pdf = new GanttPdfSettings();
                 
+            Range = new GanttRangeSettings();
+                
             Toolbar = new List<GanttToolbar>();
                 
             Tooltip = new GanttTooltipSettings();
@@ -112,6 +114,8 @@ namespace Kendo.Mvc.UI
         
         public double? ColumnResizeHandleWidth { get; set; }
         
+        public DateTime? Date { get; set; }
+        
         public GanttEditableSettings Editable
         {
             get;
@@ -143,6 +147,12 @@ namespace Kendo.Mvc.UI
         }
         
         public GanttPdfSettings Pdf
+        {
+            get;
+            set;
+        }
+        
+        public GanttRangeSettings Range
         {
             get;
             set;
@@ -235,6 +245,11 @@ namespace Kendo.Mvc.UI
                 json["columnResizeHandleWidth"] = ColumnResizeHandleWidth;
             }
                 
+            if (Date.HasValue)
+            {
+                json["date"] = Date;
+            }
+                
             if (Navigatable.HasValue)
             {
                 json["navigatable"] = Navigatable;
@@ -289,6 +304,11 @@ namespace Kendo.Mvc.UI
             if (pdf.Any())
             {
                 json["pdf"] = pdf;
+            }
+            var range = Range.ToJson();
+            if (range.Any())
+            {
+                json["range"] = range;
             }
             if (Resizable.HasValue)
             {

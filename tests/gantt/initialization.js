@@ -108,6 +108,12 @@
         ok(!gantt.footer);
     });
 
+    test("footer is not created when editable create is false", function() {
+        var gantt = new Gantt(element, { editable: { create: false } });
+
+        ok(!gantt.footer);
+    });
+
     test("css classes added to the footer", function () {
         var gantt = new Gantt(element);
 
@@ -151,6 +157,12 @@
 
     test("toolbar action button are not added when non editable", function() {
         var gantt = new Gantt(element, { editable: false });
+
+        equal(gantt.toolbar.find(".k-gantt-actions").children().length, 0);
+    });
+
+    test("toolbar action button are not added when editable create is false", function() {
+        var gantt = new Gantt(element, { editable: {create: false} });
 
         equal(gantt.toolbar.find(".k-gantt-actions").children().length, 0);
     });
@@ -302,6 +314,12 @@
         ok(!gantt.headerDropDown);
     });
 
+    test("toolbar action dropDown is not created when editable create is false", function() {
+        var gantt = new Gantt(element, { editable: { create: false } });
+
+        ok(!gantt.headerDropDown);
+    });
+
     test("toolbar action dropDown has command event handler attached", function() {
         var gantt = new Gantt(element);
 
@@ -318,6 +336,12 @@
     test("footer action dropDown is not created when non editable", function() {
         var gantt = new Gantt(element, { editable: false });
 
+        ok(!gantt.footerDropDown);
+    });
+
+    test("footer action dropDown is not created when editable create is false", function() {
+        var gantt = new Gantt(element, { editable: { create: false } });
+         
         ok(!gantt.footerDropDown);
     });
 

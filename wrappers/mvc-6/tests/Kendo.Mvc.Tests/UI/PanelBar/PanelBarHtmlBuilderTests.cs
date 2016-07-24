@@ -1,12 +1,12 @@
 ﻿namespace Kendo.Mvc.UI.Html.Tests
 {
-    using Microsoft.Extensions.WebEncoders;
-    using Microsoft.AspNet.Mvc;
     using Mvc.Tests;
     using System.IO;
     using Xunit;
     using Moq;
     using System;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Text.Encodings.Web;
     public class PanelBarHtmlBuilderTests
     {
         private PanelBar panelBar;

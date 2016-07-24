@@ -425,20 +425,21 @@ var RangeIterator = Class.extend({
     },
 
     getSubtreeIterator: function () {
+        return new RangeIterator(this.getSubRange());
+    },
+
+    getSubRange: function(){
         var that = this,
             subRange = that.range.cloneRange();
-
         subRange.selectNodeContents(that._current);
-
         if (dom.isAncestorOrSelf(that._current, that.range.startContainer)) {
             subRange.setStart(that.range.startContainer, that.range.startOffset);
         }
-
         if (dom.isAncestorOrSelf(that._current, that.range.endContainer)) {
             subRange.setEnd(that.range.endContainer, that.range.endOffset);
         }
 
-        return new RangeIterator(subRange);
+        return subRange;
     }
 });
 
@@ -664,6 +665,43 @@ var RangeEnumerator = Class.extend({
     }
 });
 
+var ImmutablesRangeIterator = RangeIterator.extend({
+    hasPartialSubtree: function () {
+        var immutable = Editor.Immutables && Editor.Immutables.immutable;
+        return immutable && !immutable(this._current) && RangeIterator.fn.hasPartialSubtree.call(this);
+    },
+    
+    getSubtreeIterator: function () {
+        return new ImmutablesRangeIterator(this.getSubRange());
+    }
+});
+
+var ImmutablesRangeEnumerator = Class.extend({
+    init: function(range) {
+        this.enumerate = function () {
+            var nodes = [];
+            var immutable = Editor.Immutables && Editor.Immutables.immutable;
+            function visit(node) {
+                if (immutable && !immutable(node)) {
+                    if (dom.is(node, "img") || (node.nodeType == 3 && (!dom.isEmptyspace(node) || node.nodeValue == "\ufeff"))) {
+                        nodes.push(node);
+                    } else {
+                        node = node.firstChild;
+                        while (node) {
+                            visit(node);
+                            node = node.nextSibling;
+                        }
+                    }
+                }
+            }
+
+            new ImmutablesRangeIterator(range).traverse(visit);
+
+            return nodes;
+        };
+    }
+});
+
 var RestorePoint = Class.extend({
     init: function(range, body) {
         var that = this;
@@ -701,7 +739,7 @@ var RestorePoint = Class.extend({
     getEditable: function(range) {
         var root = range.commonAncestorContainer;
 
-        while (root && (root.nodeType == 3 || root.attributes && !root.attributes.contentEditable)) {
+        while (root && (root.nodeType == 3 || root.attributes && (!root.attributes.contentEditable || root.attributes.contentEditable.nodeValue.toLowerCase() == "false"))) {
             root = root.parentNode;
         }
 
@@ -771,11 +809,14 @@ var Marker = Class.extend({
 
     addCaret: function (range) {
         var that = this;
+        var caret = that.caret = dom.create(RangeUtils.documentFromRange(range), 'span', { className: 'k-marker' });
+        range.insertNode(caret);
+        
+        dom.stripBomNode(caret.previousSibling);
+        dom.stripBomNode(caret.nextSibling);
 
-        that.caret = dom.create(RangeUtils.documentFromRange(range), 'span', { className: 'k-marker' });
-        range.insertNode(that.caret);
-        range.selectNode(that.caret);
-        return that.caret;
+        range.selectNode(caret);
+        return caret;
     },
 
     removeCaret: function (range) {
@@ -1005,6 +1046,17 @@ var RangeUtils = {
         return new RangeEnumerator(range).enumerate();
     },
 
+    editableTextNodes: function(range) {
+        var nodes = [],
+            immutableParent = Editor.Immutables && Editor.Immutables.immutableParent;
+
+        if (immutableParent && !immutableParent(range.commonAncestorContainer)) {
+            nodes = new ImmutablesRangeEnumerator(range).enumerate();
+        }
+
+        return nodes;
+    },
+    
     documentFromRange: function(range) {
         var startContainer = range.startContainer;
         return startContainer.nodeType == 9 ? startContainer : startContainer.ownerDocument;

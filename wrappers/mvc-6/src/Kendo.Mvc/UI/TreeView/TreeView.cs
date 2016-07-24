@@ -1,8 +1,8 @@
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections;
@@ -122,7 +122,10 @@ namespace Kendo.Mvc.UI
 
         private IEnumerable SerializeItems(IList<TreeViewItem> items)
         {
-            var urlHelper = ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelper>();
+            var factory = ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+
+            var urlHelper = factory.GetUrlHelper(ViewContext);
+
             return from item in items select item.Serialize(urlHelper);
         }
 

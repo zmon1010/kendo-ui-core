@@ -2,7 +2,7 @@
 title: Data Attributes
 page_title: Data Attributes | Kendo UI Getting Started
 previous_url: /framework/data-attribute-initialization
-description: "Learn how to initialize and configure each Kendo UI widget using data attributes."
+description: "Initialize and configure each Kendo UI widget using data attributes."
 slug: dataattributes_configuration_installation
 position: 2
 ---
@@ -41,9 +41,9 @@ By default, `kendo.bind` initializes only widgets from the `kendo.ui` namespace,
 
 > **Important**
 >
-> The `data-role` attribute also accepts full widget class name (with its namespace) as value.
+> The `data-role` attribute also accepts a full widget class name (with its namespace) as a value.
 
-The example below demonstrates how to instantiate a Kendo UI ListView in a hybrid Application by using the widget's full class path.
+The example below demonstrates how to instantiate a Kendo UI ListView in a hybrid Application by using the full class path of the widget.
 
 ###### Example
 
@@ -75,7 +75,7 @@ Each widget configuration option can be set with a data attribute of the target 
 
 > **Important**
 >
-> Camel-cased options are set via dash-separated attributes. For example, the [`ignoreCase`](/api/javascript/ui/autocomplete#configuration-ignoreCase) option of the AutoComplete is set via `data-ignore-case`.
+> The camelCase options are set through dash-separated attributes. For example, the [`ignoreCase`](/api/javascript/ui/autocomplete#configuration-ignoreCase) option of the AutoComplete is set through `data-ignore-case`.
 
 Options which start with `data` do not require an additional `"data"` in the attribute name. For example, the `dataTextField` option is set via the `data-text-field` attribute and `dataSource` is set via the `data-source` attribute.
 
@@ -141,7 +141,7 @@ The example below demonstrates how to use a member function as an event handler.
 
 The data source of data-bound Kendo UI widgets can also be set via a data attribute. The value can be a JavaScript object, array, or a variable available in the global scope.
 
-### Set DataSorce to Objects
+### Set DataSource to Objects
 
 The example below demonstrates how to set the data source of a Kendo UI widget to a JavaScript object.
 

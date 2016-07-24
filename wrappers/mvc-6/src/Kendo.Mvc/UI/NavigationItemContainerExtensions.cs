@@ -2,8 +2,8 @@
 {
     using Extensions;
     using Kendo.Mvc.UI;
-    using Microsoft.AspNet.Mvc.Rendering;
-    using Microsoft.AspNet.Mvc.Routing;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using System.Globalization;
     using System.Net;
     using System;

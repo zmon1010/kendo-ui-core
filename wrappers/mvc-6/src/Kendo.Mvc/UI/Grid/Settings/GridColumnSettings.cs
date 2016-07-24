@@ -4,7 +4,7 @@ namespace Kendo.Mvc.UI
 	using System.Collections.Generic;
 	using System.Net;
 	using Kendo.Mvc.Extensions;
-	using Microsoft.AspNet.Routing;
+	using Microsoft.AspNetCore.Routing;
 
 	public class GridColumnSettings<T> : GridColumnSettings
         where T : class

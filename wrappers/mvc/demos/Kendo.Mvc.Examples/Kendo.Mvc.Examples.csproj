@@ -228,6 +228,7 @@
     <Compile Include="Controllers\DataSource\Shared_DatasourceController.cs" />
     <Compile Include="Controllers\DatePicker\DisableDatesController.cs" />
     <Compile Include="Controllers\DateTimePicker\DisableDatesController.cs" />
+    <Compile Include="Controllers\Editor\Immutable_ElementsController.cs" />
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
@@ -987,6 +988,7 @@
     <Content Include="Areas\aspx\Views\dropdownlist\grouping.aspx" />
     <Content Include="Areas\aspx\Views\dropdownlist\serverfiltering.aspx" />
     <Content Include="Areas\aspx\Views\dropdownlist\virtualization.aspx" />
+    <Content Include="Areas\aspx\Views\editor\immutable_elements.aspx" />
     <Content Include="Areas\aspx\Views\editor\paste_cleanup.aspx" />
     <Content Include="Areas\aspx\Views\financial\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\gantt\api.aspx" />
@@ -3416,6 +3418,7 @@
     </Content>
     <Content Include="Areas\razor\Views\datasource\shared_datasource.cshtml" />
     <Content Include="Areas\razor\Views\editor\paste_cleanup.cshtml" />
+    <Content Include="Areas\razor\Views\editor\immutable_elements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
@@ -3801,10 +3804,6 @@
     <Content Include="Content\shared\fonts\Roboto-Regular-Web.woff" />
     <Content Include="Content\shared\KendoUI.ttf" />
     <Content Include="Content\shared\KendoUI.woff" />
-    <Content Include="Content\web\16x16\Thumbs.db" />
-    <Content Include="Content\web\24x24\Thumbs.db" />
-    <Content Include="Content\web\32x32\Thumbs.db" />
-    <Content Include="Content\web\48x48\Thumbs.db" />
     <Content Include="Content\web\datasource\internet-users.json" />
     <Content Include="Content\web\datasource\top250movies.json" />
     <EntityDeploy Include="Models\Sample.edmx">

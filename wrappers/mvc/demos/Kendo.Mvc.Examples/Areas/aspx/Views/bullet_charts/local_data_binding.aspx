@@ -8,6 +8,7 @@ Inherits="System.Web.Mvc.ViewPage<Kendo.Mvc.Examples.Models.BulletChartLocalData
    }
    .k-chart {
        display: inline-block;
+       width: 300px;
    }
 </style>
 </asp:Content>

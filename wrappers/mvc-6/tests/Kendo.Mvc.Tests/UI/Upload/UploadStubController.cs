@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.UI.Html.Tests
 {

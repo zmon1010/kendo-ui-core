@@ -101,8 +101,21 @@ var __meta__ = { // jshint ignore:line
                     .attr(kendo.attr("bind"), "value: value")
                     .appendTo(wrapper);
 
+            var suggestDataSource = options ? options.suggestDataSource : null;
+
+            if (suggestDataSource) {
+                // avoid deep cloning the suggest data source
+                options = $.extend({}, options, { suggestDataSource: {} });
+            }
+
             Widget.fn.init.call(that, element[0], options);
+
+            if (suggestDataSource) {
+                that.options.suggestDataSource = suggestDataSource;
+            }
+
             options = that.options;
+
             dataSource = that.dataSource = options.dataSource;
 
             //gets the type from the dataSource or sets default to string
@@ -258,7 +271,7 @@ var __meta__ = { // jshint ignore:line
                 valuePrimitive: true
             }).data("kendoDropDownList");
 
-            this.operatorDropDown.wrapper.find(".k-i-arrow-s").removeClass("k-i-arrow-s").addClass("k-filter");
+            this.operatorDropDown.wrapper.find(".k-i-arrow-s").removeClass("k-i-arrow-s").addClass("k-i-filter");
         },
 
         initSuggestDataSource: function(options) {
@@ -336,9 +349,22 @@ var __meta__ = { // jshint ignore:line
                 filters: []
             };
 
+            var prevented = false;
+
             if ((currentFilter.value !== undefined && currentFilter.value !== null) || (isNonValueFilter(currentFilter) && !this._clearInProgress)) {
                 expression.filters.push(currentFilter);
+
+                prevented = that.trigger(CHANGE, { filter: expression, field: that.options.field });
             }
+
+            if (that._clearInProgress) {
+                prevented = that.trigger(CHANGE, { filter: null, field: that.options.field });
+            }
+
+            if (prevented) {
+                return;
+            }
+
             var mergeResult = that._merge(expression);
             if (mergeResult.filters.length) {
                 that.dataSource.filter(mergeResult);

@@ -243,4 +243,47 @@ if ('FileReader' in window) {
     });
 }
 
+editor_module("editor with immutables enabled clipboard", {
+    setup: function() {
+        editor = $("#editor-fixture").data("kendoEditor");
+        editor.options.immutables = true;
+        editor._initializeImmutables();
+    },
+
+    teardown: function() {
+        kendo.destroy(QUnit.fixture);
+    }
+});
+
+function pasteIn(target, initialContent, content) {
+    target = target || editor;
+
+    if (initialContent.indexOf("|") >= 0) {
+        target.selectRange(createRangeFromText(target, initialContent));
+    } else {
+        target.value(initialContent);
+    }
+
+    target.clipboard.paste(content);
+}
+
+test("paste in inline immutable parent deletes the container", function() {
+    pasteIn(editor, '<strong contenteditable="false">fo||o</strong>', 'baz');
+    equal(editor.value(), 'baz');
+});
+
+test("paste in partially selected inline immutable parent", function() {
+    pasteIn(editor, 'test |text<strong contenteditable="false">fo|o</strong>', 'baz');
+    equal(editor.value(), 'test baz');
+});
+
+test("paste in partially selected block immutable parent", function() {
+    pasteIn(editor, 'test |text<div contenteditable="false">fo|o</div>', 'baz');
+    equal(editor.value(), 'test baz');
+});
+
+test("paste in partially selected block immutable with a single block child", function() {
+    pasteIn(editor, 'test |text<div contenteditable="false"><div>fo|o</div></div>', 'baz');
+    equal(editor.value(), 'test baz');
+});
 }());

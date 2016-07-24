@@ -1,0 +1,9 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: get which pm2
+  shell: bash -c "which pm2 || echo '0'"
+  register: which_pm_output
+
+- name: install pm2
+  shell: npm install -g pm2
+  when: which_pm_output.stdout =='0'

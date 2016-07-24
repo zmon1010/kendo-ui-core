@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.kendoui.taglib.html.Element;
-
 public class WidgetTagTest {
     private WidgetTagTestDouble tag;
     private PageContext pageContext;
@@ -45,12 +44,14 @@ public class WidgetTagTest {
     @Test
     public void dynamicAttributesAreTreatedAsHtmlAttributes() throws JspException, IOException {
         tag.setDynamicAttribute(null, "bar", "baz");
-        
-        assertEquals("<div id=\"foo\" bar=\"baz\"></div>", tag.html().outerHtml());
+	assertTrue(tag.html().outerHtml().startsWith("<div"));
+        assertTrue(tag.html().outerHtml().endsWith("</div>"));
+        assertTrue(tag.html().outerHtml().contains("id=\"foo\""));
+	assertTrue(tag.html().outerHtml().contains("bar=\"baz\""));
     }
 
     @Test
-    public void htmlSetsTheIdAttributeToTheValueOfTheNameProperty() throws IOException {
+    public void htmlSetsThedAttributeToTheValueOfTheNameProperty() throws IOException {
         assertEquals("<div id=\"foo\"></div>", tag.html().outerHtml());
     }
 

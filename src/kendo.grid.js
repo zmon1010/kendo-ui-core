@@ -447,43 +447,43 @@ var __meta__ = { // jshint ignore:line
     var defaultCommands = {
         create: {
             text: "Add new record",
-            imageClass: "k-add",
+            imageClass: "k-i-add",
             className: "k-grid-add",
             iconClass: "k-icon"
         },
         cancel: {
             text: "Cancel changes",
-            imageClass: "k-cancel",
+            imageClass: "k-i-cancel",
             className: "k-grid-cancel-changes",
             iconClass: "k-icon"
         },
         save: {
             text: "Save changes",
-            imageClass: "k-update",
+            imageClass: "k-i-update",
             className: "k-grid-save-changes",
             iconClass: "k-icon"
         },
         destroy: {
             text: "Delete",
-            imageClass: "k-delete",
+            imageClass: "k-i-delete",
             className: "k-grid-delete",
             iconClass: "k-icon"
         },
         edit: {
             text: "Edit",
-            imageClass: "k-edit",
+            imageClass: "k-i-edit",
             className: "k-grid-edit",
             iconClass: "k-icon"
         },
         update: {
             text: "Update",
-            imageClass: "k-update",
+            imageClass: "k-i-update",
             className: "k-primary k-grid-update",
             iconClass: "k-icon"
         },
         canceledit: {
             text: "Cancel",
-            imageClass: "k-cancel",
+            imageClass: "k-i-cancel",
             className: "k-grid-cancel",
             iconClass: "k-icon"
         },
@@ -1446,7 +1446,11 @@ var __meta__ = { // jshint ignore:line
            COLUMNHIDE,
            COLUMNLOCK,
            COLUMNUNLOCK,
-           NAVIGATE
+           NAVIGATE,
+           "page",
+           "sort",
+           "filter",
+           "group"
         ],
 
         setDataSource: function(dataSource) {
@@ -1927,7 +1931,15 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 function getPageZoomStyle() {
-                    return parseFloat($(document.documentElement).css("zoom") || 1) * parseFloat($(document.body).css("zoom") || 1);
+                    var docZoom = parseFloat($(document.documentElement).css("zoom"));
+                    if (isNaN(docZoom)) {
+                        docZoom = 1;
+                    }
+                    var bodyZoom = parseFloat($(document.body).css("zoom"));
+                    if (isNaN(bodyZoom)) {
+                        bodyZoom = 1;
+                    }
+                    return docZoom * bodyZoom;
                 }
 
                 var clientX = e.clientX / getPageZoomStyle(),
@@ -2199,7 +2211,7 @@ var __meta__ = { // jshint ignore:line
                                 paddingBottom: target.css("paddingBottom")
                             })
                             .html(title || target.attr(kendo.attr("field")) || target.text())
-                            .prepend('<span class="k-icon k-drag-status k-denied" />');
+                            .prepend('<span class="k-icon k-drag-status k-i-denied" />');
                     }
                 }).data("kendoDraggable");
             }
@@ -3385,8 +3397,8 @@ var __meta__ = { // jshint ignore:line
                 nextRow = newRow.next();
                 if (nextRow.hasClass("k-detail-row") && nextRow.is(":visible")) {
                     newRow.find(".k-hierarchy-cell .k-icon")
-                        .removeClass("k-plus")
-                        .addClass("k-minus");
+                        .removeClass("k-i-expand")
+                        .addClass("k-i-collapse");
                 }
             }
         },
@@ -3695,7 +3707,12 @@ var __meta__ = { // jshint ignore:line
                     dataSource: that.dataSource,
                     draggableElements: filter,
                     filter: filter,
-                    allowDrag: that.options.reorderable
+                    allowDrag: that.options.reorderable,
+                    change: function(e) {
+                        if(that.trigger("group", { groups: e.groups })) {
+                            e.preventDefault();
+                        }
+                    }
                 }));
             }
         },
@@ -5406,6 +5423,12 @@ var __meta__ = { // jshint ignore:line
                 } else {
                     that.pager = new kendo.ui.Pager(wrapper, extend({}, pageable, { dataSource: that.dataSource }));
                 }
+
+                that.pager.bind("pageChange", function(e) {
+                    if (that.trigger("page", { page: e.index })) {
+                        e.preventDefault();
+                    }
+                });
             }
         },
 
@@ -5520,6 +5543,16 @@ var __meta__ = { // jshint ignore:line
                 closeCallback = function(element) {
                     focusTable(element.closest("table"), true);
                 },
+                sortHandler = function(e) {
+                    if (that.trigger("sort", { sort: e.sort })) {
+                        e.preventDefault();
+                    }
+                },
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
+                        e.preventDefault();
+                    }
+                },
                 $angular = options.$angular;
 
             if (columnMenu) {
@@ -5565,6 +5598,8 @@ var __meta__ = { // jshint ignore:line
                             closeCallback: closeCallback,
                             init: initCallback,
                             pane: that.pane,
+                            sort: sortHandler,
+                            filtering: filterHandler,
                             filter: isMobile ? ":not(.k-column-active)" : "",
                             lockedColumns: !hasMultiColumnHeaders && column.lockable !== false && lockedColumns(columns).length > 0
                         };
@@ -5597,6 +5632,11 @@ var __meta__ = { // jshint ignore:line
                 },
                 closeCallback = function(element) {
                     focusTable(element.closest("table"), true);
+                },
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
+                        e.preventDefault();
+                    }
                 },
                 filterable = that.options.filterable;
                 if (filterable && typeof filterable.mode == STRING && filterable.mode.indexOf("menu") == -1) {
@@ -5633,7 +5673,8 @@ var __meta__ = { // jshint ignore:line
                                 closeCallback: closeCallback,
                                 title: columns[idx].title || columns[idx].field,
                                 init: filterInit,
-                                pane: that.pane
+                                pane: that.pane,
+                                change: filterHandler
                             }
                         );
 
@@ -5665,7 +5706,13 @@ var __meta__ = { // jshint ignore:line
             var $angular = that.options.$angular;
             var columns = leafColumns(that.columns),
                 filterable = that.options.filterable,
-                rowheader = that.thead.find(".k-filter-row");
+                rowheader = that.thead.find(".k-filter-row"),
+                filterHandler = function(e) {
+                    if (that.trigger("filter", { filter: e.filter, field: e.field })) {
+                        e.preventDefault();
+                    }
+                };
+
 
             this._updateHeader(this.dataSource.group().length);
 
@@ -5722,7 +5769,8 @@ var __meta__ = { // jshint ignore:line
                         dataTextField: cellOptions.dataTextField,
                         operator: cellOptions.operator,
                         operators: operators,
-                        showOperators: cellOptions.showOperators
+                        showOperators: cellOptions.showOperators,
+                        change: filterHandler
                     };
 
                     if ($angular) {
@@ -5744,7 +5792,13 @@ var __meta__ = { // jshint ignore:line
                 column,
                 sorterInstance,
                 cell,
-                sortable = that.options.sortable;
+                sortable = that.options.sortable,
+                sortHandler = function(e) {
+                    if (that.trigger("sort", { sort: e.sort })) {
+                        e.preventDefault();
+                    }
+                };
+
 
             if (sortable) {
                 var cells = leafDataCells(that.thead);
@@ -5766,7 +5820,8 @@ var __meta__ = { // jshint ignore:line
                                 extend({}, sortable, column.sortable, {
                                     dataSource: that.dataSource,
                                     aria: true,
-                                    filter: ":not(.k-column-active)"
+                                    filter: ":not(.k-column-active)",
+                                    change: sortHandler
                                 })
                             );
                     }
@@ -5874,7 +5929,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (hasDetails) {
-                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-plus" href="\\#" tabindex="-1"></a></td>';
+                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-i-expand" href="\\#" tabindex="-1"></a></td>';
                 }
 
                 for (idx = 0; idx < length; idx++) {
@@ -6188,17 +6243,17 @@ var __meta__ = { // jshint ignore:line
                 throw new Error("Having both detail template and locked columns is not supported");
             }
 
-            that.table.on(CLICK + NS, ".k-hierarchy-cell .k-plus, .k-hierarchy-cell .k-minus", function(e) {
+            that.table.on(CLICK + NS, ".k-hierarchy-cell .k-i-expand, .k-hierarchy-cell .k-i-collapse", function(e) {
                 var button = $(this),
-                    expanding = button.hasClass("k-plus"),
+                    expanding = button.hasClass("k-i-expand"),
                     masterRow = button.closest("tr.k-master-row"),
                     detailRow,
                     detailTemplate = that.detailTemplate,
                     data,
                     hasDetails = that._hasDetails();
 
-                button.toggleClass("k-plus", !expanding)
-                    .toggleClass("k-minus", expanding);
+                button.toggleClass("k-i-expand", !expanding)
+                    .toggleClass("k-i-collapse", expanding);
 
                 detailRow = masterRow.next();
 
@@ -6254,11 +6309,11 @@ var __meta__ = { // jshint ignore:line
         },
 
         expandRow: function(tr) {
-            $(tr).find('> td .k-plus, > td .k-i-expand').click();
+            $(tr).find('> td .k-i-expand').click();
         },
 
         collapseRow: function(tr) {
-            $(tr).find('> td .k-minus, > td .k-i-collapse').click();
+            $(tr).find('> td .k-i-collapse').click();
         },
 
         _createHeaderCells: function(columns, rowSpan) {
@@ -6835,12 +6890,12 @@ var __meta__ = { // jshint ignore:line
                 text = (column.title || field) + ': ' + formatGroupValue(group.value, column.format, column.values, column.encoded),
                 footerDefaults = that._groupAggregatesDefaultObject || {},
                 aggregates = extend({}, footerDefaults, group.aggregates),
-                data = extend({}, { field: group.field, value: group.value, aggregates: aggregates }, group.aggregates[group.field]),
+                headerData = extend({}, { field: group.field, value: group.value, aggregates: aggregates }, group.aggregates[group.field]),
                 groupFooterTemplate = templates.groupFooterTemplate,
                 groupItems = group.items;
 
             if (template) {
-                text  = typeof template === FUNCTION ? template(data) : kendo.template(template)(data);
+                text  = typeof template === FUNCTION ? template(headerData) : kendo.template(template)(headerData);
             }
 
             html += groupHeaderBuilder(colspan, level, text);
@@ -6854,7 +6909,14 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (groupFooterTemplate) {
-                html += groupFooterTemplate(aggregates);
+                var footerData = {};
+                for (var aggregate in aggregates) {
+                    footerData[aggregate] = extend({}, aggregates[aggregate],
+                        { group: { field: group.field, value: group.value } }
+                    );
+                }
+
+                html += groupFooterTemplate(footerData);
             }
             return html;
         },
@@ -6954,7 +7016,7 @@ var __meta__ = { // jshint ignore:line
                         that.expandGroup(tr);
                     }
 
-                    if (tr.hasClass("k-master-row") && tr.find(".k-icon").hasClass("k-minus")) {
+                    if (tr.hasClass("k-master-row") && tr.find(".k-icon").hasClass("k-i-collapse")) {
                         tr.next().show();
                         relatedGroup.eq(idx + 1).show();
                     }
@@ -7367,7 +7429,6 @@ var __meta__ = { // jshint ignore:line
                 current = $(that.current()),
                 isCurrentInHeader = false,
                 groups = (that.dataSource.group() || []).length,
-                offsetLeft = that.content && that.content.scrollLeft(),
                 colspan = groups + visibleLeafColumns(visibleColumns(that.columns)).length;
 
             if (e && e.action === "itemchange" && that.editable) { // skip rebinding if editing is in progress
@@ -7420,7 +7481,7 @@ var __meta__ = { // jshint ignore:line
 
             that._setContentHeight();
 
-            that._setContentWidth(offsetLeft);
+            that._setContentWidth(that.content && that.content.scrollLeft());
 
             if (that.lockedTable) {
                 //requires manual trigger of scroll to sync both tables

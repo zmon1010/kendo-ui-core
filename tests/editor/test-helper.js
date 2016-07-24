@@ -159,3 +159,65 @@ function removeMocksIn(obj) {
         }
     }
 }
+
+function getJQueryEventType(type) {
+    //jQuery attaches "mouseenter" and "mouseleave" as "mouseover" and "mouseout"
+    if (type === "mouseenter") {
+        return "mouseover";
+    }
+
+    if (type === "mouseleave") {
+        return "mouseout";
+    }
+
+    return type;
+}
+
+function jQueryEvents(element) {
+    if (!element) {
+        return undefined;
+    }
+
+    return $._data(element[0] || element, "events");
+}
+
+/* exported jQueryEventsInfo */
+function jQueryEventsInfo(element, event) {
+    var events = jQueryEvents(element);
+
+    if (!events) {
+        return undefined;
+    }
+
+    return events[getJQueryEventType(event)];
+}
+
+/* exported assertEvent */
+function assertEvent(element, options) {
+    var selector = options.selector;
+    var namespace = options.namespace || "";
+    var events = jQueryEvents(element);
+    var type = getJQueryEventType(options.type);
+    var event = events[type][0];
+    
+    equal(options.type, event.origType);
+    equal(type, event.type);
+    equal(selector, event.selector);
+    equal(namespace, event.namespace);
+}
+
+/* exported roughlyEqual */
+function roughlyEqual(actual, expected, precision) {
+    var valueAndUnitRegex = /(\d+\.?\d*)(.*)/i;
+    var actualParsed = valueAndUnitRegex.exec(actual);
+    var expectedParsed = valueAndUnitRegex.exec(expected);
+    var actualValue = actualParsed[1];
+    var expectedValue = expectedParsed[1];
+    var unitForActual = actualParsed[2];
+    var unitForExpected = expectedParsed[2];
+
+    var isEqual = (unitForActual === unitForExpected) && (Math.abs(actualValue - expectedValue) <= precision);
+    var failMessage = (isEqual ? "" : "{expected: " + expected + ", actual: " + actual + "}");
+
+    ok(isEqual, failMessage);
+}

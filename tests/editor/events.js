@@ -130,6 +130,14 @@ asyncTest('mouseup raises selection change', function() {
     }, 100);
 });
 
+asyncTest('mouseup on editor document raises selection change', function() {
+    $(editor.document).mousedown().mouseup();
+    setTimeout(function() {
+        ok(changeRaised);
+        start();
+    }, 100);
+});
+
 test('down arrow raises selection change', function() {
     keyup(40);
 
@@ -298,6 +306,25 @@ test("keydown is triggered even if a command is being executed", function() {
     equal(e.keyCode, 13);
 });
 
+var assertRange = function(range, startContainer, endContainer, startOffset, endOffset){
+    ok(range.startContainer === startContainer);
+    ok(range.endContainer === endContainer);
+    ok(range.startOffset === startOffset);
+    ok(range.endOffset === endOffset);
+};
+
+if (kendo.support.browser.webkit) {
+    test("keydown Ctrl+A selects all content", function() {
+        var e = $.Event({ type: "keydown", keyCode: 65, ctrlKey: true, preventDefault: $.noop }, {keyCode: 65, ctrlKey: true});
+        var body = editor.body;
+        body.innerHTML = "<p><em>test</em></p> <p><em>test</em></p>";
+
+        $(body).trigger(e);
+
+        assertRange(editor.getRange(), body, body, 0, body.childNodes.length);
+    });
+}
+
 test("blurring the editor blurs the textarea (jQuery validate compatibility)", function() {
     var called = false;
     editor.textarea.bind("blur", function() {
@@ -321,6 +348,33 @@ test("execute event can be prevented", function() {
     editor.exec('bold');
 
     ok(!editor.undoRedoStack.canUndo());
+});
+
+module("editor body events", {
+    setup: function() {
+        var element = $(QUnit.fixture).append('<textarea id="fakeEditor"></textarea>');
+        editor =  $(QUnit.fixture).find("#fakeEditor").kendoEditor({}).data("kendoEditor");
+    },
+
+    teardown: function() {
+        kendo.destroy(QUnit.fixture);
+    }
+});
+
+test("mouseenter event is attached to tables inside editor body", function() {
+    assertEvent(editor.body, { type: "mouseenter", selector: "table", namespace: "kendoEditor" });
+});
+
+test("mouseenter events are detached from editor body on destroy", function() {
+    editor.destroy();
+
+    ok(jQueryEventsInfo(editor.body, "mouseenter") === undefined);
+});
+
+test("mouseleave events are detached from editor body on destroy", function() {
+    editor.destroy();
+
+    ok(jQueryEventsInfo(editor.body, "mouseleave") === undefined);
 });
 
 }());

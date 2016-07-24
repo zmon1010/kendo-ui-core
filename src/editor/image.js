@@ -143,6 +143,8 @@ var ImageCommand = Command.extend({
                 resizable: showBrowser
             };
 
+        this.expandImmutablesIn(range);
+
         function apply(e) {
             var element = dialog.element,
                 w = parseInt(element.find(KEDITORIMAGEWIDTH).val(), 10),
@@ -208,17 +210,20 @@ var ImageCommand = Command.extend({
             .find(KEDITORIMAGEWIDTH).val(imageWidth).end()
             .find(KEDITORIMAGEHEIGHT).val(imageHeight).end()
             .data("kendoWindow");
-
+        
         if (showBrowser) {
             this._imageBrowser = new kendo.ui.ImageBrowser(
                 dialog.element.find(".k-imagebrowser"),
-                extend({}, imageBrowser, {
-                    change: function() {
-                        dialog.element.find(KEDITORIMAGEURL).val(this.value());
-                    },
-                    apply: apply
-                })
+                extend({}, imageBrowser)
             );
+
+            this._imageBrowser.bind("change", function (ev) {
+                if (ev.selected.get("type") === "f") {
+                    dialog.element.find(KEDITORIMAGEURL).val(this.value());
+                }
+            });
+
+            this._imageBrowser.bind("apply", apply);
         }
 
         dialog.center().open();

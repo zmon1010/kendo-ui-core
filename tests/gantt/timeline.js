@@ -1,5 +1,5 @@
 ﻿(function() {
-
+    var gantt;
     var element;
     var timeline;
     var view;
@@ -12,7 +12,7 @@
     var YearView = kendo.ui.GanttYearView;
 
     var headerTree;
-    
+
     module("Initialization", {
         setup: function() {
             element = $("<div/>");
@@ -213,8 +213,32 @@
         ok(!timeline._moveDraggable);
     });
 
+    test("editable move false does not initialize task draggable", function() {
+        timeline = new Timeline(element, { editable: { move:false } });
+
+        ok(!timeline._moveDraggable);
+    });
+
+    test("editable move true update false does not initialize task draggable", function() {
+        timeline = new Timeline(element, { editable: { move: true, update: false } });
+
+        ok(!timeline._moveDraggable);
+    });
+
     test("editable false does not initialize resize draggable", function() {
         timeline = new Timeline(element, { editable: false });
+
+        ok(!timeline._resizeDraggable);
+    });
+
+    test("editable resize false does not initialize resize draggable", function() {
+        timeline = new Timeline(element, { editable: { resize: false } });
+
+        ok(!timeline._resizeDraggable);
+    });
+
+    test("editable update false does not initialize resize draggable", function() {
+        timeline = new Timeline(element, { editable: { update:false, resize: true } });
 
         ok(!timeline._resizeDraggable);
     });
@@ -225,8 +249,20 @@
         ok(!timeline._percentDraggable);
     });
 
+    test("editable dragPercentComplete treu update false does not initialize percent resize draggable", function() {
+        timeline = new Timeline(element, { editable: { dragPercentComplete: true, update: false } });
+
+        ok(!timeline._percentDraggable);
+    });
+
     test("editable false does not initialize dependency draggable", function() {
         timeline = new Timeline(element, { editable: false });
+
+        ok(!timeline._dependencyDraggable);
+    });
+
+    test("editable dependancyCreate false does not initialize dependency draggable", function() {
+        timeline = new Timeline(element, { editable: { dependencyCreate: false } });
 
         ok(!timeline._dependencyDraggable);
     });
@@ -304,6 +340,73 @@
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
     });
+
+    test("custom start range", 2, function () {
+        view = dayView();
+        view.options.range = {start: new Date("2014/04/14")};
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/17")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/14");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
+    });
+
+    test("custom end range", 2, function () {
+        view = dayView();
+        view.options.range = { end: new Date("2014/04/18") };
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/17")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
+    });
+
+    test("custom start and end range", 2, function () {
+        view = dayView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/04/18 10:00")
+        };
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/17")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/15");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
+    });
+
+    test("custom start and end slot count", function () {
+        view = dayView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/04/15 13:00")
+        };
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+        view.renderLayout();
+
+        equal(view._slots[1].length, 3);
+    });
+
+   
+
+  
+
+   
 
     test("range() with equal start and end", 2, function() {
         view = dayView();
@@ -775,7 +878,6 @@
         timeline.destroy();
     });
 
-
     module("Week View", {
         setup: function() {
             element = $(
@@ -850,6 +952,60 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
     });
     
+    test("custom start range is set", 2, function () {
+        view = weekView();
+
+        view.options.range = {
+            start: new Date("2014/04/19"),
+        };
+
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/23")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/19");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
+    });
+
+    test("custom end range is set to exact date", 2, function () {
+        view = weekView();
+
+        view.options.range = {
+            end: new Date("2014/04/19"),
+        };
+
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/23")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/19");
+    });
+
+    test("custom end range is not set to exact date", 2, function () {
+        view = weekView();
+
+        view.options.range = {
+            end: new Date("2014/04/19 00:01"),
+        };
+
+        var range = {
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/23")
+        };
+
+        view.range(range);
+
+        equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
+        equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/20");
+    });
+
     test("range() sets view range to containing weeks when end is the same day as week start", 2, function() {
         view = weekView();
         var range = {
@@ -891,7 +1047,6 @@
         equal(view._calculateTableWidth(), 200);
     });
 
-
     test("renderLayout() creates table with correct width", function() {
         view = weekView();
         var range = {
@@ -917,7 +1072,6 @@
 
         equal(view.header.find("tr").length, 2);
     });
-
 
     test("renderLayout() creates day headers with correct text", function() {
         var range = {
@@ -1002,7 +1156,6 @@
 
         ok(view.header.find("tr:last th").eq(0).hasClass("k-nonwork-hour"));
     });
-
 
     test("renderLayout() creates week headers with correct text", function() {
         var range = {
@@ -1104,6 +1257,21 @@
         timeline.destroy();
     });
 
+    test("custom start and end slot count weekview", function () {
+        view = weekView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/04/18 12:00")
+        };
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+        view.renderLayout();
+
+        equal(view._slots[1].length, 4);
+    });
 
     module("Month View", {
         setup: function() {
@@ -1420,6 +1588,119 @@
         equal(view.header.find("tr:first th")[2].colSpan, 23);
     });
 
+    test("custom start and end slot count monthview", function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2014/07/17 12:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[1].length, 14);
+    });
+
+    test("custom start slot count",3 , function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+       
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 16);
+    });
+
+    test("custom end slot count exact date", 3, function () {
+        view = monthView();
+        view.options.range = {
+            end: new Date("2014/04/15")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 14);
+    });
+
+    test("custom end slot count",3 , function () {
+        view = monthView();
+        view.options.range = {
+            end: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 3);
+        equal(view._slots[0][0].span, 15);
+    });
+
+    test("custom start and end slot count", function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00"),
+            end: new Date("2015/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 13);
+        equal(view._slots[1].length, 53);
+    });
+
+    test("custom start and end slot count new year", function () {
+        view = monthView();
+        view.options.range = {
+            start: new Date("2014/12/15 10:00"),
+            end: new Date("2015/01/05 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 2);
+        equal(view._slots[1].length, 4);
+        equal(view._slots[0][0].span, 17);
+    });
 
     module("Year View", {
         setup: function() {
@@ -1610,4 +1891,215 @@
         equal(view.header.find("tr:first th")[1].colSpan, 12);
     });
 
+    test("custom start slot count", function () {
+        view = yearView();
+        view.options.range = {
+            start: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 9);
+    });
+
+    test("custom end slot count", function () {
+        view = yearView();
+        view.options.range = {
+            end: new Date("2014/04/15 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 1);
+        equal(view._slots[1].length, 4);
+    });
+
+    test("custom start and end slot count to end of the month", function () {
+        view = yearView();
+        view.options.range = {
+            start: new Date("2014/05/15 10:00"),
+            end: new Date("2015/05/31 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 2);
+        equal(view._slots[1].length, 13);
+    });
+
+    test("custom start and end slot count to start of the month", function () {
+        view = yearView();
+        view.options.range = {
+            start: new Date("2014/05/15 10:00"),
+            end: new Date("2015/06/01 10:00")
+        };
+
+        var range = {
+            start: new Date("2014/04/1"),
+            end: new Date("2014/04/2")
+        };
+        view.range(range);
+
+        view.renderLayout();
+
+        equal(view._slots[0].length, 2);
+        equal(view._slots[1].length, 14);
+    });
+
+
+    module("Gantt Date", {
+        setup: function () {
+            element = $("<div />").appendTo(QUnit.fixture);
+        },
+        teardown: function () {
+            kendo.destroy(element);
+        }
+    });
+
+    function setupGantt(userOptions) {
+        task = new kendo.data.GanttTask({
+            title: "Task",
+            start: new Date("2014/04/15 12:00"),
+            end: new Date("2014/04/15 14:00")
+        });
+
+        var options = extend({}, {
+           
+           
+            snap: false,
+            views: ["day"],
+            showWorkHours: false,
+            dataSource: [task]
+        }, userOptions);
+
+        gantt = new kendo.ui.Gantt(element, options);
+        timeline = gantt.timeline;
+    }
+
+    test("set custom date scrolls to slot day view", function () {
+        setupGantt({
+            date: new Date("2014/04/14"), views: ["day"],
+            range: {
+                start: new Date("2014/04/1"),
+                end: new Date("2014/04/15")
+            },
+        });
+
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set custom date scrolls to slot week view", function () {
+        setupGantt({
+            date: new Date("2014/04/14"), views: ["week"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/04/15")
+            },
+        });
+
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set custom date scrolls to slot month view", function () {
+        setupGantt({
+            date: new Date("2014/09/14"), views: ["month"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/10/15")
+            },
+        });
+
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/09/14")));
+    });
+
+    test("set custom date scrolls to slot year view", function () {
+        setupGantt({
+            date: new Date("2014/08/14"), views: ["year"],
+            range: {
+                start: new Date("2010/01/1"),
+                end: new Date("2015/10/15")
+            }
+        });
+
+        equal(kendo.scrollLeft(gantt.view().content), Math.floor(gantt.view()._offset(new Date("2014/08/14"))));
+    });
+
+    test("set date() scrolls to slot day view", 2, function () {
+        setupGantt({
+            views: ["day"],
+            range: {
+                start: new Date("2014/04/1"),
+                end: new Date("2014/04/15")
+            },
+        });
+
+        var date = new Date("2014/04/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set date() scrolls to slot week view", 2, function () {
+        setupGantt({
+            views: ["week"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/04/15")
+            },
+        });
+
+        var date = new Date("2014/04/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
+    });
+
+    test("set date() scrolls to slot month view", function () {
+        setupGantt({
+            views: ["month"],
+            range: {
+                start: new Date("2014/01/1"),
+                end: new Date("2015/10/15")
+            },
+        });
+
+        var date = new Date("2014/09/14")
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/09/14")));
+    });
+
+    test("set date() scrolls to slot year view", function () {
+        setupGantt({
+            date: new Date("2014/08/14"), views: ["year"],
+            range: {
+                start: new Date("2010/01/1"),
+                end: new Date("2015/10/15")
+            }
+        });
+
+        var date = new Date("2014/08/14");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), Math.floor(gantt.view()._offset(new Date("2014/08/14"))));
+    });
 }());

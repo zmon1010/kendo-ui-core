@@ -83,7 +83,7 @@
         var visual,
             point;
 
-        function chartPoint(box, visibleLabel) {
+        function chartPoint(box, visible) {
             return {
                 box: box,
                 overlapsBox: function(box) {
@@ -91,11 +91,15 @@
                 },
                 label: {
                     options: {
-                        visible: visibleLabel
+                        visible: visible
                     },
-                    createVisual: function() {
-                        return [{label: true}]
-                    }
+                    createVisual: $.noop
+                },
+                note: {
+                    options: {
+                        visible: visible
+                    },
+                    createVisual: $.noop
                 }
             };
         }
@@ -147,6 +151,14 @@
             ok(container.children[0].points[0].label.options.noclip);
         });
 
+        test("sets noclip option to notes", function() {
+            container.children[0].points = [chartPoint(Box(10, 90, 20, 110), true)];
+
+            container.renderVisual();
+
+            ok(container.children[0].points[0].note.options.noclip);
+        });
+
         test("does not set noclip option if label is not visible", function() {
             container.children[0].points = [chartPoint(Box(10, 90, 20, 110), false)];
 
@@ -154,13 +166,20 @@
             ok(!container.children[0].points[0].label.options.noclip);
         });
 
+        test("does not set noclip option if note is not visible", function() {
+            container.children[0].points = [chartPoint(Box(10, 90, 20, 110), false)];
+
+            container.renderVisual();
+            ok(!container.children[0].points[0].note.options.noclip);
+        });
+
         test("does not set noclip option if point does not overlap clipbox", function() {
             container.children[0].points = [chartPoint(Box(10, 101, 20, 110), true)];
 
             container.renderVisual();
             ok(!container.children[0].points[0].label.options.noclip);
+            ok(!container.children[0].points[0].note.options.noclip);
         });
-
 
         test("calls alignToClipBox method if available on the label", function() {
             point = chartPoint(Box(10, 90, 20, 110), true);

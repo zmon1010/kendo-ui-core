@@ -149,6 +149,19 @@ If the `dataSource` option is an existing [kendo.data.DataSource](/api/javascrip
     });
     </script>
 
+### clearButton `Boolean` *(default: true)*
+
+Unless this options is set to `false`, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
+
+#### Example - disable the clear button
+
+    <input id="autocomplete" />
+    <script>
+    $("#autocomplete").kendoAutoComplete({
+        clearButton: false
+    });
+    </script>
+
 ### dataTextField `String` *(default: null)*
 
 The field of the data item used when searching for suggestions.  This is the text that will be displayed in the list of matched results.
@@ -193,6 +206,30 @@ If set to `false` the widget will be disabled and will not allow user input. The
     });
     </script>
 
+### enforceMinLength `Boolean` *(default: false)*
+
+If set to `true` the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with [minLength](#configuration-minLength).
+
+#### Example - enforce minLength
+
+    <input id="autocomplete" />
+    <script>
+    $("#autocomplete").kendoAutoComplete({
+        dataTextField: "ProductName",
+        filter: "contains",
+        minLength: 3,
+        enforceMinLength: false,
+        autoBind: false,
+        dataSource: {
+            type: "odata",
+            serverFiltering: true,
+            transport: {
+                read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+            }
+        }
+    });
+    </script>
+
 ### filter `String` *(default: "startswith")*
 
 The filtering method used to determine the suggestions for the current value. The default filter is "startswith" -
@@ -227,6 +264,30 @@ The [template](/api/javascript/kendo#methods-template) used to render the fixed 
                 }
             });
         });
+    </script>
+
+### footerTemplate `String|Function`
+
+The [template](/api/javascript/kendo#methods-template) used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.
+
+#### Parameters
+
+##### instance `Object`
+
+The widget instance.
+
+#### Example - specify footerTemplate as a string
+
+    <input id="autocomplete" />
+    <script>
+    $("#autocomplete").kendoAutoComplete({
+      dataSource: [
+        { id: 1, name: "Apples" },
+        { id: 2, name: "Oranges" }
+      ],
+      dataTextField: "name",
+      footerTemplate: 'Total <strong>#: instance.dataSource.total() #</strong> items found'
+    });
     </script>
 
 ### groupTemplate `String|Function`
@@ -305,6 +366,27 @@ The minimum number of characters the user must type before a search is performed
     });
     </script>
 
+### noDataTemplate `String|Function` *(default: "No results found.")*
+
+The [template](/api/javascript/kendo#methods-template) used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.
+
+> **Important** The popup will open when 'noDataTemplate' is defined
+
+#### Example - specify headerTemplate as a string
+
+    <input id="autocomplete" />
+    <script>
+    $("#autocomplete").kendoAutoComplete({
+      dataSource: [
+        { id: 1, name: "Apples" },
+        { id: 2, name: "Oranges" }
+      ],
+      dataTextField: "name",
+      noDataTemplate: 'No Data!'
+    });
+    </script>
+
 ### placeholder `String` *(default: "")*
 
 The hint displayed by the widget when it is empty. Not set by default.
@@ -350,9 +432,11 @@ refer to [Popup](/api/javascript/ui/popup) documentation.
     });
     </script>
 
-### separator `String` *(default: "")*
+### separator `String|Array` *(default: "")*
 
 The character used to separate multiple values. Empty by default.
+
+> As of Q3 2016 the Autocomplete widget supports multiple separators listed in an array. All separators will be replaced with the first array item, which acts as a default separator.
 
 #### Example - set separator to allow multiple values
 
@@ -360,6 +444,15 @@ The character used to separate multiple values. Empty by default.
     <script>
     $("#autocomplete").kendoAutoComplete({
       separator: ", "
+    });
+    </script>
+
+#### Example - set multiple separators
+
+    <input id="autocomplete" />
+    <script>
+    $("#autocomplete").kendoAutoComplete({
+      separator: [", ", "; "]
     });
     </script>
 
@@ -625,6 +718,12 @@ If the developer does not specify one, the framework will automatically set `ite
             });
         });
     </script>
+
+### virtual.mapValueTo `String`*(default: "index")*
+
+The changes introduced with the Kendo UI R3 2016 release enable you to determine if the `valueMapper` must resolve a *value to an `index`* or a *value to a `dataItem`*. This is configured through the `mapValueTo` option that accepts two possible values - `"index"` or `"dataItem"`. By default, the `mapValueTo` is set to `"index"`, which does not affect the current behavior of the virtualization process.
+
+For more information, refer to the [article on virtualization]({% slug virtualization_kendoui_combobox_widget %}#value-mapping).
 
 ### virtual.valueMapper `Function`*(default: null)*
 
@@ -1276,6 +1375,10 @@ Fired when an item from the suggestion popup is selected by the user.
 
 #### Event Data
 
+##### e.dataItem `Object`
+
+The data item instance of the selected item.
+
 ##### e.item `jQuery`
 
 The jQuery object which represents the selected item.
@@ -1312,4 +1415,17 @@ The widget instance which fired the event.
     });
     var autocomplete = $("#autocomplete").data("kendoAutoComplete");
     autocomplete.bind("select", autocomplete_select);
+    </script>
+
+#### Example - prevent the item selection
+
+    <input id="autocomplete" />
+    <script>
+    $("#autocomplete").kendoAutoComplete({
+      dataSource: [ "Apples", "Oranges" ],
+      select: function(e) {
+        //call preventDefault() to prevent the selection
+        e.preventDefault();
+      }
+    });
     </script>

@@ -6,7 +6,7 @@
     "recipe[git]",
     "recipe[ruby]",
     "recipe[nodejs]",
-    "recipe[java]",
+    "recipe[java_wrapper]",
     "recipe[mono]",
     "recipe[x11]",
     "recipe[linkchecker]",

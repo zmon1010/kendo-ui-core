@@ -21,7 +21,6 @@ var __meta__ = { // jshint ignore:line
         parse = kendo.parseFloat,
         placeholderSupported = kendo.support.placeholder,
         getCulture = kendo.getCulture,
-        round = kendo._round,
         CHANGE = "change",
         DISABLED = "disabled",
         READONLY = "readonly",
@@ -71,8 +70,15 @@ var __meta__ = { // jshint ignore:line
                  that._text.on(FOCUS + ns, proxy(that._click, that));
              } else {
                  that._text.on(TOUCHEND + ns + " " + FOCUS + ns, function() {
-                    that._toggleText(false);
-                    element.focus();
+                     if (kendo.support.browser.edge) {
+                         that._text.one(FOCUS + ns, function() {
+                             that._toggleText(false);
+                             element.focus();
+                         });
+                     } else {
+                         that._toggleText(false);
+                         element.focus();
+                     }
                  });
              }
 
@@ -114,10 +120,12 @@ var __meta__ = { // jshint ignore:line
         options: {
             name: "NumericTextBox",
             decimals: NULL,
+            restrictDecimals: false,
             min: NULL,
             max: NULL,
             value: NULL,
             step: 1,
+            round: true,
             culture: "",
             format: "n",
             spinners: true,
@@ -285,7 +293,7 @@ var __meta__ = { // jshint ignore:line
             arrows = element.siblings(".k-icon");
 
             if (!arrows[0]) {
-                arrows = $(buttonHtml("n", options.upArrowText) + buttonHtml("s", options.downArrowText))
+                arrows = $(buttonHtml("increase", options.upArrowText) + buttonHtml("decrease", options.downArrowText))
                         .insertAfter(element);
 
                 arrows.wrapAll('<span class="k-select"/>');
@@ -489,6 +497,7 @@ var __meta__ = { // jshint ignore:line
             var that = this;
             var separator = numberFormat[POINT];
             var precision = that.options.decimals;
+            var fractionRule = "*";
 
             if (separator === POINT) {
                 separator = "\\" + separator;
@@ -502,9 +511,13 @@ var __meta__ = { // jshint ignore:line
                 return INTEGER_REGEXP;
             }
 
+            if (that.options.restrictDecimals) {
+                fractionRule = "{0," + precision + "}";
+            }
+
             if (that._separator !== separator) {
                 that._separator = separator;
-                that._floatRegExp = new RegExp("^(-)?(((\\d+(" + separator + "\\d*)?)|(" + separator + "\\d*)))?$");
+                that._floatRegExp = new RegExp("^(-)?(((\\d+(" + separator + "\\d" + fractionRule + ")?)|(" + separator + "\\d" + fractionRule + ")))?$");
             }
 
             return that._floatRegExp;
@@ -587,6 +600,12 @@ var __meta__ = { // jshint ignore:line
             return parse(value, this._culture(culture), this.options.format);
         },
 
+        _round: function(value, precision) {
+            var rounder = this.options.round ? kendo._round : truncate;
+
+            return rounder(value, precision);
+        },
+
         _update: function(value) {
             var that = this,
                 options = that.options,
@@ -605,7 +624,7 @@ var __meta__ = { // jshint ignore:line
             isNotNull = value !== NULL;
 
             if (isNotNull) {
-                value = parseFloat(round(value, decimals));
+                value = parseFloat(that._round(value, decimals), 10);
             }
 
             that._value = value = that._adjust(value);
@@ -614,7 +633,7 @@ var __meta__ = { // jshint ignore:line
             if (isNotNull) {
                 value = value.toString();
                 if (value.indexOf("e") !== -1) {
-                    value = round(+value, decimals);
+                    value = that._round(+value, decimals);
                 }
                 value = value.replace(POINT, numberFormat[POINT]);
             } else {
@@ -625,10 +644,15 @@ var __meta__ = { // jshint ignore:line
         },
 
         _placeholder: function(value) {
-            this._text.val(value);
+            var input = this._text;
+
+            input.val(value);
             if (!placeholderSupported && !value) {
-                this._text.val(this.options.placeholder);
+                input.val(this.options.placeholder);
             }
+
+            input.attr("title", input.attr("title") || input.val());
+            input.attr("aria-title", input.attr("title") || input.val());
         },
 
         _wrapper: function() {
@@ -673,8 +697,20 @@ var __meta__ = { // jshint ignore:line
         }
     });
 
-    function buttonHtml(className, text) {
-        return '<span unselectable="on" class="k-link"><span unselectable="on" class="k-icon k-i-arrow-' + className + '" title="' + text + '">' + text + '</span></span>';
+    function buttonHtml(direction, text) {
+        var className = "k-i-arrow-" + (direction === "increase" ? "n" : "s");
+        return '<span unselectable="on" class="k-link k-link-' + direction + '" aria-label="' + text + '"><span unselectable="on" class="k-icon ' + className + '"></span></span>';
+    }
+
+    function truncate(value, precision) {
+        var parts = parseFloat(value, 10).toString().split(POINT);
+
+        if (parts[1]) {
+            parts[1] = parts[1].substring(0, precision);
+        }
+
+        return parts.join(POINT);
+
     }
 
     ui.plugin(NumericTextBox);

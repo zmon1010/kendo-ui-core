@@ -1,6 +1,5 @@
 namespace Kendo.Mvc.UI
 {
-    using System.Data;
     using System;
 
     public interface IListViewEditingSettings

@@ -345,12 +345,7 @@
 
     test("creates clear icon", function() {
         filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
-        equal(filterCell.element.find(".k-icon.k-i-close").length, 1);
-    });
-
-    test("clear icon clears the filter", function() {
-        filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
-        equal(filterCell.element.find(".k-icon.k-i-close").length, 1);
+        equal(filterCell.element.find(".k-icon.k-i-close").length, 2);
     });
 
     test("clear icon clears the filter", function() {
@@ -377,8 +372,8 @@
         filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
 
         equal(filterCell.input.val(), "");
-        filterCell.element.find(".k-icon.k-i-close").click();
-        ok(!filterCell.element.find(".k-icon.k-i-close").is(":visible"));
+        filterCell.element.find(".k-button .k-icon.k-i-close").click();
+        ok(!filterCell.element.find(".k-button .k-icon.k-i-close").is(":visible"));
     });
 
 
@@ -547,4 +542,56 @@
 
         equal(filterCell.wrapper.find("input").val(), "");
     });
+
+    test("triggers change event when filter is change passing current filter descriptor", 5, function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        filterCell = setup(dom, {
+            dataSource: dataSource,
+            field: "foo",
+            change: function(e) {
+                equal(e.field, "foo");
+                equal(e.filter.logic, "and");
+                equal(e.filter.filters[0].value, "bar");
+                equal(e.filter.filters[0].field, "foo");
+                equal(e.filter.filters[0].operator, "eq");
+            }
+        });
+
+        filterCell.viewModel.set("value", "bar");
+    });
+
+    test("preventing change event does not filter the dataSource", 1, function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        filterCell = setup(dom, {
+            dataSource: dataSource,
+            field: "foo",
+            change: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        filterCell.viewModel.set("value", "bar");
+
+        ok(!dataSource.filter());
+    });
+
+    test("clear triggers change event with null filter", 3, function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        filterCell = setup(dom, {
+            dataSource: dataSource,
+            field: "foo",
+            change: function(e) {
+                equal(e.filter, null);
+                equal(e.field, "foo");
+            }
+        });
+
+        filterCell.clearFilter();
+
+        ok(!dataSource.filter());
+    });
+
 })();

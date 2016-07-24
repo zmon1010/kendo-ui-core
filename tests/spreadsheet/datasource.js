@@ -551,4 +551,12 @@
         sheet.range("A2").format("d/m/yyyy").input("1/1/1999");
     });
 
+    test("setting values through range API updates datasource", function() {
+        var dataSource = new kendo.data.DataSource({});
+
+        sheet.setDataSource(dataSource);
+        dataSource.bind("change", ok.bind(this));
+        sheet.range("A1").values([ [ 1 ] ]);
+    });
+
 })();

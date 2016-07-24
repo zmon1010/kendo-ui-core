@@ -2,7 +2,7 @@
 {
     using System;
     using Kendo.Mvc.UI;
-    using Microsoft.AspNet.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     
     public abstract class NavigationHtmlBuilderBase<TComponent, TItem> : INavigationHtmlBuilder<TComponent, TItem>
         where TComponent : WidgetBase, INavigationItemComponent<TItem>

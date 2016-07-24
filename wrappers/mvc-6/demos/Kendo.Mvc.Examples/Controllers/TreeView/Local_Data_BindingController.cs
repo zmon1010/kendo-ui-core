@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Examples.Models;
 

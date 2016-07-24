@@ -1,0 +1,23 @@
+---
+# vim:ff=unix ts=2 sw=2 ai expandtab ft=ansible:
+- name: installs needed packages
+  apt: name=imagemagick state=latest
+- name: installs some gems  
+  gem: name={{item}} state=latest
+  with_items:
+    - thin
+    - sinatra
+- name: deploy screenshots
+  git:
+    repo: https://github.com/underlog/xvfb-screenshot.git
+    dest: /var/www/screenshot
+
+
+#deploy_revision "/var/www/screenshot" do
+#  repo 'https://github.com/underlog/xvfb-screenshot.git'
+#  migrate false
+#  restart_command "monit restart screenshot"
+#  create_dirs_before_symlink(%w{public})
+#  symlink_before_migrate({})
+#  symlinks({})
+#end

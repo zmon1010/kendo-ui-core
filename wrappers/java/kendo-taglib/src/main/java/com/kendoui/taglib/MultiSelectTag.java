@@ -77,6 +77,10 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setEvent("dataBound", value.getBody());
     }
 
+    public void setDeselect(DeselectFunctionTag value) {
+        setEvent("deselect", value.getBody());
+    }
+
     public void setFiltering(FilteringFunctionTag value) {
         setEvent("filtering", value.getBody());
     }
@@ -111,6 +115,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setAutoClose(boolean value) {
         setProperty("autoClose", value);
+    }
+
+    public boolean getClearButton() {
+        return (Boolean)getProperty("clearButton");
+    }
+
+    public void setClearButton(boolean value) {
+        setProperty("clearButton", value);
     }
 
     public void setDataSource(DataSourceTag dataSource) {
@@ -149,6 +161,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setProperty("enable", value);
     }
 
+    public boolean getEnforceMinLength() {
+        return (Boolean)getProperty("enforceMinLength");
+    }
+
+    public void setEnforceMinLength(boolean value) {
+        setProperty("enforceMinLength", value);
+    }
+
     public java.lang.String getFilter() {
         return (java.lang.String)getProperty("filter");
     }
@@ -163,6 +183,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setFixedGroupTemplate(java.lang.String value) {
         setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getFooterTemplate() {
+        return (java.lang.String)getProperty("footerTemplate");
+    }
+
+    public void setFooterTemplate(java.lang.String value) {
+        setProperty("footerTemplate", value);
     }
 
     public java.lang.String getGroupTemplate() {
@@ -227,6 +255,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setMinLength(float value) {
         setProperty("minLength", value);
+    }
+
+    public java.lang.String getNoDataTemplate() {
+        return (java.lang.String)getProperty("noDataTemplate");
+    }
+
+    public void setNoDataTemplate(java.lang.String value) {
+        setProperty("noDataTemplate", value);
     }
 
     public java.lang.String getPlaceholder() {
@@ -311,6 +347,18 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setDataBound(String value) {
         setProperty("dataBound", new Function(value));
+    }
+
+    public String getDeselect() {
+        Function property = ((Function)getProperty("deselect"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDeselect(String value) {
+        setProperty("deselect", new Function(value));
     }
 
     public String getFiltering() {

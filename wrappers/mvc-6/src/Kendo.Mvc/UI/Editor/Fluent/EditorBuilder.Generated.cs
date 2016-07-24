@@ -46,6 +46,39 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
+        /// </summary>
+        /// <param name="configurator">The configurator for the immutables setting.</param>
+        public EditorBuilder Immutables(Action<EditorImmutablesSettingsBuilder> configurator)
+        {
+            Container.Immutables.Enabled = true;
+
+            Container.Immutables.Editor = Container;
+            configurator(new EditorImmutablesSettingsBuilder(Container.Immutables));
+
+            return this;
+        }
+
+        /// <summary>
+        /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
+        /// </summary>
+        public EditorBuilder Immutables()
+        {
+            Container.Immutables.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the immutables option.</param>
+        public EditorBuilder Immutables(bool enabled)
+        {
+            Container.Immutables.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// Defines the text of the labels that are shown within the editor. Used primarily for localization.
         /// </summary>
         /// <param name="configurator">The configurator for the messages setting.</param>

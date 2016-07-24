@@ -87,7 +87,7 @@
         {
             return new EmployeeDirectory
             {
-                EmployeeID = EmployeeId ?? 0,
+                EmployeeID = EmployeeId.Value,
                 FirstName = FirstName,
                 LastName = LastName,
                 ReportsTo = ReportsTo,

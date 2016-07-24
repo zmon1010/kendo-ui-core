@@ -31,6 +31,12 @@
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.</description>
+            <name>clearButton</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The data source of the widget which is used to display suggestions for the current value. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
 instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
             <name>dataSource</name>
@@ -56,6 +62,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.</description>
+            <name>enforceMinLength</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The filtering method used to determine the suggestions for the current value. The default filter is "startswith" -
 all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.</description>
             <name>filter</name>
@@ -65,6 +77,12 @@ all data items which begin with the current widget value are displayed in the su
         <attribute>
             <description>The template used to render the fixed header group. By default the widget displays only the value of the current group.</description>
             <name>fixedGroupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.</description>
+            <name>footerTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -105,6 +123,13 @@ all data items which begin with the current widget value are displayed in the su
             <type>float</type>
         </attribute>
         <attribute>
+            <description>The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.</description>
+            <name>noDataTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The hint displayed by the widget when it is empty. Not set by default.</description>
             <name>placeholder</name>
             <rtexprvalue>true</rtexprvalue>
@@ -121,7 +146,7 @@ refer to Popup documentation.</description>
             <description>The character used to separate multiple values. Empty by default.</description>
             <name>separator</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>If set to true the widget will automatically use the first suggestion as its value.</description>
@@ -253,6 +278,12 @@ If the developer does not specify one, the framework will automatically set item
             <name>itemHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The changes introduced with the Kendo UI R3 2016 release enable you to determine if the valueMapper must resolve a value to an index or a value to a dataItem. This is configured through the mapValueTo option that accepts two possible values - "index" or "dataItem". By default, the mapValueTo is set to "index", which does not affect the current behavior of the virtualization process.For more information, refer to the article on virtualization.</description>
+            <name>mapValueTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
@@ -4021,7 +4052,7 @@ For example line series will be on top with bar and area following below.</descr
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The chart series extremes configuration.</description>
+        <description>The chart series extremes configuration. Applies to extreme outliers. Also check series.outliers.</description>
         <name>chart-seriesItem-extremes</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemExtremesTag</tag-class>
         <body-content>JSP</body-content>
@@ -5348,7 +5379,7 @@ By default chart series highlighting is enabled.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The chart series outliers configuration.</description>
+        <description>The chart series outliers configuration. Applies to mild outliers. Also check series.extremes.</description>
         <name>chart-seriesItem-outliers</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemOutliersTag</tag-class>
         <body-content>JSP</body-content>
@@ -11581,6 +11612,12 @@ Help topic showing how cascading functionality works</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.</description>
+            <name>clearButton</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The data source of the widget which is used to display a list of values. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
 instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
             <name>dataSource</name>
@@ -11612,6 +11649,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.</description>
+            <name>enforceMinLength</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
 The supported filter values are startswith, endswith and contains.</description>
             <name>filter</name>
@@ -11621,6 +11664,12 @@ The supported filter values are startswith, endswith and contains.</description>
         <attribute>
             <description>The template used to render the fixed header group. By default the widget displays only the value of the current group.</description>
             <name>fixedGroupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.</description>
+            <name>footerTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -11667,6 +11716,13 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>float</type>
         </attribute>
         <attribute>
+            <description>The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.</description>
+            <name>noDataTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The hint displayed by the widget when it is empty. Not set by default.</description>
             <name>placeholder</name>
             <rtexprvalue>true</rtexprvalue>
@@ -11709,7 +11765,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -11859,6 +11915,12 @@ If the developer does not specify one, the framework will automatically set item
             <type>float</type>
         </attribute>
         <attribute>
+            <description>The changes introduced with the Kendo UI R3 2016 release enable you to determine if the valueMapper must resolve a value to an index or a value to a dataItem. This is configured through the mapValueTo option that accepts two possible values - "index" or "dataItem". By default, the mapValueTo is set to "index", which does not affect the current behavior of the virtualization process.For more information, refer to the article on virtualization.</description>
+            <name>mapValueTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
 The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
 The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
@@ -11880,7 +11942,7 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
     </tag>
 
     <tag>
-        <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>comboBox-change</name>
         <tag-class>com.kendoui.taglib.combobox.ChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12215,31 +12277,31 @@ makes a HTTP request for every CRUD operation.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.</description>
+            <description>If set to true, the data source will leave the aggregate calculation to the remote service. By default, the data source calculates aggregates client-side.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverAggregates</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.By default the filter is sent to the server following jQuery's conventions.For example the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.</description>
+            <description>If set to true, the data source will leave the filtering implementation to the remote service. By default, the data source performs filtering client-side.By default, the filter is sent to the server following jQuery's conventions.For example, the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverFiltering</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.By default the group is sent to the server following jQuery's conventions.For example the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.</description>
+            <description>If set to true, the data source will leave the grouping implementation to the remote service. By default, the data source performs grouping client-side.By default, the group is sent to the server following jQuery's conventions.For example, the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverGrouping</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.</description>
+            <description>If set to true, the data source will leave the data item paging implementation to the remote service. By default, the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverPaging</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.By default the sort is sent to the server following jQuery's conventions.For example the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.</description>
+            <description>If set to true, the data source will leave the data item sorting implementation to the remote service. By default, the data source performs sorting client-side.By default, the sort is sent to the server following jQuery's conventions.For example, the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.For more information and tips about client and server data operations, refer to the introductory article on the DataSource.</description>
             <name>serverSorting</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -12340,7 +12402,7 @@ odata version 4 and "signalr".</description>
         </attribute>
         <attribute>
             <description>The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "isnull" (is equal to null), "isnotnull" (is not equal to null), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
-"startswith", "endswith", "contains", "isempty", "isnotempty". The last five are supported only for string fields.</description>
+"startswith", "endswith", "contains", "doesnotcontain", "isempty", "isnotempty". The last five are supported only for string fields.</description>
             <name>operator</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -16044,6 +16106,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Specifies if the multiple selection should be enabled.</description>
+            <name>multiple</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
 
     </tag>
 
@@ -18399,6 +18467,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.</description>
+            <name>enforceMinLength</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
 The supported filter values are startswith, endswith and contains.</description>
             <name>filter</name>
@@ -18408,6 +18482,12 @@ The supported filter values are startswith, endswith and contains.</description>
         <attribute>
             <description>The template used to render the fixed header group. By default the widget displays only the value of the current group.</description>
             <name>fixedGroupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.</description>
+            <name>footerTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -18446,6 +18526,13 @@ The supported filter values are startswith, endswith and contains.</description>
             <name>minLength</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.</description>
+            <name>noDataTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>Define the text of the default empty item. If the value is an object, then the widget will use it as a valid data item.
@@ -18497,7 +18584,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -18647,6 +18734,12 @@ If the developer does not specify one, the framework will automatically set item
             <type>float</type>
         </attribute>
         <attribute>
+            <description>The changes introduced with the Kendo UI R3 2016 release enable you to determine if the valueMapper must resolve a value to an index or a value to a dataItem. This is configured through the mapValueTo option that accepts two possible values - "index" or "dataItem". By default, the mapValueTo is set to "index", which does not affect the current behavior of the virtualization process.For more information, refer to the article on virtualization.</description>
+            <name>mapValueTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
 The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
 The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
@@ -18668,7 +18761,7 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
     </tag>
 
     <tag>
-        <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the value of the widget is changed by the user. As of 2015 Q3 SP1 cascading widget will trigger change event when its value is changed due to parent update.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>dropDownList-change</name>
         <tag-class>com.kendoui.taglib.dropdownlist.ChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -18739,6 +18832,12 @@ This property has been introduced in internal builds after 2014.1.319.</descript
         <attribute>
             <description>Indicates whether the Editor should submit encoded HTML tags. By default, the submitted value is encoded.</description>
             <name>encoded</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.</description>
+            <name>immutables</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -19731,6 +19830,41 @@ If function is assigned, the current path and image name will be provided.</desc
         <body-content>JSP</body-content>
     </tag>
 
+
+    <tag>
+        <description>If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.</description>
+        <name>editor-immutables</name>
+        <tag-class>com.kendoui.taglib.editor.ImmutablesTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Callback that allows custom deserialization of an immutable element. The callback accepts two arguments. The DOM element representing the immutable element in the html view and the immutable DOM element, which will be restored.</description>
+            <name>deserialization</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Kendo template or a callback that allows custom serialization of an immutable element. The callback accepts DOM element as only parameter and is expected to return the HTML source of a DOM element.</description>
+            <name>serialization</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Callback that allows custom deserialization of an immutable element. The callback accepts two arguments. The DOM element representing the immutable element in the html view and the immutable DOM element, which will be restored.</description>
+        <name>editor-immutables-deserialization</name>
+        <tag-class>com.kendoui.taglib.editor.ImmutablesDeserializationFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Kendo template or a callback that allows custom serialization of an immutable element. The callback accepts DOM element as only parameter and is expected to return the HTML source of a DOM element.</description>
+        <name>editor-immutables-serialization</name>
+        <tag-class>com.kendoui.taglib.editor.ImmutablesSerializationFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Defines the text of the labels that are shown within the editor. Used primarily for localization.</description>
@@ -20951,6 +21085,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
             <description>The data source of the widget which contains the dependencies. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.GanttDependencyDataSource
 instance.If the dependencies option is set to a JavaScript object or array the widget will initialize a new kendo.data.GanttDependencyDataSource instance using that value as data source configuration.If the dependencies option is an existing kendo.data.GanttDependencyDataSource instance the widget will use that instance and will not initialize a new one.</description>
             <name>dependencies</name>
@@ -21271,11 +21411,65 @@ custom number format, standard date format or a custom date format.</description
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to false the user won't be able to create tasks.</description>
+            <name>create</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to create dependencies.</description>
+            <name>dependencyCreate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to delete dependencies.</description>
+            <name>dependencyDestroy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to delete tasks.</description>
+            <name>destroy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to edit the percentComplete of the tasks.</description>
+            <name>dragPercentComplete</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to move tasks.</description>
+            <name>move</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to reorder tasks in the task list.</description>
+            <name>reorder</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to resize tasks.</description>
+            <name>resize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The template which renders the editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the Gantt will know
 which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user won't be able to update tasks.</description>
+            <name>update</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
 
     </tag>
@@ -21626,6 +21820,29 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
     <tag>
+        <description>Configures the Kendo UI Gantt range settings.</description>
+        <name>gantt-range</name>
+        <tag-class>com.kendoui.taglib.gantt.RangeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>If set to some date the timeline of all views will end to this date.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>If set to some date the timeline of all views will start from this date.</description>
+            <name>start</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>The configuration of the gantt resource(s). A gantt resource is optional metadata that can be associated
 with a gantt task.</description>
         <name>gantt-resources</name>
@@ -21758,6 +21975,12 @@ By default the Kendo UI Gantt widget displays "day", "week", and "month" views.<
 
         <body-content>JSP</body-content>
         <attribute>
+            <description>If set to some date and it is between the range start and range end of the selected view, the timeline of the currently selected view is scrolled to start from this date.Overrides the date option of the gantt.</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
             <description>The template used to render the day slots in "day" and "week" views.</description>
             <name>dayHeaderTemplate</name>
             <rtexprvalue>true</rtexprvalue>
@@ -21812,6 +22035,28 @@ By default the Kendo UI Gantt widget displays "day", "week", and "month" views.<
             <type>java.lang.String</type>
         </attribute>
     </tag>
+
+    <tag>
+        <description>Configures the view range settings.</description>
+        <name>gantt-view-range</name>
+        <tag-class>com.kendoui.taglib.gantt.ViewRangeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>If set to some date the timeline of the view will end to this date.Overrides the range.end option of the gantt.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>If set to some date the timeline of the view will start from this date.Overrides the range.start option of the gantt.</description>
+            <name>start</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+
+    </tag>
+
 
 
     <tag>
@@ -22170,6 +22415,21 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>filter</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>page</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
             <name>pdfExport</name>
             <rtexprvalue>true</rtexprvalue>
@@ -22192,6 +22452,11 @@ and the string value will be passed as an argument to a kendo.template() functio
         <attribute>
             <description>Fired when the user clicks the "save" command button.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>saveChanges</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>sort</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -22320,7 +22585,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
 
 
     <tag>
-        <description>The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+        <description>The configuration of the grid columns. An array of JavaScript objects or strings. JavaScript objects are interpreted as column configurations. Strings are interpreted as the
 field to which the column is bound. The grid will create a column for every item of the array.</description>
         <name>grid-columns</name>
         <tag-class>com.kendoui.taglib.grid.ColumnsTag</tag-class>
@@ -22328,7 +22593,7 @@ field to which the column is bound. The grid will create a column for every item
     </tag>
 
     <tag>
-        <description>The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+        <description>The configuration of the grid columns. An array of JavaScript objects or strings. JavaScript objects are interpreted as column configurations. Strings are interpreted as the
 field to which the column is bound. The grid will create a column for every item of the array.</description>
         <name>grid-column</name>
         <tag-class>com.kendoui.taglib.grid.ColumnTag</tag-class>
@@ -22629,9 +22894,7 @@ for all columns when filtering is enabled via the filterable option.Can be set t
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Specifies custom dataSource for the AutoComplete when type of the column is string.  Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
-instance.
-If the dataSource options is missing the options of the Grid's dataSource will be used.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
+            <description>Specifies a custom dataSource for the AutoComplete when the type of the column is string. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array, or an existing kendo.data.DataSource instance.It is not recommended that you use the same dataSource instance for the Grid and the AutoComplete because it causes negative side effects.If the dataSource options is missing, a new cloned instance of the Grid's dataSource will be used.If the dataSource option is an existing kendo.data.DataSource instance, the widget will use that instance and will not initialize a new one.</description>
             <name>dataSource</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -22679,7 +22942,7 @@ If the dataSource options is missing the options of the Grid's dataSource will b
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswith", "endswith", "contains".</description>
+            <description>Specifies the AutoComplete filter option. The possible values are the same as the ones for the AutoComplete filter option - "startswith", "endswith", "contains". The "contains" operator performs a case-insensitive search. To perform a case-sensitive filtering, set a custom filtering function through the dataSource.filter.operator option.</description>
             <name>suggestionOperator</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -23430,7 +23693,7 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The number of data items which will be displayed in the grid.</description>
+            <description>The number of data items which will be displayed in the grid. This setting will not work if the Grid is assigned an already existing Kendo UI DataSource instance.</description>
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -23861,6 +24124,24 @@ This class can be used to obtain reference to the button after Grid initializati
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-filter</name>
+        <tag-class>com.kendoui.taglib.grid.FilterFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-group</name>
+        <tag-class>com.kendoui.taglib.grid.GroupFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-page</name>
+        <tag-class>com.kendoui.taglib.grid.PageFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
         <name>grid-pdfExport</name>
         <tag-class>com.kendoui.taglib.grid.PdfExportFunctionTag</tag-class>
@@ -23888,6 +24169,12 @@ This class can be used to obtain reference to the button after Grid initializati
         <description>Fired when the user clicks the "save" command button.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-saveChanges</name>
         <tag-class>com.kendoui.taglib.grid.SaveChangesFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-sort</name>
+        <tag-class>com.kendoui.taglib.grid.SortFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -26549,6 +26836,12 @@ by setting the close animation.  Each animation also has a direction which can b
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.</description>
+            <name>clearButton</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The data source of the widget which is used to display a list of values. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
 instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
             <name>dataSource</name>
@@ -26580,6 +26873,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to true the widget will not show all items when the text of the search input cleared. By default the widget shows all items when the text of the search input is cleared. Works in conjunction with minLength.</description>
+            <name>enforceMinLength</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The filtering method used to determine the suggestions for the current value. Filtration is turned of by default.
 The supported filter values are startswith, endswith and contains.</description>
             <name>filter</name>
@@ -26589,6 +26888,12 @@ The supported filter values are startswith, endswith and contains.</description>
         <attribute>
             <description>The template used to render the fixed header group. By default the widget displays only the value of the current group.</description>
             <name>fixedGroupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the footer template. The footer template receives the widget itself as a part of the data argument. Use the widget fields directly in the template.</description>
+            <name>footerTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -26640,6 +26945,13 @@ A zero value means that a request will be made as soon as the user focuses the w
             <name>minLength</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the "no data" template, which will be displayed if no results are found or the underlying data source is empty.
+The noData template receives the widget itself as a part of the data argument. The template will be evaluated on every widget data bound.</description>
+            <name>noDataTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The hint displayed by the widget when it is empty. Not set by default.</description>
@@ -26707,6 +27019,11 @@ A zero value means that a request will be made as soon as the user focuses the w
         <attribute>
             <description>Fired when an item from the popup is selected by the user.</description>
             <name>select</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when an item is deselected or tag is removed.</description>
+            <name>deselect</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <dynamic-attributes>true</dynamic-attributes>
@@ -26825,6 +27142,12 @@ If the developer does not specify one, the framework will automatically set item
             <type>float</type>
         </attribute>
         <attribute>
+            <description>The changes introduced with the Kendo UI R3 2016 release enable you to determine if the valueMapper must resolve a value to an index or a value to a dataItem. This is configured through the mapValueTo option that accepts two possible values - "index" or "dataItem". By default, the mapValueTo is set to "index", which does not affect the current behavior of the virtualization process.For more information, refer to the article on virtualization.</description>
+            <name>mapValueTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
 The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
 The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
@@ -26879,6 +27202,12 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
         <description>Fired when an item from the popup is selected by the user.</description>
         <name>multiSelect-select</name>
         <tag-class>com.kendoui.taglib.multiselect.SelectFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when an item is deselected or tag is removed.</description>
+        <name>multiSelect-deselect</name>
+        <tag-class>com.kendoui.taglib.multiselect.DeselectFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -27064,7 +27393,7 @@ top takes precedence over bottom and left takes precedence over right.</descript
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used.Compare with the format property.</description>
+            <description>Specifies the number precision applied to the widget value and when the NumericTextBox is focused. If not set, the precision defined by the current culture is used. If the user enters a number with a greater precision than is currently configured, the widget value will be rounded. For example, if decimals is 2 and the user inputs 12.346, the value will become 12.35. If the user inputs 12.99, the value will become 13.00.Compare with the format property.</description>
             <name>decimals</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -27098,6 +27427,18 @@ top takes precedence over bottom and left takes precedence over right.</descript
             <name>placeholder</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the decimals length should be restricted during typing. The length of the fraction is defined by the decimals value.</description>
+            <name>restrictDecimals</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the value should be rounded or truncated. The length of the fraction is defined by the decimals value.</description>
+            <name>round</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Specifies whether the up and down spin buttons should be rendered</description>
@@ -43582,7 +43923,7 @@ A fade animation is highly recommended with any of the non-default tab position 
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies the selectd tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.</description>
+            <description>Specifies the selected tab. Should be corresponding to the dataTextField configuration and used when bound to a DataSource component.</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

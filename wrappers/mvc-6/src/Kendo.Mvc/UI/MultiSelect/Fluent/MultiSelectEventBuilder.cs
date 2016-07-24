@@ -145,6 +145,28 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Fired when an item is deselected or tag is removed.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the deselect event.</param>
+        public MultiSelectEventBuilder Deselect(string handler)
+        {
+            Handler("deselect", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when an item is deselected or tag is removed.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public MultiSelectEventBuilder Deselect(Func<object, object> handler)
+        {
+            Handler("deselect", handler);
+
+            return this;
+        }
+
     }
 }
 

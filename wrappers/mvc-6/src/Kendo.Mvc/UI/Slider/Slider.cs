@@ -1,11 +1,12 @@
 using Kendo.Mvc.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Globalization;
-using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace Kendo.Mvc.UI
 {
@@ -54,7 +55,7 @@ namespace Kendo.Mvc.UI
         protected override void WriteHtml(TextWriter writer)
         {
             var explorer = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
-            var tag = Generator.GenerateRangeInput(ViewContext, explorer.Metadata, Id, Name, Value, HtmlAttributes);
+            var tag = Generator.GenerateRangeInput(ViewContext, explorer, Id, Name, Value, HtmlAttributes);
 
             if (SmallStep.HasValue)
             {

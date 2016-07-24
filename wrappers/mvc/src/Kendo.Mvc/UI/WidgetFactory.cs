@@ -19,14 +19,16 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Creates the fluent API builders of the Kendo UI widgets
     /// </summary>
+    [LicenseProvider(typeof(Kendo.Mvc.Infrastructure.Licensing.KendoLicenseProvider))]
     public class WidgetFactory : IHideObjectMembers
     {
         public WidgetFactory(HtmlHelper htmlHelper)
         {
-
             HtmlHelper = htmlHelper;
             Initializer = DI.Current.Resolve<IJavaScriptInitializer>();
             UrlGenerator = DI.Current.Resolve<IUrlGenerator>();
+
+            LicenseManager.Validate(GetType());
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2606,13 +2608,16 @@ namespace Kendo.Mvc.UI.Fluent
         {
             object model = ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData).Model;
 
-            if (model != null && model.GetType().IsPredefinedType())
+            if (model != null)
             {
-                return Convert.ToString(model);
-            }
-            else if (model.GetType().IsEnumType())
-            {
-                return Convert.ToString((int)model);
+                if (model.GetType().IsPredefinedType())
+                {
+                    return Convert.ToString(model);
+                }
+                else if (model.GetType().IsEnumType())
+                {
+                    return Convert.ToString(Convert.ToInt32(model));
+                }
             }
 
             return null;

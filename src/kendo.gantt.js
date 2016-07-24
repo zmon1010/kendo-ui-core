@@ -1114,7 +1114,9 @@ var __meta__ = { // jshint ignore:line
             html += '<div class="' + popupStyles.buttonsContainer + '">';
             html += this.createButton({ name: "update", text: messages.save, className: Gantt.styles.primary });
             html += this.createButton({ name: "cancel", text: messages.cancel });
-            html += this.createButton({ name: "delete", text: messages.destroy });
+            if (that.options.editable.destroy !== false) {
+                html += this.createButton({ name: "delete", text: messages.destroy });
+            } 
 
             html += '</div></div></div>';
 
@@ -1826,11 +1828,12 @@ var __meta__ = { // jshint ignore:line
 
         _actions: function() {
             var options = this.options;
+            var editable = options.editable;
             var actions = options.toolbar;
             var html = "";
 
             if (!isArray(actions)) {
-                if (options.editable) {
+                if (editable && editable.create !== false) {
                     actions = ["append"];
                 } else {
                     return html;
@@ -1845,7 +1848,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         _footer: function() {
-            if (!this.options.editable) {
+            var editable = this.options.editable;
+
+            if (!editable || editable.create === false) {
                 return;
             }
 
@@ -1948,6 +1953,7 @@ var __meta__ = { // jshint ignore:line
             var actionsSelector = DOT + Gantt.styles.toolbar.actions;
             var actionMessages = this.options.messages.actions;
             var timeline = this.timeline;
+            var editable = this.options.editable;
 
             var handler = function(e) {
                 var type = e.type;
@@ -1983,7 +1989,7 @@ var __meta__ = { // jshint ignore:line
                 that._createTask(task, orderId);
             };
 
-            if (!this.options.editable) {
+            if (!editable || editable.create === false) {
                 return;
             }
 
@@ -2424,6 +2430,38 @@ var __meta__ = { // jshint ignore:line
 
         view: function(type) {
             return this.timeline.view(type);
+        },
+
+        range: function (range) {
+            var dataSource = this.dataSource;
+            var view = this.view();
+            var timeline = this.timeline;
+
+            if (range) {
+                view.options.range = {
+                    start: range.start,
+                    end: range.end
+                };
+
+                timeline._render(dataSource.taskTree());
+                timeline._renderDependencies(this.dependencies.view());
+            }
+
+            return {
+                start: view.start,
+                end: view.end
+            };
+        },
+
+        date: function (date) {
+            var view = this.view();
+
+            if (date) {
+                view.options.date = date;
+                view._scrollToDate(date);
+            }
+
+            return view.options.date;
         },
 
         dataItem: function(value) {
@@ -3077,7 +3115,9 @@ var __meta__ = { // jshint ignore:line
                 }
             };
             var deleteAction = function() {
-                if (!that.options.editable || that.list.editable) {
+                var editable = that.options.editable;
+
+                if (!editable || editable.destroy === false || that.list.editable) {
                     return;
                 }
 
@@ -3192,7 +3232,7 @@ var __meta__ = { // jshint ignore:line
                         case keys.ENTER:
                             e.preventDefault();
                             if (isCell) {
-                                if (that.options.editable) {
+                                if (that.options.editable && that.options.editable.update !== false) {
                                     that._cachedCurrent = that.current;
                                     that.list._startEditHandler(that.current);
                                     $(this).one("keyup", function(e) {

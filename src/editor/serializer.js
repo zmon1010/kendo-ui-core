@@ -19,6 +19,7 @@ var cssDeclaration = /(\*?[-#\/\*\\\w]+(?:\[[0-9a-z_-]+\])?)\s*:\s*((?:'(?:\\'|.
 var sizzleAttr = /^sizzle-\d+/i;
 var scriptAttr = /^k-script-/i;
 var onerrorRe = /\s*onerror\s*=\s*(?:'|")?([^'">\s]*)(?:'|")?/i;
+var br = '<br class="k-br">';
 
 var div = document.createElement("div");
 div.innerHTML = " <hr>";
@@ -28,11 +29,7 @@ var isFunction = $.isFunction;
 
 var Serializer = {
     toEditableHtml: function(html) {
-        var br = '<br class="k-br">';
-
-        html = html || "";
-
-        return html
+        return (html || "")
             .replace(/<!\[CDATA\[(.*)?\]\]>/g, "<!--[CDATA[$1]]-->")
             .replace(/<(\/?)script([^>]*)>/ig, "<$1k:script$2>")
             .replace(/<img([^>]*)>/ig, function(match) {
@@ -42,6 +39,20 @@ var Serializer = {
             .replace(/^<(table|blockquote)/i, br + '<$1')
             .replace(/^[\s]*(&nbsp;|\u00a0)/i, '$1')
             .replace(/<\/(table|blockquote)>$/i, '</$1>' + br);
+    },
+
+    _toEditableImmutables: function(body) {
+        var firstChild = body.firstChild,
+            lastChild = body.lastChild,
+            immutable = Editor.Immutables.immutable;
+
+        if (firstChild && immutable(firstChild)) {
+            $(body).prepend(br);
+        }
+
+        if (lastChild && immutable(lastChild)) {
+            $(body).append(br);
+        }
     },
 
     _fillEmptyElements: function(body) {
@@ -55,7 +66,12 @@ var Serializer = {
                 }
 
                 if (node.nodeType == 1 && !dom.empty[dom.name(node)]) {
-                    node.innerHTML = kendo.ui.editor.emptyElementContent;
+                    if(dom.is(node, "td")) {
+                        node.innerHTML = kendo.ui.editor.emptyTableCellContent;
+                    }
+                    else {
+                        node.innerHTML = kendo.ui.editor.emptyElementContent;
+                    }
                 }
             }
         });
@@ -108,6 +124,7 @@ var Serializer = {
         var originalSrc = "originalsrc";
         var originalHref = "originalhref";
         var o = options || {};
+        var immutables = o.immutables;
 
         html = Serializer.toEditableHtml(html);
 
@@ -125,6 +142,10 @@ var Serializer = {
             html = o.custom(html) || html;
         }
         root.innerHTML = html;
+
+        if (immutables) {
+            immutables.deserialize(root);
+        }
 
         if (legacyIE) {
             dom.remove(root.firstChild);
@@ -153,6 +174,8 @@ var Serializer = {
 
         Serializer._removeSystemElements(root);
 
+        Serializer._toEditableImmutables(root);
+
         // add k-table class to all tables
         $("table", root).addClass("k-table");
 
@@ -161,6 +184,7 @@ var Serializer = {
 
     domToXhtml: function(root, options) {
         var result = [];
+        var immutables = options && options.immutables;
 
         function semanticFilter(attributes) {
             return $.grep(attributes, function(attr) {
@@ -474,7 +498,9 @@ var Serializer = {
                 tagName, mapper,
                 parent, value, previous;
 
-            if (nodeType == 1) {
+            if (immutables && Editor.Immutables.immutable(node)) {
+                result.push(immutables.serialize(node));
+            } else if (nodeType == 1) {
                 tagName = dom.name(node);
 
                 if (!tagName || dom.insignificant(node)) {

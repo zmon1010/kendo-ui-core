@@ -41,7 +41,7 @@
                 '<ul class="k-group">' +
                     '<li class="k-item k-first k-last">' +
                         '<div class="k-top k-bot">' +
-                            '<span class="k-icon k-minus"></span>' +
+                            '<span class="k-icon k-i-collapse"></span>' +
                             '<span class="k-in">My Web Site</span>' +
                         '</div>' +
                     '</li>' +
@@ -58,7 +58,7 @@
                 '<ul class="k-group">' +
                     '<li class="k-item k-first k-last" data-expanded="true">' +
                         '<div class="k-top k-bot">' +
-                            '<span class="k-icon k-minus"></span>' +
+                            '<span class="k-icon k-i-collapse"></span>' +
                             '<span class="k-in">foo</span>' +
                         '</div>' +
                         '<ul class="k-group">' +
@@ -100,7 +100,7 @@
                 '<ul class="k-group">' +
                     '<li class="k-item k-first k-last">' +
                         '<div class="k-top k-bot">' +
-                            '<span class="k-icon k-minus"></span>' +
+                            '<span class="k-icon k-i-collapse"></span>' +
                             '<span class="k-checkbox-wrapper">' +
                                 '<input class="k-checkbox" name="checkedFiles" type="checkbox" value="1">' +
                                 '<label class="k-checkbox-label"></label>' +
@@ -127,8 +127,8 @@
             "<li data-expanded='true'>bar<ul><li>qux</li></ul></li>" +
         "</ul>");
 
-        equal(dom.find(".k-icon.k-plus").length, 1);
-        equal(dom.find(".k-icon.k-minus").length, 1);
+        equal(dom.find(".k-icon.k-i-expand").length, 1);
+        equal(dom.find(".k-icon.k-i-collapse").length, 1);
     });
 
     test("sets tabindex=0 by default", function() {
