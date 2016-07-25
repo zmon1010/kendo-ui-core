@@ -45,6 +45,7 @@ To enable proper compilation of the LESS files in the example you need to do the
     <script type="text/javascript" src="../src/kendo.list.js"></script>
     <script type="text/javascript" src="../src/kendo.dropdownlist.js"></script>
     <script type="text/javascript" src="../src/kendo.toolbar.js"></script>
+    <script type="text/javascript" src="../src/kendo.tooltip.js"></script>
     <script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
 
     <script type="text/javascript" src="../src/kendo.listview.js"></script>
@@ -114,7 +115,7 @@ To enable proper compilation of the LESS files in the example you need to do the
         /*Temporary workaround for quality dropdown*/
         
         .k-mediaplayer-quality {
-            width: 60px;
+            width: 70px;
             display: block;
         }
         
@@ -203,11 +204,13 @@ To enable proper compilation of the LESS files in the example you need to do the
                 mute: false,
                 media: { 
 				 	title: "Roxette - What's She Like?", 
-					source: "https://www.youtube.com/watch?v=cjFy5AYxx7k"
-					// source: [
-					// 	{ quality: "HQ1", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k" },
-					// 	{ quality: "HQ2", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k" }
-					// ] 
+					// source: "https://www.youtube.com/watch?v=cjFy5AYxx7k"
+					source: [
+						{ quality: "480p", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k" },
+						{ quality: "720p", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k" },
+                        { quality: "960p", url: "https://www.youtube.com/watch?v=vGKeA3xUzxU" },
+                        { quality: "1080p", url: "https://www.youtube.com/watch?v=BmjAsjGbdXk" }
+					] 
 				}
             });
 

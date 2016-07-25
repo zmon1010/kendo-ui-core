@@ -5,7 +5,7 @@
     module("kendo.ui.MediaPlayer initialization", {
         setup: function () {
             div = $("<div />").appendTo(QUnit.fixture);
-            mediaPlayer = new MediaPlayer(div, { media: { title: "fakeTitle", source: "fakeUrl.mp4" } });
+            mediaPlayer = new MediaPlayer(div, { media: { title: "fakeTitle", source: "http://localhost" } });
             htmlPlayerMock = {
                 muted: false,
                 currentTime: 0,
@@ -69,9 +69,17 @@
         ok(mediaPlayer.dropdown() instanceof kendo.ui.DropDownList);
     });
 
+    test("dropdown should be hidden initially when there is only one source", function () {
+        ok(mediaPlayer.toolbar().wrapper.is(":visible"));
+    });
+
     test("adds fullscreen toolbar button", function () {
         ok(mediaPlayer.toolbar().options.items.find(function (el) {
             return el.id === "fullscreen";
         }));
+    });
+
+    test("adds kendo tooltip", function () { 
+        ok(mediaPlayer._tooltip instanceof kendo.ui.Tooltip);    
     });
 })();

@@ -5,7 +5,7 @@
     module("kendo.ui.MediaPlayer localization", {
         setup: function () {
             div = $("<div />").appendTo(QUnit.fixture);
-            mediaPlayer = new MediaPlayer(div, { media: { title: "fakeTitle", source: "fakeUrl.mp4" } });
+            mediaPlayer = new MediaPlayer(div, { media: { title: "fakeTitle", source: "http://localhost" } });
             htmlPlayerMock = {
                 muted: false,
                 currentTime: 0,

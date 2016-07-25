@@ -1,5 +1,5 @@
 (function (f, define) {
-    define(["./kendo.slider", "./kendo.toolbar", "./kendo.dropdownlist"], f);
+    define(["./kendo.slider", "./kendo.toolbar", "./kendo.dropdownlist", ".kendo.tooltip"], f);
 })(function () {
 
     var __meta__ = { // jshint ignore:line
@@ -7,7 +7,7 @@
         name: "MediaPlayer",
         category: "web",
         description: "",
-        depends: ["slider", "toolbar", "dropdownlist"]
+        depends: ["slider", "toolbar", "dropdownlist", "tooltip"]
     };
 
     (function ($, undefined) {
@@ -86,6 +86,8 @@
 
                 this._createVolumeSlider();
 
+                this._createTooltip();                
+
                 this._timers = {};
 
                 this._mediaData = options.media;
@@ -141,6 +143,13 @@
                     this.wrapper.append(templates.titleBar);
                     this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 }
+            },
+
+            _createTooltip: function () {
+                this._tooltip = new ui.Tooltip(this.toolbar().wrapper, {
+                    filter: "a[title], span[title]",
+                    position: "top"
+                });
             },
 
             _createSlider: function () {
@@ -300,9 +309,10 @@
 
                     if (this.options.media && isArray(media.source)) {
                         this._dropDown.setDataSource(media.source);
+                        this._dropDown.select(0);
                     }
 
-                    this._dropDown.wrapper.attr("title", this.options.messages.quality);
+                    this._dropDown.wrapper.attr("title", this.options.messages.quality).hide();
                 }
             },
 
@@ -431,18 +441,20 @@
             },
 
             _playStateToggle: function (play) {
+                var playButton = this._playButton;
+
                 if (typeof play === "undefined") {
-                    play = this._playButton.is(DOT + STATE_PLAY);
+                    play = playButton.is(DOT + STATE_PLAY);
                 }
 
                 if (play) {
-                    this._playButton
+                    playButton
                         .removeClass(STATE_PLAY)
                         .addClass(STATE_PAUSE)
                         .attr("title", this.options.messages.pause);
                 }
                 else {
-                    this._playButton
+                    playButton
                         .removeClass(STATE_PAUSE)
                         .addClass(STATE_PLAY)
                         .attr("title", this.options.messages.play);
@@ -558,6 +570,7 @@
                 this._ytmedia.getIframe().style.height = "100%";
                 this._youTubeVideo = true;
                 this._mediaDurationChangeHandler();
+
                 if (this.options.autoPlay) {
                     this._playStateToggle(true);
                     this._ytmedia.loadVideoById(this._getMediaId());
@@ -924,16 +937,17 @@
             },
 
             media: function (value) {
+                var dropdown = this.dropdown();
                 if (typeof value === 'undefined') {
                     return (typeof this._mediaData !== 'undefined') ? this._mediaData : this._mediaData = this.options.media;
                 }
 
                 if (isArray(value.source)) {
-                    this.dropdown().setDataSource(value.source)
-                        .wrapper.show();
+                    dropdown.setDataSource(value.source);
+                    dropdown.wrapper.show();
                 }
                 else {
-                    this.dropdown().wrapper.hide();
+                    dropdown.wrapper.hide();
                 }
 
                 this._mediaData = value;
@@ -952,10 +966,8 @@
             },
 
             _refresh: function () {
-                var data = this.media();
+                var data = this.media(this.options.media);
                 if (data) {
-                    this.dropdown().wrapper.toggle(isArray(data));
-
                     this._updateTitle();
                     this._youTubeVideo = this._isYouTubeUrl();
                     this._initializePlayer();

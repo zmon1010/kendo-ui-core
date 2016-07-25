@@ -5,7 +5,7 @@
     module("kendo.ui.MediaPlayer API", {
         setup: function () {
             div = $("<div />").appendTo(QUnit.fixture);
-            mediaPlayer = new MediaPlayer(div, { media: { title: "fakeTitle", source: "fakeUrl.mp4" } });
+            mediaPlayer = new MediaPlayer(div, { media: { title: "fakeTitle", source: "http://localhost" } });
             htmlPlayerMock = {
                 muted: false,
                 currentTime: 0,
@@ -84,13 +84,45 @@
 
     test("changing player source using the media function should update the title", function () {
         var titlebar = mediaPlayer.titlebar();
-        mediaPlayer.media({ source: "test.url", title: "new title" });
+        mediaPlayer.media({ source: "http://localhost", title: "new title" });
         ok(titlebar.text() === "new title");
     });
 
     test("setting player source without title will still fallback to url when setting the titlebar text", function () {
         var titlebar = mediaPlayer.titlebar();
-        mediaPlayer.media({ source: "test.url" });
-        ok(titlebar.text() === "test.url");
+        mediaPlayer.media({ source: "http://localhost" });
+        ok(titlebar.text() === "http://localhost");
     });
+
+    test("media function should enable the dropdown if mutiple sources are passed", function () {
+        mediaPlayer.media({ 
+            title: "Test", 
+            source: [{
+                quality: "Q1", 
+                url: "http://localhost" 
+            }, {
+                quality: "Q2",
+                url: "http://localhost"
+            }]
+        });
+        ok(mediaPlayer.toolbar().wrapper.is(":visible"));
+    });    
+
+    test("media function should disable the dropdown when single source is set", function () {
+        mediaPlayer.media({ 
+            title: "Test", 
+            source: [{
+                quality: "Q1", 
+                url: "http://localhost" 
+            }, {
+                quality: "Q2",
+                url: "http://localhost"
+            }]
+        });
+        mediaPlayer.media({ 
+            title: "Test", 
+            source: "http://localhost"
+        });   
+        ok(mediaPlayer.dropdown().wrapper.is(":hidden"));
+    });   
 })();
