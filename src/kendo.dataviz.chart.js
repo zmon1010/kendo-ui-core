@@ -8589,7 +8589,7 @@ var __meta__ = { // jshint ignore:line
                 connectorLine,
                 count = points.length,
                 space = 4,
-                sector, angle, segment,
+                connectorsColor, sector, angle, segment,
                 seriesIx, label, i;
 
             ChartElement.fn.createVisual.call(this);
@@ -8600,11 +8600,12 @@ var __meta__ = { // jshint ignore:line
                 angle = sector.middle();
                 label = segment.label;
                 seriesIx = { seriesId: segment.seriesIx };
+                connectorsColor = (segment.options.connectors || {}).color || connectors.color;
 
                 if (label) {
                     connectorLine = new draw.Path({
                         stroke: {
-                            color:  connectors.color,
+                            color:  connectorsColor,
                             width: connectors.width
                         },
                         animation: {
