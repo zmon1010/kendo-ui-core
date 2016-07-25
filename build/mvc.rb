@@ -192,6 +192,10 @@ namespace :mvc do
          :from => DEMO_SHARED_ROOT + 'shared/images/employees/*',
          :root => DEMO_SHARED_ROOT + 'shared/images/'
 
+    tree :to => MVC_DEMOS_ROOT + 'Content/shared/images',
+         :from => DEMO_SHARED_ROOT + 'shared/images/logos/*',
+         :root => DEMO_SHARED_ROOT + 'shared/images/'
+
     tree :to => MVC_DEMOS_ROOT + 'Scripts',
          :from => MVC_MIN_JS,
          :root => DIST_JS_ROOT
