@@ -51,6 +51,10 @@ public class SeriesItemConnectorsTag extends  BaseTag  /* interfaces *//* interf
         return "chart-seriesItem-connectors";
     }
 
+    public void setColor(SeriesItemConnectorsColorFunctionTag value) {
+        setEvent("color", value.getBody());
+    }
+
     public java.lang.String getColor() {
         return (java.lang.String)getProperty("color");
     }
