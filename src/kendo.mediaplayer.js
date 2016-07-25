@@ -1,5 +1,5 @@
 (function (f, define) {
-    define(["./kendo.slider", "./kendo.toolbar", "./kendo.dropdownlist", ".kendo.tooltip"], f);
+    define(["./kendo.slider", "./kendo.toolbar", "./kendo.dropdownlist", "./kendo.tooltip"], f);
 })(function () {
 
     var __meta__ = { // jshint ignore:line
@@ -147,7 +147,7 @@
 
             _createTooltip: function () {
                 this._tooltip = new ui.Tooltip(this.toolbar().wrapper, {
-                    filter: "a[title], span[title]",
+                    filter: "a[title!=''], span[title!='']", //dragHandleTitle
                     position: "top"
                 });
             },
@@ -165,6 +165,7 @@
                         showButtons: false,
                         change: this._sliderDragChangeHandler,
                         slide: this._sliderDraggingHandler,
+                        dragHandleTitle: "",
                         tooltip: {
                             template: templates.toolTip
                         }
@@ -186,6 +187,7 @@
                         value: this.options.volume,
                         slide: this._volumeDraggingHandler,
                         change: this._volumeChangeHandler,
+                        dragHandleTitle: "",
                         tickPlacement: "none",
                         showButtons: false
                     });

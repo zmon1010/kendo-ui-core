@@ -833,5 +833,22 @@
   </data>
   <data name="Editor_Print" xml:space="preserve">
     <value>Print</value>
+  <data name="MediaPlayer_Fullscreen" xml:space="preserve">
+    <value>Toggle fullscreen</value>
+  </data>
+  <data name="MediaPlayer_Mute" xml:space="preserve">
+    <value>Toggle audio</value>
+  </data>
+  <data name="MediaPlayer_Pause" xml:space="preserve">
+    <value>Pause video</value>
+  </data>
+  <data name="MediaPlayer_Play" xml:space="preserve">
+    <value>Play video</value>
+  </data>
+  <data name="MediaPlayer_Quality" xml:space="preserve">
+    <value>Change quality</value>
+  </data>
+  <data name="MediaPlayer_Volume" xml:space="preserve">
+    <value>Change volume</value>
   </data>
 </root>

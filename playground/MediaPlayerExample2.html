@@ -29,7 +29,7 @@ To enable proper compilation of the LESS files in the example you need to do the
     <link href='//fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet'>
 
     <link href="../styles/web/kendo.common.less" rel="stylesheet/less" type="text/css" />
-    <link href="../styles/web/kendo.default.less" rel="stylesheet/less" type="text/css" />
+    <link href="../styles/web/kendo.silver.less" rel="stylesheet/less" type="text/css" />
     <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/2.6.1/less.min.js"></script>
 
     <script type="text/javascript">
@@ -88,10 +88,10 @@ To enable proper compilation of the LESS files in the example you need to do the
         
         .k-mediaplayer .k-mediaplayer-seekbar {
             position: absolute;
-            bottom: 40px;
+            bottom: 26px;
             left: 20px;
             right: 10px;
-            opacity: 0.7;
+            opacity: 1;
         }
         /*Temporary workaround for the initial width of the volume slider*/
         
@@ -104,6 +104,14 @@ To enable proper compilation of the LESS files in the example you need to do the
         .k-mediaplayer-titlebar,
         .k-mediaplayer-toolbar {
             z-index: 2;
+        }
+
+        /*Temporary workaround to make the widget looks like on the provided design*/
+        .k-mediaplayer-toolbar {
+            padding: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
         }
         /*Temporary workaround for z-index and overlay size*/
         
@@ -137,7 +145,7 @@ To enable proper compilation of the LESS files in the example you need to do the
 
 <body>
     <div id="player1" style="width: 510px; height: 286px; float: left;"> </div>
-    <div id="consoleOutput" style="width: 510px; height: 288px; background-color: #ccc; float: left;overflow:hidden"></div>
+    <div id="consoleOutput" style="width: 510px; height: 288px; background: linear-gradient(to bottom, #479DD3, #1A84C8); float: left;overflow:hidden"></div>
     <div style="padding-top: 20px; width: 510px;">
         <button onclick="playVideo();">Play</button>
         <button onclick="pauseVideo();">Pause</button>
@@ -146,7 +154,7 @@ To enable proper compilation of the LESS files in the example you need to do the
         <button onclick="isEnded();">isEnded</button>
         <button onclick="isPlaying();">isPlaying</button>
     </div>
-    <div id="listView" style="position:absolute; top:0; right: 0; height: 600px; width:660px; overflow: auto;"></div>
+    <div id="listView" style="position:absolute; top:0; right: 0; height: 600px; width:660px; overflow: auto; color: #999;"></div>
 
     <script type="text/x-kendo-template" id="template">
         <div class="video">
