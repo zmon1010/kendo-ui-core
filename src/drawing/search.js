@@ -90,12 +90,11 @@
             insert: function (shape, bbox) {
                 var inserted = false;
                 var children = this.children;
-                var length = children.length;
                 if (this.inBounds(bbox)) {
-                    if (!length && this.shapes.length < 4) {
+                    if (this.shapes.length < 4) {
                         this._add(shape, bbox);
                     } else {
-                        if (!length) {
+                        if (!children.length) {
                             this._initChildren();
                         }
 
@@ -119,26 +118,16 @@
             _initChildren: function() {
                 var rect = this.rect,
                     children = this.children,
-                    shapes = this.shapes,
                     center = rect.center(),
                     halfWidth = rect.width() / 2,
-                    halfHeight = rect.height() / 2,
-                    childIdx, shapeIdx;
+                    halfHeight = rect.height() / 2;
 
                 children.push(
-                    new QuadNode(new Rect(rect.origin.x, rect.origin.y, halfWidth, halfHeight)),
-                    new QuadNode(new Rect(center.x, rect.origin.y, halfWidth, halfHeight)),
-                    new QuadNode(new Rect(rect.origin.x, center.y, halfWidth, halfHeight)),
-                    new QuadNode(new Rect(center.x, center.y, halfWidth, halfHeight))
+                    new QuadNode(new Rect([rect.origin.x, rect.origin.y], [halfWidth, halfHeight])),
+                    new QuadNode(new Rect([center.x, rect.origin.y], [halfWidth, halfHeight])),
+                    new QuadNode(new Rect([rect.origin.x, center.y], [halfWidth, halfHeight])),
+                    new QuadNode(new Rect([center.x, center.y], [halfWidth, halfHeight]))
                 );
-                for (shapeIdx = shapes.length - 1; shapeIdx >= 0; shapeIdx--) {
-                    for (childIdx = 0; childIdx < children.length; childIdx++) {
-                        if (children[childIdx].insert(shapes[shapeIdx].shape, shapes[shapeIdx].bbox)) {
-                            shapes.splice(shapeIdx, 1);
-                            break;
-                        }
-                    }
-                }
             }
         });
 
@@ -334,7 +323,8 @@
     // Exports ================================================================
 
     deepExtend(drawing, {
-        ShapesQuadTree: ShapesQuadTree
+        ShapesQuadTree: ShapesQuadTree,
+        QuadNode: QuadNode
     });
 
 })(window.kendo.jQuery);
