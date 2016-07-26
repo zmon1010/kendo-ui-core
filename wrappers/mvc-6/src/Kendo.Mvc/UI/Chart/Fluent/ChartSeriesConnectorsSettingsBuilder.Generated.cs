@@ -16,7 +16,29 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for Color</param>
         public ChartSeriesConnectorsSettingsBuilder<T> Color(string value)
         {
+            Container.ColorHandler = null;
             Container.Color = value;
+            return this;
+        }
+        /// <summary>
+        /// The color of the connector. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public ChartSeriesConnectorsSettingsBuilder<T> ColorHandler(string handler)
+        {
+            Container.Color = null;
+            Container.ColorHandler = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// The color of the connector. Accepts a valid CSS color string, including hex and rgb.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public ChartSeriesConnectorsSettingsBuilder<T> ColorHandler(Func<object, object> handler)
+        {
+            Container.Color = null;
+            Container.ColorHandler = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
 
