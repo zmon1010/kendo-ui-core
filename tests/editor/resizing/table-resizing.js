@@ -5,7 +5,11 @@
     var tableElement;
     var tableResizing;
     var anotherTable;
+    var nestedTable;
+    var nestedTableColumn;
     var wrapper;
+
+    var DESTROY = "destroy";
     var DOT = ".";
     var FIRST_COLUMN = "td:first";
     var HANDLE_SELECTOR = ".k-resize-handle";
@@ -19,6 +23,8 @@
     var MOUSE_UP = "mouseup";
     var PERCENTAGE = "%";
     var PX = "px";
+    var SHOW = "show";
+
     var EAST = "east";
     var NORTH = "north";
     var NORTHEAST = "northeast";
@@ -27,6 +33,7 @@
     var SOUTHEAST = "southeast";
     var SOUTHWEST = "southwest";
     var WEST = "west";
+
     var TABLE_HTML =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
@@ -111,7 +118,7 @@
         }));
     }
 
-    editor_module("editor table resizing", {
+    editor_module("editor table resizing initialization", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             editor.tableResizing = null;
@@ -129,84 +136,20 @@
         }
     });
 
-    test("hovering a table should initialize table resizing", function() {
-        var table = $(editor.body).find("#table")[0];
-
-        triggerEvent(table, { type: MOUSE_ENTER });
-
-        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
-    });
-
-    test("hovering a table should initialize table resizing with table element", function() {
-        var table = $(editor.body).find("#table")[0];
-
-        triggerEvent(table, { type: MOUSE_ENTER });
-
-        equal(editor.tableResizing.element, table);
-    });
-
-    test("hovering a table should initialize table resizing with custom options", function() {
-        var table = $(editor.body).find("#table")[0];
-
-        triggerEvent(table, { type: MOUSE_ENTER });
-
-        equal(editor.tableResizing.options.rtl, false);
-        equal(editor.tableResizing.options.rootElement, editor.body);
-    });
-
-    test("hovering a different table should destroy current table resizing", function() {
-        var table = $(editor.body).find("#table")[0];
-        var newTable = $(editor.body).find("#table2")[0];
-        var tableResizing = editor.tableResizing = new TableResizing(table, {});
-        trackMethodCall(tableResizing, "destroy");
-
-        triggerEvent(newTable, { type: MOUSE_ENTER });
-
-        equal(tableResizing.destroy.callCount, 1);
-    });
-
-    test("hovering the same table twice should not destroy current table resizing", function() {
-        var table = $(editor.body).find("#table")[0];
-        var tableResizing = editor.tableResizing = new TableResizing(table, {});
-        trackMethodCall(tableResizing, "destroy");
-
-        triggerEvent(table, { type: MOUSE_ENTER });
-
-        equal(tableResizing.destroy.callCount, 0);
-    });
-
-    test("leaving a table should not destroy table resizing", function() {
-        var table = $(editor.body).find("#table")[0];
-        editor.tableResizing = new TableResizing(table, {});
-        editor.tableResizing.resizingInProgress = function() { return false; };
-        var mock = editor.tableResizing;
-        trackMethodCall(mock, "destroy");
-
-        triggerEvent(table, { type: MOUSE_LEAVE });
-
-        equal(mock.destroy.callCount, 0);
-        notEqual(editor.tableResizing, null);
-    });
-
-    test("leaving a table should not destroy table resizing if resizing is in progress", function() {
-        var table = $(editor.body).find("#table")[0];
-        editor.tableResizing = new TableResizing(table, {});
-        editor.tableResizing.resizingInProgress = function() { return true; };
-        trackMethodCall(editor.tableResizing, "destroy");
-
-        triggerEvent(table, { type: MOUSE_LEAVE });
-
-        equal(editor.tableResizing.destroy.callCount, 0);
-    });
-
-    editor_module("editor table resizing", {
+    editor_module("editor table resizing nested table initialization", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             editor.tableResizing = null;
             tableElement = $(NESTED_TABLE_HTML).appendTo(editor.body)[0];
+            nestedTable = $(tableElement).find("#nestedTable")[0];
+            nestedTableColumn = $(nestedTable).find(FIRST_COLUMN)[0];
         },
 
         afterEach: function() {
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+            }
+
             if (editor) {
                 $(editor.body).find("*").remove();
             }
@@ -215,68 +158,106 @@
         }
     });
 
-    test("hovering a nested table should stop event propagation", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
-
-        $(nestedTable).trigger(enterEvent);
-
-        equal(enterEvent.isPropagationStopped(), true);
-    });
-
-    test("hovering a nested table should init new table resizing", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
-        editor.tableResizing = new TableResizing(tableElement, {});
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
-
-        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+    test("clicking a nested table should init table resizing", function() {
+        triggerEvent(nestedTable, { type: MOUSE_UP });
 
         ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
         equal(editor.tableResizing.element, nestedTable);
     });
 
-    test("hovering a nested table should destroy current table resizing", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
+    test("clicking a column in nested table should init table resizing", function() {
+        triggerEvent(nestedTableColumn, { type: MOUSE_UP });
+
+        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
+        equal(editor.tableResizing.element, nestedTable);
+    });
+
+    test("clicking from parent table to nested table should destroy current table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_UP });
         var destroySpy = spy(editor.tableResizing, "destroy");
 
-        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_UP });
 
         equal(destroySpy.calls("destroy"), 1);
     });
 
-    test("leaving a nested table should stop event propagation", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
-        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
-        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+    test("clicking from parent table to column in nested table should destroy current table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_UP });
+        var destroySpy = spy(editor.tableResizing, "destroy");
 
-        $(nestedTable).trigger(leaveEvent);
+        triggerEvent(nestedTableColumn, { type: MOUSE_UP });
 
-        equal(leaveEvent.isPropagationStopped(), true);
+        equal(destroySpy.calls("destroy"), 1);
     });
 
-    test("leaving a nested table should init new table resizing with parent table", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
-        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+    test("clicking from parent table to nested table should init new table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_UP });
 
-        triggerEvent(nestedTable, { type: MOUSE_LEAVE });
+        triggerEvent(nestedTable, { type: MOUSE_UP });
+
+        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
+        equal(editor.tableResizing.element, nestedTable);
+    });
+
+    test("clicking from parent table to column in nested table should init new table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_UP });
+
+        triggerEvent(nestedTableColumn, { type: MOUSE_UP });
+
+        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
+        equal(editor.tableResizing.element, nestedTable);
+    });
+
+    test("clicking from nested table to parent table should destroy current table resizing", function() {
+        triggerEvent(nestedTable, { type: MOUSE_UP });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+
+        triggerEvent(tableElement, { type: MOUSE_UP });
+
+        equal(destroySpy.calls("destroy"), 1);
+    });
+
+    test("clicking from nested table to parent table should init new table resizing", function() {
+        triggerEvent(nestedTable, { type: MOUSE_UP });
+
+        triggerEvent(tableElement, { type: MOUSE_UP });
 
         ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
         equal(editor.tableResizing.element, tableElement);
     });
 
-    editor_module("editor table resizing", {
+    test("clicking from column in nested table to parent table should destroy current table resizing", function() {
+        triggerEvent(nestedTableColumn, { type: MOUSE_UP });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+
+        triggerEvent(tableElement, { type: MOUSE_UP });
+
+        equal(destroySpy.calls("destroy"), 1);
+    });
+
+    test("clicking from column in nested table to parent table should init new table resizing", function() {
+        triggerEvent(nestedTableColumn, { type: MOUSE_UP });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+
+        triggerEvent(tableElement, { type: MOUSE_UP });
+
+        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
+        equal(editor.tableResizing.element, tableElement);
+    });
+
+    editor_module("editor table resizing initialization", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             editor.tableResizing = null;
-            tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
-            anotherTable = $(TABLE_HTML).attr("id", "table2").appendTo(editor.body)[0];
+            $(editor.body).append($(CONTENT_HTML)[0]);
+            tableElement = $(editor.body).find("#table")[0];
         },
 
         afterEach: function() {
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+            }
+
             if (editor) {
                 $(editor.body).find("*").remove();
             }
@@ -285,37 +266,44 @@
         }
     });
 
-    test("hovering another table while resizing is in progress should not destroy current table resizing", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
-        var destroySpy = spy(editor.tableResizing, "destroy");
-        editor.tableResizing.resizingInProgress = function() { return true; };
+    test("clicking a table should initialize table resizing", function() {
+        triggerEvent(tableElement, { type: MOUSE_UP });
 
-        $(anotherTable).trigger(enterEvent);
-
-        equal(destroySpy.calls("destroy"), 0);
+        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
     });
 
-    test("hovering another table while resizing is not in progress should destroy current table resizing", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
-        var destroySpy = spy(editor.tableResizing, "destroy");
-        editor.tableResizing.resizingInProgress = function() { return false; };
+    test("clicking a table should initialize table resizing with table element", function() {
+        triggerEvent(tableElement, { type: MOUSE_UP });
 
-        $(anotherTable).trigger(enterEvent);
-
-        equal(destroySpy.calls("destroy"), 1);
+        equal(editor.tableResizing.element, tableElement);
     });
 
-    editor_module("editor table resizing", {
+    test("clicking a table should initialize table resizing with custom options", function() {
+        triggerEvent(tableElement, { type: MOUSE_UP });
+
+        equal(editor.tableResizing.options.rtl, false);
+        equal(editor.tableResizing.options.rootElement, editor.body);
+    });
+
+    test("clicking a table should init resize handles", function() {
+        triggerEvent(tableElement, { type: MOUSE_UP });
+
+        equal(editor.tableResizing.handles.length, 8);
+    });
+
+    editor_module("editor table resizing destroying on leave", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
-            editor.tableResizing = null;
             tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
             anotherTable = $(TABLE_HTML).attr("id", "table2").appendTo(editor.body)[0];
+            editor.tableResizing = new TableResizing(tableElement);
         },
 
         afterEach: function() {
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+            }
+
             if (editor) {
                 $(editor.body).find("*").remove();
             }
@@ -326,7 +314,6 @@
 
     test("leaving the editor content should not destroy table resizing if resizing is in progress", function() {
         var leaveEvent = $.Event({ type: MOUSE_LEAVE });
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.tableResizing, "destroy");
         editor.tableResizing.resizingInProgress = function() { return true; };
 
@@ -337,7 +324,6 @@
 
     test("leaving the editor content should destroy table resizing if resizing is not in progress", function() {
         var leaveEvent = $.Event({ type: MOUSE_LEAVE });
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.tableResizing, "destroy");
         editor.tableResizing.resizingInProgress = function() { return false; };
 
@@ -346,20 +332,20 @@
         equal(destroySpy.calls("destroy"), 1);
     });
 
-    editor_module("editor table resizing", {
+    editor_module("editor table resizing destroying on click", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
-            editor.tableResizing = null;
             tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
+            editor.tableResizing = new TableResizing(tableElement);
         },
 
         afterEach: function() {
-            if (editor) {
-                $(editor.body).find("*").remove();
-            }
-
             if (editor.tableResizing) {
                 editor.tableResizing.destroy();
+            }
+
+            if (editor) {
+                $(editor.body).find("*").remove();
             }
 
             removeMocksIn(editor.tableResizing);
@@ -368,7 +354,6 @@
     });
 
     test("clicking on the resizing element should not destroy table resizing", function() {
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.tableResizing, "destroy");
 
         triggerEvent(tableElement, { type: MOUSE_UP });
@@ -377,7 +362,6 @@
     });
 
     test("clicking on a child element should not destroy table resizing", function() {
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.tableResizing, "destroy");
 
         triggerEvent($(tableElement).find(FIRST_COLUMN)[0], { type: MOUSE_UP });
@@ -386,7 +370,6 @@
     });
 
     test("clicking on the content while resizing is in progress should not destroy table resizing", function() {
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.tableResizing, "destroy");
         editor.tableResizing.resizingInProgress = function() { return true; };
 
@@ -396,7 +379,6 @@
     });
 
     test("clicking on the content while resizing is not in progress should destroy table resizing", function() {
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.tableResizing, "destroy");
         editor.tableResizing.resizingInProgress = function() { return false; };
 
@@ -408,7 +390,6 @@
 //table resize handles are natively supported in IE and Firefox
 if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("clicking on an element with data attribute equal to table should not destroy table resizing", function() {
-        triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.tableResizing, "destroy");
         editor.tableResizing.resizingInProgress = function() { return false; };
         editor.tableResizing.showResizeHandles();
@@ -422,7 +403,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     module("editor table resizing", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            },
+        },
 
         teardown: function() {
             if (tableResizing) {
@@ -467,40 +448,6 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         deepEqual(tableResizing.options.rtl, true);
     });
 
-    module("editor table resizing column resizing", {
-        setup: function() {
-            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-        },
-
-        teardown: function() {
-            if (tableResizing) {
-                tableResizing.destroy();
-            }
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("should be initialized from table resizing", function() {
-        tableResizing = new TableResizing(tableElement, {});
-
-        ok(tableResizing.columnResizing instanceof kendo.ui.editor.ColumnResizing);
-    });
-
-    test("should be initialized with custom table resizing options", function() {
-        var options = {
-            rootElement: "element"
-        };
-        tableResizing = new TableResizing(tableElement, options);
-
-        deepEqual(tableResizing.columnResizing.options.rootElement, "element");
-    });
-
-    test("should be initialized with table element", function() {
-        tableResizing = new TableResizing(tableElement, {});
-
-        equal(tableResizing.columnResizing.element, tableElement);
-    });
-
     module("editor table resizing destroy", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -513,21 +460,6 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             }
             kendo.destroy(QUnit.fixture);
         }
-    });
-
-    test("should call column resizing destroy", function() {
-        var columnResizing = tableResizing.columnResizing;
-        trackMethodCall(columnResizing, "destroy");
-
-        tableResizing.destroy();
-
-        equal(columnResizing.destroy.callCount, 1);
-    });
-
-    test("should detach event handlers", function() {
-        tableResizing.destroy();
-
-        ok(jQueryEvents(tableResizing.element) === undefined);
     });
 
 //table resize handles are natively supported in IE and Firefox
@@ -546,36 +478,6 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         }
     });
 }
-    module("editor table resizing resizingInProgress", {
-        setup: function() {
-            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            tableResizing = new TableResizing(tableElement, {});
-        },
-
-        teardown: function() {
-            if (tableResizing) {
-                tableResizing.destroy();
-            }
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("should be true while resizing columns", function() {
-        var columnResizing = tableResizing.columnResizing = new ColumnResizing(tableResizing.element, {});
-
-        columnResizing.resizable = { resizing: true, destroy: $.noop };
-
-        equal(tableResizing.resizingInProgress(), true);
-    });
-
-    test("should be false when column resizing is stopped", function() {
-        var columnResizing = tableResizing.columnResizing = new ColumnResizing(tableResizing.element, {});
-
-        columnResizing.resizable = { resizing: false, destroy: $.noop };
-
-        equal(tableResizing.resizingInProgress(), false);
-    });
-
     module("editor table resizing", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -643,6 +545,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     test("should be of type TableResizeHandle", function() {
         tableResizing.showResizeHandles();
+
         for (var i = 0; i < tableResizing.handles.length; i++) {
             ok(tableResizing.handles[i] instanceof kendo.ui.editor.TableResizeHandle);
         }
@@ -662,22 +565,13 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(tableResizing.handles[0].options.resizableElement, customOptions.resizableElement);
     });
 
-    test("should be shown on table click", function() {
-        tableResizing.showResizeHandles();
-        var showSpy = spy(tableResizing.handles[0], "show");
-
-        triggerEvent(tableResizing.element, { type: "click" });
-
-        equal(showSpy.calls("show"), 1);
-    });
-
     test("should call resize handle show() on showResizeHandles()", function() {
         tableResizing.showResizeHandles();
-        var showSpy = spy(tableResizing.handles[0], "show");
+        var showSpy = spy(tableResizing.handles[0], SHOW);
 
         tableResizing.showResizeHandles();
 
-        equal(showSpy.calls("show"), 1);
+        equal(showSpy.calls(SHOW), 1);
     });
 
     test("should call resize() on resize handle drag event", function() {
