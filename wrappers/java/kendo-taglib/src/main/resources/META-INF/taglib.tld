@@ -26926,7 +26926,7 @@ Cancelling the event will prevent the user action.</description>
         <description>The object which holds the information about the media that will be played by the control</description>
         <name>mediaPlayer-media</name>
         <tag-class>com.kendoui.taglib.mediaplayer.MediaTag</tag-class>
-        <body-content>JSP</body-content>
+        <body-content>empty</body-content>
 
         <attribute>
             <description>String or an array of objects that hold the URL\URLs to the videos</description>
@@ -26937,6 +26937,53 @@ Cancelling the event will prevent the user action.</description>
         <attribute>
             <description>Specifies the title of the media that will be played</description>
             <name>title</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>The object which holds the localization strings</description>
+        <name>mediaPlayer-messages</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Fullscreen button tooltip message</description>
+            <name>fullscreen</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Volume/Mute button tooltip message</description>
+            <name>mute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Pause button tooltip message</description>
+            <name>pause</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Play button tooltip message</description>
+            <name>play</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Quality button tooltip message</description>
+            <name>quality</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Volume slider button tooltip message</description>
+            <name>volume</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>

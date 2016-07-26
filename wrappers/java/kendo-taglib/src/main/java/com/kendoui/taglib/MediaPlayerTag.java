@@ -55,6 +55,10 @@ public class MediaPlayerTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("media", value);
     }
 
+    public void setMessages(com.kendoui.taglib.mediaplayer.MessagesTag value) {
+        setProperty("messages", value);
+    }
+
     public void setEnd(EndFunctionTag value) {
         setEvent("end", value.getBody());
     }

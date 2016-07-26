@@ -4,6 +4,7 @@ namespace Kendo.Mvc.UI
     using Infrastructure;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Web.Mvc;
     using System.Web.UI;
 
@@ -16,6 +17,7 @@ namespace Kendo.Mvc.UI
             : base(viewContext, initializer)
         {
             this.Media = new MediaPlayerMedia();
+			this.Messages = new MediaPlayerMessages();
         }
         public string TagName
         {
@@ -74,6 +76,12 @@ namespace Kendo.Mvc.UI
             {
                 settings["media"] = Media.ToJson();
             }
+			
+            var messages = Messages.Serialize();
+            if (messages.Any())
+            {
+                settings["messages"] = messages;
+            }			
 
             writer.Write(Initializer.Initialize(Selector, "MediaPlayer", settings));
             base.WriteInitializationScript(writer);
@@ -93,6 +101,8 @@ namespace Kendo.Mvc.UI
         public bool? ForwardSeek { get; set; }
 
         public MediaPlayerMedia Media { get; set; }
+		
+		public MediaPlayerMessages Messages { get; set; }
 
     }
 }

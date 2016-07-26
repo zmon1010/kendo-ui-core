@@ -77,6 +77,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The object which holds the localization strings
+        /// </summary>
+        /// <param name="configurator">The configurator for the messages setting.</param>
+        public MediaPlayerBuilder Messages(Action<MediaPlayerMessagesSettingsBuilder> configurator)
+        {
+
+            Container.Messages.MediaPlayer = Container;
+            configurator(new MediaPlayerMessagesSettingsBuilder(Container.Messages));
+
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the video will be played without sound
         /// </summary>
         /// <param name="value">The value for Mute</param>

@@ -117,6 +117,34 @@ Specifies the title of the media that will be played
     });
     </script>      
 
+### messages `Object`
+
+The object which holds the localization strings
+
+### messages.pause `String` 
+
+Pause button tooltip message
+
+### messages.play `String` 
+
+Play button tooltip message
+
+### messages.mute `String` 
+
+Volume/Mute button tooltip message
+
+### messages.volume `String` 
+
+Volume slider button tooltip message
+
+### messages.quality `String` 
+
+Quality button tooltip message
+
+### messages.fullscreen `String` 
+
+Fullscreen button tooltip message
+
 ### mute `Boolean` *(default: false)*
 
 If set to `true` the video will be played without sound

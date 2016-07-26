@@ -19,6 +19,8 @@ namespace Kendo.Mvc.UI
 
         public bool? FullScreen { get; set; }
 
+        public MediaPlayerMessagesSettings Messages { get; } = new MediaPlayerMessagesSettings();
+
         public bool? Mute { get; set; }
 
         public double? Volume { get; set; }
@@ -46,6 +48,12 @@ namespace Kendo.Mvc.UI
             if (FullScreen.HasValue)
             {
                 settings["fullScreen"] = FullScreen;
+            }
+
+            var messages = Messages.Serialize();
+            if (messages.Any())
+            {
+                settings["messages"] = messages;
             }
 
             if (Mute.HasValue)

@@ -79,6 +79,16 @@ namespace Kendo.Mvc.UI.Fluent
             Component.FullScreen = true;
             return this;
         }
+		
+        /// <summary>
+        /// The object which holds the localization strings
+        /// </summary>
+        /// <param name="configurator">The configurator for the messages setting.</param>
+        public MediaPlayerBuilder Messages(Action<MediaPlayerMessagesBuilder> configurator)
+        {
+            configurator(new MediaPlayerMessagesBuilder(Component));
+            return this;
+        }		
 
         /// <summary>
         /// If set to true the video will be played without sound

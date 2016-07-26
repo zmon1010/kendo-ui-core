@@ -857,9 +857,11 @@
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerBuilder.cs" />
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerEventBuilder.cs" />
     <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerMediaBuilder.cs" />
+    <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerMessagesBuilder.cs" />
     <Compile Include="UI\MediaPlayer\Html\MediaPlayerHtmlBuilder.cs" />
     <Compile Include="UI\MediaPlayer\MediaPlayer.cs" />
     <Compile Include="UI\MediaPlayer\MediaPlayerMedia.cs" />
+    <Compile Include="UI\MediaPlayer\MediaPlayerMessages.cs" />
     <Compile Include="UI\MobileApplication\Fluent\MobileApplicationIconBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleEventBuilder.cs" />

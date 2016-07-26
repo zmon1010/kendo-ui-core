@@ -54,6 +54,15 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
+    * The object which holds the localization strings
+    * @param \Kendo\UI\MediaPlayerMessages|array $value
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function messages($value) {
+        return $this->setProperty('messages', $value);
+    }
+
+    /**
     * If set to true the video will be played without sound
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
