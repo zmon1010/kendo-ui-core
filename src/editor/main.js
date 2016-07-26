@@ -648,9 +648,6 @@
             this._spellCorrect(editor);
 
             this._registerHandler(editor.body, {
-                "dragstart": function(e) {
-                    e.preventDefault();
-                },
                 "keydown": function (e) {
                     var range;
 
