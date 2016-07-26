@@ -941,6 +941,7 @@
     <Content Include="Content\shared\styles\horizontal-ruler-bottom.png" />
     <Content Include="Content\shared\styles\tags.png" />
     <Content Include="Content\shared\styles\units.png" />
+    <Content Include="favicon.ico" />
     <Content Include="Views\combobox\grouping.cshtml" />
     <Content Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\bar_charts\pan_and_zoom.cshtml" />
