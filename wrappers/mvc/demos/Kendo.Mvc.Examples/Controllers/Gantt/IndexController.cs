@@ -98,15 +98,5 @@ namespace Kendo.Mvc.Examples.Controllers
 
             return Json(new[] { dependency }.ToDataSourceResult(request, ModelState));
         }
-
-        public virtual JsonResult UpdateDependency([DataSourceRequest] DataSourceRequest request, DependencyViewModel dependency)
-        {
-            if (ModelState.IsValid)
-            {
-                dependencyService.Update(dependency, ModelState);
-            }
-
-            return Json(new[] { dependency }.ToDataSourceResult(request, ModelState));
-        }
     }
 }
