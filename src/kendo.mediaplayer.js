@@ -267,20 +267,21 @@
                                 template: templates.slider
                             },
                             { type: "button", id: "play", spriteCssClass: "k-icon k-font-icon k-i-play" },
+                            {
+                                id: "timeTemplate",
+                                template: templates.toolBarTime
+                            },
                             { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
                             {
                                 id: "volumeTemplate",
                                 template: templates.volumeSlider
                             },
                             {
-                                id: "timeTemplate",
-                                template: templates.toolBarTime
-                            },
-                            { type: "button", id: "fullscreen", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" },
-                            {
                                 id: "videoQuality",
                                 template: templates.qualityDropDown
                             }
+                            ,
+	                        { type: "button", id: "fullscreen", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" }
                         ]
                     });
 

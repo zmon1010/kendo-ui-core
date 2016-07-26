@@ -9,15 +9,6 @@
 .k-mediaplayer {
 	position: relative;
 
-	// seekbar
-	.k-mediaplayer-seekbar {
-		position: absolute;
-		bottom: 74px;
-		left: 10px;
-		right: 10px;
-		opacity: 0.7;
-		width: auto;
-	}
 
 }
 
@@ -26,19 +17,70 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	background-color: rgba(0, 0, 0, 0.4);
+	background: linear-gradient( rgba(0,0,0, 0.7), rgba(0, 0, 0, 0) );
 	color: white;
-	padding: 5px;
+	padding: 12px;
 	//width: 100%;
 //	z-index: 200;
 }
 
 .k-mediaplayer-toolbar {
 	position: absolute;
-	bottom: 10px;
-	left: 10px;
-	right: 10px;
-	padding: 4px;
+	bottom: 0;
+	left: -1px;
+	right: -1px;
+	padding: 0px;
+
+	.k-button {
+		&,
+		&:hover,
+		&:active {
+			border-color: transparent;
+			background: none;
+		}
+	}
+
+	// seekbar
+	.k-mediaplayer-seekbar {
+		position: absolute;
+		top: -18px;
+		left: 0;
+		right: 0;
+		opacity: 0.7;
+		margin: 0;
+		width: auto;
+
+		.k-slider-track {
+			border-radius: 0;
+		}
+	}
+
+	.k-mediaplayer-quality {
+		width: auto;
+		background: none transparent;
+
+		.k-dropdown-wrap {
+			border: 0 none;
+			box-shadow: none;
+		}
+
+		.k-input {
+			display: none;
+		}
+
+		.k-dropdown-wrap {
+			padding: 0;
+			background: none transparent;
+		}
+
+		.k-select {
+			position: relative;
+		}
+	}
+
+	.right {
+		float: right;
+	}
 }
 
 
@@ -94,90 +136,63 @@
 		content: "\e038";
 	}*/
 
+	    /*Temporary workaround for z-index*/
+        
+        .k-mediaplayer-titlebar,
+        .k-mediaplayer-toolbar {
+            z-index: 2;
+        }
+        /*Temporary workaround for z-index and overlay size*/
+        
+        .k-mediaplayer-overlay {
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }        
 
 
 
 //playlist
-	.k-mediaplayer-playlist {
-		position: absolute;
+.k-mediaplayer-playlist {
+	ul, li {
+		padding: 0;
+		margin: 0;
+		list-style-type: none;
+	}
 
-		ul, li, h4 {
-			padding: 0;
-			margin: 0;
-		}
+	.k-item {
+		padding: 14px 15px;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
 
-		ul {
-			list-style-type: none;
-		}
-
-		a {
-			display: block;
-			overflow: hidden;
-			text-decoration: none;
-
-			img {
-				display: block;
-				width: 100px;
-				height: 54px;
-				border: 0 none;
-			}
-
-			span,
-			img {
-				cursor: pointer;
-			}
-		}
-
-		.rmpThumbWrap {
-			display: inline-block;
-		}
-
-		.rmpTitle {
-			display: block;
-			overflow: hidden;
-			text-align: left;
-			font-size: 0.929em;
+		&:last-child {
+			border-bottom-width: 0;
 		}
 	}
-	//<<Common styles
-	//>>Vertical orientation
-	.k-mediaplayer-playlist {
-		top: 0px;
-		bottom: 0px;
-		right: 0;
-		z-index: 100;
-		width: 280px;
+
+	span {
+		display: block;
 		overflow: hidden;
-		overflow-y: auto;
+		text-decoration: none;
+		cursor: pointer;
 
-		.k-button {
-			padding: 0;
-			border-radius: 0;
-		}
-
-		ul {
-			position: relative;
-		}
-
-		li {
-			&:first-child {
-				border-top: 0 none;
-			}
-		}
-
-		a {
-			padding: 10px 15px;
-		}
-
-		.k-image-wrap {
+		img {
+			display: block;
+			width: 100px;
+			height: 56px;
+			border: 0 none;
+			object-fit: cover;
 			float: left;
-			margin-right: 10px;
-			vertical-align: top;
 		}
-
-		.k-title {
-			max-height: 55px;
-		}
-		//>>NavButtons mode
-		//<<NavButtons mode
 	}
+
+	h4 {
+		display: block;
+		overflow: hidden;
+		font-weight: normal;
+		text-align: left;
+		padding-left: 10px;
+		margin: 0;
+	}
+}

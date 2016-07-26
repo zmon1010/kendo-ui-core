@@ -55,17 +55,12 @@ To enable proper compilation of the LESS files in the example you need to do the
 
     <style>
         body {
-            font-size: 12px;
+            font-size: 14px;
             /*Temporary workaround for UI font*/
             font-family: 'Roboto', sans-serif;
         }
         /*Temporary workaround for the overlay*/
         
-        .k-mediaplayer-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
         /*Temporary workaround for the icon font*/
         
         @font-face {
@@ -73,73 +68,44 @@ To enable proper compilation of the LESS files in the example you need to do the
             src: url('../styles/web/common/TelerikWebUI.eot');
             src: url('../styles/web/common/TelerikWebUI.eot') format('embedded-opentype'), url('../styles/web/common/TelerikWebUI.woff') format('woff'), url('../styles/web/common/TelerikWebUI.ttf') format('truetype');
         }
-        /*Temporary workaround for portrait images, to make the image fill (crop) the available space */
-        
-        .k-mediaplayer-playlist a img {
-            object-fit: cover !important;
-        }
-        /*Temporary workaround for the toolbar height*/
-        
-        .k-mediaplayer-toolbar {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-        /*Temporary workaround for positioning of the slider (seekbar)*/
-        
-        .k-mediaplayer .k-mediaplayer-seekbar {
-            position: absolute;
-            bottom: 26px;
-            left: 20px;
-            right: 10px;
-            opacity: 1;
-        }
-        /*Temporary workaround for the initial width of the volume slider*/
-        
-        .k-mediaplayer-volume {
-            margin-left: 15px !important;
-            margin-right: 15px !important;
-        }
-        /*Temporary workaround for z-index*/
-        
-        .k-mediaplayer-titlebar,
-        .k-mediaplayer-toolbar {
-            z-index: 2;
-        }
 
-        /*Temporary workaround to make the widget looks like on the provided design*/
-        .k-mediaplayer-toolbar {
-            padding: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-        /*Temporary workaround for z-index and overlay size*/
-        
-        .k-mediaplayer-overlay {
-            z-index: 1;
-            width: 100%;
-            height: 100%;
-        }
-        /*Temporary workaround for quality dropdown*/
-        
-        .k-mediaplayer-quality {
-            width: 70px;
-            display: block;
-        }
-        
-        .video {
-            float: left;
-            width: 200px;
-            height: 200px;
-            text-align: center;
-            border-bottom: 10px solid #ccc;
-            border-right: 10px solid #aaa;
-        }
-        
-        #fullscreen,
-        #hdbutton {
-            float: right;
-        }
+		/*Playlist*/
+		/*.k-mediaplayer-playlist {
+		}
+		.k-mediaplayer-playlist ul, .k-mediaplayer-playlist li {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		.k-mediaplayer-playlist .k-item {
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			padding: 14px 15px;
+		}
+		.k-mediaplayer-playlist .k-item:last-child {
+			border-bottom-width: 0;
+		}
+		.k-mediaplayer-playlist span {
+			cursor: pointer;
+			display: block;
+			overflow: hidden;
+			text-decoration: none;
+		}
+		.k-mediaplayer-playlist span img {
+			border: 0 none;
+			display: block;
+			height: 56px;
+			object-fit: cover;
+			width: 100px;
+		}
+		.k-mediaplayer-playlist h4 {
+			display: block;
+			font-weight: normal;
+			margin: 0;
+			overflow: hidden;
+			padding-left: 10px;
+			text-align: left;
+		}*/
     </style>
 </head>
 
@@ -154,13 +120,15 @@ To enable proper compilation of the LESS files in the example you need to do the
         <button onclick="isEnded();">isEnded</button>
         <button onclick="isPlaying();">isPlaying</button>
     </div>
-    <div id="listView" style="position:absolute; top:0; right: 0; height: 600px; width:660px; overflow: auto; color: #999;"></div>
+    <div class="k-list-container k-mediaplayer-playlist" style="width: 300px;" id="listView"><ul class="k-list"></ul></div>
 
     <script type="text/x-kendo-template" id="template">
-        <div class="video">
-            <img style="max-width:200px; max-height:150px" src="#:poster#" />
-            <h4>#:title#</h4>
-        </div>
+        <li class="k-item k-state-default">
+			<span>
+				<img src="#:poster#" />
+				<h4>#:title#</h4>
+			</span>
+        </li>
     </script>
 
     <script type="text/javascript">
@@ -193,11 +161,25 @@ To enable proper compilation of the LESS files in the example you need to do the
                 //kendoConsole.log("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
             }
 
+            onDataBound = function () {
+            	var listViewItem = $("#listView li");
+            	// add row hilighting on hover and make sure to remove it on click
+            	$(listViewItem).hover(
+					function () {
+						$(this).addClass('k-state-hover');
+					},
+					function () {
+						$(this).removeClass('k-state-hover');
+					}
+				);
+            }
+
             $("#listView").kendoListView({
                 dataSource: dataSource,
                 selectable: true,
-				scrollable: true,
+                scrollable: true,
                 change: onChange,
+                dataBound: onDataBound,
                 template: kendo.template($("#template").html())
             });
 
@@ -225,7 +207,7 @@ To enable proper compilation of the LESS files in the example you need to do the
             window.player1 = $("#player1").data("kendoMediaPlayer");
 
             /*Temporary workaround for playlist background color*/
-            $(".k-mediaplayer-playlist").css("background-color", $(".k-mediaplayer-toolbar").css("background-color"));
+            //$(".k-mediaplayer-playlist").css("background-color", $(".k-mediaplayer-toolbar").css("background-color"));
         }
 
         function onEnd(e) {
