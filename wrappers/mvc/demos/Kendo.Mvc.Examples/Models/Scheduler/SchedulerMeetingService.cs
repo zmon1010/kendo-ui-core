@@ -2,11 +2,14 @@
 {
     using Kendo.Mvc.UI;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
 
     public class SchedulerMeetingService : ISchedulerEventService<MeetingViewModel>
     {
+        private static bool UpdateDatabase = false;
         private SampleEntities db;
 
         public SchedulerMeetingService(SampleEntities context)
@@ -19,9 +22,13 @@
         {
         }
 
-        public virtual IQueryable<MeetingViewModel> GetAll()
+        public virtual IList<MeetingViewModel> GetAll()
         {
-            return db.Meetings.ToList().Select(meeting => new MeetingViewModel
+            var result = HttpContext.Current.Session["SchedulerMeetings"] as IList<MeetingViewModel>;
+
+            if (result == null || UpdateDatabase)
+            {
+                result = db.Meetings.ToList().Select(meeting => new MeetingViewModel
                 {
                     MeetingID = meeting.MeetingID,
                     Title = meeting.Title,
@@ -36,37 +43,54 @@
                     RecurrenceException = meeting.RecurrenceException,
                     RecurrenceID = meeting.RecurrenceID,
                     Attendees = meeting.MeetingAttendees.Select(m => m.AttendeeID).ToArray()
-                }).AsQueryable();
+                }).ToList();
+
+                HttpContext.Current.Session["SchedulerMeetings"] = result;
+            }
+
+            return result;
         }
 
         public virtual void Insert(MeetingViewModel meeting, ModelStateDictionary modelState)
         {
             if (ValidateModel(meeting, modelState))
             {
-                if (meeting.Attendees == null)
+                if (!UpdateDatabase)
                 {
-                    meeting.Attendees = new int[0];
+                    var first = GetAll().OrderByDescending(e => e.MeetingID).FirstOrDefault();
+                    var id = (first != null) ? first.MeetingID : 0;
+
+                    meeting.MeetingID = id + 1;
+
+                    GetAll().Insert(0, meeting);
                 }
-
-                if (string.IsNullOrEmpty(meeting.Title))
+                else
                 {
-                    meeting.Title = "";
-                }
-
-                var entity = meeting.ToEntity();
-
-                foreach (var attendeeId in meeting.Attendees)
-                {
-                    entity.MeetingAttendees.Add(new MeetingAttendee
+                    if (meeting.Attendees == null)
                     {
-                        AttendeeID = attendeeId
-                    });
+                        meeting.Attendees = new int[0];
+                    }
+
+                    if (string.IsNullOrEmpty(meeting.Title))
+                    {
+                        meeting.Title = "";
+                    }
+
+                    var entity = meeting.ToEntity();
+
+                    foreach (var attendeeId in meeting.Attendees)
+                    {
+                        entity.MeetingAttendees.Add(new MeetingAttendee
+                        {
+                            AttendeeID = attendeeId
+                        });
+                    }
+
+                    db.Meetings.Add(entity);
+                    db.SaveChanges();
+
+                    meeting.MeetingID = entity.MeetingID;
                 }
-
-                db.Meetings.Add(entity);
-                db.SaveChanges();
-
-                meeting.MeetingID = entity.MeetingID;
             }
         }
 
@@ -74,81 +98,122 @@
         {
             if (ValidateModel(meeting, modelState))
             {
-                if (string.IsNullOrEmpty(meeting.Title))
+                if (!UpdateDatabase)
                 {
-                    meeting.Title = "";
-                }
+                    var target = One(e => e.MeetingID == meeting.MeetingID);
 
-                var entity = db.Meetings.Include("MeetingAttendees").FirstOrDefault(m => m.MeetingID == meeting.MeetingID);
-
-                entity.Title = meeting.Title;
-                entity.Start = meeting.Start;
-                entity.End = meeting.End;
-                entity.Description = meeting.Description;
-                entity.IsAllDay = meeting.IsAllDay;
-                entity.RoomID = meeting.RoomID;
-                entity.RecurrenceID = meeting.RecurrenceID;
-                entity.RecurrenceRule = meeting.RecurrenceRule;
-                entity.RecurrenceException = meeting.RecurrenceException;
-                entity.StartTimezone = meeting.StartTimezone;
-                entity.EndTimezone = meeting.EndTimezone;
-
-                foreach (var meetingAttendee in entity.MeetingAttendees.ToList())
-                {
-                    entity.MeetingAttendees.Remove(meetingAttendee);
-                }
-
-                if (meeting.Attendees != null)
-                {
-                    foreach (var attendeeId in meeting.Attendees)
+                    if (target != null)
                     {
-                        var meetingAttendee = new MeetingAttendee
-                        {
-                            MeetingID = entity.MeetingID,
-                            AttendeeID = attendeeId
-                        };
-
-                        entity.MeetingAttendees.Add(meetingAttendee);
+                        target.Title = meeting.Title;
+                        target.Start = meeting.Start;
+                        target.End = meeting.End;
+                        target.StartTimezone = meeting.StartTimezone;
+                        target.EndTimezone = meeting.EndTimezone;
+                        target.Description = meeting.Description;
+                        target.IsAllDay = meeting.IsAllDay;
+                        target.RecurrenceRule = meeting.RecurrenceRule;
+                        target.RoomID = meeting.RoomID;
+                        target.RecurrenceException = meeting.RecurrenceException;
+                        target.RecurrenceID = meeting.RecurrenceID;
+                        target.Attendees = meeting.Attendees;
                     }
                 }
+                else
+                {
+                    if (string.IsNullOrEmpty(meeting.Title))
+                    {
+                        meeting.Title = "";
+                    }
 
-                db.SaveChanges();
+                    var entity = db.Meetings.Include("MeetingAttendees").FirstOrDefault(m => m.MeetingID == meeting.MeetingID);
+
+                    entity.Title = meeting.Title;
+                    entity.Start = meeting.Start;
+                    entity.End = meeting.End;
+                    entity.Description = meeting.Description;
+                    entity.IsAllDay = meeting.IsAllDay;
+                    entity.RoomID = meeting.RoomID;
+                    entity.RecurrenceID = meeting.RecurrenceID;
+                    entity.RecurrenceRule = meeting.RecurrenceRule;
+                    entity.RecurrenceException = meeting.RecurrenceException;
+                    entity.StartTimezone = meeting.StartTimezone;
+                    entity.EndTimezone = meeting.EndTimezone;
+
+                    foreach (var meetingAttendee in entity.MeetingAttendees.ToList())
+                    {
+                        entity.MeetingAttendees.Remove(meetingAttendee);
+                    }
+
+                    if (meeting.Attendees != null)
+                    {
+                        foreach (var attendeeId in meeting.Attendees)
+                        {
+                            var meetingAttendee = new MeetingAttendee
+                            {
+                                MeetingID = entity.MeetingID,
+                                AttendeeID = attendeeId
+                            };
+
+                            entity.MeetingAttendees.Add(meetingAttendee);
+                        }
+                    }
+
+                    db.SaveChanges();
+                }
             }
         }
 
         public virtual void Delete(MeetingViewModel meeting, ModelStateDictionary modelState)
         {
-            if (meeting.Attendees == null)
+            if (!UpdateDatabase)
             {
-                meeting.Attendees = new int[0];
+                var target = One(p => p.MeetingID == meeting.MeetingID);
+                if (target != null)
+                {
+                    GetAll().Remove(target);
+
+                    var recurrenceExceptions = GetAll().Where(m => m.RecurrenceID == meeting.MeetingID).ToList();
+
+                    foreach (var recurrenceException in recurrenceExceptions)
+                    {
+                        GetAll().Remove(recurrenceException);
+                    }
+                }
             }
-
-            var entity = meeting.ToEntity();
-
-            db.Meetings.Attach(entity);
-
-            var attendees = meeting.Attendees.Select(attendee => new MeetingAttendee
+            else
             {
-                AttendeeID = attendee,
-                MeetingID = entity.MeetingID
-            });
+                if (meeting.Attendees == null)
+                {
+                    meeting.Attendees = new int[0];
+                }
 
-            foreach (var attendee in attendees)
-            {
-                db.MeetingAttendees.Attach(attendee);
+                var entity = meeting.ToEntity();
+
+                db.Meetings.Attach(entity);
+
+                var attendees = meeting.Attendees.Select(attendee => new MeetingAttendee
+                {
+                    AttendeeID = attendee,
+                    MeetingID = entity.MeetingID
+                });
+
+                foreach (var attendee in attendees)
+                {
+                    db.MeetingAttendees.Attach(attendee);
+                }
+
+                entity.MeetingAttendees.Clear();
+
+                var recurrenceExceptions = db.Meetings.Where(m => m.RecurrenceID == entity.MeetingID);
+
+                foreach (var recurrenceException in recurrenceExceptions)
+                {
+                    db.Meetings.Remove(recurrenceException);
+                }
+
+                db.Meetings.Remove(entity);
+                db.SaveChanges();
             }
-
-            entity.MeetingAttendees.Clear();
-
-            var recurrenceExceptions = db.Meetings.Where(m => m.RecurrenceID == entity.MeetingID);
-
-            foreach (var recurrenceException in recurrenceExceptions)
-            {
-                db.Meetings.Remove(recurrenceException);
-            }
-
-            db.Meetings.Remove(entity);
-            db.SaveChanges();
         }
 
         private bool ValidateModel(MeetingViewModel appointment, ModelStateDictionary modelState)
@@ -160,6 +225,11 @@
             }
 
             return true;
+        }
+
+        public MeetingViewModel One(Func<MeetingViewModel, bool> predicate)
+        {
+            return GetAll().FirstOrDefault(predicate);
         }
 
         public void Dispose()
