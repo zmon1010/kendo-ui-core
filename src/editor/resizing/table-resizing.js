@@ -13,7 +13,6 @@
     var browser = kendo.support.browser;
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
-    var ColumnResizing = Editor.ColumnResizing;
     var TableResizeHandle = Editor.TableResizeHandle;
     var ResizingUtils = Editor.ResizingUtils;
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
@@ -21,7 +20,6 @@
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
 
-    var CLICK = "click";
     var DRAG = "drag";
     var NS = ".kendoEditorTableResizing";
     var MAX_PERCENTAGE_VALUE = 100;
@@ -48,8 +46,6 @@
 
             if ($(element).is(TABLE)) {
                 that.element = element;
-                that.columnResizing = new ColumnResizing(element, that.options);
-                $(that.options.rootElement).on(CLICK + NS, TABLE, proxy(that.showResizeHandles, that));
             }
         },
 
@@ -145,8 +141,6 @@
                     min: that.options[MIN + dimension],
                     max: element.parent()[dimensionLowercase]()
                 });
-
-                element[dimensionLowercase](constrainedValue);
             }
 
             element[dimensionLowercase](constrainedValue);
