@@ -6,12 +6,13 @@ CHANGELOG_TEMPLATE = ERB.new(File.read(File.join(File.dirname(__FILE__), 'change
 CHANGELOG_XML_TEMPLATE = ERB.new(File.read(File.join(File.dirname(__FILE__), 'changelog.xml.erb')), 0, '%<>')
 
 class Issue
-    attr_reader :suites, :components, :internal, :framework, :bug, :new_component
+    attr_reader :suites, :components, :internal, :framework, :bug, :new_component, :link, :id
     attr_accessor :title
     def initialize(issue)
         @title = issue.title
         @labels = issue.labels.map {|l| l.name }
-
+        @link = issue.html_url
+        @id = issue.number
         @internal = @labels.join(" ") =~ /Documentation|Internal|Deleted|Invalid|Won't Fix/
         @bug = @labels.include? "Bug"
         @new_component = @labels.include? "New Component"
