@@ -3410,12 +3410,24 @@
                 "text": "Basic usage",
                 "url": "mediaplayer/index",
                 "title": {
-                    "kendo-ui": "jQuery MediaPlayer control example| KendoMediaPlayer Demo",
+                    "kendo-ui": "jQuery MediaPlayer control example | KendoMediaPlayer Demo",
                     "aspnet-mvc": "ASP.NET MVC MediaPlayer demo | Telerik UI for ASP.NET MVC demos"
                 },
                 "meta": {
                     "kendo-ui": "This KendoMediaPlayer example demonstrates the basic functionality of the widget. With jQuery-based MediaPlayer widget in Kendo UI, you can add media content to your web site",
                     "aspnet-mvc": "Play with this basic example of Telerik MediaPlayer in ASP.NET MVC and find all features of the helper for Kendo UI MediaPlayer."
+                }
+            },
+            {
+                "text": "Playlist",
+                "url": "mediaplayer/playlist",
+                "title": {
+                    "kendo-ui": "jQuery MediaPlayer control with ListView as Playlist | KendoMediaPlayer Demo",
+                    "aspnet-mvc": "ASP.NET MVC MediaPlayer with ListView as Playlist | Telerik UI for ASP.NET MVC demos"
+                },
+                "meta": {
+                    "kendo-ui": "This example of KendoMediaPlayer demonstrates how to use ListView as playlist.",
+                    "aspnet-mvc": "This example of KendoMediaPlayer demonstrates how to use ListView as playlist."
                 }
             }
         ],

@@ -90,9 +90,9 @@
 
                 this._timers = {};
 
-                this._mediaData = options.media;
-
-                this._refresh();
+                if (options.media){
+					this.media(this.options.media);
+				}
 
                 kendo.notify(this);
             },
@@ -310,7 +310,7 @@
                         select: this._dropDownSelectHandler
                     });
 
-                    if (this.options.media && isArray(media.source)) {
+                    if (media && isArray(media.source)) {
                         this._dropDown.setDataSource(media.source);
                         this._dropDown.select(0);
                     }
@@ -330,7 +330,7 @@
                 var target = $(e.target).children().first();
                 var isPaused = target.hasClass(STATE_PLAY);
 
-                if (!this.options.media) {
+                if (!this.media()) {
                     return;
                 }
 
@@ -364,7 +364,7 @@
             },
 
             _sliderDragging: function (e) {
-                if (!this.options.media) {
+                if (!this.media()) {
                     return;
                 }
 
@@ -380,7 +380,7 @@
                 var slider = e.sender;
                 var tzOffset = timeZoneSec * 1000;
 
-                if (!this.options.media) {
+                if (!this.media()) {
                     return;
                 }
 
@@ -415,7 +415,7 @@
             },
 
             _volumeDragging: function (e) {
-                if (!this.options.media) {
+                if (!this.media()) {
                     return;
                 }
                 this.volume(e.value);
@@ -424,7 +424,7 @@
             },
 
             _volumeChange: function (e) {
-                if (!this.options.media) {
+                if (!this.media()) {
                     return;
                 }
                 this.volume(e.value);
@@ -966,15 +966,6 @@
 
             isPlaying: function () {
                 return !this.isEnded() && !this._paused;
-            },
-
-            _refresh: function () {
-                var data = this.media(this.options.media);
-                if (data) {
-                    this._updateTitle();
-                    this._youTubeVideo = this._isYouTubeUrl();
-                    this._initializePlayer();
-                }
             },
 
             _error: function () {

@@ -1238,6 +1238,7 @@
     <Content Include="Views\demos\dialog\right-to-left-support.cshtml" />
     <Content Include="Views\demos\dialog\keyboard-navigation.cshtml" />
     <Content Include="Views\demos\mediaplayer\index.cshtml" />
+    <Content Include="Views\demos\mediaplayer\playlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
