@@ -57,8 +57,8 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <hudson.triggers.TimerTrigger>
-      <spec># at 6 o&apos;clock every morning during work days
-H 6 * * 1-5</spec>
+      <spec># build 2 times per day on work days
+H 6,12 * * 1-5</spec>
     </hudson.triggers.TimerTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>

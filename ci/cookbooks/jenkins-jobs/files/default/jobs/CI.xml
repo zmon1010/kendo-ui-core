@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Runs all unit tests on Firefox and Chrome		</description>
+  <description>Runs all unit tests on Chrome		</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>10</daysToKeep>
     <numToKeep>20</numToKeep>
@@ -101,7 +101,7 @@
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>CI-Brazil-Time-Zones,CI-Multiple-jQuery,CI-Firefox,CI-Download-Builder,CI-Wrappers-Generation,Bundles</childProjects>
+      <childProjects>CI-Multiple-jQuery, CI-Firefox</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

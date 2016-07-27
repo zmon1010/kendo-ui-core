@@ -95,7 +95,7 @@
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Staging-Demos-production,Bundles-production,CI-Wrappers-Generation-production</childProjects>
+      <childProjects>Staging-Demos-production</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
