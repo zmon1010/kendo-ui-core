@@ -22,8 +22,8 @@
         proxy = $.proxy,
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
+    var isRtl = kendo.support.isRtl;
 
-    var rtlEnabled = false;
     var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
@@ -195,8 +195,6 @@
             that.options = deepExtend({}, that.options, options);
             that.options.tools = that.options.tools.slice();
 
-            rtlEnabled = kendo.support.isRtl(element);
-
             element = that.element;
             domElement = element[0];
 
@@ -350,7 +348,7 @@
 
             function initTableResizing(editorWidget, tableElement) {
                 editorWidget.tableResizing = kendo.ui.editor.TableResizing.create(tableElement, {
-                    rtl: rtlEnabled,
+                    rtl: isRtl(editorWidget.element),
                     rootElement: editorWidget.body
                 });
             }
@@ -419,7 +417,7 @@
 
             function initColumnResizing(editorWidget, tableElement) {
                 editorWidget.columnResizing = new kendo.ui.editor.ColumnResizing(tableElement, {
-                    rtl: rtlEnabled,
+                    rtl: isRtl(editorWidget.element),
                     rootElement: editorWidget.body
                 });
             }

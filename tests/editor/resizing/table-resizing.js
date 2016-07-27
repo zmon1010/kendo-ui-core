@@ -2,6 +2,7 @@
     var TableResizing = kendo.ui.editor.TableResizing;
     var ColumnResizing = kendo.ui.editor.ColumnResizing;
     var editor;
+    var initialWidth;
     var tableElement;
     var tableResizing;
     var anotherTable;
@@ -21,6 +22,7 @@
     var MOUSE_MOVE = "mousemove";
     var MOUSE_UP = "mouseup";
     var PERCENTAGE = "%";
+    var RTL_MODIFIER = -1;
     var PX = "px";
     var SHOW = "show";
 
@@ -689,7 +691,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(tableElement[0].style.width, "100%");
     });
 
-    module("editor table resizing resize height", {
+    module("editor table resizing resize height in pixels", {
         setup: function() {
             wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("height", "800px");
             tableElement = $(QUnit.fixture).find("#table");
@@ -795,6 +797,53 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         tableResizing.resize({ deltaY: MAX });
 
         equal(tableElement[0].style.height, "100%");
+    });
+
+    module("editor table resizing resize width in pixels rtl", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("border", "1px solid red");
+            tableElement = $(QUnit.fixture).find("#table").css("width", "400px");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture,
+                rtl: true
+            });
+            initialWidth = tableElement.width();
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should decrease width", function() {
+        var deltaX = 20;
+
+        tableResizing.resize({ deltaX: deltaX });
+
+        equal(tableElement.css("width"), initialWidth + (RTL_MODIFIER * deltaX) + PX);
+    });
+
+    test("should increase width", function() {
+        var deltaX = 20;
+
+        tableResizing.resize({ deltaX: RTL_MODIFIER * deltaX });
+
+        equal(tableElement.css("width"), initialWidth + deltaX + PX);
+    });
+
+    test("should not set width lower than min", function() {
+        tableResizing.resize({ deltaX: MAX });
+
+        ok(parseFloat(tableElement.css("width")) >= tableResizing.options.minWidth);
+    });
+
+    test("should not set width greater than parent width", function() {
+        wrapper.css("padding", "20px");
+
+        tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
+
+        equal(tableElement[0].style.width, wrapper.width() + PX);
     });
 }
 })();

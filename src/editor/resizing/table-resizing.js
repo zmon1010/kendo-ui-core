@@ -24,6 +24,7 @@
     var NS = ".kendoEditorTableResizing";
     var MAX_PERCENTAGE_VALUE = 100;
     var MIN = "min";
+    var OUTER = "outer";
     var TABLE = "table";
     var WIDTH = "Width";
     var HEIGHT = "Height";
@@ -108,8 +109,9 @@
                 deltaX: 0,
                 deltaY: 0
             }, args);
+            var rtlModifier = that.options.rtl ? (-1) : 1;
 
-            that._resizeDimension(WIDTH, deltas.deltaX);
+            that._resizeDimension(WIDTH, deltas.deltaX * rtlModifier);
             that._resizeDimension(HEIGHT, deltas.deltaY);
 
             that.showResizeHandles();
@@ -122,14 +124,14 @@
             var dimensionLowercase = dimension.toLowerCase();
             var styleValue = style[dimensionLowercase];
             var dimensionValue = styleValue !== "" ? parseFloat(styleValue) : 0;
-            var computedStyleValue = element[dimensionLowercase]();
-            var currentValue = dimensionValue < computedStyleValue ? computedStyleValue : dimensionValue;
+            var elementOuterWidth = element[OUTER + dimension]();
+            var currentValue = dimensionValue < elementOuterWidth ? elementOuterWidth : dimensionValue;
             var constrainedValue;
 
             if (inPercentages(styleValue)) {
                 constrainedValue = constrain({
-                    value: dimensionValue + calculatePercentageRatio(delta, computedStyleValue),
-                    min: calculatePercentageRatio(that.options[MIN + dimension], computedStyleValue),
+                    value: dimensionValue + calculatePercentageRatio(delta, elementOuterWidth),
+                    min: calculatePercentageRatio(that.options[MIN + dimension], elementOuterWidth),
                     max: MAX_PERCENTAGE_VALUE
                 });
 
