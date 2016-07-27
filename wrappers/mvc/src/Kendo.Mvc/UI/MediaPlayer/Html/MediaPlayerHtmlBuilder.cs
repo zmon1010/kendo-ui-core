@@ -21,12 +21,15 @@ namespace Kendo.Mvc.UI
         /// <returns></returns>
         public IHtmlNode Build()
         {
-            var html = new HtmlElement("div", TagRenderMode.SelfClosing).Attributes(new { name = this.MediaPlayer.Name, id = this.MediaPlayer.Id });
             var tagName = MediaPlayer.TagName;
             if (string.IsNullOrEmpty(tagName))
             {
                 tagName = "div";
             }
+            var html = new HtmlElement(tagName).
+                Attributes(new { name = this.MediaPlayer.Name, id = this.MediaPlayer.Id }).
+                Attributes(this.MediaPlayer.HtmlAttributes);
+
             return html;
         }
     }

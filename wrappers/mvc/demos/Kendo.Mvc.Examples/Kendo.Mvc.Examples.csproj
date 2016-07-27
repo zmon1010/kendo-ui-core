@@ -239,6 +239,7 @@
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MediaPlayer\IndexController.cs" />
+    <Compile Include="Controllers\MediaPlayer\PlaylistController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
@@ -978,6 +979,8 @@
     <Content Include="Views\gantt\api.cshtml" />
     <Content Include="Views\gantt\events.cshtml" />
     <Content Include="Views\treemap\index.cshtml" />
+    <Content Include="Views\mediaplayer\index.aspx" />
+    <Content Include="Views\mediaplayer\playlist.aspx" />
     <Content Include="Content\dataviz\Black\markers.png" />
     <Content Include="Content\dataviz\Black\markers_2x.png" />
     <Content Include="Content\dataviz\BlueOpal\markers.png" />
@@ -2935,6 +2938,7 @@
     <Content Include="Views\dialog\right_to_left_support.cshtml" />
     <Content Include="Views\dialog\keyboard_navigation.cshtml" />
     <Content Include="Areas\razor\Views\mediaplayer\index.cshtml" />
+    <Content Include="Areas\razor\Views\mediaplayer\playlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
