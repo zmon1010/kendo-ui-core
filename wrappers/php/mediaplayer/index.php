@@ -15,3 +15,10 @@ echo $mediaPlayer->render();
 
 <?php require_once '../include/footer.php'; ?>
 
+<style>
+    .k-mediaplayer {
+        float: left;
+        width: 640px;
+        height: 360px;
+    }
+</style>

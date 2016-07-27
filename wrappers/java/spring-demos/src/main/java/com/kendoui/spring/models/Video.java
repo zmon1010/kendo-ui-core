@@ -3,20 +3,20 @@ package com.kendoui.spring.models;
 
 public class Video {
     private String title;
-    private String url;
+    private String source;
     private String poster;   
     
-    public Video(String title, String url,String poster) {
+    public Video(String title, String source,String poster) {
         setTitle(title);
-        setUrl(url);
+        setSource(source);
         setPoster(poster);
     }
 
     public String getTitle() {
         return title;
     }
-    public String getUrl() {
-        return url;
+    public String getSource() {
+        return source;
     }
     public String getPoster() {
         return poster;
@@ -24,8 +24,8 @@ public class Video {
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setUrl(String url) {
-        this.url = url;
+    public void setSource(String source) {
+        this.source = source;
     }
     public void setPoster(String poster) {
         this.poster = poster;
