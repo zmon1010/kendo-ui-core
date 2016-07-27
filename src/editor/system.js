@@ -37,7 +37,7 @@ function selected(node, range) {
 var Command = Class.extend({
     init: function(options) {
         this.options = options;
-        this.restorePoint = new RestorePoint(options.range, options.body);
+        this.restorePoint = new RestorePoint(options.range, options.body, {immutables: options.immutables});
         this.marker = new Marker();
         this.formatter = options.formatter;
     },

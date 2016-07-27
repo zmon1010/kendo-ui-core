@@ -1164,7 +1164,7 @@
                 range = that.getRange();
 
                 if (tool.command) {
-                    command = tool.command(extend({ range: range, body: that.body }, params));
+                    command = tool.command(extend({ range: range, body: that.body, immutables: !!that.immutables }, params));
                 }
 
                 prevented = that.trigger("execute", { name: name, command: command });
