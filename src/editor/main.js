@@ -24,9 +24,9 @@
         keys = kendo.keys;
 
     var rtlEnabled = false;
+    var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
-    var MOUSE_UP = "mouseup";
     var NS = ".kendoEditor";
     var TABLE = "table";
     var UNDEFINED = "undefined";
@@ -363,7 +363,7 @@
                         editor._destroyTableResizing();
                     }
                 })
-                .on(MOUSE_UP + NS, TABLE, function(e) {
+                .on(MOUSE_DOWN +NS, TABLE, function(e) {
                     var eventTarget = e.target;
                     var eventCurrentTarget = e.currentTarget;
                     var tableResizing = editor.tableResizing;
@@ -391,7 +391,7 @@
 
                     editor.tableResizing.showResizeHandles();
                 })
-                .on(MOUSE_UP + NS, function(e) {
+                .on(MOUSE_DOWN + NS, function(e) {
                     var tableResizing = editor.tableResizing;
                     var element = tableResizing ? tableResizing.element : null;
                     var target = e.target;
