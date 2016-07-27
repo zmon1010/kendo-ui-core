@@ -51,6 +51,7 @@
             },
             template = kendo.template,
             proxy = $.proxy,
+            keys = kendo.keys,
             //each = $.each,
             templates = {
                 htmlPlayer: "<video class='" + MEDIA + "'> </video>",
@@ -90,7 +91,11 @@
 
                 this._timers = {};
 
-                if (options.media){
+                this._aria();
+
+                this._navigatable();
+
+               if (options.media){
 					this.media(this.options.media);
 				}
 
@@ -147,7 +152,7 @@
 
             _createTooltip: function () {
                 this._tooltip = new ui.Tooltip(this.toolbar().wrapper, {
-                    filter: "a[title!=''], span[title!='']", //dragHandleTitle
+                    filter: "a[title], span[title]", //dragHandleTitle
                     position: "top"
                 });
             },
@@ -165,7 +170,6 @@
                         showButtons: false,
                         change: this._sliderDragChangeHandler,
                         slide: this._sliderDraggingHandler,
-                        dragHandleTitle: "",
                         tooltip: {
                             template: templates.toolTip
                         }
@@ -187,7 +191,6 @@
                         value: this.options.volume,
                         slide: this._volumeDraggingHandler,
                         change: this._volumeChangeHandler,
-                        dragHandleTitle: "",
                         tickPlacement: "none",
                         showButtons: false
                     });
@@ -618,8 +621,10 @@
                     this._paused = false;
                 }
                 else if (event.data === 2) {
-                    this._paused = true;
-                    this.trigger(PAUSE);
+                    if (!this._paused) {
+                        this.trigger(PAUSE);
+                        this._paused = true;
+                    }
                 }
             },
 
@@ -745,6 +750,8 @@
                 this._mouseOutHandler = null;
                 this._mouseInHandler = null;
                 this._mouseClickHanlder = null;
+                this._keyDownHandler = null;
+                this._fullscreenHandler = null;
 
                 this._toolbarClickHandler = null;
                 this._sliderDragChangeHandler = null;
@@ -966,6 +973,60 @@
 
             isPlaying: function () {
                 return !this.isEnded() && !this._paused;
+            },
+
+            _aria: function () {
+            },
+
+            _navigatable: function () {
+                this._fullscreenHandler = proxy(this._fullscreen, this);
+                    $(document)
+                        .on("webkitfullscreenchange mozfullscreenchange fullscreenchange" + ns, this._fullscreenHandler);
+
+                if (this.options.navigatable) {
+                    this.wrapper.attr("tabIndex", 0);
+                    this._keyDownHandler = proxy(this._keyDown, this);
+                    this.wrapper
+                        .on("keydown" + ns, this._keyDownHandler);
+
+                    this._fullscreenHandler = proxy(this._fullscreen, this);
+                    $(document)
+                        .on("webkitfullscreenchange mozfullscreenchange fullscreenchange" + ns, this._fullscreenHandler);
+                }
+            },
+
+            _fullscreen: function (e) {
+                var isFullScreen = document.fullScreen ||
+                   document.mozFullScreen ||
+                   document.webkitIsFullScreen;
+                   console.log(isFullScreen)
+                
+                this._slider.resize();
+                   
+                if (!isFullScreen) {
+                    this.wrapper.find('span[class*="k-i-fullscreen"]')
+                            .removeClass(FULLSCREEN_EXIT)
+                            .addClass(FULLSCREEN_ENTER);
+                        this.fullScreen(false);
+                }
+            },
+
+            _keyDown: function (e) {
+                e.preventDefault();
+                if (e.keyCode === keys.SPACEBAR) {
+                    this.isPlaying() ? this.pause() : this.play();
+                }
+                if (e.keyCode === keys.ENTER) {
+                        this.wrapper.find('span[class*="k-i-fullscreen"]')
+                            .removeClass(FULLSCREEN_ENTER)
+                            .addClass(FULLSCREEN_EXIT);
+                        this.fullScreen(true);
+                    
+                }
+                if (e.keyCode === 77) {
+                    var muted = (this._media && this._media.muted) || this._ytmedia.isMuted();
+                    this.mute(!muted);
+                }
             },
 
             _error: function () {

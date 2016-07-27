@@ -24,6 +24,7 @@
     });
 
     test("pause event should be fired", function () {
+        mediaPlayer.play();
         mediaPlayer.bind("pause", function (e) {
             ok(true);
         });
