@@ -149,11 +149,8 @@
         showResizeHandles: function() {
             var that = this;
 
-            //table resizing is natively supported in IE and Firefox
-            if (!browser.msie && !browser.mozilla) {
-                that._initResizeHandles();
-                that._showResizeHandles();
-            }
+            that._initResizeHandles();
+            that._showResizeHandles();
         },
 
         _initResizeHandles: function() {
@@ -208,6 +205,23 @@
             }
         }
     });
+
+    var TableResizingFactory = Class.extend({
+        create: function(element, options) {
+            //table resizing is natively supported in IE and Firefox
+            if (!browser.msie && !browser.mozilla) {
+                return new TableResizing(element, options);
+            }
+            else {
+                return null;
+            }
+        }
+    });
+    TableResizingFactory.current = new TableResizingFactory();
+
+    TableResizing.create = function(element, options) {
+        return TableResizingFactory.current.create(element, options);
+    };
 
     extend(Editor, {
         TableResizing: TableResizing

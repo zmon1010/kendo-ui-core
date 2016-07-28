@@ -117,23 +117,8 @@
         }));
     }
 
-    editor_module("editor table resizing initialization", {
-        beforeEach: function() {
-            editor = $("#editor-fixture").data("kendoEditor");
-            editor.tableResizing = null;
-            $(editor.body).append($(CONTENT_HTML)[0]);
-            $(TABLE_HTML).attr("id", "table2").appendTo(editor.body)[0];
-            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-        },
-
-        afterEach: function() {
-            if (editor) {
-                $(editor.body).find("*").remove();
-            }
-            removeMocksIn(editor.tableResizing);
-            kendo.destroy(QUnit.fixture);
-        }
-    });
+//table resizing is natively supported in IE and Firefox
+if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     editor_module("editor table resizing nested table initialization", {
         beforeEach: function() {
@@ -386,8 +371,6 @@
         equal(destroySpy.calls("destroy"), 1);
     });
 
-//table resize handles are natively supported in IE and Firefox
-if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("clicking on an element with data attribute equal to table should not destroy table resizing", function() {
         var destroySpy = spy(editor.tableResizing, "destroy");
         editor.tableResizing.resizingInProgress = function() { return false; };
@@ -397,7 +380,6 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
         equal(destroySpy.calls("destroy"), 0);
     });
-}
 
     module("editor table resizing", {
         setup: function() {
@@ -461,8 +443,6 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         }
     });
 
-//table resize handles are natively supported in IE and Firefox
-if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should call resize handles destroy", function() {
         var destroySpies = [];
         tableResizing.showResizeHandles();
@@ -476,7 +456,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             equal(destroySpies[i].calls("destroy"), 1);
         }
     });
-}
+
     module("editor table resizing", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -524,8 +504,6 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(showSpy.calls("showResizeHandles"), 1);
     });
 
-//table resize handles are natively supported in IE and Firefox
-if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     module("editor table resizing resize handle", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -601,7 +579,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
         equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
     });
-}
+
     module("editor table resizing resize width", {
         setup: function() {
             wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
@@ -818,4 +796,5 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
         equal(tableElement[0].style.height, "100%");
     });
+}
 })();

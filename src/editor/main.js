@@ -349,7 +349,7 @@
             var editor = this;
 
             function initTableResizing(editorWidget, tableElement) {
-                editorWidget.tableResizing = new kendo.ui.editor.TableResizing(tableElement, {
+                editorWidget.tableResizing = kendo.ui.editor.TableResizing.create(tableElement, {
                     rtl: rtlEnabled,
                     rootElement: editorWidget.body
                 });
@@ -370,26 +370,27 @@
                     var element = tableResizing ? tableResizing.element : null;
 
                     if (tableResizing) {
-                        if (element && !eventCurrentTarget.isSameNode(element)) {
-                            if (contains(eventCurrentTarget, element) && (!element.isSameNode(eventTarget) && contains(element, eventTarget))) {
-                                //prevent a parent table resizing init when clicking on a nested table
+                        if (element && eventCurrentTarget !== element) {
+                            if (contains(eventCurrentTarget, element) && element !== eventTarget && contains(element, eventTarget)) {
+                                //prevent a parent table resizing init when clicking on a nested table when the event bubbles
                                 //instead of stopping event propagation
                                 return;
                             }
                             else {
-                                if (!element.isSameNode(eventTarget)) {
+                                if (element !== eventTarget) {
                                     editor._destroyTableResizing();
                                     initTableResizing(editor, eventCurrentTarget);
                                 }
                             }
                         }
-                
                     }
                     else {
                         initTableResizing(editor, eventCurrentTarget);
                     }
 
-                    editor.tableResizing.showResizeHandles();
+                    if (editor.tableResizing) {
+                        editor.tableResizing.showResizeHandles();
+                    }
                 })
                 .on(MOUSE_DOWN + NS, function(e) {
                     var tableResizing = editor.tableResizing;
