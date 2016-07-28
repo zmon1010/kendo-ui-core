@@ -13145,9 +13145,50 @@ var __meta__ = { // jshint ignore:line
         }
     };
 
+    var ChartPlotArea = Class.extend({
+        init: function(plotArea) {
+            this._plotArea = plotArea;
+            this.visual = plotArea.visual;
+            this.backgroundVisual = plotArea._bgVisual;
+        }
+    });
+
+    var ChartPane = Class.extend({
+        init: function(chart, pane) {
+            this._chart = chart;
+            this._pane = pane;
+            this.visual = pane.visual;
+            this.chartsVisual = pane.chartContainer.visual;
+            this.name = pane.options.name || "default";
+        },
+
+        series: function() {
+            var chart = this._chart;
+            var seriesByPane = chart._plotArea.groupSeriesByPane();
+            var series = seriesByPane[this.name];
+
+            var result = [];
+            if (series) {
+                for (var idx = 0; idx < series.length; idx++) {
+                    result.push(new ChartSeries(chart, series[idx]));
+                }
+            }
+
+            return result;
+        }
+    });
+
     var ChartAxis = Class.extend({
         init: function(axis) {
             this._axis = axis;
+            this.options = axis.options;
+        },
+
+        value: function(point) {
+            var axis = this._axis;
+            var value = axis.getCategory ? axis.getCategory(point) : axis.getValue(point);
+
+            return value;
         },
 
         slot: function(from, to, limit) {

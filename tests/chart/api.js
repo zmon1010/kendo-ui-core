@@ -1219,6 +1219,16 @@
             equal(value, "bar");
         });
 
+        test("value returns axis category", function() {
+            chartAxis = new dataviz.ChartAxis({
+                getCategory: function(point) {
+                    return point;
+                }
+            });
+            var value = chartAxis.value("bar");
+            equal(value, "bar");
+        });
+
         test("valueRange returns axis valueRange", function() {
             var range = chartAxis.valueRange();
             equal(range, "baz");
