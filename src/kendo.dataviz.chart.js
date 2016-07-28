@@ -885,10 +885,14 @@ var __meta__ = { // jshint ignore:line
 
         _start: function(e) {
             var chart = this,
-                events = chart._events;
+                events = chart._events,
+                coords = chart._eventCoordinates(e);
+            if (!chart._plotArea.backgroundContainsPoint(coords)) {
+                return;
+            }
 
             if (defined(events[DRAG_START] || events[DRAG] || events[DRAG_END])) {
-                chart._startNavigation(e, DRAG_START);
+                chart._startNavigation(e, coords, DRAG_START);
             }
 
             if (chart._pannable && chart._pannable.start(e)) {
@@ -976,7 +980,12 @@ var __meta__ = { // jshint ignore:line
                 currentAxis,
                 axisName,
                 ranges = {},
-                mousewheelZoom = chart._mousewheelZoom;
+                mousewheelZoom = chart._mousewheelZoom,
+                coords = chart._eventCoordinates(origEvent);
+
+            if (!chart._plotArea.backgroundContainsPoint(coords)) {
+                return;
+            }
 
             if (mousewheelZoom) {
                 var args = { delta: delta, axisRanges: axisRanges(this._plotArea.axes), originalEvent: e };
@@ -1008,7 +1017,7 @@ var __meta__ = { // jshint ignore:line
                 }
             } else {
                 if (!state) {
-                    prevented = chart._startNavigation(origEvent, ZOOM_START);
+                    prevented = chart._startNavigation(origEvent, coords, ZOOM_START);
                     if (!prevented) {
                         state = chart._navState;
                     }
@@ -1045,48 +1054,34 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _startNavigation: function(e, chartEvent) {
+        _startNavigation: function(e, coords, chartEvent) {
             var chart = this,
-                coords = chart._eventCoordinates(e),
                 plotArea = chart._model._plotArea,
                 pane = plotArea.findPointPane(coords),
                 axes = plotArea.axes.slice(0),
-                i,
-                currentAxis,
-                inAxis = false,
                 prevented;
 
             if (!pane) {
                 return;
             }
 
-            for (i = 0; i < axes.length; i++) {
-                currentAxis = axes[i];
-                if (currentAxis.box.containsPoint(coords)) {
-                    inAxis = true;
-                    break;
-                }
-            }
+            var ranges = axisRanges(axes);
 
-            if (!inAxis && plotArea.backgroundContainsPoint(coords)) {
-                var ranges = axisRanges(axes);
+            prevented = chart.trigger(chartEvent, {
+                axisRanges: ranges,
+                originalEvent: e
+            });
 
-                prevented = chart.trigger(chartEvent, {
+            if (prevented) {
+                chart._userEvents.cancel();
+            } else {
+                chart._suppressHover = true;
+                chart._unsetActivePoint();
+                chart._navState = {
                     axisRanges: ranges,
-                    originalEvent: e
-                });
-
-                if (prevented) {
-                    chart._userEvents.cancel();
-                } else {
-                    chart._suppressHover = true;
-                    chart._unsetActivePoint();
-                    chart._navState = {
-                        axisRanges: ranges,
-                        pane: pane,
-                        axes: axes
-                    };
-                }
+                    pane: pane,
+                    axes: axes
+                };
             }
         },
 

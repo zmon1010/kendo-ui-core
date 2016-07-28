@@ -331,12 +331,15 @@
         });
 
         // ------------------------------------------------------------
+        var panePoint;
+        var origEvent;
+
         function triggerMousewheel(delta) {
             chart._mousewheel({
                 originalEvent: {
                     detail: delta * 3,
-                    clientX: 300,
-                    clientY: 300
+                    clientX: panePoint.x,
+                    clientY: panePoint.y
                 },
                 preventDefault: function() {},
                 stopPropagation: function() {}
@@ -349,14 +352,14 @@
                 x: {
                     startLocation: 0,
                     location: 0,
-                    client: 0,
+                    client: panePoint.x,
                     initialDelta: 0
                 },
                 y: {
                     startLocation: 0,
                     initialDelta: 0,
                     location: 0,
-                    client: 0
+                    client: panePoint.y
                 }
             }, options);
         }
@@ -368,6 +371,8 @@
                     valueAxis: { name: "value" },
                     chartArea: { width: 600, height: 400 }
                 });
+                panePoint = chart._plotArea.panes[0].chartsBox().center();
+                origEvent = { clientX: panePoint.x, clientY: panePoint.y };
             },
             teardown: destroyChart
         });
@@ -376,7 +381,7 @@
             stubMethod(Chart.fn, "_startNavigation", function() {
                 ok(false);
             }, function() {
-                chart._start();
+                chart._start(origEvent);
             });
         });
 
@@ -386,7 +391,7 @@
             stubMethod(Chart.fn, "_startNavigation", function() {
                 ok(true);
             }, function() {
-                chart._start();
+                chart._start(origEvent);
             });
         });
 
@@ -396,7 +401,7 @@
             stubMethod(Chart.fn, "_startNavigation", function() {
                 ok(true);
             }, function() {
-                chart._start();
+                chart._start(origEvent);
             });
         });
 
@@ -406,7 +411,7 @@
             stubMethod(Chart.fn, "_startNavigation", function() {
                 ok(true);
             }, function() {
-                chart._start();
+                chart._start(origEvent);
             });
         });
 
