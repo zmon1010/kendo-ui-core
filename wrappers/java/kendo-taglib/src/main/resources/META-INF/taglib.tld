@@ -362,7 +362,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the barcode will not display the checksum digit next to the value in the text area.</description>
+            <description>If set to true, the Barcode will display the checksum digit next to the value in the text area.</description>
             <name>checksum</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
