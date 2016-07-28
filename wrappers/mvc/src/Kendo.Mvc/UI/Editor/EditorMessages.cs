@@ -34,6 +34,8 @@ namespace Kendo.Mvc.UI
             FontSizeInherit = Messages.Editor_FontSizeInherit;
             FormatBlock = Messages.Editor_FormatBlock;
             Formatting = Messages.Editor_Formatting;
+            CleanFormatting = Messages.Editor_CleanFormatting;
+            Print = Messages.Editor_Print;
             Styles = Messages.Editor_Styles;
             ForeColor = Messages.Editor_ForeColor;
             BackColor = Messages.Editor_BackColor;
@@ -85,6 +87,8 @@ namespace Kendo.Mvc.UI
         public string FontSizeInherit { get; set; }
         public string FormatBlock { get; set; }
         public string Formatting { get; set; }
+        public string CleanFormatting { get; set; }
+        public string Print { get; set; }
         public string Styles { get; set; }
         public string ForeColor { get; set; }
         public string BackColor { get; set; }
@@ -135,6 +139,8 @@ namespace Kendo.Mvc.UI
         private const string DefaultFontSizeInherit = "(inherited size)";
         private const string DefaultFormatBlock = "Format";
         private const string DefaultFormatting = "Format";
+        private const string DefaultPrint = "Print";
+        private const string DefaultCleanFormatting = "Clean formatting";
         private const string DefaultStyles = "Styles";
         private const string DefaultBackColor = "Background color";
         private const string DefaultForeColor = "Color";
@@ -287,6 +293,16 @@ namespace Kendo.Mvc.UI
             if (Formatting != DefaultFormatting)
             {
                 json["formatting"] = Formatting;
+            }
+
+            if (CleanFormatting != DefaultCleanFormatting)
+            {
+                json["cleanFormatting"] = CleanFormatting;
+            }
+
+            if (Print != DefaultPrint)
+            {
+                json["print"] = Print;
             }
 
             if (Styles != DefaultStyles)

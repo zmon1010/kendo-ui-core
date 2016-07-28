@@ -403,31 +403,31 @@
     <value>Цвят</value>
   </data>
   <data name="Editor_DialogButtonSeparator" xml:space="preserve">
-    <value>or</value>
+    <value>или</value>
   </data>
   <data name="Editor_DialogCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Откажи</value>
   </data>
   <data name="Editor_DialogInsert" xml:space="preserve">
-    <value>Insert</value>
+    <value>Добави</value>
   </data>
   <data name="Editor_ImageAltText" xml:space="preserve">
-    <value>Alternate text</value>
+    <value>Алтернативен текст</value>
   </data>
   <data name="Editor_ImageWebAddress" xml:space="preserve">
-    <value>Web address</value>
+    <value>Интернет адрес</value>
   </data>
   <data name="Editor_LinkOpenInNewWindow" xml:space="preserve">
-    <value>Open link in new window</value>
+    <value>Отвори връзката в нов прозорец</value>
   </data>
   <data name="Editor_LinkText" xml:space="preserve">
-    <value>Text</value>
+    <value>Текст</value>
   </data>
   <data name="Editor_LinkToolTip" xml:space="preserve">
     <value>ToolTip</value>
   </data>
   <data name="Editor_LinkWebAddress" xml:space="preserve">
-    <value>Web address</value>
+    <value>Интернет адрес</value>
   </data>
   <data name="Editor_Search" xml:space="preserve">
     <value>Търси</value>
@@ -625,22 +625,22 @@
     <value>преместете с мишката файлове тук за да ги качите</value>
   </data>
   <data name="Editor_AddColumnLeft" xml:space="preserve">
-    <value>Add column on the left</value>
+    <value>Добави колона от ляво</value>
   </data>
   <data name="Editor_AddColumnRight" xml:space="preserve">
-    <value>Add column on the right</value>
+    <value>Добави колона от дясно</value>
   </data>
   <data name="Editor_AddRowAbove" xml:space="preserve">
-    <value>Add row above</value>
+    <value>Добави ред отгоре</value>
   </data>
   <data name="Editor_AddRowBelow" xml:space="preserve">
-    <value>Add row below</value>
+    <value>Добави ред отдолу</value>
   </data>
   <data name="Editor_DeleteColumn" xml:space="preserve">
-    <value>Delete column</value>
+    <value>Изтрии колоната</value>
   </data>
   <data name="Editor_DeleteRow" xml:space="preserve">
-    <value>Delete row</value>
+    <value>Изтрии реда</value>
   </data>
   <data name="Scheduler_DeleteWindowTitle" xml:space="preserve">
     <value>Изтрии събитие</value>
@@ -685,13 +685,13 @@
     <value>Стилове</value>
   </data>
   <data name="Upload_HeaderStatusUploaded" xml:space="preserve">
-    <value>Done</value>
+    <value>Завършено</value>
   </data>
   <data name="Upload_HeaderStatusUploading" xml:space="preserve">
     <value>Uploading...</value>
   </data>
   <data name="Editor_Formatting" xml:space="preserve">
-    <value>Format</value>
+    <value>Форматиране</value>
   </data>
   <data name="Pager_MorePages" xml:space="preserve">
     <value>Още страници</value>
@@ -724,28 +724,28 @@
     <value>Drop Column Fields Here</value>
   </data>
   <data name="PivotConfigurator_ColumnsLabel" xml:space="preserve">
-    <value>Columns</value>
+    <value>Колони</value>
   </data>
   <data name="PivotConfigurator_FieldsLabel" xml:space="preserve">
-    <value>Fields</value>
+    <value>Полета</value>
   </data>
   <data name="PivotConfigurator_Measures" xml:space="preserve">
     <value>Drop Data Fields Here</value>
   </data>
   <data name="PivotConfigurator_MeasuresLabel" xml:space="preserve">
-    <value>Measures</value>
+    <value>Мерки</value>
   </data>
   <data name="PivotConfigurator_Rows" xml:space="preserve">
     <value>Drop Rows Fields Here</value>
   </data>
   <data name="PivotConfigurator_RowsLabel" xml:space="preserve">
-    <value>Rows</value>
+    <value>Редове</value>
   </data>
   <data name="PivotFieldMenu_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Откаци</value>
   </data>
   <data name="PivotFieldMenu_Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Изчисти</value>
   </data>
   <data name="PivotFieldMenu_Filter" xml:space="preserve">
     <value>Filter</value>
@@ -811,15 +811,21 @@
     <value>Търси</value>
   </data>
   <data name="Scheduler_View_Timeline" xml:space="preserve">
-    <value>Timeline</value>
+    <value>Времева линия</value>
   </data>
   <data name="Scheduler_View_TimelineMonth" xml:space="preserve">
-    <value>Timeline Month</value>
+    <value>Месечна времева линия</value>
   </data>
   <data name="Scheduler_View_TimelineWeek" xml:space="preserve">
-    <value>Timeline Week</value>
+    <value>Седмична времева линия</value>
   </data>
   <data name="Scheduler_View_TimelineWorkWeek" xml:space="preserve">
-    <value>Timeline Work Week</value>
+    <value>Работно седмична времева линия</value>
+  </data>
+  <data name="Editor_CleanFormatting" xml:space="preserve">
+    <value>Изчисти формата</value>
+  </data>
+  <data name="Editor_Print" xml:space="preserve">
+    <value>Принтиране</value>
   </data>
 </root>
