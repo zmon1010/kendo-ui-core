@@ -10020,6 +10020,33 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        backgroundBox: function() {
+            var plotArea = this,
+                axes = plotArea.axes,
+                axesCount = axes.length,
+                lineBox, box, i, j, axisA, axisB;
+
+            for (i = 0; i < axesCount; i++) {
+                axisA = axes[i];
+
+                for (j = 0; j < axesCount; j++) {
+                    axisB = axes[j];
+
+                    if (axisA.options.vertical !== axisB.options.vertical) {
+                        lineBox = axisA.lineBox().clone().wrap(axisB.lineBox());
+
+                        if (!box) {
+                            box = lineBox;
+                        } else {
+                            box = box.wrap(lineBox);
+                        }
+                    }
+                }
+            }
+
+            return box || plotArea.box;
+        },
+
         chartsBoxes: function() {
             var panes = this.panes;
             var boxes = [];
