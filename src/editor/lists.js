@@ -278,7 +278,7 @@ var ListFormatter = Class.extend({
 
             if (formatNode && this.isList(child)) {
                 // merging lists
-                $.each(child.childNodes, pushAncestor);
+                $.each(child.children, pushAncestor);
                 dom.remove(child);
             } else {
                 ancestors.push(child);
@@ -416,7 +416,7 @@ var ListFormatter = Class.extend({
                 range.selectNode(text.parentNode);
             }
         }
-
+        nodes = dom.filterBy(nodes, dom.htmlIndentSpace, true);
         if (that.finder.isFormatted(nodes)) {
             that.split(range);
             that.remove(nodes);
