@@ -1875,11 +1875,14 @@ var __meta__ = { // jshint ignore:line
             },
             name: "workWeek",
             nextDate: function() {
-                return kendo.date.dayOfWeek(kendo.date.nextDay(this.startDate()), this.calendarInfo().firstDay, 1);
+                var weekStart = kendo.date.dayOfWeek(kendo.date.nextDay(this.startDate()), this.calendarInfo().firstDay, 1);
+                return kendo.date.addDays(weekStart, this._workDays[0]);
             },
             previousDate: function() {
                 var weekStart = kendo.date.dayOfWeek(this.startDate(), this.calendarInfo().firstDay, -1);
-                return kendo.date.previousDay(weekStart);
+                var workDays = this._workDays;
+
+                return kendo.date.addDays(weekStart, workDays[workDays.length - 1] - 7);
             },
             calculateDateRange: function() {
                 var selectedDate = this.options.date,

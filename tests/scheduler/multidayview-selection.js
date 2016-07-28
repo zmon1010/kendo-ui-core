@@ -2561,6 +2561,41 @@
         });
     }
 
+    function setupGroupedByDateSchedulerWorkWeek(orientation, view, start, end) {
+        orientation = orientation || "horizontal";
+
+        scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date("2013/6/8"),
+            group: {
+                resources: ["ResourceName", "ResourceName2"],
+                date: true,
+                orientation: orientation
+            },
+            workWeekStart: start,
+            workWeekEnd: end,
+            resources: [
+                {
+                    field: "rooms",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Room1", value: 1 },
+                        { text: "Room2", value: 2 }
+                    ]
+                },
+                {
+                    field: "persons",
+                    name: "ResourceName2",
+                    dataSource: [
+                        { text: "Fred", value: 1 },
+                        { text: "Barny", value: 2 }
+                    ]
+                }
+            ],
+            views: [ view || "workWeek" ]
+        });
+    }
+
+
      module("Horizontally grouped by date Multi Day View selection", {
         setup: module_setup,
         teardown: function() {
@@ -2771,6 +2806,121 @@
         deepEqual(selection.start,  new Date(2013, 5, 1, 23, 00));
         deepEqual(selection.end, new Date(2013, 5, 1, 23, 30));
     });
+
+      test("View moves selection to the prev visible date and group slot workWeek", function() {
+        setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 1 ,5);
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 00),
+            end: new Date(2013, 5, 2, 23, 30),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        deepEqual(selection.start,  new Date(2013, 4, 31, 23, 00));
+        deepEqual(selection.end, new Date(2013, 4, 31, 23, 30));
+    });
+
+    test("View moves selection to the prev visible date and group slot workWeek starts on sunday", function() {
+        setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 0 ,3);
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 2, 23, 00),
+            end: new Date(2013, 5, 2, 23, 30),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        deepEqual(selection.start,  new Date(2013, 4, 29, 23, 00));
+        deepEqual(selection.end, new Date(2013, 4, 29, 23, 30));
+    });
+
+   test("View moves selection to the prev visible date and group slot workWeek ends on saturday", function() {
+        setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 3 ,6);
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 5, 23, 00),
+            end: new Date(2013, 5, 5, 23, 30),
+            groupIndex: 0,
+            events: []
+        };
+
+        view.move(selection, keys.LEFT);
+
+        equal(selection.groupIndex, 3);
+        deepEqual(selection.start,  new Date(2013, 5, 1, 23, 00));
+        deepEqual(selection.end, new Date(2013, 5, 1, 23, 30));
+    });
+
+test("View moves selection to the next visible date and group slot workWeek", function() {
+        setupGroupedByDateSchedulerWorkWeek();
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 7, 23, 00),
+            end: new Date(2013, 5, 7, 23, 30),
+            groupIndex: 3,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        deepEqual(selection.start,  new Date(2013, 5, 10, 23, 00));
+        deepEqual(selection.end, new Date(2013, 5, 10, 23, 30));
+    });
+
+    test("View moves selection to the next visible date and group slot workWeek starts on sunday", function() {
+        setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 0 ,3);
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 5, 23, 00),
+            end: new Date(2013, 5, 5, 23, 30),
+            groupIndex: 3,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        deepEqual(selection.start,  new Date(2013, 5, 9, 23, 00));
+        deepEqual(selection.end, new Date(2013, 5, 9, 23, 30));
+    });
+
+   test("View moves selection to the next visible date and group slot workWeek ends on saturday", function() {
+        setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 3 ,6);
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 8, 23, 00),
+            end: new Date(2013, 5, 8, 23, 30),
+            groupIndex: 3,
+            events: []
+        };
+
+        view.move(selection, keys.RIGHT);
+
+        equal(selection.groupIndex, 0);
+        deepEqual(selection.start,  new Date(2013, 5, 12, 23, 00));
+        deepEqual(selection.end, new Date(2013, 5, 12, 23, 30));
+    });
+
 
      test("View moves allday selection to the prev group slot", function() {
         setupGroupedByDateScheduler();
