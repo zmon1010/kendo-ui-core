@@ -2659,6 +2659,18 @@ var __meta__ = { // jshint ignore:line
             return slotBox;
         },
 
+        slot: function(from, to, limit) {
+            if (typeof from === "string") {
+                from = this.categoryIndex(from);
+            }
+
+            if (typeof to === "string") {
+                to = this.categoryIndex(to);
+            }
+
+            return Axis.fn.slot.call(this, from, to, limit);
+        },
+
         pointCategoryIndex: function(point) {
             var axis = this,
                 options = axis.options,

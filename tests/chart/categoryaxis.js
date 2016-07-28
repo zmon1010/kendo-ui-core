@@ -1342,6 +1342,12 @@
             ok(slot.equals(box.toRect()));
         });
 
+        test("slot method returns slot based on category value", function() {
+            var box = categoryAxis.getSlot(1);
+            var slot = categoryAxis.slot("Bar");
+            ok(slot.equals(box.toRect()));
+        });
+
         // ------------------------------------------------------------
         module("Category Axis / Vertical / Slots", {
             setup: function() {
