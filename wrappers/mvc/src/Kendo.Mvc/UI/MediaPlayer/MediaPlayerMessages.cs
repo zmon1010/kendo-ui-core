@@ -73,32 +73,32 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Pause?.HasValue() == true)
+            if (Pause.HasValue())
             {
                 settings["pause"] = Pause;
             }
 
-            if (Play?.HasValue() == true)
+            if (Play.HasValue())
             {
                 settings["play"] = Play;
             }
 
-            if (Mute?.HasValue() == true)
+            if (Mute.HasValue())
             {
                 settings["mute"] = Mute;
             }
 
-            if (Volume?.HasValue() == true)
+            if (Volume.HasValue())
             {
                 settings["volume"] = Volume;
             }
 
-            if (Quality?.HasValue() == true)
+            if (Quality.HasValue())
             {
                 settings["quality"] = Quality;
             }
 
-            if (Fullscreen?.HasValue() == true)
+            if (Fullscreen.HasValue())
             {
                 settings["fullscreen"] = Fullscreen;
             }
