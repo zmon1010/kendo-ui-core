@@ -851,6 +851,9 @@
             },
 
             fullScreen: function (enterFullScreen) {
+                if (typeof enterFullScreen === 'undefined') {
+                    return this._isInFullScreen || false;
+                }                
                 var element = this.element.get(0);
                 if (enterFullScreen) {
                     this._width = this.element.width();
@@ -999,7 +1002,6 @@
                 var isFullScreen = document.fullScreen ||
                    document.mozFullScreen ||
                    document.webkitIsFullScreen;
-                   console.log(isFullScreen)
                 
                 this._slider.resize();
                    

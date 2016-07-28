@@ -178,7 +178,7 @@ A value between 0 and 100 that specifies the volume of the video
 
 ### fullScreen
 
-Forces the widget to enter\exit full-screen mode
+Gets or Sets the full-screen mode of the widget
 
 #### Example
 
@@ -196,9 +196,65 @@ Forces the widget to enter\exit full-screen mode
     mediaPlayer.fullScreen(true);
     </script>
 
-### enterFullScreen `Boolean`
+#### Parameters
+
+##### value `Boolean`
 
 The value that indicates whether the widget should enter\exit full-screen
+
+### volume
+
+Gets or Sets a value between 0 and 100 that specifies the volume of the video 
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
+    });
+    // get a reference to the media player widget
+    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+    // check the current volume of the player
+    mediaPlayer.volume();
+    // sets the current volume to 50
+    mediaPlayer.volume(50);
+    </script>
+
+#### Parameters
+
+##### value `Number`
+
+The value between 0 and 100 that specifies the volume of the player
+
+### mute
+
+The value that indicates whether player is muted
+
+#### Example
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        autoPlay: true,
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
+    });
+    var mediaPlayer = $("#mediaplayer").data("kendoMediaPlayer");
+
+    // mute the audio
+    mediaPlayer.mute(true);
+    //gets if the player is currently muted
+    mediaPlayer.mute();
+    // unmute the audio
+    mediaPlayer.mute(false);
+    </script>
+
+#### Parameters
+
+##### value `Boolean`
+
+The value indicates if sound should be muted
 
 ### isEnded
 
@@ -220,7 +276,7 @@ Gets a value indicating whether the media has finished playing
 
 ### isPaused
 
-Gets a value indicating whether the media is paused
+Gets a value indicating whether the media is paused, stopped or ended
 
 #### Example
 
