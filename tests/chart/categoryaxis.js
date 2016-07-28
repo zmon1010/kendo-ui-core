@@ -425,6 +425,17 @@
                 equal(totalRange.max, 3 + categories.length);
             });
 
+            // ------------------------------------------------------------
+            module("Category Axis / valueRange");
+
+            test("returns range", function() {
+                setupAxis({});
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                deepEqual(categoryAxis.valueRange(), categoryAxis.range());
+            });
+
         })();
 
         (function() {

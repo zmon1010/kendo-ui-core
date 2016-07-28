@@ -1163,6 +1163,14 @@
             },
             range: function() {
                 return "foo";
+            },
+
+            getValue: function(point) {
+                return point;
+            },
+
+            valueRange: function() {
+                return "baz";
             }
         },
         chartAxis;
@@ -1204,6 +1212,16 @@
         test("range returns axis range", function() {
             var range = chartAxis.range();
             equal(range, "foo");
+        });
+
+        test("value returns axis value", function() {
+            var value = chartAxis.value("bar");
+            equal(value, "bar");
+        });
+
+        test("valueRange returns axis valueRange", function() {
+            var range = chartAxis.valueRange();
+            equal(range, "baz");
         });
     })();
 

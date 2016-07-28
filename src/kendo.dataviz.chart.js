@@ -2833,6 +2833,10 @@ var __meta__ = { // jshint ignore:line
                 min: math.min(min, max),
                 max: math.max(min, max)
             };
+        },
+
+        valueRange: function() {
+            return this.range();
         }
     });
 
@@ -3407,6 +3411,15 @@ var __meta__ = { // jshint ignore:line
             }
 
             return CategoryAxis.fn.getSlot.call(axis, a, b, limit);
+        },
+
+        valueRange: function() {
+            var options = this.options;
+            var range = this._categoryRange(options.srcCategories || options.categories);
+            return {
+                min: toDate(range.min),
+                max: toDate(range.max)
+            };
         }
     });
 
@@ -3424,7 +3437,11 @@ var __meta__ = { // jshint ignore:line
                 )
             });
 
-            options = axis.applyDefaults(toDate(seriesMin), toDate(seriesMax), options);
+            this.seriesMin = toDate(seriesMin);
+            this.seriesMax = toDate(seriesMax);
+
+            options = axis.applyDefaults(this.seriesMin, this.seriesMax, options);
+
 
             Axis.fn.init.call(axis, options);
         },
@@ -13130,6 +13147,10 @@ var __meta__ = { // jshint ignore:line
 
         range: function() {
             return this._axis.range();
+        },
+
+        valueRange: function() {
+            return this._axis.valueRange();
         }
     });
 

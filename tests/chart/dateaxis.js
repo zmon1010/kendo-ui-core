@@ -611,6 +611,25 @@
             equal(range.min.getTime(), new Date("2012/02/05").getTime());
         });
 
+        // ------------------------------------------------------------
+        module("Date Category Axis / valueRange", {
+            setup: function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/01"), new Date("2012/02/10")
+                    ],
+                    baseUnit: "months"
+                });
+            }
+        });
+
+        test("returns source categories min and max date", function() {
+            var range = dateAxis.valueRange();
+
+            equal(range.min.getTime(), new Date("2012/02/01").getTime());
+            equal(range.max.getTime(), new Date("2012/02/10").getTime());
+        });
+
         (function() {
 
             // ------------------------------------------------------------
