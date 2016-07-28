@@ -3209,7 +3209,7 @@
             equal(stroke.dashType, "dot");
             equal(stroke.color, "red");
             equal(stroke.width, 2);
-            sameRectPath(rect, [116, 100, 988, 976], TOLERANCE);
+            sameRectPath(rect.paths[0], [116, 100, 988, 976], TOLERANCE);
         });
 
         test("should render plot area background", function() {
@@ -3226,7 +3226,36 @@
 
             var rect = plotArea._bgVisual;
             equal(rect.options.fill.color, "color");
-            sameRectPath(rect, [116, 100, 988, 976], TOLERANCE);
+
+            sameRectPath(rect.paths[0], [116, 100, 988, 976], TOLERANCE);
+        });
+
+        test("should render multipath with paths for each pane for the plot area background", function() {
+            var categoryAxis = {
+                    categories: ["A"]
+                },
+                valueAxis = [{
+
+                }, {
+                    pane: "second"
+                }];
+
+            plotArea = new dataviz.CategoricalPlotArea([{
+                data: [1],
+                type: "column"
+            }], {
+                categoryAxis: categoryAxis,
+                valueAxis: valueAxis,
+                panes: [{}, { name: "second"}]
+            });
+            plotArea.reflow(chartBox);
+            plotArea.renderVisual();
+
+            var rect = plotArea._bgVisual;
+            ok(rect instanceof kendo.drawing.MultiPath);
+
+            sameRectPath(rect.paths[0], [133, 107.5, 999, 526], TOLERANCE);
+            sameRectPath(rect.paths[1], [133, 557.5, 999, 992.5], TOLERANCE);
         });
 
         test("should set plot area background opacity", function() {
@@ -4308,7 +4337,7 @@
             bar = plotArea.charts[0].points[0];
             barElement = getChartDomElement(bar);
             plotAreaElement = getChartDomElement(plotArea);
-        }       
+        }
 
         // ------------------------------------------------------------
         module("Categorical Plot Area / Events / plotAreaClick", {
@@ -5531,14 +5560,14 @@
             pointElement = getChartDomElement(point.marker);
         }
 
-        function xyPlotAreaEventsTests(eventName, triggerEvent) {           
+        function xyPlotAreaEventsTests(eventName, triggerEvent) {
             var eventOptions = {};
             // ------------------------------------------------------------
             module("XY Plot Area / Events / " + eventName, {
                 teardown: destroyChart
             });
 
-            test("point event bubbles to plot area", 1, function() {                
+            test("point event bubbles to plot area", 1, function() {
                 eventOptions[eventName] = function() { ok(true); };
 
                 createScatterChart(eventOptions);
@@ -5546,7 +5575,7 @@
                 triggerEvent(chart, plotAreaElement, 300, 300);
             });
 
-            test("fires on the plot area directly", 1, function() {                
+            test("fires on the plot area directly", 1, function() {
                 eventOptions[eventName] = function() { ok(true); };
 
                 createScatterChart(eventOptions);
@@ -5554,7 +5583,7 @@
                 triggerEvent(chart, plotAreaElement, 300, 300);
             });
 
-            test("does not fire when outside of axis range", 0, function() {                
+            test("does not fire when outside of axis range", 0, function() {
                 eventOptions[eventName] = function() { ok(false); };
 
                 createScatterChart(eventOptions);
@@ -5562,7 +5591,7 @@
                 triggerEvent(chart, plotAreaElement, 3000, 0);
             });
 
-            test("event arguments contain x axis value", 1, function() {                
+            test("event arguments contain x axis value", 1, function() {
                 eventOptions[eventName] = function(e) { close(e.x, 12, TOLERANCE); };
                 createScatterChart(eventOptions);
 
@@ -5572,7 +5601,7 @@
             test("event arguments contain multiple x axis values", 2, function() {
                 eventOptions[eventName] = function(e) { arrayClose(e.x, [12, 192], TOLERANCE); };
                 createScatterChart(kendo.deepExtend({
-                    xAxis: [{}, { name: "b", min: 100, max: 1000 }]                    
+                    xAxis: [{}, { name: "b", min: 100, max: 1000 }]
                 }, eventOptions));
 
                 triggerEvent(chart, plotAreaElement, 200, 500);

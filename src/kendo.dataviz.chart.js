@@ -1068,7 +1068,7 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            if (!inAxis && plotArea.backgroundBox().containsPoint(coords)) {
+            if (!inAxis && plotArea.backgroundContainsPoint(coords)) {
                 var ranges = axisRanges(axes);
 
                 prevented = chart.trigger(chartEvent, {
@@ -9180,6 +9180,37 @@ var __meta__ = { // jshint ignore:line
             this.renderComplete();
         },
 
+        chartsBox: function() {
+            var axes = this.axes,
+                length = axes.length,
+                chartsBox = new Box2D(),
+                axisValueField,
+                lineBox, axis, idx;
+
+            for (idx = 0; idx < length; idx++) {
+                axis = axes[idx];
+                axisValueField = axis.options.vertical ? Y : X;
+                lineBox = axis.lineBox();
+                chartsBox[axisValueField + 1] = lineBox[axisValueField + 1];
+                chartsBox[axisValueField + 2] = lineBox[axisValueField + 2];
+            }
+
+            if (chartsBox.x2 === 0) {
+                var allAxes = this.parent.axes;
+                length = allAxes.length;
+
+                for (idx = 0; idx < length; idx++) {
+                    axis = allAxes[idx];
+                    if (!axis.options.vertical) {
+                        lineBox = axis.lineBox();
+                        chartsBox.x1 = lineBox.x1;
+                        chartsBox.x2 = lineBox.x2;
+                    }
+                }
+            }
+            return chartsBox;
+        },
+
         clipBox: function() {
             return this.chartContainer.clipBox;
         }
@@ -9207,23 +9238,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _clipBox: function() {
-            var container = this,
-                pane = container.pane,
-                axes = pane.axes,
-                length = axes.length,
-                clipBox = pane.box.clone(),
-                axisValueField, idx,
-                lineBox, axis;
-
-            for (idx = 0; idx < length; idx++) {
-                axis = axes[idx];
-                axisValueField = axis.options.vertical ? Y : X;
-                lineBox = axis.lineBox();
-                clipBox[axisValueField + 1] = lineBox[axisValueField + 1];
-                clipBox[axisValueField + 2] = lineBox[axisValueField + 2];
-            }
-
-            return clipBox;
+            return this.pane.chartsBox();
         },
 
         createVisual: function() {
@@ -10010,37 +10025,35 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        backgroundBox: function() {
-            var plotArea = this,
-                axes = plotArea.axes,
-                axesCount = axes.length,
-                lineBox, box, i, j, axisA, axisB;
-
-            for (i = 0; i < axesCount; i++) {
-                axisA = axes[i];
-
-                for (j = 0; j < axesCount; j++) {
-                    axisB = axes[j];
-
-                    if (axisA.options.vertical !== axisB.options.vertical) {
-                        lineBox = axisA.lineBox().clone().wrap(axisB.lineBox());
-
-                        if (!box) {
-                            box = lineBox;
-                        } else {
-                            box = box.wrap(lineBox);
-                        }
-                    }
-                }
+        chartsBoxes: function() {
+            var panes = this.panes;
+            var boxes = [];
+            for (var idx = 0; idx < panes.length; idx++) {
+                boxes.push(panes[idx].chartsBox());
             }
 
-            return box || plotArea.box;
+            return boxes;
+        },
+
+        addBackgroundPaths: function(multipath) {
+            var boxes = this.chartsBoxes();
+            for (var idx = 0; idx < boxes.length; idx++) {
+                multipath.paths.push(draw.Path.fromRect(boxes[idx].toRect()));
+            }
+        },
+
+        backgroundContainsPoint: function(point) {
+            var boxes = this.chartsBoxes();
+            for (var idx = 0; idx < boxes.length; idx++) {
+                if (boxes[idx].containsPoint(point)) {
+                    return true;
+                }
+            }
         },
 
         createVisual: function() {
             ChartElement.fn.createVisual.call(this);
 
-            var bgBox = this.backgroundBox();
             var options = this.options.plotArea;
             var border = options.border || {};
 
@@ -10051,7 +10064,7 @@ var __meta__ = { // jshint ignore:line
                 opacity = 0;
             }
 
-            var bg = this._bgVisual = draw.Path.fromRect(bgBox.toRect(), {
+            var bg = this._bgVisual = new draw.MultiPath({
                 fill: {
                     color: background,
                     opacity: opacity
@@ -10063,6 +10076,8 @@ var __meta__ = { // jshint ignore:line
                 },
                 zIndex: -1
             });
+
+            this.addBackgroundPaths(bg);
 
             this.appendVisual(bg);
         },
