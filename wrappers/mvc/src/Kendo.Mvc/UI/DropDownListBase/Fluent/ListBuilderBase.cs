@@ -3,7 +3,9 @@ namespace Kendo.Mvc.UI.Fluent
     using System;
     using System.Collections;
 
-
+    /// <summary>
+    /// Defines the fluent interface for configuring the <see cref="DropDownList"/>, <see cref="ComboBox"/> and <see cref="MultiSelect"/> components.
+    /// </summary>
     public class ListBuilderBase<TDropDown, TDropDownBuilder> : WidgetBuilderBase<TDropDown, TDropDownBuilder>, IHideObjectMembers
         where TDropDown : ListBase
         where TDropDownBuilder : WidgetBuilderBase<TDropDown, TDropDownBuilder>

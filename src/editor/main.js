@@ -22,11 +22,11 @@
         proxy = $.proxy,
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
+    var isRtl = kendo.support.isRtl;
 
-    var rtlEnabled = false;
+    var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
-    var MOUSE_UP = "mouseup";
     var NS = ".kendoEditor";
     var TABLE = "table";
     var UNDEFINED = "undefined";
@@ -195,8 +195,6 @@
             that.options = deepExtend({}, that.options, options);
             that.options.tools = that.options.tools.slice();
 
-            rtlEnabled = kendo.support.isRtl(element);
-
             element = that.element;
             domElement = element[0];
 
@@ -242,6 +240,7 @@
 
             that._resizable();
             that._initializeContentElement(that);
+            that._initializeColumnResizing();
             that._initializeTableResizing();
 
             that.keyboard = new editorNS.Keyboard([
@@ -348,48 +347,50 @@
             var editor = this;
 
             function initTableResizing(editorWidget, tableElement) {
-                editorWidget.tableResizing = new kendo.ui.editor.TableResizing(tableElement, {
-                    rtl: rtlEnabled,
+                editorWidget.tableResizing = kendo.ui.editor.TableResizing.create(tableElement, {
+                    rtl: isRtl(editorWidget.element),
                     rootElement: editorWidget.body
                 });
             }
 
             $(editor.body)
-                .on(MOUSE_ENTER + NS, TABLE, function(e) {
-                    var table = e.currentTarget;
-
-                    e.stopPropagation();
-
-                    if (editor.tableResizing) {
-                        if (editor.tableResizing.element !== table && !editor.tableResizing.resizingInProgress()) {
-                            editor._destroyTableResizing();
-                            initTableResizing(editor, table);
-                        }
-                    }
-                    else {
-                        initTableResizing(editor, table);
-                    }
-                })
-                .on(MOUSE_LEAVE + NS, TABLE, function(e) {
-                    var parentTable;
-
-                    e.stopPropagation();
-
-                    if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
-                        parentTable = $(editor.tableResizing.element).parents(TABLE)[0];
-
-                        if (parentTable) {
-                            editor._destroyTableResizing();
-                            initTableResizing(editor, parentTable);
-                        }
-                    }
-                })
                 .on(MOUSE_LEAVE + NS, function() {
-                    if (editor.tableResizing && !editor.tableResizing.resizingInProgress()) {
+                    var tableResizing = editor.tableResizing;
+
+                    if (tableResizing && !tableResizing.resizingInProgress()) {
                         editor._destroyTableResizing();
                     }
                 })
-                .on(MOUSE_UP + NS, function(e) {
+                .on(MOUSE_DOWN +NS, TABLE, function(e) {
+                    var eventTarget = e.target;
+                    var eventCurrentTarget = e.currentTarget;
+                    var tableResizing = editor.tableResizing;
+                    var element = tableResizing ? tableResizing.element : null;
+
+                    if (tableResizing) {
+                        if (element && eventCurrentTarget !== element) {
+                            if (contains(eventCurrentTarget, element) && element !== eventTarget && contains(element, eventTarget)) {
+                                //prevent a parent table resizing init when clicking on a nested table when the event bubbles
+                                //instead of stopping event propagation
+                                return;
+                            }
+                            else {
+                                if (element !== eventTarget) {
+                                    editor._destroyTableResizing();
+                                    initTableResizing(editor, eventCurrentTarget);
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        initTableResizing(editor, eventCurrentTarget);
+                    }
+
+                    if (editor.tableResizing) {
+                        editor.tableResizing.showResizeHandles();
+                    }
+                })
+                .on(MOUSE_DOWN + NS, function(e) {
                     var tableResizing = editor.tableResizing;
                     var element = tableResizing ? tableResizing.element : null;
                     var target = e.target;
@@ -408,6 +409,65 @@
             if (editor.tableResizing) {
                 editor.tableResizing.destroy();
                 editor.tableResizing = null;
+            }
+        },
+
+        _initializeColumnResizing: function() {
+            var editor = this;
+
+            function initColumnResizing(editorWidget, tableElement) {
+                editorWidget.columnResizing = new kendo.ui.editor.ColumnResizing(tableElement, {
+                    rtl: isRtl(editorWidget.element),
+                    rootElement: editorWidget.body
+                });
+            }
+
+            $(editor.body)
+                .on(MOUSE_ENTER + NS, TABLE, function(e) {
+                    var table = e.currentTarget;
+
+                    e.stopPropagation();
+
+                    if (editor.columnResizing) {
+                        if (editor.columnResizing.element !== table && !editor.columnResizing.resizingInProgress()) {
+                            editor._destroyColumnResizing();
+                            initColumnResizing(editor, table);
+                        }
+                    }
+                    else {
+                        initColumnResizing(editor, table);
+                    }
+                })
+                .on(MOUSE_LEAVE + NS, TABLE, function(e) {
+                    var parentTable;
+                    var columnResizing = editor.columnResizing;
+
+                    e.stopPropagation();
+
+                    if (columnResizing && !columnResizing.resizingInProgress()) {
+                        parentTable = $(columnResizing.element).parents(TABLE)[0];
+
+                        if (parentTable) {
+                            editor._destroyColumnResizing();
+                            initColumnResizing(editor, parentTable);
+                        }
+                    }
+                })
+                .on(MOUSE_LEAVE + NS, function() {
+                    var columnResizing = editor.columnResizing;
+
+                    if (columnResizing && !columnResizing.resizingInProgress()) {
+                        editor._destroyColumnResizing();
+                    }
+                });
+        },
+
+        _destroyColumnResizing: function() {
+            var editor = this;
+
+            if (editor.columnResizing) {
+                editor.columnResizing.destroy();
+                editor.columnResizing = null;
             }
         },
 
@@ -648,9 +708,6 @@
             this._spellCorrect(editor);
 
             this._registerHandler(editor.body, {
-                "dragstart": function(e) {
-                    e.preventDefault();
-                },
                 "keydown": function (e) {
                     var range;
 
@@ -919,6 +976,7 @@
             this.toolbar.destroy();
 
             editor._destroyTableResizing();
+            editor._destroyColumnResizing();
 
             kendo.destroy(this.wrapper);
         },
@@ -1105,7 +1163,7 @@
                 range = that.getRange();
 
                 if (tool.command) {
-                    command = tool.command(extend({ range: range, body: that.body }, params));
+                    command = tool.command(extend({ range: range, body: that.body, immutables: !!that.immutables }, params));
                 }
 
                 prevented = that.trigger("execute", { name: name, command: command });

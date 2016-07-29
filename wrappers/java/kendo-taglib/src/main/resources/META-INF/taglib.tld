@@ -362,7 +362,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the barcode will not display the checksum digit next to the value in the text area.</description>
+            <description>If set to true, the Barcode will display the checksum digit next to the value in the text area.</description>
             <name>checksum</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -3935,7 +3935,7 @@ For example line series will be on top with bar and area following below.</descr
         <description>The label connectors options.</description>
         <name>chart-seriesItem-connectors</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemConnectorsTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>The color of the connector. Accepts a valid CSS color string, including hex and rgb.</description>
@@ -3959,6 +3959,12 @@ For example line series will be on top with bar and area following below.</descr
     </tag>
 
 
+    <tag>
+        <description>The color of the connector. Accepts a valid CSS color string, including hex and rgb.</description>
+        <name>chart-seriesItem-connectors-color</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemConnectorsColorFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>The error bars of the chart series.</description>
         <name>chart-seriesItem-errorBars</name>

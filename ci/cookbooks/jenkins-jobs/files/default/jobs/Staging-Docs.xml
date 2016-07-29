@@ -90,7 +90,7 @@ rsync -avc --delete _site/ /var/www/kendo-ui
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>CI-Docs-Links,CI-Docs-Redirects</childProjects>
+      <childProjects>CI-Docs-Redirects</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

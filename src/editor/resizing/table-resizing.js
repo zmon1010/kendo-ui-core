@@ -13,7 +13,6 @@
     var browser = kendo.support.browser;
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
-    var ColumnResizing = Editor.ColumnResizing;
     var TableResizeHandle = Editor.TableResizeHandle;
     var ResizingUtils = Editor.ResizingUtils;
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
@@ -21,11 +20,11 @@
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
 
-    var CLICK = "click";
     var DRAG = "drag";
     var NS = ".kendoEditorTableResizing";
     var MAX_PERCENTAGE_VALUE = 100;
     var MIN = "min";
+    var OUTER = "outer";
     var TABLE = "table";
     var WIDTH = "Width";
     var HEIGHT = "Height";
@@ -48,8 +47,6 @@
 
             if ($(element).is(TABLE)) {
                 that.element = element;
-                that.columnResizing = new ColumnResizing(element, that.options);
-                $(that.options.rootElement).on(CLICK + NS, TABLE, proxy(that.showResizeHandles, that));
             }
         },
 
@@ -112,8 +109,9 @@
                 deltaX: 0,
                 deltaY: 0
             }, args);
+            var rtlModifier = that.options.rtl ? (-1) : 1;
 
-            that._resizeDimension(WIDTH, deltas.deltaX);
+            that._resizeDimension(WIDTH, deltas.deltaX * rtlModifier);
             that._resizeDimension(HEIGHT, deltas.deltaY);
 
             that.showResizeHandles();
@@ -126,14 +124,14 @@
             var dimensionLowercase = dimension.toLowerCase();
             var styleValue = style[dimensionLowercase];
             var dimensionValue = styleValue !== "" ? parseFloat(styleValue) : 0;
-            var computedStyleValue = element[dimensionLowercase]();
-            var currentValue = dimensionValue < computedStyleValue ? computedStyleValue : dimensionValue;
+            var elementOuterWidth = element[OUTER + dimension]();
+            var currentValue = dimensionValue < elementOuterWidth ? elementOuterWidth : dimensionValue;
             var constrainedValue;
 
             if (inPercentages(styleValue)) {
                 constrainedValue = constrain({
-                    value: dimensionValue + calculatePercentageRatio(delta, computedStyleValue),
-                    min: calculatePercentageRatio(that.options[MIN + dimension], computedStyleValue),
+                    value: dimensionValue + calculatePercentageRatio(delta, elementOuterWidth),
+                    min: calculatePercentageRatio(that.options[MIN + dimension], elementOuterWidth),
                     max: MAX_PERCENTAGE_VALUE
                 });
 
@@ -145,8 +143,6 @@
                     min: that.options[MIN + dimension],
                     max: element.parent()[dimensionLowercase]()
                 });
-
-                element[dimensionLowercase](constrainedValue);
             }
 
             element[dimensionLowercase](constrainedValue);
@@ -155,11 +151,8 @@
         showResizeHandles: function() {
             var that = this;
 
-            //table resizing is natively supported in IE and Firefox
-            if (!browser.msie && !browser.mozilla) {
-                that._initResizeHandles();
-                that._showResizeHandles();
-            }
+            that._initResizeHandles();
+            that._showResizeHandles();
         },
 
         _initResizeHandles: function() {
@@ -214,6 +207,23 @@
             }
         }
     });
+
+    var TableResizingFactory = Class.extend({
+        create: function(element, options) {
+            //table resizing is natively supported in IE and Firefox
+            if (!browser.msie && !browser.mozilla) {
+                return new TableResizing(element, options);
+            }
+            else {
+                return null;
+            }
+        }
+    });
+    TableResizingFactory.current = new TableResizingFactory();
+
+    TableResizing.create = function(element, options) {
+        return TableResizingFactory.current.create(element, options);
+    };
 
     extend(Editor, {
         TableResizing: TableResizing

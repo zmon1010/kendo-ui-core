@@ -231,4 +231,27 @@ test('denormalized content', function() {
     ok(range.collapsed);
 });
 
+var contentWithImmutable = "<p>foo1</p><p contenteditable='false'>immutable</p><p>foo2</p>";
+
+test("create restorePoint with immutable element", function() {
+    editor.value(contentWithImmutable);
+    var immutable = $(editor.body).find("p[contenteditable='false']").get(0);
+    var restorePoint = new RestorePoint(editor.createRange(), editor.body, {immutables: true});
+    
+    ok(/^<p>foo1<\/p><p k-immutable=\"[a-zA-Z0-9]+\"><\/p><p>foo2<\/p>/i.test(restorePoint.html));
+    var immutableId = restorePoint.html.match(/k-immutable=\"([a-zA-Z0-9]+)\"/)[1];
+    ok($.contains(editor.body, immutable));
+    ok(immutable === restorePoint.serializedImmutables[immutableId].node);
+});
+
+test("restore restorePoint with immutable element", function() {
+    editor.value(contentWithImmutable);
+    var immutable = $(editor.body).find("p[contenteditable='false']").get(0);
+    var restorePoint = new RestorePoint(editor.createRange(), editor.body, {immutables: true});
+    editor.value("foo3");
+    restorePoint.restoreHtml();
+
+    ok($.contains(editor.body, immutable));
+});
+
 }());

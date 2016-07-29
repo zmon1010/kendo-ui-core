@@ -115,6 +115,15 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clean formatting.
+        /// </summary>
+        public static string Editor_CleanFormatting {
+            get {
+                return ResourceManager.GetString("Editor_CleanFormatting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert hyperlink.
         /// </summary>
         public static string Editor_CreateLink {
@@ -489,6 +498,15 @@ namespace Kendo.Mvc.Resources {
         public static string Editor_OverwriteFile {
             get {
                 return ResourceManager.GetString("Editor_OverwriteFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        public static string Editor_Print {
+            get {
+                return ResourceManager.GetString("Editor_Print", resourceCulture);
             }
         }
         

@@ -697,6 +697,8 @@
                 nodes = editorNS.RangeUtils.textNodes(range),
                 immutablesContext = that._immutablesContext(range);
 
+            nodes = editorNS.Dom.filterBy(nodes, editorNS.Dom.htmlIndentSpace, true);
+
             if (!nodes.length) {
                 nodes = [range.startContainer];
             }

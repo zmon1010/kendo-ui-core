@@ -65,7 +65,13 @@
   <builders>
     <hudson.tasks.Shell>
       <command>ruby2.2 /usr/local/bin/bundle --without development --path ~/gems2.2
-ruby2.2 /usr/local/bin/bundle exec jekyll build --config _config.yml,_staging.yml
+
+# build angular docs
+ruby2.2 /usr/local/bin/bundle exec jekyll build --config _config.yml,_staging-angular.yml
+rsync -avc --delete _site/ /var/www/ui-for-angular
+
+# build react docs
+ruby2.2 /usr/local/bin/bundle exec jekyll build --config _react.yml,_staging-react.yml
 rsync -avc --delete _site/ /var/www/ui-for-react
 
 </command>

@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the barcode will not display the checksum digit next to the value in the text area.
+        /// If set to true, the Barcode will display the checksum digit next to the value in the text area.
         /// </summary>
         /// <param name="value">The value for Checksum</param>
         public BarcodeBuilder Checksum(bool value)
@@ -55,7 +55,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the barcode will not display the checksum digit next to the value in the text area.
+        /// If set to true, the Barcode will display the checksum digit next to the value in the text area.
         /// </summary>
         public BarcodeBuilder Checksum()
         {

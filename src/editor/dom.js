@@ -351,7 +351,7 @@ var Dom = {
     },
 
     is: function (node, nodeName) {
-        return Dom.name(node) == nodeName;
+        return node && Dom.name(node) == nodeName;
     },
 
     isMarker: function(node) {
@@ -364,6 +364,47 @@ var Dom = {
 
     isEmptyspace: function(node) {
         return emptyspace.test(node.nodeValue);
+    },
+
+    htmlIndentSpace: function (node){
+        if (!(Dom.isDataNode(node) && Dom.isWhitespace(node))) {
+            return false;
+        }
+
+        if (emptyspace.test(node.nodeValue)) {
+            return true;
+        }
+
+        var sibling = function(el, direction) {
+            while (el[direction]) {
+                el = el[direction];
+                if (Dom.significantNodes([el]).length  > 0) {
+                    return el;
+                }
+            }
+        };
+
+        var parent = node.parentNode;
+        var prev = sibling(node, "previousSibling");
+        var next = sibling(node, "nextSibling");
+        
+        if (bom.test(node.nodeValue)) {
+            return !!(prev || next);
+        }
+
+        if ($(parent).is("tr,tbody,thead,tfoot,table,ol,ul")) {
+            return true;
+        }
+
+        if (Dom.isBlock(parent) || Dom.is(parent, "body")) {
+            var isPrevBlock = prev && Dom.isBlock(prev);
+            var isNextBlock = next && Dom.isBlock(next);
+            if ((!next && isPrevBlock) || (!prev && isNextBlock) || (isPrevBlock && isNextBlock)) {
+                return true;
+            }
+        }
+
+        return false;
     },
 
     isBlock: function(node) {
@@ -594,6 +635,14 @@ var Dom = {
 
         parent.removeChild(node);
     },
+    
+    wrapper: function(node) {
+        var wrapper = Dom.closestBy(node, function (el) {
+            return el.parentNode && Dom.significantNodes(el.parentNode.childNodes).length > 1;
+        });
+
+        return $(wrapper).is("body,.k-editor") ? undefined : wrapper;
+    },
 
     create: function (document, tagName, attributes) {
         return Dom.attr(document.createElement(tagName), attributes);
@@ -793,14 +842,22 @@ var Dom = {
     },
 
     filter: function(tagName, nodes, invert) {
+        var filterFn = function (node) {
+            return Dom.name(node) == tagName;
+        };
+
+        return Dom.filterBy(nodes, filterFn, invert);
+    },
+
+    filterBy: function(nodes, condition, invert) {
         var i = 0;
         var len = nodes.length;
         var result = [];
-        var name;
+        var match;
 
         for (; i < len; i++) {
-            name = Dom.name(nodes[i]);
-            if ((!invert && name == tagName) || (invert && name != tagName)) {
+            match = condition(nodes[i]);
+            if ((match && !invert) || (!match && invert)) {
                 result.push(nodes[i]);
             }
         }

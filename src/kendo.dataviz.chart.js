@@ -885,10 +885,14 @@ var __meta__ = { // jshint ignore:line
 
         _start: function(e) {
             var chart = this,
-                events = chart._events;
+                events = chart._events,
+                coords = chart._eventCoordinates(e);
+            if (!chart._plotArea.backgroundContainsPoint(coords)) {
+                return;
+            }
 
             if (defined(events[DRAG_START] || events[DRAG] || events[DRAG_END])) {
-                chart._startNavigation(e, DRAG_START);
+                chart._startNavigation(e, coords, DRAG_START);
             }
 
             if (chart._pannable && chart._pannable.start(e)) {
@@ -976,7 +980,12 @@ var __meta__ = { // jshint ignore:line
                 currentAxis,
                 axisName,
                 ranges = {},
-                mousewheelZoom = chart._mousewheelZoom;
+                mousewheelZoom = chart._mousewheelZoom,
+                coords = chart._eventCoordinates(origEvent);
+
+            if (!chart._plotArea.backgroundContainsPoint(coords)) {
+                return;
+            }
 
             if (mousewheelZoom) {
                 var args = { delta: delta, axisRanges: axisRanges(this._plotArea.axes), originalEvent: e };
@@ -1008,7 +1017,7 @@ var __meta__ = { // jshint ignore:line
                 }
             } else {
                 if (!state) {
-                    prevented = chart._startNavigation(origEvent, ZOOM_START);
+                    prevented = chart._startNavigation(origEvent, coords, ZOOM_START);
                     if (!prevented) {
                         state = chart._navState;
                     }
@@ -1045,48 +1054,34 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _startNavigation: function(e, chartEvent) {
+        _startNavigation: function(e, coords, chartEvent) {
             var chart = this,
-                coords = chart._eventCoordinates(e),
                 plotArea = chart._model._plotArea,
                 pane = plotArea.findPointPane(coords),
                 axes = plotArea.axes.slice(0),
-                i,
-                currentAxis,
-                inAxis = false,
                 prevented;
 
             if (!pane) {
                 return;
             }
 
-            for (i = 0; i < axes.length; i++) {
-                currentAxis = axes[i];
-                if (currentAxis.box.containsPoint(coords)) {
-                    inAxis = true;
-                    break;
-                }
-            }
+            var ranges = axisRanges(axes);
 
-            if (!inAxis && plotArea.backgroundBox().containsPoint(coords)) {
-                var ranges = axisRanges(axes);
+            prevented = chart.trigger(chartEvent, {
+                axisRanges: ranges,
+                originalEvent: e
+            });
 
-                prevented = chart.trigger(chartEvent, {
+            if (prevented) {
+                chart._userEvents.cancel();
+            } else {
+                chart._suppressHover = true;
+                chart._unsetActivePoint();
+                chart._navState = {
                     axisRanges: ranges,
-                    originalEvent: e
-                });
-
-                if (prevented) {
-                    chart._userEvents.cancel();
-                } else {
-                    chart._suppressHover = true;
-                    chart._unsetActivePoint();
-                    chart._navState = {
-                        axisRanges: ranges,
-                        pane: pane,
-                        axes: axes
-                    };
-                }
+                    pane: pane,
+                    axes: axes
+                };
             }
         },
 
@@ -8589,7 +8584,7 @@ var __meta__ = { // jshint ignore:line
                 connectorLine,
                 count = points.length,
                 space = 4,
-                sector, angle, segment,
+                connectorsColor, sector, angle, segment,
                 seriesIx, label, i;
 
             ChartElement.fn.createVisual.call(this);
@@ -8600,11 +8595,12 @@ var __meta__ = { // jshint ignore:line
                 angle = sector.middle();
                 label = segment.label;
                 seriesIx = { seriesId: segment.seriesIx };
+                connectorsColor = (segment.options.connectors || {}).color || connectors.color;
 
                 if (label) {
                     connectorLine = new draw.Path({
                         stroke: {
-                            color:  connectors.color,
+                            color:  connectorsColor,
                             width: connectors.width
                         },
                         animation: {
@@ -9179,6 +9175,37 @@ var __meta__ = { // jshint ignore:line
             this.renderComplete();
         },
 
+        chartsBox: function() {
+            var axes = this.axes,
+                length = axes.length,
+                chartsBox = new Box2D(),
+                axisValueField,
+                lineBox, axis, idx;
+
+            for (idx = 0; idx < length; idx++) {
+                axis = axes[idx];
+                axisValueField = axis.options.vertical ? Y : X;
+                lineBox = axis.lineBox();
+                chartsBox[axisValueField + 1] = lineBox[axisValueField + 1];
+                chartsBox[axisValueField + 2] = lineBox[axisValueField + 2];
+            }
+
+            if (chartsBox.x2 === 0) {
+                var allAxes = this.parent.axes;
+                length = allAxes.length;
+
+                for (idx = 0; idx < length; idx++) {
+                    axis = allAxes[idx];
+                    if (!axis.options.vertical) {
+                        lineBox = axis.lineBox();
+                        chartsBox.x1 = lineBox.x1;
+                        chartsBox.x2 = lineBox.x2;
+                    }
+                }
+            }
+            return chartsBox;
+        },
+
         clipBox: function() {
             return this.chartContainer.clipBox;
         }
@@ -9206,23 +9233,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _clipBox: function() {
-            var container = this,
-                pane = container.pane,
-                axes = pane.axes,
-                length = axes.length,
-                clipBox = pane.box.clone(),
-                axisValueField, idx,
-                lineBox, axis;
-
-            for (idx = 0; idx < length; idx++) {
-                axis = axes[idx];
-                axisValueField = axis.options.vertical ? Y : X;
-                lineBox = axis.lineBox();
-                clipBox[axisValueField + 1] = lineBox[axisValueField + 1];
-                clipBox[axisValueField + 2] = lineBox[axisValueField + 2];
-            }
-
-            return clipBox;
+            return this.pane.chartsBox();
         },
 
         createVisual: function() {
@@ -10036,10 +10047,35 @@ var __meta__ = { // jshint ignore:line
             return box || plotArea.box;
         },
 
+        chartsBoxes: function() {
+            var panes = this.panes;
+            var boxes = [];
+            for (var idx = 0; idx < panes.length; idx++) {
+                boxes.push(panes[idx].chartsBox());
+            }
+
+            return boxes;
+        },
+
+        addBackgroundPaths: function(multipath) {
+            var boxes = this.chartsBoxes();
+            for (var idx = 0; idx < boxes.length; idx++) {
+                multipath.paths.push(draw.Path.fromRect(boxes[idx].toRect()));
+            }
+        },
+
+        backgroundContainsPoint: function(point) {
+            var boxes = this.chartsBoxes();
+            for (var idx = 0; idx < boxes.length; idx++) {
+                if (boxes[idx].containsPoint(point)) {
+                    return true;
+                }
+            }
+        },
+
         createVisual: function() {
             ChartElement.fn.createVisual.call(this);
 
-            var bgBox = this.backgroundBox();
             var options = this.options.plotArea;
             var border = options.border || {};
 
@@ -10050,7 +10086,7 @@ var __meta__ = { // jshint ignore:line
                 opacity = 0;
             }
 
-            var bg = this._bgVisual = draw.Path.fromRect(bgBox.toRect(), {
+            var bg = this._bgVisual = new draw.MultiPath({
                 fill: {
                     color: background,
                     opacity: opacity
@@ -10062,6 +10098,8 @@ var __meta__ = { // jshint ignore:line
                 },
                 zIndex: -1
             });
+
+            this.addBackgroundPaths(bg);
 
             this.appendVisual(bg);
         },

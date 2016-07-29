@@ -45,6 +45,7 @@ var IndentFormatter = Class.extend({
     },
 
     apply: function (nodes) {
+        nodes = dom.filterBy(nodes, dom.htmlIndentSpace, true);
         var formatNodes = this.finder.findSuitable(nodes),
             targets = [],
             i, len, formatNode, parentList, sibling;
@@ -132,6 +133,7 @@ var IndentFormatter = Class.extend({
     },
 
     remove: function(nodes) {
+        nodes = dom.filterBy(nodes, dom.htmlIndentSpace, true);
         var formatNodes = this.finder.findSuitable(nodes),
             targetNode, i, len, list, listParent, siblings,
             formatNode, marginLeft;

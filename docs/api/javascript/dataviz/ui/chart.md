@@ -9762,7 +9762,7 @@ The label connectors options.
     });
     </script>
 
-### series.connectors.color `String`
+### series.connectors.color `String|Function`
 
 The color of the connector. Accepts a valid CSS color string, including hex and rgb.
 

@@ -299,15 +299,7 @@
         },
 
         _resizeColumn: function(column, newWidth) {
-            var that = this;
-            var tableWidth = $(that.element).width();
-
-            if (inPercentages(newWidth)) {
-                $(column).width(newWidth);
-            }
-            else {
-                $(column).width(toPercentages(calculatePercentageRatio(newWidth, tableWidth)));
-            }
+            $(column).width(newWidth);
         },
 
         _resizeAdjacentColumns: function(columnIndex, initialColumnWidth, initialAdjacentColumnWidth, deltaWidth) {
@@ -352,7 +344,7 @@
                     max: abs(parseFloat(initialColumnWidth) + initialAdjacentColumnWidth - min)
                 });
 
-                $(adjacentColumn).width(toPercentages(calculatePercentageRatio(newWidth, tableWidth)));
+                $(adjacentColumn).width(newWidth);
             }
         }
     });

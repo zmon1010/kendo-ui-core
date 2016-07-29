@@ -58,6 +58,8 @@ var BlockFormatFinder = Class.extend({
             }
         }
 
+        this._resolveListsItems(suitable);
+
         for (i = 0, len = suitable.length; i < len; i++) {
             if (this.contains(suitable[i], suitable)) {
                 return [suitable[i]];
@@ -65,6 +67,17 @@ var BlockFormatFinder = Class.extend({
         }
 
         return suitable;
+    },
+    _resolveListsItems: function(nodes){
+        var i, node, wrapper;
+        for (i = 0; i < nodes.length; i++) {
+            node = nodes[i];
+            wrapper = dom.is(node, "li") ? node : dom.wrapper(node);
+            wrapper = wrapper && dom.list(wrapper) ? wrapper.children[0] : wrapper;
+            if (dom.is(wrapper, "li")) {
+                node = nodes[i] = wrapper;
+            }
+        }
     },
 
     findFormat: function (sourceNode) {
@@ -168,7 +181,7 @@ var BlockFormatter = Class.extend({
         function attributes(format) {
             return extend({}, format && format.attr, values);
         }
-        
+
         this._handleImmutables(nodes, true);
         
         var images = dom.filter("img", nodes);
@@ -253,8 +266,8 @@ var BlockFormatter = Class.extend({
 
     toggle: function (range) {
         var that = this,
-            nodes = RangeUtils.nodes(range);
-
+            nodes = dom.filterBy(RangeUtils.nodes(range), dom.htmlIndentSpace, true);
+        
         if (that.finder.isFormatted(nodes)) {
             that.remove(nodes);
         } else {

@@ -28,6 +28,15 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
+        /// Defines a function used to determine the line color.
+        /// </summary>
+        public ClientHandlerDescriptor ColorHandler
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Defines the padding of the line.
         /// </summary>
         public int? Padding
