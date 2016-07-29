@@ -2,7 +2,7 @@
     {
         "text": "AutoComplete",
         "name": "autocomplete",
-        "api": "web/autocomplete",
+        "api": { "all": "web/autocomplete" },
         "documentation": {
             "kendo-ui": "getting-started/web/autocomplete/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/autocomplete/overview",
@@ -208,7 +208,7 @@
     {
         "text": "Button",
         "name": "button",
-        "api": "web/button",
+        "api": { "all": "web/button" },
         "documentation": {
             "kendo-ui": "getting-started/web/button/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/button/overview",
@@ -360,7 +360,7 @@
     {
         "text": "ButtonGroup",
         "name": "buttongroup",
-        "api": "mobile/buttongroup",
+        "api": { "all": "mobile/buttongroup" },
         "category": "Navigation",
         "documentation": {
             "kendo-ui": "getting-started/mobile/buttongroup",
@@ -400,7 +400,7 @@
     {
         "text": "Calendar",
         "name": "calendar",
-        "api": "web/calendar",
+        "api": { "all": "web/calendar" },
         "documentation": {
             "kendo-ui": "getting-started/web/calendar/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/calendar/overview",
@@ -548,7 +548,7 @@
     {
         "text": "ColorPicker",
         "name": "colorpicker",
-        "api": "web/colorpicker",
+        "api": { "all": "web/colorpicker" },
         "documentation": {
             "kendo-ui": "getting-started/web/colorpicker/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/colorpicker/overview",
@@ -689,7 +689,7 @@
     {
         "text": "ComboBox",
         "name": "combobox",
-        "api": "web/combobox",
+        "api": { "all": "web/combobox" },
         "documentation": {
             "kendo-ui": "getting-started/web/combobox/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/combobox/overview",
@@ -907,7 +907,7 @@
     {
         "text": "DatePicker",
         "name": "datepicker",
-        "api": "web/datepicker",
+        "api": { "all": "web/datepicker" },
         "documentation": {
             "kendo-ui": "getting-started/web/datepicker/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/datepicker/overview",
@@ -1077,7 +1077,7 @@
     {
         "text": "DateTimePicker",
         "name": "datetimepicker",
-        "api": "web/datetimepicker",
+        "api": { "all": "web/datetimepicker" },
         "documentation": {
             "kendo-ui": "getting-started/web/datetimepicker/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/datetimepicker/overview",
@@ -1247,7 +1247,7 @@
     {
         "text": "DropDownList",
         "name": "dropdownlist",
-        "api": "web/dropdownlist",
+        "api": { "all": "web/dropdownlist" },
         "documentation": {
             "kendo-ui": "getting-started/web/dropdownlist/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dropdownlist/overview",
@@ -1472,7 +1472,7 @@
         "text": "Editor",
         "name": "editor",
         "pro": "true",
-        "api": "web/editor",
+        "api": { "all": "web/editor" },
         "documentation": {
             "kendo-ui": "getting-started/web/editor/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/editor/overview",
@@ -1820,7 +1820,7 @@
         "text": "Grid",
         "name": "grid",
         "pro": "true",
-        "api": "web/grid",
+        "api": { "all": "web/grid" },
         "documentation": {
             "kendo-ui": "getting-started/web/grid/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/grid/overview",
@@ -2688,7 +2688,7 @@
         "text": "Spreadsheet",
         "name": "spreadsheet",
         "pro": "true",
-        "api": "web/spreadsheet",
+        "api": { "all": "web/spreadsheet" },
         "documentation": {
             "kendo-ui": "getting-started/web/spreadsheet/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/spreadsheet/overview",
@@ -2829,7 +2829,7 @@
     {
         "text": "ListView",
         "name": "listview",
-        "api": "web/listview",
+        "api": { "all": "web/listview" },
         "documentation": {
             "kendo-ui": "getting-started/web/listview/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/listview/overview",
@@ -2974,7 +2974,7 @@
         "text": "PivotGrid",
         "name": "pivotgrid",
         "pro": "true",
-        "api": "web/pivotgrid",
+        "api": { "all": "web/pivotgrid" },
         "documentation": {
             "kendo-ui": "getting-started/web/pivotgrid/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/pivotgrid/overview",
@@ -3100,7 +3100,7 @@
     {
         "text": "MaskedTextBox",
         "name": "maskedtextbox",
-        "api": "web/maskedtextbox",
+        "api": { "all": "web/maskedtextbox" },
         "documentation": {
             "kendo-ui": "getting-started/web/maskedtextbox/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/maskedtextbox/overview",
@@ -3229,7 +3229,7 @@
     {
         "text": "Menu",
         "name": "menu",
-        "api": "web/menu",
+        "api": { "all": "web/menu" },
         "documentation": {
             "kendo-ui": "getting-started/web/menu/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/menu/overview",
@@ -3433,7 +3433,7 @@
     {
         "text": "MultiSelect",
         "name": "multiselect",
-        "api": "web/multiselect",
+        "api": { "all": "web/multiselect" },
         "documentation": {
             "kendo-ui": "getting-started/web/multiselect/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/multiselect/overview",
@@ -3644,7 +3644,7 @@
     {
         "text": "Notification",
         "name": "notification",
-        "api": "web/notification",
+        "api": { "all": "web/notification" },
         "documentation": {
             "kendo-ui": "getting-started/web/notification/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/notification/overview",
@@ -3773,7 +3773,7 @@
     {
         "text": "NumericTextBox",
         "name": "numerictextbox",
-        "api": "web/numerictextbox",
+        "api": { "all": "web/numerictextbox" },
         "documentation": {
             "kendo-ui": "getting-started/web/numerictextbox/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/numerictextbox/overview",
@@ -3931,7 +3931,7 @@
     {
         "text": "PanelBar",
         "name": "panelbar",
-        "api": "web/panelbar",
+        "api": { "all": "web/panelbar" },
         "documentation": {
             "kendo-ui": "getting-started/web/panelbar/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/panelbar/overview",
@@ -4091,7 +4091,7 @@
         ],
         "text": "Drag and Drop",
         "name": "dragdrop",
-        "api": "framework/draggable",
+        "api": { "all": "framework/draggable" },
         "documentation": {
             "kendo-ui": "getting-started/framework/draganddrop/overview"
         },
@@ -4169,7 +4169,7 @@
         ],
         "text": "Effects",
         "name": "fx",
-        "api": "framework/kendo",
+        "api": { "all": "framework/kendo" },
         "documentation": {
             "kendo-ui": "getting-started/framework/fx/overview"
         },
@@ -4297,7 +4297,7 @@
     {
         "text": "ProgressBar",
         "name": "progressbar",
-        "api": "web/progressbar",
+        "api": { "all": "web/progressbar" },
         "documentation": {
             "kendo-ui": "getting-started/web/progressbar/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/progressbar/overview",
@@ -4438,7 +4438,7 @@
     {
         "text": "Gantt",
         "name": "gantt",
-        "api": "web/gantt",
+        "api": { "all": "web/gantt" },
         "pro": "true",
         "documentation": {
             "kendo-ui": "getting-started/web/gantt/overview",
@@ -4606,7 +4606,7 @@
     {
         "text": "Responsive Panel",
         "name": "responsive-panel",
-        "api": "web/responsivepanel",
+        "api": { "all": "web/responsivepanel" },
         "documentation": {
             "kendo-ui": "getting-started/web/responsivepanel/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/responsivepanel/mvc-responsivepanel-overview",
@@ -4649,7 +4649,7 @@
         "text": "Scheduler",
         "name": "scheduler",
         "pro": "true",
-        "api": "web/scheduler",
+        "api": { "all": "web/scheduler" },
         "documentation": {
             "kendo-ui": "getting-started/web/scheduler/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/scheduler/mvc-scheduler-overview",
@@ -5008,7 +5008,7 @@
     {
         "text": "Slider",
         "name": "slider",
-        "api": "web/slider",
+        "api": { "all": "web/slider" },
         "documentation": {
             "kendo-ui": "getting-started/web/slider/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/slider/overview",
@@ -5125,7 +5125,7 @@
     {
         "text": "Sortable",
         "name": "sortable",
-        "api": "web/sortable",
+        "api": { "all": "web/sortable" },
         "documentation": {
             "kendo-ui": "getting-started/web/sortable/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/sortable/overview",
@@ -5293,7 +5293,7 @@
     {
         "text": "Splitter",
         "name": "splitter",
-        "api": "web/splitter",
+        "api": { "all": "web/splitter" },
         "documentation": {
             "kendo-ui": "getting-started/web/splitter/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/splitter/overview",
@@ -5425,7 +5425,7 @@
     {
         "text": "SpreadProcessing",
         "name": "spreadprocessing",
-        "api": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview",
+        "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview" },
         "category": "Editors",
         "spriteCssClass": "spreadprocessingIcon",
         "new": "true",
@@ -5455,7 +5455,7 @@
     {
         "text": "TabStrip",
         "name": "tabstrip",
-        "api": "web/tabstrip",
+        "api": { "all": "web/tabstrip" },
         "documentation": {
             "kendo-ui": "getting-started/web/tabstrip/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/tabstrip/overview",
@@ -5650,7 +5650,7 @@
     {
         "text": "TimePicker",
         "name": "timepicker",
-        "api": "web/timepicker",
+        "api": { "all": "web/timepicker" },
         "documentation": {
             "kendo-ui": "getting-started/web/timepicker/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/timepicker/overview",
@@ -5796,7 +5796,7 @@
     {
         "text": "ToolBar",
         "name": "toolbar",
-        "api": "web/toolbar",
+        "api": { "all": "web/toolbar" },
         "documentation": {
             "kendo-ui": "getting-started/web/toolbar/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/toolbar/overview",
@@ -5919,7 +5919,7 @@
     {
         "text": "Tooltip",
         "name": "tooltip",
-        "api": "web/tooltip",
+        "api": { "all": "web/tooltip" },
         "documentation": {
             "kendo-ui": "getting-started/web/tooltip/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/tooltip/overview",
@@ -6038,7 +6038,7 @@
         "text": "TreeList",
         "name": "treelist",
         "pro": "true",
-        "api": "web/treelist",
+        "api": { "all": "web/treelist" },
         "documentation": {
             "kendo-ui": "getting-started/web/treelist/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treelist/overview",
@@ -6294,7 +6294,7 @@
     {
         "text": "ScrollView",
         "name": "scrollview",
-        "api": "mobile/scrollview",
+        "api": { "all": "mobile/scrollview" },
         "category": "Data Management",
         "spriteCssClass": "mobileScrollViewIcon",
         "packages": [
@@ -6335,7 +6335,7 @@
         "text": "TreeView",
         "name": "treeview",
         "pro": "true",
-        "api": "web/treeview",
+        "api": { "all": "web/treeview" },
         "documentation": {
             "kendo-ui": "getting-started/web/treeview/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treeview/overview",
@@ -6566,7 +6566,7 @@
         "text": "Upload",
         "name": "upload",
         "pro": "true",
-        "api": "web/upload",
+        "api": { "all": "web/upload" },
         "documentation": {
             "kendo-ui": "getting-started/web/upload/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/upload/overview",
@@ -6721,7 +6721,7 @@
     {
         "text": "Window",
         "name": "window",
-        "api": "web/window",
+        "api": { "all": "web/window" },
         "documentation": {
             "kendo-ui": "getting-started/web/window/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/window/overview",
@@ -6887,7 +6887,7 @@
     {
         "text": "WordsProcessing",
         "name": "wordsprocessing",
-        "api": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview",
+        "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview" },
         "category": "Editors",
         "spriteCssClass": "wordprocessingIcon",
         "new": "true",
@@ -6921,7 +6921,7 @@
         ],
         "text": "DataSource",
         "name": "datasource",
-        "api": "framework/datasource",
+        "api": { "all": "framework/datasource" },
         "documentation": {
             "kendo-ui": "getting-started/framework/datasource/overview"
         },
@@ -7115,7 +7115,7 @@
     {
         "text": "PdfProcessing",
         "name": "pdfprocessing",
-        "api": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview",
+        "api": { "all": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview" },
         "category": "Editors",
         "spriteCssClass": "pdfIcon",
         "new": "true",
@@ -7157,7 +7157,7 @@
         ],
         "text": "Globalization",
         "name": "globalization",
-        "api": "framework/kendo",
+        "api": { "all": "framework/kendo" },
         "documentation": {
             "kendo-ui": "getting-started/framework/globalization/overview"
         },
@@ -7262,7 +7262,7 @@
         ],
         "text": "MVVM",
         "name": "mvvm",
-        "api": "framework/kendo",
+        "api": { "all": "framework/kendo" },
         "documentation": {
             "kendo-ui": "getting-started/framework/mvvm/overview"
         },
@@ -7404,7 +7404,7 @@
         ],
         "text": "Single-Page App",
         "name": "spa",
-        "api": "framework/kendo",
+        "api": { "all": "framework/kendo" },
         "documentation": {
             "kendo-ui": "getting-started/framework/spa/overview"
         },
@@ -7443,7 +7443,7 @@
         ],
         "text": "Templates",
         "name": "templates",
-        "api": "framework/kendo",
+        "api": { "all": "framework/kendo" },
         "documentation": {
             "kendo-ui": "getting-started/framework/templates/overview"
         },
@@ -7485,7 +7485,7 @@
         ],
         "text": "Validator",
         "name": "validator",
-        "api": "web/validator",
+        "api": { "all": "web/validator" },
         "documentation": {
             "kendo-ui": "getting-started/framework/validator/overview"
         },
@@ -7633,7 +7633,7 @@
         "text": "Area Charts",
         "name": "area-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -7897,7 +7897,7 @@
         "text": "Bar Charts",
         "name": "bar-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -8256,7 +8256,10 @@
         "name": "barcode",
         "pro": "true",
         "spriteCssClass": "barcodeIcon",
-        "api": "dataviz/barcode",
+        "api": {
+          "all": "dataviz/barcode",
+          "php-ui": "api/php/Kendo/Dataviz/UI/Barcode"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/barcode/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/barcode/overview",
@@ -8340,7 +8343,7 @@
         "text": "Box Plot Charts",
         "name": "box-plot-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -8472,7 +8475,7 @@
         "text": "Bubble Charts",
         "name": "bubble-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -8604,7 +8607,7 @@
         "text": "Bullet Charts",
         "name": "bullet-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -8719,7 +8722,7 @@
         "text": "Chart API",
         "name": "chart-api",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "spriteCssClass": "chartIcon",
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
@@ -8836,7 +8839,7 @@
         "text": "Donut Charts",
         "name": "donut-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -8967,7 +8970,7 @@
         "text": "Funnel Charts",
         "name": "funnel-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -9105,7 +9108,7 @@
         "name": "linear-gauge",
         "pro": "true",
         "spriteCssClass": "gaugeLinearIcon",
-        "api": "dataviz/lineargauge",
+        "api": { "all": "dataviz/lineargauge" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/lineargauge/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/lineargauge/overview",
@@ -9211,7 +9214,7 @@
         "name": "radial-gauge",
         "pro": "true",
         "spriteCssClass": "gaugeRadialIcon",
-        "api": "dataviz/radialgauge",
+        "api": { "all": "dataviz/radialgauge" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/radialgauge/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/radialgauge/overview",
@@ -9331,7 +9334,7 @@
         "text": "Line Charts",
         "name": "line-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -9627,7 +9630,7 @@
         "text": "Diagram",
         "name": "diagram",
         "pro": "true",
-        "api": "dataviz/diagram",
+        "api": { "all": "dataviz/diagram" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/diagram/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/diagram/overview",
@@ -9794,7 +9797,7 @@
         "text": "Map",
         "name": "map",
         "pro": "true",
-        "api": "dataviz/map",
+        "api": { "all": "dataviz/map" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/map/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/map/overview",
@@ -9935,7 +9938,7 @@
         "text": "Pie Charts",
         "name": "pie-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -10066,7 +10069,7 @@
         "text": "Polar Charts",
         "name": "polar-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -10230,7 +10233,7 @@
         "name": "qrcode",
         "pro": "true",
         "spriteCssClass": "qrcodeIcon",
-        "api": "dataviz/qrcode",
+        "api": { "all": "dataviz/qrcode" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/qrcode/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/qrcode/overview",
@@ -10314,7 +10317,7 @@
         "text": "Radar Charts",
         "name": "radar-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -10515,7 +10518,7 @@
     {
         "text": "Range Bar Charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -10596,7 +10599,7 @@
         "text": "Scatter Charts",
         "name": "scatter-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -10829,7 +10832,7 @@
         "text": "Sparklines",
         "name": "sparklines",
         "pro": "true",
-        "api": "dataviz/sparkline",
+        "api": { "all": "dataviz/sparkline" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/sparkline/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/sparkline/overview",
@@ -10951,7 +10954,7 @@
         "text": "Stock Charts",
         "name": "financial",
         "pro": "true",
-        "api": "dataviz/stock-chart",
+        "api": { "all": "dataviz/stock-chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/stockchart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/stockchart/overview",
@@ -11069,7 +11072,7 @@
         "text": "TreeMap",
         "pro": "true",
         "spriteCssClass": "treemapIcon",
-        "api": "dataviz/treemap",
+        "api": { "all": "dataviz/treemap" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/treemap/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treemap/overview",
@@ -11161,7 +11164,7 @@
         "text": "Waterfall Charts",
         "name": "waterfall-charts",
         "pro": "true",
-        "api": "dataviz/chart",
+        "api": { "all": "dataviz/chart" },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/chart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
@@ -11245,7 +11248,7 @@
     {
         "text": "Switch",
         "name": "switch",
-        "api": "mobile/switch",
+        "api": { "all": "mobile/switch" },
         "documentation": {
             "kendo-ui": "getting-started/mobile/switch",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobileswitch/overview"
@@ -11285,7 +11288,7 @@
     {
         "text": "Touch Events",
         "name": "touchevents",
-        "api": "mobile/touch",
+        "api": { "all": "mobile/touch" },
         "category": "Framework",
         "documentation": {
             "kendo-ui": "getting-started/mobile/touch"

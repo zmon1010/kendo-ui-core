@@ -74,7 +74,9 @@ namespace Kendo.Controllers
                 }
             }
 
-            var api = currentExample.Api ?? ViewBag.CurrentWidget.Api;
+            var ApiDict = currentExample.Api ?? ViewBag.CurrentWidget.Api;
+            var api = ApiDict.ContainsKey("all") ? ApiDict["all"] : null;
+
             if (!string.IsNullOrEmpty(api))
             {
                 if (product == "kendo-ui")
@@ -100,6 +102,12 @@ namespace Kendo.Controllers
                         ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/aspnet-mvc/kendo.mvc.ui.fluent" + Regex.Replace(api, "(web|dataviz)", "").Replace("mobile/", "/mobile") + "builder";
                     }
                 }
+                
+            }
+
+            if (ApiDict.ContainsKey(product))
+            {
+                ViewBag.Api = "http://docs.telerik.com/kendo-ui/" + ApiDict[product];
             }
 
             if (currentWidget.Documentation != null && currentWidget.Documentation.ContainsKey(product))
