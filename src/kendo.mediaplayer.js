@@ -784,6 +784,9 @@
             },
 
             seek: function (ms) {
+                if (typeof ms === 'undefined') {
+                    return 1000 * (this._youTubeVideo) ? this._ytmedia.getCurrentTime() : (this._media ? this._media.currentTime : 0);
+                }
                 var seconds = ms / 1000;
                 if (this._youTubeVideo) {
                     if (seconds + 3 >= this._ytmedia.getDuration() | 0) {
