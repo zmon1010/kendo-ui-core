@@ -6927,7 +6927,10 @@
         ],
         "text": "DataSource",
         "name": "datasource",
-        "api": { "all": "framework/datasource" },
+        "api": {
+            "all": "framework/datasource",
+            "aspnet-mvc" : "api/aspnet-mvc/Kendo.Mvc.UI.Fluent/DataSourceBuilder"
+        },
         "documentation": {
             "kendo-ui": "getting-started/framework/datasource/overview"
         },
@@ -10981,7 +10984,8 @@
         "api": {
             "all": "dataviz/stock-chart",
             "php-ui": "api/php/Kendo/Dataviz/UI/StockChart",
-            "jsp-ui": "api/jsp/stockChart"
+            "jsp-ui": "api/jsp/stockChart",
+            "aspnet-mvc": "api/aspnet-mvc/Kendo.Mvc.UI.Fluent/StockChartBuilder"
         },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/stockchart/overview",
