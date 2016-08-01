@@ -87,7 +87,7 @@ class ChartTitle extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true the chart will display the title. By default the title is not displayed.
+    * If set to true the chart will display the title. By default the title will be displayed.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\ChartTitle
     */

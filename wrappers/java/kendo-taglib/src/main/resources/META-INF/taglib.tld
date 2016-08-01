@@ -5065,7 +5065,7 @@ By default chart series highlighting is enabled.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the series markers. By default chart series markers are not displayed.</description>
+            <description>If set to true the chart will display the series markers. By default chart series markers are displayed.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -5137,7 +5137,7 @@ By default chart series highlighting is enabled.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>If set to true the chart will display the series markers. By default chart series markers are not displayed.</description>
+        <description>If set to true the chart will display the series markers. By default chart series markers are displayed.</description>
         <name>chart-seriesItem-markers-visible</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemMarkersVisibleFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -6814,7 +6814,7 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the title. By default the title is not displayed.</description>
+            <description>If set to true the chart will display the title. By default the title will be displayed.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
