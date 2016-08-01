@@ -22,10 +22,21 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Define custom serialization for the editable content. The method accepts a single parameter as a string and is expected to return a string.
         /// </summary>
-        /// <param name="value">The value that configures the custom.</param>
-        public EditorSerializationSettingsBuilder Custom(string value)
+        /// <param name="value">The value that configures the custom action.</param>
+        public EditorSerializationSettingsBuilder Custom(Func<object, object> handler)
         {
-            container.Custom = value;
+            container.Custom.TemplateDelegate = handler;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Define custom serialization for the editable content. The method accepts a single parameter as a string and is expected to return a string.
+        /// </summary>
+        /// <param name="value">The value that configures the custom action.</param>
+        public EditorSerializationSettingsBuilder Custom(string handler)
+        {
+            container.Custom.HandlerName = handler;
 
             return this;
         }

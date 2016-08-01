@@ -27,6 +27,8 @@ module CodeGen::MVC::Wrappers
         'diagram.shapedefaults.fill.gradient.end' => 'double[]',
 
         # types: Function => ClientHandlerDescriptior, perhaps?
+		'editor.deserialization.custom' => 'ClientHandlerDescriptor',
+		'editor.serialization.custom' => 'ClientHandlerDescriptor',
         'toolbar.items.click' => 'ClientHandlerDescriptor',
         'toolbar.items.toggle' => 'ClientHandlerDescriptor',
         'toolbar.items.buttons.click' => 'ClientHandlerDescriptor',

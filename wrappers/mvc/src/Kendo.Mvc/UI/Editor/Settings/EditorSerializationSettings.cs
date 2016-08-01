@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
-        public string Custom { get; set; }
+        public ClientHandlerDescriptor Custom { get; set; }
         
         public bool? Entities { get; set; }
         
