@@ -16,21 +16,11 @@ auth:
     # You can set this to -1 to disable registration.
     #max_users: 1000
 
-# a list of other known repositories we can talk to
-uplinks:
-  npmjs:
-    url: https://registry.npmjs.org/
-
 packages:
-  '@telerik/*':
-    # Scoped Telerik packages
+  '@progress/*':
+    # Scoped Progress packages
     access: $all
     publish: $all
-    proxy: npmjs
-
-  '*/*':
-    access: $all
-    proxy: npmjs
 
   '*':
     # allow all users (including non-authenticated users) to read and
@@ -43,9 +33,6 @@ packages:
     # allow all known users to publish packages
     # (anyone can register by default, remember?)
     publish: $authenticated
-
-    # if package is not available locally, proxy requests to 'npmjs' registry
-    proxy: npmjs
 
 # log settings
 logs:
