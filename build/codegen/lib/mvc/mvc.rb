@@ -43,7 +43,9 @@ module CodeGen::MVC::Wrappers
         'spreadsheet.sheets.rows.cells.index' => 'int',
         'spreadsheet.sheets.rows.cells.value' => 'object',
         'spreadsheet.sheets.mergedcells' => 'string[]',
-        'spreadsheet.sheets.filter.columns.values' => 'object[]'
+        'spreadsheet.sheets.filter.columns.values' => 'object[]',
+
+        'dialog.actions.action' => 'ClientHandlerDescriptor'
     }
 
     SERIALIZATION_SKIP_LIST = [
