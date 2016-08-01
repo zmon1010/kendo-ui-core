@@ -31,11 +31,13 @@
         mediaPlayer.pause();
     });
 
-    test("stop event should be fired", function () {
-        mediaPlayer.bind("end", function (e) {
+    test("ready event should be fired", function () {
+        mediaPlayer.bind("ready", function (e) {
             ok(true);
         });
-        mediaPlayer.stop();
+        mediaPlayer._media = null;
+        mediaPlayer.media({ title: "fakeTitle2", source: "http://localhost2" });
+        mediaPlayer._media.oncanplay();
     });
 
     test("volume event should be fired", function () {

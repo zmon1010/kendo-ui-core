@@ -79,7 +79,11 @@
         }));
     });
 
-    test("adds kendo tooltip", function () { 
-        ok(mediaPlayer._tooltip instanceof kendo.ui.Tooltip);    
+    test("adds kendo toolbar", function () { 
+        ok(mediaPlayer._toolBar instanceof kendo.ui.ToolBar);    
+    });
+
+    test("adds kendo slider", function () { 
+        ok(mediaPlayer._slider instanceof kendo.ui.Slider);    
     });
 })();

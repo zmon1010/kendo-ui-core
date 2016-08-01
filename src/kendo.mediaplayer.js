@@ -55,7 +55,7 @@
             //each = $.each,
             templates = {
                 htmlPlayer: "<video class='" + MEDIA + "'> </video>",
-                titleBar: template("<div class='" + TITLEBAR + "'><span class='" + TITLE + "'>Video Title</span></div>"),
+                titleBar: template("<div id='mediaplayerTitleBar' class='" + TITLEBAR + "' role='heading'><span class='" + TITLE + "'>Video Title</span></div>"),
                 toolBar: "<div class='" + TOOLBAR + "'> </div>",
                 youtubePlayer: "<div class='" + YTPLAYER + "' id='ytplayer'> </div>",
                 toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
@@ -86,8 +86,6 @@
                 this._createSlider();
 
                 this._createVolumeSlider();
-
-                this._createTooltip();                
 
                 this._timers = {};
 
@@ -121,12 +119,12 @@
                 forwardSeek: true,
                 media: null,
                 messages: {
-                    "pause": "Pause video",
-                    "play": "Play video",
-                    "mute": "Toggle audio",
-                    "volume": "Change volume",
-                    "quality": "Change quality",
-                    "fullscreen": "Toggle fullscreen"
+                    "pause": "Pause",
+                    "play": "Play",
+                    "mute": "Mute",
+                    "unmute": "Unmute",
+                    "quality": "Quality",
+                    "fullscreen": "Full Screen"
                 }
             },
 
@@ -150,13 +148,6 @@
                 }
             },
 
-            _createTooltip: function () {
-                this._tooltip = new ui.Tooltip(this.toolbar().wrapper, {
-                    filter: "a[title], span[title]", //dragHandleTitle
-                    position: "top"
-                });
-            },
-
             _createSlider: function () {
                 var sliderElement = this.wrapper.find(DOT + SLIDER);
                 if (!this._slider) {
@@ -172,7 +163,8 @@
                         slide: this._sliderDraggingHandler,
                         tooltip: {
                             template: templates.toolTip
-                        }
+                        },
+                        dragHandleTitle:""
                     });
                 }
             },
@@ -192,7 +184,9 @@
                         slide: this._volumeDraggingHandler,
                         change: this._volumeChangeHandler,
                         tickPlacement: "none",
-                        showButtons: false
+                        showButtons: false,
+                        tooltip: {enabled: false},
+                        dragHandleTitle:""
                     });
                 }
             },
@@ -282,15 +276,13 @@
                             {
                                 id: "videoQuality",
                                 template: templates.qualityDropDown
-                            }
-                            ,
-	                        { type: "button", id: "fullscreen", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" }
-                        ]
+                            },
+                            { type: "button", id: "fullscreen", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" }
+                            ]
                     });
 
-                    toolBarElement.find("#volume").attr("title", this.options.messages.mute);
+                    toolBarElement.find("#volume").attr("title", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
                     toolBarElement.find("#fullscreen").attr("title", this.options.messages.fullscreen);
-                    toolBarElement.find("#volumeTemplate").attr("title", this.options.messages.volume);
 
                     toolBarElement.width("auto");
                     this._currentTimeElement = toolBarElement.find("#currentTime");
@@ -319,6 +311,10 @@
                     }
 
                     this._dropDown.wrapper.attr("title", this.options.messages.quality).hide();
+                    this._dropDown.wrapper.find("span.k-i-arrow-s")
+                                            .removeClass('k-icon k-i-arrow-s')
+                                            .addClass('k-font-icon k-i-HD');
+                    this._dropDown.list.addClass("k-quality-list");
                 }
             },
 
@@ -361,7 +357,7 @@
                 }
 
                 if (e.id === "volume") {
-                    var muted = (this._media && this._media.muted) || this._ytmedia.isMuted();
+                    var muted = (this._media && this._media.muted) || (this._ytmedia && this._ytmedia.isMuted());
                     this.mute(!muted);
                 }
             },
@@ -404,16 +400,20 @@
             },
 
             _changeVolumeButtonImage: function (volume) {
-                var $volumeElement = this.toolbar().element.find("#volume > span");
+                var volumeButton = this.toolbar().element.find("#volume");
+                var volumeElement = this.toolbar().element.find("#volume > span");
                 var cssClass = this.toolbar().element.find("#volume > span").attr("class");
                 cssClass = cssClass.substring(0, cssClass.lastIndexOf(" "));
 
                 if (volume === 0) {
-                    $volumeElement.attr("class", cssClass + " " + MUTE);
+                    volumeElement.attr("class", cssClass + " " + MUTE);
+                    volumeButton.attr("title", this.options.messages.unmute);
                 } else if (volume > 0 && volume < 51) {
-                    $volumeElement.attr("class", cssClass + " " + LOW_VOLUME);
+                    volumeElement.attr("class", cssClass + " " + LOW_VOLUME);
+                    volumeButton.attr("title", this.options.messages.mute);
                 } else {
-                    $volumeElement.attr("class", cssClass + " " + HIGH_VOLUME);
+                    volumeElement.attr("class", cssClass + " " + HIGH_VOLUME);
+                    volumeButton.attr("title", this.options.messages.mute);
                 }
             },
 
@@ -597,8 +597,6 @@
             },
 
             _onPlayerStateChange: function (event) {
-                //IF NECESSARY
-                //check event.data = 0,1,2,5 for current player state and modify UI / fire events depending on the state
 
                 if (event.data === 0) {
                     this._slider.value(0);
@@ -614,6 +612,7 @@
                     if (this._sliderChangeFired) {
                         this._sliderChangeFired = false;
                     } else {
+                        this._playStateToggle(true);
                         this.trigger(PLAY);
                     }
 
@@ -622,6 +621,7 @@
                 }
                 else if (event.data === 2) {
                     if (!this._paused) {
+                        this._playStateToggle(false);
                         this.trigger(PAUSE);
                         this._paused = true;
                     }
@@ -633,7 +633,7 @@
                 var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
                 var match = result.match(regExp);
 
-                if (match && match[7].length == 11) {
+                if (match && match[7].length === 11) {
                     result = match[7];
                 }
 
@@ -822,7 +822,6 @@
                 this._paused = true;
 
                 this._playStateToggle(false);
-                this.trigger(END);
                 return this;
             },
 
@@ -979,6 +978,9 @@
             },
 
             _aria: function () {
+                //this.wrapper.attr("role", "region");
+                //this.wrapper.attr(" aria-labelledby", "mediaplayerTitleBar");
+                //add onfocus with aria active descendant
             },
 
             _navigatable: function () {
@@ -1045,4 +1047,4 @@
 
     return window.kendo;
 
-}, typeof define == 'function' && define.amd ? define : function (a1, a2, a3) { (a3 || a2)(); });
+}, typeof define === 'function' && define.amd ? define : function (a1, a2, a3) { (a3 || a2)(); });
