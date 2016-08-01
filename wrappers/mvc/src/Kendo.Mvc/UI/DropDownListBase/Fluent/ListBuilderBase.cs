@@ -47,7 +47,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///		            animation.Open(open =>
         ///		            {
         ///		                open.SlideIn(SlideDirection.Down);
-        ///		            }
+        ///		            });
         ///	           })
         ///	%&gt;
         /// </code>
@@ -122,7 +122,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///                 source.Read(read =>
         ///                 {
         ///                     read.Action("GetProducts", "Home");
-        ///                 }
+        ///                 });
         ///             })
         /// %&gt;
         /// </code>
