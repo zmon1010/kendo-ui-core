@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Volume/Mute button tooltip message
+        /// Mute button tooltip message
         /// </summary>
         /// <param name="value">The value for Mute</param>
         public MediaPlayerMessagesSettingsBuilder Mute(string value)
@@ -41,12 +41,12 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Volume slider button tooltip message
+        /// Unmute button tooltip message
         /// </summary>
-        /// <param name="value">The value for Volume</param>
-        public MediaPlayerMessagesSettingsBuilder Volume(string value)
+        /// <param name="value">The value for Unmute</param>
+        public MediaPlayerMessagesSettingsBuilder Unmute(string value)
         {
-            Container.Volume = value;
+            Container.Unmute = value;
             return this;
         }
 

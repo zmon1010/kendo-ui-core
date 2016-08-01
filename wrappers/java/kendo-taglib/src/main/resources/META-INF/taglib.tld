@@ -26958,7 +26958,7 @@ Cancelling the event will prevent the user action.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Volume/Mute button tooltip message</description>
+            <description>Mute button tooltip message</description>
             <name>mute</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -26982,8 +26982,8 @@ Cancelling the event will prevent the user action.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Volume slider button tooltip message</description>
-            <name>volume</name>
+            <description>Unmute button tooltip message</description>
+            <name>unmute</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>

@@ -373,7 +373,7 @@ $.extend(true, kendo.ui.MediaPlayer.prototype.options.messages,{
   "pause": "Пауза",
   "play": "Възпроизвеждане",
   "mute": "Заглушаване на звука",
-  "volume": "Сила на звука",
+  "unmute": "Включване на звука",
   "quality": "Промяна на качеството",
   "fullscreen": "Цял екран"
 });

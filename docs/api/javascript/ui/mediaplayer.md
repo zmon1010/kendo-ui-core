@@ -131,11 +131,11 @@ Play button tooltip message
 
 ### messages.mute `String` 
 
-Volume/Mute button tooltip message
+Mute button tooltip message
 
-### messages.volume `String` 
+### messages.unmute `String` 
 
-Volume slider button tooltip message
+Unmute button tooltip message
 
 ### messages.quality `String` 
 

@@ -808,21 +808,21 @@
     <value>{0} selected items</value>
   </data>
   <data name="MediaPlayer_Fullscreen" xml:space="preserve">
-    <value>Toggle fullscreen</value>
+    <value>Full Screen</value>
   </data>
   <data name="MediaPlayer_Mute" xml:space="preserve">
-    <value>Toggle audio</value>
+    <value>Mute</value>
   </data>
   <data name="MediaPlayer_Pause" xml:space="preserve">
-    <value>Pause video</value>
+    <value>Pause</value>
   </data>
   <data name="MediaPlayer_Play" xml:space="preserve">
-    <value>Play video</value>
+    <value>Play</value>
   </data>
   <data name="MediaPlayer_Quality" xml:space="preserve">
-    <value>Change quality</value>
+    <value>Quality</value>
   </data>
-  <data name="MediaPlayer_Volume" xml:space="preserve">
-    <value>Change volume</value>
+  <data name="MediaPlayer_Unmute" xml:space="preserve">
+    <value>Unmute</value>
   </data>
 </root>

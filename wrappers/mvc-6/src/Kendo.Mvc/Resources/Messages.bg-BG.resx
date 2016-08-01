@@ -822,7 +822,7 @@
   <data name="MediaPlayer_Quality" xml:space="preserve">
     <value>Промяна на качеството</value>
   </data>
-  <data name="MediaPlayer_Volume" xml:space="preserve">
-    <value>Сила на звука</value>
-  </data>  
+  <data name="MediaPlayer_Unmute" xml:space="preserve">
+    <value>Включване на звука</value>
+  </data>
 </root>

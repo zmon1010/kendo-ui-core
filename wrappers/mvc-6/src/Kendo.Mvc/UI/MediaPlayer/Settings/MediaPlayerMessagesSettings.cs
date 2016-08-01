@@ -12,12 +12,12 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class MediaPlayerMessagesSettings
     {
-        private readonly string MuteDefault = "Toggle audio";
-        private readonly string PlayDefault = "Play video";
-        private readonly string PauseDefault = "Pause video";
-        private readonly string QualityDefault = "Change quality";
-        private readonly string VolumeDefault = "Change volume";
-        private readonly string FullscreenDefault = "Toggle fullscreen";
+        private readonly string MuteDefault = "Mute";
+        private readonly string PlayDefault = "Play";
+        private readonly string PauseDefault = "Pause";
+        private readonly string QualityDefault = "Quality";
+        private readonly string UnmuteDefault = "Unmute";
+        private readonly string FullscreenDefault = "Full Screen";
 
         public MediaPlayerMessagesSettings()
         {
@@ -37,9 +37,9 @@ namespace Kendo.Mvc.UI
             {
                 this.Quality = Messages.MediaPlayer_Quality;
             }
-            if (Messages.MediaPlayer_Volume != VolumeDefault)
+            if (Messages.MediaPlayer_Unmute != UnmuteDefault)
             {
-                this.Volume = Messages.MediaPlayer_Volume;
+                this.Unmute = Messages.MediaPlayer_Unmute;
             }
             if (Messages.MediaPlayer_Fullscreen != FullscreenDefault)
             {

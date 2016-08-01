@@ -1186,7 +1186,7 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toggle fullscreen.
+        ///   Looks up a localized string similar to Full Screen.
         /// </summary>
         public static string MediaPlayer_Fullscreen {
             get {
@@ -1195,7 +1195,7 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toggle audio.
+        ///   Looks up a localized string similar to Mute.
         /// </summary>
         public static string MediaPlayer_Mute {
             get {
@@ -1204,7 +1204,7 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pause video.
+        ///   Looks up a localized string similar to Pause.
         /// </summary>
         public static string MediaPlayer_Pause {
             get {
@@ -1213,7 +1213,7 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play video.
+        ///   Looks up a localized string similar to Play.
         /// </summary>
         public static string MediaPlayer_Play {
             get {
@@ -1222,7 +1222,7 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change quality.
+        ///   Looks up a localized string similar to Quality.
         /// </summary>
         public static string MediaPlayer_Quality {
             get {
@@ -1231,11 +1231,11 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change volume.
+        ///   Looks up a localized string similar to Unmute.
         /// </summary>
-        public static string MediaPlayer_Volume {
+        public static string MediaPlayer_Unmute {
             get {
-                return ResourceManager.GetString("MediaPlayer_Volume", resourceCulture);
+                return ResourceManager.GetString("MediaPlayer_Unmute", resourceCulture);
             }
         }
         

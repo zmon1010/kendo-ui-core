@@ -93,12 +93,12 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("quality", value);
     }
 
-    public java.lang.String getVolume() {
-        return (java.lang.String)getProperty("volume");
+    public java.lang.String getUnmute() {
+        return (java.lang.String)getProperty("unmute");
     }
 
-    public void setVolume(java.lang.String value) {
-        setProperty("volume", value);
+    public void setUnmute(java.lang.String value) {
+        setProperty("unmute", value);
     }
 
 //<< Attributes

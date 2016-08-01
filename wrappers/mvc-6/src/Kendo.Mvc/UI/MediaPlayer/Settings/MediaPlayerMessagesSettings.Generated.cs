@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
 
         public string Mute { get; set; }
 
-        public string Volume { get; set; }
+        public string Unmute { get; set; }
 
         public string Quality { get; set; }
 
@@ -45,9 +45,9 @@ namespace Kendo.Mvc.UI
                 settings["mute"] = Mute;
             }
 
-            if (Volume?.HasValue() == true)
+            if (Unmute?.HasValue() == true)
             {
-                settings["volume"] = Volume;
+                settings["unmute"] = Unmute;
             }
 
             if (Quality?.HasValue() == true)

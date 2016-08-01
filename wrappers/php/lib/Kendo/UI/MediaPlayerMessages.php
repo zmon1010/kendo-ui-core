@@ -24,7 +24,7 @@ class MediaPlayerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * Volume/Mute button tooltip message
+    * Mute button tooltip message
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMessages
     */
@@ -33,12 +33,12 @@ class MediaPlayerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * Volume slider button tooltip message
+    * Unmute button tooltip message
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMessages
     */
-    public function volume($value) {
-        return $this->setProperty('volume', $value);
+    public function unmute($value) {
+        return $this->setProperty('unmute', $value);
     }
 
     /**
