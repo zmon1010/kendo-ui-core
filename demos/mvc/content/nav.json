@@ -2688,7 +2688,10 @@
         "text": "Spreadsheet",
         "name": "spreadsheet",
         "pro": "true",
-        "api": { "all": "web/spreadsheet" },
+        "api": {
+            "all": "web/spreadsheet",
+            "php-ui": "api/php/Kendo/UI/Spreadsheet"
+        },
         "documentation": {
             "kendo-ui": "getting-started/web/spreadsheet/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/spreadsheet/overview",
@@ -4606,7 +4609,10 @@
     {
         "text": "Responsive Panel",
         "name": "responsive-panel",
-        "api": { "all": "web/responsivepanel" },
+        "api": {
+            "all": "web/responsivepanel",
+            "php-ui": "api/php/Kendo/UI/ResponsivePanel"
+        },
         "documentation": {
             "kendo-ui": "getting-started/web/responsivepanel/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/responsivepanel/mvc-responsivepanel-overview",
@@ -9108,7 +9114,10 @@
         "name": "linear-gauge",
         "pro": "true",
         "spriteCssClass": "gaugeLinearIcon",
-        "api": { "all": "dataviz/lineargauge" },
+        "api": {
+            "all": "dataviz/lineargauge",
+            "php-ui": "api/php/Kendo/Dataviz/UI/LinearGauge"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/lineargauge/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/lineargauge/overview",
@@ -9214,7 +9223,10 @@
         "name": "radial-gauge",
         "pro": "true",
         "spriteCssClass": "gaugeRadialIcon",
-        "api": { "all": "dataviz/radialgauge" },
+        "api": {
+            "all": "dataviz/radialgauge",
+            "php-ui": "api/php/Kendo/Dataviz/UI/RadialGauge"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/radialgauge/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/radialgauge/overview",
@@ -9630,7 +9642,10 @@
         "text": "Diagram",
         "name": "diagram",
         "pro": "true",
-        "api": { "all": "dataviz/diagram" },
+        "api": {
+            "all": "dataviz/diagram",
+            "php-ui" : "api/php/Kendo/Dataviz/UI/Diagram"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/diagram/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/diagram/overview",
@@ -9797,7 +9812,10 @@
         "text": "Map",
         "name": "map",
         "pro": "true",
-        "api": { "all": "dataviz/map" },
+        "api": {
+            "all": "dataviz/map",
+            "php-ui": "api/php/Kendo/Dataviz/UI/Map"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/map/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/map/overview",
@@ -10233,7 +10251,10 @@
         "name": "qrcode",
         "pro": "true",
         "spriteCssClass": "qrcodeIcon",
-        "api": { "all": "dataviz/qrcode" },
+        "api": {
+            "all": "dataviz/qrcode",
+            "php-ui": "api/php/Kendo/Dataviz/UI/QRCode"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/qrcode/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/qrcode/overview",
@@ -10832,7 +10853,10 @@
         "text": "Sparklines",
         "name": "sparklines",
         "pro": "true",
-        "api": { "all": "dataviz/sparkline" },
+        "api": {
+            "all": "dataviz/sparkline",
+            "php-ui": "api/php/Kendo/Dataviz/UI/Sparkline"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/sparkline/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/sparkline/overview",
@@ -10954,7 +10978,11 @@
         "text": "Stock Charts",
         "name": "financial",
         "pro": "true",
-        "api": { "all": "dataviz/stock-chart" },
+        "api": {
+            "all": "dataviz/stock-chart",
+            "php-ui": "api/php/Kendo/Dataviz/UI/StockChart",
+            "jsp-ui": "api/jsp/stockChart"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/stockchart/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/stockchart/overview",
@@ -11072,7 +11100,10 @@
         "text": "TreeMap",
         "pro": "true",
         "spriteCssClass": "treemapIcon",
-        "api": { "all": "dataviz/treemap" },
+        "api": {
+            "all": "dataviz/treemap",
+            "php-ui": "api/php/Kendo/Dataviz/UI/TreeMap"
+        },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/treemap/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treemap/overview",
