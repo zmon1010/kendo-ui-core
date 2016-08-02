@@ -2717,4 +2717,4 @@
     <Compile Include="UI\Editor\Settings\EditorImmutablesSettings.cs" />
     <Compile Include="UI\Editor\Fluent\EditorImmutablesSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Dialog\Dialog.cs" /><Compile Include="UI\Dialog\Fluent\DialogBuilder.cs" /><Compile Include="UI\Dialog\Fluent\DialogActionFactory.cs" /><Compile Include="UI\Dialog\DialogAction.cs" /><Compile Include="UI\Dialog\Fluent\DialogActionBuilder.cs" /><Compile Include="UI\Dialog\Settings\DialogAnimationSettings.cs" /><Compile Include="UI\Dialog\Fluent\DialogAnimationSettingsBuilder.cs" /><Compile Include="UI\Dialog\Settings\DialogAnimationCloseSettings.cs" /><Compile Include="UI\Dialog\Fluent\DialogAnimationCloseSettingsBuilder.cs" /><Compile Include="UI\Dialog\Settings\DialogAnimationOpenSettings.cs" /><Compile Include="UI\Dialog\Fluent\DialogAnimationOpenSettingsBuilder.cs" /><Compile Include="UI\Dialog\Settings\DialogMessagesSettings.cs" /><Compile Include="UI\Dialog\Fluent\DialogMessagesSettingsBuilder.cs" /><Compile Include="UI\Dialog\Fluent\DialogEventBuilder.cs" /><Compile Include="UI\Dialog\Html\DialogHtmlBuilder.cs" /></ItemGroup></Project>
+</Project>

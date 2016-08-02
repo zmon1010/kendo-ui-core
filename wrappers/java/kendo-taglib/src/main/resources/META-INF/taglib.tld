@@ -13,6 +13,38 @@
     <!-- Auto-generated -->
 
     <tag>
+        <description>Alert</description>
+        <name>alert</name>
+        <tag-class>com.kendoui.taglib.AlertTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Defines the text of the labels that are shown within the alert dialog. Used primarily for localization.</description>
+        <name>alert-messages</name>
+        <tag-class>com.kendoui.taglib.alert.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The title of the OK button.</description>
+            <name>okText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>AutoComplete</description>
         <name>autoComplete</name>
         <tag-class>com.kendoui.taglib.AutoCompleteTag</tag-class>
@@ -11989,6 +12021,44 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
         <tag-class>com.kendoui.taglib.combobox.CascadeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
+    <tag>
+        <description>Confirm</description>
+        <name>confirm</name>
+        <tag-class>com.kendoui.taglib.ConfirmTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Defines the text of the labels that are shown within the confirm dialog. Used primarily for localization.</description>
+        <name>confirm-messages</name>
+        <tag-class>com.kendoui.taglib.confirm.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The title of the Cancel button.</description>
+            <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the OK button.</description>
+            <name>okText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
     <tag>
         <description>ContextMenu</description>
         <name>contextMenu</name>
@@ -28889,6 +28959,44 @@ space separated "y" plus "x" position.The available "y" positions are:
         <tag-class>com.kendoui.taglib.progressbar.CompleteFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
+    <tag>
+        <description>Prompt</description>
+        <name>prompt</name>
+        <tag-class>com.kendoui.taglib.PromptTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Defines the text of the labels that are shown within the prompt dialog. Used primarily for localization.</description>
+        <name>prompt-messages</name>
+        <tag-class>com.kendoui.taglib.prompt.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The title of the Cancel button.</description>
+            <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the OK button.</description>
+            <name>okText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
     <tag>
         <description>QRCode</description>
         <name>qRCode</name>
