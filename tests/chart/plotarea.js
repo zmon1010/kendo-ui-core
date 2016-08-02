@@ -166,16 +166,6 @@
                 ok(chartSeries.options.isStacked100);
             });
 
-            test("disables clipping when series are 100% stacked", function() {
-                createPlotArea([{
-                    type: seriesType, data: [], stack: { type: "100%" }
-                }, {
-                    type: seriesType, data: []
-                }]);
-
-                ok(!chartSeries.options.clip);
-            });
-
             test("enables clipping when series are stacked", function() {
                 createPlotArea([{
                     type: seriesType, data: [], stack: true

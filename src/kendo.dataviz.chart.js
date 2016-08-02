@@ -10542,14 +10542,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         stackableChartOptions: function(firstSeries, pane) {
-            var stack = firstSeries.stack,
-                isStacked100 = stack && stack.type === "100%",
-                clip;
-            if (defined(pane.options.clip)) {
-                clip = pane.options.clip;
-            } else if (isStacked100){
-                clip = false;
-            }
+            var stack = firstSeries.stack;
+            var isStacked100 = stack && stack.type === "100%";
+            var clip = pane.options.clip;
+
             return {
                 isStacked: stack,
                 isStacked100: isStacked100,
