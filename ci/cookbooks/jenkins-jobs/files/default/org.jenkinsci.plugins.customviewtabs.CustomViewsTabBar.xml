@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<org.jenkinsci.plugins.customviewtabs.CustomViewsTabBar_-CustomViewsTabBarDescriptor plugin="custom-view-tabs@1.0">
+  <patternActiveTab>$N1 - $F failed</patternActiveTab>
+  <patternInactiveTab>$N1 - $F failed</patternInactiveTab>
+  <conditionActiveTab>false</conditionActiveTab>
+  <conditionInactiveTab>false</conditionInactiveTab>
+  <shortNameLength>3</shortNameLength>
+  <nameRegexMatch>(\w)\w*|\s</nameRegexMatch>
+  <nameRegexReplacement>$1</nameRegexReplacement>
+  <tabColours>
+    <tabColourDefault></tabColourDefault>
+    <tabColourDisabled></tabColourDisabled>
+    <tabColourUnstable>ffff00</tabColourUnstable>
+    <tabColourFailed>ff0000</tabColourFailed>
+    <tabColourCustom1></tabColourCustom1>
+    <tabColourCustom2></tabColourCustom2>
+    <tabColourCustom3></tabColourCustom3>
+    <tabColourCustom4></tabColourCustom4>
+  </tabColours>
+</org.jenkinsci.plugins.customviewtabs.CustomViewsTabBar_-CustomViewsTabBarDescriptor>
