@@ -619,6 +619,88 @@ The [template](/api/javascript/kendo#methods-template) used to render the files 
         });
     </script>
 
+### validation `Object`
+
+Configures the validation options for uploaded files. 
+
+#### Example
+	 <input name="files" id="files" type="file" />
+	 <script>
+    	$(document).ready(function() {
+        	$("#files").kendoUpload({
+            	async: {
+                	saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+            	},
+            	validation: {
+                	allowedExtensions: [".jpg"],
+                	maxFileSize: 900000,
+                	minFileSize: 300000
+            	}
+        });
+    });
+	</script>
+
+### validation.allowedExtensions `Array`
+
+Lists which file extensions are allowed to be uploaded. 
+
+#### Example
+	<input name="files" id="files" type="file" />
+	<script>
+	    $(document).ready(function() {
+	        $("#files").kendoUpload({
+	            async: {
+	                saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+	            },
+	            validation: {
+	                allowedExtensions: [".jpg"],
+	            }
+	        });
+	    });
+	</script>
+
+### validation.maxFileSize `Number`
+
+Defines the maximum file size that can be uploaded in bytes.
+
+#### Example 
+	<input name="files" id="files" type="file" />
+	<script>
+	    $(document).ready(function() {
+	        $("#files").kendoUpload({
+	            async: {
+	                saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+	            },
+	            validation: {
+	                maxFileSize: 900000
+	            }
+	        });
+	    });
+	</script>
+
+### validation.minFileSize `Number`
+
+Defines the minimum file size that can be uploaded in bytes.
+
+#### Example 
+	<input name="files" id="files" type="file" />
+	<script>
+	    $(document).ready(function() {
+	        $("#files").kendoUpload({
+	            async: {
+	                saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+	            },
+	            validation: {
+	                minFileSize: 300000
+	            }
+	        });
+	    });
+	</script>
+
 ## Methods
 
 ### destroy
@@ -1152,86 +1234,4 @@ The request will be in UNSENT state.
             e.formData.append("foo", "bar");
         }
     </script>
-
-### validation `Object`
-
-Configures the validation options for uploaded files. 
-
-#### Example
-	 <input name="files" id="files" type="file" />
-	 <script>
-    	$(document).ready(function() {
-        	$("#files").kendoUpload({
-            	async: {
-                	saveUrl: "http://my-app.localhost/save",
-					removeUrl: "http://my-app.localhost/remove"
-            	},
-            	validation: {
-                	allowedExtensions: [".jpg"],
-                	maxFileSize: 900000,
-                	minFileSize: 300000
-            	}
-        });
-    });
-	</script>
-
-### validation.allowedExtensions `Array`
-
-Lists which file extensions are allowed to be uploaded. 
-
-#### Example
-	<input name="files" id="files" type="file" />
-	<script>
-	    $(document).ready(function() {
-	        $("#files").kendoUpload({
-	            async: {
-	                saveUrl: "http://my-app.localhost/save",
-					removeUrl: "http://my-app.localhost/remove"
-	            },
-	            validation: {
-	                allowedExtensions: [".jpg"],
-	            }
-	        });
-	    });
-	</script>
-
-### validation.maxFileSize `Number`
-
-Defines the maximum file size that can be uploaded in bytes.
-
-#### Example 
-	<input name="files" id="files" type="file" />
-	<script>
-	    $(document).ready(function() {
-	        $("#files").kendoUpload({
-	            async: {
-	                saveUrl: "http://my-app.localhost/save",
-					removeUrl: "http://my-app.localhost/remove"
-	            },
-	            validation: {
-	                maxFileSize: 900000
-	            }
-	        });
-	    });
-	</script>
-
-### validation.minFileSize `Number`
-
-Defines the minimum file size that can be uploaded in bytes.
-
-#### Example 
-	<input name="files" id="files" type="file" />
-	<script>
-	    $(document).ready(function() {
-	        $("#files").kendoUpload({
-	            async: {
-	                saveUrl: "http://my-app.localhost/save",
-					removeUrl: "http://my-app.localhost/remove"
-	            },
-	            validation: {
-	                minFileSize: 300000
-	            }
-	        });
-	    });
-	</script>
 	
