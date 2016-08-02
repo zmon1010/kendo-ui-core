@@ -7435,6 +7435,12 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
+            //someone remove the edited item
+            if (e && e.action === "remove" && that.editable &&
+                that.editable.options.model && inArray(that.editable.options.model, e.items) > -1) {
+                that.editable.options.model.unbind(CHANGE, that._modelChangeHandler);
+            }
+
             e = e || {};
 
             if (that.trigger("dataBinding", { action: e.action || "rebind", index: e.index, items: e.items })) {
