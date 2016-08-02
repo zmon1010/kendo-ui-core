@@ -15,6 +15,15 @@ class UploadLocalization extends \Kendo\SerializableObject {
     }
 
     /**
+    * Sets the text of the clear button.
+    * @param string $value
+    * @return \Kendo\UI\UploadLocalization
+    */
+    public function clearSelectedFiles($value) {
+        return $this->setProperty('clearSelectedFiles', $value);
+    }
+
+    /**
     * Sets the drop zone hint.
     * @param string $value
     * @return \Kendo\UI\UploadLocalization
@@ -39,6 +48,33 @@ class UploadLocalization extends \Kendo\SerializableObject {
     */
     public function headerStatusUploading($value) {
         return $this->setProperty('headerStatusUploading', $value);
+    }
+
+    /**
+    * Sets the text for invalid file extension validation message.
+    * @param string $value
+    * @return \Kendo\UI\UploadLocalization
+    */
+    public function invalidFileExtension($value) {
+        return $this->setProperty('invalidFileExtension', $value);
+    }
+
+    /**
+    * Sets the text for invalid maxFileSize validation message.
+    * @param string $value
+    * @return \Kendo\UI\UploadLocalization
+    */
+    public function invalidMaxFileSize($value) {
+        return $this->setProperty('invalidMaxFileSize', $value);
+    }
+
+    /**
+    * Sets the text for invalid minFileSize validation message.
+    * @param string $value
+    * @return \Kendo\UI\UploadLocalization
+    */
+    public function invalidMinFileSize($value) {
+        return $this->setProperty('invalidMinFileSize', $value);
     }
 
     /**
