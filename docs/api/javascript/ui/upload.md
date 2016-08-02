@@ -156,6 +156,28 @@ containing one or more fields with the same name as the original input name.
 Controls whether to send credentials (cookies, headers) for cross-site requests.
 This option will be ignored if the browser doesn't support File API.
 
+### dropZone `String`
+
+Initializes a dropzone element based on a given selector that provides drag and drop file upload. 
+
+#### Example 
+
+	<div>
+    	<input name="files" id="files" type="file" />
+    	<div class="dropZoneElement">Drag and drop file here</div>
+	</div>
+	<script>
+	    $(document).ready(function() {
+	        $("#files").kendoUpload({
+	            async: {
+	                saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+	            },
+	            dropZone: ".dropZoneElement"
+	        });
+	    });
+	</script>
+
 ### enabled `Boolean`*(default: true)*
 
 Enables (**true**) or disables (**false**) an **Upload**. A disabled
@@ -1054,3 +1076,86 @@ The request will be in UNSENT state.
             e.formData.append("foo", "bar");
         }
     </script>
+
+### validation `Object`
+
+Configures the validation options for uploaded files. 
+
+#### Example
+	 <input name="files" id="files" type="file" />
+	 <script>
+    	$(document).ready(function() {
+        	$("#files").kendoUpload({
+            	async: {
+                	saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+            	},
+            	validation: {
+                	allowedExtensions: [".jpg"],
+                	maxFileSize: 900000,
+                	minFileSize: 300000
+            	}
+        });
+    });
+	</script>
+
+### validation.allowedExtensions `Array`
+
+Lists which file extensions are allowed to be uploaded. 
+
+#### Example
+	<input name="files" id="files" type="file" />
+	<script>
+	    $(document).ready(function() {
+	        $("#files").kendoUpload({
+	            async: {
+	                saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+	            },
+	            validation: {
+	                allowedExtensions: [".jpg"],
+	            }
+	        });
+	    });
+	</script>
+
+### validation.minFileSize `Number`
+
+Defines the minimum file size that can be uploaded in bytes.
+
+#### Example 
+	<input name="files" id="files" type="file" />
+	<script>
+	    $(document).ready(function() {
+	        $("#files").kendoUpload({
+	            async: {
+	                saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+	            },
+	            validation: {
+	                minFileSize: 300000
+	            }
+	        });
+	    });
+	</script>
+
+### validation.maxFileSize `Number`
+
+Defines the maximum file size that can be uploaded in bytes.
+
+#### Example 
+	<input name="files" id="files" type="file" />
+	<script>
+	    $(document).ready(function() {
+	        $("#files").kendoUpload({
+	            async: {
+	                saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+	            },
+	            validation: {
+	                maxFileSize: 900000
+	            }
+	        });
+	    });
+	</script>
+	
