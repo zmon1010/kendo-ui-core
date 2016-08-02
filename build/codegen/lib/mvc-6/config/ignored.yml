@@ -152,3 +152,4 @@
 - window.appendto
 - window.content
 - window.resizable
+- dialog.animation
