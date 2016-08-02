@@ -84,6 +84,10 @@ var PopupTool = Tool.extend({
 
         this._editor = options.editor;
         this._popup = popup;
+        registerTool("tableWizardInsert", tableWizard);
+        if (editor.toolbar) {
+            editor.toolbar.attachToolsEvents(twTool);
+        }
     },
 
     popup: function() {
@@ -287,15 +291,6 @@ var InsertTableTool = PopupTool.extend({
     _close: function() {
         PopupTool.fn._close.call(this);
         this.popup().element.off("." + NS);
-    },
-
-    update: function (ui, nodes) {
-        var isFormatted;
-
-        PopupTool.fn.update.call(this, ui);
-
-        isFormatted = tableFormatFinder.isFormatted(nodes);
-        ui.toggleClass("k-state-disabled", isFormatted);
     }
 });
 

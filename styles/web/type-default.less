@@ -228,6 +228,8 @@
 .k-tooltip,
 .k-button-group .k-tool,
 .k-upload-files
+.k-popup.k-align .k-list .k-item:last-child,
+.k-editor-dialog .k-tabstrip-items
 {
     border-color: @widget-border-color;
 }
@@ -2686,4 +2688,18 @@ textarea.k-textbox,
             }
         }
     }
+}
+
+.k-editor-dialog .k-tabstrip-items {
+    border-color: @active-border-color;
+}
+
+.k-editor-dialog .k-tabstrip-items .k-item {
+     border-width: 2px 1px 0;
+}
+
+.k-editor-dialog .k-tabstrip-items .k-state-active, 
+.k-tabstrip-items .k-tab-on-top {
+    margin-bottom: -1px;
+    padding-bottom: 1px;
 }
