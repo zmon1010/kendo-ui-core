@@ -238,6 +238,8 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
+    <Compile Include="Controllers\MediaPlayer\ApiController.cs" />
+    <Compile Include="Controllers\MediaPlayer\EventsController.cs" />
     <Compile Include="Controllers\MediaPlayer\IndexController.cs" />
     <Compile Include="Controllers\MediaPlayer\PlaylistController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
@@ -979,6 +981,10 @@
     <Content Include="Views\gantt\api.cshtml" />
     <Content Include="Views\gantt\events.cshtml" />
     <Content Include="Views\treemap\index.cshtml" />
+    <Content Include="Views\mediaplayer\index.aspx" />
+    <Content Include="Views\mediaplayer\playlist.aspx" />
+    <Content Include="Views\mediaplayer\api.aspx" />
+    <Content Include="Views\mediaplayer\events.aspx" />
     <Content Include="Views\mediaplayer\index.aspx" />
     <Content Include="Views\mediaplayer\playlist.aspx" />
     <Content Include="Content\dataviz\Black\markers.png" />
@@ -2939,6 +2945,8 @@
     <Content Include="Views\dialog\keyboard_navigation.cshtml" />
     <Content Include="Areas\razor\Views\mediaplayer\index.cshtml" />
     <Content Include="Areas\razor\Views\mediaplayer\playlist.cshtml" />
+    <Content Include="Areas\razor\Views\mediaplayer\api.cshtml" />
+    <Content Include="Areas\razor\Views\mediaplayer\events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
