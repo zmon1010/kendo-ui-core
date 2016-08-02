@@ -21,22 +21,21 @@ namespace Kendo.Mvc.UI
         
             Actions = new List<DialogAction>();
                 
-            Animation = new DialogAnimationSettings();
-                
             Messages = new DialogMessagesSettings();
                 
         //<< Initialization
+
+            Animation = new PopupAnimation();
         }
 
-//>> Fields
-        
-        public List<DialogAction> Actions
+        public PopupAnimation Animation
         {
             get;
             set;
         }
+        //>> Fields
         
-        public DialogAnimationSettings Animation
+        public List<DialogAction> Actions
         {
             get;
             set;
@@ -76,21 +75,27 @@ namespace Kendo.Mvc.UI
         {
             var json = new Dictionary<string, object>(Events);
 
-//>> Serialization
+            var animation = Animation.ToJson();
+
+            if (animation.Any())
+            {
+                if (animation["animation"] is bool)
+                {
+                    json["animation"] = false;
+                }
+                else
+                {
+                    json["animation"] = animation["animation"];
+                }
+            }
+
+            //>> Serialization
         
             var actions = Actions.ToJson();
             if (actions.Any())
             {
                 json["actions"] = actions;
             }
-            var animation = Animation.ToJson();
-            if (animation.Any())
-            {
-                json["animation"] = animation;
-            } else if (Animation.Enabled != ) {
-                json["animation"] = Animation.Enabled;
-            }
-
             if (Closable.HasValue)
             {
                 json["closable"] = Closable;

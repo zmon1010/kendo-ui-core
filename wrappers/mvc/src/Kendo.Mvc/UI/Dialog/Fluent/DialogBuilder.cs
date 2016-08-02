@@ -33,30 +33,6 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
-
-        /// <summary>
-        /// A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.
-        /// </summary>
-        /// <param name="enabled">Enables or disables the animation option.</param>
-        public DialogBuilder Animation(bool enabled)
-        {
-            container.Animation.Enabled = enabled;
-            return this;
-        }
-
-        
-        /// <summary>
-        /// A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.
-        /// </summary>
-        /// <param name="configurator">The action that configures the animation.</param>
-        public DialogBuilder Animation(Action<DialogAnimationSettingsBuilder> configurator)
-        {
-            container.Animation.Enabled = true;
-            
-            configurator(new DialogAnimationSettingsBuilder(container.Animation));
-            return this;
-        }
-        
         /// <summary>
         /// Specifies whether a close button should be rendered at the top coner of the dialog.
         /// </summary>
@@ -191,7 +167,30 @@ namespace Kendo.Mvc.UI.Fluent
         //<< Fields
 
 
-        
+        /// <summary>
+        /// A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the animation option.</param>
+        public DialogBuilder Animation(bool enabled)
+        {
+            container.Animation.Enabled = enabled;
+            return this;
+        }
+
+
+        /// <summary>
+        /// A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.
+        /// </summary>
+        /// <param name="configurator">The action that configures the animation.</param>
+        public DialogBuilder Animation(Action<PopupAnimationBuilder> configurator)
+        {
+            container.Animation.Enabled = true;
+
+            configurator(new PopupAnimationBuilder(container.Animation));
+            return this;
+        }
+
+
         /// <summary>
         /// Configures the client-side events.
         /// </summary>

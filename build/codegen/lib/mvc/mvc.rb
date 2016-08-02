@@ -161,7 +161,8 @@ module CodeGen::MVC::Wrappers
         'spreadsheet.sheets.rows.cells.borderright',
         'spreadsheet.sheets.rows.cells.borderleft',
         'spreadsheet.sheets.rows.cells.value',
-        'spreadsheet.sheets.filter.columns'
+        'spreadsheet.sheets.filter.columns',
+        'dialog.animation'
     ]
 
     CSPROJ = 'wrappers/mvc/src/Kendo.Mvc/Kendo.Mvc.csproj'
