@@ -23,6 +23,8 @@ namespace Kendo.Mvc.UI
 
         public bool? Mute { get; set; }
 
+        public bool? Navigatable { get; set; }
+
         public double? Volume { get; set; }
 
 
@@ -59,6 +61,11 @@ namespace Kendo.Mvc.UI
             if (Mute.HasValue)
             {
                 settings["mute"] = Mute;
+            }
+
+            if (Navigatable.HasValue)
+            {
+                settings["navigatable"] = Navigatable;
             }
 
             if (Volume.HasValue)

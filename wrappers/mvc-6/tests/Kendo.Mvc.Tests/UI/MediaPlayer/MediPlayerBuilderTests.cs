@@ -50,5 +50,13 @@
 
             component.Mute.ShouldEqual(true);
         }
+
+        [Fact]
+        public void Keyboard_navigation_is_enabled_properly()
+        {
+            builder.Navigatable(true);
+
+            component.Navigatable.ShouldEqual(true);
+        }
     }
 }

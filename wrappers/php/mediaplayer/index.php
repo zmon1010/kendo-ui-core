@@ -9,6 +9,7 @@ $media ->title("Digital Transformation: A New Way of Thinking");
 $mediaPlayer = new \Kendo\UI\MediaPlayer('MediaPlayer') ;
 $mediaPlayer->media($media);
 $mediaPlayer->autoPlay(true);
+$mediaPlayer->navigatable(true);
 
 echo $mediaPlayer->render();
 ?>

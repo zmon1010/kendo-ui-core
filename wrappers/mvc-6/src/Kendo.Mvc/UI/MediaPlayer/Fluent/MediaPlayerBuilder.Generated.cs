@@ -109,6 +109,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true will enable the keyboard navigation for the widget
+        /// </summary>
+        /// <param name="value">The value for Navigatable</param>
+        public MediaPlayerBuilder Navigatable(bool value)
+        {
+            Container.Navigatable = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true will enable the keyboard navigation for the widget
+        /// </summary>
+        public MediaPlayerBuilder Navigatable()
+        {
+            Container.Navigatable = true;
+            return this;
+        }
+
+        /// <summary>
         /// A value between 0 and 100 that specifies the volume of the video
         /// </summary>
         /// <param name="value">The value for Volume</param>

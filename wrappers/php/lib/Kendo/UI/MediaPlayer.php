@@ -72,6 +72,15 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
+    * If set to true will enable the keyboard navigation for the widget
+    * @param boolean $value
+    * @return \Kendo\UI\MediaPlayer
+    */
+    public function navigatable($value) {
+        return $this->setProperty('navigatable', $value);
+    }
+
+    /**
     * A value between 0 and 100 that specifies the volume of the video
     * @param float $value
     * @return \Kendo\UI\MediaPlayer

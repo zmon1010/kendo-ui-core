@@ -4,7 +4,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-<kendo:mediaPlayer name="mediaPlayer" autoPlay="true">
+<kendo:mediaPlayer name="mediaPlayer" navigatable="true" autoPlay="true"  >
 	<kendo:mediaPlayer-media
 		title="Digital Transformation: A New Way of Thinking"
 		source="https://www.youtube.com/watch?v=gNlya720gbk" />

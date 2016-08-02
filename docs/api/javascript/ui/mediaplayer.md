@@ -159,6 +159,19 @@ If set to `true` the video will be played without sound
     });
     </script>
 
+### navigatable `Boolean` *(default: false)*
+
+If set to `true` will enable the keyboard navigation for the widget
+
+#### Example - keyboard navigation
+
+    <div id="mediaplayer" />
+    <script>
+    $("#mediaplayer").kendoMediaPlayer({
+        navigatable: true,
+        media: { title: "Digital Transformation: A New Way of Thinking", source: "https://www.youtube.com/watch?v=gNlya720gbk" }
+    });
+    </script>
 
 ### volume `Number` *(default: 100)*
 

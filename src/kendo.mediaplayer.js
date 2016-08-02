@@ -116,6 +116,7 @@
                 volume: 100,
                 fullScreen: false,
                 mute: false,
+                navigatable: false,
                 forwardSeek: true,
                 media: null,
                 messages: {

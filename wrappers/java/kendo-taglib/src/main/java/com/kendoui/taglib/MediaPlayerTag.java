@@ -123,6 +123,14 @@ public class MediaPlayerTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("mute", value);
     }
 
+    public boolean getNavigatable() {
+        return (Boolean)getProperty("navigatable");
+    }
+
+    public void setNavigatable(boolean value) {
+        setProperty("navigatable", value);
+    }
+
     public float getVolume() {
         return (Float)getProperty("volume");
     }

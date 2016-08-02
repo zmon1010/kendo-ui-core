@@ -67,6 +67,11 @@ namespace Kendo.Mvc.UI
                 settings["mute"] = Mute;
             }
 
+            if (Navigatable.HasValue)
+            {
+                settings["navigatable"] = Navigatable;
+            }
+
             if (ForwardSeek.HasValue)
             {
                 settings["forwardSeek"] = ForwardSeek;
@@ -97,6 +102,8 @@ namespace Kendo.Mvc.UI
         public bool? FullScreen { get; set; }
 
         public bool? Mute { get; set; }
+
+        public bool? Navigatable { get; set; }
 
         public bool? ForwardSeek { get; set; }
 
