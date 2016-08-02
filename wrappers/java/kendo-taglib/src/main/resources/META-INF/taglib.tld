@@ -13,6 +13,38 @@
     <!-- Auto-generated -->
 
     <tag>
+        <description>Alert</description>
+        <name>alert</name>
+        <tag-class>com.kendoui.taglib.AlertTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Defines the text of the labels that are shown within the alert dialog. Used primarily for localization.</description>
+        <name>alert-messages</name>
+        <tag-class>com.kendoui.taglib.alert.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The title of the OK button.</description>
+            <name>okText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>AutoComplete</description>
         <name>autoComplete</name>
         <tag-class>com.kendoui.taglib.AutoCompleteTag</tag-class>
@@ -11990,6 +12022,44 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>Confirm</description>
+        <name>confirm</name>
+        <tag-class>com.kendoui.taglib.ConfirmTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Defines the text of the labels that are shown within the confirm dialog. Used primarily for localization.</description>
+        <name>confirm-messages</name>
+        <tag-class>com.kendoui.taglib.confirm.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The title of the Cancel button.</description>
+            <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the OK button.</description>
+            <name>okText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>ContextMenu</description>
         <name>contextMenu</name>
         <tag-class>com.kendoui.taglib.ContextMenuTag</tag-class>
@@ -18401,6 +18471,263 @@ See visual.</description>
         <description>Fired when the user starts changing the diagram zoom level.</description>
         <name>diagram-zoomStart</name>
         <tag-class>com.kendoui.taglib.diagram.ZoomStartFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Dialog</description>
+        <name>dialog</name>
+        <tag-class>com.kendoui.taglib.DialogTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether a close button should be rendered at the top coner of the dialog.</description>
+            <name>closable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the content of a Dialog.</description>
+            <name>content</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies height of the dialog.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The maximum height (in pixels) that may be achieved by resizing the dialog.</description>
+            <name>maxHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The maximum width (in pixels) that may be achieved by resizing the dialog.</description>
+            <name>maxWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The minimum height (in pixels) that may be achieved by resizing the dialog.</description>
+            <name>minHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The minimum width (in pixels) that may be achieved by resizing the dialog.</description>
+            <name>minWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the dialog should show a modal overlay over the page.</description>
+            <name>modal</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The text in the dialog title bar. If false, the dialog will be displayed without a title bar.</description>
+            <name>title</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the dialog will be initially visible.</description>
+            <name>visible</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies width of the dialog.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog is closed (by a user or through the close() method).</description>
+            <name>close</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog has finished its closing animation.</description>
+            <name>hide</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog is opened for the first time (i.e. the open() method is called).</description>
+            <name>initOpen</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog is opened (i.e. the open() method is called).</description>
+            <name>open</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog has finished its opening animation.</description>
+            <name>show</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>A collection of objects containing text, action and primary attributes used to specify the dialog buttons.
+#### Example</description>
+        <name>dialog-actions</name>
+        <tag-class>com.kendoui.taglib.dialog.ActionsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>A collection of objects containing text, action and primary attributes used to specify the dialog buttons.
+#### Example</description>
+        <name>dialog-action</name>
+        <tag-class>com.kendoui.taglib.dialog.ActionTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The callback function to be called after pressing the action button.</description>
+            <name>action</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A boolean property indicating whether teh action button will be decorated as primary button or not.</description>
+            <name>primary</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The text to be shown in the action's button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+    <tag>
+        <description>The callback function to be called after pressing the action button.</description>
+        <name>dialog-action-action</name>
+        <tag-class>com.kendoui.taglib.dialog.ActionActionFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.</description>
+        <name>dialog-animation</name>
+        <tag-class>com.kendoui.taglib.dialog.AnimationTag</tag-class>
+        <body-content>JSP</body-content>
+
+
+    </tag>
+
+    <tag>
+        <description>The animation that will be used when a Dialog closes.</description>
+        <name>dialog-animation-close</name>
+        <tag-class>com.kendoui.taglib.dialog.AnimationCloseTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the close animation duration.</description>
+            <name>duration</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Effect to be used for closing of the popup.</description>
+            <name>effects</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The animation that will be used when a Dialog opens.</description>
+        <name>dialog-animation-open</name>
+        <tag-class>com.kendoui.taglib.dialog.AnimationOpenTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the open animation duration.</description>
+            <name>duration</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Effect to be used for opening of the popup.</description>
+            <name>effects</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
+        <description>Defines the text of the labels that are shown within the dialog. Used primarily for localization.</description>
+        <name>dialog-messages</name>
+        <tag-class>com.kendoui.taglib.dialog.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The title of the close button.</description>
+            <name>close</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Triggered when a Dialog is closed (by a user or through the close() method).</description>
+        <name>dialog-close</name>
+        <tag-class>com.kendoui.taglib.dialog.CloseFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when a Dialog has finished its closing animation.</description>
+        <name>dialog-hide</name>
+        <tag-class>com.kendoui.taglib.dialog.HideFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when a Dialog is opened for the first time (i.e. the open() method is called).</description>
+        <name>dialog-initOpen</name>
+        <tag-class>com.kendoui.taglib.dialog.InitOpenFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when a Dialog is opened (i.e. the open() method is called).</description>
+        <name>dialog-open</name>
+        <tag-class>com.kendoui.taglib.dialog.OpenFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when a Dialog has finished its opening animation.</description>
+        <name>dialog-show</name>
+        <tag-class>com.kendoui.taglib.dialog.ShowFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -28889,6 +29216,44 @@ space separated "y" plus "x" position.The available "y" positions are:
         <tag-class>com.kendoui.taglib.progressbar.CompleteFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
+    <tag>
+        <description>Prompt</description>
+        <name>prompt</name>
+        <tag-class>com.kendoui.taglib.PromptTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Defines the text of the labels that are shown within the prompt dialog. Used primarily for localization.</description>
+        <name>prompt-messages</name>
+        <tag-class>com.kendoui.taglib.prompt.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The title of the Cancel button.</description>
+            <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the OK button.</description>
+            <name>okText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
     <tag>
         <description>QRCode</description>
         <name>qRCode</name>
