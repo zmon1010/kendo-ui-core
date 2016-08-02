@@ -649,7 +649,8 @@ var __meta__ = { // jshint ignore:line
                 fileElement.find(".k-upload-action")
                            .addClass("k-button k-button-bare")
                            .append("<span class='k-icon " + iconsClassDictionary[actionKey] + " " + classDictionary[actionKey] +
-                                   "' title='" + this.localization[actionKey] + "'></span>")
+                                   "' title='" + this.localization[actionKey] + "'" +
+                                   "aria-label='" + this.localization[actionKey] + "'></span>")
                            .show();
             }
         },
@@ -678,7 +679,7 @@ var __meta__ = { // jshint ignore:line
             if (actionClass !== "") {
                 return $(
                 "<button type='button' class='k-button k-button-bare k-upload-action'>" +
-                    "<span class='k-icon "+ iconClass + " " + actionClass + "' title='" + actionText + "'></span>" +
+                    "<span class='k-icon "+ iconClass + " " + actionClass + "' title='" + actionText + "' aria-label='" + actionText +"'></span>" +
                 "</button>"
                 );
             }
@@ -1067,8 +1068,7 @@ var __meta__ = { // jshint ignore:line
         _wrapInput: function(input) {
             var that = this;
             var options = that.options;
-
-            input.wrap("<div class='k-widget k-upload k-header'><div class='k-button k-upload-button'></div></div>");
+            input.wrap("<div class='k-widget k-upload k-header'><div class='k-button k-upload-button' aria-label='" + this.localization.select + "'></div></div>");
 
             if(!options.async.saveUrl) {
                 input.closest(".k-upload").addClass("k-upload-sync");

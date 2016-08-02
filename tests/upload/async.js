@@ -305,6 +305,58 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         equal($(".k-i-cancel", uploadInstance.wrapper).length, 0);
     });
 
+    test("aria-label is rendered for cancel button", function() {
+        var uploadInstance = createUpload({
+            localization: {
+                cancel: "cancel the file upload"
+            }
+        });
+        simulateFileSelect();
+        var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+        equal(ariaLabelValue, "cancel the file upload");
+    });
+
+    test("aria-label is rendered for cancel button", function() {
+        var uploadInstance = createUpload({
+            localization: {
+                cancel: "cancel the file upload"
+            }
+        });
+        simulateFileSelect();
+        var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+        ok(typeof ariaLabelValue !== typeof undefined && ariaLabelValue !== false);
+    });
+
+    test("aria-label is rendered for cancel button when templates are defined", function() {
+        var uploadInstance = createUpload({
+            template: "<div><p>Name: #=name#</p>" +
+              "<p>Size: #=size# bytes</p><p>Extension: #=files[0].extension#</p>" +
+              "<button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'></button>" +
+              "</div>",
+            localization: {
+                cancel: "cancel the file upload"
+            }
+        });
+        simulateFileSelect();
+        var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+        equal(ariaLabelValue, "cancel the file upload");
+    });
+
+    test("aria-label is rendered for cancel button when templates are defined", function() {
+        var uploadInstance = createUpload({
+            template: "<div><p>Name: #=name#</p>" +
+              "<p>Size: #=size# bytes</p><p>Extension: #=files[0].extension#</p>" +
+              "<button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'></button>" +
+              "</div>",
+            localization: {
+                cancel: "cancel the file upload"
+            }
+        });
+        simulateFileSelect();
+        var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+        ok(typeof ariaLabelValue !== typeof undefined && ariaLabelValue !== false);
+    });
+
     test("Progress event is raised", 1, function() {
         var uploadInstance = createUpload({ progress:
             function() {

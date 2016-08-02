@@ -1,7 +1,8 @@
 (function(){
 
-var uploadInstance,
-    Upload = kendo.ui.Upload;
+var uploadInstance;
+var Upload = kendo.ui.Upload;
+var initialSetupCustomDropZone;
 
 function createUpload(options) {
     //removeHTML();
@@ -162,15 +163,20 @@ test("disabled in synchronous mode", function() {
 // -----------------------------------------------------------------------------------
 module("Upload / Drag and drop / Custom Drop Zone", {
     setup: function() {
+        initialSetupCustomDropZone = Upload.prototype._setupCustomDropZone;
+
         Upload.prototype._supportsFormData = function() { return true; };
         copyUploadPrototype();
+
         $("<div id='myCustomDropZone'>content</div>").appendTo(QUnit.fixture);
         $("<div id='mySecondCustomDropZone'>content</div>").appendTo(QUnit.fixture);
     },
-    teardown: moduleTeardown
+    teardown: function() {
+        Upload.prototype._setupCustomDropZone = initialSetupCustomDropZone;
+        moduleTeardown();
+    }
 });
 
-//Try to move that test last and it will work
 test("Custom drop zone is initialized when specified", function(){
     var isInitialized = false;
     Upload.prototype._setupCustomDropZone = function() { isInitialized = true };
@@ -181,6 +187,7 @@ test("Custom drop zone is initialized when specified", function(){
 
     ok(isInitialized);
 });
+
 test("select event fires on drop on custom drop zone", 1, function() {
     uploadInstance = createUpload({
         "select" : (function() { ok(true); }),
@@ -222,14 +229,12 @@ test("dropping file on custom drop zone when the widget is disabled does not add
         dropZone: $("#myCustomDropZone")
     });
 
-
     simulateDrop([ { name: "first.txt", size: 1 } ]);
 
     equal($(".k-file", uploadInstance.wrapper).length, 0);
 });
     
 test("drag file should activate both dropzones", 1, function() {
-    debugger;
     uploadInstance = createUpload({
         dropZone: $("#myCustomDropZone,#mySecondCustomDropZone")
     });
@@ -238,7 +243,6 @@ test("drag file should activate both dropzones", 1, function() {
 });
 
 asyncTest("dragend file should deactivate both dropzones", 1, function() {
-  
     uploadInstance = createUpload({
         dropZone: $("#myCustomDropZone,#mySecondCustomDropZone")
     });
@@ -248,9 +252,9 @@ asyncTest("dragend file should deactivate both dropzones", 1, function() {
         equal($(".k-dropzone-active", QUnit.fixture).length, 0);
         start();
     },150);
+
     $(document).trigger("dragleave");
 });
-    
 
 })();
 

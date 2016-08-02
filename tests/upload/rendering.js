@@ -73,6 +73,97 @@ test("file name is rendered as tooltip", function() {
 
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
+module("Upload / Rendering / Aria-Label-Select-Files", {
+    setup: function() {
+        moduleSetup();
+
+        uploadInstance = $('<input id="uploadInstance" name="uploadPrototype" type="file" />')
+            .appendTo(QUnit.fixture)
+            .kendoUpload({
+                localization: {
+                    select: "my select files",
+                    remove: "remove file", 
+                    cancel: "cancel the file upload"
+                }
+            });
+    },
+    teardown: moduleTeardown
+});
+
+test("aria-label is rendered for select files button", function() {
+    var ariaLabelValue = $(".k-upload-button", uploadInstance.wrapper).attr("aria-label");
+    ok(typeof ariaLabelValue !== typeof undefined && ariaLabelValue !== false);
+});
+
+test("aria-label is rendered for select files button", function() {
+    var ariaLabelValue = $(".k-upload-button", uploadInstance.wrapper).attr("aria-label");
+    equal(ariaLabelValue, "my select files");
+});
+
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+module("Upload / Rendering / Aria-Label-Action-Buttons", {
+    setup: function() {
+        moduleSetup();
+        uploadInstance = createUpload({
+            localization: {
+                select: "my select files",
+                remove: "remove file",
+                cancel: "cancel the file upload"
+            }
+        });
+    },
+    teardown: moduleTeardown
+});
+
+test("aria-label is rendered for remove button", function() {
+    simulateFileSelect();
+    var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+    ok(typeof ariaLabelValue !== typeof undefined && ariaLabelValue !== false);
+});
+
+test("aria-label is rendered for remove button", function() {
+    simulateFileSelect();
+    var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+    equal(ariaLabelValue, "remove file");
+});
+
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+
+module("Upload / Rendering / Aria-Label-Action-Buttons-With-Templates", {
+    setup: function() {
+        moduleSetup();
+        uploadInstance = createUpload({
+            template: "<div><p>Name: #=name#</p>" +
+              "<p>Size: #=size# bytes</p><p>Extension: #=files[0].extension#</p>" +
+              "<button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'></button>" +
+              "</div>",
+            localization: {
+                select: "my select files",
+                remove: "remove file",
+                cancel: "cancel the file upload"
+            }
+        });
+    },
+    teardown: moduleTeardown
+});
+
+test("aria-label is rendered for remove button when template is defined", function() {
+    simulateFileSelect();
+    var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+    ok(typeof ariaLabelValue !== typeof undefined && ariaLabelValue !== false);
+});
+
+test("aria-label is rendered for remove button when template is defined", function() {
+    simulateFileSelect();
+    var ariaLabelValue = $(".k-upload-action span", uploadInstance.wrapper).attr("aria-label");
+    equal(ariaLabelValue, "remove file");
+});
+
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+
 module("Upload / Rendering / Drag and drop", {
     setup: function() {
         Upload.prototype._supportsDrop = function() { return true; };
@@ -84,6 +175,7 @@ module("Upload / Rendering / Drag and drop", {
 });
 
 test("drop zone is rendered when supported by the browser", function() {
+    debugger
     equal($("> .k-dropzone", uploadInstance.wrapper).length, 1);
 });
 
