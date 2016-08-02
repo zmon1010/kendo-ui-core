@@ -3754,6 +3754,7 @@ var __meta__ = { // jshint ignore:line
             return {
                 value: this.value,
                 percentage: this.percentage,
+                stackValue: this.stackValue,
                 category: this.category,
                 series: this.series,
                 dataItem: this.dataItem,
@@ -3844,6 +3845,7 @@ var __meta__ = { // jshint ignore:line
                         category: this.category,
                         value: this.value,
                         percentage: this.percentage,
+                        stackValue: this.stackValue,
                         runningTotal: this.runningTotal,
                         total: this.total,
                         series: this.series
@@ -3906,6 +3908,7 @@ var __meta__ = { // jshint ignore:line
                         sender: bar.getChart(),
                         series: bar.series,
                         percentage: bar.percentage,
+                        stackValue: this.stackValue,
                         runningTotal: bar.runningTotal,
                         total: bar.total,
                         rect: box.toRect(),
@@ -4622,6 +4625,8 @@ var __meta__ = { // jshint ignore:line
                         var pointSlot = chart.pointSlot(categorySlot, valueSlot);
 
                         point.aboveAxis = chart.aboveAxis(point, valueAxis);
+                        point.stackValue = plotRange[1];
+
                         if (chart.options.isStacked100) {
                             point.percentage = chart.plotValue(point);
                         }
@@ -5594,6 +5599,7 @@ var __meta__ = { // jshint ignore:line
                         category: point.category,
                         value: point.value,
                         percentage: point.percentage,
+                        stackValue: this.stackValue,
                         series: point.series
                     });
                 } else if (labels.format) {
@@ -11416,6 +11422,7 @@ var __meta__ = { // jshint ignore:line
                     series: point.series,
                     dataItem: point.dataItem,
                     value: point.value,
+                    stackValue: point.stackValue,
                     preventDefault: preventDefault,
                     visual: point.highlightVisual(),
                     show: show

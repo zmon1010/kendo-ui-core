@@ -828,6 +828,7 @@ var __meta__ = { // jshint ignore:line
                             dataItem: that.dataItem,
                             category: that.category,
                             value: that.value,
+                            stackValue: that.stackValue,
                             percentage: that.percentage,
                             runningTotal: that.runningTotal,
                             total: that.total

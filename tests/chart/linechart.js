@@ -527,6 +527,7 @@
             label,
             root,
             VALUE = 1,
+            STACK_VALUE = 2,
             TOOLTIP_OFFSET = 5,
             CATEGORY = "A",
             SERIES_NAME = "series";
@@ -538,6 +539,7 @@
                 }, LinePoint.fn.defaults, options)
             );
 
+            point.stackValue = STACK_VALUE;
             point.category = CATEGORY;
             point.dataItem = { value: VALUE };
             point.series = { name: SERIES_NAME, zIndex: 100 };
@@ -911,6 +913,10 @@
             assertTemplate("${percentage}", "0.5");
         });
 
+        test("template has stackValue", function() {
+            assertTemplate("${stackValue}", STACK_VALUE);
+        });
+
         test("template has dataItem", function() {
             assertTemplate("${dataItem.value}", VALUE);
         });
@@ -922,8 +928,10 @@
 
     (function() {
         var chart,
-            marker,
             label,
+            lineChart,
+            marker,
+            point,
             segment;
 
         function createLineChart(options) {
@@ -941,10 +949,10 @@
                 }
             }, options));
 
-            var plotArea = chart._model.children[1],
-                lineChart = plotArea.charts[0],
-                point = lineChart.points[0];
+            var plotArea = chart._model.children[1];
 
+            lineChart = plotArea.charts[0];
+            point = lineChart.points[0];
             marker = point.children[0];
             label = point.children[1];
             segment = lineChart._segments[0];
@@ -1016,15 +1024,37 @@
             linePointClick(function(e) { equal(e.category, "A"); });
         });
 
-        test("event arguments contain percentage", function() {
+        test("event arguments contain percentage and stackValue (100% stacked series)", function() {
             createLineChart({
                 seriesDefaults: {
                     type: "line",
                     stack: { type: "100%" }
                 },
                 series: [{ data: [1] }, { data: [2] }],
-                seriesClick: function(e) { equal(e.percentage, 1/3); }
+                seriesClick: function(e) {
+                    equal(e.percentage, 1/3);
+                    equal(e.stackValue, 1/3);
+                }
             });
+            chart._userEvents.press(0, 0, getChartDomElement(marker));
+            chart._userEvents.end(0, 0);
+        });
+
+        test("event arguments contain stackValue (stacked series)", function() {
+            createLineChart({
+                seriesDefaults: {
+                    type: "line",
+                    stack: true
+                },
+                series: [{ data: [1] }, { data: [2] }],
+                seriesClick: function(e) {
+                    equal(e.stackValue, 3);
+                }
+            });
+
+            point = lineChart.points[1];
+            marker = point.children[0];
+
             chart._userEvents.press(0, 0, getChartDomElement(marker));
             chart._userEvents.end(0, 0);
         });
