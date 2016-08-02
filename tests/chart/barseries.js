@@ -621,6 +621,11 @@
             deepEqual(barHeights, [1, 1, 2, 2]);
         });
 
+        test("sets point stackValue", function() {
+            equal(series.points[0].stackValue, 1);
+            equal(series.points[1].stackValue, 2);
+        });
+
         // ------------------------------------------------------------
         module("Bar Chart / Stack / Negative Values", {
             setup: function() {
@@ -677,6 +682,11 @@
                       [4, 4]);
 
             CATEGORY_AXIS_Y = 2;
+        });
+
+        test("sets point stackValue", function() {
+            equal(series.points[0].stackValue, -1);
+            equal(series.points[1].stackValue, -2);
         });
 
         // ------------------------------------------------------------
@@ -757,6 +767,11 @@
             });
 
             deepEqual(barHeights, [1, 1, 2, 2]);
+        });
+
+        test("sets point stackValue", function() {
+            equal(series.points[0].stackValue, 1);
+            equal(series.points[1].stackValue, -1);
         });
 
         // ------------------------------------------------------------
@@ -2206,6 +2221,7 @@
             overlay,
             root,
             VALUE = 1,
+            STACK_VALUE = 2,
             CATEGORY = "A",
             SERIES_NAME = "series",
             TOOLTIP_OFFSET = 5;
@@ -2214,6 +2230,7 @@
             box = new Box2D(0, 0, 100, 100);
             bar = new Bar(VALUE, kendo.deepExtend({}, Bar.fn.defaults, options));
 
+            bar.stackValue = STACK_VALUE;
             bar.category = CATEGORY;
             bar.dataItem = { value: VALUE };
             bar.percentage = 0.5;
@@ -2558,7 +2575,7 @@
             });
         });
 
-        test("passes dataItem, category, value, series and percentage", function() {
+        test("passes context", function() {
             createBar({
                 visual: function(e) {
                     equal(e.value, bar.value);
@@ -2566,6 +2583,7 @@
                     ok(e.category === bar.category);
                     ok(e.series === bar.series);
                     equal(e.percentage, bar.percentage);
+                    equal(e.stackValue, bar.stackValue);
                 }
             });
         });
@@ -2612,6 +2630,10 @@
 
         test("template has percentage", function() {
             assertTemplate("${percentage}", "0.5");
+        });
+
+        test("template has stackValue", function() {
+            assertTemplate("${stackValue}", STACK_VALUE);
         });
 
         test("template has dataItem", function() {
@@ -2776,15 +2798,36 @@
             barClick(function(e) { equal(e.value, 1); });
         });
 
-        test("event arguments contain percentage", function() {
+        test("event arguments contain percentage and stackValue (100% stacked series)", function() {
             createBarChart({
                 seriesDefaults: {
                     type: "bar",
                     stack: { type: "100%" }
                 },
                 series: [{ data: [1] }, { data: [2] }],
-                seriesClick: function(e) { equal(e.percentage, 1/3); }
+                seriesClick: function(e) {
+                    equal(e.percentage, 1/3);
+                    equal(e.stackValue, 1/3);
+                }
             });
+            clickChart(chart, barElement);
+        });
+
+        test("event arguments contain stackValue (stacked series)", function() {
+            createBarChart({
+                seriesDefaults: {
+                    type: "bar",
+                    stack: true
+                },
+                series: [{ data: [1] }, { data: [2] }],
+                seriesClick: function(e) {
+                    equal(e.stackValue, 3);
+                }
+            });
+
+            bar = plotArea.charts[0].points[1];
+            barElement = getChartDomElement(bar);
+
             clickChart(chart, barElement);
         });
 
