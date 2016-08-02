@@ -11422,6 +11422,7 @@ var __meta__ = { // jshint ignore:line
                     series: point.series,
                     dataItem: point.dataItem,
                     value: point.value,
+                    stackValue: point.stackValue,
                     preventDefault: preventDefault,
                     visual: point.highlightVisual(),
                     show: show
