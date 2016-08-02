@@ -1408,6 +1408,21 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Creates a <see cref="Dialog"/>
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Dialog()
+        ///             .Name("Dialog")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public virtual DialogBuilder Dialog()
+        {
+            return new DialogBuilder(new Dialog(ViewContext, Initializer, UrlGenerator));
+        }
+        
+        /// <summary>
         /// Creates a <see cref="Editor"/>
         /// </summary>
         /// <example>
