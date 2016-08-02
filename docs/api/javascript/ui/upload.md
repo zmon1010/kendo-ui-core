@@ -158,7 +158,7 @@ This option will be ignored if the browser doesn't support File API.
 
 ### dropZone `String`
 
-Initializes a dropzone element based on a given selector that provides drag and drop file upload. 
+Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload. 
 
 #### Example 
 
@@ -274,6 +274,25 @@ Sets the text of the cancel button text.
         });
     </script>
 
+### localization.clearSelectedFiles `String`
+
+Sets the text of the clear button. 
+
+#### Example
+
+	<input type="file" name="files" id="photos" />
+    <script>
+        $("#photos").kendoUpload({
+            async: {
+                saveUrl: "http://my-app.localhost/save",
+                removeUrl: "http://my-app.localhost/remove"
+            },
+            localization: {
+                clearSelectedFiles: "RemoveFiles"
+            }
+        });
+    </script>
+
 ### localization.dropFilesHere `String`*(default: "drop files here to upload")*
 
 Sets the drop zone hint.
@@ -327,6 +346,63 @@ Sets the header status message for files that are being uploaded.
             },
             localization: {
                 headerStatusUploading: "customHeaderStatusUploading"
+            }
+        });
+    </script>
+
+### localization.invalidFileExtension `String`
+
+Sets the text for invalid file extension validation message.
+
+#### Example
+
+    <input type="file" name="files" id="photos" />
+    <script>
+        $("#photos").kendoUpload({
+            async: {
+                saveUrl: "http://my-app.localhost/save",
+                removeUrl: "http://my-app.localhost/remove"
+            },
+            localization: {
+                invalidFileExtension: "customInvalidFileExtension"
+            }
+        });
+    </script>
+
+### localization.invalidMaxFileSize `String`
+
+Sets the text for invalid maxFileSize validation message.
+
+#### Example
+
+    <input type="file" name="files" id="photos" />
+    <script>
+        $("#photos").kendoUpload({
+            async: {
+                saveUrl: "http://my-app.localhost/save",
+                removeUrl: "http://my-app.localhost/remove"
+            },
+            localization: {
+                invalidMaxFileSize: "customInvalidMaxFileSize"
+            }
+        });
+    </script>
+
+### localization.invalidMinFileSize `String`
+
+Sets the text for invalid minFileSize validation message.
+
+#### Example
+
+    <input type="file" name="files" id="photos" />
+    <script>
+        $("#photos").kendoUpload({
+            async: {
+                saveUrl: "http://my-app.localhost/save",
+                removeUrl: "http://my-app.localhost/remove"
+            },
+            localization: {
+                invalidMinFileSize: "customInvalidMinFileSize"
             }
         });
     </script>
@@ -1119,26 +1195,6 @@ Lists which file extensions are allowed to be uploaded.
 	    });
 	</script>
 
-### validation.minFileSize `Number`
-
-Defines the minimum file size that can be uploaded in bytes.
-
-#### Example 
-	<input name="files" id="files" type="file" />
-	<script>
-	    $(document).ready(function() {
-	        $("#files").kendoUpload({
-	            async: {
-	                saveUrl: "http://my-app.localhost/save",
-					removeUrl: "http://my-app.localhost/remove"
-	            },
-	            validation: {
-	                minFileSize: 300000
-	            }
-	        });
-	    });
-	</script>
-
 ### validation.maxFileSize `Number`
 
 Defines the maximum file size that can be uploaded in bytes.
@@ -1154,6 +1210,26 @@ Defines the maximum file size that can be uploaded in bytes.
 	            },
 	            validation: {
 	                maxFileSize: 900000
+	            }
+	        });
+	    });
+	</script>
+
+### validation.minFileSize `Number`
+
+Defines the minimum file size that can be uploaded in bytes.
+
+#### Example 
+	<input name="files" id="files" type="file" />
+	<script>
+	    $(document).ready(function() {
+	        $("#files").kendoUpload({
+	            async: {
+	                saveUrl: "http://my-app.localhost/save",
+					removeUrl: "http://my-app.localhost/remove"
+	            },
+	            validation: {
+	                minFileSize: 300000
 	            }
 	        });
 	    });
