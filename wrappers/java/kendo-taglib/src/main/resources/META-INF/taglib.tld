@@ -26884,6 +26884,12 @@ Cancelling the event will prevent the user action.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to true will enable the keyboard navigation for the widget</description>
+            <name>navigatable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>A value between 0 and 100 that specifies the volume of the video</description>
             <name>volume</name>
             <rtexprvalue>true</rtexprvalue>
