@@ -47107,6 +47107,12 @@ This event has been introduced in internal builds after 2014.2.828.</description
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.</description>
+            <name>dropZone</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Enables (true) or disables (false) an Upload. A disabled
 Upload may be re-enabled via enable().</description>
             <name>enabled</name>
@@ -47301,6 +47307,12 @@ This option will be ignored if the browser doesn't support File API.</descriptio
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Sets the text of the clear button.</description>
+            <name>clearSelectedFiles</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Sets the drop zone hint.</description>
             <name>dropFilesHere</name>
             <rtexprvalue>true</rtexprvalue>
@@ -47315,6 +47327,24 @@ This option will be ignored if the browser doesn't support File API.</descriptio
         <attribute>
             <description>Sets the header status message for files that are being uploaded.</description>
             <name>headerStatusUploading</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text for invalid file extension validation message.</description>
+            <name>invalidFileExtension</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text for invalid maxFileSize validation message.</description>
+            <name>invalidMaxFileSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text for invalid minFileSize validation message.</description>
+            <name>invalidMinFileSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -47359,6 +47389,35 @@ This option will be ignored if the browser doesn't support File API.</descriptio
             <name>uploadSelectedFiles</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Configures the validation options for uploaded files.</description>
+        <name>upload-validation</name>
+        <tag-class>com.kendoui.taglib.upload.ValidationTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Lists which file extensions are allowed to be uploaded.</description>
+            <name>allowedExtensions</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Defines the maximum file size that can be uploaded in bytes.</description>
+            <name>maxFileSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Defines the minimum file size that can be uploaded in bytes.</description>
+            <name>minFileSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
         </attribute>
 
     </tag>
