@@ -1239,6 +1239,8 @@
     <Content Include="Views\demos\dialog\keyboard-navigation.cshtml" />
     <Content Include="Views\demos\mediaplayer\index.cshtml" />
     <Content Include="Views\demos\mediaplayer\playlist.cshtml" />
+    <Content Include="Views\demos\mediaplayer\api.cshtml" />
+    <Content Include="Views\demos\mediaplayer\events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
