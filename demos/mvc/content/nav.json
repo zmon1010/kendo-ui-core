@@ -3431,18 +3431,6 @@
                 }
             },
             {
-                "text": "API",
-                "url": "mediaplayer/api",
-                "title": {
-                    "kendo-ui": "API functions demo for KendoMediaPlayer",
-                    "aspnet-mvc": "API functions demo for ASP.NET MVC KendoMediaPlayer"
-                },
-                "meta": {
-                    "kendo-ui": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project.",
-                    "aspnet-mvc": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project."
-                }
-            },
-            {
                 "text": "Events",
                 "url": "mediaplayer/events",
                 "title": {
@@ -3452,6 +3440,18 @@
                 "meta": {
                     "kendo-ui": "This sample shows KendoMediaPlayer events which are enabled and the demo source code guides you how you can handle the events in your media player.",
                     "aspnet-mvc": "This sample shows ASP.NET MVC KendoMediaPlayer events which are enabled and the demo source code guides you how you can handle the events in media player."
+                }
+            },
+            {
+                "text": "API",
+                "url": "mediaplayer/api",
+                "title": {
+                    "kendo-ui": "API functions demo for KendoMediaPlayer",
+                    "aspnet-mvc": "API functions demo for ASP.NET MVC KendoMediaPlayer"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project.",
+                    "aspnet-mvc": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project."
                 }
             }
         ],

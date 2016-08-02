@@ -1,53 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<div class="box wide">
-     <h4>API Functions</h4>
-     <div class="box-col">
-         <ul class="options">
-             <li>
-                 <button id="play" class="k-button">Play video</button>
-             </li>
-             <li>
-                 <button id="stop" class="k-button">Stop video</button>
-             </li>
-             <li>
-                 <button id="pause" class="k-button">Pause video</button>
-             </li>
-             <li>
-                 <button id="fullScreen" class="k-button">Enter full-screen</button>
-             </li>
-             </ul>
-     </div>
-     <div class="box-col">
-         <ul class="options">
-             <li>
-                 <button id="toggleMute" class="k-button">Toggle mute</button>
-             </li>
-             <li>
-                 <button id="isEnded" class="k-button">Video has ended</button>
-             </li>
-             <li>
-                 <button id="isPaused" class="k-button">Video is paused</button>
-             </li>
-             <li>
-                 <button id="isPlaying" class="k-button">Video is playing</button>
-             </li>
-         </ul>
-     </div>
-     <div class="box-col">
-         <ul class="options">
-             <li>
-                 <button id="volume" class="k-button">Set volume</button>
-                 <input id="volumeValue" value="50" style="float:none" />
-             </li>
-             <li>
-                 <button id="seek" class="k-button">Seek to</button>
-                 <input id="seekValue" value="50" style="float:none" />
-             </li>
-         </ul>
-     </div>
-</div>
 <div class="demo-section k-content" style="width: 644px; max-width: none">
    <%= Html.Kendo().MediaPlayer()
         .Name("MediaPlayer")
@@ -59,6 +12,53 @@
         )
         .HtmlAttributes(new { style = "height:360px; width:640px" })
     %>
+</div>
+<div class="box wide">
+    <h4>API Functions</h4>
+    <div class="box-col">
+        <ul class="options">
+            <li>
+                <button id="playButton" class="k-button">Play</button>
+            </li>
+            <li>
+                <button id="stopButton" class="k-button">Stop</button>
+            </li>
+            <li>
+                <button id="pauseButton" class="k-button">Pause</button>
+            </li>
+            <li>
+                <button id="fullScreenButton" class="k-button">Full-screen</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <ul class="options">
+            <li>
+                <button id="toggleMuteButton" class="k-button">Toggle mute</button>
+            </li>
+            <li>
+                <button id="isEndedButton" class="k-button">Video has ended</button>
+            </li>
+            <li>
+                <button id="isPausedButton" class="k-button">Video is paused</button>
+            </li>
+            <li>
+                <button id="isPlayingButton" class="k-button">Video is playing</button>
+            </li>
+        </ul>
+    </div>
+    <div class="box-col">
+        <ul class="options">
+            <li>
+                <input id="volumeValue" value="50" style="float:none; width:90px;" />
+                <button id="volumeButton" class="k-button">Set volume</button>
+            </li>
+            <li>
+                <input id="seekValue" value="50" style="float:none; width:90px;" />
+                <button id="seekButton" class="k-button">Seek to</button>
+            </li>
+        </ul>
+    </div>
 </div>
 <script>
     $(document).ready(function () {
@@ -72,39 +72,35 @@
             mediaPlayer.seek($("#seekValue").data("kendoNumericTextBox").value()*1000);
         };
 
-        $("#play").click(function () {
+        $("#playButton").click(function () {
             mediaPlayer.play();
         });
 
-        $("#stop").click(function () {
+        $("#stopButton").click(function () {
             mediaPlayer.stop();
         });
 
-        $("#pause").click(function () {
+        $("#pauseButton").click(function () {
             mediaPlayer.pause();
         });
 
-        $("#fullScreen").click(function () {
+        $("#fullScreenButton").click(function () {
             mediaPlayer.fullScreen(true);
         });
 
-        $("#volume").click(function () {
-            mediaPlayer.volume($("#value").val());
-        });
-
-        $("#toggleMute").click(function () {
+        $("#toggleMuteButton").click(function () {
             mediaPlayer.mute(!mediaPlayer.mute());
         });
 
-        $("#isEnded").click(function () {
+        $("#isEndedButton").click(function () {
             alert(mediaPlayer.isEnded());
         });
 
-        $("#isPaused").click(function () {
+        $("#isPausedButton").click(function () {
             alert(mediaPlayer.isPaused());
         });
 
-        $("#isPlaying").click(function () {
+        $("#isPlayingButton").click(function () {
             alert(mediaPlayer.isPlaying());
         });
 
@@ -124,9 +120,9 @@
             decimals: 0
         });
 
-        $("#seek").click(seekTo);
+        $("#seekButton").click(seekTo);
 
-        $("#volume").click(setVolume);
+        $("#volumeButton").click(setVolume);
     });
 </script> 
 </asp:Content>
