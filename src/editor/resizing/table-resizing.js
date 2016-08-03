@@ -1,5 +1,5 @@
 (function(f, define) {
-    define(["../main", "./column-resizing", "./table-resize-handle", "./resizing-utils"], f);
+    define(["../main", "./table-resize-handle", "./resizing-utils"], f);
 })(function() {
 
 (function(kendo, undefined) {
@@ -52,15 +52,8 @@
 
         destroy: function() {
             var that = this;
-            var element = that.element;
-            var columnResizing = that.columnResizing;
-            
-            if (columnResizing) {
-                columnResizing.destroy();
-                that.columnResizing = null;
-            }
 
-            $(element).off(NS);
+            $(that.element).off(NS);
             that.element = null;
 
             $(that.options.rootElement).off(NS);
