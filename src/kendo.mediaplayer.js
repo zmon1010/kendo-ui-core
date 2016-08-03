@@ -176,7 +176,7 @@
                     this._volumeDraggingHandler = proxy(this._volumeDragging, this);
                     this._volumeChangeHandler = proxy(this._volumeChange, this);
                     volumeSliderElement = $(DOT + VOLUME_SLIDER);
-                    volumeSliderElement.width(50);
+                    volumeSliderElement.width(87);
                     this._volumeSlider = new ui.Slider(volumeSliderElement[0], {
                         smallStep: 1,
                         min: 0,
@@ -292,6 +292,9 @@
                     if (this.options.autoPlay) {
                         this._playStateToggle(true);
                     }
+
+                    $("#fullscreen, #videoQuality, #volume, #volumeTemplate", toolBarElement).wrapAll("<div class='k-align-right' />");
+                    $(".k-button", toolBarElement).addClass("k-button-bare");
                 }
             },
 
@@ -311,9 +314,10 @@
                         this._dropDown.select(0);
                     }
 
+                    this._dropDown.wrapper.addClass("k-button-bare");
                     this._dropDown.wrapper.attr("title", this.options.messages.quality).hide();
                     this._dropDown.wrapper.find("span.k-i-arrow-s")
-                                            .removeClass('k-icon k-i-arrow-s')
+                                            .removeClass('k-i-arrow-s')
                                             .addClass('k-font-icon k-i-HD');
                     this._dropDown.list.addClass("k-quality-list");
                 }

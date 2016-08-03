@@ -1,15 +1,23 @@
 ﻿@font-face {
 	font-family: 'TelerikWebUI';
 	src: url('TelerikWebUI.eot');
-	src: url('TelerikWebUI.eot') format('embedded-opentype'),
-			url('TelerikWebUI.woff') format('woff'),
-			url('TelerikWebUI.ttf') format('truetype');
+	src: url('TelerikWebUI.eot') format('embedded-opentype'), url('TelerikWebUI.woff') format('woff'), url('TelerikWebUI.ttf') format('truetype');
 }
 
 .k-mediaplayer {
 	position: relative;
 
+	.k-mediaplayer-titlebar,
+	.k-mediaplayer-toolbar {
+		z-index: 2;
+	}
 
+	.k-mediaplayer-overlay {
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
 }
 
 .k-mediaplayer-titlebar {
@@ -20,18 +28,17 @@
 	background: linear-gradient( rgba(0,0,0, 0.7), rgba(0, 0, 0, 0) );
 	color: white;
 	padding: 12px;
-	//width: 100%;
-//	z-index: 200;
 }
 
 .k-mediaplayer-toolbar {
 	position: absolute;
 	bottom: 0;
-	left: -1px;
-	right: -1px;
+	left: 0;
+	right: 0;
 	padding: 0px;
+	border-width: 0;
 
-	.k-button {
+	.k-button-bare { //???
 		&,
 		&:hover,
 		&:active {
@@ -40,18 +47,32 @@
 		}
 	}
 
+	.k-slider-track,
+	.k-slider-selection {
+		border-radius: 0;
+	}
+
 	// seekbar
 	.k-mediaplayer-seekbar {
 		position: absolute;
-		top: -18px;
+		top: -17px;
 		left: 0;
 		right: 0;
-		opacity: 0.7;
 		margin: 0;
 		width: auto;
 
 		.k-slider-track {
-			border-radius: 0;
+			width: 100% !important;
+		}
+		
+		.k-draghandle {
+			opacity: 0;
+			transition: 0.2s opacity;
+		}
+
+		.k-draghandle.k-state-selected,
+		&:hover .k-draghandle {
+			opacity: 1;
 		}
 	}
 
@@ -62,15 +83,13 @@
 		.k-dropdown-wrap {
 			border: 0 none;
 			box-shadow: none;
+			padding: 0;
+			background: none transparent;
+			color: inherit;
 		}
 
 		.k-input {
 			display: none;
-		}
-
-		.k-dropdown-wrap {
-			padding: 0;
-			background: none transparent;
 		}
 
 		.k-select {
@@ -78,121 +97,64 @@
 		}
 	}
 
-	.right {
-		float: right;
+	.k-align-right {
+		padding: 4px 0;
+
+		 & > * {
+			display: inline-block;
+		}
 	}
 }
 
+.k-quality-list {
+	width: 80px !important;
+	margin-left: -32px !important;
+}
 
-	.k-i-play,
-	.k-i-pause,
-	.k-i-HD,
-	.k-i-volume-mute,
-	.k-i-volume-low,
-	.k-i-volume-high,
-	.k-i-fullscreen-enter,
-	.k-i-fullscreen-exit,
-	.k-i-playlist-open,
-	.k-i-playlist-close {
-		&:before {
-			font-family: "TelerikWebUI";
-		}
+
+.k-i-play,
+.k-i-pause,
+.k-i-HD,
+.k-i-volume-mute,
+.k-i-volume-low,
+.k-i-volume-high,
+.k-i-fullscreen-enter,
+.k-i-fullscreen-exit,
+.k-i-playlist-open,
+.k-i-playlist-close {
+	&:before {
+		font-family: "TelerikWebUI";
 	}
+}
 
-	.k-i-play:before {
-		content: "\e0e5";
-	}
-		
-	.k-i-pause:before {
-		content: "\e0e3";
-	}
+.k-i-play:before {
+	content: "\e0e5";
+}
 
-	.k-i-HD:before {content: "\e11e";}
-	.k-i-volume-low:before {content: "\e042";}
-	.k-i-volume-high:before {content: "\e042";}
-	.k-i-volume-mute:before {content: "\e040";}
-	.k-i-fullscreen-enter:before {content: "\e11c";}
-	.k-i-fullscreen-exit:before {content: "\e11d";}
-//	.k-i-share:before {content: "\e0df";}
-	.k-i-playlist-open:before,
-	.k-i-playlist-close:before { content: "\e11f";}
+.k-i-pause:before {
+	content: "\e0e3";
+}
 
-	/*.rmpSubtitlesIcon,
-	.rmpSubtitlesActiveIcon {
-        &:before {
-		    content: "\e150";
-        }
-	}*/
+.k-i-HD:before {
+	content: "\e11e";
+}
 
-	.rmpPlaylistPrevIcon:before { // ??? 
-		content: "\e011";
-	}
+.k-i-volume-low:before {
+	content: "\e041";
+}
 
-	.rmpPlaylistNextIcon:before {
-		content: "\e012";
-	}
+.k-i-volume-high:before {
+	content: "\e042";
+}
 
-	/*.rmpCloseBannerIcon:before {
-		content: "\e038";
-	}*/
+.k-i-volume-mute:before {
+	content: "\e040";
+}
 
-	    /*Temporary workaround for z-index*/
-        
-        .k-mediaplayer-titlebar,
-        .k-mediaplayer-toolbar {
-            z-index: 2;
-        }
-        /*Temporary workaround for z-index and overlay size*/
-        
-        .k-mediaplayer-overlay {
-            z-index: 1;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-        }        
+.k-i-fullscreen-enter:before {
+	content: "\e11c";
+}
 
-
-
-//playlist
-.k-mediaplayer-playlist {
-	ul, li {
-		padding: 0;
-		margin: 0;
-		list-style-type: none;
-	}
-
-	.k-item {
-		padding: 14px 15px;
-		border-bottom-style: solid;
-		border-bottom-width: 1px;
-
-		&:last-child {
-			border-bottom-width: 0;
-		}
-	}
-
-	span {
-		display: block;
-		overflow: hidden;
-		text-decoration: none;
-		cursor: pointer;
-
-		img {
-			display: block;
-			width: 100px;
-			height: 56px;
-			border: 0 none;
-			object-fit: cover;
-			float: left;
-		}
-	}
-
-	h4 {
-		display: block;
-		overflow: hidden;
-		font-weight: normal;
-		text-align: left;
-		padding-left: 10px;
-		margin: 0;
-	}
+.k-i-fullscreen-exit:before {
+	content: "\e11d";
 }

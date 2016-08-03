@@ -69,8 +69,15 @@ To enable proper compilation of the LESS files in the example you need to do the
             src: url('../styles/web/common/TelerikWebUI.eot') format('embedded-opentype'), url('../styles/web/common/TelerikWebUI.woff') format('woff'), url('../styles/web/common/TelerikWebUI.ttf') format('truetype');
         }
 
+		.k-mediaplayer-titlebar,
+		.k-mediaplayer-toolbar,
+		div.k-mediaplayer-seekbar {
+			display: block !important;
+			opacity: 1 !important;
+		}
+
 		/*Playlist*/
-		/*.k-mediaplayer-playlist {
+		.k-mediaplayer-playlist {
 		}
 		.k-mediaplayer-playlist ul, .k-mediaplayer-playlist li {
 			list-style-type: none;
@@ -85,13 +92,13 @@ To enable proper compilation of the LESS files in the example you need to do the
 		.k-mediaplayer-playlist .k-item:last-child {
 			border-bottom-width: 0;
 		}
-		.k-mediaplayer-playlist span {
+		.k-mediaplayer-playlist a {
 			cursor: pointer;
 			display: block;
 			overflow: hidden;
 			text-decoration: none;
 		}
-		.k-mediaplayer-playlist span img {
+		.k-mediaplayer-playlist a img {
 			border: 0 none;
 			display: block;
 			height: 56px;
@@ -105,7 +112,7 @@ To enable proper compilation of the LESS files in the example you need to do the
 			overflow: hidden;
 			padding-left: 10px;
 			text-align: left;
-		}*/
+		}
     </style>
 </head>
 
@@ -124,10 +131,10 @@ To enable proper compilation of the LESS files in the example you need to do the
 
     <script type="text/x-kendo-template" id="template">
         <li class="k-item k-state-default">
-			<span>
+			<a>
 				<img src="#:poster#" />
 				<h4>#:title#</h4>
-			</span>
+			</a>
         </li>
     </script>
 
@@ -191,11 +198,12 @@ To enable proper compilation of the LESS files in the example you need to do the
                 timeChange: onTimeChange,
                 volumeChange: onVolumeChange,
                 autoPlay: true,
-                mute: false,
+                mute: true,
                 media: { 
 				 	title: "Roxette - What's She Like?", 
 					// source: "https://www.youtube.com/watch?v=cjFy5AYxx7k"
 					source: [
+//						{ quality: "480p", url: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4" },
 						{ quality: "480p", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k" },
 						{ quality: "720p", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k" },
                         { quality: "960p", url: "https://www.youtube.com/watch?v=vGKeA3xUzxU" },
