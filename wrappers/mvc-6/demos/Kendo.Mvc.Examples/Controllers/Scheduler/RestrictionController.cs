@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SchedulerController
     {
+        [Demo]
         public IActionResult Restriction()
         {
             var meetings = new List<MeetingViewModel> {

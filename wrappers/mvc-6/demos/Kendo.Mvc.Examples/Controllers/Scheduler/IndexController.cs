@@ -17,6 +17,7 @@ namespace Kendo.Mvc.Examples.Controllers
             this.meetingService = new SchedulerMeetingService();
         }
 
+        [Demo]
         public IActionResult Index()
         {
             return View();

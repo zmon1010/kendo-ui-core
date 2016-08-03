@@ -28,6 +28,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return Json(GetCustomers().ToDataSourceResult(request));
         }
 
+        [Demo]
         public ActionResult Index()
         {
             return View();

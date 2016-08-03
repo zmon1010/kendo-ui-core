@@ -26,6 +26,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return Json(productService.Read().ToDataSourceResult(request));
         }
 
+        [Demo]
         public IActionResult Integration_Grid()
         {
             var model = productService.Read();

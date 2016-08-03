@@ -15,6 +15,7 @@ namespace Kendo.Mvc.Examples.Controllers
             base.OnActionExecuting(context);
         }
 
+        [Demo]
         public IActionResult Globalization()
         {
             return View();

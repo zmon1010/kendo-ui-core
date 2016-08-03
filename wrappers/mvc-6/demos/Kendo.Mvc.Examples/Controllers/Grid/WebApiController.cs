@@ -8,8 +8,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class GridController : Controller
-	{
-		public ActionResult WebApi()
+    {
+        [Demo]
+        public ActionResult WebApi()
 		{
 			return View();
 		}

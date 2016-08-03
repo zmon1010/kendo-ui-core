@@ -10,6 +10,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SchedulerController
     {
+        [Demo]
         public IActionResult WebApi()
         {
             return View();

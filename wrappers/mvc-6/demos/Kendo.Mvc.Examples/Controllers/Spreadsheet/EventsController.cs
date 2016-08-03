@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SpreadsheetController : Controller
     {
+        [Demo]
         public ActionResult Events()
         {
             return View();

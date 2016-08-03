@@ -23,7 +23,8 @@ namespace Kendo.Mvc.Examples.Controllers
 			base.Dispose(disposing);
 		}
 
-		public IActionResult Index()
+        [Demo]
+        public IActionResult Index()
         {
             return View();
         }

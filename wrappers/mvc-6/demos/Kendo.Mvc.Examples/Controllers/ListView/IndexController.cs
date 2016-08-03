@@ -24,6 +24,7 @@ namespace Kendo.Mvc.Examples.Controllers
             base.Dispose(disposing);
         }
 
+        [Demo]
         public ActionResult Index()
         {
             return View(GetProducts());
