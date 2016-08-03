@@ -28,6 +28,7 @@
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
     var NS = ".kendoEditor";
+    var SELECT = "select";
     var TABLE = "table";
     var UNDEFINED = "undefined";
 
@@ -353,15 +354,13 @@
                 });
             }
 
+            editor.bind(SELECT, proxy(editor._showTableResizeHandles, editor));
+
             $(editor.body)
                 .on(MOUSE_LEAVE + NS, function() {
-                    var tableResizing = editor.tableResizing;
-
-                    if (tableResizing && !tableResizing.resizingInProgress()) {
-                        editor._destroyTableResizing();
-                    }
+                    editor._destroyTableResizing();
                 })
-                .on(MOUSE_DOWN +NS, TABLE, function(e) {
+                .on(MOUSE_DOWN + NS, TABLE, function(e) {
                     var eventTarget = e.target;
                     var eventCurrentTarget = e.currentTarget;
                     var tableResizing = editor.tableResizing;
@@ -386,9 +385,7 @@
                         initTableResizing(editor, eventCurrentTarget);
                     }
 
-                    if (editor.tableResizing) {
-                        editor.tableResizing.showResizeHandles();
-                    }
+                    editor._showTableResizeHandles();
                 })
                 .on(MOUSE_DOWN + NS, function(e) {
                     var tableResizing = editor.tableResizing;
@@ -397,7 +394,7 @@
                     var dataAttribute = $(target).data(TABLE);
                     var dataCondition = typeof(dataAttribute) === UNDEFINED || (typeof(dataAttribute) !== UNDEFINED && dataAttribute !== element);
 
-                    if (tableResizing && !tableResizing.resizingInProgress() && dataCondition && element !== target && !contains(element, target)) {
+                    if (tableResizing && dataCondition && element !== target && !contains(element, target)) {
                         editor._destroyTableResizing();
                     }
                 });
@@ -405,10 +402,20 @@
 
         _destroyTableResizing: function() {
             var editor = this;
+            var tableResizing = editor.tableResizing;
 
-            if (editor.tableResizing) {
-                editor.tableResizing.destroy();
+            if (tableResizing) {
+                tableResizing.destroy();
                 editor.tableResizing = null;
+            }
+        },
+
+        _showTableResizeHandles: function() {
+            var editor = this;
+            var tableResizing = editor.tableResizing;
+
+            if (tableResizing) {
+                tableResizing.showResizeHandles();
             }
         },
 
@@ -763,10 +770,24 @@
                 "keypress": function(e) {
                     setTimeout(function () {
                         editor._runPostContentKeyCommands(e);
+                        editor._showTableResizeHandles();
                     }, 0);
                 },
                 "keyup": function (e) {
-                    var selectionCodes = [8, 9, 33, 34, 35, 36, 37, 38, 39, 40, 40, 45, 46];
+                    var selectionCodes = [
+                       keys.BACKSPACE,
+                       keys.TAB,
+                       keys.PAGEUP,
+                       keys.PAGEDOWN,
+                       keys.END,
+                       keys.HOME,
+                       keys.LEFT,
+                       keys.UP,
+                       keys.RIGHT,
+                       keys.DOWN,
+                       keys.INSERT,
+                       keys.DELETE
+                    ];
 
                     if ($.inArray(e.keyCode, selectionCodes) > -1 || (e.keyCode == 65 && e.ctrlKey && !e.altKey && !e.shiftKey)) {
                         editor._selectionChange();

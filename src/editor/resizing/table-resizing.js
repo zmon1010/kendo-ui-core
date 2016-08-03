@@ -92,17 +92,6 @@
             }]
         },
 
-        resizingInProgress: function() {
-            var that = this;
-            var columnResizing = that.columnResizing;
-
-            if (columnResizing) {
-                return !!columnResizing.resizingInProgress();
-            }
-
-            return false;
-        },
-
         resize: function(args) {
             var that = this;
             var deltas = extend({}, {
