@@ -4,7 +4,7 @@
     using Kendo.Mvc.UI;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.EntityFrameworkCore;
-    using Extensions;
+    using Mvc.Extensions;
 
     public static class EmployeeDirectoryIEnumerableExtensions
     {        
