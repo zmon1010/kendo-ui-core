@@ -14,7 +14,7 @@ namespace Kendo.Mvc.Examples.Models
         public IDictionary<string, IEnumerable<ExampleFile>> Sources { get; set; }
         public string[] Packages { get; set; }
 
-        public bool ShouldInclude(string package = "mvc")
+        public bool ShouldInclude(string package = "mvc-core")
         {
             if (Packages == null || Packages.Length == 0)
             {
