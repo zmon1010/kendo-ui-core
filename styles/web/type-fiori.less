@@ -3129,3 +3129,74 @@ div.k-window.k-state-focused
 
 @spreadsheet-cell-border: darken(@background, 13%);
 
+/* Dialog */
+
+.k-dialog {
+    border-color: @widget-border-color;
+    .k-window-titlebar {
+        font-size: 1em;
+        line-height: unset;
+        padding: 0.6em 1em 1em 1em;
+        .k-dialog-title {
+            font-size: 1.2em;
+            line-height: unset;
+        }
+    }
+    a.k-dialog-action.k-link {
+        position: absolute;
+        padding: 1em;
+        right: 0;
+        top: 0;
+        line-height: 0.9em;
+        cursor: pointer;
+        z-index: 10000;
+    }
+    .k-dialog-buttongroup {
+        .k-button {
+            border-top: 0;
+        }
+        .k-button:not(.k-primary) {
+            background-color: @widget-text-color;
+            color: @selected-text-color;
+            text-shadow: 0 1px 0 #131313;
+            &:hover {
+                background-color: #464646;
+            }
+            &:focus {
+                border-color: @accent;
+            }
+        }
+        &.k-dialog-button-layout-stretched {
+            width: 100%;
+            .k-button {
+                display: inline-block;
+                padding: 0.9em 0 0.9em 0;
+                border-radius: 0;
+                border-bottom: 0;
+                border-width: 1px 0 0 1px;
+            }
+            li.k-button:first-child {
+            border-bottom-left-radius: @border-radius;
+            border-left: 0;
+            }
+            li.k-button:last-child {
+                border-bottom-right-radius: @border-radius;
+                border-right: 0;
+            }
+        }
+        &.k-dialog-button-layout-normal {
+            width: auto;
+            margin: 0;
+            padding: 1em;
+            text-align: right;
+            .k-button {
+                padding-left: 1.7em;
+                padding-right: 1.7em;
+                margin-left: 0.5em;
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}
