@@ -176,6 +176,10 @@
     <Compile Include="UI\DataSource\WebApiDataSourceBuilderTests.cs" />
     <Compile Include="UI\DatePicker\DatePickerClientEventsBuilderTests.cs" />
     <Compile Include="UI\Diagram\Serialization\DiagramTests.cs" />
+    <Compile Include="UI\Dialog\DialogSerializationTests.cs" />
+    <Compile Include="UI\Dialog\DialogActionBuilderTests.cs" />
+    <Compile Include="UI\Dialog\DialogBuilderTests.cs" />
+    <Compile Include="UI\Dialog\DialogTestHelper.cs" />
     <Compile Include="UI\Editor\ImmutablesBuilderTests.cs" />
     <Compile Include="UI\Editor\PasteCleanupBuilderTests.cs" />
     <Compile Include="UI\Fluent\PDFSettingsBuilderTests.cs" />
