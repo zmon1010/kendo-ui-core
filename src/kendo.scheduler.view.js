@@ -212,15 +212,15 @@ var __meta__ = { // jshint ignore:line
             return this._daySlotCollections.length;
         },
 
-        daySlotByPosition: function(x, y) {
-            return this._slotByPosition(x, y, this._daySlotCollections);
+        daySlotByPosition: function(x, y, byDate) {
+            return this._slotByPosition(x, y, this._daySlotCollections, byDate);
         },
 
         timeSlotByPosition: function(x, y) {
             return this._slotByPosition(x, y, this._timeSlotCollections);
         },
 
-        _slotByPosition: function(x, y, collections) {
+        _slotByPosition: function(x, y, collections, byDate) {
            for (var collectionIndex = 0; collectionIndex < collections.length; collectionIndex++) {
                var collection = collections[collectionIndex];
 
@@ -228,11 +228,14 @@ var __meta__ = { // jshint ignore:line
                    var slot = collection.at(slotIndex);
                    var width = slot.offsetWidth;
                    var height = slot.offsetHeight;
+                   var nextSlot;
 
                    var horizontalEnd = slot.offsetLeft + width;
                    var verticalEnd =  slot.offsetTop + height;
 
-                   var nextSlot =  collection.at(slotIndex+1);
+                   if (!byDate) {
+                        nextSlot =  collection.at(slotIndex + 1);
+                   }
 
                    if (nextSlot) {
                        if (nextSlot.offsetLeft != slot.offsetLeft) {
@@ -1123,7 +1126,33 @@ var __meta__ = { // jshint ignore:line
                 selection.groupIndex += previous ? -1 : 1;
             }
 
+            if (this._isGroupedByDate() && !slot) {
+               selection.groupIndex = previous ? this.groups.length - 1 : 0;
+            }
+
             return slot;
+        },
+
+        _changeDate: function(selection, slot, previous) {
+            var group = this.groups[selection.groupIndex];
+            var collections, index;
+
+            if (previous) {
+                  collections = group._getCollections(false);
+                  index = group.daySlotCollectionCount() ? slot.index - 1 : slot.collectionIndex - 1;
+
+                  if (index >= 0) {
+                      return  collections[index]._slots[collections[index]._slots.length - 1];
+                  }
+              } else {
+                  collections = group._getCollections(group.daySlotCollectionCount());
+                  index = group.daySlotCollectionCount() ? 0 : slot.collectionIndex + 1;
+                  var slotIndex = group.daySlotCollectionCount() ? slot.collectionIndex + 1 : 0;
+                  
+                  if (collections[index] && collections[index]._slots[slotIndex]) {
+                      return  collections[index]._slots[slotIndex];
+                  }
+               }
         },
 
         _changeGroupContinuously: function() {
@@ -1145,13 +1174,28 @@ var __meta__ = { // jshint ignore:line
                 if (slot) {
                     startSlot = endSlot = slot;
                 }
-            }
+            }      
 
-            startSlot = group[method](startSlot);
-            endSlot = group[method](endSlot);
+            if (this._isGroupedByDate() && !multiple) {               
+                  var tempSlot = this._changeGroup(selection, reverse);
 
-            if (!multiple && !this._isVerticallyGrouped() && (!startSlot || !endSlot)) {
-                startSlot = endSlot = this._changeGroup(selection, reverse);
+                  if(!tempSlot) 
+                  {
+                      if(!this._isVerticallyGrouped()){
+                            startSlot = group[method](startSlot);
+                            endSlot = group[method](endSlot);
+                      }  
+                     
+                  } else {
+                      startSlot = endSlot = tempSlot;
+                  }       
+            } else {
+                  startSlot = group[method](startSlot);
+                  endSlot = group[method](endSlot);
+
+                  if (!multiple && !this._isVerticallyGrouped() && (!startSlot || !endSlot)) {
+                        startSlot = endSlot = this._changeGroup(selection, reverse);
+                  }
             }
 
             var continuousSlot;
@@ -1175,9 +1219,10 @@ var __meta__ = { // jshint ignore:line
             var startSlot = ranges[0].start;
             var endSlot = ranges[ranges.length - 1].end;
             var group = this.groups[selection.groupIndex];
+            var slot;
 
             if (!multiple) {
-                var slot = this._normalizeVerticalSelection(selection, ranges, reverse);
+                slot = this._normalizeVerticalSelection(selection, ranges, reverse);
                 if (slot) {
                     startSlot = endSlot = slot;
                 }
@@ -1189,7 +1234,12 @@ var __meta__ = { // jshint ignore:line
             endSlot = group[method](endSlot, multiple);
 
             if (!multiple && this._isVerticallyGrouped() && (!startSlot || !endSlot)) {
-                startSlot = endSlot = this._changeGroup(selection, reverse);
+                if (this._isGroupedByDate()) {
+                    startSlot = endSlot = this._changeDate(selection, slot, reverse);  
+  
+               }else{
+                    startSlot = endSlot = this._changeGroup(selection, reverse);                   
+               }    
             }
 
             return {
@@ -1244,6 +1294,7 @@ var __meta__ = { // jshint ignore:line
         move: function(selection, key, shift) {
             var handled = false;
             var group = this.groups[selection.groupIndex];
+            var verticalByDate = this._isGroupedByDate()  && this._isVerticallyGrouped();
 
             if (!group.timeSlotCollectionCount()) {
                 selection.isAllDay = true;
@@ -1260,7 +1311,7 @@ var __meta__ = { // jshint ignore:line
 
                 slots = this._verticalSlots(selection, ranges, shift, reverse);
 
-                if (!slots.startSlot && !shift && this._changeViewPeriod(selection, reverse, true)) {
+                if (!slots.startSlot && !shift && this._changeViewPeriod(selection, reverse, !verticalByDate)) {
                     return handled;
                 }
 
@@ -1819,8 +1870,12 @@ var __meta__ = { // jshint ignore:line
             this.groupedResources = result;
         },
 
-        _createColumnsLayout: function(resources, inner, template) {
-            return createLayoutConfiguration("columns", resources, inner, template);
+        _createDateLayout: function(dates, inner) {
+            return createDateLayoutConfiguration("rows", dates, inner);
+        },
+
+        _createColumnsLayout: function(resources, inner, template, dates) {
+            return createLayoutConfiguration("columns", resources, inner, template, dates);
         },
 
         _groupOrientation: function() {
@@ -1828,12 +1883,16 @@ var __meta__ = { // jshint ignore:line
             return groups && groups.resources ? groups.orientation : "horizontal";
         },
 
+        _isGroupedByDate: function() {
+            return this.options.group && this.options.group.date;
+        },
+
         _isVerticallyGrouped: function() {
             return this.groupedResources.length && this._groupOrientation() === "vertical";
         },
 
-        _createRowsLayout: function(resources, inner, template) {
-            return createLayoutConfiguration("rows", resources, inner, template);
+        _createRowsLayout: function(resources, inner, template, dates) {
+            return createLayoutConfiguration("rows", resources, inner, template, dates);
         },
 
         selectionByElement: function() {
@@ -1882,6 +1941,10 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
+            if (this._isGroupedByDate()) {
+               return slot;
+            }
+
             if (this._isVerticallyGrouped()) {
                 if (!group.timeSlotCollectionCount()) {
                     collection = group._collection(group.daySlotCollectionCount() - 1, true);
@@ -1909,6 +1972,10 @@ var __meta__ = { // jshint ignore:line
 
             if (groupIndex >= this.groups.length - 1) {
                 return;
+            }
+
+            if (this._isGroupedByDate()) {
+               return slot;
             }
 
             if (this._isVerticallyGrouped()) {
@@ -2152,28 +2219,52 @@ var __meta__ = { // jshint ignore:line
         return columns;
     }
 
-    function createLayoutConfiguration(name, resources, inner, template) {
-        var resource = resources[0];
-        if (resource) {
-            var configuration = [];
+    function createDateLayoutConfiguration(name, dates, inner) {
+         var configuration = [];
 
-            var data = resource.dataSource.view();
+         $.each(dates, function(index, item) {
+            var className = item.className ? "k-slot-cell " + item.className : "k-slot-cell";
 
-            for (var dataIndex = 0; dataIndex < data.length; dataIndex++) {
-                var obj = {
-                    text: template({
-                        text: kendo.htmlEncode(kendo.getter(resource.dataTextField)(data[dataIndex])),
-                        color: kendo.getter(resource.dataColorField)(data[dataIndex]),
-                        field: resource.field,
-                        title: resource.title,
-                        name: resource.name,
-                        value:kendo.getter(resource.dataValueField)(data[dataIndex])
-                    }),
-                    className: "k-slot-cell"
-                };
-                obj[name] = createLayoutConfiguration(name, resources.slice(1), inner, template);
+            var obj = {
+                text: item.text,
+                className: className
+            };
+            obj[name] = inner; 
+            configuration.push(obj);
+        });
 
-                configuration.push(obj);
+        return configuration;
+    }
+
+    function createLayoutConfiguration(name, resources, inner, template, dates) {
+        var resource = resources[0];     
+        var configuration = [];
+
+        if (resource) {  
+            if (dates && inner) {         
+                $.each(dates, function(index, item) {
+                    item[name] = createLayoutConfiguration(name, resources, null, template);
+                });
+                configuration = dates;
+            } else {
+                var data = resource.dataSource.view();
+
+                for (var dataIndex = 0; dataIndex < data.length; dataIndex++) {
+                    var obj = {
+                        text: template({
+                            text: kendo.htmlEncode(kendo.getter(resource.dataTextField)(data[dataIndex])),
+                            color: kendo.getter(resource.dataColorField)(data[dataIndex]),
+                            field: resource.field,
+                            title: resource.title,
+                            name: resource.name,
+                            value:kendo.getter(resource.dataValueField)(data[dataIndex])
+                        }),
+                        className: "k-slot-cell"
+                    };
+                    obj[name] = createLayoutConfiguration(name, resources.slice(1), inner, template);
+
+                    configuration.push(obj);
+                }
             }
             return configuration;
         }
