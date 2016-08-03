@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class EditorController : Controller
     {
+        [Demo]
         public ActionResult Globalization(string culture)
         {
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture ?? "en-US");            return View();

@@ -8,6 +8,7 @@
 
     public class GanttAssignmentService
     {
+        private static bool UpdateDatabase = false;
         private SampleEntities db;
 
         public GanttAssignmentService(SampleEntities context)
@@ -20,43 +21,93 @@
         {
         }
 
-        public virtual IQueryable<ResourceAssignmentViewModel> GetAll()
+        public virtual IList<ResourceAssignmentViewModel> GetAll()
         {
-            return db.GanttResourceAssignments.ToList().Select(assignment => new ResourceAssignmentViewModel
+            var result = HttpContext.Current.Session["GanttAssignments"] as IList<ResourceAssignmentViewModel>;
+
+            if (result == null || UpdateDatabase)
             {
-                ID = assignment.ID,
-                TaskID = assignment.TaskID,
-                ResourceID = assignment.ResourceID,
-                Units = assignment.Units
-            }).AsQueryable();
+                result = db.GanttResourceAssignments.ToList().Select(assignment => new ResourceAssignmentViewModel
+                {
+                    ID = assignment.ID,
+                    TaskID = assignment.TaskID,
+                    ResourceID = assignment.ResourceID,
+                    Units = assignment.Units
+                }).ToList();
+
+                HttpContext.Current.Session["GanttAssignments"] = result;
+            }
+
+            return result;
         }
 
         public virtual void Insert(ResourceAssignmentViewModel assignment)
         {
-            var entity = assignment.ToEntity();
+            if (!UpdateDatabase)
+            {
+                var first = GetAll().OrderByDescending(e => e.ID).FirstOrDefault();
+                var id = (first != null) ? first.ID : 0;
 
-            db.GanttResourceAssignments.Add(entity);
-            db.SaveChanges();
+                assignment.ID = id + 1;
 
-            assignment.ID = entity.ID;
+                GetAll().Insert(0, assignment);
+            }
+            else
+            {
+                var entity = assignment.ToEntity();
+
+                db.GanttResourceAssignments.Add(entity);
+                db.SaveChanges();
+
+                assignment.ID = entity.ID;
+            }
         }
 
         public virtual void Update(ResourceAssignmentViewModel assignment)
         {
-            var entity = assignment.ToEntity();
+            if (!UpdateDatabase)
+            {
+                var target = One(e => e.ID == assignment.ID);
 
-            db.GanttResourceAssignments.Attach(entity);
-            db.Entry(entity).State = EntityState.Modified;
-            db.SaveChanges();
+                if (target != null)
+                {
+                    target.ResourceID = assignment.ResourceID;
+                    target.TaskID = assignment.TaskID;
+                    target.Units = assignment.Units;
+                }
+            }
+            else
+            {
+                var entity = assignment.ToEntity();
+
+                db.GanttResourceAssignments.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
 
         public virtual void Delete(ResourceAssignmentViewModel assignment)
         {
-            var entity = assignment.ToEntity();
+            if (!UpdateDatabase)
+            {
+                var target = One(p => p.ID == assignment.ID);
+                if (target != null)
+                {
+                    GetAll().Remove(target);
+                }
+            }
+            else
+            {
+                var entity = assignment.ToEntity();
 
-            db.GanttResourceAssignments.Attach(entity);
-            db.GanttResourceAssignments.Remove(entity);
-            db.SaveChanges();
+                db.GanttResourceAssignments.Attach(entity);
+                db.GanttResourceAssignments.Remove(entity);
+                db.SaveChanges();
+            }
+        }
+        public ResourceAssignmentViewModel One(Func<ResourceAssignmentViewModel, bool> predicate)
+        {
+            return GetAll().FirstOrDefault(predicate);
         }
 
         public void Dispose()

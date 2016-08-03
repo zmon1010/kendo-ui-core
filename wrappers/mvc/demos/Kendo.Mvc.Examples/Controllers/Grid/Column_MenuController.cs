@@ -5,7 +5,8 @@ using Kendo.Mvc.Extensions;
 namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class GridController : Controller
-    {        
+    {
+        [Demo]
         public ActionResult Column_Menu()
         {
             return View();

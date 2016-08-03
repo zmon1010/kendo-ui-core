@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Waterfall_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Local_Data_Binding()
         {
             var model = new CashFlowData[] {

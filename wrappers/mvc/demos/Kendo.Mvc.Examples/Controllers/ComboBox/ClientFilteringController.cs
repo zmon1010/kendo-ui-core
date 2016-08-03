@@ -4,6 +4,7 @@
 
     public partial class ComboBoxController : Controller
     {
+        [Demo]
         public ActionResult ClientFiltering()
         {
             return View();

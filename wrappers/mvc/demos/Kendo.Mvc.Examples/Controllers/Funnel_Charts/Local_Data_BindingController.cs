@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Funnel_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Local_Data_Binding()
         {
             ViewData["before"] = ChartDataRepository.BeforeOptimizationData();

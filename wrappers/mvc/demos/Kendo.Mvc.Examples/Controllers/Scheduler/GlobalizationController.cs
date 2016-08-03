@@ -18,6 +18,7 @@
             base.Initialize(requestContext);
         }
 
+        [Demo]
         public ActionResult Globalization()
         {
             return View();

@@ -7,6 +7,7 @@
 
     public partial class SchedulerController
     {
+        [Demo]
         public ActionResult Resources_Grouping_Horizontal()
         {
             return View();

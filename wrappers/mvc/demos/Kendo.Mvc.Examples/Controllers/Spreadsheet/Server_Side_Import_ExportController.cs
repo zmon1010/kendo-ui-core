@@ -10,6 +10,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SpreadsheetController : Controller
     {
+        [Demo]
         public ActionResult Server_Side_Import_Export()
         {
             var path = Server.MapPath("~/Content/web/spreadsheet/products.json");

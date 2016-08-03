@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Polar_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Index()
         {
             return View();

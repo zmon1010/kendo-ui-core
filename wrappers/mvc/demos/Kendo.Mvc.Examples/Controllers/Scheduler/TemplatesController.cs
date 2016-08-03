@@ -10,6 +10,7 @@
 
     public partial class SchedulerController
     {
+        [Demo]
         public ActionResult Templates()
         {
             List<Projection> cinemaSchedule = new List<Projection> { 

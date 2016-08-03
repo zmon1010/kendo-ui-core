@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Chart_ApiController : Controller
     {
+        [Demo]
         public ActionResult Events()
         {
             return View();

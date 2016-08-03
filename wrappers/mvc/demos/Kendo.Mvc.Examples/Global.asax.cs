@@ -24,7 +24,6 @@ namespace Kendo.Mvc.Examples
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ModelBinderConfig.RegisterModelBinders(ModelBinders.Binders);
-            ViewEngineConfig.RegisterViewEngines(ViewEngines.Engines);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class MenuController : Controller
     {
+        [Demo]
         public ActionResult Context_Menu()
         {
             return View();

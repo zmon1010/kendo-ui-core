@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Pie_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Pie_Labels()
         {
             return View();

@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Pie_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Local_Data_Binding()
         {
             return View(ChartDataRepository.SpainElectricityBreakdown());

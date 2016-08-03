@@ -15,6 +15,7 @@ namespace Kendo.Mvc.Examples.Controllers
         private const int DAYS_PER_MONTH = 31;
         private const int TARGET_RESULT_SIZE = 75;
 
+        [Demo]
         public ActionResult Virtualization()
         {
             return View();

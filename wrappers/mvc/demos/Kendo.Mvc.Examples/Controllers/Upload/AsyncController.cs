@@ -9,6 +9,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class UploadController : Controller
     {
+        [Demo]
         public ActionResult Async()
         {
             return View();
