@@ -5,7 +5,23 @@
 
     <script>
         $("#alertBtn").on("click", function () {
-            kendo.alert("This is a Kendo Alert dialog.");
+            kendo.alert("Important message.");
+        });
+
+        $("#confirmBtn").on("click", function () {
+            kendo.confirm("Are you sure?").then(function () {
+                kendo.alert("Will do.");
+            }, function () {
+                kendo.alert("Cancel it is.");
+            });
+        });
+
+        $("#promptBtn").on("click", function () {
+            kendo.prompt("Enter value", "any value").then(function (e) {
+                kendo.alert(kendo.format("Value is {0}", e.data));
+            }, function () {
+                kendo.alert("Cancel input");
+            })
         });
     </script>
 </div>
