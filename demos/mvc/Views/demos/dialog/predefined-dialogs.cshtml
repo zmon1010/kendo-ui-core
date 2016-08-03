@@ -1,5 +1,11 @@
+<div id="example">
+    <button id="alertBtn" class="k-button">kendo.alert</button>
+    <button id="confirmBtn" class="k-button">kendo.confirm</button>
+    <button id="promptBtn" class="k-button">kendo.prompt</button>
 
-        <div id="example">
-            @*TODO*@
-            Demo goes here
-        </div>
+    <script>
+        $("#alertBtn").on("click", function () {
+            kendo.alert("This is a Kendo Alert dialog.");
+        });
+    </script>
+</div>
