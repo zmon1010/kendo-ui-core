@@ -60,6 +60,7 @@
         "./kendo.slider",
         "./kendo.splitter",
         "./kendo.upload",
+        "./kendo.dialog",
         "./kendo.window",
         "./kendo.virtuallist",
         "./kendo.scheduler.view",
