@@ -513,7 +513,7 @@
                         width: this.wrapper.width(),
                         height: this.wrapper.height()
                     });
-
+                    
                 if (!window.YT || !window.YT.Player) {
                     $.getScript("https://www.youtube.com/iframe_api");
                     this._youtubeApiReadyHandler = proxy(this._youtubeApiReady, this);
@@ -556,7 +556,9 @@
                 };
 
                 this._onYouTubePlayerReady = proxy(this._onYouTubePlayerReady, this);
+                window.onYouTubePlayerReady = this._onYouTubePlayerReady; 
                 this._onPlayerStateChangeHandler = proxy(this._onPlayerStateChange, this);
+                window.onPlayerStateChange = this._onPlayerStateChange;
 
                 /*jshint unused:false */
                 var player = new window.YT.Player(YTPLAYER_ID, {
@@ -614,6 +616,7 @@
                         this._sliderChangeFired = false;
                     } else {
                         this._playStateToggle(true);
+                        this._uiDisplay(false);
                         this.trigger(PLAY);
                     }
 
@@ -622,6 +625,7 @@
                 }
                 else if (event.data === 2) {
                     if (!this._paused) {
+                        this._uiDisplay(true);
                         this._playStateToggle(false);
                         this.trigger(PAUSE);
                         this._paused = true;
@@ -807,6 +811,7 @@
                 if (this._youTubeVideo) {
                     this._ytmedia.playVideo();
                 } else {
+                    this._uiDisplay(false);
                     this._media.play();
                 }
                 this._paused = false;
@@ -820,6 +825,7 @@
                 if (this._youTubeVideo && this._ytmedia) {
                     this._ytmedia.stopVideo();
                 } else if (this._media && !this._youTubeVideo) {
+                    this._uiDisplay(true);
                     this._media.pause();
                     this._media.currentTime = 0;
                 }
@@ -833,6 +839,7 @@
                 if (this._youTubeVideo) {
                     this._ytmedia.pauseVideo();
                 } else {
+                    this._uiDisplay(true);
                     this._media.pause();
                 }
                 this._paused = true;
@@ -1008,9 +1015,10 @@
                 var isFullScreen = document.fullScreen ||
                    document.mozFullScreen ||
                    document.webkitIsFullScreen;
-                
+
+                this._uiDisplay(true);
                 this._slider.resize();
-                   
+
                 if (!isFullScreen) {
                     this.wrapper.find('span[class*="k-i-fullscreen"]')
                             .removeClass(FULLSCREEN_EXIT)
