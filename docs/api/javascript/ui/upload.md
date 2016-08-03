@@ -703,7 +703,47 @@ Defines the minimum file size that can be uploaded in bytes.
 
 ## Methods
 
+### clear
+
+Resets the widget to its initial state.
+
+#### Example
+
+// demo
+
+### clearAllFiles
+
+Removes all files (only visually from the UI) without issuing requests to the `remove` handler.
+
+#### Example
+
+// demo
+
+### clearFile
+
+Removes all files for which the callback function returns `true` (only visually from the UI) without issuing requests to the `remove` handler.
+
+#### Example
+
+// demo
+
+### clearFileByUid
+
+Removes a file by ID (only visually from the UI) without issuing requests to the `remove` handler.
+
+#### Example
+
+    <input type="file" name="files" id="upload" />
+    <script>
+        $("#upload").kendoUpload();
+
+        var upload = $("#upload").data("kendoUpload");
+
+        upload.clearFileByUid();
+    </script>
+
 ### destroy
+
 Prepares the **Upload** for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
 
 > **Important:** This method does not remove the Upload element from DOM.
@@ -758,6 +798,38 @@ Enables the upload.
         // enables the upload
         upload.enable();
     </script>
+
+### getFiles
+
+Retrieves the files that are currently selected.
+
+#### Example
+
+// demo
+
+### removeAllFiles
+
+Removes all files by sending a standard `remove` request to the handler.
+
+#### Example
+
+// demo
+
+### removeFile
+
+Removes all files for which the callback function returns `true` by sending a standard `remove` request to the handler.
+
+#### Example
+
+// demo
+
+### removeFileByUid
+
+Removes a file by ID by sending a standard `remove` request to the handler.
+
+#### Example
+
+// demo
 
 #### Parameters
 
