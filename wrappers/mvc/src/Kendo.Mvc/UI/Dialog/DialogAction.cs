@@ -11,8 +11,8 @@ namespace Kendo.Mvc.UI
         public DialogAction()
         {
             //>> Initialization
-
-            //<< Initialization
+        
+        //<< Initialization
 
             Action = new ClientHandlerDescriptor();
         }
