@@ -158,9 +158,9 @@ This option will be ignored if the browser doesn't support File API.
 
 ### dropZone `String`
 
-Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload. 
+Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
 
-#### Example 
+#### Example
 
 	<div>
     	<input name="files" id="files" type="file" />
@@ -276,7 +276,7 @@ Sets the text of the cancel button text.
 
 ### localization.clearSelectedFiles `String`
 
-Sets the text of the clear button. 
+Sets the text of the clear button.
 
 #### Example
 
@@ -621,7 +621,7 @@ The [template](/api/javascript/kendo#methods-template) used to render the files 
 
 ### validation `Object`
 
-Configures the validation options for uploaded files. 
+Configures the validation options for uploaded files.
 
 #### Example
 	 <input name="files" id="files" type="file" />
@@ -643,7 +643,7 @@ Configures the validation options for uploaded files.
 
 ### validation.allowedExtensions `Array`
 
-Lists which file extensions are allowed to be uploaded. 
+Lists which file extensions are allowed to be uploaded.
 
 #### Example
 	<input name="files" id="files" type="file" />
@@ -665,7 +665,7 @@ Lists which file extensions are allowed to be uploaded.
 
 Defines the maximum file size that can be uploaded in bytes.
 
-#### Example 
+#### Example
 	<input name="files" id="files" type="file" />
 	<script>
 	    $(document).ready(function() {
@@ -685,7 +685,7 @@ Defines the maximum file size that can be uploaded in bytes.
 
 Defines the minimum file size that can be uploaded in bytes.
 
-#### Example 
+#### Example
 	<input name="files" id="files" type="file" />
 	<script>
 	    $(document).ready(function() {
@@ -702,14 +702,6 @@ Defines the minimum file size that can be uploaded in bytes.
 	</script>
 
 ## Methods
-
-### clear
-
-Resets the widget to its initial state.
-
-#### Example
-
-// demo
 
 ### clearAllFiles
 
@@ -1306,4 +1298,3 @@ The request will be in UNSENT state.
             e.formData.append("foo", "bar");
         }
     </script>
-	
