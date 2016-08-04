@@ -3158,8 +3158,13 @@ var __meta__ = { // jshint ignore:line
                             unit = HOURS;
                         } else if (minDiff >= TIME_PER_MINUTE) {
                             unit = MINUTES;
-                        } else {
+                        } else if (minDiff >= TIME_PER_SECOND) {
                             unit = SECONDS;
+                        } else {
+                            // TODO: Should we drop to millis?
+                            // That may be a breaking change if an use supplied us with dates
+                            // that are less than 1 second apart.
+                            unit = MILLISECONDS;
                         }
                     }
                 }
@@ -3337,7 +3342,7 @@ var __meta__ = { // jshint ignore:line
                 var rangeDiff = dateDiff(rangeMax, rangeMin);
                 var ticks;
 
-                if (diff < TIME_PER_UNIT[baseUnit] && baseUnit !== SECONDS) {
+                if (diff < TIME_PER_UNIT[baseUnit] && baseUnit !== MILLISECONDS) {
                     baseUnit = BASE_UNITS[baseUnitIndex - 1];
                     autoBaseUnitStep = last(autoBaseUnitSteps[baseUnit]);
                     ticks = (rangeDiff - (maxDateGroups - 1) * autoBaseUnitStep * TIME_PER_UNIT[baseUnit]) / 2;
@@ -3368,10 +3373,12 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
+            // TODO: Fails in "returns valid range if the range becomes less than a second"
             min = toDate(limitValue(min, totalLimits.min, totalLimits.max));
             max = toDate(limitValue(max, totalLimits.min, totalLimits.max));
 
-            if (dateDiff(max, min) > 0) {
+            // TODO: Hence the check
+            if (min && max && dateDiff(max, min) > 0) {
                 return {
                     min: min,
                     max: max,
