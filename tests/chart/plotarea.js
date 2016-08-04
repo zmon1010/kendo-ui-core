@@ -3752,6 +3752,90 @@
                    plotArea.categoryAxis.lineBox().x2);
         });
 
+        test("category axis in second pane is aligned to secondary value axis", function() {
+            createPlotArea({
+                panes: [{
+                    name: "a"
+                }, {
+                    name: "b"
+                }],
+                valueAxis: [{
+                    pane: "a",
+                    min: 0,
+                    max: 1,
+                    axisCrossingValue: 0
+                }, {
+                    name: "secondary",
+                    pane: "b",
+                    min: 0,
+                    max: 1,
+                    axisCrossingValue: 1
+                }],
+                categoryAxis: {
+                    pane: "b"
+                }
+            });
+
+            equal(plotArea.categoryAxis.lineBox().y1,
+                  plotArea.namedValueAxes["secondary"].lineBox().y1);
+        });
+
+        test("value axis in second pane is aligned to secondary category axis", function() {
+            createPlotArea({
+                panes: [{
+                    name: "a"
+                }, {
+                    name: "b"
+                }],
+                valueAxis: [{
+                    pane: "a"
+                }, {
+                    name: "secondary",
+                    pane: "b"
+                }],
+                categoryAxis: [{
+                    pane: "a",
+                    categories: ["foo", "bar"],
+                    axisCrossingValue: 1
+                }, {
+                    name: "secondary",
+                    pane: "b",
+                    categories: ["foo", "bar"],
+                    axisCrossingValue: 2
+                }]
+            });
+
+            equal(plotArea.namedCategoryAxes["secondary"].lineBox().x2,
+                  plotArea.namedValueAxes["secondary"].lineBox().x1);
+        });
+
+        test("category axis labels are mirrored if it's on top of the pane", function() {
+            createPlotArea({
+                panes: [{
+                    name: "a"
+                }, {
+                    name: "b"
+                }],
+                valueAxis: [{
+                    pane: "a"
+                }, {
+                    name: "secondary",
+                    pane: "b",
+                    min: 0,
+                    max: 1,
+                    axisCrossingValue: 1
+                }],
+                categoryAxis: [{
+                    pane: "a"
+                }, {
+                    name: "secondary",
+                    pane: "b"
+                }]
+            });
+
+            equal(plotArea.namedCategoryAxes["secondary"].options.labels.mirror, true);
+        });
+
         test("right aligned secondary value axis fits in the associated pane", function() {
             createPlotArea({
                 panes: [{

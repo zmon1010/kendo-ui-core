@@ -9696,6 +9696,8 @@ var __meta__ = { // jshint ignore:line
                 yAnchor = yAxes[0],
                 xAnchorCrossings = plotArea.axisCrossingValues(xAnchor, yAxes),
                 yAnchorCrossings = plotArea.axisCrossingValues(yAnchor, xAxes),
+                anchor,
+                anchorCrossings,
                 leftAnchors = {},
                 rightAnchors = {},
                 topAnchors = {},
@@ -9706,13 +9708,22 @@ var __meta__ = { // jshint ignore:line
                 axis = yAxes[i];
                 pane = axis.pane;
                 paneId = pane.id;
-                plotArea.alignAxisTo(axis, xAnchor, yAnchorCrossings[i], xAnchorCrossings[i]);
+
+                // Locate pane anchor, if any, and use its axisCrossingValues
+                anchor = paneAnchor(xAxes, pane) || xAnchor;
+                anchorCrossings = xAnchorCrossings;
+                if (anchor !== xAnchor) {
+                    anchorCrossings = plotArea.axisCrossingValues(anchor, yAxes);
+                }
+
+                plotArea.alignAxisTo(axis, anchor, yAnchorCrossings[i], anchorCrossings[i]);
 
                 if (axis.options._overlap) {
                     continue;
                 }
 
-                if (round(axis.lineBox().x1) === round(xAnchor.lineBox().x1)) {
+                if (round(axis.lineBox().x1) === round(anchor.lineBox().x1)) {
+                    // Push the axis to the left the previous y-axis so they don't overlap
                     if (leftAnchors[paneId]) {
                         axis.reflow(axis.box
                             .alignTo(leftAnchors[paneId].box, LEFT)
@@ -9723,13 +9734,15 @@ var __meta__ = { // jshint ignore:line
                     leftAnchors[paneId] = axis;
                 }
 
-                if (round(axis.lineBox().x2) === round(xAnchor.lineBox().x2)) {
+                if (round(axis.lineBox().x2) === round(anchor.lineBox().x2)) {
+                    // Flip the labels on the right if we're at the right end of the pane
                     if (!axis._mirrored) {
                         axis.options.labels.mirror = !axis.options.labels.mirror;
                         axis._mirrored = true;
                     }
-                    plotArea.alignAxisTo(axis, xAnchor, yAnchorCrossings[i], xAnchorCrossings[i]);
+                    plotArea.alignAxisTo(axis, anchor, yAnchorCrossings[i], anchorCrossings[i]);
 
+                    // Push the axis to the right the previous y-axis so they don't overlap
                     if (rightAnchors[paneId]) {
                         axis.reflow(axis.box
                             .alignTo(rightAnchors[paneId].box, RIGHT)
@@ -9750,19 +9763,29 @@ var __meta__ = { // jshint ignore:line
                 axis = xAxes[i];
                 pane = axis.pane;
                 paneId = pane.id;
-                plotArea.alignAxisTo(axis, yAnchor, xAnchorCrossings[i], yAnchorCrossings[i]);
+
+                // Locate pane anchor and use its axisCrossingValues
+                anchor = paneAnchor(yAxes, pane) || yAnchor;
+                anchorCrossings = yAnchorCrossings;
+                if (anchor !== yAnchor) {
+                    anchorCrossings = plotArea.axisCrossingValues(anchor, xAxes);
+                }
+
+                plotArea.alignAxisTo(axis, anchor, xAnchorCrossings[i], anchorCrossings[i]);
 
                 if (axis.options._overlap) {
                     continue;
                 }
 
-                if (round(axis.lineBox().y1) === round(yAnchor.lineBox().y1)) {
+                if (round(axis.lineBox().y1) === round(anchor.lineBox().y1)) {
+                    // Flip the labels on top if we're at the top of the pane
                     if (!axis._mirrored) {
                         axis.options.labels.mirror = !axis.options.labels.mirror;
                         axis._mirrored = true;
                     }
-                    plotArea.alignAxisTo(axis, yAnchor, xAnchorCrossings[i], yAnchorCrossings[i]);
+                    plotArea.alignAxisTo(axis, anchor, xAnchorCrossings[i], anchorCrossings[i]);
 
+                    // Push the axis above the previous x-axis so they don't overlap
                     if (topAnchors[paneId]) {
                         axis.reflow(axis.box
                             .alignTo(topAnchors[paneId].box, TOP)
@@ -9773,7 +9796,8 @@ var __meta__ = { // jshint ignore:line
                     topAnchors[paneId] = axis;
                 }
 
-                if (round(axis.lineBox().y2, COORD_PRECISION) === round(yAnchor.lineBox().y2, COORD_PRECISION)) {
+                if (round(axis.lineBox().y2, COORD_PRECISION) === round(anchor.lineBox().y2, COORD_PRECISION)) {
+                    // Push the axis below the previous x-axis so they don't overlap
                     if (bottomAnchors[paneId]) {
                         axis.reflow(axis.box
                             .alignTo(bottomAnchors[paneId].box, BOTTOM)
@@ -13916,6 +13940,15 @@ var __meta__ = { // jshint ignore:line
                         clearMissingValues(originalValue, fieldValue);
                     }
                 }
+            }
+        }
+    }
+
+    function paneAnchor(axes, pane) {
+        for (var i = 0; i < axes.length; i++) {
+            var anchor = axes[i];
+            if (anchor && anchor.pane === pane) {
+                return anchor;
             }
         }
     }

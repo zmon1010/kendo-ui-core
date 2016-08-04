@@ -756,7 +756,7 @@ var __meta__ = { // jshint ignore:line
                 months: [1],
                 years: [1]
             },
-            _overlap: false
+            _overlap: true
         });
         var user = naviOptions.categoryAxis;
 

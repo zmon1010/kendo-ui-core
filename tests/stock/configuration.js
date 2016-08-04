@@ -315,6 +315,18 @@
             equal(chart.navigator.selection.options.visible, false);
         });
 
+        test("navigator axes overlap", function() {
+            createStockChart({});
+
+            var plotArea = chart._plotArea;
+
+            equal(plotArea.namedCategoryAxes["_navigator"].lineBox().y1,
+                  plotArea.namedCategoryAxes["_navigator_labels"].lineBox().y1);
+
+            equal(plotArea.namedCategoryAxes["_navigator"].lineBox().y1,
+                  plotArea.namedCategoryAxes["_navigator_ticks"].lineBox().y1);
+        });
+
         // ------------------------------------------------------------
         var support = deepExtend({}, kendo.support);
         var browserOptions = deepExtend({}, kendo.support.browser);
