@@ -1501,8 +1501,8 @@
           "aspnet-mvc": "Basic usage demo for ASP.NET MVC Dialog | UI for ASP.NET MVC Demos"
         },
         "description": {
-          "kendo-ui": "TODO",
-          "aspnet-mvc": "TODO"
+          "kendo-ui": "<p>The <strong>Kendo UI Dialog</strong> is a modal popup that brings information to the user. It also provides actions through the action buttons to prompt the user for input or to ask for a decision. The component can also contain more complex UI elements that require the focus of the user. The Dialog widget is a subset of the <a href=\"http://www.telerik.com/kendo-ui/window\" target=\"_blank\">Kendo UI Window</a> widget where the most prominent difference is the added functionality for actions.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Fully customizable visual appearance of the dialog title and body</li><li>Support for rich text content</li><li>Predefined Alert, Confirm, and Prompt Dialogs</li><li>Built-in modality and animations</li><li>Ability to create and add custom actions (buttons) at the bottom of the dialog</li><li>Rich API for maximum flexibility</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li><li>Rich cross-browser and mobile support</li></ul>",
+          "aspnet-mvc": "<p>The <strong>Telerik Dialog for ASP.NET MVC</strong> is a modal popup that brings information to the user. It also provides actions through the action buttons to prompt the user for input or to ask for a decision. The component can also contain more complex UI elements that require the focus of the user. The Dialog control is a subset of the <a href=\"http://www.telerik.com/kendo-ui/window\" target=\"_blank\">Window</a> one where the most prominent difference is the added functionality for actions.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Fully customizable visual appearance of the dialog title and body</li><li>Support for rich text content</li><li>Predefined Alert, Confirm, and Prompt Dialogs</li><li>Built-in modality and animations</li><li>Ability to create and add custom actions (buttons) at the bottom of the dialog</li><li>Rich API for maximum flexibility</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li><li>Rich cross-browser and mobile support</li></ul>"
         },
         "meta": {
           "kendo-ui": "This example demonstrates the basic usage of Kendo Dialog widget.",
@@ -1513,19 +1513,17 @@
         "text": "Predefined dialogs",
         "url": "dialog/predefined-dialogs",
         "title": {
-          "kendo-ui": "Predefined dialogs of Kendo UI Dialog widget"
+          "kendo-ui": "Predefined dialogs of Kendo UI Dialog widget",
+          "aspnet-mvc": "Predefined dialogs of ASP.NET MVC Dialog control"
         },
         "description": {
-          "kendo-ui": "This demo introduces the predefined dialogs - alert, confirm and prompt, in the Kendo UI suite that are equivalent in look and feel to the built-in browser dialogs. Through a superior and more consistent UI one can achieve more coherent experience in web applications."
+          "kendo-ui": "TODO",
+          "aspnet-mvc": "TODO"
         },
         "meta": {
-          "kendo-ui": "This example shows how to use the predefined dialogs of Kendo Dialog widget."
-        },
-        "packages": [
-            "!mvc",
-            "!jsp",
-            "!php"
-        ]
+          "kendo-ui": "This example shows how to use the predefined dialogs of Kendo Dialog widget.",
+          "aspnet-mvc": "This example shows how to use the predefined dialogs of ASP.NET MVC Dialog control"
+        }
       },
       {
         "text": "MVVM",
