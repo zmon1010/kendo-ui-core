@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.core" ], f);
+    define([ "./kendo.core", "./kendo.scheduler.groupedview" ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
@@ -178,8 +178,7 @@ var __meta__ = { // jshint ignore:line
                     '</div>' +
                 '</div>';
 
-    kendo.ui.scheduler = {};
-
+  
     var ResourceView = kendo.Class.extend({
         init: function(index, isRtl) {
             this._index = index;
@@ -216,8 +215,8 @@ var __meta__ = { // jshint ignore:line
             return this._slotByPosition(x, y, this._daySlotCollections, byDate);
         },
 
-        timeSlotByPosition: function(x, y) {
-            return this._slotByPosition(x, y, this._timeSlotCollections);
+        timeSlotByPosition: function(x, y, byDate) {
+            return this._slotByPosition(x, y, this._timeSlotCollections, byDate);
         },
 
         _slotByPosition: function(x, y, collections, byDate) {
@@ -1062,7 +1061,7 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.init.call(this, element, options);
 
             this._normalizeOptions();
-
+            this._groupedView = this._groupedView();
             this._scrollbar = scrollbar();
             this._isRtl = kendo.support.isRtl(element);
             this._resizeHint = $();
@@ -1070,6 +1069,14 @@ var __meta__ = { // jshint ignore:line
             this._cellId = kendo.guid();
             this._resourcesForGroups();
             this._selectedSlots = [];
+        },
+
+        _groupedView: function(){
+            if(this._isGroupedByDate()){
+                return new kendo.ui.scheduler.GroupedByDateView(this);
+            } else{
+                return new kendo.ui.scheduler.GroupedView(this);   
+            }
         },
 
         _normalizeOptions: function() {
@@ -1193,7 +1200,7 @@ var __meta__ = { // jshint ignore:line
                   startSlot = group[method](startSlot);
                   endSlot = group[method](endSlot);
 
-                  if (!multiple && !this._isVerticallyGrouped() && (!startSlot || !endSlot)) {
+                  if (!multiple && !this._isVerticallyGrouped() && (!startSlot || !endSlot)) {                  
                         startSlot = endSlot = this._changeGroup(selection, reverse);
                   }
             }
@@ -1273,18 +1280,18 @@ var __meta__ = { // jshint ignore:line
             var slot;
 
             if (!this.inRange(selection)) {
-                slot = group.firstSlot();
+               slot = group.firstSlot();
 
-                selection.isAllDay = slot.isDaySlot;
-                selection.start = slot.startDate();
-                selection.end = slot.endDate();
+               selection.isAllDay = slot.isDaySlot;
+               selection.start = slot.startDate();
+               selection.end = slot.endDate();
             } else {
                 if (!group.daySlotCollectionCount()) {
                     selection.isAllDay = false;
                 } else if (!group.timeSlotCollectionCount()) {
                     selection.isAllDay = true;
                 }
-            }
+           }
 
             if (!this.groups[selection.groupIndex]) {
                 selection.groupIndex = 0;
@@ -1870,12 +1877,12 @@ var __meta__ = { // jshint ignore:line
             this.groupedResources = result;
         },
 
-        _createDateLayout: function(dates, inner) {
-            return createDateLayoutConfiguration("rows", dates, inner);
+        _createDateLayout: function(dates, inner, times) {
+            return createDateLayoutConfiguration("rows", dates, inner, times);
         },
 
-        _createColumnsLayout: function(resources, inner, template, dates) {
-            return createLayoutConfiguration("columns", resources, inner, template, dates);
+        _createColumnsLayout: function(resources, inner, template, dates, times) {
+            return createLayoutConfiguration("columns", resources, inner, template, dates, times);
         },
 
         _groupOrientation: function() {
@@ -2219,7 +2226,7 @@ var __meta__ = { // jshint ignore:line
         return columns;
     }
 
-    function createDateLayoutConfiguration(name, dates, inner) {
+    function createDateLayoutConfiguration(name, dates, inner, times) {
          var configuration = [];
 
          $.each(dates, function(index, item) {
@@ -2229,21 +2236,31 @@ var __meta__ = { // jshint ignore:line
                 text: item.text,
                 className: className
             };
-            obj[name] = inner; 
+
+            if(times && !item.minorTicks){
+                obj[name] = createDateLayoutConfiguration(name, item.columns, inner, times);
+            } else{
+                obj[name] = inner; 
+            }           
             configuration.push(obj);
         });
 
         return configuration;
     }
 
-    function createLayoutConfiguration(name, resources, inner, template, dates) {
+    function createLayoutConfiguration(name, resources, inner, template, dates, times) {
         var resource = resources[0];     
         var configuration = [];
 
         if (resource) {  
             if (dates && inner) {         
                 $.each(dates, function(index, item) {
-                    item[name] = createLayoutConfiguration(name, resources, null, template);
+
+                    if (times && !item.minorTicks) {
+                        item[name] = createLayoutConfiguration(name, resources, item.columns, template, item.columns, times);
+                    } else {
+                         item[name] = createLayoutConfiguration(name, resources, null, template);
+                    }                
                 });
                 configuration = dates;
             } else {

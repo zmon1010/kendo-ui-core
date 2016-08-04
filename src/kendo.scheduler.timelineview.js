@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.scheduler.view" ], f);
+    define([ "./kendo.scheduler.view"], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
@@ -91,19 +91,7 @@ var __meta__ = { // jshint ignore:line
         return workDays;
     }
 
-    function setColspan(columnLevel) {
-        var count = 0;
-        if (columnLevel.columns) {
-            for (var i = 0; i < columnLevel.columns.length; i++) {
-                count += setColspan(columnLevel.columns[i]);
-            }
-            columnLevel.colspan = count;
-            return count;
-        } else {
-            columnLevel.colspan = 1;
-            return 1;
-        }
-    }
+   
 
     function collidingEvents(elements, left, right) {
         var idx,
@@ -178,6 +166,7 @@ var __meta__ = { // jshint ignore:line
             var options = this.options;
 
             this.datesHeader.find("." + CURRENT_TIME_MARKER_CLASS).remove();
+            this.times.find("." + CURRENT_TIME_MARKER_CLASS).remove();
             this.content.find("." + CURRENT_TIME_MARKER_CLASS).remove();
 
             if (!this._isInDateSlot({start: currentTime, end:currentTime })) {
@@ -211,26 +200,31 @@ var __meta__ = { // jshint ignore:line
 
                 var collection = ranges[0].collection;
                 var slotElement = collection.slotByStartDate(currentTime);
-
+               
                 if(slotElement) {
-                    var elementHtml = "<div class='" + CURRENT_TIME_MARKER_CLASS + "'></div>";
-                    var headerWrap = this.datesHeader.find("." + SCHEDULER_HEADER_WRAP_CLASS);
-                    var left = Math.round(ranges[0].innerRect(currentTime, new Date(currentTime.getTime() + 1), false).left);
-                    var timesTableMarker = $(elementHtml)
-                            .prependTo(headerWrap)
-                            .addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-down");
 
-                    timesTableMarker.css({
-                        left: this._adjustLeftPosition(left - (timesTableMarker.outerWidth() * BORDER_SIZE_COEFF / 2)),
-                        top: headerWrap.find("tr:last").prev().position().top
-                    });
+                    if(this._isVerticallyGrouped()){
+                        this._groupedView._updateCurrentVerticalTimeMarker(ranges,currentTime);
+                    } else{
+                        var elementHtml = "<div class='" + CURRENT_TIME_MARKER_CLASS + "'></div>";
+                        var headerWrap = this.datesHeader.find("." + SCHEDULER_HEADER_WRAP_CLASS);
+                        var left = Math.round(ranges[0].innerRect(currentTime, new Date(currentTime.getTime() + 1), false).left);
+                        var timesTableMarker = $(elementHtml)
+                                .prependTo(headerWrap)
+                                .addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-down");
 
-                    $(elementHtml).prependTo(this.content).css({
-                        left: this._adjustLeftPosition(left),
-                        width: "1px",
-                        height: this.content[0].scrollHeight - 1,
-                        top: 0
-                    });
+                        timesTableMarker.css({
+                            left: this._adjustLeftPosition(left - (timesTableMarker.outerWidth() * BORDER_SIZE_COEFF / 2)),
+                            top: headerWrap.find("tr:last").prev().position().top
+                        });
+
+                        $(elementHtml).prependTo(this.content).css({
+                            left: this._adjustLeftPosition(left),
+                            width: "1px",
+                            height: this.content[0].scrollHeight - 1,
+                            top: 0
+                        });
+                    }                 
                 }
             }
         },
@@ -342,7 +336,6 @@ var __meta__ = { // jshint ignore:line
             var slot;
             var content = this.content;
             var offset = content.offset();
-            var group;
             var groupIndex;
 
             x -= offset.left;
@@ -370,9 +363,8 @@ var __meta__ = { // jshint ignore:line
             y = Math.ceil(y);
 
             for (groupIndex = 0; groupIndex < this.groups.length; groupIndex++) {
-                 group = this.groups[groupIndex];
-
-                 slot = group.timeSlotByPosition(x, y);
+               
+                 slot = this._groupedView._getTimeSlotByPosition(x, y, groupIndex);
 
                  if (slot) {
                      return slot;
@@ -462,9 +454,8 @@ var __meta__ = { // jshint ignore:line
 
                 that.trigger("navigate", { view: "timeline", date: slot.startDate() });
             });
-
-            that.timesHeader.find("table tr:last").hide(); /*Chrome fix, use CSS selector*/
-            that.datesHeader.find("table tr:last").hide();
+       
+            that._groupedView._hideHeaders();
         },
 
         _setContentWidth: function() {
@@ -514,7 +505,7 @@ var __meta__ = { // jshint ignore:line
             this._slotRanges = slotRanges;
         },
 
-        _forTimeRange: function(min, max, action, after) {
+        _forTimeRange: function(min, max, action, after, verticalByDate) {
             min = toInvariantTime(min); //convert the date to 1/2/1980 and sets the time
             max = toInvariantTime(max);
 
@@ -540,8 +531,8 @@ var __meta__ = { // jshint ignore:line
                 length = ((msMax - msMin) / msInterval);
             }
 
-            length = Math.round(length);
-
+             length = verticalByDate ? 1 : Math.round(length);
+            
             for (; idx < length; idx++) {
                 var majorTickDivider = idx % (msMajorInterval/msInterval);
                 var isMajorTickColumn = majorTickDivider === 0;
@@ -584,15 +575,17 @@ var __meta__ = { // jshint ignore:line
             var columns = [];
             var that = this;
             var rows = [{ text: that.options.messages.defaultRowText }];
+            var groupedView = that._groupedView;
 
             var minorTickSlots = [];
             for (var minorTickIndex = 0; minorTickIndex < that.options.minorTickCount; minorTickIndex++) {
                 minorTickSlots.push({
                     text: "",
-                    className: ""
+                    className: "",
+                    minorTicks: true
                 });
             }
-
+            
             this._forTimeRange(that.startTime(), that.endTime(), function(date, majorTick, middleColumn, lastSlotColumn, minorSlotsCount) {
                 var template = that.majorTimeHeaderTemplate;
 
@@ -602,7 +595,9 @@ var __meta__ = { // jshint ignore:line
                         className: lastSlotColumn ? "k-slot-cell" : "",
                         columns: minorTickSlots.slice(0, minorSlotsCount)
                     };
-                    setColspan(timeColumn);
+                    
+                    groupedView._setColspan(timeColumn); 
+
                     timeColumns.push(timeColumn);
                 }
             });
@@ -617,10 +612,12 @@ var __meta__ = { // jshint ignore:line
 
             var resources = this.groupedResources;
             if (resources.length) {
-                if (this._groupOrientation() === "vertical") {
-                    rows = that._createRowsLayout(resources, null, this.groupHeaderTemplate);
+                if (this._groupOrientation() === "vertical") {    
+                    rows =  groupedView._createRowsLayout(resources, null, this.groupHeaderTemplate, columns); 
+                    columns =  groupedView._createVerticalColumnsLayout(resources, null, this.groupHeaderTemplate, columns);            
+                               
                 } else {
-                    columns = that._createColumnsLayout(resources, columns, this.groupHeaderTemplate);
+                    columns =  groupedView._createColumnsLayout(resources, columns, this.groupHeaderTemplate, columns); 
                 }
             }
 
@@ -687,7 +684,6 @@ var __meta__ = { // jshint ignore:line
 
         _content: function(dates) {
             var that = this;
-            var options = that.options;
             var start = that.startTime();
             var end = this.endTime();
             var groupsCount = 1;
@@ -700,60 +696,17 @@ var __meta__ = { // jshint ignore:line
 
             if (resources.length) {
                 isVerticalGrouped = that._groupOrientation() === "vertical";
-
-                if (isVerticalGrouped) {
-                    rowCount = that._groupCount();
+                
+                if (isVerticalGrouped) {   
+                    rowCount = that._groupedView._getRowCount(this.rowLevels.length - 1);   
+                    groupsCount = that._groupedView._getGroupsCount(groupsCount);               
                 } else {
                     groupsCount = that._groupCount();
                 }
             }
 
-            html += '<tbody>';
-
-            var appendRow = function(date) {
-                var content = "";
-                var classes = "";
-                var tmplDate;
-
-                var resources = function(groupIndex) {
-                    return function() {
-                        return that._resourceBySlot({ groupIndex: groupIndex });
-                    };
-                };
-
-                if (kendo.date.isToday(dates[idx])) {
-                    classes += "k-today";
-                }
-
-                if (kendo.date.getMilliseconds(date) < kendo.date.getMilliseconds(options.workDayStart) ||
-                    kendo.date.getMilliseconds(date) >= kendo.date.getMilliseconds(options.workDayEnd) ||
-                    !that._isWorkDay(dates[idx])) {
-                    classes += " k-nonwork-hour";
-                }
-
-                content += '<td' + (classes !== "" ? ' class="' + classes + '"' : "") + ">";
-                tmplDate = kendo.date.getDate(dates[idx]);
-                kendo.date.setTime(tmplDate, kendo.date.getMilliseconds(date));
-
-                content += slotTemplate({ date: tmplDate, resources: resources(isVerticalGrouped ? rowIdx : groupIdx) });
-                content += "</td>";
-
-                return content;
-            };
-
-
-            for (var rowIdx = 0; rowIdx < rowCount; rowIdx++) {
-                html += '<tr>';
-
-                for (var groupIdx = 0 ; groupIdx < groupsCount; groupIdx++) {
-                    for (var idx = 0, length = columnCount; idx < length; idx++) {
-                        html += this._forTimeRange(start, end, appendRow);
-                    }
-                }
-
-                html += "</tr>";
-            }
-
+            html += '<tbody>'; 
+            html += that._groupedView._addContent(dates, columnCount, groupsCount, rowCount, start, end, slotTemplate, isVerticalGrouped);
             html += '</tbody>';
 
             this.content.find("table").append(html);
@@ -777,10 +730,6 @@ var __meta__ = { // jshint ignore:line
             this._timeSlotGroups(groupCount, columnCount);
         },
 
-        _isVerticallyGrouped: function() {
-            return this.groupedResources.length && this._groupOrientation() === "vertical";
-        },
-
         _isHorizontallyGrouped: function() {
             return this.groupedResources.length && this._groupOrientation() === "horizontal";
         },
@@ -789,53 +738,24 @@ var __meta__ = { // jshint ignore:line
             var interval = this._timeSlotInterval();
             var isVerticallyGrouped = this._isVerticallyGrouped();
             var tableRows = this.content.find("tr");
-            var rowCount = tableRows.length;
 
-            tableRows.attr("role", "row");
+            tableRows.attr("role", "row");       
+          
+            this._groupedView._addTimeSlotsCollections(groupCount, datesCount, tableRows, interval, isVerticallyGrouped);
 
-            if (isVerticallyGrouped) {
-                rowCount = Math.floor(rowCount / groupCount);
-            }
+        },
 
-            for (var groupIndex = 0; groupIndex < groupCount; groupIndex++) {
-                var rowMultiplier = 0;
-                var group = this.groups[groupIndex];
-                var time;
+        _addTimeSlotToCollection: function(group, cells, cellIndex, cellOffset, dateIndex, time, interval){
+              var cell = cells[cellIndex+cellOffset];
+              var collection = group.getTimeSlotCollection(0);
+              var currentDate = this._dates[dateIndex];            
+              var currentTime = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+              var start = currentTime + time;     
+              var end = start + interval;
+              cell.setAttribute("role", "gridcell");
+              cell.setAttribute("aria-selected", false);
 
-                if (isVerticallyGrouped) {
-                    rowMultiplier = groupIndex;
-                }
-
-                var rowIndex = rowMultiplier * rowCount;
-                var cellMultiplier = 0;
-
-                if (!isVerticallyGrouped) {
-                    cellMultiplier = groupIndex;
-                }
-
-                var cells = tableRows[rowIndex].children;
-                var cellsPerGroup = cells.length / (!isVerticallyGrouped ? groupCount : 1);
-                var cellsPerDay = cellsPerGroup / datesCount;
-
-                for (var dateIndex = 0; dateIndex < datesCount; dateIndex++) {
-                    var cellOffset = dateIndex * cellsPerDay + (cellsPerGroup * cellMultiplier);
-                    time = getMilliseconds(new Date(+this.startTime()));
-
-                    for (var cellIndex = 0; cellIndex < cellsPerDay ; cellIndex++) {
-                        var cell = cells[cellIndex+cellOffset];
-                        var collection = group.getTimeSlotCollection(0);
-                        var currentDate = this._dates[dateIndex];
-                        var currentTime = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-                        var start = currentTime + time;
-                        var end = start + interval;
-                        cell.setAttribute("role", "gridcell");
-                        cell.setAttribute("aria-selected", false);
-
-                        collection.addTimeSlot(cell, start, end, true);
-                        time += interval;
-                    }
-                }
-            }
+              collection.addTimeSlot(cell, start, end, true);
         },
 
         startDate: function() {
@@ -896,7 +816,7 @@ var __meta__ = { // jshint ignore:line
                     maxRowCount: 0,
                     events: {}
                 };
-
+                
                 eventGroups.push(eventGroup);
 
                 this._renderEvents(eventsByResource[groupIndex], groupIndex, eventGroup);
@@ -905,7 +825,7 @@ var __meta__ = { // jshint ignore:line
                     maxRowCount = eventGroup.maxRowCount;
                 }
             }
-
+            
             this._setRowsHeight(eventGroups, eventsByResource.length, maxRowCount);
 
             this._positionEvents(eventGroups, eventsByResource.length);
@@ -919,8 +839,14 @@ var __meta__ = { // jshint ignore:line
             for (var groupIndex = 0; groupIndex < groupsCount; groupIndex++) {
                 var eventsForGroup = eventGroups[groupIndex].events;
                 for (var eventUid in eventsForGroup) {
-                    var eventObject = eventsForGroup[eventUid];
-                    this._positionEvent(eventObject);
+                    var eventObject = eventsForGroup[eventUid];                   
+                    if($.isArray(eventObject)){                       
+                        for(var eventIndex = 0; eventIndex<eventObject.length; eventIndex++){
+                            this._positionEvent(eventObject[eventIndex]);
+                        }
+                    } else{
+                        this._positionEvent(eventObject);                  
+                    }
                 }
             }
         },
@@ -928,11 +854,13 @@ var __meta__ = { // jshint ignore:line
         _setRowsHeight: function(eventGroups, groupsCount, maxRowCount) {
             var eventHeight = this.options.eventHeight + 2;/* two times border width */
             var eventBottomOffset = this._getBottomRowOffset();
+            var groupedView = this._groupedView;
+            var verticalGroupCount = groupedView._getVerticalGroupCount(groupsCount);
 
-            groupsCount = this._isVerticallyGrouped() ? groupsCount : 1;
+            groupsCount = this._isVerticallyGrouped() ? verticalGroupCount : 1;
 
             for (var groupIndex = 0; groupIndex < groupsCount; groupIndex++) {
-                var rowsCount = this._isVerticallyGrouped() ? eventGroups[groupIndex].maxRowCount : maxRowCount;
+                var rowsCount = groupedView._getVerticalRowCount(eventGroups, groupIndex, maxRowCount);
 
                 rowsCount = rowsCount ? rowsCount : 1;
 
@@ -1151,28 +1079,11 @@ var __meta__ = { // jshint ignore:line
                         }
 
                         var ranges = group.slotRanges(adjustedEvent.occurrence, false);
-                        var range = ranges[0];
-                        var element;
-
+                        var range = ranges[0];                  
+                        var startIndex = range.start.index;
+                        var endIndex = range.end.index;                                                                          
                         if (this._isInTimeSlot(adjustedEvent.occurrence)) {
-
-                            element = this._createEventElement(adjustedEvent.occurrence, event, range.head || adjustedEvent.head, range.tail || adjustedEvent.tail);
-                            element.appendTo(container).css({top: 0, height: this.options.eventHeight});
-
-                            var eventObject = {
-                                start: adjustedEvent.occurrence._startTime || adjustedEvent.occurrence.start,
-                                end: adjustedEvent.occurrence._endTime || adjustedEvent.occurrence.end,
-                                element: element,
-                                uid: event.uid,
-                                slotRange: range,
-                                rowIndex: 0,
-                                offsetTop: 0
-                            };
-
-                            eventGroup.events[event.uid] = eventObject;
-
-                            this.addContinuousEvent(group, range, element, event.isAllDay);
-                            this._arrangeRows(eventObject, range, eventGroup);
+                            this._groupedView._renderEvent(eventGroup, event, adjustedEvent, group, range, container, startIndex, endIndex);
                         }
                     }
                 }
@@ -1281,12 +1192,13 @@ var __meta__ = { // jshint ignore:line
 
         _groupCount: function() {
             var resources = this.groupedResources;
+            var groupedView = this._groupedView;
 
             if (resources.length) {
                 if (this._groupOrientation() === "vertical") {
-                    return this._rowCountForLevel(resources.length - 1);
+                    return groupedView._verticalCountForLevel(resources.length - 1);
                 } else {
-                    return this._columnCountForLevel(resources.length - 1);
+                    return groupedView._horizontalCountForLevel(resources.length - 1, this.columnLevels.length - 1);
                 }
             }
             return 1;

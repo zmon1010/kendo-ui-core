@@ -64,6 +64,7 @@
         "./kendo.dialog",
         "./kendo.window",
         "./kendo.virtuallist",
+        "./kendo.scheduler.groupedview",
         "./kendo.scheduler.view",
         "./kendo.scheduler.dayview",
         "./kendo.scheduler.agendaview",
