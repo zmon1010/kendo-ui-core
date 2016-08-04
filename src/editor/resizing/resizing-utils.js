@@ -16,6 +16,7 @@
 
     var CONTENT_EDITABLE = "contenteditable";
     var PERCENTAGE = "%";
+    var REGEX_NUMBER_IN_PERCENTAGES = /(\d+)(\.?)(\d*)(%)/;
     var STRING = "string";
     var UNDEFINED = "undefined";
     var WIDTH = "width";
@@ -46,7 +47,7 @@
     }
 
     function inPercentages(value) {
-        return (typeof(value) === STRING && value.indexOf(PERCENTAGE) !== -1);
+        return (typeof(value) === STRING && REGEX_NUMBER_IN_PERCENTAGES.test(value));
     }
 
     function toPercentages(value) {
