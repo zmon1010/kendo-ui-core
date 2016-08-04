@@ -3,11 +3,11 @@ require 'spreadsheet'
 DPL_DIST = "\\\\telerik.com\\distributions\\DailyBuilds\\DocumentProcessing"
 
 def copy_dpl_binaries
-    branch = BETA ? 'Release' : 'Stable'
+    branch = BETA ? 'Release' : 'Current'
     source_dir = "#{DPL_DIST}\\#{branch}\\Binaries"
     puts "Copying DPL Binaries from #{source_dir}."
 
-    {'Net40' => { :dest => 'NET40' }}.each do |key, value|
+    {'Net40' => { :dest => 'WPF40' }}.each do |key, value|
         ['Dev', 'Trial'].each do |license|
             suffix = license == 'Trial' ? '-Trial' : '';
             dest = "dpl\\lib\\#{value[:dest]}#{suffix}\\"
