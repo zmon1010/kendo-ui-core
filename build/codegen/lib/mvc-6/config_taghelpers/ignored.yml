@@ -14,3 +14,7 @@
 - window.appendto
 - window.content
 - window.position
+- dialog.animation
+- dialog.content
+- dialog.actions
+- dialog.messages
