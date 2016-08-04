@@ -17,6 +17,9 @@ namespace Kendo.Mvc.TagHelpers
 
         protected override void WriteHtml(TagHelperOutput output)
         {
+            //Uncomment this to make sure that id attribute and script are generated
+            //GenerateId(output);
+
             var htmlAttributes = new Dictionary<string, object>();
 
             var tagBuilder = Generator.GenerateTag("div", ViewContext, Id, Name, htmlAttributes);
