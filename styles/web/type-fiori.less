@@ -3200,3 +3200,34 @@ div.k-window.k-state-focused
         }
     }
 }
+.k-rtl .k-dialog {
+        .k-window-titlebar {
+            .k-dialog-title {
+                padding-right: 0;
+                padding-left: 2em;
+            }
+    }
+    a.k-dialog-action.k-link {
+        left: 0;
+    }
+    .k-dialog-buttongroup {
+        &.k-dialog-button-layout-stretched {
+            li.k-button:first-child {
+                border-bottom-right-radius: @border-radius;
+            }
+            li.k-button:last-child {
+                border-bottom-left-radius: @border-radius;
+            }
+        }
+        &.k-dialog-button-layout-normal {
+            text-align: left;
+            .k-button {
+                margin-left: 0;
+                margin-right: 0.5em;
+                &:first-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
