@@ -1,5 +1,39 @@
+<div id="example">
+    <div id="dialog" class="k-rtl">
+    </div>
+    <span id="undo" style="display:none" class="k-button hide-on-narrow">Click here to open the dialog</span>
+</div>
+<script>
+    $(document).ready(function () {
+        var dialog = $('#dialog'),
+            undo = $("#undo");
 
-        <div id="example">
-            @*TODO*@
-            Demo goes here
-        </div>
+        undo.click(function () {
+            dialog.data("kendoDialog").open();
+            undo.fadeOut();
+        });
+
+        function onClose() {
+            undo.fadeIn();
+        }
+
+        dialog.kendoDialog({
+            width: "400px",
+            title: "Software Update",
+            closable: false,
+            modal: false,
+            content: "<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>",
+            actions: [
+                { text: 'Skip this version' },
+                { text: 'Remind me later' },
+                { text: 'Install update', primary: true },
+            ],
+            close: onClose
+        });
+    });
+</script>
+<style>
+    #example {
+        min-height: 350px;
+    }
+</style>
