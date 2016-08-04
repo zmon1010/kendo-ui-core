@@ -449,22 +449,6 @@ var __meta__ = { // jshint ignore:line
             return templateData;
         },
 
-        // _prepareDefaultFileEntryTemplate: function(name, data) {
-        //     var extension = "";
-        //     var defaultTemplate = $("<li class='k-file'>" +
-        //             "<span class='k-progress'></span>" +
-        //             "<span class='k-icon'></span>" +
-        //             "<span class='k-filename' title='" + name + "'>" + name + "</span>" +
-        //             "<strong class='k-upload-status'></strong>" +
-        //             "</li>");
-
-        //     if (data.fileNames.length == 1 && !!data.fileNames[0].extension) {
-        //         extension = data.fileNames[0].extension.substring(1);
-        //         $('.k-icon', defaultTemplate).addClass('k-i-' + extension);
-        //     }
-        //     return defaultTemplate;
-        // },
-
         _prepareDefaultSingleFileEntryTemplate: function(data) {
             var that = this;
             var file = data.fileNames[0];

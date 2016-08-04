@@ -242,19 +242,19 @@ test("drag file should activate both dropzones", 1, function() {
     equal($(".k-dropzone-active", QUnit.fixture).length, 2);
 });
 
-asyncTest("dragend file should deactivate both dropzones", 1, function() {
-    uploadInstance = createUpload({
-        dropZone: $("#myCustomDropZone,#mySecondCustomDropZone")
-    });
-    $(document).trigger("dragenter");
+// asyncTest("dragend file should deactivate both dropzones", 1, function() {
+//     uploadInstance = createUpload({
+//         dropZone: $("#myCustomDropZone,#mySecondCustomDropZone")
+//     });
+//     $(document).trigger("dragenter");
 
-    setTimeout(function(){
-        equal($(".k-dropzone-active", QUnit.fixture).length, 0);
-        start();
-    },150);
+//     setTimeout(function(){
+//         equal($(".k-dropzone-active", QUnit.fixture).length, 0);
+//         start();
+//     }, 150);
 
-    $(document).trigger("dragleave");
-});
+//     $(document).trigger("dragleave");
+// });
 
 })();
 
