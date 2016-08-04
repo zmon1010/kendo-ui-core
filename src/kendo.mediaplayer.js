@@ -37,7 +37,6 @@
             MEDIA = "k-mediaplayer-media",
             OVERLAY = "k-mediaplayer-overlay",
             YTPLAYER = "k-mediaplayer-yt",
-            YTPLAYER_ID = "ytplayer",
             DOT = ".",
             ui = kendo.ui,
             ns = ".kendoMediaPlayer",
@@ -55,9 +54,9 @@
             //each = $.each,
             templates = {
                 htmlPlayer: "<video class='" + MEDIA + "'> </video>",
-                titleBar: template("<div id='mediaplayerTitleBar' class='" + TITLEBAR + "' role='heading'><span class='" + TITLE + "'>Video Title</span></div>"),
+                titleBar: template("<div class='" + TITLEBAR + "' role='heading'><span class='" + TITLE + "'>Video Title</span></div>"),
                 toolBar: "<div class='" + TOOLBAR + "'> </div>",
-                youtubePlayer: "<div class='" + YTPLAYER + "' id='ytplayer'> </div>",
+                youtubePlayer: "<div class='" + YTPLAYER + "'> </div>",
                 toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
                 slider: "<input class='" + SLIDER + "' value='0' />",
                 volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
@@ -306,6 +305,17 @@
                     this._dropDown = new ui.DropDownList(dropDownElement, {
                         dataTextField: "quality",
                         dataValueField: "url",
+                        popup: {
+                            position: "bottom",
+                            origin: "top",
+                            appendTo: this.wrapper
+                        },
+                        animation: {
+                            open: {
+                                effects: "slideIn:up",
+                                duration:1
+                            }
+                        },
                         select: this._dropDownSelectHandler
                     });
 
@@ -565,7 +575,7 @@
                 window.onPlayerStateChange = this._onPlayerStateChange;
 
                 /*jshint unused:false */
-                var player = new window.YT.Player(YTPLAYER_ID, {
+                var player = new window.YT.Player(this.wrapper.find(DOT + YTPLAYER)[0], {
                     height: this.wrapper.height(),
                     width: this.wrapper.width(),
                     videoId: this._getMediaId(),
@@ -619,10 +629,10 @@
                     if (this._sliderChangeFired) {
                         this._sliderChangeFired = false;
                     } else {
-                        this._playStateToggle(true);
                         this._uiDisplay(false);
-                        this.trigger(PLAY);
                     }
+                    this.trigger(PLAY);
+                    this._playStateToggle(true);
 
                     this._poll("progress", this._mediaTimeUpdate, 500, this);
                     this._paused = false;
@@ -698,8 +708,9 @@
                         height: "100%"
                     });
 
-
-                this._media.muted = this.options.mute;
+                if(this.options.mute){
+                    this.mute(true);
+                }
 
                 this._media.ontimeupdate = this._mediaTimeUpdateHandler;
                 this._media.ondurationchange = this._mediaDurationChangeHandler;
@@ -993,8 +1004,8 @@
             },
 
             _aria: function () {
-                //this.wrapper.attr("role", "region");
-                //this.wrapper.attr(" aria-labelledby", "mediaplayerTitleBar");
+                this.wrapper.attr("role", "region");
+                //this.wrapper.attr("aria-labelledby", "mediaplayerTitleBar");
                 //add onfocus with aria active descendant
             },
 
@@ -1008,14 +1019,13 @@
                     this._keyDownHandler = proxy(this._keyDown, this);
                     this.wrapper
                         .on("keydown" + ns, this._keyDownHandler);
-
-                    this._fullscreenHandler = proxy(this._fullscreen, this);
+                }
+                this._fullscreenHandler = proxy(this._fullscreen, this);
                     $(document)
                         .on("webkitfullscreenchange mozfullscreenchange fullscreenchange" + ns, this._fullscreenHandler);
-                }
             },
 
-            _fullscreen: function (e) {
+            _fullscreen: function () {
                 var isFullScreen = document.fullScreen ||
                    document.mozFullScreen ||
                    document.webkitIsFullScreen;
