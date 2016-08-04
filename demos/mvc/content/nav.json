@@ -1517,13 +1517,16 @@
           "aspnet-mvc": "Predefined dialogs of ASP.NET MVC Dialog control"
         },
         "description": {
-          "kendo-ui": "TODO",
-          "aspnet-mvc": "TODO"
+          "kendo-ui": "This demo illustrates the use of the Kendo UI predefined dialogs. They are similar to the browser dialogs - alert, confirm and prompt. Through their stunning UI these dialogs integrate seamlessly with your web application."
         },
         "meta": {
-          "kendo-ui": "This example shows how to use the predefined dialogs of Kendo Dialog widget.",
-          "aspnet-mvc": "This example shows how to use the predefined dialogs of ASP.NET MVC Dialog control"
-        }
+          "kendo-ui": "This example shows how to use the predefined dialogs of Kendo Dialog widget."
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "MVVM",

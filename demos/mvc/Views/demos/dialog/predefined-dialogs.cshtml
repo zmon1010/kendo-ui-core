@@ -5,22 +5,22 @@
 
     <script>
         $("#alertBtn").on("click", function () {
-            kendo.alert("Important message.");
+            kendo.alert("This is a Kendo UI Alert message.");
         });
 
         $("#confirmBtn").on("click", function () {
-            kendo.confirm("Are you sure?").then(function () {
-                kendo.alert("Will do.");
+            kendo.confirm("Are you sure that you want to proceed?").then(function () {
+                kendo.alert("You chose the Ok action.");
             }, function () {
-                kendo.alert("Cancel it is.");
+                kendo.alert("You chose to Cancel action.");
             });
         });
 
         $("#promptBtn").on("click", function () {
-            kendo.prompt("Enter value", "any value").then(function (e) {
-                kendo.alert(kendo.format("Value is {0}", e.data));
+            kendo.prompt("Please, enter a arbitrary value:", "any value").then(function (data) {
+                kendo.alert(kendo.format("The value that you entered is '{0}'", data));
             }, function () {
-                kendo.alert("Cancel input");
+                kendo.alert("Cancel entering value.");
             })
         });
     </script>
