@@ -12,6 +12,23 @@
         var dialog = $("#dialog");
         var show = $("#show");
 
+        dialog.kendoDialog({
+            width: "400px",
+            title: "Software Update",
+            closable: true,
+            modal: false,
+            content: "<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>",
+            actions: [
+                { text: 'Close', action: onCancel },
+                { text: 'OK', primary: true, action: onOK }
+            ],
+            initOpen: onInitOpen,
+            open: onOpen,
+            close: onClose,
+            show: onShow,
+            hide: onHide
+        });
+
         function onInitOpen(e) {
             kendoConsole.log("event :: initOpen");
         }
@@ -32,28 +49,17 @@
             show.fadeIn();
             kendoConsole.log("event :: close");
         }
+        function onCancel(e) {
+            kendoConsole.log("action :: cancel");
+        }
+
+        function onOK(e) {
+            kendoConsole.log("action :: OK");
+        }
 
         show.click(function () {
             dialog.data("kendoDialog").open();
             show.fadeOut();
-        });
-
-        dialog.kendoDialog({
-            width: "400px",
-            title: "Software Update",
-            closable: true,
-            modal: false,
-            content: "<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>",
-            actions: [
-                { text: 'Skip this version' },
-                { text: 'Remind me later' },
-                { text: 'Install update', primary: true }
-            ],
-            initOpen: onInitOpen,
-            open: onOpen,
-            close: onClose,
-            show: onShow,
-            hide: onHide
         });
     </script>
 
