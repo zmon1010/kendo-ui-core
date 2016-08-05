@@ -12,8 +12,12 @@
         .Modal(false)
         .Actions(actions =>
         {
-            actions.Add().Text("Cancel");
-            actions.Add().Text("OK").Primary(true);
+            actions.Add()
+            .Text("Cancel")
+            .Action("onCancel");
+            actions.Add().Text("OK")
+            .Primary(true)
+            .Action("onOK");
         })
         .Events(ev => ev
         .InitOpen("onInitOpen")
@@ -60,6 +64,14 @@
     function onClose(e) {
         showBtn.fadeIn();
         kendoConsole.log("event :: close");
+    }
+
+    function onCancel(e) {
+        kendoConsole.log("action :: Cancel");
+    }
+
+    function onOK(e) {
+        kendoConsole.log("action :: OK");
     }
 
 </script>
