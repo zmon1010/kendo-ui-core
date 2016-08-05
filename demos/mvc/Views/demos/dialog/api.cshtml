@@ -1,45 +1,42 @@
 <div id="example">
-	<div class="box wide hidden-on-narrow" style="z-index:10000">
-		<div class="box-col">
-			<h4>API Functions</h4>
-			<ul class="options">
-				<li>
-					<button id="open" class="k-button">Open</button>
-					<button id="close" class="k-button">Close</button>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div id="dialog"></div>
-	<div class="responsive-message"></div>
-	<script>
-		$(document).ready(function () {
-			var dialog = $("#dialog")
-				.kendoDialog({
-					width: "400px",
-					title: "Software Update",
-					closable: true,
-					modal: false,
-					content: "<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>",
-					actions: [
-						{ text: 'Cancel' },
-						{ text: 'Ok', primary: true }
-					]
-				})
-				.data("kendoDialog");
+    <div class="box wide hidden-on-narrow" style="z-index:10000">
+        <div class="box-col">
+            <h4>API Functions</h4>
+            <ul class="options">
+                <li>
+                    <button id="open" class="k-button">Open</button>
+                    <button id="close" class="k-button">Close</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="dialog"></div>
+    <div class="responsive-message"></div>
+    <script>
+        var dialog = $("#dialog").kendoDialog({
+            width: "400px",
+            title: "Software Update",
+            closable: true,
+            modal: false,
+            content: "<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>",
+            actions: [
+                { text: 'Skip this version' },
+                { text: 'Remind me later' },
+                { text: 'Install update', primary: true }
+            ]
+        });
 
-			$("#open").click(function (e) {
-				dialog.open();
-			});
+        $("#open").click(function (e) {
+            dialog.data("kendoDialog").open();
+        });
 
-			$("#close").click(function (e) {
-				dialog.close();
-			});
-		});
-	</script>
-	<style>
-		#example {
-			min-height: 200px;
-		}
-	</style>
+        $("#close").click(function (e) {
+            dialog.data("kendoDialog").close();
+        });
+    </script>
+    <style>
+        #example {
+            min-height: 200px;
+        }
+    </style>
 </div>

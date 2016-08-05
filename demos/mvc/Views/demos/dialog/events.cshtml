@@ -1,77 +1,78 @@
 <div id="example">
-	<div class="box hidden-on-narrow">
-		<h4>Console log</h4>
-		<div class="console"></div>
-	</div>
-	<span id="show" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
-	<div id="dialog"></div>
+    <div class="box hidden-on-narrow">
+        <h4>Console log</h4>
+        <div class="console"></div>
+    </div>
+    <span id="show" style="display:none" class="k-button hidden-on-narrow">Click here to open the window.</span>
+    <div id="dialog"></div>
 
-	<div class="responsive-message"></div>
+    <div class="responsive-message"></div>
 
-	<script>
-		var dialog = $("#dialog");
-		var show = $("#show");
+    <script>
+        var dialog = $("#dialog");
+        var show = $("#show");
 
-		function onInitOpen(e) {
-			kendoConsole.log("event :: initOpen");
-		}
+        function onInitOpen(e) {
+            kendoConsole.log("event :: initOpen");
+        }
 
-		function onOpen(e) {
-			kendoConsole.log("event :: open");
-		}
+        function onOpen(e) {
+            kendoConsole.log("event :: open");
+        }
 
-		function onShow(e) {
-			kendoConsole.log("event :: show");
-		}
+        function onShow(e) {
+            kendoConsole.log("event :: show");
+        }
 
-		function onHide(e) {
-			kendoConsole.log("event :: hide");
-		}
+        function onHide(e) {
+            kendoConsole.log("event :: hide");
+        }
 
-		function onClose(e) {
-			show.fadeIn();
-			kendoConsole.log("event :: close");
-		}
+        function onClose(e) {
+            show.fadeIn();
+            kendoConsole.log("event :: close");
+        }
 
-		show.click(function () {
-			dialog.data("kendoDialog").open();
-			show.fadeOut();
-		});
+        show.click(function () {
+            dialog.data("kendoDialog").open();
+            show.fadeOut();
+        });
 
-		dialog.kendoDialog({
-			width: "400px",
-			title: "Software Update",
-			closable: true,
-			modal: false,
-			content: "<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>",
-			actions: [
-				{ text: 'Cancel' },
-				{ text: 'Ok', primary: true }
-			],
-			initOpen: onInitOpen,
-			open: onOpen,
-			close: onClose,
-			show: onShow,
-			hide: onHide
-		});
-	</script>
+        dialog.kendoDialog({
+            width: "400px",
+            title: "Software Update",
+            closable: true,
+            modal: false,
+            content: "<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>",
+            actions: [
+                { text: 'Skip this version' },
+                { text: 'Remind me later' },
+                { text: 'Install update', primary: true }
+            ],
+            initOpen: onInitOpen,
+            open: onOpen,
+            close: onClose,
+            show: onShow,
+            hide: onHide
+        });
+    </script>
 
-	<style>
-		#example {
-			min-height: 370px;
-		}
+    <style>
+        #example {
+            min-height: 370px;
+        }
 
-		#example .box {
-			margin: 0;
-		}
+            #example .box {
+                margin: 0;
+            }
 
-		#show {
-			text-align: center;
-			position: absolute;
-			white-space: nowrap;
-			padding: 1em;
-			cursor: pointer;
-			margin-top: 30px;
-		}
-	</style>
+        #show {
+            text-align: center;
+            position: absolute;
+            white-space: nowrap;
+            padding: 1em;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+    </style>
 </div>
