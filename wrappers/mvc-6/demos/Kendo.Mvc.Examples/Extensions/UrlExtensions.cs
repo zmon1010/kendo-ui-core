@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kendo.Extensions
+namespace Kendo.Mvc.Examples.Extensions
 {
     public static class IUrlHelperExtensions
     {

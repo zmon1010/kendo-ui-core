@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Kendo.Mvc.Examples.Extensions;
 using Kendo.Mvc.Examples.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
@@ -38,8 +39,15 @@ namespace Kendo.Mvc.Examples
                 .AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
+            services
+                .AddDistributedMemoryCache()
+                .AddSession();
+
             // Add Kendo UI services to the services container
             services.AddKendo();
+
+            // Add Deni datavase services to the services container
+            services.AddKendoDemo();
         }
 
         // Configure is called after ConfigureServices is called.
@@ -60,6 +68,8 @@ namespace Kendo.Mvc.Examples
 
             // Add static files to the request pipeline.
             app.UseStaticFiles();
+
+            app.UseSession();
 
             // Add MVC to the request pipeline.
             app.UseMvc(routes =>

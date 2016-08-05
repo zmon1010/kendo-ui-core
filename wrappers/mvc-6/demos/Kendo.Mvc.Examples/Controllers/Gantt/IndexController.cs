@@ -1,33 +1,28 @@
 ﻿using Kendo.Mvc.Examples.Models.Gantt;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class GanttController : Controller
     {
-        private GanttTaskService taskService;
-        private GanttDependencyService dependencyService;
-        private GanttAssignmentService assignmentService;
-        private GanttResourceService resourceService;
+        private IGanttTaskService taskService;
+        private IGanttDependencyService dependencyService;
+        private IGanttAssignmentService assignmentService;
+        private IGanttResourceService resourceService;
 
-        public GanttController()
+        public GanttController(
+            IGanttTaskService ganttTaskService,
+            IGanttDependencyService ganttDependencyService,
+            IGanttResourceService ganttResourceService,
+            IGanttAssignmentService ganttAssignmentService)
         {
-            taskService = new GanttTaskService();
-            dependencyService = new GanttDependencyService();
-            assignmentService = new GanttAssignmentService();
-            resourceService = new GanttResourceService();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            taskService.Dispose();
-            dependencyService.Dispose();
-            assignmentService.Dispose();
-            resourceService.Dispose();
-
-            base.Dispose(disposing);
+            taskService = ganttTaskService;
+            dependencyService = ganttDependencyService;
+            resourceService = ganttResourceService;
+            assignmentService = ganttAssignmentService;
         }
 
         [Demo]
@@ -80,7 +75,7 @@ namespace Kendo.Mvc.Examples.Controllers
         {
             if (ModelState.IsValid)
             {
-                dependencyService.Delete(dependency, ModelState);
+                dependencyService.Delete(dependency);
             }
 
             return Json(new[] { dependency }.ToDataSourceResult(request, ModelState));
@@ -90,7 +85,7 @@ namespace Kendo.Mvc.Examples.Controllers
         {
             if (ModelState.IsValid)
             {
-                dependencyService.Insert(dependency, ModelState);
+                dependencyService.Insert(dependency);
             }
 
             return Json(new[] { dependency }.ToDataSourceResult(request, ModelState));

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Text;
 
-namespace Kendo.Extensions
+namespace Kendo.Mvc.Examples.Extensions
 {
     public static class HtmlExtensions
     {
