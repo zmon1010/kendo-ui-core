@@ -7,6 +7,7 @@
     var fixture;
     var options;
     var initialWidthInPixels;
+    var rows;
     var tableElement;
     var tableWidth;
     var wrapper;
@@ -246,19 +247,19 @@
         }
     });
 
-    test("resizing should not be initialized with element that is different from table", function() {
+    test("should not be initialized with element that is different from table", function() {
         columnResizing = new ColumnResizing(QUnit.fixture, {});
 
         equal(columnResizing.element, undefined);
     });
 
-    test("resizing should be initialized with table element", function() {
+    test("should be initialized with table element", function() {
         columnResizing = new ColumnResizing(tableElement, {});
 
         equal(columnResizing.element, tableElement);
     });
 
-    test("resizing should be initialized with default options", function() {
+    test("should be initialized with default options", function() {
         var defaultOptions = {
             tags: ["td", "th"],
             min: 20,
@@ -278,7 +279,7 @@
         deepEqual(columnResizing.options, defaultOptions);
     });
 
-    test("resizing should be initialized with custom tags", function() {
+    test("should be initialized with custom tags", function() {
         var options = { tags: ["th"] };
 
         columnResizing = new ColumnResizing(tableElement, options);
@@ -286,7 +287,7 @@
         deepEqual(columnResizing.options.tags, ["th"]);
     });
 
-    test("resizing should be initialized with an array of tags", function() {
+    test("should be initialized with an array of tags", function() {
         var options = { tags: "tag" };
 
         columnResizing = new ColumnResizing(tableElement, options);
@@ -304,6 +305,22 @@
         columnResizing = new ColumnResizing(tableElement, { tags: ["th", "td"] });
 
         assertEvent(tableElement, { type: MOUSE_MOVE, selector: "th,td", namespace: NS });
+    });
+
+    test("should set computed style width in pixels to its element", function() {
+        var width = $(tableElement).outerWidth();
+
+        columnResizing = new ColumnResizing(tableElement, {});
+
+        equal(tableElement.style.width, width + PX);
+    });
+
+    test("should not set computed style width in percentages to its element", function() {
+        $(tableElement).width("100%");
+
+        columnResizing = new ColumnResizing(tableElement, {});
+
+        equal(tableElement.style.width, "100%");
     });
 
     module("editor column resizing resize handle", {
@@ -679,7 +696,7 @@
         setup: function() {
             wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
-            columnResizing = new ColumnResizing(tableElement, { rootElement: wrapper });
+            columnResizing = new ColumnResizing(tableElement[0], { rootElement: wrapper });
         },
 
         teardown: function() {
@@ -832,7 +849,7 @@
             tableWidth = $(columnResizing.element).outerWidth();
             cell = $(columnResizing.element).find(FIRST_COLUMN);
             cellIndex = cell.index();
-            initialWidthInPixels = cell.width();
+            initialWidthInPixels = parseFloat(cell[0].style.width);
         },
 
         teardown: function() {
@@ -867,11 +884,11 @@
 
     test("cell width should not be greater than the sum of column and adjacent column width", function() {
         var differenceInPixels = MAX;
-        var adjacentColumnWidthInPixels = cell.next().width();
+        var adjacentColumnWidthInPixels = parseFloat(cell.next()[0].style.width);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
-        equal(cell[0].style.width, (initialWidthInPixels + adjacentColumnWidthInPixels - options.min) + PX, 2);
+        equal(cell[0].style.width, (initialWidthInPixels + adjacentColumnWidthInPixels - options.min) + PX);
     });
 
     test("all columns with the same index in other rows should be resized", function() {
@@ -888,7 +905,7 @@
     test("all columns to the right in other rows should be decreased", function() {
         var rows = $(columnResizing.element).find(ROW);
         var differenceInPixels = 60;
-        var adjacentColumnWidthInPixels = cell.next().width();
+        var adjacentColumnWidthInPixels = parseFloat(cell.next()[0].style.width);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
@@ -900,7 +917,7 @@
     test("all columns to the right in other rows should be increased", function() {
         var rows = $(columnResizing.element).find(ROW);
         var differenceInPixels = (-1) * 60;
-        var adjacentColumnWidthInPixels = cell.next().width();
+        var adjacentColumnWidthInPixels = parseFloat(cell.next()[0].style.width);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
@@ -921,7 +938,7 @@
 
     test("width of all columns to the right in other rows should not be greater than the sum of column and adjacent column width", function() {
         var rows = $(columnResizing.element).find(ROW);
-        var adjacentColumnWidthInPixels = cell.next().width();
+        var adjacentColumnWidthInPixels = parseFloat(cell.next()[0].style.width);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + (-1) * MAX);
 
@@ -1145,6 +1162,7 @@
             tableElement = $(TABLE_WITH_COLUMNS_IN_PIXELS_AND_PERCENTAGES).appendTo(QUnit.fixture)[0];
             columnResizing = new ColumnResizing(tableElement, {});
             options = columnResizing.options;
+            rows = $(columnResizing.element).find(ROW);
         },
 
         teardown: function() {
@@ -1153,16 +1171,59 @@
         }
     });
 
-    test("adjacent columns in pixels should be resized", function() {
-        var cell = $(columnResizing.element).find("tr:first td:nth-child(2)");
+    test("column width in percentages should be resized in percentages", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
         var cellIndex = cell.index();
-        var rows = $(columnResizing.element).find(ROW);
         var differenceInPixels = 20;
         var differenceInPercentages = (differenceInPixels / $(tableElement).outerWidth()) * 100;
         var initialWidthInPixels = cell.width();
-        var initialAdjacentColumnWidths= $.map(getColumnWidths(tableElement, cellIndex + 1), function(item, index) {
+        var initialWidthInPercentages = parseFloat(cell[0].style.width);
+
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
+
+        equal(cell[0].style.width, initialWidthInPercentages + differenceInPercentages + PERCENTAGE);
+    });
+
+    test("top and bottom columns width in percentages should be resized in percentages", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var cellIndex = cell.index();
+        var differenceInPixels = 20;
+        var differenceInPercentages = (differenceInPixels / $(tableElement).outerWidth()) * 100;
+        var initialWidthInPixels = cell.width();
+        var initialWidthInPercentages = parseFloat(cell[0].style.width);
+        var initialAdjacentColumnWidths = $.map(getColumnWidths(tableElement, cellIndex + 1), function(item, index) {
             return (item / $(tableElement).outerWidth() * 100);
         });
+
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
+
+        for (var i = 0; i < rows.length; i++) {
+            equal($(rows[i]).children()[cellIndex].style.width, initialWidthInPercentages + differenceInPercentages + PERCENTAGE);
+        }
+    });
+
+    test("adjacent columns in pixels should be resized in pixels", function() {
+        var cell = $(columnResizing.element).find(SECOND_COLUMN);
+        var cellIndex = cell.index();
+        var differenceInPixels = 20;
+        var differenceInPercentages = (differenceInPixels / $(tableElement).outerWidth()) * 100;
+        var initialWidthInPixels = cell.width();
+        var initialAdjacentColumnWidths = getColumnWidths(tableElement, cellIndex + 1);
+
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
+
+        for (var i = 0; i < rows.length; i++) {
+            equal($(rows[i]).children()[cellIndex + 1].style.width, (initialAdjacentColumnWidths[i] - differenceInPixels) + PX);
+        }
+    });
+
+    test("adjacent columns in percentages should be resized in percentages", function() {
+        var cell = $(columnResizing.element).find(FIRST_COLUMN);
+        var cellIndex = cell.index();
+        var differenceInPixels = 20;
+        var differenceInPercentages = (differenceInPixels / $(tableElement).outerWidth()) * 100;
+        var initialWidthInPixels = cell.width();
+        var initialAdjacentColumnWidths= getColumnWidths(tableElement, cellIndex + 1);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
@@ -1225,7 +1286,7 @@
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
         for (var i = 0; i < rows.length; i++) {
-            equal($(rows[i]).children()[cellIndex].style.width, (initialWidthInPixels + differenceInPixels) + PX);
+            roughlyEqual($(rows[i]).children()[cellIndex].style.width, (initialWidthInPixels + differenceInPixels) + PX, 1);
         }
     });
 
@@ -1293,7 +1354,7 @@
         setup: function() {
             var wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
-            columnResizing = new ColumnResizing(tableElement, { rtl: true });
+            columnResizing = new ColumnResizing(tableElement[0], { rtl: true });
             options = columnResizing.options;
         },
 
@@ -1323,7 +1384,7 @@
         setup: function() {
             wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
-            columnResizing = new ColumnResizing(tableElement, { rtl: true });
+            columnResizing = new ColumnResizing(tableElement[0], { rtl: true });
             options = columnResizing.options;
         },
 
@@ -1393,10 +1454,10 @@
         setup: function() {
             var wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
-            columnResizing = new ColumnResizing(tableElement, { rtl: true });
+            columnResizing = new ColumnResizing(tableElement[0], { rtl: true });
             options = columnResizing.options;
             cell = $(columnResizing.element).find(FIRST_COLUMN);
-            initialWidthInPixels = cell.width();
+            initialWidthInPixels = parseFloat(cell[0].style.width);
         },
 
         teardown: function() {
@@ -1428,11 +1489,11 @@
     });
 
     test("cell width should not be greater than the sum of column and adjacent column width", function() {
-        var adjacentColumnWidthInPixels = cell.next().width();
+        var adjacentColumnWidthInPixels = parseFloat(cell.next()[0].style.width);
 
         resizeColumn(cell, 0, (-1) * MAX, { rtl: true });
 
-        equal(cell[0].style.width, (initialWidthInPixels + adjacentColumnWidthInPixels - options.min) + PX, 2);
+        equal(cell[0].style.width, (initialWidthInPixels + adjacentColumnWidthInPixels - options.min) + PX);
     });
 
     editor_module("editor column resizing initialization", {
