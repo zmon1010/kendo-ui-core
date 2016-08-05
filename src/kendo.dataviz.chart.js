@@ -12489,7 +12489,12 @@ var __meta__ = { // jshint ignore:line
                 that.bind(that.events, that.options);
                 that.wrapper[0].style.cssText = that.wrapper[0].style.cssText;
 
-                that.wrapper.on(MOUSEWHEEL_NS, proxy(that._mousewheel, that));
+                if (that.options.mousewheel !== false) {
+                    that.wrapper.on(MOUSEWHEEL_NS, proxy(that._mousewheel, that));
+                } else {
+                    // Otherwise the mousewheel event will bubble up to the chart
+                    that.wrapper.on(MOUSEWHEEL_NS, function(e) { e.stopPropagation(); });
+                }
 
                 if (kendo.UserEvents) {
                     that.userEvents = new kendo.UserEvents(that.wrapper, {

@@ -395,7 +395,7 @@ var __meta__ = { // jshint ignore:line
                 selectStart: $.proxy(navi._selectStart, navi),
                 select: $.proxy(navi._select, navi),
                 selectEnd: $.proxy(navi._selectEnd, navi),
-                mousewheel: { zoom: "left" },
+                mousewheel: util.valueOrDefault(select.mousewheel, { zoom: "left" }),
                 visible: options.visible
             });
 
@@ -428,10 +428,10 @@ var __meta__ = { // jshint ignore:line
                 to = max;
             }
 
-            this.options.select = {
+            this.options.select = deepExtend({}, select, {
                 from: from,
                 to: to
-            };
+            });
 
             this.filterAxes();
         },
