@@ -3391,7 +3391,7 @@
     {
         "text": "MediaPlayer",
         "name": "mediaplayer",
-        "api": "web/mediaplayer",
+        "api": {"all":"web/mediaplayer"},
         "documentation": {
             "kendo-ui": "getting-started/web/mediaplayer/overview",
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mediaplayer/overview"
