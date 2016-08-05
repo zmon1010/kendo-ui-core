@@ -7,18 +7,12 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SortableController : Controller
     {
-        private ProductService productService;
+        private IProductService productService;
 
-        public SortableController()
+        public SortableController(
+            IProductService service)
         {
-            productService = new ProductService(new SampleEntitiesDataContext());
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            productService.Dispose();
-
-            base.Dispose(disposing);
+            productService = service;
         }
 
         public ActionResult Products_Read([DataSourceRequest] DataSourceRequest request)

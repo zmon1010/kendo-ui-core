@@ -10,6 +10,7 @@ namespace Kendo.Mvc.Examples.Models
     {
         public static IEnumerable<ServiceDescriptor> GetServices()
         {
+            yield return ServiceDescriptor.Scoped<IProductService, ProductService>();
             yield return ServiceDescriptor.Scoped<Gantt.IGanttTaskService, Gantt.GanttTaskService>();
             yield return ServiceDescriptor.Scoped<Gantt.IGanttDependencyService, Gantt.GanttDependencyService>();
             yield return ServiceDescriptor.Scoped<Gantt.IGanttResourceService, Gantt.GanttResourceService>();

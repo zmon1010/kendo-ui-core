@@ -9,18 +9,12 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class PivotGridController : Controller
     {
-        private ProductService productService;
+        private IProductService productService;
 
-        public PivotGridController()
+        public PivotGridController(
+            IProductService service)
         {
-            productService = new ProductService(new SampleEntitiesDataContext());
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            productService.Dispose();
-
-            base.Dispose(disposing);
+            productService = service;
         }
 
         public ActionResult Customers_Read([DataSourceRequest]DataSourceRequest request)

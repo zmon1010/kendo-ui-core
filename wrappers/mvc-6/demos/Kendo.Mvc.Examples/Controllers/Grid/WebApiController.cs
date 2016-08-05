@@ -19,18 +19,12 @@ namespace Kendo.Mvc.Examples.Controllers
 	[Route("api/[controller]")]
     public class ProductController : Controller
     {
-		private readonly ProductService service;
+        private IProductService service;
 
-        public ProductController()
+        public ProductController(
+            IProductService productService)
 		{
-			service = new ProductService(new SampleEntitiesDataContext());
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			service.Dispose();
-
-			base.Dispose(disposing);
+			service = productService;
 		}
 
 		// GET: api/values

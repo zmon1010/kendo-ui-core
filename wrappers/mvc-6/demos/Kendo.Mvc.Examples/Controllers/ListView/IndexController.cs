@@ -10,18 +10,12 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class ListViewController : Controller
     {
-        private ProductService productService;
+        private IProductService productService;
 
-        public ListViewController()
+        public ListViewController(
+            IProductService service)
         {
-            productService = new ProductService(new SampleEntitiesDataContext());
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            productService.Dispose();
-
-            base.Dispose(disposing);
+            productService = service;
         }
 
         [Demo]
