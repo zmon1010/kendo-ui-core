@@ -24,19 +24,19 @@
     });
 
     test("play function should change the icon state", function () {
-        var playButton = div.find("#play.k-button.k-button-icon span");
+        var playButton = mediaPlayer._playButton;
         mediaPlayer.play();
         ok(playButton.hasClass("k-i-pause"));
     });
 
     test("pause function should change the icon state", function () {
-        var playButton = div.find("#play.k-button.k-button-icon span");
+        var playButton = mediaPlayer._playButton;
         mediaPlayer.pause();
         ok(playButton.hasClass("k-i-play"));
     });
 
     test("stop function should change the icon state", function () {
-        var playButton = div.find("#play.k-button.k-button-icon span");
+        var playButton = mediaPlayer._playButton;
         mediaPlayer.stop();
         ok(playButton.hasClass("k-i-play"));
     });

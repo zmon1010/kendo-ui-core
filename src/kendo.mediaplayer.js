@@ -57,7 +57,7 @@
                 titleBar: template("<div class='" + TITLEBAR + "' role='heading'><span class='" + TITLE + "'>Video Title</span></div>"),
                 toolBar: "<div class='" + TOOLBAR + "'> </div>",
                 youtubePlayer: "<div class='" + YTPLAYER + "'> </div>",
-                toolBarTime: "<span id='currentTime'>00:00:00</span> / <span id='duration'>00:00:00</span>",
+                toolBarTime: "<span class='k-mediaplayer-currenttime'>00:00:00</span> / <span class='k-mediaplayer-duration'>00:00:00</span>",
                 slider: "<input class='" + SLIDER + "' value='0' />",
                 volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
                 qualityDropDown: "<input class='" + VIDEO_QUALITY + "' />",
@@ -260,39 +260,37 @@
                         resizable: false,
                         items: [
                             {
-                                id: "seekBarTemplate",
                                 template: templates.slider
                             },
-                            { type: "button", id: "play", spriteCssClass: "k-icon k-font-icon k-i-play" },
+                            { type: "button", spriteCssClass: "k-icon k-font-icon k-i-play" },
                             {
-                                id: "timeTemplate",
                                 template: templates.toolBarTime
                             },
-                            { type: "button", id: "volume", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
+                            { type: "button", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
                             {
-                                id: "volumeTemplate",
                                 template: templates.volumeSlider
                             },
                             {
-                                id: "videoQuality",
                                 template: templates.qualityDropDown
                             },
-                            { type: "button", id: "fullscreen", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" }
+                            { type: "button", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" }
                             ]
                     });
 
-                    toolBarElement.find("#volume").attr("title", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
-                    toolBarElement.find("#fullscreen").attr("title", this.options.messages.fullscreen);
+                    this._volumeButton = toolBarElement.find('span[class*="k-i-volume"]').parent("a");
+                    this._fullscreenButton = toolBarElement.find('span[class*="k-i-fullscreen"]').parent("a");
+                    this._volumeButton.attr("title", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
+                    this._fullscreenButton.attr("title", this.options.messages.fullscreen);
 
                     toolBarElement.width("auto");
-                    this._currentTimeElement = toolBarElement.find("#currentTime");
-                    this._durationElement = toolBarElement.find("#duration");
-                    this._playButton = toolBarElement.find("#play.k-button.k-button-icon span");
+                    this._currentTimeElement = toolBarElement.find(".k-mediaplayer-currenttime");
+                    this._durationElement = toolBarElement.find(".k-mediaplayer-duration");
+                    this._playButton = toolBarElement.find(".k-i-play");
                     if (this.options.autoPlay) {
                         this._playStateToggle(true);
                     }
 
-                    $("#fullscreen, #videoQuality, #volume, #volumeTemplate", toolBarElement).wrapAll("<div class='k-align-right' />");
+                    $([this._volumeButton[0], toolBarElement.find(".k-mediaplayer-volume").parent()[0], toolBarElement.find(".k-mediaplayer-quality").parent()[0], this._fullscreenButton[0]]).wrapAll("<div class='k-align-right' />");
                     $(".k-button", toolBarElement).addClass("k-button-bare");
                 }
             },
@@ -348,7 +346,7 @@
                     return;
                 }
 
-                if (e.id === "play") {
+                if (target.hasClass(STATE_PLAY) || target.hasClass(STATE_PAUSE)) {
                     if (isPaused) {
                         this.play();
                     }
@@ -357,7 +355,7 @@
                     }
                 }
 
-                if (e.id === "fullscreen") {
+                if (target.hasClass(FULLSCREEN_ENTER) || target.hasClass(FULLSCREEN_EXIT)) {
                     if (this._isInFullScreen) {
                         target
                             .removeClass(FULLSCREEN_EXIT)
@@ -371,7 +369,7 @@
                     }
                 }
 
-                if (e.id === "volume") {
+                if (target.hasClass(MUTE) || target.hasClass(LOW_VOLUME) || target.hasClass(HIGH_VOLUME)) {
                     var muted = (this._media && this._media.muted) || (this._ytmedia && this._ytmedia.isMuted());
                     this.mute(!muted);
                 }
@@ -415,9 +413,9 @@
             },
 
             _changeVolumeButtonImage: function (volume) {
-                var volumeButton = this.toolbar().element.find("#volume");
-                var volumeElement = this.toolbar().element.find("#volume > span");
-                var cssClass = this.toolbar().element.find("#volume > span").attr("class");
+                var volumeButton = this._volumeButton;
+                var volumeElement = volumeButton.find("span");
+                var cssClass = volumeElement.attr("class");
                 cssClass = cssClass.substring(0, cssClass.lastIndexOf(" "));
 
                 if (volume === 0) {
@@ -942,7 +940,7 @@
 
             mute: function (muted) {
                 if (typeof muted === 'undefined') {
-                    return (this._media && this._media.muted) || this._ytmedia.isMuted();
+                    return (this._media && this._media.muted) || (this._ytmedia && this._ytmedia.isMuted());
                 }
                 if (this._youTubeVideo) {
                     if (muted) {
@@ -1054,7 +1052,7 @@
                     
                 }
                 if (e.keyCode === 77) {
-                    var muted = (this._media && this._media.muted) || this._ytmedia.isMuted();
+                    var muted = (this._media && this._media.muted) || (this._ytmedia && this._ytmedia.isMuted());
                     this.mute(!muted);
                 }
             },

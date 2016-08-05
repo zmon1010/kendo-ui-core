@@ -48,21 +48,15 @@
     });
 
     test("adds play/pause toolbar button", function () {
-        ok(mediaPlayer.toolbar().options.items.find(function (el) {
-            return el.id === "play";
-        }));
+        ok(mediaPlayer._playButton.is(".k-i-play"));
     });
 
     test("adds volume toolbar button", function () {
-        ok(mediaPlayer.toolbar().options.items.find(function (el) {
-            return el.id === "volume";
-        }));
+        ok(mediaPlayer._volumeButton.children().is('[class*="k-i-volume"]'));
     });
 
     test("adds dropdown template to toolbar", function () {
-        ok(mediaPlayer.toolbar().options.items.find(function (el) {
-            return el.id === "videoQuality";
-        }));
+        ok(mediaPlayer.dropdown().span.siblings().children().is(".k-i-HD"));
     });
 
     test("adds dropdown widget to toolbar", function () {
@@ -74,9 +68,7 @@
     });
 
     test("adds fullscreen toolbar button", function () {
-        ok(mediaPlayer.toolbar().options.items.find(function (el) {
-            return el.id === "fullscreen";
-        }));
+        ok(mediaPlayer._fullscreenButton.children().is('[class*="k-i-fullscreen"]'));
     });
 
     test("adds kendo toolbar", function () { 
