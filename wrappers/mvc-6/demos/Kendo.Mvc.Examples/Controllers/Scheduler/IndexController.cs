@@ -7,14 +7,15 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SchedulerController : Controller
     {
-        private SchedulerTaskService taskService;
-        private SchedulerMeetingService meetingService;
+        private ISchedulerEventService<TaskViewModel> taskService;
+        private ISchedulerEventService<MeetingViewModel> meetingService;
 
-
-        public SchedulerController()
+        public SchedulerController(
+            ISchedulerEventService<TaskViewModel> schedulerTaskService,
+            ISchedulerEventService<MeetingViewModel> schedulerMeetingService)
         {
-            this.taskService = new SchedulerTaskService();
-            this.meetingService = new SchedulerMeetingService();
+            taskService = schedulerTaskService;
+            meetingService = schedulerMeetingService;
         }
 
         [Demo]
@@ -62,13 +63,6 @@ namespace Kendo.Mvc.Examples.Controllers
             }
 
             return Json(new[] { task }.ToDataSourceResult(request, ModelState));
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            taskService.Dispose();
-            meetingService.Dispose();
-            base.Dispose(disposing);
         }
     }
 }
