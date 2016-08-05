@@ -11,7 +11,7 @@
             actions.Add().Text("Remind me later");
             actions.Add().Text("Install update").Primary(true);
         })
-        .Events(ev => ev.Close("onClose"))
+        .Events(ev => ev.Close("onClose").Open("onOpen"))
     )
 
     @(Html.Kendo().Button()
@@ -25,6 +25,10 @@
 <script>
     function onClose() {
         $("#showDialogBtn").fadeIn();
+    }
+
+    function onOpen() {
+        $("#showDialogBtn").fadeOut();
     }
 
     function showDialog() {
