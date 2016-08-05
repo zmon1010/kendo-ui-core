@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class MediaPlayerController : Controller
     {
+        [Demo]
         public ActionResult Events()
         {
             return View();

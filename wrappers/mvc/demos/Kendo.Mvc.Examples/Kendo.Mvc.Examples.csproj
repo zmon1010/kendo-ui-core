@@ -981,12 +981,6 @@
     <Content Include="Views\gantt\api.cshtml" />
     <Content Include="Views\gantt\events.cshtml" />
     <Content Include="Views\treemap\index.cshtml" />
-    <Content Include="Views\mediaplayer\index.aspx" />
-    <Content Include="Views\mediaplayer\playlist.aspx" />
-    <Content Include="Views\mediaplayer\api.aspx" />
-    <Content Include="Views\mediaplayer\events.aspx" />
-    <Content Include="Views\mediaplayer\index.aspx" />
-    <Content Include="Views\mediaplayer\playlist.aspx" />
     <Content Include="Content\dataviz\Black\markers.png" />
     <Content Include="Content\dataviz\Black\markers_2x.png" />
     <Content Include="Content\dataviz\BlueOpal\markers.png" />
@@ -2947,6 +2941,10 @@
     <Content Include="Areas\razor\Views\mediaplayer\playlist.cshtml" />
     <Content Include="Areas\razor\Views\mediaplayer\api.cshtml" />
     <Content Include="Areas\razor\Views\mediaplayer\events.cshtml" />
+    <Content Include="Views\mediaplayer\api.cshtml" />
+    <Content Include="Views\mediaplayer\events.cshtml" />
+    <Content Include="Views\mediaplayer\index.cshtml" />
+    <Content Include="Views\mediaplayer\playlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

@@ -833,6 +833,7 @@
   </data>
   <data name="Editor_Print" xml:space="preserve">
     <value>Print</value>
+  </data>
   <data name="MediaPlayer_Fullscreen" xml:space="preserve">
     <value>Full Screen</value>
   </data>
