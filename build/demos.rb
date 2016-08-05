@@ -218,11 +218,9 @@ PRODUCTION_RESOURCES = FileList['demos/mvc/**/*']
             .include('demos/mvc/bin/Kendo.dll')
             .include(FileList[SPREADSHEET_REDIST_NET40].pathmap("demos/mvc/bin/%f"))
 
-MVC_RAZOR_VIEWS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Areas/**/*.cshtml']
+MVC_VIEWS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Views/**/*.cshtml']
                     .exclude('**/Shared/**/*')
                     .exclude('**/_ViewStart.cshtml')
-
-MVC_ASPX_VIEWS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Areas/**/*.as*x']
 
 MVC_CONTROLLERS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Controllers/**/*.cs']
 
@@ -264,13 +262,9 @@ PHP = FileList['wrappers/php/**/*.php']
          :from => MVC_MODELS,
          :root => 'wrappers/mvc/demos/Kendo.Mvc.Examples/Models'
 
-    tree :to => "dist/demos/#{flavor}/src/aspnetmvc/views/aspx",
-         :from => MVC_ASPX_VIEWS,
-         :root => /wrappers\/mvc\/demos\/Kendo\.Mvc\.Examples\/Areas\/.+?\/Views\//
-
-    tree :to => "dist/demos/#{flavor}/src/aspnetmvc/views/razor",
-         :from => MVC_RAZOR_VIEWS,
-         :root => /wrappers\/mvc\/demos\/Kendo\.Mvc\.Examples\/Areas\/.+?\/Views\//
+    tree :to => "dist/demos/#{flavor}/src/aspnetmvc/views",
+         :from => MVC_VIEWS,
+         :root => /wrappers\/mvc\/demos\/Kendo\.Mvc\.Examples\/Views\//
 end
 
 tree :to => 'dist/demos/staging/content/cdn/js',

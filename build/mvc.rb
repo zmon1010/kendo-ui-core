@@ -565,7 +565,7 @@ end
 
         if vs == 'VS2013' || vs == 'VS2015'
 
-            ['Web.config', 'Views/Web.config', 'Areas/aspx/Views/Web.config', 'Areas/razor/Views/Web.config'].each do |config|
+            ['Web.config', 'Views/Web.config'].each do |config|
 
                 file_copy :to => "dist/bundles/aspnetmvc.#{license}/wrappers/aspnetmvc/Examples/#{vs}/Kendo.Mvc.Examples/#{config}",
                           :from => "wrappers/mvc/demos/Kendo.Mvc.Examples/#{config}"
