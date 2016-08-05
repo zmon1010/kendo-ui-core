@@ -873,6 +873,81 @@
         "category": "Editors"
     },
     {
+      "text": "Dialog",
+      "name": "dialog",
+      "api": "web/dialog",
+      "isNew":  true,
+      "documentation": {
+        "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dialog/overview"
+      },
+      "forum": {
+        "aspnet-mvc": "aspnet-mvc/dialog"
+      },
+      "codelibrary": {
+        "aspnet-mvc": "aspnet-mvc/dialog"
+      },
+      "spriteCssClass": "dialogIcon",
+      "items": [
+        {
+          "text": "Basic usage",
+          "url": "dialog/index",
+          "title": {
+            "aspnet-mvc": "Basic usage demo for ASP.NET MVC Dialog | UI for ASP.NET MVC Demos"
+          },
+          "description": {
+            "aspnet-mvc": "<p>The <strong>Telerik Dialog for ASP.NET MVC</strong> is a modal popup that brings information to the user. It also provides actions through the action buttons to prompt the user for input or to ask for a decision. The component can also contain more complex UI elements that require the focus of the user. The Dialog control is a subset of the <a href=\"http://www.telerik.com/kendo-ui/window\" target=\"_blank\">Window</a> one where the most prominent difference is the added functionality for actions.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Fully customizable visual appearance of the dialog title and body</li><li>Support for rich text content</li><li>Predefined Alert, Confirm, and Prompt Dialogs</li><li>Built-in modality and animations</li><li>Ability to create and add custom actions (buttons) at the bottom of the dialog</li><li>Rich API for maximum flexibility</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li><li>Rich cross-browser and mobile support</li></ul>"
+          },
+          "meta": {
+            "aspnet-mvc": "This example demonstrates the basic usage of ASP.NET MVC Dialog control"
+          }
+        },
+        {
+          "text": "Events",
+          "url": "dialog/events",
+          "title": {
+            "aspnet-mvc": "Events in ASP.NET MVC Dialog demo"
+          },
+          "meta": {
+            "aspnet-mvc": "This demo shows how to fire events in ASP.NET MVC dialog control. Open and close are some of the events which you can trigger."
+          },
+          "requiresServer": "true"
+        },
+        {
+          "text": "API",
+          "url": "dialog/api",
+          "title": {
+            "aspnet-mvc": "Example of ASP.NET MVC Dialog API"
+          },
+          "meta": {
+            "kendo-ui": "This sample shows how you can use the API of kendoDialog widget to refresh the content of the dialog, open and close it.",
+            "aspnet-mvc": "This sample shows how you can use the API of ASP.NET MVC Dialog control to refresh the content of the dialog, open and close it."
+          },
+          "requiresServer": "true"
+        },
+        {
+          "text": "RTL support",
+          "url": "dialog/right-to-left-support",
+          "title": {
+            "aspnet-mvc": "Right-to-Left dialog position of ASP.NET MVC Dialog control"
+          },
+          "meta": {
+            "aspnet-mvc": "This demo shows how ASP.NET MVC Dialog control supports right-to-left direction of the dialog to provide best end-user experience."
+          }
+        },
+        {
+          "text": "Keyboard navigation",
+          "url": "dialog/keyboard-navigation",
+          "title": {
+            "aspnet-mvc": "Keyboard navigation support | ASP.NET MVC Dialog Demo"
+          },
+          "meta": {
+            "aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the ASP.NET MVC Dialog control."
+          }
+        }
+      ],
+      "category": "Layout"
+    },
+    {
         "text": "Editor",
         "name": "editor",
         "api": "web/editor",
