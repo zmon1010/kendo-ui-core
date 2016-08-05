@@ -63,6 +63,14 @@ public class CategoryAxisItemCrosshairTag extends  BaseTag  /* interfaces */ /* 
         setProperty("color", value);
     }
 
+    public java.lang.String getDashType() {
+        return (java.lang.String)getProperty("dashType");
+    }
+
+    public void setDashType(java.lang.String value) {
+        setProperty("dashType", value);
+    }
+
     public float getOpacity() {
         return (Float)getProperty("opacity");
     }

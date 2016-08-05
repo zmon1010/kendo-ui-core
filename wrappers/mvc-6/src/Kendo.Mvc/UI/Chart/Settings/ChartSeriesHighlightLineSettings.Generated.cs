@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartSeriesHighlightLineSettings<T> where T : class 
     {
+        public ChartDashType? DashType { get; set; }
+
         public string Color { get; set; }
 
         public double? Opacity { get; set; }
@@ -23,6 +25,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (DashType.HasValue)
+            {
+                settings["dashType"] = DashType?.Serialize();
+            }
 
             if (Color?.HasValue() == true)
             {

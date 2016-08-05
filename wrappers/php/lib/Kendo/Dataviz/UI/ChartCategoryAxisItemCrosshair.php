@@ -15,6 +15,15 @@ class ChartCategoryAxisItemCrosshair extends \Kendo\SerializableObject {
     }
 
     /**
+    * The dash type of the crosshair.The following dash types are supported:
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\ChartCategoryAxisItemCrosshair
+    */
+    public function dashType($value) {
+        return $this->setProperty('dashType', $value);
+    }
+
+    /**
     * The opacity of the crosshair. By default the crosshair is opaque.
     * @param float $value
     * @return \Kendo\Dataviz\UI\ChartCategoryAxisItemCrosshair
