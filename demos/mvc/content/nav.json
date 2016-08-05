@@ -1613,6 +1613,16 @@
           "kendo-ui": "The sample demonstrates how the keyboard navigation feature is integrated in the Kendo UI Dialog.",
           "aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the ASP.NET MVC Dialog control."
         }
+      },
+      {
+          "text": "Tag Helper",
+          "url": "dialog/tag-helper",
+          "title": {
+              "aspnet-mvc": "ASP.NET MVC Dialog Tag Helper sample"
+          },
+          "packages": [
+              "mvc-core"
+          ]
       }
     ],
     "category": "Layout"
