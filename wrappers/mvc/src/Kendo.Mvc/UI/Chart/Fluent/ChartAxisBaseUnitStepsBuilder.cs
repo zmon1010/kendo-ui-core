@@ -17,6 +17,35 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The discrete BaseUnitStep values when BaseUnit is set to Milliseconds and
+        /// BaseUnitStep is set to 0 (auto).
+        /// </summary>
+        /// <param name="steps">The discrete steps when BaseUnit is set to Milliseconds.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Chart()
+        ///     .Name("chart")
+        ///     .Title("Units sold")
+        ///     .Series(series => {
+        ///         series
+        ///             .Column(new int[] { 20, 40, 45, 30, 50 });
+        ///     })
+        ///     .CategoryAxis(axis => axis
+        ///         .Date()
+        ///         .BaseUnit(ChartAxisBaseUnit.Fit)
+        ///         .AutoBaseUnitSteps(steps => steps.Milliseconds(1, 2))
+        ///     )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ChartAxisBaseUnitStepsBuilder Milliseconds(params int[] steps)
+        {
+            baseUnitSteps.Milliseconds = steps;
+
+            return this;
+        }
+
+        /// <summary>
         /// The discrete BaseUnitStep values when BaseUnit is set to Seconds and
         /// BaseUnitStep is set to 0 (auto).
         /// </summary>
@@ -37,7 +66,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///     )
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartAxisBaseUnitStepsBuilder Seconds(params int[] steps)
         {
             baseUnitSteps.Seconds = steps;
@@ -66,7 +95,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///     )
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartAxisBaseUnitStepsBuilder Minutes(params int[] steps)
         {
             baseUnitSteps.Minutes = steps;
@@ -95,7 +124,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///     )
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartAxisBaseUnitStepsBuilder Hours(params int[] steps)
         {
             baseUnitSteps.Hours = steps;
@@ -124,7 +153,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///     )
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartAxisBaseUnitStepsBuilder Days(params int[] steps)
         {
             baseUnitSteps.Days = steps;
@@ -153,7 +182,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///     )
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartAxisBaseUnitStepsBuilder Weeks(params int[] steps)
         {
             baseUnitSteps.Weeks = steps;
@@ -182,7 +211,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///     )
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartAxisBaseUnitStepsBuilder Months(params int[] steps)
         {
             baseUnitSteps.Months = steps;
@@ -211,7 +240,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///     )
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartAxisBaseUnitStepsBuilder Years(params int[] steps)
         {
             baseUnitSteps.Years = steps;

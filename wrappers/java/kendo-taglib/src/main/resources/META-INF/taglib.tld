@@ -1057,6 +1057,12 @@ maxDateGroups.</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>The milliseconds unit steps.</description>
+            <name>milliseconds</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The minutes unit steps.</description>
             <name>minutes</name>
             <rtexprvalue>true</rtexprvalue>
