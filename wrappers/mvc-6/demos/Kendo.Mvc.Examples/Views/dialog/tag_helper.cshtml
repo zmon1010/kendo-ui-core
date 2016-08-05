@@ -1,0 +1,39 @@
+﻿@addTagHelper *, Kendo.Mvc
+
+<div id="example">
+    <kendo-dialog name="dialog" 
+                  title="Software Update" 
+                  width="400" 
+                  modal="false" 
+                  on-close="onClose" 
+                  on-open="onOpen">
+        <p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>
+    </kendo-dialog>
+
+    <kendo-button name="showDialogBtn"
+                  class="hide-on-narrow"
+                  style = "display:none;"
+                  on-click="showDialog">
+        Click here to open the dialog
+    </kendo-button>
+</div>
+
+<script>
+    function onClose() {
+        $("#showDialogBtn").fadeIn();
+    }
+
+    function onOpen() {
+        $("#showDialogBtn").fadeOut();
+    }
+
+    function showDialog() {
+        $('#dialog').data("kendoDialog").open();
+    }
+</script>
+
+<style>
+    #example {
+        min-height: 350px;
+    }
+</style>

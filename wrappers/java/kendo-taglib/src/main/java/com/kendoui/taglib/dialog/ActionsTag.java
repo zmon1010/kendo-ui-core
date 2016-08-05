@@ -23,6 +23,10 @@ public class ActionsTag extends BaseTag /* interfaces */ /* interfaces */ {
 //>> doEndTag
 //<< doEndTag
 
+        DialogTag parent = (DialogTag)findParentWithClass(DialogTag.class);
+
+        parent.setActions(this);
+
         return super.doEndTag();
     }
 

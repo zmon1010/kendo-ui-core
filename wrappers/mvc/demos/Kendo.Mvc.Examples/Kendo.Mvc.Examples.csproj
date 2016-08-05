@@ -228,6 +228,11 @@
     <Compile Include="Controllers\DataSource\Shared_DatasourceController.cs" />
     <Compile Include="Controllers\DatePicker\DisableDatesController.cs" />
     <Compile Include="Controllers\DateTimePicker\DisableDatesController.cs" />
+    <Compile Include="Controllers\Dialog\Right_to_Left_SupportController.cs" />
+    <Compile Include="Controllers\Dialog\Keyboard_NavigationController.cs" />
+    <Compile Include="Controllers\Dialog\EventsController.cs" />
+    <Compile Include="Controllers\Dialog\ApiController.cs" />
+    <Compile Include="Controllers\Dialog\IndexController.cs" />
     <Compile Include="Controllers\Editor\Immutable_ElementsController.cs" />
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
@@ -2922,6 +2927,11 @@
     <Content Include="Views\Shared\WebSearchScript.cshtml" />
     <Content Include="Views\Shared\ExampleLayout.cshtml" />
     <Content Include="Views\Shared\ThemeChooser.cshtml" />
+    <Content Include="Views\dialog\index.cshtml" />
+    <Content Include="Views\dialog\events.cshtml" />
+    <Content Include="Views\dialog\api.cshtml" />
+    <Content Include="Views\dialog\right_to_left_support.cshtml" />
+    <Content Include="Views\dialog\keyboard_navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

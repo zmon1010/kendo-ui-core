@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,7 +63,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>False</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>bin\System.Web.Mvc.dll</HintPath>
@@ -1227,6 +1229,14 @@
     <Content Include="Views\demos\editor\paste-cleanup.cshtml" />
     <Content Include="Views\demos\drawing\tooltip.cshtml" />
     <Content Include="Views\demos\editor\immutable-elements.cshtml" />
+    <Content Include="Views\demos\dialog\index.cshtml" />
+    <Content Include="Views\demos\dialog\predefined-dialogs.cshtml" />
+    <Content Include="Views\demos\dialog\mvvm.cshtml" />
+    <Content Include="Views\demos\dialog\angular.cshtml" />
+    <Content Include="Views\demos\dialog\events.cshtml" />
+    <Content Include="Views\demos\dialog\api.cshtml" />
+    <Content Include="Views\demos\dialog\right-to-left-support.cshtml" />
+    <Content Include="Views\demos\dialog\keyboard-navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
