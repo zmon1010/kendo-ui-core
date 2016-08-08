@@ -1472,7 +1472,7 @@
     "text": "Dialog",
     "name": "dialog",
     "api": { "all": "web/dialog" },
-    "isNew":  true,
+    "new":  true,
     "documentation": {
       "kendo-ui": "getting-started/web/dialog/overview",
       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dialog/overview",
