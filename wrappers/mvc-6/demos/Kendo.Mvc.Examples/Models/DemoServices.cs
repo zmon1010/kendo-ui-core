@@ -18,6 +18,7 @@ namespace Kendo.Mvc.Examples.Models
             yield return ServiceDescriptor.Scoped<ISchedulerEventService<TaskViewModel>, SchedulerTaskService>();
             yield return ServiceDescriptor.Scoped<ISchedulerEventService<MeetingViewModel>, SchedulerMeetingService>();
             yield return ServiceDescriptor.Scoped<ISpreadsheetProductService, SpreadsheetProductService>();
+            yield return ServiceDescriptor.Scoped<TreeList.IEmployeeDirectoryService, TreeList.EmployeeDirectoryService>();
         }
     }
 }
