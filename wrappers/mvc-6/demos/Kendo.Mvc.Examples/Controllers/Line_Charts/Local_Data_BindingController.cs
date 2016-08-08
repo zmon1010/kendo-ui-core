@@ -5,6 +5,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Line_ChartsController : Controller
     {
+        [Demo]
         public IActionResult Local_Data_Binding()
         {
             return View(ChartDataRepository.InternetUsers());

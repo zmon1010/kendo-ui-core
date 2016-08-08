@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Range_Bar_ChartsController : Controller
     {
+        [Demo]
         public IActionResult Local_Data_Binding()
         {
             var viewModel = new List<RangeBarChartsLocalDataViewModel>();

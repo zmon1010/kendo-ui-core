@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Bubble_ChartsController : Controller
     {
+        [Demo]
         public IActionResult Grouped_Data()
         {
             return View();

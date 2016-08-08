@@ -873,6 +873,7 @@
         "category": "Editors"
     },
     {
+<<<<<<< 1cd8cda5d8f1a5e7e5d010bc7c979d775765b1ec
       "text": "Dialog",
       "name": "dialog",
       "api": "web/dialog",
@@ -958,6 +959,8 @@
       "category": "Layout"
     },
     {
+=======
+>>>>>>> Update kendo MVC Core demos website
         "text": "Editor",
         "name": "editor",
         "api": "web/editor",

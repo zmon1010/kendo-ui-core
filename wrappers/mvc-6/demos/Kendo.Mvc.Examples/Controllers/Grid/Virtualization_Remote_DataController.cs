@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class GridController : Controller
     {
+        [Demo]
         public ActionResult Virtualization_Remote_Data()
         {
             return View();

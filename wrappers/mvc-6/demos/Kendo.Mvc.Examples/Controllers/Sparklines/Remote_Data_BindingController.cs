@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SparklinesController : Controller
     {
+        [Demo]
         public IActionResult Remote_Data_Binding()
         {
             return View();

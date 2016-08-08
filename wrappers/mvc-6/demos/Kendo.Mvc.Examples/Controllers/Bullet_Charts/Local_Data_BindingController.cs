@@ -5,6 +5,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Bullet_ChartsController : Controller
     {
+        [Demo]
         public IActionResult Local_Data_Binding()
         {
             var model = new BulletChartLocalDataViewModel();

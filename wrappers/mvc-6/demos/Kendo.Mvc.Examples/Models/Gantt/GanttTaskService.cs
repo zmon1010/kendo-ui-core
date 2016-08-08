@@ -2,54 +2,81 @@
 using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Kendo.Mvc.Examples.Extensions;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.Examples.Models.Gantt
 {
-    public class GanttTaskService
+    public class GanttTaskService : IGanttTaskService, IDisposable
     {
+        private static bool UpdateDatabase = false;
         private SampleEntitiesDataContext db;
+        private ISession _session;
 
-        public GanttTaskService(SampleEntitiesDataContext context)
+        public ISession Session { get { return _session; } }
+
+        public GanttTaskService(IHttpContextAccessor httpContextAccessor, SampleEntitiesDataContext context)
         {
             db = context;
+            _session = httpContextAccessor.HttpContext.Session;
         }
 
-        public GanttTaskService()
-            : this(new SampleEntitiesDataContext())
+        public virtual IList<TaskViewModel> GetAll()
         {
-        }
+            var result = Session.GetObjectFromJson<IList<TaskViewModel>>("GanttTasks");
 
-        public virtual IQueryable<TaskViewModel> GetAll()
-        {
-            return db.GanttTasks.ToList().Select(task => new TaskViewModel
+            if (result == null || UpdateDatabase)
             {
-                TaskID = task.ID,
-                Title = task.Title,
-                Start = DateTime.SpecifyKind(task.Start, DateTimeKind.Utc),
-                End = DateTime.SpecifyKind(task.End, DateTimeKind.Utc),
-                ParentID = task.ParentID,
-                PercentComplete = task.PercentComplete,
-                OrderId = task.OrderID,
-                Expanded = task.Expanded,
-                Summary = task.Summary
-            }).AsQueryable();  
+                result = db.GanttTasks.ToList().Select(task => new TaskViewModel
+                {
+                    TaskID = task.ID,
+                    Title = task.Title,
+                    Start = DateTime.SpecifyKind(task.Start, DateTimeKind.Utc),
+                    End = DateTime.SpecifyKind(task.End, DateTimeKind.Utc),
+                    ParentID = task.ParentID,
+                    PercentComplete = task.PercentComplete,
+                    OrderId = task.OrderID,
+                    Expanded = task.Expanded,
+                    Summary = task.Summary
+                }).ToList();
+
+                Session.SetObjectAsJson("GanttTasks", result);
+            }
+
+            return result;
         }
 
         public virtual void Insert(TaskViewModel task, ModelStateDictionary modelState)
         {
             if (ValidateModel(task, modelState))
             {
-                if (string.IsNullOrEmpty(task.Title))
+                if (!UpdateDatabase)
                 {
-                    task.Title = "";
+                    var tasks = GetAll();
+                    var first = tasks.OrderByDescending(e => e.TaskID).FirstOrDefault();
+                    var id = (first != null) ? first.TaskID : 0;
+
+                    task.TaskID = id + 1;
+
+                    tasks.Insert(0, task);
+
+                    Session.SetObjectAsJson("GanttTasks", tasks);
                 }
+                else
+                {
+                    if (string.IsNullOrEmpty(task.Title))
+                    {
+                        task.Title = "";
+                    }
 
-                var entity = task.ToEntity();
+                    var entity = task.ToEntity();
 
-                db.GanttTasks.Add(entity);
-                db.SaveChanges();
+                    db.GanttTasks.Add(entity);
+                    db.SaveChanges();
 
-                task.TaskID = entity.ID;
+                    task.TaskID = entity.ID;
+                }
             }
         }
 
@@ -57,37 +84,87 @@ namespace Kendo.Mvc.Examples.Models.Gantt
         {
             if (ValidateModel(task, modelState))
             {
-                if (string.IsNullOrEmpty(task.Title))
+                if (!UpdateDatabase)
                 {
-                    task.Title = "";
-                }
+                    var tasks = GetAll();
+                    var target = tasks.FirstOrDefault(e => e.TaskID == task.TaskID);
 
-                var entity = task.ToEntity();
-                db.GanttTasks.Attach(entity);
-                db.Entry(entity).State = EntityState.Modified;
-                db.SaveChanges();
+                    if (target != null)
+                    {
+                        target.Title = task.Title;
+                        target.Start = task.Start;
+                        target.End = task.End;
+                        target.PercentComplete = task.PercentComplete;
+                        target.OrderId = task.OrderId;
+                        target.ParentID = task.ParentID;
+                        target.Summary = task.Summary;
+                        target.Expanded = task.Expanded;
+                    }
+
+                    Session.SetObjectAsJson("GanttTasks", tasks);
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(task.Title))
+                    {
+                        task.Title = "";
+                    }
+
+                    var entity = task.ToEntity();
+                    db.GanttTasks.Attach(entity);
+                    db.Entry(entity).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
 
         public virtual void Delete(TaskViewModel task, ModelStateDictionary modelState)
         {
-            var entity = task.ToEntity();
-            db.GanttTasks.Attach(entity);
+            if (!UpdateDatabase)
+            {
+                var tasks = GetAll();
+                var target = tasks.FirstOrDefault(e => e.TaskID == task.TaskID);
 
-            Delete(entity);
+                if (target != null)
+                {
+                    DeleteSessionChildren(target, tasks);
 
-            db.GanttTasks.Remove(entity);
-            db.SaveChanges();
+                    tasks.Remove(target);
+                }
+
+                Session.SetObjectAsJson("GanttTasks", tasks);
+            }
+            else
+            {
+                var entity = task.ToEntity();
+                db.GanttTasks.Attach(entity);
+
+                DeleteEntityChildren(entity);
+
+                db.GanttTasks.Remove(entity);
+                db.SaveChanges();
+            }
         }
 
-        private void Delete(GanttTask task)
+        private void DeleteEntityChildren(GanttTask task)
         {
             var childTasks = db.GanttTasks.Where(t => t.ParentID == task.ID);
 
             foreach (var childTask in childTasks)
             {
-                Delete(childTask);
+                DeleteEntityChildren(childTask);
                 db.GanttTasks.Remove(childTask);
+            }
+        }
+
+        private void DeleteSessionChildren(TaskViewModel task, IList<TaskViewModel> tasks)
+        {
+            var childTasks = tasks.Where(t => t.ParentID == task.TaskID).ToList();
+
+            foreach (var childTask in childTasks)
+            {
+                DeleteSessionChildren(childTask, tasks);
+                tasks.Remove(childTask);
             }
         }
 

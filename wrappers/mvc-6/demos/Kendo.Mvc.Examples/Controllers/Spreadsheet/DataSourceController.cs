@@ -10,19 +10,15 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SpreadsheetController : Controller
     {
-        private SpreadsheetProductService productService;
+        private ISpreadsheetProductService productService;
 
-        public SpreadsheetController()
+        public SpreadsheetController(
+            ISpreadsheetProductService service)
         {
-            productService = new SpreadsheetProductService(new SampleEntitiesDataContext());
+            productService = service;
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            productService.Dispose();
-
-            base.Dispose(disposing);
-        }
+        [Demo]
         public ActionResult DataSource()
         {
             return View();

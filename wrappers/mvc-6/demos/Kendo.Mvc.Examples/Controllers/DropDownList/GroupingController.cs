@@ -9,6 +9,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class DropDownListController : Controller
     {
+        [Demo]
         public ActionResult Grouping()
         {
             return View();

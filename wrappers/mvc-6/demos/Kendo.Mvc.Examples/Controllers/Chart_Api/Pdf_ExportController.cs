@@ -5,6 +5,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Chart_ApiController : Controller
     {
+        [Demo]
         public IActionResult Pdf_Export()
         {
             return View();

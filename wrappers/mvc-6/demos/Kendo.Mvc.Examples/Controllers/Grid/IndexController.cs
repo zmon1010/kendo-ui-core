@@ -9,21 +9,16 @@ namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class GridController : Controller
     {
-		private ProductService productService;
+        private IProductService productService;
 
-		public GridController()
-		{
-			productService = new ProductService(new SampleEntitiesDataContext());
+        public GridController(
+            IProductService service)
+        {
+			productService = service;
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			productService.Dispose();
-
-			base.Dispose(disposing);
-		}
-
-		public IActionResult Index()
+        [Demo]
+        public IActionResult Index()
         {
             return View();
         }

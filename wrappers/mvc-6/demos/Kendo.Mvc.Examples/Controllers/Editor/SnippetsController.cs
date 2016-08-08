@@ -19,6 +19,7 @@ namespace Kendo.Mvc.Examples.Controllers
             HostingEnvironment = hostingEnvironment;
         }
 
+        [Demo]
         public IActionResult Snippets()
         {
             ViewData["path"] = Path.Combine(HostingEnvironment.WebRootPath, "/Snippets/snippet.html");

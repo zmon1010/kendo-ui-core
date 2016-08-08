@@ -7,19 +7,15 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class DataSourceController : Controller
     {
-        private ProductService productService;
+        private IProductService productService;
 
-        public DataSourceController()
+        public DataSourceController(
+            IProductService service)
         {
-            productService = new ProductService(new SampleEntitiesDataContext());
+            productService = service;
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            productService.Dispose();
-            base.Dispose(disposing);
-        }
-
+        [Demo]
         public ActionResult Shared_Datasource()
         {
             return View();

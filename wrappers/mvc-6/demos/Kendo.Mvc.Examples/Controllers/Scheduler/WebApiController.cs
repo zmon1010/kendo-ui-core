@@ -10,6 +10,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SchedulerController
     {
+        [Demo]
         public IActionResult WebApi()
         {
             return View();
@@ -19,11 +20,12 @@ namespace Kendo.Mvc.Examples.Controllers
     [Route("api/[controller]")]
     public class TaskController : Controller
     {
-        private readonly SchedulerTaskService service;
+        private readonly ISchedulerEventService<TaskViewModel> service;
 
-        public TaskController()
+        public TaskController(
+            ISchedulerEventService<TaskViewModel> schedulerTaskService)
         {
-            service = new SchedulerTaskService(new SampleEntitiesDataContext());
+            service = schedulerTaskService;
         }
 
         protected override void Dispose(bool disposing)

@@ -9,20 +9,21 @@ namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class EmployeeDirectoryController : Controller
     {
-        private EmployeeDirectoryService employeeDirectory;
+        private IEmployeeDirectoryService employeeDirectory;
 
-        public EmployeeDirectoryController()
+        public EmployeeDirectoryController(
+            IEmployeeDirectoryService service)
         {
-            employeeDirectory = new EmployeeDirectoryService(new SampleEntitiesDataContext());
+            employeeDirectory = service;
         }
 
         public JsonResult Index([DataSourceRequest] DataSourceRequest request, int? id)
         {
             var result = GetDirectory().ToTreeDataSourceResult(request,
-                e => e.EmployeeID,
+                e => e.EmployeeId,
                 e => e.ReportsTo,
                 e => id.HasValue ? e.ReportsTo == id : e.ReportsTo == null,
-                e => e.ToEmployeeDirectoryModel()
+                e => e
             );
 
             return Json(result);
@@ -31,9 +32,9 @@ namespace Kendo.Mvc.Examples.Controllers
         public JsonResult All([DataSourceRequest] DataSourceRequest request)
         {
             var result = GetDirectory().ToTreeDataSourceResult(request,
-                e => e.EmployeeID,
+                e => e.EmployeeId,
                 e => e.ReportsTo,
-                e => e.ToEmployeeDirectoryModel(request)
+                e => e
             );
             
             return Json(result);
@@ -69,16 +70,9 @@ namespace Kendo.Mvc.Examples.Controllers
             return Json(new[] { employee }.ToTreeDataSourceResult(request, ModelState));
         }
 
-        private IEnumerable<EmployeeDirectory> GetDirectory()
+        private IEnumerable<EmployeeDirectoryModel> GetDirectory()
         {
             return employeeDirectory.GetAll();
-        }       
-
-        protected override void Dispose(bool disposing)
-        {
-            employeeDirectory.Dispose();
-
-            base.Dispose(disposing);
         }
     }
 }

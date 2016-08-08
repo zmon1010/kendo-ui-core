@@ -5,6 +5,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Box_Plot_ChartsController : Controller
     {
+        [Demo]
         public IActionResult Remote_Data_Binding()
         {
             return View();

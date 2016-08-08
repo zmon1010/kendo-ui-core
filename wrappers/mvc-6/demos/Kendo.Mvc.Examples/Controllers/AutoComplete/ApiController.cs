@@ -4,6 +4,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class AutoCompleteController : Controller
     {
+        [Demo]
         public IActionResult Api()
         {
             return View();

@@ -46,8 +46,8 @@ MVC_6_DEMOS = FileList[MVC_6_DEMOS_ROOT + '**/*']
                         .sub(DEMO_SHARED_ROOT + 'shared/images/photos/220', MVC_6_DEMOS_WWWROOT + 'shared/images/photos/220')
                 )
                 .include(
-                    FileList['demos/mvc/content/nav.json']
-                        .sub('demos/mvc/content', MVC_6_DEMOS_WWWROOT + 'shared')
+                    FileList['wrappers/nav.json']
+                        .sub('wrappers', MVC_6_DEMOS_WWWROOT + 'shared')
                 )
 
 def update_nuget_reference name
@@ -79,8 +79,8 @@ namespace :mvc_6 do
          :root => 'dist/styles'
 
     tree :to => MVC_6_DEMOS_WWWROOT + 'shared',
-         :from => 'demos/mvc/content/nav.json',
-         :root => 'demos/mvc/content/'
+         :from => 'wrappers/nav.json',
+         :root => 'wrappers/'
 
     tree :to => MVC_6_DEMOS_WWWROOT + 'shared/web',
          :from => DEMO_SHARED_ROOT + 'web/**/*',
@@ -116,6 +116,10 @@ namespace :mvc_6 do
 
     tree :to => MVC_6_DEMOS_WWWROOT + 'shared/images',
          :from => DEMO_SHARED_ROOT + 'shared/images/employees/*',
+         :root => DEMO_SHARED_ROOT + 'shared/images/'
+
+    tree :to => MVC_6_DEMOS_WWWROOT + 'shared/images',
+         :from => DEMO_SHARED_ROOT + 'shared/images/logos/*',
          :root => DEMO_SHARED_ROOT + 'shared/images/'
 
     tree :to => MVC_6_DEMOS_LIBROOT + 'js',

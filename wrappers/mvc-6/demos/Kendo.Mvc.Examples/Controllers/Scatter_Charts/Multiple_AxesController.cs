@@ -5,6 +5,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Scatter_ChartsController : Controller
     {
+        [Demo]
         public IActionResult Multiple_Axes()
         {
             return View(ChartDataRepository.EngineData());
