@@ -126,6 +126,22 @@
     })();
 
     (function() {
+        module("valueRange", {
+            setup: function() {
+                createAxis(5.7, 37, {});
+                axis.reflow(chartBox);
+            }
+        });
+
+        test("returns series min and max value", function() {
+            var range = axis.valueRange();
+            equal(range.min, 5.7);
+            equal(range.max, 37);
+        });
+
+    })();
+
+    (function() {
         module("axis slot", {
             setup: function() {
                 createAxis(0.01, 100, {

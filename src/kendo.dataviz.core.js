@@ -2375,6 +2375,13 @@ var __meta__ = { // jshint ignore:line
                 min: from,
                 max: to
             };
+        },
+
+        valueRange: function() {
+            return {
+                min: this.seriesMin,
+                max: this.seriesMax
+            };
         }
     });
 
@@ -2763,6 +2770,9 @@ var __meta__ = { // jshint ignore:line
             var axis = this,
                 defaultOptions = axis.initDefaults(seriesMin, seriesMax, options);
 
+            this.seriesMin = seriesMin;
+            this.seriesMax = seriesMax;
+
             Axis.fn.init.call(axis, defaultOptions);
         },
 
@@ -3110,6 +3120,10 @@ var __meta__ = { // jshint ignore:line
     var LogarithmicAxis = Axis.extend({
         init: function(seriesMin, seriesMax, options) {
             this.options = this._initOptions(seriesMin, seriesMax, options);
+
+            this.seriesMin = seriesMin;
+            this.seriesMax = seriesMax;
+
             Axis.fn.init.call(this, options);
         },
 

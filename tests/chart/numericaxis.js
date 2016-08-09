@@ -545,6 +545,22 @@
 
     })();
 
+
+    (function() {
+        module("valueRange", {
+            setup: function() {
+                numericAxis = new NumericAxis(5.7, 37, {});
+            }
+        });
+
+        test("returns series min and max value", function() {
+            var range = numericAxis.valueRange();
+            equal(range.min, 5.7);
+            equal(range.max, 37);
+        });
+
+    })();
+
     (function() {
         var FIRST_LABEL_WIDTH = 10,
             LAST_LABEL_WIDTH = 26,

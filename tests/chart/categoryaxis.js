@@ -425,6 +425,17 @@
                 equal(totalRange.max, 3 + categories.length);
             });
 
+            // ------------------------------------------------------------
+            module("Category Axis / valueRange");
+
+            test("returns range", function() {
+                setupAxis({});
+
+                var totalRange = categoryAxis.totalRangeIndices();
+
+                deepEqual(categoryAxis.valueRange(), categoryAxis.range());
+            });
+
         })();
 
         (function() {
@@ -1328,6 +1339,12 @@
         test("slot method returns slot as rect", function() {
             var box = categoryAxis.getSlot(0);
             var slot = categoryAxis.slot(0);
+            ok(slot.equals(box.toRect()));
+        });
+
+        test("slot method returns slot based on category value", function() {
+            var box = categoryAxis.getSlot(1);
+            var slot = categoryAxis.slot("Bar");
             ok(slot.equals(box.toRect()));
         });
 
