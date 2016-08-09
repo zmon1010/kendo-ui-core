@@ -56,9 +56,9 @@
         kendo.deepExtend(pointMock, options);
     }
 
-    function createPlotArea() {
+    function createPlotArea(axisOptions) {
         plotArea = {
-            categoryAxis: {
+            categoryAxis: kendo.deepExtend({
                 pointCategoryIndex: function() {
                 },
 
@@ -72,7 +72,7 @@
                 options: {
                     vertical: false
                 }
-            }
+            }, axisOptions)
         };
     }
 
@@ -535,10 +535,23 @@
     })();
 
     (function() {
-
+        var CHARTS_BOX = new dataviz.Box2D(0, 0, 500, 500);
+        var AXIS_SLOT = new dataviz.Box2D(100, 0, 200, 0);
         function createTooltip(options) {
-            createPlotArea();
-            createPoint({ options: { tooltip: { template: "foo" } } });
+            createPlotArea({
+                getSlot: function() {
+                    return AXIS_SLOT;
+                }
+            });
+            createPoint({ options: { tooltip: { template: "foo" } },
+                owner: {
+                    pane: {
+                        chartsBox: function() {
+                            return CHARTS_BOX;
+                        }
+                    }
+                }
+            });
 
             destroyTooltip();
 
@@ -585,6 +598,14 @@
             createTooltip({ template: "<div style='width: 100px; height: 20px;' />"});
             showTooltip();
             ok(tooltip.anchor.y < -10);
+        });
+
+        test("tooltip anchor is in the center of the slot if no coordinates are passed", function() {
+            createTooltip({ template: "<div style='width: 100px; height: 20px;' />"});
+            tooltip.showAt([pointMock]);
+            var size = tooltip._measure();
+            equal(tooltip.anchor.x, 150 - size.width / 2);
+            equal(tooltip.anchor.y, 250 - size.height / 2);
         });
 
     })();

@@ -1539,6 +1539,127 @@
 
     // ------------------------------------------------------------
     (function() {
+        var chart;
+
+        module("show/hide Tooltip", {
+            setup: function() {
+                chart = createChart({
+                    series: [{
+                        data: [1, 2, 2]
+                    }]
+                });
+            },
+            teardown: destroyChart
+        });
+
+        test("shows tooltip for filtered point", function() {
+           chart._tooltip.show = function(point) {
+               equal(point.value, 1);
+           };
+           chart.showTooltip(function(point) {
+               return point.value === 1;
+           });
+        });
+
+        test("shows tooltip for the first point if the filter matches multiple points", function() {
+           chart._tooltip.show = function(point) {
+               equal(point.value, 2);
+               equal(point.categoryIx, 1);
+           };
+           chart.showTooltip(function(point) {
+               return point.value === 2;
+           });
+        });
+
+        test("does nothing if no filter is passed", 0, function() {
+            chart._tooltip.show = function(point) {
+               ok(false);
+            };
+            chart.showTooltip();
+        });
+
+        test("does nothing if the filter returns no points", 0, function() {
+            chart._tooltip.show = function(point) {
+               ok(false);
+            };
+
+            chart.showTooltip(function() {
+                return false;
+            });
+        });
+
+        test("hide hides tooltip", function() {
+            chart._tooltip.hide = function(point) {
+               ok(true);
+            };
+            chart.hideTooltip();
+        });
+        // ------------------------------------------------------------
+        module("show/hide Tooltip / shared", {
+            setup: function() {
+                chart = createChart({
+                    series: [{
+                        data: [1, 2, 2]
+                    }, {
+                        data: [3, 4, 5]
+                    }],
+                    tooltip: {
+                        shared: true
+                    }
+                });
+            },
+            teardown: destroyChart
+        });
+
+        test("shows tooltip for filtered point", function() {
+           chart._tooltip.showAt = function(points) {
+               equal(points[0].value, 1);
+               equal(points[1].value, 3);
+           };
+           chart.showTooltip(function(point) {
+               return point.value === 1;
+           });
+        });
+
+        test("shows tooltip for the first point if the filter matches multiple points", function() {
+           chart._tooltip.showAt = function(points) {
+               equal(points[0].value, 2);
+               equal(points[1].value, 4);
+               equal(points[0].categoryIx, 1);
+           };
+           chart.showTooltip(function(point) {
+               return point.value === 2;
+           });
+        });
+
+        test("does nothing if no filter is passed", 0, function() {
+            chart._tooltip.showAt = function(point) {
+               ok(false);
+            };
+            chart.showTooltip();
+        });
+
+        test("does nothing if the filter returns no points", 0, function() {
+            chart._tooltip.showAt = function(point) {
+               ok(false);
+            };
+
+            chart.showTooltip(function() {
+                return false;
+            });
+        });
+
+        test("hide hides tooltip", function() {
+            chart._tooltip.hide = function(point) {
+               ok(true);
+            };
+            chart.hideTooltip();
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
         module("Custom fonts", {
             setup: function() {
             },

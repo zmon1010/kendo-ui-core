@@ -524,10 +524,44 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (points) {
-               for (var idx = 0; idx < points.length; idx++) {
-                    highlight.togglePointHighlight(points[idx], show);
-               }
+               this._togglePointsHighlight(show, points);
             }
+        },
+
+        _togglePointsHighlight: function(show, points) {
+            var highlight = this._highlight;
+            for (var idx = 0; idx < points.length; idx++) {
+                highlight.togglePointHighlight(points[idx], show);
+            }
+        },
+
+        showTooltip: function(filter) {
+            var shared = this._sharedTooltip();
+            var tooltip = this._tooltip;
+            var plotArea = this._plotArea;
+            var point, categoryIndex;
+
+            if (kendo.isFunction(filter)) {
+                point = plotArea.findPoint(filter);
+                if (point && shared) {
+                    categoryIndex = point.categoryIx;
+                }
+            } else if (shared && defined(filter)) {
+                categoryIndex = plotArea.categoryAxis.categoryIndex(filter);
+            }
+
+            if (shared) {
+                if (categoryIndex >= 0) {
+                    var points = this._plotArea.pointsByCategoryIndex(categoryIndex);
+                    tooltip.showAt(points);
+                }
+            } else if (point) {
+                tooltip.show(point);
+            }
+        },
+
+        hideTooltip: function() {
+            this._tooltip.hide();
         },
 
         _initSurface: function() {
@@ -11854,15 +11888,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         showAt: function(points, coords) {
-            var tooltip = this,
-                options = tooltip.options,
-                plotArea = tooltip.plotArea,
-                axis = plotArea.categoryAxis,
-                index = axis.pointCategoryIndex(coords),
-                category = axis.getCategory(coords),
-                slot = axis.getSlot(index),
-                content;
-
             points = $.grep(points, function(p) {
                 var tooltip = p.series.tooltip,
                     excluded = tooltip && tooltip.visible === false;
@@ -11871,12 +11896,15 @@ var __meta__ = { // jshint ignore:line
             });
 
             if (points.length > 0) {
-                content = tooltip._content(points, category);
-                tooltip.element.html(content);
-                tooltip.anchor = tooltip._slotAnchor(coords, slot);
-                tooltip.setStyle(options, points[0]);
+                var point = points[0];
+                var slot = this.plotArea.categoryAxis.getSlot(point.categoryIx);
 
-                BaseTooltip.fn.show.call(tooltip);
+                var content = this._content(points, point.category);
+                this.element.html(content);
+                this.anchor = coords ? this._slotAnchor(coords, slot) : this._defaultAnchor(point, slot);
+                this.setStyle(this.options, point);
+
+                BaseTooltip.fn.show.call(this);
             }
         },
 
@@ -11893,6 +11921,25 @@ var __meta__ = { // jshint ignore:line
             } else {
                 anchor = Point2D(slot.center().x, hCenter);
             }
+
+            return anchor;
+        },
+
+        _defaultAnchor: function(point, slot) {
+            var box = point.owner.pane.chartsBox();
+            var vertical = this.plotArea.categoryAxis.options.vertical;
+            var center = box.center();
+            var slotCenter = slot.center();
+            var size = this._measure();
+            var anchor;
+            if (vertical) {
+                anchor = new Point2D(center.x, slotCenter.y);
+            } else {
+                anchor = new Point2D(slotCenter.x, center.y);
+            }
+
+            anchor.x -= size.width / 2;
+            anchor.y -= size.height / 2;
 
             return anchor;
         },
