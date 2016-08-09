@@ -1346,7 +1346,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _onDataChanged: function() {
+        _onDataChanged: function(e) {
             var chart = this,
                 options = chart.options,
                 series = chart._sourceSeries || options.series,
@@ -1363,6 +1363,7 @@ var __meta__ = { // jshint ignore:line
                 if (chart._isBindable(currentSeries) && grouped) {
                     append(processedSeries,
                            groupSeries(currentSeries, data));
+                    this._applyGroupVisibleState(processedSeries, e);
                 } else {
                     processedSeries.push(currentSeries || []);
                 }
@@ -1378,6 +1379,29 @@ var __meta__ = { // jshint ignore:line
             chart._hasData = true;
 
             chart._deferRedraw();
+        },
+
+        _applyGroupVisibleState: function(processedSeries, e) {
+            if (e && e.action) {
+                var visibleState = this._groupVisibleState = this._groupVisibleState || {};
+                for (var idx = 0; idx < processedSeries.length; idx++) {
+                    if (visibleState[processedSeries[idx]._groupValue] === false) {
+                        processedSeries[idx].visible = false;
+                    }
+                }
+            } else {
+                delete this._groupVisibleState;
+            }
+        },
+
+        _saveGroupVisibleState: function(series) {
+            if (defined(series._groupValue)) {
+                if (!this._groupVisibleState) {
+                    this._groupVisibleState = {};
+                }
+
+                this._groupVisibleState[series._groupValue] = series.visible;
+            }
         },
 
         _deferRedraw: function() {
@@ -1561,11 +1585,10 @@ var __meta__ = { // jshint ignore:line
             var chart = this,
                 plotArea = chart._plotArea,
                 currentSeries = (plotArea.srcSeries || plotArea.series)[seriesIndex],
-                originalSeries = (chart._sourceSeries || [])[seriesIndex] || currentSeries,
-                transitionsState, visible, point;
+                visible, point;
 
             if (inArray(currentSeries.type, [PIE, DONUT,FUNNEL])) {
-                point = originalSeries.data[pointIndex];
+                point = currentSeries.data[pointIndex];
                 if (!defined(point.visible)) {
                     visible = false;
                 } else {
@@ -1573,18 +1596,24 @@ var __meta__ = { // jshint ignore:line
                 }
                 point.visible = visible;
             } else {
-                visible = !originalSeries.visible;
-                originalSeries.visible = visible;
-                currentSeries.visible = visible;
+                currentSeries.visible = !currentSeries.visible;
+                this._saveGroupVisibleState(currentSeries);
             }
 
-            if (chart.options.transitions) {
-                chart.options.transitions = false;
+            this._noTransitionsRedraw();
+        },
+
+        _noTransitionsRedraw: function() {
+            var options = this.options;
+            var transitionsState;
+
+            if (options.transitions) {
+                options.transitions = false;
                 transitionsState = true;
             }
-            chart.redraw();
+            this.redraw();
             if (transitionsState) {
-                chart.options.transitions = true;
+                options.transitions = true;
             }
         },
 
@@ -13778,6 +13807,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             seriesClone._groupIx = groupIx;
+            seriesClone._groupValue = data[groupIx].value;
             result.push(seriesClone);
 
             if (nameTemplate) {
