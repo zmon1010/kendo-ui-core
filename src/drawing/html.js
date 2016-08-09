@@ -160,8 +160,10 @@
                             var canceled = false, pageNum = 0;
                             (function next(){
                                 if (pageNum < x.pages.length) {
-                                    group.append(doOne(x.pages[pageNum]));
+                                    var page = doOne(x.pages[pageNum]);
+                                    group.append(page);
                                     options.progress({
+                                        page: page,
                                         pageNum: ++pageNum,
                                         totalPages: x.pages.length,
                                         cancel: function() {

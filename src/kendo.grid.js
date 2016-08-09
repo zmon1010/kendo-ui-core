@@ -7781,8 +7781,10 @@ var __meta__ = { // jshint ignore:line
                    _destructive: true,
                    progress: function(p) {
                        progress.notify({
+                           page: p.page,
                            pageNumber: p.pageNum,
-                           progress: 0.5 + p.pageNum / p.totalPages / 2
+                           progress: 0.5 + p.pageNum / p.totalPages / 2,
+                           totalPages: p.totalPages
                        });
                    }
                });
@@ -7800,12 +7802,6 @@ var __meta__ = { // jshint ignore:line
                var pageNum = dataSource.page();
                var totalPages = allPages ? dataSource.totalPages() : 1;
                body.append(origBody.find("tr"));
-               var args = {
-                   pageNumber: pageNum,
-                   progress: pageNum / totalPages / 2,
-                   totalPages: totalPages
-               };
-               progress.notify(args);
                if (pageNum < totalPages) {
                    dataSource.page(pageNum + 1);
                } else {
