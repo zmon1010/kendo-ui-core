@@ -19,6 +19,7 @@
     var constrain = ResizingUtils.constrain;
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
+    var toPixels = ResizingUtils.toPixels;
     var setContentEditable = ResizingUtils.setContentEditable;
 
     var DRAG = "drag";
@@ -109,9 +110,9 @@
             var element = $(that.element);
             var dimensionLowercase = dimension.toLowerCase();
             var styleValue = element[0].style[dimensionLowercase];
-            var dimensionValue = styleValue !== "" ? parseFloat(styleValue) : 0;
+            var parsedStyleValue = styleValue !== "" ? parseFloat(styleValue) : 0;
             var elementOuterWidth = element[OUTER + dimension]();
-            var currentValue = dimensionValue < elementOuterWidth ? elementOuterWidth : dimensionValue;
+            var currentValue = parsedStyleValue < elementOuterWidth ? elementOuterWidth : parsedStyleValue;
             var constrainedValue;
             var rtlModifier = that.options.rtl ? (-1) : 1;
             var elementOwnerDocument = $(element[0].ownerDocument);
@@ -123,12 +124,12 @@
 
             if (inPercentages(styleValue)) {
                 constrainedValue = constrain({
-                    value: dimensionValue + calculatePercentageRatio(delta, elementOuterWidth),
+                    value: parsedStyleValue + calculatePercentageRatio(delta, elementOuterWidth),
                     min: calculatePercentageRatio(that.options[MIN + dimension], elementOuterWidth),
                     max: Infinity
                 });
 
-                constrainedValue = toPercentages(constrainedValue);
+                element[dimensionLowercase](toPercentages(constrainedValue));
             }
             else {
                 constrainedValue = constrain({
@@ -136,9 +137,9 @@
                     min: that.options[MIN + dimension],
                     max: element.parent()[dimensionLowercase]() + scrollOffset
                 });
-            }
 
-            element[dimensionLowercase](constrainedValue);
+                element[0].style[dimensionLowercase] = toPixels(constrainedValue);
+            }
         },
 
         showResizeHandles: function() {

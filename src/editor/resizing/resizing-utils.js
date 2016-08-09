@@ -16,6 +16,7 @@
 
     var CONTENT_EDITABLE = "contenteditable";
     var PERCENTAGE = "%";
+    var PIXELS = "px";
     var REGEX_NUMBER_IN_PERCENTAGES = /(\d+)(\.?)(\d*)(%)/;
     var STRING = "string";
     var UNDEFINED = "undefined";
@@ -34,16 +35,12 @@
     }
 
     function calculatePercentageRatio(value, total) {
-        var result;
-
         if (inPercentages(value)) {
-            result = parseFloat(value);
+            return parseFloat(value);
         }
         else {
-            result = (parseFloat(value) / total) * 100;
+            return ((parseFloat(value) / total) * 100);
         }
-
-        return result;
     }
 
     function inPercentages(value) {
@@ -52,6 +49,10 @@
 
     function toPercentages(value) {
         return (parseFloat(value) + PERCENTAGE);
+    }
+
+    function toPixels(value) {
+        return (parseFloat(value) + PIXELS);
     }
 
     function setContentEditable(domElement, enabled) {
@@ -66,9 +67,10 @@
         constrain: constrain,
         getElementWidth: getElementWidth,
         calculatePercentageRatio: calculatePercentageRatio,
-        toPercentages: toPercentages,
         inPercentages: inPercentages,
-        setContentEditable: setContentEditable
+        setContentEditable: setContentEditable,
+        toPercentages: toPercentages,
+        toPixels: toPixels
     };
 
     extend(Editor, {

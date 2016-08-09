@@ -27,4 +27,19 @@
     test("should not match float number without unit", function() {
         equal(utils.inPercentages("123.45"), false);
     });
+
+    module("editor resizing utils toPixels", {
+    });
+
+    test("should add pixels to number", function() {
+        equal(utils.toPixels(123), "123px");
+    });
+
+    test("should not add pixels to string in pixels", function() {
+        equal(utils.toPixels("123px"), "123px");
+    });
+
+    test("should add pixels to string in percentages", function() {
+        equal(utils.toPixels("123%"), "123px");
+    });
 })();
