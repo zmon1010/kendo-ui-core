@@ -386,7 +386,7 @@
 
         triggerResize(cell, leftOffset + cellWidth, leftOffset + cellWidth - MAX);
 
-        equal(columnResizing.resizeHandle.css("left"), leftOffset + options.min + PX);
+        roughlyEqual(columnResizing.resizeHandle.css("left"), leftOffset + options.min + PX, 1);
     });
 
     test("resize handle left offset should not be greater than max", function() {
@@ -396,7 +396,8 @@
 
         triggerResize(cell, leftOffset + cellWidth, leftOffset + cellWidth + MAX);
 
-        equal(columnResizing.resizeHandle.css("left"), leftOffset + cellWidth + cell.next().outerWidth() - options.handle.width - options.min + PX);
+        roughlyEqual(columnResizing.resizeHandle.css("left"),
+            leftOffset + cellWidth + cell.next().outerWidth() - options.handle.width - options.min + PX, 1);
     });
 
     test("resize handle top offset should be set", function() {
@@ -1346,7 +1347,7 @@
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
         for (var i = 0; i < otherColumns.length; i++) {
-            equal($(otherColumns[i]).css(WIDTH), columnWidths[i] + PX);
+            roughlyEqual($(otherColumns[i]).css(WIDTH), columnWidths[i] + PX, 1);
         }
     });
 
@@ -1400,7 +1401,7 @@
 
         triggerBorderHover(cell, { rtl: true });
 
-        equal(columnResizing.resizeHandle.css("left"), leftOffset - (options.handle.width / 2) + PX);
+        roughlyEqual(columnResizing.resizeHandle.css("left"), leftOffset - (options.handle.width / 2) + PX, 1);
     });
 
     test("resize handle left offset should be increased while resizing", function() {
@@ -1410,7 +1411,7 @@
 
         triggerResize(cell, 0, differenceInPixels, { rtl: true });
 
-        equal(columnResizing.resizeHandle.css("left"), leftOffset + differenceInPixels - (options.handle.width / 2) + PX);
+        roughlyEqual(columnResizing.resizeHandle.css("left"), leftOffset + differenceInPixels - (options.handle.width / 2) + PX, 1);
     });
 
     test("resize handle left offset should be decreased while resizing", function() {
@@ -1420,7 +1421,7 @@
 
         triggerResize(cell, 0, differenceInPixels, { rtl: true });
 
-        equal(columnResizing.resizeHandle.css("left"), leftOffset + differenceInPixels - (options.handle.width / 2) + PX);
+        roughlyEqual(columnResizing.resizeHandle.css("left"), leftOffset + differenceInPixels - (options.handle.width / 2) + PX, 1);
     });
     test("resize handle left offset should not be lower than min", function() {
         var cell = $(columnResizing.element).find(SECOND_COLUMN);
@@ -1429,7 +1430,7 @@
 
         triggerResize(cell, 0, (-1) * MAX, { rtl: true });
 
-        equal(columnResizing.resizeHandle.css("left"), leftOffset - adjacentColumnWidth + options.min + PX);
+        roughlyEqual(columnResizing.resizeHandle.css("left"), leftOffset - adjacentColumnWidth + options.min + PX, 1);
     });
 
     test("resize handle left offset should not be greater than max", function() {
@@ -1439,7 +1440,7 @@
 
         triggerResize(cell, 0, MAX, { rtl: true });
 
-        equal(columnResizing.resizeHandle.css("left"), leftOffset + initialWidth - options.handle.width - options.min + PX);
+        roughlyEqual(columnResizing.resizeHandle.css("left"), leftOffset + initialWidth - options.handle.width - options.min + PX, 1);
     });
 
     test("resize handle top offset should be set", function() {
