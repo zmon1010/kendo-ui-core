@@ -453,9 +453,10 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     module("editor table resizing resize handle", {
         setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
             tableResizing = new TableResizing(tableElement, {
-                rootElement: QUnit.fixture
+                rootElement: wrapper[0]
             });
         },
 
