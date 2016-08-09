@@ -233,8 +233,77 @@
                 height: view.content[0].scrollHeight - 1,
                 top: 0
             });
-		}
-		
+        },
+
+        _changeGroup: function() { },
+
+        _prevGroupSlot: function(slot, group, isDay) {
+            var view = this._view;
+
+            if (view._isVerticallyGrouped()) {
+                return slot;
+            } else {
+                var collection = group._collection(0, isDay);
+                return collection.last();
+            }
+        },
+
+        _nextGroupSlot: function(slot, group, isDay) {
+            var view = this._view;
+
+            if (view._isVerticallyGrouped()) {
+                return slot;
+            } else {
+                var collection = group._collection(0, isDay);
+                return collection.first();
+            }
+        },
+
+        _verticalSlots: function(selection, reverse) {
+             var view = this._view;
+
+             return view._changeGroup(selection, reverse);
+        },
+
+		 _verticalMethod: function(reverse) {
+
+              return  reverse ? "leftSlot" : "rightSlot"; 
+		 },
+
+		 _normalizeVerticalSelection: function() { },
+
+		 _horizontalSlots: function(selection, group, method, startSlot, endSlot, multiple, reverse) {
+            var view = this._view;
+            var result = {};
+
+            result.startSlot = group[method](startSlot);
+            result.endSlot = group[method](endSlot);
+
+            if (!multiple && view._isHorizontallyGrouped() && (!result.startSlot || !result.endSlot)) {
+                result.startSlot = result.endSlot = view._changeGroup(selection, reverse);
+            }
+
+            return result;
+        },
+        
+        _changeVerticalViewPeriod: function() {
+            return false;
+        },
+
+        _changeHorizontalViewPeriod: function(slots, shift, selection, reverse) {
+            var view = this._view;
+
+            if ((!slots.startSlot ||!slots.endSlot ) && !shift && view._changeViewPeriod(selection, reverse, false)) {
+                return true;
+            }
+            return false;
+        },
+
+        _updateDirection: function(selection, ranges, shift, reverse) {
+            var view = this._view;
+
+            view._updateDirection(selection, ranges, shift, reverse, true);
+        }
     });
 
 	 var GroupedByDateView = kendo.Class.extend({
@@ -465,7 +534,112 @@
                 width: view.content[0].scrollWidth,
                 left: 0
             });
-	    }
+        },
+
+        _changeGroup: function(selection, previous, slot) {
+             var view = this._view;
+
+             if (!slot) {
+                selection.groupIndex = previous ? view.groups.length - 1 : 0;
+             }
+        },
+
+         _prevGroupSlot: function(slot) {
+              return slot;
+        },
+
+        _nextGroupSlot: function(slot) {
+              return slot;
+        },
+
+        _changeDate: function(selection, reverse, slot) {
+            var view = this._view;
+            var group = view.groups[selection.groupIndex];
+            var collections, index;
+
+            if (reverse) {
+                  collections = group._getCollections(false);
+                  index = slot.index - 1;
+
+                  if (index >= 0) {
+                      return  collections[0]._slots[index];
+                  }
+              } else {
+                  collections = group._getCollections(false);
+                  index = slot.index + 1;
+
+                  if (collections[0] && collections[0]._slots[index]) {
+                      return  collections[0]._slots[index];
+                  }
+               }
+        },
+
+        _verticalSlots: function (selection, reverse, slot) {
+            return this._changeDate(selection, reverse, slot);
+        },
+
+        _verticalMethod: function(reverse, multiple) {
+            if (multiple) {
+               return reverse ? "upSlot" : "downSlot";
+            } else {
+               return  reverse ? "leftSlot" : "rightSlot"; 
+            }
+        },
+
+        _normalizeVerticalSelection: function(selection, ranges, reverse, multiple) {
+            var view = this._view;
+
+            if (!multiple) {
+                return view._normalizeVerticalSelection(selection, ranges, reverse);          
+            }
+        },
+
+        _horizontalSlots: function(selection, group, method, startSlot, endSlot, multiple, reverse) {
+             var view = this._view;
+             var tempSlot = view._changeGroup(selection, reverse);
+             var result = {};
+
+            if (!tempSlot) {
+                if (!view._isVerticallyGrouped()) {
+                    result.startSlot = group[method](startSlot);
+                    result.endSlot = group[method](endSlot);
+                }
+
+            } else {
+                result.startSlot = result.endSlot = tempSlot;
+            }
+            
+            return result;
+        },
+
+        _changeVerticalViewPeriod: function(slots, shift, selection, reverse) {
+            var view = this._view;
+
+            if ((!slots.startSlot || !slots.endSlot) && !shift &&
+                view._changeViewPeriod(selection, reverse, view._isVerticallyGrouped())) {
+                return true;
+            }
+            return false;
+        },
+
+        _changeHorizontalViewPeriod: function(slots, shift, selection, reverse) {
+           var view = this._view;
+
+           if ( view._isVerticallyGrouped()) {
+               return false;
+           }
+
+           if ((!slots.startSlot ||!slots.endSlot ) && !shift && view._changeViewPeriod(selection, reverse, false)) {
+                return true;
+            }
+            return false;
+        },
+
+        _updateDirection: function(selection, ranges, shift, reverse) {
+            var view = this._view;
+
+            view._updateDirection(selection, ranges, shift, reverse, !view._isVerticallyGrouped());
+        }
     });
 
 	 kendo.ui.scheduler.GroupedView = GroupedView;

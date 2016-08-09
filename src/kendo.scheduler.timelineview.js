@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.scheduler.view"], f);
+    define([ "./kendo.scheduler.view", "./kendo.scheduler.timeline.groupedview"], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
@@ -1336,9 +1336,10 @@ var __meta__ = { // jshint ignore:line
             var slot = this[method](selection.start, selection.groupIndex, false);
 
             if (slot) {
-                selection.groupIndex += previous ? -1 : 1;
+                 selection.groupIndex += previous ? -1 : 1;
             }
 
+            this._groupedView._changeGroup(selection, previous, slot);
             return slot;
         },
 
@@ -1350,12 +1351,7 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
-            if (this._isVerticallyGrouped()) {
-                return slot;
-            } else {
-                var collection = group._collection(0, isDay);
-                return collection.last();
-            }
+            return this._groupedView._prevGroupSlot(slot, group, isDay);
         },
 
         nextGroupSlot: function(date, groupIndex, isDay) {
@@ -1366,25 +1362,26 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
-            if (this._isVerticallyGrouped()) {
-                return slot;
-            } else {
-                var collection = group._collection(0, isDay);
-                return collection.first();
-            }
+            return this._groupedView._nextGroupSlot(slot, group, isDay);
         },
 
         _verticalSlots: function (selection, ranges, multiple, reverse) {
-            var method = reverse ? "leftSlot" : "rightSlot";
+            var groupedView = this._groupedView;
+            var method = groupedView._verticalMethod(reverse, multiple);
             var startSlot = ranges[0].start;
             var endSlot = ranges[ranges.length - 1].end;
             var group = this.groups[selection.groupIndex];
+            var slot = groupedView._normalizeVerticalSelection(selection, ranges, reverse, multiple);
+
+            if (slot) {
+                startSlot = endSlot = slot;
+            }
 
             startSlot = group[method](startSlot);
             endSlot = group[method](endSlot);
 
             if (!multiple && this._isVerticallyGrouped() && (!startSlot || !endSlot)) {
-                startSlot = endSlot = this._changeGroup(selection, reverse);
+                startSlot = endSlot = groupedView._verticalSlots(selection, reverse, slot);
             }
 
             return {
@@ -1398,18 +1395,20 @@ var __meta__ = { // jshint ignore:line
             var startSlot = ranges[0].start;
             var endSlot = ranges[ranges.length - 1].end;
             var group = this.groups[selection.groupIndex];
+            var result = {};
 
-            startSlot = group[method](startSlot);
-            endSlot = group[method](endSlot);
+            if (!multiple) {
+                result = this._groupedView._horizontalSlots(selection, group, method, startSlot, endSlot, multiple, reverse);
+            } else {
+                result.startSlot = group[method](startSlot);
+                result.endSlot = group[method](endSlot);
 
-            if (!multiple && this._isHorizontallyGrouped() && (!startSlot || !endSlot)) {
-                startSlot = endSlot = this._changeGroup(selection, reverse);
+                if (!multiple && this._isHorizontallyGrouped() && (!startSlot || !endSlot)) {
+                    result.startSlot = result.endSlot = this._changeGroup(selection, reverse);
+                }
             }
-
-            return {
-                startSlot: startSlot,
-                endSlot: endSlot
-            };
+            
+            return result;
         },
 
         _changeViewPeriod: function(selection, reverse) {
@@ -1448,7 +1447,7 @@ var __meta__ = { // jshint ignore:line
             var handled = false;
             var group = this.groups[selection.groupIndex];
             var keys = kendo.keys;
-
+            var groupedView = this._groupedView;
             var ranges = group.ranges(selection.start, selection.end, false, false);
             var startSlot, endSlot, reverse, slots;
 
@@ -1456,19 +1455,23 @@ var __meta__ = { // jshint ignore:line
                 handled = true;
                 reverse = key === keys.UP;
 
-                this._updateDirection(selection, ranges, shift, reverse, true);
+                groupedView._updateDirection(selection, ranges, shift, reverse);    
 
                 slots = this._verticalSlots(selection, ranges, shift, reverse);
+
+                if(groupedView._changeVerticalViewPeriod(slots, shift, selection, reverse)){
+                    return handled;
+                }
             } else if (key === keys.LEFT || key === keys.RIGHT) {
                 handled = true;
                 reverse = key === keys.LEFT;
-
+                
                 this._updateDirection(selection, ranges, shift, reverse, false);
 
-                slots = this._horizontalSlots(selection, ranges, shift, reverse);
+                slots = this._horizontalSlots(selection, ranges, shift, reverse);               
 
-                if ((!slots.startSlot ||!slots.endSlot ) && !shift && this._changeViewPeriod(selection, reverse, false)) {
-                    return handled;
+                if(groupedView._changeHorizontalViewPeriod(slots, shift, selection, reverse)){
+                     return handled;
                 }
             }
 

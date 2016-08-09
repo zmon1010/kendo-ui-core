@@ -493,4 +493,427 @@
         equal(currentSelection.length, 1);
         equal($(currentSelection[0]).index(), 1);
     });
+
+    //horizontal grouping by date
+    test("move to next group in horizontal by date grouping restarts selection to single cell", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.RIGHT);
+
+        var oldSelection = $(".k-scheduler-content .k-state-selected");
+
+        keydown(keys.RIGHT);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(oldSelection.index(), 1);
+        equal(currentSelection.index(), 2);
+    });
+
+    test("move to next group in horizontal by date grouping restarts selection to single cell when selection is multiple", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 12, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.RIGHT, { shiftKey: true });
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+
+        var oldSelection = $(".k-scheduler-content .k-state-selected");
+
+        keydown(keys.RIGHT);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(oldSelection.length, 1);
+        equal($(oldSelection[0]).index(), 3);
+        equal(currentSelection.index(), 4);
+    });
+
+    test("move to prev group and date in horizontal by date grouping set correct slot and date", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        var scheduler = container.data("kendoScheduler");
+        var oldDViewDate = scheduler.view()._dates[0];
+
+        keydown(keys.LEFT);
+
+        var oldSelection = $(".k-scheduler-content .k-state-selected");
+
+        keydown(keys.LEFT);
+        var currentViewDate = scheduler.view()._dates[0];
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(oldSelection.index(), 3);
+        equal(currentSelection.index(), 2);
+        notEqual(currentViewDate, oldDViewDate);
+    });
+
+    test("move to prev group in horizontal by date grouping restarts selection to single cell when selection is multiple", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT, { shiftKey: true });
+
+        var oldSelection = $(".k-scheduler-content .k-state-selected");
+
+        keydown(keys.LEFT);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(oldSelection.length, 1);
+        equal($(oldSelection[0]).index(), 2);
+        equal(currentSelection.length, 1);
+        equal($(currentSelection[0]).index(), 1);
+    });
+
+  test("move to previous view in horizontal by date grouping", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.LEFT);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(currentSelection.index(), 3);
+    });
+
+     test("move to next view in horizontal by date grouping", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(currentSelection.index(), 0);
+    });
+
+       //vertical grouping by date
+    test("move to next group in vertical by date grouping restarts selection to single cell", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.DOWN);
+
+        var oldSelection = $(".k-scheduler-content .k-state-selected");
+         var oldDViewDate = scheduler.view()._dates[0];
+
+        keydown(keys.DOWN);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+         var currentViewDate = scheduler.view()._dates[0];
+
+        equal(oldSelection.index(), 0);
+        equal(currentSelection.index(), 0);
+        notEqual(currentViewDate, oldDViewDate);
+    });
+
+    test("move to next group in vertical by date grouping restarts selection to single cell when selection is multiple", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 12, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.LEFT);
+        keydown(keys.DOWN);
+        keydown(keys.DOWN);
+
+
+        var oldSelection = $(".k-scheduler-content .k-state-selected");
+
+        keydown(keys.DOWN);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(oldSelection.length, 1);
+        equal($(oldSelection[0]).index(), 1);
+        equal(currentSelection.index(), 1);
+    });
+
+    test("move to prev group and date in vertical by date grouping set correct slot and date", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        var scheduler = container.data("kendoScheduler");
+        var oldDViewDate = scheduler.view()._dates[0];
+
+        keydown(keys.LEFT);
+
+        var oldSelection = $(".k-scheduler-content .k-state-selected");
+
+        keydown(keys.LEFT);
+        var currentViewDate = scheduler.view()._dates[0];
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(oldSelection.index(), 1);
+        equal(currentSelection.index(), 0);
+        equal(currentViewDate, oldDViewDate);
+    });
+
+    test("move to prev group in vertical by date grouping restarts selection to single cell when selection is multiple", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.RIGHT);
+
+        var oldSelection = $(".k-scheduler-content .k-state-selected");
+         var oldDViewDate = scheduler.view()._dates[0];
+        keydown(keys.UP);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+         var currentViewDate = scheduler.view()._dates[0];
+
+        equal(oldSelection.length, 1);
+        equal($(oldSelection[0]).index(), 1);
+        equal(currentSelection.length, 1);
+        equal($(currentSelection[0]).index(), 1);
+        notEqual(currentViewDate, oldDViewDate);
+    });
+
+  test("move to previous view in vertical by date grouping", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.LEFT);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(currentSelection.index(), 3);
+    });
+
+     test("move to next view in vertical by date grouping", function() {
+        setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+        keydown(keys.RIGHT);
+
+        var currentSelection = $(".k-scheduler-content .k-state-selected");
+
+        equal(currentSelection.index(), 0);
+    });
 })();

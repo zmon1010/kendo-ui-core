@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.core", "./kendo.scheduler.groupedview" ], f);
+    define([ "./kendo.core"], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
