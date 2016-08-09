@@ -1237,6 +1237,275 @@
 
     // ------------------------------------------------------------
     (function() {
+        var plotArea = {
+            visual: {},
+            _bgVisual: {}
+        },
+        chartPlotArea;
+
+        module("wrappers / ChartPlotArea", {
+            setup: function() {
+                chartPlotArea = new dataviz.ChartPlotArea(plotArea);
+            }
+        });
+
+        test("visual references plotArea visual", function() {
+            ok(chartPlotArea.visual === plotArea.visual);
+        });
+
+        test("visual references plotArea _bgVisual", function() {
+            ok(chartPlotArea.backgroundVisual === plotArea._bgVisual);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var defaultPane;
+        var defaultChartPane;
+
+        module("wrappers / ChartPane", {
+            setup: function() {
+                chart = createChart({
+                    series: [{
+                        name: "foo"
+                    }, {
+                        name: "bar",
+                        axis:  "value"
+                    }],
+                    valueAxes: [{
+                    }, {
+                        name: "value",
+                        pane: "second"
+                    }],
+                    panes: [{
+                        name: "first"
+                    }, {
+                        name: "second"
+                    }]
+                });
+                defaultPane = chart._plotArea.panes[0];
+                defaultChartPane = chart.findPaneByIndex(0);
+            },
+            teardown: destroyChart
+        });
+
+        test("visual references pane visual", function() {
+            ok(defaultChartPane.visual === defaultPane.visual);
+        });
+
+        test("chartsVisual references pane chartContainer visual", function() {
+            ok(defaultChartPane.chartsVisual === defaultPane.chartContainer.visual);
+        });
+
+        test("name is equal to the pane name", function() {
+            equal(defaultChartPane.name, "first");
+        });
+
+        test("series returns ChartSeries for default pane", function() {
+            var series = defaultChartPane.series();
+            equal(series.length, 1);
+            equal(series[0]._options.name, "foo");
+            ok(series[0] instanceof dataviz.ChartSeries);
+        });
+
+        test("series returns ChartSeries for named pane", function() {
+            var pane = chart.findPaneByName("second");
+            var series = pane.series();
+            equal(series.length, 1);
+            equal(series[0]._options.name, "bar");
+            ok(series[0] instanceof dataviz.ChartSeries);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var chartSeries;
+
+        function areHighlighted(elements, highlighted) {
+            for (var idx = 0; idx < elements.length; idx++) {
+                equal(elements[idx]._highlight.visible(), highlighted);
+            }
+        }
+
+        function setup() {
+            chart = createChart({
+                series: [{
+                    data: [{ value: 1, category: "foo" }, { value: 2, category: "bar" }],
+                    field: "value",
+                    categoryField: "category"
+                }]
+            });
+            chartSeries = chart.findSeriesByIndex(0);
+        }
+
+        module("wrappers / ChartSeries", {
+            setup: setup,
+            teardown: destroyChart
+        });
+
+        test("points returns series points with or without filter", function() {
+            var allPoints = chartSeries.points();
+
+            equal(allPoints.length, 2);
+            equal(allPoints[1].category, "bar");
+
+            var filteredPoints = chartSeries.points(function(point) {
+                return point.value === 2;
+            });
+
+            equal(filteredPoints.length, 1);
+            equal(filteredPoints[0].category, "bar");
+        });
+
+        test("data retrieves and sets data", function() {
+            var data = chartSeries.data();
+            equal(data.length, 2);
+            equal(data[0].category, "foo");
+            data.pop();
+            chartSeries.data(data);
+
+            var chartData = chart.options.series[0].data;
+            var categories = chart._plotArea.categoryAxis.options.categories;
+            equal(chartData.length, 1);
+            equal(chartData[0].category, "foo");
+            equal(categories.length, 1);
+            equal(categories[0], "foo");
+        });
+
+        test("findPoint retrieves point by filter", function() {
+            var point = chartSeries.findPoint(function(point) {
+                return point.value === 2;
+            });
+            equal(point.category, "bar");
+        });
+
+        test("toggleHighlight shows/hides highlight for the series points", function() {
+            chartSeries.toggleHighlight(true);
+            areHighlighted(chartSeries.points(), true);
+
+            chartSeries.toggleHighlight(false);
+            areHighlighted(chartSeries.points(), false);
+        });
+
+        test("toggleHighlight shows/hides highlight for filtered points", function() {
+            var filter = function(point) {
+                return point.value === 2;
+            };
+            chartSeries.toggleHighlight(true, filter);
+            areHighlighted(chartSeries.points(filter), true);
+
+            chartSeries.toggleHighlight(false, filter);
+            areHighlighted(chartSeries.points(filter), false);
+        });
+
+        test("toggleHighlight shows/hides highlight for specific points", function() {
+            var points = chartSeries.points(function(point) {
+                return point.value === 2;
+            });
+            chartSeries.toggleHighlight(true, points);
+            areHighlighted(points, true);
+
+            chartSeries.toggleHighlight(false, points);
+            areHighlighted(points, false);
+        });
+
+        // ------------------------------------------------------------
+        module("wrappers / ChartSeries / toggleVisibility", {
+            setup: setup,
+            teardown: destroyChart
+        });
+
+        test("toggles series visible option", function() {
+            chartSeries.toggleVisibility(false);
+            equal(chart.options.series[0].visible, false);
+
+            chartSeries.toggleVisibility(true);
+            equal(chart.options.series[0].visible, true);
+        });
+
+        test("toggles filtered points visible option", function() {
+            var filter = function(item) {
+                return item.value === 1;
+            };
+            chartSeries.toggleVisibility(false, filter);
+
+            var points = chart._plotArea.pointsBySeriesIndex(0);
+            equal(points[0].options.visible, false);
+            equal(points[1].options.visible, true);
+
+            chartSeries.toggleVisibility(true, filter);
+            var points = chart._plotArea.pointsBySeriesIndex(0);
+            equal(points[0].options.visible, true);
+        });
+
+        // ------------------------------------------------------------
+        module("wrappers / ChartSeries / toggleVisibility / grouped", {
+            setup: function() {
+                chart = createChart({
+                    dataSource: {
+                        data: [{
+                            group: "A",
+                            value: 1
+                        }, {
+                            group: "B",
+                            value: 2
+                        }],
+                        group: { field: "group" }
+                    },
+                    series: [{
+                        field: "value"
+                    }]
+                });
+            },
+            teardown: destroyChart
+        });
+
+        test("saves group visibility", function() {
+            chartSeries = chart.findSeriesByName("B");
+            chartSeries.toggleVisibility(false);
+            equal(chart._groupVisibleState.B, false);
+
+            chartSeries.toggleVisibility(true);
+            equal(chart._groupVisibleState.B, true);
+        });
+
+        // ------------------------------------------------------------
+        module("wrappers / ChartSeries / toggleVisibility / pie", {
+            setup: function() {
+                chart = createChart({
+                    series: [{
+                        type: "pie",
+                        data: [{ value: 1, category: "foo" }, { value: 2, category: "bar" }],
+                        field: "value",
+                        categoryField: "category"
+                    }]
+                });
+                chartSeries = chart.findSeriesByIndex(0);
+            },
+            teardown: destroyChart
+        });
+
+        test("shows/hides series points", function() {
+            var filter = function(item) {
+                return item.value === 1;
+            };
+            chartSeries.toggleVisibility(false, filter);
+            var points = chart._plotArea.pointsBySeriesIndex(0);
+            equal(points.length, 1);
+            equal(points[0].value, 2);
+
+            chartSeries.toggleVisibility(true, filter);
+            var points = chart._plotArea.pointsBySeriesIndex(0);
+            equal(points.length, 2);
+            equal(points[0].value, 1);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
         module("getAxis", {
             setup: function() {
                 chart = createChart({

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<link href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.common.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.rtl.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.default.min.css" rel="stylesheet" /><link href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.default.mobile.min.css" rel="stylesheet" />
+
+    <script src="../require.js"></script>
+    <script>
+    require.config({
+        baseUrl: "../../src",
+        paths: {
+            cultures: "cultures"
+        }
+    });
+
+    require([ "jquery.min",
+              "kendo.dataviz.chart.polar" ], function(){
+
+        var chart = $("#chart").kendoChart({
+            title: {
+                text: "Site Visitors Stats \n /thousands/"
+            },
+            legend: {
+                visible: true
+            },
+            seriesDefaults: {
+                type: "column",
+                stack: true
+            },
+            series: [{
+                name: "Total Visits",
+                data: [56000, 63000, 74000, 91000, 117000, 138000]
+            }, {
+                name: "Unique visitors",
+                axis: "foo",
+                data: [52000, 34000, 23000, 48000, 67000, 83000]
+            }],
+            panes: [{
+               // background: "lightgreen"
+            }, {
+                name: "foo"
+            }],
+            valueAxis: [{
+                name: "value",
+                max: 140000,
+                line: {
+                    visible: false
+                },
+                minorGridLines: {
+                    visible: true
+                },
+                labels: {
+                    rotation: "auto"
+                }
+            },{
+                name: "foo",
+                pane: "foo"
+            }],
+            plotArea: {
+                background: "lightblue"
+            },
+            categoryAxis: [{
+                min: 1.5,
+                name: "category",
+                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                majorGridLines: {
+                    visible: false
+                }
+            }, {
+                majorGridLines: {
+                    visible: false
+                },
+                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            }],
+            tooltip: {
+                visible: true,
+                template: "#= series.name #: #= value #"
+            },
+            dragStart: function() {
+                console.log("start");
+            }
+        }).getKendoChart();
+
+        // var pane = chart.findPaneByIndex(0);
+        // series = pane.series();
+
+        // series[0].hide();
+
+        // series[0].show();
+        // var points = series[0].points();
+        // debugger;
+
+        var stocksDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: function() {
+                        return "../stock-data-2011.json";
+                    },
+                    dataType: "json"
+                }
+            },
+
+            group: {
+                field: "symbol"
+            },
+
+            sort: {
+                field: "date",
+                dir: "asc"
+            },
+
+            schema: {
+                model: {
+                    fields: {
+                        date: {
+                            type: "date"
+                        }
+                    }
+                }
+            }
+        });
+
+
+        var grouped = $("#chart-grouped").kendoChart({
+            title: { text: "Stock Prices" },
+            dataSource: stocksDataSource,
+            series: [{
+                type: "column",
+                field: "close",
+                name: "#= group.value # (close)",
+                categoryField: "date"
+            }],
+            legend: {
+                position: "bottom"
+            },
+            valueAxis: {
+                labels: {
+                    format: "${0}",
+                    skip: 2,
+                    step: 2
+                }
+            },
+            categoryAxis: {
+                labels: {
+                    format: "MMM/yyyy"
+                }
+            },
+            tooltip: {
+                // visible: true,
+                shared: true
+            }
+        }).getKendoChart();
+
+        var polar = $("#polar").kendoChart({
+                title: {
+                    text: "Polar plot"
+                },
+                seriesDefaults: {
+                    type: "polarLine",
+                    style: "smooth"
+                },
+                xAxis: {
+                    name: "polar"
+                },
+                series: [{
+                    data: [
+                        [0, 0], [15, 2], [30, 4],
+                        [45, 6], [60, 8], [75, 10],
+                        [90, 12], [105, 14], [120, 16],
+                        [135, 18], [150, 20], [165, 22],
+                        [180, 24], [195, 26], [210, 28],
+                        [225, 30], [240, 32], [255, 34],
+                        [270, 36], [285, 38], [300, 40],
+                        [315, 42], [330, 44], [345, 46],
+                        [360, 48], [15, 50], [30, 52],
+                        [45, 54], [60, 56], [75, 58], [90, 60]
+                    ]
+                },{
+                    data: [
+                        [0, 0], [15, 1], [30, 2],
+                        [45, 3], [60, 4], [75, 5],
+                        [90, 6], [105, 7], [120, 8],
+                        [135, 9], [150, 10], [165, 11],
+                        [180, 12], [195, 13], [210, 14],
+                        [225, 15], [240, 16], [255, 17],
+                        [270, 18], [285, 19], [300, 20],
+                        [315, 21], [330, 22], [345, 23],
+                        [360, 24], [15, 25], [30, 26],
+                        [45, 27], [60, 28], [75, 29], [90, 30]
+                    ]
+                },{
+                    data: [
+                        [0, 0], [15, 3], [30, 6],
+                        [45, 9], [60, 12], [75, 15],
+                        [90, 18], [105, 21], [120, 24],
+                        [135, 27], [150, 30], [165, 33],
+                        [180, 36], [195, 39], [210, 42],
+                        [225, 45], [240, 48], [255, 51],
+                        [270, 54], [285, 57], [300, 60],
+                        [315, 63], [330, 66], [345, 69],
+                        [360, 72], [15, 75], [30, 78],
+                        [45, 81], [60, 84], [75, 87], [90, 90]
+                    ]
+                }]
+            }).getKendoChart();
+
+         var pie = $("#pie").kendoChart({
+            title: {
+                position: "bottom",
+                text: "Share of Internet Population Growth, 2007 - 2012"
+            },
+            legend: {
+                visible: true
+            },
+            chartArea: {
+                background: ""
+            },
+            seriesDefaults: {
+                labels: {
+                    visible: true,
+                    background: "transparent",
+                    template: "#= category #: \n #= value#%"
+                }
+            },
+            series: [{
+                type: "pie",
+                startAngle: 150,
+                data: [{
+                    category: "Asia",
+                    value: 53.8,
+                    color: "#9de219"
+                },{
+                    category: "Europe",
+                    value: 16.1,
+                    color: "#90cc38"
+                },{
+                    category: "Latin America",
+                    value: 11.3,
+                    color: "#068c35"
+                },{
+                    category: "Africa",
+                    value: 9.6,
+                    color: "#006634"
+                },{
+                    category: "Middle East",
+                    value: 5.2,
+                    color: "#004d38"
+                },{
+                    category: "North America",
+                    value: 3.6,
+                    color: "#033939"
+                }]
+            }],
+            tooltip: {
+                visible: true,
+                format: "{0}%"
+            }
+        }).getKendoChart();
+
+         var donut = $("#donut").kendoChart({
+                title: {
+                    position: "bottom",
+                    text: "Share of Internet Population Growth"
+                },
+                legend: {
+                    visible: true
+                },
+                chartArea: {
+                    background: ""
+                },
+                seriesDefaults: {
+                    type: "donut",
+                    startAngle: 150
+                },
+                series: [{
+                    name: "2011",
+                    data: [{
+                        category: "Asia",
+                        value: 30.8,
+                        color: "#9de219"
+                    },{
+                        category: "Europe",
+                        value: 21.1,
+                        color: "#90cc38"
+                    },{
+                        category: "Latin America",
+                        value: 16.3,
+                        color: "#068c35"
+                    },{
+                        category: "Africa",
+                        value: 17.6,
+                        color: "#006634"
+                    },{
+                        category: "Middle East",
+                        value: 9.2,
+                        color: "#004d38"
+                    },{
+                        category: "North America",
+                        value: 4.6,
+                        color: "#033939"
+                    }]
+                }, {
+                    name: "2012",
+                    data: [{
+                        category: "Asia",
+                        value: 53.8,
+                        color: "#9de219"
+                    },{
+                        category: "Europe",
+                        value: 16.1,
+                        color: "#90cc38"
+                    },{
+                        category: "Latin America",
+                        value: 11.3,
+                        color: "#068c35"
+                    },{
+                        category: "Africa",
+                        value: 9.6,
+                        color: "#006634"
+                    },{
+                        category: "Middle East",
+                        value: 5.2,
+                        color: "#004d38"
+                    },{
+                        category: "North America",
+                        value: 3.6,
+                        color: "#033939"
+                    }],
+                    labels: {
+                        visible: true,
+                        background: "transparent",
+                        position: "outsideEnd",
+                        template: "#= category #: \n #= value#%"
+                    }
+                }],
+                tooltip: {
+                    visible: true,
+                    template: "#= category # (#= series.name #): #= value #%"
+                }
+            }).getKendoChart();
+
+        var visible = true;
+        var scatter = $("#scatter").kendoChart({
+                title: {
+                    text: "Rainfall - Wind Speed"
+                },
+                legend: {
+                    position: "bottom"
+                },
+                seriesDefaults: {
+                    type: "scatter"
+                },
+                series: [{
+                    name: "January 2008",
+                    data: [
+                    [16.4, 5.4], [21.7, 2]]
+                },{
+                    name: "January 2009",
+                    data: [
+                    [6.4, 13.4], [1.7, 11]]
+                },{
+                    name: "January 2010",
+                    data: [
+                    [21.7, 3], [13.6, 3.5]]
+                }],
+                xAxis: {
+                    name: "xAxis",
+                    //max: 35,
+                    title: {
+                        text: "Wind Speed [km/h]"
+                    },
+                    crosshair: {
+                        visible: true,
+                        tooltip: {
+                            visible: true,
+                            format: "n1"
+                        }
+                    }
+                },
+                yAxis: {
+                    name: "yAxis",
+                    // min: -5,
+                    // max: 25,
+                    title: {
+                        text: "Rainfall [mm]"
+                    },
+                    axisCrossingValue: -5,
+                    crosshair: {
+                        visible: true,
+                        tooltip: {
+                            visible: true,
+                            format: "n1"
+                        }
+                    }
+                },
+                // tooltip: {
+                    // visible: true
+                // }
+            }).getKendoChart();
+            
+        // var axis = scatter.getAxis("xAxis");
+        // var yAxis = scatter.getAxis("yAxis");
+
+         $("#setData").click(function() {
+              var series = scatter.findSeriesByIndex(1);
+              var data = series.data();
+              data.push([100, 100]);
+              // var data = series.data();
+                // data.push({
+                    // close: 1000,
+                    // date: new Date(2012, 0, 31),
+                    // symbol: "2. AAPL"    
+                // });
+
+              series.data(data);
+         });
+
+         $("#showTooltip").click(function() {
+            // scatter.showTooltip(function(point) {
+                // console.log(point)
+                // return point.value.x === 1.7;
+            // });
+            chart.showTooltip(function(point) {
+                return point.value === 600.36;
+            });
+         });
+
+        $("#toggleSeries").click(function() {
+            var series = pie.findSeriesByIndex(0);
+            visible = !visible;
+            series.toggleVisibility(visible, function(item) {debugger;
+                return item.value === 53.8;
+            });
+            
+        });
+
+        $("#changePoint").click(function() {
+            var series = chart.findSeriesByIndex(0);
+            var point = series.findPoint(function() {return true;});
+            point.visual.opacity(0.5);
+        });
+
+        $("#changeBackground").click(function() {
+            var plotArea = chart.plotArea();
+            plotArea.backgroundVisual.fill("red", 1);
+        });
+
+        $("#insertVisual").click(function() {
+            var pane = chart.findPaneByIndex(0);
+            //var plotArea = chart.plotArea();
+            var element = new kendo.drawing.Circle(new kendo.geometry.Circle([300, 200], 100), { fill: {color: "red"}});
+            pane.chartsVisual.insert(0, element);
+        });
+
+        $("#redraw").click(function() {
+            chart.redraw();
+        });
+
+        $("#refresh").click(function() {
+            chart.refresh();
+        });
+
+        $("#read").click(function() {
+            chart.dataSource.read();
+        });
+
+        $("#change").click(function() {
+            chart.dataSource.at(0).set("close", Math.random() * 1000);
+        });
+    });
+
+    </script>
+    <style>
+        #surface {
+            width: 400px;
+            height: 500px;
+            float: left;
+        }
+    </style>
+  </head>
+  <body>
+      <button type="button" id="setData">Set Data</button>
+      <button type="button" id="showTooltip">Show Tooltip</button>
+      <button type="button" id="toggleSeries">Toggle Series</button>
+      <button type="button" id="changePoint">Change Point</button>
+      <button type="button" id="changeBackground">Change Background</button>
+      <button type="button" id="insertVisual">Insert Visual</button>
+      <button type="button" id="redraw">redraw</button>
+      <button type="button" id="refresh">refresh</button>
+      <button type="button" id="read">read</button>
+      <button type="button" id="change">change</button>
+
+  <div id="chart"></div>
+  <div id="pie"></div>
+    <!--      <div id="chart-grouped"></div>
+      
+      <div id="donut"></div>
+      <div id="scatter"><div>
+      <div id="polar"></div>
+      <div id="surface"></div> -->
+  </body>
+</html>

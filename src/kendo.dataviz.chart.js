@@ -498,9 +498,67 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        findAxisByName: function(name) {
+            return this.getAxis(name);
+        },
+
+        plotArea: function() {
+            return new ChartPlotArea(this._plotArea);
+        },
+
+        findPaneByName: function(name) {
+            var panes = this._plotArea.panes;
+
+            for (var idx = 0; idx < panes.length; idx++) {
+                if (panes[idx].options.name === name) {
+                    return new ChartPane(this, panes[idx]);
+                }
+            }
+        },
+
+        findPaneByIndex: function(idx) {
+            var panes = this._plotArea.panes;
+            if (panes[idx]) {
+                return new ChartPane(this, panes[idx]);
+            }
+        },
+
+        findSeriesByName: function(name) {
+            return this._createSeries({ name: name });
+        },
+
+        findSeriesByIndex: function(index) {
+            return this._createSeries({ index: index });
+        },
+
+        _createSeries: function(options) {
+            var seriesOptions = this._seriesOptions(options);
+            if (seriesOptions) {
+                return new ChartSeries(this, seriesOptions);
+            }
+        },
+
+        _seriesOptions: function(options) {
+            var plotArea = this._plotArea;
+            var series = plotArea.srcSeries || plotArea.series;
+            var seriesOptions;
+
+            if (defined(options.index)) {
+                seriesOptions = series[options.index];
+            } else if (defined(options.name)) {
+                for (var idx = 0; idx < series.length; idx++) {
+                    if (series[idx].name === options.name) {
+                        seriesOptions = series[idx];
+                        break;
+                    }
+                }
+            }
+
+            return seriesOptions;
+        },
+
         toggleHighlight: function(show, filter) {
             var plotArea = this._plotArea;
-            var highlight = this._highlight;
             var firstSeries = (plotArea.srcSeries || plotArea.series || [])[0];
             var seriesName, categoryName, points;
 
@@ -1656,15 +1714,16 @@ var __meta__ = { // jshint ignore:line
                 plotArea = chart._plotArea,
                 highlight = chart._highlight,
                 currentSeries = (plotArea.srcSeries || plotArea.series)[seriesIndex],
-                index, items;
+                items;
 
             if (inArray(currentSeries.type, [PIE, DONUT, FUNNEL])) {
-                index = pointIndex;
+                items = plotArea.findPoint(function(point) {
+                    return point.series.index === seriesIndex && point.index === pointIndex;
+                });
             } else {
-                index = seriesIndex;
+                items = plotArea.pointsBySeriesIndex(seriesIndex);
             }
 
-            items = plotArea.pointsBySeriesIndex(index);
             highlight.show(items);
         },
 
@@ -10254,22 +10313,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         pointsBySeriesIndex: function(seriesIndex) {
-            var charts = this.charts,
-                result = [],
-                points, point, i, j, chart;
-
-            for (i = 0; i < charts.length; i++) {
-                chart = charts[i];
-                points = chart.points;
-                for (j = 0; j < points.length; j++) {
-                    point = points[j];
-                    if (point && point.options.index === seriesIndex) {
-                        result.push(point);
-                    }
-                }
-            }
-
-            return result;
+            return this.filterPoints(function(point) {
+                return point.series.index === seriesIndex;
+            });
         },
 
         pointsBySeriesName: function(name) {
@@ -10295,6 +10341,22 @@ var __meta__ = { // jshint ignore:line
             }
 
             return result;
+        },
+
+        findPoint: function(callback) {
+            var charts = this.charts,
+                points, point, i, j, chart;
+
+            for (i = 0; i < charts.length; i++) {
+                chart = charts[i];
+                points = chart.points;
+                for (j = 0; j < points.length; j++) {
+                    point = points[j];
+                    if (point && callback(point)) {
+                        return point;
+                    }
+                }
+            }
         },
 
         paneByPoint: function(point) {
@@ -13235,13 +13297,13 @@ var __meta__ = { // jshint ignore:line
             this._pane = pane;
             this.visual = pane.visual;
             this.chartsVisual = pane.chartContainer.visual;
-            this.name = pane.options.name || "default";
+            this.name = pane.options.name;
         },
 
         series: function() {
             var chart = this._chart;
             var seriesByPane = chart._plotArea.groupSeriesByPane();
-            var series = seriesByPane[this.name];
+            var series = seriesByPane[this.name || "default"];
 
             var result = [];
             if (series) {
@@ -13280,6 +13342,133 @@ var __meta__ = { // jshint ignore:line
 
         valueRange: function() {
             return this._axis.valueRange();
+        }
+    });
+
+    var ChartSeries = Class.extend({
+        init: function(chart, options) {
+            this._chart = chart;
+            this._options = options;
+        },
+
+        points: function(filter) {
+            var points = this._points;
+            if (!points) {
+                var series = this._seriesOptions();
+                var plotArea = this._chart._plotArea;
+                this._points = points = plotArea.pointsBySeriesIndex(series.index);
+            }
+            if (kendo.isFunction(filter)) {
+                points = this._filterPoints(points, filter);
+            }
+
+
+            return points;
+        },
+
+        data: function(data) {
+            var series = this._seriesOptions();
+            if (data) {
+                var chart = this._chart;
+                var plotArea = chart._plotArea;
+
+                series.data = data;
+
+                if (series.categoryField) {
+                    var axis = plotArea.seriesCategoryAxis(series);
+                    var options = [].concat(chart.options.categoryAxis);
+
+                    chart._bindCategoryAxisFromSeries(options[axis.axisIndex], axis.axisIndex);
+                }
+
+                chart._noTransitionsRedraw();
+                this._clearFields();
+            }
+
+            return series.data;
+        },
+
+        findPoint: function(filter) {
+            var points = this.points();
+            for (var idx = 0; idx < points.length; idx++) {
+                if (filter(points[idx])) {
+                    return points[idx];
+                }
+            }
+        },
+
+        toggleHighlight: function(show, elements) {
+            if (!elements) {
+                elements = this.points();
+            } else if (kendo.isFunction(elements)) {
+                elements = this.points(elements);
+            } else {
+                elements = isArray(elements) ? elements : [elements];
+            }
+
+            this._chart._togglePointsHighlight(show, elements);
+        },
+
+        toggleVisibility: function(visible, filter) {
+            var chart = this._chart;
+            var seriesOptions = this._seriesOptions();
+            var hasFilter = kendo.isFunction(filter);
+            if (!hasFilter) {
+                seriesOptions.visible = visible;
+                chart._saveGroupVisibleState(seriesOptions);
+            } else {
+                if (inArray(seriesOptions.type, [PIE, DONUT, FUNNEL])) {
+                    var data = this._filterData(filter);
+                    for (var idx = 0; idx < data.length; idx++) {
+                        data[idx].visible = visible;
+                    }
+                } else {
+                    seriesOptions.visible = function(data) {
+                        return filter(data.dataItem) ? visible : true;
+                    };
+                }
+            }
+
+            chart._noTransitionsRedraw();
+
+            this._clearFields();
+        },
+
+        _filterData: function(filter) {
+            var data = this._seriesOptions().data;
+            var length = data.length;
+            var result = [];
+
+            for (var idx = 0; idx < length; idx++) {
+                if (filter(data[idx])) {
+                    result.push(data[idx]);
+                }
+            }
+            return result;
+        },
+
+        _filterPoints: function(points, filter) {
+            var result = [];
+            var length = points.length;
+            for (var idx = 0; idx < length; idx++) {
+                if (filter(points[idx])) {
+                    result.push(points[idx]);
+                }
+            }
+            return result;
+        },
+
+        _seriesOptions: function() {
+            var series = this._series;
+            if (!series) {
+                series = this._series = this._chart._seriesOptions(this._options);
+            }
+            return series;
+        },
+
+        _clearFields: function() {
+            delete this._points;
+            delete this._series;
         }
     });
 
@@ -14212,6 +14401,9 @@ var __meta__ = { // jshint ignore:line
         CategoryAxis: CategoryAxis,
         ChartAxis: ChartAxis,
         ChartContainer: ChartContainer,
+        ChartPane: ChartPane,
+        ChartPlotArea: ChartPlotArea,
+        ChartSeries: ChartSeries,
         ClipAnimation: ClipAnimation,
         ClusterLayout: ClusterLayout,
         Crosshair: Crosshair,
