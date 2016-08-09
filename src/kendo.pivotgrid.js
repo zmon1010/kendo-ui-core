@@ -1130,8 +1130,9 @@ var __meta__ = { // jshint ignore:line
                 },
                 members: $.proxy(function(response, restrictions) {
                     var name = restrictions.levelUniqueName || restrictions.memberUniqueName;
-                    var dataGetter = kendo.getter(this.options.schema.data, true);
-                    var data = dataGetter(this.options.data) || this._rawData || [];
+                    var schemaData = this.options.schema.data;
+                    var dataGetter = isFunction(schemaData) ? schemaData : kendo.getter(schemaData, true);
+                    var data = (this.options.data && dataGetter(this.options.data)) || this._rawData || [];
                     var result = [];
                     var getter;
                     var value;
