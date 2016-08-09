@@ -10,6 +10,7 @@
     var wrapper;
 
     var DOT = ".";
+    var CONTENT_EDITABLE = "contenteditable";
     var FIRST_COLUMN = "td:first";
     var MAX = 123456;
     var MOUSE_DOWN = "mousedown";
@@ -524,6 +525,24 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         triggerResize(tableResizing.handles[1].element, 0, deltaY);
 
         equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
+    });
+
+    test("should set contenteditable to false on handle mouseover", function() {
+        $(tableResizing.options.rootElement).attr(CONTENT_EDITABLE, "true");
+        tableResizing.showResizeHandles();
+
+        triggerEvent(tableResizing.handles[0].element, { type: "mouseover" });
+
+        equal($(tableResizing.options.rootElement).attr(CONTENT_EDITABLE), "false");
+    });
+
+    test("should set contenteditable to true on handle mouseout", function() {
+        $(tableResizing.options.rootElement).attr(CONTENT_EDITABLE, "false");
+        tableResizing.showResizeHandles();
+
+        triggerEvent(tableResizing.handles[0].element, { type: "mouseout" });
+
+        equal($(tableResizing.options.rootElement).attr(CONTENT_EDITABLE), "true");
     });
 
     module("editor table resizing resize width in pixels", {

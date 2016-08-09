@@ -102,6 +102,16 @@
         }));
     }
 
+    function triggerEvent(element, eventOptions) {
+        var options = $.extend({
+            type: "mousedown",
+            clientX: 0,
+            clientY: 0
+        }, eventOptions || { });
+
+        $(element).trigger(options);
+    }
+
     module("editor table resize handle", {
         setup: function() {
         },
@@ -472,6 +482,28 @@
         });
 
         triggerDrag(handle.element, { deltaX: 10 });
+
+        equal(eventFired, true);
+    });
+
+    test("should fire mouseover event", function() {
+        var eventFired = false;
+        handle.bind("mouseover", function(e) {
+            eventFired = true;
+        });
+
+        triggerEvent(handle.element, { type: "mouseover" });
+
+        equal(eventFired, true);
+    });
+
+    test("should fire mouseout event", function() {
+        var eventFired = false;
+        handle.bind("mouseout", function(e) {
+            eventFired = true;
+        });
+
+        triggerEvent(handle.element, { type: "mouseout" });
 
         equal(eventFired, true);
     });

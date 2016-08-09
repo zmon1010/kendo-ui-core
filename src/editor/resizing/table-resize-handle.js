@@ -6,15 +6,24 @@
     var $ = kendo.jQuery;
     var extend = $.extend;
     var noop = $.noop;
+    var proxy = $.proxy;
 
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
     var Draggable = kendo.ui.Draggable;
     var Observable = kendo.Observable;
 
+    var AND = "and";
     var DRAG = "drag";
     var NS = ".kendoEditorTableResizeHandle";
     var HALF_INSIDE = "halfInside";
+    var MOUSE_OVER = "mouseover";
+    var MOUSE_OUT = "mouseout";
+    var HORIZONTAL = "horizontal";
+    var VERTICAL = "vertical";
+    var HORIZONTAL_AND_VERTICAL = HORIZONTAL + AND + VERTICAL;
+    var TABLE = "table";
+
     var EAST = "east";
     var NORTH = "north";
     var NORTHEAST = "northeast";
@@ -23,11 +32,6 @@
     var SOUTHEAST = "southeast";
     var SOUTHWEST = "southwest";
     var WEST = "west";
-    var HORIZONTAL = "horizontal";
-    var VERTICAL = "vertical";
-    var AND = "and";
-    var HORIZONTAL_AND_VERTICAL = HORIZONTAL + AND + VERTICAL;
-    var TABLE = "table";
 
     var TableResizeHandle = Observable.extend({
         init: function(options) {
@@ -38,6 +42,7 @@
             that.options = extend({}, that.options, options);
             that.element = $(that.options.template).appendTo(that.options.appendTo)[0];
 
+            that._attachEventHandlers();
             that._addStyles();
             that._initDraggable();
             that._initPositioningStrategy();
@@ -63,7 +68,9 @@
         },
 
         events: [
-            DRAG
+            DRAG,
+            MOUSE_OVER,
+            MOUSE_OUT
         ],
 
         show: function() {
@@ -80,6 +87,22 @@
                 left: position.left,
                 top: position.top
             });
+        },
+
+        _attachEventHandlers: function() {
+            var that = this;
+
+            $(that.element)
+                .on(MOUSE_OVER + NS, proxy(that._onMouseOver, that))
+                .on(MOUSE_OUT + NS, proxy(that._onMouseOut, that));
+        },
+
+        _onMouseOver: function() {
+            this.trigger(MOUSE_OVER);
+        },
+
+        _onMouseOut: function() {
+            this.trigger(MOUSE_OUT);
         },
 
         _addStyles: function() {

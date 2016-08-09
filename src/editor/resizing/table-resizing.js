@@ -19,10 +19,13 @@
     var constrain = ResizingUtils.constrain;
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
+    var setContentEditable = ResizingUtils.setContentEditable;
 
     var DRAG = "drag";
     var NS = ".kendoEditorTableResizing";
     var MIN = "min";
+    var MOUSE_OVER = "mouseover";
+    var MOUSE_OUT = "mouseout";
     var OUTER = "outer";
     var TABLE = "table";
     var WIDTH = "Width";
@@ -36,6 +39,9 @@
     var SOUTHEAST = "southeast";
     var SOUTHWEST = "southwest";
     var WEST = "west";
+
+    var TRUE = "true";
+    var FALSE = "false";
 
     var TableResizing = Class.extend({
         init: function(element, options) {
@@ -189,10 +195,22 @@
             var handles = that.handles || [];
             var length = handles.length;
             var i;
+            var handle;
 
             for (i = 0; i < length; i++) {
-                that.handles[i].bind(DRAG, proxy(that.resize, that));
+                handle = handles[i];
+                handle.bind(DRAG, proxy(that.resize, that));
+                handle.bind(MOUSE_OVER, proxy(that._onHandleMouseOver, that));
+                handle.bind(MOUSE_OUT, proxy(that._onHandleMouseOut, that));
             }
+        },
+
+        _onHandleMouseOver: function() {
+            setContentEditable(this.options.rootElement, FALSE);
+        },
+
+        _onHandleMouseOut: function() {
+            setContentEditable(this.options.rootElement, TRUE);
         }
     });
 
