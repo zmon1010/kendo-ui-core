@@ -272,33 +272,6 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(editor.tableResizing.handles.length, 8);
     });
 
-    editor_module("editor table resizing destroying on leave", {
-        beforeEach: function() {
-            editor = $("#editor-fixture").data("kendoEditor");
-            tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
-            editor.tableResizing = new TableResizing(tableElement);
-        },
-
-        afterEach: function() {
-            if (editor.tableResizing) {
-                editor.tableResizing.destroy();
-            }
-
-            if (editor) {
-                $(editor.body).find("*").remove();
-            }
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("leaving the editor content should destroy table resizing", function() {
-        var destroySpy = spy(editor.tableResizing, "destroy");
-
-        triggerEvent(editor.body, { type: MOUSE_LEAVE });
-
-        equal(destroySpy.calls("destroy"), 1);
-    });
-
     editor_module("editor table resizing destroying on click", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
@@ -553,7 +526,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
     });
 
-    module("editor table resizing resize width", {
+    module("editor table resizing resize width in pixels", {
         setup: function() {
             wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
             tableElement = $(QUnit.fixture).find("#table");
@@ -647,7 +620,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(tableElement[0].style.width, initialWidthInPercentages + (-1) * differenceInPercentages + PERCENTAGE);
     });
 
-    test("should should not be lower than min", function() {
+    test("should not be lower than min", function() {
         var initialWidthInPixels = tableElement.width();
         var minInPercentages = (tableResizing.options.minWidth / initialWidthInPixels) * 100;
 
@@ -656,10 +629,39 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         ok(parseFloat(tableElement[0].style.width) >= minInPercentages);
     });
 
-    test("should should not be lower than max", function() {
+    test("should be resized more than 100% ", function() {
+        var initialWidthInPixels = tableElement.outerWidth();
+        var initialStyleWidth = parseFloat(tableElement[0].style.width);
+
         tableResizing.resize({ deltaX: MAX });
 
-        equal(tableElement[0].style.width, "100%");
+        equal(tableElement[0].style.width, (initialStyleWidth + (MAX / initialWidthInPixels * 100)) + PERCENTAGE);
+    });
+
+    module("editor table resizing resize width in scrolled container", {
+        beforeEach: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
+            tableElement = $(QUnit.fixture).find("#table");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        afterEach: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set width according to scroll", function() {
+        var scrollValue = 20;
+        $(wrapper).css("width", "500px");
+        $(table).width($(document).width() + 100);
+        $(document).scrollLeft(scrollValue);
+
+        tableResizing.resize({ deltaX: MAX });
+
+        equal(tableElement[0].style.width, wrapper.width() + scrollValue + PX);
     });
 
     module("editor table resizing resize height in pixels", {
@@ -683,7 +685,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
         tableResizing.resize({ deltaY: deltaY });
 
-        equal(tableElement.css("height"), initialHeight + deltaY + PX);
+        equal(tableElement[0].style.height, initialHeight + deltaY + PX);
     });
 
     test("should decrease height", function() {
@@ -701,7 +703,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
         tableResizing.resize({ deltaY: deltaY });
 
-        equal(tableElement.css("height"), initialHeight + deltaY + PX);
+        equal(tableElement[0].style.height, initialHeight + deltaY + PX);
     });
 
     test("should not set height lower than min", function() {
@@ -715,7 +717,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
         tableResizing.resize({ deltaY: MAX });
 
-        equal(tableElement.css("height"), wrapper.outerHeight() + PX);
+        equal(tableElement[0].style.height, wrapper.outerHeight() + PX);
     });
 
     module("editor table resizing resize height in percentages", {
@@ -755,7 +757,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(tableElement[0].style.height, initialHeightInPercentages + (-1) * differenceInPercentages + PERCENTAGE);
     });
 
-    test("should should not be lower than min", function() {
+    test("should not be lower than min", function() {
         var initialHeightInPixels = tableElement.height();
         var minInPercentages = (tableResizing.options.minHeight / initialHeightInPixels) * 100;
 
@@ -764,10 +766,39 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         ok(parseFloat(tableElement[0].style.height) >= minInPercentages);
     });
 
-    test("should should not be lower than max", function() {
+    test("should be resized more than 100%", function() {
+        var initialHeightInPixels = tableElement.outerHeight();
+        var initialStyleHeight = parseFloat(tableElement[0].style.height);
+
         tableResizing.resize({ deltaY: MAX });
 
-        equal(tableElement[0].style.height, "100%");
+        equal(tableElement[0].style.height, (initialStyleHeight + (MAX / initialHeightInPixels * 100)) + PERCENTAGE);
+    });
+
+    module("editor table resizing resize height in scrolled container", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("border", "1px solid red");
+            tableElement = $(QUnit.fixture).find("#table");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set width according to scroll", function() {
+        var scrollValue = 20;
+        $(wrapper).css("height", "500px");
+        $(tableElement).height($(document).height() + 100);
+        $(document).scrollTop(scrollValue);
+
+        tableResizing.resize({ deltaY: MAX });
+
+        equal(tableElement[0].style.height, wrapper.height() + scrollValue + PX);
     });
 
     module("editor table resizing resize width in pixels rtl", {
@@ -815,6 +846,33 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
 
         equal(tableElement[0].style.width, wrapper.width() + PX);
+    });
+
+    module("editor table resizing resize width in scrolled container rtl", {
+        beforeEach: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
+            tableElement = $(QUnit.fixture).find("#table");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture,
+                rtl: true
+            });
+        },
+
+        afterEach: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set width according to scroll", function() {
+        var scrollValue = 20;
+        $(wrapper).css("width", "500px");
+        $(table).width($(document).width() + 100);
+        $(document).scrollLeft(scrollValue);
+
+        tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
+
+        equal(tableElement[0].style.width, wrapper.width() + (RTL_MODIFIER * scrollValue) + PX);
     });
 
     editor_module("editor table resizing resize handles", {

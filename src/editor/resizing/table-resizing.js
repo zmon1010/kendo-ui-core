@@ -22,7 +22,6 @@
 
     var DRAG = "drag";
     var NS = ".kendoEditorTableResizing";
-    var MAX_PERCENTAGE_VALUE = 100;
     var MIN = "min";
     var OUTER = "outer";
     var TABLE = "table";
@@ -102,19 +101,25 @@
         _resizeDimension: function(dimension, delta) {
             var that = this;
             var element = $(that.element);
-            var style = element[0].style;
             var dimensionLowercase = dimension.toLowerCase();
-            var styleValue = style[dimensionLowercase];
+            var styleValue = element[0].style[dimensionLowercase];
             var dimensionValue = styleValue !== "" ? parseFloat(styleValue) : 0;
             var elementOuterWidth = element[OUTER + dimension]();
             var currentValue = dimensionValue < elementOuterWidth ? elementOuterWidth : dimensionValue;
             var constrainedValue;
+            var rtlModifier = that.options.rtl ? (-1) : 1;
+            var elementOwnerDocument = $(element[0].ownerDocument);
+            var scrollOffset = rtlModifier * (dimension === WIDTH ? elementOwnerDocument.scrollLeft() : elementOwnerDocument.scrollTop());
+
+            if (delta === 0) {
+                return;
+            }
 
             if (inPercentages(styleValue)) {
                 constrainedValue = constrain({
                     value: dimensionValue + calculatePercentageRatio(delta, elementOuterWidth),
                     min: calculatePercentageRatio(that.options[MIN + dimension], elementOuterWidth),
-                    max: MAX_PERCENTAGE_VALUE
+                    max: Infinity
                 });
 
                 constrainedValue = toPercentages(constrainedValue);
@@ -123,7 +128,7 @@
                 constrainedValue = constrain({
                     value: currentValue + parseFloat(delta),
                     min: that.options[MIN + dimension],
-                    max: element.parent()[dimensionLowercase]()
+                    max: element.parent()[dimensionLowercase]() + scrollOffset
                 });
             }
 
@@ -139,12 +144,13 @@
 
         _initResizeHandles: function() {
             var that = this;
+            var handles = that.handles;
             var options = that.options;
-            var resizeHandles = that.options.handles;
-            var length = resizeHandles.length;
+            var handleOptions = that.options.handles;
+            var length = handleOptions.length;
             var i;
 
-            if (that.handles.length > 0) {
+            if (handles && handles.length > 0) {
                 return;
             }
 
@@ -152,7 +158,7 @@
                 that.handles.push(new TableResizeHandle(extend({
                     appendTo: options.rootElement,
                     resizableElement: that.element
-                }, resizeHandles[i])));
+                }, handleOptions[i])));
             }
 
             that._bindToResizeHandlesEvents();

@@ -3,10 +3,6 @@
 })(function() {
 
 (function(kendo, undefined) {
-    var global = window;
-    var math = global.Math;
-    var abs = math.abs;
-
     var $ = kendo.jQuery;
     var extend = $.extend;
     var noop = $.noop;
@@ -231,8 +227,8 @@
 
             if (options.offset === HALF_INSIDE) {
                 return {
-                    left: abs(position.left - (handle.outerWidth() / 2)),
-                    top: abs(position.top - (handle.outerHeight() / 2))
+                    left: (position.left - (handle.outerWidth() / 2)),
+                    top: (position.top - (handle.outerHeight() / 2))
                 };
             }
             else {

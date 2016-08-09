@@ -357,9 +357,6 @@
             editor.bind(SELECT, proxy(editor._showTableResizeHandles, editor));
 
             $(editor.body)
-                .on(MOUSE_LEAVE + NS, function() {
-                    editor._destroyTableResizing();
-                })
                 .on(MOUSE_DOWN + NS, TABLE, function(e) {
                     var eventTarget = e.target;
                     var eventCurrentTarget = e.currentTarget;
