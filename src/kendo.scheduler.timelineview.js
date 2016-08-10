@@ -231,7 +231,13 @@ var __meta__ = { // jshint ignore:line
 
         _adjustLeftPosition: function (left) {
             if (this._isRtl) {
-                left -= (this.content[0].scrollWidth - this.content[0].offsetWidth);
+                var scrollBarWidth = 0;
+
+                if (this.content.height() < this.content.children().first().height() + kendo.support.scrollbar()) {
+                    scrollBarWidth = kendo.support.scrollbar();
+                }
+
+                left -= (this.content[0].scrollWidth - this.content[0].offsetWidth + scrollBarWidth);
             }
 
             return left;
