@@ -29,7 +29,6 @@ namespace Telerik.Web.Spreadsheet
                 var sheet = workbook.AddSheet();
 
                 sheet.Name = documentWorksheet.Name;
-                var gridLines = documentWorksheet.ViewState.ShowGridLines;
 
                 sheet.ActiveCell = NameConverter.ConvertCellIndexToName(documentWorksheet.ViewState.SelectionState.ActiveCellIndex);
 
@@ -41,6 +40,8 @@ namespace Telerik.Web.Spreadsheet
                 sheet.Rows = documentWorksheet.ImportRows().ToList();
 
                 sheet.MergedCells = GetMergedCells(documentWorksheet).ToList();
+
+                sheet.ShowGridLines = documentWorksheet.ViewState.ShowGridLines;
 
                 var pane = documentWorksheet.ViewState.Pane;
                 if (pane != null && pane.State == PaneState.Frozen)

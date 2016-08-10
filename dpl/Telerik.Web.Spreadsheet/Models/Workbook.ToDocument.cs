@@ -70,6 +70,8 @@ namespace Telerik.Web.Spreadsheet
                         documentSheet.ViewState.FreezePanes(sheet.FrozenRows.GetValueOrDefault(), sheet.FrozenColumns.GetValueOrDefault());
                     }
 
+                    documentSheet.ViewState.ShowGridLines = sheet.ShowGridLines.GetValueOrDefault(false);
+
                     SetSortState(documentSheet, sheet.Sort);
 
                     SetFilterState(documentSheet, sheet.Filter);

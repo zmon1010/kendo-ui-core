@@ -130,6 +130,14 @@ namespace Telerik.Web.Spreadsheet.Tests
             Assert.Equal(1, Workbook.FromDocument(document).Sheets[0].FrozenColumns);
         }
 
+        [Fact]
+        public void FromDocument_imports_showGridLines()
+        {
+            document.ActiveWorksheet.ViewState.ShowGridLines = false;
+
+            Assert.False(Workbook.FromDocument(document).Sheets[0].ShowGridLines);
+        }
+
         private Cell GetCell(int rowIndex, int columnIndex)
         {
             return Workbook.FromDocument(document).Sheets[0]

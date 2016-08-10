@@ -129,6 +129,14 @@ namespace Telerik.Web.Spreadsheet.Tests
             Assert.Equal(4, pane.TopLeftCellIndex.ColumnIndex);
         }
 
+        [Fact]
+        public void ToDocument_exports_showGridLines()
+        {
+            sheet.ShowGridLines = false;
+
+            Assert.False(workbook.ToDocument().ActiveWorksheet.ViewState.ShowGridLines);
+        }
+
         private CellSelection GetCell(int rowIndex, int columnIndex)
         {
             return workbook.ToDocument().ActiveWorksheet.Cells[rowIndex, columnIndex];
