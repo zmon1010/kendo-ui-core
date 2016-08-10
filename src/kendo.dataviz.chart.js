@@ -1055,7 +1055,16 @@ var __meta__ = { // jshint ignore:line
         },
 
         _end: function(e) {
-            this._endNavigation(e, DRAG_END);
+            var pannable = this._pannable;
+            if (pannable && pannable.end(e)) {
+                this.surface.resumeTracking();
+                this.trigger(DRAG_END, {
+                    axisRanges: pannable.ranges(),
+                    originalEvent: e
+                });
+            } else {
+                this._endNavigation(e, DRAG_END);
+            }
 
             if (this._zoomSelection) {
                 var ranges = this._zoomSelection.end(e);
@@ -1063,10 +1072,6 @@ var __meta__ = { // jshint ignore:line
                     this._zoomSelection.zoom();
                     this.trigger(ZOOM_END, { axisRanges: ranges, originalEvent: e });
                 }
-            }
-
-            if (this._pannable && this._pannable.end(e)) {
-                this.surface.resumeTracking();
             }
         },
 
@@ -12950,6 +12955,12 @@ var __meta__ = { // jshint ignore:line
                     plotArea.updateAxisOptions(range.axis, range.range);
                 }
                 plotArea.redraw(plotArea.panes);
+            }
+        },
+
+        ranges: function() {
+            if (this.axisRanges) {
+                return toChartAxisRanges(this.axisRanges);
             }
         },
 

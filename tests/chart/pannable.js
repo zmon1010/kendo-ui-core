@@ -15,6 +15,7 @@
 
     function createEventArg(options) {
         return kendo.deepExtend({
+            preventDefault: $.noop,
             event: { },
             x: {
                 startLocation: 0,
@@ -159,6 +160,11 @@
     module("Pannable / event handling", {
         setup: function() {
             chart = createChart({
+                series: [{ data: [1, 2, 3, 4] }],
+                categoryAxis: {
+                    name: "category",
+                    max: 2
+                },
                 pannable: true
             });
             pannable = chart._pannable;
@@ -226,6 +232,24 @@
         chart.surface.resumeTracking = function() {
             ok(false);
         };
+        chart._end(createEventArg());
+    });
+
+    test("triggers dragEnd with pannable ranges", 2, function() {
+        chart.bind("dragEnd", function(e) {
+            var range = e.axisRanges.category;
+            var pannableRange = pannable.ranges().category;
+            equal(range.min, pannableRange.min);
+            equal(range.max, pannableRange.max);
+        });
+
+        chart._start(createEventArg());
+        chart._move(createEventArg({
+            x: {
+                delta: -100
+            }
+        }));
+
         chart._end(createEventArg());
     });
 
