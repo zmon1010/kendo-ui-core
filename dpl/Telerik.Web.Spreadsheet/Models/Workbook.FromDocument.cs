@@ -29,6 +29,7 @@ namespace Telerik.Web.Spreadsheet
                 var sheet = workbook.AddSheet();
 
                 sheet.Name = documentWorksheet.Name;
+                var gridLines = documentWorksheet.ViewState.ShowGridLines;
 
                 sheet.ActiveCell = NameConverter.ConvertCellIndexToName(documentWorksheet.ViewState.SelectionState.ActiveCellIndex);
 

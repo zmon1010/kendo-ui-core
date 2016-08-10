@@ -17,6 +17,16 @@ namespace Telerik.Web.Spreadsheet
         public string ActiveSheet { get; set; }
 
         /// <summary>
+        /// Configures the Kendo UI Spreadsheet PDF export settings.
+        /// </summary>
+        [DataMember(Name = "pdf", EmitDefaultValue = false)]
+        public Pdf Pdf
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// An array defining the document sheets and their content.
         /// </summary>
         [DataMember(Name = "sheets", EmitDefaultValue = false)]
@@ -37,6 +47,11 @@ namespace Telerik.Web.Spreadsheet
             if (ActiveSheet != null)
             {
                 settings["activeSheet"] = ActiveSheet;
+            }
+
+            if (Pdf != null)
+            {
+                settings["pdf"] = Pdf.Serialize();
             }
 
             if (Sheets != null)
