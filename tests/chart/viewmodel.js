@@ -4090,18 +4090,6 @@
             ok(pane.clipRoot() === pane);
         });
 
-        module("Pane / chartsBox", {});
-
-        // test("calculates charts box", function() {
-            // setup([setupAxis(Box(1,10, 1, 100), true), setupAxis(Box(10,1, 100, 1), false)]);
-            // deepEqual(container._clipBox(), Box(10,10,100,100));
-        // });
-
-        // test("gets clip box coordinates from pane if there is no secondary axis", function() {
-            // setup([setupAxis(Box(1,10, 1, 100), true)], Box(1, 1, 100, 100));
-            // deepEqual(container._clipBox(), Box(1,10,100,100));
-        // });
-
         // ------------------------------------------------------------
         (function() {
             function createPaneWithAxes(axes, options) {
