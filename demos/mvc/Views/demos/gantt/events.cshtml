@@ -30,7 +30,11 @@
             }
 
             function onRemove(e) {
-                kendoConsole.log("Task removed :: " + e.task.title);
+                if (e.task) {
+                    kendoConsole.log("Task removed :: " + e.task.title);
+                } else {
+                    kendoConsole.log("Dependancy removed");
+                }
             }
 
             function onSave(e) {
