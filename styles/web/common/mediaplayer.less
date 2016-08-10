@@ -7,6 +7,11 @@
 .k-mediaplayer {
 	position: relative;
 
+	> video,
+	> iframe {
+		vertical-align: top;
+	}
+
 	.k-mediaplayer-titlebar,
 	.k-mediaplayer-toolbar {
 		z-index: 2;
@@ -78,6 +83,7 @@
 
 	.k-mediaplayer-quality {
 		width: auto;
+		padding: 0;
 		background: none transparent;
 
 		.k-dropdown-wrap {

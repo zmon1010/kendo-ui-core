@@ -696,50 +696,19 @@ html .km-pane-wrapper .k-header
     background-color: transparent;
 }
 
-//.k-mediaplayer-toolbar .k-button,
 .k-button-bare {
-	opacity: 0.7;
-	box-shadow: none;
-
-	&,
-	&:hover,
-	&.k-state-hover,
-	&:active,
-	&.k-state-active,
-	&.k-state-active:hover {
-		color: inherit;
-	}
-
-	&:hover,
-	&.k-state-hover {
-		opacity: 1;
-	}
-
-	&:active,
-	&.k-state-active {
-		background: none;
-		box-shadow: none;
-		opacity: 1;
-	}
-
-	&:focus {
-		background: none;
-		box-shadow: none !important;
-		border-color: transparent;
-		opacity: 0.8;
-	}
-
+	&.k-state-focused .k-font-icon,
 	&:focus .k-font-icon {
 		text-shadow: 0 0 3px currentColor;
 	}
 }
 
-.k-mediaplayer-toolbar .k-button-bare.k-state-active,
-.k-mediaplayer-toolbar .k-mediaplayer-quality .k-state-active {
+html .k-mediaplayer-toolbar .k-button-bare {
+	&:active,
+	&.k-state-active,
+	&.k-state-active:hover {
 	color: @accent;
 }
-
-
 
 .k-menu {
     .k-state-selected > .k-link {
