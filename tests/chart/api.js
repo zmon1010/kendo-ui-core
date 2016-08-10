@@ -300,7 +300,11 @@
         // ------------------------------------------------------------
         module("destroy", {
             setup: function() {
-                setupChart({series: [{}]});
+                setupChart({
+                    series: [{}],
+                    pannable: true,
+                    zoomable: true
+                });
             }
         });
 
@@ -312,6 +316,24 @@
         test("destroys tooltip", function() {
             chart._tooltip.destroy();
             chart._tooltip = { destroy: function() { ok(true); }, hide: $.noop };
+            chart.destroy();
+        });
+
+        test("destroys pannable", function() {
+            chart._pannable.destroy();
+            chart._pannable = { destroy: function() { ok(true); } };
+            chart.destroy();
+        });
+
+        test("destroys zoomSelection", function() {
+            chart._zoomSelection.destroy();
+            chart._zoomSelection = { destroy: function() { ok(true); } };
+            chart.destroy();
+        });
+
+        test("destroys zoomSelection", function() {
+            chart._mousewheelZoom.destroy();
+            chart._mousewheelZoom = { destroy: function() { ok(true); } };
             chart.destroy();
         });
 
@@ -1040,6 +1062,21 @@
                 }
             });
             ok(chart.options.valueAxis.majorUnit === undefined);
+        });
+
+        test("disables panning and zooming", function() {
+            setupChart({
+                pannable: true,
+                zoomable: true
+            });
+            chart.setOptions({
+                pannable: false,
+                zoomable: false
+            });
+
+            ok(!chart._pannable);
+            ok(!chart._zoomSelection);
+            ok(!chart._mousewheelZoom);
         });
 
     })();

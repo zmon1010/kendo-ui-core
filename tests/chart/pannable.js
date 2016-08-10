@@ -229,4 +229,12 @@
         chart._end(createEventArg());
     });
 
+    // ------------------------------------------------------------
+    module("Pannable / destroy");
+
+    test("removes plotArea reference", function() {
+        pannable = new kendo.dataviz.Pannable({});
+        pannable.destroy();
+        ok(!pannable.plotArea);
+    });
 })();

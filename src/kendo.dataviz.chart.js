@@ -1832,6 +1832,17 @@ var __meta__ = { // jshint ignore:line
 
             if (chart._zoomSelection) {
                 chart._zoomSelection.destroy();
+                delete chart._zoomSelection;
+            }
+
+            if (chart._pannable) {
+                chart._pannable.destroy();
+                delete chart._pannable;
+            }
+
+            if (chart._mousewheelZoom) {
+                chart._mousewheelZoom.destroy();
+                delete chart._mousewheelZoom;
             }
         }
     });
@@ -12942,6 +12953,10 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        destroy: function() {
+            delete this.plotArea;
+        },
+
         _panAxes: function(e, position) {
             var plotArea = this.plotArea;
             var delta = -e[position].delta;
@@ -13065,6 +13080,7 @@ var __meta__ = { // jshint ignore:line
         destroy: function() {
             this._marquee.remove();
             delete this._marquee;
+            delete this.chart;
         },
 
         _updateAxisRanges: function(start, end) {
@@ -13172,6 +13188,10 @@ var __meta__ = { // jshint ignore:line
                 }
                 plotArea.redraw(plotArea.panes);
             }
+        },
+
+        destroy: function() {
+            delete this.chart;
         }
     });
 

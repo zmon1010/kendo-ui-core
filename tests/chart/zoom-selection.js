@@ -158,6 +158,14 @@
             triggerMousewheel(1);
         });
 
+        // ------------------------------------------------------------
+        module("MousewheelZoom / destroy");
+
+        test("removes chart reference", function() {
+            zoom = new kendo.dataviz.MousewheelZoom({});
+            zoom.destroy();
+            ok(!zoom.chart);
+        });
 
     })();
 
@@ -398,7 +406,22 @@
             ok(!ranges.foo);
         });
 
+        // ------------------------------------------------------------
+        module("ZoomSelection / destroy", {
+            teardown: function() {
+                destroyChart();
+            }
+        });
 
+        test("removes marquee and references", function() {
+            setup();
+            var marquee = zoom._marquee;
+            zoom.start(createEventArg());
+            zoom.destroy();
+            ok(!$.contains(document.body, marquee));
+            ok(!zoom._marquee);
+            ok(!zoom.chart);
+        });
     })();
 
 })();
