@@ -179,6 +179,13 @@ namespace Telerik.Web.Spreadsheet
                 {
                     selection.SetFontSize(UnitHelper.PointToDip(cell.FontSize.Value));
                 }
+
+                if (!string.IsNullOrEmpty(cell.Link))
+                {
+                    var link = HyperlinkInfo.CreateHyperlink(cell.Link, stringValue);
+
+                    documentSheet.Hyperlinks.Add(selection.CellRanges.First(), link);
+                }
             }
         }
 

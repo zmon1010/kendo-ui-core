@@ -16,8 +16,9 @@ namespace Telerik.Web.Spreadsheet.Tests
             row.AddCell(new Cell { Index = 3, Value = 2.71 });
             row.AddCell(new Cell { Index = 4, Formula = "A1 + B1" });
             row.AddCell(new Cell { Index = 5, Value = "Фу" });
+            row.AddCell(new Cell { Index = 6, Value = "Фу", Link = "FooLink" });
 
-            sheet.AddRow(row);            
+            sheet.AddRow(row);
 
             return workbook;
         }
@@ -34,6 +35,9 @@ namespace Telerik.Web.Spreadsheet.Tests
             worksheet.Cells[1, 3].SetValue(2.71);
             worksheet.Cells[1, 4].SetValue("=A1 + B1");
             worksheet.Cells[1, 5].SetValue("Фу");
+
+            var link = HyperlinkInfo.CreateHyperlink("FooLinkValue");
+            worksheet.Hyperlinks.Add(new CellRange(1, 6, 1, 6), link);
 
             document.ActiveWorksheet = worksheet;
 
