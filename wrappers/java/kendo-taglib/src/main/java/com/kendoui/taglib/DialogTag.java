@@ -89,6 +89,14 @@ public class DialogTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("animation", value);
     }
 
+    public java.lang.String getButtonLayout() {
+        return (java.lang.String)getProperty("buttonLayout");
+    }
+
+    public void setButtonLayout(java.lang.String value) {
+        setProperty("buttonLayout", value);
+    }
+
     public boolean getClosable() {
         return (Boolean)getProperty("closable");
     }

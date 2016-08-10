@@ -41,6 +41,8 @@ namespace Kendo.Mvc.UI
             set;
         }
         
+        public string ButtonLayout { get; set; }
+        
         public bool? Closable { get; set; }
         
         public string Content { get; set; }
@@ -96,6 +98,11 @@ namespace Kendo.Mvc.UI
             {
                 json["actions"] = actions;
             }
+            if (ButtonLayout.HasValue())
+            {
+                json["buttonLayout"] = ButtonLayout;
+            }
+            
             if (Closable.HasValue)
             {
                 json["closable"] = Closable;

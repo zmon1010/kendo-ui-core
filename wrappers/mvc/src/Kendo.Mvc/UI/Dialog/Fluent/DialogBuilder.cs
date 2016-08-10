@@ -34,7 +34,18 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Specifies whether a close button should be rendered at the top coner of the dialog.
+        /// Specifies the possible layout of the action buttons in the Dialog.Possible values are:
+        /// </summary>
+        /// <param name="value">The value that configures the buttonlayout.</param>
+        public DialogBuilder ButtonLayout(string value)
+        {
+            container.ButtonLayout = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Specifies whether a close button should be rendered at the top corner of the dialog.
         /// </summary>
         /// <param name="value">The value that configures the closable.</param>
         public DialogBuilder Closable(bool value)

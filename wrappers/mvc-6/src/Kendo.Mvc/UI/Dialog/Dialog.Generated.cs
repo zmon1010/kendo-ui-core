@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public List<DialogAction> Actions { get; set; } = new List<DialogAction>();
 
+        public string ButtonLayout { get; set; }
+
         public bool? Closable { get; set; }
 
         public string Content { get; set; }
@@ -46,6 +48,11 @@ namespace Kendo.Mvc.UI
             if (actions.Any())
             {
                 settings["actions"] = actions;
+            }
+
+            if (ButtonLayout?.HasValue() == true)
+            {
+                settings["buttonLayout"] = ButtonLayout;
             }
 
             if (Closable.HasValue)

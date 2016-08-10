@@ -27,7 +27,16 @@ class Dialog extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies whether a close button should be rendered at the top coner of the dialog.
+    * Specifies the possible layout of the action buttons in the Dialog.Possible values are:
+    * @param string $value
+    * @return \Kendo\UI\Dialog
+    */
+    public function buttonLayout($value) {
+        return $this->setProperty('buttonLayout', $value);
+    }
+
+    /**
+    * Specifies whether a close button should be rendered at the top corner of the dialog.
     * @param boolean $value
     * @return \Kendo\UI\Dialog
     */

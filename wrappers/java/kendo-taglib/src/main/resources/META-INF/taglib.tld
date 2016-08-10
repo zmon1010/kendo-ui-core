@@ -18422,7 +18422,13 @@ See visual.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Specifies whether a close button should be rendered at the top coner of the dialog.</description>
+            <description>Specifies the possible layout of the action buttons in the Dialog.Possible values are:</description>
+            <name>buttonLayout</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether a close button should be rendered at the top corner of the dialog.</description>
             <name>closable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>

@@ -10,7 +10,12 @@ namespace Kendo.Mvc.TagHelpers
     public partial class DialogTagHelper
     {
         /// <summary>
-        /// Specifies whether a close button should be rendered at the top coner of the dialog.
+        /// Specifies the possible layout of the action buttons in the Dialog.Possible values are:
+        /// </summary>
+        public string ButtonLayout { get; set; }
+
+        /// <summary>
+        /// Specifies whether a close button should be rendered at the top corner of the dialog.
         /// </summary>
         public bool? Closable { get; set; }
 
@@ -63,6 +68,11 @@ namespace Kendo.Mvc.TagHelpers
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
+
+            if (ButtonLayout?.HasValue() == true)
+            {
+                settings["buttonLayout"] = ButtonLayout;
+            }
 
             if (Closable.HasValue)
             {
