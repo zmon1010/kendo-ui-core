@@ -523,6 +523,16 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        findSeries: function(callback) {
+            var plotArea = this._plotArea;
+            var series = plotArea.srcSeries || plotArea.series;
+            for (var idx = 0; idx < series.length; idx++) {
+                if (callback(series[idx])) {
+                    return new ChartSeries(this, series[idx]);
+                }
+            }
+        },
+
         findSeriesByName: function(name) {
             return this._createSeries({ name: name });
         },

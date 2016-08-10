@@ -1544,6 +1544,31 @@
         });
     })();
 
+        // ------------------------------------------------------------
+    (function() {
+        module("findSeries", {
+            setup: function() {
+                chart = createChart({
+                series: [{ data: [1, 2]}, { data: [3, 4] }]
+                });
+            },
+            teardown: destroyChart
+        });
+
+        test("returns ChartSeries based on passed function", function() {
+            var series = chart.findSeries(function(series) {
+                return $.inArray(3, series.data) >= 0;
+            });
+
+            ok(series instanceof dataviz.ChartSeries);
+            equal(series.data()[0], 3);
+        });
+
+        test("returns nothing if the function does not return true for any series", function() {
+            ok(chart.findSeries(function() {}) === undefined);
+        });
+    })();
+
     // ------------------------------------------------------------
     (function() {
         var chart;
