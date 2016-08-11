@@ -475,18 +475,18 @@
 
             _playStateToggle: function (play) {
                 if (typeof play === "undefined") {
-                    play = this.playButtonSpan.is(DOT + STATE_PLAY);
+                    play = this._playButtonSpan.is(DOT + STATE_PLAY);
                 }
 
                 if (play) {
-                    this.playButtonSpan
+                    this._playButtonSpan
                         .removeClass(STATE_PLAY)
                         .addClass(STATE_PAUSE)
                         .html(this.options.messages.pause);
                     this._playButton.attr("title", this.options.messages.pause);
                 }
                 else {
-                    this.playButtonSpan
+                    this._playButtonSpan
                         .removeClass(STATE_PAUSE)
                         .addClass(STATE_PLAY)
                         .html(this.options.messages.play);
