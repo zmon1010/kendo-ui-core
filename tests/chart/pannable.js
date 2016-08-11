@@ -235,18 +235,34 @@
         chart._end(createEventArg());
     });
 
-    test("triggers dragEnd with pannable ranges", 2, function() {
+    test("triggers dragEnd with current ranges", 2, function() {
         chart.bind("dragEnd", function(e) {
             var range = e.axisRanges.category;
-            var pannableRange = pannable.ranges().category;
-            equal(range.min, pannableRange.min);
-            equal(range.max, pannableRange.max);
+            ok(range.min > 0);
+            ok(range.max > 2);
         });
 
         chart._start(createEventArg());
         chart._move(createEventArg({
             x: {
                 delta: -100
+            }
+        }));
+
+        chart._end(createEventArg());
+    });
+
+    test("triggers dragEnd with current ranges if the panning results in no valid range", 2, function() {
+        chart.bind("dragEnd", function(e) {
+            var range = e.axisRanges.category;
+            equal(range.min, 0);
+            equal(range.max, 2);
+        });
+
+        chart._start(createEventArg());debugger;
+        chart._move(createEventArg({
+            x: {
+                delta: 100
             }
         }));
 

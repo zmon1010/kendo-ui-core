@@ -1059,7 +1059,7 @@ var __meta__ = { // jshint ignore:line
             if (pannable && pannable.end(e)) {
                 this.surface.resumeTracking();
                 this.trigger(DRAG_END, {
-                    axisRanges: pannable.ranges(),
+                    axisRanges: axisRanges(this._plotArea.axes),
                     originalEvent: e
                 });
             } else {
@@ -12955,12 +12955,6 @@ var __meta__ = { // jshint ignore:line
                     plotArea.updateAxisOptions(range.axis, range.range);
                 }
                 plotArea.redraw(plotArea.panes);
-            }
-        },
-
-        ranges: function() {
-            if (this.axisRanges) {
-                return toChartAxisRanges(this.axisRanges);
             }
         },
 
