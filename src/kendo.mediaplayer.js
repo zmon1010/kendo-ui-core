@@ -58,9 +58,9 @@
                 toolBar: "<div class='" + TOOLBAR + "'> </div>",
                 youtubePlayer: "<div class='" + YTPLAYER + "'> </div>",
                 toolBarTime: "<span class='k-mediaplayer-currenttime'>00:00:00</span> / <span class='k-mediaplayer-duration'>00:00:00</span>",
-                slider: "<input class='" + SLIDER + "' value='0' />",
-                volumeSlider: "<input class='" + VOLUME_SLIDER + "'/>",
-                qualityDropDown: "<input class='" + VIDEO_QUALITY + "' />",
+                slider: "<input class='" + SLIDER + "' value='0' title='seekbar' />",
+                volumeSlider: "<input class='" + VOLUME_SLIDER + "' title='volume'/>",
+                qualityDropDown: "<input class='" + VIDEO_QUALITY + "' title='video quality' />",
                 toolTip: "#= kendo.toString(new Date(value), 'HH:mm:ss') #"
             };
 
@@ -222,7 +222,14 @@
                     this.wrapper.find(DOT + MEDIA).toggle();
                 }
 
+                var initialized = this._media || this._ytmedia;
+
                 this._initializePlayer();
+
+                if (initialized) { //mute and volume settings should be persisted when switching between html and youtube players
+                    this.mute(this.mute());
+                    this.volume(this.volume());
+                }
 
                 if (!this._youTubeVideo) {
                     this._videoOverlay.show();
@@ -277,15 +284,22 @@
                             ]
                     });
 
-                    this._volumeButton = toolBarElement.find('span[class*="k-i-volume"]').parent("a");
-                    this._fullscreenButton = toolBarElement.find('span[class*="k-i-fullscreen"]').parent("a");
+                    var volumeSpan = toolBarElement.find('span[class*="k-i-volume"]');
+                    this._volumeButton = volumeSpan.parent("a");
+                    var fullScreenSpan = toolBarElement.find('span[class*="k-i-fullscreen"]')
+                    this._fullscreenButton = fullScreenSpan.parent("a");
                     this._volumeButton.attr("title", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
+                    volumeSpan.html(this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
                     this._fullscreenButton.attr("title", this.options.messages.fullscreen);
+                    fullScreenSpan.html(this.options.messages.fullscreen);
 
                     toolBarElement.width("auto");
                     this._currentTimeElement = toolBarElement.find(".k-mediaplayer-currenttime");
                     this._durationElement = toolBarElement.find(".k-mediaplayer-duration");
-                    this._playButton = toolBarElement.find(".k-i-play");
+                    this._playButtonSpan = toolBarElement.find('span[class*="k-i-play"]');
+                    this._playButton = this._playButtonSpan.parent("a");
+                    this._playButtonSpan.html(this.options.messages.play);
+                    
                     if (this.options.autoPlay) {
                         this._playStateToggle(true);
                     }
@@ -370,7 +384,7 @@
                 }
 
                 if (target.hasClass(MUTE) || target.hasClass(LOW_VOLUME) || target.hasClass(HIGH_VOLUME)) {
-                    var muted = (this._media && this._media.muted) || (this._ytmedia && this._ytmedia.isMuted());
+                    var muted = this.mute();
                     this.mute(!muted);
                 }
             },
@@ -380,10 +394,6 @@
                     return;
                 }
 
-                if (!this.options.forwardSeek && (e.sender.value() < e.value)) {
-                    this._shouldCancelSlideChange = true;
-                    this._sliderValue = e.sender.value();
-                }
                 this._isDragging = true;
             },
 
@@ -398,10 +408,10 @@
 
                 that._sliderChangeFired = true;
                 that._isDragging = false;
-                if (that._shouldCancelSlideChange) {
+                
+                if (!this.options.forwardSeek && slider.value() > this._seekBarLastPosition) {
                     setTimeout(function () {
-                        that._shouldCancelSlideChange = false;
-                        slider.value(that._sliderValue);
+                        slider.value(that._seekBarLastPosition);
                     }, 1);
                 } else if (this._youTubeVideo) {
                     that._ytmedia.seekTo(that._timeToSec(e.value - tzOffset));
@@ -421,12 +431,15 @@
                 if (volume === 0) {
                     volumeElement.attr("class", cssClass + " " + MUTE);
                     volumeButton.attr("title", this.options.messages.unmute);
+                    volumeElement.html(this.options.messages.unmute);
                 } else if (volume > 0 && volume < 51) {
                     volumeElement.attr("class", cssClass + " " + LOW_VOLUME);
                     volumeButton.attr("title", this.options.messages.mute);
+                    volumeElement.html(this.options.messages.mute);
                 } else {
                     volumeElement.attr("class", cssClass + " " + HIGH_VOLUME);
                     volumeButton.attr("title", this.options.messages.mute);
+                    volumeElement.html(this.options.messages.mute);
                 }
             },
 
@@ -453,30 +466,31 @@
                 var timeInMs = this._msToTime(currentTime);
                 this._currentTimeElement.text(kendo.toString(timeInMs, this._timeFormat));
                 if (!this._isDragging) {
-                    this._slider.value((currentTime + timeZoneSec) * 1000);
+                    this._seekBarLastPosition = (currentTime + timeZoneSec) * 1000; 
+                    this._slider.value(this._seekBarLastPosition);
                 }
 
                 return this.isPlaying();
             },
 
             _playStateToggle: function (play) {
-                var playButton = this._playButton;
-
                 if (typeof play === "undefined") {
-                    play = playButton.is(DOT + STATE_PLAY);
+                    play = this.playButtonSpan.is(DOT + STATE_PLAY);
                 }
 
                 if (play) {
-                    playButton
+                    this.playButtonSpan
                         .removeClass(STATE_PLAY)
                         .addClass(STATE_PAUSE)
-                        .attr("title", this.options.messages.pause);
+                        .html(this.options.messages.pause);
+                    this._playButton.attr("title", this.options.messages.pause);
                 }
                 else {
-                    playButton
+                    this.playButtonSpan
                         .removeClass(STATE_PAUSE)
                         .addClass(STATE_PLAY)
-                        .attr("title", this.options.messages.play);
+                        .html(this.options.messages.play);
+                    this._playButton.attr("title", this.options.messages.play);
                 }
             },
 
@@ -929,6 +943,8 @@
                     return (typeof this._volume !== 'undefined') ? this._volume : this._volume = this.options.volume;
                 }
                 this._volume = value;
+                this.mute(value <= 0);
+
                 if (this._youTubeVideo) {
                     this._ytmedia.setVolume(this._volume);
                 } else {
@@ -940,7 +956,7 @@
 
             mute: function (muted) {
                 if (typeof muted === 'undefined') {
-                    return (this._media && this._media.muted) || (this._ytmedia && this._ytmedia.isMuted());
+                    return this._youTubeVideo ? (this._ytmedia && this._ytmedia.isMuted()) : (this._media && this._media.muted);
                 }
                 if (this._youTubeVideo) {
                     if (muted) {
@@ -958,7 +974,7 @@
                     this._volumeSlider.value(0);
                 }
                 else {
-                    this._volumeSlider.value((this._media && this._media.volume * 100) || this._ytmedia.getVolume());
+                    this._volumeSlider.value((this._media && this._media.volume * 100) || (this._ytmedia && this._ytmedia.getVolume()));
                 }
                 this.trigger(VOLUMECHANGE);
                 this._changeVolumeButtonImage(this._volumeSlider.value());
@@ -1052,7 +1068,7 @@
                     
                 }
                 if (e.keyCode === 77) {
-                    var muted = (this._media && this._media.muted) || (this._ytmedia && this._ytmedia.isMuted());
+                    var muted = this.mute();
                     this.mute(!muted);
                 }
             },

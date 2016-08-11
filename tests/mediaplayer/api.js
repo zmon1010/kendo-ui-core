@@ -24,19 +24,19 @@
     });
 
     test("play function should change the icon state", function () {
-        var playButton = mediaPlayer._playButton;
+        var playButton = mediaPlayer._playButtonSpan;
         mediaPlayer.play();
         ok(playButton.hasClass("k-i-pause"));
     });
 
     test("pause function should change the icon state", function () {
-        var playButton = mediaPlayer._playButton;
+        var playButton = mediaPlayer._playButtonSpan;
         mediaPlayer.pause();
         ok(playButton.hasClass("k-i-play"));
     });
 
     test("stop function should change the icon state", function () {
-        var playButton = mediaPlayer._playButton;
+        var playButton = mediaPlayer._playButtonSpan;
         mediaPlayer.stop();
         ok(playButton.hasClass("k-i-play"));
     });

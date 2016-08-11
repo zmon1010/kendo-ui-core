@@ -48,7 +48,7 @@
     });
 
     test("adds play/pause toolbar button", function () {
-        ok(mediaPlayer._playButton.is(".k-i-play"));
+        ok(mediaPlayer._playButtonSpan.is(".k-i-play"));
     });
 
     test("adds volume toolbar button", function () {
