@@ -3,9 +3,6 @@
 })(function(){
 
 (function(kendo) {
-    if (kendo.support.browser.msie && kendo.support.browser.version < 9) {
-        return;
-    }
 
 	function setColspan(columnLevel) {
         var count = 0;
@@ -27,9 +24,7 @@
         SCHEDULER_HEADER_WRAP_CLASS = "k-scheduler-header-wrap",
         BORDER_SIZE_COEFF = 0.8666;
 
-	kendo.ui.scheduler = {};
-
-    var GroupedView = kendo.Class.extend({
+    var TimelineGroupedView = kendo.Class.extend({
     	init: function(view) {
     		this._view = view;
     	},
@@ -306,7 +301,7 @@
         }
     });
 
-	 var GroupedByDateView = kendo.Class.extend({
+	 var TimelineGroupedByDateView = kendo.Class.extend({
     	init: function(view) {
     		this._view = view;
     	},
@@ -640,10 +635,10 @@
 
             view._updateDirection(selection, ranges, shift, reverse, !view._isVerticallyGrouped());
         }
-    });
+	 });
 
-	 kendo.ui.scheduler.GroupedView = GroupedView;
-	 kendo.ui.scheduler.GroupedByDateView = GroupedByDateView;
+	 kendo.ui.scheduler.TimelineGroupedView = TimelineGroupedView;
+	 kendo.ui.scheduler.TimelineGroupedByDateView = TimelineGroupedByDateView;
 })(window.kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

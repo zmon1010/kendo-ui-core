@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.core"], f);
+    define([ "./kendo.core" ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
@@ -10,7 +10,7 @@ var __meta__ = { // jshint ignore:line
     depends: [ "core" ],
     hidden: true
 };
-
+    kendo.ui.scheduler = {};
 /* jshint eqnull: true */
 (function($) {
     var kendo = window.kendo,
@@ -1060,8 +1060,7 @@ var __meta__ = { // jshint ignore:line
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
 
-            this._normalizeOptions();
-            this._groupedView = this._groupedView();
+            this._normalizeOptions();         
             this._scrollbar = scrollbar();
             this._isRtl = kendo.support.isRtl(element);
             this._resizeHint = $();
@@ -1069,15 +1068,7 @@ var __meta__ = { // jshint ignore:line
             this._cellId = kendo.guid();
             this._resourcesForGroups();
             this._selectedSlots = [];
-        },
-
-        _groupedView: function(){
-            if(this._isGroupedByDate()){
-                return new kendo.ui.scheduler.GroupedByDateView(this);
-            } else{
-                return new kendo.ui.scheduler.GroupedView(this);   
-            }
-        },
+        },    
 
         _normalizeOptions: function() {
             var options = this.options;
@@ -2239,7 +2230,7 @@ var __meta__ = { // jshint ignore:line
 
             if(times && !item.minorTicks){
                 obj[name] = createDateLayoutConfiguration(name, item.columns, inner, times);
-            } else{
+            } else {
                 obj[name] = inner; 
             }           
             configuration.push(obj);

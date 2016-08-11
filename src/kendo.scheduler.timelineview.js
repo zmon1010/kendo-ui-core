@@ -142,6 +142,8 @@ var __meta__ = { // jshint ignore:line
 
             SchedulerView.fn.init.call(that, element, options);
 
+            that._groupedView = that._getGroupedView();
+
             that.title = that.options.title || that.options.name;
 
             that._workDays = getWorkDays(that.options);
@@ -157,6 +159,15 @@ var __meta__ = { // jshint ignore:line
             that._currentTime(true);
         },
         name: "timeline",
+
+        _getGroupedView: function() {
+           
+            if (this._isGroupedByDate()) {
+                   return new kendo.ui.scheduler.TimelineGroupedByDateView(this);
+            } else {
+                   return new kendo.ui.scheduler.TimelineGroupedView(this);
+            }
+        },
 
         _currentTimeMarkerUpdater: function() {
             this._updateCurrentTimeMarker(new Date());
@@ -626,7 +637,7 @@ var __meta__ = { // jshint ignore:line
                     columns =  groupedView._createColumnsLayout(resources, columns, this.groupHeaderTemplate, columns); 
                 }
             }
-
+            
             return {
                 columns: columns,
                 rows: rows
