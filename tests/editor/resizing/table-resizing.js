@@ -77,7 +77,12 @@
                 '<td id="col33" class="col">+col 33</td>' +
             '</tr>' +
         '</table>';
-    var CONTENT_HTML = '<div id="wrapper">' + TABLE_HTML + '</div>';
+    var INNER_ELEMENT_HTML = "<div id='innerElement'>inner</div>"
+    var CONTENT_HTML =
+        '<div id="wrapper">' +
+            INNER_ELEMENT_HTML +
+            TABLE_HTML +
+        '</div>';
 
     function triggerEvent(element, eventOptions) {
         var options = $.extend({
@@ -320,7 +325,6 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     test("clicking on an element with data attribute equal to table should not destroy table resizing", function() {
         var destroySpy = spy(editor.tableResizing, "destroy");
-        editor.tableResizing.resizingInProgress = function() { return false; };
         editor.tableResizing.showResizeHandles();
 
         triggerEvent(editor.tableResizing.handles[0].element, { type: MOUSE_DOWN });
@@ -345,8 +349,8 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var defaultOptions = {
             rtl: false,
             rootElement: null,
-            minWidth: 50,
-            minHeight: 50,
+            minWidth: 10,
+            minHeight: 10,
             handles: [{
                 direction: EAST
             }, {
@@ -365,6 +369,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
                 direction: WEST
             }]
         };
+
         tableResizing = new TableResizing(tableElement);
 
         deepEqual(tableResizing.options, defaultOptions);
@@ -606,7 +611,66 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     module("editor table resizing resize width in percentages", {
         setup: function() {
             wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("width", "400px").css("border", "1px solid red");
-            tableElement = $(QUnit.fixture).find("#table").css("width", "50%");
+            tableElement = $(wrapper).find("#table").css("width", "50%");
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+            initialWidthInPixels = tableElement.outerWidth();
+            initialParentWidthInPixels = tableElement.parent().width();
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should increase width", function() {
+        var initialWidthInPercentages = (initialWidthInPixels / initialParentWidthInPixels) * 100;
+        var differenceInPixels = 40;
+        var differenceInPercentages = (differenceInPixels / initialParentWidthInPixels) * 100;
+
+        tableResizing.resize({ deltaX: differenceInPixels });
+
+        roughlyEqual(tableElement[0].style.width, initialWidthInPercentages + differenceInPercentages + PERCENTAGE, 0.001);
+    });
+
+    test("should decrease width", function() {
+        var initialWidthInPercentages = (initialWidthInPixels / initialParentWidthInPixels) * 100;
+        var differenceInPixels = 40;
+        var differenceInPercentages = (differenceInPixels / initialParentWidthInPixels) * 100;
+
+        tableResizing.resize({ deltaX: (-1) * differenceInPixels });
+
+        roughlyEqual(tableElement[0].style.width, initialWidthInPercentages + (-1) * differenceInPercentages + PERCENTAGE, 0.001);
+    });
+
+    test("should be decreased to min", function() {
+        var minInPercentages = (tableResizing.options.minWidth / initialParentWidthInPixels) * 100;
+
+        tableResizing.resize({ deltaX: (-1) * MAX });
+
+        roughlyEqual(parseFloat(tableElement[0].style.width), minInPercentages, 0.00001);
+    });
+
+    test("should be resized more than 100%", function() {
+        tableResizing.resize({ deltaX: MAX });
+
+        equal(tableElement[0].style.width, "100%");
+    });
+
+    module("editor table resizing resize width in pixels in scrolled container", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css({
+                border: "1px solid red",
+                width: "400px",
+                overflow: "scroll"
+            });
+            innerElement = $(wrapper).find("#innerElement").css({
+                border: "1px solid blue",
+                width: $(wrapper).width() + 200
+            });
+            tableElement = $(QUnit.fixture).find("#table");
             tableResizing = new TableResizing(tableElement[0], {
                 rootElement: QUnit.fixture
             });
@@ -618,70 +682,58 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         }
     });
 
-    test("should increase width", function() {
-        var initialWidthInPixels = tableElement.width();
-        var initialWidthInPercentages = parseFloat(tableElement[0].style.width);
-        var differenceInPixels = 40;
-        var differenceInPercentages = (differenceInPixels / initialWidthInPixels) * 100;
-
-        tableResizing.resize({ deltaX: differenceInPixels });
-
-        equal(tableElement[0].style.width, initialWidthInPercentages + differenceInPercentages + PERCENTAGE);
-    });
-
-    test("should decrease width", function() {
-        var initialWidthInPixels = tableElement.width();
-        var initialWidthInPercentages = parseFloat(tableElement[0].style.width);
-        var differenceInPixels = 40;
-        var differenceInPercentages = (differenceInPixels / initialWidthInPixels) * 100;
-
-        tableResizing.resize({ deltaX: (-1) * differenceInPixels });
-
-        equal(tableElement[0].style.width, initialWidthInPercentages + (-1) * differenceInPercentages + PERCENTAGE);
-    });
-
-    test("should not be lower than min", function() {
-        var initialWidthInPixels = tableElement.width();
-        var minInPercentages = (tableResizing.options.minWidth / initialWidthInPixels) * 100;
-
-        tableResizing.resize({ deltaX: (-1) * MAX });
-
-        ok(parseFloat(tableElement[0].style.width) >= minInPercentages);
-    });
-
-    test("should be resized more than 100% ", function() {
-        var initialWidthInPixels = tableElement.outerWidth();
-        var initialStyleWidth = parseFloat(tableElement[0].style.width);
+    test("should set width according to scroll", function() {
+        var scrollValue = 20;
+        var initialWrapperWidth = wrapper.width();
+        $(wrapper).scrollLeft(scrollValue);
 
         tableResizing.resize({ deltaX: MAX });
 
-        equal(tableElement[0].style.width, (initialStyleWidth + (MAX / initialWidthInPixels * 100)) + PERCENTAGE);
+        equal(tableElement[0].style.width, initialWrapperWidth + scrollValue + PX);
     });
 
-    module("editor table resizing resize width in scrolled container", {
-        beforeEach: function() {
-            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
-            tableElement = $(QUnit.fixture).find("#table");
-            tableResizing = new TableResizing(tableElement[0], {
-                rootElement: QUnit.fixture
+    module("editor table resizing resize width in percentages in scrolled container", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css({
+                border: "1px solid red",
+                width: "400px",
+                overflow: "scroll"
             });
+            innerElement = $(wrapper).find("#innerElement").css({
+                border: "1px solid blue",
+                width: $(wrapper).width() + 200
+            });
+            tableElement = $(wrapper).find("#table").css("width", "100%");
+            tableResizing = new TableResizing(tableElement[0]);
+            initialWidthInPixels = tableElement.outerWidth();
+            initialParentWidthInPixels = tableElement.parent().width();
         },
 
-        afterEach: function() {
+        teardown: function() {
             tableResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
 
-    test("should set width according to scroll", function() {
-        var scrollValue = 20;
-        $(wrapper).css("width", "500px");
-        $(table).width($(document).width() + 100);
-        $(document).scrollLeft(scrollValue);
+    test("should set width greater than 100%", function() {
+        var initialWidthInPercentages = (initialWidthInPixels / initialParentWidthInPixels) * 100;
+        var differenceInPixels = 20;
+        var differenceInPercentages = (differenceInPixels / initialParentWidthInPixels) * 100;
 
+        $(wrapper).scrollLeft(differenceInPixels * 2);
+        tableResizing.resize({ deltaX: differenceInPixels });
+
+        roughlyEqual(tableElement[0].style.width, initialWidthInPercentages + differenceInPercentages + PERCENTAGE, 0.001);
+    });
+
+    test("should set max width equal to parent width and scroll", function() {
+        var scrollValue = 20;
+        var scrollValueInPercentages = (scrollValue / initialParentWidthInPixels) * 100;
+
+        $(wrapper).scrollLeft(scrollValue);
         tableResizing.resize({ deltaX: MAX });
 
-        equal(tableElement[0].style.width, wrapper.width() + scrollValue + PX);
+        roughlyEqual(tableElement[0].style.width, 100 + scrollValueInPercentages + PERCENTAGE, 0.001);
     });
 
     module("editor table resizing resize height in pixels", {
@@ -747,6 +799,8 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             tableResizing = new TableResizing(tableElement[0], {
                 rootElement: QUnit.fixture
             });
+            initialHeightInPixels = tableElement.outerHeight();
+            initialParentHeightInPixels = tableElement.parent().height();
         },
 
         teardown: function() {
@@ -756,48 +810,50 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     });
 
     test("should increase height", function() {
-        var initialHeightInPixels = tableElement.height();
-        var initialHeightInPercentages = parseFloat(tableElement[0].style.height);
+        var initialHeightInPercentages = (initialHeightInPixels / initialParentHeightInPixels) * 100;
         var differenceInPixels = 40;
-        var differenceInPercentages = (differenceInPixels / initialHeightInPixels) * 100;
+        var differenceInPercentages = (differenceInPixels / initialParentHeightInPixels) * 100;
 
         tableResizing.resize({ deltaY: differenceInPixels });
 
-        equal(tableElement[0].style.height, initialHeightInPercentages + differenceInPercentages + PERCENTAGE);
+        roughlyEqual(tableElement[0].style.height, initialHeightInPercentages + differenceInPercentages +PERCENTAGE, 0.001);
     });
 
     test("should decrease height", function() {
-        var initialHeightInPixels = tableElement.height();
-        var initialHeightInPercentages = parseFloat(tableElement[0].style.height);
+        var initialHeightInPercentages = (initialHeightInPixels / initialParentHeightInPixels) * 100;
         var differenceInPixels = 40;
-        var differenceInPercentages = (differenceInPixels / initialHeightInPixels) * 100;
+        var differenceInPercentages = (differenceInPixels / initialParentHeightInPixels) * 100;
 
         tableResizing.resize({ deltaY: (-1) * differenceInPixels });
 
-        equal(tableElement[0].style.height, initialHeightInPercentages + (-1) * differenceInPercentages + PERCENTAGE);
+        roughlyEqual(tableElement[0].style.height, initialHeightInPercentages + (-1) * differenceInPercentages + PERCENTAGE, 0.001);
     });
 
-    test("should not be lower than min", function() {
-        var initialHeightInPixels = tableElement.height();
-        var minInPercentages = (tableResizing.options.minHeight / initialHeightInPixels) * 100;
+    test("should be decreased to min", function() {
+        var minInPercentages = (tableResizing.options.minHeight / initialParentHeightInPixels) * 100;
 
         tableResizing.resize({ deltaY: (-1) * MAX });
 
-        ok(parseFloat(tableElement[0].style.height) >= minInPercentages);
+        roughlyEqual(parseFloat(tableElement[0].style.height), minInPercentages, 0.00001);
     });
 
     test("should be resized more than 100%", function() {
-        var initialHeightInPixels = tableElement.outerHeight();
-        var initialStyleHeight = parseFloat(tableElement[0].style.height);
-
         tableResizing.resize({ deltaY: MAX });
 
-        equal(tableElement[0].style.height, (initialStyleHeight + (MAX / initialHeightInPixels * 100)) + PERCENTAGE);
+        equal(tableElement[0].style.height, "100%");
     });
 
-    module("editor table resizing resize height in scrolled container", {
+    module("editor table resizing resize height in pixels in scrolled container", {
         setup: function() {
-            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("border", "1px solid red");
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css({
+                border: "1px solid red",
+                height: "400px",
+                overflow: "scroll"
+            });
+            innerElement = $(wrapper).find("#innerElement").css({
+                border: "1px solid blue",
+                height: $(wrapper).height() + 200
+            });
             tableElement = $(QUnit.fixture).find("#table");
             tableResizing = new TableResizing(tableElement[0], {
                 rootElement: QUnit.fixture
@@ -812,13 +868,56 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     test("should set width according to scroll", function() {
         var scrollValue = 20;
-        $(wrapper).css("height", "500px");
-        $(tableElement).height($(document).height() + 100);
-        $(document).scrollTop(scrollValue);
+        var initialWrapperHeight = wrapper.height();
+        $(wrapper).scrollTop(scrollValue);
 
         tableResizing.resize({ deltaY: MAX });
 
-        equal(tableElement[0].style.height, wrapper.height() + scrollValue + PX);
+        equal(tableElement[0].style.height, initialWrapperHeight + scrollValue + PX);
+    });
+
+    module("editor table resizing resize height in percentages in scrolled container", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css({
+                border: "1px solid red",
+                height: "400px",
+                overflow: "scroll"
+            });
+            innerElement = $(wrapper).find("#innerElement").css({
+                border: "1px solid blue",
+                height: $(wrapper).height() + 200
+            });
+            tableElement = $(wrapper).find("#table").css("height", "100%");
+            tableResizing = new TableResizing(tableElement[0]);
+            initialheHghtInPixels = tableElement.outerHeight();
+            initialParentheHghtInPixels = tableElement.parent().height();
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set height greater than 100%", function() {
+        var initialheHghtInPercentages = (initialheHghtInPixels / initialParentheHghtInPixels) * 100;
+        var differenceInPixels = 20;
+        var differenceInPercentages = (differenceInPixels / initialParentheHghtInPixels) * 100;
+
+        $(wrapper).scrollTop(differenceInPixels * 2);
+        tableResizing.resize({ deltaY: differenceInPixels });
+
+        roughlyEqual(tableElement[0].style.height, initialheHghtInPercentages + differenceInPercentages + PERCENTAGE, 0.001);
+    });
+
+    test("should set max height equal to parent height and scroll", function() {
+        var scrollValue = 20;
+        var scrollValueInPercentages = (scrollValue / initialParentheHghtInPixels) * 100;
+
+        $(wrapper).scrollTop(scrollValue);
+        tableResizing.resize({ deltaY: MAX });
+
+        roughlyEqual(tableElement[0].style.height, 100 + scrollValueInPercentages + PERCENTAGE, 0.001);
     });
 
     module("editor table resizing resize width in pixels rtl", {
@@ -870,7 +969,15 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     module("editor table resizing resize width in scrolled container rtl", {
         beforeEach: function() {
-            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css({
+                border: "1px solid red",
+                width: "400px",
+                overflow: "scroll"
+            });
+            innerElement = $(wrapper).find("#innerElement").css({
+                border: "1px solid blue",
+                width: $(wrapper).width() + 200
+            });
             tableElement = $(QUnit.fixture).find("#table");
             tableResizing = new TableResizing(tableElement[0], {
                 rootElement: QUnit.fixture,
@@ -886,9 +993,8 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     test("should set width according to scroll", function() {
         var scrollValue = 20;
-        $(wrapper).css("width", "500px");
-        $(table).width($(document).width() + 100);
-        $(document).scrollLeft(scrollValue);
+        var initialWrapperWidth = wrapper.width();
+        $(wrapper).scrollLeft(scrollValue);
 
         tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
 

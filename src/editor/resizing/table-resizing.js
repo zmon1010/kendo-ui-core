@@ -4,7 +4,9 @@
 
 (function(kendo, undefined) {
     var global = window;
-    var parseFloat = global.parseFloat;
+    var math = global.Math;
+    var min = math.min;
+    var max = math.max;
 
     var $ = kendo.jQuery;
     var extend = $.extend;
@@ -70,8 +72,8 @@
         options: {
             rtl: false,
             rootElement: null,
-            minWidth: 50,
-            minHeight: 50,
+            minWidth: 10,
+            minHeight: 10,
             handles: [{
                 direction: EAST
             }, {
@@ -110,36 +112,42 @@
             var element = $(that.element);
             var dimensionLowercase = dimension.toLowerCase();
             var styleValue = element[0].style[dimensionLowercase];
-            var parsedStyleValue = styleValue !== "" ? parseFloat(styleValue) : 0;
-            var elementOuterWidth = element[OUTER + dimension]();
-            var currentValue = parsedStyleValue < elementOuterWidth ? elementOuterWidth : parsedStyleValue;
-            var constrainedValue;
+            var elementOuterDimension = element[OUTER + dimension]();
             var rtlModifier = that.options.rtl ? (-1) : 1;
-            var elementOwnerDocument = $(element[0].ownerDocument);
-            var scrollOffset = rtlModifier * (dimension === WIDTH ? elementOwnerDocument.scrollLeft() : elementOwnerDocument.scrollTop());
+            var parentElement = element.parent();
+            var parentDimension = parentElement[dimensionLowercase]();
+            var parentScrollOffset = rtlModifier * (dimension === WIDTH ? parentElement.scrollLeft() : parentElement.scrollTop());
+            var newDimensionValue;
+            var ratioValue;
+            var ratioTotalValue;
+            var constrainedDimension = constrain({
+                value: elementOuterDimension + delta,
+                min: that.options[MIN + dimension],
+                max: parentDimension + parentScrollOffset
+            });
 
             if (delta === 0) {
                 return;
             }
 
             if (inPercentages(styleValue)) {
-                constrainedValue = constrain({
-                    value: parsedStyleValue + calculatePercentageRatio(delta, elementOuterWidth),
-                    min: calculatePercentageRatio(that.options[MIN + dimension], elementOuterWidth),
-                    max: Infinity
-                });
+                //detect resizing greater than 100%
+                if (elementOuterDimension + delta > parentDimension) {
+                    ratioValue = max(constrainedDimension, parentDimension);
+                    ratioTotalValue = min(constrainedDimension, parentDimension);
+                }
+                else {
+                    ratioValue = min(constrainedDimension, parentDimension);
+                    ratioTotalValue = max(constrainedDimension, parentDimension);
+                }
 
-                element[dimensionLowercase](toPercentages(constrainedValue));
+                newDimensionValue = toPercentages(calculatePercentageRatio(ratioValue, ratioTotalValue));
             }
             else {
-                constrainedValue = constrain({
-                    value: currentValue + parseFloat(delta),
-                    min: that.options[MIN + dimension],
-                    max: element.parent()[dimensionLowercase]() + scrollOffset
-                });
-
-                element[0].style[dimensionLowercase] = toPixels(constrainedValue);
+                newDimensionValue = toPixels(constrainedDimension);
             }
+
+            element[0].style[dimensionLowercase]= newDimensionValue;
         },
 
         showResizeHandles: function() {
@@ -201,16 +209,16 @@
             for (i = 0; i < length; i++) {
                 handle = handles[i];
                 handle.bind(DRAG, proxy(that.resize, that));
-                handle.bind(MOUSE_OVER, proxy(that._onHandleMouseOver, that));
-                handle.bind(MOUSE_OUT, proxy(that._onHandleMouseOut, that));
+                handle.bind(MOUSE_OVER, proxy(that._onResizeHandleMouseOver, that));
+                handle.bind(MOUSE_OUT, proxy(that._onResizeHandleMouseOut, that));
             }
         },
 
-        _onHandleMouseOver: function() {
+        _onResizeHandleMouseOver: function() {
             setContentEditable(this.options.rootElement, FALSE);
         },
 
-        _onHandleMouseOut: function() {
+        _onResizeHandleMouseOut: function() {
             setContentEditable(this.options.rootElement, TRUE);
         }
     });
