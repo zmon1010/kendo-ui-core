@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class MediaPlayerController : Controller
     {
+        [Demo]
         public IActionResult Index()
         {
             return View();
