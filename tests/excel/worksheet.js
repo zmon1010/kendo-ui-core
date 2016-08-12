@@ -61,6 +61,15 @@ test("toXML exports only cells with data (mixed)", function() {
     equal(dom.find("c").length, 2);
 });
 
+test("toXML exports only rows with cells", function() {
+    var worksheet = Worksheet([{
+        cells: [{ }]
+    }, { }]);
+
+    var dom = $(worksheet.toXML());
+    equal(dom.find("c").length, 1);
+});
+
 test("toXML exports only cells with data (indexed)", function() {
     var worksheet = Worksheet([{
         cells: [{ index: 1 }, { index: 4 }]
