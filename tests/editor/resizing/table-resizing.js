@@ -2,11 +2,10 @@
     var TableResizing = kendo.ui.editor.TableResizing;
     var editor;
     var initialWidth;
-    var tableElement;
-    var tableResizing;
-    var anotherTable;
     var nestedTable;
     var nestedTableColumn;
+    var tableElement;
+    var tableResizing;
     var wrapper;
 
     var DOT = ".";
@@ -32,6 +31,9 @@
     var SOUTHWEST = "southwest";
     var WEST = "west";
 
+    var ROW = "tr";
+    var COLUMN = "td";
+
     var TABLE_HTML =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
@@ -40,20 +42,20 @@
                 '<td id="col13" class="col" style="border:1px solid blue;">col 13</td>' +
             '</tr>' +
             '<tr id="row2" class="row">' +
-                '<td id="col21" class="col" style="border:1px solid blue;">+col 21</td>' +
-                '<td id="col22" class="col" style="border:1px solid blue;">+col 22</td>' +
-                '<td id="col23" class="col" style="border:1px solid blue;">+col 23</td>' +
+                '<td id="col21" class="col" style="border:1px solid blue;">col 21</td>' +
+                '<td id="col22" class="col" style="border:1px solid blue;">col 22</td>' +
+                '<td id="col23" class="col" style="border:1px solid blue;">col 23</td>' +
             '</tr>' +
             '<tr id="row3" class="row">' +
-                '<td id="col31" class="col" style="border:1px solid blue;">+col 31</td>' +
-                '<td id="col32" class="col" style="border:1px solid blue;">+col 32</td>' +
-                '<td id="col33" class="col" style="border:1px solid blue;">+col 33</td>' +
+                '<td id="col31" class="col" style="border:1px solid blue;">col 31</td>' +
+                '<td id="col32" class="col" style="border:1px solid blue;">col 32</td>' +
+                '<td id="col33" class="col" style="border:1px solid blue;">col 33</td>' +
             '</tr>' +
         '</table>';
     var NESTED_TABLE_HTML =
-        '<table id="table" class="k-table">' +
+        '<table id="table" class="k-table" style="border:1px solid red;">' +
             '<tr id="row1" class="row">' +
-                '<td id="col11" class="col">' +
+                '<td id="col11" class="col" style="border:1px solid blue;">' +
                     '<table id="nestedTable" class="k-table">' +
                         '<tr id="row1" class="row">' +
                             '<td id="col11" class="col">col 11</td>' +
@@ -67,14 +69,41 @@
                 '<td id="col13" class="col">col 13</td>' +
             '</tr>' +
             '<tr id="row2" class="row">' +
-                '<td id="col21" class="col">+col 21</td>' +
-                '<td id="col22" class="col">+col 22</td>' +
-                '<td id="col23" class="col">+col 23</td>' +
+                '<td id="col21" class="col">col 21</td>' +
+                '<td id="col22" class="col">col 22</td>' +
+                '<td id="col23" class="col">col 23</td>' +
             '</tr>' +
             '<tr id="row3" class="row">' +
-                '<td id="col31" class="col">+col 31</td>' +
-                '<td id="col32" class="col">+col 32</td>' +
-                '<td id="col33" class="col">+col 33</td>' +
+                '<td id="col31" class="col">col 31</td>' +
+                '<td id="col32" class="col">col 32</td>' +
+                '<td id="col33" class="col">col 33</td>' +
+            '</tr>' +
+        '</table>';
+    var NESTED_TABLE_HTML_IN_PERCENTAGES =
+        '<table id="table" class="k-table">' +
+            '<tr id="row1" class="row">' +
+                '<td id="col11" class="col">' +
+                    '<table id="nestedTable" style="width:100%">' +
+                        '<tr id="row1" class="row">' +
+                            '<td id="col11" class="col">col 11</td>' +
+                        '</tr>' +
+                        '<tr id="row2" class="row">' +
+                            '<td id="col21" class="col">col 21</td>' +
+                        '</tr>' +
+                    '</table>' +
+                '</td>' +
+                '<td id="col12" class="col">col 12</td>' +
+                '<td id="col13" class="col">col 13</td>' +
+            '</tr>' +
+            '<tr id="row2" class="row">' +
+                '<td id="col21" class="col">col 21</td>' +
+                '<td id="col22" class="col">col 22</td>' +
+                '<td id="col23" class="col">col 23</td>' +
+            '</tr>' +
+            '<tr id="row3" class="row">' +
+                '<td id="col31" class="col">col 31</td>' +
+                '<td id="col32" class="col">col 32</td>' +
+                '<td id="col33" class="col">col 33</td>' +
             '</tr>' +
         '</table>';
     var INNER_ELEMENT_HTML = "<div id='innerElement'>inner</div>"
@@ -119,6 +148,21 @@
             pageX: position.left + from,
             pageY: position.top + from
         }));
+    }
+
+    function getColumnWidths(table, columnIndex) {
+        var columns = $(table).find(ROW).children(COLUMN)
+            .filter(function() {
+                return ($(this).index() === columnIndex);
+            });
+
+        return calculateColumnWidths(columns);
+    }
+
+    function calculateColumnWidths(columns) {
+        return columns.map(function() {
+            return this.style.width;
+        });
     }
 
 //table resizing is natively supported in IE and Firefox
@@ -968,7 +1012,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     });
 
     module("editor table resizing resize width in scrolled container rtl", {
-        beforeEach: function() {
+        setup: function() {
             wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css({
                 border: "1px solid red",
                 width: "400px",
@@ -980,12 +1024,11 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             });
             tableElement = $(QUnit.fixture).find("#table");
             tableResizing = new TableResizing(tableElement[0], {
-                rootElement: QUnit.fixture,
                 rtl: true
             });
         },
 
-        afterEach: function() {
+        teardown: function() {
             tableResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
@@ -999,6 +1042,114 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
 
         equal(tableElement[0].style.width, wrapper.width() + (RTL_MODIFIER * scrollValue) + PX);
+    });
+
+    module("editor table resizing nested table without explicit dimensions", {
+        setup: function() {
+            $(NESTED_TABLE_HTML).appendTo(QUnit.fixture);
+            tableElement = $(QUnit.fixture).find("#table");
+            nestedTable = $(QUnit.fixture).find("#nestedTable");
+            initialWidth = nestedTable.outerWidth();
+            tableResizing = new TableResizing(nestedTable[0]);
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set width in column without explicit dimensions", function() {
+        var firstColumn = $(tableElement).find(FIRST_COLUMN);
+        var firstColumnWidth = firstColumn.width();
+
+        tableResizing.resize({ deltaX: firstColumnWidth });
+
+        equal(nestedTable[0].style.width, initialWidth + firstColumnWidth + PX);
+    });
+
+    module("editor table resizing nested table width in percentages", {
+        setup: function() {
+            $(NESTED_TABLE_HTML_IN_PERCENTAGES).appendTo(QUnit.fixture);
+            tableElement = $(QUnit.fixture).find("#table");
+            nestedTable = $(QUnit.fixture).find("#nestedTable");
+            tableResizing = new TableResizing(nestedTable[0]);
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should not change width in column without explicit dimensions", function() {
+        var initialStyleWidth = nestedTable[0].style.width;
+
+        tableResizing.resize({ deltaX: MAX });
+
+        equal(nestedTable[0].style.width, initialStyleWidth);
+    });
+
+    test("should set width to adjacent columns", function() {
+        var columns = nestedTable.closest(ROW).children();
+        var columnWidths = calculateColumnWidths(columns);
+
+        tableResizing.resize({ deltaX: 10 });
+
+        for (var i = 0; i < columns.length; i++) {
+            ok(columns[i].style.width !== columnWidths[i]);
+        }
+    });
+
+    test("should not set width to columns in other rows", function() {
+        var otherColumns = tableElement.children("tbody").children(ROW).filter(function() {
+            return (this !== nestedTable.closest(ROW)[0]);
+        }).children();
+        var columnWidths = calculateColumnWidths(otherColumns);
+
+        tableResizing.resize({ deltaX: 10 });
+
+        for (var i = 0; i < otherColumns.length; i++) {
+            equal(otherColumns[i].style.width, columnWidths[i]);
+        }
+    });
+
+    module("editor table resizing nested table with k-table class", {
+        setup: function() {
+            $(NESTED_TABLE_HTML).appendTo(QUnit.fixture);
+            tableElement = $(QUnit.fixture).find("#table");
+            nestedTable = $(QUnit.fixture).find("#nestedTable");
+            tableResizing = new TableResizing(nestedTable[0]);
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set width to adjacent columns", function() {
+        var columns = nestedTable.closest(ROW).children();
+        var columnWidths = calculateColumnWidths(columns);
+
+        tableResizing.resize({ deltaX: 10 });
+
+        for (var i = 0; i < columns.length; i++) {
+            ok(columns[i].style.width !== columnWidths[i]);
+        }
+    });
+
+    test("should not set width to columns in other rows", function() {
+        var otherColumns = tableElement.children("tbody").children(ROW).filter(function() {
+            return (this !== nestedTable.closest(ROW)[0]);
+        }).children();
+        var columnWidths = calculateColumnWidths(otherColumns);
+
+        tableResizing.resize({ deltaX: 10 });
+
+        for (var i = 0; i < otherColumns.length; i++) {
+            equal(otherColumns[i].style.width, columnWidths[i]);
+        }
     });
 
     editor_module("editor table resizing resize handles", {

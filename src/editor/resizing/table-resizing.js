@@ -25,12 +25,17 @@
     var setContentEditable = ResizingUtils.setContentEditable;
 
     var DRAG = "drag";
+    var K_TABLE = "k-table";
     var NS = ".kendoEditorTableResizing";
     var MIN = "min";
     var MOUSE_OVER = "mouseover";
     var MOUSE_OUT = "mouseout";
     var OUTER = "outer";
+
+    var COLUMN = "td";
+    var ROW = "tr";
     var TABLE = "table";
+
     var WIDTH = "Width";
     var HEIGHT = "Height";
 
@@ -113,17 +118,16 @@
             var dimensionLowercase = dimension.toLowerCase();
             var styleValue = element[0].style[dimensionLowercase];
             var elementOuterDimension = element[OUTER + dimension]();
-            var rtlModifier = that.options.rtl ? (-1) : 1;
-            var parentElement = element.parent();
-            var parentDimension = parentElement[dimensionLowercase]();
-            var parentScrollOffset = rtlModifier * (dimension === WIDTH ? parentElement.scrollLeft() : parentElement.scrollTop());
+            var parent = element.parent();
+            var parentDimension = parent[dimensionLowercase]();
+            var maxDimensionValue = that._getMaxDimensionValue(dimension);
             var newDimensionValue;
             var ratioValue;
-            var ratioTotalValue;
+            var ratioTotalValue;            
             var constrainedDimension = constrain({
                 value: elementOuterDimension + delta,
                 min: that.options[MIN + dimension],
-                max: parentDimension + parentScrollOffset
+                max: maxDimensionValue
             });
 
             if (delta === 0) {
@@ -147,7 +151,64 @@
                 newDimensionValue = toPixels(constrainedDimension);
             }
 
+            that._setColumnsDimensions(dimension);
+
             element[0].style[dimensionLowercase]= newDimensionValue;
+        },
+
+        _getMaxDimensionValue: function(dimension) {
+            var that = this;
+            var element = $(that.element);
+            var dimensionLowercase = dimension.toLowerCase();
+            var rtlModifier = that.options.rtl ? (-1) : 1;
+            var parent = $(that.element).parent();
+            var parentElement = parent[0];
+            var parentDimension = parent[dimensionLowercase]();
+            var parentScrollOffset = rtlModifier * (dimension === WIDTH ? parent.scrollLeft() : parent.scrollTop());
+
+            if (parentElement === element.closest(COLUMN)[0]) {
+                if (parentElement.style[dimensionLowercase] === "" && !inPercentages(that.element.style[dimensionLowercase])) {
+                    return Infinity;
+                }
+                else {
+                    return (parentDimension + parentScrollOffset);
+                }
+            }
+            else {
+                return (parentDimension + parentScrollOffset);
+            }
+        },
+
+        _setColumnsDimensions: function(dimension) {
+            var that = this;
+            var element = $(that.element);
+            var parentElement = element.parent()[0];
+            var parentColumn = element.closest(COLUMN);
+            var dimensionLowercase = dimension.toLowerCase();
+            var columns = parentColumn.closest(ROW).children();
+            var columnsLength = columns.length;
+            var i;
+
+            function isWidthInPercentages(element) {
+                var styleWidth = element.style.width;
+
+                if (styleWidth !== "") {
+                    return inPercentages(styleWidth) ? true : false;
+                }
+                else {
+                    return $(element).hasClass(K_TABLE) ? true : false;
+                }
+            }
+
+            if (dimension !== WIDTH) {
+                return;
+            }
+
+            if (isWidthInPercentages(element[0]) && parentElement === parentColumn[0] && parentElement.style[dimensionLowercase] === "") {
+                for (i = 0; i < columnsLength; i++) {
+                    columns[i].style[dimensionLowercase] = toPixels($(columns[i]).width());
+                }
+            }
         },
 
         showResizeHandles: function() {

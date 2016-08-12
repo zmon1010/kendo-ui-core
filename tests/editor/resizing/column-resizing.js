@@ -307,22 +307,6 @@
         assertEvent(tableElement, { type: MOUSE_MOVE, selector: "th,td", namespace: NS });
     });
 
-    test("should set computed style width in pixels to its element", function() {
-        var width = $(tableElement).outerWidth();
-
-        columnResizing = new ColumnResizing(tableElement, {});
-
-        equal(tableElement.style.width, width + PX);
-    });
-
-    test("should not set computed style width in percentages to its element", function() {
-        $(tableElement).width("100%");
-
-        columnResizing = new ColumnResizing(tableElement, {});
-
-        equal(tableElement.style.width, "100%");
-    });
-
     module("editor column resizing resize handle", {
         setup: function() {
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];

@@ -57,7 +57,6 @@
             if ($(element).is(TABLE)) {
                 that.element = element;
                 $(element).on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), proxy(that._detectColumnBorderHovering, that));
-                that._setElementComputedWidth();
             }
         },
 
@@ -96,15 +95,6 @@
             }
 
             return false;
-        },
-
-        _setElementComputedWidth: function() {
-            var that = this;
-            var element = that.element;
-
-            if (!inPercentages(element.style[WIDTH])) {
-                element.style[WIDTH] = $(element).outerWidth() + PX;
-            }
         },
 
         _detectColumnBorderHovering: function(e) {
