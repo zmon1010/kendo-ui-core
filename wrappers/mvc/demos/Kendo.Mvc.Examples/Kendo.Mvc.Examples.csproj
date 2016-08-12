@@ -238,6 +238,10 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
+    <Compile Include="Controllers\MediaPlayer\ApiController.cs" />
+    <Compile Include="Controllers\MediaPlayer\EventsController.cs" />
+    <Compile Include="Controllers\MediaPlayer\IndexController.cs" />
+    <Compile Include="Controllers\MediaPlayer\PlaylistController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
@@ -783,6 +787,7 @@
     <Compile Include="Models\StyleGroups.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryService.cs" />
+    <Compile Include="Models\Video.cs" />
     <Compile Include="Models\WebMail.cs" />
     <Compile Include="Models\WebMailDataRepository.cs" />
     <Compile Include="Models\Chart\AntennaGainItem.cs" />
@@ -2932,6 +2937,14 @@
     <Content Include="Views\dialog\api.cshtml" />
     <Content Include="Views\dialog\right_to_left_support.cshtml" />
     <Content Include="Views\dialog\keyboard_navigation.cshtml" />
+    <Content Include="Areas\razor\Views\mediaplayer\index.cshtml" />
+    <Content Include="Areas\razor\Views\mediaplayer\playlist.cshtml" />
+    <Content Include="Areas\razor\Views\mediaplayer\api.cshtml" />
+    <Content Include="Areas\razor\Views\mediaplayer\events.cshtml" />
+    <Content Include="Views\mediaplayer\api.cshtml" />
+    <Content Include="Views\mediaplayer\events.cshtml" />
+    <Content Include="Views\mediaplayer\index.cshtml" />
+    <Content Include="Views\mediaplayer\playlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

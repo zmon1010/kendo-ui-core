@@ -235,6 +235,10 @@
     <Compile Include="UI\Map\Serialization\ZoomSettingsTests.cs" />
     <Compile Include="UI\Map\Serialization\NavigatorSettingsTests.cs" />
     <Compile Include="UI\Map\Serialization\MapControlsSettingsTests.cs" />
+    <Compile Include="UI\MediaPlayer\MediaPlayerEventsBuilderTests.cs" />
+    <Compile Include="UI\MediaPlayer\MediaPlayerMediaBuilderTests.cs" />
+    <Compile Include="UI\MediaPlayer\MediaPlayerTestHelper.cs" />
+    <Compile Include="UI\MediaPlayer\MediPlayerBuilderTests.cs" />
     <Compile Include="UI\PivotConfigurator\PivotConfiguratorBuilderTests.cs" />
     <Compile Include="UI\PivotDataSource\PivotAjaxDataSourceBuilderTests.cs" />
     <Compile Include="UI\PivotDataSource\PivotAjaxDataSourceSchemaBuilderTests.cs" />
@@ -374,6 +378,7 @@
     <Compile Include="UI\ToolTip\ToolTipTestHelper.cs" />
     <Compile Include="UI\ToolTip\TooltipWorkingConditionsTests.cs" />
     <Compile Include="UI\Upload\UploadMessagesBuilderTests.cs" />
+    <Compile Include="UI\Video.cs" />
     <Compile Include="UI\WidgetBaseExtensionsTests.cs" />
     <Compile Include="UI\DataSource\DataSourceTests.cs" />
     <Compile Include="UI\Gauge\GaugeLinearScaleBuilderTests.cs" />

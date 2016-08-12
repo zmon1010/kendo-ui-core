@@ -44,6 +44,7 @@
         "./kendo.editor",
         "./kendo.numerictextbox",
         "./kendo.maskedtextbox",
+		"./kendo.mediaplayer",
         "./kendo.menu",
         "./kendo.editable",
         "./kendo.pivot.fieldmenu",

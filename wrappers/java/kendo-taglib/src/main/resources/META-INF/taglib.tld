@@ -26842,6 +26842,199 @@ Cancelling the event will prevent the user action.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>MediaPlayer</description>
+        <name>mediaPlayer</name>
+        <tag-class>com.kendoui.taglib.MediaPlayerTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will start playing the video\vidoes after initializing</description>
+            <name>autoPlay</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will start playing the video\vidoes after initializing</description>
+            <name>autoRepeat</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user will be prevented from seeking the video forward</description>
+            <name>forwardSeek</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will enter in full-sreen mode</description>
+            <name>fullScreen</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the video will be played without sound</description>
+            <name>mute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true will enable the keyboard navigation for the widget</description>
+            <name>navigatable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A value between 0 and 100 that specifies the volume of the video</description>
+            <name>volume</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Fires when the media finishes playing.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the media is paused.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>pause</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the media begins playing.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>play</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when loading is over and the widget is ready to start playing the media.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>ready</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the user selects a new play time.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>timeChange</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>volumeChange</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>The object which holds the information about the media that will be played by the control</description>
+        <name>mediaPlayer-media</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.MediaTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>String or an array of objects that hold the URL\URLs to the videos</description>
+            <name>source</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the title of the media that will be played</description>
+            <name>title</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>The object which holds the localization strings</description>
+        <name>mediaPlayer-messages</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Fullscreen button tooltip message</description>
+            <name>fullscreen</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Mute button tooltip message</description>
+            <name>mute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Pause button tooltip message</description>
+            <name>pause</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Play button tooltip message</description>
+            <name>play</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Quality button tooltip message</description>
+            <name>quality</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Unmute button tooltip message</description>
+            <name>unmute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Fires when the media finishes playing.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-end</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.EndFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the media is paused.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-pause</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.PauseFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the media begins playing.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-play</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.PlayFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when loading is over and the widget is ready to start playing the media.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-ready</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.ReadyFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the user selects a new play time.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-timeChange</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.TimeChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-volumeChange</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.VolumeChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Menu</description>
         <name>menu</name>
         <tag-class>com.kendoui.taglib.MenuTag</tag-class>

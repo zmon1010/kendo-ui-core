@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Tests.Menu
     using UI;
     using Moq;
     using Xunit;
+    using Kendo.Mvc.UI;
 
     public class MenuHtmlBuilderTests
     {

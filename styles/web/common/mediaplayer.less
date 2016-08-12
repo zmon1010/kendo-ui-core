@@ -1,0 +1,166 @@
+﻿@font-face {
+	font-family: 'TelerikWebUI';
+	src: url('TelerikWebUI.eot');
+	src: url('TelerikWebUI.eot') format('embedded-opentype'), url('TelerikWebUI.woff') format('woff'), url('TelerikWebUI.ttf') format('truetype');
+}
+
+.k-mediaplayer {
+	position: relative;
+
+	> video,
+	> iframe {
+		vertical-align: top;
+	}
+
+	.k-mediaplayer-titlebar,
+	.k-mediaplayer-toolbar {
+		z-index: 2;
+	}
+
+	.k-mediaplayer-overlay {
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+}
+
+.k-mediaplayer-titlebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: linear-gradient( rgba(0,0,0, 0.7), rgba(0, 0, 0, 0) );
+	color: white;
+	padding: 12px;
+}
+
+.k-mediaplayer-toolbar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 0px;
+	border-width: 0;
+
+	.k-button-bare { //???
+		&,
+		&:hover,
+		&:active {
+			border-color: transparent;
+			background: none;
+		}
+	}
+
+	.k-slider-track,
+	.k-slider-selection {
+		border-radius: 0;
+	}
+
+	// seekbar
+	.k-mediaplayer-seekbar {
+		position: absolute;
+		top: -17px;
+		left: 0;
+		right: 0;
+		margin: 0;
+		width: auto;
+
+		.k-slider-track {
+			width: 100% !important;
+		}
+		
+		.k-draghandle {
+			opacity: 0;
+			transition: 0.2s opacity;
+		}
+
+		.k-draghandle.k-state-selected,
+		&:hover .k-draghandle {
+			opacity: 1;
+		}
+	}
+
+	.k-mediaplayer-quality {
+		width: auto;
+		padding: 0;
+		background: none transparent;
+
+		.k-dropdown-wrap {
+			border: 0 none;
+			box-shadow: none;
+			padding: 0;
+			background: none transparent;
+			color: inherit;
+		}
+
+		.k-input {
+			display: none;
+		}
+
+		.k-select {
+			position: relative;
+		}
+	}
+
+	.k-align-right {
+		padding: 4px 0;
+
+		 & > * {
+			display: inline-block;
+		}
+	}
+}
+
+.k-quality-list {
+	width: 80px !important;
+	margin-left: -32px !important;
+}
+
+
+.k-i-play,
+.k-i-pause,
+.k-i-HD,
+.k-i-volume-mute,
+.k-i-volume-low,
+.k-i-volume-high,
+.k-i-fullscreen-enter,
+.k-i-fullscreen-exit,
+.k-i-playlist-open,
+.k-i-playlist-close {
+	&:before {
+		font-family: "TelerikWebUI";
+	}
+}
+
+.k-i-play:before {
+	content: "\e0e5";
+}
+
+.k-i-pause:before {
+	content: "\e0e3";
+}
+
+.k-i-HD:before {
+	content: "\e11e";
+}
+
+.k-i-volume-low:before {
+	content: "\e041";
+}
+
+.k-i-volume-high:before {
+	content: "\e042";
+}
+
+.k-i-volume-mute:before {
+	content: "\e040";
+}
+
+.k-i-fullscreen-enter:before {
+	content: "\e11c";
+}
+
+.k-i-fullscreen-exit:before {
+	content: "\e11d";
+}

@@ -721,6 +721,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Creates a new <see cref="Kendo.Mvc.UI.MediaPlayer"/>
+        /// </summary>
+        /// <example>
+        /// <typeparam name="T">The type of the data item</typeparam>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().MediaPlayer()
+        ///             .Name("MediaPlayer")
+        /// %&gt;
+        /// </code>
+        /// </example>        
+        public virtual MediaPlayerBuilder MediaPlayer()
+        {
+            return new MediaPlayerBuilder(new MediaPlayer(ViewContext, Initializer, UrlGenerator));
+        }
+
+        /// <summary>
         /// Creates a new <see cref="CheckBox"/>.
         /// </summary>
         /// <example>

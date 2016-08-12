@@ -1186,6 +1186,60 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full Screen.
+        /// </summary>
+        public static string MediaPlayer_Fullscreen {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Fullscreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mute.
+        /// </summary>
+        public static string MediaPlayer_Mute {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Mute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause.
+        /// </summary>
+        public static string MediaPlayer_Pause {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play.
+        /// </summary>
+        public static string MediaPlayer_Play {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quality.
+        /// </summary>
+        public static string MediaPlayer_Quality {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Quality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unmute.
+        /// </summary>
+        public static string MediaPlayer_Unmute {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Unmute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string Pager_AllPages {
