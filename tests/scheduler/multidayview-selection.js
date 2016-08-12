@@ -3220,7 +3220,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
         equal(selection.groupIndex, 1);
         equal(selection.isAllDay, true);
         deepEqual(selection.start,  new Date(2013, 5, 9));
-        deepEqual(selection.end, new Date(2013, 5, 9));
+        deepEqual(selection.end, new Date(2013, 5, 10));
     });
 
      test("View moves selection to the next date slot", function() {
@@ -3241,8 +3241,30 @@ test("View moves selection to the next visible date and group slot workWeek", fu
         equal(selection.groupIndex, 1);
         equal(selection.isAllDay, false);
         deepEqual(selection.start,  new Date(2013, 5, 1, 23, 30));
-        deepEqual(selection.end, new Date(2013, 5, 1));
+        deepEqual(selection.end, new Date(2013, 5, 2));
     });
+
+    test("View day view moves selection to the prev date slot", function() {
+        setupGroupedByDateScheduler("vertical", "day");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 8),
+            end: new Date(2013, 5, 9),
+            isAllDay: true,
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.UP);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 7, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 8));
+    });
+
 
      function setupGroupedByDateSchedulerNoALLDay(orientation, view) {
         orientation = orientation || "horizontal";
@@ -3357,6 +3379,27 @@ test("View moves selection to the next visible date and group slot workWeek", fu
         equal(selection.groupIndex, 1);
         equal(selection.isAllDay, false);
         deepEqual(selection.start,  new Date(2013, 5, 1, 23, 30));
-        deepEqual(selection.end, new Date(2013, 5, 1));
+        deepEqual(selection.end, new Date(2013, 5, 2));
+     });
+
+     test("View day view moves selection to the prev date slot not allday", function() {
+        setupGroupedByDateSchedulerNoALLDay("vertical", "day");
+        scheduler.wrapper.focus();
+
+        var view = scheduler.view();
+        var selection = {
+            start: new Date(2013, 5, 8, 0, 0, 0),
+            end: new Date(2013, 5, 8, 0, 0, 30),
+            isAllDay: false,
+            groupIndex: 1,
+            events: []
+        };
+
+        view.move(selection, keys.UP);
+
+        equal(selection.groupIndex, 1);
+        equal(selection.isAllDay, false);
+        deepEqual(selection.start,  new Date(2013, 5, 7, 23, 30));
+        deepEqual(selection.end, new Date(2013, 5, 8));
     });
 })();

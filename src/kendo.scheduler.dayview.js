@@ -1804,26 +1804,28 @@ var __meta__ = { // jshint ignore:line
                 var group = this.groups[selection.groupIndex];
                 var collection = reverse ? group._timeSlotCollections : group._getCollections(group.daySlotCollectionCount());
                 var slots = collection[collection.length - 1]._slots;
-                var slotIndex = (!reverse && !group.daySlotCollectionCount()) ? 0 : slots.length - 1;         
+                var slotIndex = (!reverse && !group.daySlotCollectionCount()) ? 0 : slots.length - 1;   
+                var endMilliseconds;      
 
                 selection.start = new Date(date);
                 selection.end = new Date(date);
 
                 if (verticalByDate) { 
-                     var newStart = slots[slotIndex].startDate();
-                     var newEnd = slots[slotIndex].endDate();      
+                    var newStart =new Date(slots[slotIndex].startDate());
+                    var newEnd = new Date(slots[slotIndex].endDate());
+                    endMilliseconds = getMilliseconds(newEnd) ? getMilliseconds(newEnd) : MS_PER_DAY ;
 
-                        setTime(selection.start, getMilliseconds(new Date(newStart)));
-                        setTime(selection.end, getMilliseconds(new Date(newEnd)));
+                        setTime(selection.start, getMilliseconds(newStart));
+                        setTime(selection.end, endMilliseconds);
                         if(group.daySlotCollectionCount()){
                             selection.isAllDay = !selection.isAllDay;
                         }
                 } else {
-                      var endMilliseconds = selection.isAllDay ? MS_PER_DAY : getMilliseconds(end);
+                    endMilliseconds = (selection.isAllDay || !getMilliseconds(end)) ? MS_PER_DAY : getMilliseconds(end);
 
                     setTime(selection.start, getMilliseconds(start));
                     setTime(selection.end, endMilliseconds);
-                }         
+                }  
 
                 if (!this._isVerticallyGrouped()) {
                     selection.groupIndex = reverse ? this.groups.length - 1 : 0;
