@@ -12,7 +12,6 @@
 
     (function ($, undefined) {
         var kendo = window.kendo,
-            CHANGE = "change",
             END = "end",
             PAUSE = "pause",
             PLAY = "play",
@@ -24,9 +23,7 @@
             MUTE = "k-i-volume-mute",
             LOW_VOLUME = "k-i-volume-low",
             HIGH_VOLUME = "k-i-volume-high",
-            PROGRESS = "progress",
             VIDEO_QUALITY = "k-mediaplayer-quality",
-            ERROR = "error",
             STATE_PLAY = "k-i-play",
             STATE_PAUSE = "k-i-pause",
             TITLEBAR = "k-mediaplayer-titlebar",
@@ -286,7 +283,7 @@
 
                     var volumeSpan = toolBarElement.find('span[class*="k-i-volume"]');
                     this._volumeButton = volumeSpan.parent("a");
-                    var fullScreenSpan = toolBarElement.find('span[class*="k-i-fullscreen"]')
+                    var fullScreenSpan = toolBarElement.find('span[class*="k-i-fullscreen"]');
                     this._fullscreenButton = fullScreenSpan.parent("a");
                     this._volumeButton.attr("title", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
                     volumeSpan.html(this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
@@ -389,7 +386,7 @@
                 }
             },
 
-            _sliderDragging: function (e) {
+            _sliderDragging: function () {
                 if (!this.media()) {
                     return;
                 }
@@ -1058,7 +1055,12 @@
             _keyDown: function (e) {
                 e.preventDefault();
                 if (e.keyCode === keys.SPACEBAR) {
-                    this.isPlaying() ? this.pause() : this.play();
+                    if (this.isPlaying()) {
+                        this.pause();
+                    }
+                    else{
+                        this.play();
+                    }
                 }
                 if (e.keyCode === keys.ENTER) {
                         this.wrapper.find('span[class*="k-i-fullscreen"]')
