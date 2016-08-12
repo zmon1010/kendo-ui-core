@@ -56,6 +56,7 @@ module CodeGen::TypeScript
     }
 
     ARRAY_TYPE_OVERRIDES = {
+        'treelist.toolbar' => 'TreeListToolbarItem[] | any',
         'grid.toolbar' => 'GridToolbarItem[] | any'
     }
 
