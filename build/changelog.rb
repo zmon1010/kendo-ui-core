@@ -124,7 +124,7 @@ class ChangeLog
     end
 
     def api_for(repo_name)
-        Github.new :oauth_token => '39bacd99458f1a463b938854c2da9af6c929ed6a',
+        Github.new :oauth_token => '87924a2f282916e1c94f7aeb99d32c5a1dff95e1',
                    :user => "telerik",
                    :repo => repo_name,
                    :auto_pagination => true
