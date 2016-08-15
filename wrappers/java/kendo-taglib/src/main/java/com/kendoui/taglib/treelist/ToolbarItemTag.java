@@ -49,6 +49,22 @@ public class ToolbarItemTag extends  BaseTag  /* interfaces */ /* interfaces */ 
         return "treeList-toolbarItem";
     }
 
+    public void setClick(ToolbarItemClickFunctionTag value) {
+        setEvent("click", value.getBody());
+    }
+
+    public String getClick() {
+        Function property = ((Function)getProperty("click"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setClick(String value) {
+        setProperty("click", new Function(value));
+    }
+
     public java.lang.String getName() {
         return (java.lang.String)getProperty("name");
     }

@@ -20,6 +20,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// The click handler of the toolbar command. Used for custom toolbar commands.
+        /// </summary>
+        /// <param name="value">The value that configures the click.</param>
+        public TreeListToolbarBuilder<T> Click(string value)
+        {
+            container.Click = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The name of the toolbar command. Either a built-in ("create", "excel", "pdf") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-grid-name.
 		/// This class can be used to get a reference to the button (after TreeList initialization) and attach click handlers.
         /// </summary>
