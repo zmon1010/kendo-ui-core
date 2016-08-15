@@ -494,6 +494,12 @@ test("presentational tags are nested properly", function() {
     equal(editor.value(), '<span class="red"><u><font color="#ff0000" face="verdana">foo</font></u></span>');
 });
 
+test("elements with class k-table-resize-handle are not serialized", function() {
+    editor.body.innerHTML = '<div class="k-table-resize-handle"></div>';
+
+    equal(editor.value(), "");
+});
+
 module("editor content parsing");
 
 test("removes onerror attribute", function() {

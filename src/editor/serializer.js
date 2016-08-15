@@ -498,6 +498,10 @@ var Serializer = {
                 tagName, mapper,
                 parent, value, previous;
 
+            if ($(node).hasClass("k-table-resize-handle")) {
+                return;
+            }
+
             if (immutables && Editor.Immutables.immutable(node)) {
                 result.push(immutables.serialize(node));
             } else if (nodeType == 1) {
