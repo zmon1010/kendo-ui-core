@@ -6,6 +6,15 @@ class ChartValueAxisItemNotesLine extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * The dash type of the note line.The following dash types are supported:
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\ChartValueAxisItemNotesLine
+    */
+    public function dashType($value) {
+        return $this->setProperty('dashType', $value);
+    }
+
+    /**
     * The line width of the notes.
     * @param float $value
     * @return \Kendo\Dataviz\UI\ChartValueAxisItemNotesLine

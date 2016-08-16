@@ -6,6 +6,15 @@ class ChartSeriesItemHighlightLine extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * The dash type of the highlight line.The following dash types are supported:
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\ChartSeriesItemHighlightLine
+    */
+    public function dashType($value) {
+        return $this->setProperty('dashType', $value);
+    }
+
+    /**
     * The line color. Accepts a valid CSS color string, including hex and rgb.
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItemHighlightLine

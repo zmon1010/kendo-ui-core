@@ -21,6 +21,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The dash type of the crosshair.The following dash types are supported:
+        /// </summary>
+        /// <param name="value">The value for DashType</param>
+        public ChartAxisDefaultsCrosshairSettingsBuilder<T> DashType(ChartDashType value)
+        {
+            Container.DashType = value;
+            return this;
+        }
+
+        /// <summary>
         /// The opacity of the crosshair. By default the crosshair is opaque.
         /// </summary>
         /// <param name="value">The value for Opacity</param>

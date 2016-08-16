@@ -1103,6 +1103,12 @@ maxDateGroups.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The dash type of the crosshair.The following dash types are supported:</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The opacity of the crosshair. By default the crosshair is opaque.</description>
             <name>opacity</name>
             <rtexprvalue>true</rtexprvalue>
@@ -2126,6 +2132,12 @@ body of the chart.</description>
         <attribute>
             <description>The line color of the notes.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -4244,6 +4256,12 @@ By default chart series highlighting is enabled.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The dash type of the highlight line.The following dash types are supported:</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The opacity of the line. By default the border is opaque.</description>
             <name>opacity</name>
             <rtexprvalue>true</rtexprvalue>
@@ -5358,6 +5376,12 @@ By default chart series highlighting is enabled.</description>
         <attribute>
             <description>The line color of the notes.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -6579,6 +6603,12 @@ The function return value is displayed instead of the individual points.The supp
         <attribute>
             <description>The line color of the notes.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -8155,6 +8185,12 @@ body of the chart.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The length of the connecting lines in pixels.</description>
             <name>length</name>
             <rtexprvalue>true</rtexprvalue>
@@ -9541,6 +9577,12 @@ body of the chart.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The length of the connecting lines in pixels.</description>
             <name>length</name>
             <rtexprvalue>true</rtexprvalue>
@@ -10917,6 +10959,12 @@ body of the chart.</description>
         <attribute>
             <description>The line color of the notes.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>

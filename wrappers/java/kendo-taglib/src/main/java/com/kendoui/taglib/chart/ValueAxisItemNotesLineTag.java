@@ -59,6 +59,14 @@ public class ValueAxisItemNotesLineTag extends  BaseTag  /* interfaces */ /* int
         setProperty("color", value);
     }
 
+    public java.lang.String getDashType() {
+        return (java.lang.String)getProperty("dashType");
+    }
+
+    public void setDashType(java.lang.String value) {
+        setProperty("dashType", value);
+    }
+
     public float getLength() {
         return (Float)getProperty("length");
     }
