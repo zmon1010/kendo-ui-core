@@ -349,6 +349,7 @@
 
             function initTableResizing(editorWidget, tableElement) {
                 editorWidget.tableResizing = kendo.ui.editor.TableResizing.create(tableElement, {
+                    appendHandlesTo: editorWidget.body,
                     rtl: isRtl(editorWidget.element),
                     rootElement: editorWidget.body
                 });

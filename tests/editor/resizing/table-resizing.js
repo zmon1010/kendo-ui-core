@@ -35,7 +35,7 @@
     var COLUMN = "td";
 
     var TABLE_HTML =
-        '<table id="table" class="k-table">' +
+        '<table id="table" class="k-table" style="border:1px solid black;">' +
             '<tr id="row1" class="row">' +
                 '<td id="col11" class="col" style="border:1px solid blue;">col 11</td>' +
                 '<td id="col12" class="col" style="border:1px solid blue;">col 12</td>' +
@@ -314,12 +314,44 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
         equal(editor.tableResizing.options.rtl, false);
         equal(editor.tableResizing.options.rootElement, editor.body);
+        equal(editor.tableResizing.options.appendHandlesTo, editor.body);
     });
 
     test("clicking a table should init resize handles", function() {
         triggerEvent(tableElement, { type: MOUSE_DOWN });
 
         equal(editor.tableResizing.handles.length, 8);
+    });
+
+    editor_module("editor table resizing initialization in inline edit mode", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.tableResizing = null;
+            $(editor.body).append($(CONTENT_HTML)[0]);
+            tableElement = $(editor.body).find("#table")[0];
+        },
+
+        afterEach: function() {
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+            }
+
+            if (editor) {
+                $(editor.body).find("*").remove();
+            }
+
+            kendo.destroy(QUnit.fixture);
+        }
+    }, {
+        element: "<div id='editor-fixture'></div>"
+    });
+
+    test("clicking a table should initialize table resizing with custom options", function() {
+        triggerEvent(tableElement, { type: MOUSE_DOWN });
+
+        equal(editor.tableResizing.options.rtl, false);
+        equal(editor.tableResizing.options.rootElement, editor.body);
+        equal(editor.tableResizing.options.appendHandlesTo, editor.body);
     });
 
     editor_module("editor table resizing destroying on click", {
@@ -391,22 +423,23 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     test("should be initialized with default options", function() {
         var defaultOptions = {
+            appendHandlesTo: null,
             rtl: false,
             rootElement: null,
             minWidth: 10,
             minHeight: 10,
             handles: [{
-                direction: EAST
+                direction: NORTHWEST
             }, {
                 direction: NORTH
             }, {
                 direction: NORTHEAST
             }, {
-                direction: NORTHWEST
-            }, {
-                direction: SOUTH
+                direction: EAST
             }, {
                 direction: SOUTHEAST
+            }, {
+                direction: SOUTH
             }, {
                 direction: SOUTHWEST
             }, {
@@ -505,7 +538,8 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
             tableResizing = new TableResizing(tableElement, {
-                rootElement: wrapper[0]
+                rootElement: wrapper[0],
+                appendHandlesTo: wrapper[0]
             });
         },
 
@@ -528,8 +562,9 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should be initialized with custom options", function() {
         var customOptions = {
             appendTo: tableResizing.options.rootElement,
-            direction: "east",
-            resizableElement: tableResizing.element
+            direction: "northwest",
+            resizableElement: tableResizing.element,
+            rootElement: tableResizing.options.rootElement
         };
 
         tableResizing.showResizeHandles();
@@ -537,6 +572,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(tableResizing.handles[0].options.appendTo, customOptions.appendTo);
         equal(tableResizing.handles[0].options.direction, customOptions.direction);
         equal(tableResizing.handles[0].options.resizableElement, customOptions.resizableElement);
+        equal(tableResizing.handles[0].options.rootElement, customOptions.rootElement);
     });
 
     test("should call resize handle show() on showResizeHandles()", function() {
@@ -796,7 +832,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     });
 
     test("should increase height", function() {
-        var initialHeight = tableElement.height();
+        var initialHeight = tableElement.outerHeight();
         var deltaY = 20;
 
         tableResizing.resize({ deltaY: deltaY });
@@ -805,7 +841,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     });
 
     test("should decrease height", function() {
-        var initialHeight = tableElement.height();
+        var initialHeight = tableElement.outerHeight();
         var deltaY = 20;
 
         tableResizing.resize({ deltaY: (-1) * deltaY });
@@ -814,7 +850,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     });
     test("should change height when style height is smaller", function() {
         tableElement.css("height", "1px");
-        var initialHeight = tableElement.height();
+        var initialHeight = tableElement.outerHeight();
         var deltaY = 20;
 
         tableResizing.resize({ deltaY: deltaY });

@@ -75,22 +75,23 @@
         },
 
         options: {
+            appendHandlesTo: null,
             rtl: false,
             rootElement: null,
             minWidth: 10,
             minHeight: 10,
             handles: [{
-                direction: EAST
+                direction: NORTHWEST
             }, {
                 direction: NORTH
             }, {
                 direction: NORTHEAST
             }, {
-                direction: NORTHWEST
-            }, {
-                direction: SOUTH
+                direction: EAST
             }, {
                 direction: SOUTHEAST
+            }, {
+                direction: SOUTH
             }, {
                 direction: SOUTHWEST
             }, {
@@ -232,8 +233,9 @@
 
             for (i = 0; i < length; i++) {
                 that.handles.push(new TableResizeHandle(extend({
-                    appendTo: options.rootElement,
-                    resizableElement: that.element
+                    appendTo: options.appendHandlesTo,
+                    resizableElement: that.element,
+                    rootElement: options.rootElement
                 }, handleOptions[i])));
             }
 

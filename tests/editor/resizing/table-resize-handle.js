@@ -34,20 +34,27 @@
                 '<td id="col13" class="col">col 13</td>' +
             '</tr>' +
             '<tr id="row2" class="row">' +
-                '<td id="col21" class="col">+col 21</td>' +
-                '<td id="col22" class="col">+col 22</td>' +
-                '<td id="col23" class="col">+col 23</td>' +
+                '<td id="col21" class="col">col 21</td>' +
+                '<td id="col22" class="col">col 22</td>' +
+                '<td id="col23" class="col">col 23</td>' +
             '</tr>' +
             '<tr id="row3" class="row">' +
-                '<td id="col31" class="col">+col 31</td>' +
-                '<td id="col32" class="col">+col 32</td>' +
-                '<td id="col33" class="col">+col 33</td>' +
+                '<td id="col31" class="col">col 31</td>' +
+                '<td id="col32" class="col">col 32</td>' +
+                '<td id="col33" class="col">col 33</td>' +
             '</tr>' +
         '</table>';
+    var INNER_ELEMENT_HTML = "<div id='innerElement'>inner</div>"
+    var CONTENT_HTML =
+        '<div id="wrapper">' +
+            INNER_ELEMENT_HTML +
+            TABLE_HTML +
+        '</div>';
 
     function setupHandle(customOptions) {
-        wrapper = $("<div id='wrapper' />").appendTo(QUnit.fixture);
-        tableElement = $(TABLE_HTML).css({ left: 10, top: 20 }).appendTo(wrapper[0]);
+        customOptions = customOptions || {};
+        wrapper = customOptions.rootElement || $("<div id='wrapper' />").appendTo(QUnit.fixture);
+        tableElement = customOptions.resizableElement || $(TABLE_HTML).css({ left: 10, top: 20 }).appendTo(wrapper[0]);
 
         var options = $.extend({}, {
             appendTo: QUnit.fixture,
@@ -601,5 +608,54 @@
             expectedDeltaX: DELTA_X,
             expectedDeltaY: 0
         });
+    });
+
+    module("editor table resize handle in inline edit mode", {
+        setup: function() {
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css({
+                border: "1px solid red",
+                width: "400px",
+                height: "400px",
+                overflow: "scroll"
+            });
+
+            innerElement = $(wrapper).find("#innerElement").css({
+                border: "1px solid blue",
+                width: $(wrapper).width() + 100,
+                height: $(wrapper).height() + 100
+            });
+
+            setupHandle({
+                direction: "northwest",
+                rootElement: wrapper[0],
+                appendTo: wrapper[0],
+                resizableElement: $(QUnit.fixture).find("#table")[0]
+            })
+        },
+
+        teardown: function() {
+            handle.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set left offset according to scroll", function() {
+        var scrollLeft = 20;
+        $(wrapper).scrollLeft(scrollLeft);
+
+        handle.show();
+
+        roughlyEqual(element[0].style.left,
+            $(handle.options.resizableElement).position().left + scrollLeft - (element.outerWidth() / 2) + "px", 0.001);
+    });
+
+    test("should set top offset according to scroll", function() {
+        var scrollTop = 10;
+        $(wrapper).scrollTop(scrollTop);
+
+        handle.show();
+
+        roughlyEqual(element[0].style.top,
+            $(handle.options.resizableElement).position().top + scrollTop - (element.outerHeight() / 2) + "px", 0.5);
     });
 })();
