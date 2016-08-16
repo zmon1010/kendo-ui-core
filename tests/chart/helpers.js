@@ -857,6 +857,10 @@
         deepEqual(addDuration(dateA, 75.1, "seconds"), new Date("2010/01/01 10:01:15"));
     });
 
+    test("does not round date when adding milliseconds", function() {
+        deepEqual(addDuration(dateA, 75, "milliseconds"), new Date("2010/01/01 10:00:00.075"));
+    });
+
     tzTest("Brazil", "Adding days skips DST transition", function() {
         deepEqual(addDuration(new Date("2013/10/19"), 1, "days"),
                   new Date("2013/10/20 01:00:00"));

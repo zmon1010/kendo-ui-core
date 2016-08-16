@@ -201,6 +201,7 @@ var __meta__ = { // jshint ignore:line
         SCATTER = "scatter",
         SCATTER_LINE = "scatterLine",
         SECONDS = "seconds",
+        MILLISECONDS = "milliseconds",
         SELECT_START = "selectStart",
         SELECT = "select",
         SELECT_END = "selectEnd",
@@ -213,7 +214,8 @@ var __meta__ = { // jshint ignore:line
         STD_DEV = "stddev",
         STRING = "string",
         SUMMARY_FIELD = "summary",
-        TIME_PER_SECOND = 1000,
+        TIME_PER_MILLISECOND = 1,
+        TIME_PER_SECOND = 1000 * TIME_PER_MILLISECOND,
         TIME_PER_MINUTE = 60 * TIME_PER_SECOND,
         TIME_PER_HOUR = 60 * TIME_PER_MINUTE,
         TIME_PER_DAY = 24 * TIME_PER_HOUR,
@@ -227,7 +229,8 @@ var __meta__ = { // jshint ignore:line
             "days": TIME_PER_DAY,
             "hours": TIME_PER_HOUR,
             "minutes": TIME_PER_MINUTE,
-            "seconds": TIME_PER_SECOND
+            "seconds": TIME_PER_SECOND,
+            "milliseconds": TIME_PER_MILLISECOND
         },
         TO = "to",
         TOP = "top",
@@ -253,7 +256,7 @@ var __meta__ = { // jshint ignore:line
         ZOOM = "zoom",
         ZOOM_END = "zoomEnd",
         BASE_UNITS = [
-            SECONDS, MINUTES, HOURS, DAYS, WEEKS, MONTHS, YEARS
+            MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS, WEEKS, MONTHS, YEARS
         ],
         EQUALLY_SPACED_SERIES = [
             BAR, COLUMN, OHLC, CANDLESTICK, BOX_PLOT, VERTICAL_BOX_PLOT,
@@ -261,6 +264,7 @@ var __meta__ = { // jshint ignore:line
         ];
 
     var DateLabelFormats = {
+        milliseconds: "HH:mm:ss.fff",
         seconds: "HH:mm:ss",
         minutes: "HH:mm",
         hours: "HH:mm",
@@ -3047,6 +3051,7 @@ var __meta__ = { // jshint ignore:line
                 dateFormats: DateLabelFormats
             },
             autoBaseUnitSteps: {
+                milliseconds: [1, 10, 100],
                 seconds: [1, 2, 5, 15, 30],
                 minutes: [1, 2, 5, 15, 30],
                 hours: [1, 2, 3],
@@ -3332,7 +3337,7 @@ var __meta__ = { // jshint ignore:line
                 var rangeDiff = dateDiff(rangeMax, rangeMin);
                 var ticks;
 
-                if (diff < TIME_PER_UNIT[baseUnit] && baseUnit !== SECONDS) {
+                if (diff < TIME_PER_UNIT[baseUnit] && baseUnit !== MILLISECONDS) {
                     baseUnit = BASE_UNITS[baseUnitIndex - 1];
                     autoBaseUnitStep = last(autoBaseUnitSteps[baseUnit]);
                     ticks = (rangeDiff - (maxDateGroups - 1) * autoBaseUnitStep * TIME_PER_UNIT[baseUnit]) / 2;
@@ -3366,7 +3371,7 @@ var __meta__ = { // jshint ignore:line
             min = toDate(limitValue(min, totalLimits.min, totalLimits.max));
             max = toDate(limitValue(max, totalLimits.min, totalLimits.max));
 
-            if (dateDiff(max, min) > 0) {
+            if (min && max && dateDiff(max, min) > 0) {
                 return {
                     min: min,
                     max: max,
@@ -13784,9 +13789,11 @@ var __meta__ = { // jshint ignore:line
                 }
             } else if (unit === SECONDS) {
                 result = addTicks(date, value * TIME_PER_SECOND);
+            } else if (unit === MILLISECONDS) {
+                result = addTicks(date, value);
             }
 
-            if (result.getMilliseconds() > 0) {
+            if (unit !== MILLISECONDS && result.getMilliseconds() > 0) {
                 result.setMilliseconds(0);
             }
         }
