@@ -462,3 +462,47 @@ table.k-editor
     display: none;
 }
 
+.k-table-resize-handle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+    border: 1px solid #000;
+    z-index: 100;
+
+    &:hover {
+        background-color: #000;
+    }
+
+    &.k-resize-e {
+        cursor: e-resize;
+    }
+
+    &.k-resize-n {
+        cursor: n-resize;
+    }
+
+    &.k-resize-ne {
+        cursor: ne-resize;
+    }
+
+    &.k-resize-nw {
+        cursor: nw-resize;
+    }
+
+    &.k-resize-s {
+        cursor :s-resize;
+    }
+
+    &.k-resize-se {
+        cursor: se-resize;
+    }
+
+    &.k-resize-sw {
+        cursor: sw-resize;
+    }
+
+    &.k-resize-w {
+        cursor: w-resize;
+    }
+}
