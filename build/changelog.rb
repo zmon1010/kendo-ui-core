@@ -24,6 +24,12 @@ class Issue
         @components = filtered_labels(:w) | filtered_labels(:f) | filtered_labels(:c)
     end
 
+    def enhancement?
+        @labels.include? "Enhancement"
+    end
+    def feature?
+        @labels.include? "Feature"
+    end
     def breaking?
         @labels.include? "Breaking Change"
     end
@@ -47,7 +53,7 @@ class Component
     def add(issue)
         if issue.bug
             @bugs.push issue
-        else
+        elsif issue.feature? || issue.enhancement?
             @features.push issue
         end
     end
@@ -71,7 +77,7 @@ class Suite
         elsif issue.components.length == 0 || issue.framework_construct?
             if issue.bug
                 @bugs.push issue
-            else
+            elsif issue.feature? || issue.enhancement?
                 @features.push issue
             end
         elsif issue.components
