@@ -16,8 +16,9 @@
 
     var CONTENT_EDITABLE = "contenteditable";
     var PERCENTAGE = "%";
-    var PIXELS = "px";
-    var REGEX_NUMBER_IN_PERCENTAGES = /(\d+)(\.?)(\d*)(%)/;
+    var PIXEL = "px";
+    var REGEX_NUMBER_IN_PERCENTAGES = /(\d+)(\.?)(\d*)%/;
+    var REGEX_NUMBER_IN_PIXELS = /(\d+)(\.?)(\d*)px/;
     var STRING = "string";
     var UNDEFINED = "undefined";
     var WIDTH = "width";
@@ -47,12 +48,16 @@
         return (typeof(value) === STRING && REGEX_NUMBER_IN_PERCENTAGES.test(value));
     }
 
+    function inPixels(value) {
+        return (typeof(value) === STRING && REGEX_NUMBER_IN_PIXELS.test(value));
+    }
+
     function toPercentages(value) {
         return (parseFloat(value) + PERCENTAGE);
     }
 
     function toPixels(value) {
-        return (parseFloat(value) + PIXELS);
+        return (parseFloat(value) + PIXEL);
     }
 
     function setContentEditable(domElement, enabled) {
@@ -68,6 +73,7 @@
         getElementWidth: getElementWidth,
         calculatePercentageRatio: calculatePercentageRatio,
         inPercentages: inPercentages,
+        inPixels: inPixels,
         setContentEditable: setContentEditable,
         toPercentages: toPercentages,
         toPixels: toPixels

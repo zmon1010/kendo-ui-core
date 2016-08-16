@@ -20,7 +20,9 @@
     var getElementWidth = ResizingUtils.getElementWidth;
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
     var inPercentages = ResizingUtils.inPercentages;
+    var inPixels = ResizingUtils.inPixels;
     var toPercentages = ResizingUtils.toPercentages;
+    var toPixels = ResizingUtils.toPixels;
     var setContentEditable = ResizingUtils.setContentEditable;
 
     var NS = ".kendoEditorColumnResizing";
@@ -213,16 +215,16 @@
                 resizeend: function(e) {
                     var resizable = this;
                     var column = resizable.element;
-                    var columnWidth = getElementWidth(column[0]);
                     var options = that.options;
                     var rtlModifier = options.rtl ? (-1) : 1;
-                    var newWidth = that._calculateNewWidth(column, rtlModifier * e.x.initialDelta);
-                    var adjacentColumn = column.next()[0];
-                    var adjacentColumnWidth = adjacentColumn ? getElementWidth(adjacentColumn) : 0;
+                    var initialDeltaX = rtlModifier * e.x.initialDelta;
+                    var newWidth = that._calculateNewWidth(column, initialDeltaX);
+                    var initialAdjacentColumnWidth = column.next().outerWidth();
+                    var initialColumnWidth = column.outerWidth();
 
-                    that._resizeColumn(column, newWidth);
+                    that._resizeColumn(column[0], newWidth);
                     that._resizeTopAndBottomColumns(column, newWidth);
-                    that._resizeAdjacentColumns(column.index(), columnWidth, adjacentColumnWidth, rtlModifier * e.x.initialDelta);
+                    that._resizeAdjacentColumns(column.index(), initialAdjacentColumnWidth, initialColumnWidth, initialDeltaX);
 
                     that._destroyResizeHandle();
                     setContentEditable(options.rootElement, TRUE);
@@ -249,10 +251,11 @@
             var adjacentColumnWidthValue;
             var columnWidth = getElementWidth(column[0]);
             var columnWidthValue = parseFloat(columnWidth);
+            var columnOuterWidth = column.outerWidth();
             var differenceInPercentages;
             var newWidth;
 
-            if(inPercentages(columnWidth)) { 
+            if (inPercentages(columnWidth)) { 
                 differenceInPercentages = calculatePercentageRatio(deltaX, tableWidth);
                 adjacentColumnWidthValue = calculatePercentageRatio(adjacentColumnWidth, tableWidth);
 
@@ -261,13 +264,14 @@
                     min: minInPercentages,
                     max: abs(columnWidthValue + adjacentColumnWidthValue - minInPercentages)
                 });
+
                 newWidth = toPercentages(newWidth);
             }
             else {
                 newWidth = constrain({
-                    value: columnWidthValue + deltaX,
+                    value: columnOuterWidth + deltaX,
                     min: min,
-                    max: columnWidthValue + parseFloat(adjacentColumnWidth) - min
+                    max: columnOuterWidth + $(adjacentColumn).outerWidth() - min
                 });
             }
 
@@ -291,10 +295,15 @@
         },
 
         _resizeColumn: function(column, newWidth) {
-            $(column).width(newWidth);
+            if (inPercentages(newWidth)) {
+                column.style[WIDTH] = toPercentages(newWidth);
+            }
+            else {
+                column.style[WIDTH]= toPixels(newWidth);
+            }
         },
 
-        _resizeAdjacentColumns: function(columnIndex, initialColumnWidth, initialAdjacentColumnWidth, deltaWidth) {
+        _resizeAdjacentColumns: function(columnIndex, initialAdjacentColumnWidth, initialColumnWidth, deltaWidth) {
             var that = this;
             var adjacentColumns = $(that.element).find(TR).children(that.options.tags.join(COMMA))
                 .filter(function() {
@@ -332,13 +341,12 @@
                 $(adjacentColumn).width(toPercentages(newWidth));
             }
             else {
-                initialWidth = adjacentColumn.style[WIDTH] !== "" ? adjacentColumn.style[WIDTH] : initialAdjacentColumnWidth;
                 columnWidth = inPercentages(initialColumnWidth) ? (parseFloat(initialColumnWidth) * tableWidth / 100) : initialColumnWidth;
 
                 newWidth = constrain({
-                    value: parseFloat(initialWidth) + parseFloat(delta),
+                    value: parseFloat(initialAdjacentColumnWidth) + parseFloat(delta),
                     min: min,
-                    max: abs(parseFloat(columnWidth) + parseFloat(initialWidth) - min)
+                    max: abs(parseFloat(columnWidth) + parseFloat(initialAdjacentColumnWidth) -min)
                 });
 
                 adjacentColumn.style[WIDTH] = newWidth + PX;

@@ -28,6 +28,37 @@
         equal(utils.inPercentages("123.45"), false);
     });
 
+    module("editor resizing utils inPixels", {
+    });
+
+    test("should not match number", function() {
+        equal(utils.inPixels(123), false);
+    });
+
+    test("should match integer number", function() {
+        equal(utils.inPixels("123px"), true);
+    });
+
+    test("should match float number", function() {
+        equal(utils.inPixels("123.45px"), true);
+    });
+
+    test("should not match number in percentages", function() {
+        equal(utils.inPixels("123%"), false);
+    });
+
+    test("should not match float number in percentages", function() {
+        equal(utils.inPixels("123.45%"), false);
+    });
+
+    test("should not match number without unit", function() {
+        equal(utils.inPixels("123"), false);
+    });
+
+    test("should not match float number without unit", function() {
+        equal(utils.inPixels("123.45"), false);
+    });
+
     module("editor resizing utils toPixels", {
     });
 
