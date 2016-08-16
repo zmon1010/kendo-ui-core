@@ -164,7 +164,7 @@
 
         triggerResize(column, from, to, options);
 
-        $(column[0].ownerDocument.documentElement).trigger($.Event(MOUSE_UP));
+        triggerResizeEnd(column);
     }
 
     function triggerBorderHover(element, options) {
@@ -205,6 +205,10 @@
             pageX: position.left + from,
             pageY: 0
         }));
+    }
+
+    function triggerResizeEnd(column) {
+        $(column[0].ownerDocument.documentElement).trigger($.Event(MOUSE_UP));
     }
 
     function triggerEvent(element, eventOptions) {
@@ -1200,6 +1204,31 @@
         }
     });
 
+    test("should set computed style width in pixels to its element", function() {
+        var width = $(tableElement).outerWidth();
+
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 10);
+
+        equal(tableElement.style.width, width + PX);
+    });
+
+    test("should override style width", function() {
+        tableElement.style.width = "1px";
+        var width = $(tableElement).outerWidth();
+
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 10);
+
+        equal(tableElement.style.width, width +PX);
+    });
+
+    test("should not set computed style width in percentages to its element", function() {
+        $(tableElement).width("100%");
+
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 10);
+
+        equal(tableElement.style.width, "100%");
+    });
+
     test("cell width should be increased when resizing", function() {
         var differenceInPixels = 10;
 
@@ -1287,7 +1316,8 @@
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
         for (var i = 0; i < otherColumns.length; i++) {
-            equal($(otherColumns[i]).outerWidth(), columnWidths[i]);
+            //due to setting the size of the table in Chromium, works in Chrome
+            roughlyEqual($(otherColumns[i]).outerWidth(), columnWidths[i], 4);
         }
     });
 

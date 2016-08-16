@@ -218,9 +218,15 @@
                     var options = that.options;
                     var rtlModifier = options.rtl ? (-1) : 1;
                     var initialDeltaX = rtlModifier * e.x.initialDelta;
-                    var newWidth = that._calculateNewWidth(column, initialDeltaX);
-                    var initialAdjacentColumnWidth = column.next().outerWidth();
-                    var initialColumnWidth = column.outerWidth();
+                    var newWidth;
+                    var initialAdjacentColumnWidth;
+                    var initialColumnWidth;
+
+                    that._setElementComputedWidth();
+
+                    newWidth = that._calculateNewWidth(column, initialDeltaX);
+                    initialAdjacentColumnWidth = column.next().outerWidth();
+                    initialColumnWidth = column.outerWidth();
 
                     that._resizeColumn(column[0], newWidth);
                     that._resizeTopAndBottomColumns(column, newWidth);
@@ -238,6 +244,14 @@
             if (that.resizable) {
                 that.resizable.destroy();
                 that.resizable = null;
+            }
+        },
+
+        _setElementComputedWidth: function() {
+            var element = this.element;
+
+            if (!inPercentages(element.style[WIDTH])) {
+                element.style[WIDTH] = toPixels($(element).outerWidth());
             }
         },
 
