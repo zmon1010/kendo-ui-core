@@ -22,6 +22,7 @@
     var slice = Array.prototype.slice;
     var browser = kendo.support.browser;
     var romanNumeral = kendo.util.arabicToRoman;
+    var mergeSort = kendo.util.mergeSort;
 
     var KENDO_PSEUDO_ELEMENT = "KENDO-PSEUDO-ELEMENT";
 
@@ -2542,10 +2543,10 @@
                 }
             }
 
-            blocks.sort(zIndexSort).forEach(function(el){ renderElement(el, group); });
-            floats.sort(zIndexSort).forEach(function(el){ renderElement(el, group); });
-            inline.sort(zIndexSort).forEach(function(el){ renderElement(el, group); });
-            positioned.sort(zIndexSort).forEach(function(el){ renderElement(el, group); });
+            mergeSort(blocks, zIndexSort).forEach(function(el){ renderElement(el, group); });
+            mergeSort(floats, zIndexSort).forEach(function(el){ renderElement(el, group); });
+            mergeSort(inline, zIndexSort).forEach(function(el){ renderElement(el, group); });
+            mergeSort(positioned, zIndexSort).forEach(function(el){ renderElement(el, group); });
         }
     }
 
