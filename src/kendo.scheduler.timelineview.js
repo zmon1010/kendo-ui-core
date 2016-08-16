@@ -845,7 +845,7 @@ var __meta__ = { // jshint ignore:line
 
                 var collection = ranges[0].collection;
                 var slotElement = collection.slotByStartDate(currentTime);
-               
+
                 if(slotElement) {
 
                     if(this._isVerticallyGrouped()){
@@ -1182,8 +1182,8 @@ var __meta__ = { // jshint ignore:line
                 length = ((msMax - msMin) / msInterval);
             }
 
-             length = verticalByDate ? 1 : Math.round(length);
-            
+            length = verticalByDate ? 1 : Math.round(length);
+
             for (; idx < length; idx++) {
                 var majorTickDivider = idx % (msMajorInterval/msInterval);
                 var isMajorTickColumn = majorTickDivider === 0;
@@ -1236,7 +1236,7 @@ var __meta__ = { // jshint ignore:line
                     minorTicks: true
                 });
             }
-            
+
             this._forTimeRange(that.startTime(), that.endTime(), function(date, majorTick, middleColumn, lastSlotColumn, minorSlotsCount) {
                 var template = that.majorTimeHeaderTemplate;
 
@@ -1271,7 +1271,7 @@ var __meta__ = { // jshint ignore:line
                     columns =  groupedView._createColumnsLayout(resources, columns, this.groupHeaderTemplate, columns); 
                 }
             }
-            
+
             return {
                 columns: columns,
                 rows: rows
@@ -1467,7 +1467,7 @@ var __meta__ = { // jshint ignore:line
                     maxRowCount: 0,
                     events: {}
                 };
-                
+
                 eventGroups.push(eventGroup);
 
                 this._renderEvents(eventsByResource[groupIndex], groupIndex, eventGroup);
@@ -1476,7 +1476,7 @@ var __meta__ = { // jshint ignore:line
                     maxRowCount = eventGroup.maxRowCount;
                 }
             }
-            
+
             this._setRowsHeight(eventGroups, eventsByResource.length, maxRowCount);
 
             this._positionEvents(eventGroups, eventsByResource.length);
@@ -1730,9 +1730,9 @@ var __meta__ = { // jshint ignore:line
                         }
 
                         var ranges = group.slotRanges(adjustedEvent.occurrence, false);
-                        var range = ranges[0];                  
+                        var range = ranges[0];
                         var startIndex = range.start.index;
-                        var endIndex = range.end.index;                                                                          
+                        var endIndex = range.end.index;
                         if (this._isInTimeSlot(adjustedEvent.occurrence)) {
                             this._groupedView._renderEvent(eventGroup, event, adjustedEvent, group, range, container, startIndex, endIndex);
                         }
@@ -1987,7 +1987,7 @@ var __meta__ = { // jshint ignore:line
             var slot = this[method](selection.start, selection.groupIndex, false);
 
             if (slot) {
-                 selection.groupIndex += previous ? -1 : 1;
+                selection.groupIndex += previous ? -1 : 1;
             }
 
             this._groupedView._changeGroup(selection, previous, slot);
@@ -2106,7 +2106,7 @@ var __meta__ = { // jshint ignore:line
                 handled = true;
                 reverse = key === keys.UP;
 
-                groupedView._updateDirection(selection, ranges, shift, reverse);    
+                groupedView._updateDirection(selection, ranges, shift, reverse);
 
                 slots = this._verticalSlots(selection, ranges, shift, reverse);
 
@@ -2116,7 +2116,7 @@ var __meta__ = { // jshint ignore:line
             } else if (key === keys.LEFT || key === keys.RIGHT) {
                 handled = true;
                 reverse = key === keys.LEFT;
-                
+
                 this._updateDirection(selection, ranges, shift, reverse, false);
 
                 slots = this._horizontalSlots(selection, ranges, shift, reverse);               

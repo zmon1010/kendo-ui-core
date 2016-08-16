@@ -63,7 +63,7 @@
         "./kendo.upload",
         "./kendo.dialog",
         "./kendo.window",
-        "./kendo.virtuallist",      
+        "./kendo.virtuallist",
         "./kendo.scheduler.view",
         "./kendo.scheduler.dayview",
         "./kendo.scheduler.agendaview",

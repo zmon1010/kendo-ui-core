@@ -1068,7 +1068,7 @@ var __meta__ = { // jshint ignore:line
             this._cellId = kendo.guid();
             this._resourcesForGroups();
             this._selectedSlots = [];
-        },    
+        },
 
         _normalizeOptions: function() {
             var options = this.options;
@@ -1191,7 +1191,7 @@ var __meta__ = { // jshint ignore:line
                   startSlot = group[method](startSlot);
                   endSlot = group[method](endSlot);
 
-                  if (!multiple && !this._isVerticallyGrouped() && (!startSlot || !endSlot)) {                  
+                  if (!multiple && !this._isVerticallyGrouped() && (!startSlot || !endSlot)) {   
                         startSlot = endSlot = this._changeGroup(selection, reverse);
                   }
             }
