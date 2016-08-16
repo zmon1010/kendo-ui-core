@@ -165,7 +165,9 @@
         },
 
         _enableTracking: function() {
-            this._tooltip = new SurfaceTooltip(this, this.options.tooltip || {});
+            if (kendo.ui.Popup) {
+                this._tooltip = new SurfaceTooltip(this, this.options.tooltip || {});
+            }
         },
 
         _elementOffset: function() {

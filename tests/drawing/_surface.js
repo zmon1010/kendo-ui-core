@@ -250,6 +250,17 @@ function baseSurfaceEventTests(name, TSurface) {
         ok(tooltip instanceof d.SurfaceTooltip);
     });
 
+    test("does not create tooltip if kendo.ui.Popup is not available", function() {
+        var Popup = kendo.ui.Popup;
+        try {
+            kendo.ui.Popup = null;
+            createSurface();
+            ok(!surface._tooltip);
+        } finally {
+            kendo.ui.Popup = Popup;
+        }
+    });
+
     test("destroys tooltip", function() {
         var destroy = tooltip.destroy;
         tooltip.destroy = function() {
