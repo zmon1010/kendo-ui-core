@@ -71,7 +71,6 @@
         "./kendo.scheduler.recurrence",
         "./kendo.scheduler",
         "./kendo.gantt.list",
-        "./kendo.scheduler.timeline.groupedview",
         "./kendo.gantt.timeline",
         "./kendo.gantt",
         "./kendo.treelist",
