@@ -40545,13 +40545,19 @@ Template variables:</description>
         <description>Specifies the initially selected range.The full range of values is shown if no range is specified.</description>
         <name>stockChart-navigator-select</name>
         <tag-class>com.kendoui.taglib.stockchart.NavigatorSelectTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>The lower boundary of the selected range.</description>
             <name>from</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>The mousewheel configuration of the selection.If set to false the mousewheel will not update the selection.</description>
+            <name>mousewheel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>The upper boundary of the selected range.</description>
@@ -40561,6 +40567,28 @@ Template variables:</description>
         </attribute>
 
     </tag>
+
+    <tag>
+        <description>The mousewheel configuration of the selection.If set to false the mousewheel will not update the selection.</description>
+        <name>stockChart-navigator-select-mousewheel</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorSelectMousewheelTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>If set to true will reverse the mouse wheel direction. The normal direction is down for "zoom out", up for "zoom in".</description>
+            <name>reverse</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The zoom direction.The supported values are:</description>
+            <name>zoom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
 
 
     <tag>

@@ -51,12 +51,24 @@ public class NavigatorSelectTag extends  BaseTag  /* interfaces *//* interfaces 
         return "stockChart-navigator-select";
     }
 
+    public void setMousewheel(com.kendoui.taglib.stockchart.NavigatorSelectMousewheelTag value) {
+        setProperty("mousewheel", value);
+    }
+
     public java.util.Date getFrom() {
         return (java.util.Date)getProperty("from");
     }
 
     public void setFrom(java.util.Date value) {
         setProperty("from", value);
+    }
+
+    public boolean getMousewheel() {
+        return (Boolean)getProperty("mousewheel");
+    }
+
+    public void setMousewheel(boolean value) {
+        setProperty("mousewheel", value);
     }
 
     public java.util.Date getTo() {
