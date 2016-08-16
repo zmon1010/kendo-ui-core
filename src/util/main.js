@@ -328,6 +328,41 @@
         }).join("");
     }
 
+    // mergeSort is stable.
+    function mergeSort(a, cmp) {
+        if (a.length < 2) {
+            return a.slice();
+        }
+        function merge(a, b) {
+            var r = [], ai = 0, bi = 0, i = 0;
+            while (ai < a.length && bi < b.length) {
+                if (cmp(a[ai], b[bi]) <= 0) {
+                    r[i++] = a[ai++];
+                } else {
+                    r[i++] = b[bi++];
+                }
+            }
+            if (ai < a.length) {
+                r.push.apply(r, a.slice(ai));
+            }
+            if (bi < b.length) {
+                r.push.apply(r, b.slice(bi));
+            }
+            return r;
+        }
+        return (function sort(a) {
+            if (a.length <= 1) {
+                return a;
+            }
+            var m = Math.floor(a.length / 2);
+            var left = a.slice(0, m);
+            var right = a.slice(m);
+            left = sort(left);
+            right = sort(right);
+            return merge(left, right);
+        })(a);
+    }
+
     // Exports ================================================================
     deepExtend(kendo, {
         util: {
@@ -365,7 +400,8 @@
             arabicToRoman: arabicToRoman,
             memoize: memoize,
             ucs2encode: ucs2encode,
-            ucs2decode: ucs2decode
+            ucs2decode: ucs2decode,
+            mergeSort: mergeSort
         }
     });
 
