@@ -534,7 +534,7 @@
                 "<meta charset='utf-8' />" +
                 "<style>" +
                     "html,body{padding:0;margin:0;height:100%;min-height:100%;}" +
-                    "body{font-size:12px;font-family:Verdana,Geneva,sans-serif;margin-top:-1px;padding:1px .2em 0;" +
+                    "body{font-size:12px;font-family:Verdana,Geneva,sans-serif;margin-top:-1px;padding:5px;" +
                     "word-wrap: break-word;-webkit-nbsp-mode: space;-webkit-line-break: after-white-space;" +
                     (kendo.support.isRtl(textarea) ? "direction:rtl;" : "") +
                     (browser.msie || browser.edge ? "height:auto;" : "") +
