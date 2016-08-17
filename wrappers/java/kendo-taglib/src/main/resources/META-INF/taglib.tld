@@ -12689,7 +12689,7 @@ The transport option can also be used to implement custom data loading and savin
         </attribute>
         <attribute>
             <description>The function which converts the request parameters to a format suitable for the remote service. By default
-the data source sends the parameters using jQuery's conventions.</description>
+the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.</description>
             <name>parameterMap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12974,7 +12974,7 @@ sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation f
 
     <tag>
         <description>The function which converts the request parameters to a format suitable for the remote service. By default
-the data source sends the parameters using jQuery's conventions.</description>
+the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.</description>
         <name>dataSource-transport-parameterMap</name>
         <tag-class>com.kendoui.taglib.datasource.TransportParameterMapFunctionTag</tag-class>
         <body-content>JSP</body-content>
