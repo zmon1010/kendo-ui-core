@@ -1241,6 +1241,7 @@
     <Content Include="Views\demos\mediaplayer\playlist.cshtml" />
     <Content Include="Views\demos\mediaplayer\api.cshtml" />
     <Content Include="Views\demos\mediaplayer\events.cshtml" />
+    <Content Include="Views\demos\upload\customdropzone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
