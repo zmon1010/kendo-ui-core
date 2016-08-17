@@ -9,7 +9,6 @@
     var initialWidthInPixels;
     var rows;
     var tableElement;
-    var tableWidth;
     var wrapper;
     var FIXTURE_SELECTOR = "#qunit-fixture";
     var HANDLE_SELECTOR = ".k-column-resize-handle";
