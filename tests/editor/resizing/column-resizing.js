@@ -1222,15 +1222,15 @@
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 10);
 
-        equal(tableElement.style.width, width +PX);
+        equal(tableElement.style.width, width + PX);
     });
 
     test("should not set computed style width in percentages to its element", function() {
-        $(tableElement).width("100%");
+        tableElement.style.width = "50%";
 
-        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 10);
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 20);
 
-        equal(tableElement.style.width, "100%");
+        equal(tableElement.style.width, "50%");
     });
 
     test("cell width should be increased when resizing", function() {
@@ -1320,8 +1320,8 @@
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
 
         for (var i = 0; i < otherColumns.length; i++) {
-            //due to setting the size of the table in Chromium, works in Chrome
-            roughlyEqual($(otherColumns[i]).outerWidth(), columnWidths[i], 4);
+            //due to setting the size of the table in Chromium and Firefox, works in Chrome
+            roughlyEqual($(otherColumns[i]).outerWidth(), columnWidths[i], 5);
         }
     });
 
