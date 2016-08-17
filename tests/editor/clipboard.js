@@ -7,6 +7,7 @@ editor_module("editor clipboard", {
        editor = $("#editor-fixture").data("kendoEditor");
    },
    teardown: function() {
+       editor.options.pasteCleanup.custom = null;
        kendo.destroy(QUnit.fixture);
    }
 });
@@ -170,6 +171,15 @@ test("paste places selection after table", function() {
 
     equal(editor.value(), '<table><tbody><tr><td>foo</td></tr></tbody></table><a></a>');
 });
+
+    test("paste with options.skipCleaners skips cleaners", function() {
+        var cleaner = initMock(function(e) { return e; });
+        editor.options.pasteCleanup.custom = cleaner;
+
+        editor.clipboard.paste("foo", { skipCleaners: true });
+
+        ok(!cleaner.called);
+    });
 
 if ('FileReader' in window) {
 

@@ -14,6 +14,8 @@ editor_module("editor table command", {
     },
     teardown: function() {
         $(".k-window,.k-overlay").remove();
+        editor.options.pasteCleanup.keepNewLines = false;
+        editor.options.pasteCleanup.all = false;
     }
 });
 
@@ -36,6 +38,12 @@ test("exec createTable creates table at cursor", function() {
 
     equal(stripColumnAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
 });
+
+    test("table command should skip cleaners", function() {
+        var cmd = new TableCommand({ range: createRangeFromText(editor, "foo||") });
+        ok(cmd.options.skipCleaners);
+
+    });
 
 test("exec createTable creates table with given rows", function() {
     editor.value("foo");
@@ -151,6 +159,15 @@ test("creates 3 columns with width roughly equal to 33.3%", function() {
         roughlyEqual("33.3333%", columns[i].style.width, 0.01);
     }
 });
+
+    test("create table despite pasteCleanup.all or pasteCleanup.keepNewLines", function() {
+        range = createRangeFromText(editor, 'foo||');
+
+        editor.options.pasteCleanup.keepNewLines = true;
+        execTableCommand({ range:range });
+
+        equal(stripColumnAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
+    });
 
 editor_module("editor with immutables true table command", {
     setup: function() {
