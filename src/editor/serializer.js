@@ -498,7 +498,7 @@ var Serializer = {
                 tagName, mapper,
                 parent, value, previous;
 
-            if ($(node).hasClass("k-table-resize-handle")) {
+            if ($(node).hasClass("k-table-resize-handle") || $(node).hasClass("k-column-resize-handle")) {
                 return;
             }
 
