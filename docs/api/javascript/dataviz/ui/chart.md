@@ -249,7 +249,7 @@ The rotation angle of the labels. By default the labels are not rotated. Can be 
 
 ### axisDefaults.labels.skip `Number` *(default: 0)*
 
-The number of labels to skip. By default no labels are skipped.
+The number of labels to skip at the beginning. By default no labels are skipped.
 
 ### axisDefaults.labels.step `Number` *(default: 1)*
 
@@ -668,35 +668,35 @@ This will continue until the number of intervals is less than
 
 ### categoryAxis.autoBaseUnitSteps.milliseconds `Array` *(default: [1, 100, 100])*
 
-The milliseconds unit steps.
+The preferred interval steps when displaying milliseconds.
 
 ### categoryAxis.autoBaseUnitSteps.seconds `Array` *(default: [1, 2, 5, 15, 30])*
 
-The seconds unit steps.
+The preferred interval steps when displaying seconds.
 
 ### categoryAxis.autoBaseUnitSteps.minutes `Array` *(default: [1, 2, 5, 15, 30])*
 
-The minutes unit steps.
+The preferred interval steps when displaying minutes.
 
 ### categoryAxis.autoBaseUnitSteps.hours `Array` *(default: [1, 2, 3])*
 
-The hours unit steps.
+The preferred interval steps when displaying hours.
 
 ### categoryAxis.autoBaseUnitSteps.days `Array` *(default: [1, 2, 3])*
 
-The days unit steps.
+The preferred interval steps when displaying days.
 
 ### categoryAxis.autoBaseUnitSteps.weeks `Array` *(default: [1, 2])*
 
-The weeks unit steps.
+The preferred interval steps when displaying weeks.
 
 ### categoryAxis.autoBaseUnitSteps.months `Array` *(default: [1, 2, 3, 6])*
 
-The months unit steps.
+The preferred interval steps when displaying months.
 
 ### categoryAxis.autoBaseUnitSteps.years `Array` *(default: [1, 2, 3, 5, 10, 25, 50])*
 
-The years unit steps.
+The preferred interval steps when displaying years.
 
 #### Example
 
@@ -706,7 +706,7 @@ Category index at which the first value axis crosses this axis (when set as an o
 
 Category indices at which the value axes cross the category axis (when set as an array).
 
-> set an index greater than or equal to the number of categories to denote the far end of the axis.
+> Set an index greater than or equal to the number of categories to denote the far end of the axis.
 
 #### Example - set the category axis crossing values
 
@@ -2326,7 +2326,7 @@ The rotation angle of the labels. By default the labels are not rotated. Can be 
 
 ### categoryAxis.labels.skip `Number` *(default: 0)*
 
-The number of labels to skip. By default no labels are skipped.
+The number of labels to skip at the beginning. By default no labels are skipped.
 
 #### Example - skip category axis labels
 
@@ -2478,7 +2478,8 @@ A function that can be used to create a custom visual for the labels. The availa
 
 ### categoryAxis.line `Object`
 
-The configuration of the axis lines. Also affects the major and minor ticks, but not the grid lines.
+Appearance settings for the axis lines.
+Also affects the major and minor ticks, but not the grid lines.
 
 #### Example - configure the category axis line
 
@@ -2588,7 +2589,8 @@ The following dash types are supported:
 
 ### categoryAxis.line.visible `Boolean` *(default: true)*
 
-If set to `true` the chart will display the category axis lines. By default the category axis lines are visible.
+If set to `true` the chart will display the category axis lines.
+By default the category axis lines are visible.
 
 #### Example - hide the category axis lines
 
@@ -2609,7 +2611,8 @@ If set to `true` the chart will display the category axis lines. By default the 
 
 ### categoryAxis.line.width `Number` *(default: 1)*
 
-The width of the line in pixels. Also affects the major and minor ticks, but not the grid lines.
+The width of the line in pixels.
+Also affects the major and minor ticks, but not the grid lines.
 
 #### Example - set the category axis line width
 
@@ -9803,7 +9806,7 @@ The color of the connector. Accepts a valid CSS color string, including hex and 
 
 ### series.connectors.padding `Number` *(default: 4)*
 
-The padding between the connector line and the label, and connector line and donut chart.
+The distance between the connector line and the main chart.
 
 #### Example - configure the label connector padding
     <div id="chart"></div>
@@ -9824,7 +9827,7 @@ The padding between the connector line and the label, and connector line and don
 
 ### series.connectors.width `Number` *(default: 1)*
 
-The width of the connector line.
+The width of the connector line in pixels.
 
 #### Example - configure the label connector width
     <div id="chart"></div>
@@ -12168,7 +12171,7 @@ The line opacity. By default the line is opaque.
     });
     </script>
 
-### series.line.width `String` *(default: 4)*
+### series.line.width `String` *(default: 0)*
 
 The line width in pixels.
 
@@ -13177,7 +13180,7 @@ The color to use for bar, column or waterfall series with negative values. Accep
 
 ### series.negativeValues `Object`
 
-The options for displaying the chart negative bubble values.
+Appearance settings for negative values in "bubble" series.
 
 #### Example - set the chart negative bubbles
 
@@ -13442,7 +13445,7 @@ The type of stack to plot. The following types are supported:
 
 ### series.stack.group `String`
 
-Indicates that the series should be stacked in a group with the specified name.
+Optional stack group name.
 
 > The `group` option is supported when [series.type](#configuration-series.type) is set to "bar" or "column".
 
@@ -19698,7 +19701,7 @@ The rotation angle of the labels. By default the labels are not rotated. Can be 
 
 ### valueAxis.labels.skip `Number` *(default: 0)*
 
-The number of labels to skip. By default no labels are skipped.
+The number of labels to skip at the beginning. By default no labels are skipped.
 
 #### Example - skip value axis labels
 
@@ -24433,7 +24436,7 @@ The rotation angle of the labels. By default the labels are not rotated. Can be 
 
 ### xAxis.labels.skip `Number` *(default: 1)*
 
-The number of labels to skip.
+The number of labels to skip at the beginning.
 
 #### Example - skip  scatter chart x axis labels
     <div id="chart"></div>
@@ -29176,7 +29179,7 @@ The rotation angle of the labels. By default the labels are not rotated.
 
 ### yAxis.labels.skip `Number` *(default: 1)*
 
-The number of labels to skip.
+The number of labels to skip at the beginning.
 
 #### Example - skip  scatter chart y axis labels
     <div id="chart"></div>
