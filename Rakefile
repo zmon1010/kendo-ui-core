@@ -72,7 +72,7 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/',
     'wrappers/aspnetmvc/Binaries/Mvc4' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Binaries/Mvc5' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/',
-    'wrappers/aspnetmvc/Binaries/Mvc6' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
+    'wrappers/aspnetmvc/Binaries/AspNet.Core' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
     'spreadsheet/' => 'dpl/',
@@ -174,11 +174,11 @@ MVC_BINARIES = {
 }
 
 MVC_CORE_BINARIES_COMMERCIAL = {
-    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST_COMMERCIAL
+    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_COMMERCIAL
 }
 
 MVC_CORE_BINARIES_TRIAL = {
-    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST_TRIAL
+    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_TRIAL
 }
 
 MVC_CONTENT = {
@@ -208,13 +208,13 @@ MVC_CONTENT = {
 end
 
 ROOT_MAP.merge!( {
-    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
-    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
+    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
+    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
 } )
 
 MVC_CONTENT.merge!( {
-    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples" => MVC_6_DEMOS,
-    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
+    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples" => MVC_6_DEMOS,
+    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
 } )
 
 JSP_CONTENT = {
