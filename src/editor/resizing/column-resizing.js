@@ -20,7 +20,6 @@
     var getElementWidth = ResizingUtils.getElementWidth;
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
     var inPercentages = ResizingUtils.inPercentages;
-    var inPixels = ResizingUtils.inPixels;
     var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
     var setContentEditable = ResizingUtils.setContentEditable;
@@ -341,7 +340,6 @@
             var initialColumnWidthInPercentages = calculatePercentageRatio(initialColumnWidth, tableWidth);
             var adjacentColumnWidth;
             var newWidth;
-            var initialWidth;
             var columnWidth;
 
             if (inPercentages(getElementWidth(adjacentColumn))) {
