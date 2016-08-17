@@ -506,3 +506,20 @@ table.k-editor
         cursor: w-resize;
     }
 }
+
+.k-editor-inline .k-column-resize-handle {
+    position:absolute;
+    height: 14px;
+    width:10px;
+    cursor:col-resize;
+    z-index:2;
+
+    .k-column-resize-hint-marker {
+        width:2px;
+        height:100%;
+        margin:0 auto;
+        background-color:#00b0ff;
+        display:none;
+        opacity:0.8;
+    }
+}
