@@ -12,8 +12,8 @@
     var tableWidth;
     var wrapper;
     var FIXTURE_SELECTOR = "#qunit-fixture";
-    var HANDLE_SELECTOR = ".k-resize-handle";
-    var MARKER_SELECTOR = ".k-resize-hint-marker";
+    var HANDLE_SELECTOR = ".k-column-resize-handle";
+    var MARKER_SELECTOR = ".k-column-resize-hint-marker";
     var FIRST_COLUMN = "td:first";
     var SECOND_COLUMN = "tr:first td:nth-child(2)";
     var LAST_COLUMN = "tr:first td:last";
@@ -182,7 +182,7 @@
         triggerBorderHover(element, options);
 
         var doc = $(element[0].ownerDocument.documentElement);
-        var resizeHandle = element.find(HANDLE_SELECTOR);
+        var resizeHandle = $(QUnit.fixture).find(HANDLE_SELECTOR);
         var position = resizeHandle.position();
         var from = from || 0;
         var to = to || 0;
@@ -196,7 +196,7 @@
     }
 
     function triggerResizeStart(element, from, to) {
-        var resizeHandle = element.find(HANDLE_SELECTOR);
+        var resizeHandle = $(QUnit.fixture).find(HANDLE_SELECTOR);
         var position = resizeHandle.position();
         var from = from || 0;
         var to = to || 0;
@@ -277,8 +277,8 @@
             handle: {
                 width: 10,
                 template:
-                    '<div class="k-resize-handle">' +
-                        '<div class="k-resize-hint-marker"></div>' +
+                    '<div class="k-column-resize-handle">' +
+                        '<div class="k-column-resize-hint-marker"></div>' +
                     '</div>'
             }
         };
@@ -319,7 +319,9 @@
     module("editor column resizing resize handle", {
         setup: function() {
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
             options = columnResizing.options;
         },
 
@@ -333,7 +335,7 @@
 
         triggerBorderHover(cell);
 
-        equal(cell.children(HANDLE_SELECTOR).length, 1);
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
 
     test("hovering the border of the first cell multiple times should append only one resize handle", function() {
@@ -343,7 +345,7 @@
         triggerBorderHover(cell);
         triggerBorderHover(cell);
 
-        equal(cell.children(HANDLE_SELECTOR).length, 1);
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
 
     test("hovering the last cell should not create resize handle", function() {
@@ -351,7 +353,7 @@
 
         triggerBorderHover(cell);
 
-        equal(cell.children(HANDLE_SELECTOR).length, 0);
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
     });
 
     test("resize handle should be stored as a reference", function() {
@@ -359,7 +361,7 @@
 
         triggerBorderHover(cell);
 
-        equal(cell.children(HANDLE_SELECTOR)[0], columnResizing.resizeHandle[0]);
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR)[0], columnResizing.resizeHandle[0]);
     });
 
     test("resize handle left offset should be set", function() {
@@ -432,7 +434,7 @@
 
         triggerEvent(cell, { type: MOUSE_MOVE, pageX: MAX });
 
-        equal(cell.find(HANDLE_SELECTOR).length, 0);
+        equal($(columnResizing.options.rootElement).find(HANDLE_SELECTOR).length, 0);
     });
 
     test("resize handle should store data about resizing cell", function() {
@@ -461,17 +463,17 @@
 
         triggerBorderHover(secondCell);
 
-        equal(cell.find(HANDLE_SELECTOR).length, 0);
+        equal($(columnResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
     });
 
-    test("resize handle should be appended to the column when resizing a different column", function() {
+    test("resize handle should be re-created when hovering a different column", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         triggerBorderHover(cell);
         var secondCell = $(columnResizing.element).find("tr:first td:nth-child(2)");
 
         triggerBorderHover(secondCell);
 
-        equal(secondCell.find(HANDLE_SELECTOR).length, 1);
+        equal($(columnResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
     });
 
     test("resize handle should be removed from the column on resize end", function() {
@@ -481,7 +483,7 @@
 
         resizeColumn(cell, initialWidth, initialWidth + 10);
 
-        equal(cell.children(HANDLE_SELECTOR).length, 0);
+        equal($(columnResizing.options.rootElement).find(HANDLE_SELECTOR).length, 0);
     });
 
     test("resize handle reference should be removed on resize end", function() {
@@ -496,7 +498,9 @@
     module("editor column resizing existing resize handle", {
         setup: function() {
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
         },
 
         teardown: function() {
@@ -547,7 +551,9 @@
     module("editor column resizing resize hint marker", {
         setup: function() {
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
         },
 
         teardown: function() {
@@ -560,7 +566,7 @@
 
         triggerBorderHover(cell);
 
-        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
     });
 
     test("should be visible on resize start", function() {
@@ -570,7 +576,7 @@
 
         triggerResizeStart(cell, initialWidth, initialWidth + 10);
 
-        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should be visible while resizing", function() {
@@ -579,7 +585,7 @@
 
         triggerResize(cell, initialWidth, initialWidth + 10);
 
-        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should be visible on resize handle mouse down", function() {
@@ -588,7 +594,7 @@
 
         triggerEvent(columnResizing.resizeHandle, { type: MOUSE_DOWN });
 
-        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should not be visible on resize handle mouse up", function() {
@@ -597,7 +603,7 @@
 
         triggerEvent(columnResizing.resizeHandle, { type: MOUSE_UP });
 
-        equal(cell.children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
     });
 
     editor_module("editor column resizing", {
@@ -605,6 +611,10 @@
             editor = $("#editor-fixture").data("kendoEditor");
             editor.tableResizing = null;
             $(editor.body).append($(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS)[0]);
+            tableElement = $(editor.body).find("#table")[0];
+            columnResizing = editor.columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
         },
 
         afterEach: function() {
@@ -618,30 +628,28 @@
     });
 
     test("moving out of a table should not remove column resize handle", function() {
-        var table = $(editor.body).find("#table")[0];
-        var columnResizing = editor.columnResizing = new ColumnResizing(table, {});
         triggerBorderHover($(columnResizing.element).find(FIRST_COLUMN));
 
-        triggerEvent(table, { type: MOUSE_LEAVE });
+        triggerEvent(tableElement, { type: MOUSE_LEAVE });
 
-        equal($(columnResizing.element).find(HANDLE_SELECTOR).length, 1);
+        equal($(columnResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
     });
 
     test("hovering a scrolled editor document should create resize handle", function() {
-        var table = $(editor.body).find("#table")[0];
-        var columnResizing = editor.columnResizing = new ColumnResizing(table, {});
-        $(table).width($(editor.document).width() + 100);
+        $(tableElement).width($(editor.document).width() + 100);
         $(editor.document).scrollLeft(20);
 
-        triggerBorderHover($(table).find(SECOND_COLUMN)[0]);
+        triggerBorderHover($(tableElement).find(SECOND_COLUMN)[0]);
 
-        equal($(columnResizing.element).find(SECOND_COLUMN).children(HANDLE_SELECTOR).length, 1);
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
 
     module("editor column resizing destroy", {
         setup: function() {
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
         },
 
         teardown: function() {
@@ -666,7 +674,7 @@
 
         columnResizing.destroy();
 
-        equal($(columnResizing.element).find(HANDLE_SELECTOR).length, 0);
+        equal($(columnResizing.options.rootElement).find(HANDLE_SELECTOR).length, 0);
     });
 
     test("should call resizable destroy", function() {
@@ -690,7 +698,9 @@
         setup: function() {
             wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
-            columnResizing = new ColumnResizing(tableElement[0], { rootElement: wrapper });
+            columnResizing = new ColumnResizing(tableElement[0], {
+                rootElement: wrapper
+            });
         },
 
         teardown: function() {
@@ -777,7 +787,9 @@
         setup: function() {
             fixture = $(FIXTURE_SELECTOR);
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
         },
 
         teardown: function() {
@@ -794,14 +806,6 @@
         triggerBorderHover(cell);
 
         ok(cell.data("kendoResizable") instanceof kendo.ui.Resizable);
-    });
-
-    test("hovering a cell should initialize resizable with handle selector", function() {
-        var cell = $(columnResizing.element).find(FIRST_COLUMN);
-
-        triggerBorderHover(cell);
-
-        ok(cell.data("kendoResizable").options.handle === HANDLE_SELECTOR);
     });
 
     test("hovering a second cell should destroy the resizable of the initial cell", function() {
@@ -824,21 +828,13 @@
         ok(secondCell.data("kendoResizable") instanceof kendo.ui.Resizable);
     });
 
-    test("hovering a second cell should initialize resizable with handle selector", function() {
-        var cell = $(columnResizing.element).find(FIRST_COLUMN);
-        triggerBorderHover(cell);
-        var secondCell = $(columnResizing.element).find("tr:first td:nth-child(2)");
-
-        triggerBorderHover(secondCell);
-
-        ok(secondCell.data("kendoResizable").options.handle === HANDLE_SELECTOR);
-    });
-
     module("editor column resizing in pixels", {
         setup: function() {
             fixture = $(FIXTURE_SELECTOR);
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
             options = columnResizing.options;
             cell = $(columnResizing.element).find(FIRST_COLUMN);
             cellIndex = cell.index();
@@ -953,7 +949,9 @@
     module("editor column resizing resizingInProgress", {
         setup: function() {
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
         },
 
         teardown: function() {
@@ -992,7 +990,9 @@
     module("editor column resizing in percentages", {
         setup: function() {
             tableElement = $(TABLE_WITH_COLUMNS_IN_PERCENTAGES).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
             options = columnResizing.options;
             cell = $(columnResizing.element).find(SECOND_COLUMN);
             cellIndex = cell.index();
@@ -1120,7 +1120,9 @@
     module("editor column resizing in mixed units", {
         setup: function() {
             tableElement = $(TABLE_WITH_COLUMNS_IN_PIXELS_AND_PERCENTAGES).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
             options = columnResizing.options;
             rows = $(columnResizing.element).find(ROW);
             cell = $(columnResizing.element).find(SECOND_COLUMN);
@@ -1189,7 +1191,9 @@
     module("editor column resizing without explicit dimensions", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            columnResizing = new ColumnResizing(tableElement, {});
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
             options = columnResizing.options;
             cell = $(columnResizing.element).find(FIRST_COLUMN);
             cellIndex = cell.index();
@@ -1325,7 +1329,10 @@
         setup: function() {
             var wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
-            columnResizing = new ColumnResizing(tableElement[0], { rtl: true });
+            columnResizing = new ColumnResizing(tableElement[0], {
+                rtl: true,
+                rootElement: QUnit.fixture
+            });
             options = columnResizing.options;
         },
 
@@ -1340,7 +1347,7 @@
 
         triggerBorderHover(cell, { rtl: true });
 
-        equal(cell.children(HANDLE_SELECTOR).length, 1);
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
 
     test("hovering the border of the last cell should not create resize handle", function() {
@@ -1348,14 +1355,17 @@
 
         triggerBorderHover(cell, { rtl: true });
 
-        equal(cell.children(HANDLE_SELECTOR).length, 0);
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
     });
 
     module("editor column resizing rtl", {
         setup: function() {
             wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
-            columnResizing = new ColumnResizing(tableElement[0], { rtl: true });
+            columnResizing = new ColumnResizing(tableElement[0], {
+                rtl: true,
+                rootElement: QUnit.fixture
+            });
             options = columnResizing.options;
         },
 
@@ -1425,7 +1435,10 @@
         setup: function() {
             var wrapper = $("<div id='wrapper' class='k-rtl' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
-            columnResizing = new ColumnResizing(tableElement[0], { rtl: true });
+            columnResizing = new ColumnResizing(tableElement[0], {
+                rtl: true,
+                rootElement: QUnit.fixture
+            });
             options = columnResizing.options;
             cell = $(columnResizing.element).find(FIRST_COLUMN);
             initialWidthInPixels = cell.outerWidth()

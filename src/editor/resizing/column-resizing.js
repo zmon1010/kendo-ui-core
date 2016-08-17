@@ -25,11 +25,12 @@
     var setContentEditable = ResizingUtils.setContentEditable;
 
     var NS = ".kendoEditorColumnResizing";
-    var RESIZE_HANDLE_CLASS = ".k-resize-handle";
-    var RESIZE_HINT_MARKER_CLASS = ".k-resize-hint-marker";
+    var RESIZE_HANDLE_CLASS = "k-column-resize-handle";
+    var RESIZE_HINT_MARKER_CLASS = "k-column-resize-hint-marker";
 
     var COLUMN = "column";
     var COMMA = ",";
+    var DOT = ".";
     var LAST_CHILD = ":last-child";
     var MOUSE_DOWN = "mousedown";
     var MOUSE_MOVE = "mousemove";
@@ -81,8 +82,8 @@
             handle: {
                 width: 10,
                 template:
-                    '<div class="k-resize-handle">' +
-                        '<div class="k-resize-hint-marker"></div>' +
+                    '<div class="' + RESIZE_HANDLE_CLASS + '">' +
+                        '<div class="' + RESIZE_HINT_MARKER_CLASS + '"></div>' +
                     '</div>'
             }
         },
@@ -154,24 +155,26 @@
             var handleWidth = handleOptions.width;
 
             if (!that.resizeHandle) {
-                that.resizeHandle = $(handleOptions.template).appendTo(column);
+                that.resizeHandle = $(handleOptions.template).appendTo(options.rootElement);
             }
 
             that.resizeHandle.css({
                 top: tableBody.position().top,
                 left: column.offset().left + (options.rtl ? 0 : column.outerWidth()) - (handleWidth / 2),
                 width: handleWidth,
-                height: tableBody.height()
+                height: tableBody.height(),
+                position: "absolute"
             })
             .data(COLUMN, column[0])
             .show()
             .on(MOUSE_DOWN + NS, function() {
-                $(this).children(RESIZE_HINT_MARKER_CLASS).show();
+                $(this).children(DOT + RESIZE_HINT_MARKER_CLASS).show();
             })
             .on(MOUSE_UP +NS, function() {
-                $(this).children(RESIZE_HINT_MARKER_CLASS).hide();
-            })
-            .children(RESIZE_HINT_MARKER_CLASS).hide();
+                $(this).children(DOT + RESIZE_HINT_MARKER_CLASS).hide();
+            });
+
+            that.resizeHandle.children(DOT + RESIZE_HINT_MARKER_CLASS).hide();
         },
 
         _destroyResizeHandle: function() {
@@ -189,7 +192,7 @@
             that._destroyResizable();
 
             that.resizable = $(column).kendoResizable({
-                handle: RESIZE_HANDLE_CLASS,
+                draggableElement: that.resizeHandle[0],
                 resize: function(e) {
                     var resizable = this;
                     var column = $(resizable.element);
