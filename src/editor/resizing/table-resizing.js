@@ -24,11 +24,12 @@
     var toPixels = ResizingUtils.toPixels;
     var setContentEditable = ResizingUtils.setContentEditable;
 
+    var K_TABLE = "k-table";
+    var K_TABLE_RESIZING = "k-table-resizing";
+
     var DRAG_START = "dragStart";
     var DRAG = "drag";
     var DRAG_END = "dragEnd";
-
-    var K_TABLE = "k-table";
     var NS = ".kendoEditorTableResizing";
     var MIN = "min";
     var MOUSE_OVER = "mouseover";
@@ -291,15 +292,11 @@
         },
 
         _onResizeHandleDragStart: function() {
-            $(this.element).css({
-                opacity: 0.6
-            });
+            $(this.element).addClass(K_TABLE_RESIZING);
         },
 
         _onResizeHandleDragEnd: function() {
-            $(this.element).css({
-                opacity: 1
-            });
+            $(this.element).removeClass(K_TABLE_RESIZING);
         }
     });
 

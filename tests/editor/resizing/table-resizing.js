@@ -638,7 +638,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         triggerEvent(tableResizing.handles[0].element, { type: MOUSE_DOWN });
         triggerEvent(tableResizing.handles[0].element, { type: MOUSE_MOVE });
 
-        equal(tableResizing.element.style.opacity, "0.6");
+        equal($(tableResizing.element).hasClass("k-table-resizing"), true);
     });
 
     test("should change opacity on handle dragEnd", function() {
@@ -648,7 +648,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         triggerEvent(tableResizing.handles[0].element, { type: MOUSE_MOVE });
         triggerEvent(tableResizing.handles[0].element, { type: MOUSE_UP });
 
-        equal(tableResizing.element.style.opacity, "1");
+        equal($(tableResizing.element).hasClass("k-table-resizing"), false);
     });
 
     module("editor table resizing resize width in pixels", {
