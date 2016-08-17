@@ -14,7 +14,9 @@
     var Observable = kendo.Observable;
 
     var AND = "and";
+    var DRAG_START = "dragStart";
     var DRAG = "drag";
+    var DRAG_END = "dragEnd";
     var NS = ".kendoEditorTableResizeHandle";
     var HALF_INSIDE = "halfInside";
     var MOUSE_OVER = "mouseover";
@@ -60,6 +62,8 @@
             that.element = null;
             
             that._destroyDraggable();
+
+            that.unbind();
         },
 
         options: {
@@ -70,7 +74,9 @@
         },
 
         events: [
+            DRAG_START,
             DRAG,
+            DRAG_END,
             MOUSE_OVER,
             MOUSE_OUT
         ],
@@ -147,13 +153,27 @@
             }
 
             that._draggable = new Draggable(element, {
-                drag: function(e) {
-                    that.trigger(DRAG, that._draggingStrategy.adjustDragDelta({
-                        deltaX: e.x.delta,
-                        deltaY: e.y.delta
-                    }));
-                }
+                dragstart: proxy(that._onDragStart, that),
+                drag: proxy(that._onDrag, that),
+                dragend: proxy(that._onDragEnd, that)
             });
+        },
+
+        _onDragStart: function() {
+            this.trigger(DRAG_START);
+        },
+
+        _onDrag: function(e) {
+            var that = this;
+
+            that.trigger(DRAG, that._draggingStrategy.adjustDragDelta({
+                deltaX: e.x.delta,
+                deltaY: e.y.delta
+            }));
+        },
+
+        _onDragEnd: function() {
+            this.trigger(DRAG_END);
         },
 
         _destroyDraggable : function() {

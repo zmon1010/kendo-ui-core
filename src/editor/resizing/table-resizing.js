@@ -24,7 +24,10 @@
     var toPixels = ResizingUtils.toPixels;
     var setContentEditable = ResizingUtils.setContentEditable;
 
+    var DRAG_START = "dragStart";
     var DRAG = "drag";
+    var DRAG_END = "dragEnd";
+
     var K_TABLE = "k-table";
     var NS = ".kendoEditorTableResizing";
     var MIN = "min";
@@ -271,7 +274,9 @@
 
             for (i = 0; i < length; i++) {
                 handle = handles[i];
+                handle.bind(DRAG_START, proxy(that._onResizeHandleDragStart, that));
                 handle.bind(DRAG, proxy(that.resize, that));
+                handle.bind(DRAG_END, proxy(that._onResizeHandleDragEnd, that));
                 handle.bind(MOUSE_OVER, proxy(that._onResizeHandleMouseOver, that));
                 handle.bind(MOUSE_OUT, proxy(that._onResizeHandleMouseOut, that));
             }
@@ -283,6 +288,18 @@
 
         _onResizeHandleMouseOut: function() {
             setContentEditable(this.options.rootElement, TRUE);
+        },
+
+        _onResizeHandleDragStart: function() {
+            $(this.element).css({
+                opacity: 0.6
+            });
+        },
+
+        _onResizeHandleDragEnd: function() {
+            $(this.element).css({
+                opacity: 1
+            });
         }
     });
 

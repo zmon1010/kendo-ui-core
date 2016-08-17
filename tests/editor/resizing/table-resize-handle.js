@@ -95,6 +95,8 @@
             pageX: position.left + deltaX,
             pageY: position.top + deltaY,
         }));
+
+        triggerDragEnd(element, deltaX, deltaY);
     }
 
     function triggerDragStart(element, options) {
@@ -104,6 +106,18 @@
         var deltaY = options.deltaY || 0;
 
         resizeHandle.trigger($.Event(MOUSE_DOWN, {
+            pageX: position.left + deltaX,
+            pageY: position.top + deltaY
+        }));
+    }
+
+    function triggerDragEnd(element, options) {
+        var resizeHandle = $(element);
+        var position = resizeHandle.position();
+        var deltaX = options.deltaX || 0;
+        var deltaY = options.deltaY || 0;
+
+        resizeHandle.trigger($.Event(MOUSE_UP, {
             pageX: position.left + deltaX,
             pageY: position.top + deltaY
         }));
@@ -482,9 +496,31 @@
         }
     });
 
+    test("should fire dragStart event", function() {
+        var eventFired = false;
+        handle.bind("dragStart", function(e) {
+            eventFired = true;
+        });
+
+        triggerDrag(handle.element, { deltaX: 10 });
+
+        equal(eventFired, true);
+    });
+
     test("should fire drag event", function() {
         var eventFired = false;
         handle.bind("drag", function(e) {
+            eventFired = true;
+        });
+
+        triggerDrag(handle.element, { deltaX: 10 });
+
+        equal(eventFired, true);
+    });
+
+    test("should fire dragEnd event", function() {
+        var eventFired = false;
+        handle.bind("dragEnd", function(e) {
             eventFired = true;
         });
 

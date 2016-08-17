@@ -15,6 +15,7 @@
     var MOUSE_DOWN = "mousedown";
     var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
+    var MOUSE_UP = "mouseup";
     var PERCENTAGE = "%";
     var RTL_MODIFIER = -1;
     var PX = "px";
@@ -629,6 +630,25 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         triggerEvent(tableResizing.handles[0].element, { type: "mouseout" });
 
         equal($(tableResizing.options.rootElement).attr(CONTENT_EDITABLE), "true");
+    });
+
+    test("should change opacity on handle dragStart", function() {
+        tableResizing.showResizeHandles();
+
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_DOWN });
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_MOVE });
+
+        equal(tableResizing.element.style.opacity, "0.6");
+    });
+
+    test("should change opacity on handle dragEnd", function() {
+        tableResizing.showResizeHandles();
+
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_DOWN });
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_MOVE });
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_UP });
+
+        equal(tableResizing.element.style.opacity, "1");
     });
 
     module("editor table resizing resize width in pixels", {
