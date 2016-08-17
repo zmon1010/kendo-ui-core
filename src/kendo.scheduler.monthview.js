@@ -835,7 +835,7 @@ var __meta__ = { // jshint ignore:line
                 html += groupedView._getContent(content, startDate, resources, cellIdx);
                 html += "</td>";
 
-                that._slotIndices[getDate(startDate).getTime()] = startIdx + cellIdx;            
+                that._slotIndices[getDate(startDate).getTime()] = startIdx + cellIdx;
 
                startDate = groupedView._nextSlotStartDate(startDate);
             }

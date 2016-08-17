@@ -1194,7 +1194,7 @@ var __meta__ = { // jshint ignore:line
             } else {
                   horizontalRange.startSlot = group[method](horizontalRange.startSlot);
                   horizontalRange.endSlot = group[method](horizontalRange.endSlot);
-              
+
                   if (!multiple && !isVertical && (!horizontalRange.startSlot || !horizontalRange.endSlot)) {   
                         horizontalRange.startSlot = horizontalRange.endSlot = this._changeGroup(selection, reverse);
                   }
