@@ -788,6 +788,11 @@ namespace :build do
 
         zip_bundles.push(zip_demos)
 
+        zip_mvc_demos = "#{ARCHIVE_ROOT}/#{destination}/online-mvc-examples.zip"
+        file_copy :to => zip_mvc_demos,
+                  :from => "dist/demos/mvc.zip"
+        zip_bundles.push(zip_mvc_demos)
+
         db_root = "#{ARCHIVE_ROOT}/#{destination}/download-builder"
         db_version = "#{VERSION}".sub(/((\w+|\.){6})\./, '\1 ')
 
@@ -905,6 +910,7 @@ namespace :build do
             'bundles:all',
             'nuget:default',
             'demos:production',
+            'demos:production_mvc',
             'download_builder:bundle',
             zip_targets("Production"),
             nuget_targets("Production"),

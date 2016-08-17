@@ -218,6 +218,15 @@ PRODUCTION_RESOURCES = FileList['demos/mvc/**/*']
             .include('demos/mvc/bin/Kendo.dll')
             .include(FileList[SPREADSHEET_REDIST_NET40].pathmap("demos/mvc/bin/%f"))
 
+PRODUCTION_MVC_RESOURCES = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/**/*']
+            .exclude('wrappers/mvc/demos/Kendo.Mvc.Examples/Web.config')
+            .exclude('**/obj/**/*')
+            .exclude('wrappers/mvc/demos/Kendo.Mvc.Examples/Controllers/*.cs')
+            .exclude('wrappers/mvc/demos/Kendo.Mvc.Examples/Extensions/**/*')
+            .exclude('wrappers/mvc/demos/Kendo.Mvc.Examples/Properties/**/*')
+            .include('wrappers/mvc/demos/Kendo.Mvc.Examples/bin/Kendo.Mvc.Examples.dll')
+            .include(FileList[SPREADSHEET_REDIST_NET40].pathmap("wrappers/mvc/demos/Kendo.Mvc.Examples/bin/%f"))
+
 MVC_VIEWS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Views/**/*.cshtml']
                     .exclude('**/Shared/**/*')
                     .exclude('**/_ViewStart.cshtml')
@@ -281,6 +290,15 @@ tree :to => 'dist/demos/staging/content/cdn/themebuilder',
                 .sub('themebuilder', 'dist/themebuilder/staging'),
      :root => 'dist/themebuilder/staging/'
 
+tree :to => "dist/demos/mvc",
+     :from => PRODUCTION_MVC_RESOURCES,
+     :root => 'wrappers/mvc/demos/Kendo.Mvc.Examples/'
+
+tree :to => "dist/demos/mvc/bin",
+     :from => SPREADSHEET_REDIST_NET40,
+     :root => SPREADSHEET_SRC_ROOT
+
+
 class PatchedWebConfigTask < Rake::FileTask
     attr_accessor :options
     def execute(args=nil)
@@ -340,7 +358,8 @@ namespace :demos do
         rm_rf 'dist/demos'
     end
 
-    task :release => ['demos/mvc/bin/Kendo.dll', 'dist/binaries/demos/Kendo', 'dist/binaries/demos/Kendo/Kendo.dll']
+    task :release => ['demos/mvc/bin/Kendo.dll', 'dist/binaries/demos/Kendo', 'dist/binaries/demos/Kendo/Kendo.dll',
+                      'wrappers/mvc/demos/Kendo.Mvc.Examples/bin/Kendo.Mvc.Examples.dll', 'dist/binaries/demos/Kendo.Mvc.Examples', 'dist/binaries/demos/Kendo.Mvc.Examples/bin/Kendo.Mvc.Examples.dll']
 
     task :upload_to_cdn => [
         :js,
@@ -439,8 +458,18 @@ namespace :demos do
         })
     ]
 
+    task :production_mvc_site => [:release, 'dist/demos/mvc',
+        patched_web_config('dist/demos/mvc/Web.config', 'wrappers/mvc/demos/Kendo.Mvc.Examples/Web.config', {
+            :cdn_root => CDN_ROOT + VERSION
+        })
+    ]
+
     zip 'dist/demos/production.zip' => :production_site
+    zip 'dist/demos/mvc.zip' => :production_mvc_site
 
     desc('Build online demo site')
     task :production => 'dist/demos/production.zip'
+
+    desc('Build online MVC demo site')
+    task :production_mvc => 'dist/demos/mvc.zip'
 end
