@@ -189,7 +189,7 @@ test("scrollTo scrolls to last element", function() {
     editor.value("<div style='height: 1000px'>foo</div><div style='height:24px'>bar</div>");
     var bar = editor.body.childNodes[1];
     Dom.scrollTo(bar);
-    equal(scrollTop(editor), 1024 - iframe.height());
+    equal(scrollTop(editor), 1024 - iframe.height() + 4);
 });
 
 test("editableParent returns inline body from inline node", function() {
