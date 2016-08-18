@@ -605,7 +605,7 @@
         equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
     });
 
-    editor_module("editor column resizing", {
+    editor_module("editor column resizing resize handle", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             editor.tableResizing = null;
@@ -626,7 +626,7 @@
         }
     });
 
-    test("moving out of a table should not remove column resize handle", function() {
+    test("should not be remove when moving out of a table ", function() {
         triggerBorderHover($(columnResizing.element).find(FIRST_COLUMN));
 
         triggerEvent(tableElement, { type: MOUSE_LEAVE });
@@ -634,7 +634,7 @@
         equal($(columnResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
     });
 
-    test("hovering a scrolled editor document should create resize handle", function() {
+    test("should be initialized when hovering a scrolled editor document", function() {
         $(tableElement).width($(editor.document).width() + 100);
         $(editor.document).scrollLeft(20);
 
@@ -649,6 +649,7 @@
             columnResizing = new ColumnResizing(tableElement, {
                 rootElement: QUnit.fixture
             });
+            cell = $(columnResizing.element).find(FIRST_COLUMN);
         },
 
         teardown: function() {
@@ -668,12 +669,20 @@
         equal(columnResizing.element, null);
     });
 
-    test("should remove resize handle from DOM", function() {
-        $('<div class="k-resize-handle" />').appendTo(columnResizing.element);
+    test("should remove resize handle from DOM", function() {        
+        triggerBorderHover(cell)
 
         columnResizing.destroy();
 
         equal($(columnResizing.options.rootElement).find(HANDLE_SELECTOR).length, 0);
+    });
+
+    test("should set resize handle to nullM", function() {
+        triggerBorderHover(cell)
+
+        columnResizing.destroy();
+
+        equal(columnResizing.resizeHandle, null);
     });
 
     test("should call resizable destroy", function() {
