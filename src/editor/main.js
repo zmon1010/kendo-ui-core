@@ -483,6 +483,8 @@
             var NS = ".kendoEditorRowResizing";
 
             function initRowResizing(editorWidget, tableElement) {
+                editorWidget._destroyRowResizing();
+
                 editorWidget.rowResizing = new kendo.ui.editor.RowResizing(tableElement, {
                     rtl: isRtl(editorWidget.element),
                     rootElement: editorWidget.body
@@ -497,7 +499,6 @@
 
                     if (editor.rowResizing) {
                         if (editor.rowResizing.element !== table && !editor.rowResizing.resizingInProgress()) {
-                            editor._destroyRowResizing();
                             initRowResizing(editor, table);
                         }
                     }
@@ -515,12 +516,11 @@
                         parentTable = $(rowResizing.element).parents(TABLE)[0];
 
                         if (parentTable) {
-                            editor._destroyRowResizing();
                             initRowResizing(editor, parentTable);
                         }
                     }
                 })
-                .on(MOUSE_LEAVE +NS, function() {
+                .on(MOUSE_LEAVE + NS, function() {
                     var rowResizing = editor.rowResizing;
 
                     if (rowResizing && !rowResizing.resizingInProgress()) {
@@ -614,6 +614,8 @@
                     ".k-table p{margin:0;padding:0;}" +
                     ".k-column-resize-handle {position:absolute; height: 10px; width:10px; cursor:col-resize; z-index: 2;}" +
                     ".k-column-resize-handle > .k-column-resize-hint-marker {width:2px; height:100%; margin:0 auto; background-color:#00b0ff; display:none; opacity:0.8;}" +
+                    ".k-row-resize-handle {position:absolute; height:10px; width:10px; cursor:row-resize; z-index:2; border:1px solid red;}" +
+                    ".k-row-resize-handle > .k-row-resize-hint-marker {position:absolute; top:50%; width:100%; height:2px; background-color:#00b0ff; opacity:0.8;}" +
                     ".k-table-resize-handle{position:absolute;background-color:#fff;border:1px solid #000;z-index:2;width:5px;height:5px;}" +
                     ".k-resize-e{cursor:e-resize;}" +
                     ".k-resize-n{cursor:n-resize;}" +

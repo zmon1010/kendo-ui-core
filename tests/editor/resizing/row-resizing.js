@@ -1,14 +1,29 @@
 (function() {
     var RowResizing = kendo.ui.editor.RowResizing;
+    var row;
     var rowResizing;
     var tableElement;
-    var DOT = ".";
+
+    var NS = "kendoEditorRowResizing"
+    var HANDLE_SELECTOR = ".k-row-resize-handle";
+    var MARKER_SELECTOR = ".k-row-resize-hint-marker";
+    var MAX = 123456;
+
     var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
     var MOUSE_UP = "mouseup";
-    var NS = "kendoEditorRowResizing"
+
+    var TR = "tr";
+    var TABLE = "table";
+    var TBODY = "tbody";
+
+    var DOT = ".";
+    var FIRST_ROW = "tr:first";
+    var SECOND_ROW = "tr:nth-child(2)";
+    var PX = "px";
+
     var TABLE_HTML =
         '<table id="table" class="k-table" style="border:1px solid red">' +
             '<tr id="row1" class="row">' +
@@ -56,6 +71,58 @@
         '</table>';
     var CONTENT_HTML = '<div id="wrapper">' + TABLE_HTML + '</div>';
 
+    function resizeRow(element, from, to, options) {
+        triggerBorderHover(element, options);
+
+        triggerResize(element, from, to, options);
+
+        triggerResizeEnd(element);
+    }
+
+    function triggerResize(element, from, to, options) {
+        triggerBorderHover(element, options);
+
+        var doc = $(element[0].ownerDocument.documentElement);
+        var resizeHandle = $(QUnit.fixture).find(HANDLE_SELECTOR);
+        var position = resizeHandle.position();
+        var from = from || 0;
+        var to = to || 0;
+
+        triggerResizeStart(element, from, to);
+
+        doc.trigger($.Event(MOUSE_MOVE, {
+            pageX: 0,
+            pageY: position.top + to
+        }));
+    }
+
+    function triggerResizeStart(element, from, to) {
+        var resizeHandle = $(QUnit.fixture).find(HANDLE_SELECTOR);
+        var position = resizeHandle.position();
+        var from = from || 0;
+        var to = to || 0;
+
+        resizeHandle.trigger($.Event(MOUSE_DOWN, {
+            pageX: 0,
+            pageY: position.top + from
+        }));
+    }
+
+    function triggerResizeEnd(column) {
+        $(column[0].ownerDocument.documentElement).trigger($.Event(MOUSE_UP));
+    }
+
+    function triggerBorderHover(element, options) {
+        var rtl = (options || {}).rtl;
+        var height = rtl ? 0 : $(element).outerHeight();
+
+        triggerEvent(element, {
+            type: MOUSE_MOVE,
+            clientX: 0,
+            clientY: $(element).offset().top + height - $(element.ownerDocument).scrollTop(),
+        });
+    }
+
     function triggerEvent(element, eventOptions) {
         var options = $.extend({
             type: "mousedown",
@@ -92,8 +159,16 @@
     test("should be initialized with default options", function() {
         var defaultOptions = {
             tags: ["tr"],
+            min: 20,
             rootElement: null,
-            rtl: false
+            rtl: false,
+            handle: {
+                height: 10,
+                template:
+                    '<div class="k-row-resize-handle">' +
+                        '<div class="k-row-resize-hint-marker"></div>' +
+                    '</div>'
+            }
         };
 
         rowResizing = new RowResizing(tableElement, {});
@@ -123,31 +198,7 @@
         assertEvent(tableElement, { type: MOUSE_MOVE, selector: "tr", namespace: NS });
     });
 
-    module("editor row resizing destroy", {
-        setup: function() {
-            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            rowResizing = new RowResizing(tableElement);
-        },
-
-        teardown: function() {
-            rowResizing.destroy();
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("should detach event handlers", function() {
-        rowResizing.destroy();
-
-        equal(jQueryEvents(rowResizing.element), undefined);
-    });
-
-    test("should set element to null", function() {
-        rowResizing.destroy();
-
-        equal(rowResizing.element, null);
-    });
-
-    editor_module("editor row resizing initialization", {
+    editor_module("editor row resizing editor initialization", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             editor.rowResizing = null;
@@ -348,24 +399,323 @@
     });
 
     test("should not destroy row resizing if resizing is in progress", function() {
-        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.rowResizing, "destroy");
         editor.rowResizing.resizingInProgress = function() { return true; };
 
-        $(editor.body).trigger(leaveEvent);
+        triggerEvent(editor.body, { type: MOUSE_LEAVE });
 
         equal(destroySpy.calls("destroy"), 0);
     });
 
     test("should destroy row resizing if resizing is not in progress", function() {
-        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.rowResizing, "destroy");
         editor.rowResizing.resizingInProgress = function() { return false; };
 
-        $(editor.body).trigger(leaveEvent);
+        triggerEvent(editor.body, { type: MOUSE_LEAVE });
 
         equal(destroySpy.calls("destroy"), 1);
+    });
+
+    module("editor row resizing resize handle", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            rowResizing = new RowResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+            options = rowResizing.options;
+            row = $(rowResizing.element).find(FIRST_ROW);
+        },
+
+        teardown: function() {
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("hovering the border of the first row should append resize handle", function() {
+        triggerBorderHover(row);
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
+    });
+
+    test("hovering the border of the first row multiple times should append only one resize handle", function() {
+        triggerBorderHover(row);
+        triggerBorderHover(row);
+        triggerBorderHover(row);
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
+    });
+
+    test("hovering the last row should not create resize handle", function() {
+        var row = $(rowResizing.element).find("tr:last");
+
+        triggerBorderHover(row);
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
+    });
+
+    test("resize handle should be stored as a reference", function() {
+        triggerBorderHover(row);
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR)[0], rowResizing.resizeHandle[0]);
+    });
+
+    test("left offset should be set", function() {
+        var leftOffset = row.offset().left;
+
+        triggerBorderHover(row);
+
+        roughlyEqual(rowResizing.resizeHandle.css("left"), leftOffset + PX, 0.01);
+    });
+
+    test("top offset should be set", function() {
+        var height = row.outerHeight();
+        var topOffset = row.offset().top;
+
+        triggerBorderHover(row);
+
+        roughlyEqual(rowResizing.resizeHandle.css("top"), (topOffset + height - (options.handle.height / 2)) + PX, 0.01);
+    });
+
+    test("width should be equal to table body width", function() {
+        triggerBorderHover(row);
+
+        equal(rowResizing.resizeHandle[0].style.width, $(tableElement).find(TBODY).width() + PX);
+    });
+
+    test("height should be equal to options height", function() {
+        triggerBorderHover(row);
+
+        equal(rowResizing.resizeHandle[0].style.height, options.handle.height + PX);
+    });
+
+    test("should be shown on hover", function() {
+        triggerBorderHover(row);
+
+        equal(rowResizing.resizeHandle.css("display"), "block");
+    });
+
+    test("should be removed when leaving the row border", function() {
+        triggerBorderHover(row);
+        $(rowResizing.resizeHandle).show();
+
+        triggerEvent(row, { type: MOUSE_MOVE, pageY: MAX });
+
+        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 0);
+    });
+
+    test("should store data about resizing row", function() {
+        triggerBorderHover(row);
+
+        equal(rowResizing.resizeHandle.data("row"), row[0]);
+    });
+
+    test("should be recreated when resizing a different row", function() {
+        triggerBorderHover(row);
+        var initialResizeHandle = rowResizing.resizeHandle;
+        var secondRow = $(rowResizing.element).find(SECOND_ROW);
+
+        triggerBorderHover(secondRow);
+
+        ok(rowResizing.resizeHandle !== initialResizeHandle);
+    });
+
+    test("should be removed when resizing a different row", function() {
+        triggerBorderHover(row);
+        var secondRow = $(rowResizing.element).find(SECOND_ROW);
+
+        triggerBorderHover(secondRow);
+
+        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
+    });
+
+    test("resize handle should be re-created when hovering a different row", function() {
+        triggerBorderHover(row);
+        var secondRow = $(rowResizing.element).find(SECOND_ROW);
+
+        triggerBorderHover(secondRow);
+
+        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
+    });
+
+    editor_module("editor row resizing resize handle", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.tableResizing = null;
+            $(editor.body).append($(TABLE_HTML)[0]);
+            tableElement = $(editor.body).find("#table")[0];
+            rowResizing = editor.rowResizing = new RowResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        afterEach: function() {
+            if (editor) {
+                $(editor.body).find("*").remove();
+            }
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should not be removed when moving out of a table ", function() {
+        triggerBorderHover($(rowResizing.element).find(FIRST_ROW));
+
+        triggerEvent(tableElement, { type: MOUSE_LEAVE });
+
+        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
+    });
+
+    test("should be initialized when hovering a scrolled editor document", function() {
+        $(tableElement).height($(editor.document).height() + 100);
+        $(editor.document).scrollTop(20);
+
+        triggerBorderHover($(tableElement).find(SECOND_ROW)[0]);
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
+    });
+
+    module("editor row resizing existing resize handle", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            rowResizing = new RowResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+            row = $(rowResizing.element).find(FIRST_ROW);
+            initialHeight = row.outerHeight();
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should be shown when hovering a row", function() {
+        triggerBorderHover(row);
+
+        equal(rowResizing.resizeHandle.css("display"), "block");
+    });
+
+    test("should be shown when hovering a row for a second time", function() {
+        triggerBorderHover(row);
+        triggerEvent(row, { type: MOUSE_MOVE, pageX: MAX });
+
+        triggerBorderHover(row);
+
+        equal(rowResizing.resizeHandle.css("display"), "block");
+    });
+
+    test("should be shown when resizing is in progress", function() {
+        triggerBorderHover(row);
+        rowResizing.resizingInProgress = function() { return true; };
+
+        triggerResize(row, initialHeight, initialHeight + 10);
+
+        equal(rowResizing.resizeHandle.css("display"), "block");
+    });
+
+    test("should be shown when resizing is not in progress", function() {
+        triggerBorderHover(row);
+        rowResizing.resizingInProgress = function() { return false; };
+
+        triggerResize(row, initialHeight, initialHeight + 10);
+
+        equal(rowResizing.resizeHandle.css("display"), "block");
+    });
+
+    module("editor row resizing resize hint marker", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            rowResizing = new RowResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+            row = $(rowResizing.element).find(FIRST_ROW);
+            initialHeight = row.outerHeight();
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("resize hint marker should not be visible on row border hover", function() {
+        triggerBorderHover(row);
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
+    });
+
+    test("should be visible on resize start", function() {
+        triggerBorderHover(row);
+
+        triggerResizeStart(row, initialHeight, initialHeight + 10);
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+    });
+
+    test("should be visible while resizing", function() {
+        triggerResize(row, initialHeight, initialHeight + 10);
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+    });
+
+    test("should be visible on resize handle mouse down", function() {
+        triggerBorderHover(row);
+
+        triggerEvent(rowResizing.resizeHandle, { type: MOUSE_DOWN });
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+    });
+
+    test("should not be visible on resize handle mouse up", function() {
+        triggerBorderHover(row);
+
+        triggerEvent(rowResizing.resizeHandle, { type: MOUSE_UP });
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
+    });
+
+    module("editor row resizing destroy", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            rowResizing = new RowResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+            row = $(rowResizing.element).find(FIRST_ROW);
+        },
+
+        teardown: function() {
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should detach event handlers", function() {
+        rowResizing.destroy();
+
+        equal(jQueryEvents(rowResizing.element), undefined);
+    });
+
+    test("should set element to null", function() {
+        rowResizing.destroy();
+
+        equal(rowResizing.element, null);
+    });
+
+    test("should remove resize handle from DOM", function() {
+        triggerBorderHover(row);
+
+        rowResizing.destroy();
+
+        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 0);
+    });
+
+    test("should set resize handle to null", function() {
+        triggerBorderHover(row);
+
+        rowResizing.destroy();
+
+        equal(rowResizing.resizeHandle, null);
     });
 })();
