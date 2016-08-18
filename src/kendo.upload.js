@@ -34,7 +34,7 @@ var __meta__ = { // jshint ignore:line
 
     var headerStatusIcon = {
         loading: "k-i-loading",
-        warning: "k-warning",
+        warning: "k-i-warning",
         success: "k-i-tick"
     };
 
