@@ -161,7 +161,7 @@ function uploadSuccess(params) {
 
         simulateUpload();
 
-        equal($(".k-upload-status-total .k-warning", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-status-total .k-i-warning", uploadInstance.wrapper).length, 1);
     });
 
     // -----------------------------------------------------------------------------------
