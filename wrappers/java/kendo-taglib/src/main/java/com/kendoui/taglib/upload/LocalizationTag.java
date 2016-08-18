@@ -58,6 +58,14 @@ public class LocalizationTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("cancel", value);
     }
 
+    public java.lang.String getClearSelectedFiles() {
+        return (java.lang.String)getProperty("clearSelectedFiles");
+    }
+
+    public void setClearSelectedFiles(java.lang.String value) {
+        setProperty("clearSelectedFiles", value);
+    }
+
     public java.lang.String getDropFilesHere() {
         return (java.lang.String)getProperty("dropFilesHere");
     }
@@ -80,6 +88,30 @@ public class LocalizationTag extends BaseTag /* interfaces *//* interfaces */ {
 
     public void setHeaderStatusUploading(java.lang.String value) {
         setProperty("headerStatusUploading", value);
+    }
+
+    public java.lang.String getInvalidFileExtension() {
+        return (java.lang.String)getProperty("invalidFileExtension");
+    }
+
+    public void setInvalidFileExtension(java.lang.String value) {
+        setProperty("invalidFileExtension", value);
+    }
+
+    public java.lang.String getInvalidMaxFileSize() {
+        return (java.lang.String)getProperty("invalidMaxFileSize");
+    }
+
+    public void setInvalidMaxFileSize(java.lang.String value) {
+        setProperty("invalidMaxFileSize", value);
+    }
+
+    public java.lang.String getInvalidMinFileSize() {
+        return (java.lang.String)getProperty("invalidMinFileSize");
+    }
+
+    public void setInvalidMinFileSize(java.lang.String value) {
+        setProperty("invalidMinFileSize", value);
     }
 
     public java.lang.String getRemove() {

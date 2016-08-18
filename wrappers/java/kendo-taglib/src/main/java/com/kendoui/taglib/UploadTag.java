@@ -68,6 +68,10 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("localization", value);
     }
 
+    public void setValidation(com.kendoui.taglib.upload.ValidationTag value) {
+        setProperty("validation", value);
+    }
+
     public void setCancel(CancelFunctionTag value) {
         setEvent("cancel", value.getBody());
     }
@@ -98,6 +102,14 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setUpload(UploadFunctionTag value) {
         setEvent("upload", value.getBody());
+    }
+
+    public java.lang.String getDropZone() {
+        return (java.lang.String)getProperty("dropZone");
+    }
+
+    public void setDropZone(java.lang.String value) {
+        setProperty("dropZone", value);
     }
 
     public boolean getEnabled() {

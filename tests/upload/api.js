@@ -87,4 +87,27 @@ test("unbinds drop zone handlers", function() {
     ok(!documentEvents.dragover);
 });
 
+// ----------------------------------------------------------------
+module("getFiles", {
+    setup: moduleSetup,
+    teardown: moduleTeardown
+});
+
+test("getFiles returns the correct file name for each file", 2, function() {
+    simulateMultipleFileSelect();
+
+    var allFiles = uploadInstance.getFiles();
+
+    equal(allFiles[0].name, "first.txt");
+    equal(allFiles[1].name, "second.txt");
+});
+
+test("getFiles returns the correct file size for each file", 2, function() {
+    simulateMultipleFileSelect();
+
+    var allFiles = uploadInstance.getFiles();
+
+    equal(allFiles[0].size, 1);
+    equal(allFiles[1].size, 2);
+});
 })();

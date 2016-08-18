@@ -6856,6 +6856,30 @@
                     "aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
                 }
             },
+			{
+                "text": "Custom Drop Zone",
+                "url": "upload/customdropzone",
+                "title": {
+                    "kendo-ui": "Custom drop zone demo for File Upload | Kendo UI Upload Demo",
+                    "aspnet-mvc": "Custom drop zone demo for ASP.NET MVC File Upload"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the custom drop zone functionality of Kendo UI Upload control.",
+                    "aspnet-mvc": "This example shows the custom drop zone functionality of ASP.NET MVC Upload control."
+                }
+            },
+			{
+                "text": "Validation",
+                "url": "upload/validation",
+                "title": {
+                    "kendo-ui": "Validation demo for File Upload | Kendo UI Upload Demo",
+                    "aspnet-mvc": "Validation demo for ASP.NET MVC File Upload"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the validation functionality of Kendo UI Upload control.",
+                    "aspnet-mvc": "This example shows the validation functionality of ASP.NET MVC Upload control."
+                }
+            },
             {
                 "text": "Events",
                 "url": "upload/events",

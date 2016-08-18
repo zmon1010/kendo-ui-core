@@ -51,16 +51,16 @@ test("k-upload-empty class is added again when file list is empty", function() {
     ok($(uploadInstance.wrapper).is(".k-upload-empty"));
 });
 
-test("k-i-extension class is added to the file icon if file has extension", function(){
-    simulateFileSelect("test.zip");
-    ok($(".k-upload-files li.k-file > .k-icon", uploadInstance.wrapper).is(".k-i-zip"));
-})
+// test("k-i-extension class is added to the file icon if file has extension", function(){
+//     simulateFileSelect("test.zip");
+//     ok($(".k-upload-files li.k-file > .k-icon", uploadInstance.wrapper).is(".k-i-zip"));
+// });
 
-test("k-i-extension class is not added to the file icon if file does not have extension", function(){
-    simulateFileSelect("test");
-    var fileIcon = $(".k-upload-files li.k-file > .k-icon", uploadInstance.wrapper);
-    equal(fileIcon.removeClass("k-icon").attr("class"), "");
-})
+// test("k-i-extension class is not added to the file icon if file does not have extension", function(){
+//     simulateFileSelect("test");
+//     var fileIcon = $(".k-upload-files li.k-file > .k-icon", uploadInstance.wrapper);
+//     equal(fileIcon.removeClass("k-icon").attr("class"), "");
+// });
 
 test("current input is hidden after choosing a file", function() {
     simulateFileSelect();
@@ -74,7 +74,7 @@ test("list element is created for the selected file", function() {
 
 test("status icon is rendered always", function() {
     simulateFileSelect();
-    equal($(".k-upload-files li.k-file > .k-icon", uploadInstance.wrapper).length, 1);
+    equal($(".k-upload-files li.k-file span.k-file-extension", uploadInstance.wrapper).length, 1);
 });
 
 test("clicking remove should remove file entry", function() {
