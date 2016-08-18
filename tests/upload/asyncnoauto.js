@@ -44,7 +44,7 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
 
         simulateFileSelect();
 
-        equal($(".k-delete", uploadInstance.wrapper).length, 1);
+        equal($(".k-i-delete", uploadInstance.wrapper).length, 1);
     });
 
     test("clicking remove should remove file entry", function() {

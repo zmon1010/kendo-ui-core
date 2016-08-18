@@ -33,7 +33,7 @@ var __meta__ = { // jshint ignore:line
         PROGRESSHIDEDURATION = 2000;
 
     var headerStatusIcon = {
-        loading: "k-loading",
+        loading: "k-i-loading",
         warning: "k-warning",
         success: "k-i-tick"
     };
