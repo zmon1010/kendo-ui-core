@@ -242,6 +242,7 @@
             that._resizable();
             that._initializeContentElement(that);
             that._initializeColumnResizing();
+            that._initializeRowResizing();
             that._initializeTableResizing();
 
             that.keyboard = new editorNS.Keyboard([
@@ -419,6 +420,7 @@
 
         _initializeColumnResizing: function() {
             var editor = this;
+            var NS = ".kendoEditorColumnResizing";
 
             function initColumnResizing(editorWidget, tableElement) {
                 editorWidget.columnResizing = new kendo.ui.editor.ColumnResizing(tableElement, {
@@ -473,6 +475,66 @@
             if (editor.columnResizing) {
                 editor.columnResizing.destroy();
                 editor.columnResizing = null;
+            }
+        },
+
+        _initializeRowResizing: function() {
+            var editor = this;
+            var NS = ".kendoEditorRowResizing";
+
+            function initRowResizing(editorWidget, tableElement) {
+                editorWidget.rowResizing = new kendo.ui.editor.RowResizing(tableElement, {
+                    rtl: isRtl(editorWidget.element),
+                    rootElement: editorWidget.body
+                });
+            }
+
+            $(editor.body)
+                .on(MOUSE_ENTER + NS, TABLE, function(e) {
+                    var table = e.currentTarget;
+
+                    e.stopPropagation();
+
+                    if (editor.rowResizing) {
+                        if (editor.rowResizing.element !== table && !editor.rowResizing.resizingInProgress()) {
+                            editor._destroyRowResizing();
+                            initRowResizing(editor, table);
+                        }
+                    }
+                    else {
+                        initRowResizing(editor, table);
+                    }
+                })
+                .on(MOUSE_LEAVE + NS, TABLE, function(e) {
+                    var parentTable;
+                    var rowResizing = editor.rowResizing;
+
+                    e.stopPropagation();
+
+                    if (rowResizing && !rowResizing.resizingInProgress()) {
+                        parentTable = $(rowResizing.element).parents(TABLE)[0];
+
+                        if (parentTable) {
+                            editor._destroyRowResizing();
+                            initRowResizing(editor, parentTable);
+                        }
+                    }
+                })
+                .on(MOUSE_LEAVE +NS, function() {
+                    var rowResizing = editor.rowResizing;
+
+                    if (rowResizing && !rowResizing.resizingInProgress()) {
+                        editor._destroyRowResizing();
+                    }
+                });
+        },
+
+        _destroyRowResizing: function() {
+            var editor = this;
+
+            if (editor.rowResizing) {
+                editor.rowResizing.destroy();
+                editor.rowResizing = null;
             }
         },
 
@@ -995,6 +1057,7 @@
             this.toolbar.destroy();
 
             editor._destroyTableResizing();
+            editor._destroyRowResizing();
             editor._destroyColumnResizing();
 
             kendo.destroy(this.wrapper);

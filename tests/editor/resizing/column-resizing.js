@@ -1713,5 +1713,4 @@
 
         equal(destroySpy.calls("destroy"), 1);
     });
-
 })();

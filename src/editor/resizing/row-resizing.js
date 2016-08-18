@@ -3,11 +3,6 @@
 })(function() {
 
 (function(kendo, undefined) {
-    var global = window;
-    var math = global.Math;
-    var abs = math.abs;
-    var parseFloat = global.parseFloat;
-
     var $ = kendo.jQuery;
     var extend = $.extend;
     var proxy = $.proxy;
@@ -25,7 +20,7 @@
         init: function(element, options) {
             var that = this;
 
-            that._initOptions(options);
+            that.options = extend({}, that.options, options);
             that.options.tags = $.isArray(that.options.tags) ? that.options.tags : [that.options.tags];
 
             if ($(element).is(TABLE)) {
@@ -42,7 +37,20 @@
         },
 
         options: {
-            tags: [ROW]
+            tags: [ROW],
+            rtl: false,
+            rootElement: null
+        },
+
+        resizingInProgress: function() {
+            var that = this;
+            var resizable = that.resizable;
+
+            if (resizable) {
+                return !!resizable.resizing;
+            }
+
+            return false;
         },
 
         _detectRowBorderHovering: function() {
