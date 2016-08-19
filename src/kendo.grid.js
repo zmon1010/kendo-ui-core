@@ -7766,7 +7766,6 @@ var __meta__ = { // jshint ignore:line
 
            function resolve() {
                if (allPages && startingPage !== undefined) {
-                   dataSource.unbind("change", renderPage);
                    dataSource.one("change", draw);
                    dataSource.page(startingPage);
                } else {
@@ -7789,8 +7788,10 @@ var __meta__ = { // jshint ignore:line
                    }
                });
                kendo.drawing.drawDOM(clone, options)
-                   .then(function(group){
+                   .always(function(){
                        cont.remove();
+                   })
+                   .then(function(group){
                        result.resolve(group);
                    })
                    .fail(function(err){
@@ -7805,6 +7806,7 @@ var __meta__ = { // jshint ignore:line
                if (pageNum < totalPages) {
                    dataSource.page(pageNum + 1);
                } else {
+                   dataSource.unbind("change", renderPage);
                    resolve();
                }
            }
