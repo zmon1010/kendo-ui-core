@@ -496,7 +496,7 @@
     test("should be shown on hover", function() {
         triggerBorderHover(row);
 
-        equal(rowResizing.resizeHandle.css("display"), "block");
+        equal(rowResizing.resizeHandle.css("display"), "table");
     });
 
     test("should be removed when leaving the row border", function() {
@@ -597,7 +597,7 @@
     test("should be shown when hovering a row", function() {
         triggerBorderHover(row);
 
-        equal(rowResizing.resizeHandle.css("display"), "block");
+        equal(rowResizing.resizeHandle.css("display"), "table");
     });
 
     test("should be shown when hovering a row for a second time", function() {
@@ -606,7 +606,7 @@
 
         triggerBorderHover(row);
 
-        equal(rowResizing.resizeHandle.css("display"), "block");
+        equal(rowResizing.resizeHandle.css("display"), "table");
     });
 
     test("should be shown when resizing is in progress", function() {
@@ -615,7 +615,7 @@
 
         triggerResize(row, initialHeight, initialHeight + 10);
 
-        equal(rowResizing.resizeHandle.css("display"), "block");
+        equal(rowResizing.resizeHandle.css("display"), "table");
     });
 
     test("should be shown when resizing is not in progress", function() {
@@ -624,7 +624,7 @@
 
         triggerResize(row, initialHeight, initialHeight + 10);
 
-        equal(rowResizing.resizeHandle.css("display"), "block");
+        equal(rowResizing.resizeHandle.css("display"), "table");
     });
 
     module("editor row resizing resize hint marker", {
