@@ -18,70 +18,65 @@
         init: function(element, options) {
             kendo.ui.Widget.call(this, element, options);
             element.addClass(CLASS_NAMES.input);
-            var input = this.input = $("<input />").appendTo(element)
+
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: function(options) {
+                        var data = [];
+                        this._workbook.forEachName(function(def){
+                            if (!def.hidden && def.value instanceof kendo.spreadsheet.Ref) {
+                                data.push({ name: def.name });
+                            }
+                        });
+                        options.success(data);
+                    }.bind(this),
+                    cache: false
+                }
+            });
+
+            this.combo = $("<input />").appendTo(element)
+                .kendoComboBox({
+                    clearButton: false,
+                    dataTextField: "name",
+                    dataValueField: "name",
+                    template: "#:data.name#<a class='k-button-delete' href='\\#'><span class='k-icon k-i-close'></span></a>",
+                    dataSource: dataSource,
+                    autoBind: false,
+                    ignoreCase: true,
+                    change: this._on_listChange.bind(this),
+                    open: function() {
+                        dataSource.read();
+                    }
+                }).getKendoComboBox();
+
+            this.combo.input
                 .on("keydown", this._on_keyDown.bind(this))
                 .on("focus", this._on_focus.bind(this));
-            var icon = $("<span class='k-icon k-i-arrow-s'></span>")
-                .appendTo(element);
-            icon.on("click", function(){
-                var data = [], selected = [];
-                this._workbook.forEachName(function(def){
-                    if (!def.hidden && def.value instanceof kendo.spreadsheet.Ref) {
-                        data.push({ name: def.name });
-                        if (def.name == input.val()) {
-                            selected.push(data.length - 1);
-                        }
-                    }
-                });
-                var dataSource = new kendo.data.DataSource({ data: data });
-                this.listWidget().setDataSource(dataSource);
-                this.listWidget().select(selected);
-                dataSource.read();
-                this._popup.open();
-            }.bind(this));
+
+            this.combo.popup.element
+                .addClass("k-spreadsheet-names-popup")
+                .on("click", ".k-button-delete", function(ev){
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    var item = $(ev.target).closest(".k-item");
+                    item = this.combo.dataItem(item);
+                    this._deleteItem(item.name);
+                }.bind(this));
         },
         value: function(val) {
             if (val === undefined) {
-                return this.input.val();
+                return this.combo.value();
             } else {
-                this.input.val(val);
+                this.combo.value(val);
             }
-        },
-        listWidget: function() {
-            var list = this._list;
-            if (!list) {
-                list = this._list = new kendo.ui.StaticList(
-                    $("<ul class='" + CLASS_NAMES.list + "' />").insertAfter(this.input),
-                    {
-                        autoBind: false,
-                        selectable: true,
-                        change: this._on_listChange.bind(this),
-                        dataValueField: "name",
-                        template: "#:data.name#<a class='k-button-delete' href='\\#'><span class='k-icon k-i-close'></span></a>"
-                    }
-                );
-                this._popup = new kendo.ui.Popup(list.element, {
-                    anchor: this.element
-                });
-                list.element
-                    .on("click", ".k-button-delete", function(ev){
-                        ev.preventDefault();
-                        ev.stopPropagation();
-                        var item = $(ev.target).closest(".k-item");
-                        item = list.dataItemByIndex(item.data("offsetIndex"));
-                        this._deleteItem(item.name);
-                    }.bind(this));
-            }
-            return list;
         },
         _deleteItem: function(name) {
-            this._popup.close();
             this.trigger("delete", { name: name });
         },
         _on_keyDown: function(ev) {
             switch (ev.keyCode) {
               case 27:
-                this.input.val(this._prevValue);
+                this.combo.value(this._prevValue);
                 this.trigger("cancel");
                 break;
               case 13:
@@ -90,12 +85,11 @@
             }
         },
         _on_focus: function() {
-            this._prevValue = this.input.val();
+            this._prevValue = this.combo.value();
         },
         _on_listChange: function() {
-            var name = this._list.value()[0];
+            var name = this.combo.value();
             if (name) {
-                this._popup.close();
                 this.trigger("select", { name: name });
             }
         }
