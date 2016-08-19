@@ -55,6 +55,14 @@
 
             this.combo.popup.element
                 .addClass("k-spreadsheet-names-popup")
+
+                .on("mousemove", function(ev){
+                    // XXX: should remove this when we find a better
+                    // solution for the popup closing as we hover the
+                    // resize handles.
+                    ev.stopPropagation();
+                })
+
                 .on("click", ".k-button-delete", function(ev){
                     ev.preventDefault();
                     ev.stopPropagation();
