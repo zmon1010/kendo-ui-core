@@ -1126,12 +1126,19 @@
     }
 
     function getPropertyValue(style, prop) {
-        return style.getPropertyValue(prop) ||
-            ( browser.webkit && style.getPropertyValue("-webkit-" + prop )) ||
-            ( browser.mozilla && style.getPropertyValue("-moz-" + prop )) ||
-            ( browser.opera && style.getPropertyValue("-o-" + prop)) ||
-            ( browser.msie && style.getPropertyValue("-ms-" + prop))
-        ;
+        var val = style.getPropertyValue(prop);
+        if (val == null || val === "") {
+            if (browser.webkit) {
+                val = style.getPropertyValue("-webkit-" + prop );
+            } else if (browser.mozilla) {
+                val = style.getPropertyValue("-moz-" + prop );
+            } else if (browser.opera) {
+                val = style.getPropertyValue("-o-" + prop);
+            } else if (browser.msie) {
+                val = style.getPropertyValue("-ms-" + prop);
+            }
+        }
+        return val;
     }
 
     function pleaseSetPropertyValue(style, prop, value, important) {
