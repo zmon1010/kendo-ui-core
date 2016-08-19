@@ -285,7 +285,7 @@ var Dom = {
     stripBom: function(text) {
         return (text || "").replace(bom, "");
     },
-    
+
     stripBomNode: function(node) {
         if(Dom.isBom(node)) {
             node.parentNode.removeChild(node);
@@ -308,7 +308,7 @@ var Dom = {
                 return false;
             } else if (Dom.insignificant(child)) {
                 return false;
-            } else if (child.nodeType == 3 && whitespaceOrBom.test(child.nodeValue)) {
+            } else if (Dom.emptyTextNode(child)) {
                 return false;
             } else if (child.nodeType == 1 && !empty[name] && Dom.emptyNode(child)) {
                 return false;
@@ -316,6 +316,10 @@ var Dom = {
 
             return true;
         });
+    },
+
+    emptyTextNode: function(node) {
+        return node && node.nodeType == 3 && whitespaceOrBom.test(node.nodeValue);
     },
 
     emptyNode: function(node) {
@@ -387,7 +391,7 @@ var Dom = {
         var parent = node.parentNode;
         var prev = sibling(node, "previousSibling");
         var next = sibling(node, "nextSibling");
-        
+
         if (bom.test(node.nodeValue)) {
             return !!(prev || next);
         }
@@ -477,7 +481,7 @@ var Dom = {
 
     restoreScrollTop: function(doc) {
         if (typeof persistedScrollTop == "number") {
-            Dom.scrollContainer(doc).scrollTop = persistedScrollTop;   
+            Dom.scrollContainer(doc).scrollTop = persistedScrollTop;
         }
     },
 
@@ -542,7 +546,7 @@ var Dom = {
 
         return node;
     },
-    
+
     closestBy: function(node, condition, rootCondition) {
         while (node && !condition(node)) {
             if (rootCondition && rootCondition(node)){
@@ -635,7 +639,7 @@ var Dom = {
 
         parent.removeChild(node);
     },
-    
+
     wrapper: function(node) {
         var wrapper = Dom.closestBy(node, function (el) {
             return el.parentNode && Dom.significantNodes(el.parentNode.childNodes).length > 1;

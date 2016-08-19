@@ -17,6 +17,7 @@
         RestorePoint = editorNS.RestorePoint,
         Marker = editorNS.Marker,
         browser = kendo.support.browser,
+        br = '<br class="k-br">',
         extend = $.extend;
 
 function finishUpdate(editor, startRestorePoint) {
@@ -611,11 +612,44 @@ var SelectAllHandler = Class.extend({
             !(e.ctrlKey && e.keyCode == 65 && !e.altKey && !e.shiftKey)) {
             return;
         }
+        if (this.editor.options.immutables) {
+            this._toSelectableImmutables();
+        }
+        this._selectEditorBody();
+    },
+
+    _selectEditorBody: function() {
         var editor = this.editor;
         var range = editor.getRange();
         range.selectNodeContents(editor.body);
         editor.selectRange(range);
     },
+
+    _toSelectableImmutables: function() {
+        var editor = this.editor,
+            body = editor.body,
+            immutable = editorNS.Immutables.immutable,
+            emptyTextNode = dom.emptyTextNode,
+            first = body.firstChild,
+            last = body.lastChild;
+
+        while (emptyTextNode(first)){
+            first = first.nextSibling;
+        }
+
+        while (emptyTextNode(last)){
+            last = last.previousSibling;
+        }
+
+        if (first && immutable(first)) {
+            $(br).prependTo(body);
+        }
+
+        if (last && immutable(last)) {
+            $(br).appendTo(body);
+        }
+    },
+
     keyup: $.noop
 });
 
