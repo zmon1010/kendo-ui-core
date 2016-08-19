@@ -425,13 +425,13 @@
 
             function initColumnResizing(editorWidget, tableElement) {
                 editorWidget.columnResizing = new kendo.ui.editor.ColumnResizing(tableElement, {
-                    rtl: isRtl(editorWidget.element),
-                    rootElement: editorWidget.body
+                        rtl: isRtl(editorWidget.element),
+                        rootElement: editorWidget.body
                 });
             }
 
             $(editor.body)
-                .on(MOUSE_ENTER + COLUMN_RESIZING_NS, TABLE, function(e) {
+                .on(MOUSE_ENTER +COLUMN_RESIZING_NS, TABLE, function(e) {
                     var table = e.currentTarget;
 
                     e.stopPropagation();
@@ -461,7 +461,7 @@
                         }
                     }
                 })
-                .on(MOUSE_LEAVE + COLUMN_RESIZING_NS, function() {
+                .on(MOUSE_LEAVE +COLUMN_RESIZING_NS, function() {
                     var columnResizing = editor.columnResizing;
 
                     if (columnResizing && !columnResizing.resizingInProgress()) {
@@ -480,53 +480,7 @@
         },
 
         _initializeRowResizing: function() {
-            var editor = this;
-
-            function initRowResizing(editorWidget, tableElement) {
-                editorWidget._destroyRowResizing();
-
-                editorWidget.rowResizing = new kendo.ui.editor.RowResizing(tableElement, {
-                    rtl: isRtl(editorWidget.element),
-                    rootElement: editorWidget.body
-                });
-            }
-
-            $(editor.body)
-                .on(MOUSE_ENTER + ROW_RESIZING_NS, TABLE, function(e) {
-                    var table = e.currentTarget;
-
-                    e.stopPropagation();
-
-                    if (editor.rowResizing) {
-                        if (editor.rowResizing.element !== table && !editor.rowResizing.resizingInProgress()) {
-                            initRowResizing(editor, table);
-                        }
-                    }
-                    else {
-                        initRowResizing(editor, table);
-                    }
-                })
-                .on(MOUSE_LEAVE + ROW_RESIZING_NS, TABLE, function(e) {
-                    var parentTable;
-                    var rowResizing = editor.rowResizing;
-
-                    e.stopPropagation();
-
-                    if (rowResizing && !rowResizing.resizingInProgress()) {
-                        parentTable = $(rowResizing.element).parents(TABLE)[0];
-
-                        if (parentTable) {
-                            initRowResizing(editor, parentTable);
-                        }
-                    }
-                })
-                .on(MOUSE_LEAVE + ROW_RESIZING_NS, function() {
-                    var rowResizing = editor.rowResizing;
-
-                    if (rowResizing && !rowResizing.resizingInProgress()) {
-                        editor._destroyRowResizing();
-                    }
-                });
+            kendo.ui.editor.RowResizing.create(this);
         },
 
         _destroyRowResizing: function() {

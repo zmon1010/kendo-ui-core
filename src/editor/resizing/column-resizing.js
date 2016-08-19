@@ -1,5 +1,5 @@
 (function(f, define) {
-    define(["../main", "../../kendo.resizable", "./resizing-utils"], f);
+    define(["../main", "../../kendo.resizable", "./resizing-utils", "./table-element-resizing"], f);
 })(function() {
 
 (function(kendo, undefined) {
@@ -368,6 +368,14 @@
             }
         }
     });
+
+    ColumnResizing.create = function(editor) {
+        return Editor.TableElementResizing.create(editor, {
+            name: "columnResizing",
+            type: ColumnResizing,
+            eventNamespace: NS
+        });
+    };
 
     extend(Editor, {
         ColumnResizing: ColumnResizing

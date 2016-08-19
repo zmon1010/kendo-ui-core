@@ -1,169 +1,101 @@
 (function(f, define) {
-    define(["../main", "../../kendo.resizable", "./resizing-utils"], f);
+    define(["../main", "../../kendo.draggable", "./resizing-utils"], f);
 })(function() {
 
 (function(kendo, undefined) {
+    var abs = window.Math.abs;
+
     var $ = kendo.jQuery;
     var extend = $.extend;
-    var proxy = $.proxy;
 
     var Editor = kendo.ui.editor;
-    var Class = kendo.Class;
     var ResizingUtils = Editor.ResizingUtils;
-    var setContentEditable = ResizingUtils.setContentEditable;
+    var constrain = ResizingUtils.constrain;
 
     var NS = ".kendoEditorRowResizing";
     var RESIZE_HANDLE_CLASS = "k-row-resize-handle";
     var RESIZE_HANDLE_MARKER_WRAPPER_CLASS = "k-row-resize-marker-wrapper";
-    var RESIZE_HINT_MARKER_CLASS = "k-row-resize-marker";
-
-    var MOUSE_DOWN = "mousedown";
-    var MOUSE_MOVE = "mousemove";
-    var MOUSE_UP = "mouseup";
+    var RESIZE_MARKER_CLASS = "k-row-resize-marker";
 
     var TR = "tr";
-    var TABLE = "table";
     var TBODY = "tbody";
 
-    var COMMA = ",";
-    var DOT = ".";
-    var LAST_CHILD = ":last-child";
-    var ROW = "row";
-
-    var TRUE = "true";
-    var FALSE = "false";
-
-    var RowResizing = Class.extend({
-        init: function(element, options) {
-            var that = this;
-
-            that.options = extend({}, that.options, options);
-            that.options.tags = $.isArray(that.options.tags) ? that.options.tags : [that.options.tags];
-
-            if ($(element).is(TABLE)) {
-                that.element = element;
-                $(element).on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), proxy(that._detectRowBorderHovering, that));
-            }
-        },
-
-        destroy: function() {
-            var that = this;
-
-            $(that.element).off(NS);
-            that.element = null;
-
-            that._destroyResizeHandle();
-        },
-
+    var RowResizing = Editor.TableElementResizing.extend({
         options: {
             tags: [TR],
             min: 20,
             rootElement: null,
+            eventNamespace: NS,
             rtl: false,
             handle: {
+                axis: "y",
+                dataAttribute: "row",
+                resizeDimension: "height",
+                offset: "top",
+                scrollOffset: "top",
+                eventCoordinate: "clientY",
                 height: 10,
+                classNames: {
+                    handle: RESIZE_HANDLE_CLASS,
+                    marker: RESIZE_MARKER_CLASS
+                },
                 template:
                     '<div class="' + RESIZE_HANDLE_CLASS + '">' +
                         '<div class="' + RESIZE_HANDLE_MARKER_WRAPPER_CLASS + '">' +
-                            '<div class="' + RESIZE_HINT_MARKER_CLASS + '"></div>' +
+                            '<div class="' + RESIZE_MARKER_CLASS + '"></div>' +
                         '</div>'+
                     '</div>'
             }
         },
 
-        resizingInProgress: function() {
-            var that = this;
-            var resizable = that.resizable;
-
-            if (resizable) {
-                return !!resizable.resizing;
-            }
-
-            return false;
-        },
-
-        _detectRowBorderHovering: function(e) {
-            var that = this;
-            var row = $(e.currentTarget);
-            var resizeHandle = that.resizeHandle;
-            var rootElement = that.options.rootElement;
-
-            if (!that.resizingInProgress()) {
-                if (!row.is(LAST_CHILD) && that._rowBorderHovered(row, e.clientY)) {
-                    setContentEditable(rootElement, FALSE);
-
-                    if (resizeHandle) {
-                        if (resizeHandle.data(ROW) && resizeHandle.data(ROW) !== row[0]) {
-                            that._initResizeHandle(row);
-                        }
-                    }
-                    else {
-                        that._initResizeHandle(row);
-                    }
-                }
-                else {
-                    if (resizeHandle) {
-                        setContentEditable(rootElement, TRUE);
-                        that._destroyResizeHandle();
-                    }
-                }
-            }
-        },
-
-        _rowBorderHovered: function(tableElement, clientY) {
+        setResizeHandlePosition: function(row) {
             var that = this;
             var options = that.options;
             var handleHeight = options.handle.height;
-            var borderLeftOffset = tableElement.offset().top + tableElement.outerHeight();
-            var mousePosition = clientY + $(tableElement[0].ownerDocument).scrollTop();
-
-            if ((mousePosition > (borderLeftOffset - handleHeight)) && (mousePosition < (borderLeftOffset + handleHeight))) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        },
-
-        _initResizeHandle: function(tableElement) {
-            var that = this;
-            var tableBody = $(that.element).children(TBODY);
-            var options = that.options;
-            var handleOptions = options.handle;
-            var handleHeight = handleOptions.height;
-
-            that._destroyResizeHandle();
-
-            that.resizeHandle = $(handleOptions.template).appendTo(options.rootElement);
+            var rowPosition = row.position();
 
             that.resizeHandle.css({
-                top: tableElement.position().top + tableElement.outerHeight() - (handleHeight / 2),
-                left: tableElement.position().left,
-                width: tableBody.width(),
-                height: handleHeight,
+                top: rowPosition.top + row.outerHeight() - (handleHeight / 2),
+                left: rowPosition.left,
                 position: "absolute"
-            })
-            .data(ROW, tableElement[0])
-            .show()
-            .on(MOUSE_DOWN + NS, function() {
-                $(this).find(DOT + RESIZE_HINT_MARKER_CLASS).show();
-            })
-            .on(MOUSE_UP + NS, function() {
-                $(this).find(DOT + RESIZE_HINT_MARKER_CLASS).hide();
             });
-
-            that.resizeHandle.find(DOT + RESIZE_HINT_MARKER_CLASS).hide();
         },
 
-        _destroyResizeHandle: function() {
+        setResizeHandleDimensions: function() {
             var that = this;
 
-            if (that.resizeHandle) {
-                that.resizeHandle.off(NS).remove();
-                that.resizeHandle = null;
-            }
+            that.resizeHandle.css({
+                width: $(that.element).children(TBODY).width(),
+                height: that.options.handle.height
+            });
+        },
+
+        setResizeHandleDragPosition: function(e) {
+            var that = this;
+            var options = that.options;
+            var handleOptions = options.handle;
+            var min = options.min;
+            var tableBody =  $(that.element).find(TBODY);
+            var tableBodyTopOffset = tableBody.offset().top;
+            var resizeHandle = $(that.resizeHandle);
+
+            var handleOffset = constrain({
+                value: resizeHandle.offset().top + e.y.delta,
+                min: abs(tableBodyTopOffset + min),
+                max: abs(tableBodyTopOffset + tableBody.outerHeight() - handleOptions.height - min)
+            });
+
+            resizeHandle.css("top", handleOffset);
         }
     });
+
+    RowResizing.create = function(editor) {
+        return Editor.TableElementResizing.initResizing(editor, {
+            name: "rowResizing",
+            type: RowResizing,
+            eventNamespace: NS
+        });
+    };
 
     extend(Editor, {
         RowResizing: RowResizing

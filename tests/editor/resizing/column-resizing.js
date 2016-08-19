@@ -1685,7 +1685,7 @@
         equal(destroySpy.calls("destroy"), 1);
     });
 
-    editor_module("editor table resizing leaving editor content", {
+    editor_module("editor column resizing leaving editor content", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             editor.columnResizing = null;
