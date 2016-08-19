@@ -362,7 +362,7 @@ module("editor body events", {
 });
 
 test("mouseenter event is attached to tables inside editor body", function() {
-    assertEvent(editor.body, { type: "mouseenter", selector: "table", namespace: "kendoEditor" });
+    assertEvent(editor.body, { type: "mouseenter", selector: "table", namespace: "kendoEditorColumnResizing" });
 });
 
 test("mouseenter events are detached from editor body on destroy", function() {
