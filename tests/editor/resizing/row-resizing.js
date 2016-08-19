@@ -6,7 +6,7 @@
 
     var NS = "kendoEditorRowResizing"
     var HANDLE_SELECTOR = ".k-row-resize-handle";
-    var MARKER_SELECTOR = ".k-row-resize-hint-marker";
+    var MARKER_SELECTOR = ".k-row-resize-marker";
     var MAX = 123456;
 
     var MOUSE_DOWN = "mousedown";
@@ -166,7 +166,9 @@
                 height: 10,
                 template:
                     '<div class="k-row-resize-handle">' +
-                        '<div class="k-row-resize-hint-marker"></div>' +
+                        '<div class="k-row-resize-marker-wrapper">' +
+                            '<div class="k-row-resize-marker"></div>' +
+                        '</div>' +
                     '</div>'
             }
         };
@@ -643,7 +645,7 @@
     test("resize hint marker should not be visible on row border hover", function() {
         triggerBorderHover(row);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "none");
     });
 
     test("should be visible on resize start", function() {
@@ -651,13 +653,13 @@
 
         triggerResizeStart(row, initialHeight, initialHeight + 10);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should be visible while resizing", function() {
         triggerResize(row, initialHeight, initialHeight + 10);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should be visible on resize handle mouse down", function() {
@@ -665,7 +667,7 @@
 
         triggerEvent(rowResizing.resizeHandle, { type: MOUSE_DOWN });
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "block");
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should not be visible on resize handle mouse up", function() {
@@ -673,7 +675,7 @@
 
         triggerEvent(rowResizing.resizeHandle, { type: MOUSE_UP });
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).children(MARKER_SELECTOR).css("display"), "none");
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "none");
     });
 
     module("editor row resizing destroy", {

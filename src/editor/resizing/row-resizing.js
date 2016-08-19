@@ -14,7 +14,8 @@
 
     var NS = ".kendoEditorRowResizing";
     var RESIZE_HANDLE_CLASS = "k-row-resize-handle";
-    var RESIZE_HINT_MARKER_CLASS = "k-row-resize-hint-marker";
+    var RESIZE_HANDLE_MARKER_WRAPPER_CLASS = "k-row-resize-marker-wrapper";
+    var RESIZE_HINT_MARKER_CLASS = "k-row-resize-marker";
 
     var MOUSE_DOWN = "mousedown";
     var MOUSE_MOVE = "mousemove";
@@ -63,7 +64,9 @@
                 height: 10,
                 template:
                     '<div class="' + RESIZE_HANDLE_CLASS + '">' +
-                        '<div class="' + RESIZE_HINT_MARKER_CLASS + '"></div>' +
+                        '<div class="' + RESIZE_HANDLE_MARKER_WRAPPER_CLASS + '">' +
+                            '<div class="' + RESIZE_HINT_MARKER_CLASS + '"></div>' +
+                        '</div>'+
                     '</div>'
             }
         },
@@ -143,13 +146,13 @@
             .data(ROW, tableElement[0])
             .show()
             .on(MOUSE_DOWN + NS, function() {
-                $(this).children(DOT + RESIZE_HINT_MARKER_CLASS).show();
+                $(this).find(DOT + RESIZE_HINT_MARKER_CLASS).show();
             })
             .on(MOUSE_UP + NS, function() {
-                $(this).children(DOT + RESIZE_HINT_MARKER_CLASS).hide();
+                $(this).find(DOT + RESIZE_HINT_MARKER_CLASS).hide();
             });
 
-            that.resizeHandle.children(DOT + RESIZE_HINT_MARKER_CLASS).hide();
+            that.resizeHandle.find(DOT + RESIZE_HINT_MARKER_CLASS).hide();
         },
 
         _destroyResizeHandle: function() {
