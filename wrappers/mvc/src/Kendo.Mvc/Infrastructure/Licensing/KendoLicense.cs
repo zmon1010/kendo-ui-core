@@ -41,14 +41,21 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             }
         }
 
-        internal int TrialDuration
+        internal bool IsExtended
         {
             get
             {
                 var trialKey = ConfigurationManager.AppSettings[APP_SETTINGS_TRIAL_KEY];
 
-                if (!string.IsNullOrEmpty(trialKey) &&
-                    trialKey.Equals(RegistryUtilities.EncodeString(AssemblyVersion.GetHashCode().ToString())))
+                return !string.IsNullOrEmpty(trialKey) && trialKey.Equals(RegistryUtilities.EncodeString(AssemblyVersion.GetHashCode().ToString()));
+            }
+        }
+
+        internal int TrialDuration
+        {
+            get
+            {
+                if (IsExtended)
                 {
                     return TRIAL_DURATION + TRIAL_EXTENSION;
                 }
