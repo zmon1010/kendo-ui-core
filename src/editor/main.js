@@ -626,6 +626,7 @@
                     ".k-resize-se{cursor:se-resize;}" +
                     ".k-resize-sw{cursor:sw-resize;}" +
                     ".k-resize-w{cursor:w-resize;}" +
+                    ".k-table.k-table-resizing{opacity:0.6;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +
                 domainScript +
