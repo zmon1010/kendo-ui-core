@@ -29,6 +29,9 @@
     var SECOND_ROW = "tr:nth-child(2)";
     var PX = "px";
 
+    var ROW = "tr";
+    var COLUMN = "td";
+
     var FALSE = "false";
     var TRUE = "true";
 
@@ -60,6 +63,7 @@
                 '<td id="col53" class="col">col 53</td>' +
             '</tr>' +
         '</table>';
+
     var NESTED_TABLE_HTML =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
@@ -87,6 +91,29 @@
                 '<td id="col33" class="col">+col 33</td>' +
             '</tr>' +
         '</table>';
+
+    var TABLE_IN_PIXELS_WITH_ROWS_IN_PIXELS =
+        '<table id="table" class="k-table" style="width: 400px";padding:20px;>' +
+            '<tr id="row1" class="row" style="height:100px;">' +
+                '<td id="col11" class="col" style="border:1px solid red;">col 11</td>' +
+                '<td id="col12" class="col" style="border:1px solid red;">col 12</td>' +
+                '<td id="col13" class="col" style="border:1px solid red;">col 13</td>' +
+                '<td id="col14" class="col" style="border:1px solid red;">col 14</td>' +
+            '</tr>' +
+            '<tr id="row2" class="row" style="height:100px;">' +
+                '<td id="col21" class="col" style="border:1px solid red;">col 21</td>' +
+                '<td id="col22" class="col" style="border:1px solid red;">col 22</td>' +
+                '<td id="col23" class="col" style="border:1px solid red;">col 23</td>' +
+                '<td id="col24" class="col" style="border:1px solid red;">col 24</td>' +
+            '</tr>' +
+            '<tr id="row3" class="row" style="height:100px;">' +
+                '<td id="col31" class="col" style="border:1px solid red;">col 31</td>' +
+                '<td id="col32" class="col" style="border:1px solid red;">col 32</td>' +
+                '<td id="col33" class="col" style="border:1px solid red;">col 33</td>' +
+                '<td id="col34" class="col" style="border:1px solid red;">col 34</td>' +
+            '</tr>' +
+        '</table>';
+
     var CONTENT_HTML = '<div id="wrapper">' + TABLE_HTML + '</div>';
 
     function resizeRow(element, from, to, options) {
@@ -151,6 +178,14 @@
         $(element).trigger(options);
     }
 
+    function calculateRowsHeight(rows) {
+        var rowsHeights = rows.map(function() {
+            return $(this).outerHeight();
+        });
+
+        return rowsHeights;
+    }
+
     module("editor row resizing initialization", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
@@ -182,12 +217,8 @@
             eventNamespace: DOT + NS,
             rtl: false,
             handle: {
-                axis: "y",
                 dataAttribute: "row",
-                resizeDimension: "height",
-                offset: "top",
-                scrollOffset: "top",
-                eventCoordinate: "clientY",
+                width: 0,
                 height: 10,
                 classNames: {
                     handle: RESIZE_HANDLE_CLASS,
@@ -712,6 +743,9 @@
     module("editor row resizing resize handle top offset", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture);
+            tableElement.find("tr").css({
+                height: "50px"
+            });
             rowResizing = new RowResizing(tableElement[0], {
                 rtl: true,
                 rootElement: QUnit.fixture
@@ -734,7 +768,7 @@
 
         triggerResize(row, 0, differenceInPixels);
 
-        equal(rowResizing.resizeHandle.css("top"), topOffset + initialHeight + differenceInPixels -(options.handle.height / 2) + PX);
+        roughlyEqual(rowResizing.resizeHandle.css("top"), topOffset + initialHeight + differenceInPixels - (options.handle.height / 2) + PX, 0.01);
     });
 
     test("should be decreased while resizing", function() {
@@ -742,12 +776,12 @@
 
         triggerResize(row, 0, differenceInPixels);
 
-        equal(rowResizing.resizeHandle.css("top"), topOffset + initialHeight+ differenceInPixels -(options.handle.height / 2) + PX);
+        roughlyEqual(rowResizing.resizeHandle.css("top"), topOffset + initialHeight + differenceInPixels - (options.handle.height / 2) + PX, 0.01);
     });
     test("should not be lower than min", function() {
         triggerResize(row, 0, (-1) * MAX);
 
-        roughlyEqual(rowResizing.resizeHandle.css("top"), tbody.offset().top + options.min + PX, 0.01);
+        roughlyEqual(rowResizing.resizeHandle.css("top"), row.offset().top + options.min + PX, 0.01);
     });
 
     test("should not be greater than max", function() {
@@ -1143,6 +1177,172 @@
         $(editor.body).trigger(leaveEvent);
 
         equal(destroySpy.calls("destroy"), 1);
+    });
+
+    module("editor row resizing in pixels", {
+        setup: function() {
+            tableElement = $(TABLE_IN_PIXELS_WITH_ROWS_IN_PIXELS).appendTo(QUnit.fixture);
+            rowResizing = new RowResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+            options = rowResizing.options;
+            row = $(rowResizing.element).find(FIRST_ROW);
+            initialHeightInPixels = row.outerHeight();
+            rows = tableElement.find(TBODY).children(TR);
+            initialRowsHeights = calculateRowsHeight(rows);
+        },
+
+        teardown: function() {
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should increase table height when resizing", function() {
+        var tableHeight = tableElement.outerHeight();
+        var differenceInPixels = 10;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
+
+        equal(tableElement[0].style.height, tableHeight + differenceInPixels + PX);
+    });
+
+    test("should decrease table height when resizing", function() {
+        var tableHeight = tableElement.outerHeight();
+        var differenceInPixels = (-1) * 10;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels +differenceInPixels);
+
+        equal(tableElement[0].style.height, tableHeight +differenceInPixels + PX);
+    });
+
+    test("row height should be decreased when resizing", function() {
+        var differenceInPixels = (-1) * 10;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
+
+        equal(row[0].style.height, (initialHeightInPixels + differenceInPixels) + PX);
+    });
+
+    test("row height should not be lower than min", function() {
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + (-1) * MAX);
+
+        equal(row[0].style.height, options.min + PX);
+    });
+
+    test("row height should not be greater than the height of the table body", function() {
+        var initialTableBodyHeight = $(rowResizing.element).find(TBODY).height();
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + MAX);
+
+        equal(row[0].style.height, initialTableBodyHeight + PX);
+    });
+
+    test("should set computed dimensions to all rows", function() {
+        triggerResize(row, initialHeightInPixels, initialHeightInPixels + 10);
+
+        for (var i = 0; i < rows.length; i++) {
+            equal(rows[i].style.height, initialRowsHeights[i] + PX);
+        }
+    });
+
+    test("should not change other rows height", function() {
+        var otherRows = rows.filter(function() {
+            return (this !== row[0]);
+        });
+        var initialOtherRowsHeights = calculateRowsHeight(otherRows);
+        for (var i = 0; i < otherRows.length; i++) {
+            otherRows[i].style.height = initialOtherRowsHeights[i]+PX;
+        }
+
+        triggerResize(row, initialHeightInPixels, initialHeightInPixels + 10);
+
+        for (var i = 0; i < initialOtherRowsHeights.length; i++) {
+            equal(otherRows[i].style.height, initialOtherRowsHeights[i] + PX);
+        }
+    });
+
+    module("editor row resizing without explicit dimensions", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture);
+            rowResizing = new RowResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+            options = rowResizing.options;
+            row = $(rowResizing.element).find(FIRST_ROW);
+            initialHeightInPixels = row.outerHeight();
+            rows = $(rowResizing.element).find(ROW);
+        },
+
+        teardown: function() {
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should set computed style height in pixels to its element", function() {
+        var tableHeight = $(tableElement).outerHeight();
+        var differenceInPixels = 10;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
+
+        equal(tableElement[0].style.height, tableHeight + differenceInPixels + PX);
+    });
+
+    test("should override table style height", function() {
+        tableElement[0].style.height = "1px";
+        var tableHeight = $(tableElement).outerHeight();
+        var differenceInPixels = 10;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
+
+        equal(tableElement[0].style.height, tableHeight + differenceInPixels + PX);
+    });
+
+    test("should not set computed style height in percentages to its element", function() {
+        tableElement[0].style.height = "50%";
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + 20);
+
+        equal(tableElement[0].style.height, "50%");
+    });
+
+    test("row height should be increased when resizing", function() {
+        var differenceInPixels = 10;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
+
+        equal(row[0].style.height, (initialHeightInPixels + differenceInPixels + PX));
+    });
+
+    test("row height should not be lower than min", function() {
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + (-1) * MAX);
+
+        equal(row[0].style.height, options.min + PX);
+    });
+
+    test("row height should not be greater than table body height", function() {
+        var initialTableBodyHeight = $(rowResizing.element).find(TBODY).height();
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + MAX);
+
+        equal(row[0].style.height, initialTableBodyHeight + PX);
+    });
+
+    test("should not change other rows height", function() {
+        var otherRows = rows.filter(function() {
+            return (this !== row[0]);
+        });
+        var initialOtherRowsHeights = calculateRowsHeight(otherRows);
+        for (var i = 0; i < otherRows.length; i++) {
+            otherRows[i].style.height = initialOtherRowsHeights[i] + PX;
+        }
+
+        triggerResize(row, initialHeightInPixels, initialHeightInPixels + 10);
+
+        for (var i = 0; i < initialOtherRowsHeights.length; i++) {
+            equal(otherRows[i].style.height, initialOtherRowsHeights[i] + PX);
+        }
     });
 
     module("editor row resizing destroy", {

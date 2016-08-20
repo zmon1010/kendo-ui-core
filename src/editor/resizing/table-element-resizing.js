@@ -22,17 +22,11 @@
     var COMMA = ",";
     var DOT = ".";
     var LAST_CHILD = ":last-child";
-    var OUTER = "outer";
-    var SCROLL = "scroll";
 
     var TABLE = "table";
 
     var TRUE = "true";
     var FALSE = "false";
-
-    function capitalize(word) {
-        return word.charAt(0).toUpperCase() + word.substring(1);
-    }
 
     var TableElementResizing = Class.extend({
         init: function(element, options) {
@@ -66,13 +60,9 @@
             eventNamespace: "",
             rtl: false,
             handle: {
-                axis: "",
                 dataAttribute: "",
-                resizeDimension: "",
-                offset: "",
-                scrollOffset: "",
-                eventCoordinate: "",
                 height: 0,
+                width: 0,
                 classNames: {},
                 template: ""
             }
@@ -122,20 +112,7 @@
             }
         },
 
-        elementBorderHovered: function(tableElement, e) {
-            var that = this;
-            var handleOptions = that.options.handle;
-            var handleDimension = handleOptions[handleOptions.resizeDimension];
-            var bordertOffset = tableElement.offset()[handleOptions.offset] + tableElement[OUTER + capitalize(handleOptions.resizeDimension)]();
-            var mousePosition = e[handleOptions.eventCoordinate] + $(tableElement[0].ownerDocument)[SCROLL + capitalize(handleOptions.scrollOffset)]();
-
-            if ((mousePosition > (bordertOffset - handleDimension)) && (mousePosition < (bordertOffset + handleDimension))) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        },
+        elementBorderHovered: noop,
 
         showResizeHandle: function(tableElement) {
             var that = this;
@@ -228,10 +205,7 @@
         },
 
         onResize: function(e) {
-            var that = this;
-
-            that.draggingInProgress = true;
-            that.setResizeHandleDragPosition(e);
+            this.setResizeHandleDragPosition(e);
         },
 
         setResizeHandleDragPosition: noop,
@@ -242,7 +216,6 @@
             that.resize(e);
             that._destroyResizeHandle();
             setContentEditable(that.options.rootElement, TRUE);
-            that.draggingInProgress = false;
         }
     });
 
