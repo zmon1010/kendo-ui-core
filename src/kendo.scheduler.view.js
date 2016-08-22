@@ -115,7 +115,7 @@ var __meta__ = { // jshint ignore:line
             var cellContent = allDaySlot.cellContent;
 
             for (columnIndex = 0; columnIndex < lastLevel.length; columnIndex++) {
-                td.push('<td class="' + (lastLevel[columnIndex].className || "")  + '">' + (cellContent ? cellContent(columnIndex) : '&nbsp;') + '</th>');
+                td.push('<td class="' + (lastLevel[columnIndex].className || "")  + '">' + (cellContent ? cellContent(columnIndex) : '&nbsp;') + '</td>');
             }
 
             allDayTableRows.push(td.join(""));
