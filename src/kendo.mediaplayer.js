@@ -333,7 +333,7 @@
                         this._dropDown.select(0);
                     }
 
-                    this._dropDown.wrapper.addClass("k-button-bare");
+                    this._dropDown.wrapper.addClass("k-button k-button-bare");
                     this._dropDown.wrapper.attr("title", this.options.messages.quality).hide();
                     this._dropDown.wrapper.find("span.k-i-arrow-s")
                                             .removeClass('k-i-arrow-s')
