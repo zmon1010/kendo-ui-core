@@ -333,6 +333,8 @@
                 ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
             });
 
+            this.trigger("insertRow", { index: rowIndex });
+
             return this;
         },
 
@@ -384,6 +386,8 @@
                 deleteRow: { index: rowIndex },
                 ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
             });
+
+            this.trigger("deleteRow", { index: rowIndex });
 
             return this;
         },
