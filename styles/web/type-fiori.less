@@ -709,11 +709,21 @@ html .km-pane-wrapper .k-header
 }
 
 html body .k-button-bare {
-    border: 1px solid transparent;
-
 	&.k-state-focused,
 	&:focus {
-		border-color: @button-focused-border-color;
+		position: relative;
+
+		&:before {
+			content: "";
+			background-color: currentcolor;
+			opacity: 0.12;
+			border-radius: inherit;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
 	}
 }
 
@@ -721,7 +731,11 @@ html .k-mediaplayer-toolbar .k-button-bare {
 	&:active,
 	&.k-state-active,
 	&.k-state-active:hover {
-		color: @button-active-background;
+		color: @accent;
+
+		&:before {
+			opacity: 0.24;
+		}
 	}
 }
 

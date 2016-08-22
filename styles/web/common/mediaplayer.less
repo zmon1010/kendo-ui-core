@@ -30,9 +30,9 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	background: linear-gradient( rgba(0,0,0, 0.7), rgba(0, 0, 0, 0) );
+	background: linear-gradient( rgba(0,0,0, 0.7), rgba(0, 0, 0, 0.05) 80%, rgba(0, 0, 0, 0) );
 	color: white;
-	padding: 12px;
+	padding: 12px 12px 30px;
 }
 
 .k-mediaplayer-toolbar {
@@ -43,13 +43,13 @@
 	padding: 0px;
 	border-width: 0;
 
-	.k-button-bare { //???
-		&,
-		&:hover,
-		&:active {
-			border-color: transparent;
-			background: none;
-		}
+	html & .k-button-bare {
+		padding-left: 9px;
+		padding-right: 9px;
+	}
+	
+	div.k-mediaplayer-volume {
+		margin: 2px 6px 0;
 	}
 
 	.k-slider-track,
@@ -100,16 +100,24 @@
 
 		.k-select {
 			position: relative;
+			width: auto;
+			min-height: initial;
+			line-height: inherit;
 		}
 	}
 
 	.k-align-right {
-		padding: 4px 0;
+		line-height: inherit;
 
 		 & > * {
 			display: inline-block;
 		}
 	}
+}
+
+.k-mediaplayer-currenttime {
+	display: inline-block;
+	margin-top: 2px;
 }
 
 .k-quality-list {
