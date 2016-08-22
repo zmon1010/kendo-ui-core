@@ -258,6 +258,73 @@
         equal(filter.filters[0].value, null);
     });
 
+    test("submitting the form does send the extra filterMenu if default filter is isnotnull and extra is true", function() {
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            extra: true,
+            operators: {
+                string: {
+                    isnotnull: "custom text"
+                }
+            }
+        });
+
+        filterMenu.form.submit();
+
+        equal(dataSource.filter().filters.length, 2);
+    });
+
+
+    test("submitting the form does not send the extra filterMenu if default filter is isnotnull and extra is false", function() {
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            extra: false,
+            operators: {
+                string: {
+                    isnotnull: "custom text"
+                }
+            }
+        });
+
+        filterMenu.form.submit();
+
+        equal(dataSource.filter().filters.length, 1);
+    });
+
+
+    test("submitting the form does send the extra filterMenu if default filter is isnull and extra is true", function() {
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            extra: true,
+            operators: {
+                string: {
+                    isnull: "custom text"
+                }
+            }
+        });
+
+        filterMenu.form.submit();
+
+        equal(dataSource.filter().filters.length, 2);
+    });
+
+
+    test("submitting the form does not send the extra filterMenu if default filter is isnull and extra is false", function() {
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            extra: false,
+            operators: {
+                string: {
+                    isnull: "custom text"
+                }
+            }
+        });
+
+        filterMenu.form.submit();
+
+        equal(dataSource.filter().filters.length, 1);
+    });
+
     test("submitting the form does not send the extra filterMenu if it is empty", function() {
         filterMenu = setup(dom, {
             dataSource: dataSource

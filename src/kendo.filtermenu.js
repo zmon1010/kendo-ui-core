@@ -439,9 +439,15 @@ var __meta__ = { // jshint ignore:line
             var that = this,
                 expression = that.dataSource.filter() || { filters: [], logic: "and" };
 
+            var defaultFilters = [ that._defaultFilter() ];
+            var defaultOperator = that._defaultFilter().operator;
+            if (that.options.extra || (defaultOperator !== "isnull" && defaultOperator !== "isnotnull")) {
+                defaultFilters.push(that._defaultFilter());
+            }
+
             that.filterModel = kendo.observable({
                 logic: "and",
-                filters: [ that._defaultFilter(), that._defaultFilter()]
+                filters: defaultFilters
             });
 
             if (that.form) {
