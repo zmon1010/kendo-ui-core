@@ -1127,8 +1127,7 @@ var __meta__ = { // jshint ignore:line
             for (var idx = 0; idx < groupCount; idx++) {
                 this._addResourceView(idx);
             }
-
-            
+          
             this._groupedView._addDaySlotCollections(groupCount, tableRows, startDate);
         },
 
@@ -1136,7 +1135,6 @@ var __meta__ = { // jshint ignore:line
        addDaySlot: function(collection, cell, startDate, cellCount){
             var clientHeight = cell.clientHeight;
             var firstChildHeight = cell.children.length ? cell.children[0].offsetHeight + 3 : 0;
-
             var start = kendo.date.addDays(startDate, cellCount);
             var end = kendo.date.MS_PER_DAY;
 

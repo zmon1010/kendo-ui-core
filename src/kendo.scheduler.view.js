@@ -1186,7 +1186,6 @@ var __meta__ = { // jshint ignore:line
 
                   if(!tempSlot) 
                   {
-                    
                     horizontalRange = this._getNextHorizontalRange(group, method, horizontalRange);                
                   } else {
                       horizontalRange.startSlot = horizontalRange.endSlot = tempSlot;
