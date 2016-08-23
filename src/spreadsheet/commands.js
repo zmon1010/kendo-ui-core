@@ -797,6 +797,7 @@
     });
 
     kendo.spreadsheet.OpenCommand = Command.extend({
+        cannotUndo: true,
         exec: function() {
             var file = this.options.file;
             if (file.name.match(/.xlsx$/i) === null) {

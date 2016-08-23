@@ -97,7 +97,11 @@
             var result = command.exec();
 
             if (!result || result.reason !== "error") {
-                this.undoRedoStack.push(command);
+                if (command.cannotUndo) {
+                    this.undoRedoStack.clear();
+                } else {
+                    this.undoRedoStack.push(command);
+                }
             }
 
             return result;
