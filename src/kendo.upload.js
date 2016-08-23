@@ -347,7 +347,7 @@ var __meta__ = { // jshint ignore:line
 
         _onInputKeyDown: function(e) {
             var that = this;
-            var firstButton = that.wrapper.find(".k-upload-action:first");
+            var firstButton = that.wrapper.find(".k-upload-action:visible:first");
 
             if (e.keyCode === kendo.keys.TAB && firstButton.length > 0) {
                 e.preventDefault();
