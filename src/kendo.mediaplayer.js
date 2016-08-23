@@ -286,16 +286,15 @@
                     var fullScreenSpan = toolBarElement.find('span[class*="k-i-fullscreen"]');
                     this._fullscreenButton = fullScreenSpan.parent("a");
                     this._volumeButton.attr("title", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
-                    volumeSpan.html(this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
+                    this._volumeButton.attr("aria-label", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
                     this._fullscreenButton.attr("title", this.options.messages.fullscreen);
-                    fullScreenSpan.html(this.options.messages.fullscreen);
+                    this._fullscreenButton.attr("aria-label", this.options.messages.fullscreen);
 
                     toolBarElement.width("auto");
                     this._currentTimeElement = toolBarElement.find(".k-mediaplayer-currenttime");
                     this._durationElement = toolBarElement.find(".k-mediaplayer-duration");
                     this._playButtonSpan = toolBarElement.find('span[class*="k-i-play"]');
                     this._playButton = this._playButtonSpan.parent("a");
-                    this._playButtonSpan.html(this.options.messages.play);
                     
                     if (this.options.autoPlay) {
                         this._playStateToggle(true);
@@ -428,15 +427,15 @@
                 if (volume === 0) {
                     volumeElement.attr("class", cssClass + " " + MUTE);
                     volumeButton.attr("title", this.options.messages.unmute);
-                    volumeElement.html(this.options.messages.unmute);
+                    volumeButton.attr("aria-label", this.options.messages.unmute);
                 } else if (volume > 0 && volume < 51) {
                     volumeElement.attr("class", cssClass + " " + LOW_VOLUME);
                     volumeButton.attr("title", this.options.messages.mute);
-                    volumeElement.html(this.options.messages.mute);
+                    volumeButton.attr("aria-label", this.options.messages.mute);
                 } else {
                     volumeElement.attr("class", cssClass + " " + HIGH_VOLUME);
                     volumeButton.attr("title", this.options.messages.mute);
-                    volumeElement.html(this.options.messages.mute);
+                    volumeButton.attr("aria-label", this.options.messages.mute);
                 }
             },
 
@@ -478,16 +477,16 @@
                 if (play) {
                     this._playButtonSpan
                         .removeClass(STATE_PLAY)
-                        .addClass(STATE_PAUSE)
-                        .html(this.options.messages.pause);
+                        .addClass(STATE_PAUSE);
                     this._playButton.attr("title", this.options.messages.pause);
+                    this._playButton.attr("aria-label", this.options.messages.pause);
                 }
                 else {
                     this._playButtonSpan
                         .removeClass(STATE_PAUSE)
-                        .addClass(STATE_PLAY)
-                        .html(this.options.messages.play);
+                        .addClass(STATE_PLAY);
                     this._playButton.attr("title", this.options.messages.play);
+                    this._playButton.attr("aria-label", this.options.messages.play);
                 }
             },
 
