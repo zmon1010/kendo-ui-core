@@ -421,53 +421,7 @@
         },
 
         _initializeColumnResizing: function() {
-            var editor = this;
-
-            function initColumnResizing(editorWidget, tableElement) {
-                editorWidget.columnResizing = new kendo.ui.editor.ColumnResizing(tableElement, {
-                        rtl: isRtl(editorWidget.element),
-                        rootElement: editorWidget.body
-                });
-            }
-
-            $(editor.body)
-                .on(MOUSE_ENTER +COLUMN_RESIZING_NS, TABLE, function(e) {
-                    var table = e.currentTarget;
-
-                    e.stopPropagation();
-
-                    if (editor.columnResizing) {
-                        if (editor.columnResizing.element !== table && !editor.columnResizing.resizingInProgress()) {
-                            editor._destroyColumnResizing();
-                            initColumnResizing(editor, table);
-                        }
-                    }
-                    else {
-                        initColumnResizing(editor, table);
-                    }
-                })
-                .on(MOUSE_LEAVE + COLUMN_RESIZING_NS, TABLE, function(e) {
-                    var parentTable;
-                    var columnResizing = editor.columnResizing;
-
-                    e.stopPropagation();
-
-                    if (columnResizing && !columnResizing.resizingInProgress()) {
-                        parentTable = $(columnResizing.element).parents(TABLE)[0];
-
-                        if (parentTable) {
-                            editor._destroyColumnResizing();
-                            initColumnResizing(editor, parentTable);
-                        }
-                    }
-                })
-                .on(MOUSE_LEAVE +COLUMN_RESIZING_NS, function() {
-                    var columnResizing = editor.columnResizing;
-
-                    if (columnResizing && !columnResizing.resizingInProgress()) {
-                        editor._destroyColumnResizing();
-                    }
-                });
+            kendo.ui.editor.ColumnResizing.create(this);
         },
 
         _destroyColumnResizing: function() {
@@ -567,7 +521,7 @@
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
                     ".k-column-resize-handle {position:absolute; height: 10px; width:10px; cursor:col-resize; z-index: 2;}" +
-                    ".k-column-resize-handle > .k-column-resize-hint-marker {width:2px; height:100%; margin:0 auto; background-color:#00b0ff; display:none; opacity:0.8;}" +
+                    ".k-column-resize-handle > .k-column-resize-marker {width:2px; height:100%; margin:0 auto; background-color:#00b0ff; display:none; opacity:0.8;}" +
                     ".k-row-resize-handle{display:table;position:absolute;cursor:row-resize;z-index:100;}" +
                     ".k-row-resize-handle .k-row-resize-marker-wrapper{display:table-cell;height:100%;margin:0;padding:0;vertical-align:middle;}" +
                     ".k-row-resize-handle .k-row-resize-marker-wrapper .k-row-resize-marker{margin:0;padding:0;width:100%;height:2px;background-color:#00b0ff;opacity:0.8;display:none;}" +

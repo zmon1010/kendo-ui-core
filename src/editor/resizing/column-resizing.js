@@ -1,5 +1,5 @@
 (function(f, define) {
-    define(["../main", "../../kendo.resizable", "./resizing-utils", "./table-element-resizing"], f);
+    define(["../main", "./resizing-utils", "./table-element-resizing"], f);
 })(function() {
 
 (function(kendo, undefined) {
@@ -10,11 +10,9 @@
 
     var $ = kendo.jQuery;
     var extend = $.extend;
-    var isArray = $.isArray;
-    var proxy = $.proxy;
 
     var Editor = kendo.ui.editor;
-    var Class = kendo.Class;
+    var TableElementResizing = Editor.TableElementResizing;
     var ResizingUtils = Editor.ResizingUtils;
     var constrain = ResizingUtils.constrain;
     var getElementWidth = ResizingUtils.getElementWidth;
@@ -22,124 +20,51 @@
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
-    var setContentEditable = ResizingUtils.setContentEditable;
 
     var NS = ".kendoEditorColumnResizing";
     var RESIZE_HANDLE_CLASS = "k-column-resize-handle";
-    var RESIZE_HINT_MARKER_CLASS = "k-column-resize-hint-marker";
+    var RESIZE_MARKER_CLASS = "k-column-resize-marker";
 
-    var COLUMN = "column";
     var COMMA = ",";
-    var DOT = ".";
-    var LAST_CHILD = ":last-child";
-    var MOUSE_DOWN = "mousedown";
-    var MOUSE_MOVE = "mousemove";
-    var MOUSE_UP = "mouseup";
     var PX = "px";
 
-    var TABLE = "table";
     var TBODY = "tbody";
     var TD = "td";
     var TH = "th";
     var TR = "tr";
 
-    var TRUE = "true";
-    var FALSE = "false";
-
     var WIDTH = "width";
 
-    var ColumnResizing = Class.extend({
-        init: function(element, options) {
-            var that = this;
-
-            that.options = extend({}, that.options, options);
-
-            that.options.tags = isArray(that.options.tags) ? that.options.tags : [that.options.tags];
-
-            if ($(element).is(TABLE)) {
-                that.element = element;
-                $(element).on(MOUSE_MOVE + NS, that.options.tags.join(COMMA), proxy(that._detectColumnBorderHovering, that));
-            }
-        },
-
-        destroy: function() {
-            var that = this;
-
-            if (that.element) {
-                $(that.element).off(NS);
-                that.element = null;
-            }
-
-            that._destroyResizable();
-            that._destroyResizeHandle();
-        },
-
+    var ColumnResizing = TableElementResizing.extend({
         options: {
             tags: [TD, TH],
             min: 20,
             rootElement: null,
+            eventNamespace: NS,
             rtl: false,
             handle: {
+                dataAttribute: "column",
                 width: 10,
+                height: 0,
+                classNames: {
+                    handle: RESIZE_HANDLE_CLASS,
+                    marker: RESIZE_MARKER_CLASS
+                },
                 template:
                     '<div class="' + RESIZE_HANDLE_CLASS + '">' +
-                        '<div class="' + RESIZE_HINT_MARKER_CLASS + '"></div>' +
+                        '<div class="' + RESIZE_MARKER_CLASS + '"></div>' +
                     '</div>'
             }
         },
 
-        resizingInProgress: function() {
-            var that = this;
-            var resizable = that.resizable;
-
-            if (resizable) {
-                return !!resizable.resizing;
-            }
-
-            return false;
-        },
-
-        _detectColumnBorderHovering: function(e) {
-            var that = this;
-            var column = $(e.currentTarget);
-            var resizeHandle = that.resizeHandle;
-            var rootElement = that.options.rootElement;
-
-            if (!that.resizingInProgress()) {
-                if (!column.is(LAST_CHILD) && that._columnBorderHovered(column, e.clientX)) {
-                    setContentEditable(rootElement, FALSE);
-
-                    if (resizeHandle) {
-                        if (resizeHandle.data(COLUMN) && resizeHandle.data(COLUMN) !== column[0]) {
-                            that._destroyResizable();
-                            that._destroyResizeHandle();
-                            that._createResizeHandle(column);
-                            that._initResizable(column);
-                        }
-                    }
-                    else {
-                        that._createResizeHandle(column);
-                        that._initResizable(column);
-                    }
-                }
-                else {
-                    if (resizeHandle) {
-                        setContentEditable(rootElement, TRUE);
-                        that._destroyResizable();
-                        that._destroyResizeHandle();
-                    }
-                }
-            }
-        },
-
-        _columnBorderHovered: function(column, clientX) {
+        elementBorderHovered: function(column, e) {
             var that = this;
             var options = that.options;
             var handleWidth = options.handle.width;
-            var borderLeftOffset = column.offset().left + (options.rtl ? 0 : column.outerWidth());
-            var mousePosition = clientX + $(column[0].ownerDocument).scrollLeft();
+            var borderOffset = column.offset().left + (options.rtl ? 0 : column.outerWidth());
+            var mousePosition = e.clientX + $(column[0].ownerDocument).scrollLeft();
 
-            if ((mousePosition > (borderLeftOffset - handleWidth)) && (mousePosition < (borderLeftOffset + handleWidth))) {
+            if ((mousePosition > (borderOffset - handleWidth)) && (mousePosition < (borderOffset + handleWidth))) {
                 return true;
             }
             else {
@@ -147,106 +72,72 @@
             }
         },
 
-        _createResizeHandle: function(column) {
+        setResizeHandlePosition: function(column) {
+            var that = this;
+            var tableBody = $(that.element).children(TBODY);
+            var options = that.options;
+            var handleWidth = options.handle.width;
+
+            that.resizeHandle.css({
+                top: tableBody.position().top,
+                left: column.offset().left + (options.rtl ? 0 : column.outerWidth()) - (handleWidth / 2),
+                position: "absolute"
+            });
+        },
+
+        setResizeHandleDimensions: function() {
             var that = this;
             var tableBody = $(that.element).children(TBODY);
             var options = that.options;
             var handleOptions = options.handle;
             var handleWidth = handleOptions.width;
 
-            if (!that.resizeHandle) {
-                that.resizeHandle = $(handleOptions.template).appendTo(options.rootElement);
-            }
-
             that.resizeHandle.css({
-                top: tableBody.position().top,
-                left: column.offset().left + (options.rtl ? 0 : column.outerWidth()) - (handleWidth / 2),
                 width: handleWidth,
-                height: tableBody.height(),
-                position: "absolute"
-            })
-            .data(COLUMN, column[0])
-            .show()
-            .on(MOUSE_DOWN + NS, function() {
-                $(this).children(DOT + RESIZE_HINT_MARKER_CLASS).show();
-            })
-            .on(MOUSE_UP +NS, function() {
-                $(this).children(DOT + RESIZE_HINT_MARKER_CLASS).hide();
+                height: tableBody.height()
+            });
+        },
+
+        setResizeHandleDragPosition: function(e) {
+            var that = this;
+            var column = $($(e.currentTarget).data(that.options.handle.dataAttribute));
+            var options = that.options;
+            var handleWidth = options.handle ? options.handle.width : 0;
+            var min = options.min;
+            var rtl = options.rtl;
+            var columnWidth = column.outerWidth();
+            var columnLeftOffset = column.offset().left;
+            var adjacentColumn = column.next();
+            var adjacentColumnWidth = adjacentColumn ? adjacentColumn.outerWidth() : 0;
+                    
+            var handleOffset = constrain({
+                value: e.x.location,
+                min: abs(columnLeftOffset - (rtl ? adjacentColumnWidth : 0) + min),
+                max: abs(columnLeftOffset + columnWidth + (rtl ? 0 : adjacentColumnWidth) - handleWidth - min)
             });
 
-            that.resizeHandle.children(DOT + RESIZE_HINT_MARKER_CLASS).hide();
+            $(that.resizeHandle).css({ left: handleOffset });
         },
 
-        _destroyResizeHandle: function() {
+        resize: function(e) {
             var that = this;
+            var column = $($(e.currentTarget).data(that.options.handle.dataAttribute));
+            var options = that.options;
+            var rtlModifier = options.rtl ? (-1) : 1;
+            var initialDeltaX = rtlModifier * e.x.initialDelta;
+            var newWidth;
+            var initialAdjacentColumnWidth;
+            var initialColumnWidth;
 
-            if (that.resizeHandle) {
-                that.resizeHandle.off(NS).remove();
-                that.resizeHandle = null;
-            }
-        },
+            that._setElementComputedWidth();
 
-        _initResizable: function(column) {
-            var that = this;
+            newWidth = that._calculateNewWidth(column, initialDeltaX);
+            initialAdjacentColumnWidth = column.next().outerWidth();
+            initialColumnWidth = column.outerWidth();
 
-            that._destroyResizable();
-
-            that.resizable = $(column).kendoResizable({
-                draggableElement: that.resizeHandle[0],
-                resize: function(e) {
-                    var resizable = this;
-                    var column = $(resizable.element);
-                    var columnResizing = that;
-                    var options = columnResizing.options;
-                    var handleWidth = options.handle ? options.handle.width : 0;
-                    var min = options.min;
-                    var rtl = options.rtl;
-                    var columnWidth = column.outerWidth();
-                    var columnLeftOffset = column.offset().left;
-                    var adjacentColumn = column.next();
-                    var adjacentColumnWidth = adjacentColumn ? adjacentColumn.outerWidth() : 0;
-                    
-                    var leftOffset = constrain({
-                        value: e.x.location,
-                        min: abs(columnLeftOffset - (rtl ? adjacentColumnWidth : 0) + min),
-                        max: abs(columnLeftOffset + columnWidth + (rtl ? 0 : adjacentColumnWidth) - handleWidth - min)
-                    });
-
-                    $(columnResizing.resizeHandle).css({ left: leftOffset });
-                },
-                resizeend: function(e) {
-                    var resizable = this;
-                    var column = resizable.element;
-                    var options = that.options;
-                    var rtlModifier = options.rtl ? (-1) : 1;
-                    var initialDeltaX = rtlModifier * e.x.initialDelta;
-                    var newWidth;
-                    var initialAdjacentColumnWidth;
-                    var initialColumnWidth;
-
-                    that._setElementComputedWidth();
-
-                    newWidth = that._calculateNewWidth(column, initialDeltaX);
-                    initialAdjacentColumnWidth = column.next().outerWidth();
-                    initialColumnWidth = column.outerWidth();
-
-                    that._resizeColumn(column[0], newWidth);
-                    that._resizeTopAndBottomColumns(column, newWidth);
-                    that._resizeAdjacentColumns(column.index(), initialAdjacentColumnWidth, initialColumnWidth, initialDeltaX);
-
-                    that._destroyResizeHandle();
-                    setContentEditable(options.rootElement, TRUE);
-                }
-            }).data("kendoResizable");
-        },
-
-        _destroyResizable: function() {
-            var that = this;
-
-            if (that.resizable) {
-                that.resizable.destroy();
-                that.resizable = null;
-            }
+            that._resizeColumn(column[0], newWidth);
+            that._resizeTopAndBottomColumns(column, newWidth);
+            that._resizeAdjacentColumns(column.index(), initialAdjacentColumnWidth, initialColumnWidth, initialDeltaX);
         },
 
         _setElementComputedWidth: function() {
@@ -370,7 +261,7 @@
     });
 
     ColumnResizing.create = function(editor) {
-        return Editor.TableElementResizing.create(editor, {
+        return TableElementResizing.initResizing(editor, {
             name: "columnResizing",
             type: ColumnResizing,
             eventNamespace: NS

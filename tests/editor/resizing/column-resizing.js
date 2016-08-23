@@ -11,14 +11,19 @@
     var tableElement;
     var wrapper;
     var FIXTURE_SELECTOR = "#qunit-fixture";
-    var HANDLE_SELECTOR = ".k-column-resize-handle";
-    var MARKER_SELECTOR = ".k-column-resize-hint-marker";
+
+    var DOT = ".";
+    var RESIZE_HANDLE_CLASS = "k-column-resize-handle";
+    var RESIZE_MARKER_CLASS = "k-column-resize-marker";
+    var HANDLE_SELECTOR = DOT + RESIZE_HANDLE_CLASS;
+    var MARKER_SELECTOR = DOT + RESIZE_MARKER_CLASS;
+
     var FIRST_COLUMN = "td:first";
     var SECOND_COLUMN = "tr:first td:nth-child(2)";
     var LAST_COLUMN = "tr:first td:last";
     var CONTENT_EDITABLE = "contenteditable";
     var PX = "px";
-    var DOT = ".";
+
     var FALSE = "false";
     var TRUE = "true";
     var NS = "kendoEditorColumnResizing";
@@ -31,8 +36,12 @@
     var PERCENTAGE = "%";
     var ROW = "tr";
     var COLUMN = "td";
+    
+    var TD = "td";
+    var TH = "th";
     var TBODY = "tbody";
     var WIDTH = "width";
+
     var TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS =
         '<table id="table" class="k-table" style="width: 400px";padding:20px;>' +
             '<tr id="row1" class="row">' +
@@ -251,6 +260,7 @@
 
         teardown: function() {
             $(".table").remove();
+            columnResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -272,12 +282,19 @@
             tags: ["td", "th"],
             min: 20,
             rootElement: null,
+            eventNamespace: ".kendoEditorColumnResizing",
             rtl: false,
             handle: {
+                dataAttribute: "column",
                 width: 10,
+                height: 0,
+                classNames: {
+                    handle: "k-column-resize-handle",
+                    marker: "k-column-resize-marker"
+                },
                 template:
                     '<div class="k-column-resize-handle">' +
-                        '<div class="k-column-resize-hint-marker"></div>' +
+                        '<div class="k-column-resize-marker"></div>' +
                     '</div>'
             }
         };
@@ -325,6 +342,7 @@
         },
 
         teardown: function() {
+            columnResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -503,6 +521,7 @@
         },
 
         teardown: function() {
+            columnResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -556,6 +575,7 @@
         },
 
         teardown: function() {
+            columnResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -621,6 +641,7 @@
                 $(editor.body).find("*").remove();
             }
             editor.columnResizing.destroy();
+            columnResizing.destroy();
             removeMocksIn(editor.columnResizing);
             kendo.destroy(QUnit.fixture);
         }
@@ -653,6 +674,7 @@
         },
 
         teardown: function() {
+            columnResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -669,7 +691,7 @@
         equal(columnResizing.element, null);
     });
 
-    test("should remove resize handle from DOM", function() {        
+    test("should remove resize handle from DOM", function() {
         triggerBorderHover(cell)
 
         columnResizing.destroy();
@@ -686,20 +708,20 @@
     });
 
     test("should call resizable destroy", function() {
-        var resizable = columnResizing.resizable = new kendo.ui.Resizable($("<div />")[0], {});
-        trackMethodCall(resizable, "destroy");
+        triggerBorderHover(cell);
+        var destroySpy = spy(columnResizing._resizable, "destroy");
 
         columnResizing.destroy();
 
-        equal(resizable.destroy.callCount, 1);
+        equal(destroySpy.calls("destroy"), 1);
     });
 
     test("should remove resizable reference", function() {
-        var resizable = columnResizing.resizable = new kendo.ui.Resizable($("<div />")[0], {});
+        triggerBorderHover(cell);
 
         columnResizing.destroy();
 
-        equal(columnResizing.resizable, null);
+        equal(columnResizing._resizable, null);
     });
 
     module("editor column resizing", {
@@ -712,6 +734,7 @@
         },
 
         teardown: function() {
+            columnResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -783,12 +806,26 @@
         equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), editable);
     });
 
-    test("destroy should enable editing in the root element", function() {
-        var resizable = columnResizing.resizable = new kendo.ui.Resizable($("<div />")[0], {});
+    module("editor column resizing destroy", {
+        setup: function() {
+            wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
+            columnResizing = new ColumnResizing(tableElement[0], {
+                rootElement: wrapper
+            });
+            cell = tableElement.find(FIRST_COLUMN);
+        },
 
+        teardown: function() {
+            columnResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("destroy should not change the editing of the root element", function() {
         columnResizing.destroy();
 
-        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), TRUE);
+        equal($(wrapper).attr(CONTENT_EDITABLE), TRUE);
     });
 
     module("editor column resizing resizable", {
@@ -801,9 +838,7 @@
         },
 
         teardown: function() {
-            if(columnResizing) {
-                columnResizing.destroy();
-            }
+            columnResizing.destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
