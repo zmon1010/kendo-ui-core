@@ -64,11 +64,369 @@ var __meta__ = { // jshint ignore:line
         '<div style="width:#=width#px;left:#=left#px;top:#=top#px" class="k-more-events k-button"><span>...</span></div>'
     );
 
+       var MonthGroupedView = kendo.Class.extend({
+            init: function(view) {
+                this._view = view;
+            },
+
+            _verticalRowCountForLevel: function(level) {
+                var view = this._view;
+
+                return view._rowCountForLevel(level);
+            },
+
+            _horizontalGroupCountForLevel: function(level) {
+                var view = this._view;
+
+                return view._columnCountForLevel(level);
+            },
+
+            _getCalendarRowsLength: function(cellsPerRow, cellCount) {
+                return cellCount / cellsPerRow;
+            },
+
+            _createRows: function(start, startIdx, horizontalGroupCount, verticalGroupIndex) {
+                var view = this._view;
+                var cellsPerRow = NUMBER_OF_COLUMNS;
+                var isVerticallyGrouped = view._isVerticallyGrouped();
+                var html = "";
+
+                for (var groupIdx = 0; groupIdx < horizontalGroupCount; groupIdx++) {
+                    html += view._createRow(start, startIdx, cellsPerRow, isVerticallyGrouped ? verticalGroupIndex : groupIdx);
+                }
+
+                return html;
+            },
+
+            _adjustStartDate: function(start) {
+                return kendo.date.addDays(start, NUMBER_OF_COLUMNS);
+            },
+
+            _getContent: function(content, startDate, resources) {
+                return content({ date: startDate, resources: resources });
+            },
+
+            _getTimeSlotByPosition: function(x, y, groupIndex) {
+                var group = this._view.groups[groupIndex];
+
+                return group.daySlotByPosition(x, y);
+            },
+
+            _nextSlotStartDate: function(startDate) {
+                return kendo.date.nextDay(startDate);
+            },
+
+            _createRowsLayout: function(resources, rows, groupHeaderTemplate) {
+                var view = this._view;
+
+                return view._createRowsLayout(resources, rows, groupHeaderTemplate);
+            },
+
+            _createVerticalColumnsLayout: function(resources, rows, groupHeaderTemplate, columns) {
+
+                return columns;
+            },
+
+            _createColumnsLayout: function(resources, columns, groupHeaderTemplate) {
+                var view = this._view;
+
+                return view._createColumnsLayout(resources, columns, groupHeaderTemplate);
+            },
+
+            _verticalGroupCount: function(level) {
+                var view = this._view;
+
+                return view._rowCountForLevel(level);
+            },
+
+            _horizontalGroupCount: function(level) {
+                var view = this._view;
+
+                return view._columnCountForLevel(level) / view._columnOffsetForResource(level);
+            },
+
+            _positionEvent: function(event, group, range, rangeCount, start, end, rangeIndex){
+                 var view = this._view;
+                 var isMobilePhoneView = view._isMobilePhoneView();
+
+		    if (rangeCount > 1) {
+		        if (rangeIndex === 0) {
+		            end = range.end.endDate();
+		        } else if (rangeIndex == rangeCount - 1) {
+		            start = range.start.startDate();
+		        } else {
+		            start = range.start.startDate();
+		            end = range.end.endDate();
+		        }
+		    }
+
+		    var occurrence = event.clone({ start: start, end: end, head: range.head, tail: range.tail });
+
+		    if (isMobilePhoneView) {
+		        view._positionMobileEvent(range, view._createEventElement(occurrence), group);
+		    } else {
+		        view._positionEvent(range, view._createEventElement(occurrence), group);
+		    }
+            },
+
+            _addDaySlotCollections: function(groupCount, tableRows, startDate) {
+                var view = this._view;
+                var columnCount = NUMBER_OF_COLUMNS;
+                var rowCount = NUMBER_OF_ROWS;
+
+                for (var groupIndex = 0; groupIndex < groupCount; groupIndex++) {
+                    var cellCount = 0;
+                    var rowMultiplier = 0;
+
+                    if (view._isVerticallyGrouped()) {
+                        rowMultiplier = groupIndex;
+                    }
+
+                    for (var rowIndex = rowMultiplier * rowCount; rowIndex < (rowMultiplier + 1) * rowCount; rowIndex++) {
+                        var group = view.groups[groupIndex];
+                        var collection = group.addDaySlotCollection(kendo.date.addDays(startDate, cellCount), kendo.date.addDays(startDate, cellCount + columnCount));
+
+                        var tableRow = tableRows[rowIndex];
+                        var cells = tableRow.children;
+                        var cellMultiplier = 0;
+
+                        tableRow.setAttribute("role", "row");
+
+                        if (!view._isVerticallyGrouped()) {
+                            cellMultiplier = groupIndex;
+                        }
+
+                        for (var cellIndex = cellMultiplier * columnCount; cellIndex < (cellMultiplier + 1) * columnCount; cellIndex++) {
+                            var cell = cells[cellIndex];
+
+                            view.addDaySlot(collection, cell, startDate, cellCount);
+                            cellCount++;
+                        }
+                    }
+                }
+            },
+
+            _changePeriodGroupIndex: function(reverse){
+                var view = this._view;
+
+                return reverse ? view.groups.length - 1 : 0;
+            }
+        });
+
+        var MonthGroupedByDateView = kendo.Class.extend({
+            init: function(view) {
+                this._view = view;
+            },
+
+            _verticalRowCountForLevel: function() {
+                return 1;
+            },
+
+            _horizontalGroupCountForLevel: function(level) {
+                var view = this._view;
+
+                return view._columnCountForLevel(level + 1) / NUMBER_OF_COLUMNS;
+            },
+
+            _createRows: function(start, startIdx, horizontalGroupCount) {
+                var view = this._view;
+                var cellsPerRow = NUMBER_OF_COLUMNS;
+                var isVerticallyGrouped = view._isVerticallyGrouped();
+                var html = "";
+                var dateIdx = 0;
+
+                if (isVerticallyGrouped) {
+                    var verticalStart = new Date(start);
+                    var groupCount = view._groupCount();
+                    for (dateIdx; dateIdx < NUMBER_OF_ROWS; dateIdx++) {
+                        html += view._createRow(verticalStart, startIdx, groupCount, dateIdx);
+
+                        verticalStart = kendo.date.addDays(verticalStart, cellsPerRow);
+                    }
+                    start = kendo.date.nextDay(start);
+                } else {
+                    for (dateIdx; dateIdx < cellsPerRow; dateIdx++) {
+                        html += view._createRow(start, startIdx, horizontalGroupCount, dateIdx);
+                        start = kendo.date.nextDay(start);
+                    }
+                    start = kendo.date.addDays(start, cellsPerRow);
+                }
+
+                return html;
+            },
+
+            _adjustStartDate: function(start, isLastRow) {
+                var view = this._view;
+                var isVerticallyGrouped = view._isVerticallyGrouped();
+
+                if (isVerticallyGrouped) {
+                    if (isLastRow) {
+                        return kendo.date.addDays(start, NUMBER_OF_COLUMNS * (NUMBER_OF_ROWS - 1) + 1);
+                    } else {
+                        return kendo.date.nextDay(start);
+                    }
+                }
+
+                return kendo.date.addDays(start, NUMBER_OF_COLUMNS);
+            },
+
+            _getContent: function(content, startDate, resources, cellIdx) {
+                if (cellIdx === 0) {
+                    return content({ date: startDate, resources: resources });
+                }
+                return "";
+            },
+
+            _getTimeSlotByPosition: function(x, y, groupIndex) {
+                var group = this._view.groups[groupIndex];
+
+                return group.daySlotByPosition(x, y, true);
+            },
+
+            _nextSlotStartDate: function(startDate) {
+                return startDate;
+            },
+
+            _getCalendarRowsLength: function(cellsPerRow) {
+                var view = this._view;
+                var isVerticallyGrouped = view._isVerticallyGrouped();
+
+                return isVerticallyGrouped ? NUMBER_OF_COLUMNS : NUMBER_OF_ROWS;
+            },
+
+            _createRowsLayout: function(resources, rows, groupHeaderTemplate, columns) {
+                var view = this._view;
+
+                return view._createDateLayout(columns, null, false);
+            },
+
+            _createVerticalColumnsLayout: function(resources, rows, groupHeaderTemplate) {
+                var view = this._view;
+                var resource = resources[0];
+                var configuration = [];
+                var data = resource.dataSource.view();
+
+                for (var dataIndex = 0; dataIndex < data.length * NUMBER_OF_ROWS; dataIndex++) {
+                    var obj = {
+                        text: groupHeaderTemplate({
+                            text: kendo.htmlEncode(kendo.getter(resource.dataTextField)(data[dataIndex % data.length])),
+                            color: kendo.getter(resource.dataColorField)(data[dataIndex % data.length]),
+                            field: resource.field,
+                            title: resource.title,
+                            name: resource.name,
+                            value: kendo.getter(resource.dataValueField)(data[dataIndex % data.length])
+                        }),
+                        className: "k-slot-cell"
+                    };
+                    obj.columns = view._createColumnsLayout(resources.slice(1), null, groupHeaderTemplate);
+
+                    configuration.push(obj);
+                }
+
+                return configuration;
+            },
+
+            _createColumnsLayout: function(resources, columns, groupHeaderTemplate, subColumns) {
+                var view = this._view;
+
+                return view._createColumnsLayout(resources, columns, groupHeaderTemplate, subColumns, true);
+            },
+
+            _verticalGroupCount: function(level) {
+                var view = this._view;
+
+                return view._columnCountForLevel(level) / NUMBER_OF_ROWS;
+            },
+
+            _horizontalGroupCount: function(level) {
+                var view = this._view;
+                return view._columnCountForLevel(level) / NUMBER_OF_COLUMNS;
+            },
+
+            _positionEvent: function(event, group, range, rangeCount, start, end){
+                var view = this._view;
+                var startIndex = range.start.index;
+                var endIndex = range.end.index;
+                var isMobilePhoneView = view._isMobilePhoneView();
+
+                for (var i = range.start.index; i <= range.end.index; i++) {
+                    var currentSlot = range.collection._slots[i];
+                    var dateRange = group.daySlotRanges(currentSlot.start, currentSlot.start, true)[0];                                  
+
+                    var occurrence = event.clone({ 
+                        start: i === startIndex ? currentSlot.start : start,
+                        end: i === endIndex ? currentSlot.end : end,
+                        head: i !== endIndex || range.head,
+                        tail: i !== startIndex || range.tail });
+
+                    if (isMobilePhoneView) {
+                        view._positionMobileEvent(dateRange, view._createEventElement(occurrence), group);
+                    } else {
+                        view._positionEvent(dateRange, view._createEventElement(occurrence), group);
+                    }
+                }
+            },
+
+            _addDaySlotCollections: function(groupCount, tableRows, startDate) {
+                var view = this._view;
+                var columnCount = NUMBER_OF_COLUMNS;
+                var rowCount = NUMBER_OF_ROWS;
+                var isVerticallyGrouped = view._isVerticallyGrouped();
+
+                for (var dateIndex = 0; dateIndex < columnCount; dateIndex++) {
+                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+                        var groupIndex = 0;
+                        var currentTableIndex = isVerticallyGrouped ? dateIndex : rowIndex;
+                        var tableRow = tableRows[currentTableIndex];
+                        var cells = tableRow.children;
+                        var cellMultiplier = 0;
+
+                        tableRow.setAttribute("role", "row");
+
+                        if (!view._isVerticallyGrouped()) {
+                            cellMultiplier = dateIndex;
+                        }
+
+                        for (var cellIndex = cellMultiplier * groupCount; cellIndex < (cellMultiplier + 1) * groupCount; cellIndex++) {
+                            var cellCount = (rowIndex * columnCount) + dateIndex;
+                            var currentCellIndex = isVerticallyGrouped ? cellIndex + (rowIndex * groupCount) : cellIndex;
+                            var cell = cells[currentCellIndex];
+                            var currentGroupIndex = isVerticallyGrouped ? cellIndex : groupIndex;
+                            var group = view.groups[currentGroupIndex];
+                            var collection;
+                            if (dateIndex === 0) {
+                                collection = group.addDaySlotCollection(kendo.date.addDays(startDate, cellCount), kendo.date.addDays(startDate, cellCount + columnCount));
+                            } else {
+                                collection = group._daySlotCollections[rowIndex];
+                            }
+
+                            view.addDaySlot(collection, cell, startDate, cellCount);
+                            groupIndex++;
+                        }
+                    }
+                }
+            },
+
+            _changePeriodGroupIndex: function(reverse, vertical, selectionGroupIndex){
+                var view = this._view;
+
+                if(vertical  &&  view._isVerticallyGrouped()){
+                         return reverse ? view.groups.length - 1 : 0;
+                }
+
+                return selectionGroupIndex;
+            }
+        });
+
+        kendo.ui.scheduler.MonthGroupedView = MonthGroupedView;
+        kendo.ui.scheduler.MonthGroupedByDateView = MonthGroupedByDateView;
+
     ui.MonthView = SchedulerView.extend({
         init: function(element, options) {
             var that = this;
 
             SchedulerView.fn.init.call(that, element, options);
+            that._groupedView = that._getGroupedView();
 
             that.title = that.options.title;
 
@@ -82,6 +440,14 @@ var __meta__ = { // jshint ignore:line
         },
 
         name: "month",
+
+        _getGroupedView: function(){
+            if(this._isGroupedByDate()){
+                return new kendo.ui.scheduler.MonthGroupedByDateView(this);
+            } else{
+                return new kendo.ui.scheduler.MonthGroupedView(this);   
+            }
+        },
 
         _updateDirection: function(selection, ranges, multiple, reverse, vertical) {
             if (multiple) {
@@ -103,6 +469,46 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _changeDate: function(selection, slot, previous) {
+            var group = this.groups[selection.groupIndex];
+            var collections, index;
+
+            if (previous) {
+                  collections = group._getCollections(group.daySlotCollectionCount());
+                  index = slot.collectionIndex - 1;
+
+                  if (index >= 0) {
+                      return  collections[index]._slots[collections[index]._slots.length - 1];
+                  }
+              } else {
+                  collections = group._getCollections(group.daySlotCollectionCount());
+                  index = slot.collectionIndex + 1;
+                  var slotIndex = 0;
+                  
+                  if (collections[index] && collections[index]._slots[slotIndex]) {
+                      return  collections[index]._slots[slotIndex];
+                  }
+              }
+        },
+
+         _getNextHorizontalRange: function(group, method, horizontalRange){
+              var isVertical = this._isVerticallyGrouped();
+
+             horizontalRange.startSlot = group[method](horizontalRange.startSlot, isVertical);
+             horizontalRange.endSlot = group[method](horizontalRange.endSlot, isVertical);
+
+             return horizontalRange;
+        },
+        
+         _getNextVerticalRange: function(group, method, verticalRange, multiple){
+             var isVertical = this._isVerticallyGrouped() && this._isGroupedByDate();
+
+             verticalRange.startSlot = group[method](verticalRange.startSlot, multiple, isVertical);
+             verticalRange.endSlot = group[method](verticalRange.endSlot, multiple, isVertical);
+
+             return verticalRange;
+        },
+
         _changeViewPeriod: function(selection, reverse, vertical) {
             var pad = vertical ? 7 : 1;
 
@@ -114,7 +520,7 @@ var __meta__ = { // jshint ignore:line
             selection.end = kendo.date.addDays(selection.end, pad);
 
             if (!vertical || (vertical && this._isVerticallyGrouped())) {
-                selection.groupIndex = reverse ? this.groups.length - 1 : 0;
+                selection.groupIndex = this._groupedView._changePeriodGroupIndex(reverse, vertical, selection.groupIndex);
             }
 
             selection.events = [];
@@ -336,12 +742,12 @@ var __meta__ = { // jshint ignore:line
         _content: function() {
             var html = '<tbody>';
             var verticalGroupCount = 1;
-
+            var groupedView = this._groupedView;
             var resources = this.groupedResources;
 
             if (resources.length) {
                 if (this._isVerticallyGrouped()) {
-                    verticalGroupCount = this._rowCountForLevel(resources.length - 1);
+                    verticalGroupCount = groupedView._verticalRowCountForLevel(resources.length - 1);
                 }
             }
 
@@ -362,29 +768,29 @@ var __meta__ = { // jshint ignore:line
             var html = '';
             var horizontalGroupCount = 1;
             var isVerticallyGrouped = this._isVerticallyGrouped();
+            var groupedView = this._groupedView;
 
             var resources = this.groupedResources;
 
             if (resources.length) {
                 if (!isVerticallyGrouped) {
-                    horizontalGroupCount = this._columnCountForLevel(resources.length - 1);
+                    horizontalGroupCount = groupedView._horizontalGroupCountForLevel(resources.length - 1);
                 }
             }
 
             this._slotIndices = {};
 
-            for (var rowIdx = 0, length = cellCount / cellsPerRow; rowIdx < length; rowIdx++) {
+            var calendarRowsLength = groupedView._getCalendarRowsLength(cellsPerRow, cellCount);
+
+            for (var rowIdx = 0; rowIdx < calendarRowsLength; rowIdx++) {
                 html += "<tr>";
 
                 weekStartDates.push(start);
 
                 var startIdx = rowIdx*cellsPerRow;
 
-                for (var groupIdx = 0; groupIdx < horizontalGroupCount; groupIdx++) {
-                    html += this._createRow(start, startIdx, cellsPerRow, isVerticallyGrouped ? verticalGroupIndex : groupIdx);
-                }
-
-                start = kendo.date.addDays(start, cellsPerRow);
+               html += groupedView._createRows(start, startIdx, horizontalGroupCount, verticalGroupIndex);
+               start = groupedView._adjustStartDate(start, rowIdx === calendarRowsLength - 1); 
 
                 html += "</tr>";
             }
@@ -402,6 +808,7 @@ var __meta__ = { // jshint ignore:line
             var content = that.dayTemplate;
             var classes = "";
             var html = "";
+            var groupedView = this._groupedView;
 
             var resources = function() {
                 return that._resourceBySlot({ groupIndex: groupIndex });
@@ -425,12 +832,12 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 html += ">";
-                html += content({ date: startDate, resources: resources });
+                html += groupedView._getContent(content, startDate, resources, cellIdx);
                 html += "</td>";
 
                 that._slotIndices[getDate(startDate).getTime()] = startIdx + cellIdx;
 
-                startDate = kendo.date.nextDay(startDate);
+               startDate = groupedView._nextSlotStartDate(startDate);
             }
 
             return html;
@@ -443,6 +850,7 @@ var __meta__ = { // jshint ignore:line
             var columns = $.map(names, function(value) { return { text: value }; });
             var resources = this.groupedResources;
             var rows;
+            var groupedView = this._groupedView;
 
             if (resources.length) {
                 if (this._isVerticallyGrouped()) {
@@ -450,10 +858,11 @@ var __meta__ = { // jshint ignore:line
                     for (var idx = 0; idx < 6; idx++) {
                         inner.push({ text: "<div>&nbsp;</div>", className: "k-hidden k-slot-cell" });
                     }
+                    rows =  groupedView._createRowsLayout(resources, inner, this.groupHeaderTemplate, columns); 
+                    columns =  groupedView._createVerticalColumnsLayout(resources, inner, this.groupHeaderTemplate, columns); 
 
-                    rows = this._createRowsLayout(resources, inner, this.groupHeaderTemplate);
                 } else {
-                    columns = this._createColumnsLayout(resources, columns, this.groupHeaderTemplate);
+                    columns =  groupedView._createColumnsLayout(resources, columns, this.groupHeaderTemplate, columns);
                 }
             }
 
@@ -631,7 +1040,7 @@ var __meta__ = { // jshint ignore:line
            y = Math.ceil(y);
 
            for (var groupIndex = 0; groupIndex < this.groups.length; groupIndex++) {
-               var slot = this.groups[groupIndex].daySlotByPosition(x, y);
+               var slot = this._groupedView._getTimeSlotByPosition(x, y, groupIndex);
 
                if (slot) {
                    return slot;
@@ -711,71 +1120,39 @@ var __meta__ = { // jshint ignore:line
 
        _groups: function() {
             var groupCount = this._groupCount();
-            var columnCount =  NUMBER_OF_COLUMNS;
-            var rowCount =  NUMBER_OF_ROWS;
-
+            var tableRows = this.content[0].getElementsByTagName("tr");
+            var startDate = this.startDate();
             this.groups = [];
 
             for (var idx = 0; idx < groupCount; idx++) {
                 this._addResourceView(idx);
             }
-
-            var tableRows = this.content[0].getElementsByTagName("tr");
-            var startDate = this.startDate();
-
-            for (var groupIndex = 0; groupIndex < groupCount; groupIndex++) {
-                var cellCount = 0;
-                var rowMultiplier = 0;
-
-                if (this._isVerticallyGrouped()) {
-                    rowMultiplier = groupIndex;
-                }
-
-                for (var rowIndex = rowMultiplier*rowCount; rowIndex < (rowMultiplier+1) *rowCount; rowIndex++) {
-                    var group = this.groups[groupIndex];
-                    var collection = group.addDaySlotCollection(kendo.date.addDays(startDate, cellCount), kendo.date.addDays(this.startDate(), cellCount + columnCount));
-
-                    var tableRow = tableRows[rowIndex];
-                    var cells = tableRow.children;
-                    var cellMultiplier = 0;
-
-                    tableRow.setAttribute("role", "row");
-
-                    if (!this._isVerticallyGrouped()) {
-                        cellMultiplier = groupIndex;
-                    }
-
-                    for (var cellIndex = cellMultiplier * columnCount; cellIndex < (cellMultiplier + 1) * columnCount; cellIndex++) {
-                        var cell = cells[cellIndex];
-
-                        var clientHeight = cell.clientHeight;
-
-                        var firstChildHeight = cell.children.length ? cell.children[0].offsetHeight + 3 : 0;
-
-                        var start = kendo.date.addDays(startDate, cellCount);
-                        var end = kendo.date.MS_PER_DAY;
-
-                        if (startDate.getHours() !== start.getHours()) {
-                            end += (startDate.getHours() - start.getHours()) * kendo.date.MS_PER_HOUR;
-                        }
-
-                        start = kendo.date.toUtcTime(start);
-                        end += start;
-
-                        cellCount ++;
-
-                        var eventCount = Math.floor((clientHeight - firstChildHeight - this.options.moreButtonHeight) / (this.options.eventHeight + 3)) ;// add space for the more button
-
-                        cell.setAttribute("role", "gridcell");
-                        cell.setAttribute("aria-selected", false);
-
-                        collection.addDaySlot(cell, start, end, eventCount);
-                    }
-                }
-            }
+          
+            this._groupedView._addDaySlotCollections(groupCount, tableRows, startDate);
         },
 
-        render: function(events) {
+
+       addDaySlot: function(collection, cell, startDate, cellCount){
+            var clientHeight = cell.clientHeight;
+            var firstChildHeight = cell.children.length ? cell.children[0].offsetHeight + 3 : 0;
+            var start = kendo.date.addDays(startDate, cellCount);
+            var end = kendo.date.MS_PER_DAY;
+
+            if (startDate.getHours() !== start.getHours()) {
+                end += (startDate.getHours() - start.getHours()) * kendo.date.MS_PER_HOUR;
+            }
+
+            start = kendo.date.toUtcTime(start);
+            end += start;     
+            var eventCount = Math.floor((clientHeight - firstChildHeight - this.options.moreButtonHeight) / (this.options.eventHeight + 3)) ;// add space for the more button
+
+            cell.setAttribute("role", "gridcell");
+            cell.setAttribute("aria-selected", false);
+
+            collection.addDaySlot(cell, start, end, eventCount);
+       },
+
+       render: function(events) {
             this.content.children(".k-event,.k-more-events,.k-events-container").remove();
 
             this._groups();
@@ -784,9 +1161,9 @@ var __meta__ = { // jshint ignore:line
 
             var resources = this.groupedResources;
             if (resources.length) {
-                this._renderGroups(events, resources, 0, 1);
+               this._renderGroups(events, resources, 0, 1);
             } else {
-                this._renderEvents(events, 0);
+               this._renderEvents(events, 0);
             }
 
             this.refreshLayout();
@@ -796,8 +1173,7 @@ var __meta__ = { // jshint ignore:line
        _renderEvents: function(events, groupIndex) {
             var event;
             var idx;
-            var length;
-            var isMobilePhoneView = this._isMobilePhoneView();
+            var length;           
 
             for (idx = 0, length = events.length; idx < length; idx++) {
                 event = events[idx];
@@ -818,24 +1194,7 @@ var __meta__ = { // jshint ignore:line
                         var start = event.start;
                         var end = event.end;
 
-                        if (rangeCount > 1) {
-                            if (rangeIndex === 0) {
-                                end = range.end.endDate();
-                            } else if (rangeIndex == rangeCount - 1) {
-                                start = range.start.startDate();
-                            } else {
-                                start = range.start.startDate();
-                                end = range.end.endDate();
-                            }
-                        }
-
-                        var occurrence = event.clone({ start: start, end: end, head: range.head, tail: range.tail });
-
-                        if (isMobilePhoneView) {
-                            this._positionMobileEvent(range, this._createEventElement(occurrence), group);
-                        } else {
-                            this._positionEvent(range, this._createEventElement(occurrence), group);
-                        }
+                        this._groupedView._positionEvent(event, group, range, rangeCount, start, end, rangeIndex);                                    
                     }
                 }
             }
@@ -864,12 +1223,13 @@ var __meta__ = { // jshint ignore:line
 
         _groupCount: function() {
             var resources = this.groupedResources;
+            var groupedView = this._groupedView;
 
             if (resources.length) {
                 if (this._isVerticallyGrouped()) {
-                    return this._rowCountForLevel(resources.length - 1);
+                    return groupedView._verticalGroupCount(resources.length - 1);
                 } else {
-                    return this._columnCountForLevel(resources.length) / this._columnOffsetForResource(resources.length);
+                   return groupedView._horizontalGroupCount(resources.length);
                 }
             }
             return 1;

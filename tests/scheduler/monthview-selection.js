@@ -1365,4 +1365,645 @@
         equal(view.table.find(".k-state-selected").length, 1);
     });
 
+      test("left key in horizontally grouped view selects previous group cell on same row", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 5, 2),
+            end: new Date(2013, 5, 3),
+            isAllDay: true,
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.LEFT);
+
+        deepEqual(selection.start, new Date(2013, 5, 2));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+        equal(selection.groupIndex, 0);
+    });
+
+      test("left key in horizontally grouped view selects previous date cell on same row", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 5, 3),
+            end: new Date(2013, 5, 4),
+            isAllDay: true,
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.LEFT);
+
+        deepEqual(selection.start, new Date(2013, 5, 2));
+        deepEqual(selection.end, new Date(2013, 5, 3));
+        equal(selection.groupIndex, 1);
+    });
+
+    test("left key in horizontally grouped view selects last group cell on previous row", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 5, 2),
+            end: new Date(2013, 5, 3),
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.LEFT);
+
+        deepEqual(selection.start, new Date(2013, 5, 1));
+        deepEqual(selection.end, new Date(2013, 5, 2));
+        equal(selection.groupIndex, 1);
+    });
+
+    test("left key in horizontally grouped view changes view period", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 4, 26),
+            end: new Date(2013, 4, 26),
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.LEFT);
+
+        deepEqual(selection.start, new Date(2013, 4, 25));
+        deepEqual(selection.end, new Date(2013, 4, 25));
+        equal(selection.groupIndex, 1);
+    });
+
+    test("right key in horizontally grouped view selects next group cell on same row", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                  date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 5, 7),
+            end: new Date(2013, 5, 8),
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.RIGHT);
+
+        deepEqual(selection.start, new Date(2013, 5, 7));
+        deepEqual(selection.end, new Date(2013, 5, 8));
+        equal(selection.groupIndex, 1);
+    });
+
+     test("right key in horizontally grouped view selects next date cell on same row", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                  date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 5, 7),
+            end: new Date(2013, 5, 8),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.RIGHT);
+
+        deepEqual(selection.start, new Date(2013, 5, 8));
+        deepEqual(selection.end, new Date(2013, 5, 9));
+        equal(selection.groupIndex, 0);
+    });
+
+    test("right key in horizontally grouped view selects first group cell on next row", function() {
+       var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                  date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 5, 8),
+            end: new Date(2013, 5, 9),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.RIGHT);
+
+        deepEqual(selection.start, new Date(2013, 5, 9));
+        deepEqual(selection.end, new Date(2013, 5, 10));
+        equal(selection.groupIndex, 0);
+    });
+
+    test("up key in horizontally grouped view persists group when change period", function() {
+      var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                  date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+
+        var selection = createSelection({
+            start: new Date(2013, 5, 1),
+            end: new Date(2013, 5, 2),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.UP);
+
+        deepEqual(selection.start, new Date(2013, 4, 25));
+        deepEqual(selection.end, new Date(2013, 4, 26));
+        equal(selection.groupIndex, 1);
+    });
+
+    test("down key in horizontally grouped view persists group when change period", function() {
+         var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                  date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+
+        var selection = createSelection({
+            start: new Date(2013, 6, 6),
+            end: new Date(2013, 6, 7),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.DOWN);
+
+        deepEqual(selection.start, new Date(2013, 6, 13));
+        deepEqual(selection.end, new Date(2013, 6, 14));
+        equal(selection.groupIndex, 1);
+    });
+
+    test("right key in horizontally grouped view changes view period", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                  date: true
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 6, 6),
+            end: new Date(2013, 6, 7),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.RIGHT);
+
+        deepEqual(selection.start, new Date(2013, 6, 7));
+        deepEqual(selection.end, new Date(2013, 6, 8));
+        equal(selection.groupIndex, 0);
+    });
+
+    test("left key in vertically grouped view selects last cell on previous group", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 4, 26),
+            end: new Date(2013, 4, 27),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.LEFT);
+
+        deepEqual(selection.start, new Date(2013, 4, 26));
+        deepEqual(selection.end, new Date(2013, 4, 27));
+        equal(selection.groupIndex, 0);
+    });
+
+    test("left key in vertically grouped view changes view period", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 4, 26),
+            end: new Date(2013, 4, 27),
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.LEFT);
+
+        deepEqual(selection.start, new Date(2013, 4, 19));
+        deepEqual(selection.end, new Date(2013, 4, 20));
+        equal(selection.groupIndex, 1);
+    });
+
+     test("left key in vertically grouped view changes view period", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 4, 27),
+            end: new Date(2013, 4, 27),
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.LEFT);
+
+        deepEqual(selection.start, new Date(2013, 4, 20));
+        deepEqual(selection.end, new Date(2013, 4, 20));
+        equal(selection.groupIndex, 1);
+    });
+
+    test("right key in vertically grouped view selects first cell on next group", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 6, 6),
+            end: new Date(2013, 6, 7),
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.RIGHT);
+
+        deepEqual(selection.start, new Date(2013, 6, 6));
+        deepEqual(selection.end, new Date(2013, 6, 7));
+        equal(selection.groupIndex, 1);
+    });
+
+    test("right key in vertically grouped view changes view period", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 6, 6),
+            end: new Date(2013, 6, 7),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.RIGHT);
+
+        deepEqual(selection.start, new Date(2013, 6, 13));
+        deepEqual(selection.end, new Date(2013, 6, 14));
+        equal(selection.groupIndex, 0);
+    });
+
+    test("up key in vertically grouped view selects in previous date", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 5, 5),
+            end: new Date(2013, 5, 6),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.UP);
+
+        deepEqual(selection.start, new Date(2013, 5, 4));
+        deepEqual(selection.end, new Date(2013, 5, 5));
+        equal(selection.groupIndex, 1);
+    });
+
+    test("up key in vertically grouped view changes view period", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 4, 26),
+            end: new Date(2013, 4, 27),
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.UP);
+
+        deepEqual(selection.start, new Date(2013, 4, 25));
+        deepEqual(selection.end, new Date(2013, 4, 26));
+        equal(selection.groupIndex, 0);
+    });
+
+    test("down key in vertically grouped view selects in next date", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 5, 8),
+            end: new Date(2013, 5, 9),
+            groupIndex: 0
+        });
+
+        scheduler.view().move(selection, keys.DOWN);
+
+        deepEqual(selection.start, new Date(2013, 5, 9));
+        deepEqual(selection.end, new Date(2013, 5, 10));
+        equal(selection.groupIndex, 0);
+    });
+
+    test("down key in vertically grouped view changes view period", function() {
+        var scheduler = new kendo.ui.Scheduler(container, {
+            date: new Date(2013, 5, 6),
+            group: {
+                resources: ["ResourceName"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "foo",
+                    name: "ResourceName",
+                    dataSource: [
+                        { text: "Foo 1", value: 1, color: "red" },
+                        { text: "Foo 2", value: 2, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [ ],
+            views: ["month"]
+        });
+        var selection = createSelection({
+            start: new Date(2013, 6, 6),
+            end: new Date(2013, 6, 7),
+            groupIndex: 1
+        });
+
+        scheduler.view().move(selection, keys.DOWN);
+
+        deepEqual(selection.start, new Date(2013, 6, 7));
+        deepEqual(selection.end, new Date(2013, 6, 8));
+        equal(selection.groupIndex, 1);
+    });
+
+
 })();
