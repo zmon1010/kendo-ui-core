@@ -287,7 +287,7 @@ var __meta__ = { // jshint ignore:line
                 return startDate;
             },
 
-            _getCalendarRowsLength: function(cellsPerRow) {
+            _getCalendarRowsLength: function() {
                 var view = this._view;
                 var isVerticallyGrouped = view._isVerticallyGrouped();
 
