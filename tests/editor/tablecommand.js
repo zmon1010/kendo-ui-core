@@ -4,7 +4,9 @@ var editor;
 var TableCommand = kendo.ui.editor.TableCommand;
 var PERCENTAGE = "%";
 var TD = "td";
+var TR = "tr";
 var WIDTH = "width";
+var HEIGHT = "height";
 var range;
 
 editor_module("editor table command", {
@@ -27,8 +29,17 @@ function execTableCommand(options) {
     return command;
 }
 
-function stripColumnAttributes(html) {
-    return html.replace(/\sstyle=\"width\:\d*%?\;\"/gi, "");
+function stripTableElementAttributes(html) {
+    return stripStyleHeight(stripStyleWidth(html));
+}
+
+
+function stripStyleWidth(html) {
+    return html.replace(/\s+style=\"width\:\d*\.?\d+%?\;\"/gi, "");
+}
+
+function stripStyleHeight(html) {
+    return html.replace(/\s+style=\"height\:\d*\.?\d+%?\;\"/gi, "");
 }
 
 test("exec createTable creates table at cursor", function() {
@@ -36,7 +47,7 @@ test("exec createTable creates table at cursor", function() {
 
     execTableCommand({ range:range });
 
-    equal(stripColumnAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
+    equal(stripTableElementAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
 });
 
     test("table command should skip cleaners", function() {
@@ -54,7 +65,7 @@ test("exec createTable creates table with given rows", function() {
 
     execTableCommand({ range: range, rows: 3, columns: 2 });
 
-    equal(stripColumnAttributes(editor.value()), "<table><tbody><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table>foo");
+    equal(stripTableElementAttributes(editor.value()), "<table><tbody><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table>foo");
 });
 
 test("exec createTable creates table with given columns", function() {
@@ -66,7 +77,7 @@ test("exec createTable creates table with given columns", function() {
 
     execTableCommand({ range:range, rows: 1, columns: 2 });
 
-    equal(stripColumnAttributes(editor.value()), "<table><tbody><tr><td></td><td></td></tr></tbody></table>foo");
+    equal(stripTableElementAttributes(editor.value()), "<table><tbody><tr><td></td><td></td></tr></tbody></table>foo");
 });
 
 function stripAttr(html) {
@@ -94,7 +105,7 @@ test("exec splits paragraph", function() {
 
     execTableCommand({ range:range });
 
-    equal(stripColumnAttributes(editor.value()), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
+    equal(stripTableElementAttributes(editor.value()), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
 });
 
 test("first cell is focused after insertion", function() {
@@ -108,7 +119,7 @@ test("first cell is focused after insertion", function() {
 
     range.insertNode(editor.document.createElement("a"));
 
-    equal(stripColumnAttributes(editor.value()), "foo<table><tbody><tr><td><a></a></td></tr></tbody></table>");
+    equal(stripTableElementAttributes(editor.value()), "foo<table><tbody><tr><td><a></a></td></tr></tbody></table>");
 });
 
 test("table holds its position after undo/redo", function() {
@@ -121,7 +132,7 @@ test("table holds its position after undo/redo", function() {
 
     editor.exec("redo");
 
-    equal(stripColumnAttributes(editor.value()).replace(/<br[^>]*>/g, ""), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
+    equal(stripTableElementAttributes(editor.value()).replace(/<br[^>]*>/g, ""), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
 });
 
 editor_module("editor table command", {
@@ -166,7 +177,43 @@ test("creates 3 columns with width roughly equal to 33.3%", function() {
         editor.options.pasteCleanup.keepNewLines = true;
         execTableCommand({ range:range });
 
-        equal(stripColumnAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
+        equal(stripTableElementAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
+    });
+
+    editor_module("editor table command", {
+        setup: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.value("");
+            range = editor.createRange();
+        }
+    });
+
+    test("creates one row with height equal to 100%", function() {
+        execTableCommand({ rows: 1, columns: 1, range: range });
+
+        equal("100%", $(editor.body).find(TR)[0].style[HEIGHT]);
+    });
+
+    test("creates 4 rows with width equal to 25%", function() {
+        var row = [];
+
+        execTableCommand({ rows: 4, columns: 4, range: range });
+
+        row = $(editor.body).find(TR);
+        for (var i = 0; i < row.length; i++) {
+            equal("25%", $(editor.body).find(TR)[0].style[HEIGHT]);
+        }
+    });
+
+    test("creates 3 rows with width roughly equal to 33.3%", function() {
+        var rows = [];
+
+        execTableCommand({ rows: 3, columns: 3, range: range });
+
+        rows = $(editor.body).find(TR);
+        for (var i = 0; i < rows.length; i++) {
+            roughlyEqual("33.3333%", rows[i].style[HEIGHT], 0.01);
+        }
     });
 
 editor_module("editor with immutables true table command", {
@@ -181,13 +228,13 @@ editor_module("editor with immutables true table command", {
 });
 
 function getResultValue() {
-    return stripColumnAttributes(editor.value());
+    return stripTableElementAttributes(editor.value());
 }
 
 function testTableCommandExecution(initialContent, expectedContent) {
     range = createRangeFromText(editor, initialContent);
     execTableCommand({range: range});
-    equal(getResultValue(editor.value()), expectedContent);
+    equal(getResultValue(stripTableElementAttributes(editor.value())), expectedContent);
 }
 
 test("exec the immutable in which the selection is", function() {

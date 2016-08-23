@@ -40,10 +40,11 @@ var TableCommand = InsertHtmlCommand.extend({
         rows = rows || 1;
         columns = columns || 1;
         var columnHtml = template(columnTemplate)({ width: 100 / columns, content: Editor.emptyTableCellContent });
+        var rowHeight = 100 / rows;
 
         return "<table class='k-table' data-last>" +
                     new Array(rows + 1).join(
-                    "<tr>" +
+                    "<tr style='height:" + rowHeight + "%;'>" +
                         new Array(columns + 1).join(columnHtml) +
                     "</tr>") +
                "</table>";
