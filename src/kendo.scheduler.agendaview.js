@@ -39,15 +39,15 @@
                 _getColumns: function(groupHeaders, columns){
                     return groupHeaders.concat(columns);
                 }, 
-                _getGroupsInDay: function (tasksGroups, groups){
+                _getGroupsInDay: function(){
                     return [];
                 },
 
-                _getSumOfItemsForDate: function(tasksGroups){
+                _getSumOfItemsForDate: function(){
                     return 0;
                 },
 
-                _renderDateGroups: function(headerCells, groups, taskGroupIndex, taskIndex){
+                _renderTaskGroupsCells: function(headerCells, groups, taskGroupIndex, taskIndex){
                     var view = this._view;
 
                     if (taskGroupIndex === 0 && taskIndex === 0 && groups.length) {
@@ -83,7 +83,7 @@
                     var view = this._view;
 
                     table.append(view._renderTaskGroups(items, parents));
-                },
+                }
 
             });
 
@@ -107,7 +107,7 @@
 
                 _compareDateGroups: function(currentGroup, prevGroup, index){           
                     if (currentGroup[index].text == prevGroup[index].text) {
-                        if (index == 0) {
+                        if (index === 0) {
                             return true;
                         }else {
                             return this._compareDateGroups(currentGroup, prevGroup, index - 1);
@@ -117,32 +117,33 @@
                     return false;
                 },
 
-                _getGroupsInDay: function (tasksGroups, groups){
+                _getGroupsInDay: function(tasksGroups, groups){
                       var groupsInDay = [];
                       var prevGroup = null;
 
-                       for (var i = 0; i < tasksGroups.length; i++) {
-                        
-                            for (var j = 0; j < tasksGroups[i].items.length; j++) {
+                       for (var tasksGroupIdx = 0; tasksGroupIdx < tasksGroups.length; tasksGroupIdx++) {                      
+                            for (var itemsIdx = 0; itemsIdx < tasksGroups[tasksGroupIdx].items.length; itemsIdx++) {
+                                var idx = 0;
+
                                 if (groupsInDay.length === 0) {                     
-                                    for (var idx = 0; idx < groups[i].length; idx++) {                            
+                                    for (idx; idx < groups[tasksGroupIdx].length; idx++) {  
                                         groupsInDay.push([1]);
                                     }
                                 } else {
-                                    for (var idx = 0; idx < groups[i].length; idx++) {                            
-                                        if (this._compareDateGroups(groups[i],prevGroup, idx)) {
+                                    for (idx; idx < groups[tasksGroupIdx].length; idx++) {                         
 
+                                        if (this._compareDateGroups(groups[tasksGroupIdx], prevGroup, idx)) {
                                             groupsInDay[idx][groupsInDay[idx].length - 1]++;
                                         } else {
                                             var lastItemValue = groupsInDay[idx][groupsInDay[idx].length - 1] - 1;
-                                            for (var t = 0; t < lastItemValue; t++) {
+                                            for (var i = 0; i < lastItemValue; i++) {
                                                 groupsInDay[idx].push(0);
                                             }
                                             groupsInDay[idx].push(1);
                                         }
                                     }
                                 }
-                                prevGroup = groups[i];                  
+                                prevGroup = groups[tasksGroupIdx];                  
                             }
                         }
                         
@@ -159,7 +160,7 @@
                     return sumOfItemsForDate;
                 },
 
-                _renderDateGroups: function(headerCells, groups, taskGroupIndex, taskIndex, groupsInDay, sumOfItemsForDate, date, groupsRowSpanIndex){
+                _renderTaskGroupsCells: function(headerCells, groups, taskGroupIndex, taskIndex, groupsInDay, sumOfItemsForDate, date, groupsRowSpanIndex){
                     var view = this._view;
                     var isPhoneView = view._isMobilePhoneView();
 
@@ -189,20 +190,22 @@
                     }
                 },
 
-                _renderDateCell: function (){
+                _renderDateCell: function(){
                    return undefined;
                 },
 
-                _renderDates: function (table){
+                _renderDates: function(table){
                     var view = this._view;
-                    var sortedArray = view._groupsByDate.sort(function(a, b) { return a.array[0].value.getTime() - b.array[0].value.getTime() });
+                    var sortedArray = view._groupsByDate.sort(function(a, b) { 
+                        return a.array[0].value.getTime() - b.array[0].value.getTime(); 
+                    });
 
                     for (var i = 0; i < sortedArray.length; i++) {
                         table.append(view._renderTaskGroups(sortedArray[i].array, sortedArray[i].groups));
                     }
                 },
 
-                _getParents: function (parentGroups){
+                _getParents: function(parentGroups){
                     return parentGroups.slice(0);
                 },
 
@@ -232,7 +235,7 @@
                     }
                 },
 
-                _renderTaskGroups: function(table, items, parents){
+                _renderTaskGroups: function(){
                     return undefined;
                 }
 
@@ -413,7 +416,7 @@
 
                         var headerCells = !isPhoneView ? tableRow : [];
 
-                        this._groupedView._renderDateGroups(headerCells, groups, taskGroupIndex, taskIndex, groupsInDay, sumOfItemsForDate, date, groupsRowSpanIndex);
+                        this._groupedView._renderTaskGroupsCells(headerCells, groups, taskGroupIndex, taskIndex, groupsInDay, sumOfItemsForDate, date, groupsRowSpanIndex);
 
                         groupsRowSpanIndex++;
                         if (taskIndex === 0) {
@@ -754,8 +757,8 @@
             return result;
         }
 
-    })(window.kendo.jQuery);
+})(window.kendo.jQuery);
 
-    return window.kendo;
+return window.kendo;
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
