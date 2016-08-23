@@ -151,6 +151,10 @@
         }));
     }
 
+    function resizeTable(deltas) {
+
+    }
+
     function getColumnWidths(table, columnIndex) {
         var columns = $(table).find(ROW).children(COLUMN)
             .filter(function() {

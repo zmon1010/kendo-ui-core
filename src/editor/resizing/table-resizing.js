@@ -55,6 +55,10 @@
     var TRUE = "true";
     var FALSE = "false";
 
+    function isUndefined(value) { 
+        return typeof(value) === "undefined";
+    }
+
     var TableResizing = Class.extend({
         init: function(element, options) {
             var that = this;
@@ -111,13 +115,13 @@
             }, args);
             var rtlModifier = that.options.rtl ? (-1) : 1;
 
-            that._resizeDimension(WIDTH, deltas.deltaX * rtlModifier);
-            that._resizeDimension(HEIGHT, deltas.deltaY);
+            that._resizeWidth(WIDTH, deltas.deltaX * rtlModifier);
+            that._resizeHeight(HEIGHT, deltas.deltaY);
 
             that.showResizeHandles();
         },
 
-        _resizeDimension: function(dimension, delta) {
+        _resizeWidth: function(dimension, delta) {
             var that = this;
             var element = $(that.element);
             var dimensionLowercase = dimension.toLowerCase();
@@ -128,7 +132,7 @@
             var maxDimensionValue = that._getMaxDimensionValue(dimension);
             var newDimensionValue;
             var ratioValue;
-            var ratioTotalValue;            
+            var ratioTotalValue;
             var constrainedDimension = constrain({
                 value: elementOuterDimension + delta,
                 min: that.options[MIN + dimension],
@@ -157,6 +161,65 @@
             }
 
             that._setColumnsDimensions(dimension);
+
+            element[0].style[dimensionLowercase] = newDimensionValue;
+        },
+
+        _resizeHeight: function(dimension, delta) {
+            var that = this;
+            var element = $(that.element);
+            var dimensionLowercase = dimension.toLowerCase();
+            var styleValue = element[0].style[dimensionLowercase];
+            var elementOuterDimension = element[OUTER + dimension]();
+            var parent = element.parent();
+            var parentDimension = parent[dimensionLowercase]();
+            var maxDimensionValue = that._getMaxDimensionValue(dimension);
+            var newDimensionValue;
+            var ratioValue;
+            var ratioTotalValue;
+            var constrainedDimension = constrain({
+                value: elementOuterDimension + delta,
+                min: that.options[MIN + dimension],
+                max: maxDimensionValue
+            });
+
+            if (delta === 0) {
+                return;
+            }
+
+            if (isUndefined(that._totalDragDeltaY)) {
+                that._totalDragDeltaY = 0;
+            }
+
+            if (isUndefined(that._initialElementComputedHeight)) {
+                that._initialElementComputedHeight = elementOuterDimension;
+            }
+
+            that._totalDragDeltaY += delta;
+
+            if (inPercentages(styleValue)) {
+                //detect resizing greater than 100%
+                if (elementOuterDimension + delta > parentDimension) {
+                    ratioValue = max(constrainedDimension, parentDimension);
+                    ratioTotalValue = min(constrainedDimension, parentDimension);
+                }
+                else {
+                    ratioValue = min(constrainedDimension, parentDimension);
+                    ratioTotalValue = max(constrainedDimension, parentDimension);
+                }
+
+                newDimensionValue = toPercentages(calculatePercentageRatio(ratioValue, ratioTotalValue));
+            }
+            else {
+                //use total delta instead of delta as changing the height with a samll delta (e.g. 1px) on each drag does not work
+                constrainedDimension = constrain({
+                    value: that._initialElementComputedHeight + that._totalDragDeltaY,
+                    min: that.options[MIN + dimension],
+                    max: maxDimensionValue
+                });
+
+                newDimensionValue = toPixels(constrainedDimension);
+            }
 
             element[0].style[dimensionLowercase]= newDimensionValue;
         },
@@ -292,7 +355,13 @@
         },
 
         _onResizeHandleDragStart: function() {
-            $(this.element).addClass(K_TABLE_RESIZING);
+            var that = this;
+            var element = $(that.element);
+
+            element.addClass(K_TABLE_RESIZING);
+
+            that._totalDragDeltaY = 0;
+            that._initialElementComputedHeight = element.outerHeight();
         },
 
         _onResizeHandleDragEnd: function() {
