@@ -20,6 +20,7 @@
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
     var constrain = ResizingUtils.constrain;
     var inPercentages = ResizingUtils.inPercentages;
+    var inPixels = ResizingUtils.inPixels;
     var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
     var setContentEditable = ResizingUtils.setContentEditable;
@@ -31,17 +32,16 @@
     var DRAG = "drag";
     var DRAG_END = "dragEnd";
     var NS = ".kendoEditorTableResizing";
-    var MIN = "min";
     var MOUSE_OVER = "mouseover";
     var MOUSE_OUT = "mouseout";
-    var OUTER = "outer";
 
     var COLUMN = "td";
     var ROW = "tr";
+    var TBODY = "tbody";
     var TABLE = "table";
 
-    var WIDTH = "Width";
-    var HEIGHT = "Height";
+    var WIDTH = "width";
+    var HEIGHT = "height";
 
     var EAST = "east";
     var NORTH = "north";
@@ -115,73 +115,68 @@
             }, args);
             var rtlModifier = that.options.rtl ? (-1) : 1;
 
-            that._resizeWidth(WIDTH, deltas.deltaX * rtlModifier);
-            that._resizeHeight(HEIGHT, deltas.deltaY);
+            that._resizeWidth(deltas.deltaX * rtlModifier);
+            that._resizeHeight(deltas.deltaY);
 
             that.showResizeHandles();
         },
 
-        _resizeWidth: function(dimension, delta) {
+        _resizeWidth: function(delta) {
             var that = this;
             var element = $(that.element);
-            var dimensionLowercase = dimension.toLowerCase();
-            var styleValue = element[0].style[dimensionLowercase];
-            var elementOuterDimension = element[OUTER + dimension]();
-            var parent = element.parent();
-            var parentDimension = parent[dimensionLowercase]();
-            var maxDimensionValue = that._getMaxDimensionValue(dimension);
-            var newDimensionValue;
+            var styleWidth = element[0].style[WIDTH];
+            var currentWidth = element.outerWidth();
+            var parentWidth = element.parent().width();
+            var maxWidth = that._getMaxDimensionValue(WIDTH);
+            var newWidth;
             var ratioValue;
             var ratioTotalValue;
-            var constrainedDimension = constrain({
-                value: elementOuterDimension + delta,
-                min: that.options[MIN + dimension],
-                max: maxDimensionValue
+            var constrainedWidth = constrain({
+                value: currentWidth + delta,
+                min: that.options.minWidth,
+                max: maxWidth
             });
 
             if (delta === 0) {
                 return;
             }
 
-            if (inPercentages(styleValue)) {
+            if (inPercentages(styleWidth)) {
                 //detect resizing greater than 100%
-                if (elementOuterDimension + delta > parentDimension) {
-                    ratioValue = max(constrainedDimension, parentDimension);
-                    ratioTotalValue = min(constrainedDimension, parentDimension);
+                if (currentWidth + delta > parentWidth) {
+                    ratioValue = max(constrainedWidth, parentWidth);
+                    ratioTotalValue = min(constrainedWidth, parentWidth);
                 }
                 else {
-                    ratioValue = min(constrainedDimension, parentDimension);
-                    ratioTotalValue = max(constrainedDimension, parentDimension);
+                    ratioValue = min(constrainedWidth, parentWidth);
+                    ratioTotalValue = max(constrainedWidth, parentWidth);
                 }
 
-                newDimensionValue = toPercentages(calculatePercentageRatio(ratioValue, ratioTotalValue));
+                newWidth = toPercentages(calculatePercentageRatio(ratioValue, ratioTotalValue));
             }
             else {
-                newDimensionValue = toPixels(constrainedDimension);
+                newWidth = toPixels(constrainedWidth);
             }
 
-            that._setColumnsDimensions(dimension);
+            that._setColumnsWidth();
 
-            element[0].style[dimensionLowercase] = newDimensionValue;
+            element[0].style[WIDTH] = newWidth;
         },
 
-        _resizeHeight: function(dimension, delta) {
+        _resizeHeight: function(delta) {
             var that = this;
             var element = $(that.element);
-            var dimensionLowercase = dimension.toLowerCase();
-            var styleValue = element[0].style[dimensionLowercase];
-            var elementOuterDimension = element[OUTER + dimension]();
+            var styleHeight = element[0].style[HEIGHT];
+            var currentHeight = element.outerHeight();
             var parent = element.parent();
-            var parentDimension = parent[dimensionLowercase]();
-            var maxDimensionValue = that._getMaxDimensionValue(dimension);
-            var newDimensionValue;
+            var parentHeight = parent.height();
+            var maxHeight = that._getMaxDimensionValue(HEIGHT);
+            var newHeight;
             var ratioValue;
             var ratioTotalValue;
-            var constrainedDimension = constrain({
-                value: elementOuterDimension + delta,
-                min: that.options[MIN + dimension],
-                max: maxDimensionValue
-            });
+            var constrainedHeight;
+            var minHeight = that.options.minHeight;
+            var hasRowsInPixels = that._hasRowsInPixels();
 
             if (delta === 0) {
                 return;
@@ -192,36 +187,47 @@
             }
 
             if (isUndefined(that._initialElementComputedHeight)) {
-                that._initialElementComputedHeight = elementOuterDimension;
+                that._initialElementComputedHeight = currentHeight;
             }
 
             that._totalDragDeltaY += delta;
 
-            if (inPercentages(styleValue)) {
+            //use total delta instead of delta as changing the height with a small vaoue (e.g. 1px) 
+            //on each drag does not work due to browser calculation of computed styles
+            constrainedHeight = constrain({
+                value: that._initialElementComputedHeight + that._totalDragDeltaY,
+                min: minHeight,
+                max: maxHeight
+            });
+
+            if (hasRowsInPixels && delta < 0) {
+                //decreasing table height when rows are in pixels is not possible
+                that._setRowsHeightInPercentages();
+            }
+
+            if (inPercentages(styleHeight)) {
                 //detect resizing greater than 100%
-                if (elementOuterDimension + delta > parentDimension) {
-                    ratioValue = max(constrainedDimension, parentDimension);
-                    ratioTotalValue = min(constrainedDimension, parentDimension);
+                if (currentHeight + delta > parentHeight) {
+                    ratioValue = max(constrainedHeight, parentHeight);
+                    ratioTotalValue = min(constrainedHeight, parentHeight);
                 }
                 else {
-                    ratioValue = min(constrainedDimension, parentDimension);
-                    ratioTotalValue = max(constrainedDimension, parentDimension);
+                    ratioValue = min(constrainedHeight, parentHeight);
+                    ratioTotalValue = max(constrainedHeight, parentHeight);
                 }
 
-                newDimensionValue = toPercentages(calculatePercentageRatio(ratioValue, ratioTotalValue));
+                newHeight = toPercentages(calculatePercentageRatio(ratioValue, ratioTotalValue));
             }
             else {
-                //use total delta instead of delta as changing the height with a samll delta (e.g. 1px) on each drag does not work
-                constrainedDimension = constrain({
-                    value: that._initialElementComputedHeight + that._totalDragDeltaY,
-                    min: that.options[MIN + dimension],
-                    max: maxDimensionValue
-                });
-
-                newDimensionValue = toPixels(constrainedDimension);
+                newHeight = toPixels(constrainedHeight);
             }
 
-            element[0].style[dimensionLowercase]= newDimensionValue;
+            element[0].style[HEIGHT] = newHeight;
+
+            if (hasRowsInPixels && delta < 0) {
+                //restore original rows height unit
+                that._setRowsHeightInPixels();
+            }
         },
 
         _getMaxDimensionValue: function(dimension) {
@@ -247,12 +253,11 @@
             }
         },
 
-        _setColumnsDimensions: function(dimension) {
+        _setColumnsWidth: function() {
             var that = this;
             var element = $(that.element);
             var parentElement = element.parent()[0];
             var parentColumn = element.closest(COLUMN);
-            var dimensionLowercase = dimension.toLowerCase();
             var columns = parentColumn.closest(ROW).children();
             var columnsLength = columns.length;
             var i;
@@ -268,14 +273,53 @@
                 }
             }
 
-            if (dimension !== WIDTH) {
-                return;
+            if (isWidthInPercentages(element[0]) && parentElement === parentColumn[0] && parentElement.style[WIDTH] === "") {
+                for (i = 0; i < columnsLength; i++) {
+                    columns[i].style[WIDTH] = toPixels($(columns[i]).width());
+                }
+            }
+        },
+
+        _hasRowsInPixels: function() {
+            var that = this;
+            var rows = $(that.element).children(TBODY).children(ROW);
+
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].style.height === "" || inPixels(rows[i].style.height)) {
+                    return true;
+                }
             }
 
-            if (isWidthInPercentages(element[0]) && parentElement === parentColumn[0] && parentElement.style[dimensionLowercase] === "") {
-                for (i = 0; i < columnsLength; i++) {
-                    columns[i].style[dimensionLowercase] = toPixels($(columns[i]).width());
-                }
+            return false;
+        },
+
+        _setRowsHeightInPercentages: function() {
+            var that = this;
+            var tableBody = $(that.element).children(TBODY);
+            var tableBodyHeight = tableBody.height();
+            var rows = tableBody.children(ROW);
+            var length = rows.length;
+            var currentRowsHeights = rows.map(function() {
+                return $(this).outerHeight();
+            });
+            var i;
+
+            for (i = 0; i < length; i++) {
+                rows[i].style[HEIGHT] = toPercentages(calculatePercentageRatio(currentRowsHeights[i], tableBodyHeight));
+            }
+        },
+
+        _setRowsHeightInPixels: function() {
+            var that = this;
+            var rows = $(that.element).children(TBODY).children(ROW);
+            var length = rows.length;
+            var currentRowsHeights = rows.map(function() {
+                return $(this).outerHeight();
+            });
+            var i;
+
+            for (i = 0; i < length; i++) {
+                rows[i].style[HEIGHT] = toPixels(currentRowsHeights[i]);
             }
         },
 

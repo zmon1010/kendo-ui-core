@@ -53,6 +53,7 @@
                 '<td id="col33" class="col" style="border:1px solid blue;">col 33</td>' +
             '</tr>' +
         '</table>';
+
     var NESTED_TABLE_HTML =
         '<table id="table" class="k-table" style="border:1px solid red;">' +
             '<tr id="row1" class="row">' +
@@ -80,6 +81,7 @@
                 '<td id="col33" class="col">col 33</td>' +
             '</tr>' +
         '</table>';
+
     var NESTED_TABLE_HTML_IN_PERCENTAGES =
         '<table id="table" class="k-table">' +
             '<tr id="row1" class="row">' +
@@ -107,9 +109,34 @@
                 '<td id="col33" class="col">col 33</td>' +
             '</tr>' +
         '</table>';
+
+    var TABLE_WITH_ROWS_IN_PIXELS =
+        '<table id="table" class="k-table" style="height:400px;border:1px solid black;">' +
+            '<tr id="row1" class="row" style="height:100px">' +
+                '<td id="col11" class="col" style="border:1px solid blue;">col 11</td>' +
+                '<td id="col12" class="col" style="border:1px solid blue;">col 12</td>' +
+                '<td id="col13" class="col" style="border:1px solid blue;">col 13</td>' +
+            '</tr>' +
+            '<tr id="row2" class="row" style="height:100px">' +
+                '<td id="col21" class="col" style="border:1px solid blue;">col 21</td>' +
+                '<td id="col22" class="col" style="border:1px solid blue;">col 22</td>' +
+                '<td id="col23" class="col" style="border:1px solid blue;">col 23</td>' +
+            '</tr>' +
+            '<tr id="row3" class="row" style="height:100px">' +
+                '<td id="col31" class="col" style="border:1px solid blue;">col 31</td>' +
+                '<td id="col32" class="col" style="border:1px solid blue;">col 32</td>' +
+                '<td id="col33" class="col" style="border:1px solid blue;">col 33</td>' +
+            '</tr>' +
+            '<tr id="row4" class="row" style="height:100px">' +
+                '<td id="col41" class="col" style="border:1px solid blue;">col 41</td>' +
+                '<td id="col42" class="col" style="border:1px solid blue;">col 42</td>' +
+                '<td id="col43" class="col" style="border:1px solid blue;">col 43</td>' +
+            '</tr>' +
+        '</table>';
+
     var INNER_ELEMENT_HTML = "<div id='innerElement'>inner</div>"
     var CONTENT_HTML =
-        '<div id="wrapper">' +
+        '<div id="wrapper" style="border:1px solid red;">' +
             INNER_ELEMENT_HTML +
             TABLE_HTML +
         '</div>';
@@ -657,7 +684,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     module("editor table resizing resize width in pixels", {
         setup: function() {
-            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture);
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).height("500px");
             tableElement = $(QUnit.fixture).find("#table");
             tableResizing = new TableResizing(tableElement[0], {
                 rootElement: QUnit.fixture
@@ -872,6 +899,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
         equal(tableElement[0].style.height, initialHeight + (-1) *  deltaY + PX);
     });
+
     test("should change height when style height is smaller", function() {
         tableElement.css("height", "1px");
         var initialHeight = tableElement.outerHeight();
@@ -889,11 +917,47 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     });
 
     test("should not set height greater than parent height", function() {
-        wrapper.outerHeight($(tableElement).outerHeight() + 20);
+        wrapper[0].style.height = $(tableElement).outerHeight() + 20;
 
         tableResizing.resize({ deltaY: MAX });
 
-        equal(tableElement[0].style.height, wrapper.outerHeight() + PX);
+        roughlyEqual(tableElement[0].style.height, wrapper.outerHeight() + PX, 2);
+    });
+
+    module("editor table resizing resize height when rows are in pixels", {
+        setup: function() {
+            wrapper = $("<div id='wrapper'></div>").appendTo(QUnit.fixture).css({
+                height: "800px",
+                border: "1px solid red"
+            });
+            tableElement = $(TABLE_WITH_ROWS_IN_PIXELS).appendTo(wrapper);
+            tableResizing = new TableResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should decrease height when table height is in pixels", function() {
+        var initialHeight = tableElement.outerHeight();
+        var deltaY = 20;
+
+        tableResizing.resize({ deltaY: (-1) * deltaY });
+
+        equal(tableElement[0].style.height, initialHeight + (-1) *  deltaY + PX);
+    });
+
+    test("should decrease height when table height is in percentages", function() {
+        tableElement.css("height", "50%");
+        var deltaY = 20;
+
+        tableResizing.resize({ deltaY: (-1) * deltaY });
+
+        roughlyEqual(tableElement[0].style.height, (tableElement.outerHeight() / tableElement.parent().height() * 100) + PERCENTAGE, 0.5);
     });
 
     module("editor table resizing resize height in percentages", {

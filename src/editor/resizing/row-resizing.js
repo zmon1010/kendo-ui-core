@@ -126,8 +126,7 @@
             that._setTableHeight(initialTableHeight + (newRowHeight - currentRowHeight));
 
             if (inPercentages(initialStyleHeight)) {
-                //resize rows in percentages as late as possible to prevent
-                //incorrect precision calculations in browsers
+                //resize rows in percentages as late as possible to prevent incorrect precision calculations
                 that._setRowsHeightInPercentages();
             }
         },
@@ -165,7 +164,10 @@
         _setTableHeight: function(newHeight) {
             var element = this.element;
 
-            if (!inPercentages(element.style[HEIGHT])) {
+            if (inPercentages(element.style[HEIGHT])) {
+                element.style[HEIGHT] = toPercentages(calculatePercentageRatio(newHeight, $(element).parent().height()));
+            }
+            else {
                 element.style[HEIGHT] = toPixels(newHeight);
             }
         }

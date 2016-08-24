@@ -1412,12 +1412,12 @@ if (kendo.support.browser.mozilla) {
         equal(tableElement[0].style.height, tableHeight + differenceInPixels + PX);
     });
 
-    test("should not set computed style height in percentages to its element", function() {
+    test("should set computed style height in percentages to its element", function() {
         tableElement[0].style.height = "50%";
 
-        resizeRow(row, initialHeightInPixels, initialHeightInPixels + 20);
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + 5);
 
-        equal(tableElement[0].style.height, "50%");
+        roughlyEqual(tableElement[0].style.height, ((tableElement.outerHeight() / tableElement.parent().height() * 100) + PERCENTAGE), 0.1);
     });
 
     test("row height should be increased when resizing", function() {
