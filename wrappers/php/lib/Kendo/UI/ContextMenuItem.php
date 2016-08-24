@@ -43,7 +43,7 @@ class ContextMenuItem extends \Kendo\UI\NavigationalItem {
     * @return \Kendo\UI\ContextMenuItem
     */
     public function separator() {
-        return $this->setProperty('separator', $value);
+        return $this->setProperty('separator', true);
     }
 
 //>> Properties
