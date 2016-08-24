@@ -1,10 +1,12 @@
 (function(f, define) {
-    define(["../main", "./column-resizing", "./table-resize-handle", "./resizing-utils"], f);
+    define(["../main", "./table-resize-handle", "./resizing-utils"], f);
 })(function() {
 
 (function(kendo, undefined) {
     var global = window;
-    var parseFloat = global.parseFloat;
+    var math = global.Math;
+    var min = math.min;
+    var max = math.max;
 
     var $ = kendo.jQuery;
     var extend = $.extend;
@@ -13,20 +15,31 @@
     var browser = kendo.support.browser;
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
-    var ColumnResizing = Editor.ColumnResizing;
     var TableResizeHandle = Editor.TableResizeHandle;
     var ResizingUtils = Editor.ResizingUtils;
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
     var constrain = ResizingUtils.constrain;
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
+    var toPixels = ResizingUtils.toPixels;
+    var setContentEditable = ResizingUtils.setContentEditable;
 
-    var CLICK = "click";
+    var K_TABLE = "k-table";
+    var K_TABLE_RESIZING = "k-table-resizing";
+
+    var DRAG_START = "dragStart";
     var DRAG = "drag";
+    var DRAG_END = "dragEnd";
     var NS = ".kendoEditorTableResizing";
-    var MAX_PERCENTAGE_VALUE = 100;
     var MIN = "min";
+    var MOUSE_OVER = "mouseover";
+    var MOUSE_OUT = "mouseout";
+    var OUTER = "outer";
+
+    var COLUMN = "td";
+    var ROW = "tr";
     var TABLE = "table";
+
     var WIDTH = "Width";
     var HEIGHT = "Height";
 
@@ -39,6 +52,9 @@
     var SOUTHWEST = "southwest";
     var WEST = "west";
 
+    var TRUE = "true";
+    var FALSE = "false";
+
     var TableResizing = Class.extend({
         init: function(element, options) {
             var that = this;
@@ -48,22 +64,13 @@
 
             if ($(element).is(TABLE)) {
                 that.element = element;
-                that.columnResizing = new ColumnResizing(element, that.options);
-                $(that.options.rootElement).on(CLICK + NS, TABLE, proxy(that.showResizeHandles, that));
             }
         },
 
         destroy: function() {
             var that = this;
-            var element = that.element;
-            var columnResizing = that.columnResizing;
-            
-            if (columnResizing) {
-                columnResizing.destroy();
-                that.columnResizing = null;
-            }
 
-            $(element).off(NS);
+            $(that.element).off(NS);
             that.element = null;
 
             $(that.options.rootElement).off(NS);
@@ -72,38 +79,28 @@
         },
 
         options: {
+            appendHandlesTo: null,
             rtl: false,
             rootElement: null,
-            minWidth: 50,
-            minHeight: 50,
+            minWidth: 10,
+            minHeight: 10,
             handles: [{
-                direction: EAST
+                direction: NORTHWEST
             }, {
                 direction: NORTH
             }, {
                 direction: NORTHEAST
             }, {
-                direction: NORTHWEST
-            }, {
-                direction: SOUTH
+                direction: EAST
             }, {
                 direction: SOUTHEAST
+            }, {
+                direction: SOUTH
             }, {
                 direction: SOUTHWEST
             }, {
                 direction: WEST
             }]
-        },
-
-        resizingInProgress: function() {
-            var that = this;
-            var columnResizing = that.columnResizing;
-
-            if (columnResizing) {
-                return !!columnResizing.resizingInProgress();
-            }
-
-            return false;
         },
 
         resize: function(args) {
@@ -112,8 +109,9 @@
                 deltaX: 0,
                 deltaY: 0
             }, args);
+            var rtlModifier = that.options.rtl ? (-1) : 1;
 
-            that._resizeDimension(WIDTH, deltas.deltaX);
+            that._resizeDimension(WIDTH, deltas.deltaX * rtlModifier);
             that._resizeDimension(HEIGHT, deltas.deltaY);
 
             that.showResizeHandles();
@@ -122,62 +120,127 @@
         _resizeDimension: function(dimension, delta) {
             var that = this;
             var element = $(that.element);
-            var style = element[0].style;
             var dimensionLowercase = dimension.toLowerCase();
-            var styleValue = style[dimensionLowercase];
-            var dimensionValue = styleValue !== "" ? parseFloat(styleValue) : 0;
-            var computedStyleValue = element[dimensionLowercase]();
-            var currentValue = dimensionValue < computedStyleValue ? computedStyleValue : dimensionValue;
-            var constrainedValue;
+            var styleValue = element[0].style[dimensionLowercase];
+            var elementOuterDimension = element[OUTER + dimension]();
+            var parent = element.parent();
+            var parentDimension = parent[dimensionLowercase]();
+            var maxDimensionValue = that._getMaxDimensionValue(dimension);
+            var newDimensionValue;
+            var ratioValue;
+            var ratioTotalValue;            
+            var constrainedDimension = constrain({
+                value: elementOuterDimension + delta,
+                min: that.options[MIN + dimension],
+                max: maxDimensionValue
+            });
+
+            if (delta === 0) {
+                return;
+            }
 
             if (inPercentages(styleValue)) {
-                constrainedValue = constrain({
-                    value: dimensionValue + calculatePercentageRatio(delta, computedStyleValue),
-                    min: calculatePercentageRatio(that.options[MIN + dimension], computedStyleValue),
-                    max: MAX_PERCENTAGE_VALUE
-                });
+                //detect resizing greater than 100%
+                if (elementOuterDimension + delta > parentDimension) {
+                    ratioValue = max(constrainedDimension, parentDimension);
+                    ratioTotalValue = min(constrainedDimension, parentDimension);
+                }
+                else {
+                    ratioValue = min(constrainedDimension, parentDimension);
+                    ratioTotalValue = max(constrainedDimension, parentDimension);
+                }
 
-                constrainedValue = toPercentages(constrainedValue);
+                newDimensionValue = toPercentages(calculatePercentageRatio(ratioValue, ratioTotalValue));
             }
             else {
-                constrainedValue = constrain({
-                    value: currentValue + parseFloat(delta),
-                    min: that.options[MIN + dimension],
-                    max: element.parent()[dimensionLowercase]()
-                });
-
-                element[dimensionLowercase](constrainedValue);
+                newDimensionValue = toPixels(constrainedDimension);
             }
 
-            element[dimensionLowercase](constrainedValue);
+            that._setColumnsDimensions(dimension);
+
+            element[0].style[dimensionLowercase]= newDimensionValue;
+        },
+
+        _getMaxDimensionValue: function(dimension) {
+            var that = this;
+            var element = $(that.element);
+            var dimensionLowercase = dimension.toLowerCase();
+            var rtlModifier = that.options.rtl ? (-1) : 1;
+            var parent = $(that.element).parent();
+            var parentElement = parent[0];
+            var parentDimension = parent[dimensionLowercase]();
+            var parentScrollOffset = rtlModifier * (dimension === WIDTH ? parent.scrollLeft() : parent.scrollTop());
+
+            if (parentElement === element.closest(COLUMN)[0]) {
+                if (parentElement.style[dimensionLowercase] === "" && !inPercentages(that.element.style[dimensionLowercase])) {
+                    return Infinity;
+                }
+                else {
+                    return (parentDimension + parentScrollOffset);
+                }
+            }
+            else {
+                return (parentDimension + parentScrollOffset);
+            }
+        },
+
+        _setColumnsDimensions: function(dimension) {
+            var that = this;
+            var element = $(that.element);
+            var parentElement = element.parent()[0];
+            var parentColumn = element.closest(COLUMN);
+            var dimensionLowercase = dimension.toLowerCase();
+            var columns = parentColumn.closest(ROW).children();
+            var columnsLength = columns.length;
+            var i;
+
+            function isWidthInPercentages(element) {
+                var styleWidth = element.style.width;
+
+                if (styleWidth !== "") {
+                    return inPercentages(styleWidth) ? true : false;
+                }
+                else {
+                    return $(element).hasClass(K_TABLE) ? true : false;
+                }
+            }
+
+            if (dimension !== WIDTH) {
+                return;
+            }
+
+            if (isWidthInPercentages(element[0]) && parentElement === parentColumn[0] && parentElement.style[dimensionLowercase] === "") {
+                for (i = 0; i < columnsLength; i++) {
+                    columns[i].style[dimensionLowercase] = toPixels($(columns[i]).width());
+                }
+            }
         },
 
         showResizeHandles: function() {
             var that = this;
 
-            //table resizing is natively supported in IE and Firefox
-            if (!browser.msie && !browser.mozilla) {
-                that._initResizeHandles();
-                that._showResizeHandles();
-            }
+            that._initResizeHandles();
+            that._showResizeHandles();
         },
 
         _initResizeHandles: function() {
             var that = this;
+            var handles = that.handles;
             var options = that.options;
-            var resizeHandles = that.options.handles;
-            var length = resizeHandles.length;
+            var handleOptions = that.options.handles;
+            var length = handleOptions.length;
             var i;
 
-            if (that.handles.length > 0) {
+            if (handles && handles.length > 0) {
                 return;
             }
 
             for (i = 0; i < length; i++) {
                 that.handles.push(new TableResizeHandle(extend({
-                    appendTo: options.rootElement,
-                    resizableElement: that.element
-                }, resizeHandles[i])));
+                    appendTo: options.appendHandlesTo,
+                    resizableElement: that.element,
+                    rootElement: options.rootElement
+                }, handleOptions[i])));
             }
 
             that._bindToResizeHandlesEvents();
@@ -208,12 +271,51 @@
             var handles = that.handles || [];
             var length = handles.length;
             var i;
+            var handle;
 
             for (i = 0; i < length; i++) {
-                that.handles[i].bind(DRAG, proxy(that.resize, that));
+                handle = handles[i];
+                handle.bind(DRAG_START, proxy(that._onResizeHandleDragStart, that));
+                handle.bind(DRAG, proxy(that.resize, that));
+                handle.bind(DRAG_END, proxy(that._onResizeHandleDragEnd, that));
+                handle.bind(MOUSE_OVER, proxy(that._onResizeHandleMouseOver, that));
+                handle.bind(MOUSE_OUT, proxy(that._onResizeHandleMouseOut, that));
+            }
+        },
+
+        _onResizeHandleMouseOver: function() {
+            setContentEditable(this.options.rootElement, FALSE);
+        },
+
+        _onResizeHandleMouseOut: function() {
+            setContentEditable(this.options.rootElement, TRUE);
+        },
+
+        _onResizeHandleDragStart: function() {
+            $(this.element).addClass(K_TABLE_RESIZING);
+        },
+
+        _onResizeHandleDragEnd: function() {
+            $(this.element).removeClass(K_TABLE_RESIZING);
+        }
+    });
+
+    var TableResizingFactory = Class.extend({
+        create: function(element, options) {
+            //table resizing is natively supported in IE and Firefox
+            if (!browser.msie && !browser.mozilla) {
+                return new TableResizing(element, options);
+            }
+            else {
+                return null;
             }
         }
     });
+    TableResizingFactory.current = new TableResizingFactory();
+
+    TableResizing.create = function(element, options) {
+        return TableResizingFactory.current.create(element, options);
+    };
 
     extend(Editor, {
         TableResizing: TableResizing

@@ -32,6 +32,10 @@
       :merge: true
       :type: int[]
 
+    - :name: categoryAxis.autoBaseUnitSteps.milliseconds
+      :merge: true
+      :type: int[]
+
     - :name: categoryAxis.autoBaseUnitSteps.years
       :merge: true
       :type: int[]

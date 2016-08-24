@@ -4,6 +4,7 @@
 
     public partial class MultiSelectController : Controller
     {
+        [Demo]
         public ActionResult Index()
         {
             return View();

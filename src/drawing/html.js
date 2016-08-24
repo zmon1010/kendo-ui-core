@@ -22,6 +22,7 @@
     var slice = Array.prototype.slice;
     var browser = kendo.support.browser;
     var romanNumeral = kendo.util.arabicToRoman;
+    var mergeSort = kendo.util.mergeSort;
 
     var KENDO_PSEUDO_ELEMENT = "KENDO-PSEUDO-ELEMENT";
 
@@ -160,8 +161,10 @@
                             var canceled = false, pageNum = 0;
                             (function next(){
                                 if (pageNum < x.pages.length) {
-                                    group.append(doOne(x.pages[pageNum]));
+                                    var page = doOne(x.pages[pageNum]);
+                                    group.append(page);
                                     options.progress({
+                                        page: page,
                                         pageNum: ++pageNum,
                                         totalPages: x.pages.length,
                                         cancel: function() {
@@ -1123,12 +1126,19 @@
     }
 
     function getPropertyValue(style, prop) {
-        return style.getPropertyValue(prop) ||
-            ( browser.webkit && style.getPropertyValue("-webkit-" + prop )) ||
-            ( browser.mozilla && style.getPropertyValue("-moz-" + prop )) ||
-            ( browser.opera && style.getPropertyValue("-o-" + prop)) ||
-            ( browser.msie && style.getPropertyValue("-ms-" + prop))
-        ;
+        var val = style.getPropertyValue(prop);
+        if (val == null || val === "") {
+            if (browser.webkit) {
+                val = style.getPropertyValue("-webkit-" + prop );
+            } else if (browser.mozilla) {
+                val = style.getPropertyValue("-moz-" + prop );
+            } else if (browser.opera) {
+                val = style.getPropertyValue("-o-" + prop);
+            } else if (browser.msie) {
+                val = style.getPropertyValue("-ms-" + prop);
+            }
+        }
+        return val;
     }
 
     function pleaseSetPropertyValue(style, prop, value, important) {
@@ -2540,10 +2550,10 @@
                 }
             }
 
-            blocks.sort(zIndexSort).forEach(function(el){ renderElement(el, group); });
-            floats.sort(zIndexSort).forEach(function(el){ renderElement(el, group); });
-            inline.sort(zIndexSort).forEach(function(el){ renderElement(el, group); });
-            positioned.sort(zIndexSort).forEach(function(el){ renderElement(el, group); });
+            mergeSort(blocks, zIndexSort).forEach(function(el){ renderElement(el, group); });
+            mergeSort(floats, zIndexSort).forEach(function(el){ renderElement(el, group); });
+            mergeSort(inline, zIndexSort).forEach(function(el){ renderElement(el, group); });
+            mergeSort(positioned, zIndexSort).forEach(function(el){ renderElement(el, group); });
         }
     }
 

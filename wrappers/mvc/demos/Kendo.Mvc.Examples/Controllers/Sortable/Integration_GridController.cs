@@ -9,6 +9,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SortableController : Controller
     {
+        [Demo]
         public ActionResult Integration_Grid()
         {
             var model = productService.Read();

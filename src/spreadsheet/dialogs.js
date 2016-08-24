@@ -1161,7 +1161,7 @@
             SpreadsheetDialog.fn.init.call(this, $.extend(defaultOptions, options));
         },
         options: {
-            width: 420,
+            width: 450,
             criterion: "any",
             type: "reject",
             ignoreBlank: true,
@@ -1290,13 +1290,13 @@
                         '</div>' +
                     '</div>' +
 
-                    '<div data-bind="invisible: isAny">' +
-                        '<div class="k-edit-label"><label>#: messages.validationDialog.labels.showHint #:</label></div>' +
+                    '<div data-bind="invisible: isAny" class="hint-wrapper">' +
                         '<div class="k-edit-field">' +
                             '<input type="checkbox" name="useCustomMessages" id="useCustomMessages" class="k-checkbox" data-bind="checked: useCustomMessages" />' +
-                            '<label class="k-checkbox-label" for="useCustomMessages"></label>' +
+                            '<label class="k-checkbox-label" for="useCustomMessages">'+
+                                ' #: messages.validationDialog.labels.showHint #' +
+                            '</label>' +
                         '</div>' +
-
                         '<div data-bind="visible: useCustomMessages">' +
                             '<div class="k-edit-label"><label>#: messages.validationDialog.labels.hintTitle #:</label></div>' +
                             '<div class="k-edit-field">' +

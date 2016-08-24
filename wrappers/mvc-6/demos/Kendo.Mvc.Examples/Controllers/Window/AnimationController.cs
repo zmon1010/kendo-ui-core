@@ -4,6 +4,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class WindowController : Controller
     {
+        [Demo]
         public ActionResult Animation(string animation, bool? opacity)
         {
             ViewBag.animation = animation ?? "expand";

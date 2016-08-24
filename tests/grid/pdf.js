@@ -339,4 +339,92 @@
         });
     });
 
+    // ------------------------------------------------------------
+    module("Grid PDF Export / Auto Page Break", {
+        setup: function() {
+            saveAs = kendo.saveAs;
+            kendo.saveAs = exportNoop;
+
+            createGrid({
+                dataSource: {
+                    data: [{ foo: "bar" }, { foo: "bar" }, { foo: "bar" }, { foo: "bar" }]
+                },
+                pdf: {
+                    allPages: true,
+                    paperSize: ["20cm", "2.6cm"]
+                }
+            });
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+            QUnit.fixture.empty();
+            kendo.saveAs = saveAs;
+        }
+    });
+
+    asyncTest("gets back to original page", 5, function() {
+        createGrid({
+            pdf: {
+                allPages: true
+            },
+            dataSource: {
+                page: 2
+            }
+        });
+
+        var pages = [1, 2, 3, 4, 2];
+        grid.dataSource.bind("change", function(e) {
+            equal(grid.dataSource.page(), pages.shift());
+        });
+
+        pdfStubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            return grid.saveAsPDF();
+        });
+    });
+
+    asyncTest("reports progress", 4, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            return grid.saveAsPDF()
+                .progress(function(e) {
+                    ok(e.progress > 0);
+                });
+        });
+    });
+
+    asyncTest("passes reference to page content", function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            return grid.saveAsPDF()
+                .progress(function(e) {
+                    ok(e.page instanceof kendo.drawing.Group);
+                });
+        });
+    });
+
+    asyncTest("passes total pages", function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            return grid.saveAsPDF()
+                .progress(function(e) {
+                    equal(e.totalPages, 4);
+                });
+        });
+    });
+
+    asyncTest("promise is resolved", 1, function() {
+        pdfStubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            return grid.saveAsPDF().done(function(e) {
+                ok(true);
+            });
+        });
+    });
+
 })();

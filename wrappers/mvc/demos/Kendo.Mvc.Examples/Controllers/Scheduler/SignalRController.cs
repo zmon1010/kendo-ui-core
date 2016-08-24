@@ -10,6 +10,7 @@
 
     public partial class SchedulerController
     {
+        [Demo]
         public ActionResult SignalR()
         {
             return View();

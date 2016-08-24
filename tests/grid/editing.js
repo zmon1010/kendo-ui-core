@@ -369,6 +369,34 @@
         equal(cell.find(":input").val(), "bar");
     });
 
+    test("no error is raised when edited row is edited after been deleted", function() {
+        var grid = setup({
+            columns: [{ field: "name", locked: true }, "foo"],
+            dataSource: new DataSource({
+                schema: {
+                    model: {
+                        id: "foo",
+                        fields: {
+                            foo: { field: "foo", editable: false },
+                            name: "name"
+                        }
+                    }
+                },
+                data: [{ foo: "bar", name: "tom" }, { foo: "baz", name: "jerry" }]
+            })
+
+        });
+
+        var cell = grid.lockedTable.find("tr:first>td:first").click();
+
+        var data = grid.dataSource.data();
+        var model = data.splice(0, data.length)[0];
+
+        model.set("name", "moo");
+
+        equal(grid.dataSource.view().length, 0);
+    });
+
     test("edit cell is not refreshed on modelChange", function() {
         var grid, cell;
         setup();

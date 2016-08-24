@@ -362,7 +362,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the barcode will not display the checksum digit next to the value in the text area.</description>
+            <description>If set to true, the Barcode will display the checksum digit next to the value in the text area.</description>
             <name>checksum</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -1057,6 +1057,12 @@ maxDateGroups.</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>The milliseconds unit steps.</description>
+            <name>milliseconds</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The minutes unit steps.</description>
             <name>minutes</name>
             <rtexprvalue>true</rtexprvalue>
@@ -1099,6 +1105,12 @@ maxDateGroups.</description>
         <attribute>
             <description>The color of the crosshair. Accepts a valid CSS color string, including hex and rgb.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the crosshair.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -2126,6 +2138,12 @@ body of the chart.</description>
         <attribute>
             <description>The line color of the notes.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -3935,7 +3953,7 @@ For example line series will be on top with bar and area following below.</descr
         <description>The label connectors options.</description>
         <name>chart-seriesItem-connectors</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemConnectorsTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>The color of the connector. Accepts a valid CSS color string, including hex and rgb.</description>
@@ -3959,6 +3977,12 @@ For example line series will be on top with bar and area following below.</descr
     </tag>
 
 
+    <tag>
+        <description>The color of the connector. Accepts a valid CSS color string, including hex and rgb.</description>
+        <name>chart-seriesItem-connectors-color</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemConnectorsColorFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>The error bars of the chart series.</description>
         <name>chart-seriesItem-errorBars</name>
@@ -4234,6 +4258,12 @@ By default chart series highlighting is enabled.</description>
         <attribute>
             <description>The line color. Accepts a valid CSS color string, including hex and rgb.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the highlight line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -5059,7 +5089,7 @@ By default chart series highlighting is enabled.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the series markers. By default chart series markers are not displayed.</description>
+            <description>If set to true the chart will display the series markers. By default chart series markers are displayed.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -5131,7 +5161,7 @@ By default chart series highlighting is enabled.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>If set to true the chart will display the series markers. By default chart series markers are not displayed.</description>
+        <description>If set to true the chart will display the series markers. By default chart series markers are displayed.</description>
         <name>chart-seriesItem-markers-visible</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemMarkersVisibleFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -5352,6 +5382,12 @@ By default chart series highlighting is enabled.</description>
         <attribute>
             <description>The line color of the notes.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -6577,6 +6613,12 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The length of the connecting lines in pixels.</description>
             <name>length</name>
             <rtexprvalue>true</rtexprvalue>
@@ -6808,7 +6850,7 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the title. By default the title is not displayed.</description>
+            <description>If set to true the chart will display the title. By default the title will be displayed.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -8145,6 +8187,12 @@ body of the chart.</description>
         <attribute>
             <description>The line color of the notes.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -9535,6 +9583,12 @@ body of the chart.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The length of the connecting lines in pixels.</description>
             <name>length</name>
             <rtexprvalue>true</rtexprvalue>
@@ -10911,6 +10965,12 @@ body of the chart.</description>
         <attribute>
             <description>The line color of the notes.</description>
             <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The dash type of the note line.The following dash types are supported:</description>
+            <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -12629,7 +12689,7 @@ The transport option can also be used to implement custom data loading and savin
         </attribute>
         <attribute>
             <description>The function which converts the request parameters to a format suitable for the remote service. By default
-the data source sends the parameters using jQuery's conventions.</description>
+the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.</description>
             <name>parameterMap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12914,7 +12974,7 @@ sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation f
 
     <tag>
         <description>The function which converts the request parameters to a format suitable for the remote service. By default
-the data source sends the parameters using jQuery's conventions.</description>
+the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.</description>
         <name>dataSource-transport-parameterMap</name>
         <tag-class>com.kendoui.taglib.datasource.TransportParameterMapFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -18395,6 +18455,269 @@ See visual.</description>
         <description>Fired when the user starts changing the diagram zoom level.</description>
         <name>diagram-zoomStart</name>
         <tag-class>com.kendoui.taglib.diagram.ZoomStartFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Dialog</description>
+        <name>dialog</name>
+        <tag-class>com.kendoui.taglib.DialogTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.</description>
+            <name>animation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the possible layout of the action buttons in the Dialog.Possible values are:</description>
+            <name>buttonLayout</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether a close button should be rendered at the top corner of the dialog.</description>
+            <name>closable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the content of a Dialog.</description>
+            <name>content</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies height of the dialog.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The maximum height (in pixels) that may be achieved by resizing the dialog.</description>
+            <name>maxHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The maximum width (in pixels) that may be achieved by resizing the dialog.</description>
+            <name>maxWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The minimum height (in pixels) that may be achieved by resizing the dialog.</description>
+            <name>minHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The minimum width (in pixels) that may be achieved by resizing the dialog.</description>
+            <name>minWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the dialog should show a modal overlay over the page.</description>
+            <name>modal</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The text in the dialog title bar. If false, the dialog will be displayed without a title bar.</description>
+            <name>title</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the dialog will be initially visible.</description>
+            <name>visible</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies width of the dialog.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog is closed (by a user or through the close() method).</description>
+            <name>close</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog has finished its closing animation.</description>
+            <name>hide</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog is opened for the first time (i.e. the open() method is called).</description>
+            <name>initOpen</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog is opened (i.e. the open() method is called).</description>
+            <name>open</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when a Dialog has finished its opening animation.</description>
+            <name>show</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>A collection of objects containing text, action and primary attributes used to specify the dialog buttons.
+#### Example</description>
+        <name>dialog-actions</name>
+        <tag-class>com.kendoui.taglib.dialog.ActionsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>A collection of objects containing text, action and primary attributes used to specify the dialog buttons.
+#### Example</description>
+        <name>dialog-action</name>
+        <tag-class>com.kendoui.taglib.dialog.ActionTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The callback function to be called after pressing the action button.</description>
+            <name>action</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A boolean property indicating whether teh action button will be decorated as primary button or not.</description>
+            <name>primary</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The text to be shown in the action's button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+    <tag>
+        <description>The callback function to be called after pressing the action button.</description>
+        <name>dialog-action-action</name>
+        <tag-class>com.kendoui.taglib.dialog.ActionActionFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>A collection of {Animation} objects, used to change default animations. A value of false will disable all animations in the widget. is not a valid configuration.</description>
+        <name>dialog-animation</name>
+        <tag-class>com.kendoui.taglib.dialog.AnimationTag</tag-class>
+        <body-content>JSP</body-content>
+
+
+    </tag>
+
+    <tag>
+        <description>The animation that will be used when a Dialog closes.</description>
+        <name>dialog-animation-close</name>
+        <tag-class>com.kendoui.taglib.dialog.AnimationCloseTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the close animation duration.</description>
+            <name>duration</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Effect to be used for closing of the popup.</description>
+            <name>effects</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The animation that will be used when a Dialog opens.</description>
+        <name>dialog-animation-open</name>
+        <tag-class>com.kendoui.taglib.dialog.AnimationOpenTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Defines the open animation duration.</description>
+            <name>duration</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Effect to be used for opening of the popup.</description>
+            <name>effects</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
+        <description>Defines the text of the labels that are shown within the dialog. Used primarily for localization.</description>
+        <name>dialog-messages</name>
+        <tag-class>com.kendoui.taglib.dialog.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The title of the close button.</description>
+            <name>close</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Triggered when a Dialog is closed (by a user or through the close() method).</description>
+        <name>dialog-close</name>
+        <tag-class>com.kendoui.taglib.dialog.CloseFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when a Dialog has finished its closing animation.</description>
+        <name>dialog-hide</name>
+        <tag-class>com.kendoui.taglib.dialog.HideFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when a Dialog is opened for the first time (i.e. the open() method is called).</description>
+        <name>dialog-initOpen</name>
+        <tag-class>com.kendoui.taglib.dialog.InitOpenFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when a Dialog is opened (i.e. the open() method is called).</description>
+        <name>dialog-open</name>
+        <tag-class>com.kendoui.taglib.dialog.OpenFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when a Dialog has finished its opening animation.</description>
+        <name>dialog-show</name>
+        <tag-class>com.kendoui.taglib.dialog.ShowFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -26570,6 +26893,199 @@ Cancelling the event will prevent the user action.</description>
         <description>Fires when the value is changed</description>
         <name>maskedTextBox-change</name>
         <tag-class>com.kendoui.taglib.maskedtextbox.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>MediaPlayer</description>
+        <name>mediaPlayer</name>
+        <tag-class>com.kendoui.taglib.MediaPlayerTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will start playing the video\vidoes after initializing</description>
+            <name>autoPlay</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will start playing the video\vidoes after initializing</description>
+            <name>autoRepeat</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the user will be prevented from seeking the video forward</description>
+            <name>forwardSeek</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will enter in full-sreen mode</description>
+            <name>fullScreen</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the video will be played without sound</description>
+            <name>mute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true will enable the keyboard navigation for the widget</description>
+            <name>navigatable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A value between 0 and 100 that specifies the volume of the video</description>
+            <name>volume</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Fires when the media finishes playing.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the media is paused.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>pause</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the media begins playing.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>play</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when loading is over and the widget is ready to start playing the media.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>ready</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the user selects a new play time.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>timeChange</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>volumeChange</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>The object which holds the information about the media that will be played by the control</description>
+        <name>mediaPlayer-media</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.MediaTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>String or an array of objects that hold the URL\URLs to the videos</description>
+            <name>source</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the title of the media that will be played</description>
+            <name>title</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>The object which holds the localization strings</description>
+        <name>mediaPlayer-messages</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Fullscreen button tooltip message</description>
+            <name>fullscreen</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Mute button tooltip message</description>
+            <name>mute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Pause button tooltip message</description>
+            <name>pause</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Play button tooltip message</description>
+            <name>play</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Quality button tooltip message</description>
+            <name>quality</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Unmute button tooltip message</description>
+            <name>unmute</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Fires when the media finishes playing.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-end</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.EndFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the media is paused.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-pause</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.PauseFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the media begins playing.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-play</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.PlayFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when loading is over and the widget is ready to start playing the media.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-ready</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.ReadyFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the user selects a new play time.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-timeChange</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.TimeChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>mediaPlayer-volumeChange</name>
+        <tag-class>com.kendoui.taglib.mediaplayer.VolumeChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -40083,13 +40599,19 @@ Template variables:</description>
         <description>Specifies the initially selected range.The full range of values is shown if no range is specified.</description>
         <name>stockChart-navigator-select</name>
         <tag-class>com.kendoui.taglib.stockchart.NavigatorSelectTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>The lower boundary of the selected range.</description>
             <name>from</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>The mousewheel configuration of the selection.If set to false the mousewheel will not update the selection.</description>
+            <name>mousewheel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>The upper boundary of the selected range.</description>
@@ -40099,6 +40621,28 @@ Template variables:</description>
         </attribute>
 
     </tag>
+
+    <tag>
+        <description>The mousewheel configuration of the selection.If set to false the mousewheel will not update the selection.</description>
+        <name>stockChart-navigator-select-mousewheel</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorSelectMousewheelTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>If set to true will reverse the mouse wheel direction. The normal direction is down for "zoom out", up for "zoom in".</description>
+            <name>reverse</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The zoom direction.The supported values are:</description>
+            <name>zoom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
 
 
     <tag>
@@ -45862,7 +46406,13 @@ and the string value will be passed as an argument to a kendo.template() functio
         <name>treeList-toolbarItem</name>
         <tag-class>com.kendoui.taglib.treelist.ToolbarItemTag</tag-class>
 
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The click handler of the toolbar command. Used for custom toolbar commands.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>The name of the toolbar command. Either a built-in ("create", "excel", "pdf") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-grid-name.
 This class can be used to get a reference to the button (after TreeList initialization) and attach click handlers.</description>
@@ -45879,6 +46429,12 @@ This class can be used to get a reference to the button (after TreeList initiali
     </tag>
 
 
+    <tag>
+        <description>The click handler of the toolbar command. Used for custom toolbar commands.</description>
+        <name>treeList-toolbarItem-click</name>
+        <tag-class>com.kendoui.taglib.treelist.ToolbarItemClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
@@ -46551,6 +47107,12 @@ This event has been introduced in internal builds after 2014.2.828.</description
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.</description>
+            <name>dropZone</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Enables (true) or disables (false) an Upload. A disabled
 Upload may be re-enabled via enable().</description>
             <name>enabled</name>
@@ -46745,6 +47307,12 @@ This option will be ignored if the browser doesn't support File API.</descriptio
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Sets the text of the clear button.</description>
+            <name>clearSelectedFiles</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Sets the drop zone hint.</description>
             <name>dropFilesHere</name>
             <rtexprvalue>true</rtexprvalue>
@@ -46759,6 +47327,24 @@ This option will be ignored if the browser doesn't support File API.</descriptio
         <attribute>
             <description>Sets the header status message for files that are being uploaded.</description>
             <name>headerStatusUploading</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text for invalid file extension validation message.</description>
+            <name>invalidFileExtension</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text for invalid maxFileSize validation message.</description>
+            <name>invalidMaxFileSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text for invalid minFileSize validation message.</description>
+            <name>invalidMinFileSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -46803,6 +47389,35 @@ This option will be ignored if the browser doesn't support File API.</descriptio
             <name>uploadSelectedFiles</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>Configures the validation options for uploaded files.</description>
+        <name>upload-validation</name>
+        <tag-class>com.kendoui.taglib.upload.ValidationTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Lists which file extensions are allowed to be uploaded.</description>
+            <name>allowedExtensions</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Defines the maximum file size that can be uploaded in bytes.</description>
+            <name>maxFileSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Defines the minimum file size that can be uploaded in bytes.</description>
+            <name>minFileSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
         </attribute>
 
     </tag>

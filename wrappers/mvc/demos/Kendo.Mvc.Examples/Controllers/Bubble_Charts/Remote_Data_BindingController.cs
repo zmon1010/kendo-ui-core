@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Bubble_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Remote_Data_Binding()
         {
             return View();

@@ -414,6 +414,16 @@ html .km-pane-wrapper .k-header
     background-color: @header-background-color;
 }
 
+.k-mediaplayer-toolbar 
+{
+    background-color: fade(@group-background-color, 70%);
+	color: @inverse-text-color;
+}
+
+.k-mediaplayer-toolbar .k-mediaplayer-seekbar {
+	top: -14px;
+}
+
 /* icons */
 .k-icon:hover,
 .k-state-hover .k-icon,
@@ -713,6 +723,22 @@ html .km-pane-wrapper .k-header
 {
     border-color: @focused-border-color;
 }
+
+.k-button-bare {
+	&.k-state-focused .k-font-icon,
+	&:focus .k-font-icon {
+		text-shadow: 0 0 3px currentColor;
+	}
+}
+
+html .k-mediaplayer-toolbar .k-button-bare {
+	&:active,
+	&.k-state-active,
+	&.k-state-active:hover {
+		color: @accent;
+	}
+}
+
 
 .k-calendar {
     .k-link {
@@ -2308,6 +2334,7 @@ html .km-pane-wrapper .km-widget,
     .k-webkit,
     .k-ff,
     .k-ie11,
+    .k-edge,
     .k-safari {
 
         .k-pager-numbers,
@@ -2604,5 +2631,74 @@ html .km-pane-wrapper .km-widget,
     .k-state-hover .k-input,
     .k-state-active .k-input {
         color: @widget-text-color;
+    }
+}
+/* Dialog */
+
+.k-dialog {
+    border-color: @widget-border-color;
+    &.k-alert .k-dialog-title,
+    &.k-confirm .k-dialog-title,
+    &.k-prompt .k-dialog-title {
+        color: @normal-text-color;
+    }
+    .k-dialog-buttongroup {
+        &.k-dialog-button-layout-stretched {
+            width: 100%;
+            .k-button {
+                display: inline-block;
+                padding: 0.9em 0 0.9em 0;
+                border-radius: 0;
+                border-bottom: 0;
+                border-width: 1px 0 0 1px;
+            }
+            li.k-button:first-child {
+            border-bottom-left-radius: @border-radius;
+            border-left: 0;
+            }
+            li.k-button:last-child {
+                border-bottom-right-radius: @border-radius;
+                border-right: 0;
+            }
+        }
+        &.k-dialog-button-layout-normal {
+            width: auto;
+            margin: 0;
+            padding: 1em;
+            text-align: right;
+            .k-button {
+                margin-left: 0.5em;
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}
+
+.k-rtl .k-dialog {
+    a.k-dialog-action.k-link {
+        top: 1em;
+        left: 1em;
+    }
+    .k-dialog-buttongroup {
+        &.k-dialog-button-layout-stretched {
+            li.k-button:first-child {
+                border-bottom-right-radius: @border-radius;
+            }
+            li.k-button:last-child {
+                border-bottom-left-radius: @border-radius;
+            }
+        }
+        &.k-dialog-button-layout-normal {
+            text-align: left;
+            .k-button {
+                margin-left: 0;
+                margin-right: 0.5em;
+                &:first-child {
+                    margin-right: 0;
+                }
+            }
+        }
     }
 }

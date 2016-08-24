@@ -6,12 +6,13 @@ CHANGELOG_TEMPLATE = ERB.new(File.read(File.join(File.dirname(__FILE__), 'change
 CHANGELOG_XML_TEMPLATE = ERB.new(File.read(File.join(File.dirname(__FILE__), 'changelog.xml.erb')), 0, '%<>')
 
 class Issue
-    attr_reader :suites, :components, :internal, :framework, :bug, :new_component
+    attr_reader :suites, :components, :internal, :framework, :bug, :new_component, :link, :id
     attr_accessor :title
     def initialize(issue)
         @title = issue.title
         @labels = issue.labels.map {|l| l.name }
-
+        @link = issue.html_url
+        @id = issue.number
         @internal = @labels.join(" ") =~ /Documentation|Internal|Deleted|Invalid|Won't Fix/
         @bug = @labels.include? "Bug"
         @new_component = @labels.include? "New Component"
@@ -23,6 +24,12 @@ class Issue
         @components = filtered_labels(:w) | filtered_labels(:f) | filtered_labels(:c)
     end
 
+    def enhancement?
+        @labels.include? "Enhancement"
+    end
+    def feature?
+        @labels.include? "Feature"
+    end
     def breaking?
         @labels.include? "Breaking Change"
     end
@@ -46,7 +53,7 @@ class Component
     def add(issue)
         if issue.bug
             @bugs.push issue
-        else
+        elsif issue.feature? || issue.enhancement?
             @features.push issue
         end
     end
@@ -70,7 +77,7 @@ class Suite
         elsif issue.components.length == 0 || issue.framework_construct?
             if issue.bug
                 @bugs.push issue
-            else
+            elsif issue.feature? || issue.enhancement?
                 @features.push issue
             end
         elsif issue.components
@@ -123,7 +130,7 @@ class ChangeLog
     end
 
     def api_for(repo_name)
-        Github.new :oauth_token => '39bacd99458f1a463b938854c2da9af6c929ed6a',
+        Github.new :oauth_token => '87924a2f282916e1c94f7aeb99d32c5a1dff95e1',
                    :user => "telerik",
                    :repo => repo_name,
                    :auto_pagination => true

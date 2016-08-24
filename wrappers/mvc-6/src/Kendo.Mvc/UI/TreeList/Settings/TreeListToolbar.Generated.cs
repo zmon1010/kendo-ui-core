@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class TreeListToolbar<T> where T : class 
     {
+        public ClientHandlerDescriptor Click { get; set; }
+
         public string Name { get; set; }
 
         public string Text { get; set; }
@@ -21,6 +23,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (Click?.HasValue() == true)
+            {
+                settings["click"] = Click;
+            }
 
             if (Name?.HasValue() == true)
             {

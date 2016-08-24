@@ -44,6 +44,8 @@ exports.afterTestFiles = [
     'tests/upload/error.js',
     'tests/upload/cancel.js',
     'tests/upload/remove.js',
+    'tests/upload/removeApi.js',
+    'tests/upload/validation.js',
 
     { pattern: 'src/kendo.editor.js', included: false },
     { pattern: 'src/kendo.aspnetmvc.js', included: false },

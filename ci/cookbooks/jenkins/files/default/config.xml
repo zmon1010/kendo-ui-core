@@ -88,6 +88,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>qa-staging</string>
         <string>selenium2-no-timeout</string>
+        <string>wdio-e2e</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -328,6 +329,7 @@
         <string>Upload-CDN-production</string>
         <string>Upload-Docs-Full</string>
         <string>Upload-Download-Builder-production</string>
+        <string>Upload-NuGet-MVC-Core-production</string>
         <string>Upload-NuGet-production</string>
         <string>Upload-Release-Notes-production</string>
         <string>Upload-Theme-Builder</string>
@@ -349,5 +351,19 @@
   <slaveAgentPort>0</slaveAgentPort>
   <label>master</label>
   <nodeProperties/>
-  <globalNodeProperties/>
+  <globalNodeProperties>
+    <hudson.slaves.EnvironmentVariablesNodeProperty>
+      <envVars serialization="custom">
+        <unserializable-parents/>
+        <tree-map>
+          <default>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
+          </default>
+          <int>1</int>
+          <string>NODE_PATH</string>
+          <string>%AppData%\npm\node_modules</string>
+        </tree-map>
+      </envVars>
+    </hudson.slaves.EnvironmentVariablesNodeProperty>
+  </globalNodeProperties>
 </hudson>

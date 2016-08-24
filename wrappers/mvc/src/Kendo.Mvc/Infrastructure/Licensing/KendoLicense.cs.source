@@ -1,0 +1,38 @@
+﻿using System;
+using System.Configuration;
+using System.Linq;
+
+namespace Kendo.Mvc.Infrastructure.Licensing
+{
+	internal class KendoLicense : System.ComponentModel.License
+    {
+        public override string LicenseKey { get { return ""; } }
+
+        internal Type Type { get; set; }
+
+        internal KendoLicenseStatus LicenseStatus
+        {
+            get
+            {
+                return KendoLicenseStatus.Full;
+            }
+        }
+
+        internal int TrialDaysLeft
+        {
+            get
+            {
+                return 30;
+            }
+        }
+
+        internal KendoLicense(System.Type type)
+        {
+            this.Type = type;
+        }
+
+        public override void Dispose()
+        {
+        }
+    }
+}

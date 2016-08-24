@@ -1,3 +1,4 @@
+using System;
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
@@ -61,6 +62,19 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartPieConnectorsBuilder Color(string color)
         {
             pieConnectors.Color = color;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the function used to retrieve connector color.
+        /// </summary>
+        /// <param name="colorFunction">
+        ///     The JavaScript function that will be executed
+        ///     to retrieve the color of each connector.
+        /// </param>
+        public ChartPieConnectorsBuilder Color(Func<object, object> colorFunction)
+        {
+            pieConnectors.ColorHandler = new ClientHandlerDescriptor { TemplateDelegate = colorFunction };
             return this;
         }
 

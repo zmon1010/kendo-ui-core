@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
+        public string Click { get; set; }
+        
         public string Name { get; set; }
         
         public string Text { get; set; }
@@ -27,6 +29,11 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
+            if (Click.HasValue())
+            {
+                json["click"] = Click;
+            }
+            
             if (Name.HasValue())
             {
                 json["name"] = Name;

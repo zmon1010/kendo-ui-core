@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class MapController : Controller
     {
+        [Demo]
         public ActionResult Export()
         {
             return View();

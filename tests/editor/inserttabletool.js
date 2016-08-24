@@ -57,9 +57,10 @@ test("clicking a cell inserts a table", function() {
 
     withMock(tool._editor, "exec", function() { execArgs = arguments; }, function() {
         cell.trigger({
-            type: "mouseup",
-            clientX: offset.left + cell.width()/2,
-            clientY: offset.top + cell.height()/2
+            type: kendo.eventMap.down.split(" ")[0],
+            api: true,
+            clientX: offset.left + cell.width() / 2,
+            clientY: offset.top + cell.height() / 2
         });
 
         ok(execArgs);

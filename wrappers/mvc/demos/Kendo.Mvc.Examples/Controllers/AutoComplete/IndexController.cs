@@ -4,6 +4,7 @@
 
     public partial class AutoCompleteController : Controller
     {
+        [Demo]
         public ActionResult Index()
         {
             return View();

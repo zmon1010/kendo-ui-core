@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Area_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Error_Bars()
         {
             return View();

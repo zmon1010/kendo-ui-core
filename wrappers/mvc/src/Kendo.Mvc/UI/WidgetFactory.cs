@@ -19,14 +19,16 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Creates the fluent API builders of the Kendo UI widgets
     /// </summary>
+    [LicenseProvider(typeof(Kendo.Mvc.Infrastructure.Licensing.KendoLicenseProvider))]
     public class WidgetFactory : IHideObjectMembers
     {
         public WidgetFactory(HtmlHelper htmlHelper)
         {
-
             HtmlHelper = htmlHelper;
             Initializer = DI.Current.Resolve<IJavaScriptInitializer>();
             UrlGenerator = DI.Current.Resolve<IUrlGenerator>();
+
+            LicenseManager.Validate(GetType());
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -719,6 +721,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Creates a new <see cref="Kendo.Mvc.UI.MediaPlayer"/>
+        /// </summary>
+        /// <example>
+        /// <typeparam name="T">The type of the data item</typeparam>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().MediaPlayer()
+        ///             .Name("MediaPlayer")
+        /// %&gt;
+        /// </code>
+        /// </example>        
+        public virtual MediaPlayerBuilder MediaPlayer()
+        {
+            return new MediaPlayerBuilder(new MediaPlayer(ViewContext, Initializer, UrlGenerator));
+        }
+
+        /// <summary>
         /// Creates a new <see cref="CheckBox"/>.
         /// </summary>
         /// <example>
@@ -1403,6 +1421,21 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual ColorPickerBuilder ColorPicker()
         {
             return new ColorPickerBuilder(new ColorPicker(ViewContext, Initializer, ViewData));
+        }
+        
+        /// <summary>
+        /// Creates a <see cref="Dialog"/>
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Dialog()
+        ///             .Name("Dialog")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public virtual DialogBuilder Dialog()
+        {
+            return new DialogBuilder(new Dialog(ViewContext, Initializer, UrlGenerator));
         }
         
         /// <summary>

@@ -1355,7 +1355,7 @@ form.k-filter-menu .k-textbox {
 .k-grid-header .k-grid-filter,
 .k-grid-header .k-header-column-menu {
     padding: .857em;
-    margin: -0.9em -0.6em -0.714em -0.6em;
+    margin: -0.9em -0.6em -0.714em 0;
 }
 
 .k-grid-header .k-header-column-menu .k-i-arrowhead-s {
@@ -1765,4 +1765,29 @@ li.k-item.k-last.k-state-selected {
     .k-page-landscape {
         top: 30%;
     }
+
+    .k-edit-label,
+    .k-edit-field {
+        padding: 0;
+        line-height: 4em;
+    }
+
+    .k-edit-label > label {
+        vertical-align: middle;
+    }
+
+    .k-edit-field {
+        .k-radio-label {
+            padding-left: 1.75em;
+        }
+
+        > .k-radio-label:before,
+        > .k-radio-label:after {
+            margin-top: -2px;
+        }
+    }
+}
+
+div.k-spreadsheet-window {
+    padding: 1em;
 }

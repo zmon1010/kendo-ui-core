@@ -1,5 +1,6 @@
 (function() {
-   var AgendaView = kendo.ui.AgendaView,
+    var AgendaView = kendo.ui.AgendaView,
+        Scheduler = kendo.ui.Scheduler,
         Event = kendo.data.SchedulerEvent,
         keys = kendo.keys,
         container;
@@ -237,6 +238,147 @@
         equal(selection.index, 0);
         equal(selection.events.length, 1);
         equal(selection.events[0], event.uid);
+    });
+
+      function setupGroupedWidget(options) {
+                options = options || {};
+
+                options = $.extend({
+                    selectable: true,
+                    date: new Date(2013, 1, 3, 0, 0, 0, 0),
+                    views: [
+                        "agenda"
+                    ],
+                   
+                     resources: [
+                    {
+                        field: "roomId",
+                        name: "Rooms",
+                        dataSource: [
+                            { text: "Resource1", value: 1, color: "#6eb3fa" },
+                            { text: "Resource2", value: 2, color: "#f58a8a" }
+                        ],
+                        title: "Room"
+                    }, {
+                        field: "attendees",
+                        name: "Attendees",
+                        dataSource: [
+                            { text: "Alex", value: 1, color: "#f8a398" },
+                            { text: "Bob", value: 2, color: "#51a0ed" },
+                            { text: "Charlie", value: 3, color: "#56ca85" }
+                        ],
+                        multiple: true,
+                        title: "Attendees"
+                    }
+                ]
+                }, options);
+
+                scheduler = new Scheduler(container, options);
+                view = scheduler.view();
+
+                container.focus();
+      }
+        
+      test("grouped by date key down selects next event row", function() {
+          var startDate = new Date(2013, 1, 3, 0, 0, 0, 0);
+          var end = new Date(startDate);
+          end.setHours(1);
+
+          var startDate1 = new Date(2013, 1, 4, 0, 0, 0);
+          var end1 = new Date(startDate1);
+              end1.setHours(1);
+
+        setupGroupedWidget({
+            group: {
+                resources: ["Rooms", "Attendees"],
+                date: true,
+            },
+                dataSource: [
+                    { start: startDate, end: end, title: "Test", roomId: 2, attendees: 1 },
+                    { start: startDate1, end: end1, title: "Test", roomId: 2, attendees: 1 },
+                    { start: startDate, end: end, title: "Test", roomId: 2, attendees: 2 },
+
+                ],
+         });
+
+        var view = scheduler.view();
+        var selection = createSelection();
+
+        view.select(selection);
+        var handled = view.move(selection, keys.DOWN);
+
+        ok(handled);
+        deepEqual(selection.start, new Date(2013, 1, 4));
+        deepEqual(selection.end, new Date(2013, 1, 4, 1, 0, 0));
+        equal(selection.index, 1);
+    });
+
+    test("grouped by date key up selects previous event row", function() {
+         var startDate = new Date(2013, 1, 3, 0, 0, 0, 0);
+          var end = new Date(startDate);
+          end.setHours(1);
+
+          var startDate1 = new Date(2013, 1, 4, 0, 0, 0);
+          var end1 = new Date(startDate1);
+              end1.setHours(1);
+
+        setupGroupedWidget({
+            group: {
+                resources: ["Rooms", "Attendees"],
+                date: true,
+            },
+                dataSource: [
+                    { start: startDate, end: end, title: "Test", roomId: 2, attendees: 1 },
+                    { start: startDate1, end: end1, title: "Test", roomId: 2, attendees: 1 },
+                    { start: startDate, end: end, title: "Test", roomId: 2, attendees: 2 },
+
+                ],
+         });
+
+        var view = scheduler.view();
+        var selection = createSelection({
+            index: 1
+        });
+
+        view.select(selection);
+        var handled = view.move(selection, keys.UP);
+
+        ok(handled);
+        deepEqual(selection.start, new Date(2013, 1, 3));
+        deepEqual(selection.end, new Date(2013, 1, 3, 1, 0, 0));
+        equal(selection.index, 0);
+    });
+
+    test("grouped by date key down selects next event between multi day event", function() {
+      var startDate = new Date(2013, 1, 3, 0, 0, 0, 0);
+          var end = new Date(startDate);
+          end.setHours(1);
+
+         var startDate1 = new Date(2013, 1, 4, 0, 0, 0);
+         var end1 =new Date(2013, 1, 6, 0, 0, 0);
+
+        setupGroupedWidget({
+            group: {
+                resources: ["Rooms", "Attendees"],
+                date: true,
+            },
+                dataSource: [
+                    { start: startDate1, end: end1, title: "Test", roomId: 2, attendees: 1 },
+                    { start: startDate, end: end, title: "Test", roomId: 2, attendees: 2 },
+
+                ],
+         });
+
+        var view = scheduler.view();
+        var selection = createSelection();
+
+        view.select(selection);
+        var handled = view.move(selection, keys.DOWN);
+
+        ok(handled);
+        deepEqual(selection.start, new Date(2013, 1, 5));
+        deepEqual(selection.end, new Date(2013, 1, 5));
+        equal(selection.index, 1);
     });
 
 })();

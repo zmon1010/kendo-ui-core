@@ -369,4 +369,45 @@
             y: { location: offset.top }
         });
     }
+
+     test("possition appointments correctly in grouped timelineview when vertical scroll is visible", function() {
+       var scheduler = new Scheduler(div, {
+            date: new Date("2013/6/6"),
+            dataSource: [
+                new SchedulerEvent( { start: new Date("2013/6/6 12:00 AM"), end: new Date("2013/6/6 12:30 AM"), title: "some", roomId: 2, attendees: 3 } )
+            ],
+            views: ["timeline"],
+              group: {
+                        resources: ["Room", "attendees"],//,
+                        date: true,
+                        orientation: "vertical"
+                    },
+                    resources: [
+                        {
+                            field: "roomId",
+                            name: "Room",
+                            dataSource: [
+                                { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                                { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                            ],
+                            title: "Room"
+                        },
+                        {
+                            field: "attendees",
+                            dataSource: [
+                                { text: "Alex", value: 1, color: "#f8a398" },
+                                { text: "Bob", value: 2, color: "#51a0ed" },
+                                { text: "Charlie", value: 3, color: "#56ca85" }
+                            ],
+                            multiple: true,
+                            title: "Attendees"
+                        }
+                    ]
+        });
+        var slots = div.find(".k-scheduler-content tr:eq(1) td");
+        var event = div.find(".k-event").first();
+
+         equalWithRound(event.offset().left, slots.last().offset().left);
+   });
+
 })();

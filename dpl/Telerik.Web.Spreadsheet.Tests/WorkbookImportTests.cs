@@ -58,7 +58,7 @@ namespace Telerik.Web.Spreadsheet.Tests
         [Fact]
         public void FromDocument_imports_cells()
         {
-            Assert.Equal(5, Workbook.FromDocument(document).Sheets[0].Rows[0].Cells.Count);
+            Assert.Equal(6, Workbook.FromDocument(document).Sheets[0].Rows[0].Cells.Count);
         }
 
         [Fact]
@@ -128,6 +128,22 @@ namespace Telerik.Web.Spreadsheet.Tests
             document.ActiveWorksheet.ViewState.FreezePanes(4, 1);
 
             Assert.Equal(1, Workbook.FromDocument(document).Sheets[0].FrozenColumns);
+        }
+
+        [Fact]
+        public void FromDocument_imports_showGridLines()
+        {
+            document.ActiveWorksheet.ViewState.ShowGridLines = false;
+
+            Assert.False(Workbook.FromDocument(document).Sheets[0].ShowGridLines);
+        }
+
+        [Fact]
+        public void FromDocument_imports_hyperlinks()
+        {
+            var cell = GetCell(1, 6);
+
+            Assert.Equal("FooLinkValue", cell.Link);
         }
 
         private Cell GetCell(int rowIndex, int columnIndex)

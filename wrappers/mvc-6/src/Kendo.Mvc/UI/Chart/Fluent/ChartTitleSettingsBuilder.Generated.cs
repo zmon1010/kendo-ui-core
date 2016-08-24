@@ -90,21 +90,12 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the chart will display the title. By default the title is not displayed.
+        /// If set to true the chart will display the title. By default the title will be displayed.
         /// </summary>
         /// <param name="value">The value for Visible</param>
         public ChartTitleSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
-            return this;
-        }
-
-        /// <summary>
-        /// If set to true the chart will display the title. By default the title is not displayed.
-        /// </summary>
-        public ChartTitleSettingsBuilder<T> Visible()
-        {
-            Container.Visible = true;
             return this;
         }
 

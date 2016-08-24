@@ -76,6 +76,7 @@
 - map.markerdefaults.tooltip
 - map.markers.tooltip
 - maskedtextbox.rules
+- mediaplayer.media
 - menu.animation
 - menu.datasource
 - menu.direction
@@ -152,3 +153,4 @@
 - window.appendto
 - window.content
 - window.resizable
+- dialog.animation

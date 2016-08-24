@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartCategoryAxisAutoBaseUnitStepsSettings<T> where T : class 
     {
+        public int[] Milliseconds { get; set; }
+
         public int[] Seconds { get; set; }
 
         public int[] Minutes { get; set; }
@@ -31,6 +33,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (Milliseconds?.Any() == true)
+            {
+                settings["milliseconds"] = Milliseconds;
+            }
 
             if (Seconds?.Any() == true)
             {

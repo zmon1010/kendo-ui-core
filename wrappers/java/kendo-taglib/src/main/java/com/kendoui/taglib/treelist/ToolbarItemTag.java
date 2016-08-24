@@ -3,6 +3,7 @@ package com.kendoui.taglib.treelist;
 
 
 import com.kendoui.taglib.BaseTag;
+import com.kendoui.taglib.json.Function;
 
 
 
@@ -47,6 +48,22 @@ public class ToolbarItemTag extends  BaseTag  /* interfaces */ /* interfaces */ 
 
     public static String tagName() {
         return "treeList-toolbarItem";
+    }
+
+    public void setClick(ToolbarItemClickFunctionTag value) {
+        setEvent("click", value.getBody());
+    }
+
+    public String getClick() {
+        Function property = ((Function)getProperty("click"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setClick(String value) {
+        setProperty("click", new Function(value));
     }
 
     public java.lang.String getName() {

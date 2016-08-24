@@ -38,6 +38,15 @@ for more details.
     }
 
     /**
+    * Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
+    * @param string $value
+    * @return \Kendo\UI\Upload
+    */
+    public function dropZone($value) {
+        return $this->setProperty('dropZone', $value);
+    }
+
+    /**
     * Enables (true) or disables (false) an Upload. A disabled
 Upload may be re-enabled via enable().
     * @param boolean $value
@@ -107,6 +116,15 @@ client-side events to build your own UI.
     */
     public function template($value) {
         return $this->setProperty('template', $value);
+    }
+
+    /**
+    * Configures the validation options for uploaded files.
+    * @param \Kendo\UI\UploadValidation|array $value
+    * @return \Kendo\UI\Upload
+    */
+    public function validation($value) {
+        return $this->setProperty('validation', $value);
     }
 
     /**

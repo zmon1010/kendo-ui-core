@@ -3,7 +3,6 @@
     var plotArea;
     var pane;
     var pannable;
-    var eventArg = createEventArg();
     var chartOptions = {
         categoryAxis: {
             categories: ["A", "B", "C", "D"],
@@ -11,22 +10,24 @@
             min: 1,
             max: 2
         }
-    };
+    },
+    panePoint;
 
     function createEventArg(options) {
         return kendo.deepExtend({
+            preventDefault: $.noop,
             event: { },
             x: {
                 startLocation: 0,
                 location: 0,
-                client: 0,
+                client: panePoint.x,
                 initialDelta: 0
             },
             y: {
                 startLocation: 0,
                 initialDelta: 0,
                 location: 0,
-                client: 0
+                client: panePoint.y
             }
         }, options);
     }
@@ -38,6 +39,7 @@
         pane = plotArea.panes[0];
 
         pannable = new kendo.dataviz.Pannable(plotArea, kendo.deepExtend(panOptions));
+        panePoint = pane.chartsBox().center();
     }
 
     // ------------------------------------------------------------
@@ -49,7 +51,17 @@
 
     test("activates panning if no key is pressed by default", function() {
         setup();
-        pannable.start(eventArg);
+        pannable.start(createEventArg());
+        equal(pannable._active, true);
+    });
+
+    test("does not activate panning if the cursor is not inside the plotArea background", function() {
+        setup();
+        pannable.start(createEventArg({
+            x: {
+                client: -10
+            }
+        }));
         equal(pannable._active, true);
     });
 
@@ -79,7 +91,7 @@
         setup(chartOptions, {
             key: "ctrl"
         });
-        pannable.start(eventArg);
+        pannable.start(createEventArg());
         ok(!pannable._active);
     });
 
@@ -92,7 +104,7 @@
 
     test("returns updated ranges based on delta", function() {
         setup();
-        pannable.start(eventArg);
+        pannable.start(createEventArg());
         var range = pannable.move(createEventArg({
             x: {
                 delta: 10
@@ -107,7 +119,7 @@
         setup(chartOptions, {
             lock: "x"
         });
-        pannable.start(eventArg);
+        pannable.start(createEventArg());
         var range = pannable.move(createEventArg({
             x: {
                 delta: 10
@@ -120,7 +132,7 @@
     module("Pannable / pan", {
         setup: function() {
             setup();
-            pannable.start(eventArg);
+            pannable.start(createEventArg());
             var range = pannable.move(createEventArg({
                 x: {
                     delta: 10
@@ -148,6 +160,11 @@
     module("Pannable / event handling", {
         setup: function() {
             chart = createChart({
+                series: [{ data: [1, 2, 3, 4] }],
+                categoryAxis: {
+                    name: "category",
+                    max: 2
+                },
                 pannable: true
             });
             pannable = chart._pannable;
@@ -161,7 +178,7 @@
         chart._unsetActivePoint = function() {
             ok(true);
         };
-        chart._start(eventArg);
+        chart._start(createEventArg());
 
         chart._unsetActivePoint = $.noop;
     });
@@ -173,7 +190,7 @@
         chart._unsetActivePoint = function() {
             ok(false);
         };
-        chart._start(eventArg);
+        chart._start(createEventArg());
 
         chart._unsetActivePoint = $.noop;
     });
@@ -182,7 +199,7 @@
         chart.surface.suspendTracking = function() {
             ok(true);
         };
-        chart._start(eventArg);
+        chart._start(createEventArg());
 
         chart._unsetActivePoint = $.noop;
     });
@@ -194,28 +211,70 @@
         chart.surface.suspendTracking = function() {
             ok(false);
         };
-        chart._start(eventArg);
+        chart._start(createEventArg());
 
         chart._unsetActivePoint = $.noop;
     });
 
     test("resumes surface tracking on end", function() {
-        chart._start(eventArg);
+        chart._start(createEventArg());
         chart.surface.resumeTracking = function() {
             ok(true);
         };
-        chart._end(eventArg);
+        chart._end(createEventArg());
     });
 
     test("does not resume surface tracking on end if panning wasn't started", 0, function() {
         pannable.start = function() {
             return false;
         };
-        chart._start(eventArg);
+        chart._start(createEventArg());
         chart.surface.resumeTracking = function() {
             ok(false);
         };
-        chart._end(eventArg);
+        chart._end(createEventArg());
     });
 
+    test("triggers dragEnd with current ranges", 2, function() {
+        chart.bind("dragEnd", function(e) {
+            var range = e.axisRanges.category;
+            ok(range.min > 0);
+            ok(range.max > 2);
+        });
+
+        chart._start(createEventArg());
+        chart._move(createEventArg({
+            x: {
+                delta: -100
+            }
+        }));
+
+        chart._end(createEventArg());
+    });
+
+    test("triggers dragEnd with current ranges if the panning results in no valid range", 2, function() {
+        chart.bind("dragEnd", function(e) {
+            var range = e.axisRanges.category;
+            equal(range.min, 0);
+            equal(range.max, 2);
+        });
+
+        chart._start(createEventArg());debugger;
+        chart._move(createEventArg({
+            x: {
+                delta: 100
+            }
+        }));
+
+        chart._end(createEventArg());
+    });
+
+    // ------------------------------------------------------------
+    module("Pannable / destroy");
+
+    test("removes plotArea reference", function() {
+        pannable = new kendo.dataviz.Pannable({});
+        pannable.destroy();
+        ok(!pannable.plotArea);
+    });
 })();

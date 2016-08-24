@@ -273,6 +273,15 @@ test("applying right align to lists adds list-style-position:inside", function()
     equal(editor.value(), '<ul><li style="text-align:right;list-style-position:inside;">foo</li></ul>');
 });
 
+test('applying right align to multiple lists separated by spaces', function() {
+    editor.focus();
+    var range = createRangeFromText(editor, '<p>foo</p> <ul><li>f|oo</li><li>bar</li></ul> <ul><li>foo</li><li>ba|r</li></ul> <p>bar</p>');
+    justifyRight.toggle(range);
+    
+    var style = ' style="text-align:right;list-style-position:inside;"';
+    equal(editor.value(), '<p>foo</p><ul><li' + style + '>foo</li><li' + style + '>bar</li></ul><ul><li' + style + '>foo</li><li' + style + '>bar</li></ul><p>bar</p>');
+});
+
 test("applying left align to lists removes list-style-position", function() {
     editor.value('<ul><li style="text-align:right;list-style-position:inside;">foo</li></ul>');
 

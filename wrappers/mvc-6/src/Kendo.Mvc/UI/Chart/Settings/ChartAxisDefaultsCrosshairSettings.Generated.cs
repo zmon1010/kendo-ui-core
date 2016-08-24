@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public string Color { get; set; }
 
+        public ChartDashType? DashType { get; set; }
+
         public double? Opacity { get; set; }
 
         public ChartAxisDefaultsCrosshairTooltipSettings<T> Tooltip { get; } = new ChartAxisDefaultsCrosshairTooltipSettings<T>();
@@ -31,6 +33,11 @@ namespace Kendo.Mvc.UI
             if (Color?.HasValue() == true)
             {
                 settings["color"] = Color;
+            }
+
+            if (DashType.HasValue)
+            {
+                settings["dashType"] = DashType?.Serialize();
             }
 
             if (Opacity.HasValue)

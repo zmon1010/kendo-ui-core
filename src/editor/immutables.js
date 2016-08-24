@@ -33,7 +33,9 @@
             "mergecells",
             "formatting",
             "cleanformatting" ],
-        IMMUTABALE = "k-immutable";
+        IMMUTABALE = "k-immutable",
+        IMMUTABALE_MARKER_SELECTOR = "[" + IMMUTABALE + "]",
+        IMMUTABLE_SELECTOR = "[contenteditable='false']";
 
     var rootCondition = function(node) {
         return $(node).is("body,.k-editor");
@@ -73,6 +75,41 @@
         return false;
     };
 
+    var randomId = function(length) {
+        var result = '';
+        var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for (var i = length || 10; i > 0; --i) {
+            result += chars.charAt(Math.round(Math.random() * (chars.length - 1)));
+        }
+        return result;
+    };
+
+    var removeImmutables = function (root) {
+        var serializedImmutables = {empty: true}, nodeName, id, serialized;
+         $(root).find(IMMUTABLE_SELECTOR).each(function(i, node){
+            nodeName = dom.name(node);
+            id = randomId();
+            serialized = "<" + nodeName + " " + IMMUTABALE + "='" + id + "'></" + nodeName + ">";
+            serializedImmutables[id] = {node: node, style: $(node).attr("style")};
+            serializedImmutables.empty = false;
+            $(node).replaceWith(serialized);
+        });
+
+        return serializedImmutables;
+    };
+
+    var restoreImmutables = function(root, serializedImmutables) {
+        var id, immutable;
+        $(root).find(IMMUTABALE_MARKER_SELECTOR).each(function(i, node) {
+            id = node.getAttribute(IMMUTABALE);
+            immutable = serializedImmutables[id];
+            $(node).replaceWith(immutable.node);
+            if (immutable.style != $(immutable.node).attr("style")) {
+                $(immutable.node).removeAttr("style").attr("style", immutable.style);
+            }
+        });
+    };
+
     var deletingKey = function (keyCode) {
         var keys = kendo.keys;
         return keyCode === keys.BACKSPACE || keyCode == keys.DELETE;
@@ -96,7 +133,7 @@
                 id = result.match(/k-immutable\s*=\s*['"](.*)['"]/)[1];
             }
 
-            this.serializedImmutables[id] = $(node).clone(true);
+            this.serializedImmutables[id] = node;
             return result;
         },
 
@@ -120,11 +157,11 @@
             var that = this;
             var deserialization = this.options.deserialization;
 
-            $('[' + IMMUTABALE+ ']', node).each(function() {
+            $(IMMUTABALE_MARKER_SELECTOR, node).each(function() {
                 var id = this.getAttribute(IMMUTABALE);
                 var immutable = that.serializedImmutables[id];
                 if (kendo.isFunction(deserialization)) {
-                    deserialization(this, immutable[0]);
+                    deserialization(this, immutable);
                 }
                 $(this).replaceWith(immutable);
             });
@@ -132,13 +169,8 @@
             that.serializedImmutables = {};
         },
 
-        randomId: function(length) {
-            var result = '';
-            var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            for (var i = length || 10; i > 0; --i) {
-                result += chars.charAt(Math.round(Math.random() * (chars.length - 1)));
-            }
-            return result;
+        randomId: function (length) {
+            return randomId(length);
         },
 
         keydown: function(e, range) {
@@ -241,6 +273,8 @@
     Immutables.expandImmutablesIn = expandImmutablesIn;
     Immutables.immutablesContext = immutablesContext;
     Immutables.toolsToBeUpdated = toolsToBeUpdated;
+    Immutables.removeImmutables = removeImmutables;
+    Immutables.restoreImmutables = restoreImmutables;
 
     Editor.Immutables = Immutables;
 })(window.kendo.jQuery);

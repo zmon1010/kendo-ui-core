@@ -95,9 +95,12 @@ navigation:
         title: "FX"
     "controls/interactivity/draganddrop":
         title: "Drag and Drop"
+    "controls/media":
+        title: "Media"
+        position: 11
     "controls/hybrid":
         title: "Hybrid UI"
-        position: 11
+        position: 12
     "controls/hybrid/styles":
         title: "Styles and Appearance"
         position: 5
@@ -436,8 +439,10 @@ navigation:
         title: "Validator"
     "*autocomplete":
         title: "AutoComplete"
-    "*button":
+    "*/button":
         title: "Button"
+    "*/radiobutton":
+        title: "RadioButton"
     "*calendar":
         title: "Calendar"
     "*colorpalette":
@@ -452,6 +457,8 @@ navigation:
         title: "DatePicker"
     "*datetimepicker":
         title: "DateTimePicker"
+    "*dialog":
+        title: "Dialog"
     "*dropdownlist":
         title: "DropDownList"
     "*editor":
@@ -462,6 +469,10 @@ navigation:
         title: "PivotGrid"
     "*grid":
         title: "Grid"
+    "*media":
+        title: "Media"
+    "*mediaplayer":
+        title: "MediaPlayer"
     "*spreadsheet":
         title: "Spreadsheet"
     "*import-and-export-data":

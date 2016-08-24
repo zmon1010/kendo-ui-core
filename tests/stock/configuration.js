@@ -315,6 +315,81 @@
             equal(chart.navigator.selection.options.visible, false);
         });
 
+        test("navigator axes overlap", function() {
+            createStockChart({});
+
+            var plotArea = chart._plotArea;
+
+            equal(plotArea.namedCategoryAxes["_navigator"].lineBox().y1,
+                  plotArea.namedCategoryAxes["_navigator_labels"].lineBox().y1);
+
+            equal(plotArea.namedCategoryAxes["_navigator"].lineBox().y1,
+                  plotArea.namedCategoryAxes["_navigator_ticks"].lineBox().y1);
+        });
+
+        test("passes mousewheel options to selection", function() {
+            createStockChart({
+                dateField: "Date",
+                dataSource: {
+                    data: [{
+                        Date: new Date("2012/09/01"),
+                        Sales: 100
+                    }]
+                },
+                navigator: {
+                    series: [{
+                        field: "Sales"
+                    }],
+                    select: {
+                        mousewheel: { zoom: "both" }
+                    }
+                }
+            });
+
+            deepEqual(chart.navigator.selection.options.mousewheel, { zoom: "both" });
+        });
+
+        test("can disable mousewheel", function() {
+            createStockChart({
+                dateField: "Date",
+                dataSource: {
+                    data: [{
+                        Date: new Date("2012/09/01"),
+                        Sales: 100
+                    }]
+                },
+                navigator: {
+                    series: [{
+                        field: "Sales"
+                    }],
+                    select: {
+                        mousewheel: false
+                    }
+                }
+            });
+
+            deepEqual(chart.navigator.selection.options.mousewheel, false);
+        });
+
+        test("passes default mousewheel options", function() {
+            createStockChart({
+                dateField: "Date",
+                dataSource: {
+                    data: [{
+                        Date: new Date("2012/09/01"),
+                        Sales: 100
+                    }]
+                },
+                navigator: {
+                    series: [{
+                        field: "Sales"
+                    }]
+                }
+            });
+
+            deepEqual(chart.navigator.selection.options.mousewheel, { zoom: "left" });
+        });
+
         // ------------------------------------------------------------
         var support = deepExtend({}, kendo.support);
         var browserOptions = deepExtend({}, kendo.support.browser);

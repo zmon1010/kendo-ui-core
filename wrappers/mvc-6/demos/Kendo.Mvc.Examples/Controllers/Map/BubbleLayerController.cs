@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class MapController : Controller
     {
+        [Demo]
         public IActionResult Bubble_Layer()
         {
             return View();

@@ -9,8 +9,9 @@ namespace Kendo.Mvc.Tests.Data
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Infrastructure;
     using Kendo.Mvc.Infrastructure.Implementation;
-    using UI.Tests;
     using Xunit;
+    using Kendo.Mvc.UI.Tests;
+    using Kendo.Mvc.UI;
 
     public class QueryableExtensionsTests
     {
@@ -398,7 +399,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest(), (person) => new Person { Name = person.ID.ToString() });
+            var result = people.ToDataSourceResult(new DataSourceRequest(), (person) => new Person { Name = person.ID.ToString() });
 
             result.Data.Cast<Person>().ElementAt(0).Name.ShouldEqual(people.First().ID.ToString());
         }
@@ -408,7 +409,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest(), (person) => new PersonViewModel { Name = person.ID.ToString() });
+            var result = people.ToDataSourceResult(new DataSourceRequest(), (person) => new PersonViewModel { Name = person.ID.ToString() });
 
             result.Data.Cast<PersonViewModel>();
         }
@@ -418,7 +419,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest() { Page = 1, PageSize = 1, Groups = new [] { new GroupDescriptor { Member = "Name" } }  },
+            var result = people.ToDataSourceResult(new DataSourceRequest() { Page = 1, PageSize = 1, Groups = new [] { new GroupDescriptor { Member = "Name" } }  },
                 (person) => new Person { Name = person.ID.ToString() });
 
             result.Data.Cast<AggregateFunctionsGroup>().First().Items.Cast<Person>().First().Name.ShouldEqual(people.First().ID.ToString());
@@ -429,7 +430,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var people = CreateTestData() as IQueryable<Person>;
 
-            var result = people.ToDataSourceResult(new UI.DataSourceRequest() { Page = 1, PageSize = 1, Groups = new[] { new GroupDescriptor { Member = "Name" }, new GroupDescriptor { Member = "ID" } } },
+            var result = people.ToDataSourceResult(new DataSourceRequest() { Page = 1, PageSize = 1, Groups = new[] { new GroupDescriptor { Member = "Name" }, new GroupDescriptor { Member = "ID" } } },
                 (person) => new Person { Name = person.ID.ToString() });
 
             result.Data.Cast<AggregateFunctionsGroup>().First().Items.Cast<AggregateFunctionsGroup>()
@@ -441,7 +442,7 @@ namespace Kendo.Mvc.Tests.Data
         {
             var employees = CreateEmployeeTestData() as IQueryable<EmployeeViewModel>;
 
-            var request = new UI.DataSourceRequest()
+            var request = new DataSourceRequest()
             {
                 Filters = new List<IFilterDescriptor>
                 {
@@ -464,7 +465,7 @@ namespace Kendo.Mvc.Tests.Data
             var descriptor = new AggregateDescriptor { Member = "Name" };
             descriptor.Aggregates.Add(new CountFunction { SourceField = "Name" });
 
-            var request = new UI.DataSourceRequest()
+            var request = new DataSourceRequest()
             {
                 Aggregates = new List<AggregateDescriptor>
                 {

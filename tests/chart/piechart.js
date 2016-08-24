@@ -1277,6 +1277,59 @@
             });
         });
 
+        (function() {
+            var lines;
+
+            function createPieChart(connectorOptions) {
+                setupPieChart(plotArea, {
+                    series: [ {
+                        data: [ 1, 2 ],
+                        labels: { visible: true },
+                        connectors: connectorOptions
+                    }],
+                    connectors: connectorOptions
+                });
+                lines = pieChart._connectorLines;
+            }
+            // ------------------------------------------------------------
+            module("Pie Chart / Connectors options", {
+                setup: function() {
+                    plotArea = new PlotAreaStub();
+                }
+            });
+
+            test("sets default connectors color and width", function() {
+                createPieChart();
+                ok(lines[0].options.stroke.color);
+                ok(lines[0].options.stroke.width);
+            });
+
+            test("sets specified connectors color and width", function() {debugger;
+                createPieChart({
+                    color: "red",
+                    width: 5
+                });
+
+                equal(lines[0].options.stroke.color, "red");
+                equal(lines[0].options.stroke.width, 5);
+            });
+
+            test("sets connectors color based on function", function() {
+                createPieChart({
+                    color: function(data) {
+                        if (data.value === 1) {
+                            return "red";
+                        }
+                        return "blue";
+                    }
+                });
+
+                equal(lines[0].options.stroke.color, "red");
+                equal(lines[1].options.stroke.color, "blue");
+            });
+
+        })();
+
         // ------------------------------------------------------------
         module("Pie Chart / Labels / Positions", {
             setup: function() {

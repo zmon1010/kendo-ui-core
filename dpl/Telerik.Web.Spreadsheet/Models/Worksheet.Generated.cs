@@ -71,6 +71,12 @@ namespace Telerik.Web.Spreadsheet
         public string Selection { get; set; }
 
         /// <summary>
+        /// A boolean value indicating if the sheet grid lines should be displayed.
+        /// </summary>
+        [DataMember(Name = "showGridLines", EmitDefaultValue = false)]
+        public bool? ShowGridLines { get; set; }
+
+        /// <summary>
         /// Defines the sort criteria for the sheet.
         /// </summary>
         [DataMember(Name = "sort", EmitDefaultValue = false)]
@@ -136,6 +142,11 @@ namespace Telerik.Web.Spreadsheet
             if (Selection != null)
             {
                 settings["selection"] = Selection;
+            }
+
+            if (ShowGridLines != null)
+            {
+                settings["showGridLines"] = ShowGridLines;
             }
 
             if (Sort != null)

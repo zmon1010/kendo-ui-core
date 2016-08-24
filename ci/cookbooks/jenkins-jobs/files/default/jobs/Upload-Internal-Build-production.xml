@@ -37,7 +37,7 @@ See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist#int
     <org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration plugin="Parameterized-Remote-Trigger@2.1.3">
       <token></token>
       <remoteJenkinsName>VSX_Jenkins</remoteJenkinsName>
-      <job>Kendo_Upload_Production_Internal</job>
+      <job>Upload_Kendo_Production_Internal</job>
       <shouldNotFailBuild>false</shouldNotFailBuild>
       <pollInterval>60</pollInterval>
       <connectionRetryLimit>5</connectionRetryLimit>
@@ -61,8 +61,14 @@ See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist#int
     </org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration>
   </builders>
   <publishers>
+    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
+      <teamDomain>kendoui</teamDomain>
+      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
+      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
+      <room></room>
+    </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Upload-Bower-internal,Upload-AppBuilder-Bundle-production</childProjects>
+      <childProjects>Upload-Bower-Internal,Upload-AppBuilder-Bundle-production,Upload-NPM</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
@@ -70,12 +76,6 @@ See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist#int
         <completeBuild>true</completeBuild>
       </threshold>
     </hudson.tasks.BuildTrigger>
-    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
-      <teamDomain>kendoui</teamDomain>
-      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
-      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
-      <room></room>
-    </jenkins.plugins.slack.SlackNotifier>
   </publishers>
   <buildWrappers/>
 </project>

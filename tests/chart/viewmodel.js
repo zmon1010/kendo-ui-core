@@ -4091,6 +4091,43 @@
         });
 
         // ------------------------------------------------------------
+        (function() {
+            function createPaneWithAxes(axes, options) {
+                pane = new Pane(options);
+                pane.createGridLines = function() {};
+                pane.axes = axes;
+            }
+
+            function setupAxis(lineBox, vertical) {
+                return {
+                    lineBox: function() {
+                        return lineBox;
+                    },
+                    options: {
+                        vertical: vertical
+                    }
+                };
+            }
+
+            module("Pane / chartsBox", {});
+
+            test("calculates charts box", function() {
+                createPaneWithAxes([setupAxis(Box2D(1,10, 1, 100), true), setupAxis(Box2D(10,1, 100, 1), false)]);
+
+                deepEqual(pane.chartsBox(), Box2D(10,10,100,100));
+            });
+
+            test("calculates box based on all horizontal axes if the pane does not have one", function() {
+                createPaneWithAxes([setupAxis(Box2D(1,10, 1, 100), true)]);
+                pane.parent = {
+                    axes: [setupAxis(Box2D(10,1, 100, 1), false)]
+                };
+
+                deepEqual(pane.chartsBox(), Box2D(10,10,100,100));
+            });
+        })();
+
+        // ------------------------------------------------------------
 
         function createPaneWithTitle(options) {
             pane = new Pane($.extend(true, { title: {

@@ -14,6 +14,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class GridController : Controller
     {
+        [Demo]
         public ActionResult CustomServerBinding([DataSourceRequest(Prefix = "Grid")] DataSourceRequest request)
         {
             if (request.PageSize == 0)

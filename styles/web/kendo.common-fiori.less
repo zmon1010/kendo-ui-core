@@ -17,9 +17,9 @@ span.k-picker-wrap .k-input,
 span.k-numeric-wrap .k-input,
 span.k-dropdown-wrap .k-input,
 span.k-selectbox .k-input {
-    height: 1.429em;
-    line-height: 1.429em;
-    padding: 0.643em 0;
+    height: 1.571em;
+    line-height: 1.571em;
+    padding: .5em 0;
     text-indent: .714em;
 }
 
@@ -29,10 +29,16 @@ input.k-textbox,
     height: 2.857em;
 }
 
+.k-button-bare,
 .k-button {
     line-height: 1.143em;
     padding: .82em 14px;
 }
+
+html .k-mediaplayer-toolbar .k-button-bare {
+	padding: .82em;
+}
+
 
 .k-tabstrip > .k-content,
 .k-panelbar .k-tabstrip > .k-content
@@ -508,6 +514,7 @@ table.k-editor {
 }
 
 .k-toolbar .k-button,
+.k-toolbar .k-button-bare,
 .k-toolbar .k-split-button,
 .k-toolbar .k-button-group,
 .k-toolbar .k-textbox
@@ -971,7 +978,7 @@ span.k-tooltip
 .k-grid-header .k-grid-filter,
 .k-grid-header .k-header-column-menu {
     padding: .857em;
-    margin: -.929em -.6em -.714em -.6em;
+    margin: -.929em -.6em -.714em 0;
 }
 
 .k-grid-header .k-header-column-menu .k-i-arrowhead-s {
@@ -1148,4 +1155,29 @@ span.k-tooltip
     .k-page-landscape {
         top: 30%;
     }
+
+    .k-edit-label,
+    .k-edit-field {
+        padding: 0;
+        line-height: 4em;
+    }
+
+    .k-edit-label > label {
+        vertical-align: middle;
+    }
+
+    .k-edit-field {
+        .k-radio-label {
+            padding-left: 1.75em;
+        }
+
+        > .k-radio-label:before,
+        > .k-radio-label:after {
+            margin-top: -4px;
+        }
+    }
+}
+
+div.k-spreadsheet-window {
+    padding: 1em;
 }

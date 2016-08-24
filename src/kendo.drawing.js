@@ -24,7 +24,7 @@
         name: "Drawing API",
         category: "framework",
         description: "The Kendo UI low-level drawing API",
-        depends: [ "core", "color" ]
+        depends: [ "core", "color", "popup" ]
     };
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

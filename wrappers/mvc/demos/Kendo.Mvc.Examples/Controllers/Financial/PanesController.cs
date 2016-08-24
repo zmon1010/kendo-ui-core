@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class FinancialController : Controller
     {
+        [Demo]
         public ActionResult Panes()
         {
             return View();

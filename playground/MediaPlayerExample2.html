@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<!--
+!!! README FIRST !!!
+To enable proper compilation of the LESS files in the example you need to do the following:
+- Host the playground with IIS
+- Add LESS file to IIS MIME types
+  1) File location: %USERPROFILE%\Documents\IISExpress\config\applicationhost.config
+  OR
+  1) Add the MIME type via the IIS Manager
+  2) Less setting: <mimeMap fileExtension=".less" mimeType="text/css" />
+  3) If you need to reset IIS, open Administrator console and type "iisreset"
+-->
+<html>
+
+<head>
+    <title>MediaPlayer</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.3.js"></script>
+
+    <script>
+        less = {
+            env: "production",
+            logLevel: 0,
+            async: true,
+            fileAsync: true,
+            poll: 1000
+        };
+    </script>
+
+    <link href='//fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet'>
+
+    <link href="../styles/web/kendo.common.less" rel="stylesheet/less" type="text/css" />
+    <link href="../styles/web/kendo.default.less" rel="stylesheet/less" type="text/css" />
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/2.6.1/less.min.js"></script>
+
+    <script type="text/javascript">
+        less.pageLoadFinished.then(function () { initialize(); });
+    </script>
+
+    <script type="text/javascript" src="../src/kendo.core.js"></script>
+    <script type="text/javascript" src="../src/kendo.data.js"></script>
+    <script type="text/javascript" src="../src/kendo.userevents.js"></script>
+    <script type="text/javascript" src="../src/kendo.draganddrop.js"></script>
+    <script type="text/javascript" src="../src/kendo.slider.js"></script>
+    <script type="text/javascript" src="../src/kendo.popup.js"></script>
+    <script type="text/javascript" src="../src/kendo.list.js"></script>
+    <script type="text/javascript" src="../src/kendo.dropdownlist.js"></script>
+    <script type="text/javascript" src="../src/kendo.toolbar.js"></script>
+    <script type="text/javascript" src="../src/kendo.tooltip.js"></script>
+    <script type="text/javascript" src="../src/kendo.mediaplayer.js"></script>
+
+    <script type="text/javascript" src="../src/kendo.listview.js"></script>
+    <script type="text/javascript" src="../src/kendo.selectable.js"></script>
+
+    <!--<script src="../src/messages/kendo.messages.en-US.js"></script>-->
+
+    <style>
+        body {
+            font-size: 14px;
+            /*Temporary workaround for UI font*/
+            font-family: 'Roboto', sans-serif;
+        }
+        /*Temporary workaround for the overlay*/
+        
+        /*Temporary workaround for the icon font*/
+        
+        @font-face {
+            font-family: 'TelerikWebUI';
+            src: url('../styles/web/common/TelerikWebUI.eot');
+            src: url('../styles/web/common/TelerikWebUI.eot') format('embedded-opentype'), url('../styles/web/common/TelerikWebUI.woff') format('woff'), url('../styles/web/common/TelerikWebUI.ttf') format('truetype');
+        }
+
+		.k-mediaplayer-titlebar,
+		.k-mediaplayer-toolbar,
+		div.k-mediaplayer-seekbar {
+			display: block !important;
+			opacity: 1 !important;
+		}
+
+		/*Playlist*/
+		.k-mediaplayer-playlist {
+		}
+		.k-mediaplayer-playlist ul, .k-mediaplayer-playlist li {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		.k-mediaplayer-playlist .k-item {
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+			padding: 14px 15px;
+		}
+		.k-mediaplayer-playlist .k-item:last-child {
+			border-bottom-width: 0;
+		}
+		.k-mediaplayer-playlist a {
+			cursor: pointer;
+			display: block;
+			overflow: hidden;
+			text-decoration: none;
+		}
+		.k-mediaplayer-playlist a img {
+			border: 0 none;
+			display: block;
+			height: 56px;
+			object-fit: cover;
+			width: 100px;
+		}
+		.k-mediaplayer-playlist h4 {
+			display: block;
+			font-weight: normal;
+			margin: 0;
+			overflow: hidden;
+			padding-left: 10px;
+			text-align: left;
+		}
+    </style>
+</head>
+
+<body>
+    <div id="player1" style="width: 510px; height: 286px; float: left;"> </div>
+    <div id="consoleOutput" style="width: 510px; height: 288px; background: linear-gradient(to bottom, #479DD3, #1A84C8); float: left;overflow:auto"></div>
+    <div style="padding-top: 50px; width: 510px; clear: both;">
+        <button onclick="playVideo();">Play</button>
+        <button onclick="pauseVideo();">Pause</button>
+        <button onclick="stopVideo();">Stop</button>
+        <button onclick="isPaused();">isPaused</button>
+        <button onclick="isEnded();">isEnded</button>
+        <button onclick="isPlaying();">isPlaying</button>
+    </div>
+    <div class="k-list-container k-mediaplayer-playlist" style="width: 300px;" id="listView"><ul class="k-list"></ul></div>
+
+    <script type="text/x-kendo-template" id="template">
+        <li class="k-item k-state-default">
+			<a>
+				<img src="#:poster#" />
+				<h4>#:title#</h4>
+			</a>
+        </li>
+    </script>
+
+    <script type="text/javascript">
+        function initialize() {
+            var dataSource = new kendo.data.DataSource({
+                data: [
+				  { title: "Roxette - What's She Like?", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k", poster: "https://i.ytimg.com/vi/O13fsGJv8dQ/hqdefault.jpg" },
+				  { title: "Sepultura - Territory DRUM Cover", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k", poster: "https://i.ytimg.com/vi/Pca2qOEHHpU/maxresdefault.jpg" },
+                  { title: "Dalshabet - Big Baby Baby", url: "https://www.youtube.com/watch?v=vGKeA3xUzxU", poster: "https://s-media-cache-ak0.pinimg.com/736x/1e/bd/18/1ebd18cf578aaed5f6eacfc79a44d461.jpg" },
+				  { title: "Gus Drax - Altitudes (Jason Becker Cover)", url: "https://www.youtube.com/watch?v=BmjAsjGbdXk", poster: "https://i.ytimg.com/vi/y-F3m8_R9fs/hqdefault.jpg" },
+                  { title: "Big Buck Bunny", poster: "http://static4.opensubtitles.org/gfx/thumbs/7/0/2/4/1254207.jpg", url: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4", hdurl: "http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg" },
+				  { title: "Elephants Dream", poster: "http://iv1.lisimg.com/image/300164/450full-elephants-dream-poster.jpg", url: "http://video.webmfiles.org/elephants-dream.webm" },
+				  { title: "Lego", poster: "http://i.imgur.com/WHwKxLn.png", url: "http://techslides.com/demos/sample-videos/small.ogv" },
+				  { title: "Sample holder", poster: "http://i.imgur.com/CgRMQ5q.png", url: "http://openspim.org/images/2/20/10_Sample_holder.ogv" },
+                  { title: "Just Code", poster: "http://i.imgur.com/D463uk4.png", url: "video/justCode.mp4" },
+                  { title: "Costa Rica", poster: "video/images/youtubeLogo.png", url: "video/CostaRica.mp4" },
+                  { title: "App Builder", poster: "video/images/AppBuilder.png", url: "video/appBuilder.mp4" },
+                  { title: "Test Studio", poster: "video/images/TestStudio.png", url: "video/testStudio.mp4" }
+                ]
+            });
+
+            function onChange() {
+                var data = dataSource.view(),
+                    selected = $.map(this.select(), function (item) {
+                        return { "source": data[$(item).index()].url };
+                    });
+
+                $("#player1").data("kendoMediaPlayer").media(selected[0]);
+
+                //kendoConsole.log("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
+            }
+
+            onDataBound = function () {
+            	var listViewItem = $("#listView li");
+            	// add row hilighting on hover and make sure to remove it on click
+            	$(listViewItem).hover(
+					function () {
+						$(this).addClass('k-state-hover');
+					},
+					function () {
+						$(this).removeClass('k-state-hover');
+					}
+				);
+            }
+
+            $("#listView").kendoListView({
+                dataSource: dataSource,
+                selectable: true,
+                scrollable: true,
+                change: onChange,
+                dataBound: onDataBound,
+                template: kendo.template($("#template").html())
+            });
+
+            $("#player1").kendoMediaPlayer({
+                end: onEnd,
+                pause: onPause,
+                play: onPlay,
+                ready: onReady,
+                timeChange: onTimeChange,
+                volumeChange: onVolumeChange,
+                autoPlay: true,
+                mute: true,
+                media: { 
+				 	title: "Roxette - What's She Like?", 
+					// source: "https://www.youtube.com/watch?v=cjFy5AYxx7k"
+					source: [
+//						{ quality: "480p", url: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4" },
+						{ quality: "480p", url: "https://www.youtube.com/watch?v=cjFy5AYxx7k" },
+						{ quality: "720p", url: "https://www.youtube.com/watch?v=fDBmR8kEj3k" },
+                        { quality: "960p", url: "https://www.youtube.com/watch?v=vGKeA3xUzxU" },
+                        { quality: "1080p", url: "https://www.youtube.com/watch?v=BmjAsjGbdXk" }
+					] 
+				}
+            });
+
+            window.player1 = $("#player1").data("kendoMediaPlayer");
+
+            /*Temporary workaround for playlist background color*/
+            //$(".k-mediaplayer-playlist").css("background-color", $(".k-mediaplayer-toolbar").css("background-color"));
+        }
+
+        function onEnd(e) {
+            $("#consoleOutput").append("onEnd<br/>");
+        }
+        function onPause(e) {
+            $("#consoleOutput").append("onPause<br/>");
+        }
+        function onPlay(e) {
+            $("#consoleOutput").append("onPlay<br/>");
+        }
+        function onReady(e) {
+            $("#consoleOutput").append("onReady<br/>");
+        }
+        function onTimeChange(e) {
+            $("#consoleOutput").append("onTimeChange<br/>");
+        }
+        function onVolumeChange(e) {
+            $("#consoleOutput").append("onVolumeChange<br/>");
+        }
+
+        function playVideo() {
+            window.player1.play();
+        }
+
+        function pauseVideo() {
+            window.player1.pause();
+        }
+
+        function stopVideo() {
+            window.player1.stop();
+        }
+
+        function isPaused() {
+            $("#consoleOutput").append(window.player1.isPaused().toString());
+        }
+
+        function isEnded() {
+            $("#consoleOutput").append(window.player1.isEnded().toString());
+        }
+
+        function isPlaying() {
+            $("#consoleOutput").append(window.player1.isPlaying().toString());
+        }
+
+        /* OPTIONS USAGE EXAMPLES */
+        // 		playlist: {hidden: true}
+        // 		playlist: {hidden: false, button: false}
+    </script>
+
+</body>
+
+</html>

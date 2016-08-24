@@ -9,6 +9,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SpreadsheetController : Controller
     {
+        [Demo]
         public ActionResult Server_Side_Pdf_Export()
         {
             return View();

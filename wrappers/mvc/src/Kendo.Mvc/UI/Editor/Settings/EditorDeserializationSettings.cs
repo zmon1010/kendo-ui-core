@@ -13,11 +13,13 @@ namespace Kendo.Mvc.UI
             //>> Initialization
         
         //<< Initialization
+
+            Custom = new ClientHandlerDescriptor();
         }
 
         //>> Fields
         
-        public string Custom { get; set; }
+        public ClientHandlerDescriptor Custom { get; set; }
         
         //<< Fields
 

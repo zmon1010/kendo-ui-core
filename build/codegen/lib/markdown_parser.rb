@@ -8,6 +8,9 @@ module CodeGen
         .exclude('docs/api/javascript/ui/droptarget.md')
         .exclude('docs/api/javascript/ui/droptargetarea.md')
         .exclude('docs/api/javascript/ui/validator.md')
+        .exclude('docs/api/javascript/ui/alert.md')
+        .exclude('docs/api/javascript/ui/confirm.md')
+        .exclude('docs/api/javascript/ui/prompt.md')
         .include('docs/api/javascript/data/datasource.md')
 
 class MarkdownParser

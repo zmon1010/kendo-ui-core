@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jenkins.plugins.slack.SlackNotifier_-DescriptorImpl plugin="slack@1.7">
+  <teamDomain>kendoui</teamDomain>
+  <token>4Zwa8UKKWsEfUwjfnNvm9OZA</token>
+  <room></room>
+  <buildServerUrl>http://kendobuild/build/</buildServerUrl>
+</jenkins.plugins.slack.SlackNotifier_-DescriptorImpl>

@@ -73,7 +73,7 @@
                 options["type"] = "gs1-128";
             }
 
-            if (this.Checksum == false)
+            if (this.Checksum == true)
             {
                 options["checksum"] = this.Checksum;
             }

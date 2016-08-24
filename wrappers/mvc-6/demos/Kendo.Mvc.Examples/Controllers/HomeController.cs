@@ -5,26 +5,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
     public class HomeController : Controller
     {
-        public IHostingEnvironment HostingEnvironment { get; set; }
-
-        public HomeController(IHostingEnvironment hostingEnvironment)
+        [Home]
+        public ActionResult Index()
         {
-            HostingEnvironment = hostingEnvironment;
-        }
-
-        public IActionResult Index()
-        {
-            var widgets = NavigationProvider.SuiteWidgets(HostingEnvironment.WebRootFileProvider)
-                                            .Where(widget => widget.ShouldInclude);
-
-            ViewBag.Navigation = widgets;
-
             return View();
         }
 

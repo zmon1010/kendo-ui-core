@@ -80,7 +80,11 @@ span.k-picker-wrap .k-input,
 span.k-numeric-wrap .k-input,
 span.k-dropdown-wrap .k-input,
 span.k-selectbox .k-input {
-    padding: 0.143em 0;;
+    padding: 0.143em 0;
+}
+
+ input.k-textbox {
+    padding: 2px 0;
 }
 
 .k-combobox > .k-dropdown-wrap > .k-i-close {
@@ -253,7 +257,7 @@ span.k-tooltip {
 
 .k-header > .k-grid-filter,
 .k-header > .k-header-column-menu {
-    margin: -0.5em -0.4em -0.4em;
+    margin: -0.5em -0.4em -0.4em 0;
     padding: .4em .2em .5em;
 }
 
@@ -1209,4 +1213,27 @@ div.k-window-content {
 
 .k-spreadsheet-window .k-page-landscape {
     top: 25%;
+}
+
+.k-spreadsheet-window {
+    .hint-wrapper:before {
+        margin-left: -1em;
+        padding-right: 1em;
+        padding-left: 1em;
+    }
+
+    .k-edit-label > label {
+        vertical-align: middle;
+    }
+
+    .k-edit-field {
+        > .k-radio-label:before,
+        > .k-radio-label:after {
+            margin-top: -4px;
+        }
+    }
+}
+
+div.k-spreadsheet-window {
+    padding: 1em;
 }

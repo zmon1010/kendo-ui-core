@@ -11,6 +11,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class GanttController : Controller
     {
+        [Demo]
         public ActionResult Resources()
         {
             return View();

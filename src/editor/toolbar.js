@@ -619,7 +619,7 @@
                     } else if (resizable && (keyCode == keys.UP || keyCode == keys.DOWN)) {
                         focusElement = move(keyCode == keys.DOWN ? 1 : -1, that.overflowPopup.element, true);
                     } else if (keyCode == keys.ESC) {
-                        if (that.overflowPopup.visible()) {
+                        if (that.overflowPopup && that.overflowPopup.visible()) {
                             that.overflowPopup.close();
                         }
 
@@ -696,6 +696,8 @@
                 range = editor.getRange(),
                 nodes = editorNS.RangeUtils.textNodes(range),
                 immutablesContext = that._immutablesContext(range);
+
+            nodes = editorNS.Dom.filterBy(nodes, editorNS.Dom.htmlIndentSpace, true);
 
             if (!nodes.length) {
                 nodes = [range.startContainer];

@@ -13,11 +13,11 @@ namespace Kendo.Mvc.Examples
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            routes.Add("Default", new Route(
+                "{controller}/{action}",
+                new RouteValueDictionary { { "controller", "Home" }, { "action", "Index" } },
+                new HyphenatedRouteHandler()
+            ));
         }
     }
 }

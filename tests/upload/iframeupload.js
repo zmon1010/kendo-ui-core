@@ -24,20 +24,24 @@ function simulateIframeResponse(iframeIndex, response) {
     uploadInstance._module.processResponse($("#uploadInstance_" + iframeIndex), response || "");
 }
 
-function simulateUpload() {
+function simulateUpload(index) {
+    var i = index || 0;
+
     simulateFileSelect();
-    triggerIframeLoad(0);
+    triggerIframeLoad(i);
 
     // Clean-up iframe as if the upload as if complete
     $(".k-file:last", uploadInstance.wrapper).data("frame", null);
 }
 
-function simulateUploadWithResponse(response, postSelectCallback) {
+function simulateUploadWithResponse(response, postSelectCallback, index) {
+    var i = index || 0;
+
     simulateFileSelect();
     if (postSelectCallback) {
         postSelectCallback();
     }
-    simulateIframeResponse(0, response);
+    simulateIframeResponse(i, response);
 }
 
 function simulateRemove() {
@@ -84,6 +88,12 @@ function moduleTeardown() {
     $("iframe[name^='uploadInstance'], form[target^='uploadInstance']").remove();
     $.mockjax.clear();
     removeHTML();
+}
+
+function getFileUid(fileIndex) {
+    var uploadInstance = $("#uploadInstance").data("kendoUpload");
+
+    return uploadInstance.wrapper.find(".k-file").eq(fileIndex).attr("data-uid");
 }
 
 // -----------------------------------------------------------------------------------
@@ -225,6 +235,17 @@ test("frame is not unregistered on failure to allow retry", function() {
 uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, simulateRemove, errorResponse);
 uploadSelection(createUpload);
 uploadAsyncNoMultiple(createUpload, simulateUpload);
+
+var removeApiTestParams = {
+    createUpload: createUpload,
+    simulateFileSelect: simulateFileSelect,
+    simulateUpload: simulateUpload,
+    getFileUid: getFileUid,
+    simulateUploadWithResponse: simulateUploadWithResponse,
+    errorResponse: errorResponse
+};
+
+removeApi(removeApiTestParams);
 
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

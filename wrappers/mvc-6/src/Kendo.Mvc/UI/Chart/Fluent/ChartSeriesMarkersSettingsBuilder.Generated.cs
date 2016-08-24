@@ -66,21 +66,12 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the chart will display the series markers. By default chart series markers are not displayed.
+        /// If set to true the chart will display the series markers. By default chart series markers are displayed.
         /// </summary>
         /// <param name="value">The value for Visible</param>
         public ChartSeriesMarkersSettingsBuilder<T> Visible(bool value)
         {
             Container.Visible = value;
-            return this;
-        }
-
-        /// <summary>
-        /// If set to true the chart will display the series markers. By default chart series markers are not displayed.
-        /// </summary>
-        public ChartSeriesMarkersSettingsBuilder<T> Visible()
-        {
-            Container.Visible = true;
             return this;
         }
 

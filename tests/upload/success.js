@@ -140,6 +140,30 @@ function uploadSuccess(params) {
         equal(xhr.statusText, "OK");
     });
 
+    test("preventing success event on upload sets file error state", function() {
+        var uploadInstance = createUpload({ success:
+            function(e) {
+                e.preventDefault();
+            }
+        });
+
+        simulateUpload();
+
+        equal($(".k-file-error", uploadInstance.wrapper).length, 1);
+    });
+
+    test("preventing success event on upload sets warning header status", function() {
+        var uploadInstance = createUpload({ success:
+            function(e) {
+                e.preventDefault();
+            }
+        });
+
+        simulateUpload();
+
+        equal($(".k-upload-status-total .k-i-warning", uploadInstance.wrapper).length, 1);
+    });
+
     // -----------------------------------------------------------------------------------
     // -----------------------------------------------------------------------------------
     asyncTest("success is fired when remove action succeeds", function() {
@@ -260,6 +284,23 @@ function uploadSuccess(params) {
         }, 100);
     });
 
+    asyncTest("preventing success event on remove leaves the file in the list", function() {
+        var uploadInstance = createUpload({ success:
+            function(e) {
+                if(e.operation === "remove") {
+                    e.preventDefault();
+                }
+            }
+        });
+
+        simulateUpload();
+        simulateRemove();
+
+        setTimeout(function() {
+            equal($(".k-file", uploadInstance.wrapper).length, 1);
+            start();
+        }, 100);
+    });
 
     // -----------------------------------------------------------------------------------
     // -----------------------------------------------------------------------------------

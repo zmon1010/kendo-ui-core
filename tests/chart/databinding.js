@@ -923,6 +923,40 @@
                 }]);
             });
         });
+
+        asyncTest("applies groups visible state to series on change", 1, function() {
+            var firstCall = true;
+            createGroupedChart(function() {
+                if (firstCall) {
+                    firstCall = false;
+                    this._groupVisibleState = {
+                        Bar: false
+                    };
+                    this.dataSource.at(0).set("sales", 120);
+                } else {
+                    equal(this.options.series[1].visible, false);
+                    start();
+                }
+            });
+        });
+
+        asyncTest("clears groups visible state on read", 2, function() {
+            var firstCall = true;
+            createGroupedChart(function() {
+                if (firstCall) {
+                    firstCall = false;
+                    this._groupVisibleState = {
+                        Bar: false
+                    };
+                    this.dataSource.read();
+                } else {
+                    equal(this.options.series[1].visible, true);
+                    ok(!this._groupVisibleState);
+                    start();
+                }
+            });
+        });
+
     })();
 
     (function() {

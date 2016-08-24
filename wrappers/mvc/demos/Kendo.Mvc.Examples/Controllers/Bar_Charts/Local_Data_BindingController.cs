@@ -13,6 +13,7 @@ namespace Kendo.Mvc.Examples.Controllers
             {2,"#565656"}
         };
 
+        [Demo]
         public ActionResult Local_Data_Binding()
         {
             var blogComments = ChartDataRepository.BlogComments();

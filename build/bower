@@ -14,7 +14,7 @@ fi;
 
 rm -rf $2/{js,styles,src}
 cp -rf $3/js $2
-rsync -av $3/src --exclude 'Kendo.Mvc' --exclude 'Kendo.Web.Spreadsheet' $2
+rsync -av $3-source/src --exclude 'AspNet*' --exclude 'Kendo*' --exclude 'Telerik*' $2
 cp -rf $3/styles $2
 
 # OS X sed is quite peculiar - use gnu sed if present

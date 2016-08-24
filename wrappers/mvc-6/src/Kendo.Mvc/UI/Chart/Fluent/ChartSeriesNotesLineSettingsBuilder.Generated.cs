@@ -11,6 +11,16 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
+        /// The dash type of the note line.The following dash types are supported:
+        /// </summary>
+        /// <param name="value">The value for DashType</param>
+        public ChartSeriesNotesLineSettingsBuilder<T> DashType(ChartDashType value)
+        {
+            Container.DashType = value;
+            return this;
+        }
+
+        /// <summary>
         /// The line width of the notes.
         /// </summary>
         /// <param name="value">The value for Width</param>

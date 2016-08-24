@@ -11,6 +11,16 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
+        /// The milliseconds unit steps.
+        /// </summary>
+        /// <param name="value">The value for Milliseconds</param>
+        public ChartCategoryAxisAutoBaseUnitStepsSettingsBuilder<T> Milliseconds(params int[] value)
+        {
+            Container.Milliseconds = value;
+            return this;
+        }
+
+        /// <summary>
         /// The seconds unit steps.
         /// </summary>
         /// <param name="value">The value for Seconds</param>

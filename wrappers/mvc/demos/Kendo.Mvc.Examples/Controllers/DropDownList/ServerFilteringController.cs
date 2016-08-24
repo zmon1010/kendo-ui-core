@@ -4,6 +4,7 @@
 
     public partial class DropDownListController : Controller
     {
+        [Demo]
         public ActionResult ServerFiltering()
         {
             return View();

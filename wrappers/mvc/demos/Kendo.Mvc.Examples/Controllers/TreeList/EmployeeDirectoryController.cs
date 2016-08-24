@@ -22,10 +22,10 @@ namespace Kendo.Mvc.Examples.Controllers
         public JsonResult Index([DataSourceRequest] DataSourceRequest request, int? id)
         {
             var result = GetDirectory().ToTreeDataSourceResult(request,
-                e => e.EmployeeID,
+                e => e.EmployeeId,
                 e => e.ReportsTo,
                 e => id.HasValue ? e.ReportsTo == id : e.ReportsTo == null,
-                e => e.ToEmployeeDirectoryModel()
+                e => e
             );
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -34,9 +34,9 @@ namespace Kendo.Mvc.Examples.Controllers
         public JsonResult All([DataSourceRequest] DataSourceRequest request)
         {
             var result = GetDirectory().ToTreeDataSourceResult(request,
-                e => e.EmployeeID,
+                e => e.EmployeeId,
                 e => e.ReportsTo,
-                e => e.ToEmployeeDirectoryModel(request)
+                e => e
             );
             
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -72,7 +72,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return Json(new[] { employee }.ToTreeDataSourceResult(request, ModelState));
         }
 
-        private IEnumerable<EmployeeDirectory> GetDirectory()
+        private IEnumerable<EmployeeDirectoryModel> GetDirectory()
         {
             return employeeDirectory.GetAll();
         }       

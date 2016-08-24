@@ -4,6 +4,7 @@
 
     public partial class ComboBoxController : Controller
     {
+        [Demo]
         public ActionResult Custom_DataSource()
         {
             return View();

@@ -4,6 +4,7 @@
 
     public partial class ColorPickerController : Controller
     {
+        [Demo]
         public ActionResult Events()
         {
             return View();

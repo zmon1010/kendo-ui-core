@@ -7,6 +7,7 @@
 
     public partial class SchedulerController
     {
+        [Demo]
         public ActionResult Api()
         {
             return View();

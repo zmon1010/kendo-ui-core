@@ -118,4 +118,12 @@ test('apply on empty editor body - should not leave boms after list', function()
     equal(editor.value(), "<ul><li></li></ul>");
 });
 
+test('apply on multiple lists', function() {
+    var range = createRangeFromText(editor, '<ul><li>fo|o1</li> <li>foo2</li></ul> <ul><li>foo3</li> <li>fo|o4</li></ul>');
+    var command = createListCommand({ tag: 'ul', range: range });
+    command.exec();
+
+    equal(editor.value(), '<ul><li>foo1</li><li>foo2</li><li>foo3</li><li>foo4</li></ul>');
+});
+
 }());

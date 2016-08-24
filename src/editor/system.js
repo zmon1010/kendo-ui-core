@@ -17,6 +17,7 @@
         RestorePoint = editorNS.RestorePoint,
         Marker = editorNS.Marker,
         browser = kendo.support.browser,
+        br = '<br class="k-br">',
         extend = $.extend;
 
 function finishUpdate(editor, startRestorePoint) {
@@ -29,7 +30,7 @@ function finishUpdate(editor, startRestorePoint) {
     return endRestorePoint;
 }
 
-function selected(node, range) { 
+function selected(node, range) {
     return range.startContainer === node && range.endContainer === node &&
         range.startOffset === 0 && range.endOffset == node.childNodes.length;
 }
@@ -37,7 +38,7 @@ function selected(node, range) {
 var Command = Class.extend({
     init: function(options) {
         this.options = options;
-        this.restorePoint = new RestorePoint(options.range, options.body);
+        this.restorePoint = new RestorePoint(options.range, options.body, {immutables: options.immutables});
         this.marker = new Marker();
         this.formatter = options.formatter;
     },
@@ -210,7 +211,7 @@ var RemoveTableContent = Class.extend({
                 range.setStart(startCell.get(0), 0);
             }
         }
-        
+
         range.collapse(true);
 
         dom.remove(start);
@@ -418,7 +419,7 @@ var BackspaceHandler = Class.extend({
         if (editor.immutables) {
             this._handleImmutables(marker);
         }
-        
+
         range.setStartAfter(marker.start);
         range.setEndBefore(marker.end);
 
@@ -510,7 +511,7 @@ var BackspaceHandler = Class.extend({
         var keys = kendo.keys;
         var backspace = keyCode === keys.BACKSPACE;
         var del = keyCode == keys.DELETE;
-        
+
         if (editor.immutables && editor.immutables.keydown(e, range)) {
             return;
         }
@@ -528,7 +529,7 @@ var BackspaceHandler = Class.extend({
         }
 
         startRestorePoint = new RestorePoint(range, editor.body);
-        
+
         if (this[method](range)) {
             e.preventDefault();
 
@@ -611,11 +612,44 @@ var SelectAllHandler = Class.extend({
             !(e.ctrlKey && e.keyCode == 65 && !e.altKey && !e.shiftKey)) {
             return;
         }
+        if (this.editor.options.immutables) {
+            this._toSelectableImmutables();
+        }
+        this._selectEditorBody();
+    },
+
+    _selectEditorBody: function() {
         var editor = this.editor;
         var range = editor.getRange();
         range.selectNodeContents(editor.body);
         editor.selectRange(range);
     },
+
+    _toSelectableImmutables: function() {
+        var editor = this.editor,
+            body = editor.body,
+            immutable = editorNS.Immutables.immutable,
+            emptyTextNode = dom.emptyTextNode,
+            first = body.firstChild,
+            last = body.lastChild;
+
+        while (emptyTextNode(first)){
+            first = first.nextSibling;
+        }
+
+        while (emptyTextNode(last)){
+            last = last.previousSibling;
+        }
+
+        if (first && immutable(first)) {
+            $(br).prependTo(body);
+        }
+
+        if (last && immutable(last)) {
+            $(br).appendTo(body);
+        }
+    },
+
     keyup: $.noop
 });
 
@@ -975,7 +1009,7 @@ var Clipboard = Class.extend({
 
                     html += this.innerHTML;
                 });
-                
+
                 containers.remove();
 
                 this._triggerPaste(html, { clean: true });
@@ -991,17 +1025,17 @@ var Clipboard = Class.extend({
         node = $(node);
         node.css({
             borderWidth : "0px",
-            width : "0px", 
-            height : "0px", 
+            width : "0px",
+            height : "0px",
             overflow: "hidden",
             margin : "0",
             padding : "0"
         });
 
         if (browser.msie) {
-            //node inherits BODY styles and this causes the browser to add additional 
+            //node inherits BODY styles and this causes the browser to add additional
             var documentElement = $(body.ownerDocument.documentElement);
-            
+
             node.css({
                 fontVariant : "normal",
                 fontWeight : "normal",
@@ -1064,7 +1098,7 @@ var Clipboard = Class.extend({
         var next = caret.nextSibling;
 
         dom.remove(caret);
-        
+
         if(rangeChanged && dom.isDataNode(prev) && dom.isDataNode(next) && !dom.isBom(prev) && !dom.isBom(next)) {
             var prevLength = prev.length;
             next.data = prev.data + next.data;
@@ -1121,9 +1155,11 @@ var Clipboard = Class.extend({
 
         options = extend({ clean: false, split: true }, options);
 
-        for (i = 0, l = this.cleaners.length; i < l; i++) {
-            if (this.cleaners[i].applicable(html)) {
-                html = this.cleaners[i].clean(html);
+        if(!options.skipCleaners) {
+            for (i = 0, l = this.cleaners.length; i < l; i++) {
+                if (this.cleaners[i].applicable(html)) {
+                    html = this.cleaners[i].clean(html);
+                }
             }
         }
 

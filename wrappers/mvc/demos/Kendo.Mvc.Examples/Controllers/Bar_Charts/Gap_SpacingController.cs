@@ -6,6 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Bar_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Gap_Spacing()
         {
             return View();

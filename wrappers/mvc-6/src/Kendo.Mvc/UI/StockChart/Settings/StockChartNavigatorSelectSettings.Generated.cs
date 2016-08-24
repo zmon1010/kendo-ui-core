@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public DateTime? From { get; set; }
 
+        public StockChartNavigatorSelectMousewheelSettings<T> Mousewheel { get; } = new StockChartNavigatorSelectMousewheelSettings<T>();
+
         public DateTime? To { get; set; }
 
 
@@ -25,6 +27,16 @@ namespace Kendo.Mvc.UI
             if (From.HasValue)
             {
                 settings["from"] = From;
+            }
+
+            var mousewheel = Mousewheel.Serialize();
+            if (mousewheel.Any())
+            {
+                settings["mousewheel"] = mousewheel;
+            }
+            else if (Mousewheel.Enabled.HasValue)
+            {
+                settings["mousewheel"] = Mousewheel.Enabled;
             }
 
             if (To.HasValue)

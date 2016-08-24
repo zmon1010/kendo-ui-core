@@ -72,7 +72,7 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/',
     'wrappers/aspnetmvc/Binaries/Mvc4' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Binaries/Mvc5' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/',
-    'wrappers/aspnetmvc/Binaries/Mvc6' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
+    'wrappers/aspnetmvc/Binaries/AspNet.Core' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
     'spreadsheet/' => 'dpl/',
@@ -174,11 +174,11 @@ MVC_BINARIES = {
 }
 
 MVC_CORE_BINARIES_COMMERCIAL = {
-    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST_COMMERCIAL
+    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_COMMERCIAL
 }
 
 MVC_CORE_BINARIES_TRIAL = {
-    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST_TRIAL
+    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_TRIAL
 }
 
 MVC_CONTENT = {
@@ -208,13 +208,13 @@ MVC_CONTENT = {
 end
 
 ROOT_MAP.merge!( {
-    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
-    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
+    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
+    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
 } )
 
 MVC_CONTENT.merge!( {
-    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples" => MVC_6_DEMOS,
-    "wrappers/aspnetmvc/Examples/MVC6/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
+    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples" => MVC_6_DEMOS,
+    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
 } )
 
 JSP_CONTENT = {
@@ -365,14 +365,10 @@ bundle :name => 'aspnetmvc.trial',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Web.config',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Views/Web.config',
-           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
-           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples.sln',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Web.config',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Views/Web.config',
-           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
-           'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
        ]
 
@@ -432,14 +428,10 @@ bundle :name => 'aspnetmvc.commercial',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Web.config',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples.sln',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Web.config',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/razor/Views/Web.config',
-           'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/Areas/aspx/Views/Web.config',
            'dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples.sln'
        ]
 
@@ -452,6 +444,9 @@ bundle :name => 'aspnetmvc.commercial-source',
             'src/styles' => SRC_CSS,
             'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
             'src/Kendo.Mvc/Kendo.Mvc' => FileList['wrappers/mvc/src/Kendo.Mvc/**/*']
+                .exclude('**/RegistryUtilities.cs')
+                .exclude('**/KendoLicense.cs')
+                .exclude('**/*.cs.source')
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
@@ -470,6 +465,7 @@ bundle :name => 'aspnetmvc.commercial-source',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
+           'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs',
            'dist/bundles/aspnetmvc.commercial-source/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj',
            'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
@@ -792,6 +788,11 @@ namespace :build do
 
         zip_bundles.push(zip_demos)
 
+        zip_mvc_demos = "#{ARCHIVE_ROOT}/#{destination}/online-mvc-examples.zip"
+        file_copy :to => zip_mvc_demos,
+                  :from => "dist/demos/mvc.zip"
+        zip_bundles.push(zip_mvc_demos)
+
         db_root = "#{ARCHIVE_ROOT}/#{destination}/download-builder"
         db_version = "#{VERSION}".sub(/((\w+|\.){6})\./, '\1 ')
 
@@ -909,6 +910,7 @@ namespace :build do
             'bundles:all',
             'nuget:default',
             'demos:production',
+            'demos:production_mvc',
             'download_builder:bundle',
             zip_targets("Production"),
             nuget_targets("Production"),

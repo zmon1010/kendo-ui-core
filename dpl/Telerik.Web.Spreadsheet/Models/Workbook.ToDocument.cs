@@ -70,6 +70,8 @@ namespace Telerik.Web.Spreadsheet
                         documentSheet.ViewState.FreezePanes(sheet.FrozenRows.GetValueOrDefault(), sheet.FrozenColumns.GetValueOrDefault());
                     }
 
+                    documentSheet.ViewState.ShowGridLines = sheet.ShowGridLines.GetValueOrDefault(false);
+
                     SetSortState(documentSheet, sheet.Sort);
 
                     SetFilterState(documentSheet, sheet.Filter);
@@ -176,6 +178,13 @@ namespace Telerik.Web.Spreadsheet
                 if (cell.FontSize.HasValue)
                 {
                     selection.SetFontSize(UnitHelper.PointToDip(cell.FontSize.Value));
+                }
+
+                if (!string.IsNullOrEmpty(cell.Link))
+                {
+                    var link = HyperlinkInfo.CreateHyperlink(cell.Link, stringValue);
+
+                    documentSheet.Hyperlinks.Add(selection.CellRanges.First(), link);
                 }
             }
         }

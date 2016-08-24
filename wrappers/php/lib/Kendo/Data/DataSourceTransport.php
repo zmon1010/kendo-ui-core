@@ -26,7 +26,7 @@ class DataSourceTransport extends \Kendo\SerializableObject {
     /**
     * Sets the parameterMap option of the DataSourceTransport.
     * The function which converts the request parameters to a format suitable for the remote service. By default
-the data source sends the parameters using jQuery's conventions.
+the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Data\DataSourceTransport
     */

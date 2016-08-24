@@ -942,11 +942,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// <example>
         /// <code lang="ASPX">
         /// &lt;%@Page Inherits=&quot;System.Web.Mvc.ViewPage&lt;IEnumerable&gt;&quot; %&gt;
-        /// &amp;lt;%: Html.Kendo().Grid(Model)
+        /// &lt;%: Html.Kendo().Grid(Model)
         ///     .Name(&quot;grid&quot;)
         ///     .CellAction(cell =&gt;
         ///     {
-        ///        if (cell.Column.Name == &quot;UnitsInStock&quot;)
+        ///        if (cell.Column.Member == &quot;UnitsInStock&quot;)
         ///        {
         ///            if (cell.DataItem.UnitsInStock &gt; 10)
         ///            {
@@ -963,7 +963,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///     .Name(&quot;grid&quot;)
         ///     .CellAction(cell =&gt;
         ///     {
-        ///        if (cell.Column.Name == &quot;UnitsInStock&quot;)
+        ///        if (cell.Column.Member == &quot;UnitsInStock&quot;)
         ///        {
         ///            if (cell.DataItem.UnitsInStock &gt; 10)
         ///            {

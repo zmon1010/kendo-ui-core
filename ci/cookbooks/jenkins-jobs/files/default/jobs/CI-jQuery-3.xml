@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Runs the unit test suite with supported jQuery versions	</description>
+  <description>Runs the unit test suite with supported jQuery 3.0.0	</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>10</daysToKeep>
     <numToKeep>20</numToKeep>
@@ -56,15 +56,11 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers>
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.8">
-      <spec></spec>
-    </com.cloudbees.jenkins.GitHubPushTrigger>
-  </triggers>
+  <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>DOCS_BRANCH=master ./build/run-build-task tests:jquery</command>
+      <command>DOCS_BRANCH=master ./build/run-build-task tests:jquery3</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

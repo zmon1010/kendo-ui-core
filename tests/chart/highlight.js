@@ -207,12 +207,13 @@
             }));
         });
 
-        test("show and hide pass point dataItem, category, series, value and highlight visual as arguments", 10, function() {
+        test("show and hide pass point fields as arguments", 12, function() {
             var stub = elementStub({
                 dataItem: "bar",
                 category: "baz",
                 series: "qux",
                 value: "norf",
+                stackValue: "foo",
                 toggleHighlight: $.noop,
                 options: {
                     highlight: {
@@ -222,6 +223,7 @@
                             equal(e.category, "baz");
                             equal(e.series, "qux");
                             equal(e.value, "norf");
+                            equal(e.stackValue, "foo");
                         }
                     }
                 }

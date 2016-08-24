@@ -201,6 +201,7 @@ var __meta__ = { // jshint ignore:line
         SCATTER = "scatter",
         SCATTER_LINE = "scatterLine",
         SECONDS = "seconds",
+        MILLISECONDS = "milliseconds",
         SELECT_START = "selectStart",
         SELECT = "select",
         SELECT_END = "selectEnd",
@@ -213,7 +214,8 @@ var __meta__ = { // jshint ignore:line
         STD_DEV = "stddev",
         STRING = "string",
         SUMMARY_FIELD = "summary",
-        TIME_PER_SECOND = 1000,
+        TIME_PER_MILLISECOND = 1,
+        TIME_PER_SECOND = 1000 * TIME_PER_MILLISECOND,
         TIME_PER_MINUTE = 60 * TIME_PER_SECOND,
         TIME_PER_HOUR = 60 * TIME_PER_MINUTE,
         TIME_PER_DAY = 24 * TIME_PER_HOUR,
@@ -227,7 +229,8 @@ var __meta__ = { // jshint ignore:line
             "days": TIME_PER_DAY,
             "hours": TIME_PER_HOUR,
             "minutes": TIME_PER_MINUTE,
-            "seconds": TIME_PER_SECOND
+            "seconds": TIME_PER_SECOND,
+            "milliseconds": TIME_PER_MILLISECOND
         },
         TO = "to",
         TOP = "top",
@@ -253,7 +256,7 @@ var __meta__ = { // jshint ignore:line
         ZOOM = "zoom",
         ZOOM_END = "zoomEnd",
         BASE_UNITS = [
-            SECONDS, MINUTES, HOURS, DAYS, WEEKS, MONTHS, YEARS
+            MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS, WEEKS, MONTHS, YEARS
         ],
         EQUALLY_SPACED_SERIES = [
             BAR, COLUMN, OHLC, CANDLESTICK, BOX_PLOT, VERTICAL_BOX_PLOT,
@@ -261,6 +264,7 @@ var __meta__ = { // jshint ignore:line
         ];
 
     var DateLabelFormats = {
+        milliseconds: "HH:mm:ss.fff",
         seconds: "HH:mm:ss",
         minutes: "HH:mm",
         hours: "HH:mm",
@@ -498,9 +502,77 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        findAxisByName: function(name) {
+            return this.getAxis(name);
+        },
+
+        plotArea: function() {
+            return new ChartPlotArea(this._plotArea);
+        },
+
+        findPaneByName: function(name) {
+            var panes = this._plotArea.panes;
+
+            for (var idx = 0; idx < panes.length; idx++) {
+                if (panes[idx].options.name === name) {
+                    return new ChartPane(this, panes[idx]);
+                }
+            }
+        },
+
+        findPaneByIndex: function(idx) {
+            var panes = this._plotArea.panes;
+            if (panes[idx]) {
+                return new ChartPane(this, panes[idx]);
+            }
+        },
+
+        findSeries: function(callback) {
+            var plotArea = this._plotArea;
+            var series = plotArea.srcSeries || plotArea.series;
+            for (var idx = 0; idx < series.length; idx++) {
+                if (callback(series[idx])) {
+                    return new ChartSeries(this, series[idx]);
+                }
+            }
+        },
+
+        findSeriesByName: function(name) {
+            return this._createSeries({ name: name });
+        },
+
+        findSeriesByIndex: function(index) {
+            return this._createSeries({ index: index });
+        },
+
+        _createSeries: function(options) {
+            var seriesOptions = this._seriesOptions(options);
+            if (seriesOptions) {
+                return new ChartSeries(this, seriesOptions);
+            }
+        },
+
+        _seriesOptions: function(options) {
+            var plotArea = this._plotArea;
+            var series = plotArea.srcSeries || plotArea.series;
+            var seriesOptions;
+
+            if (defined(options.index)) {
+                seriesOptions = series[options.index];
+            } else if (defined(options.name)) {
+                for (var idx = 0; idx < series.length; idx++) {
+                    if (series[idx].name === options.name) {
+                        seriesOptions = series[idx];
+                        break;
+                    }
+                }
+            }
+
+            return seriesOptions;
+        },
+
         toggleHighlight: function(show, filter) {
             var plotArea = this._plotArea;
-            var highlight = this._highlight;
             var firstSeries = (plotArea.srcSeries || plotArea.series || [])[0];
             var seriesName, categoryName, points;
 
@@ -524,10 +596,44 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (points) {
-               for (var idx = 0; idx < points.length; idx++) {
-                    highlight.togglePointHighlight(points[idx], show);
-               }
+               this._togglePointsHighlight(show, points);
             }
+        },
+
+        _togglePointsHighlight: function(show, points) {
+            var highlight = this._highlight;
+            for (var idx = 0; idx < points.length; idx++) {
+                highlight.togglePointHighlight(points[idx], show);
+            }
+        },
+
+        showTooltip: function(filter) {
+            var shared = this._sharedTooltip();
+            var tooltip = this._tooltip;
+            var plotArea = this._plotArea;
+            var point, categoryIndex;
+
+            if (kendo.isFunction(filter)) {
+                point = plotArea.findPoint(filter);
+                if (point && shared) {
+                    categoryIndex = point.categoryIx;
+                }
+            } else if (shared && defined(filter)) {
+                categoryIndex = plotArea.categoryAxis.categoryIndex(filter);
+            }
+
+            if (shared) {
+                if (categoryIndex >= 0) {
+                    var points = this._plotArea.pointsByCategoryIndex(categoryIndex);
+                    tooltip.showAt(points);
+                }
+            } else if (point) {
+                tooltip.show(point);
+            }
+        },
+
+        hideTooltip: function() {
+            this._tooltip.hide();
         },
 
         _initSurface: function() {
@@ -885,10 +991,14 @@ var __meta__ = { // jshint ignore:line
 
         _start: function(e) {
             var chart = this,
-                events = chart._events;
+                events = chart._events,
+                coords = chart._eventCoordinates(e);
+            if (!chart._plotArea.backgroundContainsPoint(coords)) {
+                return;
+            }
 
             if (defined(events[DRAG_START] || events[DRAG] || events[DRAG_END])) {
-                chart._startNavigation(e, DRAG_START);
+                chart._startNavigation(e, coords, DRAG_START);
             }
 
             if (chart._pannable && chart._pannable.start(e)) {
@@ -949,7 +1059,16 @@ var __meta__ = { // jshint ignore:line
         },
 
         _end: function(e) {
-            this._endNavigation(e, DRAG_END);
+            var pannable = this._pannable;
+            if (pannable && pannable.end(e)) {
+                this.surface.resumeTracking();
+                this.trigger(DRAG_END, {
+                    axisRanges: axisRanges(this._plotArea.axes),
+                    originalEvent: e
+                });
+            } else {
+                this._endNavigation(e, DRAG_END);
+            }
 
             if (this._zoomSelection) {
                 var ranges = this._zoomSelection.end(e);
@@ -957,10 +1076,6 @@ var __meta__ = { // jshint ignore:line
                     this._zoomSelection.zoom();
                     this.trigger(ZOOM_END, { axisRanges: ranges, originalEvent: e });
                 }
-            }
-
-            if (this._pannable && this._pannable.end(e)) {
-                this.surface.resumeTracking();
             }
         },
 
@@ -976,7 +1091,12 @@ var __meta__ = { // jshint ignore:line
                 currentAxis,
                 axisName,
                 ranges = {},
-                mousewheelZoom = chart._mousewheelZoom;
+                mousewheelZoom = chart._mousewheelZoom,
+                coords = chart._eventCoordinates(origEvent);
+
+            if (!chart._plotArea.backgroundContainsPoint(coords)) {
+                return;
+            }
 
             if (mousewheelZoom) {
                 var args = { delta: delta, axisRanges: axisRanges(this._plotArea.axes), originalEvent: e };
@@ -1008,7 +1128,7 @@ var __meta__ = { // jshint ignore:line
                 }
             } else {
                 if (!state) {
-                    prevented = chart._startNavigation(origEvent, ZOOM_START);
+                    prevented = chart._startNavigation(origEvent, coords, ZOOM_START);
                     if (!prevented) {
                         state = chart._navState;
                     }
@@ -1045,48 +1165,34 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _startNavigation: function(e, chartEvent) {
+        _startNavigation: function(e, coords, chartEvent) {
             var chart = this,
-                coords = chart._eventCoordinates(e),
                 plotArea = chart._model._plotArea,
                 pane = plotArea.findPointPane(coords),
                 axes = plotArea.axes.slice(0),
-                i,
-                currentAxis,
-                inAxis = false,
                 prevented;
 
             if (!pane) {
                 return;
             }
 
-            for (i = 0; i < axes.length; i++) {
-                currentAxis = axes[i];
-                if (currentAxis.box.containsPoint(coords)) {
-                    inAxis = true;
-                    break;
-                }
-            }
+            var ranges = axisRanges(axes);
 
-            if (!inAxis && plotArea.backgroundBox().containsPoint(coords)) {
-                var ranges = axisRanges(axes);
+            prevented = chart.trigger(chartEvent, {
+                axisRanges: ranges,
+                originalEvent: e
+            });
 
-                prevented = chart.trigger(chartEvent, {
+            if (prevented) {
+                chart._userEvents.cancel();
+            } else {
+                chart._suppressHover = true;
+                chart._unsetActivePoint();
+                chart._navState = {
                     axisRanges: ranges,
-                    originalEvent: e
-                });
-
-                if (prevented) {
-                    chart._userEvents.cancel();
-                } else {
-                    chart._suppressHover = true;
-                    chart._unsetActivePoint();
-                    chart._navState = {
-                        axisRanges: ranges,
-                        pane: pane,
-                        axes: axes
-                    };
-                }
+                    pane: pane,
+                    axes: axes
+                };
             }
         },
 
@@ -1351,7 +1457,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _onDataChanged: function() {
+        _onDataChanged: function(e) {
             var chart = this,
                 options = chart.options,
                 series = chart._sourceSeries || options.series,
@@ -1368,6 +1474,7 @@ var __meta__ = { // jshint ignore:line
                 if (chart._isBindable(currentSeries) && grouped) {
                     append(processedSeries,
                            groupSeries(currentSeries, data));
+                    this._applyGroupVisibleState(processedSeries, e);
                 } else {
                     processedSeries.push(currentSeries || []);
                 }
@@ -1383,6 +1490,29 @@ var __meta__ = { // jshint ignore:line
             chart._hasData = true;
 
             chart._deferRedraw();
+        },
+
+        _applyGroupVisibleState: function(processedSeries, e) {
+            if (e && e.action) {
+                var visibleState = this._groupVisibleState = this._groupVisibleState || {};
+                for (var idx = 0; idx < processedSeries.length; idx++) {
+                    if (visibleState[processedSeries[idx]._groupValue] === false) {
+                        processedSeries[idx].visible = false;
+                    }
+                }
+            } else {
+                delete this._groupVisibleState;
+            }
+        },
+
+        _saveGroupVisibleState: function(series) {
+            if (defined(series._groupValue)) {
+                if (!this._groupVisibleState) {
+                    this._groupVisibleState = {};
+                }
+
+                this._groupVisibleState[series._groupValue] = series.visible;
+            }
         },
 
         _deferRedraw: function() {
@@ -1566,11 +1696,10 @@ var __meta__ = { // jshint ignore:line
             var chart = this,
                 plotArea = chart._plotArea,
                 currentSeries = (plotArea.srcSeries || plotArea.series)[seriesIndex],
-                originalSeries = (chart._sourceSeries || [])[seriesIndex] || currentSeries,
-                transitionsState, visible, point;
+                visible, point;
 
             if (inArray(currentSeries.type, [PIE, DONUT,FUNNEL])) {
-                point = originalSeries.data[pointIndex];
+                point = currentSeries.data[pointIndex];
                 if (!defined(point.visible)) {
                     visible = false;
                 } else {
@@ -1578,18 +1707,24 @@ var __meta__ = { // jshint ignore:line
                 }
                 point.visible = visible;
             } else {
-                visible = !originalSeries.visible;
-                originalSeries.visible = visible;
-                currentSeries.visible = visible;
+                currentSeries.visible = !currentSeries.visible;
+                this._saveGroupVisibleState(currentSeries);
             }
 
-            if (chart.options.transitions) {
-                chart.options.transitions = false;
+            this._noTransitionsRedraw();
+        },
+
+        _noTransitionsRedraw: function() {
+            var options = this.options;
+            var transitionsState;
+
+            if (options.transitions) {
+                options.transitions = false;
                 transitionsState = true;
             }
-            chart.redraw();
+            this.redraw();
             if (transitionsState) {
-                chart.options.transitions = true;
+                options.transitions = true;
             }
         },
 
@@ -1598,15 +1733,16 @@ var __meta__ = { // jshint ignore:line
                 plotArea = chart._plotArea,
                 highlight = chart._highlight,
                 currentSeries = (plotArea.srcSeries || plotArea.series)[seriesIndex],
-                index, items;
+                items;
 
             if (inArray(currentSeries.type, [PIE, DONUT, FUNNEL])) {
-                index = pointIndex;
+                items = plotArea.findPoint(function(point) {
+                    return point.series.index === seriesIndex && point.index === pointIndex;
+                });
             } else {
-                index = seriesIndex;
+                items = plotArea.pointsBySeriesIndex(seriesIndex);
             }
 
-            items = plotArea.pointsBySeriesIndex(index);
             highlight.show(items);
         },
 
@@ -1705,6 +1841,17 @@ var __meta__ = { // jshint ignore:line
 
             if (chart._zoomSelection) {
                 chart._zoomSelection.destroy();
+                delete chart._zoomSelection;
+            }
+
+            if (chart._pannable) {
+                chart._pannable.destroy();
+                delete chart._pannable;
+            }
+
+            if (chart._mousewheelZoom) {
+                chart._mousewheelZoom.destroy();
+                delete chart._mousewheelZoom;
             }
         }
     });
@@ -2664,6 +2811,18 @@ var __meta__ = { // jshint ignore:line
             return slotBox;
         },
 
+        slot: function(from, to, limit) {
+            if (typeof from === "string") {
+                from = this.categoryIndex(from);
+            }
+
+            if (typeof to === "string") {
+                to = this.categoryIndex(to);
+            }
+
+            return Axis.fn.slot.call(this, from, to, limit);
+        },
+
         pointCategoryIndex: function(point) {
             var axis = this,
                 options = axis.options,
@@ -2838,6 +2997,10 @@ var __meta__ = { // jshint ignore:line
                 min: math.min(min, max),
                 max: math.max(min, max)
             };
+        },
+
+        valueRange: function() {
+            return this.range();
         }
     });
 
@@ -2888,6 +3051,7 @@ var __meta__ = { // jshint ignore:line
                 dateFormats: DateLabelFormats
             },
             autoBaseUnitSteps: {
+                milliseconds: [1, 10, 100],
                 seconds: [1, 2, 5, 15, 30],
                 minutes: [1, 2, 5, 15, 30],
                 hours: [1, 2, 3],
@@ -3173,7 +3337,7 @@ var __meta__ = { // jshint ignore:line
                 var rangeDiff = dateDiff(rangeMax, rangeMin);
                 var ticks;
 
-                if (diff < TIME_PER_UNIT[baseUnit] && baseUnit !== SECONDS) {
+                if (diff < TIME_PER_UNIT[baseUnit] && baseUnit !== MILLISECONDS) {
                     baseUnit = BASE_UNITS[baseUnitIndex - 1];
                     autoBaseUnitStep = last(autoBaseUnitSteps[baseUnit]);
                     ticks = (rangeDiff - (maxDateGroups - 1) * autoBaseUnitStep * TIME_PER_UNIT[baseUnit]) / 2;
@@ -3207,7 +3371,7 @@ var __meta__ = { // jshint ignore:line
             min = toDate(limitValue(min, totalLimits.min, totalLimits.max));
             max = toDate(limitValue(max, totalLimits.min, totalLimits.max));
 
-            if (dateDiff(max, min) > 0) {
+            if (min && max && dateDiff(max, min) > 0) {
                 return {
                     min: min,
                     max: max,
@@ -3412,6 +3576,15 @@ var __meta__ = { // jshint ignore:line
             }
 
             return CategoryAxis.fn.getSlot.call(axis, a, b, limit);
+        },
+
+        valueRange: function() {
+            var options = this.options;
+            var range = this._categoryRange(options.srcCategories || options.categories);
+            return {
+                min: toDate(range.min),
+                max: toDate(range.max)
+            };
         }
     });
 
@@ -3429,7 +3602,11 @@ var __meta__ = { // jshint ignore:line
                 )
             });
 
-            options = axis.applyDefaults(toDate(seriesMin), toDate(seriesMax), options);
+            this.seriesMin = toDate(seriesMin);
+            this.seriesMax = toDate(seriesMax);
+
+            options = axis.applyDefaults(this.seriesMin, this.seriesMax, options);
+
 
             Axis.fn.init.call(axis, options);
         },
@@ -3759,6 +3936,7 @@ var __meta__ = { // jshint ignore:line
             return {
                 value: this.value,
                 percentage: this.percentage,
+                stackValue: this.stackValue,
                 category: this.category,
                 series: this.series,
                 dataItem: this.dataItem,
@@ -3849,6 +4027,7 @@ var __meta__ = { // jshint ignore:line
                         category: this.category,
                         value: this.value,
                         percentage: this.percentage,
+                        stackValue: this.stackValue,
                         runningTotal: this.runningTotal,
                         total: this.total,
                         series: this.series
@@ -3911,6 +4090,7 @@ var __meta__ = { // jshint ignore:line
                         sender: bar.getChart(),
                         series: bar.series,
                         percentage: bar.percentage,
+                        stackValue: this.stackValue,
                         runningTotal: bar.runningTotal,
                         total: bar.total,
                         rect: box.toRect(),
@@ -4627,6 +4807,8 @@ var __meta__ = { // jshint ignore:line
                         var pointSlot = chart.pointSlot(categorySlot, valueSlot);
 
                         point.aboveAxis = chart.aboveAxis(point, valueAxis);
+                        point.stackValue = plotRange[1];
+
                         if (chart.options.isStacked100) {
                             point.percentage = chart.plotValue(point);
                         }
@@ -5599,6 +5781,7 @@ var __meta__ = { // jshint ignore:line
                         category: point.category,
                         value: point.value,
                         percentage: point.percentage,
+                        stackValue: this.stackValue,
                         series: point.series
                     });
                 } else if (labels.format) {
@@ -8589,7 +8772,7 @@ var __meta__ = { // jshint ignore:line
                 connectorLine,
                 count = points.length,
                 space = 4,
-                sector, angle, segment,
+                connectorsColor, sector, angle, segment,
                 seriesIx, label, i;
 
             ChartElement.fn.createVisual.call(this);
@@ -8600,11 +8783,12 @@ var __meta__ = { // jshint ignore:line
                 angle = sector.middle();
                 label = segment.label;
                 seriesIx = { seriesId: segment.seriesIx };
+                connectorsColor = (segment.options.connectors || {}).color || connectors.color;
 
                 if (label) {
                     connectorLine = new draw.Path({
                         stroke: {
-                            color:  connectors.color,
+                            color:  connectorsColor,
                             width: connectors.width
                         },
                         animation: {
@@ -9179,6 +9363,37 @@ var __meta__ = { // jshint ignore:line
             this.renderComplete();
         },
 
+        chartsBox: function() {
+            var axes = this.axes,
+                length = axes.length,
+                chartsBox = new Box2D(),
+                axisValueField,
+                lineBox, axis, idx;
+
+            for (idx = 0; idx < length; idx++) {
+                axis = axes[idx];
+                axisValueField = axis.options.vertical ? Y : X;
+                lineBox = axis.lineBox();
+                chartsBox[axisValueField + 1] = lineBox[axisValueField + 1];
+                chartsBox[axisValueField + 2] = lineBox[axisValueField + 2];
+            }
+
+            if (chartsBox.x2 === 0) {
+                var allAxes = this.parent.axes;
+                length = allAxes.length;
+
+                for (idx = 0; idx < length; idx++) {
+                    axis = allAxes[idx];
+                    if (!axis.options.vertical) {
+                        lineBox = axis.lineBox();
+                        chartsBox.x1 = lineBox.x1;
+                        chartsBox.x2 = lineBox.x2;
+                    }
+                }
+            }
+            return chartsBox;
+        },
+
         clipBox: function() {
             return this.chartContainer.clipBox;
         }
@@ -9206,23 +9421,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _clipBox: function() {
-            var container = this,
-                pane = container.pane,
-                axes = pane.axes,
-                length = axes.length,
-                clipBox = pane.box.clone(),
-                axisValueField, idx,
-                lineBox, axis;
-
-            for (idx = 0; idx < length; idx++) {
-                axis = axes[idx];
-                axisValueField = axis.options.vertical ? Y : X;
-                lineBox = axis.lineBox();
-                clipBox[axisValueField + 1] = lineBox[axisValueField + 1];
-                clipBox[axisValueField + 2] = lineBox[axisValueField + 2];
-            }
-
-            return clipBox;
+            return this.pane.chartsBox();
         },
 
         createVisual: function() {
@@ -9679,6 +9878,8 @@ var __meta__ = { // jshint ignore:line
                 yAnchor = yAxes[0],
                 xAnchorCrossings = plotArea.axisCrossingValues(xAnchor, yAxes),
                 yAnchorCrossings = plotArea.axisCrossingValues(yAnchor, xAxes),
+                anchor,
+                anchorCrossings,
                 leftAnchors = {},
                 rightAnchors = {},
                 topAnchors = {},
@@ -9689,13 +9890,22 @@ var __meta__ = { // jshint ignore:line
                 axis = yAxes[i];
                 pane = axis.pane;
                 paneId = pane.id;
-                plotArea.alignAxisTo(axis, xAnchor, yAnchorCrossings[i], xAnchorCrossings[i]);
+
+                // Locate pane anchor, if any, and use its axisCrossingValues
+                anchor = paneAnchor(xAxes, pane) || xAnchor;
+                anchorCrossings = xAnchorCrossings;
+                if (anchor !== xAnchor) {
+                    anchorCrossings = plotArea.axisCrossingValues(anchor, yAxes);
+                }
+
+                plotArea.alignAxisTo(axis, anchor, yAnchorCrossings[i], anchorCrossings[i]);
 
                 if (axis.options._overlap) {
                     continue;
                 }
 
-                if (round(axis.lineBox().x1) === round(xAnchor.lineBox().x1)) {
+                if (round(axis.lineBox().x1) === round(anchor.lineBox().x1)) {
+                    // Push the axis to the left the previous y-axis so they don't overlap
                     if (leftAnchors[paneId]) {
                         axis.reflow(axis.box
                             .alignTo(leftAnchors[paneId].box, LEFT)
@@ -9706,13 +9916,15 @@ var __meta__ = { // jshint ignore:line
                     leftAnchors[paneId] = axis;
                 }
 
-                if (round(axis.lineBox().x2) === round(xAnchor.lineBox().x2)) {
+                if (round(axis.lineBox().x2) === round(anchor.lineBox().x2)) {
+                    // Flip the labels on the right if we're at the right end of the pane
                     if (!axis._mirrored) {
                         axis.options.labels.mirror = !axis.options.labels.mirror;
                         axis._mirrored = true;
                     }
-                    plotArea.alignAxisTo(axis, xAnchor, yAnchorCrossings[i], xAnchorCrossings[i]);
+                    plotArea.alignAxisTo(axis, anchor, yAnchorCrossings[i], anchorCrossings[i]);
 
+                    // Push the axis to the right the previous y-axis so they don't overlap
                     if (rightAnchors[paneId]) {
                         axis.reflow(axis.box
                             .alignTo(rightAnchors[paneId].box, RIGHT)
@@ -9733,19 +9945,29 @@ var __meta__ = { // jshint ignore:line
                 axis = xAxes[i];
                 pane = axis.pane;
                 paneId = pane.id;
-                plotArea.alignAxisTo(axis, yAnchor, xAnchorCrossings[i], yAnchorCrossings[i]);
+
+                // Locate pane anchor and use its axisCrossingValues
+                anchor = paneAnchor(yAxes, pane) || yAnchor;
+                anchorCrossings = yAnchorCrossings;
+                if (anchor !== yAnchor) {
+                    anchorCrossings = plotArea.axisCrossingValues(anchor, xAxes);
+                }
+
+                plotArea.alignAxisTo(axis, anchor, xAnchorCrossings[i], anchorCrossings[i]);
 
                 if (axis.options._overlap) {
                     continue;
                 }
 
-                if (round(axis.lineBox().y1) === round(yAnchor.lineBox().y1)) {
+                if (round(axis.lineBox().y1) === round(anchor.lineBox().y1)) {
+                    // Flip the labels on top if we're at the top of the pane
                     if (!axis._mirrored) {
                         axis.options.labels.mirror = !axis.options.labels.mirror;
                         axis._mirrored = true;
                     }
-                    plotArea.alignAxisTo(axis, yAnchor, xAnchorCrossings[i], yAnchorCrossings[i]);
+                    plotArea.alignAxisTo(axis, anchor, xAnchorCrossings[i], anchorCrossings[i]);
 
+                    // Push the axis above the previous x-axis so they don't overlap
                     if (topAnchors[paneId]) {
                         axis.reflow(axis.box
                             .alignTo(topAnchors[paneId].box, TOP)
@@ -9756,7 +9978,8 @@ var __meta__ = { // jshint ignore:line
                     topAnchors[paneId] = axis;
                 }
 
-                if (round(axis.lineBox().y2, COORD_PRECISION) === round(yAnchor.lineBox().y2, COORD_PRECISION)) {
+                if (round(axis.lineBox().y2, COORD_PRECISION) === round(anchor.lineBox().y2, COORD_PRECISION)) {
+                    // Push the axis below the previous x-axis so they don't overlap
                     if (bottomAnchors[paneId]) {
                         axis.reflow(axis.box
                             .alignTo(bottomAnchors[paneId].box, BOTTOM)
@@ -10036,10 +10259,35 @@ var __meta__ = { // jshint ignore:line
             return box || plotArea.box;
         },
 
+        chartsBoxes: function() {
+            var panes = this.panes;
+            var boxes = [];
+            for (var idx = 0; idx < panes.length; idx++) {
+                boxes.push(panes[idx].chartsBox());
+            }
+
+            return boxes;
+        },
+
+        addBackgroundPaths: function(multipath) {
+            var boxes = this.chartsBoxes();
+            for (var idx = 0; idx < boxes.length; idx++) {
+                multipath.paths.push(draw.Path.fromRect(boxes[idx].toRect()));
+            }
+        },
+
+        backgroundContainsPoint: function(point) {
+            var boxes = this.chartsBoxes();
+            for (var idx = 0; idx < boxes.length; idx++) {
+                if (boxes[idx].containsPoint(point)) {
+                    return true;
+                }
+            }
+        },
+
         createVisual: function() {
             ChartElement.fn.createVisual.call(this);
 
-            var bgBox = this.backgroundBox();
             var options = this.options.plotArea;
             var border = options.border || {};
 
@@ -10050,7 +10298,7 @@ var __meta__ = { // jshint ignore:line
                 opacity = 0;
             }
 
-            var bg = this._bgVisual = draw.Path.fromRect(bgBox.toRect(), {
+            var bg = this._bgVisual = new draw.MultiPath({
                 fill: {
                     color: background,
                     opacity: opacity
@@ -10062,6 +10310,8 @@ var __meta__ = { // jshint ignore:line
                 },
                 zIndex: -1
             });
+
+            this.addBackgroundPaths(bg);
 
             this.appendVisual(bg);
         },
@@ -10094,22 +10344,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         pointsBySeriesIndex: function(seriesIndex) {
-            var charts = this.charts,
-                result = [],
-                points, point, i, j, chart;
-
-            for (i = 0; i < charts.length; i++) {
-                chart = charts[i];
-                points = chart.points;
-                for (j = 0; j < points.length; j++) {
-                    point = points[j];
-                    if (point && point.options.index === seriesIndex) {
-                        result.push(point);
-                    }
-                }
-            }
-
-            return result;
+            return this.filterPoints(function(point) {
+                return point.series.index === seriesIndex;
+            });
         },
 
         pointsBySeriesName: function(name) {
@@ -10135,6 +10372,22 @@ var __meta__ = { // jshint ignore:line
             }
 
             return result;
+        },
+
+        findPoint: function(callback) {
+            var charts = this.charts,
+                points, point, i, j, chart;
+
+            for (i = 0; i < charts.length; i++) {
+                chart = charts[i];
+                points = chart.points;
+                for (j = 0; j < points.length; j++) {
+                    point = points[j];
+                    if (point && callback(point)) {
+                        return point;
+                    }
+                }
+            }
         },
 
         paneByPoint: function(point) {
@@ -10498,14 +10751,10 @@ var __meta__ = { // jshint ignore:line
         },
 
         stackableChartOptions: function(firstSeries, pane) {
-            var stack = firstSeries.stack,
-                isStacked100 = stack && stack.type === "100%",
-                clip;
-            if (defined(pane.options.clip)) {
-                clip = pane.options.clip;
-            } else if (isStacked100){
-                clip = false;
-            }
+            var stack = firstSeries.stack;
+            var isStacked100 = stack && stack.type === "100%";
+            var clip = pane.options.clip;
+
             return {
                 isStacked: stack,
                 isStacked100: isStacked100,
@@ -11378,6 +11627,7 @@ var __meta__ = { // jshint ignore:line
                     series: point.series,
                     dataItem: point.dataItem,
                     value: point.value,
+                    stackValue: point.stackValue,
                     preventDefault: preventDefault,
                     visual: point.highlightVisual(),
                     show: show
@@ -11731,15 +11981,6 @@ var __meta__ = { // jshint ignore:line
         },
 
         showAt: function(points, coords) {
-            var tooltip = this,
-                options = tooltip.options,
-                plotArea = tooltip.plotArea,
-                axis = plotArea.categoryAxis,
-                index = axis.pointCategoryIndex(coords),
-                category = axis.getCategory(coords),
-                slot = axis.getSlot(index),
-                content;
-
             points = $.grep(points, function(p) {
                 var tooltip = p.series.tooltip,
                     excluded = tooltip && tooltip.visible === false;
@@ -11748,12 +11989,15 @@ var __meta__ = { // jshint ignore:line
             });
 
             if (points.length > 0) {
-                content = tooltip._content(points, category);
-                tooltip.element.html(content);
-                tooltip.anchor = tooltip._slotAnchor(coords, slot);
-                tooltip.setStyle(options, points[0]);
+                var point = points[0];
+                var slot = this.plotArea.categoryAxis.getSlot(point.categoryIx);
 
-                BaseTooltip.fn.show.call(tooltip);
+                var content = this._content(points, point.category);
+                this.element.html(content);
+                this.anchor = coords ? this._slotAnchor(coords, slot) : this._defaultAnchor(point, slot);
+                this.setStyle(this.options, point);
+
+                BaseTooltip.fn.show.call(this);
             }
         },
 
@@ -11770,6 +12014,25 @@ var __meta__ = { // jshint ignore:line
             } else {
                 anchor = Point2D(slot.center().x, hCenter);
             }
+
+            return anchor;
+        },
+
+        _defaultAnchor: function(point, slot) {
+            var box = point.owner.pane.chartsBox();
+            var vertical = this.plotArea.categoryAxis.options.vertical;
+            var center = box.center();
+            var slotCenter = slot.center();
+            var size = this._measure();
+            var anchor;
+            if (vertical) {
+                anchor = new Point2D(center.x, slotCenter.y);
+            } else {
+                anchor = new Point2D(slotCenter.x, center.y);
+            }
+
+            anchor.x -= size.width / 2;
+            anchor.y -= size.height / 2;
 
             return anchor;
         },
@@ -12231,7 +12494,12 @@ var __meta__ = { // jshint ignore:line
                 that.bind(that.events, that.options);
                 that.wrapper[0].style.cssText = that.wrapper[0].style.cssText;
 
-                that.wrapper.on(MOUSEWHEEL_NS, proxy(that._mousewheel, that));
+                if (that.options.mousewheel !== false) {
+                    that.wrapper.on(MOUSEWHEEL_NS, proxy(that._mousewheel, that));
+                } else {
+                    // Otherwise the mousewheel event will bubble up to the chart
+                    that.wrapper.on(MOUSEWHEEL_NS, function(e) { e.stopPropagation(); });
+                }
 
                 if (kendo.UserEvents) {
                     that.userEvents = new kendo.UserEvents(that.wrapper, {
@@ -12700,6 +12968,10 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        destroy: function() {
+            delete this.plotArea;
+        },
+
         _panAxes: function(e, position) {
             var plotArea = this.plotArea;
             var delta = -e[position].delta;
@@ -12823,6 +13095,7 @@ var __meta__ = { // jshint ignore:line
         destroy: function() {
             this._marquee.remove();
             delete this._marquee;
+            delete this.chart;
         },
 
         _updateAxisRanges: function(start, end) {
@@ -12930,6 +13203,10 @@ var __meta__ = { // jshint ignore:line
                 }
                 plotArea.redraw(plotArea.panes);
             }
+        },
+
+        destroy: function() {
+            delete this.chart;
         }
     });
 
@@ -13051,9 +13328,50 @@ var __meta__ = { // jshint ignore:line
         }
     };
 
+    var ChartPlotArea = Class.extend({
+        init: function(plotArea) {
+            this._plotArea = plotArea;
+            this.visual = plotArea.visual;
+            this.backgroundVisual = plotArea._bgVisual;
+        }
+    });
+
+    var ChartPane = Class.extend({
+        init: function(chart, pane) {
+            this._chart = chart;
+            this._pane = pane;
+            this.visual = pane.visual;
+            this.chartsVisual = pane.chartContainer.visual;
+            this.name = pane.options.name;
+        },
+
+        series: function() {
+            var chart = this._chart;
+            var seriesByPane = chart._plotArea.groupSeriesByPane();
+            var series = seriesByPane[this.name || "default"];
+
+            var result = [];
+            if (series) {
+                for (var idx = 0; idx < series.length; idx++) {
+                    result.push(new ChartSeries(chart, series[idx]));
+                }
+            }
+
+            return result;
+        }
+    });
+
     var ChartAxis = Class.extend({
         init: function(axis) {
             this._axis = axis;
+            this.options = axis.options;
+        },
+
+        value: function(point) {
+            var axis = this._axis;
+            var value = axis.getCategory ? axis.getCategory(point) : axis.getValue(point);
+
+            return value;
         },
 
         slot: function(from, to, limit) {
@@ -13065,6 +13383,137 @@ var __meta__ = { // jshint ignore:line
 
         range: function() {
             return this._axis.range();
+        },
+
+        valueRange: function() {
+            return this._axis.valueRange();
+        }
+    });
+
+    var ChartSeries = Class.extend({
+        init: function(chart, options) {
+            this._chart = chart;
+            this._options = options;
+        },
+
+        points: function(filter) {
+            var points = this._points;
+            if (!points) {
+                var series = this._seriesOptions();
+                var plotArea = this._chart._plotArea;
+                this._points = points = plotArea.pointsBySeriesIndex(series.index);
+            }
+            if (kendo.isFunction(filter)) {
+                points = this._filterPoints(points, filter);
+            }
+
+
+            return points;
+        },
+
+        data: function(data) {
+            var series = this._seriesOptions();
+            if (data) {
+                var chart = this._chart;
+                var plotArea = chart._plotArea;
+
+                series.data = data;
+
+                if (series.categoryField) {
+                    var axis = plotArea.seriesCategoryAxis(series);
+                    var options = [].concat(chart.options.categoryAxis);
+
+                    chart._bindCategoryAxisFromSeries(options[axis.axisIndex], axis.axisIndex);
+                }
+
+                chart._noTransitionsRedraw();
+                this._clearFields();
+            }
+
+            return series.data;
+        },
+
+        findPoint: function(filter) {
+            var points = this.points();
+            for (var idx = 0; idx < points.length; idx++) {
+                if (filter(points[idx])) {
+                    return points[idx];
+                }
+            }
+        },
+
+        toggleHighlight: function(show, elements) {
+            if (!elements) {
+                elements = this.points();
+            } else if (kendo.isFunction(elements)) {
+                elements = this.points(elements);
+            } else {
+                elements = isArray(elements) ? elements : [elements];
+            }
+
+            this._chart._togglePointsHighlight(show, elements);
+        },
+
+        toggleVisibility: function(visible, filter) {
+            var chart = this._chart;
+            var seriesOptions = this._seriesOptions();
+            var hasFilter = kendo.isFunction(filter);
+            if (!hasFilter) {
+                seriesOptions.visible = visible;
+                chart._saveGroupVisibleState(seriesOptions);
+            } else {
+                if (inArray(seriesOptions.type, [PIE, DONUT, FUNNEL])) {
+                    var data = this._filterData(filter);
+                    for (var idx = 0; idx < data.length; idx++) {
+                        data[idx].visible = visible;
+                    }
+                } else {
+                    seriesOptions.visible = function(data) {
+                        return filter(data.dataItem) ? visible : true;
+                    };
+                }
+            }
+
+            chart._noTransitionsRedraw();
+
+            this._clearFields();
+        },
+
+        _filterData: function(filter) {
+            var data = this._seriesOptions().data;
+            var length = data.length;
+            var result = [];
+
+            for (var idx = 0; idx < length; idx++) {
+                if (filter(data[idx])) {
+                    result.push(data[idx]);
+                }
+            }
+            return result;
+        },
+
+        _filterPoints: function(points, filter) {
+            var result = [];
+            var length = points.length;
+            for (var idx = 0; idx < length; idx++) {
+                if (filter(points[idx])) {
+                    result.push(points[idx]);
+                }
+            }
+            return result;
+        },
+
+        _seriesOptions: function() {
+            var series = this._series;
+            if (!series) {
+                series = this._series = this._chart._seriesOptions(this._options);
+            }
+            return series;
+        },
+
+        _clearFields: function() {
+            delete this._points;
+            delete this._series;
         }
     });
 
@@ -13340,9 +13789,11 @@ var __meta__ = { // jshint ignore:line
                 }
             } else if (unit === SECONDS) {
                 result = addTicks(date, value * TIME_PER_SECOND);
+            } else if (unit === MILLISECONDS) {
+                result = addTicks(date, value);
             }
 
-            if (result.getMilliseconds() > 0) {
+            if (unit !== MILLISECONDS && result.getMilliseconds() > 0) {
                 result.setMilliseconds(0);
             }
         }
@@ -13639,6 +14090,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             seriesClone._groupIx = groupIx;
+            seriesClone._groupValue = data[groupIx].value;
             result.push(seriesClone);
 
             if (nameTemplate) {
@@ -13879,6 +14331,15 @@ var __meta__ = { // jshint ignore:line
         }
     }
 
+    function paneAnchor(axes, pane) {
+        for (var i = 0; i < axes.length; i++) {
+            var anchor = axes[i];
+            if (anchor && anchor.pane === pane) {
+                return anchor;
+            }
+        }
+    }
+
     // Exports ================================================================
     dataviz.ui.plugin(Chart);
 
@@ -13987,6 +14448,9 @@ var __meta__ = { // jshint ignore:line
         CategoryAxis: CategoryAxis,
         ChartAxis: ChartAxis,
         ChartContainer: ChartContainer,
+        ChartPane: ChartPane,
+        ChartPlotArea: ChartPlotArea,
+        ChartSeries: ChartSeries,
         ClipAnimation: ClipAnimation,
         ClusterLayout: ClusterLayout,
         Crosshair: Crosshair,

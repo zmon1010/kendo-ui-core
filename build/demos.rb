@@ -218,11 +218,18 @@ PRODUCTION_RESOURCES = FileList['demos/mvc/**/*']
             .include('demos/mvc/bin/Kendo.dll')
             .include(FileList[SPREADSHEET_REDIST_NET40].pathmap("demos/mvc/bin/%f"))
 
-MVC_RAZOR_VIEWS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Areas/**/*.cshtml']
+PRODUCTION_MVC_RESOURCES = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/**/*']
+            .exclude('wrappers/mvc/demos/Kendo.Mvc.Examples/Web.config')
+            .exclude('**/obj/**/*')
+            .exclude('wrappers/mvc/demos/Kendo.Mvc.Examples/Controllers/*.cs')
+            .exclude('wrappers/mvc/demos/Kendo.Mvc.Examples/Extensions/**/*')
+            .exclude('wrappers/mvc/demos/Kendo.Mvc.Examples/Properties/**/*')
+            .include('wrappers/mvc/demos/Kendo.Mvc.Examples/bin/Kendo.Mvc.Examples.dll')
+            .include(FileList[SPREADSHEET_REDIST_NET40].pathmap("wrappers/mvc/demos/Kendo.Mvc.Examples/bin/%f"))
+
+MVC_VIEWS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Views/**/*.cshtml']
                     .exclude('**/Shared/**/*')
                     .exclude('**/_ViewStart.cshtml')
-
-MVC_ASPX_VIEWS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Areas/**/*.as*x']
 
 MVC_CONTROLLERS = FileList['wrappers/mvc/demos/Kendo.Mvc.Examples/Controllers/**/*.cs']
 
@@ -264,13 +271,9 @@ PHP = FileList['wrappers/php/**/*.php']
          :from => MVC_MODELS,
          :root => 'wrappers/mvc/demos/Kendo.Mvc.Examples/Models'
 
-    tree :to => "dist/demos/#{flavor}/src/aspnetmvc/views/aspx",
-         :from => MVC_ASPX_VIEWS,
-         :root => /wrappers\/mvc\/demos\/Kendo\.Mvc\.Examples\/Areas\/.+?\/Views\//
-
-    tree :to => "dist/demos/#{flavor}/src/aspnetmvc/views/razor",
-         :from => MVC_RAZOR_VIEWS,
-         :root => /wrappers\/mvc\/demos\/Kendo\.Mvc\.Examples\/Areas\/.+?\/Views\//
+    tree :to => "dist/demos/#{flavor}/src/aspnetmvc/views",
+         :from => MVC_VIEWS,
+         :root => /wrappers\/mvc\/demos\/Kendo\.Mvc\.Examples\/Views\//
 end
 
 tree :to => 'dist/demos/staging/content/cdn/js',
@@ -286,6 +289,15 @@ tree :to => 'dist/demos/staging/content/cdn/themebuilder',
                 .include('themebuilder/bootstrap.js')
                 .sub('themebuilder', 'dist/themebuilder/staging'),
      :root => 'dist/themebuilder/staging/'
+
+tree :to => "dist/demos/mvc",
+     :from => PRODUCTION_MVC_RESOURCES,
+     :root => 'wrappers/mvc/demos/Kendo.Mvc.Examples/'
+
+tree :to => "dist/demos/mvc/bin",
+     :from => SPREADSHEET_REDIST_NET40,
+     :root => SPREADSHEET_SRC_ROOT
+
 
 class PatchedWebConfigTask < Rake::FileTask
     attr_accessor :options
@@ -346,7 +358,8 @@ namespace :demos do
         rm_rf 'dist/demos'
     end
 
-    task :release => ['demos/mvc/bin/Kendo.dll', 'dist/binaries/demos/Kendo', 'dist/binaries/demos/Kendo/Kendo.dll']
+    task :release => ['demos/mvc/bin/Kendo.dll', 'dist/binaries/demos/Kendo', 'dist/binaries/demos/Kendo/Kendo.dll',
+                      'wrappers/mvc/demos/Kendo.Mvc.Examples/bin/Kendo.Mvc.Examples.dll', 'dist/binaries/demos/Kendo.Mvc.Examples', 'dist/binaries/demos/Kendo.Mvc.Examples/bin/Kendo.Mvc.Examples.dll']
 
     task :upload_to_cdn => [
         :js,
@@ -364,8 +377,7 @@ namespace :demos do
         'dist/demos/staging',
         'dist/demos/staging/src/aspnetmvc/controllers',
         'dist/demos/staging/src/aspnetmvc/models',
-        'dist/demos/staging/src/aspnetmvc/views/aspx',
-        'dist/demos/staging/src/aspnetmvc/views/razor',
+        'dist/demos/staging/src/aspnetmvc/views',
         'dist/demos/staging/src/jsp/views',
         'dist/demos/staging/src/jsp/controllers',
         'dist/demos/staging/src/php',
@@ -437,8 +449,7 @@ namespace :demos do
         'dist/demos/production/src/jsp/controllers',
         'dist/demos/production/src/aspnetmvc/controllers',
         'dist/demos/production/src/aspnetmvc/models',
-        'dist/demos/production/src/aspnetmvc/views/aspx',
-        'dist/demos/production/src/aspnetmvc/views/razor',
+        'dist/demos/production/src/aspnetmvc/views',
         patched_web_config('dist/demos/production/Web.config', 'demos/mvc/Web.config', {
             :cdn_root => CDN_ROOT + VERSION,
             :themebuilder_root => THEME_BUILDER_ROOT,
@@ -447,8 +458,18 @@ namespace :demos do
         })
     ]
 
+    task :production_mvc_site => [:release, 'dist/demos/mvc',
+        patched_web_config('dist/demos/mvc/Web.config', 'wrappers/mvc/demos/Kendo.Mvc.Examples/Web.config', {
+            :cdn_root => CDN_ROOT + VERSION
+        })
+    ]
+
     zip 'dist/demos/production.zip' => :production_site
+    zip 'dist/demos/mvc.zip' => :production_mvc_site
 
     desc('Build online demo site')
     task :production => 'dist/demos/production.zip'
+
+    desc('Build online MVC demo site')
+    task :production_mvc => 'dist/demos/mvc.zip'
 end

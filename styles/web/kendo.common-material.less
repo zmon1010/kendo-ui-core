@@ -213,7 +213,7 @@
 }
 
 .k-pager-numbers .k-state-selected {
-    line-height: 2.429em;;
+    line-height: 2.429em;
     cursor: pointer;
 }
 
@@ -1093,7 +1093,7 @@ form.k-filter-menu .k-textbox {
 .k-grid-header .k-grid-filter,
 .k-grid-header .k-header-column-menu {
     padding: .714em;
-    margin: -.786em -.6em;
+    margin: -.786em -.6em -.786em 0;
 }
 
 .k-grid-header .k-header-column-menu .k-i-arrowhead-s {
@@ -1406,4 +1406,37 @@ form.k-filter-menu .k-textbox {
 
 .km-pane-wrapper .k-mobile-list .k-edit-field.k-scheduler-toolbar .k-scheduler-navigation {
     margin-bottom: -.6em;
+}
+
+.k-spreadsheet-window {
+    .k-edit-label,
+    .k-edit-field {
+        padding: 0;
+        line-height: 4em;
+    }
+
+    .k-edit-label > label {
+        vertical-align: middle;
+    }
+
+    .k-edit-field {
+        .k-radio-label {
+            padding-left: 1.75em;
+        }
+
+        > .k-radio-label:before,
+        > .k-radio-label:after {
+            margin-top: -2px;
+        }
+    }
+
+    .hint-wrapper:before {
+        margin-left: -1em;
+        padding-right: 1em;
+        padding-left: 1em;
+    }
+}
+
+div.k-spreadsheet-window {
+    padding: 1em;
 }

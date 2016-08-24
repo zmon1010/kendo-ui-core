@@ -833,6 +833,13 @@ var __meta__ = { // jshint ignore:line
             return (theta + start + 360) % 360;
         },
 
+        valueRange: function() {
+            return {
+                min: 0,
+                max: math.PI * 2
+            };
+        },
+
         range: NumericAxis.fn.range,
         labelsCount: NumericAxis.fn.labelsCount,
         createAxisLabel: NumericAxis.fn.createAxisLabel

@@ -28,6 +28,14 @@ var columnTemplate = "<td style='width:#=width#%;'>#=content#</td>";
 var tableFormatFinder = new BlockFormatFinder([{tags:["table"]}]);
 
 var TableCommand = InsertHtmlCommand.extend({
+    init: function(options) {
+        var o = $.extend({
+            postProcess: this.postProcess,
+            skipCleaners: true
+        }, options || {});
+
+        InsertHtmlCommand.fn.init.call(this, o);
+    },
     _tableHtml: function(rows, columns) {
         rows = rows || 1;
         columns = columns || 1;
@@ -53,7 +61,6 @@ var TableCommand = InsertHtmlCommand.extend({
     exec: function() {
         var options = this.options;
         options.html = this._tableHtml(options.rows, options.columns);
-        options.postProcess = this.postProcess;
 
         InsertHtmlCommand.fn.exec.call(this);
     }

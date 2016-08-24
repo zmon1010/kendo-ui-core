@@ -115,6 +115,15 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clean formatting.
+        /// </summary>
+        public static string Editor_CleanFormatting {
+            get {
+                return ResourceManager.GetString("Editor_CleanFormatting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert hyperlink.
         /// </summary>
         public static string Editor_CreateLink {
@@ -489,6 +498,15 @@ namespace Kendo.Mvc.Resources {
         public static string Editor_OverwriteFile {
             get {
                 return ResourceManager.GetString("Editor_OverwriteFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        public static string Editor_Print {
+            get {
+                return ResourceManager.GetString("Editor_Print", resourceCulture);
             }
         }
         
@@ -1164,6 +1182,60 @@ namespace Kendo.Mvc.Resources {
         public static string Group_Empty {
             get {
                 return ResourceManager.GetString("Group_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Screen.
+        /// </summary>
+        public static string MediaPlayer_Fullscreen {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Fullscreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mute.
+        /// </summary>
+        public static string MediaPlayer_Mute {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Mute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause.
+        /// </summary>
+        public static string MediaPlayer_Pause {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play.
+        /// </summary>
+        public static string MediaPlayer_Play {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quality.
+        /// </summary>
+        public static string MediaPlayer_Quality {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Quality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unmute.
+        /// </summary>
+        public static string MediaPlayer_Unmute {
+            get {
+                return ResourceManager.GetString("MediaPlayer_Unmute", resourceCulture);
             }
         }
         

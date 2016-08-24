@@ -33,6 +33,7 @@ namespace Kendo.Mvc.Examples.Controllers
             base.Dispose(disposing);
         }
 
+        [Demo]
         public ActionResult Index()
         {
             return View();
@@ -93,16 +94,6 @@ namespace Kendo.Mvc.Examples.Controllers
             if (ModelState.IsValid)
             {
                 dependencyService.Insert(dependency, ModelState);
-            }
-
-            return Json(new[] { dependency }.ToDataSourceResult(request, ModelState));
-        }
-
-        public virtual JsonResult UpdateDependency([DataSourceRequest] DataSourceRequest request, DependencyViewModel dependency)
-        {
-            if (ModelState.IsValid)
-            {
-                dependencyService.Update(dependency, ModelState);
             }
 
             return Json(new[] { dependency }.ToDataSourceResult(request, ModelState));

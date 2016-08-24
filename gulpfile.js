@@ -21,6 +21,7 @@ var concat = require('gulp-concat');
 var lazypipe = require('lazypipe');
 var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
+var packageJSON = require('./package');
 
 var license = require('./build/gulp/license');
 var cssUtils = require('./build/gulp/css');
@@ -179,12 +180,14 @@ gulp.task("custom", function() {
 });
 
 gulp.task("jshint", function() {
-    var packageJSON = require('./package');
-
     return gulp.src(argv.files || packageJSON.jshintFiles)
         .pipe(jshint(packageJSON.jshintConfig))
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(jshint.reporter('fail'));
+});
+
+gulp.task("watch-jshint", function() {
+    return gulp.watch(argv.files || packageJSON.jshintFiles, [ "jshint" ]);
 });
 
 gulp.task('build', [ 'scripts', 'styles' ]);

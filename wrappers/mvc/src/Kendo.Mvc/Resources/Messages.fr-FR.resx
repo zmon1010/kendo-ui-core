@@ -412,7 +412,7 @@
     <value>Insérer</value>
   </data>
   <data name="Editor_ImageAltText" xml:space="preserve">
-    <value>Alternate text</value>
+    <value>Texte alternatif</value>
   </data>
   <data name="Editor_ImageWebAddress" xml:space="preserve">
     <value>Adresse Web</value>
@@ -421,7 +421,7 @@
     <value>Ouvrir dans une nouvelle fenêtre</value>
   </data>
   <data name="Editor_LinkText" xml:space="preserve">
-    <value>Text</value>
+    <value>Texte</value>
   </data>
   <data name="Editor_LinkToolTip" xml:space="preserve">
     <value>Info-bulle</value>
@@ -430,7 +430,7 @@
     <value>Adresse Web</value>
   </data>
   <data name="Editor_Search" xml:space="preserve">
-    <value>Search</value>
+    <value>Chercher</value>
   </data>
   <data name="Scheduler_AllDay" xml:space="preserve">
     <value>toute la journée</value>
@@ -622,22 +622,22 @@
     <value>Insérer un tableau</value>
   </data>
   <data name="Editor_AddColumnLeft" xml:space="preserve">
-    <value>Add column on the left</value>
+    <value>Ajouter une colonne à gauche</value>
   </data>
   <data name="Editor_AddColumnRight" xml:space="preserve">
-    <value>Add column on the right</value>
+    <value>Ajouter une colonne sur la droite</value>
   </data>
   <data name="Editor_AddRowAbove" xml:space="preserve">
-    <value>Add row above</value>
+    <value>Ajouter une ligne au-dessus</value>
   </data>
   <data name="Editor_AddRowBelow" xml:space="preserve">
-    <value>Add row below</value>
+    <value>Ajouter une ligne ci-dessous</value>
   </data>
   <data name="Editor_DeleteColumn" xml:space="preserve">
-    <value>Delete column</value>
+    <value>Supprimer la colonne</value>
   </data>
   <data name="Editor_DeleteRow" xml:space="preserve">
-    <value>Delete row</value>
+    <value>Supprimer ligne</value>
   </data>
   <data name="Scheduler_DeleteWindowTitle" xml:space="preserve">
     <value>Suppression de l'élément</value>
@@ -700,10 +700,10 @@
     <value>Ouvrir</value>
   </data>
   <data name="Editor_ViewHtml" xml:space="preserve">
-    <value>View HTML</value>
+    <value>Voir HTML</value>
   </data>
   <data name="Editor_DialogUpdate" xml:space="preserve">
-    <value>Update</value>
+    <value>Mettre à jour</value>
   </data>
   <data name="Scheduler_Editor_NoTimezone" xml:space="preserve">
     <value>Pas de fuseau horaire</value>
@@ -715,7 +715,7 @@
     <value>Prend fin</value>
   </data>
   <data name="Editor_InsertFile" xml:space="preserve">
-    <value>Insert file</value>
+    <value>Fichier Insérer</value>
   </data>
   <data name="PivotConfigurator_Columns" xml:space="preserve">
     <value>Drop Column Fields Here</value>
@@ -812,5 +812,11 @@
   </data>
   <data name="Scheduler_View_TimelineWorkWeek" xml:space="preserve">
     <value>Semaine de travail Chronologie</value>
+  </data>
+  <data name="Editor_CleanFormatting" xml:space="preserve">
+    <value>Effacer la mise en forme</value>
+  </data>
+  <data name="Editor_Print" xml:space="preserve">
+    <value>Impression</value>
   </data>
 </root>

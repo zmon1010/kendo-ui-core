@@ -1469,6 +1469,165 @@
         "category": "Editors"
     },
     {
+        "text": "Dialog",
+        "name": "dialog",
+        "api": { "all": "web/dialog" },
+        "new":  true,
+        "documentation": {
+            "kendo-ui": "getting-started/web/dialog/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dialog/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/dialog/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/dialog/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/dialog",
+            "aspnet-mvc": "aspnet-mvc/dialog",
+            "jsp-ui": "jsp/dialog",
+            "php-ui": "php/dialog"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/dialog",
+            "aspnet-mvc": "aspnet-mvc/dialog",
+            "jsp-ui": "jsp/dialog",
+            "php-ui": "php/dialog"
+        },
+        "spriteCssClass": "dialogIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "dialog/index",
+                "title": {
+                    "kendo-ui": "Kendo UI Dialog Example | Kendo UI Web Demos",
+                    "aspnet-mvc": "Basic usage demo for ASP.NET MVC Dialog | UI for ASP.NET MVC Demos"
+                },
+                "description": {
+                    "kendo-ui": "<p>The <strong>Kendo UI Dialog</strong> is a modal popup that brings information to the user. It also provides actions through the action buttons to prompt the user for input or to ask for a decision. The component can also contain more complex UI elements that require the focus of the user. The Dialog widget is a subset of the <a href=\"http://www.telerik.com/kendo-ui/window\" target=\"_blank\">Kendo UI Window</a> widget where the most prominent difference is the added functionality for actions.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Fully customizable visual appearance of the dialog title and body</li><li>Support for rich text content</li><li>Predefined Alert, Confirm, and Prompt Dialogs</li><li>Built-in modality and animations</li><li>Ability to create and add custom actions (buttons) at the bottom of the dialog</li><li>Rich API for maximum flexibility</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li><li>Rich cross-browser and mobile support</li></ul>",
+                    "aspnet-mvc": "<p>The <strong>Telerik Dialog for ASP.NET MVC</strong> is a modal popup that brings information to the user. It also provides actions through the action buttons to prompt the user for input or to ask for a decision. The component can also contain more complex UI elements that require the focus of the user. The Dialog control is a subset of the <a href=\"http://www.telerik.com/kendo-ui/window\" target=\"_blank\">Window</a> one where the most prominent difference is the added functionality for actions.</p><br /><p><strong>Key Features</strong></p> <ul style=\"list-style-type: disc;\"><li>Fully customizable visual appearance of the dialog title and body</li><li>Support for rich text content</li><li>Predefined Alert, Confirm, and Prompt Dialogs</li><li>Built-in modality and animations</li><li>Ability to create and add custom actions (buttons) at the bottom of the dialog</li><li>Rich API for maximum flexibility</li><li>Built-in themes</li><li>Accessibility, keyboard navigation and RTL Support</li><li>Rich cross-browser and mobile support</li></ul>"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates the basic usage of Kendo Dialog widget.",
+                    "aspnet-mvc": "This example demonstrates the basic usage of ASP.NET MVC Dialog control"
+                }
+            },
+            {
+                "text": "Predefined dialogs",
+                "url": "dialog/predefined-dialogs",
+                "title": {
+                    "kendo-ui": "Predefined dialogs of Kendo UI Dialog widget",
+                    "aspnet-mvc": "Predefined dialogs of ASP.NET MVC Dialog control"
+                },
+                "description": {
+                    "kendo-ui": "This demo illustrates the use of the Kendo UI predefined dialogs. They are similar to the browser dialogs - alert, confirm and prompt. Through their stunning UI these dialogs integrate seamlessly with your web application."
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how to use the predefined dialogs of Kendo Dialog widget."
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "MVVM",
+                "url": "dialog/mvvm",
+                "title": {
+                    "kendo-ui": "MVVM support in Kendo UI Dialog"
+                },
+                "description": {
+                    "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI Dialog to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call), and instantiate the widget, its attributes and binding definition using <strong>data-</strong> attributes (on a div html element). The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the dialog, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"
+                },
+                "meta": {
+                    "kendo-ui": "<p>The MVVM feature of the Kendo UI framework provides powerful two-way data binding capabilities, built on the popular Model-View-ViewModel concept. In this way you can easily make attribute values for widgets observable and modify them automatically when changes are applied in the data source, or alter the underlying data when the user interacts with the UI.</p> <p>In this example we show how to configure the Kendo UI Dialog to make use of the MVVM functionality exposed by the framework. For this purpose we create a <strong>viewmodel</strong> instance (with <strong>kendo.observable</strong> call), and instantiate the widget, its attributes and binding definition using <strong>data-</strong> attributes (on a div html element). The important detail to wire the viewmodel is to invoke <strong>kendo.bind</strong> to the container element of the dialog, passing the viewmodel as a second argument. Review the code snippets from the demo for more info.</p> <p>Details on the MVVM features of the Kendo UI framework can be obtained from <a target=\"_blank\" href=\"http://docs.telerik.com/kendo-ui/framework/mvvm/overview\">this chapter</a> of the documentation.</p>"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "AngularJS",
+                "url": "dialog/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support in Kendo UI Dialog"
+                },
+                "meta": {
+                    "kendo-ui": "AngularJS directive support for Kendo UI Dialog"
+                },
+                "description": {
+                    "kendo-ui": "<p>The Kendo UI Dialog features inborn integration with AngularJS using directives which are officially supported as part of the product. To make use of this integration, you need to reference the Angular scripts in your app and register the module incorporating the Kendo UI directives in the following way:</p><p> angular.module(\"KendoDemos\", [ \"kendo.directives\" ])</p><p>Thus you can utilize the AngularJS framework in combination with our editor for apps which could benefit from such integrations. Further, you can specify the editor html as a field in the $scope and then associate it via the relevant <b>k-</b> dialog Angular attribute definition. This is demonstrated in the demo at hand.</p><p>Additional information about how to use Kendo UI widgets with AngularJS you can gather from <a target=\"blank\" href=\"http://docs.telerik.com/kendo-ui/AngularJS/introduction#overview\">this help resource.</a></p></p>"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "Events",
+                "url": "dialog/events",
+                "title": {
+                    "kendo-ui": "Events in Kendo UI Dialog demo",
+                    "aspnet-mvc": "Events in ASP.NET MVC Dialog demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how to fire events in  Kendo UI jQuery dialog widget. Open and close are some of the events which you can trigger.",
+                    "aspnet-mvc": "This demo shows how to fire events in ASP.NET MVC dialog control. Open and close are some of the events which you can trigger."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "API",
+                "url": "dialog/api",
+                "title": {
+                    "kendo-ui": "Example of Kendo UI Dialog API",
+                    "aspnet-mvc": "Example of ASP.NET MVC Dialog API"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows how you can use the API of kendoDialog widget to refresh the content of the dialog, open and close it.",
+                    "aspnet-mvc": "This sample shows how you can use the API of ASP.NET MVC Dialog control to refresh the content of the dialog, open and close it."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "RTL support",
+                "url": "dialog/right-to-left-support",
+                "title": {
+                    "kendo-ui": "Right-to-Left dialog position of Kendo UI Dialog control",
+                    "aspnet-mvc": "Right-to-Left dialog position of ASP.NET MVC Dialog control"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how Kendo UI Dialog widget supports right-to-left direction of the dialog to provide best end-user experience.",
+                    "aspnet-mvc": "This demo shows how ASP.NET MVC Dialog control supports right-to-left direction of the dialog to provide best end-user experience."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "url": "dialog/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation support | Kendo UI Dialog Demo",
+                    "aspnet-mvc": "Keyboard navigation support | ASP.NET MVC Dialog Demo"
+                },
+                "meta": {
+                    "kendo-ui": "The sample demonstrates how the keyboard navigation feature is integrated in the Kendo UI Dialog.",
+                    "aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the ASP.NET MVC Dialog control."
+                }
+            },
+            {
+                "text": "Tag Helper",
+                "url": "dialog/tag-helper",
+                "title": {
+                    "aspnet-mvc": "ASP.NET MVC Dialog Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ]
+            }
+        ],
+        "category": "Layout"
+    },
+  {
         "text": "Editor",
         "name": "editor",
         "pro": "true",
@@ -1698,30 +1857,30 @@
                     "!mvc-core"
                 ]
             },
-          {
-            "text": "Immutable Elements",
-            "url": "editor/immutable-elements",
-            "new": true,
-            "title": {
-              "kendo-ui": "Immutable Elements demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
-              "aspnet-mvc": "Immutable Elements demo demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
+            {
+                "text": "Immutable Elements",
+                "url": "editor/immutable-elements",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Immutable Elements demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
+                    "aspnet-mvc": "Immutable Elements demo demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how you can use immutable elements in Kendo UI Editor's",
+                    "aspnet-mvc": "This example shows how you can use immutable elements in ASP.NET MVC Editor"
+                },
+                "description": {
+                    "kendo-ui": "<p>The <strong>Kendo UI Editor</strong> widget and its <strong>Immutable Elements</strong> feature enables you to predefine elements in the content area that cannot be edited by the end user.&nbsp;</p><p>This demo shows a use case where a mail form is to be edited. You can see also:</p><ol><li>How to enable the Immutable Elements—by using the&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables'>immutables option</a>;</li><li>How to define the HTML elements that cannot be edited—by adding the <strong>contenteditable='false'</strong> attribute;</li><li>How to use the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.serialization'>immutables.serialization</a>&nbsp;and&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.deserialization'>immutables.deserialization</a>&nbsp;option to change the data shown in the&nbsp;<strong>viewHtml</strong> dialog and enable end user to control the CSS text-align property from there;</li><li>How to define default styles for the immutable elements;</li><li>And how to define styles when an immutable element is selected to improve UX.</li></ol>",
+                    "aspnet-mvc": "<p>The ASP.NET MVC web editor and its <strong>Immutable Elements</strong> feature enables you to predefine elements in the content area that cannot be edited by the end user.&nbsp;</p><p>This demo shows a use case where a mail form is to be edited. You can see also:</p><ol><li>How to enable the Immutable Elements—by using the&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables'>immutables option</a>;</li><li>How to define the HTML elements that cannot be edited—by adding the <strong>contenteditable='false'</strong> attribute;</li><li>How to use the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.serialization'>immutables.serialization</a>&nbsp;and&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.deserialization'>immutables.deserialization</a>&nbsp;option to change the data shown in the&nbsp;<strong>viewHtml</strong> dialog and enable end user to control the CSS text-align property from there;</li><li>How to define default styles for the immutable elements;</li><li>And how to define styles when an immutable element is selected to improve UX.</li></ol>"
+                },
+                "packages": [
+                    "online",
+                    "mvc",
+                    "jsp",
+                    "php",
+                    "mvc-core"
+                ]
             },
-            "meta": {
-              "kendo-ui": "This example shows how you can use immutable elements in Kendo UI Editor's",
-              "aspnet-mvc": "This example shows how you can use immutable elements in ASP.NET MVC Editor"
-            },
-            "description": {
-              "kendo-ui": "<p>The <strong>Kendo UI Editor</strong> widget and its <strong>Immutable Elements</strong> feature enables you to predefine elements in the content area that cannot be edited by the end user.&nbsp;</p><p>This demo shows a use case where a mail form is to be edited. You can see also:</p><ol><li>How to enable the Immutable Elements—by using the&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables'>immutables option</a>;</li><li>How to define the HTML elements that cannot be edited—by adding the <strong>contenteditable='false'</strong> attribute;</li><li>How to use the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.serialization'>immutables.serialization</a>&nbsp;and&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.deserialization'>immutables.deserialization</a>&nbsp;option to change the data shown in the&nbsp;<strong>viewHtml</strong> dialog and enable end user to control the CSS text-align property from there;</li><li>How to define default styles for the immutable elements;</li><li>And how to define styles when an immutable element is selected to improve UX.</li></ol>",
-              "aspnet-mvc": "<p>The ASP.NET MVC web editor and its <strong>Immutable Elements</strong> feature enables you to predefine elements in the content area that cannot be edited by the end user.&nbsp;</p><p>This demo shows a use case where a mail form is to be edited. You can see also:</p><ol><li>How to enable the Immutable Elements—by using the&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables'>immutables option</a>;</li><li>How to define the HTML elements that cannot be edited—by adding the <strong>contenteditable='false'</strong> attribute;</li><li>How to use the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.serialization'>immutables.serialization</a>&nbsp;and&nbsp;<a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/editor#configuration-immutables.deserialization'>immutables.deserialization</a>&nbsp;option to change the data shown in the&nbsp;<strong>viewHtml</strong> dialog and enable end user to control the CSS text-align property from there;</li><li>How to define default styles for the immutable elements;</li><li>And how to define styles when an immutable element is selected to improve UX.</li></ol>"
-            },
-            "packages": [
-              "online",
-              "mvc",
-              "jsp",
-              "php",
-              "mvc-core"
-            ]
-          },
             {
                 "text": "Events",
                 "url": "editor/events",
@@ -3228,6 +3387,75 @@
             }
         ],
         "category": "Editors"
+    },
+    {
+        "text": "MediaPlayer",
+        "name": "mediaplayer",
+        "api": {"all":"web/mediaplayer"},
+        "documentation": {
+            "kendo-ui": "getting-started/web/mediaplayer/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mediaplayer/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/mediaplayer",
+            "aspnet-mvc": "aspnet-mvc/mediaplayer"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/mediaplayer",
+            "aspnet-mvc": "aspnet-mvc/mediaplayer"
+        },
+        "spriteCssClass": "mediaPlayerIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "mediaplayer/index",
+                "title": {
+                    "kendo-ui": "jQuery MediaPlayer control example | KendoMediaPlayer Demo",
+                    "aspnet-mvc": "ASP.NET MVC MediaPlayer demo | Telerik UI for ASP.NET MVC demos"
+                },
+                "meta": {
+                    "kendo-ui": "This KendoMediaPlayer example demonstrates the basic functionality of the widget. With jQuery-based MediaPlayer widget in Kendo UI, you can add media content to your web site",
+                    "aspnet-mvc": "Play with this basic example of Telerik MediaPlayer in ASP.NET MVC and find all features of the helper for Kendo UI MediaPlayer."
+                }
+            },
+            {
+                "text": "Playlist",
+                "url": "mediaplayer/playlist",
+                "title": {
+                    "kendo-ui": "jQuery MediaPlayer control with ListView as Playlist | KendoMediaPlayer Demo",
+                    "aspnet-mvc": "ASP.NET MVC MediaPlayer with ListView as Playlist | Telerik UI for ASP.NET MVC demos"
+                },
+                "meta": {
+                    "kendo-ui": "This example of KendoMediaPlayer demonstrates how to use ListView as playlist.",
+                    "aspnet-mvc": "This example of KendoMediaPlayer demonstrates how to use ListView as playlist."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "mediaplayer/events",
+                "title": {
+                    "kendo-ui": "Kendo UI jQuery KendoMediaPlayer Events Sample | KendoMediaPlayer Demos",
+                    "aspnet-mvc": "ASP.NET MVC KendoMediaPlayer Events Sample | ASP.NET MVC Demos"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows KendoMediaPlayer events which are enabled and the demo source code guides you how you can handle the events in your media player.",
+                    "aspnet-mvc": "This sample shows ASP.NET MVC KendoMediaPlayer events which are enabled and the demo source code guides you how you can handle the events in media player."
+                }
+            },
+            {
+                "text": "API",
+                "url": "mediaplayer/api",
+                "title": {
+                    "kendo-ui": "API functions demo for KendoMediaPlayer",
+                    "aspnet-mvc": "API functions demo for ASP.NET MVC KendoMediaPlayer"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project.",
+                    "aspnet-mvc": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project."
+                }
+            }
+        ],
+        "category": "Media"
     },
     {
         "text": "Menu",
@@ -6628,6 +6856,30 @@
                     "aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
                 }
             },
+			{
+                "text": "Custom Drop Zone",
+                "url": "upload/customdropzone",
+                "title": {
+                    "kendo-ui": "Custom drop zone demo for File Upload | Kendo UI Upload Demo",
+                    "aspnet-mvc": "Custom drop zone demo for ASP.NET MVC File Upload"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the custom drop zone functionality of Kendo UI Upload control.",
+                    "aspnet-mvc": "This example shows the custom drop zone functionality of ASP.NET MVC Upload control."
+                }
+            },
+			{
+                "text": "Validation",
+                "url": "upload/validation",
+                "title": {
+                    "kendo-ui": "Validation demo for File Upload | Kendo UI Upload Demo",
+                    "aspnet-mvc": "Validation demo for ASP.NET MVC File Upload"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the validation functionality of Kendo UI Upload control.",
+                    "aspnet-mvc": "This example shows the validation functionality of ASP.NET MVC Upload control."
+                }
+            },
             {
                 "text": "Events",
                 "url": "upload/events",
@@ -6927,7 +7179,10 @@
         ],
         "text": "DataSource",
         "name": "datasource",
-        "api": { "all": "framework/datasource" },
+        "api": {
+            "all": "framework/datasource",
+            "aspnet-mvc": "api/aspnet-mvc/Kendo.Mvc.UI.Fluent/DataSourceBuilder"
+        },
         "documentation": {
             "kendo-ui": "getting-started/framework/datasource/overview"
         },
@@ -9644,7 +9899,7 @@
         "pro": "true",
         "api": {
             "all": "dataviz/diagram",
-            "php-ui" : "api/php/Kendo/Dataviz/UI/Diagram"
+            "php-ui": "api/php/Kendo/Dataviz/UI/Diagram"
         },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/diagram/overview",
@@ -10981,7 +11236,8 @@
         "api": {
             "all": "dataviz/stock-chart",
             "php-ui": "api/php/Kendo/Dataviz/UI/StockChart",
-            "jsp-ui": "api/jsp/stockChart"
+            "jsp-ui": "api/jsp/stockChart",
+            "aspnet-mvc": "api/aspnet-mvc/Kendo.Mvc.UI.Fluent/StockChartBuilder"
         },
         "documentation": {
             "kendo-ui": "getting-started/dataviz/stockchart/overview",

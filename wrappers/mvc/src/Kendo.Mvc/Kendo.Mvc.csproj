@@ -306,6 +306,10 @@
     <Compile Include="Infrastructure\Implementation\Signature.cs" />
     <Compile Include="Infrastructure\IRouteDataCache.cs" />
     <Compile Include="Infrastructure\Licensing.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicense.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicenseProvider.cs" />
+    <Compile Include="Infrastructure\Licensing\KendoLicenseStatus.cs" />
+    <Compile Include="Infrastructure\Licensing\RegistryUtilities.cs" />
     <Compile Include="Resources\Messages.bg-BG.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -850,6 +854,14 @@
     <Compile Include="UI\Grid\Fluent\GridNoRecordsSettingsBuilder.cs" />
     <Compile Include="UI\Grid\Settings\AllowCopySettings.cs" />
     <Compile Include="UI\Grid\Settings\GridNoRecordsSettings.cs" />
+    <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerBuilder.cs" />
+    <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerEventBuilder.cs" />
+    <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerMediaBuilder.cs" />
+    <Compile Include="UI\MediaPlayer\Fluent\MediaPlayerMessagesBuilder.cs" />
+    <Compile Include="UI\MediaPlayer\Html\MediaPlayerHtmlBuilder.cs" />
+    <Compile Include="UI\MediaPlayer\MediaPlayer.cs" />
+    <Compile Include="UI\MediaPlayer\MediaPlayerMedia.cs" />
+    <Compile Include="UI\MediaPlayer\MediaPlayerMessages.cs" />
     <Compile Include="UI\MobileApplication\Fluent\MobileApplicationIconBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleEventBuilder.cs" />
@@ -2709,4 +2721,19 @@
     <Compile Include="UI\Gantt\Settings\GanttViewRangeSettings.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttViewRangeSettingsBuilder.cs" />
   </ItemGroup>
- <ItemGroup><Compile Include="UI\Editor\Settings\EditorImmutablesSettings.cs" /><Compile Include="UI\Editor\Fluent\EditorImmutablesSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Editor\Settings\EditorImmutablesSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorImmutablesSettingsBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Dialog\Dialog.cs" />
+    <Compile Include="UI\Dialog\Fluent\DialogBuilder.cs" />
+    <Compile Include="UI\Dialog\Fluent\DialogActionFactory.cs" />
+    <Compile Include="UI\Dialog\DialogAction.cs" />
+    <Compile Include="UI\Dialog\Fluent\DialogActionBuilder.cs" />
+    <Compile Include="UI\Dialog\Settings\DialogMessagesSettings.cs" />
+    <Compile Include="UI\Dialog\Fluent\DialogMessagesSettingsBuilder.cs" />
+    <Compile Include="UI\Dialog\Fluent\DialogEventBuilder.cs" />
+    <Compile Include="UI\Dialog\Html\DialogHtmlBuilder.cs" />
+  </ItemGroup>
+</Project>

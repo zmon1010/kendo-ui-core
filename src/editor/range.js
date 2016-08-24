@@ -703,7 +703,7 @@ var ImmutablesRangeEnumerator = Class.extend({
 });
 
 var RestorePoint = Class.extend({
-    init: function(range, body) {
+    init: function(range, body, options) {
         var that = this;
         that.range = range;
         that.rootNode = RangeUtils.documentFromRange(range);
@@ -711,7 +711,18 @@ var RestorePoint = Class.extend({
         if (dom.name(that.body) != "body") {
             that.rootNode = that.body;
         }
+
+        that.immutables = options && options.immutables;
+        
+        if (that.immutables) {
+            that.serializedImmutables = Editor.Immutables.removeImmutables(that.body);
+        }
+
         that.html = that.body.innerHTML;
+
+        if (that.immutables && !that.serializedImmutables.empty) {
+            Editor.Immutables.restoreImmutables(that.body, that.serializedImmutables);
+        }
 
         that.startContainer = that.nodeToPath(range.startContainer);
         that.endContainer = that.nodeToPath(range.endContainer);
@@ -747,7 +758,11 @@ var RestorePoint = Class.extend({
     },
 
     restoreHtml: function() {
-        this.body.innerHTML = this.html;
+        var that = this;
+        that.body.innerHTML = that.html;
+        if (that.immutables && !that.serializedImmutables.empty) {
+            Editor.Immutables.restoreImmutables(that.body, that.serializedImmutables);
+        }
     },
 
     offset: function(node, value) {

@@ -71,6 +71,12 @@ namespace Telerik.Web.Spreadsheet
         public int? Index { get; set; }
 
         /// <summary>
+        /// The hyperlink (URL) of the cell.
+        /// </summary>
+        [DataMember(Name = "link", EmitDefaultValue = false)]
+        public string Link { get; set; }
+
+        /// <summary>
         /// The text align setting for the cell content.Available options are:
 		/// * left
 		/// * center
@@ -164,6 +170,11 @@ namespace Telerik.Web.Spreadsheet
             if (Index != null)
             {
                 settings["index"] = Index;
+            }
+
+            if (Link != null)
+            {
+                settings["link"] = Link;
             }
 
             if (TextAlign != null)

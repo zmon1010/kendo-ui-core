@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class GridController : Controller
     {
+        [Demo]
         public ActionResult ServerEditing()
         {
             return View(productService.Read());

@@ -105,7 +105,7 @@ MVC_DEMOS = FileList[MVC_DEMOS_ROOT + '**/*']
                         .sub(DEMO_SHARED_ROOT + 'shared/images/photos/220', MVC_DEMOS_ROOT + 'Content/shared/images/photos/220')
                 )
                 .include(
-                    FileList['demos/mvc/content/nav.json', 'demos/mvc/content/mobile-nav.json']
+                    FileList['demos/mvc/content/nav.json']
                         .sub('demos/mvc/content', MVC_DEMOS_ROOT + 'Content')
                 )
                 .include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll')
@@ -153,12 +153,8 @@ namespace :mvc do
          :root => 'dist/styles'
 
     tree :to => MVC_DEMOS_ROOT + 'Content',
-         :from => 'demos/mvc/content/nav.json',
-         :root => 'demos/mvc/content/'
-
-    tree :to => MVC_DEMOS_ROOT + 'Content',
-         :from => 'demos/mvc/content/mobile-nav.json',
-         :root => 'demos/mvc/content/'
+         :from => 'wrappers/nav.json',
+         :root => 'wrappers/'
 
     tree :to => MVC_DEMOS_ROOT + 'Content/web',
          :from => DEMO_SHARED_ROOT + 'web/**/*',
@@ -194,6 +190,10 @@ namespace :mvc do
 
     tree :to => MVC_DEMOS_ROOT + 'Content/shared/images',
          :from => DEMO_SHARED_ROOT + 'shared/images/employees/*',
+         :root => DEMO_SHARED_ROOT + 'shared/images/'
+
+    tree :to => MVC_DEMOS_ROOT + 'Content/shared/images',
+         :from => DEMO_SHARED_ROOT + 'shared/images/logos/*',
          :root => DEMO_SHARED_ROOT + 'shared/images/'
 
     tree :to => MVC_DEMOS_ROOT + 'Scripts',
@@ -321,7 +321,7 @@ else
     # Produce Kendo.Mvc.Examples.dll by building Kendo.Mvc.Examples.csproj
     file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' => MVC_DEMOS_SRC.include('wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll') do |t|
         system("xcopy dpl\\lib\\NET40\\* wrappers\\mvc\\demos\\Kendo.Mvc.Examples\\bin\\ /d /y > nul")
-        msbuild MVC_DEMOS_ROOT + 'Kendo.Mvc.Examples.csproj'
+        msbuild MVC_DEMOS_ROOT + 'Kendo.Mvc.Examples.csproj', '/p:Configuration=Release'
     end
 
     tree :to => 'dist/binaries/',
@@ -391,6 +391,10 @@ end
     # Copy CommonAssemblyInfo.cs because the 'shared' folder is not distributed
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs",
               :from => 'wrappers/mvc/src/shared/CommonAssemblyInfo.cs'
+
+    # Copy CommonAssemblyInfo.cs because the 'shared' folder is not distributed
+    file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs",
+              :from => 'wrappers/mvc/src/Kendo.Mvc/Infrastructure/Licensing/KendoLicense.cs.source'
 
     # Copy Kendo.Mvc.csproj (needed for the next task)
     file_copy :to => "dist/bundles/aspnetmvc.#{bundle}/src/Kendo.Mvc/Kendo.Mvc/Kendo.Mvc.csproj",
@@ -561,7 +565,7 @@ end
 
         if vs == 'VS2013' || vs == 'VS2015'
 
-            ['Web.config', 'Views/Web.config', 'Areas/aspx/Views/Web.config', 'Areas/razor/Views/Web.config'].each do |config|
+            ['Web.config', 'Views/Web.config'].each do |config|
 
                 file_copy :to => "dist/bundles/aspnetmvc.#{license}/wrappers/aspnetmvc/Examples/#{vs}/Kendo.Mvc.Examples/#{config}",
                           :from => "wrappers/mvc/demos/Kendo.Mvc.Examples/#{config}"

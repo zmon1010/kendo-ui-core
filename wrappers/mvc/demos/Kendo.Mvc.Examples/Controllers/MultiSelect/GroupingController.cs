@@ -10,6 +10,7 @@
 
     public partial class MultiSelectController : Controller
     {
+        [Demo]
         public ActionResult Grouping()
         {
             return View();

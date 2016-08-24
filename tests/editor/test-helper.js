@@ -7,8 +7,12 @@ function getEditor(selector) {
 function editor_module(name, options, editorOptions) {
     QUnit.moduleStart(function(details) {
         if (details.name == name) {
-            $('<textarea id="editor-fixture"></textarea>').appendTo("body").kendoEditor(editorOptions);
-
+            if (editorOptions && editorOptions.element) {
+                $(editorOptions.element).appendTo(QUnit.fixture).kendoEditor(editorOptions);
+            }
+            else {
+                $('<textarea id="editor-fixture"></textarea>').appendTo("body").kendoEditor(editorOptions);
+            }
             QUnit.suppressCleanupCheck = true;
         }
     });

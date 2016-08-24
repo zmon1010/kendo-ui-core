@@ -8,7 +8,10 @@
     function setup(axes, box) {
         pane = {
             axes: axes,
-            box: box || Box(1,1,100,100)
+            box: box || Box(1,1,100,100),
+            chartsBox: function() {
+                return this.box;
+            }
         };
         container = new ChartContainer({}, pane);
     }
@@ -63,21 +66,6 @@
             equal(container.parent, undefined);
         });
     })();
-
-    (function(){
-        module("chart container / clip box", {});
-
-        test("calculates clip box", function() {
-            setup([setupAxis(Box(1,10, 1, 100), true), setupAxis(Box(10,1, 100, 1), false)]);
-            deepEqual(container._clipBox(), Box(10,10,100,100));
-        });
-
-        test("gets clip box coordinates from pane if there is no secondary axis", function() {
-            setup([setupAxis(Box(1,10, 1, 100), true)], Box(1, 1, 100, 100));
-            deepEqual(container._clipBox(), Box(1,10,100,100));
-        });
-    })();
-
 
     (function() {
         var visual,

@@ -5,6 +5,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class MenuController : Controller
     {
+        [Demo]
         public ActionResult Orientation(string orientation)
         {
             MenuOrientation value = MenuOrientation.Horizontal;

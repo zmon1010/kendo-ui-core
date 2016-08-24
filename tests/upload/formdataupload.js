@@ -57,9 +57,11 @@ function simulateRequestError(fileIndex, response) {
     );
 }
 
-function simulateUpload() {
+function simulateUpload(index) {
+    var i = index || 0;
+
     simulateFileSelect();
-    simulateRequestSuccess(0);
+    simulateRequestSuccess(i);
 }
 
 function simulateUploadError() {
@@ -97,9 +99,17 @@ function simulateRemoveError() {
     simulateRemoveClick();
 }
 
-function simulateUploadWithResponse(response) {
+function simulateUploadWithResponse(response, callback, index) {
+    var i = index || 0;
+
     simulateFileSelect();
-    simulateRequestSuccess(0, response);
+    simulateRequestSuccess(i, response);
+}
+
+function getFileUid(fileIndex) {
+    var uploadInstance = $("#uploadInstance").data("kendoUpload");
+
+    return uploadInstance.wrapper.find(".k-file").eq(fileIndex).attr("data-uid");
 }
 
 function moduleSetup() {
@@ -144,6 +154,7 @@ test("current input is hidden after choosing a file", function() {
 test("list element is created for each selected file", function() {
     uploadInstance._inputFiles = function () { return getFileListMock() };
     simulateFileSelect();
+    
     equal($(".k-upload-files li.k-file", uploadInstance.wrapper).length, 2);
 });
 
@@ -156,11 +167,11 @@ test("data-uid attribute for list element has the same value as the file uid", f
     equal(listItemUid, fileUid);
 });
 
-test("file names are rendered for multiple files", function() {
+test("file names are rendered for multiple files", 2, function() {
     uploadInstance._inputFiles = function () { return getFileListMock() };
     simulateFileSelect();
 
-    var fileNames = $(".k-filename", uploadInstance.wrapper).map(function() { return $(this).text(); });
+    var fileNames = $(".k-file-name", uploadInstance.wrapper).map(function() { return $(this).text(); });
 
     equal(fileNames[0], "first.txt");
     equal(fileNames[1], "second.txt");
@@ -321,6 +332,19 @@ test("Error event is raised when response code is above 299", function() {
 uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, simulateRemove, errorResponse);
 uploadSelection(createUpload);
 uploadAsyncNoMultiple(createUpload, simulateUpload);
+
+var removeApiTestParams = {
+    createUpload: createUpload,
+    simulateFileSelect: simulateFileSelect,
+    simulateUpload: simulateUpload,
+    getFileUid: getFileUid,
+    simulateUploadWithResponse: simulateUploadWithResponse,
+    errorResponse: errorResponse
+};
+
+removeApi(removeApiTestParams);
+
+validation(removeApiTestParams);
 
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -788,15 +812,16 @@ test("data-uid value is the same for the list item and all selected files", func
     equal(listItemUid, secondFileUid);
 });
 
-test("file names are rendered for multiple files", function() {
+test("file names are rendered for multiple files", 2, function() {
     uploadInstance._inputFiles = function () { return getFileListMock() };
     simulateFileSelect();
 
-    var fileNames = $(".k-filename", uploadInstance.wrapper).map(
+    var fileNames = $(".k-file-name", uploadInstance.wrapper).map(
         function() { return $(this).text(); }
     );
 
-    equal(fileNames[0], "first.txt, second.txt");
+    equal(fileNames[0], "first.txt");
+    equal(fileNames[1], "second.txt");
 });
 
 test("files are passed to populateFormData", 2, function() {
@@ -807,6 +832,15 @@ test("files are passed to populateFormData", 2, function() {
 
     uploadInstance._inputFiles = function () { return getFileListMock() };
     simulateFileSelect();
+});
+
+test("getFiles returns all files selected at once", function() {
+    uploadInstance._inputFiles = function () { return getFileListMock() };
+    simulateFileSelect();
+
+    var allFiles = uploadInstance.getFiles();
+
+    equal(allFiles.length, 2);
 });
 
 // -----------------------------------------------------------------------------------
@@ -985,8 +1019,8 @@ test("remove icon is rendered for each file entry", function() {
     equal($(".k-i-delete", uploadInstance.wrapper).length, 2);
 });
 
-test("initial file entries have progress-bar with 100% width", function(){
-    equal($(".k-file .k-progress", uploadInstance.wrapper)[0].style.width, "100%");
+test("initial file entries have progress-bar with 0% width", function(){
+    equal($(".k-file .k-progress", uploadInstance.wrapper)[0].style.width, "");
 });
 
 test("k-upload-pct text is '100%'  for each initially rendered file entry", function(){
@@ -1156,7 +1190,7 @@ test("files selected prior to initialization issue postFormData", function(){
             stubXHR();
             simulateFileSelect();
 
-            equal(headers["Accept"], "*/*; q=0.5; application/json");
+            equal(headers["Accept"], "*/*; q=0.5, application/json");
         });
     })();
 })();

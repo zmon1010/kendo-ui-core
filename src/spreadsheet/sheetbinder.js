@@ -30,8 +30,12 @@
             this.sheet = this.options.sheet;
 
             this._sheetChangeHandler = this._sheetChange.bind(this);
+            this._sheetDeleteRowHandler = this._sheetDeleteRow.bind(this);
+            this._sheetInsertRowHandler = this._sheetInsertRow.bind(this);
 
-            this.sheet.bind("change", this._sheetChangeHandler);
+            this.sheet.bind("change", this._sheetChangeHandler)
+                .bind("deleteRow", this._sheetDeleteRowHandler)
+                .bind("insertRow", this._sheetInsertRowHandler);
         },
 
         _sheetInsertRow: function(e) {
@@ -60,11 +64,12 @@
         },
 
         _sheetChange: function(e) {
-            if (e.insertRow) {
-                this._sheetInsertRow(e.insertRow);
-            } else if (e.deleteRow) {
-                this._sheetDeleteRow(e.deleteRow);
-            } else if (e.recalc && e.ref) {
+            if (e.insertRow || e.deleteRow) {
+                // these actions are handled via custom events
+                return;
+            }
+
+            if (e.recalc && e.ref) {
                 var dataSource = this.dataSource;
                 var data = dataSource.view();
                 var columns = this.columns;
@@ -178,7 +183,9 @@
         destroy: function() {
             this.dataSource.unbind("change", this._changeHandler);
 
-            this.sheet.unbind("change", this._sheetChangeHandler);
+            this.sheet.unbind("change", this._sheetChangeHandler)
+                .unbind("deleteRow", this._sheetDeleteRowHandler)
+                .unbind("insertRow", this._sheetInsertRowHandler);
         },
 
         options: {

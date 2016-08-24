@@ -807,4 +807,22 @@
   <data name="Filter_EnumIsNull" xml:space="preserve">
     <value>Е null</value>
   </data>
+  <data name="MediaPlayer_Fullscreen" xml:space="preserve">
+    <value>Цял екран</value>
+  </data>
+  <data name="MediaPlayer_Mute" xml:space="preserve">
+    <value>Заглушаване на звука</value>
+  </data>
+  <data name="MediaPlayer_Pause" xml:space="preserve">
+    <value>Пауза</value>
+  </data>
+  <data name="MediaPlayer_Play" xml:space="preserve">
+    <value>Възпроизвеждане</value>
+  </data>
+  <data name="MediaPlayer_Quality" xml:space="preserve">
+    <value>Промяна на качеството</value>
+  </data>
+  <data name="MediaPlayer_Unmute" xml:space="preserve">
+    <value>Включване на звука</value>
+  </data>
 </root>

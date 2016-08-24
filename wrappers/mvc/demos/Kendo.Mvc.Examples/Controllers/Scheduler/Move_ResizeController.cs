@@ -7,6 +7,7 @@
 
     public partial class SchedulerController
     {
+        [Demo]
         public ActionResult Move_Resize()
         {
             return View();

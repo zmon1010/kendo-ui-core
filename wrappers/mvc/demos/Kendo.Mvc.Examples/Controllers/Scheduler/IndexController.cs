@@ -17,6 +17,7 @@
             this.meetingService = new SchedulerMeetingService();
         }
 
+        [Demo]
         public ActionResult Index()
         {
             return View();

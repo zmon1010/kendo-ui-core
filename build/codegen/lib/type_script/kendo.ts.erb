@@ -1405,17 +1405,21 @@ declare namespace kendo.ui {
 
     interface DraggableOptions {
         axis?: string;
+        autoScroll?: boolean;
         container?: JQuery;
         cursorOffset?: any;
         distance?: number;
         filter?: string;
         group?: string;
         hint?: Function;
+        holdToDrag?: boolean;
         ignore?: string;
+        cancelHold(): void;
         drag?(e: DraggableEvent): void;
         dragcancel?(e: DraggableEvent): void;
         dragend?(e: DraggableEvent): void;
         dragstart?(e: DraggableEvent): void;
+        hold?(e: DraggableEvent): void;
     }
 
     interface GridColumnEditorOptions {

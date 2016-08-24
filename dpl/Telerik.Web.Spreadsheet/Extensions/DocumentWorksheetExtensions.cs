@@ -108,6 +108,8 @@ namespace Telerik.Web.Spreadsheet
 
             GetCellProperty(worksheet, CellPropertyDefinitions.RightBorderProperty, state);
 
+            GetCellHyperLinks(worksheet, state);
+
             return state;
         }
 
@@ -120,32 +122,50 @@ namespace Telerik.Web.Spreadsheet
             {
                 var cellRange = CellsPropertyBag.ConvertLongCellRangeToCellRange(nonDefaultRange.Start, nonDefaultRange.End);
 
-                for (var rowIndex = cellRange.FromIndex.RowIndex; rowIndex <= cellRange.ToIndex.RowIndex; rowIndex++)
+                SetCellValue(cellRange, worksheet, state, setter, nonDefaultRange.Value);
+            }
+        }
+
+        private static void GetCellHyperLinks(DocumentWorksheet worksheet, SortedDictionary<int, SortedDictionary<int, Cell>> state)
+        {
+            foreach (var hyperlinkInfo in worksheet.Hyperlinks)
+            {
+                SetCellValue(hyperlinkInfo.Range, worksheet, state, SetHyperlink, hyperlinkInfo.HyperlinkInfo.Address);
+            }
+        }
+
+        private static void SetCellValue(
+            CellRange cellRange,
+            DocumentWorksheet worksheet,
+            SortedDictionary<int, SortedDictionary<int, Cell>> state,
+            Action<Cell, DocumentTheme, object> setter,
+            object value)
+        {
+            for (var rowIndex = cellRange.FromIndex.RowIndex; rowIndex <= cellRange.ToIndex.RowIndex; rowIndex++)
+            {
+                for (var columnIndex = cellRange.FromIndex.ColumnIndex; columnIndex <= cellRange.ToIndex.ColumnIndex; columnIndex++)
                 {
-                    for (var columnIndex = cellRange.FromIndex.ColumnIndex; columnIndex <= cellRange.ToIndex.ColumnIndex; columnIndex++)
+                    Cell cell;
+                    if (state.ContainsKey(rowIndex))
                     {
-                        Cell cell;
-                        if (state.ContainsKey(rowIndex))
+                        var row = state[rowIndex];
+                        if (row.ContainsKey(columnIndex))
                         {
-                            var row = state[rowIndex];
-                            if (row.ContainsKey(columnIndex))
-                            {
-                                cell = row[columnIndex];
-                            }
-                            else
-                            {
-                                cell = new Cell { Index = columnIndex };
-                                row.Add(columnIndex, cell);
-                            }
+                            cell = row[columnIndex];
                         }
                         else
                         {
                             cell = new Cell { Index = columnIndex };
-                            state.Add(rowIndex, new SortedDictionary<int, Cell> { { columnIndex, cell } });
+                            row.Add(columnIndex, cell);
                         }
-
-                        setter(cell, worksheet.Workbook.Theme, nonDefaultRange.Value);
                     }
+                    else
+                    {
+                        cell = new Cell { Index = columnIndex };
+                        state.Add(rowIndex, new SortedDictionary<int, Cell> { { columnIndex, cell } });
+                    }
+
+                    setter(cell, worksheet.Workbook.Theme, value);
                 }
             }
         }
@@ -223,6 +243,11 @@ namespace Telerik.Web.Spreadsheet
         private static void SetFormat(Cell cell, DocumentTheme theme, object value)
         {
             cell.Format = ((CellValueFormat)value).FormatString;
+        }
+
+        private static void SetHyperlink(Cell cell, DocumentTheme theme, object value)
+        {
+            cell.Link = value.ToString();
         }
 
         private static void SetValue(Cell cell, DocumentTheme theme, object value)

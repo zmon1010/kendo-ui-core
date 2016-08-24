@@ -50,4 +50,12 @@ test('indent list', function() {
     equal(editor.value(), '<ul><li>foo<ul><li>bar</li></ul></li></ul>');
 });
 
+test('indent multiple lists separated by spaces', function() {
+    editor.focus();
+    var range = createRangeFromText(editor, '<p>foo</p> <ul><li>f|oo</li><li>bar</li></ul> <ul><li>foo</li><li>ba|r</li></ul> <p>bar</p>');
+    var command = createIndentCommand(range);
+    command.exec();
+    equal(editor.value(), '<p>foo</p><ul style="margin-left:30px;"><li>foo</li><li>bar</li></ul><ul style="margin-left:30px;"><li>foo</li><li>bar</li></ul><p>bar</p>');
+});
+
 }());

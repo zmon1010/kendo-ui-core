@@ -552,6 +552,50 @@
             equal(sOpts.to, 70);
         });
 
+        test("selection does not react to events when mousewheel is false", 0, function() {
+            setup({
+                series: [{
+                    type: "area",
+                    data: new Array(100)
+                }],
+                categoryAxis: {
+                    select: {
+                        from: 0,
+                        to: 10,
+                        mousewheel: false
+                    }
+                },
+                selectStart: function() {
+                    ok(false);
+                }
+            });
+
+            mousewheel(selection.wrapper, 100);
+        });
+
+        test("mousewheel events don't bubble when mousewheel is false", function() {
+            setup({
+                series: [{
+                    type: "area",
+                    data: new Array(100)
+                }],
+                categoryAxis: {
+                    select: {
+                        from: 0,
+                        to: 10,
+                        mousewheel: false
+                    }
+                }
+            });
+
+            $(selection.wrapper).trigger($.Event("mousewheel", {
+                originalEvent: { detail: 3 },
+                stopPropagation: function() { ok(true); } }
+            ));
+
+            mousewheel(selection.wrapper, 100);
+        });
+
         // ------------------------------------------------------------
         module("Selection / Date axis / Configuration", {
             setup: function() {

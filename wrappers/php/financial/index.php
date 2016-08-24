@@ -22,8 +22,12 @@ $series->type('candlestick')
 
 $navigator = new \Kendo\Dataviz\UI\StockChartNavigator();
 
+$select = new \Kendo\Dataviz\UI\StockChartNavigatorSelect();
+$select->from('2009/02/05')
+       ->to('2011/10/07');
+
 $navigator->addSeriesItem(array('type' => 'area', 'field' => 'Close'))
-          ->select(array('from' => '2009/02/05', 'to' => '2011/10/07'));
+          ->select($select);
 
 $transport = new \Kendo\Data\DataSourceTransport();
 $transport->read(array('url' => 'index.php', 'type' => 'POST', 'dataType' => 'json'));

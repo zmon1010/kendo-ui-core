@@ -10,9 +10,14 @@ def output(title, issues)
 
     out += issues.sort_by { |i| i.breaking? ? 0 : 1 } .map { |issue|
         content = encode(issue.title)
-
+        link = encode(issue.link)
+        id = issue.id.to_s
         if issue.breaking? then
             content = "<span class='breaking'>Breaking</span> #{content}"
+        end
+
+        if link && id && (link.include? "kendo-ui-core") then
+            content = "#{content} (<a href=\"#{link}\">##{id}</a>)"
         end
 
         "<li>#{content}</li>"

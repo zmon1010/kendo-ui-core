@@ -41,6 +41,8 @@ namespace Telerik.Web.Spreadsheet
 
                 sheet.MergedCells = GetMergedCells(documentWorksheet).ToList();
 
+                sheet.ShowGridLines = documentWorksheet.ViewState.ShowGridLines;
+
                 var pane = documentWorksheet.ViewState.Pane;
                 if (pane != null && pane.State == PaneState.Frozen)
                 {

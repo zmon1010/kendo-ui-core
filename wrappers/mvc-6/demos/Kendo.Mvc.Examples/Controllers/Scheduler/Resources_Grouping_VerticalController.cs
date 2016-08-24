@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SchedulerController
     {
+        [Demo]
         public IActionResult Resources_Grouping_Vertical()
         {
             return View();

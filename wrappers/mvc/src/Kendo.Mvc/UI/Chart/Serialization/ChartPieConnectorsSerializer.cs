@@ -20,6 +20,7 @@ namespace Kendo.Mvc.UI
             FluentDictionary.For(result)
                 .Add("width", pieConnectors.Width, () => pieConnectors.Width.HasValue)
                 .Add("color", pieConnectors.Color, () => pieConnectors.Color.HasValue())
+                .Add("color", pieConnectors.ColorHandler, () => pieConnectors.ColorHandler != null)
                 .Add("padding", pieConnectors.Padding, () => pieConnectors.Padding.HasValue);
 
             return result;

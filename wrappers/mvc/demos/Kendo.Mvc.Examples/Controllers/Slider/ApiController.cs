@@ -4,6 +4,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SliderController : Controller
     {
+        [Demo]
         public ActionResult Api()
         {
             return View();

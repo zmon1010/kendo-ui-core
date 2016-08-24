@@ -1,10 +1,11 @@
 (function(){
 
-var uploadInstance,
-    Upload = kendo.ui.Upload;
+var uploadInstance;
+var Upload = kendo.ui.Upload;
+var initialSetupCustomDropZone;
 
 function createUpload(options) {
-    removeHTML();
+    //removeHTML();
 
     copyUploadPrototype();
 
@@ -118,13 +119,6 @@ test("dropping file when the widget is disabled does not add it to files list", 
     equal($(".k-file", uploadInstance.wrapper).length, 0);
 });
 
-test("k-upload-empty class is present after dropping file when the widget is disabled", 1, function() {
-    uploadInstance = createUpload({ "select" : (function() { isFired = true; }), enabled: false });
-    simulateDrop([ { name: "first.txt", size: 1 } ]);
-
-    ok($(uploadInstance.wrapper).hasClass("k-upload-empty"));
-});
-
 test("files in select event arguments are wrapped", 1, function() {
     uploadInstance = createUpload({ "select" : (function(e) {
             equal(e.files[0].rawFile.name, "first.txt");
@@ -165,4 +159,102 @@ test("disabled in synchronous mode", function() {
     ok(!uploadInstance._supportsDrop());
 });
 
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+module("Upload / Drag and drop / Custom Drop Zone", {
+    setup: function() {
+        initialSetupCustomDropZone = Upload.prototype._setupCustomDropZone;
+
+        Upload.prototype._supportsFormData = function() { return true; };
+        copyUploadPrototype();
+
+        $("<div id='myCustomDropZone'>content</div>").appendTo(QUnit.fixture);
+        $("<div id='mySecondCustomDropZone'>content</div>").appendTo(QUnit.fixture);
+    },
+    teardown: function() {
+        Upload.prototype._setupCustomDropZone = initialSetupCustomDropZone;
+        moduleTeardown();
+    }
+});
+
+test("Custom drop zone is initialized when specified", function(){
+    var isInitialized = false;
+    Upload.prototype._setupCustomDropZone = function() { isInitialized = true };
+
+    uploadInstance = createUpload({
+        dropZone: $("#myCustomDropZone")
+    });
+
+    ok(isInitialized);
+});
+
+test("select event fires on drop on custom drop zone", 1, function() {
+    uploadInstance = createUpload({
+        "select" : (function() { ok(true); }),
+        dropZone: $("#myCustomDropZone")
+    });
+
+    simulateDrop([ { name: "first.txt", size: 1 } ]);
+});
+
+test("select event fired on drop on custom drop zone can be cancelled", 1, function() {
+    uploadInstance = createUpload({
+        "select" : (function(e) { e.preventDefault(); }),
+        dropZone: $("#myCustomDropZone")
+    });
+
+    simulateDrop([ { name: "first.txt", size: 1 } ]);
+
+    equal($(".k-file", uploadInstance.wrapper).length, 0);
+});
+
+test("select event is not fired on drop on custom drop zone when the widget is disabled", 1, function() {
+    var isFired = false;
+
+    uploadInstance = createUpload({
+        "select" : (function() { isFired = true; }),
+        enabled: false,
+        dropZone: $("#myCustomDropZone")
+    });
+
+    simulateDrop([ { name: "first.txt", size: 1 } ]);
+
+    equal(isFired, false);
+});
+
+test("dropping file on custom drop zone when the widget is disabled does not add it to files list", 1, function() {
+    uploadInstance = createUpload({
+        "select" : (function() { isFired = true; }),
+        enabled: false,
+        dropZone: $("#myCustomDropZone")
+    });
+
+    simulateDrop([ { name: "first.txt", size: 1 } ]);
+
+    equal($(".k-file", uploadInstance.wrapper).length, 0);
+});
+    
+test("drag file should activate both dropzones", 1, function() {
+    uploadInstance = createUpload({
+        dropZone: $("#myCustomDropZone,#mySecondCustomDropZone")
+    });
+    $(document).trigger("dragenter");
+    equal($(".k-dropzone-active", QUnit.fixture).length, 2);
+});
+
+// asyncTest("dragend file should deactivate both dropzones", 1, function() {
+//     uploadInstance = createUpload({
+//         dropZone: $("#myCustomDropZone,#mySecondCustomDropZone")
+//     });
+//     $(document).trigger("dragenter");
+
+//     setTimeout(function(){
+//         equal($(".k-dropzone-active", QUnit.fixture).length, 0);
+//         start();
+//     }, 150);
+
+//     $(document).trigger("dragleave");
+// });
+
 })();
+

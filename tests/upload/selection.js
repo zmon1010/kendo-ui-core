@@ -45,14 +45,14 @@ test("upload list is hidden when showFileList is false", function() {
 test("file name is rendered", function() {
     var uploadInstance = createUpload();
     simulateFileSelect();
-    equal($(".k-upload-files .k-file .k-filename", uploadInstance.wrapper).text(), "first.txt");
+    equal($(".k-upload-files .k-file .k-file-name", uploadInstance.wrapper).text(), "first.txt");
 });
 
 test("empty progress bar is rendered", function() {
     var uploadInstance = createUpload();
     simulateFileSelect();
     equal($(".k-upload-files li.k-file .k-progress", uploadInstance.wrapper).length, 1);
-})
+});
 
 test("disable prevents selection", function () {
     var uploadInstance = createUpload();
@@ -123,4 +123,64 @@ test("next focusable element is focused on first tab key press", function(){
     equal(firstRemoveButton[0], document.activeElement);
 });
 
+test("Total file count and size are displayed when selecting multiple files", function() {
+    var uploadInstance = createUpload({
+        async: {
+            "saveUrl": 'javascript:;',
+            "removeUrl": 'javascript:;',
+            autoUpload: false,
+            batch: true
+        }
+    });
+
+    simulateMultipleFileSelectWithFileInfo([
+        {name: "first.txt", size: 1000},
+        {name: "second.txt", size: 2000}
+    ]);
+
+    var totalSize = (3000 / 1024).toFixed(2);
+
+    equal($(".k-file-information", uploadInstance.wrapper).text(), "Total: 2 files, " + totalSize + " KB");
+});
+
+test("Total size is displayed in MB if larger than 1024 KB", function() {
+    var uploadInstance = createUpload({
+        async: {
+            "saveUrl": 'javascript:;',
+            "removeUrl": 'javascript:;',
+            autoUpload: false,
+            batch: true
+        }
+    });
+
+    simulateMultipleFileSelectWithFileInfo([
+        {name: "first.txt", size: 1000000},
+        {name: "second.txt", size: 2000000}
+    ]);
+
+    var totalSize = ((3000000 / 1024) / 1024).toFixed(2);
+
+    equal($(".k-file-information", uploadInstance.wrapper).text(), "Total: 2 files, " + totalSize + " MB");
+});
+
+test("Invalid files message is displayed when multiple files selected at once and displayed in a single item", function(){
+    var uploadInstance = createUpload({
+        async: {
+            "saveUrl": 'javascript:;',
+            "removeUrl": 'javascript:;',
+            autoUpload: false,
+            batch: true
+        },
+        validation: {
+            allowedExtensions: [".png"]
+        }
+    });
+
+    simulateMultipleFileSelectWithFileInfo([
+        {name: "first.txt", size: 1000},
+        {name: "second.png", size: 2000}
+    ]);
+
+    equal($(".k-file-validation-message", uploadInstance.wrapper).text(), "Invalid files(s). Please check file upload requirements.");
+});
 }

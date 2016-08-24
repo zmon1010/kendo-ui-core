@@ -729,6 +729,11 @@ var __meta__ = { // jshint ignore:line
                 } else if (status == 'timeout') {
                     that._showMessage('Error! Server timeout.');
                 }
+
+                var dataSource = that.dataSource;
+                if (dataSource.hasChanges()) {
+                    dataSource.cancelChanges();
+                }                
             }
         },
 

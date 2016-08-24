@@ -5,7 +5,8 @@
         d = kendo.drawing,
         Group = d.Group,
         Rect = d.Rect,
-        ShapesQuadTree = d.ShapesQuadTree;
+        ShapesQuadTree = d.ShapesQuadTree,
+        QuadNode = d.QuadNode;
 
     // ------------------------------------------------------------
     (function() {
@@ -135,5 +136,68 @@
         });
 
     })();
+
+    (function() {
+        var rect = new g.Rect([0,0], [100, 100]);
+        var bbox = new g.Rect([0,0], [10, 10]);
+        var node;
+
+        function createShapes(count) {
+            var shapes = [];
+            for (var idx = 0; idx < count; idx++) {
+                shapes.push(new d.Path());
+            }
+            return shapes;
+        }
+
+        module("QuadNode", {
+            setup: function() {
+               node = new QuadNode(rect);
+            }
+        });
+
+        test("does not insert shape outside of the node rect", function() {
+            var inserted = node.insert(new d.Path(), new g.Rect([100,100], [10, 10]));
+
+            equal(inserted, false);
+            equal(node.shapes.length, 0);
+            equal(node.children.length, 0);
+        });
+
+        test("inserts into shapes until the size is smaller than four", function() {
+            for (var idx = 0; idx < 4; idx++) {
+               equal(node.insert(new d.Path(), bbox), true);
+            }
+
+            equal(node.shapes.length, 4);
+            equal(node.children.length, 0);
+        });
+
+        test("inserts additional shapes into children", function() {
+            for (var idx = 0; idx < 4; idx++) {
+               equal(node.insert(new d.Path(), bbox), true);
+            }
+
+            var shape = new d.Path();
+            equal(node.insert(shape, bbox), true);
+            equal(node.shapes.length, 4);
+            equal(node.children[0].shapes.length, 1);
+            ok(node.children[0].shapes[0].shape === shape);
+        });
+
+        test("inserts additional shapes into the shapes array if the shape bbox does not fit in any child", function() {
+            for (var idx = 0; idx < 4; idx++) {
+               equal(node.insert(new d.Path(), bbox), true);
+            }
+            var shape = new d.Path();
+
+            equal(node.insert(shape, new g.Rect([30, 30], [50, 50])), true);
+            equal(node.shapes.length, 5);
+            ok(node.shapes[4].shape === shape);
+
+        });
+
+    })();
+
 
 })();

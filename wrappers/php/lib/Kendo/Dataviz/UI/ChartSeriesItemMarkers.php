@@ -46,7 +46,7 @@ class ChartSeriesItemMarkers extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true the chart will display the series markers. By default chart series markers are not displayed.
+    * If set to true the chart will display the series markers. By default chart series markers are displayed.
     * @param boolean|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItemMarkers
     */

@@ -5,6 +5,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Scatter_ChartsController : Controller
     {
+        [Demo]
         public IActionResult Pan_And_Zoom()
         {
             return View(ChartDataRepository.SineInterval(-50, 50));

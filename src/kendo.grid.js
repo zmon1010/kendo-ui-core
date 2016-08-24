@@ -7435,6 +7435,12 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
+            //someone remove the edited item
+            if (e && e.action === "remove" && that.editable &&
+                that.editable.options.model && inArray(that.editable.options.model, e.items) > -1) {
+                that.editable.options.model.unbind(CHANGE, that._modelChangeHandler);
+            }
+
             e = e || {};
 
             if (that.trigger("dataBinding", { action: e.action || "rebind", index: e.index, items: e.items })) {
@@ -7760,7 +7766,6 @@ var __meta__ = { // jshint ignore:line
 
            function resolve() {
                if (allPages && startingPage !== undefined) {
-                   dataSource.unbind("change", renderPage);
                    dataSource.one("change", draw);
                    dataSource.page(startingPage);
                } else {
@@ -7775,14 +7780,18 @@ var __meta__ = { // jshint ignore:line
                    _destructive: true,
                    progress: function(p) {
                        progress.notify({
+                           page: p.page,
                            pageNumber: p.pageNum,
-                           progress: 0.5 + p.pageNum / p.totalPages / 2
+                           progress: 0.5 + p.pageNum / p.totalPages / 2,
+                           totalPages: p.totalPages
                        });
                    }
                });
                kendo.drawing.drawDOM(clone, options)
-                   .then(function(group){
+                   .always(function(){
                        cont.remove();
+                   })
+                   .then(function(group){
                        result.resolve(group);
                    })
                    .fail(function(err){
@@ -7794,15 +7803,10 @@ var __meta__ = { // jshint ignore:line
                var pageNum = dataSource.page();
                var totalPages = allPages ? dataSource.totalPages() : 1;
                body.append(origBody.find("tr"));
-               var args = {
-                   pageNumber: pageNum,
-                   progress: pageNum / totalPages / 2,
-                   totalPages: totalPages
-               };
-               progress.notify(args);
                if (pageNum < totalPages) {
                    dataSource.page(pageNum + 1);
                } else {
+                   dataSource.unbind("change", renderPage);
                    resolve();
                }
            }

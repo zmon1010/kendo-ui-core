@@ -703,6 +703,21 @@ html .km-pane-wrapper .k-header
     background-color: transparent;
 }
 
+.k-button-bare {
+	&.k-state-focused .k-font-icon,
+	&:focus .k-font-icon {
+		text-shadow: 0 0 3px currentColor;
+	}
+}
+
+html .k-mediaplayer-toolbar .k-button-bare {
+	&:active,
+	&.k-state-active,
+	&.k-state-active:hover {
+		color: @accent;
+	}
+}
+
 .k-menu {
     .k-state-selected > .k-link {
         color: @selected-text-color;
@@ -2067,6 +2082,11 @@ html .km-pane-wrapper .km-widget,
     border-color: @active-border-color;
 }
 
+.k-tabstrip-top .k-tabstrip-items .k-state-active,
+.k-panelbar .k-tabstrip-top .k-tabstrip-items .k-state-active {
+    border-bottom-color: @active-background-color;
+}
+
 .k-tabstrip .k-content.k-state-active
 {
     background-color: @tabstrip-active-background;
@@ -2348,6 +2368,7 @@ html .km-pane-wrapper .km-widget,
     .k-webkit,
     .k-ff,
     .k-ie11,
+    .k-edge,
     .k-safari {
 
         .km-pane-wrapper .k-pager-numbers,
@@ -2537,3 +2558,78 @@ html .km-pane-wrapper .km-widget,
 @import "themes/spreadsheet.less";
 
 @spreadsheet-page-orientation-border-color: @button-border-color;
+
+/* Dialog */
+
+.k-dialog {
+    border-color: @widget-border-color;
+    .k-window-titlebar {
+        border-bottom-width: 0;
+    }
+    .k-dialog-title {
+        color: @active-text-color;
+    }
+    .k-dialog-buttongroup {
+        &.k-dialog-button-layout-stretched {
+            width: 100%;
+            .k-button {
+                display: inline-block;
+                padding: 0.9em 0 0.9em 0;
+                border-radius: 0;
+                border-bottom: 0;
+                border-width: 1px 0 0 1px;
+            }
+            li.k-button:first-child {
+            border-bottom-left-radius: @border-radius;
+            border-left: 0;
+            }
+            li.k-button:last-child {
+                border-bottom-right-radius: @border-radius;
+                border-right: 0;
+            }
+        }
+        &.k-dialog-button-layout-normal {
+            width: auto;
+            margin: 0;
+            padding: 1em;
+            text-align: left;
+            .k-button {
+                padding: 0.2em 1.5em;
+                margin-left: 0.5em;
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}
+.k-rtl .k-dialog {
+    a.k-dialog-action.k-link {
+        top: 1em;
+        left: 1em;
+    }
+    .k-dialog-buttongroup {
+        &.k-dialog-button-layout-stretched {
+            li.k-button:first-child {
+                border-right-width: 0;
+                border-left-width: 1px;
+                border-bottom-right-radius: @border-radius;
+            }
+            li.k-button:last-child {
+                border-left-width: 0;
+                border-right-width: 1px;
+                border-bottom-left-radius: @border-radius;
+            }
+        }
+        &.k-dialog-button-layout-normal {
+            text-align: right;
+            .k-button {
+                margin-right: 0;
+                margin-left: 0.5em;
+                &:last-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}

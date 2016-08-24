@@ -868,6 +868,10 @@ function fillCells(data, ctx) {
     var cells = row.cells;
     var cellData = data.cells;
 
+    if (!cells) {
+        return;
+    }
+
     for (var i = 0; i < cells.length; i++) {
         var cell = cells[i] || EMPTY_CELL;
 

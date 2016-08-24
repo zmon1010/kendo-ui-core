@@ -9,6 +9,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class MapController : Controller
     {
+        [Demo]
         public ActionResult Remote_Markers()
         {
             return View();

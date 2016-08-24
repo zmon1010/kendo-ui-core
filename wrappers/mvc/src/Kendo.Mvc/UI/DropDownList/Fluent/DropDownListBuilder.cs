@@ -16,6 +16,17 @@ namespace Kendo.Mvc.UI.Fluent
         {
         }
 
+        /// <summary>
+        /// Controls whether to bind the widget to the DataSource on initialization.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .AutoBind(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
         public DropDownListBuilder AutoBind(bool autoBind)
         {
             Component.AutoBind = autoBind;

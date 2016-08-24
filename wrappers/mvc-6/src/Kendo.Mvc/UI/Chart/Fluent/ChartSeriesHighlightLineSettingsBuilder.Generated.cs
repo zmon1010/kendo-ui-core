@@ -11,6 +11,16 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
+        /// The dash type of the highlight line.The following dash types are supported:
+        /// </summary>
+        /// <param name="value">The value for DashType</param>
+        public ChartSeriesHighlightLineSettingsBuilder<T> DashType(ChartDashType value)
+        {
+            Container.DashType = value;
+            return this;
+        }
+
+        /// <summary>
         /// The line color. Accepts a valid CSS color string, including hex and rgb.
         /// </summary>
         /// <param name="value">The value for Color</param>

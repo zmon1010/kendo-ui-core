@@ -286,6 +286,10 @@ function baseLineChartTests(seriesName, TChart) {
             equal(chart.points[0].category, "A");
         });
 
+        test("sets point stackValue to be the same as value", function() {
+            equal(chart.points[0].stackValue, 1);
+        });
+
         test("sets correct category if multiple categoryAxis are used", function() {
             var plotArea = new dataviz.CategoricalPlotArea([{
                 type: seriesName,
@@ -439,6 +443,12 @@ function baseLineChartTests(seriesName, TChart) {
             );
         });
 
+        test("sets point stackValue", function() {
+            equal(chart.points[0].stackValue, 1);
+            equal(chart.points[1].stackValue, 2);
+            equal(chart.points[2].stackValue, 3);
+        });
+
         // ------------------------------------------------------------
         module(chartName + " / Stack / Negative Values", {
             setup: function() {
@@ -462,6 +472,12 @@ function baseLineChartTests(seriesName, TChart) {
                 $.map(chart.points, function(point) { return chart.plotRange(point)[0] }),
                 [-1, -2, -3, -2, -4, -6]
             );
+        });
+
+        test("sets point stackValue", function() {
+            equal(chart.points[0].stackValue, -1);
+            equal(chart.points[1].stackValue, -2);
+            equal(chart.points[2].stackValue, -3);
         });
 
         // ------------------------------------------------------------
@@ -494,6 +510,11 @@ function baseLineChartTests(seriesName, TChart) {
             });
 
             deepEqual(pointHeights, [2, 1, 2, 1]);
+        });
+
+        test("sets point stackValue", function() {
+            equal(chart.points[0].stackValue, 2);
+            equal(chart.points[1].stackValue, 1);
         });
 
         // ------------------------------------------------------------

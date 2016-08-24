@@ -129,6 +129,27 @@ namespace Telerik.Web.Spreadsheet.Tests
             Assert.Equal(4, pane.TopLeftCellIndex.ColumnIndex);
         }
 
+        [Fact]
+        public void ToDocument_exports_showGridLines()
+        {
+            sheet.ShowGridLines = false;
+
+            Assert.False(workbook.ToDocument().ActiveWorksheet.ViewState.ShowGridLines);
+        }
+
+        [Fact]
+        public void ToDocument_exports_hyperlinks()
+        {
+            var hyperlinks = workbook.ToDocument().ActiveWorksheet.Hyperlinks;
+
+            Assert.Equal(1, hyperlinks.Count());
+
+            var hyperlink = hyperlinks.First();
+
+            Assert.Equal(new CellRange(1, 6, 1, 6), hyperlink.Range);
+            Assert.Equal("FooLink", hyperlink.HyperlinkInfo.Address);
+        }
+
         private CellSelection GetCell(int rowIndex, int columnIndex)
         {
             return workbook.ToDocument().ActiveWorksheet.Cells[rowIndex, columnIndex];

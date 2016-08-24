@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Kendo.Mvc.Examples.Models.Gantt
 {
-    public class GanttResourceService
+    public class GanttResourceService : IGanttResourceService, IDisposable
     {
         private SampleEntitiesDataContext db;
 
@@ -16,14 +18,14 @@ namespace Kendo.Mvc.Examples.Models.Gantt
         {
         }
 
-        public virtual IQueryable<ResourceViewModel> GetAll()
+        public virtual IList<ResourceViewModel> GetAll()
         {
             return db.GanttResources.ToList().Select(resource => new ResourceViewModel
             {
                 ID = resource.ID,
                 Name = resource.Name,
                 Color = resource.Color
-            }).AsQueryable();
+            }).ToList();
         }
 
         public void Dispose()

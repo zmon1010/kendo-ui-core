@@ -913,4 +913,10 @@
   <data name="Scheduler_View_TimelineWorkWeek" xml:space="preserve">
     <value>Timeline Work Week</value>
   </data>
+  <data name="Editor_CleanFormatting" xml:space="preserve">
+    <value>Clean formatting</value>
+  </data>
+  <data name="Editor_Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
 </root>

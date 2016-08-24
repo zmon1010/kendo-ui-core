@@ -38,7 +38,7 @@ Any valid CSS color string will work here, including hex and rgb.
     }
 
     /**
-    * If set to true the barcode will not display the checksum digit next to the value in the text area.
+    * If set to true, the Barcode will display the checksum digit next to the value in the text area.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\Barcode
     */

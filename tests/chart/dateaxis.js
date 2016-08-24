@@ -611,6 +611,25 @@
             equal(range.min.getTime(), new Date("2012/02/05").getTime());
         });
 
+        // ------------------------------------------------------------
+        module("Date Category Axis / valueRange", {
+            setup: function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/01"), new Date("2012/02/10")
+                    ],
+                    baseUnit: "months"
+                });
+            }
+        });
+
+        test("returns source categories min and max date", function() {
+            var range = dateAxis.valueRange();
+
+            equal(range.min.getTime(), new Date("2012/02/01").getTime());
+            equal(range.max.getTime(), new Date("2012/02/10").getTime());
+        });
+
         (function() {
 
             // ------------------------------------------------------------
@@ -1296,9 +1315,9 @@
 
             var TOLERANCE = 60000;
 
-            function compareRange(actual, expected) {
-                close(actual.min.getTime(), expected.min.getTime(), TOLERANCE);
-                close(actual.max.getTime(), expected.max.getTime(), TOLERANCE);
+            function compareRange(actual, expected, tolerance) {
+                close(actual.min.getTime(), expected.min.getTime(), tolerance || TOLERANCE);
+                close(actual.max.getTime(), expected.max.getTime(), tolerance || TOLERANCE);
             }
 
             // ------------------------------------------------------------
@@ -1550,16 +1569,57 @@
                 });
             });
 
-            test("returns undefined if the range becomes less than a second", function() {
+            test("jumps from seconds to milliseconds", function() {
                 createDateCategoryAxis({
                     categories: [
                         new Date("2013/01/01"), new Date("2014/01/01")
                     ],
                     autoBaseUnitSteps: {
+                        milliseconds: [500]
+                    },
+                    min: new Date("2013/04/01 00:01:00"),
+                    max: new Date("2013/04/01 00:01:03"),
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                console.log(range.min.getTime(), new Date("2013/04/01 00:01:01.500").getTime())
+                compareRange(range, {
+                    min: new Date("2013/04/01 00:01:00.500"),
+                    max: new Date("2013/04/01 00:01:02.500")
+                }, 1);
+            });
+
+            test("returns valid range if the range becomes less than a second", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    autoBaseUnitSteps: {
+                        milliseconds: [],
                         seconds: [10]
                     },
                     min: new Date("2013/04/01 00:00:10"),
                     max: new Date("2013/04/01 00:00:30"),
+                    baseUnit: "fit"
+                });
+
+                var range = dateAxis.zoomRange(1);
+
+                ok(!range);
+            });
+
+            test("returns undefined if the range becomes less than a millisecond", function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2013/01/01"), new Date("2014/01/01")
+                    ],
+                    autoBaseUnitSteps: {
+                        milliseconds: [500]
+                    },
+                    min: new Date("2013/04/01 00:00:10.000"),
+                    max: new Date("2013/04/01 00:00:10.000"),
                     baseUnit: "fit"
                 });
 

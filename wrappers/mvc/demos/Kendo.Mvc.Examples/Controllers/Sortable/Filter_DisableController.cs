@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SortableController : Controller
     {
+        [Demo]
         public ActionResult Filter_Disable()
         {
             return View();

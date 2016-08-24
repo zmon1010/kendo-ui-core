@@ -86,8 +86,14 @@
     </hudson.plugins.parameterizedtrigger.TriggerBuilder>
   </builders>
   <publishers>
+    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
+      <teamDomain>kendoui</teamDomain>
+      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
+      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
+      <room></room>
+    </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Upload-Release-Notes-production,Upload-Bower-production,Upload-App-Builder-Verified-Bundle-production,Upload-Theme-Builder,Upload-NuGet-production</childProjects>
+      <childProjects>Upload-Bower-production,Upload-App-Builder-Verified-Bundle-production,Upload-Theme-Builder,Upload-NuGet-production,Upload-NPM</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
@@ -95,12 +101,6 @@
         <completeBuild>true</completeBuild>
       </threshold>
     </hudson.tasks.BuildTrigger>
-    <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
-      <teamDomain>kendoui</teamDomain>
-      <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
-      <buildServerUrl>http://kendobuild/build/</buildServerUrl>
-      <room></room>
-    </jenkins.plugins.slack.SlackNotifier>
   </publishers>
   <buildWrappers/>
 </project>

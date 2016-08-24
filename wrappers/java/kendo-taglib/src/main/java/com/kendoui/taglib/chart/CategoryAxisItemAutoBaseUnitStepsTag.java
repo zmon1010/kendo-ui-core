@@ -67,6 +67,14 @@ public class CategoryAxisItemAutoBaseUnitStepsTag extends  BaseTag  /* interface
         setProperty("hours", value);
     }
 
+    public java.lang.Object getMilliseconds() {
+        return (java.lang.Object)getProperty("milliseconds");
+    }
+
+    public void setMilliseconds(java.lang.Object value) {
+        setProperty("milliseconds", value);
+    }
+
     public java.lang.Object getMinutes() {
         return (java.lang.Object)getProperty("minutes");
     }

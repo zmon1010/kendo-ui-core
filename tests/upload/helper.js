@@ -6,6 +6,7 @@ function copyUploadPrototype() {
 }
 
 function createHTML() {
+   $("#testbed_container").remove();
    var html = '<div id="testbed_container"><div id="prototype" style="display:none">' +
         '<div class="k-widget k-upload k-header k-upload-empty">' +
             '<div class="k-button k-upload-button">' +
@@ -55,10 +56,17 @@ function simulateMultipleFileSelect() {
     );
 }
 
+function simulateMultipleFileSelectWithFileInfo(files) {
+    var uploadInstance = $("#uploadInstance").data("kendoUpload");
+    uploadInstance._onInputChange({
+        target: { files: files }
+    });
+}
+
 function getFileListMock() {
     return [
-        { name: "first.txt", size: 1 },
-        { name: "second.txt", size: 2 }
+        { name: "first.txt", size: 1, extension: ".txt" },
+        { name: "second.txt", size: 2, extension: ".txt" }
     ];
 }
 

@@ -61,6 +61,22 @@ var __meta__ = { // jshint ignore:line
 
              that._initialOptions = extend({}, options);
 
+             min = that.min(element.attr("min"));
+             max = that.max(element.attr("max"));
+             step = that._parse(element.attr("step"));
+
+             if (options.min === NULL && min !== NULL) {
+                 options.min = min;
+             }
+
+             if (options.max === NULL && max !== NULL) {
+                 options.max = max;
+             }
+
+             if (!isStep && step !== NULL) {
+                 options.step = step;
+             }
+
              that._reset();
              that._wrapper();
              that._arrows();
@@ -80,22 +96,6 @@ var __meta__ = { // jshint ignore:line
                          element.focus();
                      }
                  });
-             }
-
-             min = that.min(element.attr("min"));
-             max = that.max(element.attr("max"));
-             step = that._parse(element.attr("step"));
-
-             if (options.min === NULL && min !== NULL) {
-                 options.min = min;
-             }
-
-             if (options.max === NULL && max !== NULL) {
-                 options.max = max;
-             }
-
-             if (!isStep && step !== NULL) {
-                 options.step = step;
              }
 
              element.attr("aria-valuemin", options.min)
@@ -408,6 +408,7 @@ var __meta__ = { // jshint ignore:line
 
         _input: function() {
             var that = this,
+                options = that.options,
                 CLASSNAME = "k-formatted-value",
                 element = that.element.addClass(INPUT).show()[0],
                 accessKey = element.accessKey,
@@ -429,14 +430,19 @@ var __meta__ = { // jshint ignore:line
             text[0].tabIndex = element.tabIndex;
             text[0].style.cssText = element.style.cssText;
             text[0].title = element.title;
-            text.prop("placeholder", that.options.placeholder);
+            text.prop("placeholder", options.placeholder);
 
             if (accessKey) {
                 text.attr("accesskey", accessKey);
                 element.accessKey = "";
             }
 
-            that._text = text.addClass(element.className);
+            that._text = text.addClass(element.className)
+                             .attr({
+                                 "role": "spinbutton",
+                                 "aria-valuemin": options.min,
+                                 "aria-valuemax": options.max
+                             });
         },
 
         _keydown: function(e) {
@@ -524,12 +530,16 @@ var __meta__ = { // jshint ignore:line
         },
 
         _paste: function(e) {
-            var that = this,
-                element = e.target,
-                value = element.value;
+            var that = this;
+            var element = e.target;
+            var value = element.value;
+            var numberFormat = that._format(that.options.format);
 
             setTimeout(function() {
-                if (that._parse(element.value) === NULL) {
+                var result = that._parse(element.value);
+                var isValid = that._numericRegex(numberFormat).test(element.value);
+
+                if (result === NULL || that._adjust(result) !== result || !isValid) {
                     that._update(value);
                 }
             });
@@ -537,6 +547,7 @@ var __meta__ = { // jshint ignore:line
 
         _option: function(option, value) {
             var that = this,
+                element = that.element,
                 options = that.options;
 
             if (value === undefined) {
@@ -550,9 +561,11 @@ var __meta__ = { // jshint ignore:line
             }
 
             options[option] = value;
-            that.element
-                .attr("aria-value" + option, value)
-                .attr(option, value);
+            element
+                .add(that._text)
+                .attr("aria-value" + option, value);
+
+            element.attr(option, value);
         },
 
         _spin: function(step, timeout) {
@@ -640,7 +653,8 @@ var __meta__ = { // jshint ignore:line
                 value = "";
             }
 
-            that.element.val(value).attr("aria-valuenow", value);
+            that.element.val(value);
+            that.element.add(that._text).attr("aria-valuenow", value);
         },
 
         _placeholder: function(value) {

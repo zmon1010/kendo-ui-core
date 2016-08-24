@@ -8,6 +8,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class GridController
     {
+        [Demo]
         public ActionResult ColumnSettings()
         {
             var columns = new[] 

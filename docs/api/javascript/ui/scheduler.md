@@ -4343,7 +4343,7 @@ The fields which can be used in the template are:
         # var resources = data.resources(); #
         # var color = resources.roomId === 1 ? "red" : "blue"; #
 
-        <span style="display:none; height:100%; background: #=color#">
+        <span style="height:100%;color:black;background-color:#:color#">
           #=kendo.toString(date, "d")#
         </span>
     </script>
@@ -5888,17 +5888,15 @@ Get the time slot from given element.
 
 ### view
 
-Gets or sets the current scheduler view.
+Sets the current Scheduler view.
+
+To get the current Scheduler view name, use the [`viewName` method](#methods-viewName).
 
 #### Parameters
 
 ##### type `String` *(optional)*
 
 The view type to select.
-
-#### Returns
-
-`kendo.ui.SchedulerView` the current scheduler view.
 
 #### Example - set the current view
 
@@ -7071,4 +7069,3 @@ The widget instance which fired the event.
     var scheduler = $("#scheduler").data("kendoScheduler");
     scheduler.bind("save", scheduler_save);
     </script>
-

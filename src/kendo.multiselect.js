@@ -548,7 +548,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             listView.value(value);
-            that._old = value;
+            that._old = listView.value(); //get a new array reference
 
             if (!clearFilters) {
                 that._fetchData();
@@ -658,6 +658,8 @@ var __meta__ = { // jshint ignore:line
                 value = $.map(value, function(dataItem) { return that._value(dataItem); });
             } else if (!isArray(value) && !(value instanceof ObservableArray)) {
                 value = [value];
+            } else if (isArray(value)) {
+                value = value.slice();
             }
 
             return value;
@@ -1107,19 +1109,22 @@ var __meta__ = { // jshint ignore:line
         },
 
         _input: function() {
-            var that = this,
-                accessKey = that.element[0].accessKey,
-                input = that._innerWrapper.children("input.k-input");
+            var that = this;
+            var element = that.element;
+            var accessKey = element[0].accessKey;
+            var input = that._innerWrapper.children("input.k-input");
 
             if (!input[0]) {
                 input = $('<input class="k-input" style="width: 25px" />').appendTo(that._innerWrapper);
             }
 
-            that.element.removeAttr("accesskey");
+            element.removeAttr("accesskey");
+
             that._focused = that.input = input.attr({
                 "accesskey": accessKey,
                 "autocomplete": "off",
                 "role": "listbox",
+                "title": element[0].title,
                 "aria-expanded": false
             });
         },

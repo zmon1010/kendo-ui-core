@@ -9,6 +9,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Donut_ChartsController : Controller
     {
+        [Demo]
         public ActionResult Remote_Data_Binding()
         {
             return View();

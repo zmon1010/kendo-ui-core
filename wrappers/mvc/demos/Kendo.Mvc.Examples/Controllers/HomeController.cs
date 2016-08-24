@@ -7,6 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public class HomeController : Controller
     {
+        [Home]
         public ActionResult Index()
         {
             return View();

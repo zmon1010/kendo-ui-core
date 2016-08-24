@@ -120,7 +120,8 @@ namespace :generate do
                     'docs/api/javascript/ui/toolbar.md',
                     'docs/api/javascript/ui/treelist.md',
                     'docs/api/javascript/ui/treeview.md',
-                    'docs/api/javascript/ui/spreadsheet.md'
+                    'docs/api/javascript/ui/spreadsheet.md',
+                    'docs/api/javascript/ui/dialog.md'
                 ]
 
                 components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC::Wrappers::DataViz::Component) }
@@ -245,6 +246,7 @@ namespace :generate do
                 'docs/api/javascript/ui/grid.md',
                 'docs/api/javascript/ui/listview.md',
                 'docs/api/javascript/ui/maskedtextbox.md',
+                'docs/api/javascript/ui/mediaplayer.md',
                 'docs/api/javascript/ui/menu.md',
                 'docs/api/javascript/ui/multiselect.md',
                 'docs/api/javascript/ui/notification.md',
@@ -265,7 +267,8 @@ namespace :generate do
                 'docs/api/javascript/ui/window.md',
                 'docs/api/javascript/ui/splitter.md',
                 'docs/api/javascript/ui/pivotgrid.md',
-                'docs/api/javascript/ui/pivotconfigurator.md'
+                'docs/api/javascript/ui/pivotconfigurator.md',
+                'docs/api/javascript/ui/dialog.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }
@@ -290,7 +293,8 @@ namespace :generate do
                 'docs/api/javascript/ui/datetimepicker.md',
                 'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/timepicker.md',
-                'docs/api/javascript/ui/window.md'
+                'docs/api/javascript/ui/window.md',
+                'docs/api/javascript/ui/dialog.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }

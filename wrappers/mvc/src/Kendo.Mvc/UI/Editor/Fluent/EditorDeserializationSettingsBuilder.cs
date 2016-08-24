@@ -22,10 +22,21 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Callback that allows custom deserialization to be plugged in. The method accepts string as the only parameter and is expected to return the modified content as string as well.
         /// </summary>
-        /// <param name="value">The value that configures the custom.</param>
-        public EditorDeserializationSettingsBuilder Custom(string value)
+        /// <param name="value">The value that configures the custom action.</param>
+        public EditorDeserializationSettingsBuilder Custom(Func<object, object> handler)
         {
-            container.Custom = value;
+            container.Custom.TemplateDelegate = handler;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Callback that allows custom deserialization to be plugged in. The method accepts string as the only parameter and is expected to return the modified content as string as well.
+        /// </summary>
+        /// <param name="value">The value that configures the custom action.</param>
+        public EditorDeserializationSettingsBuilder Custom(string handler)
+        {
+            container.Custom.HandlerName = handler;
 
             return this;
         }

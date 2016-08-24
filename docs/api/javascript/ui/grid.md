@@ -451,22 +451,26 @@ The JavaScript function executed when the user clicks the command button. The fu
 
 The function context (available via the `this` keyword) will be set to the grid instance.
 
+> Grid custom commands are rendered as anchors (`<a>`) with no `href` value. Prevent the click event in the click function in order to avoid shifting of the page scroll position.
+
 #### Example - handle the click event of the custom command button
     <div id="grid"></div>
     <script>
     $("#grid").kendoGrid({
       columns: [
         { field: "name" },
-        { command: [ {
+        { command: [{
             name: "details",
             click: function(e) {
-              // e.target is the DOM element representing the button
-              var tr = $(e.target).closest("tr"); // get the current table row (tr)
-              // get the data bound to the current table row
-              var data = this.dataItem(tr);
-              console.log("Details for: " + data.name);
+                // prevent page scroll position change
+                e.preventDefault();
+                // e.target is the DOM element representing the button
+                var tr = $(e.target).closest("tr"); // get the current table row (tr)
+                // get the data bound to the current table row
+                var data = this.dataItem(tr);
+                console.log("Details for: " + data.name);
             }
-          } ]
+          }]
        }
       ],
       dataSource: [ { name: "Jane Doe" } ]
@@ -2475,7 +2479,7 @@ which field to update. The other option is to use [MVVM](/framework/mvvm/overvie
     <script id="popup-editor" type="text/x-kendo-template">
       <h3>Edit Person</h3>
       <p>
-        <label>Name:<input data-bind="valueu:name" /></label>
+        <label>Name:<input data-bind="value:name" /></label>
       </p>
       <p>
         <label>Age:<input data-role="numerictextbox" data-bind="value:age" /></label>
@@ -8169,7 +8173,7 @@ If invoked prevents the data bind action. The table rows will remain unchanged a
 
 ##### e.action `String`
 
-The action that caused the dataBinding event
+The action that caused the dataBinding event. Possible values: `rebind`, `sync`, `add`, `remove`.
 
 ##### e.index `Number`
 
