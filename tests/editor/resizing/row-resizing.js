@@ -1,6 +1,7 @@
 (function() {
     var RowResizing = kendo.ui.editor.RowResizing;
     var initialHeight;
+    var options;
     var row;
     var rowResizing;
     var tableElement;
@@ -28,6 +29,7 @@
     var FIRST_ROW = "tr:first";
     var SECOND_ROW = "tr:nth-child(2)";
     var PX = "px";
+    var PERCENTAGE = "%";
 
     var ROW = "tr";
     var COLUMN = "td";
@@ -111,6 +113,40 @@
                 '<td id="col32" class="col" style="border:1px solid red;">col 32</td>' +
                 '<td id="col33" class="col" style="border:1px solid red;">col 33</td>' +
                 '<td id="col34" class="col" style="border:1px solid red;">col 34</td>' +
+            '</tr>' +
+        '</table>';
+
+    var TABLE_WITH_ROWS_IN_PERCENTAGES =
+        '<table id="table" class="k-table" style="height: 500px;";>' +
+            '<tr id="row1" class="row" style="height:20%;">' +
+                '<td id="col11" class="col" style="border:1px solid red;">col 11</td>' +
+                '<td id="col12" class="col" style="border:1px solid red;">col 12</td>' +
+                '<td id="col13" class="col" style="border:1px solid red;">col 13</td>' +
+                '<td id="col14" class="col" style="border:1px solid red;">col 14</td>' +
+            '</tr>' +
+            '<tr id="row2" class="row" style="height:20%;">' +
+                '<td id="col21" class="col" style="border:1px solid red;">col 21</td>' +
+                '<td id="col22" class="col" style="border:1px solid red;">col 22</td>' +
+                '<td id="col23" class="col" style="border:1px solid red;">col 23</td>' +
+                '<td id="col24" class="col" style="border:1px solid red;">col 24</td>' +
+            '</tr>' +
+            '<tr id="row3" class="row" style="height:20%;">' +
+                '<td id="col31" class="col" style="border:1px solid red;">col 31</td>' +
+                '<td id="col32" class="col" style="border:1px solid red;">col 32</td>' +
+                '<td id="col33" class="col" style="border:1px solid red;">col 33</td>' +
+                '<td id="col34" class="col" style="border:1px solid red;">col 34</td>' +
+            '</tr>' +
+            '<tr id="row4" class="row" style="height:20%;">' +
+                '<td id="col41" class="col" style="border:1px solid red;">col 41</td>' +
+                '<td id="col42" class="col" style="border:1px solid red;">col 42</td>' +
+                '<td id="col43" class="col" style="border:1px solid red;">col 43</td>' +
+                '<td id="col44" class="col" style="border:1px solid red;">col 44</td>' +
+            '</tr>' +
+            '<tr id="row5" class="row" style="height:20%;">' +
+                '<td id="col51" class="col" style="border:1px solid red;">col 51</td>' +
+                '<td id="col52" class="col" style="border:1px solid red;">col 52</td>' +
+                '<td id="col53" class="col" style="border:1px solid red;">col 53</td>' +
+                '<td id="col54" class="col" style="border:1px solid red;">col 54</td>' +
             '</tr>' +
         '</table>';
 
@@ -1190,6 +1226,7 @@
             initialHeightInPixels = row.outerHeight();
             rows = tableElement.find(TBODY).children(TR);
             initialRowsHeights = calculateRowsHeight(rows);
+            options = rowResizing.options;
         },
 
         teardown: function() {
@@ -1216,7 +1253,7 @@
         equal(tableElement[0].style.height, tableHeight +differenceInPixels + PX);
     });
 
-    test("row height should be decreased when resizing", function() {
+    test("should decrease row height", function() {
         var differenceInPixels = (-1) * 10;
 
         resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
@@ -1224,18 +1261,18 @@
         equal(row[0].style.height, (initialHeightInPixels + differenceInPixels) + PX);
     });
 
-    test("row height should not be lower than min", function() {
+    test("should not set row height to be lower than min", function() {
         resizeRow(row, initialHeightInPixels, initialHeightInPixels + (-1) * MAX);
 
         equal(row[0].style.height, options.min + PX);
     });
 
-    test("row height should not be greater than the height of the table body", function() {
+    test("should not set row height to be greater than the height of the table body", function() {
         var initialTableBodyHeight = $(rowResizing.element).find(TBODY).height();
 
         resizeRow(row, initialHeightInPixels, initialHeightInPixels + MAX);
 
-        equal(row[0].style.height, initialTableBodyHeight + PX);
+        equal(row[0].style.height, initialTableBodyHeight - options.min +PX);
     });
 
     test("should set computed dimensions to all rows", function() {
@@ -1262,6 +1299,81 @@
         }
     });
 
+    module("editor row resizing in percentages", {
+        setup: function() {
+            tableElement = $(TABLE_WITH_ROWS_IN_PERCENTAGES).appendTo(QUnit.fixture);
+            rowResizing = new RowResizing(tableElement[0], {
+                rootElement: QUnit.fixture
+            });
+            options = rowResizing.options;
+            row = $(rowResizing.element).find(SECOND_ROW);
+            rows = $(rowResizing.element).find(ROW);
+            initialHeightInPixels = row.outerHeight();
+            tableBody = $(tableElement).children(TBODY);
+            tableBodyHeight = $(tableElement).children(TBODY).height();
+        },
+
+        teardown: function() {
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should increase row height", function() {
+        var differenceInPixels = 25;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
+
+        roughlyEqual(row[0].style.height, ((initialHeightInPixels + differenceInPixels) / tableBody.height() * 100) + PERCENTAGE, 0.18);
+    });
+
+    test("should decrease row height", function() {
+        var differenceInPixels = (-1) * 25;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
+
+        roughlyEqual(row[0].style.height, ((initialHeightInPixels + differenceInPixels) / tableBody.height() * 100) + PERCENTAGE, 0.15);
+    });
+
+if (!kendo.support.browser.mozilla) {
+    test("should not set row height to be lower than min", function() {
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + (-1) * MAX);
+
+        roughlyEqual(row[0].style.height, (options.min / tableBody.height() * 100) + PERCENTAGE, 0.5);
+    });
+}
+
+//firefox calculates percentages with worse precision
+if (kendo.support.browser.mozilla) {
+    test("should not set row height to be lower than min", function() {
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + (-1) * MAX);
+
+        roughlyEqual(row[0].style.height, (options.min / tableBody.height() * 100) + PERCENTAGE, 0.9);
+    });
+}
+
+    test("should not set row height to be greater than the height of the table body", function() {
+        var differenceInPixels = (-1) * 25;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + MAX);
+
+        roughlyEqual(row[0].style.height, ((tableBodyHeight - options.min) / tableBody.height() * 100) + PERCENTAGE, 0.2);
+    });
+
+    test("should change other rows height", function() {
+        var otherRows = rows.filter(function() {
+            return (this !== row[0]);
+        });
+        var initialOtherRowsHeights = calculateRowsHeight(otherRows);
+        var differenceInPixels = 25;
+
+        resizeRow(row, initialHeightInPixels, initialHeightInPixels + differenceInPixels);
+
+        for (var i = 0; i < initialOtherRowsHeights.length; i++) {
+            roughlyEqual(otherRows[i].style.height, (initialOtherRowsHeights[i]/ tableBody.height() * 100) + PERCENTAGE, 0.2);
+        }
+    });
+
     module("editor row resizing without explicit dimensions", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture);
@@ -1272,6 +1384,7 @@
             row = $(rowResizing.element).find(FIRST_ROW);
             initialHeightInPixels = row.outerHeight();
             rows = $(rowResizing.element).find(ROW);
+            options = rowResizing.options;
         },
 
         teardown: function() {
@@ -1326,7 +1439,7 @@
 
         resizeRow(row, initialHeightInPixels, initialHeightInPixels + MAX);
 
-        equal(row[0].style.height, initialTableBodyHeight + PX);
+        equal(row[0].style.height, initialTableBodyHeight - options.min + PX);
     });
 
     test("should not change other rows height", function() {

@@ -3,7 +3,8 @@
 })(function() {
 
 (function(kendo, undefined) {
-    var abs = window.Math.abs;
+    var math = window.Math;
+    var abs = math.abs;
 
     var $ = kendo.jQuery;
     var extend = $.extend;
@@ -12,7 +13,9 @@
     var TableElementResizing = Editor.TableElementResizing;
     var ResizingUtils = Editor.ResizingUtils;
     var constrain = ResizingUtils.constrain;
+    var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
     var inPercentages = ResizingUtils.inPercentages;
+    var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
 
     var NS = ".kendoEditorRowResizing";
@@ -50,7 +53,7 @@
 
         elementBorderHovered: function(tableElement, e) {
             var that = this;
-            var handleHeight = that.options.handle.height;
+            var handleHeight = that.options.handle[HEIGHT];
             var borderOffset = tableElement.offset().top + tableElement.outerHeight();
             var mousePosition = e.clientY + $(tableElement[0].ownerDocument).scrollTop();
 
@@ -65,7 +68,7 @@
         setResizeHandlePosition: function(row) {
             var that = this;
             var options = that.options;
-            var handleHeight = options.handle.height;
+            var handleHeight = options.handle[HEIGHT];
             var rowPosition = row.position();
 
             that.resizeHandle.css({
@@ -80,7 +83,7 @@
 
             that.resizeHandle.css({
                 width: $(that.element).children(TBODY).width(),
-                height: that.options.handle.height
+                height: that.options.handle[HEIGHT]
             });
         },
 
@@ -88,15 +91,15 @@
             var that = this;
             var options = that.options;
             var min = options.min;
-            var tableBody =  $(that.element).find(TBODY);
+            var tableBody =  $(that.element).children(TBODY);
             var tableBodyTopOffset = tableBody.offset().top;
             var resizeHandle = $(that.resizeHandle);
-            var row = $(e.currentTarget).data("row");
+            var row = $(e.currentTarget).data(options.handle.dataAttribute);
 
             var handleOffset = constrain({
                 value: resizeHandle.offset().top + e.y.delta,
                 min: $(row).offset().top + min,
-                max: abs(tableBodyTopOffset + tableBody.outerHeight() - options.handle.height - min)
+                max: abs(tableBodyTopOffset + tableBody.outerHeight() - options.handle[HEIGHT] - min)
             });
 
             resizeHandle.css({ top: handleOffset });
@@ -106,35 +109,56 @@
             var that = this;
             var options = that.options;
             var row = $(e.currentTarget).data(options.handle.dataAttribute);
-            var newRowHeight;
             var currentRowHeight = $(row).outerHeight();
             var element = $(that.element);
             var initialTableHeight = element.outerHeight();
-
-            that._setRowsComputedHeight();
-
-            newRowHeight = constrain({
+            var tableBody = element.children(TBODY);
+            var tableBodyHeight = tableBody.height();
+            var initialStyleHeight = row.style[HEIGHT];
+            var newRowHeight = constrain({
                 value: currentRowHeight + e.y.initialDelta,
                 min: options.min,
-                max: element.children(TBODY).height()
+                max: abs(tableBodyHeight - options.min)
             });
 
+            that._setRowsHeightInPixels();
             row.style[HEIGHT] = toPixels(newRowHeight);
+            that._setTableHeight(initialTableHeight + (newRowHeight - currentRowHeight));
 
-            that._setTableHeight(initialTableHeight + (newRowHeight -currentRowHeight));
+            if (inPercentages(initialStyleHeight)) {
+                //resize rows in percentages as late as possible to prevent
+                //incorrect precision calculations in browsers
+                that._setRowsHeightInPercentages();
+            }
         },
 
-        _setRowsComputedHeight: function() {
+        _setRowsHeightInPixels: function() {
             var that = this;
-            var rows = $(that.element).find(TBODY).children(TR);
-            var row;
+            var rows = $(that.element).children(TBODY).children(TR);
+            var length = rows.length;
+            var currentRowsHeights = rows.map(function() {
+                return $(this).outerHeight();
+            });
+            var i;
 
-            for (var i = 0; i < rows.length; i++) {
-                row = rows[i];
+            for (i = 0; i < length; i++) {
+                rows[i].style[HEIGHT] = toPixels(currentRowsHeights[i]);
+            }
+        },
 
-                if (!inPercentages(row.style[HEIGHT])) {
-                    row.style[HEIGHT] = toPixels($(row).outerHeight());
-                }
+        _setRowsHeightInPercentages: function() {
+            var that = this;
+            var tableBody = $(that.element).children(TBODY);
+            var tableBodyHeight = tableBody.height();
+            var rows = tableBody.children(TR);
+            var length = rows.length;
+            var currentRowsHeights = rows.map(function() {
+                return $(this).outerHeight();
+            });
+            var i;
+
+            for (i = 0; i < length; i++) {
+                rows[i].style[HEIGHT] = toPercentages(calculatePercentageRatio(currentRowsHeights[i], tableBodyHeight));
             }
         },
 
