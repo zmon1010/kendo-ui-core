@@ -248,6 +248,250 @@
         equal(sch.view().content.find("td").length, 126);
     });
 
+     test("render work hour clasee day slots timeline", function() {
+          setupScheduler({
+            date: new Date("2013/1/7"),
+            startTime: new Date("2013/1/7 07:00"),
+            endTime: new Date("2013/1/7 12:00"),
+            views: [
+                "timeline"
+            ],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+           var sch = $(container).data("kendoScheduler");
+           ok(sch.view().content.find("td").eq(3).hasClass("k-nonwork-hour"));
+           ok(!sch.view().content.find("td").eq(4).hasClass("k-nonwork-hour"));
+    });
+
+     test("render work hour clasee day slots timelineWeek", function() {
+          setupScheduler({
+            date: new Date("2013/1/7"),
+            startTime: new Date("2013/1/7 07:00"),
+            endTime: new Date("2013/1/7 12:00"),
+            views: [
+                "timelineWeek"
+            ],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+           var sch = $(container).data("kendoScheduler");
+           ok(sch.view().content.find("td").eq(11).hasClass("k-nonwork-hour"));
+           ok(!sch.view().content.find("td").eq(12).hasClass("k-nonwork-hour"));
+    });
+
+     test("render work hour clasee day slots timelineMonth", function() {
+          setupScheduler({
+            date: new Date("2013/1/7"),
+            views: [
+                "timelineMonth"
+            ],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+           var sch = $(container).data("kendoScheduler");
+           ok(sch.view().content.find("td").eq(8).hasClass("k-nonwork-hour"));
+           ok(!sch.view().content.find("td").eq(7).hasClass("k-nonwork-hour"));
+    });
+
+     test("render work hour clasee day slots timelineWorkWeek", function() {
+          setupScheduler({
+            date: new Date("2013/1/7"),
+            startTime: new Date("2013/1/7 07:00"),
+            endTime: new Date("2013/1/7 12:00"),
+            views: [
+                "timelineWorkWeek"
+            ],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "horizontal"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+           var sch = $(container).data("kendoScheduler");
+           ok(sch.view().content.find("td").eq(1).hasClass("k-nonwork-hour"));
+           ok(!sch.view().content.find("td").eq(2).hasClass("k-nonwork-hour"));
+    });
+
+     test("vertical render work hour clasee day slots timeline", function() {
+          setupScheduler({
+            date: new Date("2013/1/7"),
+            startTime: new Date("2013/1/7 07:00"),
+            endTime: new Date("2013/1/7 12:00"),
+            views: [
+                "timeline"
+            ],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+           var sch = $(container).data("kendoScheduler");
+           ok(sch.view().content.find("td").eq(3).hasClass("k-nonwork-hour"));
+           ok(!sch.view().content.find("td").eq(4).hasClass("k-nonwork-hour"));
+    });
+
+     test("vertical render work hour clasee day slots timelineWeek", function() {
+          setupScheduler({
+            date: new Date("2013/1/7"),
+            startTime: new Date("2013/1/7 07:00"),
+            endTime: new Date("2013/1/7 12:00"),
+            views: [
+                "timelineWeek"
+            ],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+           var sch = $(container).data("kendoScheduler");
+           ok(sch.view().content.find("td").eq(11).hasClass("k-nonwork-hour"));
+           ok(!sch.view().content.find("td").eq(12).hasClass("k-nonwork-hour"));
+    });
+
+     test("vertical render work hour clasee day slots timelineMonth", function() {
+          setupScheduler({
+            date: new Date("2013/1/7"),
+            views: [
+                "timelineMonth"
+            ],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+           var sch = $(container).data("kendoScheduler");
+           ok(sch.view().content.find("tr").eq(4).find("td").eq(0).hasClass("k-nonwork-hour"));
+           ok(!sch.view().content.find("tr").eq(3).find("td").eq(0).hasClass("k-nonwork-hour"));
+    });
+
+     test("vertical render work hour clasee day slots timelineWorkWeek", function() {
+          setupScheduler({
+            date: new Date("2013/1/7"),
+            startTime: new Date("2013/1/7 07:00"),
+            endTime: new Date("2013/1/7 12:00"),
+            views: [
+                "timelineWorkWeek"
+            ],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        });
+
+           var sch = $(container).data("kendoScheduler");
+           ok(sch.view().content.find("td").eq(1).hasClass("k-nonwork-hour"));
+           ok(!sch.view().content.find("td").eq(2).hasClass("k-nonwork-hour"));
+    });
+
     test("render day slots template", function() {
           setupScheduler({
             date: new Date("2013/1/6"),

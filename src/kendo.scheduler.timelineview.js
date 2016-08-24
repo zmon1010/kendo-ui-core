@@ -485,10 +485,11 @@ var __meta__ = { // jshint ignore:line
 			var html;
 			var options = view.options;
 			
-			var appendRow = function(date) {
+			var appendRow = function(date, isMajorTickColumn, isMiddleColumn, isLastSlotColumn, minorTickColumns, groupIdx) {
                 var content = "";
                 var classes = "";
                 var tmplDate;
+                var workDateIndex = view._isVerticallyGrouped() ? dateIndex : idx;
 
                 var resources = function(groupIndex) {
                     return function() {
@@ -502,7 +503,7 @@ var __meta__ = { // jshint ignore:line
 
                 if (kendo.date.getMilliseconds(date) < kendo.date.getMilliseconds(options.workDayStart) ||
                     kendo.date.getMilliseconds(date) >= kendo.date.getMilliseconds(options.workDayEnd) ||
-                    !view._isWorkDay(dates[idx])) {
+                    !view._isWorkDay(dates[workDateIndex])) {
                     classes += " k-nonwork-hour";
                 }
 
@@ -510,19 +511,33 @@ var __meta__ = { // jshint ignore:line
                 tmplDate = kendo.date.getDate(dates[idx]);
                 kendo.date.setTime(tmplDate, kendo.date.getMilliseconds(date));
 
-                content += slotTemplate({ date: tmplDate, resources: resources(isVerticalGrouped ? rowIdx : groupIdx) });
+                content += slotTemplate({ date: tmplDate, resources: resources(groupIdx)});
                 content += "</td>";
 
                 return content;
             };
 
+            var tempStart = new Date(start),
+                minorTickCount = view.options.minorTickCount,
+                msMajorInterval = view.options.majorTick * MS_PER_MINUTE,
+                msInterval = msMajorInterval / minorTickCount || 1,
+                dateIndex;
+              
 			for (var rowIdx = 0; rowIdx < rowCount; rowIdx++) {
                 html += '<tr>';
-				for (var idx = 0, length = columnCount; idx < length; idx++) {
-					for (var groupIdx = 0 ; groupIdx < groupsCount; groupIdx++) {                     
-						html += view._forTimeRange(start, end, appendRow, false, isVerticalGrouped);
-					}
-					if(isVerticalGrouped){
+
+                 if((rowIdx % (rowCount / view._dates.length)) === 0){
+                   dateIndex = (rowIdx / (rowCount / view._dates.length));
+                   tempStart = new Date(view._dates[dateIndex]);
+                   kendo.date.setTime(tempStart, kendo.date.getMilliseconds(start));
+                  }
+
+				for (var idx = 0, length = columnCount; idx < length; idx++) {      
+               
+					html += view._forTimeRange(tempStart, end, appendRow, isVerticalGrouped, groupsCount);
+
+					if (isVerticalGrouped){
+					setTime(tempStart, msInterval, false);
 						break;
 					} 
 				}
@@ -576,10 +591,10 @@ var __meta__ = { // jshint ignore:line
 			 }
 		},
 
-		_getVerticalGroupCount: function(groupsCount) {
+		_getVerticalGroupCount: function() {
 			var view = this._view;
 
-    		return view._dates.length * groupsCount;
+    		return view.content.find("tr").length;
 		},
 
 		_getVerticalRowCount: function(eventGroups, groupIndex, maxRowCount) {
@@ -1156,7 +1171,7 @@ var __meta__ = { // jshint ignore:line
             this._slotRanges = slotRanges;
         },
 
-        _forTimeRange: function(min, max, action, after, verticalByDate) {
+        _forTimeRange: function(min, max, action, verticalByDate, groupsCount) {
             min = toInvariantTime(min); //convert the date to 1/2/1980 and sets the time
             max = toInvariantTime(max);
 
@@ -1184,6 +1199,10 @@ var __meta__ = { // jshint ignore:line
 
             length = verticalByDate ? 1 : Math.round(length);
 
+            if (groupsCount) {
+                length = length * groupsCount;
+            }
+
             for (; idx < length; idx++) {
                 var majorTickDivider = idx % (msMajorInterval/msInterval);
                 var isMajorTickColumn = majorTickDivider === 0;
@@ -1198,9 +1217,17 @@ var __meta__ = { // jshint ignore:line
                     }
                 }
 
-                html += action(start, isMajorTickColumn, isMiddleColumn, isLastSlotColumn, minorTickColumns);
+                html += action(start, isMajorTickColumn, isMiddleColumn, isLastSlotColumn, minorTickColumns, idx % groupsCount);
 
-                setTime(start, msInterval, false);
+                if (!verticalByDate) {
+                    if (groupsCount) {
+                        if ((idx % groupsCount) === groupsCount - 1) {
+                            setTime(start, msInterval, false);
+                        }
+                    } else {
+                        setTime(start, msInterval, false);
+                    }
+                }
             }
 
             if (msMax) {
@@ -1214,9 +1241,6 @@ var __meta__ = { // jshint ignore:line
                 }
             }
 
-            if (after) {
-                html += after(start);
-            }
 
             return html;
         },
