@@ -18,10 +18,10 @@
         }
     });
 
-    function setupWidget(options) {
+    function setupWidget(options, selectedView) {
         startDate = new Date(2013, 1, 3, 0, 0, 0, 0);
         options = options || {};
-
+         selectedView = selectedView || "timeline";
         var end = new Date(startDate);
         end.setHours(1);
 
@@ -29,7 +29,7 @@
             selectable: true,
             date: new Date(2013, 1, 3, 0, 0, 0, 0),
             views: [
-                "timeline"
+                selectedView
             ],
             dataSource: [
                 { start: startDate, end: end, title: "Test", roomId: 2}
@@ -915,5 +915,78 @@
         var currentSelection = $(".k-scheduler-content .k-state-selected");
 
         equal(currentSelection.index(), 0);
-    });
+     });
+
+      test("View moves selection to the prev visible date and group slot timelineWorkWeek", function() {
+         setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        }, "timelineWorkWeek");
+ 
+        var selection = {
+             start: new Date(2013, 0, 28, 10, 0, 0, 0),
+             end: new Date(2013, 0, 28, 11, 0, 0),
+             groupIndex: 0,
+             events: []
+         };
+ 
+         scheduler.view().move(selection, keys.UP);
+
+       
+         deepEqual(selection.start,  new Date(2013, 0, 25, 10, 0, 0, 0));
+         deepEqual(selection.end,  new Date(2013, 0, 25, 11, 0, 0, 0));
+     });
+ 
+      test("View moves selection to the prev visible date and group slot timelineWorkWeek", function() {
+         setupWidget({
+            startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+
+        }, "timelineWorkWeek");
+ 
+        var selection = {
+             start: new Date(2013, 1, 1, 10, 0, 0, 0),
+             end: new Date(2013, 1, 1, 11, 0, 0),
+             groupIndex: 0,
+             events: []
+         };
+ 
+         scheduler.view().move(selection, keys.DOWN);
+
+       
+         deepEqual(selection.start,  new Date(2013, 1, 4, 10, 0, 0, 0));
+         deepEqual(selection.end,  new Date(2013, 1, 4, 11, 0, 0, 0));
+     });
+
 })();

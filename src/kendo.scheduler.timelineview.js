@@ -2238,10 +2238,15 @@ var __meta__ = { // jshint ignore:line
             },
             name: "timelineWorkWeek",
             nextDate: function() {
-                return kendo.date.dayOfWeek(kendo.date.nextDay(this.endDate()), this.options.workWeekStart, 1);
+                var weekStart = kendo.date.dayOfWeek(kendo.date.nextDay(this.endDate()), this.calendarInfo().firstDay, 1);
+
+		return kendo.date.addDays(weekStart, this._workDays[0]);
             },
             previousDate: function() {
-                return kendo.date.previousDay(this.startDate());
+                var weekStart = kendo.date.dayOfWeek(this.startDate(), this.calendarInfo().firstDay, -1);
+	        var workDays = this._workDays;
+
+ 		return kendo.date.addDays(weekStart, workDays[workDays.length - 1] - 7);
             },
             calculateDateRange: function() {
                 var selectedDate = this.options.date,
