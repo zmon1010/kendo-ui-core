@@ -25,6 +25,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
+        /// </summary>
+        /// <param name="value">The value for DropZone</param>
+        public UploadBuilder DropZone(string value)
+        {
+            Container.DropZone = value;
+            return this;
+        }
+
+        /// <summary>
         /// List of files to be initially rendered in the Upload widget files list.
         /// </summary>
         /// <param name="configurator">The configurator for the files setting.</param>
@@ -80,6 +90,19 @@ namespace Kendo.Mvc.UI.Fluent
         public UploadBuilder TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the validation options for uploaded files.
+        /// </summary>
+        /// <param name="configurator">The configurator for the validation setting.</param>
+        public UploadBuilder Validation(Action<UploadValidationSettingsBuilder> configurator)
+        {
+
+            Container.Validation.Upload = Container;
+            configurator(new UploadValidationSettingsBuilder(Container.Validation));
+
             return this;
         }
 

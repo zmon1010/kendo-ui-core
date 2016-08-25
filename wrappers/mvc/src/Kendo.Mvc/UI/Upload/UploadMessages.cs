@@ -29,6 +29,14 @@ namespace Kendo.Mvc.UI
 
         private const string DefaultHeaderStatusUploaded = "Done";
 
+        private const string DefaultInvalidMaxFileSize = "File size too large.";
+
+        private const string DefaultInvalidMinFileSize = "File size too small.";
+
+        private const string DefaultInvalidFileExtension = "File type not allowed.";
+
+        private const string DefaultClearSelectedFiles = "Clear";
+
         public UploadMessages()
         {
             Cancel = Messages.Upload_Cancel;
@@ -42,6 +50,10 @@ namespace Kendo.Mvc.UI
             UploadSelectedFiles = Messages.Upload_UploadSelectedFiles;
             HeaderStatusUploading = Messages.Upload_HeaderStatusUploading;
             HeaderStatusUploaded = Messages.Upload_HeaderStatusUploaded;
+            InvalidMaxFileSize = Messages.Upload_InvalidMaxFileSize;
+            InvalidMinFileSize = Messages.Upload_InvalidMinFileSize;
+            InvalidFileExtension = Messages.Upload_InvalidFileExtension;
+            ClearSelectedFiles = Messages.Upload_ClearSelectedFiles;
         }
 
         public string Cancel { get; set; }
@@ -66,6 +78,14 @@ namespace Kendo.Mvc.UI
 
         public string HeaderStatusUploaded { get; set; }
 
+        public string InvalidMaxFileSize { get; set; }
+
+		public string InvalidMinFileSize { get; set; }
+
+		public string InvalidFileExtension { get; set; }
+
+		public string ClearSelectedFiles { get; set; }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
             FluentDictionary.For(json)
@@ -79,7 +99,11 @@ namespace Kendo.Mvc.UI
                 .Add("statusUploading", StatusUploading, DefaultStatusUploading)
                 .Add("uploadSelectedFiles", UploadSelectedFiles, DefaultUploadSelectedFiles)
                 .Add("headerStatusUploading", HeaderStatusUploading, DefaultHeaderStatusUploading)
-                .Add("headerStatusUploaded", HeaderStatusUploaded, DefaultHeaderStatusUploaded);
+                .Add("headerStatusUploaded", HeaderStatusUploaded, DefaultHeaderStatusUploaded)
+                .Add("invalidMaxFileSize", InvalidMaxFileSize, DefaultInvalidMaxFileSize)
+                .Add("invalidMinFileSize", InvalidMinFileSize, DefaultInvalidMinFileSize)
+                .Add("InvalidFileExtension", InvalidFileExtension, DefaultInvalidFileExtension)
+                .Add("clearSelectedFiles", ClearSelectedFiles, DefaultClearSelectedFiles);
         }
     }
 }

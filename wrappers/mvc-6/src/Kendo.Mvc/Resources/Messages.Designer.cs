@@ -2183,5 +2183,41 @@ namespace Kendo.Mvc.Resources {
                 return ResourceManager.GetString("Upload_UploadSelectedFiles", resourceCulture);
             }
         }
+
+         /// <summary>
+        ///   Looks up a localized string similar to invalid max file size.
+        /// </summary>
+        public static string Upload_InvalidMaxFileSize {
+            get {
+                return ResourceManager.GetString("Upload_InvalidMaxFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to invalid min file size.
+        /// </summary>
+        public static string Upload_InvalidMinFileSize {
+            get {
+                return ResourceManager.GetString("Upload_InvalidMinFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to invalid file extension.
+        /// </summary>
+        public static string Upload_InvalidFileExtension {
+            get {
+                return ResourceManager.GetString("Upload_InvalidFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to clear selected files.
+        /// </summary>
+        public static string Upload_ClearSelectedFiles {
+            get {
+                return ResourceManager.GetString("Upload_ClearSelectedFiles", resourceCulture);
+            }
+        }
     }
 }

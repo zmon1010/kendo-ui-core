@@ -26,6 +26,14 @@ namespace Kendo.Mvc.UI
 
         string HeaderStatusUploaded { get; set; }
 
+        string InvalidMaxFileSize { get; set; }
+
+        string InvalidMinFileSize { get; set; }
+
+        string InvalidFileExtension { get; set; }
+
+        string ClearSelectedFiles { get; set; }
+
         IDictionary<string, object> ToJson();
     }
 }

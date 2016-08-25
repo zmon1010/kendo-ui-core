@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public UploadAsyncSettings Async { get; } = new UploadAsyncSettings();
 
+        public string DropZone { get; set; }
+
         public List<UploadFile> Files { get; set; } = new List<UploadFile>();
 
         public bool? Multiple { get; set; }
@@ -23,6 +25,8 @@ namespace Kendo.Mvc.UI
 
         public string TemplateId { get; set; }
 
+        public UploadValidationSettings Validation { get; } = new UploadValidationSettings();
+
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -32,6 +36,11 @@ namespace Kendo.Mvc.UI
             if (async.Any())
             {
                 settings["async"] = async;
+            }
+
+            if (DropZone?.HasValue() == true)
+            {
+                settings["dropZone"] = DropZone;
             }
 
             var files = Files.Select(i => i.Serialize());
@@ -61,6 +70,12 @@ namespace Kendo.Mvc.UI
             else if (Template.HasValue())
             {
                 settings["template"] = Template;
+            }
+
+            var validation = Validation.Serialize();
+            if (validation.Any())
+            {
+                settings["validation"] = validation;
             }
 
             return settings;

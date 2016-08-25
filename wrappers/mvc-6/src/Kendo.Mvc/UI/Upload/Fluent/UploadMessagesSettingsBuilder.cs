@@ -129,5 +129,45 @@ namespace Kendo.Mvc.UI.Fluent
 			Container.UploadSelectedFiles = value;
 			return this;
 		}
+
+		/// <summary>
+		/// Sets the status message for invalid maximal size.
+		/// </summary>
+		/// <param name="value">The value for InvalidMaxFileSize</param>
+		public UploadMessagesSettingsBuilder InvalidMaxFileSize(string value)
+		{
+			Container.InvalidMaxFileSize = value;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the status message for invalid minimal file size.
+		/// </summary>
+		/// <param name="value">The value for InvalidMinFileSize</param>
+		public UploadMessagesSettingsBuilder InvalidMinFileSize(string value)
+		{
+			Container.InvalidMinFileSize = value;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the status message for invalid file extension.
+		/// </summary>
+		/// <param name="value">The value for InvalidFileExtension</param>
+		public UploadMessagesSettingsBuilder InvalidFileExtension(string value)
+		{
+			Container.InvalidFileExtension = value;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the text of the clear files.
+		/// </summary>
+		/// <param name="value">The value for ClearSelectedFiles</param>
+		public UploadMessagesSettingsBuilder ClearSelectedFiles(string value)
+		{
+			Container.ClearSelectedFiles = value;
+			return this;
+		}
 	}
 }

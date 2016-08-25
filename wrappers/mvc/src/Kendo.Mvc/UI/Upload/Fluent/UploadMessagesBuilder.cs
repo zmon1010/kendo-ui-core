@@ -258,5 +258,89 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets invalid max file size text
+        /// </summary>
+        /// <param name="invalidMaxFileSizeMessage">New invalid max file size text.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Messages(msgs => msgs
+        ///                 .InvalidMaxFileSize("invalid max file size")
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadMessagesBuilder InvalidMaxFileSize(string invalidMaxFileSizeMessage)
+        {
+            messages.InvalidMaxFileSize = invalidMaxFileSizeMessage;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets invalid min file size text
+        /// </summary>
+        /// <param name="invalidMinFileSizeMessage">New invalid min file size text.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Messages(msgs => msgs
+        ///                 .InvalidMinFileSize("invalid min file size")
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadMessagesBuilder InvalidMinFileSize(string invalidMinFileSizeMessage)
+        {
+            messages.InvalidMinFileSize = invalidMinFileSizeMessage;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets invalid file type text
+        /// </summary>
+        /// <param name="invalidMinFileExtensionMessage">New invalid file type text.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Messages(msgs => msgs
+        ///                 .InvalidFileExtension("invalid file type size")
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadMessagesBuilder InvalidFileExtension(string invalidFileExtensionMessage)
+        {
+            messages.InvalidFileExtension = invalidFileExtensionMessage;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets clear file text
+        /// </summary>
+        /// <param name="clearSelectedFilesMessage">New clear file text.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Messages(msgs => msgs
+        ///                 .ClearSelectedFiles("clear file")
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadMessagesBuilder ClearSelectedFiles(string clearSelectedFilesMessage)
+        {
+            messages.ClearSelectedFiles = clearSelectedFilesMessage;
+
+            return this;
+        }
     }
 }

@@ -112,6 +112,27 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Use it to configure validation.
+        /// </summary>
+        /// <param name="configurator">Use builder to set different validation options.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Validation(async => async
+        ///                 .MaxFileSize(900000)
+        ///             );
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadBuilder Validation(Action<UploadValidationSettingsBuilder> configurator)
+        {
+            configurator(new UploadValidationSettingsBuilder(Component.Validation));
+
+            return this;
+        }
+
+        /// <summary>
         /// Use it to configure asynchronous uploading.
         /// </summary>
         /// <param name="configurator">Use builder to set different asynchronous uploading options.</param>
@@ -163,6 +184,40 @@ namespace Kendo.Mvc.UI.Fluent
         public UploadBuilder TemplateId(string templateId)
         {
             Component.TemplateId = templateId;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The string jQuery selector for the DropZone
+        /// </summary>
+        /// <param name="templateId">The string jQuery selector for the DropZone</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Upload()
+        ///     .Name(&quot;files&quot;)
+        ///     .DropZone(&quot;DropZone&quot;)
+        ///     .Async(a =&gt; a
+        ///         .Save(&quot;Save&quot;, &quot;Compose&quot;)
+        ///         .Remove(&quot;Remove&quot;, &quot;Compose&quot;)
+        ///         .AutoUpload(true)
+        ///     )
+        /// )
+        /// </code>
+        /// <code lang="ASPX">
+        /// &lt;%= Html.Kendo().Upload()
+        ///             .Name(&quot;Upload&quot;)
+        ///             .DropZone(&quot;DropZone&quot;)
+        ///             .Async(async =&gt; async
+        ///                 .Save(&quot;Save&quot;, &quot;Compose&quot;)
+        ///                 .Remove(&quot;Remove&quot;, &quot;Compose&quot;)
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadBuilder DropZone(string dropZone)
+        {
+            Component.DropZone = dropZone;
 
             return this;
         }

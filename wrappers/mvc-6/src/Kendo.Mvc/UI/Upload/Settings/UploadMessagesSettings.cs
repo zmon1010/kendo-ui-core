@@ -34,6 +34,14 @@ namespace Kendo.Mvc.UI
 
 		public string UploadSelectedFiles { get; set; }
 
+		public string InvalidMaxFileSize { get; set; }
+
+		public string InvalidMinFileSize { get; set; }
+
+		public string InvalidFileExtension { get; set; }
+
+		public string ClearSelectedFiles { get; set; }
+
 		public Dictionary<string, object> Serialize()
 		{
 			var settings = new Dictionary<string, object>();
@@ -91,6 +99,26 @@ namespace Kendo.Mvc.UI
 			if (UploadSelectedFiles.HasValue())
 			{
 				settings["uploadSelectedFiles"] = UploadSelectedFiles;
+			}
+
+			if (InvalidMaxFileSize.HasValue())
+			{
+				settings["invalidMaxFileSize"] = InvalidMaxFileSize;
+			}
+
+			if (InvalidMinFileSize.HasValue())
+			{
+				settings["invalidMinFileSize"] = InvalidMinFileSize;
+			}
+
+			if (InvalidFileExtension.HasValue())
+			{
+				settings["invalidFileExtension"] = InvalidFileExtension;
+			}
+
+			if (ClearSelectedFiles.HasValue())
+			{
+				settings["clearSelectedFiles"] = ClearSelectedFiles;
 			}
 
 			return settings;

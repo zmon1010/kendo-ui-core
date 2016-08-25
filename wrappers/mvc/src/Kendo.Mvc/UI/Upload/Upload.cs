@@ -22,9 +22,11 @@ namespace Kendo.Mvc.UI
             Enabled = true;
             Multiple = true;
             ShowFileList = true;
+            Validation = new UploadValidationSettings();
             Async = new UploadAsyncSettings(this);
             Messages = new UploadMessages();
             TemplateId = string.Empty;
+            DropZone = string.Empty;
             Files = new List<UploadFile>();
 
             UrlGenerator = urlGenerator;
@@ -76,6 +78,15 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
+        /// Defines the Validation uploading settings
+        /// </summary>
+        public UploadValidationSettings Validation
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the URL generator.
         /// </summary>
         /// <value>The URL generator.</value>
@@ -100,6 +111,16 @@ namespace Kendo.Mvc.UI
         /// </summary>
         /// <value>The template for the files list</value>
         public string TemplateId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the jQuery selector for the DropZone
+        /// </summary>
+        /// <value>The jQuery selector for the DropZone</value>
+        public string DropZone
         {
             get;
             set;
@@ -155,7 +176,14 @@ namespace Kendo.Mvc.UI
                 options.Add("template", new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, TemplateId) });
             }
 
+            if (!string.IsNullOrEmpty(DropZone))
+            {
+                options.Add("dropZone", DropZone);
+            }
+
             Async.SerializeTo("async", options);
+
+            Validation.SerializeTo("validation", options);
 
             var initialFiles = Files.Select(f => f.ToJson());
 
