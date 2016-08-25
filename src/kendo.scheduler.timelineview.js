@@ -199,7 +199,7 @@ var __meta__ = { // jshint ignore:line
 
 		_addContent: function(dates, columnCount, groupsCount, rowCount, start, end, slotTemplate, isVerticalGrouped) {
 			var view = this._view;
-			var html;
+			var html = '';
 			var options = view.options;
 			
 			var appendRow = function(date) {
@@ -445,7 +445,9 @@ var __meta__ = { // jshint ignore:line
 
     		if (!view._isVerticallyGrouped()) {
 				view.timesHeader.find("table tr").eq(2).hide();
-                view.datesHeader.find("table tr").eq(2).hide();  
+       		 view.datesHeader.find("table tr").eq(2).hide();  
+    		} else {
+               		 view.times.find(".k-last").hide();
     		}
 		},
 		_setColspan: function() {},
@@ -482,7 +484,7 @@ var __meta__ = { // jshint ignore:line
 
 		_addContent: function(dates, columnCount, groupsCount, rowCount, start, end, slotTemplate, isVerticalGrouped) {
 			var view = this._view;
-			var html;
+			var html = '';
 			var options = view.options;
 			
 			var appendRow = function(date, isMajorTickColumn, isMiddleColumn, isLastSlotColumn, minorTickColumns, groupIdx) {
@@ -1256,7 +1258,7 @@ var __meta__ = { // jshint ignore:line
             for (var minorTickIndex = 0; minorTickIndex < that.options.minorTickCount; minorTickIndex++) {
                 minorTickSlots.push({
                     text: "",
-                    className: "",
+                    className: "k-last",
                     minorTicks: true
                 });
             }
@@ -1287,7 +1289,7 @@ var __meta__ = { // jshint ignore:line
 
             var resources = this.groupedResources;
             if (resources.length) {
-                if (this._groupOrientation() === "vertical") {    
+                if (this._groupOrientation() === "vertical") {
                     rows =  groupedView._createRowsLayout(resources, null, this.groupHeaderTemplate, columns); 
                     columns =  groupedView._createVerticalColumnsLayout(resources, null, this.groupHeaderTemplate, columns);            
                                
