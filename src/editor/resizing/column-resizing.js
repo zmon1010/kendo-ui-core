@@ -6,7 +6,6 @@
     var global = window;
     var math = global.Math;
     var abs = math.abs;
-    var parseFloat = global.parseFloat;
 
     var $ = kendo.jQuery;
     var extend = $.extend;
@@ -15,7 +14,6 @@
     var TableElementResizing = Editor.TableElementResizing;
     var ResizingUtils = Editor.ResizingUtils;
     var constrain = ResizingUtils.constrain;
-    var getElementWidth = ResizingUtils.getElementWidth;
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
@@ -26,7 +24,6 @@
     var RESIZE_MARKER_CLASS = "k-column-resize-marker";
 
     var COMMA = ",";
-    var PX = "px";
 
     var TBODY = "tbody";
     var TD = "td";
@@ -88,12 +85,9 @@
         setResizeHandleDimensions: function() {
             var that = this;
             var tableBody = $(that.element).children(TBODY);
-            var options = that.options;
-            var handleOptions = options.handle;
-            var handleWidth = handleOptions.width;
 
             that.resizeHandle.css({
-                width: handleWidth,
+                width: that.options.handle.width,
                 height: tableBody.height()
             });
         },
@@ -107,8 +101,7 @@
             var rtl = options.rtl;
             var columnWidth = column.outerWidth();
             var columnLeftOffset = column.offset().left;
-            var adjacentColumn = column.next();
-            var adjacentColumnWidth = adjacentColumn ? adjacentColumn.outerWidth() : 0;
+            var adjacentColumnWidth = column.next().outerWidth() || 0;
                     
             var handleOffset = constrain({
                 value: e.x.location,
@@ -124,74 +117,69 @@
             var column = $($(e.currentTarget).data(that.options.handle.dataAttribute));
             var options = that.options;
             var rtlModifier = options.rtl ? (-1) : 1;
+            var min = options.min;
             var initialDeltaX = rtlModifier * e.x.initialDelta;
             var newWidth;
             var initialAdjacentColumnWidth;
             var initialColumnWidth;
 
-            that._setElementComputedWidth();
+            that._setTableComputedWidth();
+            that._setColumnsComputedWidth();
 
-            newWidth = that._calculateNewWidth(column, initialDeltaX);
-            initialAdjacentColumnWidth = column.next().outerWidth();
             initialColumnWidth = column.outerWidth();
+            initialAdjacentColumnWidth = column.next().outerWidth() || 0;
+
+            newWidth = constrain({
+                value: initialColumnWidth + initialDeltaX,
+                min: min,
+                max: initialColumnWidth + initialAdjacentColumnWidth - min
+            });
 
             that._resizeColumn(column[0], newWidth);
-            that._resizeTopAndBottomColumns(column, newWidth);
-            that._resizeAdjacentColumns(column.index(), initialAdjacentColumnWidth, initialColumnWidth, initialDeltaX);
+            that._resizeTopAndBottomColumns(column[0], newWidth);
+            that._resizeAdjacentColumns(column.index(), initialAdjacentColumnWidth, initialColumnWidth, (initialColumnWidth - newWidth));
         },
 
-        _setElementComputedWidth: function() {
+        _setTableComputedWidth: function() {
             var element = this.element;
+            var elementWidth = $(element).outerWidth();
 
-            if (!inPercentages(element.style[WIDTH])) {
-                element.style[WIDTH] = toPixels($(element).outerWidth());
-            }
-        },
-
-        _calculateNewWidth: function(column, deltaX) {
-            var that = this;
-            var tableWidth = $(that.element).outerWidth();
-            var min = that.options.min;
-            var minInPercentages = calculatePercentageRatio(min, tableWidth);
-            var adjacentColumn = column.next()[0];
-            var adjacentColumnWidth = adjacentColumn ? getElementWidth(adjacentColumn) : 0;
-            var adjacentColumnWidthValue;
-            var columnWidth = getElementWidth(column[0]);
-            var columnWidthValue = parseFloat(columnWidth);
-            var columnOuterWidth = column.outerWidth();
-            var differenceInPercentages;
-            var newWidth;
-
-            if (inPercentages(columnWidth)) { 
-                differenceInPercentages = calculatePercentageRatio(deltaX, tableWidth);
-                adjacentColumnWidthValue = calculatePercentageRatio(adjacentColumnWidth, tableWidth);
-
-                newWidth = constrain({
-                    value: columnWidthValue + differenceInPercentages,
-                    min: minInPercentages,
-                    max: abs(columnWidthValue + adjacentColumnWidthValue - minInPercentages)
-                });
-
-                newWidth = toPercentages(newWidth);
+            if (inPercentages(element.style[WIDTH])) {
+                element.style[WIDTH] = toPercentages(calculatePercentageRatio(elementWidth, $(element).parent().width()));
             }
             else {
-                newWidth = constrain({
-                    value: columnOuterWidth + deltaX,
-                    min: min,
-                    max: columnOuterWidth + $(adjacentColumn).outerWidth() - min
-                });
+                element.style[WIDTH] = toPixels(elementWidth);
             }
+        },
 
-            return newWidth;
+        _setColumnsComputedWidth: function() {
+            var that = this;
+            var tableBody = $(that.element).children(TBODY);
+            var tableBodyWidth = tableBody.outerWidth();
+            var columns = tableBody.children(TR).children(TD);
+            var length = columns.length;
+            var currentColumnsWidths = columns.map(function() {
+                return $(this).outerWidth();
+            });
+            var i;
+
+            for (i = 0; i < length; i++) {
+                if (inPercentages(columns[i].style[WIDTH])) {
+                    columns[i].style[WIDTH] = toPercentages(calculatePercentageRatio(currentColumnsWidths[i], tableBodyWidth));
+                }
+                else {
+                    columns[i].style[WIDTH] = toPixels(currentColumnsWidths[i]);
+                }
+            }
         },
 
         _resizeTopAndBottomColumns: function(column, newWidth) {
             var that = this;
-            var columnIndex = column.index();
-            var topAndBottomColumns = $(that.element).find(TR).children(that.options.tags.join(COMMA))
+            var columnIndex = $(column).index();
+            var topAndBottomColumns = $(that.element).children(TBODY).children(TR).children(that.options.tags.join(COMMA))
                 .filter(function() {
-                    var cell = $(this);
-                    return (cell.index() === columnIndex && cell[9] !== column[0]);
+                    var cell = this;
+                    return ($(cell).index() === columnIndex && cell !== column);
                 });
             var length = topAndBottomColumns.length;
             var i;
@@ -202,17 +190,17 @@
         },
 
         _resizeColumn: function(column, newWidth) {
-            if (inPercentages(newWidth)) {
-                column.style[WIDTH] = toPercentages(newWidth);
+            if (inPercentages(column.style[WIDTH])) {
+                column.style[WIDTH] = toPercentages(calculatePercentageRatio(newWidth, $(this.element).children(TBODY).outerWidth()));
             }
             else {
-                column.style[WIDTH]= toPixels(newWidth);
+                column.style[WIDTH] = toPixels(newWidth);
             }
         },
 
         _resizeAdjacentColumns: function(columnIndex, initialAdjacentColumnWidth, initialColumnWidth, deltaWidth) {
             var that = this;
-            var adjacentColumns = $(that.element).find(TR).children(that.options.tags.join(COMMA))
+            var adjacentColumns = $(that.element).children(TBODY).children(TR).children(that.options.tags.join(COMMA))
                 .filter(function() {
                     return ($(this).index() === (columnIndex + 1));
                 });
@@ -226,37 +214,16 @@
 
         _resizeAdjacentColumn: function(adjacentColumn, initialAdjacentColumnWidth, initialColumnWidth, deltaWidth) {
             var that = this;
-            var tableWidth = $(that.element).width();
-            var options = that.options;
-            var min = options.min;
-            var minInPercentages = calculatePercentageRatio(min, tableWidth);
-            var delta = (-1) * parseFloat(deltaWidth);
-            var initialColumnWidthInPercentages = calculatePercentageRatio(initialColumnWidth, tableWidth);
-            var adjacentColumnWidth;
+            var min = that.options.min;
             var newWidth;
-            var columnWidth;
 
-            if (inPercentages(getElementWidth(adjacentColumn))) {
-                adjacentColumnWidth = calculatePercentageRatio(initialAdjacentColumnWidth, tableWidth);
-                newWidth = constrain({
-                    value: adjacentColumnWidth + calculatePercentageRatio(delta, tableWidth),
-                    min: minInPercentages,
-                    max: abs(initialColumnWidthInPercentages + adjacentColumnWidth - minInPercentages)
-                });
+            newWidth = constrain({
+                value: initialAdjacentColumnWidth + deltaWidth,
+                min: min,
+                max: abs(initialColumnWidth + initialAdjacentColumnWidth - min)
+            });
 
-                $(adjacentColumn).width(toPercentages(newWidth));
-            }
-            else {
-                columnWidth = inPercentages(initialColumnWidth) ? (parseFloat(initialColumnWidth) * tableWidth / 100) : initialColumnWidth;
-
-                newWidth = constrain({
-                    value: parseFloat(initialAdjacentColumnWidth) + parseFloat(delta),
-                    min: min,
-                    max: abs(parseFloat(columnWidth) + parseFloat(initialAdjacentColumnWidth) -min)
-                });
-
-                adjacentColumn.style[WIDTH] = newWidth + PX;
-            }
+            that._resizeColumn(adjacentColumn, newWidth);
         }
     });
 

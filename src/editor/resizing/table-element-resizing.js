@@ -226,9 +226,6 @@
     });
 
     var ResizingFactory = Class.extend({
-        init: function() {
-        },
-
         create: function(editor, options) {
             var that = this;
             var resizingName = options.name;
