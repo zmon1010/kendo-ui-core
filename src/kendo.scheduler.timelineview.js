@@ -820,6 +820,69 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _getNextEventIndexBySlot: function(slot, sortedEvents, groupIndex){
+           if(this._isVerticallyGrouped()){
+               return kendo.ui.SchedulerView.fn._getNextEventIndexBySlot.call(this, slot, sortedEvents, groupIndex);
+           } 
+
+            var tempIndex = 0;
+
+            for (var i = 0; i < sortedEvents.length; i++) {
+                if (slot.startDate()> sortedEvents[i].start.startDate()) {
+                    tempIndex++;
+                    continue;
+                }
+
+                if (slot.startDate().getTime() === sortedEvents[i].start.startDate().getTime() &&
+                 groupIndex > sortedEvents[i].start.groupIndex) {
+                      tempIndex++;
+                      continue;
+                }
+
+                 break;
+
+            }
+            return tempIndex;
+        },
+
+		_getSelectedSlot: function (slot, sortedEvents, event, idx, pad, prev) {
+            if(this._isVerticallyGrouped()){
+               return kendo.ui.SchedulerView.fn._getSelectedSlot.call(this, slot, sortedEvents, event, idx, pad, prev);
+            } 
+
+		    return slot;
+		},
+
+		_getSortedEvents: function (uniqueAllEvents) {
+            if(this._isVerticallyGrouped()){
+               return kendo.ui.SchedulerView.fn._getSortedEvents.call(this, uniqueAllEvents);
+            } 
+
+            return uniqueAllEvents.sort(function(first, second) {
+                var result = first.start.startDate().getTime() - second.start.startDate().getTime();
+
+                if (result === 0) {
+                    if (first.start.isDaySlot && !second.start.isDaySlot) {
+                            result = -1;
+                    }
+
+                    if (!first.start.isDaySlot && second.start.isDaySlot) {
+                            result = 1;
+                    }
+                }
+
+                if (result === 0) {
+                    result = first.start.groupIndex - second.start.groupIndex;
+                }
+
+                if (result === 0) {
+                    result = $(first.element).index() - $(second.element).index();
+                }
+
+                return result;
+            });
+		},
+
         _currentTimeMarkerUpdater: function() {
             this._updateCurrentTimeMarker(new Date());
         },

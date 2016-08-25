@@ -1405,22 +1405,59 @@ var __meta__ = { // jshint ignore:line
             var pad = prev ? -1 : 1;
             var events = selection.events;
             var event;
+           
+            if (this._isGroupedByDate()) {
+                var allEvents = this._getAllEvents();            
+                var uniqueAllEvents = this._getUniqueEvents(allEvents);
+                var sortedEvents = this._getSortedEvents(uniqueAllEvents);              
+                             
+                if(events.length === 0){
+                    var eventIndex = this._getNextEventIndexBySlot(slot, sortedEvents, groupIndex);
 
-            while (groupIndex < length && groupIndex > -1) {
-                event = this.moveToEventInGroup(group, slot, events, prev);
+		            if(prev){
+			            eventIndex--;
+		            }
 
-                groupIndex += pad;
-                group = this.groups[groupIndex];
+                    event = sortedEvents[eventIndex];
+                } else{
+                     var idx = this._getStartIdx(events, sortedEvents);
 
-                if (!group || event) {
-                    break;
+                    while (idx < sortedEvents.length && idx > -1) {     
+                        if(events.length > 0){     
+                            slot = this._getSelectedSlot(slot, sortedEvents, event, idx, pad, prev);
+                        }
+
+                        if(!slot){
+                            break;
+                        }
+
+                        if ( (!prev && sortedEvents[idx].start.startDate() >= slot.startDate()) ||
+                              (prev && sortedEvents[idx].start.startDate() <= slot.startDate())) {
+                             if (events[0] != sortedEvents[idx].uid) {
+                                 event = sortedEvents[idx];
+                                  break;
+                             }                      
+                        }
+                        idx += pad;
+                    }
                 }
+            } else {
+                  while (groupIndex < length && groupIndex > -1) {
+                    event = this.moveToEventInGroup(group, slot, events, prev);
 
-                events = [];
-                if (prev) {
-                    slot = group.lastSlot();
-                } else {
-                    slot = group.firstSlot(true);
+                    groupIndex += pad;
+                    group = this.groups[groupIndex];
+
+                    if (!group || event) {
+                        break;
+                    }
+
+                    events = [];
+                    if (prev) {
+                        slot = group.lastSlot();
+                    } else {
+                        slot = group.firstSlot(true);
+                    }
                 }
             }
 
@@ -1452,6 +1489,132 @@ var __meta__ = { // jshint ignore:line
             if (!this._selectEvents(selection)) {
                 this._selectSlots(selection);
             }
+        },
+
+        _getNextEventIndexBySlot: function(slot, sortedEvents, groupIndex){
+            var tempIndex = 0;
+            var slotStartDate = kendo.date.getDate(slot.startDate());     
+
+            for (var i = 0; i < sortedEvents.length; i++) {
+                var eventStartDate = kendo.date.getDate(sortedEvents[i].start.startDate());
+                if (slotStartDate > eventStartDate) {
+                    tempIndex++;
+                    continue;
+                }
+
+                if (slotStartDate.getTime() === eventStartDate.getTime() && groupIndex > sortedEvents[i].start.groupIndex) {
+                      tempIndex++;
+                      continue;
+                }
+
+                if (slotStartDate.getTime() === eventStartDate.getTime() &&
+                    groupIndex >= sortedEvents[i].start.groupIndex &&
+                    slot.startDate() > sortedEvents[i].start.startDate()) {
+                    tempIndex++;
+                    continue;
+                 }
+
+                 break;
+            }
+            return tempIndex;
+        },
+
+        _getSelectedSlot: function(slot, sortedEvents, event, idx, pad, prev) {
+              if (sortedEvents[idx + pad] &&
+               sortedEvents[idx].start.groupIndex !== sortedEvents[idx + pad].start.groupIndex) {
+                    var groupIndex = sortedEvents[idx + pad].start.groupIndex;
+                    var group = this.groups[groupIndex];
+
+                    if (!group || event) {
+                       slot = null;
+                    }
+
+                    if (prev) {
+                        slot = group.lastSlot();
+                    } else {
+                        slot = group.firstSlot(true);
+                    }
+                }
+             return slot;
+        },
+
+        _getStartIdx: function(events, sortedEvents){
+            var selectedEventIndex = 0;
+     
+            $.each(sortedEvents, function() {
+                if (this.uid === events[0]){
+                     return false;
+                }               
+                
+                selectedEventIndex++;
+            });                      
+
+            return selectedEventIndex;
+        },
+
+        _getAllEvents: function(){
+            var allEvents = [];
+            var groups = this.groups;
+
+            for (var idx = 0; idx < groups.length; idx++) {
+                if (groups[idx]._continuousEvents) {
+                    allEvents= allEvents.concat(groups[idx]._continuousEvents);
+                }
+            }
+
+            return allEvents;
+        },
+
+        _getUniqueEvents: function(allEvents){
+            var uniqueAllEvents = [];
+
+            for (var i = 0; i < allEvents.length; i++) {
+                var exists = false;
+                for (var j = 0; j < uniqueAllEvents.length; j++) {
+                    if (allEvents[i].uid === uniqueAllEvents[j].uid) {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists) {
+                    uniqueAllEvents.push(allEvents[i]);
+                }
+            }
+
+            return uniqueAllEvents;
+        },
+
+        _getSortedEvents: function(uniqueAllEvents){
+             return uniqueAllEvents.sort(function(first, second) {
+                var firstStartDate = first.start.startDate();
+                var secondStartDate = second.start.startDate();                  
+                var result = kendo.date.getDate(firstStartDate) - kendo.date.getDate(secondStartDate);
+
+                if (result === 0) {
+                    result = first.start.groupIndex - second.start.groupIndex;
+                }
+
+                if (result === 0) {
+                    result = firstStartDate.getTime() - secondStartDate.getTime();
+                }
+
+                if (result === 0) {
+                    if (first.start.isDaySlot && !second.start.isDaySlot) {
+                            result = -1;
+                    }
+
+                    if (!first.start.isDaySlot && second.start.isDaySlot) {
+                            result = 1;
+                    }
+                }
+
+                if (result === 0) {
+                    result = $(first.element).index() - $(second.element).index();
+                }
+
+                return result;
+            });       
         },
 
         _selectSlots: function(selection) {
