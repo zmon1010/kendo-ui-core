@@ -2058,6 +2058,21 @@
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
     });
 
+     test("set date() scrolls to slot day view to the beginning", 2, function () {
+        setupGantt({
+            views: ["day"],
+            range: {
+                start: new Date("2014/04/1"),
+                end: new Date("2014/04/15")
+            },
+        });
+
+        var date = new Date("2014/04/1");
+        gantt.date(date);
+        equal(gantt.date(), date);
+        equal(kendo.scrollLeft(gantt.view().content), 0);
+    });
+
     test("set date() scrolls to slot week view", 2, function () {
         setupGantt({
             views: ["week"],

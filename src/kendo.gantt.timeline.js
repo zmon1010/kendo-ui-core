@@ -1317,7 +1317,7 @@ var __meta__ = { // jshint ignore:line
             var viewEnd = this.end;
             var offset;
 
-            if (date > viewStart && date < viewEnd) {
+            if (date >= viewStart && date < viewEnd) {
                 offset = this._offset(date);
 
                 if (kendo.support.isRtl(this.element)) {
