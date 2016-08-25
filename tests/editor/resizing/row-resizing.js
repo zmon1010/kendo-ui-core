@@ -173,7 +173,8 @@
 
         doc.trigger($.Event(MOUSE_MOVE, {
             pageX: 0,
-            pageY: position.top + to
+            pageY: position.top + to,
+            which: 0
         }));
     }
 
@@ -185,7 +186,8 @@
 
         resizeHandle.trigger($.Event(MOUSE_DOWN, {
             pageX: 0,
-            pageY: position.top + from
+            pageY: position.top + from,
+            which: 0
         }));
     }
 
@@ -201,6 +203,7 @@
             type: MOUSE_MOVE,
             clientX: 0,
             clientY: $(element).offset().top + height - $(element.ownerDocument).scrollTop(),
+            which: 0
         });
     }
 
@@ -208,7 +211,8 @@
         var options = $.extend({
             type: "mousedown",
             pageX: 0,
-            pageY: 0
+            pageY: 0,
+            which: 0
         }, eventOptions || {});
 
         $(element).trigger(options);
@@ -261,7 +265,7 @@
                     marker: RESIZE_MARKER_CLASS,
                 },
                 template:
-                    '<div class="' + RESIZE_HANDLE_CLASS + '">' +
+                    '<div class="' + RESIZE_HANDLE_CLASS + '" unselectable="on" contenteditable="false">' +
                         '<div class="' + RESIZE_HANDLE_MARKER_WRAPPER_CLASS + '">' +
                             '<div class="' + RESIZE_MARKER_CLASS + '"></div>' +
                         '</div>'+
@@ -636,6 +640,34 @@
         triggerBorderHover(secondRow);
 
         equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
+    });
+
+    module("editor row resizing resize handle", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            rowResizing = new RowResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+            options = rowResizing.options;
+            row = $(rowResizing.element).find(FIRST_ROW);
+        },
+
+        teardown: function() {
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should not be shown if mouse button is pressed", function() {
+        rowResizing.showResizeHandle(row, { which: 1 });
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
+    });
+
+    test("should be shown if mouse button is not pressed", function() {
+        rowResizing.showResizeHandle(row, { which: 0 });
+
+        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
 
     editor_module("editor row resizing resize handle", {

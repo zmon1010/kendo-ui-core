@@ -182,7 +182,8 @@
         triggerEvent(element, {
             type: MOUSE_MOVE,
             clientX: $(element).offset().left + width - $(element.ownerDocument).scrollLeft(),
-            clientY: 0
+            clientY: 0,
+            which: 0
         });
     }
 
@@ -199,7 +200,8 @@
 
         doc.trigger($.Event(MOUSE_MOVE, {
             pageX: position.left + to,
-            pageY: 0
+            pageY: 0,
+            which: 0
         }));
     }
 
@@ -211,7 +213,8 @@
 
         resizeHandle.trigger($.Event(MOUSE_DOWN, {
             pageX: position.left + from,
-            pageY: 0
+            pageY: 0,
+            which: 0
         }));
     }
 
@@ -223,7 +226,8 @@
         var options = $.extend({
             type: "mousedown",
             pageX: 0,
-            pageY: 0
+            pageY: 0,
+            which: 0
         }, eventOptions || {});
 
         $(element).trigger(options);
@@ -293,7 +297,7 @@
                     marker: "k-column-resize-marker"
                 },
                 template:
-                    '<div class="k-column-resize-handle">' +
+                    '<div class="k-column-resize-handle" unselectable="on" contenteditable="false">' +
                         '<div class="k-column-resize-marker"></div>' +
                     '</div>'
             }
@@ -510,6 +514,34 @@
         resizeColumn(cell, cell[0].offsetWidth, cell[0].offsetWidth + 10);
 
         equal(columnResizing.resizeHandle, null);
+    });
+
+    module("editor row resizing resize handle", {
+        setup: function() {
+            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
+            columnResizing = new ColumnResizing(tableElement, {
+                rootElement: QUnit.fixture
+            });
+            options = columnResizing.options;
+            cell = $(columnResizing.element).find(FIRST_COLUMN);
+        },
+
+        teardown: function() {
+            columnResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should not be shown if mouse button is pressed", function() {
+        columnResizing.showResizeHandle(cell, { which: 1 });
+
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
+    });
+
+    test("should be shown if mouse button is not pressed", function() {
+        columnResizing.showResizeHandle(cell, { which: 0 });
+
+        equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
 
     module("editor column resizing existing resize handle", {

@@ -43,7 +43,7 @@
                     marker: RESIZE_MARKER_CLASS
                 },
                 template:
-                    '<div class="' + RESIZE_HANDLE_CLASS + '">' +
+                    '<div class="' + RESIZE_HANDLE_CLASS + '" unselectable="on" contenteditable="false">' +
                         '<div class="' + RESIZE_HANDLE_MARKER_WRAPPER_CLASS + '">' +
                             '<div class="' + RESIZE_MARKER_CLASS + '"></div>' +
                         '</div>'+

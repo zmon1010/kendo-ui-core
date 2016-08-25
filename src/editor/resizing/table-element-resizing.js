@@ -96,11 +96,11 @@
 
                     if (resizeHandle) {
                         if (resizeHandle.data(dataAttribute) && resizeHandle.data(dataAttribute) !== tableElement[0]) {
-                            that.showResizeHandle(tableElement);
+                            that.showResizeHandle(tableElement, e);
                         }
                     }
                     else {
-                        that.showResizeHandle(tableElement);
+                        that.showResizeHandle(tableElement, e);
                     }
                 }
                 else {
@@ -114,27 +114,33 @@
 
         elementBorderHovered: noop,
 
-        showResizeHandle: function(tableElement) {
+        showResizeHandle: function(tableElement, e) {
             var that = this;
 
-            that._initResizeHandle(tableElement);
+            if (e.which !== 0) {
+                //prevent showing when a mouse button is still being pressed
+                return;
+            }
+
+            that._initResizeHandle();
+            that.setResizeHandlePosition(tableElement);
+            that.setResizeHandleDimensions();
+            that.setResizeHandleDataAttributes(tableElement[0]);
+            that.attachResizeHandleEventHandlers();
+
             that._initResizable(tableElement);
+
+            that._hideResizeMarker();
             that.resizeHandle.show();
         },
 
-        _initResizeHandle: function(tableElement) {
+        _initResizeHandle: function() {
             var that = this;
             var options = that.options;
 
             that._destroyResizeHandle();
 
             that.resizeHandle = $(options.handle.template).appendTo(options.rootElement);
-
-            that.setResizeHandlePosition(tableElement);
-            that.setResizeHandleDimensions();
-            that.setResizeHandleDataAttributes(tableElement[0]);
-            that.attachResizeHandleEventHandlers();
-            that._hideResizeMarker();
         },
 
         setResizeHandlePosition: noop,
