@@ -1,6 +1,8 @@
 (function() {
     var RowResizing = kendo.ui.editor.RowResizing;
     var initialHeight;
+    var nestedTable;
+    var nestedTableCell;
     var options;
     var row;
     var rowResizing;
@@ -28,6 +30,7 @@
     var DOT = ".";
     var FIRST_ROW = "tr:first";
     var SECOND_ROW = "tr:nth-child(2)";
+    var FIRST_COLUMN = "td:first";
     var PX = "px";
     var PERCENTAGE = "%";
 
@@ -381,6 +384,8 @@
             editor = $("#editor-fixture").data("kendoEditor");
             editor.rowResizing = null;
             tableElement = $(NESTED_TABLE_HTML).appendTo(editor.body)[0];
+            nestedTable = $(tableElement).find("#nestedTable")[0];
+            nestedTableCell = $(nestedTable).find(FIRST_COLUMN);
         },
 
         afterEach: function() {
@@ -393,7 +398,6 @@
     });
 
     test("hovering a nested table should stop event propagation", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
         var enterEvent = $.Event({ type: MOUSE_ENTER });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
 
@@ -402,8 +406,7 @@
         equal(enterEvent.isPropagationStopped(), true);
     });
 
-    test("hovering a nested table should init new table resizing", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
+    test("hovering a nested table should init new row resizing", function() {
         editor.rowResizing = new RowResizing(tableElement, {});
         triggerEvent(tableElement, { type: MOUSE_ENTER });
 
@@ -413,8 +416,7 @@
         equal(editor.rowResizing.element, nestedTable);
     });
 
-    test("hovering a nested table should destroy current table resizing", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
+    test("hovering a nested table should destroy current row resizing", function() {
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.rowResizing, "destroy");
 
@@ -424,7 +426,6 @@
     });
 
     test("leaving a nested table should stop event propagation", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
         var leaveEvent = $.Event({ type: MOUSE_LEAVE });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         triggerEvent(nestedTable, { type: MOUSE_ENTER });
@@ -434,8 +435,7 @@
         equal(leaveEvent.isPropagationStopped(), true);
     });
 
-    test("leaving a nested table should init new table resizing with parent table", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
+    test("leaving a nested table should init new row resizing with parent table", function() {
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         triggerEvent(nestedTable, { type: MOUSE_ENTER });
 
@@ -443,6 +443,16 @@
 
         ok(editor.rowResizing instanceof kendo.ui.editor.RowResizing);
         equal(editor.rowResizing.element, tableElement);
+    });
+
+    test("leaving a nested table should not init new row resizing when leaving a column", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+
+        triggerEvent(nestedTableCell, { type: MOUSE_LEAVE });
+
+        ok(editor.rowResizing instanceof kendo.ui.editor.RowResizing);
+        equal(editor.rowResizing.element, nestedTable);
     });
 
     editor_module("editor row resizing initialization resizing in progress", {

@@ -254,10 +254,10 @@
 
                     e.stopPropagation();
 
-                    if (resizing && !resizing.resizingInProgress()) {
+                    if ($(e.target).is(TABLE) && resizing && !resizing.resizingInProgress()) {
                         parentTable = $(resizing.element).parents(TABLE)[0];
 
-                        if (parentTable && !$.contains(resizing.element, e.target)) {
+                        if (parentTable) {
                             that._destroyResizing(editor, options);
                             that._initResizing(editor, parentTable, options);
                         }
