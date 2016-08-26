@@ -28,6 +28,17 @@
         }
 
         /// <summary>
+        /// Sets grouping by date.
+        /// </summary>
+        /// <param name="names">The grouping by date</param>
+        public SchedulerGroupBuilder Date(bool date)
+        {
+            settings.Date = date;
+
+            return this;
+        }
+
+        /// <summary>
         /// The orientation of the group headers.
         /// </summary>
         /// <param name="value">The orientation</param>        

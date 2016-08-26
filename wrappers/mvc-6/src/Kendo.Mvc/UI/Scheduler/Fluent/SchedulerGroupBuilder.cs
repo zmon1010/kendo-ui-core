@@ -36,5 +36,15 @@
             settings.Orientation = value;
             return this;
         }
+
+        /// <summary>
+        /// The grouping by date.
+        /// </summary>
+        /// <param name="value">The grouping by date</param>        
+        public SchedulerGroupBuilder Date(bool date)
+        {
+            settings.Date = date;
+            return this;
+        }
     }
 }

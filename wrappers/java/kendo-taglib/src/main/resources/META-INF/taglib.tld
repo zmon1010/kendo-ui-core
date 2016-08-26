@@ -30631,6 +30631,12 @@ which field to update. The other option is to use MVVM bindings in order to bind
         <body-content>empty</body-content>
 
         <attribute>
+            <description>If set to true and the group.resources has some resources set the view is grouped by date.</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The orientation of the group headers. Supported values are horizontal or vertical. Note that the agenda view is always in vertical orientation.</description>
             <name>orientation</name>
             <rtexprvalue>true</rtexprvalue>
@@ -31649,6 +31655,12 @@ If the developer wants to control the day and month order then one needs to defi
         <tag-class>com.kendoui.taglib.scheduler.ViewGroupTag</tag-class>
         <body-content>empty</body-content>
 
+        <attribute>
+            <description>If set to true and the group.resources has some resources set the view is grouped by date.Overrides the date option of the scheduler.</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
         <attribute>
             <description>The orientation of the group headers. Supported values are horizontal or vertical. Note that the agenda view is always in vertical orientation.</description>
             <name>orientation</name>

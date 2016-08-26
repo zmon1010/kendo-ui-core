@@ -53,6 +53,14 @@ public class GroupTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "scheduler-group";
     }
 
+    public boolean getDate() {
+        return (Boolean)getProperty("date");
+    }
+
+    public void setDate(boolean value) {
+        setProperty("date", value);
+    }
+
     public java.lang.String getOrientation() {
         return (java.lang.String)getProperty("orientation");
     }

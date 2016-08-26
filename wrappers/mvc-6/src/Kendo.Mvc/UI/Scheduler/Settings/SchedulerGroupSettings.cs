@@ -15,6 +15,12 @@
             set;
         }
 
+        public bool Date
+        {
+            get;
+            set;
+        }
+
         public SchedulerGroupOrientation Orientation
         {
             get;
@@ -26,6 +32,11 @@
             if (Resources.Length > 0)
             {
                 json["resources"] = Resources;
+            }
+
+            if (Date)
+            {
+                json["date"] = Date;
             }
 
             if (Orientation != SchedulerGroupOrientation.Default)

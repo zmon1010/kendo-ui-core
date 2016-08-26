@@ -208,6 +208,17 @@
         }
 
         /// <summary>
+        /// Sets grouping by date.
+        /// </summary>
+        /// <param name="orientation">The grouping by date</param>        
+        public TViewBuilder Groups(bool date)
+        {
+            view.Group.Date = date;
+
+            return (TViewBuilder)this;
+        }
+
+        /// <summary>
         /// Sets the resources grouping configuration of the view.
         /// </summary>
         /// <param name="configuration">The lambda which configures the view grouping</param>
