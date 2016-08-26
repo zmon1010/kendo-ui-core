@@ -117,7 +117,7 @@
         showResizeHandle: function(tableElement, e) {
             var that = this;
 
-            if (e.which !== 0) {
+            if (e.buttons !== 0) {
                 //prevent showing when a mouse button is still being pressed
                 return;
             }

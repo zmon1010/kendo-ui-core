@@ -174,7 +174,7 @@
         doc.trigger($.Event(MOUSE_MOVE, {
             pageX: 0,
             pageY: position.top + to,
-            which: 0
+            buttons: 0
         }));
     }
 
@@ -187,7 +187,7 @@
         resizeHandle.trigger($.Event(MOUSE_DOWN, {
             pageX: 0,
             pageY: position.top + from,
-            which: 0
+            buttons: 0
         }));
     }
 
@@ -203,7 +203,7 @@
             type: MOUSE_MOVE,
             clientX: 0,
             clientY: $(element).offset().top + height - $(element.ownerDocument).scrollTop(),
-            which: 0
+            buttons: 0
         });
     }
 
@@ -212,7 +212,7 @@
             type: "mousedown",
             pageX: 0,
             pageY: 0,
-            which: 0
+            buttons: 0
         }, eventOptions || {});
 
         $(element).trigger(options);
@@ -659,13 +659,13 @@
     });
 
     test("should not be shown if mouse button is pressed", function() {
-        rowResizing.showResizeHandle(row, { which: 1 });
+        rowResizing.showResizeHandle(row, { buttons: 1 });
 
         equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
     });
 
     test("should be shown if mouse button is not pressed", function() {
-        rowResizing.showResizeHandle(row, { which: 0 });
+        rowResizing.showResizeHandle(row, { buttons: 0 });
 
         equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
@@ -1367,22 +1367,11 @@
         roughlyEqual(row[0].style.height, ((initialHeightInPixels + differenceInPixels) / tableBody.height() * 100) + PERCENTAGE, 0.15);
     });
 
-if (!kendo.support.browser.mozilla) {
-    test("should not set row height to be lower than min", function() {
-        resizeRow(row, initialHeightInPixels, initialHeightInPixels + (-1) * MAX);
-
-        roughlyEqual(row[0].style.height, (options.min / tableBody.height() * 100) + PERCENTAGE, 0.5);
-    });
-}
-
-//firefox calculates percentages with worse precision
-if (kendo.support.browser.mozilla) {
     test("should not set row height to be lower than min", function() {
         resizeRow(row, initialHeightInPixels, initialHeightInPixels + (-1) * MAX);
 
         roughlyEqual(row[0].style.height, (options.min / tableBody.height() * 100) + PERCENTAGE, 0.9);
     });
-}
 
     test("should not set row height to be greater than the height of the table body", function() {
         var differenceInPixels = (-1) * 25;

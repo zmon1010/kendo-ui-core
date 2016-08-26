@@ -183,7 +183,7 @@
             type: MOUSE_MOVE,
             clientX: $(element).offset().left + width - $(element.ownerDocument).scrollLeft(),
             clientY: 0,
-            which: 0
+            buttons: 0
         });
     }
 
@@ -201,7 +201,7 @@
         doc.trigger($.Event(MOUSE_MOVE, {
             pageX: position.left + to,
             pageY: 0,
-            which: 0
+            buttons: 0
         }));
     }
 
@@ -214,7 +214,7 @@
         resizeHandle.trigger($.Event(MOUSE_DOWN, {
             pageX: position.left + from,
             pageY: 0,
-            which: 0
+            buttons: 0
         }));
     }
 
@@ -227,7 +227,7 @@
             type: "mousedown",
             pageX: 0,
             pageY: 0,
-            which: 0
+            buttons: 0
         }, eventOptions || {});
 
         $(element).trigger(options);
@@ -533,13 +533,13 @@
     });
 
     test("should not be shown if mouse button is pressed", function() {
-        columnResizing.showResizeHandle(cell, { which: 1 });
+        columnResizing.showResizeHandle(cell, { buttons: 1 });
 
         equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
     });
 
     test("should be shown if mouse button is not pressed", function() {
-        columnResizing.showResizeHandle(cell, { which: 0 });
+        columnResizing.showResizeHandle(cell, { buttons: 0 });
 
         equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
