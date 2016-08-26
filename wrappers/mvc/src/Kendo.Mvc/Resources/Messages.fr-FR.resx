@@ -715,7 +715,7 @@
     <value>Prend fin</value>
   </data>
   <data name="Editor_InsertFile" xml:space="preserve">
-    <value>Fichier Insérer</value>
+    <value>Insérer un Fichier</value>
   </data>
   <data name="PivotConfigurator_Columns" xml:space="preserve">
     <value>Drop Column Fields Here</value>
