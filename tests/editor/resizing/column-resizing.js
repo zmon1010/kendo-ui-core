@@ -1672,6 +1672,8 @@
             editor = $("#editor-fixture").data("kendoEditor");
             editor.columnResizing = null;
             tableElement = $(NESTED_TABLE_HTML).appendTo(editor.body)[0];
+            nestedTable = $(tableElement).find("#nestedTable")[0];
+            nestedTableCell = $(nestedTable).find(FIRST_COLUMN);
         },
 
         afterEach: function() {
@@ -1684,7 +1686,6 @@
     });
 
     test("hovering a nested table should stop event propagation", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
         var enterEvent = $.Event({ type: MOUSE_ENTER });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
 
@@ -1694,7 +1695,6 @@
     });
 
     test("hovering a nested table should init new table resizing", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
         editor.columnResizing = new ColumnResizing(tableElement, {});
         triggerEvent(tableElement, { type: MOUSE_ENTER });
 
@@ -1705,7 +1705,6 @@
     });
 
     test("hovering a nested table should destroy current table resizing", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.columnResizing, "destroy");
 
@@ -1726,7 +1725,6 @@
     });
 
     test("leaving a nested table should init new table resizing with parent table", function() {
-        var nestedTable = $(tableElement).find("#nestedTable")[0];
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         triggerEvent(nestedTable, { type: MOUSE_ENTER });
 
@@ -1734,6 +1732,16 @@
 
         ok(editor.columnResizing instanceof kendo.ui.editor.ColumnResizing);
         equal(editor.columnResizing.element, tableElement);
+    });
+
+    test("leaving a nested table should not init new row resizing when leaving a column", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+
+        triggerEvent(nestedTableCell, { type: MOUSE_LEAVE });
+
+        ok(editor.rowResizing instanceof kendo.ui.editor.RowResizing);
+        equal(editor.rowResizing.element, nestedTable);
     });
 
     editor_module("editor column resizing initialization resizing in progress", {
