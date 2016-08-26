@@ -40,10 +40,11 @@ class ContextMenuItem extends \Kendo\UI\NavigationalItem {
 
     /**
     * Specifies the item should render separator
+    * @param boolean $value
     * @return \Kendo\UI\ContextMenuItem
     */
-    public function separator() {
-        return $this->setProperty('separator', true);
+    public function separator($value = true) {
+        return $this->setProperty('separator', $value);
     }
 
 //>> Properties
