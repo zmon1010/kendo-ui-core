@@ -2026,7 +2026,7 @@ var __meta__ = { // jshint ignore:line
                 startRect.top = start.offsetTop;
 
                 var width = startRect.right - startRect.left;
-                var height = start.offsetHeight;
+                var height = range.endSlot().offsetTop + start.offsetHeight - startRect.top;
 
                 var left = this._adjustLeftPosition(startRect.left);
 

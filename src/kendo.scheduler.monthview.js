@@ -210,6 +210,17 @@ var __meta__ = { // jshint ignore:line
                 var view = this._view;
 
                 return reverse ? view.groups.length - 1 : 0;
+            },
+
+            _createResizeHint: function(range) {
+                 var view = this._view;
+                 var left = range.startSlot().offsetLeft;
+                 var top = range.start.offsetTop;
+                 var width = range.innerWidth();
+                 var height = range.start.clientHeight - 2;
+                 var hint = SchedulerView.fn._createResizeHint.call(view, left, top, width, height);
+
+                 view._appendResizeHint(hint);
             }
         });
 
@@ -415,6 +426,32 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 return selectionGroupIndex;
+            },
+
+             _createResizeHint: function(range) {
+                 var view = this._view;
+                 var left, top, width, height, hint;
+
+                 if (view._isVerticallyGrouped()) {
+                    left = range.startSlot().offsetLeft;
+                    top = range.start.offsetTop;
+                    width = range.startSlot().offsetWidth;
+                    height = range.endSlot().offsetTop + range.startSlot().offsetHeight - range.startSlot().offsetTop - 2;
+                    hint = SchedulerView.fn._createResizeHint.call(view, left, top, width, height);
+
+                    view._appendResizeHint(hint);
+                 } else {
+                    for (var i = range.startSlot().index; i <= range.endSlot().index; i++) {
+                       var slot = range.collection._slots[i];
+                        left = slot.offsetLeft;
+                        top = slot.offsetTop;
+                        width = slot.offsetWidth;
+                        height = slot.offsetHeight - 2;                  
+                        hint = SchedulerView.fn._createResizeHint.call(view, left, top, width, height);
+
+                        view._appendResizeHint(hint);
+                    }
+                 }
             }
         });
 
@@ -1051,16 +1088,10 @@ var __meta__ = { // jshint ignore:line
        },
 
        _createResizeHint: function(range) {
-            var left = range.startSlot().offsetLeft;
+           this._groupedView._createResizeHint(range);
+       },
 
-            var top = range.start.offsetTop;
-
-            var width = range.innerWidth();
-
-            var height = range.start.clientHeight - 2;
-
-            var hint = SchedulerView.fn._createResizeHint.call(this, left, top, width, height);
-
+       _appendResizeHint: function(hint) {
             hint.appendTo(this.content);
 
             this._resizeHint = this._resizeHint.add(hint);
