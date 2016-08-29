@@ -504,7 +504,7 @@
                 "<meta charset='utf-8' />" +
                 "<style>" +
                     "html,body{padding:0;margin:0;height:100%;min-height:100%;}" +
-                    "body{box-sizing:border-box;font-size:12px;font-family:Verdana,Geneva,sans-serif;margin-top:-1px;padding:5px;" +
+                    "body{box-sizing:border-box;font-size:12px;font-family:Verdana,Geneva,sans-serif;margin-top:-1px;padding:5px .4em 0;" +
                     "word-wrap: break-word;-webkit-nbsp-mode: space;-webkit-line-break: after-white-space;" +
                     (kendo.support.isRtl(textarea) ? "direction:rtl;" : "") +
                     (browser.msie || browser.edge ? "height:auto;" : "") +
