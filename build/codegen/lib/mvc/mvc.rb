@@ -29,6 +29,7 @@ module CodeGen::MVC::Wrappers
         # types: Function => ClientHandlerDescriptior, perhaps?
 		'editor.deserialization.custom' => 'ClientHandlerDescriptor',
 		'editor.serialization.custom' => 'ClientHandlerDescriptor',
+		'editor.pastecleanup.custom' => 'ClientHandlerDescriptor',
         'toolbar.items.click' => 'ClientHandlerDescriptor',
         'toolbar.items.toggle' => 'ClientHandlerDescriptor',
         'toolbar.items.buttons.click' => 'ClientHandlerDescriptor',

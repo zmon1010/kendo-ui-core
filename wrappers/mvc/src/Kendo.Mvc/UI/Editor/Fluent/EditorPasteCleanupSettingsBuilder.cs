@@ -44,10 +44,21 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Use a callback function to integrate a custom implementation for cleaning up the paste content. Make sure the callback function always returns the result.
         /// </summary>
-        /// <param name="value">The value that configures the custom.</param>
-        public EditorPasteCleanupSettingsBuilder Custom(string value)
+        /// <param name="value">The value that configures the custom action.</param>
+        public EditorPasteCleanupSettingsBuilder Custom(Func<object, object> handler)
         {
-            container.Custom = value;
+            container.Custom.TemplateDelegate = handler;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Use a callback function to integrate a custom implementation for cleaning up the paste content. Make sure the callback function always returns the result.
+        /// </summary>
+        /// <param name="value">The value that configures the custom action.</param>
+        public EditorPasteCleanupSettingsBuilder Custom(string handler)
+        {
+            container.Custom.HandlerName = handler;
 
             return this;
         }

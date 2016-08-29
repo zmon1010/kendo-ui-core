@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
             //>> Initialization
         
         //<< Initialization
+
+            Custom = new ClientHandlerDescriptor();
         }
 
         //>> Fields
@@ -21,7 +23,7 @@ namespace Kendo.Mvc.UI
         
         public bool? Css { get; set; }
         
-        public string Custom { get; set; }
+        public ClientHandlerDescriptor Custom { get; set; }
         
         public bool? KeepNewLines { get; set; }
         
