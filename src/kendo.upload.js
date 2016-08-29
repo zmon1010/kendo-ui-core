@@ -707,7 +707,7 @@ var __meta__ = { // jshint ignore:line
                     that._checkAllComplete();
                     that._updateHeaderUploadStatus();
                 } else if (icon.hasClass("k-i-retry")) {
-                    $(".k-warning", fileEntry).remove();
+                    $(".k-i-warning", fileEntry).remove();
                     $(".k-progress", fileEntry).finish().show();
                     that._module.onRetry({ target: $(fileEntry, that.wrapper) });
                 }
