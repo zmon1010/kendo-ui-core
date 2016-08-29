@@ -367,6 +367,10 @@ function toHeight(px) {
     return px * 0.75;
 }
 
+function stripFunnyChars(value) {
+    return (value+"").replace(/[\x00-\x08]/g, "");
+}
+
 var DATE_EPOCH = new Date(1900, 0, 0);
 
 var Worksheet = kendo.Class.extend({
@@ -533,6 +537,7 @@ var Worksheet = kendo.Class.extend({
         }
 
         if (type === "string") {
+            value = stripFunnyChars(value);
             value = this._lookupString(value);
             type = "s";
         } else if (type === "number") {
