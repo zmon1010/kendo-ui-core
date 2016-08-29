@@ -190,6 +190,12 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.destroy.call(that);
         },
 
+        upload: function() {
+            var that = this;
+
+            that._module.onSaveSelected();
+        },
+
         getFiles: function() {
             var that = this;
             var filesData;

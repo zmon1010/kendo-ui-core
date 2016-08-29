@@ -22,6 +22,15 @@ function asyncNoAuto(createUpload, simulateUploadWithResponse, noAutoConfig, sim
         equal($(".k-upload-selected", uploadInstance.wrapper).length, 0);
     });
 
+    test("upload method triggers upload process", function() {
+        var uploadInstance = createUpload(noAutoConfig);
+        simulateFileSelect();
+
+        uploadInstance.upload();
+
+        equal($(".k-file-progress", uploadInstance.wrapper).length, 1);
+    });
+
     test("clear button is removed when upload starts", function() {
         var uploadInstance = createUpload(noAutoConfig);
         simulateFileSelect();
