@@ -426,7 +426,36 @@ var __meta__ = { // jshint ignore:line
             var view = this._view;
 
             view._updateDirection(selection, ranges, shift, reverse, true);
-        }
+        },
+
+         _createMoveHint: function(range, adjustedEvent) {
+                var view = this._view;
+                var startSlot = range.start;
+
+                var hint = view._createEventElement(adjustedEvent.occurrence ,adjustedEvent.occurrence, false, false);
+
+                hint.addClass("k-event-drag-hint");
+
+                var rect = range.innerRect(adjustedEvent.occurrence.start, adjustedEvent.occurrence.end, view.options.snap);
+                var width = rect.right - rect.left - 2;
+
+                if (width < 0) {
+                   width = 0;
+                }
+
+                var left = view._adjustLeftPosition(rect.left);
+
+                var css = {
+                    left: left,
+                    top: startSlot.offsetTop,
+                    height: startSlot.offsetHeight - 2,
+                    width: width
+                };
+
+                hint.css(css);
+
+                view._moveHint = view._moveHint.add(hint);
+          }
     });
 
 	 var TimelineGroupedByDateView = kendo.Class.extend({
@@ -781,7 +810,31 @@ var __meta__ = { // jshint ignore:line
             var view = this._view;
 
             view._updateDirection(selection, ranges, shift, reverse, !view._isVerticallyGrouped());
-        }
+        },
+
+         _createMoveHint: function(range, adjustedEvent) {
+                var view = this._view;
+                var startSlot = range.start;
+                var startEnd = range.end;
+
+                for (var slotIdx = startSlot.index; slotIdx <= startEnd.index; slotIdx++) {
+                    var slot = range.collection._slots[slotIdx];
+                    var hint = view._createEventElement(adjustedEvent.occurrence ,adjustedEvent.occurrence, false, false);
+
+                    hint.addClass("k-event-drag-hint");
+
+                    var css = {
+                        left: slot.offsetLeft + 2,
+                        top: slot.offsetTop,
+                        height: view.options.eventHeight,
+                        width: slot.offsetWidth
+                    };
+
+                    hint.css(css);
+
+                    view._moveHint = view._moveHint.add(hint);
+                }
+          }
 	 });
 
 	 kendo.ui.scheduler.TimelineGroupedView = TimelineGroupedView;
@@ -1979,32 +2032,7 @@ var __meta__ = { // jshint ignore:line
             this._removeMoveHint();
 
             for (var rangeIndex = 0; rangeIndex < ranges.length; rangeIndex++) {
-                var range = ranges[rangeIndex];
-                var startSlot = range.start;
-
-                var hint = this._createEventElement(adjustedEvent.occurrence ,adjustedEvent.occurrence, false, false);
-
-                hint.addClass("k-event-drag-hint");
-
-                var rect = range.innerRect(adjustedEvent.occurrence.start, adjustedEvent.occurrence.end, this.options.snap);
-                var width = rect.right - rect.left - 2;
-
-                if (width < 0) {
-                   width = 0;
-                }
-
-                var left = this._adjustLeftPosition(rect.left);
-
-                var css = {
-                    left: left,
-                    top: startSlot.offsetTop,
-                    height: startSlot.offsetHeight - 2,
-                    width: width
-                };
-
-                hint.css(css);
-
-                this._moveHint = this._moveHint.add(hint);
+                this._groupedView._createMoveHint(ranges[rangeIndex], adjustedEvent);
             }
 
             var content = this.content;
@@ -2050,7 +2078,6 @@ var __meta__ = { // jshint ignore:line
             this._resizeHint.first().addClass("k-first").find(".k-label-top").text(kendo.toString(kendo.timezone.toLocalDate(startTime), format));
 
             this._resizeHint.last().addClass("k-last").find(".k-label-bottom").text(kendo.toString(kendo.timezone.toLocalDate(endTime), format));
-
         },
 
         selectionByElement: function(cell) {

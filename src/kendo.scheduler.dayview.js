@@ -287,6 +287,7 @@ var __meta__ = { // jshint ignore:line
             var group = this.groups[groupIndex];
 
             var ranges = group.ranges(startTime, endTime, multiday, event.isAllDay);
+            var width, height, top, hint;
 
             this._removeResizeHint();
 
@@ -294,26 +295,44 @@ var __meta__ = { // jshint ignore:line
                 var range = ranges[rangeIndex];
                 var start = range.startSlot();
 
-                var width = start.offsetWidth;
-                var height = start.clientHeight;
-                var top = start.offsetTop;
+                if (this._isGroupedByDate() && multiday) {
+                    for (var slotIdx = start.index; slotIdx <= range.end.index; slotIdx++) {
+                        var slot = range.collection._slots[slotIdx];
+                        width = slot.offsetWidth;
+                        height = slot.clientHeight;
+                        top = slot.offsetTop;
 
-                if (multiday) {
-                    width = range.innerWidth();
+                        hint = SchedulerView.fn._createResizeHint.call(this,
+                            slot.offsetLeft,
+                            top,
+                            width,
+                            height
+                        );
+
+                        this._resizeHint = this._resizeHint.add(hint);
+                    }
                 } else {
-                    var rect = range.outerRect(startTime, endTime, this.options.snap);
-                    top = rect.top;
-                    height = rect.bottom - rect.top;
+                    width = start.offsetWidth;
+                    height = start.clientHeight;
+                    top = start.offsetTop;
+
+                    if (multiday) {
+                        width = range.innerWidth();
+                    } else {
+                        var rect = range.outerRect(startTime, endTime, this.options.snap);
+                        top = rect.top;
+                        height = rect.bottom - rect.top;
+                    }
+
+                    hint = SchedulerView.fn._createResizeHint.call(this,
+                        start.offsetLeft,
+                        top,
+                        width,
+                        height
+                    );
+
+ 	               this._resizeHint = this._resizeHint.add(hint);
                 }
-
-                var hint = SchedulerView.fn._createResizeHint.call(this,
-                    start.offsetLeft,
-                    top,
-                    width,
-                    height
-                );
-
-                this._resizeHint = this._resizeHint.add(hint);
             }
 
             var format = "t";
@@ -362,32 +381,42 @@ var __meta__ = { // jshint ignore:line
             for (var rangeIndex = 0; rangeIndex < ranges.length; rangeIndex++) {
                 var range = ranges[rangeIndex];
                 var startSlot = range.start;
-
-                var hint = this._createEventElement(event.clone({ start: start, end: end }), !multiday);
-
-                hint.addClass("k-event-drag-hint");
-
+                var hint;
                 var css = {
                     left: startSlot.offsetLeft + 2,
                     top: startSlot.offsetTop
                 };
 
-                if (this._isRtl) {
-                   css.left = startSlot.clientWidth * 0.1 + startSlot.offsetLeft + 2;
-                }
+                if (this._isGroupedByDate() && multiday) {               
+                    for (var slotIdx = startSlot.index; slotIdx <= range.end.index; slotIdx++) {
+                        var slot = range.collection._slots[slotIdx];
 
-                if (multiday) {
-                    css.width = range.innerWidth() - 4;
+                        css.left = this._isRtl ? slot.clientWidth * 0.1 + slot.offsetLeft + 2 : slot.offsetLeft + 2;                      
+                        css.height = slot.offsetHeight;
+                        css.width = slot.clientWidth * 0.9 - 4;
+
+                        hint = this._createEventElement(event.clone({ start: start, end: end }), !multiday);
+
+                        this._appendMoveHint(hint, css);
+                    }
                 } else {
-                    var rect = range.outerRect(start, end, this.options.snap);
-                    css.top = rect.top;
-                    css.height = rect.bottom - rect.top;
-                    css.width = startSlot.clientWidth * 0.9 - 4;
+                    if (this._isRtl) {
+                       css.left = startSlot.clientWidth * 0.1 + startSlot.offsetLeft + 2;
+                    }
+
+                    if (multiday) {
+                        css.width = range.innerWidth() - 4;
+                    } else {
+                        var rect = range.outerRect(start, end, this.options.snap);
+                        css.top = rect.top;
+                        css.height = rect.bottom - rect.top;
+                        css.width = startSlot.clientWidth * 0.9 - 4;
+                    }
+
+                      hint = this._createEventElement(event.clone({ start: start, end: end }), !multiday);
+
+                      this._appendMoveHint(hint, css);
                 }
-
-                hint.css(css);
-
-                this._moveHint = this._moveHint.add(hint);
             }
 
             var content = this.content;
@@ -401,6 +430,13 @@ var __meta__ = { // jshint ignore:line
 
             this._moveHint.appendTo(content);
         },
+
+        _appendMoveHint: function(hint, css) {
+            hint.addClass("k-event-drag-hint");
+            hint.css(css);
+
+            this._moveHint = this._moveHint.add(hint);
+       },
 
        _slotByPosition: function(x, y) {
            var slot, offset;

@@ -221,6 +221,24 @@ var __meta__ = { // jshint ignore:line
                  var hint = SchedulerView.fn._createResizeHint.call(view, left, top, width, height);
 
                  view._appendResizeHint(hint);
+            },
+
+           _createMoveHint: function(range, event) {
+                var view = this._view;
+                var startSlot = range.startSlot();
+                var endSlot = range.endSlot();
+                var hint = view._createEventElement(event.clone({ head: range.head, tail: range.tail }));
+
+                hint.css({
+                    left: startSlot.offsetLeft + 2,
+                    top: startSlot.offsetTop + startSlot.firstChildHeight,
+                    height: view.options.eventHeight,
+                    width: range.innerWidth() - (startSlot.index !== endSlot.index ? 5 : 4)
+                });
+
+                hint.addClass("k-event-drag-hint");
+
+                view._appendMoveHint(hint);
             }
         });
 
@@ -441,8 +459,8 @@ var __meta__ = { // jshint ignore:line
 
                     view._appendResizeHint(hint);
                  } else {
-                    for (var i = range.startSlot().index; i <= range.endSlot().index; i++) {
-                       var slot = range.collection._slots[i];
+                    for (var slotIdx = range.startSlot().index; slotIdx <= range.endSlot().index; slotIdx++) {
+                       var slot = range.collection._slots[slotIdx];
                         left = slot.offsetLeft;
                         top = slot.offsetTop;
                         width = slot.offsetWidth;
@@ -452,7 +470,29 @@ var __meta__ = { // jshint ignore:line
                         view._appendResizeHint(hint);
                     }
                  }
-            }
+             },
+
+             _createMoveHint: function(range, event) {
+                 var view = this._view;
+                 var startSlot = range.startSlot();
+                 var endSlot = range.endSlot();
+
+                for (var slotIdx = startSlot.index; slotIdx <= endSlot.index; slotIdx++) {
+                    var slot = range.collection._slots[slotIdx];
+                    var hint = view._createEventElement(event.clone({ head: range.head, tail: range.tail }));
+
+                    hint.css({
+                        left: slot.offsetLeft,
+                        top: slot.offsetTop + slot.firstChildHeight,
+                        height: view.options.eventHeight,
+                        width: slot.offsetWidth - 2
+                    });
+
+                    hint.addClass("k-event-drag-hint");
+
+                    view._appendMoveHint(hint);
+                }
+             }
         });
 
         kendo.ui.scheduler.MonthGroupedView = MonthGroupedView;
@@ -1087,10 +1127,6 @@ var __meta__ = { // jshint ignore:line
            return null;
        },
 
-       _createResizeHint: function(range) {
-           this._groupedView._createResizeHint(range);
-       },
-
        _appendResizeHint: function(hint) {
             hint.appendTo(this.content);
 
@@ -1105,7 +1141,7 @@ var __meta__ = { // jshint ignore:line
             var ranges = group.ranges(startTime, endTime, true, event.isAllDay);
 
             for (var rangeIndex = 0; rangeIndex < ranges.length; rangeIndex++) {
-                this._createResizeHint(ranges[rangeIndex]);
+                this._groupedView._createResizeHint(ranges[rangeIndex]);
             }
 
             this._resizeHint.find(".k-label-top,.k-label-bottom").text("");
@@ -1127,26 +1163,13 @@ var __meta__ = { // jshint ignore:line
             this._removeMoveHint();
 
             for (var rangeIndex = 0; rangeIndex < ranges.length; rangeIndex++) {
-                var range = ranges[rangeIndex];
-
-                var startSlot = range.startSlot();
-
-                var endSlot = range.endSlot();
-
-                var hint = this._createEventElement(event.clone({ head: range.head, tail: range.tail }));
-
-                hint.css({
-                    left: startSlot.offsetLeft + 2,
-                    top: startSlot.offsetTop + startSlot.firstChildHeight,
-                    height: this.options.eventHeight,
-                    width: range.innerWidth() - (startSlot.index !== endSlot.index ? 5 : 4)
-                });
-
-                hint.addClass("k-event-drag-hint");
-
-                hint.appendTo(this.content);
-                this._moveHint = this._moveHint.add(hint);
+                this._groupedView._createMoveHint(ranges[rangeIndex], event);
             }
+       },
+
+       _appendMoveHint: function(hint) {
+            hint.appendTo(this.content);
+            this._moveHint = this._moveHint.add(hint);
        },
 
        _groups: function() {
