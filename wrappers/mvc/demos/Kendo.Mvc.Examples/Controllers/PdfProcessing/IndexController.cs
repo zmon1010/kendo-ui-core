@@ -12,6 +12,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public class PdfProcessingController : Controller
     {
+        [Demo]
         public ActionResult Index()
         {
             return View();

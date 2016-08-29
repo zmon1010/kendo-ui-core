@@ -16,6 +16,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public class WordsProcessingController : Controller
     {
+        [Demo]
         public ActionResult Index()
         {
             return View();

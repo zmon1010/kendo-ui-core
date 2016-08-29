@@ -10,6 +10,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return View();
         }
 
+        [Demo]
         public ActionResult ImageBrowser()
         {
             return View();
