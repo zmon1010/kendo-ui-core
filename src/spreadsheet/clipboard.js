@@ -210,7 +210,7 @@
 
     function cellState(element) {
         var styles = window.getComputedStyle(element[0]);
-        var text = element.text();
+        var text = element[0].innerText;
         var borders = borderObject(styles);
         var state = {
             value: text === "" ? null : text,
