@@ -4,7 +4,8 @@ namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class ColorPickerController : Controller
 	{
-		public IActionResult Api()
+        [Demo]
+        public IActionResult Api()
 		{
 			return View();
 		}

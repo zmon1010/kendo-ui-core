@@ -4,7 +4,8 @@ namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class ButtonController : Controller
 	{
-		public IActionResult Keyboard_Navigation()
+        [Demo]
+        public IActionResult Keyboard_Navigation()
 		{
 			return View();
 		}
