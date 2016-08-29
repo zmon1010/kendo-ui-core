@@ -92,8 +92,6 @@
 
             if (!that.resizingInProgress()) {
                 if (!tableElement.is(LAST_CHILD) && that.elementBorderHovered(tableElement, e)) {
-                    setContentEditable(rootElement, FALSE);
-
                     if (resizeHandle) {
                         if (resizeHandle.data(dataAttribute) && resizeHandle.data(dataAttribute) !== tableElement[0]) {
                             that.showResizeHandle(tableElement, e);
@@ -122,6 +120,7 @@
                 return;
             }
 
+            setContentEditable(that.options.rootElement, FALSE);
             that._initResizeHandle();
             that.setResizeHandlePosition(tableElement);
             that.setResizeHandleDimensions();

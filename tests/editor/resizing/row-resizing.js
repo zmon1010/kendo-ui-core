@@ -680,6 +680,28 @@
         equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
 
+    module("editor column resizing resize handle show", {
+        setup: function() {
+            wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(wrapper);
+            rowResizing = new RowResizing(tableElement[0], {
+                rootElement: wrapper
+            });
+            cell = $(rowResizing.element).find(FIRST_COLUMN);
+        },
+
+        teardown: function() {
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should disable editing in the root element", function() {
+        rowResizing.showResizeHandle(cell, { buttons: 0 });
+
+        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), FALSE);
+    });
+
     editor_module("editor row resizing resize handle", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");

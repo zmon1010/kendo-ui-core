@@ -544,6 +544,28 @@
         equal($(columnResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
     });
 
+    module("editor column resizing resize handle show", {
+        setup: function() {
+            wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(wrapper);
+            columnResizing = new ColumnResizing(tableElement[0], {
+                rootElement: wrapper
+            });
+            cell = $(columnResizing.element).find(FIRST_COLUMN);
+        },
+
+        teardown: function() {
+            columnResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should disable editing in the root element", function() {
+        columnResizing.showResizeHandle(cell, { buttons: 0 });
+
+        equal($(columnResizing.options.rootElement).attr(CONTENT_EDITABLE), FALSE);
+    });
+
     module("editor column resizing existing resize handle", {
         setup: function() {
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
@@ -1308,7 +1330,7 @@
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 20);
 
-        roughlyEqual(tableElement[0].style.width, "40%", 0.5);
+        roughlyEqual(tableElement[0].style.width, "40%", 1.5);
     });
 
     module("editor column resizing without explicit dimensions", {
