@@ -630,7 +630,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var deltaX = 20;
         tableResizing.showResizeHandles();
 
-        triggerResize(tableResizing.handles[0].element, 0, deltaX);
+        triggerResize(tableResizing.handles[3].element, 0, deltaX);
 
         equal(resizeSpy.args("resize")[0]["deltaX"], deltaX);
     });
@@ -640,7 +640,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var deltaY = 30;
         tableResizing.showResizeHandles();
 
-        triggerResize(tableResizing.handles[1].element, 0, deltaY);
+        triggerResize(tableResizing.handles[4].element, 0, deltaY);
 
         equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
     });

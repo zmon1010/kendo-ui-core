@@ -9,6 +9,7 @@
     var max = math.max;
 
     var $ = kendo.jQuery;
+    var contains = $.contains;
     var extend = $.extend;
     var proxy = $.proxy;
 
@@ -25,13 +26,14 @@
     var toPixels = ResizingUtils.toPixels;
     var setContentEditable = ResizingUtils.setContentEditable;
 
-    var K_TABLE = "k-table";
-    var K_TABLE_RESIZING = "k-table-resizing";
+    var NS = ".kendoEditorTableResizing";
+    var TABLE_CLASS = "k-table";
+    var TABLE_RESIZING_CLASS = "k-table-resizing";
 
     var DRAG_START = "dragStart";
     var DRAG = "drag";
     var DRAG_END = "dragEnd";
-    var NS = ".kendoEditorTableResizing";
+    var MOUSE_DOWN = "mousedown";
     var MOUSE_OVER = "mouseover";
     var MOUSE_OUT = "mouseout";
 
@@ -76,8 +78,6 @@
 
             $(that.element).off(NS);
             that.element = null;
-
-            $(that.options.rootElement).off(NS);
 
             that._destroyResizeHandles();
         },
@@ -192,7 +192,7 @@
 
             that._totalDragDeltaY += delta;
 
-            //use total delta instead of delta as changing the height with a small vaoue (e.g. 1px) 
+            //use total delta instead of delta as changing the height with a small value (e.g. 1px) 
             //on each drag does not work due to browser calculation of computed styles
             constrainedHeight = constrain({
                 value: that._initialElementComputedHeight + that._totalDragDeltaY,
@@ -269,7 +269,7 @@
                     return inPercentages(styleWidth) ? true : false;
                 }
                 else {
-                    return $(element).hasClass(K_TABLE) ? true : false;
+                    return $(element).hasClass(TABLE_CLASS) ? true : false;
                 }
             }
 
@@ -383,7 +383,7 @@
             for (i = 0; i < length; i++) {
                 handle = handles[i];
                 handle.bind(DRAG_START, proxy(that._onResizeHandleDragStart, that));
-                handle.bind(DRAG, proxy(that.resize, that));
+                handle.bind(DRAG, proxy(that._onResizeHandleDrag, that));
                 handle.bind(DRAG_END, proxy(that._onResizeHandleDragEnd, that));
                 handle.bind(MOUSE_OVER, proxy(that._onResizeHandleMouseOver, that));
                 handle.bind(MOUSE_OUT, proxy(that._onResizeHandleMouseOut, that));
@@ -402,32 +402,81 @@
             var that = this;
             var element = $(that.element);
 
-            element.addClass(K_TABLE_RESIZING);
+            element.addClass(TABLE_RESIZING_CLASS);
 
             that._totalDragDeltaY = 0;
             that._initialElementComputedHeight = element.outerHeight();
         },
 
+        _onResizeHandleDrag: function(e) {
+            this.resize(e);
+        },
+
         _onResizeHandleDragEnd: function() {
-            $(this.element).removeClass(K_TABLE_RESIZING);
+            $(this.element).removeClass(TABLE_RESIZING_CLASS);
         }
     });
 
     var TableResizingFactory = Class.extend({
-        create: function(element, options) {
+        create: function(editor) {
+            var factory = this;
+
+            $(editor.body)
+                .on(MOUSE_DOWN + NS, TABLE, function(e) {
+                    var eventTarget = e.target;
+                    var eventCurrentTarget = e.currentTarget;
+                    var tableResizing = editor.tableResizing;
+                    var element = tableResizing ? tableResizing.element : null;
+
+                    if (tableResizing) {
+                        if (element && eventCurrentTarget !== element) {
+                            if (contains(eventCurrentTarget, element) && element !== eventTarget && contains(element, eventTarget)) {
+                                //prevent a parent table resizing init when clicking on a nested table when the event bubbles
+                                //instead of stopping event propagation
+                                return;
+                            }
+                            else {
+                                if (element !== eventTarget) {
+                                    editor._destroyTableResizing();
+                                    factory._initResizing(editor, eventCurrentTarget);
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        factory._initResizing(editor, eventCurrentTarget);
+                    }
+
+                    editor._showTableResizeHandles();
+                })
+                .on(MOUSE_DOWN + NS, function(e) {
+                    var tableResizing = editor.tableResizing;
+                    var element = tableResizing ? tableResizing.element : null;
+                    var target = e.target;
+                    var tableData = $(target).data(TABLE);
+                    var tableDataCondition = isUndefined(tableData) || (!isUndefined(tableData) && tableData !== element);
+
+                    if (tableResizing && tableDataCondition && element !== target && !contains(element, target)) {
+                        editor._destroyTableResizing();
+                    }
+                });
+        },
+
+        _initResizing: function(editor, table) {
             //table resizing is natively supported in IE and Firefox
             if (!browser.msie && !browser.mozilla) {
-                return new TableResizing(element, options);
-            }
-            else {
-                return null;
+                editor.tableResizing = new TableResizing(table, {
+                    appendHandlesTo: editor.body,
+                    rtl:  kendo.support.isRtl(editor.element),
+                    rootElement: editor.body
+                });
             }
         }
     });
     TableResizingFactory.current = new TableResizingFactory();
 
-    TableResizing.create = function(element, options) {
-        return TableResizingFactory.current.create(element, options);
+    TableResizing.create = function(editor) {
+        TableResizingFactory.current.create(editor);
     };
 
     extend(Editor, {

@@ -17,22 +17,16 @@
         Widget = kendo.ui.Widget,
         os = kendo.support.mobileOS,
         browser = kendo.support.browser,
-        contains = $.contains,
         extend = $.extend,
         proxy = $.proxy,
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
-    var isRtl = kendo.support.isRtl;
 
-    var MOUSE_DOWN = "mousedown";
-    var MOUSE_ENTER = "mouseenter";
-    var MOUSE_LEAVE = "mouseleave";
-    var NS = ".kendoEditor";
     var COLUMN_RESIZING_NS = ".kendoEditorColumnResizing";
     var ROW_RESIZING_NS = ".kendoEditorRowResizing";
+    var TABLE_RESIZING_NS = ".kendoEditorTableResizing";
+
     var SELECT = "select";
-    var TABLE = "table";
-    var UNDEFINED = "undefined";
 
     // options can be: template (as string), cssClass, title, defaultValue
     var ToolTemplate = Class.extend({
@@ -350,55 +344,8 @@
         _initializeTableResizing: function() {
             var editor = this;
 
-            function initTableResizing(editorWidget, tableElement) {
-                editorWidget.tableResizing = kendo.ui.editor.TableResizing.create(tableElement, {
-                    appendHandlesTo: editorWidget.body,
-                    rtl: isRtl(editorWidget.element),
-                    rootElement: editorWidget.body
-                });
-            }
-
+            kendo.ui.editor.TableResizing.create(editor);
             editor.bind(SELECT, proxy(editor._showTableResizeHandles, editor));
-
-            $(editor.body)
-                .on(MOUSE_DOWN + NS, TABLE, function(e) {
-                    var eventTarget = e.target;
-                    var eventCurrentTarget = e.currentTarget;
-                    var tableResizing = editor.tableResizing;
-                    var element = tableResizing ? tableResizing.element : null;
-
-                    if (tableResizing) {
-                        if (element && eventCurrentTarget !== element) {
-                            if (contains(eventCurrentTarget, element) && element !== eventTarget && contains(element, eventTarget)) {
-                                //prevent a parent table resizing init when clicking on a nested table when the event bubbles
-                                //instead of stopping event propagation
-                                return;
-                            }
-                            else {
-                                if (element !== eventTarget) {
-                                    editor._destroyTableResizing();
-                                    initTableResizing(editor, eventCurrentTarget);
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        initTableResizing(editor, eventCurrentTarget);
-                    }
-
-                    editor._showTableResizeHandles();
-                })
-                .on(MOUSE_DOWN + NS, function(e) {
-                    var tableResizing = editor.tableResizing;
-                    var element = tableResizing ? tableResizing.element : null;
-                    var target = e.target;
-                    var dataAttribute = $(target).data(TABLE);
-                    var dataCondition = typeof(dataAttribute) === UNDEFINED || (typeof(dataAttribute) !== UNDEFINED && dataAttribute !== element);
-
-                    if (tableResizing && dataCondition && element !== target && !contains(element, target)) {
-                        editor._destroyTableResizing();
-                    }
-                });
         },
 
         _destroyTableResizing: function() {
@@ -623,8 +570,6 @@
         },
 
         _deregisterHandlers: function() {
-            var editor = this;
-
             var handlers = this._handlers;
 
             for (var i = 0; i < handlers.length; i++) {
@@ -633,10 +578,6 @@
             }
 
             this._handlers = [];
-
-            $(editor.body)
-                .off(MOUSE_ENTER + NS)
-                .off(MOUSE_LEAVE + NS);
         },
 
         _initializeContentElement: function() {
@@ -955,6 +896,7 @@
 
         destroy: function() {
             var editor = this;
+            var body = $(editor.body);
 
             Widget.fn.destroy.call(this);
 
@@ -969,10 +911,11 @@
             this.toolbar.destroy();
 
             editor._destroyTableResizing();
+            body.off(TABLE_RESIZING_NS);
             editor._destroyRowResizing();
-            $(editor.body).off(ROW_RESIZING_NS);
+            body.off(ROW_RESIZING_NS);
             editor._destroyColumnResizing();
-            $(editor.body).off(COLUMN_RESIZING_NS);
+            body.off(COLUMN_RESIZING_NS);
 
             kendo.destroy(this.wrapper);
         },
