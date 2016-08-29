@@ -3430,6 +3430,7 @@
     {
         "text": "SpreadProcessing",
         "name": "spreadprocessing",
+        "packages":[ "!mvc-core" ],
         "api": "http://docs.telerik.com/devtools/wpf/controls/radspreadprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "spreadprocessingIcon",
@@ -4331,6 +4332,7 @@
     {
         "text": "WordsProcessing",
         "name": "wordsprocessing",
+        "packages":[ "!mvc-core" ],
         "api": "http://docs.telerik.com/devtools/wpf/controls/radwordsprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "wordprocessingIcon",
@@ -4408,6 +4410,7 @@
     {
         "text": "PdfProcessing",
         "name": "pdfprocessing",
+        "packages":[ "!mvc-core" ],
         "api": "http://docs.telerik.com/devtools/wpf/controls/radpdfprocessing/overview",
         "category": "Editors",
         "spriteCssClass": "pdfIcon",
@@ -5763,6 +5766,7 @@
         "text": "Diagram",
         "name": "diagram",
         "api": "dataviz/diagram",
+        "packages": [ "!mvc-core" ], 
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/diagram/overview"
         },
