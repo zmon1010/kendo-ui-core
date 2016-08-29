@@ -292,8 +292,8 @@
     });
     ResizingFactory.current = new ResizingFactory();
 
-    TableElementResizing.initResizing = function(editor, options) {
-        return ResizingFactory.current.create(editor, options);
+    TableElementResizing.create = function(editor, options) {
+        ResizingFactory.current.create(editor, options);
     };
 
     extend(Editor, {

@@ -228,7 +228,7 @@
     });
 
     ColumnResizing.create = function(editor) {
-        return TableElementResizing.initResizing(editor, {
+        TableElementResizing.create(editor, {
             name: "columnResizing",
             type: ColumnResizing,
             eventNamespace: NS
