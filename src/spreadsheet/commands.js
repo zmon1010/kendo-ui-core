@@ -170,7 +170,11 @@
 
             try {
                 range.link(null);
-                range.input(value);
+                if (value === "") {
+                    range.value(null);
+                } else {
+                    range.input(value);
+                }
                 range._adjustRowHeight();
 
                 var validationState = range._getValidationState();
