@@ -8,6 +8,10 @@
     var container;
     var scheduler;
 
+     function equalWithRound(value, expected) {
+        QUnit.close(value, expected, 3);
+    }
+
     function setup(options) {
         return new TimelineView(container, options);
     }
@@ -2575,6 +2579,58 @@
         equal(view.groups[0].getTimeSlotCollection(0).events()[0].end, 0);
 
         equal(view.element.find(".k-event").length, 2);
+    });
+
+    test("resizing clue is rendered correctly", function() {
+        setupScheduler({
+             date: new Date(2013, 1, 3),
+             startTime: new Date(2013, 1, 2, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 2, 18, 0, 0, 0),
+            views: [
+                {
+                    type: "timelineWeek",
+            }],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+        });
+
+        var view = scheduler.view();
+
+        var start =  new Date(2013, 1, 3, 10, 0, 0);
+        var end = new Date(2013, 1, 3, 12, 0, 0);
+        var event = new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: start,
+            startTime: kendo.date.toUtcTime(start),
+            end: end,
+            endTime: kendo.date.toUtcTime(end),
+            recurrenceRule: "FREQ=DAILY",
+            isAllDay: false,
+            id: "2",
+            roomId: 1
+        });
+
+        view.render([event]);
+
+        view._updateResizeHint(event, 0, new Date(2013, 1, 3, 10, 0, 0), new Date(2013, 1, 3, 14, 0, 0));
+
+        equalWithRound(view._resizeHint.width(), 397);
+        equal(view._resizeHint.height(), 176);
+
          });
     
 })();

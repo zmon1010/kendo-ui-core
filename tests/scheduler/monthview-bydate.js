@@ -2043,4 +2043,154 @@
         equal(view.element.find(".k-event").length, 1);
          });
     
+     test("resizing clue is added correctly for 2 days resize", function() {
+          setupScheduler({
+             date: new Date(2013, 1, 3),
+             startTime: new Date(2013, 1, 2, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 2, 18, 0, 0, 0),
+            views: [
+                {
+                    type: "month",
+            }],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+        });
+
+        var view = scheduler.view();
+
+        var start =  new Date(2013, 1, 3, 10, 0, 0);
+        var end = new Date(2013, 1, 3, 12, 0, 0);
+        var event = new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: start,
+            startTime: kendo.date.toUtcTime(start),
+            end: end,
+            endTime: kendo.date.toUtcTime(end),
+            isAllDay: false,
+            id: "2",
+            roomId: 1
+        });
+
+        view.render([event]);
+
+
+        view._updateResizeHint(event, 0,  new Date(2013, 1, 3, 10, 0, 0),  new Date(2013, 1, 4, 13, 0, 0));
+
+        equal(view._resizeHint.width(), 75);
+        equal(view._resizeHint.height(), 194);
+    });
+
+     test("resizing clue is added correctly for 9 days resize", function() {
+          setupScheduler({
+             date: new Date(2013, 1, 3),
+             startTime: new Date(2013, 1, 2, 10, 0, 0, 0),
+            endTime: new Date(2013, 1, 2, 18, 0, 0, 0),
+            views: [
+                {
+                    type: "month",
+            }],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+        });
+
+        var view = scheduler.view();
+
+        var start =  new Date(2013, 1, 3, 10, 0, 0);
+        var end = new Date(2013, 1, 3, 12, 0, 0);
+        var event = new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: start,
+            startTime: kendo.date.toUtcTime(start),
+            end: end,
+            endTime: kendo.date.toUtcTime(end),
+            isAllDay: false,
+            id: "2",
+            roomId: 1
+        });
+
+        view.render([event]);
+
+
+       view._updateResizeHint(event, 0,  new Date(2013, 1, 3, 10, 0, 0),  new Date(2013, 1, 12, 13, 0, 0));
+
+        equal(view._resizeHint.first().width(), 75);
+        equal(view._resizeHint.first().height(), 684);
+        equal(view._resizeHint.last().width(), 75);
+        equal(view._resizeHint.last().height(), 292);
+    });
+
+     test("dragging clues are added correctly", function() {
+            setupScheduler({
+             date: new Date(2013, 1, 3),
+            views: [
+                {
+                    type: "month",
+            }],
+            group: {
+                resources: ["Rooms"],
+                date: true,
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                }]
+        });
+
+        var view = scheduler.view();
+
+        var start =  new Date(2013, 1, 3, 10, 0, 0);
+        var end = new Date(2013, 1, 6, 12, 0, 0);
+        var event = new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: start,
+            startTime: kendo.date.toUtcTime(start),
+            end: end,
+            endTime: kendo.date.toUtcTime(end),
+            isAllDay: false,
+            id: "2",
+            roomId: 1
+        });
+
+        view.render([event]);
+        view._updateMoveHint(event, 0, 50);
+
+        equal(view._moveHint.length, 4);
+    });
+
 })();
