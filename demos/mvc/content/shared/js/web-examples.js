@@ -1,7 +1,7 @@
 $(function () {
     populateSearchDataSource(desktopExamples);
 
-    var isRoot = window.location.href.match("/(.+kendo-ui|aspnet-mvc|php-ui|jsp-ui)/?$") !== null;
+    var isRoot = window.location.href.match("/(.+kendo-ui|aspnet-mvc|aspnet-core|staging-mvc|staging-core|php-ui|jsp-ui)/?$") !== null;
     var baseUrl = isRoot ? "" : "../";
 
     $("#example-search").kendoExampleSearch({
