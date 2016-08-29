@@ -2937,10 +2937,6 @@
     <Content Include="Views\dialog\api.cshtml" />
     <Content Include="Views\dialog\right_to_left_support.cshtml" />
     <Content Include="Views\dialog\keyboard_navigation.cshtml" />
-    <Content Include="Areas\razor\Views\mediaplayer\index.cshtml" />
-    <Content Include="Areas\razor\Views\mediaplayer\playlist.cshtml" />
-    <Content Include="Areas\razor\Views\mediaplayer\api.cshtml" />
-    <Content Include="Areas\razor\Views\mediaplayer\events.cshtml" />
     <Content Include="Views\mediaplayer\api.cshtml" />
     <Content Include="Views\mediaplayer\events.cshtml" />
     <Content Include="Views\mediaplayer\index.cshtml" />
