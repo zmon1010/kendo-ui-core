@@ -242,7 +242,8 @@
             || cell.borderTop != null
             || cell.borderRight != null
             || cell.borderBottom != null
-            || cell.borderLeft != null;
+            || cell.borderLeft != null
+            || (cell.validation != null && !cell.validation.value);
     }
 
     function normalOrder(a, b) {

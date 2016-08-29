@@ -138,3 +138,10 @@ sheet.range("B5").input("=A5+1");
 console.log(sheet.range("A5").value());
 
 sheet.range("A15").format(" _(* #,##0.00_);_(* (#,##0.00);_(* \"\"-\"\"_)").value(1231231231);
+
+sheet.range("G14").validation({
+    dataType: "number",
+    allowNulls: false,
+    comparerType: "greaterThan",
+    from: 10
+});
