@@ -23,6 +23,7 @@
     });
 
     var spreadsheet = kendo.spreadsheet;
+    var Ref = spreadsheet.Ref;
     var calc = spreadsheet.calc;
     var runtime = calc.runtime;
     var CalcError = runtime.CalcError;
@@ -58,6 +59,12 @@
             var cell = this.data[this.id(row, col)];
             if (!cell) {
                 this.data[this.id(row, col)] = cell = {};
+            }
+            if (value instanceof Ref) {
+                value = this.getData(value);
+                if (Array.isArray(value)) {
+                    value = value[0];
+                }
             }
             cell.value = value;
             return true;
@@ -104,6 +111,8 @@
                 }];
             }
             return [];
+        },
+        nameValue: function(name) {
         },
         getData: function(ref) {
             if (!(ref instanceof spreadsheet.Ref)) {
@@ -525,6 +534,10 @@
         equal(exp.ast.print(0, 0), "'The Sheet':Man!$C$3:$D$4");
         var exp = calc.parse(Sheet1, 0, 0, "='The Sheet':'Man'!R[3]C[3]:R5C5");
         equal(exp.ast.print(0, 0), "'The Sheet':Man!D4:$E$5");
+        var exp = calc.parse(Sheet1, 0, 0, "=RC2");
+        equal(exp.ast.print(0, 0), "$B1");
+        var exp = calc.parse(Sheet1, 0, 0, "=R2C");
+        equal(exp.ast.print(0, 0), "A$2");
     });
 
     test("parseReference", function(){
@@ -588,7 +601,7 @@
         testOne("=A2", "R[-3]C[-4]");
         testOne("=B1", "R[-4]C[-3]");
         testOne("=B2", "R[-3]C[-3]");
-        testOne("=$C$3", "R3C3");
+        testOne("=$C$3", "$C$3");
         testOne("=$C3", "R[-2]C3");
         testOne("=C$3", "R3C[-2]");
         testOne("=C3", "R[-2]C[-2]");
@@ -1373,7 +1386,7 @@
                 A8  : "A1",
                 A9  : "#VALUE!",
                 A10 : "R[0]C[0]",
-                B10 : "R1C1",
+                B10 : "$A$1",
                 A11 : "A1",
                 A12 : "Sheet2!A1",
                 A13 : "Sheet2!$A$1",

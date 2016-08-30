@@ -8,6 +8,9 @@
     }
 
     var $ = kendo.jQuery;
+    var Formula = kendo.spreadsheet.calc.runtime.Formula;
+    var Ref = kendo.spreadsheet.Ref;
+    var CalcError = kendo.spreadsheet.CalcError;
 
     var Workbook = kendo.Observable.extend({
         init: function(options, view) {
@@ -250,10 +253,10 @@
         },
 
         renameSheet: function(sheet, newSheetName) {
-            var oldSheetName = sheet.name();
+            var oldSheetName = sheet.name().toLowerCase();
 
             if (!newSheetName ||
-                oldSheetName === newSheetName) {
+                oldSheetName === newSheetName.toLowerCase()) {
                 return;
             }
 
@@ -271,6 +274,19 @@
                     formula.renameSheet(oldSheetName, newSheetName);
                 });
             });
+
+            this.forEachName(function(def, name){
+                // 1. redefine sheet-local names
+                if (def.nameref.renameSheet(oldSheetName, newSheetName)) {
+                    this.undefineName(name);
+                    def.name = def.nameref.print();
+                    this.nameDefinition(def.name, def);
+                }
+                // 2. if the value is reference or formula, update it
+                if (def.value instanceof Ref || def.value instanceof Formula) {
+                    def.value.renameSheet(oldSheetName, newSheetName);
+                }
+            }.bind(this));
 
             sheet._name(newSheetName);
 
@@ -311,6 +327,7 @@
             }
             this._sheets = [];
             this._sheetsSearchCache = {};
+            this._names = {};
         },
 
         fromJSON: function(json) {
@@ -341,17 +358,45 @@
             } else {
                 this.activeSheet(this._sheets[0]);
             }
+
+            if (json.names) {
+                json.names.forEach(function(def){
+                    this.defineName(def.name, def.value, def.hidden);
+                }, this);
+            }
         },
 
         toJSON: function() {
             this.resetFormulas();
             this.resetValidations();
+            var names = Object.keys(this._names).map(function(name){
+                var def = this._names[name];
+                var val = def.value;
+                if (val instanceof Ref || val instanceof Formula) {
+                    val = val.print(0, 0, true);
+                } else if (val instanceof CalcError) {
+                    val = val + "";
+                } else {
+                    val = JSON.stringify(val);
+                }
+                return {
+                    value     : val,
+                    hidden    : def.hidden,
+                    name      : def.name,
+
+                    // these two are not really useful in
+                    // deserialization, but are handy in OOXML export.
+                    sheet     : def.nameref.sheet,
+                    localName : def.nameref.name
+                };
+            }, this);
             return {
                 activeSheet: this.activeSheet().name(),
                 sheets: this._sheets.map(function(sheet) {
                     sheet.recalc(this._context);
                     return sheet.toJSON();
-                }, this)
+                }, this),
+                names: names
             };
         },
 
@@ -408,29 +453,78 @@
             })(0);
         },
 
+        nameForRef: function(ref, sheet) {
+            if (sheet === undefined) {
+                sheet = ref.sheet;
+            }
+            sheet = sheet.toLowerCase();
+            var str = ref + "";
+            for (var name in this._names) {
+                var def = this._names[name];
+                var val = def.value;
+                if (val instanceof Ref) {
+                    if (!val.sheet || (val.sheet && sheet == val.sheet.toLowerCase())) {
+                        if (val + "" == str) {
+                            return def;
+                        }
+                    }
+                }
+            }
+            return { name: str };
+        },
+
         defineName: function(name, value, hidden) {
-            this._names[name] = { value: value, hidden: hidden };
+            var x = kendo.spreadsheet.calc.parseNameDefinition(name, value);
+            name = x.name.print();
+            this._names[name.toLowerCase()] = {
+                value   : x.value,
+                hidden  : hidden,
+                name    : name,
+                nameref : x.name
+            };
         },
 
         undefineName: function(name) {
-            delete this._names[name];
+            delete this._names[name.toLowerCase()];
         },
 
         nameValue: function(name) {
+            name = name.toLowerCase();
             if (name in this._names) {
                 return this._names[name].value;
             }
             return null;
         },
 
+        nameDefinition: function(name, def) {
+            name = name.toLowerCase();
+            if (arguments.length > 1) {
+                if (def === undefined) {
+                    delete this._names[name];
+                } else {
+                    this._names[name] = def;
+                }
+            }
+            return this._names[name];
+        },
+
+        forEachName: function(func) {
+            Object.keys(this._names).forEach(function(name){
+                func(this._names[name], name);
+            }, this);
+        },
+
         adjustNames: function(affectedSheet, forRow, start, delta) {
             affectedSheet = affectedSheet.toLowerCase();
             Object.keys(this._names).forEach(function(name){
-                var ref = this.nameValue(name);
-                if (ref instanceof kendo.spreadsheet.Ref &&
-                    ref.sheet.toLowerCase() == affectedSheet) {
-                    ref = ref.adjust(null, null, null, null, forRow, start, delta);
-                    this.defineName(name, ref);
+                var def = this._names[name];
+                var x = def.value;
+                if (x instanceof Ref &&
+                    x.sheet.toLowerCase() == affectedSheet) {
+                    def.value = x.adjust(null, null, null, null, forRow, start, delta);
+                }
+                else if (x instanceof Formula) {
+                    x.adjust(affectedSheet, forRow ? "row" : "col", start, delta);
                 }
             }, this);
         },

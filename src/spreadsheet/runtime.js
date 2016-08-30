@@ -54,11 +54,6 @@
             var self = this;
             if (val instanceof Ref) {
                 self.resolveCells([ val ], function(){
-                    val = self.getRefData(val);
-                    if (Array.isArray(val)) {
-                        // got a Range, we should return a single value
-                        val = val[0];
-                    }
                     self._resolve(val);
                 });
             } else {
@@ -73,6 +68,9 @@
         _resolve: function(val) {
             if (val === undefined) {
                 val = null;
+            }
+            if (Array.isArray(val)) {
+                val = this.asMatrix(val);
             }
             var f = this.formula;
             f.value = val;
@@ -104,9 +102,8 @@
             for (var pending = formulas.length, i = 0; i < formulas.length; ++i) {
                 fetch(formulas[i]);
             }
-            function fetch(cell) { // jshint ignore:line, because you are stupid.
-                cell.formula.exec(context.ss, function(){
-
+            function fetch(formula) { // jshint ignore:line, because you are stupid.
+                formula.exec(context.ss, function(){
                     if (!--pending) {
                         f.call(context);
                     }
@@ -115,9 +112,8 @@
             function add(a) {
                 for (var i = 0; i < a.length; ++i) {
                     var cell = a[i];
-
                     if (cell.formula) {
-                        formulas.push(cell);
+                        formulas.push(cell.formula);
                     }
                 }
                 return true;
@@ -143,6 +139,31 @@
                 return f.apply(this, ret);
             }
             return ret;
+        },
+
+        fetchName: function(ref, callback) {
+            var f = this.formula;
+            var val = this.ss.nameValue(ref, f.sheet, f.row, f.col);
+            if (val instanceof Formula) {
+                // clone and relocate to calling formula, so that relative references in a named
+                // formula would work as expected.
+                val = val.clone(f.sheet, f.row, f.col, true);
+
+                // XXX: I don't like this dependency here; basically we only need ss.onFormula to
+                // return true and do nothing else.
+                var ss = new spreadsheet.ValidationFormulaContext(this.ss.workbook);
+
+                val.exec(ss, callback, this);
+            } else {
+                if (val instanceof Ref) {
+                    // relocate for relative refs
+                    val = val.absolute(f.row, f.col);
+                    if (!val.sheet) {
+                        val.sheet = f.sheet;
+                    }
+                }
+                callback(val == null ? new CalcError("NAME") : val);
+            }
         },
 
         force: function(val) {
@@ -236,11 +257,13 @@
         },
 
         getRefCells: function(refs, hiddenInfo) {
-            return this.ss.getRefCells(refs, hiddenInfo);
+            var f = this.formula;
+            return this.ss.getRefCells(refs, hiddenInfo, f.sheet, f.row, f.col);
         },
 
         getRefData: function(ref) {
-            return this.ss.getData(ref);
+            var f = this.formula;
+            return this.ss.getData(ref, f.sheet, f.row, f.col);
         },
 
         workbook: function() {
@@ -515,12 +538,12 @@
             this.onReady = [];
             this.pending = false;
         },
-        clone: function(sheet, row, col) {
+        clone: function(sheet, row, col, forceRefs) {
             var lcsheet = sheet.toLowerCase();
             var refs = this.refs;
-            if (lcsheet != this.sheet.toLowerCase()) {
+            if (forceRefs || lcsheet != this.sheet.toLowerCase()) {
                 refs = refs.map(function(ref){
-                    if (!ref.hasSheet() && ref.sheet.toLowerCase() != lcsheet) {
+                    if (!ref.hasSheet() && (!ref.sheet || ref.sheet.toLowerCase() != lcsheet)) {
                         ref = ref.clone().setSheet(sheet);
                     }
                     return ref;
@@ -585,9 +608,7 @@
                 this.sheet = newSheetName;
             }
             this.refs.forEach(function(ref){
-                if (ref.sheet.toLowerCase() == oldSheetName) {
-                    ref.sheet = newSheetName;
-                }
+                ref.renameSheet(oldSheetName, newSheetName);
             });
         },
         adjust: function(affectedSheet, operation, start, delta) {
@@ -1441,6 +1462,12 @@
     }).args([
         [ "*value", "anything!" ]
     ]);
+
+    /* -----[ resolve NameRef-s ]----- */
+
+    FUNCS[",getname"] = function(callback, args) {
+        this.fetchName(args[0], callback);
+    };
 
     /// utils
 

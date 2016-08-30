@@ -99,13 +99,21 @@ var WORKBOOK = kendo.template(
       '# } #' +
   '# } #' +
   '</sheets>' +
-  '# if (definedNames.length) { #' +
+  '# if (filterNames.length || userNames.length) { #' +
   '<definedNames>' +
-  ' # for (var di = 0; di < definedNames.length; di++) { #' +
-  '<definedName name="_xlnm._FilterDatabase" hidden="1" localSheetId="${definedNames[di].localSheetId}">' +
-  '${definedNames[di].name}!$${definedNames[di].from}:$${definedNames[di].to}' +
+
+  ' # for (var di = 0; di < filterNames.length; di++) { #' +
+  '<definedName name="_xlnm._FilterDatabase" hidden="1" localSheetId="${filterNames[di].localSheetId}">' +
+  '${filterNames[di].name}!$${filterNames[di].from}:$${filterNames[di].to}' +
   '</definedName>' +
   ' # } #' +
+
+  ' # for (var i = 0; i < userNames.length; ++i) { #' +
+  '<definedName name="${userNames[i].name}" hidden="${userNames[i].hidden ? 1 : 0}"' +
+    ' # if (userNames[i].localSheetId != null) { # localSheetId="${userNames[i].localSheetId}" # } #' +
+  '>${userNames[i].value}</definedName>' +
+  ' # } #' +
+
   '</definedNames>' +
   '# } #' +
   '<calcPr calcId="145621" />' +
@@ -673,19 +681,31 @@ var Workbook = kendo.Class.extend({
         var xlRels = xl.folder("_rels");
         xlRels.file("workbook.xml.rels", WORKBOOK_RELS({ count: sheetCount }));
 
+        var sheetIds = {};
+
         xl.file("workbook.xml", WORKBOOK({
             sheets: this._sheets,
-            definedNames: $.map(this._sheets, function(sheet, index) {
+            filterNames: $.map(this._sheets, function(sheet, index) {
                 var options = sheet.options;
+                var sheetName = (options.name || options.title || "Sheet" + (index + 1));
+                sheetIds[sheetName.toLowerCase()] = index;
                 var filter = options.filter;
                 if (filter && typeof filter.from !== "undefined" && typeof filter.to !== "undefined") {
                     return {
                         localSheetId: index,
-                        name: (options.name || options.title || "Sheet" + (index + 1)),
+                        name: sheetName,
                         from: $ref(filterRowIndex(options), filter.from),
                         to: $ref(filterRowIndex(options), filter.to)
                     };
                 }
+            }),
+            userNames: $.map(this.options.names, function(def){
+                return {
+                    name: def.localName,
+                    localSheetId: def.sheet ? sheetIds[def.sheet.toLowerCase()] : null,
+                    value: def.value,
+                    hidden: def.hidden
+                };
             })
         }));
 

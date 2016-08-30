@@ -61,6 +61,10 @@
 
     var Ref = Class.extend({
         type: "ref",
+        sheet: "",
+        clone: function() {
+            return this;
+        },
         hasSheet: function() {
             return this._hasSheet;
         },
@@ -204,6 +208,13 @@
 
         valid: function() {
             return false;
+        },
+
+        renameSheet: function(oldSheetName, newSheetName) {
+            if (this.sheet && this.sheet.toLowerCase() == oldSheetName.toLowerCase()) {
+                this.sheet = newSheetName;
+                return true;
+            }
         }
     });
 
@@ -215,9 +226,6 @@
         init: function NullRef(){},
         print: function() {
             return "#NULL!";
-        },
-        clone: function() {
-            return this;
         },
         eq: function(ref) {
             return ref === this;
@@ -231,6 +239,10 @@
         ref: "name",
         init: function NameRef(name){
             this.name = name;
+        },
+        clone: function() {
+            return new NameRef(this.name)
+                .setSheet(this.sheet, this.hasSheet());
         },
         print: function() {
             var ret = displaySheet(this.name);
@@ -264,9 +276,9 @@
             }
             return ref.intersect(this);
         },
-        print: function(trow, tcol) {
+        print: function(trow, tcol, mod) {
             var col = this.col, row = this.row, rel = this.rel, abs;
-            if (trow == null) {
+            if (trow == null && rel) {
                 var sheet = this.hasSheet() ? displaySheet(this.sheet) + "!" : "";
                 if (isFinite(col)) {
                     col = rel & 1 ? ("C[" + col + "]") : ("C" + (col + 1));
@@ -281,6 +293,18 @@
                 return sheet + row + col;
             } else {
                 abs = this.absolute(trow, tcol);
+                if (mod) {
+                    // Hacks: see the big comment below in `absolute()`
+                    row = abs.row % 0x100000;
+                    col = abs.col % 0x4000;
+                    if (row < 0) {
+                        row += 0x100000;
+                    }
+                    if (col < 0) {
+                        col += 0x4000;
+                    }
+                    return displayRef(this._hasSheet && this.sheet, row, col, rel);
+                }
                 return abs.valid() ? displayRef(this._hasSheet && this.sheet, abs.row, abs.col, rel) : "#REF!";
             }
         },
@@ -289,14 +313,43 @@
             if (ret.rel & 3 === 0) {
                 return ret;    // already absolute
             }
+
+            // Hacks: we make coordinates modulo 0x4000 (max col) and 0x100000 (max row).  This
+            // fixes importing relative references in definedName-s from Excel.  Example in
+            // Excel: select cell E3, open the Name Manager (in Formula tab) and define name
+            // TEST with value Sheet1!A1:C3.  The serialization of this name in XLSX is:
+            //
+            //     <definedName name="TEST">Sheet1!XFA1048575:XFC1</definedName>
+            //
+            // This is insane, of course, but oh well.  Excel.  If you type in E3 =SUM(TEST) it
+            // works (it actually sums the cells), but if you type =SUM(Sheet1!XFA1048575:XFC1)
+            // you get back zero.  Let's see why SUM(TEST) works:
+            //
+            //     XFA1048575:XFC1                   E3
+            //     (zero-based indexes below)
+            //
+            //     R[1048574]C[16380]:R[0]C[16382] + R2C4 = R1048576C16384:R2C16386
+            //                                            % (0x100000, 0x4000)
+            //                                            = R0C0:R2C2 (== A1:C3)
+            //
+            // So XFA1048575:XFC1 is relocated to E3 at evaluation time, and because we take
+            // rows modulo 0x100000 and cols modulo 0x4000, we get back the correct range.
+            //
+            // IMO Excel should disallow A1-style relative references in name definitions
+            // (simply because the meaning of the A1:C3 you type in Name Manager depends on the
+            // active cell) and only allow R1C1 notation — that's unambiguous.  But it doesn't.
+            // Moreover, R1C1-style refs in XLSX are explicitly forbidden by the spec, and the
+            // hacks above are not documented — how else could we have fun implementing a XLSX
+            // reader?
             if (ret.rel & 1) {
                 // relative col, add anchor
-                ret.col += acol;
+                ret.col = (ret.col + acol) % 0x4000;
             }
             if (ret.rel & 2) {
                 // relative row, add anchor
-                ret.row += arow;
+                ret.row = (ret.row + arow) % 0x100000;
             }
+
             ret.rel = 0;
             return ret;
         },
@@ -445,9 +498,6 @@
             }
         },
         intersect: function(ref) {
-            if (ref === NULL) {
-                return ref;
-            }
             if (ref instanceof CellRef) {
                 return this._containsCell(ref) ? ref : NULL;
             }
@@ -457,7 +507,7 @@
             if (ref instanceof UnionRef) {
                 return ref.intersect(this);
             }
-            throw new Error("Unknown reference");
+            return NULL;        // can't handle NameRef-s here.
         },
         simplify: function() {
             if (this.isCell()) {
@@ -491,12 +541,11 @@
             }
             return this;
         },
-        print: function(trow, tcol) {
-            var abs = this.absolute(trow, tcol);
-            if (abs.valid()) {
-                var ret = this.topLeft.print(trow, tcol)
+        print: function(trow, tcol, mod) {
+            if (mod || this.absolute(trow, tcol).valid()) {
+                var ret = this.topLeft.print(trow, tcol, mod)
                     + ":"
-                    + this.bottomRight.print(trow, tcol);
+                    + this.bottomRight.print(trow, tcol, mod);
                 if (this.hasSheet()) {
                     ret = displaySheet(this.sheet)
                         + (this.endSheet ? ":" + displaySheet(this.endSheet) : "")
@@ -809,8 +858,8 @@
         concat: function(ref) {
             return new UnionRef(this.refs.concat([ref]));
         },
-        print: function(row, col) {
-            return this.refs.map(function(ref) { return ref.print(row, col); }).join(",");
+        print: function(row, col, mod) {
+            return this.refs.map(function(ref) { return ref.print(row, col, mod); }).join(",");
         },
 
         replaceAt: function(index, ref) {
@@ -866,6 +915,11 @@
                 }
             }
             return true;
+        },
+        renameSheet: function(oldSheetName, newSheetName) {
+            this.refs.forEach(function(ref){
+                ref.renameSheet(oldSheetName, newSheetName);
+            });
         }
     });
 

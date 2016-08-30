@@ -1,0 +1,44 @@
+.k-spreadsheet-name-editor-wrapper {
+  width: 8em;
+  position: relative;
+
+  .k-spreadsheet-name-editor {
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      border: none;
+      padding: 4px 5px;
+    }
+    .k-icon {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.7;
+      cursor: pointer;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.k-spreadsheet-name-list {
+  .k-item {
+    padding: 4px 25px 4px 5px;
+    min-width: 8em;
+    box-sizing: border-box;
+    position: relative;
+
+    a.k-button-delete {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 10px;
+      &:hover {
+        background: white;
+      }
+    }
+  }
+}

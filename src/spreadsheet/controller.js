@@ -124,6 +124,11 @@
             this.tabstrip = view.tabstrip;
             this.sheetsbar = view.sheetsbar;
 
+            view.nameEditor.bind("enter", this.onNameEditorEnter.bind(this));
+            view.nameEditor.bind("cancel", this.onNameEditorCancel.bind(this));
+            view.nameEditor.bind("select", this.onNameEditorSelect.bind(this));
+            view.nameEditor.bind("delete", this.onNameEditorDelete.bind(this));
+
             this.editor = view.editor;
             this.editor.bind("change", this.onEditorChange.bind(this));
             this.editor.bind("activate", this.onEditorActivate.bind(this));
@@ -317,6 +322,10 @@
                 editor.enable(sheet.selection().enable() !== false);
                 editor.value(workbook._inputForRef(sheet.activeCell()));
             }
+
+            var ref = sheet.selection()._ref.simplify();
+            var def = this._workbook.nameForRef(ref, sheet.name());
+            this.view.nameEditor.value(def.name);
         },
 
         onScroll: function() {
@@ -1020,6 +1029,73 @@
             }.bind(this);
 
             this.executeRequest(executeDialog, e);
+        },
+
+        onNameEditorEnter: function() {
+            var ref;
+            var workbook = this._workbook;
+            var sheet = workbook.activeSheet();
+            var name = this.view.nameEditor.value();
+
+            // 1. does it look like a reference, or already defined
+            // name?  If so, just select it (don't define/modify any
+            // names)
+            ref = kendo.spreadsheet.calc.parseReference(name, true) || workbook.nameValue(name);
+            if (ref instanceof kendo.spreadsheet.Ref) {
+                if (ref.sheet && ref.sheet.toLowerCase() != sheet.name().toLowerCase()) {
+                    // reference points to another sheet, select it if found
+                    var tmp = workbook.sheetByName(ref.sheet);
+                    if (tmp) {
+                        workbook.activeSheet(tmp);
+                        sheet = tmp;
+                    }
+                }
+                sheet.range(ref).select();
+                return;
+            }
+
+            ref = sheet.selection()._ref.clone().simplify().setSheet(sheet.name(), true);
+
+            // XXX: should we check if a name is already defined for this range, and update it instead?
+            // Excel just adds a new one, and provides a more complete Name Manager dialog.
+            //var def = workbook.nameForRef(ref, sheet.name());
+
+            // just define new name
+            this._execute({
+                command: "DefineNameCommand",
+                options: { name: name, value: ref }
+            });
+
+            this.clipboardElement.focus();
+        },
+        onNameEditorCancel: function() {
+            this.clipboardElement.focus();
+        },
+        onNameEditorSelect: function(ev) {
+            var name = ev.name;
+            var workbook = this._workbook;
+            var sheet = workbook.activeSheet();
+            var ref = workbook.nameValue(name);
+            if (ref instanceof kendo.spreadsheet.Ref) {
+                if (ref.sheet && ref.sheet.toLowerCase() != sheet.name().toLowerCase()) {
+                    // reference points to another sheet, select it if found
+                    var tmp = workbook.sheetByName(ref.sheet);
+                    if (tmp) {
+                        workbook.activeSheet(tmp);
+                        sheet = tmp;
+                    }
+                }
+                sheet.range(ref).select();
+                return;
+            }
+            this.clipboardElement.focus();
+        },
+        onNameEditorDelete: function(ev) {
+            this._execute({
+                command: "DeleteNameCommand",
+                options: { name: ev.name }
+            });
+            this.clipboardElement.focus();
         }
     });
 

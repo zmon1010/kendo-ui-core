@@ -825,6 +825,45 @@
         }
     });
 
+    var NameCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._name = options.name;
+            this._value = options.value;
+        },
+        getState: function() {
+            this._state = this._workbook.nameDefinition(this._name);
+        },
+        setState: function() {
+            this._workbook.nameDefinition(this._name, this._state);
+            this._workbook.trigger("change", { recalc: true });
+        }
+    });
+
+    kendo.spreadsheet.DefineNameCommand = NameCommand.extend({
+        exec: function() {
+            this.getState();
+            try {
+                this._workbook.defineName(this._name, this._value);
+                this._workbook.trigger("change", { recalc: true });
+            } catch(ex) {
+                return {
+                    title: "Error",
+                    body: ex+"",
+                    reason: "error"
+                };
+            }
+        }
+    });
+
+    kendo.spreadsheet.DeleteNameCommand = NameCommand.extend({
+        exec: function() {
+            this.getState();
+            this._workbook.undefineName(this._name);
+            this._workbook.trigger("change", { recalc: true });
+        }
+    });
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

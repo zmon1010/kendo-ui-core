@@ -603,7 +603,12 @@
         },
 
         _chrome: function() {
-            var formulaBar = $("<div />").prependTo(this.element);
+            var wrapper = $("<div class='k-spreadsheet-action-bar' />").prependTo(this.element);
+
+            var nameEditor = $("<div class='k-spreadsheet-name-editor' />").appendTo(wrapper);
+            this.nameEditor = new kendo.spreadsheet.NameEditor(nameEditor);
+
+            var formulaBar = $("<div />").appendTo(wrapper);
             this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar);
 
             if (this.options.toolbar) {
@@ -659,6 +664,7 @@
 
         workbook: function(workbook) {
             this._workbook = workbook;
+            this.nameEditor._workbook = workbook;
         },
 
         sheet: function(sheet) {

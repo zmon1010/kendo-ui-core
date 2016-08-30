@@ -19,7 +19,7 @@
             this.workbook = workbook;
         },
 
-        getRefCells: function(ref, hiddenInfo) {
+        getRefCells: function(ref, hiddenInfo, fsheet, frow, fcol) {
             var sheet, formula, value, i;
             if (ref instanceof CellRef) {
                 sheet = this.workbook.sheetByName(ref.sheet);
@@ -115,29 +115,54 @@
             if (ref instanceof UnionRef) {
                 var a = [];
                 for (i = 0; i < ref.refs.length; ++i) {
-                    a = a.concat(this.getRefCells(ref.refs[i], hiddenInfo));
+                    a = a.concat(this.getRefCells(ref.refs[i], hiddenInfo, fsheet, frow, fcol));
                 }
                 return a;
             }
             if (ref instanceof NameRef) {
-                var val = this.workbook.nameValue(ref.name);
+                var val = this.nameValue(ref, fsheet, frow, fcol);
+                // XXX: revise this
                 if (val instanceof Ref) {
-                    return this.getRefCells(val, hiddenInfo);
+                    return this.getRefCells(val, hiddenInfo, fsheet, frow, fcol);
                 }
                 return [{
-                    value: new kendo.spreadsheet.calc.runtime.CalcError("NAME")
+                    value: val == null ? new kendo.spreadsheet.calc.runtime.CalcError("NAME") : val
                 }];
             }
             return [];
         },
 
-        getData: function(ref) {
+        nameValue: function(ref, fsheet, frow, fcol) {
+            var val;
+            if (ref.hasSheet()) {
+                // qualified name
+                val = this.workbook.nameValue(ref.print());
+            } else {
+                // try local name
+                ref = ref.clone().setSheet(fsheet, true);
+                val = this.workbook.nameValue(ref.print());
+                if (val == null) {
+                    // try global name
+                    val = this.workbook.nameValue(ref.name);
+                }
+            }
+            if (val instanceof Ref) {
+                val = val.absolute(frow, fcol);
+            }
+            return val;
+        },
+
+        getData: function(ref, fsheet, frow, fcol) {
             var single = ref instanceof CellRef;
             if (ref instanceof NameRef) {
-                single = this.workbook.nameValue(ref) instanceof CellRef;
+                single = this.workbook.nameValue(ref.name) instanceof CellRef;
             }
-            var data = this.getRefCells(ref).map(function(cell){
-                return cell.value;
+            var data = this.getRefCells(ref, false, fsheet, frow, fcol).map(function(cell){
+                var val = cell.value;
+                if (val instanceof kendo.spreadsheet.calc.runtime.Formula) {
+                    val = val.value;
+                }
+                return val;
             });
             return single ? data[0] : data;
         },
@@ -150,6 +175,15 @@
                 // could have been deleted or modified in the mean time,
                 // if the formula was asynchronous.  ignore this result.
                 return false;
+            }
+
+            // formulas may return references.  if a range or union,
+            // we'll just save the first cell.
+            if (value instanceof Ref) {
+                value = this.getData(value, f.sheet, row, col);
+                if (Array.isArray(value)) {
+                    value = value[0];
+                }
             }
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {

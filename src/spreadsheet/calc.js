@@ -15,6 +15,7 @@
     /* jshint latedef: nofunc */
 
     var spreadsheet = kendo.spreadsheet;
+    var Ref = spreadsheet.Ref;
     var RangeRef = spreadsheet.RangeRef;
     var CellRef = spreadsheet.CellRef;
     var NameRef = spreadsheet.NameRef;
@@ -80,7 +81,7 @@
             var m;
             if ((m = /^(\$)?([a-z]+)(\$)?(\d+)$/i.exec(name))) {
                 var row = getrow(m[4]), col = getcol(m[2]);
-                if (row <= 1048576 && col <= 16383) {
+                if (row < 0x100000 && col < 0x4000) {
                     return new CellRef(getrow(m[4]), getcol(m[2]));
                 }
                 // no NameRef-s from this function
@@ -297,8 +298,32 @@
         }
     }
 
+    function parseNameDefinition(name, def) {
+        var nameRef = parseFormula(null, 0, 0, name);
+        if (!(nameRef.ast instanceof NameRef)) {
+            throw new ParseError("Invalid name: " + name);
+        }
+        nameRef = nameRef.ast;
+
+        if (!(def instanceof Ref)) {
+            var defAST = parseFormula(nameRef.sheet, 0, 0, def);
+            if (defAST.ast instanceof Ref) {
+                def = defAST.ast;   // single reference
+            } else if (/^(?:str|num|bool|error)$/.test(defAST.ast.type)) {
+                def = defAST.ast.value; // constant
+            } else {
+                def = makeFormula(defAST); // formula
+            }
+        }
+
+        return {
+            name: nameRef,
+            value: def
+        };
+    }
+
     function makePrinter(exp) {
-        return makeClosure("function(row, col){return(" + print(exp.ast, exp, 0) + ")}");
+        return makeClosure("function(row, col, mod){return(" + print(exp.ast, exp, 0) + ")}");
         function print(node, parent, prec) { // jshint ignore:line, because you are stupid.
             switch (node.type) {
               case "num":
@@ -309,7 +334,7 @@
               case "str":
                 return JSON.stringify(JSON.stringify(node.value));
               case "ref":
-                return "this.refs[" + node.index + "].print(row, col)";
+                return "this.refs[" + node.index + "].print(row, col, mod)";
               case "prefix":
                 return withParens(function(){
                     return JSON.stringify(node.op) + " + " + print(node.exp, node, OPERATORS[node.op]);
@@ -368,7 +393,7 @@
 
         function cps(node, k){
             switch (node.type) {
-              case "ref"     :
+              case "ref"     : return cpsRef(node, k);
               case "num"     :
               case "str"     :
               case "null"    :
@@ -384,8 +409,20 @@
             throw new Error("Cannot CPS " + node.type);
         }
 
+        function cpsRef(node, k) {
+            return node.ref == "name" ? cpsNameRef(node, k) : cpsAtom(node, k);
+        }
+
         function cpsAtom(node, k) {
             return k(node);
+        }
+
+        function cpsNameRef(node, k) {
+            return {
+                type: "func",
+                func: ",getname",
+                args: [ makeContinuation(k), node ]
+            };
         }
 
         function cpsUnary(node, k) {
@@ -882,7 +919,7 @@
             {
                 skip(3);
                 var x = toCell(c);
-                if (!x) {
+                if (!x || !isFinite(x.row)) {
                     x = new NameRef(c.value);
                 }
                 return addPos(x.setSheet(a.value, true), a, c);
@@ -988,6 +1025,9 @@
         }
 
         function getRC(a, b, c) {
+            if (!a && !b && !c) {
+                return 0;
+            }
             if ((!a && !c) || (a && c)) {
                 var negative = a && /-$/.test(a);
                 var num = parseInt(b, 10);
@@ -1002,7 +1042,7 @@
         }
 
         function readSymbol() {
-            var m = input.lookingAt(/^R(\[-?)?([0-9]+)(\])?C(\[-?)?([0-9]+)(\])?/i);
+            var m = input.lookingAt(/^R(\[-?)?([0-9]+)?(\])?C(\[-?)?([0-9]+)?(\])?/i);
             if (m) {
                 var row = getRC(m[1], m[2], m[3]);
                 var col = getRC(m[4], m[5], m[6]);
@@ -1012,7 +1052,10 @@
                         type: "rc",
                         row: row,
                         col: col,
-                        rel: (m[4] ? 1 : 0) | (m[1] ? 2 : 0)
+                        rel: ((m[4] || !(m[4] || m[5] || m[6]) ? 1 : 0) // col
+                              |
+                              (m[1] || !(m[1] || m[2] || m[3]) ? 2 : 0) // row
+                             )
                     };
                 }
             }
@@ -1316,6 +1359,7 @@
         }
     }
 
+    exports.parseNameDefinition = parseNameDefinition;
     exports.parseFormula = parseFormula;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;

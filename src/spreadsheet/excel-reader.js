@@ -93,8 +93,16 @@
             text: function(text) {
                 var attrs = this.is(SEL_DEFINED_NAME);
                 if (attrs && !(bool(attrs["function"]) || bool(attrs.vbProcedure))) {
-                    var ref = parseReference(text, true);
-                    workbook.defineName(attrs.name, ref, bool(attrs.hidden));
+                    var localSheetId = attrs.localSheetId;
+                    var sheet = null;
+                    if (localSheetId != null) {
+                        sheet = items[localSheetId].options.name;
+                    }
+                    var name = attrs.name;
+                    if (sheet) {
+                        name = "'" + sheet.replace(/\'/g, "\\'") + "'!" + name;
+                    }
+                    workbook.defineName(name, text, bool(attrs.hidden));
                 }
             }
         });
