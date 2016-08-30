@@ -34,7 +34,7 @@ namespace Kendo.Mvc.UI
         /// <param name="options">The target dictionary.</param>
         public void SerializeTo(string key, IDictionary<string, object> options)
         {
-           if (AllowedExtensions.Length > 0)
+           if (AllowedExtensions != null)
             {
                 options["allowedExtensions"] = AllowedExtensions;
             }
