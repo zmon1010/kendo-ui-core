@@ -1325,6 +1325,16 @@
         equal(tableElement[0].style.width, width + PX);
     });
 
+if (kendo.support.browser.mozilla) {
+    test("should set computed style width in percentages to its element", function() {
+        tableElement[0].style.width = "1%";
+
+        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 20);
+
+        roughlyEqual(tableElement[0].style.width, "40%", 5.5);
+    });
+}
+else {
     test("should set computed style width in percentages to its element", function() {
         tableElement[0].style.width = "1%";
 
@@ -1332,6 +1342,7 @@
 
         roughlyEqual(tableElement[0].style.width, "40%", 1.5);
     });
+}
 
     module("editor column resizing without explicit dimensions", {
         setup: function() {
