@@ -1,0 +1,166 @@
+﻿<div id="example">
+    <div class="box wide">
+        <div class="box-col">
+            <h4>Set Visible Range</h4>
+            <p>Start date of range</p>
+            <input id="start-range" />
+            <br />
+            <br />
+            <p>End date of range</p>
+            <input id="end-range" />
+        </div>
+        <div class="box-col">
+            <h4>Set Selected Date</h4>
+            <br/>
+            <input id="date" />
+        </div>
+    </div>
+
+    <div id="gantt"></div>
+
+    <script>
+        $(document).ready(function () {
+            var serviceRoot = "//demos.telerik.com/kendo-ui/service";
+            var tasksDataSource = new kendo.data.GanttDataSource({
+                transport: {
+                    read: {
+                        url: serviceRoot + "/GanttTasks",
+                        dataType: "jsonp"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            id: { from: "ID" },
+                            orderId: { from: "OrderID", type: "number" },
+                            parentId: { from: "ParentID", type: "number" },
+                            start: { from: "Start", type: "date" },
+                            end: { from: "End", type: "date" },
+                            title: { from: "Title", type: "string" },
+                            percentComplete: { from: "PercentComplete", type: "number" },
+                            summary: { from: "Summary", type: "boolean" },
+                            expanded: { from: "Expanded", type: "boolean" }
+                        }
+                    }
+                }
+            });
+
+            var dependenciesDataSource = new kendo.data.GanttDependencyDataSource({
+                transport: {
+                    read: {
+                        url: serviceRoot + "/GanttDependencies",
+                        dataType: "jsonp"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            id: { from: "ID", type: "number" },
+                            predecessorId: { from: "PredecessorID", type: "number" },
+                            successorId: { from: "SuccessorID", type: "number" },
+                            type: { from: "Type", type: "number" }
+                        }
+                    }
+                }
+            });
+
+            var gantt = $("#gantt").kendoGantt({
+                dataSource: tasksDataSource,
+                dependencies: dependenciesDataSource,
+                views: [
+                    "day",
+                    { type: "week", selected: true },
+                    "month"
+                ],
+                columns: [
+                    { field: "id", title: "ID", width: 60 },
+                    { field: "title", title: "Title" },
+                    { field: "start", title: "Start Time", format: "{0:MM/dd/yyyy}", width: 100 },
+                    { field: "end", title: "End Time", format: "{0:MM/dd/yyyy}", width: 100 }
+                ],
+                date: new Date("2014/06/01"),
+                height: 700,
+                editable: false,
+                showWorkHours: false,
+                showWorkDays: false,
+                snap: false
+            }).data("kendoGantt");
+
+            var startRange = $("#start-range").kendoDatePicker({
+                value: new Date("2014/6/1"),
+                disableDates: function (date) {
+                    var end;
+                    if (endRange) {
+                        end = endRange.value();
+                    } else {
+                        end = new Date("2014/7/13");
+                    }
+                    if (date >= end) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                open: function (e) {
+                    e.sender.setOptions(e.sender.options);
+                },
+                change: function () {
+                    var range = gantt.range();
+                    range.start = this.value();
+                    gantt.range(range);
+                    if (this.value() > date.value()) {
+                        date.value("");
+                    }
+                }
+            }).data("kendoDatePicker");
+
+            var endRange = $("#end-range").kendoDatePicker({
+                value: new Date("2014/7/13"),
+                disableDates: function (date) {
+                    var start = startRange.value() || new Date("2014/6/1");
+                    if (date <= start) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                open: function (e) {
+                    e.sender.setOptions(e.sender.options);
+                },
+                change: function () {
+                    var range = gantt.range();
+                    range.end = this.value();
+                    gantt.range(range);
+                    if (this.value() <= date.value()) {
+                        date.value("");
+                    }
+                }
+            }).data("kendoDatePicker");
+
+            var date = $("#date").kendoDatePicker({
+                value: new Date("2014/6/1"),
+                disableDates: function (date) {
+                    var start = startRange.value() || new Date("2014/6/1");
+                    var end = endRange.value() || new Date("2014/7/13");
+                    if (date < start || date >= end) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                open: function (e) {
+                    e.sender.setOptions(e.sender.options);
+                },
+                change: function () {
+                    gantt.date(this.value());
+                }
+            }).data("kendoDatePicker");
+
+            $(document).bind("kendo:skinChange", function () {
+                gantt.refresh();
+            });
+        });
+    </script>
+</div>
