@@ -5059,6 +5059,24 @@
         }
       },
       {
+        "text": "Date Grouping",
+        "url": "scheduler/date-grouping",
+        "new":  true,
+        "title": {
+          "kendo-ui": "Date grouping in Kendo UI Scheduler",
+          "aspnet-mvc": "Date grouping in ASP.NET MVC Scheduler control"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows horizontal and vertical grouping by Date in scheduler widget.",
+          "aspnet-mvc": "This demo shows horizontal and vertical grouping by Date in ASP.NET MVC Scheduler."
+        },
+        "description": {
+          "kendo-ui": "<p>This demo shows horizontal and vertical grouping by Date in scheduler widget. The direction of the grouping can be controlled with the group -&gt;orientation property (default value is horizontal). <p>The available orientation options are horizontal and vertical, having in mind that the agenda view is always in vertical orientation.</p>",
+          "aspnet-mvc": "<p>This demo shows horizontal and vertical grouping by Date in ASP.NET MVC Scheduler. The direction of the grouping can be controlled with the Orientation property, i.e.</p> <p>.Group(group =&gt; group.Resources(\"Rooms\").Orientation(SchedulerGroupOrientation.Horizontal))</p> <p>The available options of the SchedulerGroupOrientation setting are Default, Horizontal and Vertical.</p>"
+        }
+      },
+
+      {
         "text": "Templates",
         "url": "scheduler/templates",
         "title": {
@@ -6663,6 +6681,20 @@
           "kendo-ui": "This sample illustrates how you can easily create tree nodes with checkboxes by simply setting the child item of the checkboxes to true.",
           "aspnet-mvc": "This sample illustrates how you can easily create tree nodes with checkboxes in ASP.NET MVC Treeview by simply setting the child item of the checkboxes to true."
         }
+      },
+      {
+         "packages": [
+             "!mvc"
+         ],
+         "text": "Filter TreeView in dialog",
+         "url": "treeview/filter-treeview-in-dialog",
+         "new":  true,
+         "title": {
+            "kendo-ui": "Filtering Kendo UI TreeView with checkboxes nested in a dialog"
+         },
+         "meta": {
+           "kendo-ui": "This demo shows how Kendo UI TreeView widget with checkboxes nested in dialog can be filtered."
+         }
       },
       {
         "text": "Binding to local data",
