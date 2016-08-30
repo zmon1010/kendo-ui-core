@@ -576,7 +576,7 @@
             deltaX: DELTA_X,
             deltaY: DELTA_Y,
             expectedDeltaX: 0,
-            expectedDeltaY: DELTA_Y
+            expectedDeltaY: (-1) * DELTA_Y
         });
     });
 
@@ -587,7 +587,7 @@
             deltaX: DELTA_X,
             deltaY: DELTA_Y,
             expectedDeltaX: DELTA_X,
-            expectedDeltaY: DELTA_Y
+            expectedDeltaY: (-1) * DELTA_Y
         });
     });
 
@@ -597,8 +597,8 @@
         assertDragDelta({
             deltaX: DELTA_X,
             deltaY: DELTA_Y,
-            expectedDeltaX: DELTA_X,
-            expectedDeltaY: DELTA_Y
+            expectedDeltaX: (-1) * DELTA_X,
+            expectedDeltaY: (-1) * DELTA_Y
         });
     });
 
@@ -630,7 +630,7 @@
         assertDragDelta({
             deltaX: DELTA_X,
             deltaY: DELTA_Y,
-            expectedDeltaX: DELTA_X,
+            expectedDeltaX: (-1) * DELTA_X,
             expectedDeltaY: DELTA_Y
         });
     });
@@ -641,7 +641,7 @@
         assertDragDelta({
             deltaX: DELTA_X,
             deltaY: DELTA_Y,
-            expectedDeltaX: DELTA_X,
+            expectedDeltaX: (-1) * DELTA_X,
             expectedDeltaY: 0
         });
     });

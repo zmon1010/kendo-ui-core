@@ -13,17 +13,14 @@
     var Draggable = kendo.ui.Draggable;
     var Observable = kendo.Observable;
 
-    var AND = "and";
+    var NS = ".kendoEditorTableResizeHandle";
+
     var DRAG_START = "dragStart";
     var DRAG = "drag";
     var DRAG_END = "dragEnd";
-    var NS = ".kendoEditorTableResizeHandle";
     var HALF_INSIDE = "halfInside";
     var MOUSE_OVER = "mouseover";
     var MOUSE_OUT = "mouseout";
-    var HORIZONTAL = "horizontal";
-    var VERTICAL = "vertical";
-    var HORIZONTAL_AND_VERTICAL = HORIZONTAL + AND + VERTICAL;
 
     var BODY = "body";
     var TABLE = "table";
@@ -82,9 +79,7 @@
         ],
 
         show: function() {
-            var that = this;
-
-            that._setPosition();
+            this._setPosition();
         },
 
         _setPosition: function() {
@@ -188,21 +183,8 @@
         _initDraggingStrategy: function() {
             var that = this;
 
-            function getStrategyName(direction) {
-                return {
-                    "east": HORIZONTAL,
-                    "north": VERTICAL,
-                    "northeast": HORIZONTAL_AND_VERTICAL,
-                    "northwest": HORIZONTAL_AND_VERTICAL,
-                    "south": VERTICAL,
-                    "southeast": HORIZONTAL_AND_VERTICAL,
-                    "southwest": HORIZONTAL_AND_VERTICAL,
-                    "west": HORIZONTAL
-                }[direction];
-            }
-
             that._draggingStrategy = HandleDraggingStrategy.create({
-                name: getStrategyName(that.options.direction)
+                name: that.options.direction
             });
         }
     });
@@ -414,12 +396,23 @@
         },
 
         options: {
-            direction: "",
-            deltaAdjustment: {}
+            deltaX: {
+                adjustment: null,
+                modifier: null
+            },
+            deltaY: {
+                adjustment: null,
+                modifier: null
+            }
         },
 
         adjustDragDelta: function(deltas) {
-            return extend(deltas, this.options.deltaAdjustment);
+            var options = this.options;
+
+            return {
+                deltaX: deltas.deltaX * options.deltaX.adjustment * options.deltaX.modifier,
+                deltaY: deltas.deltaY * options.deltaY.adjustment * options.deltaY.modifier
+            };
         }
     });
 
@@ -429,30 +422,126 @@
 
     var HorizontalDraggingStrategy = HandleDraggingStrategy.extend({
         options: {
-            direction: HORIZONTAL,
-            deltaAdjustment: {
-                deltaY: 0
+            deltaX: {
+                adjustment: 1,
+                modifier: 1
+            },
+            deltaY: {
+                adjustment: 0,
+                modifier: 0
             }
         }
     });
-    DraggingStrategyFactory.current.register(HORIZONTAL, HorizontalDraggingStrategy);
+
+    var EastDraggingStrategy = HorizontalDraggingStrategy.extend({
+        options: {
+            deltaX: {
+                modifier: 1
+            }
+        }
+    });
+    DraggingStrategyFactory.current.register(EAST, EastDraggingStrategy);
+
+    var WestDraggingStrategy = HorizontalDraggingStrategy.extend({
+        options: {
+            deltaX: {
+                modifier: (-1)
+            }
+        }
+    });
+    DraggingStrategyFactory.current.register(WEST, WestDraggingStrategy);
 
     var VerticalDraggingStrategy = HandleDraggingStrategy.extend({
         options: {
-            direction: VERTICAL,
-            deltaAdjustment: {
-                deltaX: 0
+            deltaX: {
+                adjustment: 0,
+                modifier: 0
+            },
+            deltaY: {
+                adjustment: 1,
+                modifier: 1
             }
         }
     });
-    DraggingStrategyFactory.current.register(VERTICAL, VerticalDraggingStrategy);
+
+    var NorthDraggingStrategy = VerticalDraggingStrategy.extend({
+        options: {
+            deltaY: {
+                modifier: (-1)
+            }
+        }
+    });
+    DraggingStrategyFactory.current.register(NORTH, NorthDraggingStrategy);
+
+    var SouthDraggingStrategy = VerticalDraggingStrategy.extend({
+        options: {
+            deltaY: {
+                modifier: 1
+            }
+        }
+    });
+    DraggingStrategyFactory.current.register(SOUTH, SouthDraggingStrategy);
 
     var HorizontalAndVerticalDraggingStrategy = HandleDraggingStrategy.extend({
         options: {
-            direction: HORIZONTAL_AND_VERTICAL
+            deltaX: {
+                adjustment: 1,
+                modifier: 1
+            },
+            deltaY: {
+                adjustment: 1,
+                modifier: 1
+            }
         }
     });
-    DraggingStrategyFactory.current.register(HORIZONTAL_AND_VERTICAL, HorizontalAndVerticalDraggingStrategy);
+
+    var NorthEastDraggingStrategy = HorizontalAndVerticalDraggingStrategy.extend({
+        options: {
+            deltaX: {
+                modifier: 1
+            },
+            deltaY: {
+                modifier: (-1)
+            }
+        }
+    });
+    DraggingStrategyFactory.current.register(NORTHEAST, NorthEastDraggingStrategy);
+
+    var NorthWestDraggingStrategy = HorizontalAndVerticalDraggingStrategy.extend({
+        options: {
+            deltaX: {
+                modifier: (-1)
+            },
+            deltaY: {
+                modifier: (-1)
+            }
+        }
+    });
+    DraggingStrategyFactory.current.register(NORTHWEST, NorthWestDraggingStrategy);
+
+    var SouthEastDraggingStrategy = HorizontalAndVerticalDraggingStrategy.extend({
+        options: {
+            deltaX: {
+                modifier: 1
+            },
+            deltaY: {
+                modifier: 1
+            }
+        }
+    });
+    DraggingStrategyFactory.current.register(SOUTHEAST, SouthEastDraggingStrategy);
+
+    var SouthWestDraggingStrategy = HorizontalAndVerticalDraggingStrategy.extend({
+        options: {
+            deltaX: {
+                modifier: (-1)
+            },
+            deltaY: {
+                modifier: 1
+            }
+        }
+    });
+    DraggingStrategyFactory.current.register(SOUTHWEST, SouthWestDraggingStrategy);
 
     extend(Editor, {
         TableResizeHandle: TableResizeHandle
