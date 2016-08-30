@@ -3047,6 +3047,20 @@
                 }
             },
             {
+                "text": "Date Grouping",
+                "url": "scheduler/date-grouping",
+                "new":  true,
+                "title": {
+                    "aspnet-mvc": "Date grouping in ASP.NET MVC Scheduler control"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows horizontal and vertical grouping by Date in ASP.NET MVC Scheduler."
+                },
+                "description": {
+                    "aspnet-mvc": "<p>This demo shows horizontal and vertical grouping by Date in ASP.NET MVC Scheduler. The direction of the grouping can be controlled with the Orientation property, i.e.</p> <p>.Group(group =&gt; group.Resources(\"Rooms\").Orientation(SchedulerGroupOrientation.Horizontal))</p> <p>The available options of the SchedulerGroupOrientation setting are Default, Horizontal and Vertical.</p>"
+                }
+            },
+            {
                 "text": "Templates",
                 "url": "scheduler/templates",
                 "title": {
