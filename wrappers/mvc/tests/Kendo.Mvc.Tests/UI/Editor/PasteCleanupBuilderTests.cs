@@ -35,8 +35,16 @@ namespace Kendo.Mvc.UI.Tests
 		public void Set_Custom()
 		{
 			builder.Custom("customCleanup");
-			settings.Custom.ShouldEqual("customCleanup");
+			settings.Custom.HandlerName.ShouldEqual("customCleanup");
 		}
+
+        [Fact]
+        public void Set_Custom_Function()
+        {
+            Func<object, object> handler = o => o.ToString();
+            builder.Custom(handler);
+            settings.Custom.TemplateDelegate.ShouldBeSameAs(handler);
+        }
 
 		[Fact]
 		public void Set_KeepNewLines()
