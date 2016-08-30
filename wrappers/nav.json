@@ -2810,101 +2810,115 @@
         },
         "spriteCssClass": "ganttIcon",
         "items": [
-            {
-                "text": "Basic usage",
-                "url": "gantt/index",
-                "title": {
-                    "aspnet-mvc": "Example of Kendo UI jQuery-based Gantt chart"
-                },
-                "meta": {
-                    "aspnet-mvc": "Explore the example of HTML5 gantt chart widget, included in Kendo UI Web, to find how easy it is to add a gantt chart to your website or web app."
-                }
-            },
-            {
-                "text": "Column resizing",
-                "url": "gantt/column-resizing",
-                "title": {
-                    "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Gantt"
-                },
-                "meta": {
-                    "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC Gantt."
-                }
-            },
-            {
-                "text": "Export to PDF",
-                "url": "gantt/pdf-export",
-                "title": {
-                    "aspnet-mvc": "Exporting to PDF"
-                },
-                "meta": {
-                    "aspnet-mvc": "Export Kendo UI gantt as PDF file"
-                }
-            },
-            {
-                "text": "Resources",
-                "url": "gantt/resources",
-                "title": {
-                    "aspnet-mvc": "Resources in Kendo UI Gantt"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows how to assign resources to gantt tasks."
-                }
-            },
-            {
-                "text": "Events",
-                "url": "gantt/events",
-                "title": {
-                    "aspnet-mvc": "Example of using events in Kendo UI Gantt control"
-                },
-                "meta": {
-                    "aspnet-mvc": "This example demonstrates different events which are available in KendoGantt widget and the code explains how you can use them for your project."
-                }
-            },
-            {
-                "text": "API",
-                "url": "gantt/api",
-                "title": {
-                    "aspnet-mvc": "Kendo UI Gantt API Functions Example"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows API Functions of KendoGantt. Demo Source Code will show you how to call methods on the widget instance to script its behavior."
-                }
-            },
-            {
-                "text": "Keyboard navigation",
-                "url": "gantt/keyboard-navigation",
-                "title": {
-                    "aspnet-mvc": "Keyboard navigation in Kendo UI Gantt"
-                },
-                "meta": {
-                    "aspnet-mvc": "Look at this Kendo UI Gantt demo to learn how different keyboard combinations could be used to navigate in the component."
-                }
-            },
-            {
-                "text": "RTL Support",
-                "url": "gantt/right-to-left-support",
-                "title": {
-                    "aspnet-mvc": "Right-to-left (RTL) support of Kendo UI Gantt"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows the Right-to-left (RTL) support of Kendo UI Gantt."
-                }
-            },
-            {
-                "text": "Task Template",
-                "url": "gantt/task-template",
-                "title": {
-                    "aspnet-mvc": "Task template support of Kendo UI Gantt"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows the Task template support of Kendo UI Gantt."
-                }
-            },
-            {
-                "text": "Server binding",
-                "url": "gantt/serverbinding"
-            }
-        ],
+      {
+        "text": "Basic usage",
+        "url": "gantt/index",
+        "title": {
+          "aspnet-mvc": "Example of Kendo UI jQuery-based Gantt chart"
+        },
+        "meta": {
+          "aspnet-mvc": "Explore the example of HTML5 gantt chart widget, included in Kendo UI Web, to find how easy it is to add a gantt chart to your website or web app."
+        }
+      },
+      {
+        "text": "Column resizing",
+        "url": "gantt/column-resizing",
+        "title": {
+          "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Gantt"
+        },
+        "meta": {
+          "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC Gantt."
+        },
+        "group": "Functionality"
+      },
+      {
+        "text": "Export to PDF",
+        "url": "gantt/pdf-export",
+        "title": {
+          "aspnet-mvc": "Exporting to PDF"
+        },
+        "meta": {
+          "aspnet-mvc": "Export Kendo UI gantt as PDF file"
+        }
+      },
+      {
+        "text": "Resources",
+        "url": "gantt/resources",
+        "title": {
+          "aspnet-mvc": "Resources in Kendo UI Gantt"
+        },
+        "meta": {
+          "aspnet-mvc": "This demo shows how to assign resources to gantt tasks."
+        }
+      },
+      {
+        "text": "Task Template",
+        "url": "gantt/task-template",
+        "title": {
+          "aspnet-mvc": "Task template support of Kendo UI Gantt"
+        },
+        "meta": {
+          "aspnet-mvc": "This demo shows the Task template support of Kendo UI Gantt."
+        }
+      },
+      {
+        "text": "Selected Date and Range",
+        "url": "gantt/selected-date-and-range",
+        "title": {
+          "aspnet-mvc": "Setting selected date and selected visible range of Telerik ASP.NET MVC Gantt"
+        },
+        "meta": {
+          "aspnet-mvc": "This demo shows how to select date and visible range, using the corresponding Telerik ASP.NET MVC Gantt properties."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "gantt/events",
+        "title": {
+          "aspnet-mvc": "Example of using events in Kendo UI Gantt control"
+        },
+        "meta": {
+          "aspnet-mvc": "This example demonstrates different events which are available in KendoGantt widget and the code explains how you can use them for your project."
+        },
+        "group": "API"
+      },
+      {
+        "text": "API",
+        "url": "gantt/api",
+        "title": {
+          "aspnet-mvc": "Kendo UI Gantt API Functions Example"
+        },
+        "meta": {
+          "aspnet-mvc": "This demo shows API Functions of KendoGantt. Demo Source Code will show you how to call methods on the widget instance to script its behavior."
+        }
+      },
+      {
+        "text": "RTL Support",
+        "url": "gantt/right-to-left-support",
+        "title": {
+          "aspnet-mvc": "Right-to-left (RTL) support of Kendo UI Gantt"
+        },
+        "meta": {
+          "aspnet-mvc": "This demo shows the Right-to-left (RTL) support of Kendo UI Gantt."
+        },
+        "group": "Accessibility and Internationalization"
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "gantt/keyboard-navigation",
+        "title": {
+          "aspnet-mvc": "Keyboard navigation in Kendo UI Gantt"
+        },
+        "meta": {
+          "aspnet-mvc": "Look at this Kendo UI Gantt demo to learn how different keyboard combinations could be used to navigate in the component."
+        }
+      },
+      {
+        "text": "Server binding",
+        "url": "gantt/serverbinding",
+        "group": "Binding"
+      }
+    ],
         "category": "Scheduling"
     },
     {
