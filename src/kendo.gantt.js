@@ -53,8 +53,8 @@ var __meta__ = { // jshint ignore:line
     var DOT = ".";
     var TASK_DELETE_CONFIRM = "Are you sure you want to delete this task?";
     var DEPENDENCY_DELETE_CONFIRM = "Are you sure you want to delete this dependency?";
-    var TOGGLE_BUTTON_TEMPLATE = kendo.template('<button class="#=styles.buttonToggle#"><span class="#=styles.iconToggle#">&nbps;</span></button>');
-    var BUTTON_TEMPLATE = '<button class="#=styles.button# #=className#" '+
+    var TOGGLE_BUTTON_TEMPLATE = kendo.template('<button class="#=styles.buttonToggle#" type="button"><span class="#=styles.iconToggle#">&nbps;</span></button>');
+    var BUTTON_TEMPLATE = '<button class="#=styles.button# #=className#" type="button" '+
             '#if (action) {#' +
                 'data-action="#=action#"' +
             '#}#' +
