@@ -506,6 +506,12 @@ test("elements with class k-column-resize-handle are not serialized", function()
     equal(editor.value(), "");
 });
 
+test("elements with class k-row-resize-handle are not serialized", function() {
+    editor.body.innerHTML = '<div class="k-row-resize-handle"></div>';
+
+    equal(editor.value(), "");
+});
+
 module("editor content parsing");
 
 test("removes onerror attribute", function() {
