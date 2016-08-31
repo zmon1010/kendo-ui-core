@@ -47154,8 +47154,7 @@ client-side events to build your own UI.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Fires when the upload has been cancelled while in progress.Note: The cancel event fires only when the upload is in
-async mode.</description>
+            <description>Fires when the upload has been cancelled while in progress.</description>
             <name>cancel</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -47437,8 +47436,7 @@ This option will be ignored if the browser doesn't support File API.</descriptio
 
 
     <tag>
-        <description>Fires when the upload has been cancelled while in progress.Note: The cancel event fires only when the upload is in
-async mode.</description>
+        <description>Fires when the upload has been cancelled while in progress.</description>
         <name>upload-cancel</name>
         <tag-class>com.kendoui.taglib.upload.CancelFunctionTag</tag-class>
         <body-content>JSP</body-content>

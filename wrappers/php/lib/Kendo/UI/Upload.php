@@ -129,8 +129,7 @@ client-side events to build your own UI.
 
     /**
     * Sets the cancel event of the Upload.
-    * Fires when the upload has been cancelled while in progress.Note: The cancel event fires only when the upload is in
-async mode.
+    * Fires when the upload has been cancelled while in progress.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */

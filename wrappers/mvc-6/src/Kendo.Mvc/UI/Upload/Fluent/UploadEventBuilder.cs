@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when the upload has been cancelled while in progress.Note: The cancel event fires only when the upload is in\n\t\t/// async mode.
+        /// Fires when the upload has been cancelled while in progress.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the cancel event.</param>
         public UploadEventBuilder Cancel(string handler)
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when the upload has been cancelled while in progress.Note: The cancel event fires only when the upload is in\n\t\t/// async mode.
+        /// Fires when the upload has been cancelled while in progress.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public UploadEventBuilder Cancel(Func<object, object> handler)
