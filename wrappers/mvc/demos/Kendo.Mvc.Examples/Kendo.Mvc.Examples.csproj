@@ -236,6 +236,7 @@
     <Compile Include="Controllers\Editor\Immutable_ElementsController.cs" />
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
+    <Compile Include="Controllers\Gantt\Selected_Date_and_RangeController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MediaPlayer\ApiController.cs" />
@@ -664,7 +665,7 @@
     <Compile Include="Controllers\Scheduler\ResourcesController.cs" />
     <Compile Include="Controllers\Scheduler\Resources_Grouping_HorizontalController.cs" />
     <Compile Include="Controllers\Scheduler\Resources_Grouping_VerticalController.cs" />
-	<Compile Include="Controllers\Scheduler\Date_GroupingController.cs" />
+    <Compile Include="Controllers\Scheduler\Date_GroupingController.cs" />
     <Compile Include="Controllers\Scheduler\Right_To_Left_SupportController.cs" />
     <Compile Include="Controllers\Scheduler\SelectionController.cs" />
     <Compile Include="Controllers\Scheduler\TemplatesController.cs" />
@@ -2942,6 +2943,7 @@
     <Content Include="Views\mediaplayer\events.cshtml" />
     <Content Include="Views\mediaplayer\index.cshtml" />
     <Content Include="Views\mediaplayer\playlist.cshtml" />
+    <Content Include="Views\gantt\selected_date_and_range.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
@@ -3223,7 +3225,7 @@
     <Content Include="Views\scheduler\resources.cshtml" />
     <Content Include="Views\scheduler\resources_grouping_horizontal.cshtml" />
     <Content Include="Views\scheduler\resources_grouping_vertical.cshtml" />
-	<Content Include="Views\scheduler\date_grouping.cshtml" />
+    <Content Include="Views\scheduler\date_grouping.cshtml" />
     <Content Include="Views\scheduler\right_to_left_support.cshtml" />
     <Content Include="Views\scheduler\selection.cshtml" />
     <Content Include="Views\scheduler\templates.cshtml" />
