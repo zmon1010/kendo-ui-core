@@ -1838,16 +1838,6 @@
                 }
             },
             {
-                "text": "Custom cell editors",
-                "url": "spreadsheet/custom-editors",
-                "title": {
-                    "aspnet-mvc": "Custom editors"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows how to define your own custom cell editors"
-                }
-            },
-            {
                 "text": "Events",
                 "url": "spreadsheet/events",
                 "title": {
