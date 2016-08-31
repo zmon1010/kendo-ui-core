@@ -80,7 +80,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
         protected void LoadCategories()
         {
-            ViewBag.Categories = LoadWidgets().GroupBy(w => w.Category).ToList();
+            ViewBag.WidgetCategories = LoadWidgets().GroupBy(w => w.Category).ToList();
         }
 
         protected IEnumerable<NavigationWidget> LoadWidgets()

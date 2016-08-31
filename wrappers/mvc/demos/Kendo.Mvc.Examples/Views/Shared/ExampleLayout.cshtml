@@ -24,7 +24,7 @@
     <div id="nav-wrapper">
         <div id="nav">
             <div id="root-nav">
-                @foreach (IGrouping<string, NavigationWidget> category in ViewBag.Categories)
+                @foreach (IGrouping<string, NavigationWidget> category in ViewBag.WidgetCategories)
                 {
                     <ul class="root-nav-categories">
                         @if (category.Any(c => c.ShouldInclude()))
