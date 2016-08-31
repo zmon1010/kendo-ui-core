@@ -23,9 +23,10 @@ namespace Kendo.Mvc.Examples.Extensions
             }
 
             var routeData = html.ViewContext.RouteData;
-            var currentAction = routeData.Values["section"];
-            var currentController = routeData.Values["example"];
-            if (href.EndsWith(currentAction + "/" + currentController))
+            var currentAction = routeData.Values["action"].ToString().ToLower().Replace("_", "-");
+            var currentController = routeData.Values["controller"].ToString().ToLower().Replace("_", "-");
+
+            if (href.EndsWith(currentController + "/" + currentAction))
             {
                 className += " active";
             }
