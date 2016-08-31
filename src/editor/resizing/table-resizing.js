@@ -113,9 +113,8 @@
                 deltaX: 0,
                 deltaY: 0
             }, args);
-            var rtlModifier = that.options.rtl ? (-1) : 1;
 
-            that._resizeWidth(deltas.deltaX * rtlModifier);
+            that._resizeWidth(deltas.deltaX);
             that._resizeHeight(deltas.deltaY);
 
             that.showResizeHandles();

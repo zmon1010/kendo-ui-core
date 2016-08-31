@@ -1090,7 +1090,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     module("editor table resizing resize width in pixels rtl", {
         setup: function() {
-            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css("border", "1px solid red");
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).addClass("k-rtl").css("border", "1px solid red");
             tableElement = $(QUnit.fixture).find("#table").css("width", "400px");
             tableResizing = new TableResizing(tableElement[0], {
                 rootElement: QUnit.fixture,
@@ -1106,23 +1106,23 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     });
 
     test("should decrease width", function() {
-        var deltaX = 20;
+        var deltaX = (-1) * 20;
 
         tableResizing.resize({ deltaX: deltaX });
 
-        equal(tableElement.css("width"), initialWidth + (RTL_MODIFIER * deltaX) + PX);
+        equal(tableElement.css("width"), initialWidth + deltaX + PX);
     });
 
     test("should increase width", function() {
         var deltaX = 20;
 
-        tableResizing.resize({ deltaX: RTL_MODIFIER * deltaX });
+        tableResizing.resize({ deltaX: deltaX });
 
         equal(tableElement.css("width"), initialWidth + deltaX + PX);
     });
 
     test("should not set width lower than min", function() {
-        tableResizing.resize({ deltaX: MAX });
+        tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
 
         ok(parseFloat(tableElement.css("width")) >= tableResizing.options.minWidth);
     });
@@ -1130,21 +1130,21 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should not set width greater than parent width", function() {
         wrapper.css("padding", "20px");
 
-        tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
+        tableResizing.resize({ deltaX: MAX });
 
         equal(tableElement[0].style.width, wrapper.width() + PX);
     });
 
     module("editor table resizing resize width in scrolled container rtl", {
         setup: function() {
-            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).css({
+            wrapper = $(CONTENT_HTML).appendTo(QUnit.fixture).addClass("k-rtl").css({
                 border: "1px solid red",
                 width: "400px",
                 overflow: "scroll"
             });
             innerElement = $(wrapper).find("#innerElement").css({
                 border: "1px solid blue",
-                width: $(wrapper).width() + 200
+                width: $(wrapper).width() + 50
             });
             tableElement = $(QUnit.fixture).find("#table");
             tableResizing = new TableResizing(tableElement[0], {
@@ -1163,9 +1163,9 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var initialWrapperWidth = wrapper.width();
         $(wrapper).scrollLeft(scrollValue);
 
-        tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
+        tableResizing.resize({ deltaX: MAX });
 
-        equal(tableElement[0].style.width, wrapper.width() + (RTL_MODIFIER * scrollValue) + PX);
+        equal(tableElement[0].style.width, initialWrapperWidth + RTL_MODIFIER * scrollValue + PX);
     });
 
     module("editor table resizing nested table without explicit dimensions", {
