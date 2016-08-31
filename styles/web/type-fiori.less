@@ -78,10 +78,10 @@
 @event-inverse-text-color: @normal-text-color;
 @scheduler-nonwork-background-color: darken(@hover-background, 2%);
 @resize-background-color: @background;
-@upload-progress-background-color: @info;
+@upload-progress-background-color: darken(@info, 50%);
 @upload-progress-text-color: darken(@info, 50%);
-@upload-success-background-color: @success;
-@upload-success-text-color: darken(@success, 50%);
+@upload-success-background-color: darken(@success, 40%);
+@upload-success-text-color: darken(@success, 40%);
 @upload-error-background-color: @error;
 @upload-error-text-color: darken(@error, 50%);
 @task-summary-color: darken(@background, 20%);
@@ -125,7 +125,7 @@
 @window-shadow-style: 1px 1px 13px 1px;
 @filter-menu-content-background: @background;
 @icon-background-color: transparent;
-@disabled-background-color: darken(@background, 5%);
+@disabled-background-color: darken(@background, 25%);
 @disabled-border-color: darken(@background, 5%);
 @disabled-gradient: none;
 @treeview-text-color: @normal-text-color;
@@ -694,7 +694,7 @@ html .km-pane-wrapper .k-header
 {
     color: @disabled-text-color;
     border-color: @disabled-border-color;
-    background-color: @disabled-background-color;
+    background-color: @disabled-border-color;
     .composite-background(@disabled-gradient);
 }
 
@@ -1263,6 +1263,55 @@ div.k-filebrowser-dropzone em
 .k-file-error .k-progress
 {
     background-color: @upload-error-background-color;
+}
+
+.k-file-extension-wrapper,
+.k-multiple-files-extension-wrapper {
+    color: @disabled-background-color;
+    border-color: @disabled-background-color;
+}
+
+.k-file-invalid .k-file-name-invalid {
+    color: @upload-error-text-color;
+}
+
+.k-file-invalid-extension-wrapper,
+.k-multiple-files-invalid-extension-wrapper {
+    color: @upload-error-text-color;
+    border-color: @upload-error-text-color;
+}
+
+.k-file-extension-wrapper:before,
+.k-multiple-files-extension-wrapper:before {
+    background-color: @widget-background-color;
+    border-color: transparent transparent @disabled-background-color @disabled-background-color;
+}
+
+.k-file-invalid-extension-wrapper:before,
+.k-multiple-files-invalid-extension-wrapper:before {
+    background-color: @widget-background-color;
+    border-color: transparent transparent @upload-error-text-color @upload-error-text-color;
+}
+
+.k-multiple-files-extension-wrapper:after {
+    border-top-color: @disabled-background-color;
+    border-left-color: @disabled-background-color;
+}
+
+.k-multiple-files-invalid-extension-wrapper:after {
+    border-top-color: @upload-error-text-color;
+    border-left-color: @upload-error-text-color;
+}
+
+.k-file-size,
+.k-file-information,
+.k-file-validation-message {
+    color: @disabled-text-color;
+}
+
+.k-upload .k-upload-selected {
+    color: @accent;
+    border-color: @widget-border-color;
 }
 
 /* ImageBrowser */

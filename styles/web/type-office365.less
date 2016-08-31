@@ -38,19 +38,19 @@
 @error-text-color: lighten(@normal-text-color, 22%);
 @error-background-color: lighten(@error, 2%);
 @error-border-color: darken(@background, 14%);
-@disabled-text-color: darken(@hover-background, 29%);
-@notification-info-background-color: @info;
+@disabled-text-color: darken(@hover-background, 31%);
+@notification-info-background-color: lighten(@info, 39%);
 @notification-info-text-color: lighten(@normal-text-color, 10%);
-@notification-info-border-color: @info;
-@notification-success-background-color: @success;
+@notification-info-border-color: @notification-info-background-color;
+@notification-success-background-color: lighten(@success, 41%);
 @notification-success-text-color: lighten(@normal-text-color, 10%);
-@notification-success-border-color: @success;
+@notification-success-border-color: @notification-success-background-color;
 @notification-warning-background-color: @warning;
 @notification-warning-text-color: lighten(@normal-text-color, 10%);
 @notification-warning-border-color: @warning;
-@notification-error-background-color: @error;
+@notification-error-background-color: lighten(@error, 30%);
 @notification-error-text-color: lighten(@normal-text-color, 10%);
-@notification-error-border-color: @error;
+@notification-error-border-color: @notification-error-background-color;
 @tooltip-text-color: @normal-text-color;
 @tooltip-background-color: @background;
 @tooltip-border-color: darken(@background, 21%);
@@ -80,9 +80,9 @@
 @upload-progress-background-color: @info;
 @upload-progress-text-color: @normal-text-color;
 @upload-success-background-color: @success;
-@upload-success-text-color: @normal-text-color;
+@upload-success-text-color: @success;
 @upload-error-background-color: @error;
-@upload-error-text-color: @normal-text-color;
+@upload-error-text-color: @error;
 @task-summary-color: darken(@background, 18%);
 @task-summary-selected-color: @hover-text-color;
 @loading-panel-color: @background;
@@ -1229,6 +1229,55 @@ div.k-filebrowser-dropzone em
 .k-file-error .k-progress
 {
     background-color: @upload-error-background-color;
+}
+
+.k-file-extension-wrapper,
+.k-multiple-files-extension-wrapper {
+    color: @disabled-text-color;
+    border-color: @disabled-text-color;
+}
+
+.k-file-invalid .k-file-name-invalid {
+    color: @error;
+}
+
+.k-file-invalid-extension-wrapper,
+.k-multiple-files-invalid-extension-wrapper {
+    color: @error;
+    border-color: @upload-error-text-color;
+}
+
+.k-file-extension-wrapper:before,
+.k-multiple-files-extension-wrapper:before {
+    background-color: @widget-background-color;
+    border-color: transparent transparent @disabled-text-color @disabled-text-color;
+}
+
+.k-file-invalid-extension-wrapper:before,
+.k-multiple-files-invalid-extension-wrapper:before {
+    background-color: @widget-background-color;
+    border-color: transparent transparent @upload-error-text-color @upload-error-text-color;
+}
+
+.k-multiple-files-extension-wrapper:after {
+    border-top-color: @disabled-text-color;
+    border-left-color: @disabled-text-color;
+}
+
+.k-multiple-files-invalid-extension-wrapper:after {
+    border-top-color: @upload-error-text-color;
+    border-left-color: @upload-error-text-color;
+}
+
+.k-file-size,
+.k-file-information,
+.k-file-validation-message {
+    color: @disabled-text-color;
+}
+
+.k-upload .k-upload-selected {
+    color: @base;
+    border-color: @widget-border-color;
 }
 
 /* ImageBrowser */
