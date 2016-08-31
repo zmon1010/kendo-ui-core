@@ -32,6 +32,9 @@
                     removeUrl: "remove",
                     autoUpload: true
                 },
+                validation: {
+                    allowedExtensions: [".jpg", ",jpeg", ".png", ".bmp", ".gif"],
+                },
                 success: onSuccess,
                 showFileList: false,
                 dropZone: ".dropZoneElement"
@@ -40,11 +43,19 @@
             function onSuccess(e) {
                 if (e.operation == "upload") {
                     for (var i = 0; i < e.files.length; i++) {
-                        initialFiles.push({ name: e.files[i].name });
+                        var file = e.files[i].rawFile;
+
+                        if (file) {
+                            var reader = new FileReader();
+
+                            reader.onloadend = function () {
+                                $("<div class='product'><img src=" + this.result + " /></div>").appendTo($("#products"));
+                            };
+
+                            reader.readAsDataURL(file);
+                        }
                     }
                 }
-
-                $("#products").html(kendo.render(template, initialFiles));
             }
         });
     </script>
