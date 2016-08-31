@@ -1043,7 +1043,7 @@
         }
     });
 
-    module("editor column resizing resizingInProgress", {
+    module("editor column resizing resizing in progress", {
         setup: function() {
             tableElement = $(TABLE_IN_PIXELS_WITH_COLUMNS_IN_PIXELS).appendTo(QUnit.fixture)[0];
             columnResizing = new ColumnResizing(tableElement, {
@@ -1713,7 +1713,11 @@ else {
             if (editor) {
                 $(editor.body).find("*").remove();
             }
-            removeMocksIn(editor.columnResizing);
+
+            if (editor.columnResizing) {
+                editor.columnResizing.destroy();
+            }
+
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -1767,17 +1771,52 @@ else {
         equal(editor.columnResizing.element, tableElement);
     });
 
-    test("leaving a nested table should not init new row resizing when leaving a column", function() {
+    test("leaving a column in nested table should not init new row resizing when resizing is in progress", function() {
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        editor.columnResizing.resizingInProgress = function() { return true; };
 
         triggerEvent(nestedTableCell, { type: MOUSE_LEAVE });
 
-        ok(editor.rowResizing instanceof kendo.ui.editor.RowResizing);
-        equal(editor.rowResizing.element, nestedTable);
+        ok(editor.columnResizing instanceof kendo.ui.editor.ColumnResizing);
+        equal(editor.columnResizing.element, nestedTable);
     });
 
-    editor_module("editor column resizing initialization resizing in progress", {
+    test("leaving a column in nested table should init new row resizing when resizing is not in progress", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        editor.columnResizing.resizingInProgress = function() { return false; };
+
+        triggerEvent(nestedTableCell, { type: MOUSE_LEAVE });
+
+        ok(editor.columnResizing instanceof kendo.ui.editor.ColumnResizing);
+        equal(editor.columnResizing.element, tableElement);
+    });
+
+    test("leaving a column in nested table should not init new row resizing if resize handle exists", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        editor.columnResizing.resizingInProgress = function() { return false; };
+        editor.columnResizing.resizeHandle = $();
+
+        triggerEvent(nestedTableCell, { type: MOUSE_LEAVE });
+
+        ok(editor.columnResizing instanceof kendo.ui.editor.ColumnResizing);
+        equal(editor.columnResizing.element, nestedTable);
+    });
+
+    test("leaving a column in nested table should init new row resizing when resize handle does not exist", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        editor.columnResizing.resizingInProgress = function() { return false; };
+
+        triggerEvent(nestedTableCell, { type: MOUSE_LEAVE });
+
+        ok(editor.columnResizing instanceof kendo.ui.editor.ColumnResizing);
+        equal(editor.columnResizing.element, tableElement);
+    });
+
+    editor_module("editor column resizing nested table initialization resizing in progress", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             editor.columnResizing = null;
@@ -1789,7 +1828,11 @@ else {
             if (editor) {
                 $(editor.body).find("*").remove();
             }
-            removeMocksIn(editor.columnResizing);
+
+            if (editor.columnResizing) {
+                editor.columnResizing.destroy();
+            }
+
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -1816,7 +1859,7 @@ else {
         equal(destroySpy.calls("destroy"), 1);
     });
 
-    editor_module("editor column resizing leaving editor content", {
+    editor_module("editor column resizing leaving editor content resizing in progress", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             editor.columnResizing = null;

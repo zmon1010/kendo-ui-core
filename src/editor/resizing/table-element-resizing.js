@@ -253,7 +253,7 @@
 
                     e.stopPropagation();
 
-                    if ($(e.target).is(TABLE) && resizing && !resizing.resizingInProgress()) {
+                    if (resizing && !resizing.resizingInProgress() && !resizing.resizeHandle) {
                         parentTable = $(resizing.element).parents(TABLE)[0];
 
                         if (parentTable) {
