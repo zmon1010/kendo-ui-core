@@ -1245,6 +1245,11 @@
     <Content Include="Views\demos\drawing\tooltip.cshtml" />
     <Content Include="Views\demos\upload\customdropzone.cshtml" />
     <Content Include="Views\demos\upload\validation.cshtml" />
+    <Content Include="Views\demos\gantt\angular.cshtml" />
+    <Content Include="Views\demos\gantt\column-resizing.cshtml" />
+    <Content Include="Views\demos\gantt\pdf-export.cshtml" />
+    <Content Include="Views\demos\gantt\selected-date-and-range.cshtml" />
+    <Content Include="Views\demos\gantt\task-template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
