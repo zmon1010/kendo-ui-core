@@ -664,6 +664,7 @@
     <Compile Include="Controllers\Scheduler\ResourcesController.cs" />
     <Compile Include="Controllers\Scheduler\Resources_Grouping_HorizontalController.cs" />
     <Compile Include="Controllers\Scheduler\Resources_Grouping_VerticalController.cs" />
+	<Compile Include="Controllers\Scheduler\Date_GroupingController.cs" />
     <Compile Include="Controllers\Scheduler\Right_To_Left_SupportController.cs" />
     <Compile Include="Controllers\Scheduler\SelectionController.cs" />
     <Compile Include="Controllers\Scheduler\TemplatesController.cs" />
@@ -3222,6 +3223,7 @@
     <Content Include="Views\scheduler\resources.cshtml" />
     <Content Include="Views\scheduler\resources_grouping_horizontal.cshtml" />
     <Content Include="Views\scheduler\resources_grouping_vertical.cshtml" />
+	<Content Include="Views\scheduler\date_grouping.cshtml" />
     <Content Include="Views\scheduler\right_to_left_support.cshtml" />
     <Content Include="Views\scheduler\selection.cshtml" />
     <Content Include="Views\scheduler\templates.cshtml" />
