@@ -221,6 +221,14 @@
             that.resize(e);
             that._destroyResizeHandle();
             setContentEditable(that.options.rootElement, TRUE);
+        },
+
+        _forceResize: function(e) {
+            var resizable = this._resizable;
+
+            if (resizable && resizable.userEvents) { 
+                resizable.userEvents._end(e);
+            }
         }
     });
 
@@ -233,7 +241,7 @@
             $(editor.body)
                 .on(MOUSE_ENTER + NS, TABLE, function(e) {
                     var table = e.currentTarget;
-                    var resizing =  editor[resizingName];
+                    var resizing = editor[resizingName];
 
                     e.stopPropagation();
 
@@ -267,6 +275,20 @@
 
                     if (resizing && !resizing.resizingInProgress()) {
                         that._destroyResizing(editor, options);
+                    }
+                })
+                .on(MOUSE_UP + NS, function(e) {
+                    var resizing = editor[resizingName];
+                    var parentTable;
+
+                    if (resizing && resizing.resizingInProgress()) {
+                        parentTable = $(e.target).parents(TABLE)[0];
+
+                        if (parentTable) {
+                            resizing._forceResize(e);
+                            that._destroyResizing(editor, options);
+                            that._initResizing(editor, parentTable, options);
+                        }
                     }
                 });
         },

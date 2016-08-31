@@ -70,15 +70,17 @@
         '</table>';
 
     var NESTED_TABLE_HTML =
-        '<table id="table" class="k-table">' +
+        '<table id="outerTable" class="k-table">' +
             '<tr id="row1" class="row">' +
                 '<td id="col11" class="col">' +
                     '<table id="nestedTable" class="k-table">' +
                         '<tr id="row1" class="row">' +
                             '<td id="col11" class="col">col 11</td>' +
+                            '<td id="col12" class="col">col 12</td>' +
                         '</tr>' +
                         '<tr id="row2" class="row">' +
                             '<td id="col21" class="col">col 21</td>' +
+                            '<td id="col22" class="col">col 22</td>' +
                         '</tr>' +
                     '</table>' +
                 '</td>' +
@@ -492,6 +494,74 @@
 
         ok(editor.rowResizing instanceof kendo.ui.editor.RowResizing);
         equal(editor.rowResizing.element, tableElement);
+    });
+
+    editor_module("editor row resizing nested table initialization on mouseup", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.rowResizing = null;
+            tableElement = $(NESTED_TABLE_HTML).appendTo(editor.body)[0];
+            nestedTable = $(tableElement).find("#nestedTable")[0];
+            nestedTableCell = $(nestedTable).find(FIRST_COLUMN);
+            anotherTable = $(TABLE_HTML).appendTo(editor.body)[0];
+        },
+
+        afterEach: function() {
+            if (editor) {
+                $(editor.body).find("*").remove();
+            }
+
+            if (editor.rowResizing) {
+                editor.rowResizing.destroy();
+            }
+
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should init new row resizing if resizing is in progress", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        editor.rowResizing.resizingInProgress = function() { return true; };
+
+        triggerEvent(editor.body, { type: MOUSE_UP, target: $(anotherTable).find(FIRST_COLUMN)[0] });
+
+        ok(editor.rowResizing instanceof kendo.ui.editor.RowResizing);
+        equal(editor.rowResizing.element, anotherTable);
+    });
+
+    test("should not init new row resizing if resizing is not in progress", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        editor.rowResizing.resizingInProgress = function() { return false; };
+
+        triggerEvent(editor.body, { type: MOUSE_UP, target: $(anotherTable).find(FIRST_COLUMN)[0] });
+
+        ok(editor.rowResizing instanceof kendo.ui.editor.RowResizing);
+        equal(editor.rowResizing.element, nestedTable);
+    });
+
+    test("should destroy current row resizing if resizing is in progress", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        editor.rowResizing.resizingInProgress = function() { return true; };
+        var destroySpy = spy(editor.rowResizing, "destroy");
+
+        triggerEvent(editor.body, { type: MOUSE_UP, target: $(anotherTable).find(FIRST_COLUMN)[0] });
+
+        equal(destroySpy.calls("destroy"), 1);
+    });
+
+    test("should force resizing if resizing is in progress", function() {
+        triggerEvent(tableElement, { type: MOUSE_ENTER });
+        triggerEvent(nestedTable, { type: MOUSE_ENTER });
+        editor.rowResizing.resizingInProgress = function() { return true; };
+        editor.rowResizing.showResizeHandle(nestedTableCell, { buttons: 0, target: nestedTableCell });
+        var resizeEndSpy = spy(editor.rowResizing._resizable.userEvents, "_end");
+
+        triggerEvent(editor.body, { type: MOUSE_UP, target: $(anotherTable).find(FIRST_COLUMN)[0] });
+
+        equal(resizeEndSpy.calls("_end"), 1);
     });
 
     editor_module("editor row resizing initialization resizing in progress", {
