@@ -73,10 +73,21 @@
         })
         .Read("ReadDependencies", "Gantt")
     )
+    .Events(e => e.Navigate("onNavigate"))
 )
 
 <script>
     var gantt, startRange, endRange, date;
+
+    function onNavigate(e) {
+        var options = e.sender.options;
+        options.date = date.value();
+        options.range = {
+            start: startRange.value(),
+            end: endRange.value()
+        };
+        e.sender.setOptions(options);
+    }
 
     function openHandler(e) {
         e.sender.setOptions(e.sender.options);
