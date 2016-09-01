@@ -42,13 +42,15 @@
 
         public IHtmlNode Text(TItem item)
         {
+            var itemText = item.Text ?? string.Empty;
+
             if (item.Encoded)
             {
-                return new TextNode(item.Text);
+                return new TextNode(itemText);
             }
             else
             {
-                return new LiteralNode(item.Text);
+                return new LiteralNode(itemText);
             }
         }
 
