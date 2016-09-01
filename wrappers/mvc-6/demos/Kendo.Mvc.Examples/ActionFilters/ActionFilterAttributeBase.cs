@@ -39,7 +39,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
             ViewBag.ShowCodeStrip = true;
             ViewBag.Product = "aspnet-mvc";
-            ViewBag.NavProduct = "mvc";
+            ViewBag.NavProduct = "mvc-core";
 
             ViewBag.Theme = "material";
             ViewBag.CommonFile = "common-material";
