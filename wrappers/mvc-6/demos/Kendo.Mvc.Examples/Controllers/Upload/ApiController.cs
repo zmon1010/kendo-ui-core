@@ -4,7 +4,8 @@ namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class UploadController : Controller
 	{
-		public ActionResult Api()
+        [Demo]
+        public ActionResult Api()
 		{
 			return View();
 		}

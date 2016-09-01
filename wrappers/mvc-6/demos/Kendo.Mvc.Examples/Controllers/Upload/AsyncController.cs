@@ -17,6 +17,7 @@ namespace Kendo.Mvc.Examples.Controllers
             HostingEnvironment = hostingEnvironment;
         }
 
+        [Demo]
         public ActionResult Async()
 		{
 			return View();
