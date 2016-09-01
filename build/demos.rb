@@ -464,7 +464,7 @@ namespace :demos do
         sh "sed 's/\$CDN_ROOT/#{(CDN_ROOT + VERSION).gsub(/\//, '\/')}/' -i dist/demos/mvc/Web.config"
     end
 
-    task :production_mvc_core_site do
+    task :production_mvc_core_site => ['mvc:assets'] do
         sh <<-SHELL
             cd wrappers/mvc-6
             dotnet restore
