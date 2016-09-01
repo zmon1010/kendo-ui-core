@@ -13,7 +13,7 @@
             columns.Bound(p => p.Freight).Width(200);
             columns.Bound(p => p.OrderDate).Format("{0:dd/MM/yyyy}");
         })
-        .Pageable(pageable => pageable.ButtonCount(5))
+        .Pageable(pageable => pageable.ButtonCount(4).Info(false))
         .Selectable(selectable => selectable
             .Mode(GridSelectionMode.Multiple)
             .Type(GridSelectionType.Cell))
