@@ -695,6 +695,7 @@
                 editor = that._editor,
                 range = editor.getRange(),
                 nodes = editorNS.RangeUtils.textNodes(range),
+                immutables = editor.options.immutables,
                 immutablesContext = that._immutablesContext(range);
 
             nodes = editorNS.Dom.filterBy(nodes, editorNS.Dom.htmlIndentSpace, true);
@@ -711,7 +712,7 @@
                         tool.update(ui, nodes);
                     }
 
-                    if (editor.options.immutables) {
+                    if (immutables) {
                         that._updateImmutablesState(tool, ui, immutablesContext);
                     }
                 }

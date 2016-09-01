@@ -114,12 +114,24 @@
         var keys = kendo.keys;
         return keyCode === keys.BACKSPACE || keyCode == keys.DELETE;
     };
+    var updateToolOptions = function(tool) {
+        var options = tool ? tool.options : undefined;
+        if (options && options.finder) {
+            options.finder._initOptions({immutables: true});
+        }
+    };
 
     var Immutables = Class.extend({
         init: function (editor) {
             this.editor = editor;
             this.serializedImmutables = {};
             this.options = $.extend({}, editor && editor.options && editor.options.immutables);
+
+            var tools = editor.toolbar.tools;
+            updateToolOptions(tools.justifyLeft);
+            updateToolOptions(tools.justifyCenter);
+            updateToolOptions(tools.justifyRight);
+            updateToolOptions(tools.justifyFull);
         },
 
         serialize: function(node) {

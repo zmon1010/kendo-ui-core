@@ -176,4 +176,44 @@ test("getFormat returns false despite of inline editor wrapper", function() {
 
         equal(suitable[0], editor.body.firstChild);
     });
+
+    test("isFormatted returns null if immutables option is false and formatted element is immutable for justifyCenter", function() {
+        var li = '<li><div contenteditable="false" style="display: block; margin-left: auto; margin-right: auto;">list1</div></li>';
+        editor.value('<ol>' + li + li + '</ol>');
+        var finder = new BlockFormatFinder(justifyCenter);
+        var immutables = $(editor.body).find("[contenteditable='false']");
+
+        notOk(finder.isFormatted([immutables[0].firstChild, immutables[1].firstChild]));
+    });
+
+    test("isFormatted returns formatted immutable element for justifyCenter", function() {
+        var li = '<li><div contenteditable="false" style="display: block; margin-left: auto; margin-right: auto;">list1</div></li>';
+        editor.value('<ol>' + li + li + '</ol>');
+        var finder = new BlockFormatFinder(justifyCenter);
+        finder._initOptions({immutables: true});
+        var immutables = $(editor.body).find("[contenteditable='false']");
+
+        ok(finder.isFormatted([immutables[0].firstChild, immutables[1].firstChild]));
+    });
+
+    test("isFormatted returns formatted immutable element for justifyRight", function() {
+        var li = '<li><div contenteditable="false" style="float: right;">list1</div></li>';
+        editor.value('<ol>' + li + li + '</ol>');
+        var finder = new BlockFormatFinder(editor.options.formats.justifyRight);
+        finder._initOptions({immutables: true});
+        var immutables = $(editor.body).find("[contenteditable='false']");
+
+        ok(finder.isFormatted([immutables[0].firstChild, immutables[1].firstChild]));
+    });
+
+    test("isFormatted returns formatted immutable element for justifyLeft", function() {
+        var li = '<li><div contenteditable="false" style="float: left;">list1</div></li>';
+        editor.value('<ol>' + li + li + '</ol>');
+        var finder = new BlockFormatFinder(editor.options.formats.justifyLeft);
+        finder._initOptions({immutables: true});
+        var immutables = $(editor.body).find("[contenteditable='false']");
+
+        ok(finder.isFormatted([immutables[0].firstChild, immutables[1].firstChild]));
+    });
+
 }());

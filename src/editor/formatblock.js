@@ -84,11 +84,20 @@ var BlockFormatFinder = Class.extend({
         var format = this.format,
             i, len, node, tags, attributes;
         var editableParent = dom.editableParent(sourceNode);
+        var immutables = this.options && this.options.immutables;
+        var ImmutablesNS = Editor.Immutables;
 
         for (i = 0, len = format.length; i < len; i++) {
             node = sourceNode;
             tags = format[i].tags;
             attributes = format[i].attr;
+
+            if (immutables && tags && tags[0] == "immutable") {
+                var immutable = ImmutablesNS.immutableParent(node);
+                if (immutable && dom.attrEquals(immutable, attributes)) {
+                    return node;
+                }
+            }
 
             while (node && dom.isAncestorOf(editableParent, node)) {
                 if (dom.ofType(node, tags) && dom.attrEquals(node, attributes)) {
@@ -151,7 +160,7 @@ var BlockFormatter = Class.extend({
             position = dom.findNodeIndex(ancestors[0]),
             wrapper = dom.create(commonAncestor.ownerDocument, tag, attributes),
             i, ancestor;
-        
+
         for (i = 0; i < ancestors.length; i++) {
             ancestor = ancestors[i];
             if (dom.isBlock(ancestor)) {
@@ -183,7 +192,7 @@ var BlockFormatter = Class.extend({
         }
 
         this._handleImmutables(nodes, true);
-        
+
         var images = dom.filter("img", nodes);
         var imageFormat = EditorUtils.formatByName("img", this.format);
         var imageAttributes = attributes(imageFormat);
@@ -198,7 +207,7 @@ var BlockFormatter = Class.extend({
 
         var nonImages = dom.filter("img", nodes, true);
         var formatNodes = this.finder.findSuitable(nonImages);
-        
+
         if (formatNodes.length) {
             for (var i = 0, len = formatNodes.length; i < len; i++) {
                 format = EditorUtils.formatByName(dom.name(formatNodes[i]), this.format);
@@ -209,7 +218,7 @@ var BlockFormatter = Class.extend({
             this.wrap(format.tags[0], attributes(format), nonImages);
         }
     },
-       
+
     _handleImmutables: function (nodes, applyFormatting) {
         if (!this.immutables()) {
             return;
@@ -235,7 +244,7 @@ var BlockFormatter = Class.extend({
             nodes.splice(i, 1);
         }
     },
-    
+
     immutables: function() {
         return this.editor && this.editor.options.immutables;
     },
@@ -267,7 +276,7 @@ var BlockFormatter = Class.extend({
     toggle: function (range) {
         var that = this,
             nodes = dom.filterBy(RangeUtils.nodes(range), dom.htmlIndentSpace, true);
-        
+
         if (that.finder.isFormatted(nodes)) {
             that.remove(nodes);
         } else {
@@ -344,6 +353,10 @@ var GreedyBlockFormatter = Class.extend({
 var FormatCommand = Command.extend({
     init: function (options) {
         options.formatter = options.formatter();
+        var finder = options.formatter.finder;
+        if (finder && EditorUtils.formatByName("immutable", finder.format)) {
+            finder._initOptions({immutables: options.immutables});
+        }
         Command.fn.init.call(this, options);
     }
 });

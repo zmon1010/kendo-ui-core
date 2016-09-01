@@ -670,7 +670,7 @@ var ImmutablesRangeIterator = RangeIterator.extend({
         var immutable = Editor.Immutables && Editor.Immutables.immutable;
         return immutable && !immutable(this._current) && RangeIterator.fn.hasPartialSubtree.call(this);
     },
-    
+
     getSubtreeIterator: function () {
         return new ImmutablesRangeIterator(this.getSubRange());
     }
@@ -712,8 +712,13 @@ var RestorePoint = Class.extend({
             that.rootNode = that.body;
         }
 
+        that.startContainer = that.nodeToPath(range.startContainer);
+        that.endContainer = that.nodeToPath(range.endContainer);
+        that.startOffset = that.offset(range.startContainer, range.startOffset);
+        that.endOffset = that.offset(range.endContainer, range.endOffset);
+
         that.immutables = options && options.immutables;
-        
+
         if (that.immutables) {
             that.serializedImmutables = Editor.Immutables.removeImmutables(that.body);
         }
@@ -723,11 +728,6 @@ var RestorePoint = Class.extend({
         if (that.immutables && !that.serializedImmutables.empty) {
             Editor.Immutables.restoreImmutables(that.body, that.serializedImmutables);
         }
-
-        that.startContainer = that.nodeToPath(range.startContainer);
-        that.endContainer = that.nodeToPath(range.endContainer);
-        that.startOffset = that.offset(range.startContainer, range.startOffset);
-        that.endOffset = that.offset(range.endContainer, range.endOffset);
     },
 
     index: function(node) {
@@ -826,7 +826,7 @@ var Marker = Class.extend({
         var that = this;
         var caret = that.caret = dom.create(RangeUtils.documentFromRange(range), 'span', { className: 'k-marker' });
         range.insertNode(caret);
-        
+
         dom.stripBomNode(caret.previousSibling);
         dom.stripBomNode(caret.nextSibling);
 
@@ -1071,7 +1071,7 @@ var RangeUtils = {
 
         return nodes;
     },
-    
+
     documentFromRange: function(range) {
         var startContainer = range.startContainer;
         return startContainer.nodeType == 9 ? startContainer : startContainer.ownerDocument;
