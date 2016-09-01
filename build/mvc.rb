@@ -105,8 +105,8 @@ MVC_DEMOS = FileList[MVC_DEMOS_ROOT + '**/*']
                         .sub(DEMO_SHARED_ROOT + 'shared/images/photos/220', MVC_DEMOS_ROOT + 'Content/shared/images/photos/220')
                 )
                 .include(
-                    FileList['demos/mvc/content/nav.json']
-                        .sub('demos/mvc/content', MVC_DEMOS_ROOT + 'Content')
+                    FileList['wrappers/nav.json']
+                        .sub('wrappers', MVC_DEMOS_ROOT + 'Content')
                 )
                 .include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll')
                 .include(FileList[SPREADSHEET_REDIST_NET40].pathmap(MVC_DEMOS_ROOT + 'bin/%f'))
@@ -322,7 +322,6 @@ else
     file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' => MVC_DEMOS_SRC.include('wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll') do |t|
         system("xcopy dpl\\lib\\NET40\\* wrappers\\mvc\\demos\\Kendo.Mvc.Examples\\bin\\ /d /y")
         msbuild MVC_DEMOS_ROOT + 'Kendo.Mvc.Examples.csproj', '/p:Configuration=Release'
-        system("xcopy wrappers\\mvc\\demos\\Kendo.Mvc.Examples\\bin\\*.dll dist\\binaries\\demos\\Kendo.Mvc.Examples\\bin\\ /d /y")
     end
 
     tree :to => 'dist/binaries/',
@@ -330,7 +329,6 @@ else
              MVC3_DLL + MVC4_DLL + MVC5_DLL +
              MVC3_TRIAL_DLL + MVC4_TRIAL_DLL + MVC5_TRIAL_DLL +
              FileList['wrappers/mvc/**/*.dll'],
-             FileList[MVC_DEMOS_ROOT + 'bin/**/*'],
              MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll'
          ],
          :root => 'wrappers/mvc/'

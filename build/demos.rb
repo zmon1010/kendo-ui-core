@@ -458,11 +458,11 @@ namespace :demos do
         })
     ]
 
-    task :production_mvc_site => [:release, 'dist/demos/mvc',
-        patched_web_config('dist/demos/mvc/Web.config', 'wrappers/mvc/demos/Kendo.Mvc.Examples/Web.config', {
-            :cdn_root => CDN_ROOT + VERSION
-        })
-    ]
+    task :production_mvc_site => [] do
+        sh 'mkdir -p dist/demos/mvc'
+        sh 'cp -a dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples dist/demos/mvc'
+        sh "sed 's/\$CDN_ROOT/#{(CDN_ROOT + VERSION).gsub(/\//, '\/')}/' -i dist/demos/mvc/Web.config"
+    end
 
     zip 'dist/demos/production.zip' => :production_site
     zip 'dist/demos/mvc.zip' => :production_mvc_site
