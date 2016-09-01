@@ -5,6 +5,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class Pdf_ExportController : Controller
     {
+        [Demo]
         public ActionResult Index()
         {
             return View();

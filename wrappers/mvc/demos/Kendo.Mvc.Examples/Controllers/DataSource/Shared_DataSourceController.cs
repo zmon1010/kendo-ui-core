@@ -20,6 +20,7 @@ namespace Kendo.Mvc.Examples.Controllers
             base.Dispose(disposing);
         }
 
+        [Demo]
         public ActionResult Shared_Datasource()
         {
             return View();
