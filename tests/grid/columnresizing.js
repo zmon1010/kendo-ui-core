@@ -847,4 +847,20 @@
         equal(grid.wrapper.find(".k-grid-header-wrap").children(".k-resize-handle").first()[0].offsetLeft, firstColumn[0].offsetLeft + firstColumn[0].offsetWidth - indicatorWidth);
     });
 
+    test("column autofit preserves the horizontal scroll position", function () {
+        var grid = new Grid(table, {
+            dataSource: [{ foo: "foo", bar: "bar", baz: "baz" }],
+            resizable: true,
+            columns: [{ field: "foo", width: 200 }, { field: "bar", width: 200 }, { field: "baz", width: 200 }]
+        });
+
+        grid.wrapper.width(350);
+
+        grid.table.parent().scrollLeft(20);
+
+        grid.autoFitColumn(1);
+
+        equal(grid.table.parent().scrollLeft(), 20);
+    });
+
 })();

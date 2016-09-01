@@ -2381,6 +2381,7 @@ var __meta__ = { // jshint ignore:line
                 isLocked,
                 visibleLocked = that.lockedHeader ? leafDataCells(that.lockedHeader.find(">table>thead")).filter(isCellVisible).length : 0,
                 col,
+                contentDiv, scrollLeft,
                 notGroupOrHierarchyCol = "col:not(.k-group-col):not(.k-hierarchy-col)",
                 notGroupOrHierarchyVisibleCell = "td:visible:not(.k-group-cell):not(.k-hierarchy-cell)";
 
@@ -2441,6 +2442,11 @@ var __meta__ = { // jshint ignore:line
                 col = headerTable.find(notGroupOrHierarchyCol).eq(index)
                     .add(contentTable.children("colgroup").find(notGroupOrHierarchyCol).eq(index))
                     .add(footerTable.find("colgroup").find(notGroupOrHierarchyCol).eq(index));
+
+                if (!isLocked) {
+                    contentDiv = contentTable.parent();
+                    scrollLeft = contentDiv.scrollLeft();
+                }
             } else {
                 col = contentTable.children("colgroup").find(notGroupOrHierarchyCol).eq(index);
             }
@@ -2497,6 +2503,10 @@ var __meta__ = { // jshint ignore:line
             }
 
             tables.removeClass("k-autofitting");
+
+            if (scrollLeft) {
+                contentDiv.scrollLeft(scrollLeft);
+            }
 
             that.trigger(COLUMNRESIZE, {
                 column: column,
