@@ -2223,7 +2223,10 @@
             },
             {
                 "text": "SiteMapBinding",
-                "url": "menu/sitemapbinding"
+                "url": "menu/sitemapbinding",
+                "packages": [
+                    "!mvc-core"
+                ]
             },
             {
                 "text": "ModelBinding",
