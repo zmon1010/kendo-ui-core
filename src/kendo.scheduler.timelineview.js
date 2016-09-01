@@ -455,7 +455,17 @@ var __meta__ = { // jshint ignore:line
                 hint.css(css);
 
                 view._moveHint = view._moveHint.add(hint);
-          }
+         },
+
+         _adjustLeftPosition: function(left) {
+            var view = this._view;
+
+            if (view._isRtl) {
+                left -= (view.content[0].scrollWidth - view.content[0].offsetWidth);
+            }
+
+            return left;
+         }
     });
 
 	 var TimelineGroupedByDateView = kendo.Class.extend({
@@ -834,8 +844,18 @@ var __meta__ = { // jshint ignore:line
 
                     view._moveHint = view._moveHint.add(hint);
                 }
-          }
-	 });
+         },
+
+         _adjustLeftPosition: function(left) {
+             var view = this._view;
+
+            if (view._isRtl && !view._isVerticallyGrouped()) {
+                left -= (view.content[0].scrollWidth - view.content[0].offsetWidth);
+            }
+
+            return left;
+         }
+ });
 
 	 kendo.ui.scheduler.TimelineGroupedView = TimelineGroupedView;
 	 kendo.ui.scheduler.TimelineGroupedByDateView = TimelineGroupedByDateView;
@@ -1007,18 +1027,8 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _adjustLeftPosition: function (left) {
-            if (this._isRtl) {
-                var scrollBarWidth = 0;
-
-                if (this.content.height() < this.content.children().first().height() + kendo.support.scrollbar()) {
-                    scrollBarWidth = kendo.support.scrollbar();
-                }
-
-                left -= (this.content[0].scrollWidth - this.content[0].offsetWidth + scrollBarWidth);
-            }
-
-            return left;
+        _adjustLeftPosition: function(left) {
+            return this._groupedView._adjustLeftPosition(left);
         },
 
         _currentTime: function(setUpdateTimer) {
