@@ -320,17 +320,19 @@ else
 
     # Produce Kendo.Mvc.Examples.dll by building Kendo.Mvc.Examples.csproj
     file MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll' => MVC_DEMOS_SRC.include('wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll') do |t|
-        system("xcopy dpl\\lib\\NET40\\* wrappers\\mvc\\demos\\Kendo.Mvc.Examples\\bin\\ /d /y > nul")
+        system("xcopy dpl\\lib\\NET40\\* wrappers\\mvc\\demos\\Kendo.Mvc.Examples\\bin\\ /d /y")
         msbuild MVC_DEMOS_ROOT + 'Kendo.Mvc.Examples.csproj', '/p:Configuration=Release'
-        system("xcopy wrappers\\mvc\\demos\\Kendo.Mvc.Examples\\bin\\* dist\\binaries\\demos\\Kendo.Mvc.Examples\\bin /d /y > nul")
+        system("xcopy wrappers\\mvc\\demos\\Kendo.Mvc.Examples\\bin\\*.dll dist\\binaries\\demos\\Kendo.Mvc.Examples\\bin\\ /d /y")
     end
 
     tree :to => 'dist/binaries/',
          :from => FileList[
              MVC3_DLL + MVC4_DLL + MVC5_DLL +
              MVC3_TRIAL_DLL + MVC4_TRIAL_DLL + MVC5_TRIAL_DLL +
-             FileList['wrappers/mvc/**/*.dll']
-         ].include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll'),
+             FileList['wrappers/mvc/**/*.dll'],
+             FileList[MVC_DEMOS_ROOT + 'bin/**/*'],
+             MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll'
+         ],
          :root => 'wrappers/mvc/'
 
     tree :to => 'dist/binaries/demos/Kendo.Mvc.Examples/bin/',
