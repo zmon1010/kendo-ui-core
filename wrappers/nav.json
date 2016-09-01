@@ -56,7 +56,8 @@
             },
             {
                 "text": "Client filtering",
-                "url": "autocomplete/clientfiltering"
+                "url": "autocomplete/clientfiltering",
+				"new": true
             },
             {
                 "text": "Customizing templates",
@@ -71,7 +72,8 @@
             },
             {
                 "text": "Custom data source",
-                "url": "autocomplete/custom-datasource"
+                "url": "autocomplete/custom-datasource",
+				"new": true
             },
             {
                 "text": "Events",
@@ -802,12 +804,12 @@
             },
             {
                 "text": "Client filtering",
-                "url": "dropdownlist/clientfiltering"
+                "url": "dropdownlist/clientfiltering",
+				"new": true
             },
             {
                 "text": "Customizing templates",
                 "url": "dropdownlist/template",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Customize items in ASP.NET MVC DropDownList component"
                 },
@@ -827,7 +829,8 @@
             },
             {
                 "text": "Custom data source",
-                "url": "dropdownlist/custom-datasource"
+                "url": "dropdownlist/custom-datasource",
+				"new": true
             },
             {
                 "text": "Events",

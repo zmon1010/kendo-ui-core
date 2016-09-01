@@ -1,4 +1,4 @@
-<<div class="demo-section k-content">
+<div class="demo-section k-content">
 
        <h4>Categories:</h4>
         @(Html.Kendo().DropDownList()
@@ -9,7 +9,7 @@
               .DataValueField("CategoryId")
               .DataSource(source => {
                    source.Read(read => {
-                       read.Action("GetCascadeCategories", "ComboBox");
+                       read.Action("GetCascadeCategories", "DropDownList");
                    });
               })
         )
@@ -24,7 +24,7 @@
               .DataSource(source => {
                   source.Read(read =>
                   {
-                      read.Action("GetCascadeProducts", "ComboBox")
+                      read.Action("GetCascadeProducts", "DropDownList")
                           .Data("filterProducts");
                   })
                   .ServerFiltering(true);
@@ -51,7 +51,7 @@
               .DataSource(source => {
                   source.Read(read =>
                   {
-                      read.Action("GetCascadeOrders", "ComboBox")
+                      read.Action("GetCascadeOrders", "DropDownList")
                           .Data("filterOrders");
                   })
                   .ServerFiltering(true);
@@ -63,7 +63,7 @@
         <script>
             function filterOrders() {
                 return {
-                    products: $("#filterOrders").val()
+                    products: $("#products").val()
                 };
             }
         </script>
