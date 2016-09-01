@@ -30,7 +30,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                 sourceName = sourceName.Replace(".", "-");
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "{0}_{1}_{2}", AggregateMethodName, sourceName, GetHashCode());
+            return string.Format(CultureInfo.InvariantCulture, "{0}_{1}", AggregateMethodName, sourceName);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Kendo.Mvc
         /// </returns>
         protected virtual string GenerateFunctionName()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0}_{1}", this.GetType().Name, this.GetHashCode());
+            return string.Format(CultureInfo.InvariantCulture, "{0}", this.GetType().Name);
         }
 
         protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)

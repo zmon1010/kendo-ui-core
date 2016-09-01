@@ -29,7 +29,7 @@ namespace Kendo.Mvc.Infrastructure
                     var aggregates = values.GroupBy(entry =>
                     {
                         var startIndex = entry.Key.IndexOf('_');
-                        return entry.Key.Substring(startIndex + 1, entry.Key.LastIndexOf('_') - startIndex - 1);
+                        return entry.Key.Substring(startIndex + 1);
                     });
 
                     return aggregates.ToDictionary(g => g.Key, g => (object)g.ToDictionary(entry => entry.Key.Split('_').First(), entry => entry.Value));
