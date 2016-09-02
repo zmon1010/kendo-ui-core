@@ -22,3 +22,12 @@
         )
     )
 </div>
+<script>
+    $(function () {
+        $(document).bind("kendo:skinChange", updateTheme);
+    });
+
+    function updateTheme() {
+        $("#stockChart").getKendoStockChart().setOptions({ theme: kendoTheme });
+    }
+</script>
