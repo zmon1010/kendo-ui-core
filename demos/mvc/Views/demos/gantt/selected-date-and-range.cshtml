@@ -70,31 +70,51 @@
             var gantt = $("#gantt").kendoGantt({
                 dataSource: tasksDataSource,
                 dependencies: dependenciesDataSource,
-                views: [
-                    "day",
-                    { type: "week", selected: true },
-                    "month"
-                ],
+                views: [{
+                    type: "day",
+                    range: {
+                        start: new Date("2014/6/2"),
+                        end: new Date("2014/6/8")
+                    },
+                    date: new Date("2014/6/2"),
+                }, {
+                    type: "week",
+                    selected: true,
+                    range: {
+                        start: new Date("2014/6/1"),
+                        end: new Date("2014/7/13")
+                    },
+                    date: new Date("2014/6/1")
+                }, {
+                    type: "month",
+                    range: {
+                        start: new Date("2014/5/18"),
+                        end: new Date("2014/8/3")
+                    },
+                    date: new Date("2014/5/18")
+                }],
                 columns: [
                     { field: "id", title: "ID", width: 60 },
                     { field: "title", title: "Title" },
                     { field: "start", title: "Start Time", format: "{0:MM/dd/yyyy}", width: 100 },
                     { field: "end", title: "End Time", format: "{0:MM/dd/yyyy}", width: 100 }
                 ],
-                date: new Date("2014/06/01"),
+                
                 height: 700,
                 editable: false,
                 showWorkHours: false,
                 showWorkDays: false,
                 snap: false,
                 navigate: function (e) {
-                    var options = e.sender.options;
-                    options.date = date.value();
-                    options.range = {
-                        start: startRange.value(),
-                        end: endRange.value()
-                    };
-                    e.sender.setOptions(options);
+                    var viewsOptions = e.sender.options.views;
+                    viewsOptions.forEach(function (view) {
+                        if (view.type === e.view) {
+                            startRange.value(view.range.start);
+                            endRange.value(view.range.end);
+                            date.value(view.date);
+                            return;
+                        }
+                    })
                 }
             }).data("kendoGantt");
 
