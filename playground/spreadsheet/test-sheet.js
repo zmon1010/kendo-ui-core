@@ -7,6 +7,12 @@ var sheet = spreadsheet.activeSheet();
 spreadsheet.insertSheet();
 var calc = kendo.spreadsheet.calc;
 
+kendo.spreadsheet.defineFunction("json.encode", function(x){
+    return JSON.stringify(x);
+}).args([
+    [ "x", "anyvalue" ]
+]);
+
 kendo.spreadsheet.registerEditor("color", function(){
     var context, dlg, colorpicker, model;
     function create() {
@@ -130,8 +136,6 @@ sheet.batch(function(){
         type: "reject"
     }).background("#fea");
 
-    sheet.range("E10").select();
-
     sheet.range("C10:C12").editor("color");
     sheet.range("C10:C12").values([ ["red"], ["green"], ["blue"] ]);
 
@@ -170,5 +174,8 @@ sheet.batch(function(){
     sheet.range("G19").input("=Const_PI");
     sheet.range("20:20").background("#fea").bold(true);
     sheet.range("J1").input("=SUM(NoSheet)");
+
+    sheet.range("F1").input('=json.encode(E1)');
+    sheet.range("E1").select();
 
 }, { recalc: true });
