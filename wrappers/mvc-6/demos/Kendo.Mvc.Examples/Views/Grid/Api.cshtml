@@ -1,4 +1,4 @@
-<div class="configuration k-widget k-header" style="width: 190px">
+<div class="box">
     <span class="configHead">API Functions</span>
     <ul class="options">
         <li>
@@ -17,7 +17,6 @@
 
 @(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
     .Name("grid")
-    .HtmlAttributes(new { style = "width:700px" })
     .Columns(columns =>
     {
         columns.Bound(p => p.ProductName).Title("Product Name");
