@@ -1303,7 +1303,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             point = chart._drawingChartElement(element, e, function(element) {
-                return element.hover;
+                return element.hover && !(element instanceof PlotAreaBase);
             });
 
             if (point && !point.hover(chart, e)) {

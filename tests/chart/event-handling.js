@@ -8,6 +8,32 @@
         chart = createChart(options);
     }
 
+    (function() {
+        function triggerMouseover(element) {
+            return chart._mouseover({ element: element, originalEvent: { } });
+        }
+
+        module("mouseover", {
+            setup: function() {
+                setupChart({});
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("does not change highlight if hovering over the plotarea", function() {
+            var calls = 0;
+            chart._highlight.show = chart._highlight.hide = function() {
+                calls++;
+            };
+
+            triggerMouseover(chart._plotArea.visual);
+            equal(calls, 0);
+        });
+
+    })();
+
     // ------------------------------------------------------------
     (function() {
         function createEvent(relatedTarget) {
