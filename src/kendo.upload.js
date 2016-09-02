@@ -1715,9 +1715,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function validateFiles(files, validationInfo) {
-        var allowedExtensions = $.map(validationInfo.allowedExtensions, function(ext){
-            return ext.toLowerCase();
-        });
+        var allowedExtensions = parseAllowedExtensions(validationInfo.allowedExtensions);
         var maxFileSize = validationInfo.maxFileSize;
         var minFileSize = validationInfo.minFileSize;
 
@@ -1725,6 +1723,15 @@ var __meta__ = { // jshint ignore:line
             validateFileExtension(files[i], allowedExtensions);
             validateFileSize(files[i], minFileSize, maxFileSize);
         }
+    }
+
+    function parseAllowedExtensions(extensions) {
+        var allowedExtensions = $.map(extensions, function(ext){
+            var parsedExt = (ext.substring(0, 1) === ".") ? ext : ("." + ext);
+            return parsedExt.toLowerCase();
+        });
+
+        return allowedExtensions;
     }
 
     function validateFileExtension(file, allowedExtensions) {

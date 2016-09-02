@@ -57,6 +57,50 @@ function validation(params) {
         equal($(".k-file span.k-file-validation-message").text(), uploadInstance.localization.invalidFileExtension);
     });
 
+    test("Upload with file extension validation allows defining extension without a dot at the begining", 2, function() {
+        var uploadInstance = createUpload($.extend({}, noAutoConfig, {
+            validation: {
+                allowedExtensions: ["jpg"]
+            }
+        }));
+
+        simulateFileSelect("first.jpg");
+        simulateFileSelect("second.txt");
+
+        allFiles = uploadInstance.getFiles();
+
+        ok(allFiles[0].validationErrors === undefined);
+        ok(allFiles[1].validationErrors && allFiles[1].validationErrors[0] === "invalidFileExtension");
+    });
+
+    test("Upload with file extension validation adds validation message", 1, function() {
+        var uploadInstance = createUpload($.extend({}, noAutoConfig, {
+            validation: {
+                allowedExtensions: ["jpg"]
+            }
+        }));
+
+        simulateFileSelect("second.png");
+
+        equal($(".k-file span.k-file-validation-message").text(), uploadInstance.localization.invalidFileExtension);
+    });
+
+    test("Upload with file extension validation pass validation when extension name does not start with dot or contains uppercase", 2, function() {
+        var uploadInstance = createUpload($.extend({}, noAutoConfig, {
+            validation: {
+                allowedExtensions: ["JPg", ".tXt"]
+            }
+        }));
+
+        simulateFileSelect("first.jpg");
+        simulateFileSelect("second.txt");
+
+        allFiles = uploadInstance.getFiles();
+
+        ok(allFiles[0].validationErrors === undefined);
+        ok(allFiles[1].validationErrors === undefined);
+    });
+
     test("Upload with max file size validation adds validation error", 2, function() {
         var uploadInstance = createUpload($.extend({}, noAutoConfig, {
             validation: {
