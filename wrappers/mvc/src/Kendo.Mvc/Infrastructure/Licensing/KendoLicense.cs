@@ -7,7 +7,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 	internal class KendoLicense : System.ComponentModel.License
     {
         private const int TRIAL_DURATION = 30;
-        private const int TRIAL_EXTENSION = 30;
+        private const int TRIAL_EXTENSION = 15;
         private const string TRIAL_START_KEY_PERFIX = "Telerik";
         private const string TRIAL_LAST_KEY_PERFIX = "TelerikLast";
         private const string REGISTRY_SUB_KEY = "Software\\Telerik\\MVC";
