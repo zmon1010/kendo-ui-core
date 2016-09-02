@@ -100,10 +100,10 @@ namespace Kendo.Mvc.UI
         {
             return new HtmlElement("span")
                 .AddClass(UIPrimitives.Icon)
-                .ToggleClass("k-plus", item.Enabled && !item.Expanded)
-                .ToggleClass("k-minus", item.Enabled && item.Expanded)
-                .ToggleClass("k-plus-disabled", !item.Enabled && !item.Expanded)
-                .ToggleClass("k-minus-disabled", !item.Enabled && item.Expanded);
+                .ToggleClass("k-i-expand", item.Enabled && !item.Expanded)
+                .ToggleClass("k-i-collapse", item.Enabled && item.Expanded)
+                .ToggleClass("k-i-expand-disabled", !item.Enabled && !item.Expanded)
+                .ToggleClass("k-i-collapse-disabled", !item.Enabled && item.Expanded);
         }
 
         public IHtmlNode ItemInnerContent(TreeViewItem item)

@@ -180,7 +180,7 @@ namespace Kendo.Mvc.UI.Tests
             IHtmlNode tag = renderer.ItemTag(item, true /*there are items*/).Children[0].Children[0];
 
             Assert.Equal("span", tag.TagName);
-            Assert.Equal("k-icon k-plus", tag.Attribute("class"));
+            Assert.Equal("k-icon k-i-expand", tag.Attribute("class"));
         }
 
         [Fact]
@@ -192,7 +192,7 @@ namespace Kendo.Mvc.UI.Tests
 
             IHtmlNode tag = renderer.ItemTag(item, true /*there are items*/).Children[0].Children[0];
 
-            Assert.Equal("k-icon k-plus-disabled", tag.Attribute("class"));
+            Assert.Equal("k-icon k-i-expand-disabled", tag.Attribute("class"));
         }
 
         [Fact]
@@ -206,7 +206,7 @@ namespace Kendo.Mvc.UI.Tests
             IHtmlNode tag = renderer.ItemTag(item, true /*there are items*/).Children[0].Children[0];
 
             Assert.Equal("span", tag.TagName);
-            Assert.Equal("k-icon k-minus", tag.Attribute("class"));
+            Assert.Equal("k-icon k-i-collapse", tag.Attribute("class"));
         }
 
         [Fact]
