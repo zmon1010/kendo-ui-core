@@ -228,10 +228,10 @@
         f.exec(ss, 2, "m/d/yyyy", validationCallback);
     });
 
-    test("validation clone is working as expected", 9, function(){
+    test("validation clone is working as expected", 8, function(){
         var customOptions = {
             from: "Sheet1!A2",
-            to: "Sheet1!A3",
+            to: "1/1/2017",
             comparerType: "between",
             dataType: "date",
             type: "reject",
@@ -245,13 +245,30 @@
         equal(newFormula.handler, f.handler);
         equal(newFormula.row, 1);
         equal(newFormula.col, 1);
+        equal(newFormula.toIsDateValue, true);
         equal(newFormula.type, customOptions.type);
 
         equal(newFormula.from.row, 1);
         equal(newFormula.from.col, 1);
-        equal(newFormula.to.row, 1);
-        equal(newFormula.to.col, 1);
         equal(newFormula.allowNulls, true);
+    });
+
+    test("validation clone is working as expected for list validation", 1, function(){
+        var customOptions = {
+            from: "B1:E2",
+            dataType: "list",
+            allowNulls: false
+        };
+
+        var f = validation.compile(Sheet1, 0, 0, $.extend({}, customOptions));
+
+        var options = f._getOptions();
+
+        options.from = options.from.toString();
+
+        var newFormula = validation.compile(Sheet1, 0, 0, options);
+
+        equal(newFormula.from.toString(), "_matrix(B1:E2)");
     });
 
     test("validation allow null values when allowNulls is set to true", 2, function(){

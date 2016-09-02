@@ -35,8 +35,9 @@
         }
 
         if (validation.from) {
-            if (validation.dataType === "list") {
+            if (validation.dataType === "list" && !validation.fromIsListValue) {
                 validation.from = kendo.format(TRANSPOSE_FORMAT, validation.from);
+                validation.fromIsListValue = true;
             }
 
             if (validation.dataType === "date") {
@@ -117,6 +118,7 @@
             this.fromIsDateValue = options.fromIsDateValue ? true : false;
             this.toIsDateValue = options.toIsDateValue ? true : false;
             this.showButton = options.showButton;
+            this.fromIsListValue = options.fromIsListValue ? true : false;
 
             //TODO: address to be range / cell ref, and adjust it based on it
             this.sheet = options.sheet;
@@ -289,11 +291,13 @@
 
                 if (options.dataType === "list") {
                     options.from = options.from.replace(/^_matrix\((.*)\)$/i, "$1");
+                    delete options.fromIsListValue;
                 }
 
                 if (options.dataType === "date") {
                     if (this.fromIsDateValue) {
                         options.from = options.from.replace(/^DATEVALUE\("(.*)"\)$/i, "$1");
+                        delete options.fromIsDateValue;
                     }
                 }
             }
@@ -304,12 +308,10 @@
                 if (options.dataType === "date") {
                     if (this.toIsDateValue) {
                         options.to = options.to.replace(/^DATEVALUE\("(.*)"\)$/i, "$1");
+                        delete options.toIsDateValue;
                     }
                 }
             }
-
-
-
 
             return options;
         },
@@ -325,6 +327,9 @@
                 col: this.col,
                 sheet: this.sheet,
                 allowNulls: this.allowNulls,
+                fromIsListValue: this.fromIsListValue,
+                fromIsDateValue: this.fromIsDateValue,
+                toIsDateValue: this.toIsDateValue,
                 tooltipMessageTemplate: this.tooltipMessageTemplate,
                 tooltipTitleTemplate: this.tooltipTitleTemplate,
                 //TODO: export generated messages instead?
