@@ -1,6 +1,7 @@
 /* jshint browser:false, node:true, esnext: true */
 
 var gulp = require('gulp');
+var shell = require('gulp-shell');
 var path = require('path');
 var debug = require('gulp-debug'); // jshint ignore:line
 var logger = require('gulp-logger');
@@ -221,6 +222,9 @@ gulp.task('cjs', function() {
         }))
         .pipe(gulp.dest('dist/cjs'));
 });
+gulp.task('mdspell', shell.task(
+['cd docs && mdspell "**/*.md" -n -a --report']
+));
 
 [ 'pro', 'core' ].forEach(function(flavor) {
     gulp.task('npm-' + flavor, [ 'cjs', 'styles' ] , function() {
