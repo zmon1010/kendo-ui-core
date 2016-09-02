@@ -3,7 +3,7 @@
 @(Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
     .HtmlAttributes(new { style = "width:100%;" })
-    .Events(events => events.Render("onRender").ExcelExport("onExcelExport"))
+    .Events(events => events.Render("onRender").ExcelExport("onExcelExport").Change("onChange"))
     .Sheets(sheets =>
     {
         sheets.Add()
@@ -347,5 +347,9 @@
 
     function onExcelExport(arg) {
         kendoConsole.log("Spreadsheet is exported to Excel");
+    }
+
+    function onChange(arg) {
+        kendoConsole.log("Spreadsheet change, new value: " + arg.range.value());
     }
 </script>
