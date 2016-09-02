@@ -460,7 +460,7 @@ namespace :demos do
 
     task :production_mvc_site => [] do
         sh 'mkdir -p dist/demos/mvc'
-        sh 'cp -a dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples dist/demos/mvc'
+        sh 'cp -rT dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples dist/demos/mvc'
         sh "sed 's/\$CDN_ROOT/#{(CDN_ROOT + VERSION).gsub(/\//, '\/')}/' -i dist/demos/mvc/Web.config"
     end
 
