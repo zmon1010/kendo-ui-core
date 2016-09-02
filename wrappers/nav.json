@@ -2889,7 +2889,8 @@
         },
         "meta": {
           "aspnet-mvc": "This demo shows how to select date and visible range, using the corresponding Telerik ASP.NET MVC Gantt properties."
-        }
+        },
+		"new": true
       },
       {
         "text": "Events",
@@ -2936,7 +2937,8 @@
       {
         "text": "Server binding",
         "url": "gantt/serverbinding",
-        "group": "Binding"
+        "group": "Binding",
+		"new": true
       }
     ],
         "category": "Scheduling"
