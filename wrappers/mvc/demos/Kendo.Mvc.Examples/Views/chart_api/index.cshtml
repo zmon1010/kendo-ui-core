@@ -1,6 +1,7 @@
 <div class="demo-section k-content wide">
     @(Html.Kendo().Chart()
         .Name("chart")
+        .HtmlAttributes(new { style = "height: 400px;" })
         .Title("Site Visitors Stats /thousands/")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Bottom)
@@ -59,6 +60,7 @@
 <script>
     $(document).ready(function() {
         $(".options").bind("change", refresh);
+        $(document).bind("kendo:skinChange", updateTheme);
     });
 
     function refresh() {
@@ -73,5 +75,9 @@
         };
 
         chart.refresh();
+    }
+
+    function updateTheme() {
+        $("#chart").getKendoChart().setOptions({ theme: kendoTheme });
     }
 </script>

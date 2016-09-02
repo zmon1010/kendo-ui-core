@@ -25,6 +25,7 @@
 <div class="demo-section k-content wide">
     @(Html.Kendo().Chart<Kendo.Mvc.Examples.Models.ElectricityProduction>()
         .Name("chart")
+        .HtmlAttributes(new { style = "height: 400px;" })
         .Title("Olympic Medals won by USA")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Bottom)
@@ -93,4 +94,12 @@
     }
 
     $("#reverse, #zoom").click(setOptions);
+
+    $(function () {
+        $(document).bind("kendo:skinChange", updateTheme);
+    });
+
+    function updateTheme() {
+        $("#chart").getKendoChart().setOptions({ theme: kendoTheme });
+    }
 </script>
