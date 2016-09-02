@@ -376,7 +376,9 @@ function toHeight(px) {
 }
 
 function stripFunnyChars(value) {
-    return (value+"").replace(/[\x00-\x08]/g, "");
+    return (value+"")
+        .replace(/[\x00-\x08]/g, "")
+        .replace(/\n/g, "\r\n");
 }
 
 var DATE_EPOCH = new Date(1900, 0, 0);
