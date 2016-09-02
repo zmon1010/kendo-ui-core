@@ -174,6 +174,9 @@
                     range.value(null);
                 } else {
                     range.input(value);
+                    if (/\n/.test(range.value())) {
+                        range.wrap(true);
+                    }
                 }
                 range._adjustRowHeight();
 
