@@ -62,7 +62,6 @@
             {
                 "text": "Customizing templates",
                 "url": "autocomplete/template",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Templates customization in ASP.NET MVC AutoComplete"
                 },
@@ -443,12 +442,12 @@
             },
             {
                 "text": "Client filtering",
-                "url": "combobox/clientfiltering"
+                "url": "combobox/clientfiltering",
+				"new": true
             },
             {
                 "text": "Customizing templates",
                 "url": "combobox/template",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Demo for customizing ASP.NET MVC ComboBox Templates"
                 },
@@ -468,7 +467,8 @@
             },
             {
                 "text": "Custom data source",
-                "url": "combobox/custom-datasource"
+                "url": "combobox/custom-datasource",
+				"new": true
             },
             {
                 "text": "Events",
@@ -2379,12 +2379,12 @@
             },
             {
                 "text": "Client filtering",
-                "url": "multiselect/clientfiltering"
+                "url": "multiselect/clientfiltering",
+				"new": true
             },
             {
                 "text": "Customizing templates",
                 "url": "multiselect/template",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Templates customization of ASP.NET MVC MultiSelect control"
                 },
