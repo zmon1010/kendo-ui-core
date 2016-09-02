@@ -648,7 +648,11 @@
         value: function(value) {
             if (value === undefined) {
                 // jQuery's .text() discards the newlines for some reason
-                return this.element[0].innerText;
+                var txt = this.element[0].innerText;
+                if (kendo.support.browser.mozilla) {
+                    txt = txt.replace(/\n$/, "");
+                }
+                return txt;
             }
 
             this._value(value);
