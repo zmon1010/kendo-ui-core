@@ -464,27 +464,12 @@ namespace :demos do
         sh "sed 's/\$CDN_ROOT/#{(CDN_ROOT + VERSION).gsub(/\//, '\/')}/' -i dist/demos/mvc/Web.config"
     end
 
-    task :production_mvc_core_site => ['mvc:assets'] do
-        sh <<-SHELL
-            cd wrappers/mvc-6
-            dotnet restore
-            cd demos/Kendo.Mvc.Examples
-            rm -r bin
-            dotnet publish --framework netcoreapp1.0 --configuration Release
-            rsync -av --delete bin/Release/netcoreapp1.0/publish/ ../../../../dist/demos/mvc-core
-        SHELL
-    end
-
     zip 'dist/demos/production.zip' => :production_site
     zip 'dist/demos/mvc.zip' => :production_mvc_site
-    zip 'dist/demos/mvc-core.zip' => :production_mvc_core_site
 
     desc('Build online demo site')
     task :production => 'dist/demos/production.zip'
 
     desc('Build online MVC demo site')
     task :production_mvc => 'dist/demos/mvc.zip'
-
-    desc('Build online MVC Core demo site')
-    task :production_mvc_core => 'dist/demos/mvc-core.zip'
 end
