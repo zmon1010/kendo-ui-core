@@ -25,7 +25,12 @@
 
         public virtual IList<TaskViewModel> GetAll()
         {
-            var result = HttpContext.Current.Session["SchedulerTasks"] as IList<TaskViewModel>;
+            bool IsWebApiRequest = HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/api");
+            IList <TaskViewModel> result = null;
+
+            if(!IsWebApiRequest){
+                result = HttpContext.Current.Session["SchedulerTasks"] as IList<TaskViewModel>;
+            }
 
             if (result == null || UpdateDatabase)
             {
@@ -45,7 +50,10 @@
                     OwnerID = task.OwnerID
                 }).ToList();
 
-                HttpContext.Current.Session["SchedulerTasks"] = result;
+                if (!IsWebApiRequest)
+                {
+                    HttpContext.Current.Session["SchedulerTasks"] = result;
+                }
             }
 
             return result;

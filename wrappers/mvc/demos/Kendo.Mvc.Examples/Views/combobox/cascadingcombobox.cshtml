@@ -43,7 +43,7 @@
             function filterProducts() {
                 return {
                     categories: $("#categories").val(),
-                    productFilter: $("#products").data("kendoComboBox").input.val()
+                    productFilter: $("#products").data("kendoComboBox").value()
                 };
             }
         </script>
@@ -73,7 +73,7 @@
             function filterOrders() {
                 return {
                     products: $("#products").val(),
-                    orderFilter: $("#orders").data("kendoComboBox").input.val()
+                    orderFilter: $("#orders").data("kendoComboBox").value()
                 };
             }
         </script>
