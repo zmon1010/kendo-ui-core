@@ -4,11 +4,11 @@ namespace Kendo.Mvc.Examples.Models
 {
     public class PopulationUSA
     {
-        public PopulationUSA(string name, int value)
+        public PopulationUSA(string name, int value, List<PopulationUSA> items)
         {
             Name = name;
             Value = value;
-            Items = new List<PopulationUSA>();
+            Items = items;
         }
 
         public string Name { get; set; }
