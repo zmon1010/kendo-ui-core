@@ -1,0 +1,9 @@
+#!/bin/sh
+
+git clean -dfx src styles dist demos wrappers
+npm install
+npm install bower
+bundle --without development --path ~/gems
+
+cd wrappers && gulp "$1"
+
