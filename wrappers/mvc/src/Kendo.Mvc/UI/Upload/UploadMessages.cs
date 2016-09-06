@@ -102,7 +102,7 @@ namespace Kendo.Mvc.UI
                 .Add("headerStatusUploaded", HeaderStatusUploaded, DefaultHeaderStatusUploaded)
                 .Add("invalidMaxFileSize", InvalidMaxFileSize, DefaultInvalidMaxFileSize)
                 .Add("invalidMinFileSize", InvalidMinFileSize, DefaultInvalidMinFileSize)
-                .Add("InvalidFileExtension", InvalidFileExtension, DefaultInvalidFileExtension)
+                .Add("invalidFileExtension", InvalidFileExtension, DefaultInvalidFileExtension)
                 .Add("clearSelectedFiles", ClearSelectedFiles, DefaultClearSelectedFiles);
         }
     }
