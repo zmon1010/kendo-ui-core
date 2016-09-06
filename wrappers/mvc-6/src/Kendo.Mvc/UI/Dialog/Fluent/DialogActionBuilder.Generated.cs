@@ -40,7 +40,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         /// <summary>
-        /// A boolean property indicating whether teh action button will be decorated as primary button or not.
+        /// A boolean property indicating whether the action button will be decorated as primary button or not.
         /// </summary>
         /// <param name="value">The value for Primary</param>
         public DialogActionBuilder Primary(bool value)

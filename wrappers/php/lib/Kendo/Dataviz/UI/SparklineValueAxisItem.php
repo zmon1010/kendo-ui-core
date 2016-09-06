@@ -72,7 +72,7 @@ body of the chart.
 
     /**
     * The maximum value of the axis.
-This is often used in combination with the min configuration option.
+This is often used in combination with theminconfiguration option.
     * @param float $value
     * @return \Kendo\Dataviz\UI\SparklineValueAxisItem
     */
@@ -82,7 +82,7 @@ This is often used in combination with the min configuration option.
 
     /**
     * The minimum value of the axis.
-This is often used in combination with the max configuration option.
+This is often used in combination with themaxconfiguration option.
     * @param float $value
     * @return \Kendo\Dataviz\UI\SparklineValueAxisItem
     */

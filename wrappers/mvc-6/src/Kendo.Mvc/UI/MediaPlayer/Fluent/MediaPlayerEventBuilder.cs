@@ -124,7 +124,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// This event is fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the volumeChange event.</param>
         public MediaPlayerEventBuilder VolumeChange(string handler)
@@ -135,7 +135,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// This event is fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public MediaPlayerEventBuilder VolumeChange(Func<object, object> handler)

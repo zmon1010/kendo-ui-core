@@ -176,7 +176,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The interval between minor divisions. It defaults to 1/5th of the xAxis.majorUnit.
+        /// The interval between minor divisions. It defaults to 1/5 of the xAxis.majorUnit.
 		/// If the xAxis.type is set to "log", the minorUnit value represents the number of divisions between two major units and defaults to the major unit minus one.
         /// </summary>
         /// <param name="value">The value for MinorUnit</param>

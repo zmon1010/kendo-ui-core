@@ -6,7 +6,7 @@ class SparklineSeriesItemLabels extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Defines the alignment of the labels.** Available for pie series. **
+    * Defines the alignment of the labels.Available for pie series.
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItemLabels
     */
@@ -42,7 +42,7 @@ class SparklineSeriesItemLabels extends \Kendo\SerializableObject {
     }
 
     /**
-    * The distance of the labels.** Available for pie series. **
+    * The distance of the labels.Available for pie series.
     * @param float $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItemLabels
     */

@@ -29,7 +29,7 @@ class DialogAction extends \Kendo\SerializableObject {
     }
 
     /**
-    * A boolean property indicating whether teh action button will be decorated as primary button or not.
+    * A boolean property indicating whether the action button will be decorated as primary button or not.
     * @param boolean $value
     * @return \Kendo\UI\DialogAction
     */

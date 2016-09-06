@@ -56,7 +56,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Forses inset appearance - the collapsible panel is padded from the View and receives rounded corners.
+        /// Forces inset appearance - the collapsible panel is padded from the View and receives rounded corners.
         /// </summary>
         /// <param name="value">The value that configures the inset.</param>
         public MobileCollapsibleBuilder Inset(bool value)

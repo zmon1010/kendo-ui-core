@@ -15,7 +15,7 @@ class ComboBoxPopup extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies how to position the popup element based on achor point. The value is
+    * Specifies how to position the popup element based on anchor point. The value is
 space separated "y" plus "x" position.The available "y" positions are:
 - "bottom"
 - "center"

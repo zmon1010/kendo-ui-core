@@ -43,7 +43,7 @@ class GridColumnFilterable extends \Kendo\SerializableObject {
 
     /**
     * Sets the itemTemplate option of the GridColumnFilterable.
-    * Allows customization on the logic that renderes the checkboxes when using checkbox filtering.
+    * Allows customization on the logic that renders the checkboxes when using checkbox filtering.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\GridColumnFilterable
     */

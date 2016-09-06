@@ -6,7 +6,7 @@ class MediaPlayerMedia extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * String or an array of objects that hold the URL\URLs to the videos
+    * String or an array of objects that hold the URL or URLs of the videos.
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMedia
     */
@@ -15,7 +15,7 @@ class MediaPlayerMedia extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the title of the media that will be played
+    * Specifies the title of the media that will be played.
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMedia
     */

@@ -47,7 +47,7 @@ This is the entire visible area of the chart.
     }
 
     /**
-    * The data for the default sparkline series.Will be discareded if series are supplied.
+    * The data for the default sparkline series.Will be discarded if series are supplied.
     * @param array $value
     * @return \Kendo\Dataviz\UI\Sparkline
     */

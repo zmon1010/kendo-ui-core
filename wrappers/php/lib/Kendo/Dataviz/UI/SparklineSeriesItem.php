@@ -15,7 +15,7 @@ class SparklineSeriesItem extends \Kendo\SerializableObject {
     }
 
     /**
-    * The series line dash type.** Applicable only to line series **
+    * The series line dash type.Applicable only to line series
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -33,7 +33,7 @@ class SparklineSeriesItem extends \Kendo\SerializableObject {
     }
 
     /**
-    * The data field containing a boolean value that indicates if the sector is exploded.** Available for pie series **
+    * The data field containing a Boolean value that indicates if the sector is exploded.Available for pie series
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -42,7 +42,7 @@ class SparklineSeriesItem extends \Kendo\SerializableObject {
     }
 
     /**
-    * The data field containing the current value.** Available for bullet and verticalBullet series. **
+    * The data field containing the current value.Available for bullet and verticalBullet series.
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -51,7 +51,7 @@ class SparklineSeriesItem extends \Kendo\SerializableObject {
     }
 
     /**
-    * The data field containing the target value.** Available for bullet and verticalBullet series. **** Available for pie series **
+    * The data field containing the target value.Available for bullet and verticalBullet series.Available for pie series
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -97,7 +97,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The name of the value axis to use.** Applicable to area, bar, column and line series **
+    * The name of the value axis to use.Applicable to area, bar, column and line series
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -106,7 +106,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The border of the points.** Applicable to bar, column and pie series **
+    * The border of the points.Applicable to bar, column and pie series
     * @param \Kendo\Dataviz\UI\SparklineSeriesItemBorder|array $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -115,7 +115,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The data field containing the point category name.** Applicable to pie series. **
+    * The data field containing the point category name.Applicable to pie series.
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -133,7 +133,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The data field containing the point color.** Applicable for bar, column and pie series. **
+    * The data field containing the point color.Applicable for bar, column and pie series.
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -142,7 +142,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The label connectors options.** Applicable to pie series. **
+    * The label connectors options.Applicable to pie series.
     * @param \Kendo\Dataviz\UI\SparklineSeriesItemConnectors|array $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -151,7 +151,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The distance between category clusters.** Applicable for bar and column series. **
+    * The distance between category clusters.Applicable for bar and column series.
     * @param float $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -169,7 +169,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * Line options.** Applicable to area series. **
+    * Line options.Applicable to area series.
     * @param string|\Kendo\Dataviz\UI\SparklineSeriesItemLine|array $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -178,7 +178,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * Marker options.** Applicable to area and line series **
+    * Marker options.Applicable to area and line series
     * @param \Kendo\Dataviz\UI\SparklineSeriesItemMarkers|array $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -205,7 +205,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * Color to use for bars with negative values.** Applicable only to bar and column series. **
+    * Color to use for bars with negative values.Applicable only to bar and column series.
     * @param string $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -232,7 +232,7 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
-    * The padding around the chart (equal on all sides).** Available for pie series. **
+    * The padding around the chart (equal on all sides).Available for pie series.
     * @param float $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -260,7 +260,7 @@ If not specified, the available space is split evenly between the series.Availab
     }
 
     /**
-    * Space between points as proportion of the point width.** Available for bar and column series. **
+    * Space between points as proportion of the point width.Available for bar and column series.
     * @param float $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */
@@ -269,7 +269,7 @@ If not specified, the available space is split evenly between the series.Availab
     }
 
     /**
-    * A boolean value indicating if the series should be stacked.
+    * A Boolean value indicating if the series should be stacked.
 A string value is interpreted as series.stack.group.
     * @param boolean|string|\Kendo\Dataviz\UI\SparklineSeriesItemStack|array $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
@@ -288,7 +288,7 @@ A string value is interpreted as series.stack.group.
     }
 
     /**
-    * The line width.** Available for line series **
+    * The line width.Available for line series
     * @param float $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesItem
     */

@@ -6,7 +6,7 @@ class UploadValidation extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Lists which file extensions are allowed to be uploaded.
+    * Lists which file extensions are allowed to be uploaded. Recognizes entries of both .type and type values.
     * @param array $value
     * @return \Kendo\UI\UploadValidation
     */

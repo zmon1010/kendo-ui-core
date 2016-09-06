@@ -6,7 +6,7 @@ class MediaPlayerMessages extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Pause button tooltip message
+    * Pause button tooltip message.
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMessages
     */
@@ -15,7 +15,7 @@ class MediaPlayerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * Play button tooltip message
+    * Play button tooltip message.
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMessages
     */
@@ -24,7 +24,7 @@ class MediaPlayerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * Mute button tooltip message
+    * Mute button tooltip message.
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMessages
     */
@@ -33,7 +33,7 @@ class MediaPlayerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * Unmute button tooltip message
+    * Unmute button tooltip message.
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMessages
     */
@@ -42,7 +42,7 @@ class MediaPlayerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * Quality button tooltip message
+    * Quality button tooltip message.
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMessages
     */
@@ -51,7 +51,7 @@ class MediaPlayerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * Fullscreen button tooltip message
+    * Fullscreen button tooltip message.
     * @param string $value
     * @return \Kendo\UI\MediaPlayerMessages
     */

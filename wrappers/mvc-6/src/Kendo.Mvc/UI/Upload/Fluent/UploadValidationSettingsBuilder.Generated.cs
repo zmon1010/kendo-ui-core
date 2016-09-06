@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Lists which file extensions are allowed to be uploaded.
+        /// Lists which file extensions are allowed to be uploaded. Recognizes entries of both .type and type values.
         /// </summary>
         /// <param name="value">The value for AllowedExtensions</param>
         public UploadValidationSettingsBuilder AllowedExtensions(params String[] value)

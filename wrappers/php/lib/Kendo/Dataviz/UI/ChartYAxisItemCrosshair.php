@@ -24,7 +24,7 @@ class ChartYAxisItemCrosshair extends \Kendo\SerializableObject {
     }
 
     /**
-    * The crosshar tooltip options.
+    * The crosshair tooltip options.
     * @param \Kendo\Dataviz\UI\ChartYAxisItemCrosshairTooltip|array $value
     * @return \Kendo\Dataviz\UI\ChartYAxisItemCrosshair
     */

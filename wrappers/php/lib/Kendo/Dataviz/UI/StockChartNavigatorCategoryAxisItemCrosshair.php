@@ -24,7 +24,7 @@ class StockChartNavigatorCategoryAxisItemCrosshair extends \Kendo\SerializableOb
     }
 
     /**
-    * The crosshar tooltip options.
+    * The crosshair tooltip options.
     * @param \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxisItemCrosshairTooltip|array $value
     * @return \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxisItemCrosshair
     */

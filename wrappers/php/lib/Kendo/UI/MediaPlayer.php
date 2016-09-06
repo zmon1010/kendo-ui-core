@@ -9,7 +9,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * If set to true the widget will start playing the video\vidoes after initializing
+    * If set to true, the widget will start playing the video or videos after initializing.
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -18,7 +18,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
-    * If set to true the widget will start playing the video\vidoes after initializing
+    * If set to true, the widget will start playing the video or videos after initializing.
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -27,7 +27,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
-    * If set to false the user will be prevented from seeking the video forward
+    * If set to false, the user will be prevented from seeking the video forward.
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -36,7 +36,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
-    * If set to true the widget will enter in full-sreen mode
+    * If set to true, the widget will enter fullscreen mode.
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -45,7 +45,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
-    * The object which holds the information about the media that will be played by the control
+    * The object which holds the information about the media that will be played by the control.
     * @param \Kendo\UI\MediaPlayerMedia|array $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -54,7 +54,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
-    * The object which holds the localization strings
+    * The object which holds the localization strings.
     * @param \Kendo\UI\MediaPlayerMessages|array $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -63,7 +63,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
-    * If set to true the video will be played without sound
+    * If set to true, the video will be played without sound.
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -72,7 +72,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
-    * If set to true will enable the keyboard navigation for the widget
+    * If set to true, the option enables the keyboard navigation for the widget.
     * @param boolean $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -81,7 +81,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
     }
 
     /**
-    * A value between 0 and 100 that specifies the volume of the video
+    * A value between 0 and 100 that specifies the volume of the video.
     * @param float $value
     * @return \Kendo\UI\MediaPlayer
     */
@@ -161,7 +161,7 @@ class MediaPlayer extends \Kendo\UI\Widget {
 
     /**
     * Sets the volumeChange event of the MediaPlayer.
-    * This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * This event is fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\MediaPlayer
     */

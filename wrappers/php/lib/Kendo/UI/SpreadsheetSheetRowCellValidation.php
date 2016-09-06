@@ -42,7 +42,7 @@ class SpreadsheetSheetRowCellValidation extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines a formula or value used for the comparison process. Will be used if comparer type requies second argument.
+    * Defines a formula or value used for the comparison process. Will be used if comparer type requires second argument.
     * @param string $value
     * @return \Kendo\UI\SpreadsheetSheetRowCellValidation
     */

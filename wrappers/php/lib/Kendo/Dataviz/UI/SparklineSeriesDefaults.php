@@ -100,7 +100,7 @@ The default options for all pie series. For more details see the series options.
     }
 
     /**
-    * A boolean value indicating if the series should be stacked.
+    * A Boolean value indicating if the series should be stacked.
     * @param boolean|\Kendo\Dataviz\UI\SparklineSeriesDefaultsStack|array $value
     * @return \Kendo\Dataviz\UI\SparklineSeriesDefaults
     */

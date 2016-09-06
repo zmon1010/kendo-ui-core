@@ -101,7 +101,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Defines text for search box pleaceholder.
+        /// Defines text for search box placeholder.
         /// </summary>
         /// <param name="value">The value for Search</param>
         public EditorImageBrowserMessagesSettingsBuilder Search(string value)

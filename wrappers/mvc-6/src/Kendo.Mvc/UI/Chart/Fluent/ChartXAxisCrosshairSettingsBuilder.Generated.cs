@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The crosshar tooltip options.
+        /// The crosshair tooltip options.
         /// </summary>
         /// <param name="configurator">The configurator for the tooltip setting.</param>
         public ChartXAxisCrosshairSettingsBuilder<T> Tooltip(Action<ChartXAxisCrosshairTooltipSettingsBuilder<T>> configurator)

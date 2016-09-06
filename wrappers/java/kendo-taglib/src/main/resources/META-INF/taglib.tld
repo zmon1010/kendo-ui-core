@@ -1136,7 +1136,7 @@ maxDateGroups.</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip options.</description>
+        <description>The crosshair tooltip options.</description>
         <name>chart-categoryAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.chart.CategoryAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -7146,7 +7146,7 @@ If the valueAxis.type is set to "log", the majorUnit value will be used for the 
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The interval between minor divisions. It defaults to 1/5th of the valueAxis.majorUnit.
+            <description>The interval between minor divisions. It defaults to 1/5 of the valueAxis.majorUnit.
 If the valueAxis.type is set to "log", the minorUnit value represents the number of divisions between two major units and defaults to the major unit minus one.</description>
             <name>minorUnit</name>
             <rtexprvalue>true</rtexprvalue>
@@ -7226,7 +7226,7 @@ The axis will be rendered in the first (default) pane if not set.</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip options.</description>
+        <description>The crosshair tooltip options.</description>
         <name>chart-valueAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.chart.ValueAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -8491,7 +8491,7 @@ If the xAxis.type is set to "log", the majorUnit value will be used for the base
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The interval between minor divisions. It defaults to 1/5th of the xAxis.majorUnit.
+            <description>The interval between minor divisions. It defaults to 1/5 of the xAxis.majorUnit.
 If the xAxis.type is set to "log", the minorUnit value represents the number of divisions between two major units and defaults to the major unit minus one.</description>
             <name>minorUnit</name>
             <rtexprvalue>true</rtexprvalue>
@@ -8577,7 +8577,7 @@ The axis will be rendered in the first (default) pane if not set.</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip options.</description>
+        <description>The crosshair tooltip options.</description>
         <name>chart-xAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.chart.XAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -9028,7 +9028,7 @@ body of the chart.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the x major grid liness. By default the x major grid liness are visible.</description>
+            <description>If set to true the chart will display the x major grid lines. By default the x major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -9883,7 +9883,7 @@ If the yAxis.type is set to "log", the majorUnit value will be used for the base
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The interval between minor divisions. It defaults to 1/5th of the yAxis.majorUnit.
+            <description>The interval between minor divisions. It defaults to 1/5 of the yAxis.majorUnit.
 If the yAxis.type is set to "log", the minorUnit value represents the number of divisions between two major units and defaults to the major unit minus one.</description>
             <name>minorUnit</name>
             <rtexprvalue>true</rtexprvalue>
@@ -9963,7 +9963,7 @@ The axis will be rendered in the first (default) pane if not set.</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip options.</description>
+        <description>The crosshair tooltip options.</description>
         <name>chart-yAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.chart.YAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -10414,7 +10414,7 @@ body of the chart.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will display the x major grid liness. By default the x major grid liness are visible.</description>
+            <description>If set to true the chart will display the x major grid lines. By default the x major grid lines are visible.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -11931,7 +11931,7 @@ refer to Popup documentation.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies how to position the popup element based on achor point. The value is
+            <description>Specifies how to position the popup element based on anchor point. The value is
 space separated "y" plus "x" position.The available "y" positions are:
 - "bottom"
 - "center"
@@ -12300,13 +12300,13 @@ by setting the close animation. Each animation also has a direction which can be
         <tag-class>com.kendoui.taglib.DataSourceTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
-            <description>If set to true the data source would automatically save any changed data items by calling the sync method. By default changes are not automatically saved.</description>
+            <description>If set to true the data source would automatically save any changed data items by calling the sync method. By default, changes are not automatically saved.</description>
             <name>autoSync</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the data source will batch CRUD operation requests. For example updating two data items would cause one HTTP request instead of two. By default the data source
+            <description>If set to true, the data source will batch CRUD operation requests. For example, updating two data items would cause one HTTP request instead of two. By default, the data source
 makes a HTTP request for every CRUD operation.</description>
             <name>batch</name>
             <rtexprvalue>true</rtexprvalue>
@@ -12331,7 +12331,7 @@ makes a HTTP request for every CRUD operation.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The number of data items per page. The property has no default value, that's why if paging should be used, make sure some pageSize is set.</description>
+            <description>The number of data items per page. The property has no default value. That is why to use paging, make sure some pageSize value is set.</description>
             <name>pageSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -12367,15 +12367,13 @@ makes a HTTP request for every CRUD operation.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set the data source will use a predefined transport and/or schema.
-The supported values are "odata" which supports the OData v.2 protocol, "odata-v4" which partially supports
-odata version 4 and "signalr".</description>
+            <description>If set, the data source will use a predefined transport and/or schema.The supported values are:</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.</description>
+            <description>Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered, or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -12385,7 +12383,7 @@ odata version 4 and "signalr".</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the data source receives a push notification or the pushCreate, pushUpdate or pushDestroy methods are called.</description>
+            <description>Fired when the data source receives a push notification or the pushCreate, pushUpdate, or pushDestroy methods are called.</description>
             <name>push</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -12407,20 +12405,20 @@ odata version 4 and "signalr".</description>
     </tag>
 
     <tag>
-        <description>The aggregate(s) which are calculated when the data source populates with data. The supported aggregates are "average", "count", "max", "min" and "sum".</description>
+        <description>The aggregates which are calculated when the data source populates with data.The supported aggregates are:</description>
         <name>dataSource-aggregate</name>
         <tag-class>com.kendoui.taglib.datasource.AggregateTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>The aggregate(s) which are calculated when the data source populates with data. The supported aggregates are "average", "count", "max", "min" and "sum".</description>
+        <description>The aggregates which are calculated when the data source populates with data.The supported aggregates are:</description>
         <name>dataSource-aggregateItem</name>
         <tag-class>com.kendoui.taglib.datasource.AggregateItemTag</tag-class>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The name of the aggregate function. The supported aggregates are "average", "count", "max", "min" and "sum".</description>
+            <description>The name of the aggregate function.The supported aggregates are:</description>
             <name>aggregate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12436,14 +12434,14 @@ odata version 4 and "signalr".</description>
 
 
     <tag>
-        <description>The filter(s) which is (are) applied over the data items. By default no filter is applied.</description>
+        <description>The filters which are applied over the data items. By default, no filter is applied.</description>
         <name>dataSource-filter</name>
         <tag-class>com.kendoui.taglib.datasource.FilterTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>The filter(s) which is (are) applied over the data items. By default no filter is applied.</description>
+        <description>The filters which are applied over the data items. By default, no filter is applied.</description>
         <name>dataSource-filterItem</name>
         <tag-class>com.kendoui.taglib.datasource.FilterItemTag</tag-class>
 
@@ -12455,20 +12453,19 @@ odata version 4 and "signalr".</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The logical operation to use when the filter.filters option is set. The supported values are "and" and "or".</description>
+            <description>The logical operation to use when the filter.filters option is set.The supported values are:</description>
             <name>logic</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "isnull" (is equal to null), "isnotnull" (is not equal to null), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
-"startswith", "endswith", "contains", "doesnotcontain", "isempty", "isnotempty". The last five are supported only for string fields.</description>
+            <description>The filter operator (comparison).The supported operators are:The last five are supported only for string fields.</description>
             <name>operator</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The value to which the field is compared. The value must be from the same type as the field.</description>
+            <description>The value to which the field is compared. The value has to be of the same type as the field.</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -12478,20 +12475,20 @@ odata version 4 and "signalr".</description>
 
 
     <tag>
-        <description>The grouping configuration of the data source. If set the data items will be grouped when the data source is populated. By default grouping is not applied.</description>
+        <description>The grouping configuration of the data source. If set, the data items will be grouped when the data source is populated. By default, grouping is not applied.</description>
         <name>dataSource-group</name>
         <tag-class>com.kendoui.taglib.datasource.GroupTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>The grouping configuration of the data source. If set the data items will be grouped when the data source is populated. By default grouping is not applied.</description>
+        <description>The grouping configuration of the data source. If set, the data items will be grouped when the data source is populated. By default, grouping is not applied.</description>
         <name>dataSource-groupItem</name>
         <tag-class>com.kendoui.taglib.datasource.GroupItemTag</tag-class>
 
         <body-content>JSP</body-content>
         <attribute>
-            <description>The sort order of the group. The supported values are "asc" (ascending order) and "desc" (descending order). The default sort order is ascending.</description>
+            <description>The sort order of the group.The supported values are:The default sort order is ascending.</description>
             <name>dir</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12505,20 +12502,20 @@ odata version 4 and "signalr".</description>
     </tag>
 
     <tag>
-        <description>The aggregate(s) which are calculated during grouping. The supported aggregates are "average", "count", "max", "min" and "sum".</description>
+        <description>The aggregates which are calculated during grouping.The supported aggregates are:</description>
         <name>dataSource-groupItem-aggregates</name>
         <tag-class>com.kendoui.taglib.datasource.GroupItemAggregatesTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>The aggregate(s) which are calculated during grouping. The supported aggregates are "average", "count", "max", "min" and "sum".</description>
+        <description>The aggregates which are calculated during grouping.The supported aggregates are:</description>
         <name>dataSource-groupItem-aggregate</name>
         <tag-class>com.kendoui.taglib.datasource.GroupItemAggregateTag</tag-class>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The name of the aggregate function. Specifies the aggregate function. The supported aggregates are "average", "count", "max", "min" and "sum".</description>
+            <description>The name of the aggregate function. Specifies the aggregate function.The supported aggregates are:</description>
             <name>aggregate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12541,35 +12538,31 @@ odata version 4 and "signalr".</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>The field from the response which contains the aggregate results. Can be set to a function which is called to
-return the aggregate results from the response.The result of the function should be a JavaScript object which contains the aggregate results for every fields in the following format:For example if the data source is configured like this:The aggregate results should have the following format:</description>
+            <description>The field from the response which contains the aggregate results. Can be set to a function which is called to return the aggregate results from the response.The result of the function should be a JavaScript object which contains the aggregate results for every field in the following format:For example, if the data source is configured like this:The aggregate results should have the following format:</description>
             <name>aggregates</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The field from the server response which contains the data items. Can be set to a function which is called to
-return the data items for the response.</description>
+            <description>The field from the server response which contains the data items. Can be set to a function which is called to return the data items for the response.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The field from the server response which contains server-side errors. Can be set to a function which is called to
-return the errors for response. If there are any errors the error event will be fired.</description>
+            <description>The field from the server response which contains server-side errors. Can be set to a function which is called to return the errors for response. If there are any errors, the error event will be fired.</description>
             <name>errors</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The field from the server response which contains the groups. Can be set to a function which is called to
-return the groups from the response.The result should have the following format:</description>
+            <description>The field from the server response which contains the groups. Can be set to a function which is called to return the groups from the response.The result should have the following format:</description>
             <name>groups</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The data item (model) configuration.If set to an object the Model.define method will be used to initialize the data source model.If set to an existing kendo.data.Model instance the data source will use that instance and will not initialize a new one.</description>
+            <description>The data item (model) configuration.If set to an object, the Model.define method will be used to initialize the data source model.If set to an existing kendo.data.Model instance, the data source will use that instance and will not initialize a new one.</description>
             <name>model</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -12581,14 +12574,13 @@ return the groups from the response.The result should have the following format:
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The field from the server response which contains the total number of data items. Can be set to a function which is called to
-return the total number of data items for the response.</description>
+            <description>The field from the server response which contains the total number of data items. Can be set to a function which is called to return the total number of data items for the response.</description>
             <name>total</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of the response. The supported values are "xml" and "json". By default the schema interprets the server response as JSON.</description>
+            <description>The type of the response.The supported values are:By default, the schema interprets the server response as JSON.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12598,29 +12590,25 @@ return the total number of data items for the response.</description>
 
 
     <tag>
-        <description>The field from the response which contains the aggregate results. Can be set to a function which is called to
-return the aggregate results from the response.The result of the function should be a JavaScript object which contains the aggregate results for every fields in the following format:For example if the data source is configured like this:The aggregate results should have the following format:</description>
+        <description>The field from the response which contains the aggregate results. Can be set to a function which is called to return the aggregate results from the response.The result of the function should be a JavaScript object which contains the aggregate results for every field in the following format:For example, if the data source is configured like this:The aggregate results should have the following format:</description>
         <name>dataSource-schema-aggregates</name>
         <tag-class>com.kendoui.taglib.datasource.SchemaAggregatesFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The field from the server response which contains the data items. Can be set to a function which is called to
-return the data items for the response.</description>
+        <description>The field from the server response which contains the data items. Can be set to a function which is called to return the data items for the response.</description>
         <name>dataSource-schema-data</name>
         <tag-class>com.kendoui.taglib.datasource.SchemaDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The field from the server response which contains server-side errors. Can be set to a function which is called to
-return the errors for response. If there are any errors the error event will be fired.</description>
+        <description>The field from the server response which contains server-side errors. Can be set to a function which is called to return the errors for response. If there are any errors, the error event will be fired.</description>
         <name>dataSource-schema-errors</name>
         <tag-class>com.kendoui.taglib.datasource.SchemaErrorsFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The field from the server response which contains the groups. Can be set to a function which is called to
-return the groups from the response.The result should have the following format:</description>
+        <description>The field from the server response which contains the groups. Can be set to a function which is called to return the groups from the response.The result should have the following format:</description>
         <name>dataSource-schema-groups</name>
         <tag-class>com.kendoui.taglib.datasource.SchemaGroupsFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12632,8 +12620,7 @@ return the groups from the response.The result should have the following format:
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The field from the server response which contains the total number of data items. Can be set to a function which is called to
-return the total number of data items for the response.</description>
+        <description>The field from the server response which contains the total number of data items. Can be set to a function which is called to return the total number of data items for the response.</description>
         <name>dataSource-schema-total</name>
         <tag-class>com.kendoui.taglib.datasource.SchemaTotalFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12653,7 +12640,7 @@ return the total number of data items for the response.</description>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The sort order (direction). The supported values are "asc" (ascending order) and "desc" (descending order).</description>
+            <description>The sort order (direction).The supported values are:</description>
             <name>dir</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12669,53 +12656,49 @@ return the total number of data items for the response.</description>
 
 
     <tag>
-        <description>The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.Remote data sources load and save data items from and to a remote end-point (a.k.a. remote service or server). The transport option describes the remote service configuration - URL, HTTP verb, HTTP headers etc.
-The transport option can also be used to implement custom data loading and saving.Local data sources are bound to a JavaScript array via the data option.</description>
+        <description>The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.Remote data sources load and save data items from and to a remote end-point (also known as remote service or server). The transport option describes the remote service configuration - URL, HTTP verb, HTTP headers, and others. The transport option can also be used to implement custom data loading and saving.Local data sources are bound to a JavaScript array via the data option.</description>
         <name>dataSource-transport</name>
         <tag-class>com.kendoui.taglib.datasource.TransportTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax. Check the jQuery documentation for more details on the provided argument.If the value of transport.create is a string the data source uses this string as the URL of the remote service.</description>
+            <description>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax. Check the jQuery documentation for more details on the provided argument.If the value of transport.create is a string, the data source uses this string as the URL of the remote service.</description>
             <name>create</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The configuration used when the data source destroys data items. Those are items removed from the data source via the remove method.If the value of transport.destroy is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.destroy is a string the data source uses this string as the URL of the remote service.</description>
+            <description>The configuration used when the data source destroys data items. Those are items removed from the data source via the remove method.If the value of transport.destroy is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.destroy is a string, the data source uses this string as the URL of the remote service.</description>
             <name>destroy</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The function which converts the request parameters to a format suitable for the remote service. By default
-the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.</description>
+            <description>The function which converts the request parameters to a format suitable for the remote service. By default, the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.</description>
             <name>parameterMap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The function invoked during transport initialization which sets up push notifications. The data source will call this function only once and provide
-callbacks which will handle push notifications (data pushed from the server).</description>
+            <description>The function invoked during transport initialization which sets up push notifications. The data source will call this function only once and provide callbacks which will handle push notifications (data pushed from the server).</description>
             <name>push</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The configuration used when the data source loads data items from a remote service.If the value of transport.read is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.read is a string the data source uses this string as the URL of the remote service.</description>
+            <description>The configuration used when the data source loads data items from a remote service.If the value of transport.read is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.read is a string, the data source uses this string as the URL of the remote service.</description>
             <name>read</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A function that will handle create, update and delete operations in a single batch.Typically you'd have transport.read and transport.submit operations defined together.
-The transport.create, transport.update and transport.delete operations will not be executed in this case.</description>
+            <description>A function that will handle create, update and delete operations in a single batch.Typically, you have the transport.read and transport.submit operations defined together. The transport.create, transport.update and transport.delete operations will not be executed in this case.</description>
             <name>submit</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The configuration used when the data source saves updated data items. Those are data items whose fields have been updated.If the value of transport.update is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.update is a string the data source uses this string as the URL of the remote service.</description>
+            <description>The configuration used when the data source saves updated data items. Those are data items whose fields have been updated.If the value of transport.update is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.update is a string, the data source uses this string as the URL of the remote service.</description>
             <name>update</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12724,46 +12707,43 @@ The transport.create, transport.update and transport.delete operations will not 
     </tag>
 
     <tag>
-        <description>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax. Check the jQuery documentation for more details on the provided argument.If the value of transport.create is a string the data source uses this string as the URL of the remote service.</description>
+        <description>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax. Check the jQuery documentation for more details on the provided argument.If the value of transport.create is a string, the data source uses this string as the URL of the remote service.</description>
         <name>dataSource-transport-create</name>
         <tag-class>com.kendoui.taglib.datasource.TransportCreateTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>If set to false the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters.
-By default "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>If set to false, the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters. By default, "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further info.</description>
             <name>cache</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON.
-Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The content-type HTTP header sent to the server. The default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON. Refer to the jQuery.ajax documentation for further information.</description>
             <name>contentType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>Additional parameters that are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further information.</description>
             <name>dataType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"). The default request is "GET".Refer to the jQuery.ajax documentation for further information.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</description>
+            <description>The URL to which the request is sent.If set to function, the data source will invoke it and use the result as the URL.</description>
             <name>url</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12773,59 +12753,55 @@ sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation f
 
 
     <tag>
-        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
+        <description>Additional parameters that are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.</description>
         <name>dataSource-transport-create-data</name>
         <tag-class>com.kendoui.taglib.datasource.TransportCreateDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</description>
+        <description>The URL to which the request is sent.If set to function, the data source will invoke it and use the result as the URL.</description>
         <name>dataSource-transport-create-url</name>
         <tag-class>com.kendoui.taglib.datasource.TransportCreateUrlFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The configuration used when the data source destroys data items. Those are items removed from the data source via the remove method.If the value of transport.destroy is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.destroy is a string the data source uses this string as the URL of the remote service.</description>
+        <description>The configuration used when the data source destroys data items. Those are items removed from the data source via the remove method.If the value of transport.destroy is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.destroy is a string, the data source uses this string as the URL of the remote service.</description>
         <name>dataSource-transport-destroy</name>
         <tag-class>com.kendoui.taglib.datasource.TransportDestroyTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>If set to false the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters.
-By default "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>If set to false, the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters. By default, "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further information.</description>
             <name>cache</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON.
-Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The content-type HTTP header sent to the server. The default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON. Refer to the jQuery.ajax documentation for further information.</description>
             <name>contentType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further information.</description>
             <name>dataType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"). The default request is "GET".Refer to the jQuery.ajax documentation for further information.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</description>
+            <description>The URL to which the request is sent.If set to function, the data source will invoke it and use the result as the URL.</description>
             <name>url</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12835,59 +12811,55 @@ sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation f
 
 
     <tag>
-        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
+        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.</description>
         <name>dataSource-transport-destroy-data</name>
         <tag-class>com.kendoui.taglib.datasource.TransportDestroyDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</description>
+        <description>The URL to which the request is sent.If set to function, the data source will invoke it and use the result as the URL.</description>
         <name>dataSource-transport-destroy-url</name>
         <tag-class>com.kendoui.taglib.datasource.TransportDestroyUrlFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The configuration used when the data source loads data items from a remote service.If the value of transport.read is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.read is a string the data source uses this string as the URL of the remote service.</description>
+        <description>The configuration used when the data source loads data items from a remote service.If the value of transport.read is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.read is a string, the data source uses this string as the URL of the remote service.</description>
         <name>dataSource-transport-read</name>
         <tag-class>com.kendoui.taglib.datasource.TransportReadTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>If set to false the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters.
-By default "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>If set to false, the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters. By default, "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further information.</description>
             <name>cache</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON.
-Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The content-type HTTP header sent to the server. The default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON. Refer to the jQuery.ajax documentation for further information.</description>
             <name>contentType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further information.</description>
             <name>dataType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"). The default request is "GET".Refer to the jQuery.ajax documentation for further information.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</description>
+            <description>The URL to which the request is sent.If set to function, the data source will invoke it and use the result as the URL.</description>
             <name>url</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12897,59 +12869,57 @@ sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation f
 
 
     <tag>
-        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
+        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.</description>
         <name>dataSource-transport-read-data</name>
         <tag-class>com.kendoui.taglib.datasource.TransportReadDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</description>
+        <description>The URL to which the request is sent.If set to function, the data source will invoke it and use the result as the URL.</description>
         <name>dataSource-transport-read-url</name>
         <tag-class>com.kendoui.taglib.datasource.TransportReadUrlFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The configuration used when the data source saves updated data items. Those are data items whose fields have been updated.If the value of transport.update is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.update is a string the data source uses this string as the URL of the remote service.</description>
+        <description>The configuration used when the data source saves updated data items. Those are data items whose fields have been updated.If the value of transport.update is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.update is a string, the data source uses this string as the URL of the remote service.</description>
         <name>dataSource-transport-update</name>
         <tag-class>com.kendoui.taglib.datasource.TransportUpdateTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>If set to false the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters.
-By default "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>If set to false, the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters. By default, "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further information.</description>
             <name>cache</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
             <description>The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON.
-Refer to the jQuery.ajax documentation for further info.</description>
+Refer to the jQuery.ajax documentation for further information.</description>
             <name>contentType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
+sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further information.</description>
             <name>dataType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".Refer to the jQuery.ajax documentation for further info.</description>
+            <description>The type of request to make ("POST", "GET", "PUT" or "DELETE"). The default request is "GET".Refer to the jQuery.ajax documentation for further information.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</description>
+            <description>The URL to which the request is sent.If set to function, the data source will invoke it and use the result as the URL.</description>
             <name>url</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12960,42 +12930,39 @@ sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation f
 
     <tag>
         <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
-sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
+sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation for further information.</description>
         <name>dataSource-transport-update-data</name>
         <tag-class>com.kendoui.taglib.datasource.TransportUpdateDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</description>
+        <description>The URL to which the request is sent.If set to function, the data source will invoke it and use the result as the URL.</description>
         <name>dataSource-transport-update-url</name>
         <tag-class>com.kendoui.taglib.datasource.TransportUpdateUrlFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>The function which converts the request parameters to a format suitable for the remote service. By default
-the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.</description>
+        <description>The function which converts the request parameters to a format suitable for the remote service. By default, the data source sends the parameters using jQuery's conventions.If a transport.read.data function is used together with parameterMap, do not forget to preserve the result from the data function that will be received in the parameterMap arguments. An example is provided below. Generally, the parameterMap function is designed to transform the request payload, not add new parameters to it.</description>
         <name>dataSource-transport-parameterMap</name>
         <tag-class>com.kendoui.taglib.datasource.TransportParameterMapFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The function invoked during transport initialization which sets up push notifications. The data source will call this function only once and provide
-callbacks which will handle push notifications (data pushed from the server).</description>
+        <description>The function invoked during transport initialization which sets up push notifications. The data source will call this function only once and provide callbacks which will handle push notifications (data pushed from the server).</description>
         <name>dataSource-transport-push</name>
         <tag-class>com.kendoui.taglib.datasource.TransportPushFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>A function that will handle create, update and delete operations in a single batch.Typically you'd have transport.read and transport.submit operations defined together.
-The transport.create, transport.update and transport.delete operations will not be executed in this case.</description>
+        <description>A function that will handle create, update and delete operations in a single batch.Typically, you have the transport.read and transport.submit operations defined together. The transport.create, transport.update and transport.delete operations will not be executed in this case.</description>
         <name>dataSource-transport-submit</name>
         <tag-class>com.kendoui.taglib.datasource.TransportSubmitFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.</description>
+        <description>Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered, or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.</description>
         <name>dataSource-change</name>
         <tag-class>com.kendoui.taglib.datasource.ChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -13007,7 +12974,7 @@ The transport.create, transport.update and transport.delete operations will not 
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the data source receives a push notification or the pushCreate, pushUpdate or pushDestroy methods are called.</description>
+        <description>Fired when the data source receives a push notification or the pushCreate, pushUpdate, or pushDestroy methods are called.</description>
         <name>dataSource-push</name>
         <tag-class>com.kendoui.taglib.datasource.PushFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -15905,7 +15872,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>float</type>
         </attribute>
         <attribute>
-            <description>In the force-directed layout this setting defines the optimal length between 2 nodes, which directly correlates to the state of the link between them. If a link is longer than there will be a force pulling the nodes together, if the link is shorter the force will push the nodes apart. The optimal length is more and indication in the algorithm than a guarantee that all nodes will be at this distance. The result of the layout is really a combination of the incidence structure of the diagram, the initial topology (positions of the nodes) and the number of iterations.In the layered layout it defines the minimum distance between nodes on the same level. Due to the nature of the algorithm this distance will only be respected if the the whole crossing of links and optimimzation does not induce a shift of the siblings.This setting is specific to the force-directed layout and layered layout</description>
+            <description>In the force-directed layout this setting defines the optimal length between 2 nodes, which directly correlates to the state of the link between them. If a link is longer than there will be a force pulling the nodes together, if the link is shorter the force will push the nodes apart. The optimal length is more and indication in the algorithm than a guarantee that all nodes will be at this distance. The result of the layout is really a combination of the incidence structure of the diagram, the initial topology (positions of the nodes) and the number of iterations.In the layered layout it defines the minimum distance between nodes on the same level. Due to the nature of the algorithm this distance will only be respected if the the whole crossing of links and optimization does not induce a shift of the siblings.This setting is specific to the force-directed layout and layered layout</description>
             <name>nodeDistance</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -16720,14 +16687,14 @@ units are "mm", "cm", "in" and "pt" (default).</description>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-shapeDefaults-editable-tools</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>Specifies the the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
+        <description>Specifies the toolbar tools. Supports all options supported for the toolbar.items. Predefined tools are:</description>
         <name>diagram-shapeDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolTag</tag-class>
 
@@ -18597,7 +18564,7 @@ See visual.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A boolean property indicating whether teh action button will be decorated as primary button or not.</description>
+            <description>A boolean property indicating whether the action button will be decorated as primary button or not.</description>
             <name>primary</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -19013,7 +18980,7 @@ refer to Popup documentation.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies how to position the popup element based on achor point. The value is
+            <description>Specifies how to position the popup element based on anchor point. The value is
 space separated "y" plus "x" position.The available "y" positions are:
 - "bottom"
 - "center"
@@ -19320,7 +19287,7 @@ and a contenteditable iframe is generated.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines text for search box pleaceholder.</description>
+            <description>Defines text for search box placeholder.</description>
             <name>search</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -19768,7 +19735,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines text for search box pleaceholder.</description>
+            <description>Defines text for search box placeholder.</description>
             <name>search</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -23178,7 +23145,7 @@ for all columns when filtering is enabled via the filterable option.Can be set t
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Allows customization on the logic that renderes the checkboxes when using checkbox filtering.</description>
+            <description>Allows customization on the logic that renders the checkboxes when using checkbox filtering.</description>
             <name>itemTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -23290,7 +23257,7 @@ The function receives an object argument with two fields:</description>
     </tag>
 
     <tag>
-        <description>Allows customization on the logic that renderes the checkboxes when using checkbox filtering.</description>
+        <description>Allows customization on the logic that renders the checkboxes when using checkbox filtering.</description>
         <name>grid-column-filterable-itemTemplate</name>
         <tag-class>com.kendoui.taglib.grid.ColumnFilterableItemTemplateFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -26908,43 +26875,43 @@ Cancelling the event will prevent the user action.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the widget will start playing the video\vidoes after initializing</description>
+            <description>If set to true, the widget will start playing the video or videos after initializing.</description>
             <name>autoPlay</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the widget will start playing the video\vidoes after initializing</description>
+            <description>If set to true, the widget will start playing the video or videos after initializing.</description>
             <name>autoRepeat</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to false the user will be prevented from seeking the video forward</description>
+            <description>If set to false, the user will be prevented from seeking the video forward.</description>
             <name>forwardSeek</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the widget will enter in full-sreen mode</description>
+            <description>If set to true, the widget will enter fullscreen mode.</description>
             <name>fullScreen</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the video will be played without sound</description>
+            <description>If set to true, the video will be played without sound.</description>
             <name>mute</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true will enable the keyboard navigation for the widget</description>
+            <description>If set to true, the option enables the keyboard navigation for the widget.</description>
             <name>navigatable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>A value between 0 and 100 that specifies the volume of the video</description>
+            <description>A value between 0 and 100 that specifies the volume of the video.</description>
             <name>volume</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -26975,7 +26942,7 @@ Cancelling the event will prevent the user action.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>This event is fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>volumeChange</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -26983,19 +26950,19 @@ Cancelling the event will prevent the user action.</description>
     </tag>
 
     <tag>
-        <description>The object which holds the information about the media that will be played by the control</description>
+        <description>The object which holds the information about the media that will be played by the control.</description>
         <name>mediaPlayer-media</name>
         <tag-class>com.kendoui.taglib.mediaplayer.MediaTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>String or an array of objects that hold the URL\URLs to the videos</description>
+            <description>String or an array of objects that hold the URL or URLs of the videos.</description>
             <name>source</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies the title of the media that will be played</description>
+            <description>Specifies the title of the media that will be played.</description>
             <name>title</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -27006,43 +26973,43 @@ Cancelling the event will prevent the user action.</description>
 
 
     <tag>
-        <description>The object which holds the localization strings</description>
+        <description>The object which holds the localization strings.</description>
         <name>mediaPlayer-messages</name>
         <tag-class>com.kendoui.taglib.mediaplayer.MessagesTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Fullscreen button tooltip message</description>
+            <description>Fullscreen button tooltip message.</description>
             <name>fullscreen</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Mute button tooltip message</description>
+            <description>Mute button tooltip message.</description>
             <name>mute</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Pause button tooltip message</description>
+            <description>Pause button tooltip message.</description>
             <name>pause</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Play button tooltip message</description>
+            <description>Play button tooltip message.</description>
             <name>play</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Quality button tooltip message</description>
+            <description>Quality button tooltip message.</description>
             <name>quality</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Unmute button tooltip message</description>
+            <description>Unmute button tooltip message.</description>
             <name>unmute</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -27083,7 +27050,7 @@ Cancelling the event will prevent the user action.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>This event if fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>This event is fired upon changing the volume level.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>mediaPlayer-volumeChange</name>
         <tag-class>com.kendoui.taglib.mediaplayer.VolumeChangeFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -27614,7 +27581,7 @@ refer to Popup documentation.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies how to position the popup element based on achor point. The value is
+            <description>Specifies how to position the popup element based on anchor point. The value is
 space separated "y" plus "x" position.The available "y" positions are:
 - "bottom"
 - "center"
@@ -29164,7 +29131,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies how to position the popup element based on achor point. The value is
+            <description>Specifies how to position the popup element based on anchor point. The value is
 space separated "y" plus "x" position.The available "y" positions are:
 - "bottom"
 - "center"
@@ -29684,7 +29651,7 @@ Any valid CSS color string will work here, including hex and rgb.</description>
 
         <attribute>
             <description>The end angle of the gauge.
-The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinat system)</description>
+The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinate system)</description>
             <name>endAngle</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -29739,7 +29706,7 @@ The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coord
         </attribute>
         <attribute>
             <description>The start angle of the gauge.
-The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinat system)</description>
+The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinate system)</description>
             <name>startAngle</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -32156,7 +32123,7 @@ By default, the hint is initially positioned on top of the draggable source offs
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The data for the default sparkline series.Will be discareded if series are supplied.</description>
+            <description>The data for the default sparkline series.Will be discarded if series are supplied.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -32277,14 +32244,14 @@ and is about to render it.</description>
 
         <body-content>JSP</body-content>
         <attribute>
-            <description>Specifies the discrete baseUnitStep values when
-either baseUnit is set to "fit" or baseUnitStep is set to "auto".The default configuration is as follows:Each setting can be overriden individually.</description>
+            <description>Specifies the discretebaseUnitStepvalues when
+eitherbaseUnitis set to "fit" orbaseUnitStepis set to "auto".The default configuration is as follows:Each setting can be overriden individually.</description>
             <name>autoBaseUnitSteps</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>Category index at which the first value axis crosses this axis. (Only for object)Category indicies at which the value axes cross the category axis. (Only for array)Note: Specify an index greater than or equal to the number
+            <description>Category index at which the first value axis crosses this axis. (Only for object)Category indicies at which the value axes cross the category axis. (Only for array)Note:Specify an index greater than or equal to the number
 of categories to denote the far end of the axis.</description>
             <name>axisCrossingValue</name>
             <rtexprvalue>true</rtexprvalue>
@@ -32293,16 +32260,16 @@ of categories to denote the far end of the axis.</description>
         <attribute>
             <description>The base time interval for the axis.
 The default baseUnit is determined automatically from the minimum difference
-between subsequent categories. Available options:Setting baseUnit to "fit" will set such base unit and baseUnitStep
-that the total number of categories does not exceed maxDateGroups.Series data is aggregated for the specified base unit by using the
-series.aggregate function.</description>
+between subsequent categories. Available options:SettingbaseUnitto "fit" will set such base unit andbaseUnitStep
+that the total number of categories does not exceedmaxDateGroups.Series data is aggregated for the specified base unit by using the
+series.aggregatefunction.</description>
             <name>baseUnit</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>Sets the step (interval) between categories in base units.
-Specifiying "auto" will set the step to such value that the total number of categories does not exceed maxDateGroups.This option is ignored if baseUnit is set to "fit".</description>
+Specifiying "auto" will set the step to such value that the total number of categories does not exceedmaxDateGroups.This option is ignored ifbaseUnitis set to "fit".</description>
             <name>baseUnitStep</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -32335,7 +32302,7 @@ Individual color settings for line and labels take priority.</description>
         <attribute>
             <description>The last date displayed on the axis.
 By default, the minimum date is the same as the last category.
-This is often used in combination with the min and roundToBaseUnit configuration options to
+This is often used in combination with theminandroundToBaseUnitconfiguration options to
 set up a fixed date range.</description>
             <name>max</name>
             <rtexprvalue>true</rtexprvalue>
@@ -32343,7 +32310,7 @@ set up a fixed date range.</description>
         </attribute>
         <attribute>
             <description>Specifies the maximum number of groups (categories) to produce when
-either baseUnit is set to "fit" or baseUnitStep is set to "auto".This option is ignored in all other cases.</description>
+eitherbaseUnitis set to "fit" orbaseUnitStepis set to "auto".This option is ignored in all other cases.</description>
             <name>maxDateGroups</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -32351,7 +32318,7 @@ either baseUnit is set to "fit" or baseUnitStep is set to "auto".This option is 
         <attribute>
             <description>The first date displayed on the axis.
 By default, the minimum date is the same as the first category.
-This is often used in combination with the max and roundToBaseUnit configuration options to
+This is often used in combination with themaxandroundToBaseUnitconfiguration options to
 set up a fixed date range.</description>
             <name>min</name>
             <rtexprvalue>true</rtexprvalue>
@@ -32372,7 +32339,7 @@ categories are listed from right to left and from top to bottom.</description>
         </attribute>
         <attribute>
             <description>By default, the first and last dates will be rounded off to the nearest base unit.
-Specifying false for this option will disable this behavior.This option is most useful in combination with explicit min and max dates.It will be ignored if either bar or column series are plotted on the axis.</description>
+Specifyingfalsefor this option will disable this behavior.This option is most useful in combination with explicitminandmaxdates.It will be ignored if either bar or column series are plotted on the axis.</description>
             <name>roundToBaseUnit</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -32390,7 +32357,7 @@ Specifying false for this option will disable this behavior.This option is most 
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Specifies the week start day when baseUnit is set to "weeks".
+            <description>Specifies the week start day whenbaseUnitis set to "weeks".
 Use the kendo.days constants to specify the day by name.</description>
             <name>weekStartDay</name>
             <rtexprvalue>true</rtexprvalue>
@@ -32438,7 +32405,7 @@ Use the kendo.days constants to specify the day by name.</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip configuration options.</description>
+        <description>The crosshair tooltip configuration options.</description>
         <name>sparkline-categoryAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.sparkline.CategoryAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -32660,7 +32627,7 @@ Every n-th label is rendered where n is the step</description>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>The color of the lines. Any valid CSS color string will work here, including hex and rgb.Note: This will also effect the major and minor ticks, but not the grid lines.</description>
+            <description>The color of the lines. Any valid CSS color string will work here, including hex and rgb.Note:This will also effect the major and minor ticks, but not the grid lines.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -32784,7 +32751,7 @@ on the chart.</description>
 
     <tag>
         <description>Configures the minor grid lines.  These are the lines that are an extension of the minor ticks through
-the body of the chart.Note that minor grid lines are not visible by default, therefore none of these settings will take effect with the minor grid lines visibility being set to true.</description>
+the body of the chart.Note that minor grid lines are not visible by default, therefore none of these settings will take effect with the minor grid lines visibility being set totrue.</description>
         <name>sparkline-categoryAxisItem-minorGridLines</name>
         <tag-class>com.kendoui.taglib.sparkline.CategoryAxisItemMinorGridLinesTag</tag-class>
         <body-content>empty</body-content>
@@ -32792,7 +32759,7 @@ the body of the chart.Note that minor grid lines are not visible by default, the
         <attribute>
             <description>The color of the lines. Any valid CSS color string will work here, including hex and
 rgb.Note that this setting has no effect if the visibility of the minor
-grid lines is not set to true.</description>
+grid lines is not set totrue.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -32823,7 +32790,7 @@ grid lines is not set to true.</description>
         </attribute>
         <attribute>
             <description>The width of the lines.Note that this setting has no effect if the visibility of the minor
-grid lines is not set to true.</description>
+grid lines is not set totrue.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -33567,13 +33534,13 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The name of the value axis to use.** Applicable to area, bar, column and line series **</description>
+            <description>The name of the value axis to use.Applicable to area, bar, column and line series</description>
             <name>axis</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The data field containing the point category name.** Applicable to pie series. **</description>
+            <description>The data field containing the point category name.Applicable to pie series.</description>
             <name>categoryField</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -33585,19 +33552,19 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The data field containing the point color.** Applicable for bar, column and pie series. **</description>
+            <description>The data field containing the point color.Applicable for bar, column and pie series.</description>
             <name>colorField</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The data field containing the current value.** Available for bullet and verticalBullet series. **</description>
+            <description>The data field containing the current value.Available for bullet and verticalBullet series.</description>
             <name>currentField</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The series line dash type.** Applicable only to line series **</description>
+            <description>The series line dash type.Applicable only to line series</description>
             <name>dashType</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -33609,7 +33576,7 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The data field containing a boolean value that indicates if the sector is exploded.** Available for pie series **</description>
+            <description>The data field containing a Boolean value that indicates if the sector is exploded.Available for pie series</description>
             <name>explodeField</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -33621,13 +33588,13 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The distance between category clusters.** Applicable for bar and column series. **</description>
+            <description>The distance between category clusters.Applicable for bar and column series.</description>
             <name>gap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Line options.** Applicable to area series. **</description>
+            <description>Line options.Applicable to area series.</description>
             <name>line</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -33645,7 +33612,7 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Color to use for bars with negative values.** Applicable only to bar and column series. **</description>
+            <description>Color to use for bars with negative values.Applicable only to bar and column series.</description>
             <name>negativeColor</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -33657,7 +33624,7 @@ The function return value is displayed instead of the individual points.The supp
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The padding around the chart (equal on all sides).** Available for pie series. **</description>
+            <description>The padding around the chart (equal on all sides).Available for pie series.</description>
             <name>padding</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -33670,13 +33637,13 @@ If not specified, the available space is split evenly between the series.Availab
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Space between points as proportion of the point width.** Available for bar and column series. **</description>
+            <description>Space between points as proportion of the point width.Available for bar and column series.</description>
             <name>spacing</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>A boolean value indicating if the series should be stacked.
+            <description>A Boolean value indicating if the series should be stacked.
 A string value is interpreted as series.stack.group.</description>
             <name>stack</name>
             <rtexprvalue>true</rtexprvalue>
@@ -33695,7 +33662,7 @@ A string value is interpreted as series.stack.group.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The data field containing the target value.** Available for bullet and verticalBullet series. **** Available for pie series **</description>
+            <description>The data field containing the target value.Available for bullet and verticalBullet series.Available for pie series</description>
             <name>targetField</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -33707,7 +33674,7 @@ A string value is interpreted as series.stack.group.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The line width.** Available for line series **</description>
+            <description>The line width.Available for line series</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -33722,7 +33689,7 @@ For example line series will be on top with bar and area following below.</descr
     </tag>
 
     <tag>
-        <description>The border of the points.** Applicable to bar, column and pie series **</description>
+        <description>The border of the points.Applicable to bar, column and pie series</description>
         <name>sparkline-seriesItem-border</name>
         <tag-class>com.kendoui.taglib.sparkline.SeriesItemBorderTag</tag-class>
         <body-content>JSP</body-content>
@@ -33780,7 +33747,7 @@ For example line series will be on top with bar and area following below.</descr
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The label connectors options.** Applicable to pie series. **</description>
+        <description>The label connectors options.Applicable to pie series.</description>
         <name>sparkline-seriesItem-connectors</name>
         <tag-class>com.kendoui.taglib.sparkline.SeriesItemConnectorsTag</tag-class>
         <body-content>empty</body-content>
@@ -33814,13 +33781,13 @@ For example line series will be on top with bar and area following below.</descr
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>The highlight color.** Available only for pie series **</description>
+            <description>The highlight color.Available only for pie series</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The opacity of the highlighted points.** Applicable to pie series. **</description>
+            <description>The opacity of the highlighted points.Applicable to pie series.</description>
             <name>opacity</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -33835,7 +33802,7 @@ For example line series will be on top with bar and area following below.</descr
     </tag>
 
     <tag>
-        <description>The border of highlighted points. The color is computed automatically from the base point color.** Applicable to pie series. **</description>
+        <description>The border of highlighted points. The color is computed automatically from the base point color.Applicable to pie series.</description>
         <name>sparkline-seriesItem-highlight-border</name>
         <tag-class>com.kendoui.taglib.sparkline.SeriesItemHighlightBorderTag</tag-class>
         <body-content>empty</body-content>
@@ -33870,7 +33837,7 @@ For example line series will be on top with bar and area following below.</descr
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Defines the alignment of the labels.** Available for pie series. **</description>
+            <description>Defines the alignment of the labels.Available for pie series.</description>
             <name>align</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -33888,7 +33855,7 @@ For example line series will be on top with bar and area following below.</descr
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The distance of the labels.** Available for pie series. **</description>
+            <description>The distance of the labels.Available for pie series.</description>
             <name>distance</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -34028,7 +33995,7 @@ For example line series will be on top with bar and area following below.</descr
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Line options.** Applicable to area series. **</description>
+        <description>Line options.Applicable to area series.</description>
         <name>sparkline-seriesItem-line</name>
         <tag-class>com.kendoui.taglib.sparkline.SeriesItemLineTag</tag-class>
         <body-content>empty</body-content>
@@ -34062,7 +34029,7 @@ For example line series will be on top with bar and area following below.</descr
 
 
     <tag>
-        <description>Marker options.** Applicable to area and line series **</description>
+        <description>Marker options.Applicable to area and line series</description>
         <name>sparkline-seriesItem-markers</name>
         <tag-class>com.kendoui.taglib.sparkline.SeriesItemMarkersTag</tag-class>
         <body-content>JSP</body-content>
@@ -34374,7 +34341,10 @@ For example line series will be on top with bar and area following below.</descr
         <body-content>empty</body-content>
 
         <attribute>
-            <description>The gradient name.Available options:</description>
+            <description>The gradient name.Available options:glass**(bar and column series)
+**roundedBevel(pie series)
+sharpBevel**(pie series)
+**none</description>
             <name>gradient</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -34384,7 +34354,7 @@ For example line series will be on top with bar and area following below.</descr
 
 
     <tag>
-        <description>A boolean value indicating if the series should be stacked.
+        <description>A Boolean value indicating if the series should be stacked.
 A string value is interpreted as series.stack.group.</description>
         <name>sparkline-seriesItem-stack</name>
         <tag-class>com.kendoui.taglib.sparkline.SeriesItemStackTag</tag-class>
@@ -34652,7 +34622,7 @@ The default options for all pie series. For more details see the series options.
             <type>float</type>
         </attribute>
         <attribute>
-            <description>A boolean value indicating if the series should be stacked.</description>
+            <description>A Boolean value indicating if the series should be stacked.</description>
             <name>stack</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -34792,7 +34762,7 @@ Template variables:</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>A boolean value indicating if the series should be stacked.</description>
+        <description>A Boolean value indicating if the series should be stacked.</description>
         <name>sparkline-seriesDefaults-stack</name>
         <tag-class>com.kendoui.taglib.sparkline.SeriesDefaultsStackTag</tag-class>
         <body-content>empty</body-content>
@@ -35021,14 +34991,14 @@ Individual color settings for line and labels take priority. Any valid CSS color
         </attribute>
         <attribute>
             <description>The maximum value of the axis.
-This is often used in combination with the min configuration option.</description>
+This is often used in combination with theminconfiguration option.</description>
             <name>max</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
             <description>The minimum value of the axis.
-This is often used in combination with the max configuration option.</description>
+This is often used in combination with themaxconfiguration option.</description>
             <name>min</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -35107,7 +35077,7 @@ values increase from right to left and from top to bottom.</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip configuration options.</description>
+        <description>The crosshair tooltip configuration options.</description>
         <name>sparkline-valueAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.sparkline.ValueAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -35443,7 +35413,7 @@ body of the chart.</description>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>The color of the lines.Note that this has no effect if the visibility of the minor grid lines is not set to true.</description>
+            <description>The color of the lines.Note that this has no effect if the visibility of the minor grid lines is not set totrue.</description>
             <name>color</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -35473,7 +35443,7 @@ body of the chart.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The width of the lines.Note that this settings has no effect if the visibility of the minor grid lines is not set to true.</description>
+            <description>The width of the lines.Note that this settings has no effect if the visibility of the minor grid lines is not set totrue.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -37068,7 +37038,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines a formula or value used for the comparison process. Will be used if comparer type requies second argument.</description>
+            <description>Defines a formula or value used for the comparison process. Will be used if comparer type requires second argument.</description>
             <name>to</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -37578,7 +37548,7 @@ categoryAxis.baseUnitStep is set to "auto".</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip configuration options.</description>
+        <description>The crosshair tooltip configuration options.</description>
         <name>stockChart-categoryAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.stockchart.CategoryAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -39134,7 +39104,7 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip options.</description>
+        <description>The crosshair tooltip options.</description>
         <name>stockChart-navigator-categoryAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -43298,7 +43268,7 @@ values increase from right to left and from top to bottom.</description>
     </tag>
 
     <tag>
-        <description>The crosshar tooltip configuration options.</description>
+        <description>The crosshair tooltip configuration options.</description>
         <name>stockChart-valueAxisItem-crosshair-tooltip</name>
         <tag-class>com.kendoui.taglib.stockchart.ValueAxisItemCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
@@ -47348,13 +47318,13 @@ This option will be ignored if the browser doesn't support File API.</descriptio
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Sets the text for invalid maxFileSize validation message.</description>
+            <description>Sets the text for an invalid maxFileSize validation message.</description>
             <name>invalidMaxFileSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Sets the text for invalid minFileSize validation message.</description>
+            <description>Sets the text for an invalid minFileSize validation message.</description>
             <name>invalidMinFileSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -47413,7 +47383,7 @@ This option will be ignored if the browser doesn't support File API.</descriptio
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Lists which file extensions are allowed to be uploaded.</description>
+            <description>Lists which file extensions are allowed to be uploaded. Recognizes entries of both .type and type values.</description>
             <name>allowedExtensions</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>

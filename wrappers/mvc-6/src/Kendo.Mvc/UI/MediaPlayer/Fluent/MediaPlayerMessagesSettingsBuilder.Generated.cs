@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Pause button tooltip message
+        /// Pause button tooltip message.
         /// </summary>
         /// <param name="value">The value for Pause</param>
         public MediaPlayerMessagesSettingsBuilder Pause(string value)
@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Play button tooltip message
+        /// Play button tooltip message.
         /// </summary>
         /// <param name="value">The value for Play</param>
         public MediaPlayerMessagesSettingsBuilder Play(string value)
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Mute button tooltip message
+        /// Mute button tooltip message.
         /// </summary>
         /// <param name="value">The value for Mute</param>
         public MediaPlayerMessagesSettingsBuilder Mute(string value)
@@ -41,7 +41,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Unmute button tooltip message
+        /// Unmute button tooltip message.
         /// </summary>
         /// <param name="value">The value for Unmute</param>
         public MediaPlayerMessagesSettingsBuilder Unmute(string value)
@@ -51,7 +51,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Quality button tooltip message
+        /// Quality button tooltip message.
         /// </summary>
         /// <param name="value">The value for Quality</param>
         public MediaPlayerMessagesSettingsBuilder Quality(string value)
@@ -61,7 +61,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fullscreen button tooltip message
+        /// Fullscreen button tooltip message.
         /// </summary>
         /// <param name="value">The value for Fullscreen</param>
         public MediaPlayerMessagesSettingsBuilder Fullscreen(string value)

@@ -15,7 +15,7 @@ class DataSource extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true the data source would automatically save any changed data items by calling the sync method. By default changes are not automatically saved.
+    * If set to true the data source would automatically save any changed data items by calling the sync method. By default, changes are not automatically saved.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
     */
@@ -24,7 +24,7 @@ class DataSource extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true the data source will batch CRUD operation requests. For example updating two data items would cause one HTTP request instead of two. By default the data source
+    * If set to true, the data source will batch CRUD operation requests. For example, updating two data items would cause one HTTP request instead of two. By default, the data source
 makes a HTTP request for every CRUD operation.
     * @param boolean $value
     * @return \Kendo\Data\DataSource
@@ -79,7 +79,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * The number of data items per page. The property has no default value, that's why if paging should be used, make sure some pageSize is set.
+    * The number of data items per page. The property has no default value. That is why to use paging, make sure some pageSize value is set.
     * @param float $value
     * @return \Kendo\Data\DataSource
     */
@@ -151,8 +151,7 @@ makes a HTTP request for every CRUD operation.
     }
 
     /**
-    * The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.Remote data sources load and save data items from and to a remote end-point (a.k.a. remote service or server). The transport option describes the remote service configuration - URL, HTTP verb, HTTP headers etc.
-The transport option can also be used to implement custom data loading and saving.Local data sources are bound to a JavaScript array via the data option.
+    * The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.Remote data sources load and save data items from and to a remote end-point (also known as remote service or server). The transport option describes the remote service configuration - URL, HTTP verb, HTTP headers, and others. The transport option can also be used to implement custom data loading and saving.Local data sources are bound to a JavaScript array via the data option.
     * @param \Kendo\Data\DataSourceTransport|array $value
     * @return \Kendo\Data\DataSource
     */
@@ -161,9 +160,7 @@ The transport option can also be used to implement custom data loading and savin
     }
 
     /**
-    * If set the data source will use a predefined transport and/or schema.
-The supported values are "odata" which supports the OData v.2 protocol, "odata-v4" which partially supports
-odata version 4 and "signalr".
+    * If set, the data source will use a predefined transport and/or schema.The supported values are:
     * @param string $value
     * @return \Kendo\Data\DataSource
     */
@@ -173,7 +170,7 @@ odata version 4 and "signalr".
 
     /**
     * Sets the change event of the DataSource.
-    * Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.
+    * Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered, or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Data\DataSource
     */
@@ -201,7 +198,7 @@ odata version 4 and "signalr".
 
     /**
     * Sets the push event of the DataSource.
-    * Fired when the data source receives a push notification or the pushCreate, pushUpdate or pushDestroy methods are called.
+    * Fired when the data source receives a push notification or the pushCreate, pushUpdate, or pushDestroy methods are called.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Data\DataSource
     */

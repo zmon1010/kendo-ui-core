@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the chart will display the x major grid liness. By default the x major grid liness are visible.
+        /// If set to true the chart will display the x major grid lines. By default the x major grid lines are visible.
         /// </summary>
         /// <param name="value">The value for Visible</param>
         public ChartYAxisMajorGridLinesSettingsBuilder<T> Visible(bool value)

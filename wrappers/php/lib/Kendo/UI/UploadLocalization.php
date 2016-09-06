@@ -60,7 +60,7 @@ class UploadLocalization extends \Kendo\SerializableObject {
     }
 
     /**
-    * Sets the text for invalid maxFileSize validation message.
+    * Sets the text for an invalid maxFileSize validation message.
     * @param string $value
     * @return \Kendo\UI\UploadLocalization
     */
@@ -69,7 +69,7 @@ class UploadLocalization extends \Kendo\SerializableObject {
     }
 
     /**
-    * Sets the text for invalid minFileSize validation message.
+    * Sets the text for an invalid minFileSize validation message.
     * @param string $value
     * @return \Kendo\UI\UploadLocalization
     */

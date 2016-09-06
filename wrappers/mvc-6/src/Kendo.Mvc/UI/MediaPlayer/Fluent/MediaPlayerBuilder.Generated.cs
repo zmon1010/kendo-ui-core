@@ -10,7 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// If set to true the widget will start playing the video\vidoes after initializing
+        /// If set to true, the widget will start playing the video or videos after initializing.
         /// </summary>
         /// <param name="value">The value for AutoPlay</param>
         public MediaPlayerBuilder AutoPlay(bool value)
@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the widget will start playing the video\vidoes after initializing
+        /// If set to true, the widget will start playing the video or videos after initializing.
         /// </summary>
         public MediaPlayerBuilder AutoPlay()
         {
@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the widget will start playing the video\vidoes after initializing
+        /// If set to true, the widget will start playing the video or videos after initializing.
         /// </summary>
         /// <param name="value">The value for AutoRepeat</param>
         public MediaPlayerBuilder AutoRepeat(bool value)
@@ -39,7 +39,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the widget will start playing the video\vidoes after initializing
+        /// If set to true, the widget will start playing the video or videos after initializing.
         /// </summary>
         public MediaPlayerBuilder AutoRepeat()
         {
@@ -48,7 +48,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to false the user will be prevented from seeking the video forward
+        /// If set to false, the user will be prevented from seeking the video forward.
         /// </summary>
         /// <param name="value">The value for ForwardSeek</param>
         public MediaPlayerBuilder ForwardSeek(bool value)
@@ -58,7 +58,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the widget will enter in full-sreen mode
+        /// If set to true, the widget will enter fullscreen mode.
         /// </summary>
         /// <param name="value">The value for FullScreen</param>
         public MediaPlayerBuilder FullScreen(bool value)
@@ -68,7 +68,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the widget will enter in full-sreen mode
+        /// If set to true, the widget will enter fullscreen mode.
         /// </summary>
         public MediaPlayerBuilder FullScreen()
         {
@@ -77,7 +77,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The object which holds the localization strings
+        /// The object which holds the localization strings.
         /// </summary>
         /// <param name="configurator">The configurator for the messages setting.</param>
         public MediaPlayerBuilder Messages(Action<MediaPlayerMessagesSettingsBuilder> configurator)
@@ -90,7 +90,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the video will be played without sound
+        /// If set to true, the video will be played without sound.
         /// </summary>
         /// <param name="value">The value for Mute</param>
         public MediaPlayerBuilder Mute(bool value)
@@ -100,7 +100,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the video will be played without sound
+        /// If set to true, the video will be played without sound.
         /// </summary>
         public MediaPlayerBuilder Mute()
         {
@@ -109,7 +109,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true will enable the keyboard navigation for the widget
+        /// If set to true, the option enables the keyboard navigation for the widget.
         /// </summary>
         /// <param name="value">The value for Navigatable</param>
         public MediaPlayerBuilder Navigatable(bool value)
@@ -119,7 +119,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true will enable the keyboard navigation for the widget
+        /// If set to true, the option enables the keyboard navigation for the widget.
         /// </summary>
         public MediaPlayerBuilder Navigatable()
         {
@@ -128,7 +128,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// A value between 0 and 100 that specifies the volume of the video
+        /// A value between 0 and 100 that specifies the volume of the video.
         /// </summary>
         /// <param name="value">The value for Volume</param>
         public MediaPlayerBuilder Volume(double value)
