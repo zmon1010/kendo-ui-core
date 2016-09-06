@@ -15,7 +15,8 @@ namespace Kendo.Mvc.Examples.Controllers
             return View();
         }
 
-		public ActionResult Submit(IEnumerable<IFormFile> files)
+        [Demo]
+        public ActionResult Submit(IEnumerable<IFormFile> files)
 		{
 			IEnumerable<string> fileInfo = new List<string>();
 
@@ -27,7 +28,8 @@ namespace Kendo.Mvc.Examples.Controllers
 			return View("Result", fileInfo);
 		}
 
-		public ActionResult Result()
+        [Demo]
+        public ActionResult Result()
 		{
 			return View();
 		}

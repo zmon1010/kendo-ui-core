@@ -121,7 +121,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
             var components = url.Split('/');
 
-            return (section == components[0] && example == components[1]) || (section == "upload" && example == "result" && components[0] == "upload" && components[1] == "index");
+            return (section == components[0] && example == components[1]) || (section == "upload" && example == "submit" && components[0] == "upload" && components[1] == "index");
         }
 
         protected string Description(string product, NavigationExample example, NavigationWidget widget)
