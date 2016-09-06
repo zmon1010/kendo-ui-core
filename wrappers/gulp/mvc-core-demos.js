@@ -12,7 +12,7 @@ const tasks = (gulp) => {
     gulp.task('mvc-core-demos:build', ['mvc-core-demos:assets'],
         shell.task([
             'dotnet restore',
-            'rm -r demos/Kendo.Mvc.Examples/bin',
+            'rm -rf demos/Kendo.Mvc.Examples/bin',
             'dotnet publish --framework netcoreapp1.0 --configuration Release demos/Kendo.Mvc.Examples'
         ], { cwd: 'mvc-6' })
     );
