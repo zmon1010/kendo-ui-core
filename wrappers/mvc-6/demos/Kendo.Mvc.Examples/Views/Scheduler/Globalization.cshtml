@@ -17,18 +17,14 @@
     kendo.culture("@culture");
 </script>
 
-<div class="configuration k-widget k-header" style="width: 190px">
-    <ul class="options">
-        <li>
-            Choose culture:
-            @(Html.Kendo().DropDownList()
-                .Name("CulturesSelector")
-                .BindTo(new[] { "en-US", "de-DE", "fr-FR", "bg-BG" })
-                .Value(culture)
-                .Events(events => events.Change("cultureChange"))
-            )
-        </li>
-    </ul>
+<div class="box wide">
+    <label for="CulturesSelector">Choose culture:</label>
+    @(Html.Kendo().DropDownList()
+        .Name("CulturesSelector")
+        .BindTo(new[] { "en-US", "de-DE", "fr-FR", "bg-BG" })
+        .Value(culture)
+        .Events(events => events.Change("cultureChange"))
+    )
 </div>
 
 @(Html.Kendo().Scheduler<Kendo.Mvc.Examples.Models.Scheduler.TaskViewModel>()
