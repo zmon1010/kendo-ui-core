@@ -1072,7 +1072,7 @@ var __meta__ = { // jshint ignore:line
             var bboxX = bbox.origin.x;
             var bboxY = bbox.origin.y;
 
-            var bbox2D = new dataviz.Box2D(bboxX, bboxX,
+            var bbox2D = new dataviz.Box2D(bboxX, bboxY,
                                            bboxX + bbox.width(), bboxY + bbox.height());
 
             that.scale.reflow(bbox2D);
