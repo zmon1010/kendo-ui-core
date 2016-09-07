@@ -246,6 +246,8 @@
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
+    <Compile Include="Controllers\Upload\CustomDropZoneController.cs" />
+    <Compile Include="Controllers\Upload\ValidationController.cs" />
     <Compile Include="Controllers\WordsProcessing\IndexController.cs" />
     <Compile Include="Controllers\PdfProcessing\IndexController.cs" />
     <Compile Include="Controllers\Scatter_Charts\Pan_And_ZoomController.cs" />
@@ -2944,6 +2946,8 @@
     <Content Include="Views\mediaplayer\index.cshtml" />
     <Content Include="Views\mediaplayer\playlist.cshtml" />
     <Content Include="Views\gantt\selected_date_and_range.cshtml" />
+    <Content Include="Views\upload\customdropzone.cshtml" />
+    <Content Include="Views\upload\validation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
