@@ -4,8 +4,8 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 
 $media = new \Kendo\UI\MediaPlayerMedia('MediaPlayerMedia') ;
-$media ->source("https://www.youtube.com/watch?v=gNlya720gbk");
-$media ->title("Digital Transformation: A New Way of Thinking");
+$media ->source("https://www.youtube.com/watch?v=rLtTuFbuf1c");
+$media ->title("Take a Tour of the Telerik Platform");
 $mediaPlayer = new \Kendo\UI\MediaPlayer('MediaPlayer') ;
 $mediaPlayer->media($media)
             ->play('onPlay')
@@ -17,14 +17,14 @@ $mediaPlayer->media($media)
 $mediaPlayer->autoPlay(true);
 ?>
 
-<div class="demo-section k-content wide">
+<div class="demo-section k-content wide" style="width: 644px;">
 <?php
 echo $mediaPlayer->render();
 ?>
 </div>
 
-<div class="demo-section">
-    <h3 class="title">Console log</h3>
+<div class="box wide" style="max-width:644px; text-align: center;">
+    <h4 class="title">Events log</h4>
     <div class="console"></div>
 </div>
 
@@ -55,7 +55,6 @@ echo $mediaPlayer->render();
 </script>
 <style>
     .k-mediaplayer {
-        margin: 0 auto;
         width: 640px;
         height: 360px;
     }

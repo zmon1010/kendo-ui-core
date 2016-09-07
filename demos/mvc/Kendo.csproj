@@ -1249,6 +1249,7 @@
     <Content Include="Views\demos\gantt\pdf-export.cshtml" />
     <Content Include="Views\demos\gantt\selected-date-and-range.cshtml" />
     <Content Include="Views\demos\gantt\task-template.cshtml" />
+    <Content Include="Views\demos\mediaplayer\keyboard-navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

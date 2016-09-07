@@ -3392,6 +3392,7 @@
     "text": "MediaPlayer",
     "name": "mediaplayer",
     "api": { "all": "web/mediaplayer" },
+    "new": true,
     "documentation": {
       "kendo-ui": "getting-started/web/mediaplayer/overview",
       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mediaplayer/overview"
@@ -3416,6 +3417,10 @@
         "meta": {
           "kendo-ui": "This KendoMediaPlayer example demonstrates the basic functionality of the widget. With jQuery-based MediaPlayer widget in Kendo UI, you can add media content to your web site",
           "aspnet-mvc": "Play with this basic example of Telerik MediaPlayer in ASP.NET MVC and find all features of the helper for Kendo UI MediaPlayer."
+        },
+        "description": {
+          "kendo-ui": "<p>The <strong>Kendo UI MediaPlayer</strong> widget plays video files from static sources or streams online YouTube videos and enriches your website with dynamic content in a user-friendly interface. It provides a styled video UI functionality by using the HTML5 <code>&ltvideo&gt</code> element and brings powerful media capabilities to your applications.</p>",
+          "aspnet-mvc": "<p>The <strong>Telerik MediaPlayer for ASP.NET MVC</strong> component plays video files from static sources or streams online YouTube videos and enriches your website with dynamic content in a user-friendly interface. It provides a styled video UI functionality by using the HTML5 <code>&ltvideo&gt</code> element and brings powerful media capabilities to your applications.</p>"
         }
       },
       {
@@ -3428,6 +3433,10 @@
         "meta": {
           "kendo-ui": "This example of KendoMediaPlayer demonstrates how to use ListView as playlist.",
           "aspnet-mvc": "This example of KendoMediaPlayer demonstrates how to use ListView as playlist."
+        },
+        "description": {
+          "kendo-ui": "<p>The <strong>MediaPlayer</strong> widget provides convenient API to change its source dynamically and dictate the flow of the video. This sample uses a ListView widget to create a practical Playlist which displays the available videos right next to the MediaPlayer element.</p>",
+          "aspnet-mvc": "<p>The <strong>MediaPlayer</strong> component provides convenient API to change its source dynamically and dictate the flow of the video. This sample uses a ListView component to create a practical Playlist which displays the available videos right next to the MediaPlayer element.</p>"
         }
       },
       {
@@ -3450,8 +3459,20 @@
           "aspnet-mvc": "API functions demo for ASP.NET MVC KendoMediaPlayer"
         },
         "meta": {
-          "kendo-ui": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project.",
-          "aspnet-mvc": "This demo illustrates how API functions of KendoMediaPlayer control operate and how you can use them in your project."
+          "kendo-ui": "This demo illustrates how API functions of KendoMediaPlayer widget operate and how you can use them in your project.",
+          "aspnet-mvc": "This demo illustrates how API functions of KendoMediaPlayer widget operate and how you can use them in your project."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "mediaplayer/keyboard-navigation",
+        "title": {
+          "kendo-ui": "Keyboard Support demo for KendoMediaPlayer",
+          "aspnet-mvc": "Keyboard Support demo for ASP.NET MVC KendoMediaPlayer"
+        },
+        "meta": {
+          "kendo-ui": "This demo demonstrates the built-in Keyboard Shortcuts provided by the KendoMediaPlayer widget to ease the user navigation.",
+          "aspnet-mvc": "This demo demonstrates the built-in Keyboard Shortcuts provided by the KendoMediaPlayer widget to ease the user navigation."
         }
       }
     ],
