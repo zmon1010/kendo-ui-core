@@ -4053,128 +4053,132 @@
             "aspnet-mvc": "aspnet-mvc/treeview"
         },
         "spriteCssClass": "treeViewIcon",
-        "items": [
-            {
-                "text": "Basic usage",
-                "url": "treeview/index",
-                "title": {
-                    "aspnet-mvc": "ASP.NET MVC TreeView control | UI for ASP.NET MVC demo"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo illustrates the basic usage and functionality of ASP.NET MVC Tree component which represents items in a hierarchical tree structure."
-                }
-            },
-            {
-                "text": "Drag & drop",
-                "url": "treeview/dragdrop",
-                "title": {
-                    "aspnet-mvc": "Drag & Drop support in ASP.NET MVC TreeView control"
-                },
-                "meta": {
-                    "aspnet-mvc": "This example shows how to drag and drop items in ASP.NET MVC TreeView. Use the demo source code and play with the demo."
-                }
-            },
-            {
-                "text": "Animation effects",
-                "url": "treeview/animation",
-                "title": {
-                    "aspnet-mvc": "Animation effects sample for ASP.NET MVC Treeview component"
-                },
-                "meta": {
-                    "aspnet-mvc": "This sample shows how you can add animation effects and expand animation by setting the specific options for ASP.NET MVC TreeView component."
-                }
-            },
-            {
-                "text": "Images",
-                "url": "treeview/images",
-                "title": {
-                    "aspnet-mvc": "Example of customized ASP.NET MVC TreeView using image"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows how you can add images to your ASP.NET MVC TreeView control, as well as implement TreeView with sprites in your website or project."
-                }
-            },
-            {
-                "text": "Checkboxes",
-                "url": "treeview/checkboxes",
-                "title": {
-                    "aspnet-mvc": "Creating tree nodes with checkboxes | ASP.NET MVC TreeView Demo"
-                },
-                "meta": {
-                    "aspnet-mvc": "This sample illustrates how you can easily create tree nodes with checkboxes in ASP.NET MVC Treeview by simply setting the child item of the checkboxes to true."
-                }
-            },
-            {
-                "text": "Binding to local data",
-                "url": "treeview/local-data-binding",
-                "title": {
-                    "aspnet-mvc": "Binding to local data demo for ASP.NET MVC TreeView control"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows how items in the tree are displayed with the default settings of ASP.NET MVC TreeView and how the component can be easily bound to local data."
-                }
-            },
-            {
-                "text": "Binding to remote data",
-                "url": "treeview/remote-data-binding",
-                "title": {
-                    "aspnet-mvc": "Binding ASP.NET MVC tree component to remote data"
-                },
-                "meta": {
-                    "aspnet-mvc": "This example illustrates how the ASP.NET MVC hierarchical tree can be bound to remote data and the items in the tree populated from an external source."
-                }
-            },
-            {
-                "text": "Templates",
-                "url": "treeview/templates",
-                "title": {
-                    "aspnet-mvc": "Example of templates for ASP.NET MVC TreeView"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo illustrates how tree nodes in ASP.NET MVC TreeView component can be further customized by using templates."
-                }
-            },
-            {
-                "text": "Events",
-                "url": "treeview/events",
-                "title": {
-                    "aspnet-mvc": "Demo for ASP.NET MVC TreeView control events"
-                },
-                "meta": {
-                    "aspnet-mvc": "This sample shows built-in events in ASP.NET MVC tree control. Events are triggered when the user selects, collapses, expands, adds or removes an item on the list."
-                }
-            },
-            {
-                "text": "API",
-                "url": "treeview/api",
-                "title": {
-                    "aspnet-mvc": "ASP.NET MVC TreeView API Example"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows the specific API functions, as well as DataSource interaction options, which control the behaviour of ASP.NET MVC TreeView."
-                }
-            },
-            {
-                "text": "RTL support",
-                "url": "treeview/right-to-left-support",
-                "title": {
-                    "aspnet-mvc": "RTL Support in ASP.NET MVC TreeView component"
-                },
-                "meta": {
-                    "aspnet-mvc": "Get familiar with the RTL support in ASP.NET MVC TreeView component. Look at the example and use the source code to play with the demo."
-                }
-            },
-            {
-                "text": "Keyboard navigation",
-                "url": "treeview/keyboard-navigation",
-                "title": {
-                    "aspnet-mvc": "ASP.NET MVC TreeView control | Keyboard support demo"
-                },
-                "meta": {
-                    "aspnet-mvc": "Look at the source code and play with the demo to find out more about the keyboard support feature in ASP.NET MVC TreeView."
-                }
-            }
-        ],
+      "items": [
+        {
+          "text": "Basic usage",
+          "url": "treeview/index",
+          "title": {
+            "aspnet-mvc": "ASP.NET MVC TreeView control | UI for ASP.NET MVC demo"
+          },
+          "meta": {
+            "aspnet-mvc": "This demo illustrates the basic usage and functionality of ASP.NET MVC Tree component which represents items in a hierarchical tree structure."
+          }
+        },
+        {
+          "text": "Drag & drop",
+          "url": "treeview/dragdrop",
+          "title": {
+            "aspnet-mvc": "Drag & Drop support in ASP.NET MVC TreeView control"
+          },
+          "meta": {
+            "aspnet-mvc": "This example shows how to drag and drop items in ASP.NET MVC TreeView. Use the demo source code and play with the demo."
+          },
+          "group": "Functionality"
+        },
+        {
+          "text": "Animation effects",
+          "url": "treeview/animation",
+          "title": {
+            "aspnet-mvc": "Animation effects sample for ASP.NET MVC Treeview component"
+          },
+          "meta": {
+            "aspnet-mvc": "This sample shows how you can add animation effects and expand animation by setting the specific options for ASP.NET MVC TreeView component."
+          }
+        },
+        {
+          "text": "Images",
+          "url": "treeview/images",
+          "title": {
+            "aspnet-mvc": "Example of customized ASP.NET MVC TreeView using image"
+          },
+          "meta": {
+            "aspnet-mvc": "This demo shows how you can add images to your ASP.NET MVC TreeView control, as well as implement TreeView with sprites in your website or project."
+          }
+        },
+        {
+          "text": "Checkboxes",
+          "url": "treeview/checkboxes",
+          "title": {
+            "aspnet-mvc": "Creating tree nodes with checkboxes | ASP.NET MVC TreeView Demo"
+          },
+          "meta": {
+            "aspnet-mvc": "This sample illustrates how you can easily create tree nodes with checkboxes in ASP.NET MVC Treeview by simply setting the child item of the checkboxes to true."
+          }
+        },
+        {
+          "text": "Templates",
+          "url": "treeview/templates",
+          "title": {
+            "aspnet-mvc": "Example of templates for ASP.NET MVC TreeView"
+          },
+          "meta": {
+            "aspnet-mvc": "This demo illustrates how tree nodes in ASP.NET MVC TreeView component can be further customized by using templates."
+          }
+        },
+        {
+          "text": "Binding to local data",
+          "url": "treeview/local-data-binding",
+          "title": {
+            "aspnet-mvc": "Binding to local data demo for ASP.NET MVC TreeView control"
+          },
+          "meta": {
+            "aspnet-mvc": "This demo shows how items in the tree are displayed with the default settings of ASP.NET MVC TreeView and how the component can be easily bound to local data."
+          },
+          "group": "Data Binding"
+        },
+        {
+          "text": "Binding to remote data",
+          "url": "treeview/remote-data-binding",
+          "title": {
+            "aspnet-mvc": "Binding ASP.NET MVC tree component to remote data"
+          },
+          "meta": {
+            "aspnet-mvc": "This example illustrates how the ASP.NET MVC hierarchical tree can be bound to remote data and the items in the tree populated from an external source."
+          }
+        },
+        {
+          "text": "Events",
+          "url": "treeview/events",
+          "title": {
+            "aspnet-mvc": "Demo for ASP.NET MVC TreeView control events"
+          },
+          "meta": {
+            "aspnet-mvc": "This sample shows built-in events in ASP.NET MVC tree control. Events are triggered when the user selects, collapses, expands, adds or removes an item on the list."
+          },
+          "group": "API"
+        },
+        {
+          "text": "API",
+          "url": "treeview/api",
+          "title": {
+            "aspnet-mvc": "ASP.NET MVC TreeView API Example"
+          },
+          "meta": {
+            "aspnet-mvc": "This demo shows the specific API functions, as well as DataSource interaction options, which control the behaviour of ASP.NET MVC TreeView."
+          }
+        },
+        {
+          "text": "RTL support",
+          "url": "treeview/right-to-left-support",
+          "title": {
+            "aspnet-mvc": "RTL Support in ASP.NET MVC TreeView component"
+          },
+          "meta": {
+            "aspnet-mvc": "Get familiar with the RTL support in ASP.NET MVC TreeView component. Look at the example and use the source code to play with the demo."
+          },
+          "group": "Accessibility and Internationalization"
+        },
+        {
+          "text": "Keyboard navigation",
+          "url": "treeview/keyboard-navigation",
+          "title": {
+            "aspnet-mvc": "ASP.NET MVC TreeView control | Keyboard support demo"
+          },
+          "meta": {
+            "aspnet-mvc": "Look at the source code and play with the demo to find out more about the keyboard support feature in ASP.NET MVC TreeView."
+          }
+        }
+      ],
         "category": "Navigation"
     },
     {
