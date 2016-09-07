@@ -89,7 +89,7 @@
       {
         "text": "Customizing templates",
         "url": "autocomplete/template",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Templates customization in Kendo UI AutoComplete",
           "aspnet-mvc": "Templates customization in ASP.NET MVC AutoComplete"
@@ -102,7 +102,7 @@
       {
         "text": "Add new item",
         "url": "autocomplete/addnewitem",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Add new item in Kendo UI AutoComplete",
           "aspnet-mvc": "Add new item in ASP.NET MVC AutoComplete"
@@ -776,7 +776,7 @@
       {
         "text": "Customizing templates",
         "url": "combobox/template",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Demo for customizing jQuery ComboBox Templates | Kendo UI Web Demos",
           "aspnet-mvc": "Demo for customizing ASP.NET MVC ComboBox Templates"
@@ -801,7 +801,7 @@
       {
         "text": "Add new item",
         "url": "combobox/addnewitem",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Add new item in Kendo UI ComboBox",
           "aspnet-mvc": "Add new item in ASP.NET MVC ComboBox"
@@ -1340,7 +1340,7 @@
       {
         "text": "Customizing templates",
         "url": "dropdownlist/template",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Customize items in Kendo UI DropDownList component",
           "aspnet-mvc": "Customize items in ASP.NET MVC DropDownList component"
@@ -1365,7 +1365,7 @@
       {
         "text": "Add new item",
         "url": "dropdownlist/addnewitem",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Add new item in Kendo UI DropDownList",
           "aspnet-mvc": "Add new item in ASP.NET MVC DropDownList"
@@ -1472,7 +1472,7 @@
     "text": "Dialog",
     "name": "dialog",
     "api": { "all": "web/dialog" },
-    "new": true,
+    "new": "true",
     "documentation": {
       "kendo-ui": "getting-started/web/dialog/overview",
       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dialog/overview",
@@ -1860,7 +1860,7 @@
       {
         "text": "Immutable Elements",
         "url": "editor/immutable-elements",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Immutable Elements demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
           "aspnet-mvc": "Immutable Elements demo demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
@@ -3751,7 +3751,7 @@
       {
         "text": "Customizing templates",
         "url": "multiselect/template",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Templates customization of Kendo UI MultiSelect widget",
           "aspnet-mvc": "Templates customization of ASP.NET MVC MultiSelect control"
@@ -3764,7 +3764,7 @@
       {
         "text": "Add new item",
         "url": "multiselect/addnewitem",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Add new item in Kendo UI MultiSelect",
           "aspnet-mvc": "Add new item in ASP.NET MVC MultiSelect"
@@ -4106,7 +4106,7 @@
       {
         "text": "Range Validation",
         "url": "numerictextbox/validation",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Range validation in Kendo UI NumericTextBox",
           "aspnet-mvc": "Range validation in ASP.NET MVC NumericTextBox"
@@ -4794,7 +4794,7 @@
         "meta": {
           "kendo-ui": "This demo shows how to select date and visible range, using the corresponding Kendo UI Gantt properties."
         },
-        "new": true
+        "new": "true"
       },
       {
         "text": "Events",
@@ -5062,7 +5062,7 @@
       {
         "text": "Date Grouping",
         "url": "scheduler/date-grouping",
-        "new":  true,
+        "new":  "true",
         "title": {
           "kendo-ui": "Date grouping in Kendo UI Scheduler",
           "aspnet-mvc": "Date grouping in ASP.NET MVC Scheduler control"
@@ -6166,7 +6166,7 @@
       },
       {
         "text": "RTL Support",
-        "disableInMobile": true,
+        "disableInMobile": "true",
         "url": "toolbar/right-to-left-support",
         "title": {
           "kendo-ui": "Right-to-left support for Kendo UI Toolbar",
@@ -6689,7 +6689,7 @@
          ],
          "text": "Filter TreeView in dialog",
          "url": "treeview/filter-treeview-in-dialog",
-         "new":  true,
+         "new":  "true",
          "title": {
             "kendo-ui": "Filtering Kendo UI TreeView with checkboxes nested in a dialog"
          },
@@ -8691,7 +8691,7 @@
       {
         "text": "Vertical Box Plot",
         "url": "box-plot-charts/vertical",
-        "new": true,
+        "new": "true",
         "title": {
           "kendo-ui": "Kendo UI HTML5 Box Plot Charts Example",
           "aspnet-mvc": "ASP.NET MVC Box Plot Charts Example"
