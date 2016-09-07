@@ -13,7 +13,7 @@ const tasks = (gulp) => {
         shell.task([
             'dotnet restore',
             'rm -rf demos/Kendo.Mvc.Examples/bin',
-            'dotnet publish --framework netcoreapp1.0 --configuration Release demos/Kendo.Mvc.Examples'
+            'cd demos/Kendo.Mvc.Examples && dotnet publish --framework netcoreapp1.0 --configuration Release'
         ], { cwd: 'mvc-6' })
     );
 
