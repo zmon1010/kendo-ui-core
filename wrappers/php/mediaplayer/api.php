@@ -4,19 +4,19 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 
 $media = new \Kendo\UI\MediaPlayerMedia('MediaPlayerMedia') ;
-$media ->source("https://www.youtube.com/watch?v=gNlya720gbk");
-$media ->title("Digital Transformation: A New Way of Thinking");
+$media ->source("https://www.youtube.com/watch?v=CpHKm2NruYc");
+$media ->title("Why Telerik Analytics - Key Benefits For Your Applications");
 $mediaPlayer = new \Kendo\UI\MediaPlayer('MediaPlayer') ;
 $mediaPlayer->media($media);
 $mediaPlayer->autoPlay(true);
 ?>
 
-<div class="demo-section k-content wide">
+<div class="demo-section k-content wide" style="width: 644px;">
 <?php
 echo $mediaPlayer->render();
 ?>
 </div>
-<div class="box wide">
+<div class="box wide" style="max-width:644px;">
     <h4>API Functions</h4>
     <div class="box-col">
         <ul class="options">
@@ -130,7 +130,6 @@ echo $mediaPlayer->render();
 </script> 
 <style>
     .k-mediaplayer {
-        margin: 0 auto;
         width: 640px;
         height: 360px;
     }

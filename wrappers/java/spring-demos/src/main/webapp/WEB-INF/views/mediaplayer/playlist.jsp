@@ -4,8 +4,7 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-<div class="demo-section k-content"
-	style="width: 925px; max-width: none">
+<div class="demo-section k-content wide" style="width: 925px;">
 
 	<kendo:mediaPlayer name="mediaPlayer" autoPlay="true">
 	</kendo:mediaPlayer>
@@ -23,7 +22,7 @@
         onmouseout="$(this).removeClass('k-state-hover')">
         <span>
             <img src="#:poster#" />
-            <h4>#:title#</h4>
+            <h5>#:title#</h5>
         </span>
     </div>
 </script>
@@ -42,7 +41,7 @@
 
 <style>
 .k-mediaplayer {
-	float: left;
+    float: left;
 	width: 640px;
 	height: 360px;
 }
@@ -80,7 +79,7 @@
 	float: left;
 }
 
-.playlist h4 {
+.playlist h5 {
 	display: block;
 	font-weight: normal;
 	margin: 0;

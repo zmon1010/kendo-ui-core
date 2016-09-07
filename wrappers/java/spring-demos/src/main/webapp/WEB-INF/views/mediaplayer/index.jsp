@@ -4,14 +4,17 @@
 <%@taglib prefix="demo" tagdir="/WEB-INF/tags"%>
 
 <demo:header />
-<kendo:mediaPlayer name="mediaPlayer" navigatable="true" autoPlay="true"  >
-	<kendo:mediaPlayer-media
-		title="Digital Transformation: A New Way of Thinking"
-		source="https://www.youtube.com/watch?v=gNlya720gbk" />
-</kendo:mediaPlayer>
+<div class="demo-section k-content wide" style="width: 644px;">
+	<kendo:mediaPlayer name="mediaPlayer" navigatable="true"
+		autoPlay="true">
+		<kendo:mediaPlayer-media
+			title="Recap of Progress Ringing The Bell at Nasdaq (2016)"
+			source="https://www.youtube.com/watch?v=tc3xhD24iTU" />
+	</kendo:mediaPlayer>
+</div>
+
 <style>
 .k-mediaplayer {
-	float: left;
 	width: 640px;
 	height: 360px;
 }

@@ -1,18 +1,17 @@
 ﻿@using Kendo.Mvc.UI
 
-<div class="demo-section k-content" style="width: 644px; max-width: none">
+<div class="demo-section k-content wide" style="width: 644px;">
     @(Html.Kendo().MediaPlayer()
         .Name("MediaPlayer")
         .AutoPlay(true)
-        .Media(
-            media => media
-            .Title("Digital Transformation: A New Way of Thinking")
-            .Source("https://www.youtube.com/watch?v=gNlya720gbk")
+        .Media(m => m
+            .Title("Why Telerik Analytics - Key Benefits For Your Applications")
+            .Source("https://www.youtube.com/watch?v=CpHKm2NruYc")
         )
         .HtmlAttributes(new { style = "height:360px; width:640px" })
     )
 </div>
-<div class="box wide">
+<div class="box wide" style="max-width:644px;">
     <h4>API Functions</h4>
     <div class="box-col">
         <ul class="options">
@@ -68,7 +67,7 @@
         };
 
         var seekTo = function () {
-            mediaPlayer.seek($("#seekValue").data("kendoNumericTextBox").value()*1000);
+            mediaPlayer.seek($("#seekValue").data("kendoNumericTextBox").value() * 1000);
         };
 
         $("#playButton").click(function () {

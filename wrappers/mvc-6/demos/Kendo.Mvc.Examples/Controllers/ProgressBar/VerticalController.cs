@@ -4,7 +4,8 @@ namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class ProgressBarController : Controller
 	{
-		public IActionResult Vertical()
+        [Demo]
+        public IActionResult Vertical()
 		{
 			return View();
 		}
