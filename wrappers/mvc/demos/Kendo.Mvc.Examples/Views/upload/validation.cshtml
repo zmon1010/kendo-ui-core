@@ -33,7 +33,7 @@
             .Remove("Remove", "Upload")
             .SaveField("files")
         )
-        .Validation(validation => validation.MaxFileSize(4194304))
+        .Validation(validation => validation.MaxFileSize(3145728))
     )
-    <div class="demo-hint">Maximum allowed file size is <strong>4MB</strong>.</div>
+    <div class="demo-hint">Maximum allowed file size is <strong>3MB</strong>.</div>
 </div>
