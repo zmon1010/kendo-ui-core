@@ -377,6 +377,7 @@
     <Compile Include="UI\ToolTip\TooltipSerializationTests.cs" />
     <Compile Include="UI\ToolTip\ToolTipTestHelper.cs" />
     <Compile Include="UI\ToolTip\TooltipWorkingConditionsTests.cs" />
+    <Compile Include="UI\Upload\UploadValidationSettingsBuilderTests.cs" />
     <Compile Include="UI\Upload\UploadMessagesBuilderTests.cs" />
     <Compile Include="UI\Video.cs" />
     <Compile Include="UI\WidgetBaseExtensionsTests.cs" />

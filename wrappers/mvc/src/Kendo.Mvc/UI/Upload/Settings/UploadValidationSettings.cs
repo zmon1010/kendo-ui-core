@@ -34,19 +34,16 @@ namespace Kendo.Mvc.UI
         /// <param name="options">The target dictionary.</param>
         public void SerializeTo(string key, IDictionary<string, object> options)
         {
-           if (AllowedExtensions != null)
-            {
-                options["allowedExtensions"] = AllowedExtensions;
-            }
+            var config = new Dictionary<string, object>();
 
-            if (MaxFileSize.HasValue)
-            {
-                options["maxFileSize"] = MaxFileSize;
-            }
+            FluentDictionary.For(config)
+                .Add("allowedExtensions", AllowedExtensions, () => AllowedExtensions != null)
+                .Add("maxFileSize", MaxFileSize, () => MaxFileSize.HasValue)
+                .Add("minFileSize", MinFileSize, () => MinFileSize.HasValue);
 
-            if (MinFileSize.HasValue)
+            if (config.Count > 0)
             {
-                options["minFileSize"] = MinFileSize;
+               options.Add(key, config);
             }
         }
     }
