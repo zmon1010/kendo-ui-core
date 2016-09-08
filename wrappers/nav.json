@@ -4233,26 +4233,28 @@
                     "aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
                 }
             },
-            {
-                "text": "Custom Drop Zone",
-                "url": "upload/customdropzone",
-                "title": {
-                    "aspnet-mvc": "Custom drop zone demo for ASP.NET MVC File Upload"
-                },
-                "meta": {
-                    "aspnet-mvc": "This example shows the custom drop zone functionality of ASP.NET MVC Upload control."
-                }
+          {
+            "text": "Custom Drop Zone",
+            "url": "upload/customdropzone",
+            "title": {
+              "aspnet-mvc": "Custom drop zone demo for ASP.NET MVC File Upload"
             },
-            {
-                "text": "Validation",
-                "url": "upload/validation",
-                "title": {
-                    "aspnet-mvc": "Validation demo for ASP.NET MVC File Upload"
-                },
-                "meta": {
-                    "aspnet-mvc": "This example shows the validation functionality of ASP.NET MVC Upload control."
-                }
+            "meta": {
+              "aspnet-mvc": "This example shows the custom drop zone functionality of ASP.NET MVC Upload control."
             },
+            "new": true
+          },
+          {
+            "text": "Validation",
+            "url": "upload/validation",
+            "title": {
+              "aspnet-mvc": "Validation demo for ASP.NET MVC File Upload"
+            },
+            "meta": {
+              "aspnet-mvc": "This example shows the validation functionality of ASP.NET MVC Upload control."
+            },
+            "new": true
+          },
             {
                 "text": "Events",
                 "url": "upload/events",
