@@ -77,7 +77,7 @@
 
             that.resizeHandle.css({
                 top: tableBody.position().top,
-                left: column.offset().left + (options.rtl ? 0 : column.outerWidth()) - (handleWidth / 2),
+                left: column.position().left + (options.rtl ? 0 : column.outerWidth()) - (handleWidth / 2),
                 position: "absolute"
             });
         },
@@ -100,16 +100,17 @@
             var min = options.min;
             var rtl = options.rtl;
             var columnWidth = column.outerWidth();
-            var columnLeftOffset = column.offset().left;
+            var columnLeftOffset = column.position().left;
             var adjacentColumnWidth = column.next().outerWidth() || 0;
-                    
+            var resizeHandle = $(that.resizeHandle);
+
             var handleOffset = constrain({
-                value: e.x.location,
+                value: resizeHandle.position().left + e.x.delta,
                 min: abs(columnLeftOffset - (rtl ? adjacentColumnWidth : 0) + min),
                 max: abs(columnLeftOffset + columnWidth + (rtl ? 0 : adjacentColumnWidth) - handleWidth - min)
             });
 
-            $(that.resizeHandle).css({ left: handleOffset });
+            resizeHandle.css({ left: handleOffset });
         },
 
         resize: function(e) {
