@@ -82,6 +82,19 @@
         equal(args.deltaY, testOptions.expectedDeltaY);
     }
 
+    function assertInitialDragDelta(testOptions) {
+        var args = {};
+        handle.bind("drag", function(e) {
+            args.initialDeltaX = e.initialDeltaX;
+            args.initialDeltaY = e.initialDeltaY;
+        });
+
+        triggerDrag(handle.element, { deltaX: testOptions.initialDeltaX, deltaY: testOptions.initialDeltaY });
+
+        equal(args.initialDeltaX, testOptions.expectedDeltaX);
+        equal(args.initialDeltaY, testOptions.expectedDeltaY);
+    }
+
     function triggerDrag(element, options) {
         var doc = $((element[0] || element).ownerDocument.documentElement);
         var resizeHandle = $(element);
@@ -142,7 +155,7 @@
         }
     });
 
-    test("should be initialized with default optionsy", function() {
+    test("should be initialized with default options", function() {
         var defaultOptions = {
             appendTo: null,
             direction: SOUTHEAST,
@@ -558,7 +571,7 @@
         }
     });
 
-    test("should adjust dragging delta for east direction", function() {
+    test("should adjust drag delta for east direction", function() {
         setupHandle({ direction: "east" });
 
         assertDragDelta({
@@ -569,7 +582,7 @@
         });
     });
 
-    test("should adjust dragging delta for north direction", function() {
+    test("should adjust drag delta for north direction", function() {
         setupHandle({ direction: "north" });
 
         assertDragDelta({
@@ -580,7 +593,7 @@
         });
     });
 
-    test("should adjust dragging delta for northeast direction", function() {
+    test("should adjust drag delta for northeast direction", function() {
         setupHandle({ direction: "northeast" });
 
         assertDragDelta({
@@ -591,7 +604,7 @@
         });
     });
 
-    test("should adjust dragging delta for northwest direction", function() {
+    test("should adjust drag delta for northwest direction", function() {
         setupHandle({ direction: "northwest" });
 
         assertDragDelta({
@@ -602,7 +615,7 @@
         });
     });
 
-    test("should adjust dragging delta for south direction", function() {
+    test("should adjust drag delta for south direction", function() {
         setupHandle({ direction: "south" });
 
         assertDragDelta({
@@ -613,7 +626,7 @@
         });
     });
 
-    test("should adjust dragging delta for southeast direction", function() {
+    test("should adjust drag delta for southeast direction", function() {
         setupHandle({ direction: "southeast" });
 
         assertDragDelta({
@@ -624,7 +637,7 @@
         });
     });
 
-    test("should adjust dragging delta for southwest direction", function() {
+    test("should adjust drag delta for southwest direction", function() {
         setupHandle({ direction: "southwest" });
 
         assertDragDelta({
@@ -635,7 +648,7 @@
         });
     });
 
-    test("should adjust dragging delta for west direction", function() {
+    test("should adjust drag delta for west direction", function() {
         setupHandle({ direction: "west" });
 
         assertDragDelta({
@@ -644,6 +657,108 @@
             expectedDeltaX: (-1) * DELTA_X,
             expectedDeltaY: 0
         });
+    });
+
+    module("editor table resize handle dragging", {
+        teardown: function() {
+            handle.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should adjust initial drag delta for east direction", function() {
+        setupHandle({ direction: "east" });
+
+        assertInitialDragDelta({
+            initialDeltaX: DELTA_X,
+            initialDeltaY: DELTA_Y,
+            expectedDeltaX: DELTA_X,
+            expectedDeltaY: 0
+        });
+    });
+
+    test("should adjust initial drag delta for north direction", function() {
+        setupHandle({ direction: "north" });
+
+        assertInitialDragDelta({
+            initialDeltaX: DELTA_X,
+            initialDeltaY: DELTA_Y,
+            expectedDeltaX: 0,
+            expectedDeltaY: (-1) * DELTA_Y
+        });
+    });
+
+    test("should adjust initial drag delta for northeast direction", function() {
+        setupHandle({ direction: "northeast" });
+
+        assertInitialDragDelta({
+            initialDeltaX: DELTA_X,
+            initialDeltaY: DELTA_Y,
+            expectedDeltaX: DELTA_X,
+            expectedDeltaY: (-1) * DELTA_Y
+        });
+    });
+
+    test("should adjust initial drag delta for northwest direction", function() {
+        setupHandle({ direction: "northwest" });
+
+        assertInitialDragDelta({
+            initialDeltaX: DELTA_X,
+            initialDeltaY: DELTA_Y,
+            expectedDeltaX: (-1) * DELTA_X,
+            expectedDeltaY: (-1) * DELTA_Y
+        });
+    });
+
+    test("should adjust initial drag delta for south direction", function() {
+        setupHandle({ direction: "south" });
+
+        assertInitialDragDelta({
+            initialDeltaX: DELTA_X,
+            initialDeltaY: DELTA_Y,
+            expectedDeltaX: 0,
+            expectedDeltaY: DELTA_Y
+        });
+    });
+
+    test("should adjust initial drag delta for southeast direction", function() {
+        setupHandle({ direction: "southeast" });
+
+        assertInitialDragDelta({
+            initialDeltaX: DELTA_X,
+            initialDeltaY: DELTA_Y,
+            expectedDeltaX: DELTA_X,
+            expectedDeltaY: DELTA_Y
+        });
+    });
+
+    test("should adjust initial drag delta for southwest direction", function() {
+        setupHandle({ direction: "southwest" });
+
+        assertInitialDragDelta({
+            initialDeltaX: DELTA_X,
+            initialDeltaY: DELTA_Y,
+            expectedDeltaX: (-1) * DELTA_X,
+            expectedDeltaY: DELTA_Y
+        });
+    });
+
+    test("should adjust initial drag delta for west direction", function() {
+        setupHandle({ direction: "west" });
+
+        assertInitialDragDelta({
+            initialDeltaX: DELTA_X,
+            initialDeltaY: DELTA_Y,
+            expectedDeltaX: (-1) * DELTA_X,
+            expectedDeltaY: 0
+        });
+    });
+
+    module("editor table resize handle dragging", {
+        teardown: function() {
+            handle.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
     });
 
     module("editor table resize handle in inline edit mode", {

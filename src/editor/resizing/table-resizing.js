@@ -111,16 +111,18 @@
             var that = this;
             var deltas = extend({}, {
                 deltaX: 0,
-                deltaY: 0
+                deltaY: 0,
+                initialDeltaX: 0,
+                initialDeltaY: 0
             }, args);
 
-            that._resizeWidth(deltas.deltaX);
-            that._resizeHeight(deltas.deltaY);
+            that._resizeWidth(deltas.deltaX, deltas.initialDeltaX);
+            that._resizeHeight(deltas.deltaY, deltas.initialDeltaY);
 
             that.showResizeHandles();
         },
 
-        _resizeWidth: function(delta) {
+        _resizeWidth: function(delta, initialDelta) {
             var that = this;
             var element = $(that.element);
             var styleWidth = element[0].style[WIDTH];
@@ -130,15 +132,23 @@
             var newWidth;
             var ratioValue;
             var ratioTotalValue;
-            var constrainedWidth = constrain({
-                value: currentWidth + delta,
-                min: that.options.minWidth,
-                max: maxWidth
-            });
+            var constrainedWidth;
 
             if (delta === 0) {
                 return;
             }
+
+            if (isUndefined(that._initialElementWidth)) {
+                that._initialElementWidth = currentWidth;
+            }
+
+            //use initial delta instead of delta as changing the width with a small value (e.g. 1px) 
+            //on each drag does not work due to browser calculation of computed styles
+            constrainedWidth = constrain({
+                value: that._initialElementWidth + initialDelta,
+                min: that.options.minWidth,
+                max: maxWidth
+            });
 
             if (inPercentages(styleWidth)) {
                 //detect resizing greater than 100%
@@ -162,7 +172,7 @@
             element[0].style[WIDTH] = newWidth;
         },
 
-        _resizeHeight: function(delta) {
+        _resizeHeight: function(delta, initialDelta) {
             var that = this;
             var element = $(that.element);
             var styleHeight = element[0].style[HEIGHT];
@@ -181,26 +191,20 @@
                 return;
             }
 
-            if (isUndefined(that._totalDragDeltaY)) {
-                that._totalDragDeltaY = 0;
+            if (isUndefined(that._initialElementHeight)) {
+                that._initialElementHeight = currentHeight;
             }
 
-            if (isUndefined(that._initialElementComputedHeight)) {
-                that._initialElementComputedHeight = currentHeight;
-            }
-
-            that._totalDragDeltaY += delta;
-
-            //use total delta instead of delta as changing the height with a small value (e.g. 1px) 
+            //use initial delta instead of delta as changing the height with a small value (e.g. 1px) 
             //on each drag does not work due to browser calculation of computed styles
             constrainedHeight = constrain({
-                value: that._initialElementComputedHeight + that._totalDragDeltaY,
+                value: that._initialElementHeight + initialDelta,
                 min: minHeight,
                 max: maxHeight
             });
 
             if (hasRowsInPixels && delta < 0) {
-                //decreasing table height when rows are in pixels is not possible
+                //decreasing table height when rows are sized in pixels is not possible
                 that._setRowsHeightInPercentages();
             }
 
@@ -403,8 +407,8 @@
 
             element.addClass(TABLE_RESIZING_CLASS);
 
-            that._totalDragDeltaY = 0;
-            that._initialElementComputedHeight = element.outerHeight();
+            that._initialElementHeight = element.outerHeight();
+            that._initialElementWidth = element.outerWidth();
         },
 
         _onResizeHandleDrag: function(e) {

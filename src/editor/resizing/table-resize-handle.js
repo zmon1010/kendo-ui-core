@@ -163,7 +163,9 @@
 
             that.trigger(DRAG, that._draggingStrategy.adjustDragDelta({
                 deltaX: e.x.delta,
-                deltaY: e.y.delta
+                deltaY: e.y.delta,
+                initialDeltaX: e.x.initialDelta,
+                initialDeltaY: e.y.initialDelta
             }));
         },
 
@@ -408,10 +410,14 @@
 
         adjustDragDelta: function(deltas) {
             var options = this.options;
+            var xAxisAdjustment = options.deltaX.adjustment * options.deltaX.modifier;
+            var yAxisAdjustment = options.deltaY.adjustment * options.deltaY.modifier;
 
             return {
-                deltaX: deltas.deltaX * options.deltaX.adjustment * options.deltaX.modifier,
-                deltaY: deltas.deltaY * options.deltaY.adjustment * options.deltaY.modifier
+                deltaX: deltas.deltaX * xAxisAdjustment,
+                deltaY: deltas.deltaY * yAxisAdjustment,
+                initialDeltaX: deltas.initialDeltaX * xAxisAdjustment,
+                initialDeltaY: deltas.initialDeltaY * yAxisAdjustment
             };
         }
     });

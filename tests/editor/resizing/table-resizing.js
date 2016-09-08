@@ -21,7 +21,7 @@
     var PX = "px";
     var SELECT = "select";
     var SHOW = "show";
-    var TIMEOUT = 100;
+    var TIMEOUT = 200;
 
     var EAST = "east";
     var NORTH = "north";
@@ -701,18 +701,18 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var initialWidth = tableElement.width();
         var deltaX = 20;
 
-        tableResizing.resize({ deltaX: deltaX });
+        tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
         equal(tableElement.css("width"), initialWidth + deltaX + PX);
     });
 
     test("should decrease width", function() {
         var initialWidth = tableElement.width();
-        var deltaX = 20;
+        var deltaX = (-1) * 20;
 
-        tableResizing.resize({ deltaX: (-1) * deltaX });
+        tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
-        equal(tableElement.css("width"), initialWidth + (-1) * deltaX + PX);
+        equal(tableElement.css("width"), initialWidth + deltaX + PX);
     });
 
     test("should change width when style width is smaller", function() {
@@ -720,13 +720,13 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var initialWidth = tableElement.width();
         var deltaX = 20;
 
-        tableResizing.resize({ deltaX: deltaX });
+        tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
         equal(tableElement.css("width"), initialWidth + deltaX + PX);
     });
 
     test("should not set width lower than min", function() {
-        tableResizing.resize({ deltaX: (-1) * MAX });
+        tableResizing.resize({ deltaX: (-1) * MAX, initialDeltaX: (-1) * MAX });
 
         ok(parseFloat(tableElement.css("width")) >= tableResizing.options.minWidth);
     });
@@ -734,7 +734,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should not set width greater than parent width", function() {
         wrapper.css("padding", "20px");
 
-        tableResizing.resize({ deltaX: MAX });
+        tableResizing.resize({ deltaX: MAX, initialDeltaX: MAX });
 
         equal(tableElement[0].style.width, wrapper.width() + PX);
     });
@@ -761,7 +761,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var differenceInPixels = 40;
         var differenceInPercentages = (differenceInPixels / initialParentWidthInPixels) * 100;
 
-        tableResizing.resize({ deltaX: differenceInPixels });
+        tableResizing.resize({ deltaX: differenceInPixels, initialDeltaX: differenceInPixels });
 
         roughlyEqual(tableElement[0].style.width, initialWidthInPercentages + differenceInPercentages + PERCENTAGE, 0.001);
     });
@@ -771,7 +771,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var differenceInPixels = 40;
         var differenceInPercentages = (differenceInPixels / initialParentWidthInPixels) * 100;
 
-        tableResizing.resize({ deltaX: (-1) * differenceInPixels });
+        tableResizing.resize({ deltaX: (-1) * differenceInPixels, initialDeltaX: (-1) * differenceInPixels });
 
         roughlyEqual(tableElement[0].style.width, initialWidthInPercentages + (-1) * differenceInPercentages + PERCENTAGE, 0.001);
     });
@@ -779,13 +779,13 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should be decreased to min", function() {
         var minInPercentages = (tableResizing.options.minWidth / initialParentWidthInPixels) * 100;
 
-        tableResizing.resize({ deltaX: (-1) * MAX });
+        tableResizing.resize({ deltaX: (-1) * MAX, initialDeltaX: (-1) * MAX });
 
         roughlyEqual(parseFloat(tableElement[0].style.width), minInPercentages, 0.00001);
     });
 
     test("should be resized more than 100%", function() {
-        tableResizing.resize({ deltaX: MAX });
+        tableResizing.resize({ deltaX: MAX, initialDeltaX: MAX });
 
         equal(tableElement[0].style.width, "100%");
     });
@@ -818,7 +818,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var initialWrapperWidth = wrapper.width();
         $(wrapper).scrollLeft(scrollValue);
 
-        tableResizing.resize({ deltaX: MAX });
+        tableResizing.resize({ deltaX: MAX, initialDeltaX: MAX });
 
         equal(tableElement[0].style.width, initialWrapperWidth + scrollValue + PX);
     });
@@ -852,7 +852,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var differenceInPercentages = (differenceInPixels / initialParentWidthInPixels) * 100;
 
         $(wrapper).scrollLeft(differenceInPixels * 2);
-        tableResizing.resize({ deltaX: differenceInPixels });
+        tableResizing.resize({ deltaX: differenceInPixels, initialDeltaX: differenceInPixels });
 
         roughlyEqual(tableElement[0].style.width, initialWidthInPercentages + differenceInPercentages + PERCENTAGE, 0.001);
     });
@@ -862,7 +862,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var scrollValueInPercentages = (scrollValue / initialParentWidthInPixels) * 100;
 
         $(wrapper).scrollLeft(scrollValue);
-        tableResizing.resize({ deltaX: MAX });
+        tableResizing.resize({ deltaX: MAX, initialDeltaX: MAX });
 
         roughlyEqual(tableElement[0].style.width, 100 + scrollValueInPercentages + PERCENTAGE, 0.001);
     });
@@ -886,18 +886,18 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var initialHeight = tableElement.outerHeight();
         var deltaY = 20;
 
-        tableResizing.resize({ deltaY: deltaY });
+        tableResizing.resize({ deltaY: deltaY, initialDeltaY: deltaY });
 
         equal(tableElement[0].style.height, initialHeight + deltaY + PX);
     });
 
     test("should decrease height", function() {
         var initialHeight = tableElement.outerHeight();
-        var deltaY = 20;
+        var deltaY = (-1) * 20;
 
-        tableResizing.resize({ deltaY: (-1) * deltaY });
+        tableResizing.resize({ deltaY: deltaY, initialDeltaY: deltaY });
 
-        equal(tableElement[0].style.height, initialHeight + (-1) *  deltaY + PX);
+        equal(tableElement[0].style.height, initialHeight + deltaY + PX);
     });
 
     test("should change height when style height is smaller", function() {
@@ -905,13 +905,13 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var initialHeight = tableElement.outerHeight();
         var deltaY = 20;
 
-        tableResizing.resize({ deltaY: deltaY });
+        tableResizing.resize({ deltaY: deltaY, initialDeltaY: deltaY });
 
         equal(tableElement[0].style.height, initialHeight + deltaY + PX);
     });
 
     test("should not set height lower than min", function() {
-        tableResizing.resize({ deltaY: (-1) * MAX });
+        tableResizing.resize({ deltaY: (-1) * MAX, initialDeltaY: (-1) * MAX });
 
         ok(parseFloat(tableElement.css("height")) >= tableResizing.options.minHeight);
     });
@@ -919,7 +919,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should not set height greater than parent height", function() {
         wrapper[0].style.height = $(tableElement).outerHeight() + 20;
 
-        tableResizing.resize({ deltaY: MAX });
+        tableResizing.resize({ deltaY: MAX, initialDeltaY: MAX });
 
         roughlyEqual(tableElement[0].style.height, wrapper.outerHeight() + PX, 2);
     });
@@ -944,18 +944,18 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
 
     test("should decrease height when table height is in pixels", function() {
         var initialHeight = tableElement.outerHeight();
-        var deltaY = 20;
+        var deltaY = (-1) * 20;
 
-        tableResizing.resize({ deltaY: (-1) * deltaY });
+        tableResizing.resize({ deltaY: deltaY, initialDeltaY: deltaY });
 
-        equal(tableElement[0].style.height, initialHeight + (-1) *  deltaY + PX);
+        equal(tableElement[0].style.height, initialHeight + deltaY + PX);
     });
 
     test("should decrease height when table height is in percentages", function() {
         tableElement.css("height", "50%");
-        var deltaY = 20;
+        var deltaY = (-1) * 20;
 
-        tableResizing.resize({ deltaY: (-1) * deltaY });
+        tableResizing.resize({ deltaY: deltaY, initialDeltaY: deltaY });
 
         roughlyEqual(tableElement[0].style.height, (tableElement.outerHeight() / tableElement.parent().height() * 100) + PERCENTAGE, 0.5);
     });
@@ -982,7 +982,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var differenceInPixels = 40;
         var differenceInPercentages = (differenceInPixels / initialParentHeightInPixels) * 100;
 
-        tableResizing.resize({ deltaY: differenceInPixels });
+        tableResizing.resize({ deltaY: differenceInPixels, initialDeltaY: differenceInPixels });
 
         roughlyEqual(tableElement[0].style.height, initialHeightInPercentages + differenceInPercentages +PERCENTAGE, 0.001);
     });
@@ -992,7 +992,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var differenceInPixels = 40;
         var differenceInPercentages = (differenceInPixels / initialParentHeightInPixels) * 100;
 
-        tableResizing.resize({ deltaY: (-1) * differenceInPixels });
+        tableResizing.resize({ deltaY: (-1) * differenceInPixels, initialDeltaY: (-1) * differenceInPixels });
 
         roughlyEqual(tableElement[0].style.height, initialHeightInPercentages + (-1) * differenceInPercentages + PERCENTAGE, 0.001);
     });
@@ -1000,13 +1000,13 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should be decreased to min", function() {
         var minInPercentages = (tableResizing.options.minHeight / initialParentHeightInPixels) * 100;
 
-        tableResizing.resize({ deltaY: (-1) * MAX });
+        tableResizing.resize({ deltaY: (-1) * MAX, initialDeltaY: (-1) * MAX });
 
         roughlyEqual(parseFloat(tableElement[0].style.height), minInPercentages, 0.00001);
     });
 
     test("should be resized more than 100%", function() {
-        tableResizing.resize({ deltaY: MAX });
+        tableResizing.resize({ deltaY: MAX, initialDeltaY: MAX });
 
         equal(tableElement[0].style.height, "100%");
     });
@@ -1039,7 +1039,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var initialWrapperHeight = wrapper.height();
         $(wrapper).scrollTop(scrollValue);
 
-        tableResizing.resize({ deltaY: MAX });
+        tableResizing.resize({ deltaY: MAX, initialDeltaY: MAX });
 
         equal(tableElement[0].style.height, initialWrapperHeight + scrollValue + PX);
     });
@@ -1073,7 +1073,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var differenceInPercentages = (differenceInPixels / initialParentheHghtInPixels) * 100;
 
         $(wrapper).scrollTop(differenceInPixels * 2);
-        tableResizing.resize({ deltaY: differenceInPixels });
+        tableResizing.resize({ deltaY: differenceInPixels, initialDeltaY: differenceInPixels });
 
         roughlyEqual(tableElement[0].style.height, initialheHghtInPercentages + differenceInPercentages + PERCENTAGE, 0.001);
     });
@@ -1083,7 +1083,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var scrollValueInPercentages = (scrollValue / initialParentheHghtInPixels) * 100;
 
         $(wrapper).scrollTop(scrollValue);
-        tableResizing.resize({ deltaY: MAX });
+        tableResizing.resize({ deltaY: MAX, initialDeltaY: MAX });
 
         roughlyEqual(tableElement[0].style.height, 100 + scrollValueInPercentages + PERCENTAGE, 0.001);
     });
@@ -1108,7 +1108,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should decrease width", function() {
         var deltaX = (-1) * 20;
 
-        tableResizing.resize({ deltaX: deltaX });
+                tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
         equal(tableElement.css("width"), initialWidth + deltaX + PX);
     });
@@ -1116,13 +1116,13 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should increase width", function() {
         var deltaX = 20;
 
-        tableResizing.resize({ deltaX: deltaX });
+                tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
         equal(tableElement.css("width"), initialWidth + deltaX + PX);
     });
 
     test("should not set width lower than min", function() {
-        tableResizing.resize({ deltaX: RTL_MODIFIER * MAX });
+        tableResizing.resize({ deltaX: RTL_MODIFIER * MAX, initialDeltaX: RTL_MODIFIER * MAX });
 
         ok(parseFloat(tableElement.css("width")) >= tableResizing.options.minWidth);
     });
@@ -1130,7 +1130,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should not set width greater than parent width", function() {
         wrapper.css("padding", "20px");
 
-        tableResizing.resize({ deltaX: MAX });
+        tableResizing.resize({ deltaX: MAX, initialDeltaX: MAX });
 
         equal(tableElement[0].style.width, wrapper.width() + PX);
     });
@@ -1163,7 +1163,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var initialWrapperWidth = wrapper.width();
         $(wrapper).scrollLeft(scrollValue);
 
-        tableResizing.resize({ deltaX: MAX });
+        tableResizing.resize({ deltaX: MAX, initialDeltaX: MAX });
 
         equal(tableElement[0].style.width, initialWrapperWidth + RTL_MODIFIER * scrollValue + PX);
     });
@@ -1187,7 +1187,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         var firstColumn = $(tableElement).find(FIRST_COLUMN);
         var firstColumnWidth = firstColumn.width();
 
-        tableResizing.resize({ deltaX: firstColumnWidth });
+        tableResizing.resize({ deltaX: firstColumnWidth, initialDeltaX: firstColumnWidth });
 
         equal(nestedTable[0].style.width, initialWidth + firstColumnWidth + PX);
     });
@@ -1209,7 +1209,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should not change width in column without explicit dimensions", function() {
         var initialStyleWidth = nestedTable[0].style.width;
 
-        tableResizing.resize({ deltaX: MAX });
+        tableResizing.resize({ deltaX: MAX, initialDeltaX: MAX });
 
         equal(nestedTable[0].style.width, initialStyleWidth);
     });
@@ -1217,8 +1217,9 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should set width to adjacent columns", function() {
         var columns = nestedTable.closest(ROW).children();
         var columnWidths = calculateColumnWidths(columns);
+        var deltaX = 10;
 
-        tableResizing.resize({ deltaX: 10 });
+        tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
         for (var i = 0; i < columns.length; i++) {
             ok(columns[i].style.width !== columnWidths[i]);
@@ -1230,8 +1231,9 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             return (this !== nestedTable.closest(ROW)[0]);
         }).children();
         var columnWidths = calculateColumnWidths(otherColumns);
+        var deltaX = 10;
 
-        tableResizing.resize({ deltaX: 10 });
+        tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
         for (var i = 0; i < otherColumns.length; i++) {
             equal(otherColumns[i].style.width, columnWidths[i]);
@@ -1255,8 +1257,9 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("should set width to adjacent columns", function() {
         var columns = nestedTable.closest(ROW).children();
         var columnWidths = calculateColumnWidths(columns);
+        var deltaX = 10;
 
-        tableResizing.resize({ deltaX: 10 });
+        tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
         for (var i = 0; i < columns.length; i++) {
             ok(columns[i].style.width !== columnWidths[i]);
@@ -1268,8 +1271,9 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             return (this !== nestedTable.closest(ROW)[0]);
         }).children();
         var columnWidths = calculateColumnWidths(otherColumns);
+        var deltaX = 10;
 
-        tableResizing.resize({ deltaX: 10 });
+        tableResizing.resize({ deltaX: deltaX, initialDeltaX: deltaX });
 
         for (var i = 0; i < otherColumns.length; i++) {
             equal(otherColumns[i].style.width, columnWidths[i]);
