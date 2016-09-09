@@ -694,7 +694,11 @@
                                     // because if we set value here and get get to
                                     // formula later and cellState.formula is null,
                                     // it'll clear the value.
-                                    range._set(property, cellState[property]);
+
+                                    // when pasting, do not copy "disabled" state
+                                    if (!(clipboard && property == "enable")) {
+                                        range._set(property, cellState[property]);
+                                    }
                                 }
                             }
                             if (!cellState.formula) {
