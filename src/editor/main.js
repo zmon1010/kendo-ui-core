@@ -168,7 +168,7 @@
         lists: [ "insertUnorderedList", "insertOrderedList" ],
         indenting: [ "indent", "outdent" ],
         links: [ "createLink", "unlink" ],
-        tables: [ "tableWizard", "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn" ]
+        tables: [ "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn" ]
     };
 
     var Editor = Widget.extend({

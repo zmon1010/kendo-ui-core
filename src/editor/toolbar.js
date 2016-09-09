@@ -538,7 +538,7 @@
                 $(this).children().filter(function(){
                     return !$(this).hasClass("k-state-disabled");
                 })
-                    .removeClass("k-group-start k-group-end")
+                    .removeClass("k-group-end")
                     .first().addClass("k-group-start").end()
                     .last().addClass("k-group-end").end();
             });
@@ -581,7 +581,6 @@
 
         _attachEvents: function() {
             var that = this,
-
                 buttons = "[role=button].k-tool",
                 enabledButtons = buttons + ":not(.k-state-disabled)",
                 disabledButtons = buttons + ".k-state-disabled",
