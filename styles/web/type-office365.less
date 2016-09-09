@@ -3482,14 +3482,15 @@ input.k-textbox:focus {
             box-sizing: content-box;
         }
     }
-    a.k-dialog-action.k-link {
-        position: absolute;
+    a.k-dialog-action.k-dialog-close.k-button-bare {
+        &:before {
+            content: normal;
+        }
+    }
+    a.k-dialog-action.k-dialog-close {
         padding: 1em;
         right: 0;
         top: 0;
-        line-height: 1em;
-        cursor: pointer;
-        z-index: 10000;
     }
     &.k-alert .k-window-titlebar,
     &.k-confirm .k-window-titlebar,
@@ -3558,7 +3559,7 @@ input.k-textbox:focus {
                 padding-left: 2em;
             }
     }
-    a.k-dialog-action.k-link {
+    a.k-dialog-action.k-dialog-close {
         left: 0;
     }
     .k-dialog-buttongroup {
