@@ -394,6 +394,7 @@
                 activeSheet: this.activeSheet().name(),
                 sheets: this._sheets.map(function(sheet) {
                     sheet.recalc(this._context);
+                    sheet.revalidate(this._validationContext);
                     return sheet.toJSON();
                 }, this),
                 names: names
