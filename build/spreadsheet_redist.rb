@@ -4,7 +4,8 @@ DPL_DIST = "\\\\telerik.com\\distributions\\DailyBuilds\\DocumentProcessing"
 
 def copy_dpl_binaries
     branch = BETA ? 'Dev' : 'Current'
-    source_dir = "#{DPL_DIST}\\#{branch}\\Binaries"
+    root_dir = "#{DPL_DIST}\\#{branch}"
+    source_dir = "#{root_dir}\\Binaries"
     puts "Copying DPL Binaries from #{source_dir}."
 
     {'Net40' => { :dest => 'NET40' }}.each do |key, value|
@@ -16,6 +17,14 @@ def copy_dpl_binaries
                 source = "#{source_dir}\\#{key}\\#{license}\\#{file}"
                 system("xcopy #{source} #{dest} /y")
             end
+
+            # Copy NuGets
+            nuget_source = "#{root_dir}\\Nugets\\#{key}\\#{license}\\*"
+            system("xcopy #{nuget_source} #{dest}\\nugets\\ /d /y")
+
+            # Copy Sources
+            src_source = "#{root_dir}\\SourceCode\\*"
+            system("xcopy #{src_source} #{dest}\\source\\ /d /y")
         end
     end
 end
