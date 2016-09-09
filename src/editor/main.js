@@ -510,14 +510,14 @@
                     ".k-row-resize-handle .k-row-resize-marker-wrapper{display:table-cell;height:100%;margin:0;padding:0;vertical-align:middle;}" +
                     ".k-row-resize-handle .k-row-resize-marker-wrapper .k-row-resize-marker{margin:0;padding:0;width:100%;height:2px;background-color:#00b0ff;opacity:0.8;display:none;}" +
                     ".k-table-resize-handle{position:absolute;background-color:#fff;border:1px solid #000;z-index:2;width:5px;height:5px;}" +
-                    ".k-resize-e{cursor:e-resize;}" +
-                    ".k-resize-n{cursor:n-resize;}" +
-                    ".k-resize-ne{cursor:ne-resize;}" +
-                    ".k-resize-nw{cursor:nw-resize;}" +
-                    ".k-resize-s{cursor:s-resize;}" +
-                    ".k-resize-se{cursor:se-resize;}" +
-                    ".k-resize-sw{cursor:sw-resize;}" +
-                    ".k-resize-w{cursor:w-resize;}" +
+                    ".k-table-resize-handle.k-resize-east{cursor:e-resize;}" +
+                    ".k-table-resize-handle.k-resize-north{cursor:n-resize;}" +
+                    ".k-table-resize-handle.k-resize-northeast{cursor:ne-resize;}" +
+                    ".k-table-resize-handle.k-resize-northwest{cursor:nw-resize;}" +
+                    ".k-table-resize-handle.k-resize-south{cursor:s-resize;}" +
+                    ".k-table-resize-handle.k-resize-southeast{cursor:se-resize;}" +
+                    ".k-table-resize-handle.k-resize-southwest{cursor:sw-resize;}" +
+                    ".k-table-resize-handle.k-resize-west{cursor:w-resize;}" +
                     ".k-table.k-table-resizing{opacity:0.6;}" +
                     "k\\:script{display:none;}" +
                 "</style>" +

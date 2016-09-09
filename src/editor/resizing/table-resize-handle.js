@@ -12,6 +12,7 @@
     var Class = kendo.Class;
     var Draggable = kendo.ui.Draggable;
     var Observable = kendo.Observable;
+    var getScrollBarWidth = Editor.ResizingUtils.getScrollBarWidth;
 
     var NS = ".kendoEditorTableResizeHandle";
 
@@ -67,6 +68,7 @@
             appendTo: null,
             direction: SOUTHEAST,
             resizableElement: null,
+            rtl: false,
             template: "<div class='k-table-resize-handle' unselectable='on' contenteditable='false'></div>"
         },
 
@@ -87,8 +89,9 @@
             var position = that._positioningStrategy.getPosition();
 
             $(that.element).css({
+                top: position.top,
                 left: position.left,
-                top: position.top
+                position: "absolute"
             });
         },
 
@@ -113,14 +116,14 @@
 
             function getDirectionClass(direction) {
                 return {
-                    "east": "k-resize-e",
-                    "north": "k-resize-n",
-                    "northeast": "k-resize-ne",
-                    "northwest": "k-resize-nw",
-                    "south": "k-resize-s",
-                    "southeast": "k-resize-se",
-                    "southwest": "k-resize-sw",
-                    "west": "k-resize-w"
+                    "east": "k-resize-east",
+                    "north": "k-resize-north",
+                    "northeast": "k-resize-northeast",
+                    "northwest": "k-resize-northwest",
+                    "south": "k-resize-south",
+                    "southeast": "k-resize-southeast",
+                    "southwest": "k-resize-southwest",
+                    "west": "k-resize-west"
                 }[direction];
             }
 
@@ -135,7 +138,8 @@
                 name: options.direction,
                 handle: that.element,
                 resizableElement: options.resizableElement,
-                rootElement: options.rootElement
+                rootElement: options.rootElement,
+                rtl: options.rtl
             });
         },
 
@@ -239,14 +243,17 @@
             handle: null,
             offset: HALF_INSIDE,
             resizableElement: null,
-            rootElement: null
+            rootElement: null,
+            rtl: false
         },
 
         getPosition: function() {
             var that = this;
+
             var position = that.calculatePosition();
             var handleOffsetPosition = that.applyHandleOffset(position);
             var scrollOffsetPosition = that.applyScrollOffset(handleOffsetPosition);
+
             return scrollOffsetPosition;
         },
 
@@ -267,12 +274,14 @@
         },
 
         applyScrollOffset: function(position) {
-            var rootElement = $(this.options.rootElement);
+            var options = this.options;
+            var rootElement = $(options.rootElement);
+            var scrollBarWidth = options.rtl ? getScrollBarWidth(rootElement[0]) : 0;
 
             if (!rootElement.is(BODY)) {
                 return {
                     top: position.top + rootElement.scrollTop(),
-                    left: position.left + rootElement.scrollLeft()
+                    left: position.left + rootElement.scrollLeft() - scrollBarWidth
                 };
             }
 

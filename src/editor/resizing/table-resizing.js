@@ -349,7 +349,8 @@
                 that.handles.push(new TableResizeHandle(extend({
                     appendTo: options.appendHandlesTo,
                     resizableElement: that.element,
-                    rootElement: options.rootElement
+                    rootElement: options.rootElement,
+                    rtl: options.rtl
                 }, handleOptions[i])));
             }
 

@@ -21,7 +21,6 @@
     var REGEX_NUMBER_IN_PIXELS = /(\d+)(\.?)(\d*)px/;
     var STRING = "string";
     var UNDEFINED = "undefined";
-    var WIDTH = "width";
 
     function constrain(options) {
         var value = options.value;
@@ -31,8 +30,12 @@
         return max(min(parseFloat(value), parseFloat(upperBound)), parseFloat(lowerBound));
     }
 
-    function getElementWidth(element) {
-        return (element.style[WIDTH] !== "" ? element.style[WIDTH] : $(element).width());
+    function getScrollBarWidth(element) {
+        if  (!$(element).is("body") && element.scrollHeight > element.clientHeight) {
+            return kendo.support.scrollbar();
+        }
+
+        return 0;
     }
 
     function calculatePercentageRatio(value, total) {
@@ -70,7 +73,7 @@
 
     var ResizingUtils = {
         constrain: constrain,
-        getElementWidth: getElementWidth,
+        getScrollBarWidth: getScrollBarWidth,
         calculatePercentageRatio: calculatePercentageRatio,
         inPercentages: inPercentages,
         inPixels: inPixels,

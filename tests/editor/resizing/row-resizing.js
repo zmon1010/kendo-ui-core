@@ -953,7 +953,7 @@
         equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "none");
     });
 
-    module("editor row resizing resize handle top offset", {
+    module("editor row resizing resize handle position top offset", {
         setup: function() {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture);
             tableElement.find("tr").css({
@@ -1001,6 +1001,29 @@
         triggerResize(row, 0, MAX);
 
         roughlyEqual(rowResizing.resizeHandle.css("top"), tbody.offset().top + tbody.outerHeight() - options.handle.height - options.min + PX, 0.01);
+    });
+
+    module("editor row resizing resize handle position", {
+        setup: function() {
+            wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(wrapper);
+            tableElement.find("tr").css({
+                height: "50px"
+            });
+             rowResizing = new RowResizing(tableElement[0], {
+                rootElement: wrapper
+            });
+            options = rowResizing.options;
+            tbody = tableElement.find(TBODY);
+            row = $(rowResizing.element).find(SECOND_ROW);
+            topOffset = row.offset().top;
+            initialHeight = row.outerHeight();
+        },
+
+        teardown: function() {
+            rowResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
     });
 
     test("left offset should be set", function() {

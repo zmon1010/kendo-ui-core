@@ -12,6 +12,7 @@
     var Editor = kendo.ui.editor;
     var TableElementResizing = Editor.TableElementResizing;
     var ResizingUtils = Editor.ResizingUtils;
+    var getScrollBarWidth = ResizingUtils.getScrollBarWidth;
     var constrain = ResizingUtils.constrain;
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
     var inPercentages = ResizingUtils.inPercentages;
@@ -23,9 +24,11 @@
     var RESIZE_HANDLE_MARKER_WRAPPER_CLASS = "k-row-resize-marker-wrapper";
     var RESIZE_MARKER_CLASS = "k-row-resize-marker";
 
-    var HEIGHT = "height";
+    var BODY = "body";
     var TR = "tr";
     var TBODY = "tbody";
+
+    var HEIGHT = "height";
 
     var RowResizing = TableElementResizing.extend({
         options: {
@@ -70,10 +73,14 @@
             var options = that.options;
             var handleHeight = options.handle[HEIGHT];
             var rowPosition = row.position();
+            var rootElement = $(options.rootElement);
+            var scrollTopOffset = rootElement.is(BODY) ? 0 : rootElement.scrollTop();
+            var scrollLeftOffset = rootElement.is(BODY) ? 0 : rootElement.scrollLeft();
+            var scrollBarWidth = options.rtl ? getScrollBarWidth(rootElement[0]) : 0;
 
             that.resizeHandle.css({
-                top: rowPosition.top + row.outerHeight() - (handleHeight / 2),
-                left: rowPosition.left,
+                top: rowPosition.top + row.outerHeight() + scrollTopOffset - (handleHeight / 2),
+                left: rowPosition.left + (scrollLeftOffset - scrollBarWidth),
                 position: "absolute"
             });
         },
@@ -92,14 +99,16 @@
             var options = that.options;
             var min = options.min;
             var tableBody =  $(that.element).children(TBODY);
-            var tableBodyTopOffset = tableBody.offset().top;
+            var tableBodyTopOffset = tableBody.position().top;
             var resizeHandle = $(that.resizeHandle);
             var row = $(e.currentTarget).data(options.handle.dataAttribute);
+            var rootElement = $(options.rootElement);
+            var scrollTopOffset = rootElement.is(BODY) ? 0 : rootElement.scrollTop();
 
             var handleOffset = constrain({
-                value: resizeHandle.offset().top + e.y.delta,
-                min: $(row).offset().top + min,
-                max: abs(tableBodyTopOffset + tableBody.outerHeight() - options.handle[HEIGHT] - min)
+                value: resizeHandle.position().top + scrollTopOffset + e.y.delta,
+                min: $(row).position().top + scrollTopOffset + min,
+                max: tableBodyTopOffset + tableBody.outerHeight() + scrollTopOffset - options.handle[HEIGHT] - min
             });
 
             resizeHandle.css({ top: handleOffset });

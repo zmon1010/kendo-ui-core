@@ -160,6 +160,7 @@
             appendTo: null,
             direction: SOUTHEAST,
             resizableElement: null,
+            rtl: false,
             template: "<div class='k-table-resize-handle' unselectable='on' contenteditable='false'></div>"
         };
 
@@ -214,49 +215,49 @@
     test("should have direction class east", function() {
         setupHandle({ direction: "east" });
 
-        equal($(handle.element).hasClass("k-resize-e"), true);
+        equal($(handle.element).hasClass("k-resize-east"), true);
     });
 
     test("should have direction class north", function() {
         setupHandle({ direction: "north" });
 
-        equal($(handle.element).hasClass("k-resize-n"), true);
+        equal($(handle.element).hasClass("k-resize-north"), true);
     });
 
     test("should have direction class northeast", function() {
         setupHandle({ direction: "northeast" });
 
-        equal($(handle.element).hasClass("k-resize-ne"), true);
+        equal($(handle.element).hasClass("k-resize-northeast"), true);
     });
 
     test("should have direction class northwest", function() {
         setupHandle({ direction: "northwest" });
 
-        equal($(element).hasClass("k-resize-nw"), true);
+        equal($(element).hasClass("k-resize-northwest"), true);
     });
 
     test("should have direction class south", function() {
         setupHandle({ direction: "south" });
 
-        equal($(element).hasClass("k-resize-s"), true);
+        equal($(element).hasClass("k-resize-south"), true);
     });
 
     test("should have direction class southeast", function() {
         setupHandle({ direction: "southeast" });
 
-        equal($(element).hasClass("k-resize-se"), true);
+        equal($(element).hasClass("k-resize-southeast"), true);
     });
 
     test("should have direction class southwest", function() {
         setupHandle({ direction: "southwest" });
 
-        equal($(element).hasClass("k-resize-sw"), true);
+        equal($(element).hasClass("k-resize-southwest"), true);
     });
 
     test("should have direction class west", function() {
         setupHandle({ direction: "west" });
 
-        equal($(element).hasClass("k-resize-w"), true);
+        equal($(element).hasClass("k-resize-west"), true);
     });
 
     module("editor table resize handle data", {

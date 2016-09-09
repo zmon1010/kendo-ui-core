@@ -571,7 +571,8 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
             tableResizing = new TableResizing(tableElement, {
                 rootElement: wrapper[0],
-                appendHandlesTo: wrapper[0]
+                appendHandlesTo: wrapper[0],
+                rtl: true
             });
         },
 
@@ -596,7 +597,8 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             appendTo: tableResizing.options.rootElement,
             direction: "northwest",
             resizableElement: tableResizing.element,
-            rootElement: tableResizing.options.rootElement
+            rootElement: tableResizing.options.rootElement,
+            rtl: tableResizing.options.rtl
         };
 
         tableResizing.showResizeHandles();
@@ -605,6 +607,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(tableResizing.handles[0].options.direction, customOptions.direction);
         equal(tableResizing.handles[0].options.resizableElement, customOptions.resizableElement);
         equal(tableResizing.handles[0].options.rootElement, customOptions.rootElement);
+        equal(tableResizing.handles[0].options.rtl, customOptions.rtl);
     });
 
     test("should call resize handle show() on showResizeHandles()", function() {
@@ -1148,7 +1151,8 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             });
             tableElement = $(QUnit.fixture).find("#table");
             tableResizing = new TableResizing(tableElement[0], {
-                rtl: true
+                rtl: true,
+                rootElement: wrapper[0]
             });
         },
 

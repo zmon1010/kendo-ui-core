@@ -15,6 +15,7 @@
     var ResizingUtils = Editor.ResizingUtils;
     var constrain = ResizingUtils.constrain;
     var calculatePercentageRatio = ResizingUtils.calculatePercentageRatio;
+    var getScrollBarWidth = ResizingUtils.getScrollBarWidth;
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
@@ -23,13 +24,13 @@
     var RESIZE_HANDLE_CLASS = "k-column-resize-handle";
     var RESIZE_MARKER_CLASS = "k-column-resize-marker";
 
-    var COMMA = ",";
-
+    var BODY = "body";
     var TBODY = "tbody";
     var TD = "td";
     var TH = "th";
     var TR = "tr";
 
+    var COMMA = ",";
     var WIDTH = "width";
 
     var ColumnResizing = TableElementResizing.extend({
@@ -73,11 +74,17 @@
             var that = this;
             var tableBody = $(that.element).children(TBODY);
             var options = that.options;
+            var rtl = options.rtl;
             var handleWidth = options.handle.width;
+            var rootElement = $(options.rootElement);
+            var scrollTopOffset = rootElement.is(BODY) ? 0 : rootElement.scrollTop();
+            var scrollLeftOffset = rootElement.is(BODY) ? 0 : rootElement.scrollLeft();
+            var columnWidthOffset = rtl ? 0 : column.outerWidth();
+            var scrollBarWidth = rtl ? getScrollBarWidth(rootElement[0]) : 0;
 
             that.resizeHandle.css({
-                top: tableBody.position().top,
-                left: column.position().left + (options.rtl ? 0 : column.outerWidth()) - (handleWidth / 2),
+                top: tableBody.position().top + scrollTopOffset,
+                left: column.position().left + columnWidthOffset + (scrollLeftOffset - scrollBarWidth) - (handleWidth / 2),
                 position: "absolute"
             });
         },
@@ -103,11 +110,14 @@
             var columnLeftOffset = column.position().left;
             var adjacentColumnWidth = column.next().outerWidth() || 0;
             var resizeHandle = $(that.resizeHandle);
+            var rootElement = $(options.rootElement);
+            var scrollLeftOffset = rootElement.is(BODY) ? 0 : rootElement.scrollLeft();
+            var scrollBarWidth = rtl ? getScrollBarWidth(rootElement[0]) : 0;
 
             var handleOffset = constrain({
-                value: resizeHandle.position().left + e.x.delta,
-                min: abs(columnLeftOffset - (rtl ? adjacentColumnWidth : 0) + min),
-                max: abs(columnLeftOffset + columnWidth + (rtl ? 0 : adjacentColumnWidth) - handleWidth - min)
+                value: resizeHandle.position().left + (scrollLeftOffset - scrollBarWidth) + e.x.delta,
+                min: columnLeftOffset + (scrollLeftOffset - scrollBarWidth) - (rtl ? adjacentColumnWidth : 0) + min,
+                max: columnLeftOffset + columnWidth + (scrollLeftOffset - scrollBarWidth) + (rtl ? 0 : adjacentColumnWidth) - handleWidth - min
             });
 
             resizeHandle.css({ left: handleOffset });
