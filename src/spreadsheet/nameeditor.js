@@ -44,6 +44,7 @@
                     autoBind: false,
                     ignoreCase: true,
                     change: this._on_listChange.bind(this),
+                    noDataTemplate: "<div></div>",
                     open: function() {
                         dataSource.read();
                     }
