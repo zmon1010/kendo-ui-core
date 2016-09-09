@@ -95,7 +95,7 @@ MVC_DEMOS = FileList[MVC_DEMOS_ROOT + '**/*']
                         .sub(DEMO_SHARED_ROOT + 'shared/icons', MVC_DEMOS_ROOT + 'Content/shared/icons')
                 )
                 .include(
-                    FileList[DEMO_SHARED_ROOT + 'shared/images/{patterns,photos,employees}/*']
+                    FileList[DEMO_SHARED_ROOT + 'shared/images/{patterns,photos,employees,logos}/*']
                         .reject { |f| File.directory? f }
                         .sub(DEMO_SHARED_ROOT + 'shared/images', MVC_DEMOS_ROOT + 'Content/shared/images')
                 )
