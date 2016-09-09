@@ -3226,14 +3226,15 @@ div.k-window.k-state-focused
             line-height: unset;
         }
     }
-    a.k-dialog-action.k-link {
-        position: absolute;
-        padding: 1em;
+    a.k-dialog-action.k-dialog-close.k-button-bare {
+        &:before {
+            content: normal;
+        }
+    }
+    a.k-dialog-action.k-dialog-close {
+        padding: .8em;
         right: 0;
         top: 0;
-        line-height: 0.9em;
-        cursor: pointer;
-        z-index: 10000;
     }
     .k-dialog-buttongroup {
         .k-button {
@@ -3291,7 +3292,7 @@ div.k-window.k-state-focused
                 padding-left: 2em;
             }
     }
-    a.k-dialog-action.k-link {
+    a.k-dialog-action.k-dialog-close {
         left: 0;
     }
     .k-dialog-buttongroup {
