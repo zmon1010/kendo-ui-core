@@ -6044,3 +6044,78 @@
 
     })();
 })();
+
+(function() {
+    // ------------------------------------------------------------
+    module("Pie Plot Area / Events / plotAreaHover", {
+        teardown: destroyChart
+    });
+
+    test("does not trigger hover", 0, function() {
+        var chart = createChart({
+            series: [{
+                type: "pie",
+                data: [1, 2]
+            }],
+            chartArea: {
+                width: 1664,
+                height: 400
+            },
+            plotAreaHover: function(e) {
+                ok(false);
+            }
+        });
+
+        hoverChart(chart, chart.element, 300, 300);
+    });
+})();
+
+(function() {
+    // ------------------------------------------------------------
+    module("Donut Plot Area / Events / plotAreaHover", {
+        teardown: destroyChart
+    });
+
+    test("does not trigger hover", 0, function() {
+        var chart = createChart({
+            series: [{
+                type: "donut",
+                data: [1, 2]
+            }],
+            chartArea: {
+                width: 1664,
+                height: 400
+            },
+            plotAreaHover: function(e) {
+                ok(false);
+            }
+        });
+
+        hoverChart(chart, chart.element, 300, 300);
+    });
+})();
+
+(function() {
+    // ------------------------------------------------------------
+    module("Funnel Plot Area / Events / plotAreaHover", {
+        teardown: destroyChart
+    });
+
+    test("does not trigger hover", 0, function() {
+        var chart = createChart({
+            series: [{
+                type: "funnel",
+                data: [1, 2]
+            }],
+            chartArea: {
+                width: 1664,
+                height: 400
+            },
+            plotAreaHover: function(e) {
+                ok(false);
+            }
+        });
+
+        hoverChart(chart, chart.element, 300, 300);
+    });
+})();

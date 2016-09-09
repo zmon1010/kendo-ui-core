@@ -1362,7 +1362,9 @@ var __meta__ = { // jshint ignore:line
             var coords = this._eventCoordinates(e);
 
             this._trackCrosshairs(coords);
-            this._plotArea.hover(this, e);
+            if(this._plotArea.hover) {
+                this._plotArea.hover(this, e);
+            }
 
             if (this._sharedTooltip()) {
                 this._trackSharedTooltip(coords, e);
