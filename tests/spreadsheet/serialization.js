@@ -567,6 +567,20 @@
         equal(json.sheets[0].rows.length, 0);
     });
 
+    test("toJSON recalculates sheet validation and formulas", 2, function() {
+        var sheet = spreadsheet._workbook.sheets()[0];
+
+        sheet.recalc = function() {
+            ok(true);
+        };
+
+        sheet.revalidate = function() {
+            ok(true);
+        };
+
+        spreadsheet.toJSON();
+    });
+
     test("toJSON serializes multiple sheets", function() {
         spreadsheet.insertSheet();
 
