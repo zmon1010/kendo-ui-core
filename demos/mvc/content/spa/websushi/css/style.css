@@ -448,13 +448,6 @@ h3{
     line-height: 1em;
 }
 
-.icon_plus {
-    width: 8px;
-    height: 8px;
-    background: url('images/icon_plus.png') no-repeat;
-    display: inline-block;
-    padding-right: 6px;
-}
 
 #details{
     background-color: #fff;
