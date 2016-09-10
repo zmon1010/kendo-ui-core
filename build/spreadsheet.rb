@@ -103,7 +103,7 @@ namespace :spreadsheet do
                 src = SPREADSHEET_SRC_ROOT + "/bin/#{build}/*"
                 dest = "dist/bundles/#{bundle}/spreadsheet/binaries/#{target}/"
                 mkdir_p dest
-                Dir.glob(src).each { |f| cp f, dest }
+                Dir.glob(src).select { |f| File.file?(f) }.each { |f| cp f, dest }
             end
         end
     end
