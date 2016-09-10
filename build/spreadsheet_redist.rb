@@ -1,11 +1,11 @@
 require 'spreadsheet'
 
 DPL_DIST = "\\\\telerik.com\\distributions\\DailyBuilds\\DocumentProcessing"
+DPL_BRANCH = BETA ? 'Dev' : 'Current';
+DPL_ROOT_DIR = "#{DPL_DIST}\\#{DPL_BRANCH}"
 
 def copy_dpl_binaries
-    branch = BETA ? 'Dev' : 'Current'
-    root_dir = "#{DPL_DIST}\\#{branch}"
-    source_dir = "#{root_dir}\\Binaries"
+    source_dir = "#{DPL_ROOT_DIR}\\Binaries"
     puts "Copying DPL Binaries from #{source_dir}."
 
     {'Net40' => { :dest => 'NET40' }}.each do |key, value|
@@ -17,16 +17,24 @@ def copy_dpl_binaries
                 source = "#{source_dir}\\#{key}\\#{license}\\#{file}"
                 system("xcopy #{source} #{dest} /y")
             end
-
-            # Copy NuGets
-            nuget_source = "#{root_dir}\\Nugets\\#{key}\\#{license}\\*"
-            system("xcopy #{nuget_source} #{dest}\\nugets\\ /d /y")
-
-            # Copy Sources
-            src_source = "#{root_dir}\\SourceCode\\*"
-            system("xcopy #{src_source} #{dest}\\source\\ /d /y")
         end
     end
+end
+
+def copy_dpl_redist
+    redist_dir = SPREADSHEET_REDIST_ROOT.gsub('/', '\\')
+
+    {'Dev' => { :license => 'Release' }, 'Trial' => { :license => 'Release-Trial' }}.each do |license, dest|
+        dest = "#{redist_dir}\\#{dest[:license]}"
+
+        # Copy NuGets
+        nuget_source = "#{DPL_ROOT_DIR}\\Nugets\\Net40\\#{license}\\*"
+        system("xcopy #{nuget_source} #{dest}\\nugets\\ /d /y")
+    end
+
+    # Copy Sources
+    src_source = "#{DPL_ROOT_DIR}\\SourceCode\\*"
+    system("xcopy #{src_source} #{redist_dir}\\source\\ /d /y")
 end
 
 # Update AssemblyInfo.cs whenever the VERSION constant changes
@@ -36,6 +44,7 @@ namespace :spreadsheet do
     desc('Redistribute Telerik.Web.Spreadsheet')
     task :redist => 'spreadsheet:assembly_version' do
         copy_dpl_binaries
+        copy_dpl_redist
 
         ['Release', 'Release-Trial'].each do |configuration|
             msbuild SPREADSHEET_SRC_ROOT + '/Telerik.Web.Spreadsheet.csproj', "/p:Configuration=#{configuration}"
