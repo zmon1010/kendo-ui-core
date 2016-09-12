@@ -153,13 +153,9 @@
 
         _setTableComputedWidth: function() {
             var element = this.element;
-            var elementWidth = $(element).outerWidth();
 
-            if (inPercentages(element.style[WIDTH])) {
-                element.style[WIDTH] = toPercentages(calculatePercentageRatio(elementWidth, $(element).parent().width()));
-            }
-            else {
-                element.style[WIDTH] = toPixels(elementWidth);
+            if (element.style[WIDTH] === "") {
+                element.style[WIDTH] = toPixels($(element).outerWidth());
             }
         },
 
