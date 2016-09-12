@@ -40,7 +40,9 @@
         var setValue = function () {
             numerictextbox.value($("#value").val());
         };
-
+        $("#focus").click(function () {
+            numerictextbox.focus();
+        });
         $("#enable").click(function () {
             numerictextbox.enable();
         });

@@ -272,7 +272,8 @@
             },
             {
                 "text": "Globalization",
-                "url": "calendar/globalization"
+                "url": "calendar/globalization",
+                "new": true
             },
             {
                 "text": "RTL support",
@@ -2601,7 +2602,8 @@
             },
             {
                 "text": "Globalization",
-                "url": "numerictextbox/globalization"
+                "url": "numerictextbox/globalization",
+                "new": true
             },
             {
                 "text": "RTL support",
