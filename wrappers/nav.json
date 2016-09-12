@@ -2572,9 +2572,12 @@
                 "title": {
                     "aspnet-mvc": "The precision features of Kendo UI Numeric TextBox | Kendo UI Web demo"
                 },
-                "meta": {
-                    "aspnet-mvc": "This demo shows the precision functionality of KendoNumericTextBox component."
-                }
+              "meta": {
+                "aspnet-mvc": "This demo shows the precision functionality of KendoNumericTextBox component."
+              },
+              "packages": [
+                    "!mvc-core"
+                ]
             },
             {
                 "text": "Events",
@@ -2627,9 +2630,12 @@
                 "title": {
                     "aspnet-mvc": "Range validation in ASP.NET MVC NumericTextBox"
                 },
-                "meta": {
-                    "aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how."
-                }
+              "meta": {
+                "aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how."
+              },
+              "packages": [
+                    "!mvc-core"
+                ]
             },
             {
                 "text": "Tag Helper",
