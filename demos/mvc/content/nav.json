@@ -8714,7 +8714,6 @@
       {
         "text": "Vertical Box Plot",
         "url": "box-plot-charts/vertical",
-        "new": "true",
         "title": {
           "kendo-ui": "Kendo UI HTML5 Box Plot Charts Example",
           "aspnet-mvc": "ASP.NET MVC Box Plot Charts Example"
