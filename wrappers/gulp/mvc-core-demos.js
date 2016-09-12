@@ -32,7 +32,7 @@ const tasks = (gulp) => {
                 "base": "mvc-6/demos/Kendo.Mvc.Examples/"
             });
 
-        return gulp.merge(distFiles, controllers)
+        return merge(distFiles, controllers)
                    .pipe(zip('online-mvc-core-examples.zip'))
                    .pipe(gulp.dest(dest));
     });
