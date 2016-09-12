@@ -37,25 +37,23 @@ namespace Kendo.Extensions
 
         private static string ResourceUrl(UrlHelper url, string assetType, string file, bool isAbsoluteUrl)
         {
-#if DEBUG
-            if (assetType == "styles")
+            var CDN_ROOT = ConfigurationManager.AppSettings["CDN_ROOT"];
+            if (CDN_ROOT == "$CDN_ROOT")
             {
-                return url.Content(string.Format("~/content/web/{0}", file));
+                if (assetType == "styles")
+                {
+                    return url.Content(string.Format("~/content/web/{0}", file));
+                }
+
+                return url.Content(string.Format("~/Scripts/{0}", file));
             }
 
-            return url.Content(string.Format("~/Scripts/{0}", file));
-#else
             if (isAbsoluteUrl == true)
             {
                 return file;
             }
 
-            return url.Content(string.Format("{0}/{1}/{2}",
-                ConfigurationManager.AppSettings["CDN_ROOT"],
-                assetType,
-                file
-            ));
-#endif
+            return url.Content(string.Format("{0}/{1}/{2}", CDN_ROOT, assetType, file));
         }
 
         private static bool IsAbsoluteUrl(string url)
