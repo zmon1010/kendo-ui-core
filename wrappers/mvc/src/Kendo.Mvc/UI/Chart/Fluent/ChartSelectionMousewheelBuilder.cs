@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// </summary>
     public class ChartSelectionMousewheelBuilder : IHideObjectMembers
     {
-        private readonly ChartSelectionMousewheel mousehweel;
+        private readonly ChartSelectionMousewheel mousewheel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChartSelectionMousewheelBuilder" /> class.
@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="selectionMousewheel">The mousewheel zoom settings.</param>
         public ChartSelectionMousewheelBuilder(ChartSelectionMousewheel selectionMousewheel)
         {
-            mousehweel = selectionMousewheel;
+            mousewheel = selectionMousewheel;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public ChartSelectionMousewheelBuilder Reverse()
         {
-            mousehweel.Reverse = true;
+            mousewheel.Reverse = true;
             return this;
         }
 
@@ -61,14 +61,14 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public ChartSelectionMousewheelBuilder Reverse(bool reverse)
         {
-            mousehweel.Reverse = reverse;
+            mousewheel.Reverse = reverse;
             return this;
         }
 
         /// <summary>
-        /// Sets the mousehweel zoom type
+        /// Sets the mousewheel zoom type
         /// </summary>
-        /// <param name="fromDate">The mousehweel zoom type. Default value is ChartZoomDirection.Both</param>
+        /// <param name="fromDate">The mousewheel zoom type. Default value is ChartZoomDirection.Both</param>
         /// <example>
         /// <code lang="CS">
         /// &lt;% Html.Kendo().Chart()
@@ -83,7 +83,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public ChartSelectionMousewheelBuilder Zoom(ChartZoomDirection zoom)
         {
-            mousehweel.Zoom = zoom;
+            mousewheel.Zoom = zoom;
             return this;
         }
     }

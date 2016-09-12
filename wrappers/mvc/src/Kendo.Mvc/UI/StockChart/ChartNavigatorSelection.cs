@@ -2,13 +2,14 @@ using System;
 
 namespace Kendo.Mvc.UI
 {
-    public class ChartDateSelection
+    public class ChartNavigatorSelection
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChartDateSelection" /> class.
         /// </summary>
-        public ChartDateSelection()
+        public ChartNavigatorSelection()
         {
+             Mousewheel = new ChartNavigatorSelectionMousewheel();
         }
 
         /// <summary>
@@ -29,9 +30,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Mousewheel selection settings
+        /// </summary>
+        public ChartNavigatorSelectionMousewheel Mousewheel
+        {
+            get;
+            set;
+        }
+
         public IChartSerializer CreateSerializer()
         {
-            return new ChartDateSelectionSerializer(this);
+            return new ChartNavigatorSelectionSerializer(this);
         }
     }
 }

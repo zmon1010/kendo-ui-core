@@ -40,6 +40,26 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Defines the navigator selection.
+        /// </summary>
+        /// <param name="configurator">The add action.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().StockChart(Model)
+        ///             .Name("Chart")
+        ///             . .Navigator(nav => nav.Select(x => x.From(DateTime.Today)))
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ChartNavigatorBuilder<T> Select(Action<ChartNavigatorSelectionBuilder> configurator)
+        {
+            configurator(new ChartNavigatorSelectionBuilder(navigator.Select));
+
+            return this;
+        }
+
+        /// <summary>
         /// Defines the navigator series. At least one series should be configured.
         /// </summary>
         /// <param name="configurator">The add action.</param>
