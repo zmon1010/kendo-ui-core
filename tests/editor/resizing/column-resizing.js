@@ -1310,7 +1310,7 @@
         }
     });
 
-    test("should set computed style width in pixels to its element", function() {
+    test("should set computed style width in pixels to the table", function() {
         var width = tableElement.outerWidth();
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 10);
@@ -1318,33 +1318,23 @@
         equal(tableElement[0].style.width, width + PX);
     });
 
-    test("should override style width", function() {
-        tableElement[0].style.width = "1px";
-        var width = tableElement.outerWidth();
+    test("should not override table style width", function() {
+        var width = "1px";
+        tableElement[0].style.width = width;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 10);
 
-        equal(tableElement[0].style.width, width + PX);
+        equal(tableElement[0].style.width, width);
     });
 
-if (kendo.support.browser.mozilla) {
     test("should set computed style width in percentages to its element", function() {
-        tableElement[0].style.width = "1%";
+        var width = "1%";
+        tableElement[0].style.width = width;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 20);
 
-        roughlyEqual(tableElement[0].style.width, "40%", 5.5);
+        equal(tableElement[0].style.width, width);
     });
-}
-else {
-    test("should set computed style width in percentages to its element", function() {
-        tableElement[0].style.width = "1%";
-
-        resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + 20);
-
-        roughlyEqual(tableElement[0].style.width, "40%", 1.5);
-    });
-}
 
     module("editor column resizing without explicit dimensions", {
         setup: function() {
