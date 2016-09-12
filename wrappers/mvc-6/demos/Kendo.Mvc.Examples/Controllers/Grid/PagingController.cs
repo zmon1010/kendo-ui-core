@@ -13,6 +13,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return View(new PagerViewModel());
         }
 
+        [Demo]
         [HttpPost]
         public ActionResult Paging(PagerViewModel pager)
         {
