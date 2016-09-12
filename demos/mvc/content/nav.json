@@ -6927,6 +6927,7 @@
       {
         "text": "Custom Drop Zone",
         "url": "upload/customdropzone",
+        "new": "true",
         "title": {
           "kendo-ui": "Custom drop zone demo for File Upload | Kendo UI Upload Demo",
           "aspnet-mvc": "Custom drop zone demo for ASP.NET MVC File Upload"
@@ -6939,6 +6940,7 @@
       {
         "text": "Validation",
         "url": "upload/validation",
+        "new": "true",
         "title": {
           "kendo-ui": "Validation demo for File Upload | Kendo UI Upload Demo",
           "aspnet-mvc": "Validation demo for ASP.NET MVC File Upload"
