@@ -25,7 +25,9 @@
         "./editor/resizing/row-resizing",
         "./editor/resizing/table-resizing",
         "./editor/resizing/table-resize-handle",
-        "./editor/immutables"
+        "./editor/immutables",
+        "./editor/table-wizard/table-wizard-command",
+        "./editor/table-wizard/table-wizard-dialog"
     ], f);
 })(function(){
 

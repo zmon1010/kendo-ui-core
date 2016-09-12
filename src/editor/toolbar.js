@@ -581,14 +581,18 @@
 
         _attachEvents: function() {
             var that = this,
-                buttons = "[role=button].k-tool",
-                enabledButtons = buttons + ":not(.k-state-disabled)",
-                disabledButtons = buttons + ".k-state-disabled",
                 popupElement = that.overflowPopup ? that.overflowPopup.element : $([]);
 
-            that.element
-                .add(popupElement)
-                .off(NS)
+            that.attachToolsEvents(that.element.add(popupElement));
+        },
+
+        attachToolsEvents: function(element) {
+            var that = this,
+                buttons = "[role=button].k-tool",
+                enabledButtons = buttons + ":not(.k-state-disabled)",
+                disabledButtons = buttons + ".k-state-disabled";
+
+                element.off(NS)
                 .on("mouseenter" + NS, enabledButtons, function() { $(this).addClass("k-state-hover"); })
                 .on("mouseleave" + NS, enabledButtons, function() { $(this).removeClass("k-state-hover"); })
                 .on("mousedown" + NS, buttons, function(e) {
