@@ -23,7 +23,16 @@ const tasks = (gulp) => {
             throw new Error('No REDIST_PATH specified');
         }
 
-        return gulp.src('mvc-6/demos/Kendo.Mvc.Examples/bin/Release/netcoreapp1.0/publish/**/*')
+        var distFiles = gulp.src('mvc-6/demos/Kendo.Mvc.Examples/bin/Release/netcoreapp1.0/publish/**/*');
+        var controllers = gulp.src(
+            [
+                'mvc-6/demos/Kendo.Mvc.Examples/Controllers/**/*'
+            ],
+            {
+                "base": "mvc-6/demos/Kendo.Mvc.Examples/"
+            });
+
+        return gulp.merge(distFiles, controllers)
                    .pipe(zip('online-mvc-core-examples.zip'))
                    .pipe(gulp.dest(dest));
     });

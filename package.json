@@ -60,6 +60,7 @@
     "lazypipe": "~1.0.1",
     "less": "2.5.3",
     "less-plugin-autoprefix": "~1.5.1",
+    "merge-stream": "1.0.0",
     "merge2": "~0.3.6",
     "optimist": "0.3.7",
     "qunitjs": "1.19.0",
