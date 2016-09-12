@@ -72,6 +72,7 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/',
     'wrappers/aspnetmvc/Binaries/Mvc4' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Binaries/Mvc5' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/',
+    'wrappers/aspnetmvc/Binaries/Mvc6' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Binaries/AspNet.Core' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
@@ -174,11 +175,13 @@ MVC_BINARIES = {
 }
 
 MVC_CORE_BINARIES_COMMERCIAL = {
-    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_COMMERCIAL
+    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_COMMERCIAL,
+    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST_COMMERCIAL
 }
 
 MVC_CORE_BINARIES_TRIAL = {
-    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_TRIAL
+    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_TRIAL,
+    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST_TRIAL
 }
 
 MVC_CONTENT = {
