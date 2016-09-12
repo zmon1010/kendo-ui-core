@@ -2,6 +2,7 @@
 
 const shell = require('gulp-shell');
 const zip = require('gulp-zip');
+const merge = require('merge-stream');
 
 const tasks = (gulp) => {
     gulp.task('mvc-core-demos:assets',
