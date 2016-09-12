@@ -29,11 +29,13 @@ def copy_dpl_redist
 
         # Copy NuGets
         nuget_source = "#{DPL_ROOT_DIR}\\Nugets\\Net40\\#{license}\\*"
+        system("del /q #{dest}\\nugets\\*.*")
         system("xcopy #{nuget_source} #{dest}\\nugets\\ /d /y")
     end
 
     # Copy Sources
     src_source = "#{DPL_ROOT_DIR}\\SourceCode\\*"
+    system("del /q #{redist_dir}\\source\\*.*")
     system("xcopy #{src_source} #{redist_dir}\\source\\ /d /y")
 end
 
