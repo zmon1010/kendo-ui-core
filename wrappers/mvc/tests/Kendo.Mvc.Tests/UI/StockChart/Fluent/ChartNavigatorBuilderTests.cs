@@ -80,6 +80,22 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Builder_should_set_Select()
+        {
+            var date = new DateTime(2012, 1, 1);
+
+            builder.Select(select => select.From(date));
+
+            navigator.Select.From.ShouldEqual(date);
+        }
+
+        [Fact]
+        public void Select__object_should_return_builder()
+        {
+            builder.Select(select => { }).ShouldBeSameAs(builder);
+        }
+
+        [Fact]
         public void Visible_should_set_Visible()
         {
             builder.Visible(false);

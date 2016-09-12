@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
         public ChartNavigator(Chart<T> chart, ViewContext viewContext, IUrlGenerator urlGenerator)
         {
             Series = new List<IChartSeries>();
-            Select = new ChartDateSelection();
+            Select = new ChartNavigatorSelection();
             Hint = new ChartNavigatorHint();
             UrlGenerator = urlGenerator;
             ViewContext = viewContext;
@@ -54,7 +54,7 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// Gets or sets the navigator selection.
         /// </summary>
-        public ChartDateSelection Select
+        public ChartNavigatorSelection Select
         {
             get;
             set;

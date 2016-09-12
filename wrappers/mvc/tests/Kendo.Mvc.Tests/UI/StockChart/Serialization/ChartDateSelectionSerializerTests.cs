@@ -2,16 +2,17 @@ namespace Kendo.Mvc.UI.Tests
 {
     using Xunit;
     using System;
+    using System.Collections.Generic;
 
     public class ChartDateSelectionSerializerTests
     {
-        private readonly ChartDateSelection selection;
-        private readonly ChartDateSelectionSerializer serializer;
+        private readonly ChartNavigatorSelection selection;
+        private readonly ChartNavigatorSelectionSerializer serializer;
 
         public ChartDateSelectionSerializerTests()
         {
-            selection = new ChartDateSelection();
-            serializer = new ChartDateSelectionSerializer(selection);
+            selection = new ChartNavigatorSelection();
+            serializer = new ChartNavigatorSelectionSerializer(selection);
         }
 
         [Fact]
@@ -38,6 +39,40 @@ namespace Kendo.Mvc.UI.Tests
         public void Should_not_serialize_To_if_not_set()
         {
             serializer.Serialize().ContainsKey("to").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Should_serialize_Mousewheel()
+        {
+            selection.Mousewheel = new ChartNavigatorSelectionMousewheel() { Reverse = true };
+            GetJson().ContainsKey("mousewheel").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Should_serialize_Mousewheel_Enabled()
+        {
+            selection.Mousewheel.Enabled = false; 
+
+            GetJson()["mousewheel"].ShouldEqual(false);
+        }
+
+        [Fact]
+        public void Should_not_serialize_Mousewheel_Enabled()
+        {
+            selection.Mousewheel.Enabled = true;
+
+            GetJson().ContainsKey("mousewheel").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Should_not_serialize_Mousewheel_if_not_set()
+        {
+            GetJson().ContainsKey("mousewheel").ShouldBeFalse();
+        }
+
+        private IDictionary<string, object> GetJson()
+        {
+            return selection.CreateSerializer().Serialize();
         }
     }
 }
