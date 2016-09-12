@@ -2972,6 +2972,7 @@
         "text": "Responsive Panel",
         "name": "responsive-panel",
         "api": "web/responsivepanel",
+        "packages": [ "!mvc-core" ],  
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/responsivepanel/mvc-responsivepanel-overview"
         },
@@ -4491,6 +4492,7 @@
         "category": "Framework",
         "text": "PDF Export",
         "name": "export",
+        "packages": [ "!mvc-core" ],  
         "spriteCssClass": "drawingIcon",
         "items": [
             {
@@ -4548,6 +4550,7 @@
         "text": "Globalization",
         "name": "globalization",
         "api": "framework/kendo",
+        "packages": [ "!mvc-core" ],  
         "documentation": {
             "kendo-ui": "getting-started/framework/globalization/overview"
         },
@@ -4579,6 +4582,7 @@
         "text": "Validator",
         "name": "validator",
         "api": "web/validator",
+        "packages": [ "!mvc-core" ],  
         "documentation": {
             "kendo-ui": "getting-started/framework/validator/overview"
         },
