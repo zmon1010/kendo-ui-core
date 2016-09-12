@@ -18,30 +18,26 @@ namespace Kendo.Mvc.Examples.Models
 
         public IList<ProductViewModel> GetAll()
         {
-            var result = HttpContext.Current.Session["Products"] as IList<ProductViewModel>;
+            IList<ProductViewModel> result = new List<ProductViewModel>();
 
-            if (result == null || UpdateDatabase)
+            result = entities.Products.Select(product => new ProductViewModel
             {
-                result = entities.Products.Select(product => new ProductViewModel
+                ProductID = product.ProductID,
+                ProductName = product.ProductName,
+                UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
+                UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(short),
+                QuantityPerUnit = product.QuantityPerUnit,
+                Discontinued = product.Discontinued,
+                UnitsOnOrder = product.UnitsOnOrder.HasValue ? (int)product.UnitsOnOrder.Value : default(int),
+                CategoryID = product.CategoryID,
+                Category = new CategoryViewModel()
                 {
-                    ProductID = product.ProductID,
-                    ProductName = product.ProductName,
-                    UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
-                    UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(short),
-                    QuantityPerUnit = product.QuantityPerUnit,
-                    Discontinued = product.Discontinued,
-                    UnitsOnOrder = product.UnitsOnOrder.HasValue ? (int)product.UnitsOnOrder.Value : default(int),
-                    CategoryID = product.CategoryID,
-                    Category = new CategoryViewModel()
-                    {
-                        CategoryID = product.Category.CategoryID,
-                        CategoryName = product.Category.CategoryName
-                    },
-                    LastSupply = DateTime.Today
-                }).ToList();
+                    CategoryID = product.Category.CategoryID,
+                    CategoryName = product.Category.CategoryName
+                },
+                LastSupply = DateTime.Today
+            }).ToList();
 
-                HttpContext.Current.Session["Products"] = result;
-            }
 
             return result;
         }
