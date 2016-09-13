@@ -5,7 +5,6 @@ var editor;
 editor_module("editor insert html command", {
     setup: function() {
         editor = $("#editor-fixture").data("kendoEditor");
-        debugger;
     }
 }, {
     tools: [
