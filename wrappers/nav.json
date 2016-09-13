@@ -956,6 +956,38 @@
             "packages": [
                 "mvc-core"
             ]
+        },{
+          "text": "TreeView In Dialog",
+          "url": "dialog/treeview-integration",
+          "title": {
+            "aspnet-mvc": "Example of TreeView in ASP.NET MVC Dialog"
+          },
+		  "packages": [
+                "!mvc-core",
+				"!php",
+				"!jsp"
+            ],
+          "meta": {
+            "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field.",
+            "aspnet-mvc": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field."
+          },
+          "requiresServer": "true"
+        },{
+          "text": "TreeList in Dialog",
+          "url": "dialog/treelist-integration",
+          "title": {
+            "aspnet-mvc": "Example of ASP.NET MVC Dialog API"
+          },
+		  "packages": [
+                "!mvc-core",
+				"!php",
+				"!jsp"
+            ],
+          "meta": {
+            "kendo-ui": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field",
+            "aspnet-mvc": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field"
+          },
+          "requiresServer": "true"
         }
       ],
       "category": "Layout"

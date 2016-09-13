@@ -1250,6 +1250,8 @@
     <Content Include="Views\demos\gantt\selected-date-and-range.cshtml" />
     <Content Include="Views\demos\gantt\task-template.cshtml" />
     <Content Include="Views\demos\mediaplayer\keyboard-navigation.cshtml" />
+    <Content Include="Views\demos\dialog\treeview-integration.cshtml" />
+    <Content Include="Views\demos\dialog\treelist-integration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

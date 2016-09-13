@@ -228,6 +228,8 @@
     <Compile Include="Controllers\DataSource\Shared_DatasourceController.cs" />
     <Compile Include="Controllers\DatePicker\DisableDatesController.cs" />
     <Compile Include="Controllers\DateTimePicker\DisableDatesController.cs" />
+    <Compile Include="Controllers\Dialog\TreeList_IntegrationController.cs" />
+    <Compile Include="Controllers\Dialog\TreeView_IntegrationController.cs" />
     <Compile Include="Controllers\Dialog\Right_to_Left_SupportController.cs" />
     <Compile Include="Controllers\Dialog\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\Dialog\EventsController.cs" />
@@ -2950,6 +2952,8 @@
     <Content Include="Views\upload\customdropzone.cshtml" />
     <Content Include="Views\upload\validation.cshtml" />
     <Content Include="Views\mediaplayer\keyboard_navigation.cshtml" />
+    <Content Include="Views\dialog\treeview_integration.cshtml" />
+    <Content Include="Views\dialog\treelist_integration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
@@ -3711,7 +3715,7 @@
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
+  </Target>  
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
