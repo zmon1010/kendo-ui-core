@@ -234,7 +234,7 @@ test('space before content preserved after removing format', function() {
     marker.add(range);
     formatter.toggle(range);
     marker.remove(range);
-    equal(editor.value(), 'foo<strong> </strong>bar');
+    equal(editor.value(), 'foo bar');
 });
 
 test('space after content preserved after removing format', function() {
@@ -245,7 +245,7 @@ test('space after content preserved after removing format', function() {
 
     formatter.toggle(range);
     marker.remove(range);
-    equal(editor.value(), 'foo<strong> </strong>');
+    equal(editor.value(), 'foo ');
 });
 
 test('removing format preserves the format element and removes the format attributes', function () {
@@ -277,7 +277,7 @@ test('space before and after content preserved after removing format', function(
     marker.add(range);
     formatter.toggle(range);
     marker.remove(range);
-    equal(editor.value(), 'foo<strong> </strong>bar<strong> baz</strong>');
+    equal(editor.value(), 'foo bar<strong> baz</strong>');
 });
 
 test("BOM nodes are not accumulated when executing sequential commands", function() {
@@ -314,7 +314,7 @@ test("format fonts", function() {
     var font = fixture.firstChild;
 
     formatter.apply([font.firstChild]);
-
+        
     equal(font.nodeName, "FONT");
     notOk(font.size);
     equal(font.style.fontSize, "large");

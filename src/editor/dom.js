@@ -524,6 +524,10 @@ var Dom = {
                 if (!Dom.stripBom(node.nodeValue).length) {
                     Dom.remove(node);
                 }
+
+                if (Dom.isWhitespace(node)) {
+                    Dom.insertBefore(node, parent);
+                }
             } else if (node.className != KMARKER) {
                 Dom.trim(node);
                 if (!node.childNodes.length && !Dom.isEmpty(node)) {
