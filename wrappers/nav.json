@@ -4611,10 +4611,7 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example illustrates how jQuery and HTML5-based forms can be styled with Kendo UI Web."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Checkboxes",
@@ -4624,10 +4621,7 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Radio buttons",
