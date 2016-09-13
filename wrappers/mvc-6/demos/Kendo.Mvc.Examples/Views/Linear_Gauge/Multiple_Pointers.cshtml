@@ -39,35 +39,35 @@
         )
     </div>
 
-    <div class="box">
+    <div class="box wide">
         <div class="box-col">
             <h4>Red pointer value</h4>
-            @*@(Html.Kendo().Slider().Name("gauge-value0")
+            @(Html.Kendo().Slider().Name("gauge-value0")
                       .Min(0).Max(180).Value(10).ShowButtons(false)
                       .HtmlAttributes(new { style = "width: 220px;" })
                       .Events(e => e.Change("onSliderChange"))
-            )*@
+            )
             <h4 style="margin-top: 30px;">Get all pointer values</h4>
             <button id="getValues" class="k-button">Get all</button>
         </div>
         <div class="box-col">
             <h4>Orange pointer value</h4>
-            @*@(Html.Kendo().Slider().Name("gauge-value1")
+            @(Html.Kendo().Slider().Name("gauge-value1")
                       .Min(0).Max(180).Value(70).ShowButtons(false)
                       .HtmlAttributes(new { style = "width: 220px;" })
                       .Events(e => e.Change("onSliderChange"))
-            )*@
+            )
             <h4 style="margin-top: 30px;">Set all pointer values</h4>
             <input id="newValues" class="k-textbox" value="100, 10, 80" style="width: 110px;" />
             <button id="setValues" class="k-button">Set all</button>
         </div>
         <div class="box-col">
             <h4>Yellow pointer value</h4>
-            @*@(Html.Kendo().Slider().Name("gauge-value2")
+            @(Html.Kendo().Slider().Name("gauge-value2")
                       .Min(0).Max(180).Value(140).ShowButtons(false)
                       .HtmlAttributes(new { style = "width: 220px;" })
                       .Events(e => e.Change("onSliderChange"))
-            )*@
+            )
         </div>
     </div>
 
