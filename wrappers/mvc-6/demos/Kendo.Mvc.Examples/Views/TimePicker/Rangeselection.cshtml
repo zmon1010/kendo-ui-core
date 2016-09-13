@@ -1,20 +1,23 @@
-<div class="demo-section" style="width: 500px;">
+<div class="demo-section k-content">
 
-    <label for="start">Start time:</label>
+    <h4>Start time:</h4>
     @(Html.Kendo().TimePicker()
           .Name("start")
           .Value("8:00 AM")
           .Min("8:00 AM")
           .Max("6:00 PM")
+          .HtmlAttributes(new { style = "width:100%;" })
           .Events(e => e.Change("startChange"))
+
     )
 
-    <label for="end" style="margin-left:3em">End time:</label>
+    <h4  style="margin-top: 2em;">End time:</h4>
     @(Html.Kendo().TimePicker()
           .Name("end")
           .Value("8:30 AM")
           .Min("8:00 AM")
           .Max("7:30 AM")
+          .HtmlAttributes(new { style = "width:100%;" })
     )
 </div>
 <script>
