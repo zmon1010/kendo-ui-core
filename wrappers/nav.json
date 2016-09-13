@@ -6299,10 +6299,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The Telerik ASP.NET MVC chart is a powerful data visualization component, which allows you to graphically represent your data. It is useful when you would like to utilize modern browser technologies such as <a href=\"http://en.wikipedia.org/wiki/Scalable_Vector_Graphics\">SVG</a> or <a href=\"https://en.wikipedia.org/wiki/Canvas_element\">Canvas</a> (with a fallback to <a href=\"http://en.wikipedia.org/wiki/Vector_Markup_Language\">VML</a> for older IE versions) for interactive data visualizations. </p> <p>The component offers a variety of chart types such as area, bar, line, scatter, polar, radar, pie and donut, stock (OHLC) and many more.</p> <p>This demo demonstrates the Radar Line type which series are represented on the chart as data points connected with straight line.<br /> <br /> The chart can fetch data for its series from either local or remote data source. You can find more information about the MVC chart in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">product documentation</a>.</p> <p><strong><br /> Key Features of Telerik MVC Charts</strong></p> <ul> <li>Various Chart Types</li> <li>A Number of Data Types</li> <li>High Performance</li> <li>Export to PDF</li> <li>Simple-to-Customize Look and Feel</li> <li>Rich Server and Client-side API</li> <li>Server and Client-side Data Binding</li> <li>Built-in Themes</li> <li>Intuitive Built-in Animations</li> <li>Multiple Series and Combination Charts</li> <li>Plot Bands</li> <li>Rich Cross-Browser and Mobile Support</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/charts\">Telerik MVC Charts</a>.</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Smooth radar line",
@@ -6316,10 +6313,7 @@
                 "description": {
                     "aspnet-mvc": "<p>This demo shows how to configure <em>smooth (spline)</em> radar line style for the Telerik MVC Radar Chart.</p> <p>A Spline chart is a form of line/area chart where each data point from the series is connected with a curved line, which represents a rough approximation of the missing data points.</p> <p>You can configure a smooth polar area chart through the Series or SeriesDefaults -&gt; RadarLine -&gt; Style(ChartPolarLineStyle.Smooth) setting.</p>"
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Radar area",
@@ -6332,10 +6326,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The Telerik ASP.NET MVC chart is a powerful data visualization component, which allows you to graphically represent your data. It is useful when you would like to utilize modern browser technologies such as <a href=\"http://en.wikipedia.org/wiki/Scalable_Vector_Graphics\">SVG</a> or <a href=\"https://en.wikipedia.org/wiki/Canvas_element\">Canvas</a> (with a fallback to <a href=\"http://en.wikipedia.org/wiki/Vector_Markup_Language\">VML</a> for older IE versions) for interactive data visualizations. </p> <p>The component offers a variety of chart types such as area, bar, line, scatter, polar, radar, pie and donut, stock (OHLC) and many more.</p><p>This demo shows how to create a radar area chart, which series type is represented by data points connected with straight line segments that enclose a filled area. You can configure this chart from the Series -&gt; RadarArea configuration setting.</p><p>The chart can fetch data for its series from either local or remote data source. You can find more information about the MVC chart in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">product documentation</a>.</p> <p><strong><br /> Key Features of Telerik MVC Charts</strong></p> <ul>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Radar column",
@@ -6348,10 +6339,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>This example displays how to create a radar column chart, which series type is represented as data columns whose height varies according to their value.</p> <p>You can configure this chart from the Series -&gt; RadarColumn configuration setting.</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Binding to remote data",
@@ -6365,10 +6353,7 @@
                 "description": {
                     "aspnet-mvc": "<p>The Telerik MVC Chart offers two ways of data-binding:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\" target=\"_blank\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\" target=\"_blank\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP format and utilize the DataSource as a mediator between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>In this example the chart fetches its data from a MVC controller assigned via the DataSource read configuration. You can find more information about the data-binding capabilities of the MVC chart in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">help article</a>.</p>"
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             },
             {
                 "text": "Binding to local data",
@@ -6381,10 +6366,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The Telerik MVC Radar chart can be instructed to display data from local data storage using its built-in data-binding capabilities. </p> <p>There are two ways to bind the chart:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">Ajax</a> - the chart will perform Ajax requests to populate its series.</li> </ul> <p>In this example you can see how to bind the chart using the server approach. You need to create an action method and pass the ProteinQualityData list located in the \\Models\\Chart\\ChartDataRepository.Radar.cs file as a model. After that you should configure the data bound Score and Abbr fields for the Series and Categories. Note that the view has to be strongly typed so that the chart is able to load its data.</p><p>You can find additional information about how to utilize the data-binding capabilities of the MVC chart in <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">the Getting Started section</a> of the product documentation.</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Binding to grouped data",
@@ -6398,10 +6380,7 @@
                 "description": {
                     "aspnet-mvc": "<p>Telerik MVC charting extension can be integrated to a grouped data by <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/data/datasource\">Kendo UI DataSource</a>. To do, so you can follow the steps below:</p> <ol> <li>Bind the chart to a <a href=\"http://docs.telerik.com/kendo-ui/framework/datasource/overview\">Kendo UI DataSource control</a>.</li> <li>Set the <a href=\"http://docs.telerik.com/kendo-ui/framework/datasource/basic-usage#working-with-grouped-data\">DataSource.group.field property</a> to the name (e.g., the \"Category\" field) of the column in the underlying data which will be the criteria for grouping the chart series items into series Group(group =&gt; group.Add(model =&gt; model.Category))</li> <li>Bind the RadarColumn values of the series to the corresponding data source field (e.g., the \"Frequency\" and \"DirText\" fields): series.RadarColumn(model =&gt; model.Frequency, categoryExpression: model =&gt; model.DirText)</li> <li>Hide the Value Axis: ValueAxis -&gt; Visible(false) </li> </ol> <p>This will result in as many series as the number of distinct values in the DataSource.group.field column (e.g. \"Category\"). </p>"
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             }
         ],
         "category": "Charts"
@@ -6430,10 +6409,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The Telerik ASP.NET MVC chart is a powerful data visualization component, which allows you to graphically represent your data. It is useful when you would like to utilize modern browser technologies such as <a href=\"http://en.wikipedia.org/wiki/Scalable_Vector_Graphics\">SVG</a> or <a href=\"https://en.wikipedia.org/wiki/Canvas_element\">Canvas</a> (with a fallback to <a href=\"http://en.wikipedia.org/wiki/Vector_Markup_Language\">VML</a> for older IE versions) for interactive data visualizations. </p> <p>The component offers a variety of chart types such as area, bar, line, scatter, polar, radar, pie and donut, stock (OHLC) and many more.</p> <p>This demo shows how to create a Range Bar chart, which displays data as bars where each bar represents a value range that spans between its minimum (i.e., From property) and maximum (i.e., To property) levels. A Range Bar type has floating bars unlike the standard Ba chart that has anchored bars to its x-axis.</p> <p>This chart type is useful for comparing the low and high levels of value ranges (e.g., employees' working time, blood glucose levels per day, average minimum and maximum temperatures and rainfalls over time, etc.).</p> <p>The chart can fetch data for its series from either local or remote data source. You can find more information about the MVC chart in the <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">product documentation</a>.</p> <p><strong><br /> Key Features of Telerik MVC Charts</strong></p> <ul> <li>Various Chart Types</li> <li>A Number of Data Types</li> <li>High Performance</li> <li>Export to PDF</li> <li>Simple-to-Customize Look and Feel</li> <li>Rich Server and Client-side API</li> <li>Server and Client-side Data Binding</li> <li>Built-in Themes</li> <li>Intuitive Built-in Animations</li> <li>Multiple Series and Combination Charts</li> <li>Plot Bands</li> <li>Rich Cross-Browser and Mobile Support</li> </ul> <p>More about <a href=\"http://www.telerik.com/aspnet-mvc/charts\">Telerik MVC Charts</a>.</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Binding to local data",
@@ -6446,10 +6422,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The Telerik MVC Range Bar chart can be instructed to display data from local data storage using its built-in data-binding capabilities. </p> <p>There are two ways to bind the chart:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">Ajax</a> - the chart will perform Ajax requests to populate its series.</li> </ul> <p>You can learn from this demo how to bind the chart using the server approach. You need to create an action method and pass the RangeBarChartsLocalDataViewModel list model. After that you should configure the data bound FromA, ToA, FromB and ToB fields for the Series. Note that the view has to be strongly typed so that the chart is able to load its data.</p><p>You can find additional information about how to utilize the data-binding capabilities of the MVC chart in <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">the Getting Started section</a> of the product documentation.</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Binding to remote data",
@@ -6463,10 +6436,7 @@
                 "description": {
                     "aspnet-mvc": "<p>The Telerik MVC Chart offers two ways of data-binding:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\" target=\"_blank\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\" target=\"_blank\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP format and utilize the DataSource as a mediator between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>In this example the chart fetches its data from a MVC controller assigned via the DataSource read configuration. You can find more information about the data-binding capabilities of the MVC chart in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">help article</a>.</p>"
                 },
-                "requiresServer": "true",
-                "packages": [
-                    "!mvc-core"
-                ]
+                "requiresServer": "true"
             }
         ],
         "spriteCssClass": "chartRangeBarIcon",
@@ -6554,10 +6524,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The Telerik ASP.NET MVC Scatter chart supports multiple axis. This helps you leverage the best charting performance and visualize data on any number axis to provide solid business reports for your users.</p> <p>The example shows a Dyno run report and includes information for the: <em>torgue and power</em>. Note that each of them has unique name which is set through the <strong>XAxis and YAxis Title </strong>method.</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Pan and zoom",
@@ -6643,10 +6610,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>A Sparkline is a very small chart, drawn without axes, coordinates, legend, title and other chart-specific elements. It behaves like an inline element (rendered inside a span) as opposed to the standard charts, which behave like block elements (rendered inside divs) so that it can be easily embedded in text.</p> <p>You can specify the sparkline type through the Type property: .Type(SparklineType.[Area|Bar|Bullet|Column|Line|Pie])</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Binding to remote data",
@@ -6659,10 +6623,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The Telerik MVC Chart offers two ways of data-binding:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\" target=\"_blank\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\" target=\"_blank\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>For remote data binding you need to specify a remote endpoint or web service returning data in JSON/JSONP format and utilize the DataSource as a mediator between the chart and the underlying data. To make the connection to the remote endpoint and process the data properly, the data source needs information about the web service URL(s), the request type, the response data type, and the structure (schema) of the response, in case it is more complex than a plain array of objects.</p> <p>In this example the chart fetches its data from a MVC controller assigned via the DataSource read configuration. You can find more information about the data-binding capabilities of the MVC chart in this <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">help article</a>.</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             },
             {
                 "text": "Binding to local data",
@@ -6675,10 +6636,7 @@
                 },
                 "description": {
                     "aspnet-mvc": "<p>The Telerik MVC Area chart can be instructed to display data from local data storage using its built-in data-binding capabilities. </p> <p>There are two ways to bind the chart:</p> <ul> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/overview\">Server</a> - the chart will bind to a supplied model</li> <li><a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">Ajax</a> - the chart will perform Ajax requests to populate its series</li> </ul> <p>In this example you can see how to bind the chart using the server approach. You need to create an action method and pass the CompensationData list located in the \\Models\\Chart\\ChartDataRepository.cs file as a model. After that you should configure the data bound fields for the Series, i.e. .ValueAxis(axis => axis.Numeric().Max(50)). Note that the view has to be strongly typed so that the chart is able to load its data.</p><p>You can find additional information about how to utilize the data-binding capabilities of the MVC chart in <a href=\"http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/chart/ajax-binding\">the Getting Started section</a> of the product documentation.</p>"
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             }
         ],
         "category": "Charts"
