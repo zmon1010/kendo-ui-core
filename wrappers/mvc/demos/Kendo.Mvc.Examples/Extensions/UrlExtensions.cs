@@ -15,7 +15,14 @@ namespace Kendo.Extensions
 
         public static string ExampleUrl(this UrlHelper url, string widget, string example)
         {
-            return url.Action(example, widget);
+            var widgetUrl = url.Action(example, widget);
+
+            if (example == "index" && !widgetUrl.EndsWith("index"))
+            {
+                widgetUrl += "/index";
+            }
+
+            return widgetUrl;
         }
 
         public static string Script(this UrlHelper url, string file)
