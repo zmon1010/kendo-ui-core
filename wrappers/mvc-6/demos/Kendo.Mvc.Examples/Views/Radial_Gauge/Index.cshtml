@@ -37,14 +37,14 @@
         )
     )
 
-    @*@(Html.Kendo().Slider()
+    @(Html.Kendo().Slider()
         .Name("gauge-value")
         .Value(65)
         .Min(0)
         .Max(180)
         .ShowButtons(false)
         .Events(e => e.Change("change"))
-    )*@
+    )
 </div>
 <script>
 
