@@ -389,7 +389,7 @@
                             options.name = "custom";
                         }
 
-                        options.cssClass = "k-" + (options.name == "custom" ? "i-custom" : options.name);
+                        options.cssClass = "k-" + options.name;
 
                         if (!options.template && options.type == "button") {
                             options.template = editorNS.EditorUtils.buttonTemplate;
