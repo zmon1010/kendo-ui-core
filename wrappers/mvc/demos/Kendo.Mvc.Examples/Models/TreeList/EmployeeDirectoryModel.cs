@@ -7,7 +7,7 @@
     public class EmployeeDirectoryModel
     {
         [ScaffoldColumn(false)]
-        public int? EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
 
         [Required]
         [DisplayName("First name")]
@@ -84,7 +84,7 @@
         {
             return new EmployeeDirectory
             {
-                EmployeeID = EmployeeId ?? 0,
+                EmployeeID = EmployeeId,
                 FirstName = FirstName,
                 LastName = LastName,
                 ReportsTo = ReportsTo,
