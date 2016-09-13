@@ -217,16 +217,16 @@
         }
     });
 
-    function tableWizardEditCommand() {
+    function tableWizardCommand() {
         var range = createRangeFromText(editor, content);
         editor.selectRange(range);
-        var command = kendo.ui.Editor.defaultTools.tableWizardEdit.command({range:range});
+        var command = kendo.ui.Editor.defaultTools.tableWizard.command({range:range});
         command.editor = editor;
         return command;
     }
 
     function updateTable(table, data) {
-        var cmd = tableWizardEditCommand();
+        var cmd = tableWizardCommand();
         cmd.updateTable(data, table, [table.rows[0].cells[0]]);
     }
 

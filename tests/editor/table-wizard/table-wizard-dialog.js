@@ -26,7 +26,7 @@ var TableWizardDialog = kendo.ui.editor.TableWizardDialog,
                 id: "idValue",
                 borderWidth: "1",
                 borderColor: "#000000",
-                borderStyle: "Solid",
+                borderStyle: "solid",
                 collapseBorders: true,
                 captionContent: "caption",
                 captionAlignment: "right bottom",
@@ -47,7 +47,7 @@ var TableWizardDialog = kendo.ui.editor.TableWizardDialog,
                 id: "id",
                 borderWidth: "3",
                 borderColor: "#000000",
-                borderStyle: "Dashed",
+                borderStyle: "dashed",
                 wrapText: true
             }]
         },
@@ -88,7 +88,7 @@ test('loading table values', function() {
     equal(tableView.id.value, "idValue");
     equal(tableView.borderWidth.value(), "1");
     equal(tableView.borderColor.value(), "#000000");
-    equal(tableView.borderStyle.value(), "Solid");
+    equal(tableView.borderStyle.value(), "solid");
     equal(tableView.collapseBorders.checked, true);
 });
 
@@ -106,7 +106,7 @@ test('loading selected cell values', function() {
     equal(cellView.id.value, "id");
     equal(cellView.borderWidth.value(), "3");
     equal(cellView.borderColor.value(), "#000000");
-    equal(cellView.borderStyle.value(), "Dashed");
+    equal(cellView.borderStyle.value(), "dashed");
     equal(cellView.wrapText.checked, true);
 });
 
@@ -134,7 +134,7 @@ test('getting table properties from dialog', function() {
     equal(data.tableProperties.id, "idValue");
     equal(data.tableProperties.borderWidth, "1");
     equal(data.tableProperties.borderColor, "#000000");
-    equal(data.tableProperties.borderStyle, "Solid");
+    equal(data.tableProperties.borderStyle, "solid");
     equal(data.tableProperties.collapseBorders, true);
     equal(data.tableProperties.captionContent, "caption");
     equal(data.tableProperties.captionAlignment, "right bottom");
@@ -156,7 +156,7 @@ test('getting cell properties from dialog', function() {
     equal(data.cellProperties.id, "id");
     equal(data.cellProperties.borderWidth, "3");
     equal(data.cellProperties.borderColor, "#000000");
-    equal(data.cellProperties.borderStyle, "Dashed");
+    equal(data.cellProperties.borderStyle, "dashed");
     equal(data.cellProperties.wrapText, true);
 });
 
