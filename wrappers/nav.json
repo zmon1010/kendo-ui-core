@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "text": "AutoComplete",
         "name": "autocomplete",
@@ -4626,7 +4626,7 @@
                 "meta": {
                     "aspnet-mvc": "This example illustrates how jQuery and HTML5-based forms can be styled with Kendo UI Web."
                 }
-            },
+            },	
             {
                 "text": "Checkboxes",
                 "url": "styling/checkboxes",
@@ -4637,16 +4637,19 @@
                     "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
                 }
             },
-            {
-                "text": "Radio buttons",
-                "url": "styling/radios",
-                "title": {
-                    "aspnet-mvc": "jQuery icons styling example | Kendo UI Web demos"
-                },
-                "meta": {
-                    "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
-                }
-            }
+          {
+            "text": "Radio buttons",
+            "url": "styling/radios",
+            "title": {
+              "aspnet-mvc": "jQuery icons styling example | Kendo UI Web demos"
+            },
+            "meta": {
+              "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
+            },
+            "packages": [
+              "!mvc-core"
+            ]
+          }
         ],
         "category": "Interactivity & UX"
     },
