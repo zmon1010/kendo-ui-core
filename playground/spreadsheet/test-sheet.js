@@ -178,4 +178,9 @@ sheet.batch(function(){
     sheet.range("F1").input('=json.encode(E1)');
     sheet.range("E1").select();
 
+    sheet.range("C15").input("5%");
+    sheet.range("C16").input("3.2");
+    sheet.range("D15").input("=CEILING(C15*C16, 0.01)");
+    sheet.range("D16").input("=ROUNDUP(C15*C16, 2)");
+
 }, { recalc: true });
