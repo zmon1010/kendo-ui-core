@@ -11,8 +11,10 @@
 @{ 
     CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("de-DE");
 }
-
-@(Html.Kendo().TimePicker()
+<div class="demo-section k-content">
+    @(Html.Kendo().TimePicker()
       .Name("timepicker")
       .Value(DateTime.Now)
-)
+      .HtmlAttributes(new { style = "width: 100%" })
+    )
+    </div>

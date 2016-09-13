@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "text": "AutoComplete",
         "name": "autocomplete",
@@ -272,7 +272,8 @@
             },
             {
                 "text": "Globalization",
-                "url": "calendar/globalization"
+                "url": "calendar/globalization",
+                "new": true
             },
             {
                 "text": "RTL support",
@@ -1552,7 +1553,8 @@
                 "text": "Server hierarchy",
                 "url": "grid/serverhierarchy",
                 "packages": [
-                    "!mvc-core"
+                    "!mvc-core",
+                    "!mvc"
                 ]
             },
             {
@@ -1622,7 +1624,8 @@
                 "text": "Server detail template",
                 "url": "grid/serverdetails",
                 "packages": [
-                    "!mvc-core"
+                    "!mvc-core",
+                    "!mvc"
                 ]
             },
             {
@@ -2572,9 +2575,12 @@
                 "title": {
                     "aspnet-mvc": "The precision features of Kendo UI Numeric TextBox | Kendo UI Web demo"
                 },
-                "meta": {
-                    "aspnet-mvc": "This demo shows the precision functionality of KendoNumericTextBox component."
-                }
+              "meta": {
+                "aspnet-mvc": "This demo shows the precision functionality of KendoNumericTextBox component."
+              },
+              "packages": [
+                    "!mvc-core"
+                ]
             },
             {
                 "text": "Events",
@@ -2598,7 +2604,8 @@
             },
             {
                 "text": "Globalization",
-                "url": "numerictextbox/globalization"
+                "url": "numerictextbox/globalization",
+                "new": true
             },
             {
                 "text": "RTL support",
@@ -2627,9 +2634,12 @@
                 "title": {
                     "aspnet-mvc": "Range validation in ASP.NET MVC NumericTextBox"
                 },
-                "meta": {
-                    "aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how."
-                }
+              "meta": {
+                "aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be restricted between min and max value using a custom Kendo UI Validator rules. Take a look at the demo to learn how."
+              },
+              "packages": [
+                    "!mvc-core"
+                ]
             },
             {
                 "text": "Tag Helper",
@@ -2964,6 +2974,7 @@
         "text": "Responsive Panel",
         "name": "responsive-panel",
         "api": "web/responsivepanel",
+        "packages": [ "!mvc-core" ],  
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/responsivepanel/mvc-responsivepanel-overview"
         },
@@ -4483,6 +4494,7 @@
         "category": "Framework",
         "text": "PDF Export",
         "name": "export",
+        "packages": [ "!mvc-core" ],  
         "spriteCssClass": "drawingIcon",
         "items": [
             {
@@ -4540,6 +4552,7 @@
         "text": "Globalization",
         "name": "globalization",
         "api": "framework/kendo",
+        "packages": [ "!mvc-core" ],  
         "documentation": {
             "kendo-ui": "getting-started/framework/globalization/overview"
         },
@@ -4571,6 +4584,7 @@
         "text": "Validator",
         "name": "validator",
         "api": "web/validator",
+        "packages": [ "!mvc-core" ],  
         "documentation": {
             "kendo-ui": "getting-started/framework/validator/overview"
         },
@@ -4612,7 +4626,7 @@
                 "meta": {
                     "aspnet-mvc": "This example illustrates how jQuery and HTML5-based forms can be styled with Kendo UI Web."
                 }
-            },
+            },	
             {
                 "text": "Checkboxes",
                 "url": "styling/checkboxes",
@@ -4623,16 +4637,19 @@
                     "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
                 }
             },
-            {
-                "text": "Radio buttons",
-                "url": "styling/radios",
-                "title": {
-                    "aspnet-mvc": "jQuery icons styling example | Kendo UI Web demos"
-                },
-                "meta": {
-                    "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
-                }
-            }
+          {
+            "text": "Radio buttons",
+            "url": "styling/radios",
+            "title": {
+              "aspnet-mvc": "jQuery icons styling example | Kendo UI Web demos"
+            },
+            "meta": {
+              "aspnet-mvc": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
+            },
+            "packages": [
+              "!mvc-core"
+            ]
+          }
         ],
         "category": "Interactivity & UX"
     },
