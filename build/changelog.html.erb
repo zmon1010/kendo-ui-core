@@ -140,7 +140,7 @@ end
 % end
 
 % suite.components.each do |component_title, component|
-% next if exclude.include? component_title.downcase
+% next if (exclude.include? component_title.downcase) && (!component.features.empty? || !component.bugs.empty?)
         <div class="tClear poTopLine">
             <h2><%= encode(component_title) %></h2>
             <%= output("What's new", component.features) %>
