@@ -1614,6 +1614,30 @@
           "aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the ASP.NET MVC Dialog control."
         }
       },
+	  {
+        "text": "TreeView in Dialog",
+        "url": "dialog/treeview-integration",
+        "title": {
+          "kendo-ui": "TreeView in Dialog | Kendo UI Dialog Demo",
+          "aspnet-mvc": "TreeView in Dialog | ASP.NET MVC Dialog Demo"
+        },
+        "meta": {
+          "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field.",
+          "aspnet-mvc": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field."
+        }
+      },
+	  {
+        "text": "TreeList in Dialog",
+        "url": "dialog/treelist-integration",
+        "title": {
+          "kendo-ui": "TreeList in Dialog | Kendo UI Dialog Demo",
+          "aspnet-mvc": "TreeList in Dialog | ASP.NET MVC Dialog Demo"
+        },
+        "meta": {
+          "kendo-ui": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field.",
+          "aspnet-mvc": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field."
+        }
+      },
       {
         "text": "Tag Helper",
         "url": "dialog/tag-helper",
