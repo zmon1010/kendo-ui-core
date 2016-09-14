@@ -74,40 +74,42 @@ namespace Kendo.Controllers
                 }
             }
 
-            var ApiDict = currentExample.Api ?? ViewBag.CurrentWidget.Api;
-            var api = ApiDict.ContainsKey("all") ? ApiDict["all"] : null;
-
-            if (!string.IsNullOrEmpty(api))
+            var apiDict = currentExample.Api ?? ViewBag.CurrentWidget.Api;
+            if (apiDict != null)
             {
-                if (product == "kendo-ui")
+                var api = apiDict.ContainsKey("all") ? apiDict["all"] : null;
+                if (!string.IsNullOrEmpty(api))
                 {
-                    ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/" + api;
-                }
-                else if (product == "php-ui")
-                {
-                    ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/php/kendo/ui" + Regex.Replace(api, "(web|dataviz|mobile)", "");
-                }
-                else if (product == "jsp-ui")
-                {
-                    ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/jsp" + Regex.Replace(api, "(web|dataviz|mobile)", "");
-                }
-                else if (product == "aspnet-mvc")
-                {
-                    if (api == "web/validator")
+                    if (product == "kendo-ui")
                     {
-                        ViewBag.Api = "http://docs.telerik.com/kendo-ui/aspnet-mvc/validation";
+                        ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/" + api;
                     }
-                    else
+                    else if (product == "php-ui")
                     {
-                        ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/aspnet-mvc/kendo.mvc.ui.fluent" + Regex.Replace(api, "(web|dataviz)", "").Replace("mobile/", "/mobile") + "builder";
+                        ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/php/kendo/ui" + Regex.Replace(api, "(web|dataviz|mobile)", "");
                     }
-                }
-                
-            }
+                    else if (product == "jsp-ui")
+                    {
+                        ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/jsp" + Regex.Replace(api, "(web|dataviz|mobile)", "");
+                    }
+                    else if (product == "aspnet-mvc")
+                    {
+                        if (api == "web/validator")
+                        {
+                            ViewBag.Api = "http://docs.telerik.com/kendo-ui/aspnet-mvc/validation";
+                        }
+                        else
+                        {
+                            ViewBag.Api = "http://docs.telerik.com/kendo-ui/api/wrappers/aspnet-mvc/kendo.mvc.ui.fluent" + Regex.Replace(api, "(web|dataviz)", "").Replace("mobile/", "/mobile") + "builder";
+                        }
+                    }
 
-            if (ApiDict.ContainsKey(product))
-            {
-                ViewBag.Api = "http://docs.telerik.com/kendo-ui/" + ApiDict[product];
+                }
+
+                if (apiDict.ContainsKey(product))
+                {
+                    ViewBag.Api = "http://docs.telerik.com/kendo-ui/" + apiDict[product];
+                }
             }
 
             if (currentWidget.Documentation != null && currentWidget.Documentation.ContainsKey(product))
