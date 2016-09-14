@@ -366,6 +366,16 @@ var Dom = {
         return whitespace.test(node.nodeValue);
     },
 
+    allWhitespaceContent: function(node) {
+        var child = node.firstChild;
+        while(child && Dom.isWhitespace(child)) {
+            child = child.nextSibling;
+        }
+
+        return !child;
+    },
+
+
     isEmptyspace: function(node) {
         return emptyspace.test(node.nodeValue);
     },
@@ -524,13 +534,9 @@ var Dom = {
                 if (!Dom.stripBom(node.nodeValue).length) {
                     Dom.remove(node);
                 }
-
-                if (Dom.isWhitespace(node)) {
-                    Dom.insertBefore(node, parent);
-                }
             } else if (node.className != KMARKER) {
                 Dom.trim(node);
-                if (!node.childNodes.length && !Dom.isEmpty(node)) {
+                if ((node.childNodes.length === 0 || (Dom.allWhitespaceContent(node) && Dom.isBlock(node)) && !Dom.isEmpty(node))) {
                     Dom.remove(node);
                 }
             }
