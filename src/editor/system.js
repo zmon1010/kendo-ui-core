@@ -907,7 +907,7 @@ var Clipboard = Class.extend({
     },
 
     _handleImagePaste: function(e) {
-        if (!('FileReader' in window)) {
+        if (!('FileReader' in window) || (browser.msie && browser.version > 10)) {
             return;
         }
 
