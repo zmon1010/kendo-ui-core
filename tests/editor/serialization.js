@@ -417,6 +417,12 @@ if (!kendo.support.browser.msie) {
     });
 }
 
+test("nbsp in table cell is serialized", function() {
+    editor.value("<table><tr><td>&nbsp;</td></tr></table");
+
+    equal(editor.value(), "<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>");
+});
+
 test("single quotes in style attribute", function() {
     editor.value('<span style="font-family:\'Verdana\';">foo</span>');
     equal(editor.value(), '<span style="font-family:\'Verdana\';">foo</span>');

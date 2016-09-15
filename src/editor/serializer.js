@@ -27,6 +27,8 @@ var supportsLeadingWhitespace = div.firstChild.nodeType === 3;
 div = null;
 var isFunction = $.isFunction;
 
+var TD = "td";
+
 var Serializer = {
     toEditableHtml: function(html) {
         return (html || "")
@@ -491,7 +493,12 @@ var Serializer = {
             if (node.nodeValue === '\ufeff') {
                 do {
                     node = node.parentNode;
-                    if (dom.is(node, "td") || node.childNodes.length !== 1) {
+
+                    if (dom.is(node, TD) && node.childNodes.length === 1) {
+                        return true;
+                    }
+
+                    if (node.childNodes.length !== 1) {
                         return false;
                     }
                 } while(!dom.isBlock(node));

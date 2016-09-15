@@ -51,8 +51,8 @@ test("exec with position:'before' inserts column before selection", function() {
     var dom = $(editor.value());
 
     equal(dom.find("tr").length, 1);
-    equal(dom.find("td:first").text(), "");
-    equal(dom.find("td:last").text(), "foo");
+    equal(dom.find("td:first").html(), "&nbsp;");
+    equal(dom.find("td:last").html(), "foo");
 });
 
 test("cell classes are copied when creating new columns", function() {
@@ -72,7 +72,8 @@ test("inserted row do not copy text content", function() {
 
     var dom = $(editor.value());
 
-    equal(dom.find("td").text(), "foo");
+    equal(dom.find("td:first").html(), "foo");
+    equal(dom.find("td:last").html(), "&nbsp;");
 });
 
 test("insert row after non-table element and cell", function() {
@@ -82,7 +83,8 @@ test("insert row after non-table element and cell", function() {
 
     var dom = $(editor.value());
 
-    equal(dom.find("td").text(), "foo");
+    equal(dom.find("td:first").html(), "foo");
+    equal(dom.find("td:last").html(), "&nbsp;");
 });
 
 

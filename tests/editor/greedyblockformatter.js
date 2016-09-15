@@ -123,7 +123,7 @@ test("apply does not fail on empty table cells", function() {
     td[1].innerHTML = "\ufeff";
     formatter.apply([td[0].firstChild, td[1].firstChild, td[2].firstChild]);
 
-    equal(editor.value(), '<table><tbody><tr><td><h3>foo</h3></td><td></td><td><h3>bar</h3></td></tr></tbody></table>');
+    equal(editor.value(), '<table><tbody><tr><td><h3>foo</h3></td><td>&nbsp;</td><td><h3>bar</h3></td></tr></tbody></table>');
 });
 
 editor_module("editor greedy block formatter with immutables enabled", {

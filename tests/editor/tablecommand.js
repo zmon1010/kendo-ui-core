@@ -47,7 +47,7 @@ test("exec createTable creates table at cursor", function() {
 
     execTableCommand({ range:range });
 
-    equal(stripTableElementAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
+    equal(stripTableElementAttributes(editor.value()), "foo<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>");
 });
 
     test("table command should skip cleaners", function() {
@@ -65,7 +65,7 @@ test("exec createTable creates table with given rows", function() {
 
     execTableCommand({ range: range, rows: 3, columns: 2 });
 
-    equal(stripTableElementAttributes(editor.value()), "<table><tbody><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table>foo");
+    equal(stripTableElementAttributes(editor.value()), "<table><tbody><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table>foo");
 });
 
 test("exec createTable creates table with given columns", function() {
@@ -77,7 +77,7 @@ test("exec createTable creates table with given columns", function() {
 
     execTableCommand({ range:range, rows: 1, columns: 2 });
 
-    equal(stripTableElementAttributes(editor.value()), "<table><tbody><tr><td></td><td></td></tr></tbody></table>foo");
+    equal(stripTableElementAttributes(editor.value()), "<table><tbody><tr><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table>foo");
 });
 
 function stripAttr(html) {
@@ -105,7 +105,7 @@ test("exec splits paragraph", function() {
 
     execTableCommand({ range:range });
 
-    equal(stripTableElementAttributes(editor.value()), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
+    equal(stripTableElementAttributes(editor.value()), "<p>foo</p><table><tbody><tr><td>&nbsp;</td></tr></tbody></table><p>bar</p>");
 });
 
 test("first cell is focused after insertion", function() {
@@ -132,7 +132,7 @@ test("table holds its position after undo/redo", function() {
 
     editor.exec("redo");
 
-    equal(stripTableElementAttributes(editor.value()).replace(/<br[^>]*>/g, ""), "<p>foo</p><table><tbody><tr><td></td></tr></tbody></table><p>bar</p>");
+    equal(stripTableElementAttributes(editor.value()).replace(/<br[^>]*>/g, ""), "<p>foo</p><table><tbody><tr><td>&nbsp;</td></tr></tbody></table><p>bar</p>");
 });
 
 editor_module("editor table command", {
@@ -177,7 +177,7 @@ test("creates 3 columns with width roughly equal to 33.3%", function() {
         editor.options.pasteCleanup.keepNewLines = true;
         execTableCommand({ range:range });
 
-        equal(stripTableElementAttributes(editor.value()), "foo<table><tbody><tr><td></td></tr></tbody></table>");
+        equal(stripTableElementAttributes(editor.value()), "foo<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>");
     });
 
     editor_module("editor table command", {
@@ -238,32 +238,32 @@ function testTableCommandExecution(initialContent, expectedContent) {
 }
 
 test("exec the immutable in which the selection is", function() {
-    testTableCommandExecution('<div contenteditable="false">|foo|bar</div>',  '<table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('<div contenteditable="false">|foo|bar</div>',  '<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>');
 });
 
 test("exec deletest immutable inline element in which the selection is", function() {
-    testTableCommandExecution('<span contenteditable="false">|foo|bar</span>','<table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('<span contenteditable="false">|foo|bar</span>','<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>');
 });
 
 test("exec when selection is in partially selected immutable start container", function() {
-    testTableCommandExecution('<div contenteditable="false">foo|bar</div> text |text','<table><tbody><tr><td></td></tr></tbody></table>text');
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div> text |text','<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>text');
 });
 
 test("exec when selection is in partially selected only block child in immutable start container", function() {
-    testTableCommandExecution('<div contenteditable="false"><div>foo|bar</div></div> text |text','<table><tbody><tr><td></td></tr></tbody></table>text');
+    testTableCommandExecution('<div contenteditable="false"><div>foo|bar</div></div> text |text','<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>text');
 });
 
 test("exec when selection is in partially selected immutable end container", function() {
-    testTableCommandExecution('text |text<div contenteditable="false">foo|bar</div>','text <table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('text |text<div contenteditable="false">foo|bar</div>','text <table><tbody><tr><td>&nbsp;</td></tr></tbody></table>');
 });
 
 test("exec when selection is in partially selected immutable start and end containers", function() {
-    testTableCommandExecution('<div contenteditable="false">foo|bar</div>test text<div contenteditable="false">foo|bar</div>','<table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div>test text<div contenteditable="false">foo|bar</div>','<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>');
 });
 
 
 test("exec when selection is in partially selected immutable start and end containers and paragraph is in between", function() {
-    testTableCommandExecution('<div contenteditable="false">foo|bar</div><p>test text</p><div contenteditable="false">foo|bar</div>','<table><tbody><tr><td></td></tr></tbody></table>');
+    testTableCommandExecution('<div contenteditable="false">foo|bar</div><p>test text</p><div contenteditable="false">foo|bar</div>','<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>');
 });
 
 }());

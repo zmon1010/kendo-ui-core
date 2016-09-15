@@ -73,7 +73,8 @@ test("inserted row do not copy text content", function() {
 
     var dom = $(editor.value());
 
-    equal(dom.find("td").text(), "foo");
+    equal(dom.find("td:first").html(), "foo");
+    equal(dom.find("td:last").html(), "&nbsp;");
 });
 
 editor_module("editor immutables enabled insert row command", {
