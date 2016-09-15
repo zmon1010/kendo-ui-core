@@ -48,7 +48,6 @@ namespace Kendo.Mvc.UI.Fluent
         ///  &lt;%= Html.Kendo().StockChart(Model)
         ///             .Name("Chart")
         ///                 .Navigator(nav => nav.Select(x => x.From(DateTime.Today)))
-        ///             )
         /// %&gt;
         /// </code>
         /// </example>
