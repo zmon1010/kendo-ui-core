@@ -26,7 +26,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <code lang="CS">
         /// &lt;%= Html.Kendo().StockChart(Model)
         ///             .Name("Chart")
-        ///             . .Navigator(nav => nav.Select(x => x.From(DateTime.Today)))
+        ///               .Navigator(nav => nav.Select(x => x.From(DateTime.Today)))
         ///             )
         /// %&gt;
         /// </code>
@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <code lang="CS">
         /// &lt;%= Html.Kendo().StockChart(Model)
         ///             .Name("Chart")
-        ///             . .Navigator(nav => nav.Select(x => x.To(DateTime.Today)))
+        ///               .Navigator(nav => nav.Select(x => x.To(DateTime.Today)))
         ///             )
         /// %&gt;
         /// %&gt;
@@ -56,7 +56,7 @@ namespace Kendo.Mvc.UI.Fluent
             selection.To = toDate;
             return this;
         }
-        
+
         /// <summary>
         /// Enable or disable mouse wheel zooming.
         /// </summary>
