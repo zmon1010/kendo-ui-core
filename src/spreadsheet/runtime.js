@@ -68,9 +68,10 @@
         _resolve: function(val) {
             if (val === undefined) {
                 val = null;
-            }
-            if (Array.isArray(val)) {
+            } else if (Array.isArray(val)) {
                 val = this.asMatrix(val);
+            } else {
+                val = maybeRoundFloatErrors(val);
             }
             var f = this.formula;
             f.value = val;
@@ -723,11 +724,11 @@
         var f;
         if (haveForced) {
             resolve += "this.resolveCells(toResolve, callback); } ";
-            f = new Function("CalcError", main + resolve + arrayArgs + " return { resolve: resolve, check: check, arrayArgs: arrayArgs };");
+            f = new Function("CalcError", "round", main + resolve + arrayArgs + " return { resolve: resolve, check: check, arrayArgs: arrayArgs };");
         } else {
-            f = new Function("CalcError", main + " return { check: check };");
+            f = new Function("CalcError", "round", main + " return { check: check };");
         }
-        f = f(CalcError);
+        f = f(CalcError, roundFloatErrors);
         if (!hasArrayArgs) {
             delete f.arrayArgs;
         }
@@ -814,9 +815,11 @@
             return "($"+name+" = this.force($"+name+"))";
         }
 
-        function forceNum() {
+        function forceNum(round) {
             return "("
-                +     "(typeof " + force() + " == 'number') || "
+                +     (round
+                       ? ("(typeof " + force() + " == 'number' ? ($"+name+" = round($"+name+"), true) : false) || ")
+                       : ("(typeof " + force() + " == 'number') || "))
                 +     "(typeof $"+name+" == 'boolean') || "
                 +     "(typeof $"+name+" == 'string' && !/^(?:=|true|false)/i.test($"+name+") ? ("
                 +       "tmp = kendo.spreadsheet.calc.parse(0, 0, 0, $"+name+"), "
@@ -888,22 +891,22 @@
                 throw new Error("Unknown array type condition: " + type[0]);
             }
             if (type == "number" || type == "datetime") {
-                return forceNum();
+                return forceNum(true);
             }
             if (type == "integer" || type == "date") {
                 return "(" + forceNum() + " && (($"+name+" |= 0), true))";
             }
             if (type == "divisor") {
-                return "(" + forceNum() + " && ($"+name+" == 0 ? ((err = 'DIV/0'), false) : true))";
+                return "(" + forceNum(true) + " && ($"+name+" == 0 ? ((err = 'DIV/0'), false) : true))";
             }
             if (type == "number+") {
-                return "(" + forceNum() + " && ($"+name+" >= 0 ? true : ((err = 'NUM'), false)))";
+                return "(" + forceNum(true) + " && ($"+name+" >= 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "integer+") {
                 return "(" + forceNum() + " && (($"+name+" |= 0) >= 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "number++") {
-                return "(" + forceNum() + " && ($"+name+" > 0 ? true : ((err = 'NUM'), false)))";
+                return "(" + forceNum(true) + " && ($"+name+" > 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "integer++") {
                 return "(" + forceNum() + " && (($"+name+" |= 0) > 0 ? true : ((err = 'NUM'), false)))";
@@ -949,6 +952,18 @@
                 return "(" + force() + " == null || $"+name+" === '')";
             }
             throw new Error("Can't check for type: " + type);
+        }
+    }
+
+    function roundFloatErrors(num) {
+        return Math.round(num * 1E15) / 1E15;
+    }
+
+    function maybeRoundFloatErrors(num) {
+        if (typeof num == "number") {
+            return roundFloatErrors(num);
+        } else {
+            return num;
         }
     }
 
