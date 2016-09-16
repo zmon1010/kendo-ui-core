@@ -568,6 +568,9 @@ var __meta__ = { // jshint ignore:line
 
         _setDataSource: function(dataSource) {
             this.dataSource = dataSource;
+
+            // Re-initialize sortable columns
+            this._sortable();
         },
 
         _editable: function() {
