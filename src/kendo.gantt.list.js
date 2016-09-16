@@ -486,6 +486,11 @@ var __meta__ = { // jshint ignore:line
             var sortableInstance;
             var cells = this.header.find("th[" + kendo.attr("field") + "]");
             var cell;
+            var changeHandler = function(e) {
+                if (that.dataSource.total() === 0 || that.editable && that.editable.trigger('validate')) {
+                    e.preventDefault();
+                }
+            };
 
             for (var idx = 0, length = cells.length; idx < length; idx++) {
                 column = columns[idx];
@@ -502,11 +507,7 @@ var __meta__ = { // jshint ignore:line
                     cell.attr("data-" + kendo.ns + "field", column.field)
                         .kendoColumnSorter({
                             dataSource: this.dataSource,
-                            change: function(e) {
-                                if (that.dataSource.total() === 0 || that.editable && that.editable.trigger('validate')) {
-                                    e.preventDefault();
-                                }
-                            }
+                            change: changeHandler
                         });
                 }
             }
