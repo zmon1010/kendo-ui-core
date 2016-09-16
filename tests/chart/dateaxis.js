@@ -1583,11 +1583,13 @@
                 });
 
                 var range = dateAxis.zoomRange(1);
-
-                console.log(range.min.getTime(), new Date("2013/04/01 00:01:01.500").getTime())
+                var dateMin = new Date("2013/04/01 00:01:00");
+                var dateMax = new Date("2013/04/01 00:01:02");
+                dateMin.setMilliseconds(500);
+                dateMax.setMilliseconds(500);
                 compareRange(range, {
-                    min: new Date("2013/04/01 00:01:00.500"),
-                    max: new Date("2013/04/01 00:01:02.500")
+                    min: dateMin,
+                    max: dateMax
                 }, 1);
             });
 
