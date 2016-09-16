@@ -553,6 +553,11 @@
         });
     });
 
+    test("parse .1 numbers", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "=.1");
+        hasProps(exp.ast, { type: "num", value: 0.1 });
+    });
+
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){

@@ -1099,7 +1099,7 @@
             if (ch == "'") {
                 return readSheetName();
             }
-            if (isDigit(ch)) {
+            if (isDigit(ch) || ch == ".") {
                 return readNumber();
             }
             if (isIdStart(ch)) {
