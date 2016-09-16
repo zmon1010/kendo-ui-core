@@ -1,5 +1,15 @@
 ﻿@using Kendo.Mvc.UI
 
+<div class="demo-section">
+    @(Html.Kendo().ProgressBar()
+              .Name("progressBar")
+              .Min(0)
+              .Max(100)
+              .Type(ProgressBarType.Value)
+              .Animation(a => a.Duration(4000))
+    )
+</div>
+
 <div id="example" class="k-content">
 	<div class="configuration-horizontal">
 		<div class="config-section">
@@ -30,15 +40,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="demo-section">
-		@(Html.Kendo().ProgressBar()
-			  .Name("progressBar")
-			  .Min(0)
-			  .Max(100)
-			  .Type(ProgressBarType.Value)
-			  .Animation(a => a.Duration(4000))
-		)
-	</div>
+	
 
 	<script>
         $(function () {
@@ -69,6 +71,7 @@
 	<style>
 		#example .config-section {
 			min-width: 160px;
+            max-width: 1363px;
 		}
 
 		.configuration-horizontal .k-textbox {
