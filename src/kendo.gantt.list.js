@@ -485,12 +485,6 @@ var __meta__ = { // jshint ignore:line
             var column;
             var sortableInstance;
             var cells = this.header.find("th[" + kendo.attr("field") + "]");
-            var handler = function(e) {
-                if (that.dataSource.total() === 0 || that.editable && that.editable.trigger("validate")) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                }
-            };
             var cell;
 
             for (var idx = 0, length = cells.length; idx < length; idx++) {
@@ -506,9 +500,14 @@ var __meta__ = { // jshint ignore:line
                     }
 
                     cell.attr("data-" + kendo.ns + "field", column.field)
-                        .kendoColumnSorter({ dataSource: this.dataSource })
-                        .find(DOT + GanttList.styles.link)
-                        .on("click" + NS, handler);
+                        .kendoColumnSorter({
+                            dataSource: this.dataSource,
+                            change: function(e) {
+                                if (that.dataSource.total() === 0 || that.editable && that.editable.trigger('validate')) {
+                                    e.preventDefault();
+                                }
+                            }
+                        });
                 }
             }
             cells = null;
