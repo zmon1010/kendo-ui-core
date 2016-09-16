@@ -1,6 +1,13 @@
 ﻿@using Kendo.Mvc.UI
 
-<div class="configuration-horizontal" id="qrConfig">
+<div class="demo-section">
+    @(
+        Html.Kendo().QRCode()
+            .Name("qrCode")
+            .Size(200)
+    )
+</div>
+<div class="configuration-horizontal" id="qrConfig" style="width:100%">
     <div class="config-section">
         <span class="configHead">Value</span>
         <ul class="options">
@@ -58,13 +65,7 @@
         </ul>
     </div>
 </div>
-<div class="demo-section">
-    @(
-        Html.Kendo().QRCode()
-            .Name("qrCode")
-            .Size(200)
-    )
-</div>
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -127,6 +128,7 @@
 
     .configuration-horizontal .config-section {
         min-width: 100px;
+        max-width: 1363px;
     }
 
     .configuration-horizontal .k-textbox {
