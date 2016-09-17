@@ -108,6 +108,9 @@ var TableWizardCommand = Command.extend({
         cmd._updateTableProperties(table, tableProp);
 
         var cellProp = data.cellProperties;
+        if (selectedCells[0]) {
+            dom.attr(selectedCells[0], {id: cellProp.id || null});
+        }
         (cellProp.selectAllCells ? $(tableRows).children() : $(selectedCells)).each(function(i, cell){
             cmd._updateCellProperties(cell, cellProp);
         });
@@ -210,6 +213,9 @@ var TableWizardCommand = Command.extend({
             for (var c = 0, cell; c < tableProp.columns; c++) {
                 cell = row.insertCell();
                 cell.innerHTML = "&nbsp;";
+                if (r === 0 && c === 0 && cellProp.id) {
+                    cell.id = cellProp.id;
+                }
                 cmd._updateCellProperties(cell, (cellPropToAll || (r === 0 && c === 0)) ? cellProp : {});
             }
         }
@@ -238,8 +244,7 @@ var TableWizardCommand = Command.extend({
         style.margin = data.cellMargin || null;
         dom.attr(cell, {
             style: style || null,
-            className: data.className || null,
-            id : data.id || null
+            className: data.className || null
         });
     },
     _updateCaption: function(table, data){

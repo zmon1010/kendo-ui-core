@@ -181,6 +181,14 @@
         testCellProperty("id", "someId");
     });
 
+    test('table cell id is applyed only to first cell', function() {
+        var data = {tableProperties: { rows: 1, columns: 2 }, cellProperties: {id: "test", selectAllCells: true}};
+        var table = tableWizardCommand().createNewTable(data);
+
+        ok(table.rows[0].cells[0].id);
+        notOk(table.rows[0].cells[1].id);
+    });
+
     test('table cell CSS class', function() {
         testCellProperty("className", "someClass");
     });
@@ -282,6 +290,20 @@
         var table = singleRowTable.clone().get(0);
         updateTable(table, {tableProperties: { rows: table.rows.length, columns: table.rows[0].cells.length, height: 40, heightUnit: "em" }, cellProperties: {}});
         equal(table.style.height, "40em");
+    });
+
+    test('edit table cell id', function() {
+        var table = singleRowTable.clone().get(0);
+        var cells = table.rows[0].cells;
+        cells[0].id = "someId";
+
+        updateTable(table, {
+            tableProperties: { rows: table.rows.length, columns: cells.length },
+            cellProperties: {selectAllCells: true, id: "test"}
+        });
+
+        equal(cells[0].id, "test");
+        equal(cells[1].id, "");
     });
 
     test('add association cells with header', function() {
