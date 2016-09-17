@@ -1484,6 +1484,7 @@ declare namespace kendo.mobile {
         statusBarStyle?: string;
         transition?: string;
         useNativeScrolling?: boolean;
+		init?(e: ApplicationEvent): void;
     }
 
     interface ApplicationEvent {
