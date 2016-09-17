@@ -85,7 +85,12 @@ var PopupTool = Tool.extend({
         var editor = this._editor = options.editor;
         this._popup = popup;
 
-        var tableWizard = new Editor.TableWizardTool({ command: Editor.TableWizardCommand, insertNewTable: true, template: new ToolTemplate({ template: EditorUtils.buttonTemplate, title: "Table Wizard" }) });
+        var tableWizard = new Editor.TableWizardTool({
+            template: new ToolTemplate({ template: EditorUtils.buttonTemplate, title: editor.options.messages.tableWizard }),
+            command: Editor.TableWizardCommand,
+            insertNewTable: true
+        });
+
         registerTool("tableWizardInsert", tableWizard);
 
         var twTool = $("<div class='k-editor-toolbar'>" + tableWizard.options.template.getHtml() + "</div>");
