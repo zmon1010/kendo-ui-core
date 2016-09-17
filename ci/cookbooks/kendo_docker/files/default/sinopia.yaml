@@ -16,11 +16,31 @@ auth:
     # You can set this to -1 to disable registration.
     #max_users: 1000
 
+uplinks:
+  npmjs:
+    url: http://registry.npmjs.org/
+
+    # amount of time to wait for repository to respond
+    # before giving up and use the local cached copy
+    timeout: 5s
+
+    # maximum time in which data is considered up to date
+    #
+    # default is 2 minutes, so server won't request the same data from
+    # uplink if a similar request was made less than 2 minutes ago
+    maxage: 10m
+
+    # if two subsequent requests fail, no further requests will be sent to
+    # this uplink for five minutes
+    max_fails: 2
+    fail_timeout: 5m
+
 packages:
-  '@progress/*':
-    # Scoped Progress packages
+  '@*/*':
+    # scoped packages
     access: $all
-    publish: $all
+    publish: $authenticated
+    proxy: npmjs
 
   '*':
     # allow all users (including non-authenticated users) to read and
@@ -34,6 +54,8 @@ packages:
     # (anyone can register by default, remember?)
     publish: $authenticated
 
+    proxy: npmjs
+
 # log settings
 logs:
   - {type: stdout, format: pretty, level: http}
@@ -45,4 +67,4 @@ listen:
 # maximum size of uploaded json document
 # increase it if you have "request entity too large" errors
 # Kendo: This is required as packages include metadata as well, where for core package the metadata is > 30mb
-max_body_size: 50mb
+max_body_size: 100mb
