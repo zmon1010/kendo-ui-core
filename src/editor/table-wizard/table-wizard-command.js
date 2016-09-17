@@ -234,10 +234,10 @@ var TableWizardCommand = Command.extend({
     },
     _updateCellProperties: function(cell, data) {
         var style = this._getStylesData(data);
+        style.padding = data.cellPadding || null;
+        style.margin = data.cellMargin || null;
         dom.attr(cell, {
             style: style || null,
-            cellMargin: data.cellMargin || null,
-            cellPadding: data.cellPadding || null,
             className: data.className || null,
             id : data.id || null
         });
@@ -370,8 +370,8 @@ var TableWizardCommand = Command.extend({
             height: cStyle.height || cell.height ? parseFloat(cStyle.height || cell.height) : null,
             widthUnit: cmd._getUnit(cStyle.width),
             heightUnit: cmd._getUnit(cStyle.height),
-            cellMargin: cStyle.margin || cell.cellMargin,
-            cellPadding: cStyle.padding || cell.cellPadding,
+            cellMargin: cStyle.margin,
+            cellPadding: cStyle.padding,
             alignment: alignment,
             bgColor: cStyle.backgroundColor || cell.bgColor,
             className: cell.className,

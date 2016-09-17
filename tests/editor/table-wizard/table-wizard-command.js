@@ -152,12 +152,20 @@
         equal(row.cells[1].style.height, "");
     });
 
-    test('table cell cellMargin', function() {
-        testCellProperty("cellMargin", "3");
+    test('table cell margin', function() {
+        var data = $.extend(true, {}, tableCellData, {cellProperties: {cellMargin: "5px"}});
+        var table = tableWizardCommand().createNewTable(data);
+        var row = table.rows[0];
+
+        equal(row.cells[0].style.margin, "5px");
     });
 
-    test('table cell cellPadding', function() {
-        testCellProperty("cellPadding", "2");
+    test('table cell padding', function() {
+        var data = $.extend(true, {}, tableCellData, {cellProperties: {cellPadding: "4px"}});
+        var table = tableWizardCommand().createNewTable(data);
+        var row = table.rows[0];
+
+        equal(row.cells[0].style.padding, "4px");
     });
 
     test('table cell alignment', function() {
@@ -203,7 +211,6 @@
         equal(cell.style.whiteSpace, "nowrap");
     });
 
-    var tableData = {tableProperties: {columns: 1,rows: 1}, cellProperties: {}};
     var cellHtml = "<td>cell</td>";
     var rowHtml = "<tr>" + cellHtml + cellHtml + "</tr>";
     var singleRowTable = $("<table><tbody>" + rowHtml + "</tbody></table>");// 1 row, 2 columns
@@ -216,14 +223,6 @@
             editor.focus();
         }
     });
-
-    function tableWizardCommand() {
-        var range = createRangeFromText(editor, content);
-        editor.selectRange(range);
-        var command = kendo.ui.Editor.defaultTools.tableWizard.command({range:range});
-        command.editor = editor;
-        return command;
-    }
 
     function updateTable(table, data) {
         var cmd = tableWizardCommand();
