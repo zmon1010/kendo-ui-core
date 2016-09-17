@@ -544,7 +544,6 @@ bundle :name => 'aspnetmvc.hotfix.commercial',
        :type_script => %w(all web mobile dataviz),
        :changelog => %w(components aspnetmvc),
        :product => 'UI for ASP.NET MVC',
-       :product => 'UI for ASP.NET MVC',
        :vs_extension => true,
        :contents => {
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
