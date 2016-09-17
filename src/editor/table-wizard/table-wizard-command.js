@@ -56,7 +56,10 @@ var TableWizardCommand = Command.extend({
         Command.fn.releaseRange.call(cmd, range);
     },
     insertTable: function(table) {
-        this.range.insertNode(table);
+        var range = this.range;
+        range.insertNode(table);
+        range.collapse(true);
+        this.editor.selectRange(range);
     },
     updateTable: function(data, table, selectedCells) {
         var cmd = this;
