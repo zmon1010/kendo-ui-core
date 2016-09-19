@@ -30,11 +30,6 @@ uplinks:
     # uplink if a similar request was made less than 2 minutes ago
     maxage: 10m
 
-    # if two subsequent requests fail, no further requests will be sent to
-    # this uplink for five minutes
-    max_fails: 2
-    fail_timeout: 5m
-
 packages:
   '@*/*':
     # scoped packages
