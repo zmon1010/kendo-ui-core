@@ -337,16 +337,13 @@ var TableWizardDialog = kendo.Class.extend({
         dialogOptions.close = closeHandler;
         dialogOptions.title = messages.tableWizard;
         dialogOptions.visible = options.visible;
-        dialogOptions.maxHeight = 720;
 
         dialog = $(that._dialogTemplate(messages)).appendTo(document.body)
             .kendoWindow(dialogOptions)
             .closest(".k-window").toggleClass("k-rtl", options.isRtl).end()
             .find(".k-dialog-ok").click(okHandler).end()
             .find(".k-dialog-close").click(closeHandler).end()
-            .data("kendoWindow")
-            .center()
-            .open();
+            .data("kendoWindow");
 
         var element = dialog.element;
         that._initTabStripComponent(element);
@@ -355,6 +352,7 @@ var TableWizardDialog = kendo.Class.extend({
         that._initAccessibilityViewComponents(element, tableData);
 
         dialog.center();
+        dialog.open();
     },
 
     _initTabStripComponent: function(element){
