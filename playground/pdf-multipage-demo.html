@@ -9,10 +9,12 @@
         "../src/kendo.pdf.js",
       ]);
     </script>
+    <script src="./test-pdf-helpers.js"></script>
     <script src="./pako.min.js"></script>
     <style>
       #main {
         font: 14px "DejaVu Serif";
+        line-height: 1em;
         background: #fea;
         padding: 2em;
         margin: 2em;
@@ -148,6 +150,7 @@
 
     <script>
      function makePDF() {
+         console.time("drawing");
          kendo.drawing.drawDOM("#content", {
              paperSize: "A4",
              forcePageBreak: "H1:not(:first-child)",
@@ -156,6 +159,7 @@
              },
              template: $("#page-template").html()
          }).then(function(group){
+             console.timeEnd("drawing");
              kendo.drawing.pdf.saveAs(group, "loremipsum.pdf");
          });
      }

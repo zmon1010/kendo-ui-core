@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+     requireSync([
+         "../../src/jquery.js",
+         "../../src/kendo.spreadsheet.js"
+     ]);
+    </script>
+    <style type="text/css">
+     body {
+       font: 14px Arial,sans-serif;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="ss"></div>
+    <script>
+     window.ss = $("#ss").kendoSpreadsheet({
+         sheets: [
+             { name: "Sheet1" },
+             { name: "Sheet2" },
+             { name: "Sheet3" }
+         ]
+     }).getKendoSpreadsheet();
+
+     var validator = {
+         dataType: "custom",
+         from: "AND(LEN(A2)<56)",
+         type: "reject",
+         allowNulls: false,
+         titleTemplate: "Invalid Item",
+         messageTemplate: "Values must 55 characters or less"
+     };
+
+     ss.sheets().forEach(function(sheet){
+         var sheetRows = sheet._rows._count;
+         var rangeItem = sheet.range("A2:A" + sheetRows);
+         rangeItem.validation(validator);
+         console.log(rangeItem.validation());
+     });
+    </script>
+  </body>
+</html>
