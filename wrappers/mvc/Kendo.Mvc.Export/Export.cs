@@ -5,8 +5,45 @@ using System;
 
 namespace Kendo.Mvc
 {
+    public class GridExportCellCreatedEvent : EventArgs
+    {
+        private ICellExporter cell;
+        public ICellExporter Cell
+        {
+            get
+            {
+                return cell;
+            }
+        }
+        private int column;
+        public int Column
+        {
+            get
+            {
+                return column;
+            }
+        }
+        private int row;
+        public int Row
+        {
+            get
+            {
+                return row;
+            }
+        }
+        public GridExportCellCreatedEvent(ICellExporter cell, int column, int row)
+        {
+            this.cell = cell;
+            this.column = column;
+            this.row = row;
+        }
+    }
+
     public static class Export
     {
+        public static event GridExportCellCreatedEventHandler CellCreated;
+        public delegate void GridExportCellCreatedEventHandler(object sender, GridExportCellCreatedEvent e);
+
         public static Stream JsonToStream(SpreadDocumentFormat format, string data, string model, string title)
         {
             var modelObject = JsonConvert.DeserializeObject<dynamic>(model);
@@ -26,6 +63,7 @@ namespace Kendo.Mvc
                             using (ICellExporter cell = row.CreateCellExporter())
                             {
                                 cell.SetValue(columnName);
+                                CellCreated.Invoke(typeof(GridExportCellCreatedEvent), new GridExportCellCreatedEvent(cell, idx, 0));
                             }
                         }
                     }
@@ -38,6 +76,7 @@ namespace Kendo.Mvc
                                 using (ICellExporter cell = row.CreateCellExporter())
                                 {
                                     cell.SetValue(dataObject[rowIdx][modelObject[colIdx].field.ToString()].ToString());
+                                    CellCreated.Invoke(typeof(GridExportCellCreatedEvent), new GridExportCellCreatedEvent(cell, colIdx, rowIdx + 1));
                                 }
                             }
                         }

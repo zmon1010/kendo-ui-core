@@ -27,13 +27,27 @@ namespace Kendo.Mvc.Examples.Controllers
             string fileName = String.Format("{0}.{1}", options.title, options.format);
             string mimeType = Kendo.Mvc.Export.GetMimeType(exportFormat);
 
-            Stream stream = Kendo.Mvc.Export.JsonToStream(exportFormat, options.data.ToString(), options.model.ToString(), options.title.ToString());
+            Kendo.Mvc.Export.CellCreated += Export_CellCreated;
 
+
+            Stream stream = Kendo.Mvc.Export.JsonToStream(exportFormat, options.data.ToString(), options.model.ToString(), options.title.ToString());
             var fileStreamResult = new FileStreamResult(stream, mimeType);
             fileStreamResult.FileDownloadName = fileName;
             fileStreamResult.FileStream.Seek(0, SeekOrigin.Begin);
 
             return fileStreamResult;
+        }
+
+        private void Export_CellCreated(object sender, GridExportCellCreatedEvent e)
+        {
+            SpreadCellFormat format = new SpreadCellFormat
+            {
+                ForeColor = e.Row == 0 ? SpreadThemableColor.FromRgb(143, 108, 54) : SpreadThemableColor.FromRgb(245, 24, 122),
+                IsItalic = true,
+                WrapText = true
+            };
+            e.Cell.SetFormat(format);
+
         }
     }
 }
