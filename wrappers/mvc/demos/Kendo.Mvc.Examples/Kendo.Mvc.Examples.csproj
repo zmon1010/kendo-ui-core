@@ -252,6 +252,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Selected_Date_and_RangeController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
+    <Compile Include="Controllers\Grid\Server_ExportController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MediaPlayer\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\MediaPlayer\ApiController.cs" />
@@ -2973,9 +2974,13 @@
     <Content Include="Views\mediaplayer\keyboard_navigation.cshtml" />
     <Content Include="Views\dialog\treeview_integration.cshtml" />
     <Content Include="Views\dialog\treelist_integration.cshtml" />
+<<<<<<< 6e075218cd70a3952290eea9df727e34d5d1b479
     <Content Include="Views\spreadstreamprocessing\index.cshtml" />
     <Content Include="Views\financial\stock_history.cshtml" />
     <Content Include="Views\editor\import_exportas.cshtml" />
+=======
+    <Content Include="Views\grid\server_export.cshtml" />
+>>>>>>> Initial commit
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
@@ -3401,6 +3406,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
     </Reference>
+    <ProjectReference Include="..\..\Kendo.Mvc.Export\Kendo.Mvc.Export.csproj">
+      <Project>{9d23a875-d933-455e-aa70-a0a3a434f1ab}</Project>
+      <Name>Kendo.Mvc.Export</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Kendo.Mvc\Kendo.Mvc.csproj">
       <Project>{a7f7c110-d7f0-49b7-8dda-fd2d1cc6f3b1}</Project>
       <Name>Kendo.Mvc</Name>
