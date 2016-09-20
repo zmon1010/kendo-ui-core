@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 using Telerik.Documents.SpreadsheetStreaming;
+using System;
 
 namespace Kendo.Mvc
 {
@@ -44,6 +45,11 @@ namespace Kendo.Mvc
                 }
                 return stream;
             }
+        }
+
+        public static string GetMimeType(SpreadDocumentFormat exportFormat)
+        {
+            return exportFormat == SpreadDocumentFormat.Csv ? "text/csv" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         }
     }
 }

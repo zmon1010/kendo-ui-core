@@ -19,96 +19,23 @@
      )
 )
 
-<a class='k-button k-grid-export' title='Export to CSV'>CSV</a>
-<a class='k-button k-grid-export' title='Export to XLSX'>XLSX</a>
+<form action="@Url.Action("Export", "Grid")" method="POST">
+    <input type="hidden" id="export-data" name="data" />
+    <ul>
+        <li><input type="submit" class="k-button download" data-format="xlsx" data-title="Title1" value="Export to XLSX" /></li>
+        <li><input type="submit" class="k-button download" data-format="csv" data-title="Title2" value="Export to CSV" /></li>
+    </ul>
+</form>
 
 <script>
-    $(".k-grid-export").on("click", function (e) {
-        exportToExcel(e.target.innerHTML);
-    });
-
-    function exportToExcel(format) {
+    $(".download").click(function () {
         var grid = $("#grid").data("kendoGrid");
-
-        var exportOption = {
-            format: format,
-            title: "MvcExport",
-            createUrl: "/Grid/Export",
-            downloadUrl: "/Grid/Download"
+        var options = {
+            data: grid.dataSource.data().toJSON(),
+            model: grid.columns,
+            format: $(this).data("format"),
+            title: "export"
         }
-
-        data = {
-            model: encodeURIComponent(JSON.stringify(grid.columns)),
-            data: encodeURIComponent(JSON.stringify(grid.dataSource.data().toJSON())),
-            format: exportOption.format,
-            title: exportOption.title
-        };
-
-
-        var xhr = new XMLHttpRequest();
-        var mimeType = format == "CSV" ? "text/csv" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        xhr.responseType = "blob";
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4) {
-                //if (this.status == 200) {
-                //    download(xhr.response, exportOption.title + "." + format, mimeType);
-                //}
-                //else if (this.status == 400) {
-                //    var reader = new FileReader();
-                //    reader.onload = function (e) {
-                //        var text = reader.result;
-                //        alert(text);
-                //    }
-                //    reader.readAsText(xhr.response);
-                //}
-            }
-        }
-        xhr.open('POST', '/Grid/Export');
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-        xhr.responseType = 'blob'; // the response will be a blob and not text
-        xhr.send(JSON.stringify(data));
-    }
-
-    //var grid = $("#grid").data("kendoGrid");
-
-    //var exportOption = {
-    //    format: format,
-    //    title: "MvcExport",
-    //    createUrl: "/Grid/Export",
-    //    downloadUrl: "/Grid/Download"
-    //}
-
-    //data = {
-    //    model: encodeURIComponent(JSON.stringify(grid.columns)),
-    //    data: encodeURIComponent(JSON.stringify(grid.dataSource.data().toJSON())),
-    //    format: exportOption.format,
-    //    title: exportOption.title
-    //};
-
-    //$.post(exportOption.createUrl, data);
-
-    //function exportToExcel(format) {
-    //    var grid = $("#grid").data("kendoGrid");
-
-    //    var exportOption = {
-    //        format: format,
-    //        title: "MvcExport",
-    //        createUrl: "/Grid/Export",
-    //        downloadUrl: "/Grid/Download"
-    //    }
-
-    //    data = {
-    //        model: encodeURIComponent(JSON.stringify(grid.columns)),
-    //        data: encodeURIComponent(JSON.stringify(grid.dataSource.data().toJSON())),
-    //        format: exportOption.format,
-    //        title: exportOption.title
-    //    };
-
-    //    $.post(exportOption.createUrl, data, function () {
-    //        window.location.replace(kendo.format("{0}?format={1}&title={2}",
-    //            exportOption.downloadUrl,
-    //            exportOption.format,
-    //            exportOption.title));
-    //    });
-    //}
+        $("#export-data").val(encodeURIComponent(JSON.stringify(options)));
+    });
 </script>

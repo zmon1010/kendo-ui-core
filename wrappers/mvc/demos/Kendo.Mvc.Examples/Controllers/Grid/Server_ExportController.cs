@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,16 +18,16 @@ namespace Kendo.Mvc.Examples.Controllers
         }
 
         [HttpPost]
-        public FileStreamResult Export(string model, string data, string format, string title)
+        public FileStreamResult Export(string data)
         {
-            model = HttpUtility.UrlDecode(model);
             data = HttpUtility.UrlDecode(data);
-            SpreadDocumentFormat exportFormat = format == "CSV" ? exportFormat = SpreadDocumentFormat.Csv : exportFormat = SpreadDocumentFormat.Xlsx;
+            dynamic options = JsonConvert.DeserializeObject(data);
+            SpreadDocumentFormat exportFormat = options.format.ToString() == "csv" ? exportFormat = SpreadDocumentFormat.Csv : exportFormat = SpreadDocumentFormat.Xlsx;
 
-            string fileName = String.Format("{0}.{1}", title, format);
-            string mimeType = format == "CSV" ? "text/csv" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            string fileName = String.Format("{0}.{1}", options.title, options.format);
+            string mimeType = Kendo.Mvc.Export.GetMimeType(exportFormat);
 
-            Stream stream = Kendo.Mvc.Export.JsonToStream(exportFormat, data, model, title);
+            Stream stream = Kendo.Mvc.Export.JsonToStream(exportFormat, options.data.ToString(), options.model.ToString(), options.title.ToString());
 
             var fileStreamResult = new FileStreamResult(stream, mimeType);
             fileStreamResult.FileDownloadName = fileName;
@@ -34,39 +35,5 @@ namespace Kendo.Mvc.Examples.Controllers
 
             return fileStreamResult;
         }
-
-        //public JsonResult Export(string model, string data, string format, string title)
-        //{
-        //    model = HttpUtility.UrlDecode(model);
-        //    data = HttpUtility.UrlDecode(data);
-        //    SpreadDocumentFormat exportFormat = format == "CSV" ? exportFormat = SpreadDocumentFormat.Csv : exportFormat = SpreadDocumentFormat.Xlsx;
-
-        //    using (Stream stream = Kendo.Mvc.Export.JsonToStream(exportFormat, data, model, title))
-        //    {
-        //        Session[title] = (stream as MemoryStream).ToArray();
-        //    }
-
-        //    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //public FileResult Download(string title, string format)
-        //{
-        //    string mimeType = format == "CSV" ? "text/csv" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        //    if (Session[title] != null)
-        //    {
-        //        byte[] fileData = Session[title] as byte[];
-        //        string fileName = string.Format("{0}.{1}", title, format.ToLowerInvariant());
-
-        //        Session.Remove(title);
-
-        //        Response.Buffer = true;
-        //        Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}", fileName));
-        //        return File(fileData, mimeType, fileName);
-        //    }
-        //    else
-        //    {
-        //        throw new Exception(string.Format("{0} not found", title));
-        //    }
-        //}
     }
 }
