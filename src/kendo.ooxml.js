@@ -814,7 +814,7 @@ function borderStyle(width) {
 function borderSideTemplate(name, style) {
     var result = "";
 
-    if (style && style.size) {
+    if (style) {
         result += "<" + name + " style=\"" + borderStyle(style.size) + "\">";
         if (style.color) {
             result += "<color rgb=\"" + convertColor(style.color) + "\"/>";
