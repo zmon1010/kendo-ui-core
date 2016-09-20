@@ -278,10 +278,7 @@
             for (var i = arguments.length; --i >= 0;) {
                 id += ":" + arguments[i];
             }
-            if (id in cache) {
-                return cache[id];
-            }
-            return f.apply(this, arguments);
+            return id in cache ? cache[id] : (cache[id] = f.apply(this, arguments));
         };
     }
 
