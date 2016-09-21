@@ -5490,9 +5490,12 @@ var __meta__ = { // jshint ignore:line
             if (footer.length) {
                 if (options.scrollable) {
                     footerWrap = footer.attr("tabindex", -1).children(".k-grid-footer-wrap");
-                    that.scrollables = that.scrollables
-                        .filter(function() { return !$(this).is(".k-grid-footer-wrap"); })
-                        .add(footerWrap);
+
+                    that.scrollables = $(
+                        that.scrollables
+                            .filter(function() { return !$(this).is(".k-grid-footer-wrap"); })
+                            .toArray()
+                    ).add(footerWrap);
                 }
 
                 if (that._footerWidth) {
