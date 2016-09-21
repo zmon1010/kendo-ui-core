@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Collections;
 using System.Linq;
+using System.Data;
 
 namespace Kendo.Mvc
 {
@@ -50,6 +51,15 @@ namespace Kendo.Mvc
 
         public static Stream JsonToStream(SpreadDocumentFormat format, string data, string model, string title)
         {
+
+            if (string.IsNullOrEmpty(model))
+            {
+                throw new Exception("Data model should be provided");
+            }
+            if (string.IsNullOrEmpty(data))
+            {
+                throw new Exception("Data should be provided");
+            }
             var modelObject = JsonConvert.DeserializeObject<dynamic>(model);
             var dataObject = JsonConvert.DeserializeObject<dynamic>(data);
 
@@ -90,8 +100,34 @@ namespace Kendo.Mvc
             }
         }
 
+        private static object ExtractItemValue(object dataItem, string propertyName)
+        {
+            if (dataItem is DataRow)
+            {
+                DataRow row = (DataRow)dataItem;
+                return row[propertyName];
+            }
+            else if (dataItem is DataRowView)
+            {
+                DataRowView row = (DataRowView)dataItem;
+                return row[propertyName];
+            }
+            else
+            {
+                return dataItem.GetType().GetProperty(propertyName).GetValue(dataItem, null);
+            }
+        }
+       
         public static Stream CollectionToStream(SpreadDocumentFormat format, object data, string model, string title)
         {
+            if (string.IsNullOrEmpty(model))
+            {
+                throw new Exception("Data model should be provided");
+            }
+            if (data == null)
+            {
+                throw new Exception("Data should be provided");
+            }
             var modelObject = JsonConvert.DeserializeObject<dynamic>(model);
             Dictionary<int, string> properties = new Dictionary<int, string>();
             for (int colIdx = 0; colIdx < modelObject.Count; colIdx++)
@@ -100,6 +136,8 @@ namespace Kendo.Mvc
             }
 
             IEnumerable listEnumerable = data as IEnumerable;
+            IListSource listSource = data as IListSource;
+            if (listSource != null) listEnumerable = listSource.GetList();
 
             MemoryStream stream = new MemoryStream();
             using (IWorkbookExporter workbook = SpreadExporter.CreateWorkbookExporter(format, stream))
@@ -131,7 +169,7 @@ namespace Kendo.Mvc
                                 {
                                     using (ICellExporter cell = row.CreateCellExporter())
                                     {
-                                        cell.SetValue(item.GetType().GetProperty(properties[colIdx]).GetValue(item, null).ToString());
+                                        cell.SetValue(ExtractItemValue(item,properties[colIdx]).ToString());
                                         CellCreated.Invoke(typeof(GridExportCellCreatedEvent), new GridExportCellCreatedEvent(cell, colIdx, i + 1));
                                     }
                                 }
