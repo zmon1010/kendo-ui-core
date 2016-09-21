@@ -5919,7 +5919,7 @@ declare module kendo.ui {
         enable(command: string, enable: boolean): void;
         enable(command: Element, enable: boolean): void;
         enable(command: JQuery, enable: boolean): void;
-        getSelectedFromGroup(groupName: string): void;
+        getSelectedFromGroup(groupName: string): JQuery;
         remove(command: string): void;
         remove(command: Element): void;
         remove(command: JQuery): void;
