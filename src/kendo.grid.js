@@ -5119,7 +5119,7 @@ var __meta__ = { // jshint ignore:line
                     }
                     if (that.thead) {
                         expander.width(that.thead.width());
-                        if (scrollLeft) {
+                        if (!isNaN(parseFloat(scrollLeft, 10))) {
                             that.content.scrollLeft(scrollLeft);
                         }
                     }
