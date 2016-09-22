@@ -2628,7 +2628,7 @@
 
         view._updateResizeHint(event, 0, new Date(2013, 1, 3, 10, 0, 0), new Date(2013, 1, 3, 14, 0, 0));
    
-        if (!kendo.support.browser.firefox){
+        if (!kendo.support.browser.mozilla){
             equalWithRound(view._resizeHint.width(), 397);
         }
         equal(view._resizeHint.height(), 176);
