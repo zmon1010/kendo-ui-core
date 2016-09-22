@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Collections;
-using System.Linq;
 using System.Data;
 
 namespace Kendo.Mvc
@@ -89,7 +88,7 @@ namespace Kendo.Mvc
                             {
                                 using (ICellExporter cell = row.CreateCellExporter())
                                 {
-                                    cell.SetValue(dataObject[rowIdx][modelObject[colIdx].field.ToString()].ToString());
+                                    cell.SetValue(dataObject[rowIdx][modelObject[colIdx].field.Value].Value);
                                     CellCreated.Invoke(typeof(GridExportCellCreatedEvent), new GridExportCellCreatedEvent(cell, colIdx, rowIdx + 1));
                                 }
                             }

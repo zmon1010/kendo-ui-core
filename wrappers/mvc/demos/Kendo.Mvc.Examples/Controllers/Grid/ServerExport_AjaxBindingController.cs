@@ -1,9 +1,6 @@
-﻿using Kendo.Mvc.Examples.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Telerik.Documents.SpreadsheetStreaming;
@@ -13,13 +10,13 @@ namespace Kendo.Mvc.Examples.Controllers
     public partial class GridController : Controller
     {
         [Demo]
-        public ActionResult Export_Server_Binding()
+        public ActionResult Server_Export_Ajax()
         {
-            return View(new SampleEntities().Products);
+            return View();
         }
 
         [HttpPost]
-        public FileStreamResult ExportTo(string data)
+        public FileStreamResult ExportAjax(string data)
         {
             data = HttpUtility.UrlDecode(data);
             dynamic options = JsonConvert.DeserializeObject(data);
@@ -28,10 +25,10 @@ namespace Kendo.Mvc.Examples.Controllers
             string fileName = String.Format("{0}.{1}", options.title, options.format);
             string mimeType = Kendo.Mvc.Export.GetMimeType(exportFormat);
 
-            Kendo.Mvc.Export.CellCreated += Export_CellCreatedHandler;
+            Kendo.Mvc.Export.CellCreated += Export_CellCreated;
 
 
-            Stream stream = Kendo.Mvc.Export.CollectionToStream(exportFormat, new SampleEntities().Products, options.model.ToString(), options.title.ToString());
+            Stream stream = Kendo.Mvc.Export.JsonToStream(exportFormat, options.data.ToString(), options.model.ToString(), options.title.ToString());
             var fileStreamResult = new FileStreamResult(stream, mimeType);
             fileStreamResult.FileDownloadName = fileName;
             fileStreamResult.FileStream.Seek(0, SeekOrigin.Begin);
@@ -39,7 +36,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return fileStreamResult;
         }
 
-        private void Export_CellCreatedHandler(object sender, GridExportCellCreatedEvent e)
+        private void Export_CellCreated(object sender, GridExportCellCreatedEvent e)
         {
             SpreadCellFormat format = new SpreadCellFormat
             {
