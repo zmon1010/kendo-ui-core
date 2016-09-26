@@ -115,11 +115,13 @@
                 }, this);
             }
 
-            var clone = ref.clone();
-            clone.col = Math.max(0, Math.min(this.columnCount - 1, ref.col));
-            clone.row = Math.max(0, Math.min(this.rowCount - 1, ref.row));
+            if (ref instanceof CellRef) {
+                ref = ref.clone();
+                ref.col = Math.max(0, Math.min(this.columnCount - 1, ref.col));
+                ref.row = Math.max(0, Math.min(this.rowCount - 1, ref.row));
+            }
 
-            return clone;
+            return ref;
         },
 
         rectangle: function(ref) {

@@ -601,16 +601,24 @@
             return this;
         },
         toRow: function(row) {
+            row += Math.max(0, this.topLeft.row);
             return new RangeRef(
-               new CellRef(this.topLeft.row + row, this.topLeft.col),
-               new CellRef(this.topLeft.row + row, this.bottomRight.col)
-            );
+                new CellRef(row, this.topLeft.col),
+                new CellRef(row, this.bottomRight.col)
+            ).setSheet(this.sheet, this.hasSheet());
         },
         toColumn: function(col) {
+            col += Math.max(0, this.topLeft.col);
             return new RangeRef(
-               new CellRef(this.topLeft.row, this.topLeft.col + col),
-               new CellRef(this.bottomRight.row, this.topLeft.col + col)
-            );
+                new CellRef(this.topLeft.row, col),
+                new CellRef(this.bottomRight.row, col)
+            ).setSheet(this.sheet, this.hasSheet());
+        },
+        toCell: function(row, col) {
+            row += Math.max(0, this.topLeft.row);
+            col += Math.max(0, this.topLeft.col);
+            return new CellRef(row, col, 0)
+                .setSheet(this.sheet, this.hasSheet());
         },
         forEachRow: function(callback) {
             var startRow = this.topLeft.row;

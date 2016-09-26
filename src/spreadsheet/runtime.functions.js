@@ -1455,36 +1455,74 @@
         [ "approx", [ "or", "logical", [ "null", true ]]]
     ]);
 
-    defineFunction("index", function(ref, row, col, areanum){
-        var m = ref instanceof UnionRef ? ref.refs[areanum - 1] : ref;
-        if ((!row && !col) || !m) {
-            return new CalcError("N/A");
+    defineFunction("index", function(callback, ref, row, col, areanum){
+        var self = this;
+        if (ref instanceof UnionRef) {
+            ref = ref.refs[areanum - 1];
         }
-        m = this.asMatrix(m);
-        if (m.width > 1 && m.height > 1) {
+        if ((!row && !col) || !ref) {
+            return callback(new CalcError("N/A"));
+        }
+        if (ref instanceof CellRef) {
+            ref = ref.toRangeRef();
+        }
+        if (ref instanceof RangeRef) {
             if (row && col) {
-                return m.get(row - 1, col - 1);
+                if (col > ref.width() || row > ref.height()) {
+                    return callback(new CalcError("REF"));
+                }
+                // fetching a single cell
+                var cell = ref.toCell(row - 1, col - 1);
+                self.resolveCells([ cell ], function(){
+                    callback(self.getRefData(cell));
+                });
+                return;
             }
             if (!row) {
-                return m.mapRow(function(row){
-                    return m.get(row, col - 1);
+                // fetch a full column
+                var colRange = ref.toColumn(col - 1);
+                self.resolveCells([ colRange ], function(){
+                    callback(self.asMatrix(colRange));
                 });
+                return;
             }
             if (!col) {
-                return m.mapCol(function(col){
-                    return m.get(row - 1, col);
+                // fetch a full row
+                var rowRange = ref.toRow(row - 1);
+                self.resolveCells([ rowRange ], function(){
+                    callback(self.asMatrix(rowRange));
                 });
+                return;
             }
         }
-        if (m.width == 1) {
-            return m.get(row - 1, 0);
+        else if (ref instanceof Matrix) {
+            if (ref.width > 1 && ref.height > 1) {
+                if (row && col) {
+                    return callback(ref.get(row - 1, col - 1));
+                }
+                if (!row) {
+                    return callback(ref.mapRow(function(row){
+                        return ref.get(row, col - 1);
+                    }));
+                }
+                if (!col) {
+                    return callback(ref.mapCol(function(col){
+                        return ref.get(row - 1, col);
+                    }));
+                }
+            }
+            if (ref.width == 1) {
+                return callback(ref.get(row - 1, 0));
+            }
+            if (ref.height == 1) {
+                return callback(ref.get(0, col - 1));
+            }
         }
-        if (m.height == 1) {
-            return m.get(0, col - 1);
+        else {
+            callback(new CalcError("REF"));
         }
-        return new CalcError("REF");
-    }).args([
-        [ "range", [ "or", "matrix", "ref" ] ],
+    }).argsAsync([
+        [ "range", [ "or", "ref", "matrix" ] ],
         [ "row", [ "or", "integer+", "null" ] ],
         [ "col", [ "or", "integer+", "null" ] ],
         [ "areanum", [ "or", "integer++", [ "null", 1 ] ] ]
