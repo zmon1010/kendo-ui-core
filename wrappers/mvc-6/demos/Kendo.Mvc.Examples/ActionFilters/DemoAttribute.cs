@@ -143,7 +143,7 @@ namespace Kendo.Mvc.Examples.Controllers
             var section = Controller.ControllerContext.RouteData.Values["controller"].ToString().ToLower().Replace("_", "-");
             var example = Controller.ControllerContext.RouteData.Values["action"].ToString().ToLower().Replace("_", "-");
 
-            IFrameworkDescription framework = new AspNetMvcDescription();
+            IFrameworkDescription framework = new AspNetCoreDescription();
 
             return framework.GetFiles(ContentRootPath, example, section);
         }

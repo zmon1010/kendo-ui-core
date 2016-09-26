@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace Kendo.Mvc.Examples.Models
 {
-    public class AspNetMvcDescription : IFrameworkDescription
+    public class AspNetCoreDescription : IFrameworkDescription
     {
         public string Name
         {
             get
             {
-                return "ASP.NET MVC";
+                return "ASP.NET Core";
             }
         }
 
