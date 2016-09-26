@@ -26,6 +26,14 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             }
         }
 
+        internal bool IsExtended
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         internal KendoLicense(System.Type type)
         {
             this.Type = type;
