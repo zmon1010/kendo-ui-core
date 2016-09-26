@@ -98,9 +98,13 @@ namespace Kendo.Mvc
                 return stream;
             }
         }
-
         private static object ExtractItemValue(object dataItem, string propertyName)
         {
+            if (propertyName.Contains("."))
+            {
+                var temp = propertyName.Split(new char[] { '.' }, 2);
+                return ExtractItemValue(ExtractItemValue(dataItem, temp[0]), temp[1]);
+            }
             if (dataItem is DataRow)
             {
                 DataRow row = (DataRow)dataItem;

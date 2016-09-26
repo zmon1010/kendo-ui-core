@@ -1,6 +1,7 @@
 ﻿using Kendo.Mvc.Examples.Models;
 using Newtonsoft.Json;
 using System;
+using System.Data.Entity;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
@@ -10,10 +11,12 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class GridController : Controller
     {
+        private DbSet<Product> products = new SampleEntities().Products;
+
         [Demo]
         public ActionResult Server_Export()
         {
-            return View(new SampleEntities().Products);
+            return View(products);
         }
 
         [HttpPost]
@@ -27,9 +30,8 @@ namespace Kendo.Mvc.Examples.Controllers
             string mimeType = Kendo.Mvc.Export.GetMimeType(exportFormat);
 
             Kendo.Mvc.Export.CellCreated += Export_CellCreatedHandler;
-
-
-            Stream stream = Kendo.Mvc.Export.CollectionToStream(exportFormat, new SampleEntities().Products, options.model.ToString(), options.title.ToString());
+            products.Load();
+            Stream stream = Kendo.Mvc.Export.CollectionToStream(exportFormat, products.Local.ToBindingList(), options.model.ToString(), options.title.ToString());
             var fileStreamResult = new FileStreamResult(stream, mimeType);
             fileStreamResult.FileDownloadName = fileName;
             fileStreamResult.FileStream.Seek(0, SeekOrigin.Begin);
