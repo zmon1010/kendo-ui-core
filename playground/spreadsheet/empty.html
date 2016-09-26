@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+      requireSync([
+        "../../src/jquery.js",
+        "../../src/kendo.dom.js",
+          "../../src/kendo.spreadsheet.js",
+          "../../src/kendo.window.js"
+      ]);
+    </script>
+    <script src="../../src/jszip.js"></script>
+
+    <style type="text/css">
+     body {
+       font: 14px Arial,sans-serif;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="spreadsheet"></div>
+    <script>
+     window.ss = $("#spreadsheet").kendoSpreadsheet().getKendoSpreadsheet();
+     window.sheet = ss.activeSheet();
+
+     sheet.batch(function(){
+         sheet.range("B2:H10").input('=RANDBETWEEN(1, 20)');
+         sheet.range("A1").input('=INDEX(A:AX, 5, 5)');
+     }, { recalc: true });
+    </script>
+  </body>
+</html>
