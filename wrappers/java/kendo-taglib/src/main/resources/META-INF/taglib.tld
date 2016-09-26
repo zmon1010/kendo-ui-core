@@ -45869,7 +45869,7 @@ Each table row consists of table cells (&lt;td&gt;) which represent the treelist
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The name of the command. The built-in commands are "edit", "createChild" and "destroy". When set to a custom value, it is rendered as a data-command attribute.</description>
+            <description>The name of the command. The built-in command names are "edit", "createChild" and "destroy". Check the columns.command section for additional important information. When set to a custom value, the name is rendered as a data-command attribute.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
