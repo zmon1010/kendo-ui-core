@@ -4,6 +4,6 @@
       :description: The content of the editor.
 
     - :name: tools.palette
-      :description: The color palette.
+      :description: Specifies the color palette for "foreColor" and "backColor" tools.
       :type: String
       :enum_type: ColorPickerPalette
