@@ -68,6 +68,15 @@ class EditorTool extends \Kendo\SerializableObject {
         return $this->setProperty('template', $value);
     }
 
+    /**
+    * Specifies the color palette for "foreColor" and "backColor" tools.
+    * @param string|array $value
+    * @return \Kendo\UI\EditorTool
+    */
+    public function palette($value) {
+        return $this->setProperty('palette', $value);
+    }
+
 //<< Properties
 }
 

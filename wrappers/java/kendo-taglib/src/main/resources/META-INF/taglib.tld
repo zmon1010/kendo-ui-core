@@ -20832,6 +20832,12 @@ Custom tools and tools that require configuration are defined as objects.The ava
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Specifies the color palette for "foreColor" and "backColor" tools.</description>
+            <name>palette</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The kendo template that will be used for rendering the given tool.</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>

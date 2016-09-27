@@ -19,7 +19,7 @@ namespace Kendo.Mvc.UI
 
             // Do manual serialization here
 
-            if (Palette.HasValue)
+            if (Palette.HasValue && Palette != ColorPickerPalette.None)
             {
                 settings["palette"] = Palette?.Serialize();
             }
