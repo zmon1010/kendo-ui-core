@@ -53,6 +53,9 @@
                 calendar.bind("change", function(){
                     popup.close();
                     var date = calendar.value();
+                    if (!context.range.format()) {
+                        context.range.format("yyyy-mm-dd");
+                    }
                     context.callback(kendo.spreadsheet.dateToNumber(date));
                 });
             }
