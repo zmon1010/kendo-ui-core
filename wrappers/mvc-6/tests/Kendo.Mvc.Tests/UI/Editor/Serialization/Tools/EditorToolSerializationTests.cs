@@ -19,7 +19,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Default_StyleSheets_should_not_be_serialized()
+        public void Palette_should_not_be_serialized()
         {
             tool.Serialize().ContainsKey("palette").ShouldBeFalse();
         }
@@ -27,6 +27,8 @@ namespace Kendo.Mvc.UI.Tests
         [Fact]
         public void Default_Palette_should_not_be_serialized()
         {
+            tool.Palette = ColorPickerPalette.None;
+
             tool.Serialize().ContainsKey("palette").ShouldBeFalse();
         }
 
