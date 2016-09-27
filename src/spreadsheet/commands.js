@@ -92,7 +92,9 @@
         exec: function() {
             var range = this.range();
             this._prevLink = range.link();
+            this._prevUnderline = range.underline();
             range.link(this._link);
+            range.underline(true);
             if (range.value() == null) { // jshint ignore:line
                 this._hasSetValue = true;
                 range.value(this._link);
@@ -101,6 +103,7 @@
         undo: function() {
             var range = this.range();
             range.link(this._prevLink);
+            range.underline(this._prevUnderline);
             if (this._hasSetValue) {
                 range.value(null);
             }
