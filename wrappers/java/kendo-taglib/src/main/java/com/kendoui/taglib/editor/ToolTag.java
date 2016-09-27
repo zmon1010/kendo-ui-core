@@ -85,6 +85,14 @@ public class ToolTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("name", value);
     }
 
+    public java.lang.Object getPalette() {
+        return (java.lang.Object)getProperty("palette");
+    }
+
+    public void setPalette(java.lang.Object value) {
+        setProperty("palette", value);
+    }
+
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }
