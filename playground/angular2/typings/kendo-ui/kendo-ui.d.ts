@@ -5119,7 +5119,8 @@ declare module kendo.ui {
         slotByElement(element: Element): any;
         slotByElement(element: JQuery): any;
         view(): kendo.ui.SchedulerView;
-        view(type?: string): void;
+        view(type?: string): void;  
+        resources: SchedulerResource[];
     }
 
     interface SchedulerCurrentTimeMarker {
@@ -5146,6 +5147,7 @@ declare module kendo.ui {
     interface SchedulerGroup {
         resources?: any;
         orientation?: string;
+        date?:boolean;
     }
 
     interface SchedulerMessagesEditor {
