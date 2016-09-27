@@ -69,20 +69,21 @@
             }
             var val = context.validation;
             if (val) {
-                var min = null, max = null;
+                var min = kendo.ui.Calendar.fn.options.min;
+                var max = kendo.ui.Calendar.fn.options.max;
                 if (/^(?:greaterThan|between)/.test(val.comparerType)) {
                     min = kendo.spreadsheet.numberToDate(val.from.value);
                 }
                 if (val.comparerType == "between") {
                     max = kendo.spreadsheet.numberToDate(val.to.value);
                 }
-                if (val.comparerType == "greaterThan") {
+                if (val.comparerType == "lessThan") {
                     max = kendo.spreadsheet.numberToDate(val.from.value);
                 }
                 calendar.setOptions({
                     disableDates: function(date) {
-                        var from = val.from.value | 0;
-                        var to = val.to.value | 0;
+                        var from = val.from ? val.from.value|0 : 0;
+                        var to = val.to ? val.to.value|0 : 0;
                         date = kendo.spreadsheet.dateToNumber(date) | 0;
                         return !kendo.spreadsheet.validation
                             .validationComparers[val.comparerType](date, from, to);
