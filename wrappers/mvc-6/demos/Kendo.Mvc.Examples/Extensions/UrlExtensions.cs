@@ -5,8 +5,6 @@ namespace Kendo.Mvc.Examples.Extensions
 {
     public static class IUrlHelperExtensions
     {
-        private static readonly string cdnRoot = "http://kendo.cdn.telerik.com/2016.2.714";
-
         public static string Widget(this IUrlHelper url, string widget)
         {
             return url.ExampleUrl(widget, "index");
@@ -36,21 +34,12 @@ namespace Kendo.Mvc.Examples.Extensions
 
         private static string ResourceUrl(IUrlHelper url, string assetType, string file, bool isAbsoluteUrl)
         {
-#if DEBUG
             if (assetType == "styles")
             {
                 return url.Content(string.Format("~/lib/kendo/css/web/{0}", file));
             }
 
             return url.Content(string.Format("~/lib/kendo/js/{0}", file));
-#else
-            if (isAbsoluteUrl == true)
-            {
-                return file;
-            }
-
-            return url.Content(string.Format("{0}/{1}/{2}", cdnRoot, assetType, file));
-#endif
         }
 
         private static bool IsAbsoluteUrl(string url)
