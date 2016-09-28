@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
@@ -16,19 +17,17 @@ namespace Kendo.Mvc.Examples.Controllers
         }
 
         [HttpPost]
-        public FileStreamResult ExportAjax(string data)
+        public FileStreamResult ExportAjax(string model, string data)
         {
-            data = HttpUtility.UrlDecode(data);
-            dynamic options = JsonConvert.DeserializeObject(data);
+            var columnsData = JsonConvert.DeserializeObject<IList<ExportColumnSettings>>(HttpUtility.UrlDecode(model));
+            dynamic options = JsonConvert.DeserializeObject(HttpUtility.UrlDecode(data));
             SpreadDocumentFormat exportFormat = options.format.ToString() == "csv" ? exportFormat = SpreadDocumentFormat.Csv : exportFormat = SpreadDocumentFormat.Xlsx;
+            Action<ExportCellStyle> action = ChangeCellStyle;
 
             string fileName = String.Format("{0}.{1}", options.title, options.format);
             string mimeType = Kendo.Mvc.Export.GetMimeType(exportFormat);
 
-            Kendo.Mvc.Export.CellCreated += Export_CellCreated;
-
-
-            Stream stream = Kendo.Mvc.Export.JsonToStream(exportFormat, options.data.ToString(), options.model.ToString(), options.title.ToString());
+            Stream stream = Kendo.Mvc.Export.JsonToStream(exportFormat, options.data.ToString(), columnsData, options.title.ToString(), action);
             var fileStreamResult = new FileStreamResult(stream, mimeType);
             fileStreamResult.FileDownloadName = fileName;
             fileStreamResult.FileStream.Seek(0, SeekOrigin.Begin);
@@ -36,7 +35,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return fileStreamResult;
         }
 
-        private void Export_CellCreated(object sender, GridExportCellCreatedEvent e)
+        public void ChangeCellStyleAjax(ExportCellStyle e)
         {
             SpreadCellFormat format = new SpreadCellFormat
             {
@@ -45,7 +44,6 @@ namespace Kendo.Mvc.Examples.Controllers
                 WrapText = true
             };
             e.Cell.SetFormat(format);
-
         }
     }
 }

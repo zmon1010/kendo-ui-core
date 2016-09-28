@@ -9,49 +9,11 @@ using System.Data;
 
 namespace Kendo.Mvc
 {
-    public class GridExportCellCreatedEvent : EventArgs
-    {
-        private ICellExporter cell;
-        public ICellExporter Cell
-        {
-            get
-            {
-                return cell;
-            }
-        }
-        private int column;
-        public int Column
-        {
-            get
-            {
-                return column;
-            }
-        }
-        private int row;
-        public int Row
-        {
-            get
-            {
-                return row;
-            }
-        }
-        public GridExportCellCreatedEvent(ICellExporter cell, int column, int row)
-        {
-            this.cell = cell;
-            this.column = column;
-            this.row = row;
-        }
-    }
-
     public static class Export
     {
-        public static event GridExportCellCreatedEventHandler CellCreated;
-        public delegate void GridExportCellCreatedEventHandler(object sender, GridExportCellCreatedEvent e);
-
-        public static Stream JsonToStream(SpreadDocumentFormat format, string data, string model, string title)
+        public static Stream JsonToStream(SpreadDocumentFormat format, string data, IList<ExportColumnSettings> model, string title, Action<ExportCellStyle> applyCellStyle)
         {
-
-            if (string.IsNullOrEmpty(model))
+            if (model == null || model.Count == 0)
             {
                 throw new Exception("Data model should be provided");
             }
@@ -59,7 +21,6 @@ namespace Kendo.Mvc
             {
                 throw new Exception("Data should be provided");
             }
-            var modelObject = JsonConvert.DeserializeObject<dynamic>(model);
             var dataObject = JsonConvert.DeserializeObject<dynamic>(data);
 
             MemoryStream stream = new MemoryStream();
@@ -69,14 +30,14 @@ namespace Kendo.Mvc
                 {
                     using (IRowExporter row = worksheet.CreateRowExporter())
                     {
-                        for (int idx = 0; idx < modelObject.Count; idx++)
+                        for (int idx = 0; idx < model.Count; idx++)
                         {
-                            var modelCol = modelObject[idx];
-                            string columnName = modelCol.title ?? modelCol.field;
+                            var modelCol = model[idx];
+                            string columnName = modelCol.Title ?? modelCol.Field;
                             using (ICellExporter cell = row.CreateCellExporter())
                             {
                                 cell.SetValue(columnName);
-                                CellCreated.Invoke(typeof(GridExportCellCreatedEvent), new GridExportCellCreatedEvent(cell, idx, 0));
+                                applyCellStyle(new ExportCellStyle(cell, idx, 0));
                             }
                         }
                     }
@@ -84,12 +45,12 @@ namespace Kendo.Mvc
                     {
                         using (IRowExporter row = worksheet.CreateRowExporter())
                         {
-                            for (int colIdx = 0; colIdx < modelObject.Count; colIdx++)
+                            for (int colIdx = 0; colIdx < model.Count; colIdx++)
                             {
                                 using (ICellExporter cell = row.CreateCellExporter())
                                 {
-                                    cell.SetValue(dataObject[rowIdx][modelObject[colIdx].field.Value].Value);
-                                    CellCreated.Invoke(typeof(GridExportCellCreatedEvent), new GridExportCellCreatedEvent(cell, colIdx, rowIdx + 1));
+                                    cell.SetValue(dataObject[rowIdx][model[colIdx].Field].Value);
+                                    applyCellStyle(new ExportCellStyle(cell, colIdx, rowIdx + 1));
                                 }
                             }
                         }
@@ -120,10 +81,10 @@ namespace Kendo.Mvc
                 return dataItem.GetType().GetProperty(propertyName).GetValue(dataItem, null);
             }
         }
-       
-        public static Stream CollectionToStream(SpreadDocumentFormat format, object data, string model, string title)
+
+        public static Stream CollectionToStream(SpreadDocumentFormat format, object data, IList<ExportColumnSettings> model, string title, Action<ExportCellStyle> applyCellStyle)
         {
-            if (string.IsNullOrEmpty(model))
+            if (model == null || model.Count == 0)
             {
                 throw new Exception("Data model should be provided");
             }
@@ -131,11 +92,11 @@ namespace Kendo.Mvc
             {
                 throw new Exception("Data should be provided");
             }
-            var modelObject = JsonConvert.DeserializeObject<dynamic>(model);
+
             Dictionary<int, string> properties = new Dictionary<int, string>();
-            for (int colIdx = 0; colIdx < modelObject.Count; colIdx++)
+            for (int colIdx = 0; colIdx < model.Count; colIdx++)
             {
-                properties[colIdx] = modelObject[colIdx].field.ToString();
+                properties[colIdx] = model[colIdx].Field;
             }
 
             IEnumerable listEnumerable = data as IEnumerable;
@@ -149,14 +110,14 @@ namespace Kendo.Mvc
                 {
                     using (IRowExporter row = worksheet.CreateRowExporter())
                     {
-                        for (int idx = 0; idx < modelObject.Count; idx++)
+                        for (int idx = 0; idx < model.Count; idx++)
                         {
-                            var modelCol = modelObject[idx];
-                            string columnName = modelCol.title ?? modelCol.field;
+                            var modelCol = model[idx];
+                            string columnName = modelCol.Title ?? modelCol.Field;
                             using (ICellExporter cell = row.CreateCellExporter())
                             {
                                 cell.SetValue(columnName);
-                                CellCreated.Invoke(typeof(GridExportCellCreatedEvent), new GridExportCellCreatedEvent(cell, idx, 0));
+                                applyCellStyle(new ExportCellStyle(cell, idx, 0));
                             }
                         }
                     }
@@ -168,12 +129,12 @@ namespace Kendo.Mvc
                         {
                             using (IRowExporter row = worksheet.CreateRowExporter())
                             {
-                                for (int colIdx = 0; colIdx < modelObject.Count; colIdx++)
+                                for (int colIdx = 0; colIdx < model.Count; colIdx++)
                                 {
                                     using (ICellExporter cell = row.CreateCellExporter())
                                     {
-                                        cell.SetValue(ExtractItemValue(item,properties[colIdx]).ToString());
-                                        CellCreated.Invoke(typeof(GridExportCellCreatedEvent), new GridExportCellCreatedEvent(cell, colIdx, i + 1));
+                                        cell.SetValue(ExtractItemValue(item, properties[colIdx]).ToString());
+                                        applyCellStyle(new ExportCellStyle(cell, colIdx, i + 1));
                                     }
                                 }
                             }

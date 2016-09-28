@@ -1,5 +1,6 @@
 ﻿<form action="@Url.Action("ExportAjax", "Grid")" method="POST">
     <input type="hidden" id="export-data" name="data" />
+    <input type="hidden" id="export-model" name="model" />
     <input type="submit" class="k-button download" data-format="xlsx" data-title="Title1" value="Export to XLSX" />
     <input type="submit" class="k-button download" data-format="csv" data-title="Title2" value="Export to CSV" />
 </form>
@@ -12,10 +13,11 @@
         columns.Bound(e => e.OrderDate).Width(120).Format("{0:MM/dd/yyyy}");
         columns.Bound(e => e.ShipName);
         columns.Bound(e => e.ShipCity);
-        columns.Bound(e => e.Freight).Width(100);
+        columns.Bound(e => e.Freight).Width(100).Hidden();
     })
     .Sortable()
     .Filterable()
+    .Groupable()
     .Scrollable(scr => scr.Height(500))
     .DataSource(dataSource => dataSource
         .Custom()
@@ -31,10 +33,10 @@
         var grid = $("#grid").data("kendoGrid");
         var options = {
             data: grid.dataSource.data().toJSON(),
-            model: grid.columns,
             format: $(this).data("format"),
             title: "export"
         }
         $("#export-data").val(encodeURIComponent(JSON.stringify(options)));
+        $("#export-model").val(encodeURIComponent(JSON.stringify(grid.columns)));
     });
 </script>
