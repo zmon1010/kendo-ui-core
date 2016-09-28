@@ -44,6 +44,15 @@
         equal(editor.value(), '');
     });
 
+    test("removes fully selected anchor", function() {
+        var range = createRangeFromText(editor, 'foo <a src="#">|test text|</a> baz');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), 'foo baz');
+    });
+
     test("removes all bom characters before caret without preventing default action", function() {
         var range = createRangeFromText(editor, 'foo\ufeff\ufeff||bar');
         editor.selectRange(range);
@@ -256,9 +265,9 @@
     test("removing empty paragraph should not insert bom and set caret after the li", function() {
         var range = createRangeFromText(editor, '<ul><li>test</li></ul><p>||</p>');
         editor.selectRange(range);
-        
+
         handleBackspace();
-        
+
         var list = $(editor.body).find("ul").get(0);
         equal(list.childNodes.length, 1);
     });
@@ -272,7 +281,7 @@
             handleBackspace();
             delete editor.immutables;
         });
-        
+
         notOk($(editor.body).find("[contenteditable]").length);
     });
 }());
