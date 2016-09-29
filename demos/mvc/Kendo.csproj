@@ -1252,6 +1252,10 @@
     <Content Include="Views\demos\mediaplayer\keyboard-navigation.cshtml" />
     <Content Include="Views\demos\dialog\treeview-integration.cshtml" />
     <Content Include="Views\demos\dialog\treelist-integration.cshtml" />
+    <Content Include="Views\demos\treeview\filter-treeview-in-dialog.cshtml" />
+    <Content Include="Views\demos\dialog\treeview-integration-angularjs.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

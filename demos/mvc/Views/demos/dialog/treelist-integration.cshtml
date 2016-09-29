@@ -19,10 +19,9 @@
             content: "<div id='treelist'></div>",
             actions: [
                 { text: 'Cancel' },
-                { text: 'Ok', primary: true }
+                { text: 'OK', primary: true, action: actionOK }
             ],
-            initOpen: initOpen,
-            close: dialogClose
+            initOpen: initOpen
         });
 
         $("#pickEmployeesButton").kendoButton({
@@ -137,7 +136,7 @@
         $("#dialog").data("kendoDialog").open();
     }
 
-    function dialogClose(e) {
+    function actionOK(e) {
         var treelist = $("#treelist").data("kendoTreeList");
         var items = treelist.element.find(".k-state-selected");
         updateResult(items, treelist);
