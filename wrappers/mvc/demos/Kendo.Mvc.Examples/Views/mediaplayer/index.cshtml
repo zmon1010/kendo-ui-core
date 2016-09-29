@@ -1,4 +1,4 @@
-<div class="demo-section k-content wide" style="width: 644px;">
+<div class="demo-section k-content wide" style="max-width: 644px;">
     @(Html.Kendo().MediaPlayer()
             .AutoPlay(true)
             .Navigatable(true)
@@ -7,6 +7,6 @@
                 .Source("https://www.youtube.com/watch?v=tc3xhD24iTU")
             )
             .Name("mediaPlayer")
-            .HtmlAttributes(new { style = "height:360px; width:640px" })
+            .HtmlAttributes(new { style = "height:360px" })
     )
 </div> 
