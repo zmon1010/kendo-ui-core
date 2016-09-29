@@ -42,6 +42,15 @@ class SpreadsheetSheetRowCellValidation extends \Kendo\SerializableObject {
     }
 
     /**
+    * A boolean value indicating if a button for selecting list items (dataType set to list) should be displayed.
+    * @param boolean $value
+    * @return \Kendo\UI\SpreadsheetSheetRowCellValidation
+    */
+    public function showButton($value) {
+        return $this->setProperty('showButton', $value);
+    }
+
+    /**
     * Defines a formula or value used for the comparison process. Will be used if comparer type requires second argument.
     * @param string $value
     * @return \Kendo\UI\SpreadsheetSheetRowCellValidation

@@ -91,6 +91,14 @@ public class SheetRowCellValidationTag extends  BaseTag  /* interfaces */ /* int
         setProperty("messageTemplate", value);
     }
 
+    public boolean getShowButton() {
+        return (Boolean)getProperty("showButton");
+    }
+
+    public void setShowButton(boolean value) {
+        setProperty("showButton", value);
+    }
+
     public java.lang.String getTitleTemplate() {
         return (java.lang.String)getProperty("titleTemplate");
     }

@@ -37038,6 +37038,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A boolean value indicating if a button for selecting list items (dataType set to list) should be displayed.</description>
+            <name>showButton</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Defines the hint title that will be displayed if value is invalid.</description>
             <name>titleTemplate</name>
             <rtexprvalue>true</rtexprvalue>

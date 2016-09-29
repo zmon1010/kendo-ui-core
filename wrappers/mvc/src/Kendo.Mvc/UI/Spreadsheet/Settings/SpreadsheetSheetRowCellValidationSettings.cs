@@ -25,6 +25,8 @@ namespace Kendo.Mvc.UI
         
         public string From { get; set; }
         
+        public bool? ShowButton { get; set; }
+        
         public string To { get; set; }
         
         public bool? AllowNulls { get; set; }
@@ -63,6 +65,11 @@ namespace Kendo.Mvc.UI
                 json["from"] = From;
             }
             
+            if (ShowButton.HasValue)
+            {
+                json["showButton"] = ShowButton;
+            }
+                
             if (To.HasValue())
             {
                 json["to"] = To;

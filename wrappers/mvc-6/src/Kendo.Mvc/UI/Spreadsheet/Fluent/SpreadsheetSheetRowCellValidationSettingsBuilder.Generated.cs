@@ -51,6 +51,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// A boolean value indicating if a button for selecting list items (dataType set to list) should be displayed.
+        /// </summary>
+        /// <param name="value">The value for ShowButton</param>
+        public SpreadsheetSheetRowCellValidationSettingsBuilder ShowButton(bool value)
+        {
+            Container.ShowButton = value;
+            return this;
+        }
+
+        /// <summary>
+        /// A boolean value indicating if a button for selecting list items (dataType set to list) should be displayed.
+        /// </summary>
+        public SpreadsheetSheetRowCellValidationSettingsBuilder ShowButton()
+        {
+            Container.ShowButton = true;
+            return this;
+        }
+
+        /// <summary>
         /// Defines a formula or value used for the comparison process. Will be used if comparer type requires second argument.
         /// </summary>
         /// <param name="value">The value for To</param>
