@@ -9,6 +9,7 @@
 
 <script>
     $(document).ready(function () {
+        var tempSelectList = [];
         var dialog = $("#dialog").kendoDialog({
             width: "400px",
             height: "500px",
@@ -17,15 +18,14 @@
             closable: true,
             modal: false,
             content: "<div class='k-textbox k-space-right search-wrapper'><input id='employees-search' type='text'  placeholder='Search employees'/><span class='k-icon k-i-search'></span></div>" +             
-                "<div class='select-all-wrapper'><input data-role='checkbox' type='checkbox' class='k-checkbox' id='_selectAllEmployees'><lable class='k-checkbox-label' for='_selectAllEmployees' onclick='selectAll(this)'>Select all employees</label><span class='selected-count'></span></div>" +
+                "<div class='select-all-wrapper'><input data-role='checkbox' onchange='selectAll(this)' type='checkbox' class='k-checkbox' id='_selectAllEmployees'/><label class='k-checkbox-label' for='_selectAllEmployees'>Select all employees</label><span class='selected-count'></span></div>" +
                 "<div id='treeview'></div>",
             actions: [
-                { text: 'Cancel' },
-                { text: 'Ok', primary: true }
+                { text: 'Cancel'},
+                { text: 'OK', primary: true, action: actionOK }
             ],
             initOpen: initOpen,
-            open: dialogOpen,
-            close: dialogClose
+            open: dialogOpen
         });
 
         $("#pickEmployeesButton").kendoButton({
@@ -73,6 +73,8 @@
     }
 
     function dialogOpen(e) {
+        var treeView = $("#treeview").data("kendoTreeView");
+        tempSelectList = getCheckedItems(treeView);
         setTimeout(function () {
             $("#employees-search").focus().select();
         })
@@ -81,12 +83,12 @@
         $("#dialog").data("kendoDialog").open();
     }
 
-    function dialogClose(e) {
+    function actionOK(e) {
         var treeView = $("#treeview").data("kendoTreeView");
         var checkedNodes = getCheckedItems(treeView);
         updateResult(checkedNodes);        
     }
-
+    
     function updateResult(checkedNodes) {
         if (checkedNodes.length > 0) {
             var result = "";
@@ -105,11 +107,8 @@
         })
     }
 
-    function selectAll(label) {
-        var checkbox = $("#" + $(label).attr("for"));
-        checkbox.click();
-        checkbox.attr("checked", !(checkbox.attr("checked") == "checked"));
-        $("#treeview .k-checkbox").prop("checked", checkbox.attr("checked") == "checked");
+    function selectAll(sender) {
+        $("#treeview .k-checkbox").removeAttr("checked").prop("checked", sender.checked);
         $("#treeview .k-checkbox").trigger("change");
     }
 
@@ -233,10 +232,6 @@
             display: block;
             clear: both;
         }
-
-    .k-window-titlebar.k-header {
-        height: 30px!important;
-    }
 </style>
 
 

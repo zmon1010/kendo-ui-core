@@ -1622,9 +1622,24 @@
           "aspnet-mvc": "TreeView in Dialog | ASP.NET MVC Dialog Demo"
         },
         "meta": {
-          "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field.",
-          "aspnet-mvc": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to a input element or a hidden field."
+          "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to an input element or a hidden field.",
+          "aspnet-mvc": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to an input element or a hidden field."
         }
+      },
+	  {
+        "text": "TreeView in Dialog (AngularJS)",
+        "url": "dialog/treeview-integration-angularjs",
+        "title": {
+          "kendo-ui": "TreeView in Dialog (AngularJS)| Kendo UI Dialog Demo"
+        },
+        "meta": {
+          "kendo-ui": "This sample shows how you can use a TreeView in Dialog for picking values and pass them to an input element or a hidden field."          
+        },
+		"packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
 	  {
         "text": "TreeList in Dialog",
@@ -1634,8 +1649,8 @@
           "aspnet-mvc": "TreeList in Dialog | ASP.NET MVC Dialog Demo"
         },
         "meta": {
-          "kendo-ui": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field.",
-          "aspnet-mvc": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to a input element or a hidden field."
+          "kendo-ui": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to an input element or a hidden field.",
+          "aspnet-mvc": "This sample shows how you can use a TreeList in Dialog for picking values and pass them to an input element or a hidden field."
         }
       },
       {
