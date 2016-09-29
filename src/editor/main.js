@@ -1118,9 +1118,9 @@
 
             name = name.toLowerCase();
 
-            // restore selection
             if (!that.keyboard.isTypingInProgress()) {
-                that.restoreSelection();
+                that._focusBody();
+                that.selectRange(that.getRange());
             }
 
             tool = that.toolbar.toolById(name);

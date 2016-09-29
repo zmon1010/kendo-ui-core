@@ -106,6 +106,34 @@ test("exec outdent creates indent command", function() {
     assertCommand(kendo.ui.editor.OutdentCommand, "outdent");
 });
 
+test("does not call restoreSelection()", function() {
+    spy(editor, "restoreSelection");
+
+    editor.exec("toolName");
+
+    equal(editor.calls("restoreSelection"), 0);
+});
+
+test("calls selectRange() with current range", function() {
+    var range = editor.getRange();
+    spy(editor, "selectRange");
+
+    editor.exec("toolName");
+
+    equal(editor.calls("selectRange"), 1);
+    deepEqual(editor.args("selectRange")[0], range);
+});
+
+test("calls _focusBody() before selecting a range", function() {
+    spy(editor, "_focusBody");
+
+    withMock(editor, "selectRange", $.noop, function() {
+        editor.exec("toolName");
+
+        equal(editor.calls("_focusBody"), 1);
+    });
+});
+
 function innerHTML(element) {
     return element.innerHTML.toLowerCase().replace(/\ufeff/g, "BOM").replace(/<br[^>]*>/g, "");
 }
