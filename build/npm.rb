@@ -13,6 +13,7 @@ task :npm do
             git clone --bare git@github.com:telerik/npm-kendo-ui.git;
             cd npm-kendo-ui.git;
             git config http.receivepack false;
+            git config remote.origin.fetch 'refs/heads/*:refs/heads/*';
         fi
 
         cd npm-kendo-ui.git;
