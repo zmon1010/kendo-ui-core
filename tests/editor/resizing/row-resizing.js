@@ -1136,17 +1136,7 @@
 
     test("should be disabled on resize start", function() {
         var keydownEvent = $.Event({ type: KEY_DOWN });
-        triggerBorderHover(row);
-        rowResizing.onResizeStart();
-
-        $(rootElement).trigger(keydownEvent);
-        
-        equal(keydownEvent.isDefaultPrevented(), true);
-    });
-
-    test("should be disabled during resizing", function() {
-        var keydownEvent = $.Event({ type: KEY_DOWN });
-        triggerResize(row, 10, 20);
+        triggerResize(row, 0, 20);
 
         $(rootElement).trigger(keydownEvent);
         
@@ -1157,7 +1147,7 @@
         var keydownEvent = $.Event({ type: KEY_DOWN });
         triggerBorderHover(row);
 
-        resizeRow(row, 0, 1);
+        resizeRow(row, 0, 20);
         
         equal(jQueryEventsInfo(rowResizing.rootElement, "keydown"), undefined);
     });

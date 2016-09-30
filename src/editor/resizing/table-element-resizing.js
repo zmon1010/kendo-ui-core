@@ -40,11 +40,14 @@
         
         destroy: function() {
             var that = this;
+            var eventNamespace = that.options.eventNamespace;
 
             if (that.element) {
-                $(that.element).off(that.options.eventNamespace);
+                $(that.element).off(eventNamespace);
                 that.element = null;
             }
+
+            $(that.options.rootElement).off(KEY_DOWN + eventNamespace);
 
             that._destroyResizeHandle();
         },

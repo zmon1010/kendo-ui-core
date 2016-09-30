@@ -809,16 +809,7 @@
     test("should be disabled on resize start", function() {
         var keydownEvent = $.Event({ type: KEY_DOWN });
         triggerBorderHover(cell);
-        triggerResizeStart(cell, 0, 1);
-
-        $(rootElement).trigger(keydownEvent);
-        
-        equal(keydownEvent.isDefaultPrevented(), true);
-    });
-
-    test("should be disabled during resizing", function() {
-        var keydownEvent = $.Event({ type: KEY_DOWN });
-        triggerResize(cell, 0, 1);
+        triggerResize(cell, 0, 20);
 
         $(rootElement).trigger(keydownEvent);
         
