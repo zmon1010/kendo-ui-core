@@ -123,7 +123,11 @@ namespace Kendo.Mvc.UI
         
         public bool? Scrollable { get; set; }
 
-        public TreeListSelectableSettings<T> Selectable { get; }
+        public TreeListSelectableSettings<T> Selectable
+        {
+            get;
+            set;
+        }
 
         public TreeListSortableSettings Sortable
         {
