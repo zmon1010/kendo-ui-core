@@ -8,8 +8,10 @@ cd /usr/share/nginx/html
         git clone --bare git@github.com:telerik/bower-kendo-ui.git;
         cd bower-kendo-ui.git;
         git config http.receivepack false;
+        git config remote.origin.fetch 'refs/heads/*:refs/heads/*'
     fi
 
     cd bower-kendo-ui.git;
     git fetch --tags --prune origin;
+    git fetch;
 SH
