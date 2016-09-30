@@ -49,6 +49,8 @@ namespace Kendo.Mvc.UI
             Pdf = new TreeListPdfSettings();
                 
             Sortable = new TreeListSortableSettings();
+
+            Selectable = new TreeListSelectableSettings<T>();
                 
             Toolbar = new List<TreeListToolbar>();
                 
@@ -121,7 +123,7 @@ namespace Kendo.Mvc.UI
         
         public bool? Scrollable { get; set; }
 
-        public TreeListSelectableSettings<T> Selectable { get; } = new TreeListSelectableSettings<T>();
+        public TreeListSelectableSettings<T> Selectable { get; }
 
         public TreeListSortableSettings Sortable
         {
