@@ -51,6 +51,8 @@
     <Compile Include="Export.cs" />
     <Compile Include="ExportCellStyle.cs" />
     <Compile Include="ExportColumnSettings.cs" />
+    <Compile Include="ExportColumnStyle.cs" />
+    <Compile Include="ExportRowStyle.cs" />
     <Compile Include="Extensions\ExportExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

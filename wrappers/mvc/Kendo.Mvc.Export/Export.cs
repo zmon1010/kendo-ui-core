@@ -11,55 +11,6 @@ namespace Kendo.Mvc
 {
     public static class Export
     {
-
-        public static Stream JsonToStream(SpreadDocumentFormat format, string data, IList<ExportColumnSettings> model, string title, Action<ExportCellStyle> applyCellStyle)
-        {
-            if (model == null || model.Count == 0)
-            {
-                throw new Exception("Data model should be provided");
-            }
-            if (string.IsNullOrEmpty(data))
-            {
-                throw new Exception("Data should be provided");
-            }
-            var dataObject = JsonConvert.DeserializeObject<dynamic>(data);
-
-            MemoryStream stream = new MemoryStream();
-            using (IWorkbookExporter workbook = SpreadExporter.CreateWorkbookExporter(format, stream))
-            {
-                using (IWorksheetExporter worksheet = workbook.CreateWorksheetExporter(title))
-                {
-                    using (IRowExporter row = worksheet.CreateRowExporter())
-                    {
-                        for (int idx = 0; idx < model.Count; idx++)
-                        {
-                            var modelCol = model[idx];
-                            string columnName = modelCol.Title ?? modelCol.Field;
-                            using (ICellExporter cell = row.CreateCellExporter())
-                            {
-                                cell.SetValue(columnName);
-                                applyCellStyle(new ExportCellStyle(cell, idx, 0));
-                            }
-                        }
-                    }
-                    for (int rowIdx = 0; rowIdx < dataObject.Count; rowIdx++)
-                    {
-                        using (IRowExporter row = worksheet.CreateRowExporter())
-                        {
-                            for (int colIdx = 0; colIdx < model.Count; colIdx++)
-                            {
-                                using (ICellExporter cell = row.CreateCellExporter())
-                                {
-                                    cell.SetValue(dataObject[rowIdx][model[colIdx].Field].Value);
-                                    applyCellStyle(new ExportCellStyle(cell, colIdx, rowIdx + 1));
-                                }
-                            }
-                        }
-                    }
-                }
-                return stream;
-            }
-        }
         private static object ExtractItemValue(object dataItem, string propertyName)
         {
             if (propertyName.Contains("."))
@@ -67,23 +18,11 @@ namespace Kendo.Mvc
                 var temp = propertyName.Split(new char[] { '.' }, 2);
                 return ExtractItemValue(ExtractItemValue(dataItem, temp[0]), temp[1]);
             }
-            if (dataItem is DataRow)
-            {
-                DataRow row = (DataRow)dataItem;
-                return row[propertyName];
-            }
-            else if (dataItem is DataRowView)
-            {
-                DataRowView row = (DataRowView)dataItem;
-                return row[propertyName];
-            }
-            else
-            {
-                return dataItem.GetType().GetProperty(propertyName).GetValue(dataItem, null);
-            }
+            return dataItem.GetType().GetProperty(propertyName).GetValue(dataItem, null);
         }
 
-        public static Stream CollectionToStream(SpreadDocumentFormat format, object data, IList<ExportColumnSettings> model, string title, Action<ExportCellStyle> applyCellStyle)
+        public static Stream CollectionToStream(SpreadDocumentFormat format, IEnumerable data, IList<ExportColumnSettings> model, string title, 
+            Action<ExportCellStyle> applyCellStyle = null, Action<ExportColumnStyle> applyColumnStyle = null, Action<ExportRowStyle> applyRowStyle = null)
         {
             if (model == null || model.Count == 0)
             {
@@ -100,15 +39,23 @@ namespace Kendo.Mvc
                 properties[colIdx] = model[colIdx].Field;
             }
 
-            IEnumerable listEnumerable = data as IEnumerable;
-            IListSource listSource = data as IListSource;
-            if (listSource != null) listEnumerable = listSource.GetList();
-
             MemoryStream stream = new MemoryStream();
             using (IWorkbookExporter workbook = SpreadExporter.CreateWorkbookExporter(format, stream))
             {
                 using (IWorksheetExporter worksheet = workbook.CreateWorksheetExporter(title))
                 {
+                    for (int idx = 0; idx < model.Count; idx++)
+                    {
+                        using (IColumnExporter column = worksheet.CreateColumnExporter())
+                        {
+                            column.SetWidthInPixels(100);
+                            if (model[idx].Hidden)
+                            {
+                                column.SetHidden(true);
+                            }
+                            applyColumnStyle?.Invoke(new ExportColumnStyle(column, idx));
+                        }
+                    }
                     using (IRowExporter row = worksheet.CreateRowExporter())
                     {
                         for (int idx = 0; idx < model.Count; idx++)
@@ -118,29 +65,26 @@ namespace Kendo.Mvc
                             using (ICellExporter cell = row.CreateCellExporter())
                             {
                                 cell.SetValue(columnName);
-                                applyCellStyle(new ExportCellStyle(cell, idx, 0));
+                                applyCellStyle?.Invoke(new ExportCellStyle(cell, idx, 0));
                             }
                         }
                     }
-
-                    if (listEnumerable != null)
+                    int i = 0;
+                    foreach (object item in data)
                     {
-                        int i = 0;
-                        foreach (object item in listEnumerable)
+                        using (IRowExporter row = worksheet.CreateRowExporter())
                         {
-                            using (IRowExporter row = worksheet.CreateRowExporter())
+                            applyRowStyle?.Invoke(new ExportRowStyle(row, i));
+                            for (int colIdx = 0; colIdx < model.Count; colIdx++)
                             {
-                                for (int colIdx = 0; colIdx < model.Count; colIdx++)
+                                using (ICellExporter cell = row.CreateCellExporter())
                                 {
-                                    using (ICellExporter cell = row.CreateCellExporter())
-                                    {
-                                        cell.SetValue(ExtractItemValue(item, properties[colIdx]).ToString());
-                                        applyCellStyle(new ExportCellStyle(cell, colIdx, i + 1));
-                                    }
+                                    cell.SetValue(ExtractItemValue(item, properties[colIdx]).ToString());
+                                    applyCellStyle?.Invoke(new ExportCellStyle(cell, colIdx, i + 1));
                                 }
                             }
-                            i++;
                         }
+                        i++;
                     }
                 }
                 return stream;

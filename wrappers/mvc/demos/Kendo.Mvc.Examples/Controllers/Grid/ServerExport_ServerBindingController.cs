@@ -30,7 +30,8 @@ namespace Kendo.Mvc.Examples.Controllers
             string fileName = String.Format("{0}.{1}", options.title, options.format);
             string mimeType = Export.GetMimeType(exportFormat);
 
-            Stream exportStream = productService.Read().ToExportStream(exportFormat, columnsData, (string)options.title.ToString(), action);
+            Stream exportStream = (exportFormat == SpreadDocumentFormat.Xlsx) ? productService.Read().ToXlsxStream(columnsData, (string)options.title.ToString(), applyCellStyle: action)
+                : productService.Read().ToCSVStream(columnsData, (string)options.title.ToString());
 
             var fileStreamResult = new FileStreamResult(exportStream, mimeType);
             fileStreamResult.FileDownloadName = fileName;

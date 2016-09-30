@@ -12,14 +12,14 @@ namespace Kendo.Mvc
 
     public static class ExportExtensions
     {
-        public static Stream ToExportStream(this IEnumerable instance, SpreadDocumentFormat format, IList<ExportColumnSettings> model, string title, Action<ExportCellStyle> applyCellStyle)
+        public static Stream ToXlsxStream(this IEnumerable instance, IList<ExportColumnSettings> model, string title, Action<ExportColumnStyle> applyColumnStyle = null, Action<ExportRowStyle> applyRowStyle = null, Action<ExportCellStyle> applyCellStyle = null)
         {
-            return Export.CollectionToStream(format, instance, model, title, applyCellStyle);
+            return Export.CollectionToStream(SpreadDocumentFormat.Xlsx, instance, model, title, applyColumnStyle: applyColumnStyle, applyRowStyle: applyRowStyle, applyCellStyle: applyCellStyle);
         }
 
-        public static Stream ToExportStream<T>(this IEnumerable<T> instance, SpreadDocumentFormat format, IList<ExportColumnSettings> model, string title, Action<ExportCellStyle> applyCellStyle)
+        public static Stream ToCSVStream(this IEnumerable instance, IList<ExportColumnSettings> model, string title)
         {
-            return Export.CollectionToStream(format, instance, model, title, applyCellStyle);
+            return Export.CollectionToStream(SpreadDocumentFormat.Csv, instance, model, title);
         }
     }
 }
