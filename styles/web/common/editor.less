@@ -535,29 +535,37 @@ table.k-editor
     opacity: 0.6;
 }
 
-.k-row-resize-handle {
-    display: table;
+.k-editor-inline .k-row-resize-handle-wrapper {
     position: absolute;
+    z-index: 2;
     cursor: row-resize;
-    z-index: 100;
-}
+    width: 10px;
+    height: 10px;
 
-.k-row-resize-marker-wrapper {
-    display: table-cell;
-    height: 100%;
-    margin:0;
-    padding: 0;
-    vertical-align: middle;
-}
+    .k-row-resize-handle {
+        display: table;
+        width: 100%;
+        height: 100;
+    }
 
-.k-row-resize-marker {
-    margin:0;
-    padding: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #00b0ff;
-    opacity: 0.8;
-    display: none;
+    .k-row-resize-marker-wrapper {
+        display: table-cell;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        vertical-align: middle;
+    }
+
+    .k-row-resize-marker {
+        display: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #00b0ff;
+        opacity: 0.8;
+    }
 }
 
 //TableWizard dialog styles

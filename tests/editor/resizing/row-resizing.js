@@ -9,13 +9,18 @@
     var tableElement;
 
     var NS = "kendoEditorRowResizing"
-    var HANDLE_SELECTOR = ".k-row-resize-handle";
-    var MARKER_SELECTOR = ".k-row-resize-marker";
+
+    var DOT = ".";
     var RESIZE_HANDLE_CLASS = "k-row-resize-handle";
     var RESIZE_HANDLE_MARKER_WRAPPER_CLASS = "k-row-resize-marker-wrapper";
     var RESIZE_MARKER_CLASS = "k-row-resize-marker";
+    var HANDLE_WRAPPER_SELECTOR = ".k-row-resize-handle-wrapper";
+    var HANDLE_SELECTOR = DOT + RESIZE_HANDLE_CLASS;
+    var MARKER_SELECTOR = DOT + RESIZE_MARKER_CLASS;
+
     var MAX = 123456;
 
+    var KEY_DOWN = "keydown";
     var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
@@ -27,7 +32,6 @@
     var TBODY = "tbody";
 
     var CONTENT_EDITABLE = "contenteditable";
-    var DOT = ".";
     var FIRST_ROW = "tr:first";
     var SECOND_ROW = "tr:nth-child(2)";
     var FIRST_COLUMN = "td:first";
@@ -169,7 +173,7 @@
         triggerBorderHover(element, options);
 
         var doc = $(element[0].ownerDocument.documentElement);
-        var resizeHandle = $(QUnit.fixture).find(HANDLE_SELECTOR);
+        var resizeHandle = $(QUnit.fixture).find(HANDLE_WRAPPER_SELECTOR);
         var position = resizeHandle.position();
         var from = from || 0;
         var to = to || 0;
@@ -184,7 +188,7 @@
     }
 
     function triggerResizeStart(element, from, to) {
-        var resizeHandle = $(QUnit.fixture).find(HANDLE_SELECTOR);
+        var resizeHandle = $(QUnit.fixture).find(HANDLE_WRAPPER_SELECTOR);
         var position = resizeHandle.position();
         var from = from || 0;
         var to = to || 0;
@@ -270,11 +274,13 @@
                     marker: RESIZE_MARKER_CLASS,
                 },
                 template:
-                    '<div class="' + RESIZE_HANDLE_CLASS + '" unselectable="on" contenteditable="false">' +
-                        '<div class="' + RESIZE_HANDLE_MARKER_WRAPPER_CLASS + '">' +
-                            '<div class="' + RESIZE_MARKER_CLASS + '"></div>' +
-                        '</div>'+
-                    '</div>'
+                    '<div class="k-row-resize-handle-wrapper" unselectable="on" contenteditable="false">' +
+                        '<div class="' + RESIZE_HANDLE_CLASS + '">' +
+                            '<div class="' + RESIZE_HANDLE_MARKER_WRAPPER_CLASS + '">' +
+                                '<div class="' + RESIZE_MARKER_CLASS + '"></div>' +
+                            '</div>'+
+                        '</div>' +
+                   '</div>'
             }
         };
 
@@ -662,7 +668,7 @@
     test("hovering the border of the first row should append resize handle", function() {
         triggerBorderHover(row);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).length, 1);
     });
 
     test("hovering the border of the first row multiple times should append only one resize handle", function() {
@@ -670,7 +676,7 @@
         triggerBorderHover(row);
         triggerBorderHover(row);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).length, 1);
     });
 
     test("hovering the last row should not create resize handle", function() {
@@ -678,13 +684,13 @@
 
         triggerBorderHover(row);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).length, 0);
     });
 
     test("resize handle should be stored as a reference", function() {
         triggerBorderHover(row);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR)[0], rowResizing.resizeHandle[0]);
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR)[0], rowResizing.resizeHandle[0]);
     });
 
     test("left offset should be set", function() {
@@ -719,7 +725,7 @@
     test("should be shown on hover", function() {
         triggerBorderHover(row);
 
-        equal(rowResizing.resizeHandle.css("display"), "table");
+        equal(rowResizing.resizeHandle.find(HANDLE_SELECTOR).css("display"), "block");
     });
 
     test("should be removed when leaving the row border", function() {
@@ -728,7 +734,7 @@
 
         triggerEvent(row, { type: MOUSE_MOVE, pageY: MAX });
 
-        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 0);
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).length, 0);
     });
 
     test("should store data about resizing row", function() {
@@ -753,7 +759,7 @@
 
         triggerBorderHover(secondRow);
 
-        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
+        equal($(rowResizing.options.rootElement).find(HANDLE_WRAPPER_SELECTOR).length, 1);
     });
 
     test("resize handle should be re-created when hovering a different row", function() {
@@ -762,7 +768,7 @@
 
         triggerBorderHover(secondRow);
 
-        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
+        equal($(rowResizing.options.rootElement).find(HANDLE_WRAPPER_SELECTOR).length, 1);
     });
 
     module("editor row resizing resize handle", {
@@ -784,13 +790,13 @@
     test("should not be shown if mouse button is pressed", function() {
         rowResizing.showResizeHandle(row, { buttons: 1 });
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 0);
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).length, 0);
     });
 
     test("should be shown if mouse button is not pressed", function() {
         rowResizing.showResizeHandle(row, { buttons: 0 });
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).length, 1);
     });
 
     module("editor column resizing resize handle show", {
@@ -809,10 +815,10 @@
         }
     });
 
-    test("should disable editing in the root element", function() {
+    test("should not disable editing in the root element", function() {
         rowResizing.showResizeHandle(cell, { buttons: 0 });
 
-        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), FALSE);
+        equal(jQueryEventsInfo(rowResizing.rootElement, "keydown"), undefined);
     });
 
     editor_module("editor row resizing resize handle", {
@@ -840,7 +846,7 @@
 
         triggerEvent(tableElement, { type: MOUSE_LEAVE });
 
-        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 1);
+        equal($(rowResizing.options.rootElement).find(HANDLE_WRAPPER_SELECTOR).length, 1);
     });
 
     test("should be initialized when hovering a scrolled editor document", function() {
@@ -849,7 +855,7 @@
 
         triggerBorderHover($(tableElement).find(SECOND_ROW)[0]);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).length, 1);
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).length, 1);
     });
 
     module("editor row resizing existing resize handle", {
@@ -871,7 +877,7 @@
     test("should be shown when hovering a row", function() {
         triggerBorderHover(row);
 
-        equal(rowResizing.resizeHandle.css("display"), "table");
+        equal(rowResizing.resizeHandle.css("display"), "block");
     });
 
     test("should be shown when hovering a row for a second time", function() {
@@ -880,7 +886,7 @@
 
         triggerBorderHover(row);
 
-        equal(rowResizing.resizeHandle.css("display"), "table");
+        equal(rowResizing.resizeHandle.css("display"), "block");
     });
 
     test("should be shown when resizing is in progress", function() {
@@ -889,7 +895,7 @@
 
         triggerResize(row, initialHeight, initialHeight + 10);
 
-        equal(rowResizing.resizeHandle.css("display"), "table");
+        equal(rowResizing.resizeHandle.css("display"), "block");
     });
 
     test("should be shown when resizing is not in progress", function() {
@@ -898,7 +904,7 @@
 
         triggerResize(row, initialHeight, initialHeight + 10);
 
-        equal(rowResizing.resizeHandle.css("display"), "table");
+        equal(rowResizing.resizeHandle.css("display"), "block");
     });
 
     module("editor row resizing resize marker", {
@@ -920,7 +926,7 @@
     test("should not be visible on row border hover", function() {
         triggerBorderHover(row);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "none");
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).find(MARKER_SELECTOR).css("display"), "none");
     });
 
     test("should be visible on resize start", function() {
@@ -928,13 +934,13 @@
 
         triggerResizeStart(row, initialHeight, initialHeight + 10);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should be visible while resizing", function() {
         triggerResize(row, initialHeight, initialHeight + 10);
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should be visible on resize handle mouse down", function() {
@@ -942,7 +948,7 @@
 
         triggerEvent(rowResizing.resizeHandle, { type: MOUSE_DOWN });
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).find(MARKER_SELECTOR).css("display"), "block");
     });
 
     test("should not be visible on resize handle mouse up", function() {
@@ -950,7 +956,7 @@
 
         triggerEvent(rowResizing.resizeHandle, { type: MOUSE_UP });
 
-        equal($(rowResizing.options.rootElement).children(HANDLE_SELECTOR).find(MARKER_SELECTOR).css("display"), "none");
+        equal($(rowResizing.options.rootElement).children(HANDLE_WRAPPER_SELECTOR).find(MARKER_SELECTOR).css("display"), "none");
     });
 
     module("editor row resizing resize handle position top offset", {
@@ -1105,7 +1111,7 @@
         equal(rowResizing._resizable.element[0], secondRow[0]);
     });
 
-    module("editor row resizing content editable", {
+    module("editor row resizing keyboard", {
         setup: function() {
             wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
             tableElement = $(TABLE_HTML).appendTo(wrapper);
@@ -1113,6 +1119,7 @@
                 rootElement: wrapper
             });
             row = $(rowResizing.element).find(FIRST_ROW);
+            rootElement = rowResizing.options.rootElement;
         },
 
         teardown: function() {
@@ -1121,63 +1128,38 @@
         }
     });
 
-    test("hovering the border of a row should disable editing in the root element", function() {
+    test("should not be disabled when hovering a row border", function() {
         triggerBorderHover(row);
 
-        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), FALSE);
+        equal(jQueryEventsInfo(rowResizing.rootElement, "keydown"), undefined);
     });
 
-    test("hovering the border of a row should disable the editing in editable root element", function() {
-        $(wrapper).removeAttr(CONTENT_EDITABLE);
-        $(wrapper).removeAttr(CONTENT_EDITABLE, "");
+    test("should be disabled on resize start", function() {
+        var keydownEvent = $.Event({ type: KEY_DOWN });
+        triggerBorderHover(row);
+        rowResizing.onResizeStart();
 
+        $(rootElement).trigger(keydownEvent);
+        
+        equal(keydownEvent.isDefaultPrevented(), true);
+    });
+
+    test("should be disabled during resizing", function() {
+        var keydownEvent = $.Event({ type: KEY_DOWN });
+        triggerResize(row, 10, 20);
+
+        $(rootElement).trigger(keydownEvent);
+        
+        equal(keydownEvent.isDefaultPrevented(), true);
+    });
+
+    test("should be enabled after resize end", function() {
+        var keydownEvent = $.Event({ type: KEY_DOWN });
         triggerBorderHover(row);
 
-        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), undefined);
-    });
-
-    test("hovering the border of a row should not disable editing in non-editable root element", function() {
-        $(wrapper).removeAttr(CONTENT_EDITABLE);
-
-        triggerBorderHover(row);
-
-        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), undefined);
-    });
-
-    test("leaving the border of a row should enable editing in the root element", function() {
-        triggerBorderHover(row);
-
-        triggerEvent(row, { type: MOUSE_MOVE, pageY: MAX });
-
-        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), TRUE);
-    });
-
-    test("leaving a row should not change editing of the root element when resizing is in progress", function() {
-        var editable = $(rowResizing.options.rootElement).attr(CONTENT_EDITABLE);
-        rowResizing.resizingInProgress = function() { return true; };
-        triggerBorderHover(row);
-
-        triggerEvent(row, { type: MOUSE_MOVE, pageY: MAX });
-
-        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), editable);
-    });
-
-    test("leaving a row should enable editing in the root element when resizing is not progress", function() {
-        rowResizing.resizingInProgress = function() { return false; };
-        triggerBorderHover(row);
-
-        triggerEvent(row, { type: MOUSE_MOVE, pageY: MAX });
-
-        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), TRUE);
-    });
-
-    test("resizing a row should not change the editing of the root element", function() {
-        var editable = $(rowResizing.options.rootElement).attr(CONTENT_EDITABLE);
-        var initialHeight = row.outerHeight();
-
-        resizeRow(row, initialHeight, initialHeight + 10);
-
-        equal($(rowResizing.options.rootElement).attr(CONTENT_EDITABLE), editable);
+        resizeRow(row, 0, 1);
+        
+        equal(jQueryEventsInfo(rowResizing.rootElement, "keydown"), undefined);
     });
 
     editor_module("editor row resizing editor initialization", {
@@ -1683,7 +1665,7 @@
 
         rowResizing.destroy();
 
-        equal($(rowResizing.options.rootElement).find(HANDLE_SELECTOR).length, 0);
+        equal($(rowResizing.options.rootElement).find(HANDLE_WRAPPER_SELECTOR).length, 0);
     });
 
     test("should set resize handle to null", function() {
