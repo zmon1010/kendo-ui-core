@@ -11,6 +11,7 @@ namespace Kendo.Mvc
 {
     public static class Export
     {
+
         public static Stream JsonToStream(SpreadDocumentFormat format, string data, IList<ExportColumnSettings> model, string title, Action<ExportCellStyle> applyCellStyle)
         {
             if (model == null || model.Count == 0)
