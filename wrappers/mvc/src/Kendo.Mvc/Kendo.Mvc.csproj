@@ -1784,8 +1784,12 @@
     <Compile Include="UI\Tooltip\TooltipPosition.cs" />
     <Compile Include="UI\TreeList\Fluent\TreeListAjaxDataSourceBuilder.cs" />
     <Compile Include="UI\TreeList\Fluent\TreeListColumnFactory.cs" />
+    <Compile Include="UI\TreeList\Fluent\TreeListSelectableSettingsBuilder.cs" />
     <Compile Include="UI\TreeList\Fluent\TreeListToolbarFactory.cs" />
+    <Compile Include="UI\TreeList\Settings\TreeListSelectableSettings.cs" />
     <Compile Include="UI\TreeList\TreeListModelDescriptor.cs" />
+    <Compile Include="UI\TreeList\TreeListSelectionMode.cs" />
+    <Compile Include="UI\TreeList\TreeListSelectionType.cs" />
     <Compile Include="UI\TreeList\TreeListViewDataContainer.cs" />
     <Compile Include="UI\TreeMap\Fluent\TreeMapColorRangeFactory.cs" />
     <Compile Include="UI\TreeMap\Html\TreeMapHtmlBuilder.cs" />

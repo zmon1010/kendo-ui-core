@@ -120,9 +120,9 @@ namespace Kendo.Mvc.UI
         }
         
         public bool? Scrollable { get; set; }
-        
-        public bool? Selectable { get; set; }
-        
+
+        public TreeListSelectableSettings<T> Selectable { get; } = new TreeListSelectableSettings<T>();
+
         public TreeListSortableSettings Sortable
         {
             get;
@@ -214,12 +214,12 @@ namespace Kendo.Mvc.UI
             {
                 json["scrollable"] = Scrollable;
             }
-                
-            if (Selectable.HasValue)
+
+            if (Selectable.Enabled)
             {
-                json["selectable"] = Selectable;
+                Selectable.Serialize(json);
             }
-                
+
             var sortable = Sortable.ToJson();
             if (sortable.Any())
             {
