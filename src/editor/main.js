@@ -504,7 +504,8 @@
                     ".k-table td{min-width:1px;padding:.2em .3em;}" +
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
-                    ".k-column-resize-handle {position:absolute; height: 10px; width:10px; cursor:col-resize; z-index: 2;}" +
+                    ".k-column-resize-handle-wrapper {position: absolute; height: 10px; width:10px; cursor: col-resize; z-index: 2;}" +
+                    ".k-column-resize-handle {width: 100%; height: 100%;}" +
                     ".k-column-resize-handle > .k-column-resize-marker {width:2px; height:100%; margin:0 auto; background-color:#00b0ff; display:none; opacity:0.8;}" +
                     ".k-row-resize-handle{display:table;position:absolute;cursor:row-resize;z-index:100;}" +
                     ".k-row-resize-handle .k-row-resize-marker-wrapper{display:table-cell;height:100%;margin:0;padding:0;vertical-align:middle;}" +

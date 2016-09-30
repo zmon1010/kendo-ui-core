@@ -10,9 +10,8 @@
 
     var Editor = kendo.ui.editor;
     var Class = kendo.Class;
-    var ResizingUtils = Editor.ResizingUtils;
-    var setContentEditable = ResizingUtils.setContentEditable;
 
+    var KEY_DOWN = "keydown";
     var MOUSE_DOWN = "mousedown";
     var MOUSE_ENTER = "mouseenter";
     var MOUSE_LEAVE = "mouseleave";
@@ -25,9 +24,6 @@
 
     var TABLE = "table";
 
-    var TRUE = "true";
-    var FALSE = "false";
-
     var TableElementResizing = Class.extend({
         init: function(element, options) {
             var that = this;
@@ -38,7 +34,7 @@
 
             if ($(element).is(TABLE)) {
                 that.element = element;
-                $(element).on(MOUSE_MOVE + that.options.eventNamespace, that.options.tags.join(COMMA), proxy(that.detectElementBorderHovering, that));
+                that._attachEventHandlers();
             }
         },
         
@@ -68,6 +64,13 @@
             }
         },
 
+        _attachEventHandlers: function() {
+            var that = this;
+            var options = that.options;
+
+            $(that.element).on(MOUSE_MOVE + options.eventNamespace, options.tags.join(COMMA), proxy(that.detectElementBorderHovering, that));
+        },
+
         resizingInProgress: function() {
             var that = this;
             var resizable = that._resizable;
@@ -87,7 +90,6 @@
             var handleOptions = options.handle;
             var tableElement = $(e.currentTarget);
             var resizeHandle = that.resizeHandle;
-            var rootElement = options.rootElement;
             var dataAttribute = handleOptions.dataAttribute;
 
             if (!that.resizingInProgress()) {
@@ -103,7 +105,6 @@
                 }
                 else {
                     if (resizeHandle) {
-                        setContentEditable(rootElement, TRUE);
                         that._destroyResizeHandle();
                     }
                 }
@@ -120,12 +121,11 @@
                 return;
             }
 
-            setContentEditable(that.options.rootElement, FALSE);
             that._initResizeHandle();
             that.setResizeHandlePosition(tableElement);
             that.setResizeHandleDimensions();
             that.setResizeHandleDataAttributes(tableElement[0]);
-            that.attachResizeHandleEventHandlers();
+            that._attachResizeHandleEventHandlers();
 
             that._initResizable(tableElement);
 
@@ -152,7 +152,7 @@
             that.resizeHandle.data(that.options.handle.dataAttribute, tableElement);
         },
 
-        attachResizeHandleEventHandlers: function() {
+        _attachResizeHandleEventHandlers: function() {
             var that = this;
             var options = that.options;
             var eventNamespace = options.eventNamespace;
@@ -195,6 +195,7 @@
 
             that._resizable = new kendo.ui.Resizable(tableElement, {
                 draggableElement: that.resizeHandle[0],
+                start: proxy(that.onResizeStart, that),
                 resize: proxy(that.onResize, that),
                 resizeend: proxy(that.onResizeEnd, that)
             });
@@ -209,6 +210,10 @@
             }
         },
 
+        onResizeStart: function() {
+            this._disableKeyboard();
+        },
+
         onResize: function(e) {
             this.setResizeHandleDragPosition(e);
         },
@@ -220,10 +225,24 @@
 
             that.resize(e);
             that._destroyResizeHandle();
-            setContentEditable(that.options.rootElement, TRUE);
+            that._enableKeyboard();
         },
 
-        _forceResize: function(e) {
+        _enableKeyboard: function() {
+            var options = this.options;
+
+            $(options.rootElement).off(KEY_DOWN + options.eventNamespace);
+        },
+
+        _disableKeyboard: function() {
+            var options = this.options;
+
+            $(options.rootElement).on(KEY_DOWN + options.eventNamespace, function(e) {
+                e.preventDefault();
+            });
+        },
+
+        _forceResizing: function(e) {
             var resizable = this._resizable;
 
             if (resizable && resizable.userEvents) { 
@@ -285,7 +304,7 @@
                         parentTable = $(e.target).parents(TABLE)[0];
 
                         if (parentTable) {
-                            resizing._forceResize(e);
+                            resizing._forceResizing(e);
                             that._destroyResizing(editor, options);
                             that._initResizing(editor, parentTable, options);
                         }
