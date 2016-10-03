@@ -1,13 +1,10 @@
-﻿using Kendo.Mvc.Examples.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using Telerik.Documents.SpreadsheetStreaming;
-using System.Collections;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
@@ -30,8 +27,9 @@ namespace Kendo.Mvc.Examples.Controllers
             string fileName = String.Format("{0}.{1}", options.title, options.format);
             string mimeType = Export.GetMimeType(exportFormat);
 
-            Stream exportStream = (exportFormat == SpreadDocumentFormat.Xlsx) ? productService.Read().ToXlsxStream(columnsData, (string)options.title.ToString(), applyCellStyle: action)
-                : productService.Read().ToCSVStream(columnsData, (string)options.title.ToString());
+            Stream exportStream = exportFormat == SpreadDocumentFormat.Xlsx  ?
+                productService.Read().ToXlsxStream(columnsData, (string)options.title.ToString(), applyCellStyle: action) :
+                productService.Read().ToCsvStream(columnsData, (string)options.title.ToString());
 
             var fileStreamResult = new FileStreamResult(exportStream, mimeType);
             fileStreamResult.FileDownloadName = fileName;

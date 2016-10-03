@@ -17,7 +17,7 @@ namespace Kendo.Mvc
             return Export.CollectionToStream(SpreadDocumentFormat.Xlsx, instance, model, title, applyColumnStyle: applyColumnStyle, applyRowStyle: applyRowStyle, applyCellStyle: applyCellStyle);
         }
 
-        public static Stream ToCSVStream(this IEnumerable instance, IList<ExportColumnSettings> model, string title)
+        public static Stream ToCsvStream(this IEnumerable instance, IList<ExportColumnSettings> model, string title)
         {
             return Export.CollectionToStream(SpreadDocumentFormat.Csv, instance, model, title);
         }
