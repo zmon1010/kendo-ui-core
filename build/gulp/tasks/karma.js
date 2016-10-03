@@ -68,7 +68,7 @@ var defaultOptions = {
       outputFile: argv['junit-results']
     },
     captureTimeout: 60000,
-    browserNoActivityTimeout: 30000,
+    browserNoActivityTimeout: 60000,
     singleRun: argv['single-run'],
     exclude:exclude
 };
