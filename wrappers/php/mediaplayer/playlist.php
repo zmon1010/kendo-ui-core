@@ -6,7 +6,7 @@ $mediaPlayer = new \Kendo\UI\MediaPlayer('mediaPlayer');
 $mediaPlayer->autoPlay(true);
 ?>
 
-<div class="demo-section k-content wide" style="width: 925px;">
+<div class="demo-section k-content wide" style="max-width: 925px;">
 <?php
 echo $mediaPlayer->render();
 
@@ -59,14 +59,21 @@ echo "</div>";
 <style>
     .k-mediaplayer {
         float: left;
-        width: 640px;
         height: 360px;
+        box-sizing: border-box;
+        width: 70%;
     }
     .playlist {
         float: left;
-        width: 280px;
         height: 360px;
         overflow: auto;
+        width: 30%;
+    }
+    @media(max-width: 800px) {
+        .playlist,
+        .k-mediaplayer {
+            width: 100%;
+        }
     }
     .playlist .k-item {
         border-bottom-style: solid;

@@ -17,7 +17,7 @@ $mediaPlayer->media($media)
 $mediaPlayer->autoPlay(true);
 ?>
 
-<div class="demo-section k-content wide" style="width: 644px;">
+<div class="demo-section k-content wide" style="max-width: 644px;">
 <?php
 echo $mediaPlayer->render();
 ?>
@@ -55,7 +55,6 @@ echo $mediaPlayer->render();
 </script>
 <style>
     .k-mediaplayer {
-        width: 640px;
         height: 360px;
     }
 </style>  
