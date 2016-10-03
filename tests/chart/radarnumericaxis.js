@@ -57,6 +57,18 @@
         equal(gridLines.length, 4);
     });
 
+    test("applies major grid lines skip and step options", function() {
+        setupGridLines({
+            majorGridLines: {
+                skip: 1,
+                step: 2
+            }
+        });
+        equal(gridLines.length, 2);
+        close(gridLines[0].segments[0].anchor().y, 200, TOLERANCE);
+        close(gridLines[1].segments[0].anchor().y, 0, TOLERANCE);
+    });
+
     test("points are placed on alt axis intervals", function() {
         var segments = gridLines[0].segments;
 
@@ -93,6 +105,24 @@
         });
 
         equal(gridLines.length, 16);
+    });
+
+    test("applies minor grid lines skip and step options", function() {
+        setupGridLines({
+            majorGridLines: {
+                visible: false
+            },
+            minorGridLines: {
+                visible: true,
+                skip: 5,
+                step: 5
+            }
+        });
+
+        equal(gridLines.length, 3);
+        close(gridLines[0].segments[0].anchor().y, 200, TOLERANCE);
+        close(gridLines[1].segments[0].anchor().y, 100, TOLERANCE);
+        close(gridLines[2].segments[0].anchor().y, 0, TOLERANCE);
     });
 
     test("applies minor grid line color", function() {

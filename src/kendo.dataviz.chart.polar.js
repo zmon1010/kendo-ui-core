@@ -518,9 +518,11 @@ var __meta__ = { // jshint ignore:line
                     dashType: options.dashType
                 }
             };
+            var skip = options.skip || 0;
+            var step = options.step || 1;
 
             var container = this.gridLinesVisual();
-            for (tickIx = 0; tickIx < ticks.length; tickIx++) {
+            for (tickIx = skip; tickIx < ticks.length; tickIx += step) {
                 tickRadius = center.y - ticks[tickIx];
                 if(tickRadius > 0) {
                     var circle = new geom.Circle([center.x, center.y], tickRadius);
