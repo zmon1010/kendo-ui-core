@@ -3963,7 +3963,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         removeDuplicates: function(idx, points) {
-            while (points[idx].equals(points[idx + 1]) || points[idx + 1].equals(points[idx + 2])) {
+            while (points[idx + 1] && (points[idx].equals(points[idx + 1]) || points[idx + 1].equals(points[idx + 2]))) {
                 points.splice(idx + 1, 1);
             }
         },

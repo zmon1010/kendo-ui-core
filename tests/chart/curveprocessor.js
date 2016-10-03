@@ -905,6 +905,13 @@
         ok(curvePoints && curvePoints.length === 0);
     });
 
+    test("only duplicate points are truncated", function() {
+        var dataPoints = [new Point(1, 2), new Point(1, 2), new Point(1, 2), new Point(1, 2)];
+        var curvePoints = closedPointsProcessor.process(dataPoints);
+
+        equal(curvePoints.length, 0);
+    });
+
     test("tangent line is used if 2 points are left after removing duplicated points", function() {
         var dataPoints = [new Point(1,1), new Point(1,1), new Point(3,3)],
             expectedPoints = [new Point(1,1), new Point(1.666,1.666), new Point(2.334,2.334), new Point(3,3)],
