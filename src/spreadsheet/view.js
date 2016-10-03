@@ -702,16 +702,20 @@
         },
 
         isFilterIcon: function(x, y, pane, ref) {
+            var theGrid = pane._grid;
+            var scrollTop = theGrid.rows.frozen ? 0 : this.scroller.scrollTop;
+            var scrollLeft = theGrid.columns.frozen ? 0 : this.scroller.scrollLeft;
+
+            x -= this._sheet._grid._headerWidth - scrollLeft;
+            y -= this._sheet._grid._headerHeight - scrollTop;
+
             var result = false;
-
-            x -= this._sheet._grid._headerWidth - this.scroller.scrollLeft;
-            y -= this._sheet._grid._headerHeight - this.scroller.scrollTop;
-
             this._sheet.forEachFilterHeader(ref, function(ref) {
-                var rect = this._rectangle(pane, ref);
-                result = result || pane.filterIconRect(rect).intersects(x, y);
+                if (!result) {
+                    var rect = this._rectangle(pane, ref);
+                    result = pane.filterIconRect(rect).intersects(x, y);
+                }
             }.bind(this));
-
             return result;
         },
 
