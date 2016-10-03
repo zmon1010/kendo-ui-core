@@ -32,6 +32,8 @@ namespace Kendo.Mvc.UI
             };
             DataSource.Schema.Model = new TreeListModelDescriptor(typeof(T));
 
+            Selectable = new TreeListSelectableSettings<T>();
+
             //>> Initialization
         
             ColumnMenu = new TreeListColumnMenuSettings();
@@ -49,8 +51,6 @@ namespace Kendo.Mvc.UI
             Pdf = new TreeListPdfSettings();
                 
             Sortable = new TreeListSortableSettings();
-
-            Selectable = new TreeListSelectableSettings<T>();
                 
             Toolbar = new List<TreeListToolbar>();
                 
@@ -64,6 +64,12 @@ namespace Kendo.Mvc.UI
         }
 
         public string DataSourceId
+        {
+            get;
+            set;
+        }
+
+        public TreeListSelectableSettings<T> Selectable
         {
             get;
             set;
@@ -122,13 +128,7 @@ namespace Kendo.Mvc.UI
         }
         
         public bool? Scrollable { get; set; }
-
-        public TreeListSelectableSettings<T> Selectable
-        {
-            get;
-            set;
-        }
-
+        
         public TreeListSortableSettings Sortable
         {
             get;
@@ -157,6 +157,11 @@ namespace Kendo.Mvc.UI
             }
 
             Editable.InitializeEditor(ViewContext, ViewData);
+
+            if (Selectable.Enabled)
+            {
+                Selectable.Serialize(json);
+            }
 
             //>> Serialization
         
@@ -220,12 +225,7 @@ namespace Kendo.Mvc.UI
             {
                 json["scrollable"] = Scrollable;
             }
-
-            if (Selectable.Enabled)
-            {
-                Selectable.Serialize(json);
-            }
-
+                
             var sortable = Sortable.ToJson();
             if (sortable.Any())
             {

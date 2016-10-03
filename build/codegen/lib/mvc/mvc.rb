@@ -130,6 +130,7 @@ module CodeGen::MVC::Wrappers
         'treelist.datasource',
         'treelist.editable.window',
         'treelist.filterable.messages',
+        'treelist.selectable',
         'treeview.items',
         'treeview.autobind',
         'treeview.animation',

@@ -214,41 +214,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
-
-        /// <summary>
-        /// If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values:
-        /// </summary>
-        /// <param name="value">The value that configures the selectable.</param>
-        public TreeListBuilder<T> Selectable(bool value)
-        {
-            container.Selectable.Enabled = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Specifies whether TreeList selection is allowed. By default selection is disabled
-        /// </summary>
-        /// <param name="enabled">Enables or disables the selectable option.</param>
-        public TreeListBuilder<T> Selectable()
-        {
-            container.Selectable.Enabled = true;
-            return this;
-        }
-        /// <summary>
-        /// Specifies whether TreeList selection is allowed. By default selection is disabled
-        /// </summary>
-        /// <param name="configurator">The configurator for the selectable setting.</param>
-        public TreeListBuilder<T> Selectable(Action<TreeListSelectableSettingsBuilder<T>> configurator)
-        {
-            container.Selectable.Enabled = true;
-
-            container.Selectable.TreeList = container;
-            configurator(new TreeListSelectableSettingsBuilder<T>(container.Selectable));
-
-            return this;
-        }
-
+        
         /// <summary>
         /// If set to true the user could sort the treelist by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
         /// </summary>
@@ -292,6 +258,39 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         //<< Fields
+
+        /// <summary>
+        /// If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values:
+        /// </summary>
+        /// <param name="value">The value that configures the selectable.</param>
+        public TreeListBuilder<T> Selectable(bool value)
+        {
+            container.Selectable.Enabled = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether TreeList selection is allowed. By default selection is disabled
+        /// </summary>
+        /// <param name="enabled">Enables or disables the selectable option.</param>
+        public TreeListBuilder<T> Selectable()
+        {
+            container.Selectable.Enabled = true;
+            return this;
+        }
+        /// <summary>
+        /// Specifies whether TreeList selection is allowed. By default selection is disabled
+        /// </summary>
+        /// <param name="configurator">The configurator for the selectable setting.</param>
+        public TreeListBuilder<T> Selectable(Action<TreeListSelectableSettingsBuilder<T>> configurator)
+        {
+            container.Selectable.Enabled = true;
+
+            container.Selectable.TreeList = container;
+            configurator(new TreeListSelectableSettingsBuilder<T>(container.Selectable));
+
+            return this;
+        }
 
         /// <summary>
         /// Configure the DataSource of the component
