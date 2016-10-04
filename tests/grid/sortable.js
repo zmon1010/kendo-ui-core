@@ -69,7 +69,7 @@
         var element = append("<table><thead><tr><th/></tr></thead></table>"),
             grid = new Grid(element, {
             data: [],
-            columns: [ { field: "foo", sortable: { compare: $.noop } } ],
+            columns: [ { field: "foo", sortable: { compare: $.noop, initialDirection: "desc" } } ],
             sortable: {
                 allowUnsort: false,
                 mode: "multiple"
@@ -77,6 +77,7 @@
         });
         var sortable = grid.wrapper.find("th").data("kendoColumnSorter");
         equal(sortable.options.compare, $.noop);
+        equal(sortable.options.initialDirection, "desc");
     });
 
     test("sortable is properly attached when there is no table header initially", function() {
