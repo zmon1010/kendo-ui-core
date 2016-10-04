@@ -3450,7 +3450,11 @@ var __meta__ = { // jshint ignore:line
         _confirmation: function(row) {
             var that = this,
                 editable = that.options.editable,
-                confirmation = editable === true || typeof editable === STRING ? that.options.messages.editable.confirmation : editable.confirmation;
+                confirmation = (editable === true || typeof editable === STRING) ? that.options.messages.editable.confirmation : editable.confirmation;
+
+            if (isPlainObject(editable) && typeof confirmation !== STRING && confirmation !== false) {
+                confirmation = that.options.messages.editable.confirmation;
+            }
 
             if (confirmation !== false && confirmation != null) {
 
