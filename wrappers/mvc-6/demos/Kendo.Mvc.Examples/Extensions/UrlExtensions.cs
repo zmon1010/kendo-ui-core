@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace Kendo.Mvc.Examples.Extensions
 {
@@ -34,12 +36,25 @@ namespace Kendo.Mvc.Examples.Extensions
 
         private static string ResourceUrl(IUrlHelper url, string assetType, string file, bool isAbsoluteUrl)
         {
-            if (assetType == "styles")
+            var configuration = url.ActionContext.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
+            var cdnRoot = configuration["ApplicationSettings:CdnRoot"];
+
+            if (cdnRoot == "$CDN_ROOT")
             {
-                return url.Content(string.Format("~/lib/kendo/css/web/{0}", file));
+                if (assetType == "styles")
+                {
+                    return url.Content(string.Format("~/lib/kendo/css/web/{0}", file));
+                }
+
+                return url.Content(string.Format("~/lib/kendo/js/{0}", file));
             }
 
-            return url.Content(string.Format("~/lib/kendo/js/{0}", file));
+            if (isAbsoluteUrl == true)
+            {
+                return file;
+            }
+
+            return url.Content(string.Format("{0}/{1}/{2}", cdnRoot, assetType, file));
         }
 
         private static bool IsAbsoluteUrl(string url)

@@ -34,6 +34,8 @@ namespace Kendo.Mvc.Examples
             services.AddDbContext<SampleEntitiesDataContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
+            services.AddSingleton<IConfiguration>(Configuration);
+
             // Add MVC services to the services container.
             services
                 .AddMvc()
