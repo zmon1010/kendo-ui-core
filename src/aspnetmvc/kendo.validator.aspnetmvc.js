@@ -136,7 +136,7 @@
                 }
             }
 
-            return !(value === "" || !value);
+            return !(value === "" || !value || value.length === 0);
         },
         number: function (input) {
             /* jshint eqnull:true */
