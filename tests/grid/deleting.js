@@ -163,6 +163,15 @@
             equal(destroyEditable.calls("_destroyEditable"), 1);
         });
 
+        test("removeRow shows confirmation message if editing.mode is set", function () {
+            var grid = setup({ editable: { mode: "inline" } });
+            method = stub(grid, "_showMessage");
+
+            grid.removeRow(table.find("tbody>tr:first"));
+
+            ok(method.calls("_showMessage"));
+        });
+
         test("removeRow does not show confirmation message if editing is false", function() {
             var grid = setup({ editable: { confirmation: undefined } });
                 method = stub(grid, "_showMessage");

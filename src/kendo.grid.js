@@ -3452,7 +3452,7 @@ var __meta__ = { // jshint ignore:line
                 editable = that.options.editable,
                 confirmation = (editable === true || typeof editable === STRING) ? that.options.messages.editable.confirmation : editable.confirmation;
 
-            if (isPlainObject(editable) && typeof confirmation !== STRING && confirmation !== false) {
+            if (isPlainObject(editable) && typeof editable.mode === STRING && typeof confirmation !== STRING && confirmation !== false) {
                 confirmation = that.options.messages.editable.confirmation;
             }
 
