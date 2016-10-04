@@ -15,6 +15,7 @@
     var getScrollBarWidth = Editor.ResizingUtils.getScrollBarWidth;
 
     var NS = ".kendoEditorTableResizeHandle";
+    var RESIZE_HANDLE_CLASS = "k-table-resize-handle";
 
     var DRAG_START = "dragStart";
     var DRAG = "drag";
@@ -34,6 +35,8 @@
     var SOUTHEAST = "southeast";
     var SOUTHWEST = "southwest";
     var WEST = "west";
+
+    var DOT = ".";
 
     var TableResizeHandle = Observable.extend({
         init: function(options) {
@@ -69,7 +72,10 @@
             direction: SOUTHEAST,
             resizableElement: null,
             rtl: false,
-            template: "<div class='k-table-resize-handle' unselectable='on' contenteditable='false'></div>"
+            template:
+                "<div class='k-table-resize-handle-wrapper' unselectable='on' contenteditable='false'>"+
+                    "<div class='" + RESIZE_HANDLE_CLASS + "'></div>" +
+                "</div>"
         },
 
         events: [
@@ -113,21 +119,7 @@
 
         _addStyles: function() {
             var that = this;
-
-            function getDirectionClass(direction) {
-                return {
-                    "east": "k-resize-east",
-                    "north": "k-resize-north",
-                    "northeast": "k-resize-northeast",
-                    "northwest": "k-resize-northwest",
-                    "south": "k-resize-south",
-                    "southeast": "k-resize-southeast",
-                    "southwest": "k-resize-southwest",
-                    "west": "k-resize-west"
-                }[direction];
-            }
-
-            $(that.element).addClass(getDirectionClass(that.options.direction));
+            $(that.element).children(DOT + RESIZE_HANDLE_CLASS).addClass("k-resize-" + that.options.direction);
         },
 
         _initPositioningStrategy: function() {

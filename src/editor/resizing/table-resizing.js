@@ -24,15 +24,16 @@
     var inPixels = ResizingUtils.inPixels;
     var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
-    var setContentEditable = ResizingUtils.setContentEditable;
 
     var NS = ".kendoEditorTableResizing";
+    var RESIZE_HANDLE_WRAPPER_CLASS = "k-table-resize-handle-wrapper";
     var TABLE_CLASS = "k-table";
     var TABLE_RESIZING_CLASS = "k-table-resizing";
 
     var DRAG_START = "dragStart";
     var DRAG = "drag";
     var DRAG_END = "dragEnd";
+    var KEY_DOWN = "keydown";
     var MOUSE_DOWN = "mousedown";
     var MOUSE_OVER = "mouseover";
     var MOUSE_OUT = "mouseout";
@@ -54,8 +55,7 @@
     var SOUTHWEST = "southwest";
     var WEST = "west";
 
-    var TRUE = "true";
-    var FALSE = "false";
+    var DOT = ".";
 
     function isUndefined(value) { 
         return typeof(value) === "undefined";
@@ -78,6 +78,8 @@
 
             $(that.element).off(NS);
             that.element = null;
+
+            $(that.options.rootElement).off(KEY_DOWN + NS);
 
             that._destroyResizeHandles();
         },
@@ -394,14 +396,6 @@
             }
         },
 
-        _onResizeHandleMouseOver: function() {
-            setContentEditable(this.options.rootElement, FALSE);
-        },
-
-        _onResizeHandleMouseOut: function() {
-            setContentEditable(this.options.rootElement, TRUE);
-        },
-
         _onResizeHandleDragStart: function() {
             var that = this;
             var element = $(that.element);
@@ -410,6 +404,7 @@
 
             that._initialElementHeight = element.outerHeight();
             that._initialElementWidth = element.outerWidth();
+            that._disableKeyboard();
         },
 
         _onResizeHandleDrag: function(e) {
@@ -417,7 +412,19 @@
         },
 
         _onResizeHandleDragEnd: function() {
-            $(this.element).removeClass(TABLE_RESIZING_CLASS);
+            var that = this;
+            $(that.element).removeClass(TABLE_RESIZING_CLASS);
+            that._enableKeyboard();
+        },
+
+        _enableKeyboard: function() {
+            $(this.options.rootElement).off(KEY_DOWN + NS);
+        },
+
+        _disableKeyboard: function() {
+            $(this.options.rootElement).on(KEY_DOWN + NS, function(e) {
+                e.preventDefault();
+            });
         }
     });
 
@@ -457,10 +464,9 @@
                     var tableResizing = editor.tableResizing;
                     var element = tableResizing ? tableResizing.element : null;
                     var target = e.target;
-                    var tableData = $(target).data(TABLE);
-                    var tableDataCondition = isUndefined(tableData) || (!isUndefined(tableData) && tableData !== element);
+                    var isResizeHandleOrChild = $(target).hasClass(RESIZE_HANDLE_WRAPPER_CLASS) || $(target).parents(DOT + RESIZE_HANDLE_WRAPPER_CLASS).length > 0;
 
-                    if (tableResizing && tableDataCondition && element !== target && !contains(element, target)) {
+                    if (tableResizing && element !== target && !contains(element, target) && !isResizeHandleOrChild) {
                         editor._destroyTableResizing();
                     }
                 });

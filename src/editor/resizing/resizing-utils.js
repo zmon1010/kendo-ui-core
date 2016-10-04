@@ -14,13 +14,11 @@
 
     var Editor = kendo.ui.editor;
 
-    var CONTENT_EDITABLE = "contenteditable";
     var PERCENTAGE = "%";
     var PIXEL = "px";
     var REGEX_NUMBER_IN_PERCENTAGES = /(\d+)(\.?)(\d*)%/;
     var REGEX_NUMBER_IN_PIXELS = /(\d+)(\.?)(\d*)px/;
     var STRING = "string";
-    var UNDEFINED = "undefined";
 
     function constrain(options) {
         var value = options.value;
@@ -63,21 +61,12 @@
         return (parseFloat(value) + PIXEL);
     }
 
-    function setContentEditable(domElement, enabled) {
-        var element = $(domElement);
-
-        if (element && (typeof(element.attr(CONTENT_EDITABLE)) !== UNDEFINED)) {
-            element.attr(CONTENT_EDITABLE, enabled);
-        }
-    }
-
     var ResizingUtils = {
         constrain: constrain,
         getScrollBarWidth: getScrollBarWidth,
         calculatePercentageRatio: calculatePercentageRatio,
         inPercentages: inPercentages,
         inPixels: inPixels,
-        setContentEditable: setContentEditable,
         toPercentages: toPercentages,
         toPixels: toPixels
     };

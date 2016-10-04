@@ -9,9 +9,9 @@
     var wrapper;
 
     var DOT = ".";
-    var CONTENT_EDITABLE = "contenteditable";
     var FIRST_COLUMN = "td:first";
     var MAX = 123456;
+    var KEY_DOWN = "keydown";
     var MOUSE_DOWN = "mousedown";
     var MOUSE_LEAVE = "mouseleave";
     var MOUSE_MOVE = "mousemove";
@@ -176,10 +176,6 @@
             pageX: position.left + from,
             pageY: position.top + from
         }));
-    }
-
-    function resizeTable(deltas) {
-
     }
 
     function getColumnWidths(table, columnIndex) {
@@ -390,7 +386,9 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
-            editor.tableResizing = new TableResizing(tableElement);
+            tableResizing = editor.tableResizing = new TableResizing(tableElement, {
+                appendHandlesTo: editor.body
+            });
         },
 
         afterEach: function() {
@@ -407,37 +405,46 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         }
     });
 
-    test("clicking on the resizing element should not destroy table resizing", function() {
-        var destroySpy = spy(editor.tableResizing, "destroy");
+    test("clicking on a table element should not destroy table resizing", function() {
+        spy(tableResizing, "destroy");
 
         triggerEvent(tableElement, { type: MOUSE_DOWN });
 
-        equal(destroySpy.calls("destroy"), 0);
+        equal(tableResizing.calls("destroy"), 0);
     });
 
-    test("clicking on a child element should not destroy table resizing", function() {
-        var destroySpy = spy(editor.tableResizing, "destroy");
+    test("clicking on a table child element should not destroy table resizing", function() {
+        spy(tableResizing, "destroy");
 
         triggerEvent($(tableElement).find(FIRST_COLUMN)[0], { type: MOUSE_DOWN });
 
-        equal(destroySpy.calls("destroy"), 0);
+        equal(tableResizing.calls("destroy"), 0);
     });
 
     test("clicking on the content should destroy table resizing", function() {
-        var destroySpy = spy(editor.tableResizing, "destroy");
+        spy(tableResizing, "destroy");
 
         triggerEvent(editor.body, { type: MOUSE_DOWN });
 
-        equal(destroySpy.calls("destroy"), 1);
+        equal(tableResizing.calls("destroy"), 1);
     });
 
-    test("clicking on an element with data attribute equal to table should not destroy table resizing", function() {
-        var destroySpy = spy(editor.tableResizing, "destroy");
-        editor.tableResizing.showResizeHandles();
+    test("clicking on a resize handle wrapper should not destroy table resizing", function() {
+        spy(tableResizing, "destroy");
+        tableResizing.showResizeHandles();
+        
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_DOWN });
 
-        triggerEvent(editor.tableResizing.handles[0].element, { type: MOUSE_DOWN });
+        equal(tableResizing.calls("destroy"), 0);
+    });
 
-        equal(destroySpy.calls("destroy"), 0);
+    test("clicking on a resize handle should not destroy table resizing", function() {
+        spy(editor.tableResizing, "destroy");
+        tableResizing.showResizeHandles();
+        
+        triggerEvent($(tableResizing.handles[0].element).children()[0], { type: MOUSE_DOWN });
+
+        equal(tableResizing.calls("destroy"), 0);
     });
 
     module("editor table resizing", {
@@ -648,22 +655,20 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(resizeSpy.args("resize")[0]["deltaY"], deltaY);
     });
 
-    test("should set contenteditable to false on handle mouseover", function() {
-        $(tableResizing.options.rootElement).attr(CONTENT_EDITABLE, "true");
+    test("should not disable editing when hovering a resize handle", function() {
         tableResizing.showResizeHandles();
 
         triggerEvent(tableResizing.handles[0].element, { type: "mouseover" });
 
-        equal($(tableResizing.options.rootElement).attr(CONTENT_EDITABLE), "false");
+        equal(jQueryEventsInfo(tableResizing.options.rootElement, "keydown"), undefined);
     });
 
-    test("should set contenteditable to true on handle mouseout", function() {
-        $(tableResizing.options.rootElement).attr(CONTENT_EDITABLE, "false");
+    test("should not disable editing when leaving a resize handle", function() {
         tableResizing.showResizeHandles();
 
         triggerEvent(tableResizing.handles[0].element, { type: "mouseout" });
 
-        equal($(tableResizing.options.rootElement).attr(CONTENT_EDITABLE), "true");
+        equal(jQueryEventsInfo(tableResizing.options.rootElement, "keydown"), undefined);
     });
 
     test("should change opacity on handle dragStart", function() {
@@ -1321,6 +1326,50 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
             start();
             equal(showSpy.calls("showResizeHandles"), 1);
         }, TIMEOUT);
+    });
+
+    module("editor table resizing keyboard", {
+        setup: function() {
+            wrapper = $("<div id='wrapper' contenteditable='true' />").appendTo(QUnit.fixture)[0];
+            tableElement = $(TABLE_HTML).appendTo(wrapper);
+            tableResizing = new TableResizing(tableElement, {
+                appendHandlesTo: wrapper,
+                rootElement: wrapper
+            });
+            rootElement = tableResizing.options.rootElement;
+        },
+
+        teardown: function() {
+            tableResizing.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should not be disabled when resize handles are shown", function() {
+        tableResizing.showResizeHandles();
+
+        equal(jQueryEventsInfo(tableResizing.options.rootElement, "keydown"), undefined);
+    });
+
+    test("should be disabled on resize handle drag start", function() {
+        var keydownEvent = $.Event({ type: KEY_DOWN });
+        tableResizing.showResizeHandles();
+        triggerResize(tableResizing.handles[0].element, 0, 20);
+
+        $(rootElement).trigger(keydownEvent);
+        
+        equal(keydownEvent.isDefaultPrevented(), true);
+    });
+
+    test("should be enabled after resize handle drag end", function() {
+        var keydownEvent = $.Event({ type: KEY_DOWN });
+        tableResizing.showResizeHandles();
+
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_DOWN });
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_MOVE });
+        triggerEvent(tableResizing.handles[0].element, { type: MOUSE_UP });
+        
+        equal(jQueryEventsInfo(tableResizing.options.rootElement, "keydown"), undefined);
     });
 }
 })();
