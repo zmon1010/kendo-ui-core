@@ -771,7 +771,12 @@
                         var active = kendo._activeElement();
                         var body = editor.body;
                         var toolbar = editor.toolbar;
-
+                        if (toolbar.options.popup) {
+                            var toolbarContainerElement = toolbar.window.element.get(0);
+                            if (toolbarContainerElement && !($.contains(toolbarContainerElement, active) || toolbarContainerElement == active)) {
+                                toolbar.preventPopupHide = false;
+                            }                            
+                        }
                         if (active != body && !$.contains(body, active) && !$(active).is(".k-editortoolbar-dragHandle") && !toolbar.focused()) {
                             $(body).removeClass("k-state-active");
                             toolbar.hide();

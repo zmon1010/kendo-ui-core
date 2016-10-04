@@ -89,6 +89,7 @@
         overflowFlaseTools: [ "formatting", "fontName", "fontSize", "foreColor", "backColor", "insertHtml" ],
 
         _initPopup: function() {
+            var that = this;
             this.window = $(this.element)
                 .wrap("<div class='editorToolbarWindow k-header' />")
                 .parent()
@@ -113,8 +114,11 @@
                 })
                 .on("mousedown", function(e){
                     if (!$(e.target).is(".k-icon")) {
-                        e.preventDefault();
+                        that.preventPopupHide = true;
                     }
+                })
+                .on("focusout", function(){
+                    that.options.editor.element.focusout();
                 })
                 .data("kendoWindow");
         },
@@ -160,8 +164,8 @@
         },
 
         focused: function() {
-            return this.element.find(".k-state-focused").length > 0;
-        },
+            return this.element.find(".k-state-focused").length > 0 || this.preventPopupHide;
+        },		
 
         toolById: function(name) {
             var id, tools = this.tools;
