@@ -1755,13 +1755,14 @@
             });
         });
 
-        test("waits for images to load", function() {
+        asyncTest("waits for images to load", function() {
             var image = new d.Image("foo", new g.Rect([0, 0], [100, 100]));
             group.append(image);
 
             var loaded = false;
             d.exportImage(group).done(function(small) {
                 ok(loaded);
+                start();
             });
 
             loaded = true;
