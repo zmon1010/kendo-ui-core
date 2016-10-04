@@ -285,7 +285,7 @@
         createElement: function() {
             this.element = $("<img style='position: absolute; display: block;' />")
                             .css({ width: this.options.size, height: this.options.size })
-                            .error(proxy(function(e) {
+                            .on("error", proxy(function(e) {
                                 if (this.errorUrl()) {
                                     e.target.setAttribute("src", this.errorUrl());
                                 } else {
