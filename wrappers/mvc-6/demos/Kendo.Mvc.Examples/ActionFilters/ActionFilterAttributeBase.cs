@@ -86,8 +86,9 @@ namespace Kendo.Mvc.Examples.Controllers
         protected IEnumerable<NavigationWidget> LoadWidgets()
         {
             var rootPath = _hostingEnvironment.WebRootPath;
+            var navJson = IOFile.ReadAllText(rootPath + "/shared/nav.json");
 
-            return JsonConvert.DeserializeObject<NavigationWidget[]>(IOFile.ReadAllText(rootPath + "/shared/nav.json"));
+            return JsonConvert.DeserializeObject<NavigationWidget[]>(navJson.Replace("$FRAMEWORK", "ASP.NET Core"));
         }
     }
 }

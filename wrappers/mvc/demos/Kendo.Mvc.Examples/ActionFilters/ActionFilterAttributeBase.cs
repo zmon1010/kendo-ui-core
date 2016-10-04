@@ -77,7 +77,9 @@ namespace Kendo.Mvc.Examples.Controllers
 
         protected IEnumerable<NavigationWidget> LoadWidgets()
         {
-            return Serializer.Deserialize<NavigationWidget[]>(IOFile.ReadAllText(Controller.Server.MapPath("~/content/nav.json")));
+            var navJson = IOFile.ReadAllText(Controller.Server.MapPath("~/content/nav.json"));
+
+            return Serializer.Deserialize<NavigationWidget[]>(navJson.Replace("$FRAMEWORK", "ASP.NET MVC"));
         }
     }
 }
