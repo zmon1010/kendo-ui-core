@@ -2010,6 +2010,7 @@ var __meta__ = { // jshint ignore:line
                 container,
                 columnStart,
                 columnWidth,
+                columnMinWidth,
                 gridWidth,
                 isMobile = this._isMobile,
                 scrollbar = !kendo.support.mobileOS ? kendo.support.scrollbar() : 0,
@@ -2067,6 +2068,7 @@ var __meta__ = { // jshint ignore:line
 
                         columnStart = e.x.location;
                         columnWidth = th.outerWidth();
+                        columnMinWidth = that.columns[index].minResizableWidth || 10;
                         gridWidth = isLocked ? contentTable.children("tbody").outerWidth() : that.tbody.outerWidth(); // IE returns 0 if grid is empty and scrolling is enabled
 
                         // fix broken UI in Chrome38+
@@ -2102,7 +2104,7 @@ var __meta__ = { // jshint ignore:line
                                 constrain = true;
                             }
 
-                            if (width > 10) {
+                            if (width > 10 && width >= columnMinWidth) {
                                 col.css('width', width);
 
                                 if (gridWidth) {
@@ -2122,7 +2124,7 @@ var __meta__ = { // jshint ignore:line
                                     }
                                 }
                             }
-                        } else if (currentWidth > 10) {
+                        } else if (currentWidth > 10 && currentWidth >= columnMinWidth) {
                             col.css('width', currentWidth);
                         }
                     },

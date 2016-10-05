@@ -863,4 +863,20 @@
         equal(grid.table.parent().scrollLeft(), 20);
     });
 
+    test("column body cell width is not decremented pass the minResizableWidth", function() {
+         var grid = new Grid(table, {
+            dataSource: [ { foo: "foo", bar: "bar" } ],
+            scrollable: true,
+            resizable: true,
+            columns: [{ field: "foo", minResizableWidth: 40, width: 100 }, "bar"]
+        }),
+        firstColumn = grid.thead.find("th:first"),
+        initialWidth = grid.tbody.find("tr:first > td:first")[0].offsetWidth;
+
+        resizeColumn(grid.wrapper, firstColumn, initialWidth, initialWidth - 60); // move the column to the min width
+        resizeColumn(grid.wrapper, firstColumn, initialWidth, initialWidth - 80); // try to move it pass the min width
+
+        equal(grid.tbody.find("tr:first > td:first")[0].offsetWidth, 40);
+    });
+
 })();
