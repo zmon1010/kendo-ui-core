@@ -72,7 +72,7 @@ function testWorkbook(options, callback) {
     exporter.workbook().then(callback);
 }
 
-test("Exporter does not fetch data source", function() {
+asyncTest("Exporter does not fetch data source", 2, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
         { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] },
@@ -100,12 +100,13 @@ test("Exporter does not fetch data source", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         ok(true);
         equal(source.calls("fetch"), 1);
     });
 });
 
-test("Exporter creates columns array with correct length", function() {
+asyncTest("Exporter creates columns array with correct length", 1, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
         { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] },
@@ -128,11 +129,12 @@ test("Exporter creates columns array with correct length", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         equal(book.sheets[0].columns.length, 4);
     });
 });
 
-test("Exporter defines columns configuration", function() {
+asyncTest("Exporter defines columns configuration", 7, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
         { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] },
@@ -155,6 +157,7 @@ test("Exporter defines columns configuration", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var columns = book.sheets[0].columns;
 
         equal(columns[0].autoWidth, true);
@@ -170,7 +173,7 @@ test("Exporter defines columns configuration", function() {
     });
 });
 
-test("Exporter add column configuration for row headers", function() {
+asyncTest("Exporter add column configuration for row headers", 5, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
     ];
@@ -197,6 +200,7 @@ test("Exporter add column configuration for row headers", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var columns = book.sheets[0].columns;
         equal(columns.length, 4);
 
@@ -207,7 +211,7 @@ test("Exporter add column configuration for row headers", function() {
     });
 });
 
-test("Exporter creates rows for row, column header and content data", function() {
+asyncTest("Exporter creates rows for row, column header and content data", 1, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
     ];
@@ -234,12 +238,13 @@ test("Exporter creates rows for row, column header and content data", function()
     };
 
     testWorkbook(options, function(book) {
+        start();
         var rows = book.sheets[0].rows;
         equal(rows.length, 4);
     });
 });
 
-test("Exporter creates cells for column header with correct value and cell attributes", function() {
+asyncTest("Exporter creates cells for column header with correct value and cell attributes", 19, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
         { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] },
@@ -262,6 +267,8 @@ test("Exporter creates cells for column header with correct value and cell attri
     };
 
     testWorkbook(options, function(book) {
+        start();
+
         var cells_level1 = book.sheets[0].rows[0].cells;
         var cells_level2 = book.sheets[0].rows[1].cells;
         var cells_level3 = book.sheets[0].rows[2].cells;
@@ -293,7 +300,7 @@ test("Exporter creates cells for column header with correct value and cell attri
     });
 });
 
-test("Exporter generate rows for row header and data", function() {
+asyncTest("Exporter generate rows for row header and data", 38, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
     ];
@@ -320,6 +327,7 @@ test("Exporter generate rows for row header and data", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var rows = book.sheets[0].rows;
 
         var cells_level1 = book.sheets[0].rows[1].cells;
@@ -383,7 +391,7 @@ test("Exporter generate rows for row header and data", function() {
     });
 });
 
-test("Exporter generate rows for expanded rows and columns", function() {
+asyncTest("Exporter generate rows for expanded rows and columns", 3, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
         { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] }
@@ -410,6 +418,7 @@ test("Exporter generate rows for expanded rows and columns", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var rows = book.sheets[0].rows;
 
         var column_level1 = rows[0].cells;
@@ -421,7 +430,7 @@ test("Exporter generate rows for expanded rows and columns", function() {
     });
 });
 
-test("Exporter generate rows for row header and data", function() {
+asyncTest("Exporter generate rows for row header and data", 2, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
         { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] }
@@ -448,6 +457,7 @@ test("Exporter generate rows for row header and data", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var pane = book.sheets[0].freezePane;
 
         equal(pane.colSplit, 3);
@@ -455,7 +465,7 @@ test("Exporter generate rows for row header and data", function() {
     });
 });
 
-test("Exporter honours two level row headers when creating first empty cell", function() {
+asyncTest("Exporter honours two level row headers when creating first empty cell", 4, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
         { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] }
@@ -484,6 +494,7 @@ test("Exporter honours two level row headers when creating first empty cell", fu
     };
 
     testWorkbook(options, function(book) {
+        start();
         var cells_level1 = book.sheets[0].rows[0].cells;
 
         equal(cells_level1.length, 3);
@@ -493,7 +504,7 @@ test("Exporter honours two level row headers when creating first empty cell", fu
     });
 });
 
-test("Exporter generate column header cells using member title", function() {
+asyncTest("Exporter generate column header cells using member title", 1, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
     ];
@@ -513,13 +524,14 @@ test("Exporter generate column header cells using member title", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var header_cell = book.sheets[0].rows[0].cells[1]
 
         equal(header_cell.value, "dim 0");
     });
 });
 
-test("Exporter generate row header cells using member title", function() {
+asyncTest("Exporter generate row header cells using member title", 1, function() {
     var rows = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
     ];
@@ -539,13 +551,14 @@ test("Exporter generate row header cells using member title", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var header_cell = book.sheets[0].rows[1].cells[0]
 
         equal(header_cell.value, "dim 0");
     });
 });
 
-test("Exporter generate cells using data item.value", function() {
+asyncTest("Exporter generate cells using data item.value", 1, function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
     ];
@@ -568,13 +581,14 @@ test("Exporter generate cells using data item.value", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var data_cell = book.sheets[0].rows[1].cells[1];
 
         equal(data_cell.value, 1);
     });
 });
 
-test("Export of non-numeric value", function() {
+asyncTest("Export of non-numeric value", 1, function() {
     var testValue = "some value";
 
     var columns = [
@@ -599,6 +613,7 @@ test("Export of non-numeric value", function() {
     };
 
     testWorkbook(options, function(book) {
+        start();
         var data_cell = book.sheets[0].rows[1].cells[1];
 
         equal(data_cell.value, testValue);

@@ -4363,7 +4363,7 @@
         var columnHeaderWrap = pivotgrid.wrapper.find(".k-grid-header-wrap");
         var rowsField = pivotgrid.wrapper.find(".k-pivot-rowheaders").find(".k-header:last");
 
-        equal(rowsField.innerHeight(), columnHeaderWrap.height());
+        equal(parseInt(rowsField.innerHeight(), 10), parseInt(columnHeaderWrap.height(), 10));
     });
 
     test("PivotGrid sets height to the measure-fields section if column descriptors", function() {
