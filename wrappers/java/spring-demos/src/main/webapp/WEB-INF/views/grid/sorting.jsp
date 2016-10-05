@@ -13,7 +13,9 @@
 	    	<kendo:grid-pageable buttonCount="5" />
 	    	<kendo:grid-sortable allowUnsort="false" mode="single" />
 	        <kendo:grid-columns>
-	            <kendo:grid-column title="Order ID" field="orderId" width="300px"  />
+	            <kendo:grid-column title="Order ID" field="orderId" width="300px">
+	            	<kendo:grid-column-sortable initialDirection="desc"></kendo:grid-column-sortable>
+	            </kendo:grid-column>
 	            <kendo:grid-column title="Freight" field="freight" width="300px" />
 	            <kendo:grid-column title="Order Date" field="orderDate" format="{0:dd/MM/yyyy}"/>
 	        </kendo:grid-columns>

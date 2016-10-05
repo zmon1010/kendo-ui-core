@@ -58,6 +58,14 @@ public class SortableTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("allowUnsort", value);
     }
 
+    public java.lang.String getInitialDirection() {
+        return (java.lang.String)getProperty("initialDirection");
+    }
+
+    public void setInitialDirection(java.lang.String value) {
+        setProperty("initialDirection", value);
+    }
+
     public java.lang.String getMode() {
         return (java.lang.String)getProperty("mode");
     }
