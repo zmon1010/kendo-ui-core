@@ -25,6 +25,15 @@ See How-to: Stable Sort in Chrome for more details on how this can be useful.
         return $this->setProperty('compare', $value);
     }
 
+    /**
+    * Determines the inital (from un-sorted to sorted state) sort direction. The supported values are asc and desc.
+    * @param string $value
+    * @return \Kendo\UI\GridColumnSortable
+    */
+    public function initialDirection($value) {
+        return $this->setProperty('initialDirection', $value);
+    }
+
 //<< Properties
 }
 

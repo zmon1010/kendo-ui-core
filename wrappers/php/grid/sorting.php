@@ -57,9 +57,13 @@ $dataSource->transport($transport)
            ->serverSorting(true)
            ->schema($schema);
 
+$columnSortable = new \Kendo\UI\GridColumnSortable();
+$columnSortable->initialDirection("desc");
+
 $shipCountry = new \Kendo\UI\GridColumn();
 $shipCountry->field('ShipCountry')
             ->width(300)
+            ->sortable($columnSortable)
             ->title('Ship Country');
 
 $freight = new \Kendo\UI\GridColumn();
