@@ -238,6 +238,14 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("menu", value);
     }
 
+    public float getMinResizableWidth() {
+        return (Float)getProperty("minResizableWidth");
+    }
+
+    public void setMinResizableWidth(float value) {
+        setProperty("minResizableWidth", value);
+    }
+
     public float getMinScreenWidth() {
         return (Float)getProperty("minScreenWidth");
     }

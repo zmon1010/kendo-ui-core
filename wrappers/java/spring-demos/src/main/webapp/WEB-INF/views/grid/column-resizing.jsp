@@ -12,7 +12,7 @@
     	<kendo:grid-scrollable/>
         <kendo:grid-columns>
             <kendo:grid-column title="Order Date" field="orderDate" format="{0:MM/dd/yyyy}" width="120px"/>
-            <kendo:grid-column title="Ship Country" field="shipCountry" />
+            <kendo:grid-column title="Ship Country" field="shipCountry" minResizableWidth="100"/>
             <kendo:grid-column title="Ship City" field="shipCity" />
             <kendo:grid-column title="Ship Name" field="shipName" />
             <kendo:grid-column title="Shipped Date" field="shippedDate" format="{0:MM/dd/yyyy}" width="200" />
