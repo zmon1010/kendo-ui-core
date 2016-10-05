@@ -79,11 +79,12 @@ $orderDate->field('OrderDate')
 
 $orderID = new \Kendo\UI\GridColumn();
 $orderID->field('OrderID')
-    ->width(80)   
+    ->width(80)
     ->title('Order Id');
 
 $shipCountry = new \Kendo\UI\GridColumn();
 $shipCountry->field('ShipCountry')
+    ->minResizableWidth(100)
     ->title('Ship Country');
 
 $shipCity = new \Kendo\UI\GridColumn();

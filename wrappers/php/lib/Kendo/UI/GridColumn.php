@@ -234,6 +234,15 @@ is displayed in the column header cell.
     }
 
     /**
+    * The pixel screen width below which the user will not be able to resize the column via the UI.
+    * @param float $value
+    * @return \Kendo\UI\GridColumn
+    */
+    public function minResizableWidth($value) {
+        return $this->setProperty('minResizableWidth', $value);
+    }
+
+    /**
     * The pixel screen width below which the column will be hidden. The setting takes precedence over the hidden setting,
 so the two should not be used at the same time.
     * @param float $value
