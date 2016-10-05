@@ -272,8 +272,8 @@
 
             if (!rootElement.is(BODY)) {
                 return {
-                    top: position.top + rootElement.scrollTop(),
-                    left: position.left + rootElement.scrollLeft() - scrollBarWidth
+                    top: position.top + (rootElement.scrollTop() || 0),
+                    left: position.left + (rootElement.scrollLeft() || 0) - scrollBarWidth
                 };
             }
 

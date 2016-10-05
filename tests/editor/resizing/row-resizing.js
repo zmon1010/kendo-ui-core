@@ -211,7 +211,7 @@
         triggerEvent(element, {
             type: MOUSE_MOVE,
             clientX: 0,
-            clientY: $(element).offset().top + height - $(element.ownerDocument).scrollTop(),
+            clientY: $(element).offset().top + height - $(element.ownerDocument || element[0].ownerDocument).scrollTop(),
             buttons: 0
         });
     }
@@ -410,7 +410,7 @@
     });
 
     test("hovering a nested table should stop event propagation", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
 
         $(nestedTable).trigger(enterEvent);
@@ -438,7 +438,7 @@
     });
 
     test("leaving a nested table should stop event propagation", function() {
-        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
+        var leaveEvent = $.Event({ type: MOUSE_LEAVE, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         triggerEvent(nestedTable, { type: MOUSE_ENTER });
 
@@ -592,7 +592,7 @@
     });
 
     test("hovering another table while resizing is in progress should not destroy current row resizing", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.rowResizing, "destroy");
         editor.rowResizing.resizingInProgress = function() { return true; };
@@ -603,7 +603,7 @@
     });
 
     test("hovering another table while resizing is not in progress should destroy current row resizing", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.rowResizing, "destroy");
         editor.rowResizing.resizingInProgress = function() { return false; };
@@ -1135,7 +1135,7 @@
     });
 
     test("should be disabled on resize start", function() {
-        var keydownEvent = $.Event({ type: KEY_DOWN });
+        var keydownEvent = $.Event({ type: KEY_DOWN, preventDefault: $.noop });
         triggerResize(row, 0, 20);
 
         $(rootElement).trigger(keydownEvent);
@@ -1259,7 +1259,7 @@
 
     test("hovering a nested table should stop event propagation", function() {
         var nestedTable = $(tableElement).find("#nestedTable")[0];
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
 
         $(nestedTable).trigger(enterEvent);
@@ -1290,7 +1290,7 @@
 
     test("leaving a nested table should stop event propagation", function() {
         var nestedTable = $(tableElement).find("#nestedTable")[0];
-        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
+        var leaveEvent = $.Event({ type: MOUSE_LEAVE, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         triggerEvent(nestedTable, { type: MOUSE_ENTER });
 
@@ -1328,7 +1328,7 @@
     });
 
     test("hovering another table while resizing is in progress should not destroy current row resizing", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.rowResizing, "destroy");
         editor.rowResizing.resizingInProgress = function() { return true; };
@@ -1339,7 +1339,7 @@
     });
 
     test("hovering another table while resizing is not in progress should destroy current row resizing", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.rowResizing, "destroy");
         editor.rowResizing.resizingInProgress = function() { return false; };

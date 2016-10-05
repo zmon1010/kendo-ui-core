@@ -1352,7 +1352,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     });
 
     test("should be disabled on resize handle drag start", function() {
-        var keydownEvent = $.Event({ type: KEY_DOWN });
+        var keydownEvent = $.Event({ type: KEY_DOWN, preventDefault: $.noop });
         tableResizing.showResizeHandles();
         triggerResize(tableResizing.handles[0].element, 0, 20);
 

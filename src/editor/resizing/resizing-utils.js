@@ -29,7 +29,7 @@
     }
 
     function getScrollBarWidth(element) {
-        if  (!$(element).is("body") && element.scrollHeight > element.clientHeight) {
+        if  (element && !$(element).is("body") && element.scrollHeight > element.clientHeight) {
             return kendo.support.scrollbar();
         }
 

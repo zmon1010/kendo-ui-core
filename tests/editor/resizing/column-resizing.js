@@ -184,7 +184,7 @@
 
         triggerEvent(element, {
             type: MOUSE_MOVE,
-            clientX: $(element).offset().left + width - $(element.ownerDocument).scrollLeft(),
+            clientX: $(element).offset().left + width - $(element.ownerDocument || element[0].ownerDocument).scrollLeft(),
             clientY: 0,
             buttons: 0
         });
@@ -807,7 +807,7 @@
     });
 
     test("should be disabled on resize start", function() {
-        var keydownEvent = $.Event({ type: KEY_DOWN });
+        var keydownEvent = $.Event({ type: KEY_DOWN, preventDefault: $.noop });
         triggerBorderHover(cell);
         triggerResize(cell, 0, 20);
 
@@ -1678,7 +1678,7 @@
     });
 
     test("hovering a nested table should stop event propagation", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
 
         $(nestedTable).trigger(enterEvent);
@@ -1707,7 +1707,7 @@
 
     test("leaving a nested table should stop event propagation", function() {
         var nestedTable = $(tableElement).find("#nestedTable")[0];
-        var leaveEvent = $.Event({ type: MOUSE_LEAVE });
+        var leaveEvent = $.Event({ type: MOUSE_LEAVE, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         triggerEvent(nestedTable, { type: MOUSE_ENTER });
 
@@ -1793,7 +1793,7 @@
     });
 
     test("hovering another table while resizing is in progress should not destroy current column resizing", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.columnResizing, "destroy");
         editor.columnResizing.resizingInProgress = function() { return true; };
@@ -1804,7 +1804,7 @@
     });
 
     test("hovering another table while resizing is not in progress should destroy current column resizing", function() {
-        var enterEvent = $.Event({ type: MOUSE_ENTER });
+        var enterEvent = $.Event({ type: MOUSE_ENTER, stopPropagation: $.noop });
         triggerEvent(tableElement, { type: MOUSE_ENTER });
         var destroySpy = spy(editor.columnResizing, "destroy");
         editor.columnResizing.resizingInProgress = function() { return false; };
