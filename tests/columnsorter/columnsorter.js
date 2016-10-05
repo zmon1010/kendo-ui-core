@@ -62,6 +62,43 @@
         equal(button.attr("data-dir"), "asc");
     });
 
+    test("clicking unsorted element sets its direrction to initialDirection value", function() {
+        var sorter = setup(button.attr("data-field", "foo"), {
+            initialDirection: "desc",
+            dataSource: dataSource
+        });
+
+        button.click();
+
+        equal(button.attr("data-dir"), "desc");
+    });
+
+    test("clicking unsorted element sets its direrction to initialDirection value - uppercase", function() {
+        var sorter = setup(button.attr("data-field", "foo"), {
+            initialDirection: "DESC",
+            dataSource: dataSource
+        });
+
+        button.click();
+
+        equal(button.attr("data-dir"), "desc");
+    });
+
+    test("subsequent clicks on initialDirection value toggles the direction", function() {
+        var sorter = setup(button.attr("data-field", "foo"), {
+            initialDirection: "desc",
+            dataSource: dataSource
+        });
+
+        button.click();
+        equal(button.attr("data-dir"), "desc");
+
+        button.click();
+        equal(button.attr("data-dir"), "asc");
+
+        button.click();
+        equal(button.attr("data-dir"), undefined);
+    });
 
     test("multiple sort mode", function() {
         var sorter = setup(button.attr("data-field", "foo"), { dataSource: dataSource, mode: "multiple" } );

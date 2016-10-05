@@ -35,6 +35,8 @@ var __meta__ = { // jshint ignore:line
 
             that.dataSource = that.options.dataSource.bind("change", that._refreshHandler);
 
+            that.directions = that.options.initialDirection === ASC ? [ASC, DESC] : [DESC, ASC];
+
             link = that.element.find(TLINK);
 
             if (!link[0]) {
@@ -51,7 +53,8 @@ var __meta__ = { // jshint ignore:line
             mode: SINGLE,
             allowUnsort: true,
             compare: null,
-            filter: ""
+            filter: "",
+            initialDirection: ASC
         },
 
         events: ["change"],
@@ -101,6 +104,14 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _toggleSortDirection: function(dir) {
+            var directions = this.directions;
+            if (dir === directions[directions.length - 1] && this.options.allowUnsort) {
+                return undefined;
+            }
+            return directions[0] === dir ? directions[1] : directions[0];
+        },
+
         _click: function (e) {
             var that = this,
                 element = that.element,
@@ -118,13 +129,7 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
-            if (dir === ASC) {
-                dir = DESC;
-            } else if (dir === DESC && options.allowUnsort) {
-                dir = undefined;
-            } else {
-                dir = ASC;
-            }
+            dir = this._toggleSortDirection(dir);
 
             if (this.trigger("change", { sort: { field: field, dir: dir, compare: compare } })) {
                 return;

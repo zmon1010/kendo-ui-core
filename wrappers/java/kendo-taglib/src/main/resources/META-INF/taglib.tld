@@ -23299,6 +23299,12 @@ See How-to: Stable Sort in Chrome for more details on how this can be useful.</d
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Determines the inital (from un-sorted to sorted state) sort direction. The supported values are asc and desc.</description>
+            <name>initialDirection</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -24285,6 +24291,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <name>allowUnsort</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Determines the inital (from un-sorted to sorted state) sort direction. The supported values are asc and desc.</description>
+            <name>initialDirection</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by multiple columns.</description>

@@ -59,6 +59,13 @@ public class ColumnSortableTag extends BaseTag /* interfaces *//* interfaces */{
         setProperty("compare", new Function(value));
     }
 
+    public java.lang.String getInitialDirection() {
+        return (java.lang.String)getProperty("initialDirection");
+    }
+
+    public void setInitialDirection(java.lang.String value) {
+        setProperty("initialDirection", value);
+    }
     // << Attributes
 
 }

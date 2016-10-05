@@ -1608,6 +1608,29 @@ See [How-to: Stable Sort in Chrome](/web/grid/how-to/stable-sort-chrome) for mor
 
     </script>
 
+### columns.sortable.initialDirection `String` *(default: asc)*
+
+Determines the inital (from un-sorted to sorted state) sort direction. The supported values are `asc` and `desc`.
+
+#### Example - disable sorting
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [
+        {
+          field: "id",
+          sortable: {
+            initialDirection: "desc"
+          }
+        },
+        { field: "name" }
+      ],
+      sortable: true,
+      dataSource: [ { id: 1, name: "Jane Doe" }, { id: 2, name: "John Doe" } ]
+    });
+    </script>
+
 ### columns.template `String|Function`
 
 The [template](/api/javascript/kendo#methods-template) which renders the column content. The grid renders table rows (`<tr>`) which represent the data source items.
@@ -6180,6 +6203,26 @@ If set to `true` the user can get the grid in unsorted state by clicking the sor
       sortable: {
         allowUnsort: false
       }
+    });
+    </script>
+
+### sortable.initialDirection `String` *(default: asc)*
+
+Determines the inital (from un-sorted to sorted state) sort direction. The supported values are `asc` and `desc`.
+
+#### Example - disable sorting
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [
+        { field: "id" },
+        { field: "name" }
+      ],
+      sortable: {
+        initialDirection: "desc"
+      },
+      dataSource: [ { id: 1, name: "Jane Doe" }, { id: 2, name: "John Doe" } ]
     });
     </script>
 
