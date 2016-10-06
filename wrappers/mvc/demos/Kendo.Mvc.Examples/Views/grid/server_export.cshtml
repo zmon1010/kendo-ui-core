@@ -15,7 +15,7 @@
         columns.Bound(p => p.ProductName);
         columns.Bound(p => p.UnitPrice).Width(150);
         columns.Bound(p => p.Category.CategoryName);
-        columns.Bound(p => p.UnitsInStock).Width(150).Hidden();
+        columns.Bound(p => p.UnitsInStock).Width(150);
     })
     .Pageable()
     .Sortable()
@@ -33,7 +33,7 @@
         var grid = $("#Grid").data("kendoGrid");
         var options = {
             format: $(this).data("format"),
-            title: "export"
+            title: "DemoSheet"
         }
         $("#export-data").val(encodeURIComponent(JSON.stringify(options)));
         $("#export-model").val(encodeURIComponent(JSON.stringify(grid.columns)));

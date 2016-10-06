@@ -1,10 +1,14 @@
 ﻿using Telerik.Documents.SpreadsheetStreaming;
 
-namespace Kendo.Mvc
+namespace Kendo.Mvc.Export
 {
     public class ExportRowStyle
     {
         private IRowExporter row;
+
+        /// <summary>
+        /// Current row instance
+        /// </summary>        
         public IRowExporter Row
         {
             get
@@ -12,7 +16,12 @@ namespace Kendo.Mvc
                 return row;
             }
         }
+        
         private int index;
+
+        /// <summary>
+        /// Current row index
+        /// </summary>        
         public int Index
         {
             get
@@ -20,6 +29,12 @@ namespace Kendo.Mvc
                 return index;
             }
         }
+
+        /// <summary>
+        /// ExportRowStyle constructor
+        /// </summary>
+        /// <param name="row">Row instance</param>
+        /// <param name="index">Row index</param>        
         public ExportRowStyle(IRowExporter row, int index)
         {
             this.index = index;
