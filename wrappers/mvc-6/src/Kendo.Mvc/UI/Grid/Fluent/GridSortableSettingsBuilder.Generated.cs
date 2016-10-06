@@ -21,6 +21,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Determines the inital (from un-sorted to sorted state) sort direction. The supported values are asc and desc.
+        /// </summary>
+        /// <param name="value">The value for InitialDirection</param>
+        public GridSortableSettingsBuilder<T> InitialDirection(string value)
+        {
+            Container.InitialDirection = value;
+            return this;
+        }
+
+        /// <summary>
         /// Defines the sort modes supported by Kendo UI Grid for ASP.NET MVC
         /// </summary>
         /// <param name="value">The value for SortMode</param>

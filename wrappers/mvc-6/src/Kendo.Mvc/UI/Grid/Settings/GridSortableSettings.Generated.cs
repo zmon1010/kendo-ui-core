@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public bool? AllowUnsort { get; set; }
 
+        public string InitialDirection { get; set; }
+
         public GridSortMode? SortMode { get; set; }
 
         public bool? Enabled { get; set; }
@@ -26,6 +28,11 @@ namespace Kendo.Mvc.UI
             if (AllowUnsort.HasValue)
             {
                 settings["allowUnsort"] = AllowUnsort;
+            }
+
+            if (InitialDirection?.HasValue() == true)
+            {
+                settings["initialDirection"] = InitialDirection;
             }
 
             return settings;
