@@ -12,7 +12,7 @@ editor_module("editor pdf export", {
     }
 });
 
-test('pdf.options.paperSize is a4', function() {
+asyncTest("pdf.options.paperSize is a4", function() {
     editor.setOptions({pdf: {paperSize: "A4"}});
     
     mockFunc(kendo.drawing, "drawDOM", function(node, options) {
@@ -28,7 +28,10 @@ test('pdf.options.paperSize is a4', function() {
     mockFunc(kendo, "saveAs", function(){});
     editor.saveAsPDF();
    
-    ok(kendo.drawing.exportPDF.called);
+    setTimeout(function() {
+        start();
+        equal(kendo.drawing.exportPDF.called, true);
+    });
 });
 
 }());
