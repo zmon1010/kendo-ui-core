@@ -2440,6 +2440,10 @@ a.footer-links:hover,
   padding: 0;
 }
 
+.k-nova #example-search-list.k-list-container {
+  padding: 0 11px;
+}
+
 #example-search-list .k-item.k-first {
   position: relative;
   box-shadow: inset 0 1px 0 0 #cad0d6;
