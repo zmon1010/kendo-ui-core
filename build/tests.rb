@@ -49,9 +49,7 @@ namespace :tests do
     %w[CI Production TZ].each do |env|
         output = "#{env}-test-results.xml"
 
-        file output => DEPS do |t|
-            gulp_xvfb "ci", "--junit-results=#{output}", "--single-run=true", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
-        end
+        gulp_xvfb "ci", "--junit-results=#{output}", "--single-run=true", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
 
         desc "Run #{env} tests"
         task env => [:jshint, output, :java] do
