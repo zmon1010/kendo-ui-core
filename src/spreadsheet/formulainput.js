@@ -318,8 +318,12 @@
         _paste: function(ev) {
             ev.preventDefault();
             var pos = this.getPos();
-            var clipboard = ev.originalEvent.clipboardData;
-            var text = clipboard.getData("text/plain");
+            var text;
+            if (kendo.support.browser.msie) {
+                text = window.clipboardData.getData("Text");
+            } else {
+                text = ev.originalEvent.clipboardData.getData("text/plain");
+            }
             var val = this.value();
             val = val.substr(0, pos.begin) + text + val.substr(pos.end);
             this.value(val);
