@@ -146,7 +146,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when an upload / remove operation has been completed successfully.Note: The success event fires only when the upload is in\n\t\t/// async mode.
+        /// Fires when an upload / remove operation has been completed successfully.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the success event.</param>
         public UploadEventBuilder Success(string handler)
@@ -157,7 +157,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fires when an upload / remove operation has been completed successfully.Note: The success event fires only when the upload is in\n\t\t/// async mode.
+        /// Fires when an upload / remove operation has been completed successfully.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public UploadEventBuilder Success(Func<object, object> handler)

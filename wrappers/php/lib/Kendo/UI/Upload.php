@@ -219,8 +219,7 @@ occurring.
 
     /**
     * Sets the success event of the Upload.
-    * Fires when an upload / remove operation has been completed successfully.Note: The success event fires only when the upload is in
-async mode.
+    * Fires when an upload / remove operation has been completed successfully.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */

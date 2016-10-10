@@ -47190,8 +47190,7 @@ occurring.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fires when an upload / remove operation has been completed successfully.Note: The success event fires only when the upload is in
-async mode.</description>
+            <description>Fires when an upload / remove operation has been completed successfully.</description>
             <name>success</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -47478,8 +47477,7 @@ occurring.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fires when an upload / remove operation has been completed successfully.Note: The success event fires only when the upload is in
-async mode.</description>
+        <description>Fires when an upload / remove operation has been completed successfully.</description>
         <name>upload-success</name>
         <tag-class>com.kendoui.taglib.upload.SuccessFunctionTag</tag-class>
         <body-content>JSP</body-content>
