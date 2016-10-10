@@ -612,46 +612,51 @@
             ok(diagram._inactiveShapeItems.getByUid(item.uid));
         });
 
-        test("inactive item is removed after it has been synced", 0, function() {
+        asyncTest("inactive item is removed after it has been synced", 0, function() {
             item = dataSource.add({});
-            dataSource.sync();
-            diagram._inactiveShapeItems.forEach(function() {
-                ok(false);
+            dataSourceSync(function() {
+                diagram._inactiveShapeItems.forEach(function() {
+                    ok(false);
+                });
             });
         });
 
-        test("inactive item callbacks are executed after an item is synced with the dataItem as parameter", 1, function() {
+        asyncTest("inactive item callbacks are executed after an item is synced with the dataItem as parameter", 1, function() {
             item = dataSource.add({});
             var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
             inactiveItem.onActivate(function(e) {
+                start();
                 ok(item === e);
             });
             dataSource.sync();
         });
 
-        test("deferreds are resolved after an item is synced", 1, function() {
+        asyncTest("deferreds are resolved after an item is synced", 1, function() {
             item = dataSource.add({});
             var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
             var deferred = inactiveItem.onActivate(function() {});
             $.when(deferred).then(function() {
+                start();
                 ok(true);
             });
             dataSource.sync();
         });
 
-        test("adds shape for the inactive dataItem after it has been synced", 1, function() {
+        asyncTest("adds shape for the inactive dataItem after it has been synced", 1, function() {
             item = dataSource.add({});
-            dataSource.sync();
-            ok(diagram._dataMap[item.id]);
+            dataSourceSync(function() {
+                ok(diagram._dataMap[item.id]);
+            });
         });
 
-        test("adds existing shape for the inactive item if the element is set", 1, function() {
+        asyncTest("adds existing shape for the inactive item if the element is set", 1, function() {
             item = dataSource.add({});
             var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
             var shape = new kendo.dataviz.diagram.Shape();
             inactiveItem.element = shape;
-            dataSource.sync();
-            ok(diagram._dataMap[item.id] === shape);
+            dataSourceSync(function() {
+                ok(diagram._dataMap[item.id] === shape);
+            });
         });
 
         test("does not add shape to undo redo stack for existing shape if undoable is set to false", 1, function() {
@@ -664,6 +669,14 @@
             dataSource.sync();
             equal(diagram.undoRedoService.count(), count);
         });
+
+        var dataSourceSync = function (assertCallback) {
+            dataSource.one("sync", function() {
+                start();
+                assertCallback();
+            });
+            dataSource.sync();
+        };
 
     })();
 
@@ -1012,23 +1025,25 @@
             teardown: destroyDiagram
         });
 
-        test("_syncShapeChanges syncs dataSource", function() {
+        asyncTest("_syncShapeChanges syncs dataSource", function() {
             dataSource.at(0).dirty = true;
             dataSource.one("sync", function() {
+                start();
                 ok(true);
             });
             diagram._syncShapeChanges();
         });
 
-        test("_syncConnectionChanges syncs connectionsDataSource", function() {
+        asyncTest("_syncConnectionChanges syncs connectionsDataSource", function() {
             connectionsDataSource.at(0).dirty = true;
             connectionsDataSource.one("sync", function() {
+                start();
                 ok(true);
             });
             diagram._syncConnectionChanges();
         });
 
-        test("_syncConnectionChanges syncs connectionsDataSource after the deferred connection updates are resolved", function() {
+        asyncTest("_syncConnectionChanges syncs connectionsDataSource after the deferred connection updates are resolved", function() {
             var deferred = $.Deferred();
             diagram._deferredConnectionUpdates.push(deferred);
             connectionsDataSource.at(0).dirty = true;
@@ -1038,18 +1053,20 @@
             diagram._syncConnectionChanges();
 
             connectionsDataSource.sync = function() {
+                start();
                 ok(true);
             };
             deferred.resolve();
         });
 
-        test("_syncChanges syncs dataSource and connectionsDataSource", 2, function() {
+        asyncTest("_syncChanges syncs dataSource and connectionsDataSource", 2, function() {
             dataSource.at(0).dirty = true;
             connectionsDataSource.at(0).dirty = true;
             dataSource.one("sync", function() {
                 ok(true);
             });
             connectionsDataSource.one("sync", function() {
+                start();
                 ok(true);
             });
             diagram._syncChanges();

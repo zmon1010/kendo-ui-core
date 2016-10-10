@@ -2908,24 +2908,32 @@
             isConnected(connection, diagram.shapes[0].getConnector("left"), "source");
         });
 
-        test("Sets target if the shape does not exist but its dataItem is for inactive shape", function() {
+        asyncTest("Sets target if the shape does not exist but its dataItem is for inactive shape", function() {
             var dataItem = diagram.dataSource.add({});
             var shape = new Shape();
             shape.dataItem = dataItem;
             var connector = shape.getConnector("left");
             connection._updateConnector(connector, "target");
+            diagram.dataSource.one("sync", function() {
+                start();
+                isConnected(connection, diagram._dataMap[dataItem.id].getConnector("left"), "target");
+            });
+
             diagram.dataSource.sync();
-            isConnected(connection, diagram._dataMap[dataItem.id].getConnector("left"), "target");
         });
 
-        test("Sets source if the shape does not exist but its dataItem is for inactive shape", function() {
+        asyncTest("Sets source if the shape does not exist but its dataItem is for inactive shape", function() {
             var dataItem = diagram.dataSource.add({});
             var shape = new Shape();
             shape.dataItem = dataItem;
             var connector = shape.getConnector("left");
             connection._updateConnector(connector, "source");
+
+            diagram.dataSource.one("sync", function() {
+                start();
+                isConnected(connection, diagram._dataMap[dataItem.id].getConnector("left"), "source");
+            });
             diagram.dataSource.sync();
-            isConnected(connection, diagram._dataMap[dataItem.id].getConnector("left"), "source");
         });
     })();
 
@@ -3046,42 +3054,55 @@
             teardown: teardown
         });
 
-        test("Paste should insert shape", function () {
+        asyncTest("Paste should insert shape", function () {
+            diagram.dataSource.one("sync", function() {
+                start();
+                equal(diagram.dataSource.data().length, 2);
+                equal(diagram.shapes.length, 2);
+            });
+
             pasteShape();
-            equal(diagram.dataSource.data().length, 2);
-            equal(diagram.shapes.length, 2);
         });
 
-        test("Paste should sync dataSource", function () {
-            diagram.dataSource.bind("sync", function() {
+        asyncTest("Paste should sync dataSource", function () {
+            diagram.dataSource.one("sync", function() {
+                start();
                 ok(true);
             });
+
             pasteShape();
         });
 
-        test("Paste should set new shape position", function () {
+        asyncTest("Paste should set new shape position", function () {
+            diagram.dataSource.one("sync", function() {
+                start();
+                var shape = diagram.shapes[1];
+                var item = shape.dataItem;
+                var bounds = shape.bounds();
+                equal(item.x, 20);
+                equal(item.y, 20);
+                equal(bounds.x, 20);
+                equal(bounds.y, 20);
+            });
+
             pasteShape();
-            var shape = diagram.shapes[1];
-            var item = shape.dataItem;
-            var bounds = shape.bounds();
-            equal(item.x, 20);
-            equal(item.y, 20);
-            equal(bounds.x, 20);
-            equal(bounds.y, 20);
         });
 
-        test("Paste should set original shape options to new shape", function () {
+        asyncTest("Paste should set original shape options to new shape", function () {
+            diagram.dataSource.one("sync", function() {
+                start();
+                var shape = diagram.shapes[1];
+                var item = shape.dataItem;
+                var bounds = shape.bounds();
+
+                equal(item.width, 300);
+                equal(item.height, 300);
+                equal(item.text, "foo");
+
+                equal(bounds.width, 300);
+                equal(bounds.height, 300);
+            });
             pasteShape();
-            var shape = diagram.shapes[1];
-            var item = shape.dataItem;
-            var bounds = shape.bounds();
-
-            equal(item.width, 300);
-            equal(item.height, 300);
-            equal(item.text, "foo");
-
-            equal(bounds.width, 300);
-            equal(bounds.height, 300);
         });
 
         test("Paste should trigger add", function () {
@@ -3103,14 +3124,17 @@
             equal(diagram.dataSource.data().length, 1);
         });
 
-        test("Paste should add the shape passed to the add event after sync", function () {
+        asyncTest("Paste should add the shape passed to the add event after sync", function () {
             var shape;
             diagram.bind("add", function(e) {
                 shape = e.shape;
             });
-            pasteShape();
+            diagram.dataSource.one("sync", function() {
+                start();
+                ok(diagram.getShapeById(shape.id) === shape);
+            })
 
-            ok(diagram.getShapeById(shape.id) === shape);
+            pasteShape();
         });
 
     })();
@@ -3143,8 +3167,9 @@
             equal(diagram.connections.length, 3);
         });
 
-        test("Paste should sync connectionsDataSource", function () {
+        asyncTest("Paste should sync connectionsDataSource", function () {
             diagram.connectionsDataSource.bind("sync", function() {
+                start();
                 ok(true);
             });
             pasteConnection();
@@ -3171,24 +3196,28 @@
             equal(connection.dataItem.text, "foo");
         });
 
-        test("Paste should set connected shapes to new connection", function () {
+        asyncTest("Paste should set connected shapes to new connection", function () {
             var originalConnection = diagram.connections[1];
             originalConnection.select(true);
             diagram.shapes[0].select();
             diagram.shapes[1].select();
             diagram.copy();
-            diagram.paste();
 
-            var connection = diagram.connections[2];
-            var sourceShape = diagram.shapes[2];
-            var targetShape = diagram.shapes[3];
-            var source = connection.source();
-            var target = connection.target();
-            var item = connection.dataItem;
-            equal(item.from, sourceShape.dataItem.id);
-            equal(item.to, targetShape.dataItem.id);
-            ok(source.shape === sourceShape);
-            ok(target.shape === targetShape);
+            diagram.dataSource.one("sync", function() {
+                start();
+                var connection = diagram.connections[2];
+                var sourceShape = diagram.shapes[2];
+                var targetShape = diagram.shapes[3];
+                var source = connection.source();
+                var target = connection.target();
+                var item = connection.dataItem;
+                equal(item.from, sourceShape.dataItem.id);
+                equal(item.to, targetShape.dataItem.id);
+                ok(source.shape === sourceShape);
+                ok(target.shape === targetShape);
+            });
+
+            diagram.paste();
         });
 
         test("Paste should trigger add", function () {
@@ -3353,15 +3382,19 @@
         equal(d.dataSource.data().length, 3);
     });
 
-    test("should add the shape passed to the add event after sync", function () {
+    asyncTest("should add the shape passed to the add event after sync", function () {
         var shape;
         d.bind("add", function(e) {
             shape = e.shape;
         });
         d.createShape();
 
+        d.dataSource.one("sync", function() {
+            start();
+            ok(d.getShapeById(shape.id));
+        });
+
         d.dataSource.sync();
-        ok(d.getShapeById(shape.id));
     });
 
     // ------------------------------------------------------------

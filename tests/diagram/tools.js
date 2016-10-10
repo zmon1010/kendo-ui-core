@@ -73,6 +73,7 @@
             createDiagram();
         },
         teardown: function() {
+            removeMocksIn(diagram);
             diagram.destroy();
         }
     });
@@ -89,30 +90,34 @@
 
     test("should remove the selected shapes", function () {
         var shape = diagram.shapes[0];
-        diagram.remove = function(items) {
+
+        trackMethodCall(diagram, "remove");
+        diagram.remove.addMethod(function(items) {
             ok(shape === items[0]);
-        };
+        });
 
         shape.select(true);
         diagram.toolBar["delete"]();
     });
 
-    test("should note remove the selected shapes if the default action is prevented", 0, function () {
+    test("should not remove the selected shapes if the default action is prevented", function () {
         var shape = diagram.shapes[0];
         diagram.bind("remove", function(e) {
             e.preventDefault();
         });
-        diagram.remove = function(items) {
-            ok(false);
-        };
+
+        trackMethodCall(diagram, "remove");
 
         shape.select(true);
         diagram.toolBar["delete"]();
+
+        ok(!diagram.remove.called);
     });
 
-    test("should sync the shape changes", function () {
+    asyncTest("should sync the shape changes", function () {
         var shape = diagram.shapes[0];
-        diagram.dataSource.bind("sync", function() {
+        diagram.dataSource.one("sync", function() {
+            start();
             ok(true);
         });
         shape.select(true);
@@ -139,22 +144,24 @@
         diagram.toolBar["delete"]();
     });
 
-    test("should not remove the selected connections if the default action is prevented", 0, function () {
+    test("should not remove the selected connections if the default action is prevented", function () {
         var connection = diagram.connections[0];
                 diagram.bind("remove", function(e) {
             e.preventDefault();
         });
-        diagram.remove = function(items) {
-            ok(false);
-        };
+
+        trackMethodCall(diagram, "remove");
 
         connection.select(true);
         diagram.toolBar["delete"]();
+
+        ok(!diagram.remove.called);
     });
 
-    test("should sync the connection changes", function () {
+    asyncTest("should sync the connection changes", function () {
         var connection = diagram.connections[0];
-        diagram.connectionsDataSource.bind("sync", function() {
+        diagram.connectionsDataSource.one("sync", function() {
+            start();
             ok(true);
         });
         connection.select(true);
