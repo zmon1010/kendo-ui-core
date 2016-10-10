@@ -933,6 +933,7 @@
                     this.element.height(this._height);
                     this._isInFullScreen = false;
                 }
+                this._slider.resize();
             },
 
             volume: function (value) {
@@ -1022,8 +1023,8 @@
 
             _navigatable: function () {
                 this._fullscreenHandler = proxy(this._fullscreen, this);
-                    $(document)
-                        .on("webkitfullscreenchange mozfullscreenchange fullscreenchange" + ns, this._fullscreenHandler);
+                $(document)
+                    .on("webkitfullscreenchange mozfullscreenchange fullscreenchange" + ns, this._fullscreenHandler);
 
                 if (this.options.navigatable) {
                     this.wrapper.attr("tabIndex", 0);
@@ -1031,9 +1032,6 @@
                     this.wrapper
                         .on("keydown" + ns, this._keyDownHandler);
                 }
-                this._fullscreenHandler = proxy(this._fullscreen, this);
-                    $(document)
-                        .on("webkitfullscreenchange mozfullscreenchange fullscreenchange" + ns, this._fullscreenHandler);
             },
 
             _fullscreen: function () {
@@ -1054,6 +1052,7 @@
 
             _keyDown: function (e) {
                 e.preventDefault();
+                var fsButton = this.wrapper.find('span[class*="k-i-fullscreen"]');
                 if (e.keyCode === keys.SPACEBAR) {
                     if (this.isPlaying()) {
                         this.pause();
@@ -1062,16 +1061,21 @@
                         this.play();
                     }
                 }
-                if (e.keyCode === keys.ENTER) {
-                        this.wrapper.find('span[class*="k-i-fullscreen"]')
-                            .removeClass(FULLSCREEN_ENTER)
-                            .addClass(FULLSCREEN_EXIT);
-                        this.fullScreen(true);
-                    
+                else if (e.keyCode === keys.ENTER && !this._isInFullScreen) {
+                    fsButton
+                        .removeClass(FULLSCREEN_ENTER)
+                        .addClass(FULLSCREEN_EXIT);
+                    this.fullScreen(true);
                 }
-                if (e.keyCode === 77) {
+                else if (e.keyCode === 77) {
                     var muted = this.mute();
                     this.mute(!muted);
+                }
+                else if (e.keyCode === keys.ESC && this._isInFullScreen) {
+                    fsButton
+                        .removeClass(FULLSCREEN_EXIT)
+                        .addClass(FULLSCREEN_ENTER);
+                    this.fullScreen(false);
                 }
             },
 
