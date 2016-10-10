@@ -61,7 +61,7 @@ module CodeGen::TypeScript
     }
 
     UPLOAD_EVENT_OVERRIDES = {
-        'files' => 'UploadFile[]'
+        'files' => 'any[]'
     }
 
     DIAGRAM_EVENT_OVERRIDES = {
