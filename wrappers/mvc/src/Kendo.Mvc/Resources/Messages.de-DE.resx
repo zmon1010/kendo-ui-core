@@ -181,7 +181,7 @@
     <value>Numerierte Liste</value>
   </data>
   <data name="Editor_InsertUnorderedList" xml:space="preserve">
-    <value>Unsortierte Liste</value>
+    <value>Aufzählung</value>
   </data>
   <data name="Editor_InvalidFileType" xml:space="preserve">
     <value>Die ausgewählte Datei  "{0}" ist ungültig. Unterstützte Dateitypen sind {1}.</value>
@@ -259,34 +259,34 @@
     <value>Löschen</value>
   </data>
   <data name="Filter_DateIsEqualTo" xml:space="preserve">
-    <value>gleich sind</value>
+    <value>Ist gleich</value>
   </data>
   <data name="Filter_DateIsGreaterThan" xml:space="preserve">
-    <value>später sind als</value>
+    <value>Ist nach</value>
   </data>
   <data name="Filter_DateIsGreaterThanOrEqualTo" xml:space="preserve">
-    <value>gleich oder später sind als</value>
+    <value>Ist nach oder gleich</value>
   </data>
   <data name="Filter_DateIsLessThan" xml:space="preserve">
-    <value>früher sind als</value>
+    <value>Ist vor</value>
   </data>
   <data name="Filter_DateIsLessThanOrEqualTo" xml:space="preserve">
-    <value>früher oder gleich sind</value>
+    <value>Ist vor oder gleich</value>
   </data>
   <data name="Filter_DateIsNotEqualTo" xml:space="preserve">
-    <value>ist nicht gleich</value>
+    <value>Ist nicht gleich</value>
   </data>
   <data name="Filter_EnumIsEqualTo" xml:space="preserve">
-    <value>gleich sind</value>
+    <value>Ist gleich</value>
   </data>
   <data name="Filter_EnumIsNotEqualTo" xml:space="preserve">
-    <value>nicht gleich sind</value>
+    <value>Ist nicht gleich</value>
   </data>
   <data name="Filter_Filter" xml:space="preserve">
     <value>Filtern</value>
   </data>
   <data name="Filter_Info" xml:space="preserve">
-    <value>Zeilen mit Werten anzeigen, die</value>
+    <value>Zeigt Zeilen mit Werten, die</value>
   </data>
   <data name="Filter_IsFalse" xml:space="preserve">
     <value>falsch</value>
@@ -295,22 +295,22 @@
     <value>richtig</value>
   </data>
   <data name="Filter_NumberIsEqualTo" xml:space="preserve">
-    <value>gleich sind</value>
+    <value>Ist gleich</value>
   </data>
   <data name="Filter_NumberIsGreaterThan" xml:space="preserve">
-    <value>größer als sind</value>
+    <value>Ist größer als</value>
   </data>
   <data name="Filter_NumberIsGreaterThanOrEqualTo" xml:space="preserve">
-    <value>größer als oder gleich sind</value>
+    <value>Ist größer als oder gleich</value>
   </data>
   <data name="Filter_NumberIsLessThan" xml:space="preserve">
-    <value>kleiner sind</value>
+    <value>Ist kleiner</value>
   </data>
   <data name="Filter_NumberIsLessThanOrEqualTo" xml:space="preserve">
-    <value>kleiner als oder gleich sind</value>
+    <value>Ist kleiner als oder gleich</value>
   </data>
   <data name="Filter_NumberIsNotEqualTo" xml:space="preserve">
-    <value>nicht gleich sind</value>
+    <value>Ist nicht gleich</value>
   </data>
   <data name="Filter_Or" xml:space="preserve">
     <value>Oder</value>
@@ -319,22 +319,22 @@
     <value>-Wählen Sie-</value>
   </data>
   <data name="Filter_StringContains" xml:space="preserve">
-    <value>beinhalten</value>
+    <value>Beinhaltet</value>
   </data>
   <data name="Filter_StringDoesNotContain" xml:space="preserve">
-    <value>nicht beinhalten</value>
+    <value>Nicht beinhaltet</value>
   </data>
   <data name="Filter_StringEndsWith" xml:space="preserve">
-    <value>enden mit</value>
+    <value>Enden mit</value>
   </data>
   <data name="Filter_StringIsEqualTo" xml:space="preserve">
-    <value>gleich sind</value>
+    <value>Ist gleich</value>
   </data>
   <data name="Filter_StringIsNotEqualTo" xml:space="preserve">
-    <value>nicht gleich sind</value>
+    <value>Ist nicht gleich</value>
   </data>
   <data name="Filter_StringStartsWith" xml:space="preserve">
-    <value>beginnen mit</value>
+    <value>Beginnt mit</value>
   </data>
   <data name="Grid_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -376,22 +376,22 @@
     <value>Ziehen Sie eine Spaltenüberschrift hierher, um nach dieser Spalte zu gruppieren</value>
   </data>
   <data name="Pager_Display" xml:space="preserve">
-    <value>Einträge {0} - {1} von {2}</value>
+    <value>Anzeigen der Elemente {0} - {1} von {2}</value>
   </data>
   <data name="Pager_Empty" xml:space="preserve">
     <value>keine Daten</value>
   </data>
   <data name="Pager_First" xml:space="preserve">
-    <value>Zur ersten Seite</value>
+    <value>Gehen Sie zur ersten Seite</value>
   </data>
   <data name="Pager_ItemsPerPage" xml:space="preserve">
     <value>Elemente pro Seite</value>
   </data>
   <data name="Pager_Last" xml:space="preserve">
-    <value>Zur letzten Seite</value>
+    <value>Gehen Sie zur letzten Seite</value>
   </data>
   <data name="Pager_Next" xml:space="preserve">
-    <value>Zur nächsten Seite</value>
+    <value>Gehen Sie zur nächsten Seite</value>
   </data>
   <data name="Pager_Of" xml:space="preserve">
     <value>von {0}</value>
@@ -400,7 +400,7 @@
     <value>Seite</value>
   </data>
   <data name="Pager_Previous" xml:space="preserve">
-    <value>Zur vorherigen Seite</value>
+    <value>Gehen Sie zur vorherigen Seite</value>
   </data>
   <data name="Pager_Refresh" xml:space="preserve">
     <value>Aktualisieren</value>
@@ -424,7 +424,7 @@
     <value>nicht erfolgreich</value>
   </data>
   <data name="Upload_StatusUploaded" xml:space="preserve">
-    <value>hochgeladen</value>
+    <value>hochgeladet</value>
   </data>
   <data name="Upload_StatusUploading" xml:space="preserve">
     <value>hochladen</value>
