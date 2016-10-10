@@ -633,6 +633,7 @@
                     }
                 }
                 else if (event.data === 1) {
+                    this._mediaDurationChange();
                     this._ytmedia.setVolume(this.volume());
                     if (this._sliderChangeFired) {
                         this._sliderChangeFired = false;
