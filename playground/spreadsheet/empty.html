@@ -37,6 +37,10 @@
      sheet.batch(function(){
          sheet.range("B2:H10").input('=RANDBETWEEN(1, 20)');
          sheet.range("A1").input('=INDEX(A:AX, 5, 5)');
+         sheet.range("B1").value("Much\nUnderlined\nText").underline(true).wrap(true);
+         sheet.range("C1").value("Much\nUnderlined\nText").underline(true).wrap(true).textAlign("center");
+         sheet.range("D1").value("Underlined").underline(true).bold(true);
+         sheet.range("E1").value("Much\nUnderlined\nText").underline(true).wrap(true).textAlign("right").italic(true);
      }, { recalc: true });
     </script>
   </body>
