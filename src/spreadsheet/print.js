@@ -458,14 +458,14 @@
         var rect_width  = cell.width  - 4;
         var rect_height = cell.height - 4;
         var font = makeFontDef(cell);
-        var style = { font: font };
+        var style = { font: font, whiteSpace: "pre" };
         var props = {
             font: font,
             fill: { color: color }
         };
         var lines = [], text_height = 0, top = rect_top;
         if (cell.wrap) {
-            lineBreak(text, style, rect_width).forEach(function(line){
+            paraBreak(text, style, rect_width).forEach(function(line){
                 var tmp = new drawing.Text(line.text, [ rect_left, top ], props);
                 top += line.box.height;
                 lines.push({ el: tmp, box: line.box });
@@ -524,14 +524,12 @@
         });
     }
 
-    function lineBreak(text, style, width) {
-        var lines = [];
+    function lineBreak(text, style, width, lines) {
         var len = text.length;
         var start = 0;
         while (start < len) {
             split(start, len, len);
         }
-        return lines;
         function split(min, eol, max) {
             var sub = text.substring(start, eol).trim();
             var box = kendo.util.measureText(sub, style);
@@ -546,6 +544,15 @@
                 split(min, (min + eol) >> 1, eol);
             }
         }
+    }
+
+    function paraBreak(text, style, width) {
+        var a = text.split(/\r?\n/);
+        var lines = [];
+        a.forEach(function(text){
+            lineBreak(text, style, width, lines);
+        });
+        return lines;
     }
 
     function makeFontDef(cell) {
