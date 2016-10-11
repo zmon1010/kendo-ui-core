@@ -599,28 +599,6 @@ defaults:
         editable: false
 -
     scope:
-        path: "php"
-    values:
-        product: "php-ui"
--
-    scope:
-        path: "api/php"
-    values:
-        product: "php-ui"
-        editable: false
--
-    scope:
-        path: "api/jsp"
-    values:
-        product: "jsp-ui"
-        editable: false
--
-    scope:
-        path: "jsp"
-    values:
-        product: "jsp-ui"
--
-    scope:
         path: "api"
     values:
         kind: "api"
