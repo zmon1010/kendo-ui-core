@@ -1412,13 +1412,15 @@
                 close: this.close.bind(this)
             });
 
+            var dialog = this.dialog();
             this.viewModel.bind("change", function(e) {
-                if(e.field === "extension") {
+                if (e.field === "extension") {
                     this.set("showPdfOptions", this.extension === ".pdf" ? true : false);
+                    dialog.center();
                 }
             });
 
-            kendo.bind(this.dialog().element, this.viewModel);
+            kendo.bind(dialog.element, this.viewModel);
         },
         options: {
             name: "Workbook",
