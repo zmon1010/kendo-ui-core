@@ -77,20 +77,33 @@
     });
 
     test("mute should not fire volumeChange if not needed", function () {
-        mediaPlayer.volume(97);            
-        mediaPlayer.play();         
+        mediaPlayer.volume(97);
+        mediaPlayer.play();
         mediaPlayer.bind("volumeChange", function (e) {
-            ok(false);            
+            ok(false);
         });
         mediaPlayer.mute(false);
-        ok(true);        
-    });    
+        ok(true);
+    });
 
     test("destroy function should stop playing", function () {
         mediaPlayer.play();
         mediaPlayer.destroy();
         ok(mediaPlayer.isPaused());
     });
+
+    test("fullscreen class should be added when fullscreen mode is triggered through api", function () {
+        mediaPlayer.play();
+        mediaPlayer.fullScreen(true);
+        ok(mediaPlayer.element.hasClass("k-mediaplayer-fullscreen"));
+    });
+
+    test("fullscreen class should be removed when leaving fullscreen mode through api", function () {
+        mediaPlayer.play();
+        mediaPlayer.fullScreen(true);
+        mediaPlayer.fullScreen(false);
+        ok(!mediaPlayer.element.hasClass("k-mediaplayer-fullscreen"));
+    });    
 
     test("changing player source using the media function should update the title", function () {
         var titlebar = mediaPlayer.titlebar();
@@ -105,34 +118,34 @@
     });
 
     test("media function should enable the dropdown if mutiple sources are passed", function () {
-        mediaPlayer.media({ 
-            title: "Test", 
+        mediaPlayer.media({
+            title: "Test",
             source: [{
-                quality: "Q1", 
-                url: "http://localhost" 
+                quality: "Q1",
+                url: "http://localhost"
             }, {
                 quality: "Q2",
                 url: "http://localhost"
             }]
         });
         ok(mediaPlayer.toolbar().wrapper.is(":visible"));
-    });    
+    });
 
     test("media function should disable the dropdown when single source is set", function () {
-        mediaPlayer.media({ 
-            title: "Test", 
+        mediaPlayer.media({
+            title: "Test",
             source: [{
-                quality: "Q1", 
-                url: "http://localhost" 
+                quality: "Q1",
+                url: "http://localhost"
             }, {
                 quality: "Q2",
                 url: "http://localhost"
             }]
         });
-        mediaPlayer.media({ 
-            title: "Test", 
+        mediaPlayer.media({
+            title: "Test",
             source: "http://localhost"
-        });   
+        });
         ok(mediaPlayer.dropdown().wrapper.is(":hidden"));
-    });   
+    });
 })();

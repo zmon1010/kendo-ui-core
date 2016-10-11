@@ -89,9 +89,9 @@
 
                 this._navigatable();
 
-               if (options.media){
-					this.media(this.options.media);
-				}
+                if (options.media) {
+                    this.media(this.options.media);
+                }
 
                 kendo.notify(this);
             },
@@ -161,7 +161,7 @@
                         tooltip: {
                             template: templates.toolTip
                         },
-                        dragHandleTitle:""
+                        dragHandleTitle: ""
                     });
                 }
             },
@@ -182,8 +182,8 @@
                         change: this._volumeChangeHandler,
                         tickPlacement: "none",
                         showButtons: false,
-                        tooltip: {enabled: false},
-                        dragHandleTitle:""
+                        tooltip: { enabled: false },
+                        dragHandleTitle: ""
                     });
                 }
             },
@@ -278,7 +278,7 @@
                                 template: templates.qualityDropDown
                             },
                             { type: "button", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" }
-                            ]
+                        ]
                     });
 
                     var volumeSpan = toolBarElement.find('span[class*="k-i-volume"]');
@@ -295,7 +295,7 @@
                     this._durationElement = toolBarElement.find(".k-mediaplayer-duration");
                     this._playButtonSpan = toolBarElement.find('span[class*="k-i-play"]');
                     this._playButton = this._playButtonSpan.parent("a");
-                    
+
                     if (this.options.autoPlay) {
                         this._playStateToggle(true);
                     }
@@ -321,7 +321,7 @@
                         animation: {
                             open: {
                                 effects: "slideIn:up",
-                                duration:1
+                                duration: 1
                             }
                         },
                         select: this._dropDownSelectHandler
@@ -335,8 +335,8 @@
                     this._dropDown.wrapper.addClass("k-button k-button-bare");
                     this._dropDown.wrapper.attr("title", this.options.messages.quality).hide();
                     this._dropDown.wrapper.find("span.k-i-arrow-s")
-                                            .removeClass('k-i-arrow-s')
-                                            .addClass('k-font-icon k-i-HD');
+                        .removeClass('k-i-arrow-s')
+                        .addClass('k-font-icon k-i-HD');
                     this._dropDown.list.addClass("k-quality-list");
                 }
             },
@@ -404,7 +404,7 @@
 
                 that._sliderChangeFired = true;
                 that._isDragging = false;
-                
+
                 if (!this.options.forwardSeek && slider.value() > this._seekBarLastPosition) {
                     setTimeout(function () {
                         slider.value(that._seekBarLastPosition);
@@ -462,7 +462,7 @@
                 var timeInMs = this._msToTime(currentTime);
                 this._currentTimeElement.text(kendo.toString(timeInMs, this._timeFormat));
                 if (!this._isDragging) {
-                    this._seekBarLastPosition = (currentTime + timeZoneSec) * 1000; 
+                    this._seekBarLastPosition = (currentTime + timeZoneSec) * 1000;
                     this._slider.value(this._seekBarLastPosition);
                 }
 
@@ -535,7 +535,7 @@
                         width: this.wrapper.width(),
                         height: this.wrapper.height()
                     });
-                    
+
                 if (!window.YT || !window.YT.Player) {
                     $.getScript("https://www.youtube.com/iframe_api");
                     this._youtubeApiReadyHandler = proxy(this._youtubeApiReady, this);
@@ -578,7 +578,7 @@
                 };
 
                 this._onYouTubePlayerReady = proxy(this._onYouTubePlayerReady, this);
-                window.onYouTubePlayerReady = this._onYouTubePlayerReady; 
+                window.onYouTubePlayerReady = this._onYouTubePlayerReady;
                 this._onPlayerStateChangeHandler = proxy(this._onPlayerStateChange, this);
                 window.onPlayerStateChange = this._onPlayerStateChange;
 
@@ -717,7 +717,7 @@
                         height: "100%"
                     });
 
-                if(this.options.mute){
+                if (this.options.mute) {
                     this.mute(true);
                 }
 
@@ -887,17 +887,11 @@
             fullScreen: function (enterFullScreen) {
                 if (typeof enterFullScreen === 'undefined') {
                     return this._isInFullScreen || false;
-                }                
+                }
                 var element = this.element.get(0);
                 if (enterFullScreen) {
-                    this._width = this.element.width();
-                    this._height = this.element.height();
-                    // Handles the case when the action is triggered by code and not user iteraction
-                    this.element.width("100%").height("100%").css({
-                        position: "fixed",
-                        top: 0,
-                        left: 0
-                    });
+                    // Handles the case when the action is triggered by code and not by user iteraction
+                    this.element.addClass("k-mediaplayer-fullscreen");
                     if (element.requestFullscreen) {
                         element.requestFullscreen();
                     } else if (element.webkitRequestFullscreen) {
@@ -923,14 +917,8 @@
                     } else if (document.msExitFullscreen) {
                         document.msExitFullscreen();
                     }
-                    // Handles the case when the action is triggered by code and not user iteraction
-                    this.element.css({
-                        position: "relative",
-                        top: null,
-                        left: null
-                    });
-                    this.element.width(this._width);
-                    this.element.height(this._height);
+                    // Handles the case when the action is triggered by code and not by user iteraction
+                    this.element.removeClass("k-mediaplayer-fullscreen");
                     this._isInFullScreen = false;
                 }
                 this._slider.resize();
@@ -953,7 +941,7 @@
             },
 
             mute: function (muted) {
-                var currentState = this._youTubeVideo ? (this._ytmedia && this._ytmedia.isMuted()) : (this._media && this._media.muted); 
+                var currentState = this._youTubeVideo ? (this._ytmedia && this._ytmedia.isMuted()) : (this._media && this._media.muted);
                 if (typeof muted === 'undefined' || muted === currentState) {
                     return currentState;
                 }
@@ -1037,17 +1025,17 @@
 
             _fullscreen: function () {
                 var isFullScreen = document.fullScreen ||
-                   document.mozFullScreen ||
-                   document.webkitIsFullScreen;
+                    document.mozFullScreen ||
+                    document.webkitIsFullScreen;
 
                 this._uiDisplay(true);
                 this._slider.resize();
 
                 if (!isFullScreen) {
                     this.wrapper.find('span[class*="k-i-fullscreen"]')
-                            .removeClass(FULLSCREEN_EXIT)
-                            .addClass(FULLSCREEN_ENTER);
-                        this.fullScreen(false);
+                        .removeClass(FULLSCREEN_EXIT)
+                        .addClass(FULLSCREEN_ENTER);
+                    this.fullScreen(false);
                 }
             },
 
@@ -1058,7 +1046,7 @@
                     if (this.isPlaying()) {
                         this.pause();
                     }
-                    else{
+                    else {
                         this.play();
                     }
                 }
