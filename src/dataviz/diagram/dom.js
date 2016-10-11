@@ -3381,7 +3381,7 @@
 
             _extendLayoutOptions: function(options) {
                 if(options.layout) {
-                    options.layout = deepExtend(diagram.LayoutBase.fn.defaultOptions || {}, options.layout);
+                    options.layout = deepExtend({}, diagram.LayoutBase.fn.defaultOptions || {}, options.layout);
                 }
             },
 
