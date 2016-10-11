@@ -95,6 +95,69 @@ namespace Telerik.Web.Spreadsheet.Tests
         }
 
         [Fact]
+        public void FromDocument_imports_cell_validation_allowNulls()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.AllowNulls;
+            Assert.Equal(true, value);
+        }
+
+        [Fact]
+        public void FromDocument_imports_cell_validation_type()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.Type;
+            Assert.Equal("SomeType", value);
+        }
+
+        [Fact]
+        public void FromDocument_imports_cell_validation_comparetype()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.CompareType;
+            Assert.Equal("SomeCompareType", value);
+        }
+
+        [Fact]
+        public void FromDocument_imports_cell_validation_datatype()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.DataType;
+            Assert.Equal("list", value);
+        }
+
+        [Fact]
+        public void FromDocument_imports_cell_validation_from()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.From;
+            Assert.Equal("SomeFrom", value);
+        }
+
+        [Fact]
+        public void FromDocument_imports_cell_validation_to()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.To;
+            Assert.Equal("SomeTo", value);
+        }
+
+        [Fact]
+        public void FromDocument_imports_cell_validation_showbutton()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.ShowButton;
+            Assert.Equal(true, value);
+        }
+
+        [Fact]
+        public void FromDocument_imports_cell_validation_messagetempalte()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.MessageTemplate;
+            Assert.Equal("SomeMessage", value);
+        }
+
+        [Fact]
+        public void FromDocument_imports_cell_validation_titletemplate()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.TitleTemplate;
+            Assert.Equal("SomeTitle", value);
+        }
+
+        [Fact]
         public void FromDocument_imports_merged_cells()
         {
             var from = new CellIndex(1, 0);

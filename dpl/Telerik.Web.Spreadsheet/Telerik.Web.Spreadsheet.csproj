@@ -140,6 +140,8 @@
     <Compile Include="Extensions\FilterExtensions.cs" />
     <Compile Include="Extensions\RadVerticalAlignmentExtensions.cs" />
     <Compile Include="Extensions\DocumentWorksheetExtensions.cs" />
+    <Compile Include="Models\Validation.Generated.cs" />
+    <Compile Include="Models\Validation.cs" />
     <Compile Include="Models\ValueFilterDate.cs" />
     <Compile Include="Models\Workbook.Json.cs" />
     <Compile Include="Provider\JsonSettings.cs" />
@@ -175,10 +177,10 @@
     <Compile Include="Models\SortColumn.Generated.cs" />
     <Compile Include="Models\Criteria.cs" />
     <Compile Include="Models\Criteria.Generated.cs" />
-	<Compile Include="Models\Pdf.cs" />
-	<Compile Include="Models\Pdf.Generated.cs" />
-	<Compile Include="Models\Margin.cs" />
-	<Compile Include="Models\Margin.Generated.cs" />
+    <Compile Include="Models\Pdf.cs" />
+    <Compile Include="Models\Pdf.Generated.cs" />
+    <Compile Include="Models\Margin.cs" />
+    <Compile Include="Models\Margin.Generated.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Kendo.snk" />

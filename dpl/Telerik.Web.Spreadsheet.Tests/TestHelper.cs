@@ -17,6 +17,20 @@ namespace Telerik.Web.Spreadsheet.Tests
             row.AddCell(new Cell { Index = 4, Formula = "A1 + B1" });
             row.AddCell(new Cell { Index = 5, Value = "Фу" });
             row.AddCell(new Cell { Index = 6, Value = "Фу", Link = "FooLink" });
+            Cell newCell = new Cell() { Index = 7, Value = "Фуу" };
+            newCell.Validation = new Validation()
+            {
+                AllowNulls = true,
+                DataType = "list",
+                Type = "SomeType",
+                CompareType = "SomeCompareType",
+                From = "SomeFrom",
+                To = "SomeTo",
+                ShowButton = true,
+                MessageTemplate = "SomeMessage",
+                TitleTemplate = "SomeTitle"
+            };
+            row.AddCell(newCell);
 
             sheet.AddRow(row);
 

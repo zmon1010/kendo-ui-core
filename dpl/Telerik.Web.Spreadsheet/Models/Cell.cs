@@ -32,6 +32,12 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "borderRight", EmitDefaultValue = false)]
         public BorderStyle BorderRight { get; set; }
 
+        /// <summary>
+        /// The information for the validation.
+        /// </summary>
+        [DataMember(Name = "validation", EmitDefaultValue = false)]
+        public Validation Validation { get; set; }
+
         internal Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
@@ -54,6 +60,11 @@ namespace Telerik.Web.Spreadsheet
             if (BorderRight != null)
             {
                 settings["borderRight"] = BorderRight.Serialize();
+            }
+
+            if (Validation != null)
+            {
+                settings["validation"] = Validation.Serialize();
             }
 
             return settings;
