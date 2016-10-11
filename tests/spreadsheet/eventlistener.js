@@ -8,7 +8,7 @@
             element = $("<div>").appendTo(QUnit.fixture);
             listener = new EventListener(element);
             $.fn.pressKey = function(key, ctrl, shift, alt) {
-                this.trigger({ type: "keydown", keyCode: key, ctrlKey: ctrl, shiftKey: shift, altKey: alt });
+                this.trigger({ type: "keydown", keyCode: key, ctrlKey: ctrl, shiftKey: shift, altKey: alt, originalEvent: { keyCode: key } });
             };
 
             $.fn.triggerMouseDown = function(eventData) {
