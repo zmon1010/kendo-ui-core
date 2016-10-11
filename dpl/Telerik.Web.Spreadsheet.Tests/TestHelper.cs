@@ -23,7 +23,7 @@ namespace Telerik.Web.Spreadsheet.Tests
                 AllowNulls = true,
                 DataType = "list",
                 Type = "SomeType",
-                CompareType = "SomeCompareType",
+                ComparerType = "SomeCompareType",
                 From = "SomeFrom",
                 To = "SomeTo",
                 ShowButton = true,

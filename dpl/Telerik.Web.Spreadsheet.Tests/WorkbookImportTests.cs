@@ -97,7 +97,7 @@ namespace Telerik.Web.Spreadsheet.Tests
         [Fact]
         public void FromDocument_imports_cell_validation_allowNulls()
         {
-            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.AllowNulls;
+            var value = GetCell(1, 6).Validation.AllowNulls;
             Assert.Equal(true, value);
         }
 
@@ -111,7 +111,7 @@ namespace Telerik.Web.Spreadsheet.Tests
         [Fact]
         public void FromDocument_imports_cell_validation_comparetype()
         {
-            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.CompareType;
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[6].Validation.ComparerType;
             Assert.Equal("SomeCompareType", value);
         }
 

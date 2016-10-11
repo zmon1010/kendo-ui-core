@@ -5,7 +5,7 @@ using System.Linq;
 namespace Telerik.Web.Spreadsheet
 {
     /// <summary>
-    /// Represents a BorderStyle
+    /// Represents a Validation
     /// </summary>
     [DataContract]
     public partial class Validation
@@ -19,8 +19,8 @@ namespace Telerik.Web.Spreadsheet
         /// <summary>
         /// 
         /// </summary>
-        [DataMember(Name = "compareType", EmitDefaultValue = false)]
-        public string CompareType { get; set; }
+        [DataMember(Name = "comparerType", EmitDefaultValue = false)]
+        public string ComparerType { get; set; }
 
         /// <summary>
         /// 
@@ -77,9 +77,9 @@ namespace Telerik.Web.Spreadsheet
                 settings["type"] = Type;
             }
 
-            if (CompareType != null)
+            if (ComparerType != null)
             {
-                settings["compareType"] = CompareType;
+                settings["comparerType"] = ComparerType;
             }
 
             if (DataType != null)
