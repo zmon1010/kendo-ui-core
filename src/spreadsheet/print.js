@@ -495,17 +495,31 @@
         lines.forEach(function(line){
             cont.append(line.el);
             var htrans = 0;
+            var text_width = line.box.width;
             switch (cell.textAlign) {
               case "center":
-                htrans = (rect_width - line.box.width) >> 1;
+                htrans = (rect_width - text_width) / 2;
                 break;
               case "right":
-                htrans = rect_width - line.box.width;
+                htrans = rect_width - text_width;
                 break;
             }
             if (htrans < 0) { htrans = 0; }
             if (htrans || vtrans) {
                 line.el.transform(geo.Matrix.translate(htrans, vtrans));
+            }
+            if (cell.underline) {
+                var height = cell.fontSize || 12;
+                var width = height / 12;
+                var path = new drawing.Path({ stroke: {
+                    width: width,
+                    color: color
+                }});
+                var pos = line.el.position();
+                var bottom = pos.y + height + vtrans + 2 * width;
+                path.moveTo(pos.x + htrans, bottom)
+                    .lineTo(pos.x + htrans + text_width, bottom);
+                cont.append(path);
             }
         });
     }
