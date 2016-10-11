@@ -953,8 +953,9 @@
             },
 
             mute: function (muted) {
-                if (typeof muted === 'undefined') {
-                    return this._youTubeVideo ? (this._ytmedia && this._ytmedia.isMuted()) : (this._media && this._media.muted);
+                var currentState = this._youTubeVideo ? (this._ytmedia && this._ytmedia.isMuted()) : (this._media && this._media.muted); 
+                if (typeof muted === 'undefined' || muted === currentState) {
+                    return currentState;
                 }
                 if (this._youTubeVideo) {
                     if (muted) {

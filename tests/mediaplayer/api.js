@@ -76,6 +76,16 @@
         ok(mediaPlayer.volume() === 97);
     });
 
+    test("mute should not fire volumeChange if not needed", function () {
+        mediaPlayer.volume(97);            
+        mediaPlayer.play();         
+        mediaPlayer.bind("volumeChange", function (e) {
+            ok(false);            
+        });
+        mediaPlayer.mute(false);
+        ok(true);        
+    });    
+
     test("destroy function should stop playing", function () {
         mediaPlayer.play();
         mediaPlayer.destroy();
