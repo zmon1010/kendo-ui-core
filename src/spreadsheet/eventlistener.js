@@ -41,10 +41,19 @@
         return false;
     };
 
-    var keyName = function(keyCode) {
+    var keyName = function(event) {
+        var keyCode = event.keyCode;
         var name = KEY_NAMES[keyCode];
 
         if (!name && isAlphaNum(keyCode)) {
+            name = ":alphanum";
+        }
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
+        //
+        // Fix for https://github.com/telerik/kendo-ui-core/issues/2284
+        // (starting editor with `=` on Firefox)
+        if (!name && event.key && event.key.length == 1) {
             name = ":alphanum";
         }
 
@@ -75,7 +84,7 @@
         },
 
         keyDown: function(e) {
-            this.handleEvent(e, keyName(e.keyCode));
+            this.handleEvent(e, keyName(e.originalEvent));
         },
 
         mouse: function(e) {
