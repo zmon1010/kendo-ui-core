@@ -21,7 +21,6 @@ namespace Kendo.Mvc.UI
             DefaultToolGroup = new EditorToolGroup(this);
 
             Template = new HtmlTemplate();
-            Messages = new EditorMessages();
             StyleSheets = new List<string>();
             Pdf = new PDFSettings();
 
@@ -37,14 +36,15 @@ namespace Kendo.Mvc.UI
 
             TagName = "textarea";
 
-            ImageBrowserSettings = new EditorImageBrowserSettings(Messages.ImageBrowserMessages);
-            FileBrowserSettings = new EditorFileBrowserSettings(Messages.FileBrowserMessages);
+            
 
             //>> Initialization
         
             Deserialization = new EditorDeserializationSettings();
                 
             Immutables = new EditorImmutablesSettings();
+                
+            Messages = new EditorMessagesSettings();
                 
             PasteCleanup = new EditorPasteCleanupSettings();
                 
@@ -53,6 +53,9 @@ namespace Kendo.Mvc.UI
             Serialization = new EditorSerializationSettings();
                 
         //<< Initialization
+
+            ImageBrowserSettings = new EditorImageBrowserSettings(Messages.ImageBrowserMessages);
+            FileBrowserSettings = new EditorFileBrowserSettings(Messages.FileBrowserMessages);
         }
 
         //>> Fields
@@ -66,6 +69,12 @@ namespace Kendo.Mvc.UI
         public string Domain { get; set; }
         
         public EditorImmutablesSettings Immutables
+        {
+            get;
+            set;
+        }
+        
+        public EditorMessagesSettings Messages
         {
             get;
             set;
@@ -104,12 +113,6 @@ namespace Kendo.Mvc.UI
         }
 
         public EditorImageBrowserSettings ImageBrowserSettings
-        {
-            get;
-            private set;
-        }
-
-        public EditorMessages Messages
         {
             get;
             private set;
@@ -200,6 +203,11 @@ namespace Kendo.Mvc.UI
                 json["immutables"] = Immutables.Enabled;
             }
 
+            var messages = Messages.ToJson();
+            if (messages.Any())
+            {
+                json["messages"] = messages;
+            }
             var pasteCleanup = PasteCleanup.ToJson();
             if (pasteCleanup.Any())
             {
@@ -304,13 +312,6 @@ namespace Kendo.Mvc.UI
             if (Encode.HasValue && !Encode.Value)
             {
                 json["encoded"] = Encode.Value;
-            }
-
-            var messages = Messages.ToJson();
-
-            if (messages.Any())
-            {
-                json["messages"] = messages;
             }
 
             if (StyleSheets.Count > 0)

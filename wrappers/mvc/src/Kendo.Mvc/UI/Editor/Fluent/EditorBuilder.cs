@@ -159,13 +159,6 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-        public EditorBuilder Messages(Action<EditorMessagesBuilder> configurator)
-        {
-            configurator(new EditorMessagesBuilder(Component.Messages));
-
-            return this;
-        }
-
         /// <summary>
         /// Sets the CSS files that will be registered in the Editor's iframe
         /// </summary>
@@ -288,6 +281,16 @@ namespace Kendo.Mvc.UI.Fluent
             container.Immutables.Enabled = true;
             
             configurator(new EditorImmutablesSettingsBuilder(container.Immutables));
+            return this;
+        }
+        
+        /// <summary>
+        /// Defines the text of the labels that are shown within the editor. Used primarily for localization.
+        /// </summary>
+        /// <param name="configurator">The action that configures the messages.</param>
+        public EditorBuilder Messages(Action<EditorMessagesSettingsBuilder> configurator)
+        {
+            configurator(new EditorMessagesSettingsBuilder(container.Messages));
             return this;
         }
         

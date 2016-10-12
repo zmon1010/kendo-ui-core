@@ -837,8 +837,10 @@
     <Compile Include="UI\Diagram\Settings\DiagramShapeFillGradientSettings.cs" />
     <Compile Include="UI\DropDownListBase\Fluent\VirtualSettingsBuilder.cs" />
     <Compile Include="UI\DropDownListBase\VirtualSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorMessagesSettingsBuilder.cs" />
     <Compile Include="UI\Editor\Fluent\EditorPdfMarginSettingsBuilder.cs" />
     <Compile Include="UI\Editor\Fluent\EditorPdfSettingsBuilder.cs" />
+    <Compile Include="UI\Editor\Settings\EditorMessagesSettings.cs" />
     <Compile Include="UI\Editor\Settings\EditorPdfMarginSettings.cs" />
     <Compile Include="UI\Editor\Settings\EditorPdfSettings.cs" />
     <Compile Include="UI\Effects\Fluent\PopupCollisionBuilder.cs" />
@@ -1054,7 +1056,6 @@
     <Compile Include="UI\Editor\Fluent\EditorImageBrowserOperationBuilder.cs" />
     <Compile Include="UI\Editor\Fluent\EditorImageBrowserSettingsBuilder.cs" />
     <Compile Include="UI\Editor\Fluent\EditorStyleSheetBuilder.cs" />
-    <Compile Include="UI\Editor\Fluent\EditorMessagesBuilder.cs" />
     <Compile Include="UI\Editor\EditorImageBrowserSettings.cs" />
     <Compile Include="UI\Editor\FileBrowser\DirectoryBrowser.cs" />
     <Compile Include="UI\Editor\FileBrowser\DirectoryPermission.cs" />
