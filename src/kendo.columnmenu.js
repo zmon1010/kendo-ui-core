@@ -689,7 +689,7 @@ var __meta__ = { // jshint ignore:line
                             '<li><div class="k-filterable"></div></li>'+
                         '</ul></li>'+
                         '#if(lockedColumns){#'+
-                           '<li class="k-separator" role="presentation"></li>'+
+                            '<li class="k-separator" role="presentation"></li>'+
                         '#}#'+
                     '#}#'+
                     '#if(lockedColumns){#'+
