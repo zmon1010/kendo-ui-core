@@ -6358,6 +6358,7 @@ var __meta__ = { // jshint ignore:line
                     }
 
                     html += "<th scope='col' role='columnheader' " + field;
+                    html += " aria-haspopup='true'";
 
                     if (rowSpan && !columns[idx].colSpan) {
                         html += " rowspan='" + rowSpan + "'";
