@@ -165,7 +165,7 @@
 
         focused: function() {
             return this.element.find(".k-state-focused").length > 0 || this.preventPopupHide;
-        },		
+        },
 
         toolById: function(name) {
             var id, tools = this.tools;
@@ -592,7 +592,7 @@
 
         attachToolsEvents: function(element) {
             var that = this,
-                buttons = "[role=button].k-tool",
+                buttons = ".k-tool",
                 enabledButtons = buttons + ":not(.k-state-disabled)",
                 disabledButtons = buttons + ".k-state-disabled";
 
