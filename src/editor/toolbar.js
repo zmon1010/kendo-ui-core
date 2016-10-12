@@ -164,7 +164,9 @@
         },
 
         focused: function() {
-            return this.element.find(".k-state-focused").length > 0 || this.preventPopupHide;
+            return this.element.find(".k-state-focused").length > 0 || 
+                    this.preventPopupHide || 
+                    (this.overflowPopup && this.overflowPopup.visible());
         },
 
         toolById: function(name) {
