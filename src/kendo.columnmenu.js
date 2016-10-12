@@ -487,6 +487,8 @@ var __meta__ = { // jshint ignore:line
                 return col.field;
             });
 
+            this.wrapper.find("[role='menuitemcheckbox']").attr("aria-checked", false);
+
             var checkboxes = this.wrapper
                 .find(".k-columns-item input[" + fieldAttr + "]")
                 .prop("disabled", false)
@@ -677,7 +679,7 @@ var __meta__ = { // jshint ignore:line
                     '#if(showColumns){#'+
                         '<li class="k-item k-columns-item" aria-haspopup="true"><span class="k-link"><span class="k-sprite k-i-columns"></span>${messages.columns}</span><ul>'+
                         '#for (var idx = 0; idx < columns.length; idx++) {#'+
-                            '<li role="menuitemcheckbox" aria-checked="true"><input type="checkbox" data-#=ns#field="#=columns[idx].field.replace(/\"/g,"&\\#34;")#" data-#=ns#index="#=columns[idx].index#" data-#=ns#locked="#=columns[idx].locked#"/>#=columns[idx].title#</li>'+
+                            '<li role="menuitemcheckbox" aria-checked="false"><input type="checkbox" data-#=ns#field="#=columns[idx].field.replace(/\"/g,"&\\#34;")#" data-#=ns#index="#=columns[idx].index#" data-#=ns#locked="#=columns[idx].locked#"/>#=columns[idx].title#</li>'+
                         '#}#'+
                         '</ul></li>'+
                         '#if(filterable || lockedColumns){#'+
