@@ -110,4 +110,23 @@ test("getFiles returns the correct file size for each file", 2, function() {
     equal(allFiles[0].size, 1);
     equal(allFiles[1].size, 2);
 });
+
+// ----------------------------------------------------------------
+module("focus", {
+    setup: moduleSetup,
+    teardown: moduleTeardown
+});
+
+test("focus adds k-state-focused to the upload button", function() {
+    uploadInstance.focus();
+
+    ok($(".k-upload-button", uploadInstance.wrapper).hasClass("k-state-focused"));
+});
+
+test("focus method sets the document's active element to the upload's element", function() {
+    uploadInstance.focus();
+
+    equal(document.activeElement.id, uploadInstance.element.attr("id"));
+});
+
 })();

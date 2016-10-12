@@ -172,6 +172,10 @@ var __meta__ = { // jshint ignore:line
             this.element.prop("disabled", enable);
         },
 
+        focus: function() {          
+            this.element.focus();
+        },
+
         destroy: function() {
             var that = this;
             var customDropZone = $(that.options.dropZone);
