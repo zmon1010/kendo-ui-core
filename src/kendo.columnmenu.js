@@ -147,6 +147,7 @@ var __meta__ = { // jshint ignore:line
                 options = that.options;
 
             that.wrapper.html(kendo.template(template)({
+                uid: kendo.guid(),
                 ns: kendo.ns,
                 messages: options.messages,
                 sortable: options.sortable,
@@ -486,6 +487,8 @@ var __meta__ = { // jshint ignore:line
                 return col.field;
             });
 
+            this.wrapper.find("[role='menuitemcheckbox']").attr("aria-checked", false);
+
             var checkboxes = this.wrapper
                 .find(".k-columns-item input[" + fieldAttr + "]")
                 .prop("disabled", false)
@@ -499,6 +502,8 @@ var __meta__ = { // jshint ignore:line
                     checked = true;
                     current.prop("checked", checked);
                 }
+
+                current.closest("[role='menuitemcheckbox']").attr("aria-checked", checked);
 
                 if (checked) {
                     if (lockedCount == 1 && locked) {
@@ -663,30 +668,30 @@ var __meta__ = { // jshint ignore:line
         }
     });
 
-    var template = '<ul>'+
+    var template = '<ul id="#=uid#">'+
                     '#if(sortable){#'+
                         '<li class="k-item k-sort-asc"><span class="k-link"><span class="k-sprite k-i-sort-asc"></span>${messages.sortAscending}</span></li>'+
                         '<li class="k-item k-sort-desc"><span class="k-link"><span class="k-sprite k-i-sort-desc"></span>${messages.sortDescending}</span></li>'+
                         '#if(showColumns || filterable){#'+
-                            '<li class="k-separator"></li>'+
+                            '<li class="k-separator" role="presentation"></li>'+
                         '#}#'+
                     '#}#'+
                     '#if(showColumns){#'+
-                        '<li class="k-item k-columns-item"><span class="k-link"><span class="k-sprite k-i-columns"></span>${messages.columns}</span><ul>'+
+                        '<li class="k-item k-columns-item" aria-haspopup="true"><span class="k-link"><span class="k-sprite k-i-columns"></span>${messages.columns}</span><ul>'+
                         '#for (var idx = 0; idx < columns.length; idx++) {#'+
-                            '<li><input type="checkbox" data-#=ns#field="#=columns[idx].field.replace(/\"/g,"&\\#34;")#" data-#=ns#index="#=columns[idx].index#" data-#=ns#locked="#=columns[idx].locked#"/>#=columns[idx].title#</li>'+
+                            '<li role="menuitemcheckbox" aria-checked="false"><input type="checkbox" data-#=ns#field="#=columns[idx].field.replace(/\"/g,"&\\#34;")#" data-#=ns#index="#=columns[idx].index#" data-#=ns#locked="#=columns[idx].locked#"/>#=columns[idx].title#</li>'+
                         '#}#'+
                         '</ul></li>'+
                         '#if(filterable || lockedColumns){#'+
-                            '<li class="k-separator"></li>'+
+                            '<li class="k-separator" role="presentation"></li>'+
                         '#}#'+
                     '#}#'+
                     '#if(filterable){#'+
-                        '<li class="k-item k-filter-item"><span class="k-link"><span class="k-sprite k-filter"></span>${messages.filter}</span><ul>'+
+                        '<li class="k-item k-filter-item" aria-haspopup="true"><span class="k-link"><span class="k-sprite k-filter"></span>${messages.filter}</span><ul>'+
                             '<li><div class="k-filterable"></div></li>'+
                         '</ul></li>'+
                         '#if(lockedColumns){#'+
-                            '<li class="k-separator"></li>'+
+                            '<li class="k-separator" role="presentation"></li>'+
                         '#}#'+
                     '#}#'+
                     '#if(lockedColumns){#'+
