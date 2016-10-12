@@ -100,7 +100,7 @@ namespace :generate do
         task :api => 'Kendo.Mvc.xml' do
             parser = CodeGen::MVC::API::XmlParser.new('wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.xml')
 
-            generator = CodeGen::MVC::API::Generator.new('docs-aspnet-mvc/api/aspnet-mvc/')
+            generator = CodeGen::MVC::API::Generator.new('docs-aspnet-mvc/api/')
 
             parser.components do |component|
                 generator.component(component)
