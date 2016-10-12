@@ -409,8 +409,11 @@ var BackspaceHandler = Class.extend({
         var emptyParagraphContent = editorNS.emptyElementContent;
         var editor = this.editor;
 
-        if (/t(able|body)/i.test(dom.name(ancestor))) {
-            range.selectNode(table);
+        if (inTable(range)) {
+            var removeTableContent = new RemoveTableContent(editor);
+            removeTableContent.remove(range);
+            editor.selectRange(range);
+            return true;
         }
 
         var marker = new Marker();

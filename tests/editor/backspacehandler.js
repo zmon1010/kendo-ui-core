@@ -44,6 +44,15 @@
         equal(editor.value(), '');
     });
 
+    test("removes table content from partially selection", function() {
+        var range = createRangeFromText(editor, '<table><tr><td><em>f|oo</em></td><td>test</td><td>b|ar</td></tr></table>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<table><tbody><tr><td><em>f</em></td><td>&nbsp;</td><td>ar</td></tr></tbody></table>');
+    });
+
     test("removes fully selected anchor", function() {
         var range = createRangeFromText(editor, 'foo <a src="#">|test text|</a> baz');
         editor.selectRange(range);
