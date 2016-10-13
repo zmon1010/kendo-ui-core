@@ -787,6 +787,25 @@
         equal(timeCell.length, 0);
     });
 
+    test("agenda displays two tasks for all day event ending at midnight", function() {
+        var agenda = agendaView({ date: new Date("2013/06/07 00:00") });
+
+        agenda.render([
+            new Event({
+                start: new Date("2013/06/06 14:00"),
+                end: new Date("2013/06/07 00:00"),
+                title: "event 1",
+                isAllDay: true
+            })
+        ]);
+
+        var table = agenda.element.find(".k-scheduler-table");
+
+        var timeCell = table.find("td.k-scheduler-timecolumn");
+
+        equal(timeCell.length, 1);
+    });
+
     module("grouped by date agenda view", {
         teardown: function() {
             if (agenda) {
@@ -931,7 +950,7 @@
         var agenda = groupedAgendaView({ date: new Date(2013, 1, 3, 0, 0, 0, 0)});
 
         var table = agenda.element.find(".k-scheduler-table");
-        equal(table.find("tr:has(td)").length, 5);
+        equal(table.find("tr:has(td)").length, 6);
     });
 
     test("agenda groups events having the same date", function() {
@@ -969,7 +988,7 @@
 
         var dateCells = table.find("td.k-scheduler-datecolumn");
 
-        equal(dateCells.length, 2);
+        equal(dateCells.length, 3);
     });
 
     test("agenda displays 'all day' in the time cell for all day events", function() {
@@ -1052,7 +1071,7 @@
 
         var timeCells = table.find("td.k-scheduler-timecolumn");
 
-        equal(timeCells.length, 5);
+        equal(timeCells.length, 6);
     });
 
     test("agenda renders rows with ARIA role", function() {

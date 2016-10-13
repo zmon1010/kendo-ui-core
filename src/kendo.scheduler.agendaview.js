@@ -355,9 +355,13 @@
                 for (var idx = 0; idx < events.length; idx++) {
                     var event = events[idx];
                     var start = event.start;
-                    var end = event.end;
+                    var end = event.isAllDay ? kendo.date.getDate(event.end) : event.end;
 
                     var eventDurationInDays = Math.ceil((end - kendo.date.getDate(start)) / kendo.date.MS_PER_DAY);
+
+                    if (event.isAllDay) {
+                        eventDurationInDays += 1;
+                    }
 
                     var task = event.clone();
                     task.startDate = kendo.date.getDate(start);
