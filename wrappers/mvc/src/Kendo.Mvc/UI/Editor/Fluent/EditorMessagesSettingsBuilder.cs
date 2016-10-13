@@ -321,12 +321,320 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// The title of the Accessibility in the Table Wizard dialog.
+        /// </summary>
+        /// <param name="value">The value that configures the accessibilitytab.</param>
+        public EditorMessagesSettingsBuilder AccessibilityTab(string value)
+        {
+            container.AccessibilityTab = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the aligncenter.</param>
+        public EditorMessagesSettingsBuilder AlignCenter(string value)
+        {
+            container.AlignCenter = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the aligncenterbottom.</param>
+        public EditorMessagesSettingsBuilder AlignCenterBottom(string value)
+        {
+            container.AlignCenterBottom = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the aligncentermiddle.</param>
+        public EditorMessagesSettingsBuilder AlignCenterMiddle(string value)
+        {
+            container.AlignCenterMiddle = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the aligncentertop.</param>
+        public EditorMessagesSettingsBuilder AlignCenterTop(string value)
+        {
+            container.AlignCenterTop = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignleft.</param>
+        public EditorMessagesSettingsBuilder AlignLeft(string value)
+        {
+            container.AlignLeft = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignleftbottom.</param>
+        public EditorMessagesSettingsBuilder AlignLeftBottom(string value)
+        {
+            container.AlignLeftBottom = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignleftmiddle.</param>
+        public EditorMessagesSettingsBuilder AlignLeftMiddle(string value)
+        {
+            container.AlignLeftMiddle = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignlefttop.</param>
+        public EditorMessagesSettingsBuilder AlignLeftTop(string value)
+        {
+            container.AlignLeftTop = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that removes the cell text's alignment.
+        /// </summary>
+        /// <param name="value">The value that configures the alignremove.</param>
+        public EditorMessagesSettingsBuilder AlignRemove(string value)
+        {
+            container.AlignRemove = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignright.</param>
+        public EditorMessagesSettingsBuilder AlignRight(string value)
+        {
+            container.AlignRight = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignrightbottom.</param>
+        public EditorMessagesSettingsBuilder AlignRightBottom(string value)
+        {
+            container.AlignRightBottom = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignrightmiddle.</param>
+        public EditorMessagesSettingsBuilder AlignRightMiddle(string value)
+        {
+            container.AlignRightMiddle = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignrighttop.</param>
+        public EditorMessagesSettingsBuilder AlignRightTop(string value)
+        {
+            container.AlignRightTop = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that aligns the cell text.
+        /// </summary>
+        /// <param name="value">The value that configures the alignment.</param>
+        public EditorMessagesSettingsBuilder Alignment(string value)
+        {
+            container.Alignment = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Associate cells with headers tool.
+        /// </summary>
+        /// <param name="value">The value that configures the associatecellswithheaders.</param>
+        public EditorMessagesSettingsBuilder AssociateCellsWithHeaders(string value)
+        {
+            container.AssociateCellsWithHeaders = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that changes the text background of the tables/cells.
+        /// </summary>
+        /// <param name="value">The value that configures the background.</param>
+        public EditorMessagesSettingsBuilder Background(string value)
+        {
+            container.Background = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that changes the border of tables.
+        /// </summary>
+        /// <param name="value">The value that configures the border.</param>
+        public EditorMessagesSettingsBuilder Border(string value)
+        {
+            container.Border = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The title of the tool that applies styling to elements. Deprecated.
         /// </summary>
         /// <param name="value">The value that configures the style.</param>
         public EditorMessagesSettingsBuilder Style(string value)
         {
             container.Style = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that adds caption to tables.
+        /// </summary>
+        /// <param name="value">The value that configures the caption.</param>
+        public EditorMessagesSettingsBuilder Caption(string value)
+        {
+            container.Caption = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that applies margin to table cells.
+        /// </summary>
+        /// <param name="value">The value that configures the cellmargin.</param>
+        public EditorMessagesSettingsBuilder CellMargin(string value)
+        {
+            container.CellMargin = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that applies padding to table cells.
+        /// </summary>
+        /// <param name="value">The value that configures the cellpadding.</param>
+        public EditorMessagesSettingsBuilder CellPadding(string value)
+        {
+            container.CellPadding = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the tool that applies spacing to table cells.
+        /// </summary>
+        /// <param name="value">The value that configures the cellspacing.</param>
+        public EditorMessagesSettingsBuilder CellSpacing(string value)
+        {
+            container.CellSpacing = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Cell tab in Table Wizard dialog.
+        /// </summary>
+        /// <param name="value">The value that configures the celltab.</param>
+        public EditorMessagesSettingsBuilder CellTab(string value)
+        {
+            container.CellTab = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Collapse borders option in Table Wizard.
+        /// </summary>
+        /// <param name="value">The value that configures the collapseborders.</param>
+        public EditorMessagesSettingsBuilder CollapseBorders(string value)
+        {
+            container.CollapseBorders = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Columns tool in Table Wizard.
+        /// </summary>
+        /// <param name="value">The value that configures the columns.</param>
+        public EditorMessagesSettingsBuilder Columns(string value)
+        {
+            container.Columns = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The status text of the tool that inserts tables, which indicates the dimensions of the inserted table.
+        /// </summary>
+        /// <param name="value">The value that configures the createtablehint.</param>
+        public EditorMessagesSettingsBuilder CreateTableHint(string value)
+        {
+            container.CreateTableHint = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the CSS Class dropdown tool.
+        /// </summary>
+        /// <param name="value">The value that configures the cssclass.</param>
+        public EditorMessagesSettingsBuilder CssClass(string value)
+        {
+            container.CssClass = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the OK buttons in editor's dialogs.
+        /// </summary>
+        /// <param name="value">The value that configures the dialogok.</param>
+        public EditorMessagesSettingsBuilder DialogOk(string value)
+        {
+            container.DialogOk = value;
 
             return this;
         }
@@ -343,23 +651,12 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The caption for the image width in the insertImage dialog.
+        /// The caption for the file title in the insertFile dialog.
         /// </summary>
-        /// <param name="value">The value that configures the imagewidth.</param>
-        public EditorMessagesSettingsBuilder ImageWidth(string value)
+        /// <param name="value">The value that configures the filetitle.</param>
+        public EditorMessagesSettingsBuilder FileTitle(string value)
         {
-            container.ImageWidth = value;
-
-            return this;
-        }
-        
-        /// <summary>
-        /// The caption for the image height in the insertImage dialog.
-        /// </summary>
-        /// <param name="value">The value that configures the imageheight.</param>
-        public EditorMessagesSettingsBuilder ImageHeight(string value)
-        {
-            container.ImageHeight = value;
+            container.FileTitle = value;
 
             return this;
         }
@@ -376,23 +673,122 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The caption for the file title in the insertFile dialog.
+        /// The title of the height fields.
         /// </summary>
-        /// <param name="value">The value that configures the filetitle.</param>
-        public EditorMessagesSettingsBuilder FileTitle(string value)
+        /// <param name="value">The value that configures the height.</param>
+        public EditorMessagesSettingsBuilder Height(string value)
         {
-            container.FileTitle = value;
+            container.Height = value;
 
             return this;
         }
         
         /// <summary>
-        /// The status text of the tool that inserts tables, which indicates the dimensions of the inserted table.
+        /// The title of the id fields.
         /// </summary>
-        /// <param name="value">The value that configures the createtablehint.</param>
-        public EditorMessagesSettingsBuilder CreateTableHint(string value)
+        /// <param name="value">The value that configures the id.</param>
+        public EditorMessagesSettingsBuilder Id(string value)
         {
-            container.CreateTableHint = value;
+            container.Id = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The caption for the image height in the insertImage dialog.
+        /// </summary>
+        /// <param name="value">The value that configures the imageheight.</param>
+        public EditorMessagesSettingsBuilder ImageHeight(string value)
+        {
+            container.ImageHeight = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The caption for the image width in the insertImage dialog.
+        /// </summary>
+        /// <param name="value">The value that configures the imagewidth.</param>
+        public EditorMessagesSettingsBuilder ImageWidth(string value)
+        {
+            container.ImageWidth = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Rows field in Table Wizard.
+        /// </summary>
+        /// <param name="value">The value that configures the rows.</param>
+        public EditorMessagesSettingsBuilder Rows(string value)
+        {
+            container.Rows = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Select All Cells tool.
+        /// </summary>
+        /// <param name="value">The value that configures the selectallcells.</param>
+        public EditorMessagesSettingsBuilder SelectAllCells(string value)
+        {
+            container.SelectAllCells = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Summary field in Table Wizard.
+        /// </summary>
+        /// <param name="value">The value that configures the summary.</param>
+        public EditorMessagesSettingsBuilder Summary(string value)
+        {
+            container.Summary = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Table tab in Table Wizard.
+        /// </summary>
+        /// <param name="value">The value that configures the tabletab.</param>
+        public EditorMessagesSettingsBuilder TableTab(string value)
+        {
+            container.TableTab = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Table Wizard tool.
+        /// </summary>
+        /// <param name="value">The value that configures the tablewizard.</param>
+        public EditorMessagesSettingsBuilder TableWizard(string value)
+        {
+            container.TableWizard = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Width fields.
+        /// </summary>
+        /// <param name="value">The value that configures the width.</param>
+        public EditorMessagesSettingsBuilder Width(string value)
+        {
+            container.Width = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The title of the Wrap Text option in Table Wizard.
+        /// </summary>
+        /// <param name="value">The value that configures the wraptext.</param>
+        public EditorMessagesSettingsBuilder WrapText(string value)
+        {
+            container.WrapText = value;
 
             return this;
         }

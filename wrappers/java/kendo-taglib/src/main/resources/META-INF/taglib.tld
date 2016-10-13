@@ -20169,6 +20169,12 @@ If function is assigned, the current path and image name will be provided.</desc
         <body-content>empty</body-content>
 
         <attribute>
+            <description>The title of the Accessibility in the Table Wizard dialog.</description>
+            <name>accessibilityTab</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The title of the tool that adds table columns on the left of the selection.</description>
             <name>addColumnLeft</name>
             <rtexprvalue>true</rtexprvalue>
@@ -20193,14 +20199,164 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignCenter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignCenterBottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignCenterMiddle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignCenterTop</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignLeft</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignLeftBottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignLeftMiddle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignLeftTop</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that removes the cell text's alignment.</description>
+            <name>alignRemove</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignRight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignRightBottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignRightMiddle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignRightTop</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that aligns the cell text.</description>
+            <name>alignment</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Associate cells with headers tool.</description>
+            <name>associateCellsWithHeaders</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The title of the tool that changes the text background color.</description>
             <name>backColor</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The title of the tool that changes the text background of the tables/cells.</description>
+            <name>background</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The title of the tool that makes text bold.</description>
             <name>bold</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that changes the border of tables.</description>
+            <name>border</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that adds caption to tables.</description>
+            <name>caption</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that applies margin to table cells.</description>
+            <name>cellMargin</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that applies padding to table cells.</description>
+            <name>cellPadding</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the tool that applies spacing to table cells.</description>
+            <name>cellSpacing</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Cell tab in Table Wizard dialog.</description>
+            <name>cellTab</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Clean Formatting tool.</description>
+            <name>cleanFormatting</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Collapse borders option in Table Wizard.</description>
+            <name>collapseBorders</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Columns tool in Table Wizard.</description>
+            <name>columns</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -20219,6 +20375,12 @@ If function is assigned, the current path and image name will be provided.</desc
         <attribute>
             <description>The status text of the tool that inserts tables, which indicates the dimensions of the inserted table.</description>
             <name>createTableHint</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the CSS Class dropdown tool.</description>
+            <name>cssClass</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -20249,6 +20411,12 @@ If function is assigned, the current path and image name will be provided.</desc
         <attribute>
             <description>The label of the insert button in all editor dialogs.</description>
             <name>dialogInsert</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the OK buttons in editor's dialogs.</description>
+            <name>dialogOk</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -20327,6 +20495,18 @@ If function is assigned, the current path and image name will be provided.</desc
         <attribute>
             <description>The title of the tool that lets users choose block formats.</description>
             <name>formatting</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the height fields.</description>
+            <name>height</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the id fields.</description>
+            <name>id</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -20481,6 +20661,24 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The title of the Print tool.</description>
+            <name>print</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Rows field in Table Wizard.</description>
+            <name>rows</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Select All Cells tool.</description>
+            <name>selectAllCells</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The title of the tool that strikes through text.</description>
             <name>strikethrough</name>
             <rtexprvalue>true</rtexprvalue>
@@ -20499,8 +20697,26 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The title of the Summary field in Table Wizard.</description>
+            <name>summary</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The title of the tool that makes text superscript.</description>
             <name>superscript</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Table tab in Table Wizard.</description>
+            <name>tableTab</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Table Wizard tool.</description>
+            <name>tableWizard</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -20525,6 +20741,18 @@ If function is assigned, the current path and image name will be provided.</desc
         <attribute>
             <description>The title of the tool that shows the editor value as HTML.</description>
             <name>viewHtml</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Width fields.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The title of the Wrap Text option in Table Wizard.</description>
+            <name>wrapText</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
