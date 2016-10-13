@@ -3315,7 +3315,6 @@ var __meta__ = { // jshint ignore:line
             if (that.options.enabled) {
                 this.sortable = this.element.kendoSortable({
                     connectWith: this.options.connectWith,
-                    filter: ">:not(.k-empty)",
                     hint: that.options.hint,
                     cursor: "move",
                     start: function(e) {
