@@ -34,7 +34,7 @@ class DataSourceFilterItem extends \Kendo\SerializableObject {
 
     /**
     * The filter operator (comparison).The supported operators are:The last five are supported only for string fields.
-    * @param string $value
+    * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Data\DataSourceFilterItem
     */
     public function operator($value) {

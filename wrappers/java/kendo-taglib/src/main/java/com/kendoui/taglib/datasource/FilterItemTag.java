@@ -62,6 +62,10 @@ public class FilterItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
         return "dataSource-filterItem";
     }
 
+    public void setOperator(FilterItemOperatorFunctionTag value) {
+        setEvent("operator", value.getBody());
+    }
+
     public java.lang.String getField() {
         return (java.lang.String)getProperty("field");
     }

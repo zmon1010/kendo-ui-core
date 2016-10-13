@@ -12473,6 +12473,12 @@ makes a HTTP request for every CRUD operation.</description>
     </tag>
 
 
+    <tag>
+        <description>The filter operator (comparison).The supported operators are:The last five are supported only for string fields.</description>
+        <name>dataSource-filterItem-operator</name>
+        <tag-class>com.kendoui.taglib.datasource.FilterItemOperatorFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>The grouping configuration of the data source. If set, the data items will be grouped when the data source is populated. By default, grouping is not applied.</description>
