@@ -203,20 +203,11 @@ function assertEvent(element, options) {
     var events = jQueryEvents(element);
     var type = getJQueryEventType(options.type);
     var event = events[type][0];
-
+    
     equal(options.type, event.origType);
     equal(type, event.type);
     equal(selector, event.selector);
     equal(namespace, event.namespace);
-}
-
-/* exported assertEvents */
-function assertEvents(element, events) {
-    equal(Object.keys(jQueryEvents(element)).length, events.length);
-
-    for (var i = 0; i < events.length; i++) {
-        assertEvent(element, events[i]);
-    }
 }
 
 /* exported roughlyEqual */

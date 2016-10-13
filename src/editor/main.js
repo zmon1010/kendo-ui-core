@@ -584,10 +584,7 @@
         },
 
         _registerHandler: function(element, type, handler) {
-            var editor = this;
             var NS = ".kendoEditor";
-            var eventNames;
-            var i;
 
             element = $(element);
 
@@ -603,18 +600,11 @@
                         }
                     }
                 } else {
-                    //map the original event to handle interaction on mobile platforms
-                    eventNames = kendo.applyEventMap(type).split(" ");
+                    type = type.split(" ").join(NS + " ")  + NS;
 
-                    for (i = 0; i < eventNames.length; i++) {
-                        editor._handlers.push({
-                            element: element,
-                            type: eventNames[i] + NS,
-                            handler: handler
-                        });
+                    this._handlers.push({ element: element, type: type, handler: handler });
 
-                        element.on(eventNames[i] + NS, handler);
-                    }
+                    element.on(type, handler);
                 }
             }
         },
@@ -657,7 +647,7 @@
             }
 
             this._registerHandler(blurTrigger, "blur", proxy(this._blur, this));
-            editor._registerHandler(mousedownTrigger, "down", proxy(editor._mousedown, editor));
+            this._registerHandler(mousedownTrigger, "mousedown ", proxy(this._mousedown, this));
 
             try {
                 doc.execCommand("enableInlineTableEditing", null, false);
@@ -665,6 +655,7 @@
 
             if (kendo.support.touch) {
                 this._registerHandler(doc, {
+                    "selectionchange": proxy(this._selectionChange, this),
                     "keydown": function() {
                         // necessary in iOS when touch events are bound to the page
                         if (kendo._activeElement() != doc.body) {
@@ -1295,6 +1286,6 @@
         };
     }
 
-})(window.kendo.jQuery);
+})(window.jQuery || window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
