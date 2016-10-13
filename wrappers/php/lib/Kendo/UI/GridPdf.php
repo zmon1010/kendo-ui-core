@@ -109,7 +109,7 @@ The default "auto" means paper size is determined by content.Supported values:
     /**
     * Sets the template option of the GridPdf.
     * A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include:
-* pageNumber
+* pageNum
 * totalPages
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\GridPdf
@@ -123,7 +123,7 @@ The default "auto" means paper size is determined by content.Supported values:
     /**
     * Sets the template option of the GridPdf.
     * A piece of HTML to be included in each page.  Can be used to display headers and footers.  See the documentation in drawDOM.Available template variables include:
-* pageNumber
+* pageNum
 * totalPages
     * @param string $value The template content.
     * @return \Kendo\UI\GridPdf
