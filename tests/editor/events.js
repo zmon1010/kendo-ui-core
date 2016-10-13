@@ -377,4 +377,74 @@ test("mouseleave events are detached from editor body on destroy", function() {
     ok(jQueryEventsInfo(editor.body, "mouseleave") === undefined);
 });
 
+    var selectionChangeCalls = 0;
+    var TIMEOUT = 100;
+
+    editor_module("editor events selectionChange", {
+        setup: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+
+            selectionChangeCalls = 0;
+
+            editor.bind("select", function() {
+                selectionChangeCalls++;
+            });
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    asyncTest("should be triggered on editor document mouseup", function() {
+        $(editor.document).mousedown().mouseup();
+
+        setTimeout(function() {
+            equal(selectionChangeCalls, 1);
+            start();
+        }, TIMEOUT);
+    });
+
+    asyncTest("should be triggered on document mouseup", function() {
+        $(window.document).mousedown().mouseup();
+
+        setTimeout(function() {
+            equal(selectionChangeCalls, 0);
+            start();
+        }, TIMEOUT);
+    });
+
+    module("editor events selectionChange in inline edit mode", {
+        setup: function() {
+            editor = $("<div id='editor-fixture' contenteditable='true'></div>").appendTo(QUnit.fixture)
+            .kendoEditor().data("kendoEditor");
+
+            selectionChangeCalls = 0;
+
+            editor.bind("select", function() {
+                selectionChangeCalls++;
+            });
+        },
+        teardown: function() {
+            editor.destroy();
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    asyncTest("should be triggered on editor body mouseup", function() {
+        $(editor.body).mousedown().mouseup();
+
+        setTimeout(function() {
+            equal(selectionChangeCalls, 1);
+            start();
+        }, TIMEOUT);
+    });
+
+    asyncTest("should be triggered on document mouseup", function() {
+        $(window.document).mousedown().mouseup();
+
+        setTimeout(function() {
+            equal(selectionChangeCalls, 0);
+            start();
+        }, TIMEOUT);
+    });
 }());
