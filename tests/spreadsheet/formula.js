@@ -2532,6 +2532,14 @@ TRUE, TRUE),, 1)": [[ -234.2371645 ],
         });
     });
 
+    test("CONCATENATE", function(){
+        calcTest({
+            "=CONCATENATE()"         : "#VALUE!",
+            '=CONCATENATE("1")'      : "1",
+            '=CONCATENATE("1", "2")' : "12"
+        });
+    });
+
     test("Float number precision", function(){
         var ss = new Spreadsheet();
         ss.fill({

@@ -2093,10 +2093,10 @@
     defineAlias("unichar", "char");
     defineAlias("unicode", "code");
 
-    defineFunction("concatenate", function(){
+    defineFunction("concatenate", function(args){
         var out = "";
-        for (var i = 0; i < arguments.length; ++i) {
-            out += arguments[i];
+        for (var i = 0; i < args.length; ++i) {
+            out += args[i];
         }
         return out;
     }).args([
