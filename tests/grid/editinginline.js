@@ -39,6 +39,44 @@
         }
     });
 
+    test("saveRow should returns resolved promise when not in edit mode", function() {
+        var grid = setup();
+
+        var promise = grid.saveRow();
+
+        equal(promise.state(), "resolved");
+    });
+
+    test("saveRow should returns rejected promise on validation errors", function() {
+        var grid = setup({ columns: ["foo", "name"], editable: "inline",
+            dataSource: {
+                schema: {
+                    model: {
+                        fields: {
+                            foo: { validation: { custom: function() { return false; } } }
+                        }
+                    }
+        }}});
+
+        grid.editRow(table.find("tr:first"));
+        var promise = grid.saveRow();
+
+        equal(promise.state(), "rejected");
+    });
+
+    test("saveRow should returns rejected promise save event is prevented", function() {
+        var grid = setup({
+            save: function(e) {
+                e.preventDefault();
+            }
+        });
+
+        grid.editRow(table.find("tr:first"));
+        var promise = grid.saveRow();
+
+        equal(promise.state(), "rejected");
+    });
+
     test("propagation is stopped when update is clicked", function() {
         var grid = setup({ columns: [{ command: ["edit"] }] });
         var e = new $.Event();
@@ -343,14 +381,16 @@
         ok(table.find("tr:eq(1)").hasClass("k-grid-edit-row"));
     });
 
-    test("saveRow switches edit row in display mode", function() {
+    asyncTest("saveRow switches edit row in display mode", 1, function() {
         var grid = setup({ columns: ["foo", "name"], editable: "inline" }),
             tr = table.find("tr:first");
 
         grid.editRow(tr);
-        grid.saveRow();
-
-        ok(!table.find("tr:first").find(":input").length);
+        grid.dataItem(tr).set("foo", "42");
+        grid.saveRow().done(function() {
+            start();
+            equal(table.find("tr:first").find("input").length, 0);
+        });
     });
 
     test("clicking update command calls saveRow", function() {
@@ -365,14 +405,16 @@
         equal(saveRow.calls("saveRow"), 1);
     });
 
-    test("saveRow destroyes Editable", function() {
+    asyncTest("saveRow destroyes Editable", 1, function() {
         var grid = setup({ columns: ["foo", "name"], editable: "inline" }),
             tr = table.find("tr:first");
 
         grid.editRow(tr);
-        grid.saveRow(tr);
-
-        ok(!table.find("tr:first").data("kendoEditable"));
+        grid.dataItem(tr).set("foo", "42");
+        grid.saveRow(tr).done(function() {
+            start();
+            ok(!table.find("tr:first").data("kendoEditable"));
+        });
     });
 
     test("saveRow calls validate", function() {
@@ -588,14 +630,17 @@
         ok(!grid.table.find(".k-icon:first").hasClass("k-i-expand"));
     });
 
-    test("saveRow detaches button click handlers", function() {
+    asyncTest("saveRow detaches button click handlers", 1, function() {
         var grid = setup({ columns: ["foo", "name"], editable: "inline" }),
             tr = table.find("tr:first");
 
         grid.editRow(tr);
-        grid.saveRow();
+        grid.dataItem(tr).set("foo", "42");
+        grid.saveRow(tr).done(function() {
+            start();
+            ok(!$._data(tr[0], "events"));
+        });
 
-        ok(!$._data(tr[0], "events"));
     });
 
     test("calling cancelRow from within the edit event does not throw error", 1, function() {

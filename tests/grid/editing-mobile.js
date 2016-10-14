@@ -89,12 +89,13 @@
         ok(grid.view === grid.pane.view(), "Current view is not the one which wraps the Grid");
     });
 
-    test("click on update button navigates back to grid view", function() {
+    asyncTest("saveRow navigates back to grid view", 1, function() {
         var grid = setup();
 
         grid.editRow(grid.items().eq(0));
-        grid.editView.element.find(".k-grid-update").click();
-
-        ok(grid.view === grid.pane.view(), "Current view is not the one which wraps the Grid");
+        grid.saveRow(grid.items().eq(0)).done(function() {
+            start();
+            ok(grid.view === grid.pane.view(), "Current view is not the one which wraps the Grid");
+        });
     });
 })();

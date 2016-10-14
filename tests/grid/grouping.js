@@ -103,6 +103,8 @@
 
         innerGrid.tbody.find("tr.k-grouping-row:first > td:first a").click();
         equal(masterExpandGroup.calls("expandGroup"), 0);
+
+        innerGrid.destroy();
     });
 
     test("expanding group with persist detail template state", function() {
