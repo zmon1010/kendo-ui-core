@@ -26,6 +26,8 @@ module("pdf mixin",  {
 
         QUnit.fixture.append(dom);
 
+        jasmine.clock().install();
+
         kendo.drawing.drawDOM = function(element) {
             return $.Deferred().resolve(new kendo.drawing.Group()).promise();
         };
@@ -37,6 +39,7 @@ module("pdf mixin",  {
         kendo.saveAs = $.noop;
     },
     teardown: function() {
+        jasmine.clock().uninstall();
         kendo.destroy(QUnit.fixture);
         kendo.saveAs = saveAs;
         kendo.drawing.drawDOM = drawDOM;
@@ -53,6 +56,8 @@ test("saveAsPDF fires the pdfExport event", function() {
     }).data("kendoPDF");
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF calls drawDOM with the widget wrapper", 1, function() {
@@ -66,6 +71,8 @@ test("saveAsPDF calls drawDOM with the widget wrapper", 1, function() {
     };
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF calls pdf.toDataURL", 1, function() {
@@ -78,6 +85,8 @@ test("saveAsPDF calls pdf.toDataURL", 1, function() {
     };
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF calls kendo.saveAs", 1, function() {
@@ -93,6 +102,8 @@ test("saveAsPDF calls kendo.saveAs", 1, function() {
     };
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF calls kendo.saveAs and passes the fileName option", function() {
@@ -107,6 +118,8 @@ test("saveAsPDF calls kendo.saveAs and passes the fileName option", function() {
     };
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF uses 'Export.pdf' as default file name", function() {
@@ -118,6 +131,8 @@ test("saveAsPDF uses 'Export.pdf' as default file name", function() {
     };
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF uses the pdf.proxyURL option", function() {
@@ -132,6 +147,8 @@ test("saveAsPDF uses the pdf.proxyURL option", function() {
     };
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF uses the pdf.proxyTarget option", function() {
@@ -147,6 +164,8 @@ test("saveAsPDF uses the pdf.proxyTarget option", function() {
     };
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF uses 'auto' as default paperSize", 1, function() {
@@ -167,6 +186,8 @@ test("saveAsPDF uses 'auto' as default paperSize", 1, function() {
     }
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsPDF passes the paperSize option", 1, function() {
@@ -190,6 +211,8 @@ test("saveAsPDF passes the paperSize option", 1, function() {
     }
 
     widget.saveAsPDF();
+
+    jasmine.clock().tick(1);
 });
 
 test("preventing pdfExport stops kendo.saveAs", 0, function() {
