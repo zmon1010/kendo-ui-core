@@ -345,6 +345,64 @@
         equal(element.find("span.k-font-icon.k-i-xls").length, 1);
     });
 
+    test("open popup on click", function() {
+        createWithTools([ "backgroundColor" ]);
+
+        var color = "#7fd13b";
+
+        sheet.range("A1").background(color);
+
+        var colorPickerEl = $("[data-property=background]");
+        var colorPicker = colorPickerEl.data("colorPicker");
+
+
+        colorPickerEl.click();
+
+        ok(colorPicker.popup.visible());
+    });
+
+    test("open popup on touchend", function() {
+        createWithTools([ "backgroundColor" ]);
+
+        var color = "#7fd13b";
+
+        sheet.range("A1").background(color);
+
+        var colorPickerEl = $("[data-property=background]");
+        var colorPicker = colorPickerEl.data("colorPicker");
+
+
+        colorPickerEl.triggerHandler("touchend");
+
+        ok(colorPicker.popup.visible());
+    });
+
+    test("open hyperlink dialog on click", 1, function() {
+        createWithTools([ "hyperlink" ]);
+
+        var hyperlinkEl = $("[data-tool=hyperlink]");
+        var hyperlinkButton = hyperlinkEl.data("button");
+
+        hyperlinkButton.toolbar.bind("dialog", function() {
+            ok(true);
+        });
+
+        hyperlinkEl.click();
+    });
+
+    test("open dialog on touchend", 1, function() {
+        createWithTools([ "hyperlink" ]);
+
+        var hyperlinkEl = $("[data-tool=hyperlink]");
+        var hyperlinkButton = hyperlinkEl.data("button");
+
+        hyperlinkButton.toolbar.bind("dialog", function() {
+            ok(true);
+        });
+
+        hyperlinkEl.triggerHandler("touchend");
+    });
+
     // ------------------------------------------------------------
     (function() {
         var openCommand;

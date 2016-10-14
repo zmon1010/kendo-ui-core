@@ -440,7 +440,7 @@
                             "</a>");
 
             this.element
-                .on("click", this.open.bind(this))
+                .on("click touchend", this.open.bind(this))
                 .attr("data-command", options.command);
 
             this.options = options;
@@ -474,7 +474,7 @@
 
             this._dialogName = options.dialogName;
 
-            this.element.bind("click", this.open.bind(this))
+            this.element.bind("click touchend", this.open.bind(this))
                         .data("instance", this);
         },
         open: function() {
@@ -503,7 +503,7 @@
         init: function(options, toolbar) {
             kendo.toolbar.OverflowButton.fn.init.call(this, options, toolbar);
 
-            this.element.on("click", this._click.bind(this));
+            this.element.on("click touchend", this._click.bind(this));
 
             this.message = this.options.text;
 
