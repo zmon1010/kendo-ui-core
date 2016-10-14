@@ -375,22 +375,25 @@
         equal(dataSource.at(0)._events["change"].length, 1);
     });
 
-    test("cancelRow cancel changes made only to the record", function() {
+    asyncTest("cancelRow cancel changes made only to the record", 2, function() {
         var grid = setup({ columns: ["foo", "name"], editable: "popup" }),
             tr = table.find("tr:first");
 
+        var cont = function() {
+            start();
+            var tr = table.find("tr:last");
+
+            grid.editRow(tr);
+            grid.dataItem(tr).set("foo", "foo");
+            grid.cancelRow(tr);
+
+            equal(grid.dataItem(table.find("tr:first")).get("foo"), "moo");
+            equal(grid.dataItem(table.find("tr:last")).get("foo"), "baz");
+        };
+
         grid.editRow(tr);
         grid.dataItem(tr).set("foo", "moo");
-        grid.saveRow();
-
-        tr = table.find("tr:last");
-
-        grid.editRow(tr);
-        grid.dataItem(tr).set("foo", "foo");
-        grid.cancelRow(tr);
-
-        equal(grid.dataItem(table.find("tr:first")).get("foo"), "moo");
-        equal(grid.dataItem(table.find("tr:last")).get("foo"), "baz");
+        grid.saveRow().done(cont);
     });
 
     test("save event is raised when item is updated", 2, function() {

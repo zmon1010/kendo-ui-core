@@ -52,8 +52,11 @@
             $.fn.press = function(key, ctrl, shift) {
                 return this.trigger( { type: "keydown", keyCode: key, ctrlKey: ctrl, shiftKey: shift } );
             }
+
+            jasmine.clock().install();
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
             div.remove();
         }
@@ -256,6 +259,8 @@
 
         focusCell(grid).table.press(kendo.keys.ENTER).press(kendo.keys.ENTER);
 
+        jasmine.clock().tick(1);
+
         ok(!table.find("tr:first").hasClass("k-grid-edit-row"));
     });
 
@@ -340,6 +345,8 @@
 
         focusCell(grid).table.press(kendo.keys.ENTER).find(".k-grid-update").click();
 
+        jasmine.clock().tick(1);
+
         equal(table.find("td")[0], grid.current()[0]);
         ok(grid.current().hasClass("k-state-focused"));
         equal(document.activeElement, grid.table[0]);
@@ -352,7 +359,10 @@
         });
 
         grid.addRow();
+
         table.find(".k-grid-update").click();
+
+        jasmine.clock().tick(1);
 
         ok(grid.current());
         equal(document.activeElement, grid.table[0]);

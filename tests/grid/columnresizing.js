@@ -679,19 +679,20 @@
     });
 
     test("columnresize event is not raised if width is not changed", function() {
-         var grid = new Grid(table, {
+        var wasCalled = false;
+        var grid = new Grid(table, {
             dataSource: [ { foo: "foo", bar: "bar" } ],
             resizable: true,
             columns: ["foo", "bar"],
             columnResize: function(e) {
-               ok(false);
+                wasCalled = true;
             }
         }),
         firstColumn = grid.thead.find("th:first"),
         initialWidth = firstColumn[0].offsetWidth;
 
         resizeColumn(grid.wrapper, firstColumn, initialWidth, initialWidth);
-        expect(0);
+        equal(wasCalled, false, "unexpected call to columnResize event");
     });
 
     test("column footer cell width is persisted is grid is paged", function() {

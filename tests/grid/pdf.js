@@ -186,8 +186,9 @@
             return grid.saveAsPDF()
                 .fail(function(e) {
                     ok(true);
-                });
-        });
+                })
+                .done(start);
+        }, true);
     });
 
     asyncTest("avoidLinks is false by default", 1, function() {
@@ -198,8 +199,9 @@
             return grid.saveAsPDF()
                 .fail(function(e) {
                     ok(true);
-                });
-        });
+                })
+                .done(start);
+        }, true);
     });
 
     asyncTest("adds loading mask", 1, function() {

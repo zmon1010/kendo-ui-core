@@ -3343,16 +3343,19 @@ var __meta__ = { // jshint ignore:line
         },
 
         saveRow: function() {
-            var that = this,
-                container = that._editContainer,
-                model = that._modelForContainer(container),
-                editable = that.editable;
+            var container = this._editContainer;
+            var model = this._modelForContainer(container);
+            var deferred = $.Deferred();
 
-            if (container && editable && editable.end() &&
-                !that.trigger(SAVE, { container: container, model: model } )) {
-
-                that.dataSource.sync();
+            if (!container || !this.editable) {
+                return deferred.resolve().promise();
             }
+
+            if (!this.editable.end() || this.trigger(SAVE, { container: container, model: model })) {
+                return deferred.reject().promise();
+            }
+
+            return this.dataSource.sync();
         },
 
         _displayRow: function(row) {
@@ -4136,7 +4139,7 @@ var __meta__ = { // jshint ignore:line
             var isInLockedContainer = tableContainer.is(".k-grid-content-locked,.k-grid-header-locked");
             var isInContent = tableContainer.is(".k-grid-content-locked,.k-grid-content,.k-virtual-scrollable-wrap");
 
-            var scrollableContainer = $(this.content).find(">.k-virtual-scrollable-wrap").andSelf().last()[0];
+            var scrollableContainer = $(this.content).find(">.k-virtual-scrollable-wrap").addBack().last()[0];
 
             //adjust scroll vertically
             if (isInContent) {

@@ -123,14 +123,17 @@
 
         var dataSource = grid.dataSource;
 
+        var wasCalled = false;
+
         grid._dataSource();
 
         grid.bind("dataBound", function() {
-            ok(false, "Change event is not detached");
+            wasCalled = true;
         });
 
         dataSource.read();
-        expect(0);
+
+        equal(wasCalled, false, "Change event is not detached");
     });
 
     test("resetting DataSource rebinds the widget", function() {

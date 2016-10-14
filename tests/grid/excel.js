@@ -47,6 +47,8 @@ test("clicking the excel button calls the excel export method", 1, function() {
 });
 
 test("saveAsExcel passes through forceProxy option", function() {
+    jasmine.clock().install();
+
     dom.kendoGrid({
         excel: {
             forceProxy: true
@@ -61,8 +63,12 @@ test("saveAsExcel passes through forceProxy option", function() {
         }, function() {
             kendo.ui.Grid.fn.saveAsExcel = saveAsExcel;
             dom.getKendoGrid().saveAsExcel();
+
+            jasmine.clock().tick(1);
         });
     });
+
+    jasmine.clock().uninstall();
 });
 
 }());
