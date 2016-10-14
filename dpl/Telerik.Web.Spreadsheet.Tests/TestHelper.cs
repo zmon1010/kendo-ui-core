@@ -31,7 +31,7 @@ namespace Telerik.Web.Spreadsheet.Tests
                 TitleTemplate = "SomeTitle"
             };
             row.AddCell(newCell);
-
+            row.AddCell(new Cell { Index = 8, Value = "Фу", Editor = "color" });
             sheet.AddRow(row);
 
             return workbook;

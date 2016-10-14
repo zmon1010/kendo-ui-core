@@ -114,6 +114,11 @@ namespace Telerik.Web.Spreadsheet
         [DataMember(Name = "wrap", EmitDefaultValue = false)]
         public bool? Wrap { get; set; }
 
+        /// <summary>
+        /// Sets the editor of the cell.
+        /// </summary>
+        [DataMember(Name = "editor", EmitDefaultValue = false)]
+        public string Editor { get; set; }
 
         /// <summary>
         /// Serialize current instance to Dictionary
@@ -200,6 +205,11 @@ namespace Telerik.Web.Spreadsheet
             if (Wrap != null)
             {
                 settings["wrap"] = Wrap;
+            }
+
+            if (Editor != null)
+            {
+                settings["editor"] = Editor;
             }
 
             return settings;

@@ -158,6 +158,13 @@ namespace Telerik.Web.Spreadsheet.Tests
         }
 
         [Fact]
+        public void FromDocument_imports_cell_editor()
+        {
+            var value = TestHelper.CreateWorkbook().Sheets[0].Rows[0].Cells[7].Editor;
+            Assert.Equal("color", value);
+        }
+
+        [Fact]
         public void FromDocument_imports_merged_cells()
         {
             var from = new CellIndex(1, 0);
