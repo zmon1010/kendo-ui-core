@@ -6,13 +6,22 @@ var exporter;
 var dataSource;
 
 module("excel exporter", {
-
+    setup: function() {
+        jasmine.clock().install();
+    },
+    teardown: function() {
+        jasmine.clock().uninstall();
+    }
 });
 
 function testWorkbook(options, callback) {
     exporter = new Exporter(options);
 
-    exporter.workbook().then(callback);
+    var workbook = exporter.workbook();
+
+    jasmine.clock().tick(1);
+
+    workbook.done(callback);
 }
 
 test("returns a promise", function() {

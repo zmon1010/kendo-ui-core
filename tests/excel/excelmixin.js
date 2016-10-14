@@ -22,10 +22,13 @@ module("excel mixin",  {
 
         QUnit.fixture.append(dom);
 
+        jasmine.clock().install();
+
         kendo.ExcelExporter = function () {
             this.workbook = function() {
                 return $.Deferred(function(d) {
                     d.resolve({}, []);
+
                 }).promise();
             };
         };
@@ -36,6 +39,7 @@ module("excel mixin",  {
         kendo.saveAs = $.noop;
     },
     teardown: function() {
+        jasmine.clock().uninstall();
         kendo.destroy(QUnit.fixture);
         kendo.ExcelExporter = exporter;
         kendo.ooxml.Workbook = workbook;
@@ -51,6 +55,8 @@ test("saveAsExcel fires the excelExport event", function() {
     }).data("kendoExcel");
 
     widget.saveAsExcel();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsExcel creates kendo.ExcelExporter with its columns and data source", 2, function() {
@@ -88,6 +94,8 @@ test("saveAsExcel creates kendo.ooxml.Workbook from the result of the workbook m
     };
 
     widget.saveAsExcel();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsExcel calls the workbook method of the exporter", 1, function() {
@@ -151,6 +159,8 @@ test("saveAsExcel calls the toDataURL method of the workbook", 1, function() {
     };
 
     widget.saveAsExcel();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsExcel calls kendo.saveAs", 1, function() {
@@ -168,6 +178,8 @@ test("saveAsExcel calls kendo.saveAs", 1, function() {
     };
 
     widget.saveAsExcel();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsExcel calls kendo.saveAs and passes the fileName option of the workbook as file name", function() {
@@ -182,6 +194,8 @@ test("saveAsExcel calls kendo.saveAs and passes the fileName option of the workb
     };
 
     widget.saveAsExcel();
+
+    jasmine.clock().tick(1);
 });
 
 test("data is available in the excelExport event arguments", 1, function() {
@@ -202,6 +216,8 @@ test("data is available in the excelExport event arguments", 1, function() {
     }).data("kendoExcel");
 
     widget.saveAsExcel();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsExcel uses 'Export.xlsx' as default file name", function() {
@@ -213,6 +229,8 @@ test("saveAsExcel uses 'Export.xlsx' as default file name", function() {
     };
 
     widget.saveAsExcel();
+
+    jasmine.clock().tick(1);
 });
 
 test("saveAsExcel uses the excel.proxyURL option", function() {
@@ -227,6 +245,8 @@ test("saveAsExcel uses the excel.proxyURL option", function() {
     };
 
     widget.saveAsExcel();
+
+    jasmine.clock().tick(1);
 });
 
 test("preventing excelExport stops kendo.saveAs", 0, function() {
