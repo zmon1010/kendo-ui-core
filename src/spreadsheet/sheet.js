@@ -1306,7 +1306,7 @@
 
             callback.call(this);
 
-            return this.suspendChanges(suspended).triggerChange(reason);
+            return this.suspendChanges(suspended).triggerChange(reason || { recalc: true });
         },
 
         _sortBy: function(ref, columns) {
