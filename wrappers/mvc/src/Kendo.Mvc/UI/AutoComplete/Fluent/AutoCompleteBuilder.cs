@@ -18,6 +18,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Use to enable or disable clear button functionality.
+        /// </summary>
+        /// <param name="enable">The boolean value.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().AutoComplete()
+        ///	           .Name("AutoComplete")
+        ///	           .ClearButton(false) //disable clear button
+        ///	%&gt;
+        /// </code>
+        /// </example>
+        public AutoCompleteBuilder ClearButton(bool enable)
+        {
+            Component.ClearButton = enable;
+
+            return this;
+        }
+
+        /// <summary>
         /// Configures the client-side events.
         /// </summary>
         /// <param name="clientEventsAction">The client events action.</param>

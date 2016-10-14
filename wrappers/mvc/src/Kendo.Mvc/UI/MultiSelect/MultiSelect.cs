@@ -29,6 +29,12 @@
             set;
         }
 
+        public bool? ClearButton
+        {
+            get;
+            set;
+        }
+
         public string DataValueField
         {
             get;
@@ -106,6 +112,11 @@
             }
 
             var options = this.SeriailzeBaseOptions();
+
+            if (ClearButton != null)
+            {
+                options["clearButton"] = ClearButton;
+            }
 
             if (!string.IsNullOrEmpty(ItemTemplateId))
             {

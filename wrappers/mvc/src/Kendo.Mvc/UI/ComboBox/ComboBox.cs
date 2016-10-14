@@ -36,6 +36,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public bool? ClearButton
+        {
+            get;
+            set;
+        }
+
         public string DataValueField 
         { 
             get; 
@@ -87,6 +93,11 @@ namespace Kendo.Mvc.UI
             if (AutoBind != null)
             {
                 options["autoBind"] = AutoBind;
+            }
+
+            if (ClearButton != null)
+            {
+                options["clearButton"] = ClearButton;
             }
 
             if (!string.IsNullOrEmpty(DataValueField))

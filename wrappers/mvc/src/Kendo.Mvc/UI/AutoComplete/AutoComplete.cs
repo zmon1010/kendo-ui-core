@@ -11,6 +11,12 @@ namespace Kendo.Mvc.UI
             : base(viewContext, initializer, viewData, urlGenerator)
         {
         }
+
+        public bool? ClearButton
+        {
+            get;
+            set;
+        }
         
         public bool? HighlightFirst
         {
@@ -39,6 +45,11 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = this.SeriailzeBaseOptions();
+
+            if (ClearButton != null)
+            {
+                options["clearButton"] = ClearButton;
+            }
 
             if (HighlightFirst != null)
             {

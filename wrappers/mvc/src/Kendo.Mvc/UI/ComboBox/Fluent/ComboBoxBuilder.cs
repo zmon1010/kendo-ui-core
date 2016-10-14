@@ -112,6 +112,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Use to enable or disable clear button functionality.
+        /// </summary>
+        /// <param name="enable">The boolean value.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().ComboBox()
+        ///	           .Name("ComboBox")
+        ///	           .ClearButton(false) //disable clear button
+        ///	%&gt;
+        /// </code>
+        /// </example>
+        public ComboBoxBuilder ClearButton(bool enable)
+        {
+            Component.ClearButton = enable;
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets the field of the data item that provides the value content of the list items.
         /// </summary>
         /// <example>
