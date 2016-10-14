@@ -180,7 +180,7 @@
         var read = function(options) {
             var deferred = $.Deferred();
 
-            deferred.then(options.success, options.error);
+            deferred.done(options.success).fail(options.error);
 
             queue.push(deferred);
         };
@@ -1130,7 +1130,7 @@
         ds.read();
         read.resolve([ { id: 1, hasChildren: true } ]);
 
-        ds.load(ds.get(1)).then(function() {
+        ds.load(ds.get(1)).done(function() {
             ok(true);
         });
 
@@ -1162,9 +1162,9 @@
             { id: 3, hasChildren: true }
         ]);
 
-        ds.load(ds.get(1)).then($.proxy(ok, this, true));
-        ds.load(ds.get(2)).then($.proxy(ok, this, true));
-        ds.load(ds.get(3)).then($.proxy(ok, this, true));
+        ds.load(ds.get(1)).done($.proxy(ok, this, true));
+        ds.load(ds.get(2)).done($.proxy(ok, this, true));
+        ds.load(ds.get(3)).done($.proxy(ok, this, true));
 
         read.resolve([]).resolve([]).resolve([]);
     });

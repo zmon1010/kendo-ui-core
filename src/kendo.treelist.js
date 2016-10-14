@@ -526,10 +526,9 @@ var __meta__ = { // jshint ignore:line
                 method = "read";
             }
 
-            return this[method]({ id: model.id }).then(
-                proxy(this._modelLoaded, this, model.id),
-                proxy(this._modelError, this, model.id)
-            );
+            return this[method]({ id: model.id })
+                .done(proxy(this._modelLoaded, this, model.id))
+                .fail(proxy(this._modelError, this, model.id));
         },
 
         contains: function(root, child) {
@@ -2878,7 +2877,7 @@ var __meta__ = { // jshint ignore:line
                 model[parent.parentIdField] = parent.id;
                 index = this.dataSource.indexOf(parent) + 1;
 
-                this.expand(parent).then(proxy(this._insertAt, this, model, index));
+                this.expand(parent).done(proxy(this._insertAt, this, model, index));
 
                 return;
             }

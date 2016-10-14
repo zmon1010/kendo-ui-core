@@ -35,7 +35,8 @@
         var read = function(options) {
             var deferred = $.Deferred();
 
-            deferred.then(options.success, options.error);
+            deferred.done(options.success)
+                .fail(options.error);
 
             queue.push(deferred);
         };
