@@ -396,7 +396,7 @@
             filter: { filters: [{ operator: "doesnotcontain", field: "[foo]", value: "zoo" }] }
         }, "read");
 
-        ok(params.indexOf('FROM (SELECT (Filter([foo].MEMBERS, InStr([foo].CurrentMember.MEMBER_CAPTION,"zoo") = 0)) ON 0 FROM [cubeName])') > -1);
+        ok(params.indexOf('FROM (SELECT (-Filter([foo].MEMBERS, InStr([foo].CurrentMember.MEMBER_CAPTION,"zoo"))) ON 0 FROM [cubeName])') > -1);
     });
 
     test("parameterMap startswith filter is generated", function() {
@@ -448,7 +448,7 @@
             filter: { filters: [{ operator: "neq", field: "[foo]", value: "zoo" }] }
         }, "read");
 
-        ok(params.indexOf('FROM (SELECT (Filter([foo].MEMBERS, NOT [foo].CurrentMember.MEMBER_CAPTION = "zoo")) ON 0 FROM [cubeName])') > -1);
+        ok(params.indexOf('FROM (SELECT (-Filter([foo].MEMBERS, [foo].CurrentMember.MEMBER_CAPTION = "zoo")) ON 0 FROM [cubeName])') > -1);
     });
 
     test("parameterMap nested filter is generated", function() {
@@ -461,7 +461,7 @@
             filter: { filters: [{ operator: "neq", field: "[foo]", value: "zoo" }, { operator: "eq", field: "[foo]", value: "boo" }] }
         }, "read");
 
-        ok(params.indexOf('FROM (SELECT (Filter([foo].MEMBERS, NOT [foo].CurrentMember.MEMBER_CAPTION = "zoo")) ON 0 FROM ( SELECT (Filter([foo].MEMBERS, [foo].CurrentMember.MEMBER_CAPTION = "boo")) ON 0 FROM [cubeName] ))') > -1);
+        ok(params.indexOf('FROM (SELECT (-Filter([foo].MEMBERS, [foo].CurrentMember.MEMBER_CAPTION = "zoo")) ON 0 FROM ( SELECT (Filter([foo].MEMBERS, [foo].CurrentMember.MEMBER_CAPTION = "boo")) ON 0 FROM [cubeName] ))') > -1);
     });
 
     test("parameterMap sort is generated", function() {

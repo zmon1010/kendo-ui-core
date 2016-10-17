@@ -2746,11 +2746,11 @@ var __meta__ = { // jshint ignore:line
 
     var filterFunctionFormats = {
         contains: ", InStr({0}.CurrentMember.MEMBER_CAPTION,\"{1}\") > 0",
-        doesnotcontain: ", InStr({0}.CurrentMember.MEMBER_CAPTION,\"{1}\") = 0",
+        doesnotcontain: ", InStr({0}.CurrentMember.MEMBER_CAPTION,\"{1}\")",
         startswith: ", Left({0}.CurrentMember.MEMBER_CAPTION,Len(\"{1}\"))=\"{1}\"",
         endswith: ", Right({0}.CurrentMember.MEMBER_CAPTION,Len(\"{1}\"))=\"{1}\"",
         eq: ", {0}.CurrentMember.MEMBER_CAPTION = \"{1}\"",
-        neq: ", NOT {0}.CurrentMember.MEMBER_CAPTION = \"{1}\""
+        neq: ", {0}.CurrentMember.MEMBER_CAPTION = \"{1}\""
     };
 
     function serializeExpression(expression) {
@@ -2764,6 +2764,7 @@ var __meta__ = { // jshint ignore:line
             command += value;
             command += "}";
         } else {
+            command += operator == "neq" || operator == "doesnotcontain" ? "-" : "";
             command += "Filter(";
             command += field + ".MEMBERS";
             command += kendo.format(filterFunctionFormats[operator], field, value);
