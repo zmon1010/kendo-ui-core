@@ -597,9 +597,7 @@
     var ARGS_COUNTIFS = [
         [ "m1", "matrix" ],
         [ "c1", "anyvalue" ],
-        [ [ "m2", [ "and", "matrix",
-                    [ "assert", "$m1.width == $m2.width" ],
-                    [ "assert", "$m1.height == $m2.height" ] ] ],
+        [ [ "m2", "matrix" ],
           [ "c2", "anyvalue" ] ]
     ];
 
@@ -2335,8 +2333,21 @@
         }
 
         function lc(a) {
+            var num, str;
             if (typeof a == "string") {
-                return a.toLowerCase();
+                a = a.toLowerCase();
+            }
+            if (/^[0-9.]+%$/.test(a)) {
+                str = a.substr(0, a.length - 1);
+                num = parseFloat(str);
+                if (!isNaN(num) && num == str) {
+                    a = num / 100;
+                }
+            } else if (/^[0-9.]+$/.test(a)) {
+                num = parseFloat(a);
+                if (!isNaN(num) && num == a) {
+                    a = num;
+                }
             }
             return a;
         }
@@ -2345,10 +2356,15 @@
         function compLTE(a, b) { return lc(a) <= lc(b); }
         function compGT(a, b) { return lc(a) > lc(b); }
         function compGTE(a, b) { return lc(a) >= lc(b); }
-        function compNE(a, b) { return lc(a) != lc(b); }
+        function compNE(a, b) { return !compEQ(a, b); }
         function compEQ(a, b) {
             if (b instanceof RegExp) {
                 return b.test(a);
+            }
+            if (typeof a == "string" || typeof b == "string") {
+                // if either one is string, make sure both are strings
+                a = String(a);
+                b = String(b);
             }
             return lc(a) == lc(b);
         }
