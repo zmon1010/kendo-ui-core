@@ -97,7 +97,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Defines the hint message that will be displayed if value is invalid.
+        /// Defines the hint message that will be displayed if value is invalid.The template is giving an access to the following variables: from{0}, to{1}, fromFormula{2}, toFormula{3}, dataType{4}, type{5} and comparerType{6}.
         /// </summary>
         /// <param name="value">The value that configures the messagetemplate.</param>
         public SpreadsheetSheetRowCellValidationSettingsBuilder MessageTemplate(string value)
@@ -108,7 +108,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Defines the hint message that will be displayed if value is invalid.
+        /// Defines the hint message that will be displayed if value is invalid.The template is giving an access to the following variables: from{0}, to{1}, fromFormula{2}, toFormula{3}, dataType{4}, type{5} and comparerType{6}.
         /// </summary>
         /// <param name="value">The value that configures the messagetemplate.</param>
         public SpreadsheetSheetRowCellValidationSettingsBuilder MessageTemplateId(string value)

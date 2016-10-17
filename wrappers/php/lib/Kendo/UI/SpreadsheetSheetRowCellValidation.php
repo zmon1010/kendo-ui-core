@@ -70,7 +70,7 @@ class SpreadsheetSheetRowCellValidation extends \Kendo\SerializableObject {
 
     /**
     * Sets the messageTemplate option of the SpreadsheetSheetRowCellValidation.
-    * Defines the hint message that will be displayed if value is invalid.
+    * Defines the hint message that will be displayed if value is invalid.The template is giving an access to the following variables: from{0}, to{1}, fromFormula{2}, toFormula{3}, dataType{4}, type{5} and comparerType{6}.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SpreadsheetSheetRowCellValidation
     */
@@ -82,7 +82,7 @@ class SpreadsheetSheetRowCellValidation extends \Kendo\SerializableObject {
 
     /**
     * Sets the messageTemplate option of the SpreadsheetSheetRowCellValidation.
-    * Defines the hint message that will be displayed if value is invalid.
+    * Defines the hint message that will be displayed if value is invalid.The template is giving an access to the following variables: from{0}, to{1}, fromFormula{2}, toFormula{3}, dataType{4}, type{5} and comparerType{6}.
     * @param string $value The template content.
     * @return \Kendo\UI\SpreadsheetSheetRowCellValidation
     */
