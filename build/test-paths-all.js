@@ -43,6 +43,7 @@ exports.afterTestFiles = [
     'tests/upload/success.js',
     'tests/upload/error.js',
     'tests/upload/cancel.js',
+    'tests/upload/clear.js',
     'tests/upload/remove.js',
     'tests/upload/removeApi.js',
     'tests/upload/validation.js',
