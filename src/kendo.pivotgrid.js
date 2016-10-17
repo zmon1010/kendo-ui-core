@@ -1227,7 +1227,9 @@ var __meta__ = { // jshint ignore:line
             this.query({
                 columns: val,
                 rows: this.rowsAxisDescriptors(),
-                measures: this.measures()
+                measures: this.measures(),
+                sort: this.sort(),
+                filter: this.filter()
             });
         },
 
@@ -1244,7 +1246,9 @@ var __meta__ = { // jshint ignore:line
             this.query({
                 columns: this.columnsAxisDescriptors(),
                 rows: val,
-                measures: this.measures()
+                measures: this.measures(),
+                sort: this.sort(),
+                filter: this.filter()
             });
         },
 
@@ -1259,7 +1263,9 @@ var __meta__ = { // jshint ignore:line
             this.query({
                 columns: this.columnsAxisDescriptors(),
                 rows: this.rowsAxisDescriptors(),
-                measures: normalizeMeasures(val)
+                measures: normalizeMeasures(val),
+                sort: this.sort(),
+                filter: this.filter()
             });
         },
 

@@ -339,6 +339,7 @@ var __meta__ = { // jshint ignore:line
 
             this.rows = this._createTarget(rows, {
                 filterable: options.filterable,
+                sortable: options.sortable,
                 setting: "rows",
                 connectWith: columns,
                 messages: {

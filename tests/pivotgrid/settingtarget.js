@@ -833,4 +833,27 @@
         equal(children.eq(0).text(), "moo");
     });
 
+    test("removing an item does not erase sorting", function () {
+        var dataSource = new kendo.data.PivotDataSource({
+            columns: ["foo", "bar"],
+            sortable: true
+        });
+
+        var setting = new PivotSettingTarget($(div), {
+            dataSource: dataSource,
+            template: settingTemplateWithSort(),
+            sortable: true
+        });
+
+        setting.sort({
+            field: "foo",
+            dir: "asc"
+        });
+
+        setting.setDataSource(dataSource);
+        setting.remove("bar");
+
+        equal($(div).find(".k-i-sort-asc").length, 1);
+    });
+
 })();
