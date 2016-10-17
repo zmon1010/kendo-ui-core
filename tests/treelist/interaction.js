@@ -2,12 +2,15 @@
     var cleanup = {
         setup: function() {
            dom = $("<div />").appendTo(QUnit.fixture);
+           jasmine.clock().install();
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
             dom.remove();
 
             dom = instance = null;
+
+            jasmine.clock().uninstall();
         }
     };
 
@@ -680,6 +683,8 @@
         }, options));
 
         instance.saveAsExcel();
+
+        jasmine.clock().tick(1);
     }
 
     test("indents headers based on level", function() {
