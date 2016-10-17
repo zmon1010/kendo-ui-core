@@ -1236,7 +1236,8 @@ var __meta__ = { // jshint ignore:line
             };
 
             if (isHeightSet(element)) {
-                height = element.height() - header.outerHeight() - toolbar.outerHeight();
+                height = element.height() - header.outerHeight() - (toolbar.outerHeight() || 0);
+
                 contentWrap.height(height);
 
                 if (this._hasLockedColumns) {
