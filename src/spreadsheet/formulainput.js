@@ -333,40 +333,42 @@
 
         _move: function(key) {
             var list = this.list;
-            var pressed = false;
             var popup = this.popup;
-
-            if (key === keys.DOWN) {
-                list.focusNext();
-                if (!list.focus()) {
-                    list.focusFirst();
+            if (popup.visible()) {
+                if (key === keys.DOWN) {
+                    list.focusNext();
+                    if (!list.focus()) {
+                        list.focusFirst();
+                    }
+                    return true;
                 }
-                pressed = true;
-            } else if (key === keys.UP) {
-                list.focusPrev();
-                if (!list.focus()) {
-                    list.focusLast();
+                if (key === keys.UP) {
+                    list.focusPrev();
+                    if (!list.focus()) {
+                        list.focusLast();
+                    }
+                    return true;
                 }
-                pressed = true;
-            } else if (key === keys.ENTER) {
-                if (popup.visible()) {
+                if (key === keys.ENTER) {
                     list.select(list.focus());
+                    popup.close();
+                    return true;
                 }
-                popup.close();
-                pressed = true;
-            } else if (key === keys.TAB) {
-                list.select(list.focus());
-                popup.close();
-                pressed = true;
-            } else if (key === keys.PAGEUP) {
-                list.focusFirst();
-                pressed = true;
-            } else if (key === keys.PAGEDOWN) {
-                list.focusLast();
-                pressed = true;
+                if (key === keys.TAB) {
+                    list.select(list.focus());
+                    popup.close();
+                    return true;
+                }
+                if (key === keys.PAGEUP) {
+                    list.focusFirst();
+                    return true;
+                }
+                if (key === keys.PAGEDOWN) {
+                    list.focusLast();
+                    return true;
+                }
             }
-
-            return pressed;
+            return false;
         },
 
         _tokenContext: function() {
