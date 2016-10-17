@@ -704,7 +704,6 @@ var __meta__ = { // jshint ignore:line
                 var eventArgs = { files: files };
 
                 if (icon.hasClass("k-i-delete")) {
-                    debugger;
                     if (!that.trigger(REMOVE, eventArgs)) {
                         that._module.onRemove({target : $(fileEntry, that.wrapper)}, eventArgs.data, !hasValidationErrors);
                     }
