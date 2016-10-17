@@ -164,8 +164,8 @@
         },
 
         focused: function() {
-            return this.element.find(".k-state-focused").length > 0 || 
-                    this.preventPopupHide || 
+            return this.element.find(".k-state-focused").length > 0 ||
+                    this.preventPopupHide ||
                     (this.overflowPopup && this.overflowPopup.visible());
         },
 
@@ -594,7 +594,7 @@
 
         attachToolsEvents: function(element) {
             var that = this,
-                buttons = ".k-tool",
+                buttons = "[role=button].k-tool",
                 enabledButtons = buttons + ":not(.k-state-disabled)",
                 disabledButtons = buttons + ".k-state-disabled";
 
