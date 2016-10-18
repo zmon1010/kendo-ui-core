@@ -116,7 +116,7 @@ var WORKBOOK = kendo.template(
 
   '</definedNames>' +
   '# } #' +
-  '<calcPr calcId="145621" />' +
+  '<calcPr fullCalcOnLoad="1" calcId="145621" />' +
 '</workbook>');
 
 var WORKSHEET = kendo.template(
