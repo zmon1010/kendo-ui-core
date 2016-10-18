@@ -40,7 +40,7 @@
 
         var oldWidth = instance.columns[2].width;
         instance.autoFitColumn(2);
-        ok(oldWidth < instance.columns[2].width)
+        ok(oldWidth < instance.columns[2].width, oldWidth + " should be less than " + instance.columns[2].width)
     });
 
 })();

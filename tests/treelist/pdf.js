@@ -70,6 +70,8 @@
 // ------------------------------------------------------------
 (function() {
     var draw = kendo.drawing;
+    var exportPDF = draw.exportPDF;
+    var drawDOM = draw.drawDOM;
     var treelist;
     var saveAs;
 
@@ -102,6 +104,8 @@
             kendo.destroy(QUnit.fixture);
             QUnit.fixture.empty();
             kendo.saveAs = saveAs;
+            draw.exportPDF = exportPDF;
+            draw.drawDOM = drawDOM;
         }
     });
 
@@ -168,39 +172,46 @@
     });
 
     asyncTest("promise is rejected on drawing error", 1, function () {
-        pdfStubMethod(draw, "drawDOM", function (group) {
-            return $.Deferred().reject();
-        }, function () {
-            return treelist.saveAsPDF()
+        stub(draw, {
+            drawDOM: function () {
+                return $.Deferred().reject().promise();
+            }
+        });
+
+        treelist.saveAsPDF()
+                .always(start)
                 .fail(function (e) {
                     ok(true);
                 });
-        });
     });
 
     asyncTest("avoidLinks is passed through", 1, function() {
-        pdfStubMethod(draw, "drawDOM", function(group, options) {
-            ok(options.avoidLinks);
-            return $.Deferred().resolve(new kendo.drawing.Group());
-        }, function() {
-            treelist.options.pdf.avoidLinks = true;
-            return treelist.saveAsPDF()
-                .fail(function(e) {
-                    ok(true);
-                });
+        stub(draw, {
+            drawDOM: function(group, options) {
+                ok(options.avoidLinks);
+                return $.Deferred().resolve(new kendo.drawing.Group());
+            }
         });
+
+        treelist.saveAsPDF()
+                .always(start)
+                .fail(function(e) {
+                    ok(false);
+                });
     });
 
     asyncTest("avoidLinks is false by default", 1, function() {
-        pdfStubMethod(draw, "drawDOM", function(group, options) {
+        stub(draw, {
+            drawDOM: function(group, options) {
             ok(!options.avoidLinks);
             return $.Deferred().resolve(new kendo.drawing.Group());
-        }, function() {
-            return treelist.saveAsPDF()
+        }});
+
+        treelist.saveAsPDF()
+                .always(start)
                 .fail(function(e) {
-                    ok(true);
+                    ok(false);
                 });
-        });
     });
 
 })();

@@ -685,7 +685,7 @@ var __meta__ = { // jshint ignore:line
         return width;
     }
 
-   function syncTableHeight(table1, table2) {
+    function syncTableHeight(table1, table2) {
        table1 = table1[0];
        table2 = table2[0];
 
@@ -706,8 +706,11 @@ var __meta__ = { // jshint ignore:line
            }
            row.style.height = row.offsetHeight + diff + "px";
        }
-   }
+    }
 
+    function outerWidth(element) { return $(element).outerWidth() || 0; }
+
+    function outerHeight(element) { return $(element).outerHeight() || 0; }
 
     var Editor = kendo.Observable.extend({
         init: function(element, options) {
@@ -1236,7 +1239,7 @@ var __meta__ = { // jshint ignore:line
             };
 
             if (isHeightSet(element)) {
-                height = element.height() - header.outerHeight() - (toolbar.outerHeight() || 0);
+                height = element.height() - outerHeight(header) - outerHeight(toolbar);
 
                 contentWrap.height(height);
 
@@ -2286,7 +2289,7 @@ var __meta__ = { // jshint ignore:line
             var resizeHandle = this.resizeHandle;
             var position = th.position();
             var left = position.left;
-            var cellWidth = th.outerWidth();
+            var cellWidth = outerWidth(th);
             var container = th.closest("div");
             var clientX = e.clientX + $(window).scrollLeft();
             var indicatorWidth = this.options.columnResizeHandleWidth || 3;
@@ -2314,7 +2317,7 @@ var __meta__ = { // jshint ignore:line
                 .css({
                     top: position.top,
                     left: left + cellWidth - indicatorWidth - 1,
-                    height: th.outerHeight(),
+                    height: outerHeight(th),
                     width: indicatorWidth * 3
                 })
                 .data("th", th);
@@ -2405,7 +2408,7 @@ var __meta__ = { // jshint ignore:line
 
             var tables = headerTable.add(contentTable).add(footerTable);
 
-            var oldColumnWidth = th.outerWidth();
+            var oldColumnWidth = outerWidth(th);
 
             // reset the table and autofitted column widths
             // if scrolling is disabled, we need some additional repainting of the table
@@ -2415,7 +2418,12 @@ var __meta__ = { // jshint ignore:line
             tables.addClass("k-autofitting");
             tables.css("table-layout", "");
 
-            var newColumnWidth = Math.ceil(Math.max(th.outerWidth(), contentTable.find("tr").eq(0).children("td:visible").eq(index).outerWidth(), footerTable.find("tr").eq(0).children("td:visible").eq(index).outerWidth()));
+            var newColumnWidth = Math.ceil(
+                    Math.max(
+                        outerWidth(th),
+                        outerWidth(contentTable.find("tr").eq(0).children("td:visible").eq(index)),
+                        outerWidth(footerTable.find("tr").eq(0).children("td:visible").eq(index))
+            ));
 
             col.width(newColumnWidth);
             column.width = newColumnWidth;
@@ -2525,7 +2533,7 @@ var __meta__ = { // jshint ignore:line
                           .add(header.find(colSelector));
                     this.th = th;
                     this.startLocation = e.x.location;
-                    this.columnWidth = th.outerWidth();
+                    this.columnWidth = outerWidth(th);
                     this.table = this.col.closest("table");
                     this.totalWidth = this.table.width();
                 },
@@ -2547,7 +2555,7 @@ var __meta__ = { // jshint ignore:line
                     var column = grep(treelist.columns, function(c) {
                         return c.field == field;
                     });
-                    var newWidth = Math.floor(this.th.outerWidth());
+                    var newWidth = Math.floor(outerWidth(this.th));
 
                     column[0].width = newWidth;
                     treelist._resize();
