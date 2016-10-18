@@ -4395,7 +4395,7 @@
             rotateAnticlockwiseTool: function(options) {
                 this._appendGroup("rotate");
                 this._rotateGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-rotateccw",
+                    spriteCssClass: "k-icon k-i-rotate-ccw",
                     showText: "overflow",
                     text: "RotateAnticlockwise",
                     group: "rotate",
@@ -4406,7 +4406,7 @@
             rotateClockwiseTool: function(options) {
                 this._appendGroup("rotate");
                 this._rotateGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-rotatecw",
+                    spriteCssClass: "k-icon k-i-rotate-cw",
                     attributes: this._setAttributes({ action: "rotateClockwise", step: options.step }),
                     showText: "overflow",
                     text: "RotateClockwise",
