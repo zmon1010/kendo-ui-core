@@ -193,6 +193,7 @@
             }
         });
 
+        treelist.options.pdf.avoidLinks = true;
         treelist.saveAsPDF()
                 .always(start)
                 .fail(function(e) {
