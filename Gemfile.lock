@@ -22,7 +22,7 @@ GEM
       faraday (~> 0.8, < 0.10)
       hashie (>= 3.4)
       multi_json (>= 1.7.5, < 2.0)
-      nokogiri (>= 1.6.7)
+      nokogiri (>= 1.6.8)
       oauth2
     gssapi (1.2.0)
       ffi (>= 1.0.1)
