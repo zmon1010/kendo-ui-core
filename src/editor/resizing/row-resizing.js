@@ -18,6 +18,7 @@
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
+    var outerHeight = kendo._outerHeight;
 
     var NS = ".kendoEditorRowResizing";
     var RESIZE_HANDLE_CLASS = "k-row-resize-handle";
@@ -59,7 +60,7 @@
         elementBorderHovered: function(tableElement, e) {
             var that = this;
             var handleHeight = that.options.handle[HEIGHT];
-            var borderOffset = tableElement.offset().top + tableElement.outerHeight();
+            var borderOffset = tableElement.offset().top + outerHeight(tableElement);
             var mousePosition = e.clientY + $(tableElement[0].ownerDocument).scrollTop();
 
             if ((mousePosition > (borderOffset - handleHeight)) && (mousePosition < (borderOffset + handleHeight))) {
@@ -81,7 +82,7 @@
             var scrollBarWidth = options.rtl ? getScrollBarWidth(rootElement[0]) : 0;
 
             that.resizeHandle.css({
-                top: rowPosition.top + row.outerHeight() + scrollTopOffset - (handleHeight / 2),
+                top: rowPosition.top + outerHeight(row) + scrollTopOffset - (handleHeight / 2),
                 left: rowPosition.left + (scrollLeftOffset - scrollBarWidth),
                 position: "absolute"
             });
@@ -110,7 +111,7 @@
             var handleOffset = constrain({
                 value: resizeHandle.position().top + scrollTopOffset + e.y.delta,
                 min: $(row).position().top + scrollTopOffset + min,
-                max: tableBodyTopOffset + tableBody.outerHeight() + scrollTopOffset - options.handle[HEIGHT] - min
+                max: tableBodyTopOffset + outerHeight(tableBody) + scrollTopOffset - options.handle[HEIGHT] - min
             });
 
             resizeHandle.css({ top: handleOffset });
@@ -120,9 +121,9 @@
             var that = this;
             var options = that.options;
             var row = $(e.currentTarget).data(options.handle.dataAttribute);
-            var currentRowHeight = $(row).outerHeight();
+            var currentRowHeight = outerHeight($(row));
             var element = $(that.element);
-            var initialTableHeight = element.outerHeight();
+            var initialTableHeight = outerHeight(element);
             var tableBody = element.children(TBODY);
             var tableBodyHeight = tableBody.height();
             var initialStyleHeight = row.style[HEIGHT];
@@ -147,7 +148,7 @@
             var rows = $(that.element).children(TBODY).children(TR);
             var length = rows.length;
             var currentRowsHeights = rows.map(function() {
-                return $(this).outerHeight();
+                return outerHeight($(this));
             });
             var i;
 
@@ -163,7 +164,7 @@
             var rows = tableBody.children(TR);
             var length = rows.length;
             var currentRowsHeights = rows.map(function() {
-                return $(this).outerHeight();
+                return outerHeight($(this));
             });
             var i;
 

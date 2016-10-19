@@ -675,8 +675,8 @@
                 height: defined(options.height) ? options.height : "auto"
             });
 
-            width = this.element.outerWidth();
-            height = this.element.outerHeight();
+            width = kendo._outerWidth(this.element);
+            height = kendo._outerHeight(this.element);
 
             if (!visible) {
                 this.popup.wrapper.hide();

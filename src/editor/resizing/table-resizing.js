@@ -24,6 +24,8 @@
     var inPixels = ResizingUtils.inPixels;
     var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
+    var outerWidth = kendo._outerWidth;
+    var outerHeight = kendo._outerHeight;
 
     var NS = ".kendoEditorTableResizing";
     var RESIZE_HANDLE_WRAPPER_CLASS = "k-table-resize-handle-wrapper";
@@ -128,7 +130,7 @@
             var that = this;
             var element = $(that.element);
             var styleWidth = element[0].style[WIDTH];
-            var currentWidth = element.outerWidth();
+            var currentWidth = outerWidth(element);
             var parentWidth = element.parent().width();
             var maxWidth = that._getMaxDimensionValue(WIDTH);
             var newWidth;
@@ -178,7 +180,7 @@
             var that = this;
             var element = $(that.element);
             var styleHeight = element[0].style[HEIGHT];
-            var currentHeight = element.outerHeight();
+            var currentHeight = outerHeight(element);
             var parent = element.parent();
             var parentHeight = parent.height();
             var maxHeight = that._getMaxDimensionValue(HEIGHT);
@@ -305,7 +307,7 @@
             var rows = tableBody.children(ROW);
             var length = rows.length;
             var currentRowsHeights = rows.map(function() {
-                return $(this).outerHeight();
+                return outerHeight($(this));
             });
             var i;
 
@@ -319,7 +321,7 @@
             var rows = $(that.element).children(TBODY).children(ROW);
             var length = rows.length;
             var currentRowsHeights = rows.map(function() {
-                return $(this).outerHeight();
+                return outerHeight($(this));
             });
             var i;
 
@@ -402,8 +404,8 @@
 
             element.addClass(TABLE_RESIZING_CLASS);
 
-            that._initialElementHeight = element.outerHeight();
-            that._initialElementWidth = element.outerWidth();
+            that._initialElementHeight = outerHeight(element);
+            that._initialElementWidth = outerWidth(element);
             that._disableKeyboard();
         },
 

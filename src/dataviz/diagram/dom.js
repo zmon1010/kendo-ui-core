@@ -20,6 +20,8 @@
             Class = kendo.Class,
             proxy = $.proxy,
             deepExtend = kendo.deepExtend,
+            outerWidth = kendo._outerWidth,
+            outerHeight = kendo._outerHeight,
             extend = $.extend,
             HierarchicalDataSource = kendo.data.HierarchicalDataSource,
             Canvas = diagram.Canvas,
@@ -3092,7 +3094,7 @@
                 var height = element.height();
 
                 if (this.toolBar) {
-                    height -= this.toolBar.element.outerHeight();
+                    height -= outerHeight(this.toolBar.element);
                 }
 
                 return new Rect(0, 0, width, height);
@@ -3213,7 +3215,7 @@
             _containerOffset: function() {
                 var containerOffset = this.element.offset();
                 if (this.toolBar) {
-                    containerOffset.top += this.toolBar.element.outerHeight();
+                    containerOffset.top += outerHeight(this.toolBar.element);
                 }
                 return containerOffset;
             },
@@ -3724,8 +3726,8 @@
                                 click: proxy(this._toolBarClick, this),
                                 modal: true
                             });
-                            var popupWidth = this.singleToolBar._popup.element.outerWidth();
-                            var popupHeight = this.singleToolBar._popup.element.outerHeight();
+                            var popupWidth = outerWidth(this.singleToolBar._popup.element);
+                            var popupHeight = outerHeight(this.singleToolBar._popup.element);
                             if (element instanceof Shape) {
                                 var shapeBounds = this.modelToView(element.bounds(ROTATED));
                                 point = Point(shapeBounds.x, shapeBounds.y).minus(Point(

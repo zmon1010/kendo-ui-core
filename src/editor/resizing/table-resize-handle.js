@@ -13,6 +13,8 @@
     var Draggable = kendo.ui.Draggable;
     var Observable = kendo.Observable;
     var getScrollBarWidth = Editor.ResizingUtils.getScrollBarWidth;
+    var outerWidth = kendo._outerWidth;
+    var outerHeight = kendo._outerHeight;
 
     var NS = ".kendoEditorTableResizeHandle";
     var RESIZE_HANDLE_CLASS = "k-table-resize-handle";
@@ -257,8 +259,8 @@
 
             if (options.offset === HALF_INSIDE) {
                 return {
-                    top: position.top - (handle.outerHeight() / 2),
-                    left: position.left - (handle.outerWidth() / 2)
+                    top: position.top - (outerHeight(handle) / 2),
+                    left: position.left - (outerWidth(handle) / 2)
                 };
             }
 
@@ -291,8 +293,8 @@
             var offset = resizableElement.position();
 
             return {
-                top: offset.top + (resizableElement.outerHeight() / 2),
-                left: offset.left + resizableElement.outerWidth()
+                top: offset.top + (outerHeight(resizableElement) / 2),
+                left: offset.left + outerWidth(resizableElement)
             };
         }
     });
@@ -305,7 +307,7 @@
 
             return {
                 top: offset.top,
-                left: offset.left + (resizableElement.outerWidth() / 2)
+                left: offset.left + (outerWidth(resizableElement) / 2)
             };
         }
     });
@@ -318,7 +320,7 @@
 
             return {
                 top: offset.top,
-                left: offset.left + resizableElement.outerWidth()
+                left: offset.left + outerWidth(resizableElement)
             };
         }
     });
@@ -343,8 +345,8 @@
             var offset = resizableElement.position();
 
             return {
-                top: offset.top + resizableElement.outerHeight(),
-                left: offset.left + (resizableElement.outerWidth() / 2)
+                top: offset.top + outerHeight(resizableElement),
+                left: offset.left + (outerWidth(resizableElement) / 2)
             };
         }
     });
@@ -356,8 +358,8 @@
             var offset = resizableElement.position();
 
             return {
-                top: offset.top + resizableElement.outerHeight(),
-                left: offset.left + resizableElement.outerWidth()
+                top: offset.top + outerHeight(resizableElement),
+                left: offset.left + outerWidth(resizableElement)
             };
         }
     });
@@ -369,7 +371,7 @@
             var offset = resizableElement.position();
 
             return {
-                top: offset.top + resizableElement.outerHeight(),
+                top: offset.top + outerHeight(resizableElement),
                 left: offset.left
             };
         }
@@ -382,7 +384,7 @@
             var offset = resizableElement.position();
 
             return {                
-                top: offset.top + (resizableElement.outerHeight() / 2),
+                top: offset.top + (outerHeight(resizableElement) / 2),
                 left: offset.left
             };
         }

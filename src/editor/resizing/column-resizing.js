@@ -19,6 +19,7 @@
     var inPercentages = ResizingUtils.inPercentages;
     var toPercentages = ResizingUtils.toPercentages;
     var toPixels = ResizingUtils.toPixels;
+    var outerWidth = kendo._outerWidth;
 
     var NS = ".kendoEditorColumnResizing";
     var RESIZE_HANDLE_CLASS = "k-column-resize-handle";
@@ -61,7 +62,7 @@
             var that = this;
             var options = that.options;
             var handleWidth = options.handle.width;
-            var borderOffset = column.offset().left + (options.rtl ? 0 : column.outerWidth());
+            var borderOffset = column.offset().left + (options.rtl ? 0 : outerWidth(column));
             var mousePosition = e.clientX + $(column[0].ownerDocument).scrollLeft();
 
             if ((mousePosition > (borderOffset - handleWidth)) && (mousePosition < (borderOffset + handleWidth))) {
@@ -81,7 +82,7 @@
             var rootElement = $(options.rootElement);
             var scrollTopOffset = rootElement.is(BODY) ? 0 : rootElement.scrollTop();
             var scrollLeftOffset = rootElement.is(BODY) ? 0 : rootElement.scrollLeft();
-            var columnWidthOffset = rtl ? 0 : column.outerWidth();
+            var columnWidthOffset = rtl ? 0 : outerWidth(column);
             var scrollBarWidth = rtl ? getScrollBarWidth(rootElement[0]) : 0;
 
             that.resizeHandle.css({
@@ -108,9 +109,9 @@
             var handleWidth = options.handle ? options.handle.width : 0;
             var min = options.min;
             var rtl = options.rtl;
-            var columnWidth = column.outerWidth();
+            var columnWidth = outerWidth(column);
             var columnLeftOffset = column.position().left;
-            var adjacentColumnWidth = column.next().outerWidth() || 0;
+            var adjacentColumnWidth = outerWidth(column.next());
             var resizeHandle = $(that.resizeHandle);
             var rootElement = $(options.rootElement);
             var scrollLeftOffset = rootElement.is(BODY) ? 0 : rootElement.scrollLeft();
@@ -139,8 +140,8 @@
             that._setTableComputedWidth();
             that._setColumnsComputedWidth();
 
-            initialColumnWidth = column.outerWidth();
-            initialAdjacentColumnWidth = column.next().outerWidth() || 0;
+            initialColumnWidth = outerWidth(column);
+            initialAdjacentColumnWidth = outerWidth(column.next());
 
             newWidth = constrain({
                 value: initialColumnWidth + initialDeltaX,
@@ -157,18 +158,18 @@
             var element = this.element;
 
             if (element.style[WIDTH] === "") {
-                element.style[WIDTH] = toPixels($(element).outerWidth());
+                element.style[WIDTH] = toPixels(outerWidth($(element)));
             }
         },
 
         _setColumnsComputedWidth: function() {
             var that = this;
             var tableBody = $(that.element).children(TBODY);
-            var tableBodyWidth = tableBody.outerWidth();
+            var tableBodyWidth = outerWidth(tableBody);
             var columns = tableBody.children(TR).children(TD);
             var length = columns.length;
             var currentColumnsWidths = columns.map(function() {
-                return $(this).outerWidth();
+                return outerWidth($(this));
             });
             var i;
 
@@ -200,7 +201,7 @@
 
         _resizeColumn: function(column, newWidth) {
             if (inPercentages(column.style[WIDTH])) {
-                column.style[WIDTH] = toPercentages(calculatePercentageRatio(newWidth, $(this.element).children(TBODY).outerWidth()));
+                column.style[WIDTH] = toPercentages(calculatePercentageRatio(newWidth, outerWidth($(this.element).children(TBODY))));
             }
             else {
                 column.style[WIDTH] = toPixels(newWidth);

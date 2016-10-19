@@ -58,6 +58,8 @@ var __meta__ = { // jshint ignore:line
     var kendoDomElement = kendoDom.element;
     var kendoTextElement = kendoDom.text;
     var kendoHtmlElement = kendoDom.html;
+    var outerWidth = kendo._outerWidth;
+    var outerHeight = kendo._outerHeight;
     var ui = kendo.ui;
     var DataBoundWidget = ui.DataBoundWidget;
     var DataSource = data.DataSource;
@@ -707,10 +709,6 @@ var __meta__ = { // jshint ignore:line
            row.style.height = row.offsetHeight + diff + "px";
        }
     }
-
-    function outerWidth(element) { return $(element).outerWidth() || 0; }
-
-    function outerHeight(element) { return $(element).outerHeight() || 0; }
 
     var Editor = kendo.Observable.extend({
         init: function(element, options) {

@@ -14,6 +14,8 @@
     var EditorUtils = kendo.ui.editor.EditorUtils;
     var ToolTemplate = kendo.ui.editor.ToolTemplate;
     var Tool = kendo.ui.editor.Tool;
+    var outerWidth = kendo._outerWidth;
+    var outerHeight = kendo._outerHeight;
     var OVERFLOWANCHOR = "overflowAnchor";
 
     var focusable = ".k-tool-group:visible a.k-tool:not(.k-state-disabled)," +
@@ -279,14 +281,14 @@
                 if (!wrapper.is(":visible") || !that.window.options.visible) {
 
                     if (!wrapper[0].style.width) {
-                        wrapper.width(editorElement.outerWidth() - parseInt(wrapper.css("border-left-width"), 10) - parseInt(wrapper.css("border-right-width"), 10));
+                        wrapper.width(outerWidth(editorElement) - parseInt(wrapper.css("border-left-width"), 10) - parseInt(wrapper.css("border-right-width"), 10));
                     }
 
                     // track content position when other parts of page change
                     if (!window._moved) {
                         editorOffset = editorElement.offset();
                         wrapper.css({
-                            top: Math.max(0, parseInt(editorOffset.top, 10) - wrapper.outerHeight() - parseInt(that.window.element.css("padding-bottom"), 10)),
+                            top: Math.max(0, parseInt(editorOffset.top, 10) - outerHeight(wrapper) - parseInt(that.window.element.css("padding-bottom"), 10)),
                             left: Math.max(0, parseInt(editorOffset.left, 10))
                         });
                     }
@@ -805,7 +807,7 @@
         _refreshWidths: function() {
             this.element.children("li").each(function(idx, element) {
                 var group = $(element);
-                group.data("outerWidth", group.outerWidth(true));
+                group.data("outerWidth", outerWidth(group, true));
             });
         },
 
