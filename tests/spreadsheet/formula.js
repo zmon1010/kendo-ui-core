@@ -637,6 +637,16 @@
         testOne("=1*(2*4)", "1*(2*4)"); // the parens are not really necessary here, but it's not a bug to include them either
     });
 
+    test("unary operator precedence", function(){
+        // https://github.com/telerik/kendo-ui-core/issues/2334
+        calcTest({
+            "=-20 + 10"  : -10,
+            "=-20 - 20"  : -40,
+            "=--20"      : 20,
+            "=-20% + 10" : 9.8
+        });
+    });
+
     test("formula cache", function(){
         function testOne(f1, f2) {
             var e1 = calc.parse(Sheet1, 0, 0, f1);

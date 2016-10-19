@@ -222,7 +222,7 @@
                 exp = {
                     type: "prefix",
                     op: input.next().value,
-                    exp: parseExpression(commas)
+                    exp: parseAtom(commas)
                 };
             }
             else if (!input.peek()) {
