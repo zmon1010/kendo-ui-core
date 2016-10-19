@@ -7,7 +7,9 @@ NUGET_ZIPS = FileList[
     "dist/bundles/telerik.kendoui.professional.#{VERSION}.commercial.nupkg.zip",
     "dist/bundles/telerik.kendoui.professional.#{VERSION}.trial.nupkg.zip",
     "dist/bundles/telerik.ui.for.aspnetmvc.#{VERSION}.commercial.nupkg.zip",
-    "dist/bundles/telerik.ui.for.aspnetmvc.#{VERSION}.trial.nupkg.zip"
+    "dist/bundles/telerik.ui.for.aspnetmvc.#{VERSION}.trial.nupkg.zip",
+    "dist/bundles/telerik.ui.for.aspnet.core.#{VERSION}.nupkg.zip",
+    "dist/bundles/telerik.ui.for.aspnet.core.trial.#{VERSION}.nupkg.zip",
 ]
 
 namespace :nuget do
@@ -53,7 +55,6 @@ namespace :nuget do
         suffix = ".Trial" if options[:trial]
 
         packages = mvc_versions.map { |mvc_version| "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}.nupkg" }
-        packages << "#{MVC6_PACKAGE_BASENAME}#{suffix}.#{VERSION}.nupkg"
 
         packages.join(" ")
     end
@@ -72,6 +73,14 @@ namespace :nuget do
 
     file NUGET_ZIPS[3] do |t|
         zip_bundle(t.name, mvc_packages(:trial => true))
+    end
+
+    file NUGET_ZIPS[4] do |t|
+        zip_bundle(t.name, "Telerik.UI.for.AspNet.Core.#{VERSION}.nupkg")
+    end
+
+    file NUGET_ZIPS[5] do |t|
+        zip_bundle(t.name, "Telerik.UI.for.AspNet.Core.Trial.#{VERSION}.nupkg")
     end
 
     desc "Upload NuGet packages to nuget.org"
