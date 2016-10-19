@@ -20391,12 +20391,6 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The confirmation message shown when deleting files in the file- or imageBrowser.</description>
-            <name>deleteFile</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
             <description>The title of the tool that deletes selected table rows.</description>
             <name>deleteRow</name>
             <rtexprvalue>true</rtexprvalue>
@@ -20427,20 +20421,8 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The error message shown when the target directory is not found in the file- or imageBrowser.</description>
-            <name>directoryNotFound</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
             <description>The title of the iframe editing area when a sandboxed editor is used. Used as a hint for screen readers.</description>
             <name>editAreaTitle</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The message shown in the file- or imageBrowser when a folder is empty.</description>
-            <name>emptyFolder</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -20571,12 +20553,6 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The error message shown when an invalid file type has been selected in the file- or imageBrowser.</description>
-            <name>invalidFileType</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
             <description>The title of the tool that makes text italicized.</description>
             <name>italic</name>
             <rtexprvalue>true</rtexprvalue>
@@ -20631,32 +20607,8 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The caption of the sorting order in the file- or imageBrowser.</description>
-            <name>orderBy</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The sorting order by name in the file- or imageBrowser.</description>
-            <name>orderByName</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The sorting order by size in the file- or imageBrowser.</description>
-            <name>orderBySize</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
             <description>The title of the tool that outdents the content.</description>
             <name>outdent</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The confirmation message shown when overwriting files in the file- or imageBrowser.</description>
-            <name>overwriteFile</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -20729,12 +20681,6 @@ If function is assigned, the current path and image name will be provided.</desc
         <attribute>
             <description>The title of the tool that removes hyperlinks.</description>
             <name>unlink</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The caption of the upload button in the file- or imageBrowser.</description>
-            <name>uploadFile</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>

@@ -87,8 +87,6 @@ namespace Kendo.Mvc.UI
 
         public string DeleteColumn { get; set; }
 
-        public string DeleteFile { get; set; }
-
         public string DeleteRow { get; set; }
 
         public string DialogCancel { get; set; }
@@ -99,11 +97,7 @@ namespace Kendo.Mvc.UI
 
         public string DialogUpdate { get; set; }
 
-        public string DirectoryNotFound { get; set; }
-
         public string EditAreaTitle { get; set; }
-
-        public string EmptyFolder { get; set; }
 
         public string FileTitle { get; set; }
 
@@ -147,8 +141,6 @@ namespace Kendo.Mvc.UI
 
         public string InsertUnorderedList { get; set; }
 
-        public string InvalidFileType { get; set; }
-
         public string Italic { get; set; }
 
         public string JustifyCenter { get; set; }
@@ -167,15 +159,7 @@ namespace Kendo.Mvc.UI
 
         public string LinkWebAddress { get; set; }
 
-        public string OrderBy { get; set; }
-
-        public string OrderByName { get; set; }
-
-        public string OrderBySize { get; set; }
-
         public string Outdent { get; set; }
-
-        public string OverwriteFile { get; set; }
 
         public string Print { get; set; }
 
@@ -198,8 +182,6 @@ namespace Kendo.Mvc.UI
         public string Underline { get; set; }
 
         public string Unlink { get; set; }
-
-        public string UploadFile { get; set; }
 
         public string ViewHtml { get; set; }
 
@@ -404,11 +386,6 @@ namespace Kendo.Mvc.UI
                 settings["deleteColumn"] = DeleteColumn;
             }
 
-            if (DeleteFile?.HasValue() == true)
-            {
-                settings["deleteFile"] = DeleteFile;
-            }
-
             if (DeleteRow?.HasValue() == true)
             {
                 settings["deleteRow"] = DeleteRow;
@@ -434,19 +411,9 @@ namespace Kendo.Mvc.UI
                 settings["dialogUpdate"] = DialogUpdate;
             }
 
-            if (DirectoryNotFound?.HasValue() == true)
-            {
-                settings["directoryNotFound"] = DirectoryNotFound;
-            }
-
             if (EditAreaTitle?.HasValue() == true)
             {
                 settings["editAreaTitle"] = EditAreaTitle;
-            }
-
-            if (EmptyFolder?.HasValue() == true)
-            {
-                settings["emptyFolder"] = EmptyFolder;
             }
 
             if (FileTitle?.HasValue() == true)
@@ -554,11 +521,6 @@ namespace Kendo.Mvc.UI
                 settings["insertUnorderedList"] = InsertUnorderedList;
             }
 
-            if (InvalidFileType?.HasValue() == true)
-            {
-                settings["invalidFileType"] = InvalidFileType;
-            }
-
             if (Italic?.HasValue() == true)
             {
                 settings["italic"] = Italic;
@@ -604,29 +566,9 @@ namespace Kendo.Mvc.UI
                 settings["linkWebAddress"] = LinkWebAddress;
             }
 
-            if (OrderBy?.HasValue() == true)
-            {
-                settings["orderBy"] = OrderBy;
-            }
-
-            if (OrderByName?.HasValue() == true)
-            {
-                settings["orderByName"] = OrderByName;
-            }
-
-            if (OrderBySize?.HasValue() == true)
-            {
-                settings["orderBySize"] = OrderBySize;
-            }
-
             if (Outdent?.HasValue() == true)
             {
                 settings["outdent"] = Outdent;
-            }
-
-            if (OverwriteFile?.HasValue() == true)
-            {
-                settings["overwriteFile"] = OverwriteFile;
             }
 
             if (Print?.HasValue() == true)
@@ -682,11 +624,6 @@ namespace Kendo.Mvc.UI
             if (Unlink?.HasValue() == true)
             {
                 settings["unlink"] = Unlink;
-            }
-
-            if (UploadFile?.HasValue() == true)
-            {
-                settings["uploadFile"] = UploadFile;
             }
 
             if (ViewHtml?.HasValue() == true)

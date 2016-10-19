@@ -349,14 +349,6 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("deleteColumn", value);
     }
 
-    public java.lang.String getDeleteFile() {
-        return (java.lang.String)getProperty("deleteFile");
-    }
-
-    public void setDeleteFile(java.lang.String value) {
-        setProperty("deleteFile", value);
-    }
-
     public java.lang.String getDeleteRow() {
         return (java.lang.String)getProperty("deleteRow");
     }
@@ -397,28 +389,12 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("dialogUpdate", value);
     }
 
-    public java.lang.String getDirectoryNotFound() {
-        return (java.lang.String)getProperty("directoryNotFound");
-    }
-
-    public void setDirectoryNotFound(java.lang.String value) {
-        setProperty("directoryNotFound", value);
-    }
-
     public java.lang.String getEditAreaTitle() {
         return (java.lang.String)getProperty("editAreaTitle");
     }
 
     public void setEditAreaTitle(java.lang.String value) {
         setProperty("editAreaTitle", value);
-    }
-
-    public java.lang.String getEmptyFolder() {
-        return (java.lang.String)getProperty("emptyFolder");
-    }
-
-    public void setEmptyFolder(java.lang.String value) {
-        setProperty("emptyFolder", value);
     }
 
     public java.lang.String getFileTitle() {
@@ -589,14 +565,6 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("insertUnorderedList", value);
     }
 
-    public java.lang.String getInvalidFileType() {
-        return (java.lang.String)getProperty("invalidFileType");
-    }
-
-    public void setInvalidFileType(java.lang.String value) {
-        setProperty("invalidFileType", value);
-    }
-
     public java.lang.String getItalic() {
         return (java.lang.String)getProperty("italic");
     }
@@ -669,44 +637,12 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("linkWebAddress", value);
     }
 
-    public java.lang.String getOrderBy() {
-        return (java.lang.String)getProperty("orderBy");
-    }
-
-    public void setOrderBy(java.lang.String value) {
-        setProperty("orderBy", value);
-    }
-
-    public java.lang.String getOrderByName() {
-        return (java.lang.String)getProperty("orderByName");
-    }
-
-    public void setOrderByName(java.lang.String value) {
-        setProperty("orderByName", value);
-    }
-
-    public java.lang.String getOrderBySize() {
-        return (java.lang.String)getProperty("orderBySize");
-    }
-
-    public void setOrderBySize(java.lang.String value) {
-        setProperty("orderBySize", value);
-    }
-
     public java.lang.String getOutdent() {
         return (java.lang.String)getProperty("outdent");
     }
 
     public void setOutdent(java.lang.String value) {
         setProperty("outdent", value);
-    }
-
-    public java.lang.String getOverwriteFile() {
-        return (java.lang.String)getProperty("overwriteFile");
-    }
-
-    public void setOverwriteFile(java.lang.String value) {
-        setProperty("overwriteFile", value);
     }
 
     public java.lang.String getPrint() {
@@ -803,14 +739,6 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setUnlink(java.lang.String value) {
         setProperty("unlink", value);
-    }
-
-    public java.lang.String getUploadFile() {
-        return (java.lang.String)getProperty("uploadFile");
-    }
-
-    public void setUploadFile(java.lang.String value) {
-        setProperty("uploadFile", value);
     }
 
     public java.lang.String getViewHtml() {

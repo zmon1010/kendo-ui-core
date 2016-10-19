@@ -326,7 +326,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         //>> Fields
-
+        
         /// <summary>
         /// The title of the Accessibility in the Table Wizard dialog.
         /// </summary>

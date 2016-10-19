@@ -348,15 +348,6 @@ class EditorMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * The confirmation message shown when deleting files in the file- or imageBrowser.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function deleteFile($value) {
-        return $this->setProperty('deleteFile', $value);
-    }
-
-    /**
     * The title of the tool that deletes selected table rows.
     * @param string $value
     * @return \Kendo\UI\EditorMessages
@@ -402,30 +393,12 @@ class EditorMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * The error message shown when the target directory is not found in the file- or imageBrowser.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function directoryNotFound($value) {
-        return $this->setProperty('directoryNotFound', $value);
-    }
-
-    /**
     * The title of the iframe editing area when a sandboxed editor is used. Used as a hint for screen readers.
     * @param string $value
     * @return \Kendo\UI\EditorMessages
     */
     public function editAreaTitle($value) {
         return $this->setProperty('editAreaTitle', $value);
-    }
-
-    /**
-    * The message shown in the file- or imageBrowser when a folder is empty.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function emptyFolder($value) {
-        return $this->setProperty('emptyFolder', $value);
     }
 
     /**
@@ -618,15 +591,6 @@ class EditorMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * The error message shown when an invalid file type has been selected in the file- or imageBrowser.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function invalidFileType($value) {
-        return $this->setProperty('invalidFileType', $value);
-    }
-
-    /**
     * The title of the tool that makes text italicized.
     * @param string $value
     * @return \Kendo\UI\EditorMessages
@@ -708,48 +672,12 @@ class EditorMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * The caption of the sorting order in the file- or imageBrowser.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function orderBy($value) {
-        return $this->setProperty('orderBy', $value);
-    }
-
-    /**
-    * The sorting order by name in the file- or imageBrowser.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function orderByName($value) {
-        return $this->setProperty('orderByName', $value);
-    }
-
-    /**
-    * The sorting order by size in the file- or imageBrowser.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function orderBySize($value) {
-        return $this->setProperty('orderBySize', $value);
-    }
-
-    /**
     * The title of the tool that outdents the content.
     * @param string $value
     * @return \Kendo\UI\EditorMessages
     */
     public function outdent($value) {
         return $this->setProperty('outdent', $value);
-    }
-
-    /**
-    * The confirmation message shown when overwriting files in the file- or imageBrowser.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function overwriteFile($value) {
-        return $this->setProperty('overwriteFile', $value);
     }
 
     /**
@@ -849,15 +777,6 @@ class EditorMessages extends \Kendo\SerializableObject {
     */
     public function unlink($value) {
         return $this->setProperty('unlink', $value);
-    }
-
-    /**
-    * The caption of the upload button in the file- or imageBrowser.
-    * @param string $value
-    * @return \Kendo\UI\EditorMessages
-    */
-    public function uploadFile($value) {
-        return $this->setProperty('uploadFile', $value);
     }
 
     /**

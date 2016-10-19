@@ -391,16 +391,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The confirmation message shown when deleting files in the file- or imageBrowser.
-        /// </summary>
-        /// <param name="value">The value for DeleteFile</param>
-        public EditorMessagesSettingsBuilder DeleteFile(string value)
-        {
-            Container.DeleteFile = value;
-            return this;
-        }
-
-        /// <summary>
         /// The title of the tool that deletes selected table rows.
         /// </summary>
         /// <param name="value">The value for DeleteRow</param>
@@ -451,32 +441,12 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The error message shown when the target directory is not found in the file- or imageBrowser.
-        /// </summary>
-        /// <param name="value">The value for DirectoryNotFound</param>
-        public EditorMessagesSettingsBuilder DirectoryNotFound(string value)
-        {
-            Container.DirectoryNotFound = value;
-            return this;
-        }
-
-        /// <summary>
         /// The title of the iframe editing area when a sandboxed editor is used. Used as a hint for screen readers.
         /// </summary>
         /// <param name="value">The value for EditAreaTitle</param>
         public EditorMessagesSettingsBuilder EditAreaTitle(string value)
         {
             Container.EditAreaTitle = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The message shown in the file- or imageBrowser when a folder is empty.
-        /// </summary>
-        /// <param name="value">The value for EmptyFolder</param>
-        public EditorMessagesSettingsBuilder EmptyFolder(string value)
-        {
-            Container.EmptyFolder = value;
             return this;
         }
 
@@ -691,16 +661,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The error message shown when an invalid file type has been selected in the file- or imageBrowser.
-        /// </summary>
-        /// <param name="value">The value for InvalidFileType</param>
-        public EditorMessagesSettingsBuilder InvalidFileType(string value)
-        {
-            Container.InvalidFileType = value;
-            return this;
-        }
-
-        /// <summary>
         /// The title of the tool that makes text italicized.
         /// </summary>
         /// <param name="value">The value for Italic</param>
@@ -791,52 +751,12 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The caption of the sorting order in the file- or imageBrowser.
-        /// </summary>
-        /// <param name="value">The value for OrderBy</param>
-        public EditorMessagesSettingsBuilder OrderBy(string value)
-        {
-            Container.OrderBy = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The sorting order by name in the file- or imageBrowser.
-        /// </summary>
-        /// <param name="value">The value for OrderByName</param>
-        public EditorMessagesSettingsBuilder OrderByName(string value)
-        {
-            Container.OrderByName = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The sorting order by size in the file- or imageBrowser.
-        /// </summary>
-        /// <param name="value">The value for OrderBySize</param>
-        public EditorMessagesSettingsBuilder OrderBySize(string value)
-        {
-            Container.OrderBySize = value;
-            return this;
-        }
-
-        /// <summary>
         /// The title of the tool that outdents the content.
         /// </summary>
         /// <param name="value">The value for Outdent</param>
         public EditorMessagesSettingsBuilder Outdent(string value)
         {
             Container.Outdent = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The confirmation message shown when overwriting files in the file- or imageBrowser.
-        /// </summary>
-        /// <param name="value">The value for OverwriteFile</param>
-        public EditorMessagesSettingsBuilder OverwriteFile(string value)
-        {
-            Container.OverwriteFile = value;
             return this;
         }
 
@@ -947,16 +867,6 @@ namespace Kendo.Mvc.UI.Fluent
         public EditorMessagesSettingsBuilder Unlink(string value)
         {
             Container.Unlink = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The caption of the upload button in the file- or imageBrowser.
-        /// </summary>
-        /// <param name="value">The value for UploadFile</param>
-        public EditorMessagesSettingsBuilder UploadFile(string value)
-        {
-            Container.UploadFile = value;
             return this;
         }
 
