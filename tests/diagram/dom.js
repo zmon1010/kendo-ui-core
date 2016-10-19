@@ -550,12 +550,21 @@
             move(150, 150, 1);
             move(0, 0, 1);
             trigger("mouseup", 0, 0, 1);
-
-            move(150, 150, 2);
-            move(0, 0, 2);
-            move(150, 150, 3);
-            move(0, 0, 3);
         });
+
+
+        test("track mouse if a mouse button is not pressed", 2, function(e) {
+            diagram.bind("mouseEnter", function(e) {
+               ok(true);
+            });
+            diagram.bind("mouseLeave", function(e) {
+                ok(true);
+            });
+
+            move(10, 10, 1);
+            move(150, 150, 1);
+            move(0, 0, 1);
+        });    
     })();
 
     // ------------------------------------------------------------

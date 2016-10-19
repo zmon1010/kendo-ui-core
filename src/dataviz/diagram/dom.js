@@ -2164,7 +2164,9 @@
                 this.scrollable
                     .on("mouseover" + NS, proxy(that._mouseover, that))
                     .on("mouseout" + NS, proxy(that._mouseout, that))
-                    .on("mousemove" + NS, proxy(that._mouseMove, that));
+                    .on("mousemove" + NS, proxy(that._mouseMove, that))                    
+                    .on("mousedown" + NS, proxy(that._mouseDown, that))
+                    .on("mouseup" + NS, proxy(that._mouseUp, that));
 
                 this._syncHandler = proxy(that._syncChanges, that);
 
@@ -2205,12 +2207,20 @@
             },
 
             _mouseMove: function (e) {
-                if (!this._pauseMouseHandlers && (e.which === 0 || e.which === 1)) {
+                if (!this._pauseMouseHandlers) {
                     var p = this._eventPositions(e);
                     this.toolService._updateHoveredItem(p);
                     this.toolService._updateCursor(p);
                 }
             },
+
+            _mouseDown: function () {
+                this._pauseMouseHandlers = true;
+            },
+
+            _mouseUp: function () {
+                this._pauseMouseHandlers = false;
+            },    
 
             _tap: function(e) {
                 var toolService = this.toolService;
