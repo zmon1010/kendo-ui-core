@@ -7,7 +7,7 @@
     "net451": { }
   },
   "dependencies": {
-    "Kendo.Mvc": "1.0.0-*",
+    "Kendo.Mvc": "*",
     "Microsoft.NETCore.Platforms": "1.0.1",
     "Microsoft.AspNetCore.Http": "1.0.0",
     "Microsoft.AspNetCore.Hosting": "1.0.0",
