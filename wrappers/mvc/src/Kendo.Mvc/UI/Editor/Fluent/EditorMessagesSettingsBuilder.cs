@@ -318,8 +318,15 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public EditorMessagesSettingsBuilder InsertFile(string message)
+        {
+            container.InsertFile = message;
+
+            return this;
+        }
+
         //>> Fields
-        
+
         /// <summary>
         /// The title of the Accessibility in the Table Wizard dialog.
         /// </summary>
