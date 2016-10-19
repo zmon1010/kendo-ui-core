@@ -9,6 +9,8 @@
         toString = Object.prototype.toString,
 
         kendo = window.kendo,
+        outerWidth = kendo._outerWidth,
+        outerHeight = kendo._outerHeight,
         Class = kendo.Class,
         Widget = kendo.ui.Widget,
         deepExtend = kendo.deepExtend,
@@ -675,8 +677,8 @@
                 height: defined(options.height) ? options.height : "auto"
             });
 
-            width = kendo._outerWidth(this.element);
-            height = kendo._outerHeight(this.element);
+            width = outerWidth(this.element);
+            height = outerHeight(this.element);
 
             if (!visible) {
                 this.popup.wrapper.hide();
