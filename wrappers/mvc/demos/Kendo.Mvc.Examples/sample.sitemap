@@ -2,16 +2,16 @@
 <siteMap>
   <siteMapNode title="Home" controller="Home" action="Overview">
     <siteMapNode title="Grid">
-      <siteMapNode controller="grid" action="index" title="First Look (Razor)" area="razor"/>
-      <siteMapNode controller="grid" action="editing" title="Batch editing (Razor)" area="razor"/>
-      <siteMapNode controller="grid" action="from-table" title="Initialization from table (Razor)" area="razor"/>
+      <siteMapNode controller="grid" action="index" title="First Look" />
+      <siteMapNode controller="grid" action="editing" title="Batch editing" />
+      <siteMapNode controller="grid" action="paging" title="Paging" />
     </siteMapNode>
     <siteMapNode title="Menu">
-      <siteMapNode controller="menu" action="index" title="First Look (Razor)" area="razor"/>
-      <siteMapNode controller="menu" action="sitemapbinding" title="Sitemap binding (Razor)" area="razor"/>
-      <siteMapNode controller="menu" action="events" title="Events (Razor)" area="razor"/>
-      <siteMapNode controller="menu" action="api" title="API (Razor)" area="razor"/>
-      <siteMapNode controller="menu" action="images" title="Images (Razor)" area="razor"/>
+      <siteMapNode controller="menu" action="index" title="First Look" />
+      <siteMapNode controller="menu" action="sitemapbinding" title="Sitemap binding" />
+      <siteMapNode controller="menu" action="events" title="Events" />
+      <siteMapNode controller="menu" action="api" title="API" />
+      <siteMapNode controller="menu" action="images" title="Images" />
     </siteMapNode>
   </siteMapNode>
 </siteMap>
