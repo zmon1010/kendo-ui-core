@@ -191,7 +191,8 @@
         alignRemove: "Remove Alignment",
         columns: "Columns",
         rows: "Rows",
-        selectAllCells: "Select All Cells"
+        selectAllCells: "Select All Cells",
+        exportAs: "Export As"
     };
 
     var supportedBrowser = !os || (os.ios && os.flatVersion >= 500) || (!os.ios && typeof(document.documentElement.contentEditable) != 'undefined');

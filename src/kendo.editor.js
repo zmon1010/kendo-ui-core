@@ -21,6 +21,7 @@
         "./editor/formatting",
         "./editor/toolbar",
         "./editor/tables",
+        "./editor/export",
         "./editor/resizing/column-resizing",
         "./editor/resizing/row-resizing",
         "./editor/resizing/table-resizing",
