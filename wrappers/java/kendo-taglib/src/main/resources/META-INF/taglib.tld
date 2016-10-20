@@ -31749,6 +31749,12 @@ If the developer wants to control the day and month order then one needs to defi
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The format used to display the selected date when viewport is narrow, and the date is displayed in short ("d") format by default. Uses kendo.format.</description>
+            <name>selectedShortDateFormat</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>If set to true the view will be initially shown in business hours mode. By default view is displayed in full day mode.</description>
             <name>showWorkHours</name>
             <rtexprvalue>true</rtexprvalue>

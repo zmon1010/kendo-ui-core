@@ -229,6 +229,14 @@ public class ViewTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("selectedDateFormat", value);
     }
 
+    public java.lang.String getSelectedShortDateFormat() {
+        return (java.lang.String)getProperty("selectedShortDateFormat");
+    }
+
+    public void setSelectedShortDateFormat(java.lang.String value) {
+        setProperty("selectedShortDateFormat", value);
+    }
+
     public boolean getShowWorkHours() {
         return (Boolean)getProperty("showWorkHours");
     }

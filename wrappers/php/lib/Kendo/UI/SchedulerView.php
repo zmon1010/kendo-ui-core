@@ -276,6 +276,15 @@ If the developer wants to control the day and month order then one needs to defi
     }
 
     /**
+    * The format used to display the selected date when viewport is narrow, and the date is displayed in short ("d") format by default. Uses kendo.format.
+    * @param string $value
+    * @return \Kendo\UI\SchedulerView
+    */
+    public function selectedShortDateFormat($value) {
+        return $this->setProperty('selectedShortDateFormat', $value);
+    }
+
+    /**
     * If set to true the view will be initially shown in business hours mode. By default view is displayed in full day mode.
     * @param boolean $value
     * @return \Kendo\UI\SchedulerView
