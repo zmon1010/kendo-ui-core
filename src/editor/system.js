@@ -19,6 +19,8 @@
         browser = kendo.support.browser,
         br = '<br class="k-br">',
         extend = $.extend;
+    var nodeTypes = dom.nodeTypes;
+    var PREVIOUS_SIBLING = "previousSibling";
 
 function finishUpdate(editor, startRestorePoint) {
     var endRestorePoint = editor.selectionRestorePoint = new RestorePoint(editor.getRange(), editor.body);
@@ -33,6 +35,16 @@ function finishUpdate(editor, startRestorePoint) {
 function selected(node, range) {
     return range.startContainer === node && range.endContainer === node &&
         range.startOffset === 0 && range.endOffset == node.childNodes.length;
+}
+
+function getSibling(node, direction, condition) {
+    var sibling = node ? node[direction] : null;
+
+    while (sibling && !condition(sibling)) {
+        sibling = sibling[direction];
+    }
+
+    return sibling;
 }
 
 var Command = Class.extend({
@@ -362,17 +374,27 @@ var BackspaceHandler = Class.extend({
         var node = range.startContainer;
         var li = dom.closestEditableOfType(node, ['li']);
         var block = dom.closestEditableOfType(node, 'p,h1,h2,h3,h4,h5,h6'.split(','));
+        var previousSibling;
 
         if (dom.isDataNode(node)) {
             this._cleanBomBefore(range);
         }
 
-        // unwrap block
-        if (block && block.previousSibling && editorNS.RangeUtils.isStartOf(range, block)) {
-            var prev = block.previousSibling;
-            var caret = this._addCaret(block);
-            this._merge(prev, block);
+        previousSibling = getSibling(block, PREVIOUS_SIBLING, function(sibling) {
+            return !dom.htmlIndentSpace(sibling);
+        });
 
+        //deleting the first list item with empty content in IE results in invalid range
+        if (range.collapsed && range.startOffset !== range.endOffset && range.startOffset < 0) {
+            range.startOffset = 0;
+            range.endOffset = 0;
+            this.editor.selectRange(range);
+        }
+
+        // unwrap block
+        if (block && previousSibling && editorNS.RangeUtils.isStartOf(range, block)) {
+            var caret = this._addCaret(block);
+            this._merge(previousSibling, block);
             this._restoreCaret(caret);
 
             return true;
@@ -514,6 +536,8 @@ var BackspaceHandler = Class.extend({
             if (dest.nodeType == 1) {
                 dest = dom.list(dest) ? dest.children[dest.children.length - 1] : dest;
                 dest.appendChild(src.firstChild);
+            } else if (dest.nodeType === nodeTypes.TEXT_NODE) {
+                this._mergeWithTextNode(dest, src.firstChild);
             } else {
                 dest.parentNode.appendChild(src.firstChild);
             }
@@ -521,6 +545,22 @@ var BackspaceHandler = Class.extend({
 
         dom.remove(src);
     },
+
+    _mergeWithTextNode: function(textNode, appendedNode) {
+        if (textNode && textNode.nodeType === nodeTypes.TEXT_NODE) {
+            if (textNode.nextSibling && this._isCaret(textNode.nextSibling)) {
+                dom.insertAfter(appendedNode, textNode.nextSibling);
+            }
+            else {
+                dom.insertAfter(appendedNode, textNode);
+            }
+        }
+    },
+
+    _isCaret: function(element) {
+        return $(element).is("a");
+    },
+
     keydown: function(e) {
         var method, startRestorePoint;
         var editor = this.editor;

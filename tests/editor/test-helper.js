@@ -47,6 +47,15 @@ function createRangeFromText(editor, html) {
     return range;
 }
 
+/* exported assertRange */
+function assertRange(actualRange, expectedRange) {
+    equal(actualRange.commonAncestorContainer, expectedRange.commonAncestorContainer);
+    equal(actualRange.startContainer, expectedRange.startContainer);
+    equal(actualRange.endContainer, expectedRange.endContainer);
+    equal(actualRange.startOffset, expectedRange.startOffset);
+    equal(actualRange.endOffset, expectedRange.endOffset);
+}
+
 /* exported withMock */
 function withMock(context, method, mock, callback) {
     var originalMethod = context[method];

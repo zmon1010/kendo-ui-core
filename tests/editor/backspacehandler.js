@@ -112,6 +112,20 @@
         equal(editor.value(), "foo <a></a>bar");
     });
 
+    test("unwraps block to text node by skipping whitespace", function() {
+        editor.value('foo \ufefe<p>bar</p>');
+        var range = editor.createRange();
+        range.setStart(editor.body.childNodes[1].firstChild, 0);
+        range.collapse(true);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "foo \ufefe<a></a>bar");
+    });
+
     test("does not change selection unnecessarily", function() {
         editor.selectRange(createRangeFromText(editor, 'foo||bar'));
 
@@ -145,6 +159,92 @@
         editor.getRange().insertNode(editor.document.createElement("a"));
 
         equal(editor.value(), '<h3>foo<a></a>bar</h3>');
+    });
+
+    test("at the start of block element should update the range", function() {
+        editor.value('<h3>123</h3><h3>456</h3>');
+        var firstBlockElement = $(editor.body).find("h3")[0];
+        var range = editor.createRange();
+        range.setStart($(editor.body).find("h3")[1].firstChild, 0);
+        range.setEnd($(editor.body).find("h3")[1].firstChild, 0);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        assertRange(editor.getRange(), {
+            commonAncestorContainer: firstBlockElement,
+            startContainer: firstBlockElement,
+            endContainer: firstBlockElement,
+            startOffset: 1,
+            endOffset: 1
+        });
+    });
+
+    test("at the start of a block element should join it with previous by skipping whitespace", function() {
+        editor.value('<p id="block1">123</p>\ufeff<p id="block2">45</p><p>6789</p>');
+        var range = editor.createRange();
+        range.setStart($(editor.body).find("#block2")[0].firstChild, 0);
+        range.setEnd($(editor.body).find("#block2")[0].firstChild, 0);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<p id="block1">12345</p><p>6789</p>');
+    });
+
+    test("at the start of a block element before whitespace should update the range", function() {
+        editor.value('<p id="block1">123</p>\ufeff<p id="block2">45</p><p>6789</p>');
+        var firstBlockElement = $(editor.body).find("#block1")[0];
+        var range = editor.createRange();
+        range.setStart($(editor.body).find("#block2")[0].firstChild, 0);
+        range.setEnd($(editor.body).find("#block2")[0].firstChild, 0);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        assertRange(editor.getRange(), {
+            commonAncestorContainer: firstBlockElement,
+            startContainer: firstBlockElement,
+            endContainer: firstBlockElement,
+            startOffset: 1,
+            endOffset: 1
+        });
+    });
+
+    test("at the first element of the content area should not delete content", function() {
+        editor.value('<p id="block1">123</p>');
+        var range = editor.createRange();
+        range.setStart($(editor.body).find("#block1")[0].firstChild, 0);
+        range.setEnd($(editor.body).find("#block1")[0].firstChild, 0);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<p id="block1">123</p>');
+    });
+
+    test("at the first element of the content area before whitespace should not delete content", function() {
+        editor.value('\ufeff<p id="block1">123</p>');
+        var range = editor.createRange();
+        range.setStart($(editor.body).find("#block1")[0].firstChild, 0);
+        range.setEnd($(editor.body).find("#block1")[0].firstChild, 0);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<p id="block1">123</p>');
+    });
+
+    test("at the first element of the content area before whitespace should not change range", function() {
+        editor.value('\ufeff<p id="block1">123</p>');
+        var range = editor.createRange();
+        range.setStart($(editor.body).find("#block1")[0].firstChild, 0);
+        range.setEnd($(editor.body).find("#block1")[0].firstChild, 0);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        assertRange(editor.getRange(), range);
     });
 
     test("prevents default action if handling range selection", function() {
