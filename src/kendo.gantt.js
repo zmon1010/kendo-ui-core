@@ -1208,7 +1208,6 @@ var __meta__ = { // jshint ignore:line
 
         open: function() {
             this.window.center().open();
-            this.grid.resize(true);
         },
 
         close: function() {
@@ -1282,6 +1281,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _initContainer: function() {
+            var that = this;
             var popupStyles = Gantt.styles.popup;
             var dom = kendo.format('<div class="{0} {1}"><div class="{2} {3}"/></div>"',
                 popupStyles.form, popupStyles.editForm, popupStyles.formContainer, popupStyles.resourcesFormContainer);
@@ -1295,7 +1295,10 @@ var __meta__ = { // jshint ignore:line
                 resizable: false,
                 draggable: true,
                 visible: false,
-                title: this.options.messages.resourcesEditorTitle
+                title: this.options.messages.resourcesEditorTitle,
+                open: function() {
+                      that.grid.resize(true);
+                }
             }).data("kendoWindow");
 
             this._resourceGrid();

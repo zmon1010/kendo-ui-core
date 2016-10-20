@@ -236,9 +236,10 @@ var __meta__ = { // jshint ignore:line
                 });
         },
         TIMEZONEEDITOR = function(container, options) {
+            var visible = options.visible || options.visible === undefined;
             $('<div ' + kendo.attr("bind") + '="value:' + options.field +'" />')
                 .attr({ name: options.field })
-                .toggle(options.visible)
+                .toggle(visible)
                 .appendTo(container)
                 .kendoTimezoneEditor({
                     optionLabel: options.noTimezone
@@ -3418,7 +3419,7 @@ var __meta__ = { // jshint ignore:line
 
         _renderView: function(name) {
             var view = this._initializeView(name);
-
+          
             this._bindView(view);
 
             this._model.set("formattedDate", view.dateForTitle());

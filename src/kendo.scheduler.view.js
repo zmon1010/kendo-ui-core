@@ -1881,13 +1881,13 @@ var __meta__ = { // jshint ignore:line
 
             var rowLevels = this.rowLevels = levels(layout, "rows");
 
-            this.table = $('<table ' + cellspacing() + ' class="k-scheduler-layout k-scheduler-' + this.name + 'view"/>');
+            this.table = $('<table ' + cellspacing() + ' class="k-scheduler-layout k-scheduler-' + this.name + 'view"><tbody></tbody></table>');
 
             var rowCount = rowLevels[rowLevels.length - 1].length;
+            
+            this.table.find("tbody:first").append(this._topSection(columnLevels, allDaySlot, rowCount));
 
-            this.table.append(this._topSection(columnLevels, allDaySlot, rowCount));
-
-            this.table.append(this._bottomSection(columnLevels, rowLevels, rowCount));
+            this.table.find("tbody:first").append(this._bottomSection(columnLevels, rowLevels, rowCount));
 
             this.element.append(this.table);
 
