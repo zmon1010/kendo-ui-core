@@ -55,7 +55,10 @@ namespace Kendo.Mvc.UI
         //<< Initialization
 
             ImageBrowserSettings = new EditorImageBrowserSettings(Messages.ImageBrowserMessages);
+
             FileBrowserSettings = new EditorFileBrowserSettings(Messages.FileBrowserMessages);
+
+            ExportAsSettings = new EditorExportAsSettings(this);
         }
 
         //>> Fields
@@ -113,6 +116,12 @@ namespace Kendo.Mvc.UI
         }
 
         public EditorImageBrowserSettings ImageBrowserSettings
+        {
+            get;
+            private set;
+        }
+
+        public EditorExportAsSettings ExportAsSettings
         {
             get;
             private set;
@@ -329,6 +338,12 @@ namespace Kendo.Mvc.UI
             if (fileSettings.Any())
             {
                 json["fileBrowser"] = fileSettings;
+            }
+
+            var exportAsSettings = ExportAsSettings.ToJson();
+            if (exportAsSettings.Any())
+            {
+                json["exportAs"] = exportAsSettings;
             }
 
             writer.Write(Initializer.Initialize(Selector, "Editor", json));

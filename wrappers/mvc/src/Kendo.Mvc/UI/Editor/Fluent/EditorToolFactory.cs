@@ -156,6 +156,21 @@ namespace Kendo.Mvc.UI.Fluent
             return Button("pdf");
         }
 
+        public EditorToolFactory ExportAs()
+        {
+            return SelectBox("exportAs", null);
+        }
+
+        public EditorToolFactory ExportAs(Action<EditorDropDownItemBuilder> configurator)
+        {
+            var items = new List<DropDownListItem>();
+            var builder = new EditorDropDownItemBuilder(items);
+
+            configurator(builder);
+
+            return SelectBox("exportAs", items);
+        }
+
         /// <summary>
         /// Adds Outdent tool.
         /// </summary>

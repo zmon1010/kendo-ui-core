@@ -226,9 +226,30 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Configure the exportAs settings.
+        /// </summary>
+        /// <param name="configurator">An action that configures the ExportAs settings.</param>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Editor()
+        ///             .Name("Editor")
+        ///             .ExportAs(exportAs => exportAs
+        ///                 .FileName("Editor")
+        ///                 .Proxy("Export", "Editor")
+        ///             )
+        /// %&gt;
+        /// </code>
+        public EditorBuilder ExportAs(Action<EditorExportAsSettingsBuilder> configurator)
+        {
+            var builder = new EditorExportAsSettingsBuilder(Component.ExportAsSettings);
+
+            configurator(builder);
+
+            return this;
+        }
 
         //>> Fields
-        
+
         /// <summary>
         /// Fine-tune deserialization in the Editor widget. Deserialization is the process of parsing the HTML string input from the value() method or from the viewHtml dialog into editable content.
         /// </summary>
