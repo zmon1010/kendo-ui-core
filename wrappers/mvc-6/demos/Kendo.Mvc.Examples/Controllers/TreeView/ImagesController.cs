@@ -2,7 +2,7 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class TreeViewController : Controller
+    public partial class TreeViewController : BaseController
     {
         [Demo]
         public ActionResult Images()

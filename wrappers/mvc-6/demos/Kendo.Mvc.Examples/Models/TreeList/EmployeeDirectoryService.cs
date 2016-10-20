@@ -32,35 +32,36 @@
         }
     }
 
-    public class EmployeeDirectoryService: IEmployeeDirectoryService, IDisposable
+    public class EmployeeDirectoryService: BaseService, IEmployeeDirectoryService
     {
         private static bool UpdateDatabase = false;
-        private SampleEntitiesDataContext db;
         private ISession _session;
 
         public ISession Session { get { return _session; } }
 
-        public EmployeeDirectoryService(IHttpContextAccessor httpContextAccessor, SampleEntitiesDataContext context)
+        public EmployeeDirectoryService(IHttpContextAccessor httpContextAccessor)
         {
-            db = context;
             _session = httpContextAccessor.HttpContext.Session;
         }
 
         public virtual IList<EmployeeDirectoryModel> GetAll()
         {
-            var result = Session.GetObjectFromJson<IList<EmployeeDirectoryModel>>("EmployeeDirectory");
-
-            if (result == null || UpdateDatabase)
+            using (var db = GetContext())
             {
-                result = db.EmployeeDirectories
-                    .ToList()
-                    .Select(employee => employee.ToEmployeeDirectoryModel())
-                    .ToList();
+                var result = Session.GetObjectFromJson<IList<EmployeeDirectoryModel>>("EmployeeDirectory");
 
-                Session.SetObjectAsJson("EmployeeDirectory", result);
+                if (result == null || UpdateDatabase)
+                {
+                    result = db.EmployeeDirectories
+                        .ToList()
+                        .Select(employee => employee.ToEmployeeDirectoryModel())
+                        .ToList();
+
+                    Session.SetObjectAsJson("EmployeeDirectory", result);
+                }
+
+                return result;
             }
-
-            return result;
         }
 
         public virtual void Insert(EmployeeDirectoryModel employee, ModelStateDictionary modelState)
@@ -81,12 +82,15 @@
                 }
                 else
                 {
-                    var entity = employee.ToEntity();
+                    using (var db = GetContext())
+                    {
+                        var entity = employee.ToEntity();
 
-                    db.EmployeeDirectories.Add(entity);
-                    db.SaveChanges();
+                        db.EmployeeDirectories.Add(entity);
+                        db.SaveChanges();
 
-                    employee.EmployeeId = entity.EmployeeID;
+                        employee.EmployeeId = entity.EmployeeID;
+                    }
                 }
             }
         }
@@ -119,10 +123,13 @@
                 }
                 else
                 {
-                    var entity = employee.ToEntity();
-                    db.EmployeeDirectories.Attach(entity);
-                    db.Entry(entity).State = EntityState.Modified;
-                    db.SaveChanges();
+                    using (var db = GetContext())
+                    {
+                        var entity = employee.ToEntity();
+                        db.EmployeeDirectories.Attach(entity);
+                        db.Entry(entity).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
             }
         }
@@ -145,26 +152,29 @@
             }
             else
             {
-                var entity = employee.ToEntity();
-
-                db.EmployeeDirectories.Attach(entity);
-
-                DeleteEntityChildren(entity);
-
-                db.SaveChanges();
+                using (var db = GetContext())
+                {
+                    var entity = employee.ToEntity();
+                    db.EmployeeDirectories.Attach(entity);
+                    DeleteEntityChildren(entity);
+                    db.SaveChanges();
+                }
             }
         }
 
         private void DeleteEntityChildren(EmployeeDirectory employee)
         {
-            var children = db.EmployeeDirectories.Where(e => e.ReportsTo == employee.EmployeeID);
-
-            foreach (var subordinate in children)
+            using (var db = GetContext())
             {
-                DeleteEntityChildren(subordinate);
-            }
+                var children = db.EmployeeDirectories.Where(e => e.ReportsTo == employee.EmployeeID);
 
-            db.EmployeeDirectories.Remove(employee);
+                foreach (var subordinate in children)
+                {
+                    DeleteEntityChildren(subordinate);
+                }
+
+                db.EmployeeDirectories.Remove(employee);
+            }
         }
 
         private void DeleteSessionChildren(EmployeeDirectoryModel employee, IList<EmployeeDirectoryModel> employees)
@@ -188,11 +198,6 @@
             }
             
             return true;
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
         }
     }
 }

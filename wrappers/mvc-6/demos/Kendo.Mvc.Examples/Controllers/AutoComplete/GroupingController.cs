@@ -14,29 +14,31 @@ namespace Kendo.Mvc.Examples.Controllers
             return View();
         }
 
-        public IList<CustomerViewModel> Customers_Read(string text)
+        public IEnumerable<CustomerViewModel> Customers_Read(string text)
         {
-            return GetCustomers().Where(c => c.ContactName.Contains(text)).ToList();
+            return GetCustomers().Where(c => c.ContactName.Contains(text));
         }
 
-        private static IEnumerable<CustomerViewModel> GetCustomers()
+        private IEnumerable<CustomerViewModel> GetCustomers()
         {
-            var northwind = new SampleEntitiesDataContext();
-            return northwind.Customers.Select(customer => new CustomerViewModel
+            using (var northwind = new SampleEntitiesDataContext())
             {
-                CustomerID = customer.CustomerID,
-                CompanyName = customer.CompanyName,
-                ContactName = customer.ContactName,
-                ContactTitle = customer.ContactTitle,
-                Address = customer.Address,
-                City = customer.City,
-                Region = customer.Region,
-                PostalCode = customer.PostalCode,
-                Country = customer.Country,
-                Phone = customer.Phone,
-                Fax = customer.Fax,
-                Bool = customer.Bool
-            });
+                return northwind.Customers.Select(customer => new CustomerViewModel
+                {
+                    CustomerID = customer.CustomerID,
+                    CompanyName = customer.CompanyName,
+                    ContactName = customer.ContactName,
+                    ContactTitle = customer.ContactTitle,
+                    Address = customer.Address,
+                    City = customer.City,
+                    Region = customer.Region,
+                    PostalCode = customer.PostalCode,
+                    Country = customer.Country,
+                    Phone = customer.Phone,
+                    Fax = customer.Fax,
+                    Bool = customer.Bool
+                }).ToList();
+            }
         }
     }
 }

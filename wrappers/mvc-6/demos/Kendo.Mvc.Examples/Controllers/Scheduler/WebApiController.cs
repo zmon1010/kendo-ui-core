@@ -28,13 +28,6 @@ namespace Kendo.Mvc.Examples.Controllers
             service = schedulerTaskService;
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            service.Dispose();
-
-            base.Dispose(disposing);
-        }
-
         // GET api/task
         [HttpGet]
         public DataSourceResult Get([DataSourceRequest]DataSourceRequest request)

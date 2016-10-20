@@ -2,7 +2,7 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-	public partial class GridController : Controller
+	public partial class GridController : BaseController
     {
         [Demo]
         public ActionResult Copy_To_Excel()

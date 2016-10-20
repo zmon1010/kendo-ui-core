@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class DropDownListController : Controller
+    public partial class DropDownListController : BaseController
     {
         [Demo]
         public ActionResult CascadingDropDownList()
@@ -14,35 +14,41 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public JsonResult GetCascadeCategories()
         {
-            var northwind = new SampleEntitiesDataContext();
-
-            return Json(northwind.Categories.Select(c => new { CategoryId = c.CategoryID, CategoryName = c.CategoryName }));
+            using (var northwind = GetContext())
+            {
+                return Json(northwind.Categories
+                    .Select(c => new { CategoryId = c.CategoryID, CategoryName = c.CategoryName }).ToList());
+            }
         }
 
         public JsonResult GetCascadeProducts(int? categories)
         {
-            var northwind = new SampleEntitiesDataContext();
-            var products = northwind.Products.AsQueryable();
-
-            if (categories != null)
+            using (var northwind = GetContext())
             {
-                products = products.Where(p => p.CategoryID == categories);
-            }
+                var products = northwind.Products.AsQueryable();
 
-            return Json(products.Select(p => new { ProductID = p.ProductID, ProductName = p.ProductName }));
+                if (categories != null)
+                {
+                    products = products.Where(p => p.CategoryID == categories);
+                }
+
+                return Json(products.Select(p => new { ProductID = p.ProductID, ProductName = p.ProductName }).ToList());
+            }
         }
 
         public JsonResult GetCascadeOrders(int? products)
         {
-            var northwind = new SampleEntitiesDataContext();
-            var orders = northwind.OrderDetails.AsQueryable();
-
-            if (products != null)
+            using (var northwind = new SampleEntitiesDataContext())
             {
-                orders = orders.Where(o => o.ProductID == products);
-            }
+                var orders = northwind.OrderDetails.AsQueryable();
 
-            return Json(orders.Select(o => new { OrderID = o.OrderID, ShipCity = o.Order.ShipCity }));
+                if (products != null)
+                {
+                    orders = orders.Where(o => o.ProductID == products);
+                }
+
+                return Json(orders.Select(o => new { OrderID = o.OrderID, ShipCity = o.Order.ShipCity }).ToList());
+            }
         }
     }
 }

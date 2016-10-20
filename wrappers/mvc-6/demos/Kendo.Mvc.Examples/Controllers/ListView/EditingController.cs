@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class ListViewController : Controller
+    public partial class ListViewController : BaseController
     {
         [Demo]
         public ActionResult Editing()

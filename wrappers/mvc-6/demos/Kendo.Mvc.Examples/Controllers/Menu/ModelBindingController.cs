@@ -4,20 +4,21 @@ using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class MenuController : Controller
+    public partial class MenuController : BaseController
     {
         [Demo]
         public ActionResult ModelBinding()
         {
-            var northwind = new SampleEntitiesDataContext();
+            using (var northwind = GetContext())
+            {
+                var categories = northwind.Categories.ToList();
+                categories.ForEach(c =>
+                                   c.Products = northwind.Products
+                                    .Where(p => p.CategoryID == c.CategoryID)
+                                    .ToList());
 
-            var categories = northwind.Categories.ToList();
-            categories.ForEach(c => 
-                               c.Products = northwind.Products
-                                .Where(p => p.CategoryID == c.CategoryID)
-                                .ToList());
-
-            return View(northwind.Categories);
+                return View(categories);
+            }
         }
     }
 }

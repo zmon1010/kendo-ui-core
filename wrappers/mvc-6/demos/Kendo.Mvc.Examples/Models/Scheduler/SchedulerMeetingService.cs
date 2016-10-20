@@ -10,17 +10,15 @@
     using Microsoft.AspNetCore.Http;
     using Extensions;
 
-    public class SchedulerMeetingService : ISchedulerEventService<MeetingViewModel>
+    public class SchedulerMeetingService : BaseService, ISchedulerEventService<MeetingViewModel>
     {
         private static bool UpdateDatabase = false;
-        private SampleEntitiesDataContext db;
         private ISession _session;
 
         public ISession Session { get { return _session; } }
 
-        public SchedulerMeetingService(IHttpContextAccessor httpContextAccessor, SampleEntitiesDataContext context)
+        public SchedulerMeetingService(IHttpContextAccessor httpContextAccessor)
         {
-            db = context;
             _session = httpContextAccessor.HttpContext.Session;
         }
 
@@ -31,34 +29,37 @@
 
         public virtual IList<MeetingViewModel> GetAllMeetings()
         {
-            var result = Session.GetObjectFromJson<IList<MeetingViewModel>>("SchedulerMeetings");
-
-            if (result == null || UpdateDatabase)
+            using (var db = GetContext())
             {
-                result = db.Meetings
-                    .Include(model => model.MeetingAttendees)
-                    .ToList()
-                    .Select(meeting => new MeetingViewModel
-                    {
-                        MeetingID = meeting.MeetingID,
-                        Title = meeting.Title,
-                        Start = DateTime.SpecifyKind(meeting.Start, DateTimeKind.Utc),
-                        End = DateTime.SpecifyKind(meeting.End, DateTimeKind.Utc),
-                        StartTimezone = meeting.StartTimezone,
-                        EndTimezone = meeting.EndTimezone,
-                        Description = meeting.Description,
-                        IsAllDay = meeting.IsAllDay,
-                        RoomID = meeting.RoomID,
-                        RecurrenceRule = meeting.RecurrenceRule,
-                        RecurrenceException = meeting.RecurrenceException,
-                        RecurrenceID = meeting.RecurrenceID,
-                        Attendees = meeting.MeetingAttendees.Select(m => m.AttendeeID).ToArray()
-                    }).ToList();
+                var result = Session.GetObjectFromJson<IList<MeetingViewModel>>("SchedulerMeetings");
 
-                Session.SetObjectAsJson("SchedulerMeetings", result);
+                if (result == null || UpdateDatabase)
+                {
+                    result = db.Meetings
+                        .Include(model => model.MeetingAttendees)
+                        .ToList()
+                        .Select(meeting => new MeetingViewModel
+                        {
+                            MeetingID = meeting.MeetingID,
+                            Title = meeting.Title,
+                            Start = DateTime.SpecifyKind(meeting.Start, DateTimeKind.Utc),
+                            End = DateTime.SpecifyKind(meeting.End, DateTimeKind.Utc),
+                            StartTimezone = meeting.StartTimezone,
+                            EndTimezone = meeting.EndTimezone,
+                            Description = meeting.Description,
+                            IsAllDay = meeting.IsAllDay,
+                            RoomID = meeting.RoomID,
+                            RecurrenceRule = meeting.RecurrenceRule,
+                            RecurrenceException = meeting.RecurrenceException,
+                            RecurrenceID = meeting.RecurrenceID,
+                            Attendees = meeting.MeetingAttendees.Select(m => m.AttendeeID).ToArray()
+                        }).ToList();
+
+                    Session.SetObjectAsJson("SchedulerMeetings", result);
+                }
+
+                return result;
             }
-
-            return result;
         }
 
         public virtual void Insert(MeetingViewModel meeting, ModelStateDictionary modelState)
@@ -79,30 +80,33 @@
                 }
                 else
                 {
-                    if (meeting.Attendees == null)
+                    using (var db = GetContext())
                     {
-                        meeting.Attendees = new int[0];
-                    }
-
-                    if (string.IsNullOrEmpty(meeting.Title))
-                    {
-                        meeting.Title = "";
-                    }
-
-                    var entity = meeting.ToEntity();
-
-                    foreach (var attendeeId in meeting.Attendees)
-                    {
-                        entity.MeetingAttendees.Add(new MeetingAttendee
+                        if (meeting.Attendees == null)
                         {
-                            AttendeeID = attendeeId
-                        });
+                            meeting.Attendees = new int[0];
+                        }
+
+                        if (string.IsNullOrEmpty(meeting.Title))
+                        {
+                            meeting.Title = "";
+                        }
+
+                        var entity = meeting.ToEntity();
+
+                        foreach (var attendeeId in meeting.Attendees)
+                        {
+                            entity.MeetingAttendees.Add(new MeetingAttendee
+                            {
+                                AttendeeID = attendeeId
+                            });
+                        }
+
+                        db.Meetings.Add(entity);
+                        db.SaveChanges();
+
+                        meeting.MeetingID = entity.MeetingID;
                     }
-
-                    db.Meetings.Add(entity);
-                    db.SaveChanges();
-
-                    meeting.MeetingID = entity.MeetingID;
                 }
             }
         }
@@ -136,55 +140,58 @@
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(meeting.Title))
+                    using (var db = GetContext())
                     {
-                        meeting.Title = "";
-                    }
-
-                    var entity = meeting.ToEntity();
-                    db.Meetings.Attach(entity);
-                    db.Entry(entity).State = EntityState.Modified;
-
-                    var oldMeeting = db.Meetings
-                        .Include(model => model.MeetingAttendees)
-                        .FirstOrDefault(m => m.MeetingID == meeting.MeetingID);
-
-                    foreach (var attendee in oldMeeting.MeetingAttendees.ToList())
-                    {
-                        db.MeetingAttendees.Attach(attendee);
-
-                        if (meeting.Attendees == null || !meeting.Attendees.Contains(attendee.AttendeeID))
+                        if (string.IsNullOrEmpty(meeting.Title))
                         {
-                            db.Entry(attendee).State = EntityState.Deleted;
-                        }
-                        else
-                        {
-                            db.Entry(attendee).State = EntityState.Unchanged;
-
-                            ((List<int>)meeting.Attendees).Remove(attendee.AttendeeID);
+                            meeting.Title = "";
                         }
 
-                        entity.MeetingAttendees.Add(attendee);
-                    }
+                        var entity = meeting.ToEntity();
+                        db.Meetings.Attach(entity);
+                        db.Entry(entity).State = EntityState.Modified;
 
-                    if (meeting.Attendees != null)
-                    {
-                        foreach (var attendeeId in meeting.Attendees)
+                        var oldMeeting = db.Meetings
+                            .Include(model => model.MeetingAttendees)
+                            .FirstOrDefault(m => m.MeetingID == meeting.MeetingID);
+
+                        foreach (var attendee in oldMeeting.MeetingAttendees.ToList())
                         {
-                            var meetingAttendee = new MeetingAttendee
+                            db.MeetingAttendees.Attach(attendee);
+
+                            if (meeting.Attendees == null || !meeting.Attendees.Contains(attendee.AttendeeID))
                             {
-                                MeetingID = entity.MeetingID,
-                                AttendeeID = attendeeId
-                            };
+                                db.Entry(attendee).State = EntityState.Deleted;
+                            }
+                            else
+                            {
+                                db.Entry(attendee).State = EntityState.Unchanged;
 
-                            db.MeetingAttendees.Attach(meetingAttendee);
-                            db.Entry(meetingAttendee).State = EntityState.Added;
+                                ((List<int>)meeting.Attendees).Remove(attendee.AttendeeID);
+                            }
 
-                            entity.MeetingAttendees.Add(meetingAttendee);
+                            entity.MeetingAttendees.Add(attendee);
                         }
-                    }
 
-                    db.SaveChanges();
+                        if (meeting.Attendees != null)
+                        {
+                            foreach (var attendeeId in meeting.Attendees)
+                            {
+                                var meetingAttendee = new MeetingAttendee
+                                {
+                                    MeetingID = entity.MeetingID,
+                                    AttendeeID = attendeeId
+                                };
+
+                                db.MeetingAttendees.Attach(meetingAttendee);
+                                db.Entry(meetingAttendee).State = EntityState.Added;
+
+                                entity.MeetingAttendees.Add(meetingAttendee);
+                            }
+                        }
+
+                        db.SaveChanges();
+                    }
                 }
             }
         }
@@ -210,37 +217,40 @@
             }
             else
             {
-                if (meeting.Attendees == null)
+                using (var db = GetContext())
                 {
-                    meeting.Attendees = new int[0];
+                    if (meeting.Attendees == null)
+                    {
+                        meeting.Attendees = new int[0];
+                    }
+
+                    var entity = meeting.ToEntity();
+
+                    db.Meetings.Attach(entity);
+
+                    var attendees = meeting.Attendees.Select(attendee => new MeetingAttendee
+                    {
+                        AttendeeID = attendee,
+                        MeetingID = entity.MeetingID
+                    });
+
+                    foreach (var attendee in attendees)
+                    {
+                        db.MeetingAttendees.Attach(attendee);
+                        db.Entry(attendee).State = EntityState.Deleted;
+                    }
+
+                    var recurrenceExceptions = db.Meetings.Where(m => m.RecurrenceID == entity.MeetingID);
+
+                    foreach (var recurrenceException in recurrenceExceptions)
+                    {
+                        db.Meetings.Remove(recurrenceException);
+                    }
+
+                    db.Entry(entity).State = EntityState.Deleted;
+                    db.Meetings.Remove(entity);
+                    db.SaveChanges();
                 }
-
-                var entity = meeting.ToEntity();
-
-                db.Meetings.Attach(entity);
-
-                var attendees = meeting.Attendees.Select(attendee => new MeetingAttendee
-                {
-                    AttendeeID = attendee,
-                    MeetingID = entity.MeetingID
-                });
-
-                foreach (var attendee in attendees)
-                {
-                    db.MeetingAttendees.Attach(attendee);
-                    db.Entry(attendee).State = EntityState.Deleted;
-                }
-
-                var recurrenceExceptions = db.Meetings.Where(m => m.RecurrenceID == entity.MeetingID);
-
-                foreach (var recurrenceException in recurrenceExceptions)
-                {
-                    db.Meetings.Remove(recurrenceException);
-                }
-
-                db.Entry(entity).State = EntityState.Deleted;
-                db.Meetings.Remove(entity);
-                db.SaveChanges();
             }
         }
 
@@ -253,11 +263,6 @@
             }
 
             return true;
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
         }
     }
 }

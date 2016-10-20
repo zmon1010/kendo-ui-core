@@ -8,38 +8,39 @@ using System.Linq;
 namespace Kendo.Mvc.Examples.Models.Gantt
 {
 
-    public class GanttAssignmentService : IGanttAssignmentService, IDisposable
+    public class GanttAssignmentService : BaseService, IGanttAssignmentService
     {
         private static bool UpdateDatabase = false;
-        private SampleEntitiesDataContext db;
         private ISession _session;
 
         public ISession Session { get { return _session; } }
 
-        public GanttAssignmentService(IHttpContextAccessor httpContextAccessor, SampleEntitiesDataContext context)
+        public GanttAssignmentService(IHttpContextAccessor httpContextAccessor)
         {
-            db = context;
             _session = httpContextAccessor.HttpContext.Session;
         }
 
         public virtual IList<ResourceAssignmentViewModel> GetAll()
         {
-            var result = Session.GetObjectFromJson<IList<ResourceAssignmentViewModel>>("GanttAssignments");
-
-            if (result == null || UpdateDatabase)
+            using (var db = GetContext())
             {
-                result = db.GanttResourceAssignments.ToList().Select(assignment => new ResourceAssignmentViewModel
+                var result = Session.GetObjectFromJson<IList<ResourceAssignmentViewModel>>("GanttAssignments");
+
+                if (result == null || UpdateDatabase)
                 {
-                    ID = assignment.ID,
-                    TaskID = assignment.TaskID,
-                    ResourceID = assignment.ResourceID,
-                    Units = assignment.Units
-                }).ToList();
+                    result = db.GanttResourceAssignments.ToList().Select(assignment => new ResourceAssignmentViewModel
+                    {
+                        ID = assignment.ID,
+                        TaskID = assignment.TaskID,
+                        ResourceID = assignment.ResourceID,
+                        Units = assignment.Units
+                    }).ToList();
 
-                Session.SetObjectAsJson("GanttAssignments", result);
+                    Session.SetObjectAsJson("GanttAssignments", result);
+                }
+
+                return result;
             }
-
-            return result;
         }
 
         public virtual void Insert(ResourceAssignmentViewModel assignment)
@@ -58,12 +59,15 @@ namespace Kendo.Mvc.Examples.Models.Gantt
             }
             else
             {
-                var entity = assignment.ToEntity();
+                using (var db = GetContext())
+                {
+                    var entity = assignment.ToEntity();
 
-                db.GanttResourceAssignments.Add(entity);
-                db.SaveChanges();
+                    db.GanttResourceAssignments.Add(entity);
+                    db.SaveChanges();
 
-                assignment.ID = entity.ID;
+                    assignment.ID = entity.ID;
+                }
             }
         }
 
@@ -85,11 +89,14 @@ namespace Kendo.Mvc.Examples.Models.Gantt
             }
             else
             {
-                var entity = assignment.ToEntity();
+                using (var db = GetContext())
+                {
+                    var entity = assignment.ToEntity();
 
-                db.GanttResourceAssignments.Attach(entity);
-                db.Entry(entity).State = EntityState.Modified;
-                db.SaveChanges();
+                    db.GanttResourceAssignments.Attach(entity);
+                    db.Entry(entity).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -109,17 +116,15 @@ namespace Kendo.Mvc.Examples.Models.Gantt
             }
             else
             {
-                var entity = assignment.ToEntity();
+                using (var db = GetContext())
+                {
+                    var entity = assignment.ToEntity();
 
-                db.GanttResourceAssignments.Attach(entity);
-                db.GanttResourceAssignments.Remove(entity);
-                db.SaveChanges();
+                    db.GanttResourceAssignments.Attach(entity);
+                    db.GanttResourceAssignments.Remove(entity);
+                    db.SaveChanges();
+                }
             }
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
         }
     }
 }

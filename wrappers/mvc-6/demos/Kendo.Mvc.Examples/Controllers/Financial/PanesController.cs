@@ -2,7 +2,7 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class FinancialController : Controller
+    public partial class FinancialController : BaseController
     {
         [Demo]
         public IActionResult Panes()

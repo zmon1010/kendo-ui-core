@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-	public partial class GridController : Controller
+	public partial class GridController : BaseController
     {
         private IProductService productService;
 
@@ -30,22 +30,24 @@ namespace Kendo.Mvc.Examples.Controllers
 
 		private static IEnumerable<CustomerViewModel> GetCustomers()
 		{
-			var northwind = new SampleEntitiesDataContext();
-			return northwind.Customers.ToList().Select(customer => new CustomerViewModel
-			{
-				CustomerID = customer.CustomerID,
-				CompanyName = customer.CompanyName,
-				ContactName = customer.ContactName,
-				ContactTitle = customer.ContactTitle,
-				Address = customer.Address,
-				City = customer.City,
-				Region = customer.Region,
-				PostalCode = customer.PostalCode,
-				Country = customer.Country,
-				Phone = customer.Phone,
-				Fax = customer.Fax,
-				Bool = customer.Bool
-			});
+            using (var northwind = new SampleEntitiesDataContext())
+            {
+                return northwind.Customers.Select(customer => new CustomerViewModel
+                {
+                    CustomerID = customer.CustomerID,
+                    CompanyName = customer.CompanyName,
+                    ContactName = customer.ContactName,
+                    ContactTitle = customer.ContactTitle,
+                    Address = customer.Address,
+                    City = customer.City,
+                    Region = customer.Region,
+                    PostalCode = customer.PostalCode,
+                    Country = customer.Country,
+                    Phone = customer.Phone,
+                    Fax = customer.Fax,
+                    Bool = customer.Bool
+                }).ToList();
+            }
 		}
 
 		public ActionResult Orders_Read([DataSourceRequest]DataSourceRequest request)
@@ -55,24 +57,25 @@ namespace Kendo.Mvc.Examples.Controllers
 
 		private static IEnumerable<OrderViewModel> GetOrders()
 		{
-			var northwind = new SampleEntitiesDataContext();
+            using (var northwind = new SampleEntitiesDataContext())
+            {
+                var customers = northwind.Customers.ToList();
 
-			var customers = northwind.Customers.ToList();
-
-            return northwind.Orders.ToList().Select(order => new OrderViewModel
-			{
-				ContactName = customers.First(c => c.CustomerID == order.CustomerID).ContactName,
-				Freight = order.Freight,
-				OrderDate = order.OrderDate,
-				ShippedDate = order.ShippedDate,
-				OrderID = order.OrderID,
-				ShipAddress = order.ShipAddress,
-				ShipCountry = order.ShipCountry,
-				ShipName = order.ShipName,
-				ShipCity = order.ShipCity,
-				EmployeeID = order.EmployeeID,
-				CustomerID = order.CustomerID
-			});
+                return northwind.Orders.ToList().Select(order => new OrderViewModel
+                {
+                    ContactName = customers.First(c => c.CustomerID == order.CustomerID).ContactName,
+                    Freight = order.Freight,
+                    OrderDate = order.OrderDate,
+                    ShippedDate = order.ShippedDate,
+                    OrderID = order.OrderID,
+                    ShipAddress = order.ShipAddress,
+                    ShipCountry = order.ShipCountry,
+                    ShipName = order.ShipName,
+                    ShipCity = order.ShipCity,
+                    EmployeeID = order.EmployeeID,
+                    CustomerID = order.CustomerID
+                }).ToList();
+            }
 		}
 
         public ActionResult Products_Read([DataSourceRequest] DataSourceRequest request)

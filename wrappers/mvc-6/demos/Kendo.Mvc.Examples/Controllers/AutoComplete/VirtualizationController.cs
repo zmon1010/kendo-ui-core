@@ -24,22 +24,23 @@ namespace Kendo.Mvc.Examples.Controllers
 
         private static IEnumerable<OrderViewModel> GetOrders()
         {
-            var northwind = new SampleEntitiesDataContext();
-
-            return northwind.Orders.Select(order => new OrderViewModel
+            using (var northwind = new SampleEntitiesDataContext())
             {
-                ContactName = order.Customer.ContactName,
-                Freight = order.Freight,
-                OrderDate = order.OrderDate,
-                ShippedDate = order.ShippedDate,
-                OrderID = order.OrderID,
-                ShipAddress = order.ShipAddress,
-                ShipCountry = order.ShipCountry,
-                ShipName = order.ShipName,
-                ShipCity = order.ShipCity,
-                EmployeeID = order.EmployeeID,
-                CustomerID = order.CustomerID
-            });
+                return northwind.Orders.Select(order => new OrderViewModel
+                {
+                    ContactName = order.Customer.ContactName,
+                    Freight = order.Freight,
+                    OrderDate = order.OrderDate,
+                    ShippedDate = order.ShippedDate,
+                    OrderID = order.OrderID,
+                    ShipAddress = order.ShipAddress,
+                    ShipCountry = order.ShipCountry,
+                    ShipName = order.ShipName,
+                    ShipCity = order.ShipCity,
+                    EmployeeID = order.EmployeeID,
+                    CustomerID = order.CustomerID
+                }).ToList();
+            }
         }
     }
 }

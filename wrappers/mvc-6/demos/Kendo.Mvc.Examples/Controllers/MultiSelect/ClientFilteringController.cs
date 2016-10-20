@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class MultiSelectController : Controller
+    public partial class MultiSelectController : BaseController
     {
         [Demo]
         public ActionResult ClientFiltering()

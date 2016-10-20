@@ -7,17 +7,15 @@ using Kendo.Mvc.Examples.Extensions;
 
 namespace Kendo.Mvc.Examples.Models
 {
-	public class ProductService : IProductService, IDisposable
+	public class ProductService : BaseService, IProductService
     {
         private static bool UpdateDatabase = false;
-        private SampleEntitiesDataContext entities;
         private ISession _session;
 
         public ISession Session { get { return _session; } }
 
-        public ProductService(IHttpContextAccessor httpContextAccessor, SampleEntitiesDataContext context)
+        public ProductService(IHttpContextAccessor httpContextAccessor)
         {
-            entities = context;
             _session = httpContextAccessor.HttpContext.Session;
         }
 
@@ -28,38 +26,42 @@ namespace Kendo.Mvc.Examples.Models
 
         public IList<ProductViewModel> GetAll()
         {
-            var result = Session.GetObjectFromJson<IList<ProductViewModel>>("Products");
-
-            if (result == null || UpdateDatabase)
+            using (var db = GetContext())
             {
-                var categories = entities.Categories.ToList();
+                var result = Session.GetObjectFromJson<IList<ProductViewModel>>("Products");
 
-                result = entities.Products.ToList().Select(product => {
-                    var category = categories.First(c => product.CategoryID == c.CategoryID);
+                if (result == null || UpdateDatabase)
+                {
+                    var categories = db.Categories.ToList();
 
-                    return new ProductViewModel
+                    result = db.Products.ToList().Select(product =>
                     {
-                        ProductID = product.ProductID,
-                        ProductName = product.ProductName,
-                        UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
-                        UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(int),
-                        QuantityPerUnit = product.QuantityPerUnit,
-                        Discontinued = product.Discontinued,
-                        UnitsOnOrder = product.UnitsOnOrder.HasValue ? product.UnitsOnOrder.Value : default(int),
-                        CategoryID = product.CategoryID,
-                        Category = new CategoryViewModel()
+                        var category = categories.First(c => product.CategoryID == c.CategoryID);
+
+                        return new ProductViewModel
                         {
-                            CategoryID = category.CategoryID,
-                            CategoryName = category.CategoryName
-                        },
-                        LastSupply = DateTime.Today
-                    };
-                }).ToList();
+                            ProductID = product.ProductID,
+                            ProductName = product.ProductName,
+                            UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
+                            UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(int),
+                            QuantityPerUnit = product.QuantityPerUnit,
+                            Discontinued = product.Discontinued,
+                            UnitsOnOrder = product.UnitsOnOrder.HasValue ? product.UnitsOnOrder.Value : default(int),
+                            CategoryID = product.CategoryID,
+                            Category = new CategoryViewModel()
+                            {
+                                CategoryID = category.CategoryID,
+                                CategoryName = category.CategoryName
+                            },
+                            LastSupply = DateTime.Today
+                        };
+                    }).ToList();
 
-                Session.SetObjectAsJson("Products", result);
-            }
+                    Session.SetObjectAsJson("Products", result);
+                }
 
-            return result;
+                return result;
+            } 
         }
 
         public void Create(ProductViewModel product)
@@ -78,28 +80,31 @@ namespace Kendo.Mvc.Examples.Models
             }
             else
             {
-                var entity = new Product();
-
-                entity.ProductName = product.ProductName;
-                entity.UnitPrice = product.UnitPrice;
-                entity.UnitsInStock = (short)product.UnitsInStock;
-                entity.Discontinued = product.Discontinued;
-                entity.CategoryID = product.CategoryID;
-
-                if (entity.CategoryID == null)
+                using (var db = GetContext())
                 {
-                    entity.CategoryID = 1;
+                    var entity = new Product();
+
+                    entity.ProductName = product.ProductName;
+                    entity.UnitPrice = product.UnitPrice;
+                    entity.UnitsInStock = (short)product.UnitsInStock;
+                    entity.Discontinued = product.Discontinued;
+                    entity.CategoryID = product.CategoryID;
+
+                    if (entity.CategoryID == null)
+                    {
+                        entity.CategoryID = 1;
+                    }
+
+                    if (product.Category != null)
+                    {
+                        entity.CategoryID = product.Category.CategoryID;
+                    }
+
+                    db.Products.Add(entity);
+                    db.SaveChanges();
+
+                    product.ProductID = (int)entity.ProductID;
                 }
-
-                if (product.Category != null)
-                {
-                    entity.CategoryID = product.Category.CategoryID;
-                }
-
-                entities.Products.Add(entity);
-                entities.SaveChanges();
-
-                product.ProductID = (int)entity.ProductID;
             }
         }
 
@@ -124,23 +129,26 @@ namespace Kendo.Mvc.Examples.Models
             }
             else
             {
-                var entity = new Product();
-
-                entity.ProductID = product.ProductID;
-                entity.ProductName = product.ProductName;
-                entity.UnitPrice = product.UnitPrice;
-                entity.UnitsInStock = (short)product.UnitsInStock;
-                entity.Discontinued = product.Discontinued;
-                entity.CategoryID = product.CategoryID;
-
-                if (product.Category != null)
+                using (var db = GetContext())
                 {
-                    entity.CategoryID = product.Category.CategoryID;
-                }
+                    var entity = new Product();
 
-                entities.Products.Attach(entity);
-                entities.Entry(entity).State = EntityState.Modified;
-                entities.SaveChanges();
+                    entity.ProductID = product.ProductID;
+                    entity.ProductName = product.ProductName;
+                    entity.UnitPrice = product.UnitPrice;
+                    entity.UnitsInStock = (short)product.UnitsInStock;
+                    entity.Discontinued = product.Discontinued;
+                    entity.CategoryID = product.CategoryID;
+
+                    if (product.Category != null)
+                    {
+                        entity.CategoryID = product.Category.CategoryID;
+                    }
+
+                    db.Products.Attach(entity);
+                    db.Entry(entity).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -160,28 +168,26 @@ namespace Kendo.Mvc.Examples.Models
             }
             else
             {
-                var entity = new Product();
-
-                entity.ProductID = product.ProductID;
-
-                entities.Products.Attach(entity);
-
-                entities.Products.Remove(entity);
-
-                var orderDetails = entities.OrderDetails.Where(pd => pd.ProductID == entity.ProductID);
-
-                foreach (var orderDetail in orderDetails)
+                using (var db = GetContext())
                 {
-                    entities.OrderDetails.Remove(orderDetail);
+                    var entity = new Product();
+
+                    entity.ProductID = product.ProductID;
+
+                    db.Products.Attach(entity);
+
+                    db.Products.Remove(entity);
+
+                    var orderDetails = db.OrderDetails.Where(pd => pd.ProductID == entity.ProductID);
+
+                    foreach (var orderDetail in orderDetails)
+                    {
+                        db.OrderDetails.Remove(orderDetail);
+                    }
+
+                    db.SaveChanges();
                 }
-
-                entities.SaveChanges();
             }
-        }
-
-        public void Dispose()
-        {
-            entities.Dispose();
         }
     }
 }

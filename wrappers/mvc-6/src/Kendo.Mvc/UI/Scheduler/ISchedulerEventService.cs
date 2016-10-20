@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-    public interface ISchedulerEventService<T> : IDisposable
+    public interface ISchedulerEventService<T>
         where T : class, ISchedulerEvent
     {
         IQueryable<T> GetAll();

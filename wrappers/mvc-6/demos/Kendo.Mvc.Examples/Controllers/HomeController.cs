@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         [Home]
         public ActionResult Index()
@@ -18,47 +18,48 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public JsonResult GetProducts(string text)
         {
-            var northwind = new SampleEntitiesDataContext();
-
-            var products = northwind.Products.Select(product => new ProductViewModel
+            using (var northwind = GetContext())
             {
-                ProductID = product.ProductID,
-                ProductName = product.ProductName,
-                UnitPrice = product.UnitPrice.Value,
-                UnitsInStock = product.UnitsInStock.Value,
-                UnitsOnOrder = product.UnitsOnOrder.Value,
-                Discontinued = product.Discontinued
-            });
+                var products = northwind.Products.Select(product => new ProductViewModel
+                {
+                    ProductID = product.ProductID,
+                    ProductName = product.ProductName,
+                    UnitPrice = product.UnitPrice.Value,
+                    UnitsInStock = product.UnitsInStock.Value,
+                    UnitsOnOrder = product.UnitsOnOrder.Value,
+                    Discontinued = product.Discontinued
+                });
 
-            if (!string.IsNullOrEmpty(text))
-            {
-                products = products.Where(p => p.ProductName.Contains(text));
+                if (!string.IsNullOrEmpty(text))
+                {
+                    products = products.Where(p => p.ProductName.Contains(text));
+                }
+
+                return Json(products.ToList());
             }
-
-            return Json(products);
         }
 
         public IEnumerable<CustomerViewModel> GetCustomers()
         {
-            var customers = new SampleEntitiesDataContext()
-                .Customers
-                .Select(customer => new CustomerViewModel
+            using (var customers = GetContext())
             {
-                CustomerID = customer.CustomerID,
-                CompanyName = customer.CompanyName,
-                ContactName = customer.ContactName,
-                ContactTitle = customer.ContactTitle,
-                Address = customer.Address,
-                City = customer.City,
-                Region = customer.Region,
-                PostalCode = customer.PostalCode,
-                Country = customer.Country,
-                Phone = customer.Phone,
-                Fax = customer.Fax,
-                Bool = customer.Bool
-            });
-
-            return customers;
+                return customers.Customers
+                    .Select(customer => new CustomerViewModel
+                    {
+                        CustomerID = customer.CustomerID,
+                        CompanyName = customer.CompanyName,
+                        ContactName = customer.ContactName,
+                        ContactTitle = customer.ContactTitle,
+                        Address = customer.Address,
+                        City = customer.City,
+                        Region = customer.Region,
+                        PostalCode = customer.PostalCode,
+                        Country = customer.Country,
+                        Phone = customer.Phone,
+                        Fax = customer.Fax,
+                        Bool = customer.Bool
+                    }).ToList();
+            }
         }
     }
 }

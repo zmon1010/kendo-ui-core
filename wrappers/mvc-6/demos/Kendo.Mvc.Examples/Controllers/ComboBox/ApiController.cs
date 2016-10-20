@@ -2,7 +2,7 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class ComboBoxController : Controller
+    public partial class ComboBoxController : BaseController
     {
         [Demo]
         public ActionResult Api()

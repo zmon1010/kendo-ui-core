@@ -8,43 +8,44 @@ using System.Collections.Generic;
 
 namespace Kendo.Mvc.Examples.Models.Gantt
 {
-    public class GanttTaskService : IGanttTaskService, IDisposable
+    public class GanttTaskService : BaseService, IGanttTaskService
     {
         private static bool UpdateDatabase = false;
-        private SampleEntitiesDataContext db;
         private ISession _session;
 
         public ISession Session { get { return _session; } }
 
-        public GanttTaskService(IHttpContextAccessor httpContextAccessor, SampleEntitiesDataContext context)
+        public GanttTaskService(IHttpContextAccessor httpContextAccessor)
         {
-            db = context;
             _session = httpContextAccessor.HttpContext.Session;
         }
 
         public virtual IList<TaskViewModel> GetAll()
         {
-            var result = Session.GetObjectFromJson<IList<TaskViewModel>>("GanttTasks");
-
-            if (result == null || UpdateDatabase)
+            using (var db = GetContext())
             {
-                result = db.GanttTasks.ToList().Select(task => new TaskViewModel
+                var result = Session.GetObjectFromJson<IList<TaskViewModel>>("GanttTasks");
+
+                if (result == null || UpdateDatabase)
                 {
-                    TaskID = task.ID,
-                    Title = task.Title,
-                    Start = DateTime.SpecifyKind(task.Start, DateTimeKind.Utc),
-                    End = DateTime.SpecifyKind(task.End, DateTimeKind.Utc),
-                    ParentID = task.ParentID,
-                    PercentComplete = task.PercentComplete,
-                    OrderId = task.OrderID,
-                    Expanded = task.Expanded,
-                    Summary = task.Summary
-                }).ToList();
+                    result = db.GanttTasks.ToList().Select(task => new TaskViewModel
+                    {
+                        TaskID = task.ID,
+                        Title = task.Title,
+                        Start = DateTime.SpecifyKind(task.Start, DateTimeKind.Utc),
+                        End = DateTime.SpecifyKind(task.End, DateTimeKind.Utc),
+                        ParentID = task.ParentID,
+                        PercentComplete = task.PercentComplete,
+                        OrderId = task.OrderID,
+                        Expanded = task.Expanded,
+                        Summary = task.Summary
+                    }).ToList();
 
-                Session.SetObjectAsJson("GanttTasks", result);
+                    Session.SetObjectAsJson("GanttTasks", result);
+                }
+
+                return result;
             }
-
-            return result;
         }
 
         public virtual void Insert(TaskViewModel task, ModelStateDictionary modelState)
@@ -65,17 +66,20 @@ namespace Kendo.Mvc.Examples.Models.Gantt
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(task.Title))
+                    using (var db = GetContext())
                     {
-                        task.Title = "";
+                        if (string.IsNullOrEmpty(task.Title))
+                        {
+                            task.Title = "";
+                        }
+
+                        var entity = task.ToEntity();
+
+                        db.GanttTasks.Add(entity);
+                        db.SaveChanges();
+
+                        task.TaskID = entity.ID;
                     }
-
-                    var entity = task.ToEntity();
-
-                    db.GanttTasks.Add(entity);
-                    db.SaveChanges();
-
-                    task.TaskID = entity.ID;
                 }
             }
         }
@@ -105,15 +109,18 @@ namespace Kendo.Mvc.Examples.Models.Gantt
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(task.Title))
+                    using (var db = GetContext())
                     {
-                        task.Title = "";
-                    }
+                        if (string.IsNullOrEmpty(task.Title))
+                        {
+                            task.Title = "";
+                        }
 
-                    var entity = task.ToEntity();
-                    db.GanttTasks.Attach(entity);
-                    db.Entry(entity).State = EntityState.Modified;
-                    db.SaveChanges();
+                        var entity = task.ToEntity();
+                        db.GanttTasks.Attach(entity);
+                        db.Entry(entity).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
             }
         }
@@ -136,24 +143,30 @@ namespace Kendo.Mvc.Examples.Models.Gantt
             }
             else
             {
-                var entity = task.ToEntity();
-                db.GanttTasks.Attach(entity);
+                using (var db = GetContext())
+                {
+                    var entity = task.ToEntity();
+                    db.GanttTasks.Attach(entity);
 
-                DeleteEntityChildren(entity);
+                    DeleteEntityChildren(entity);
 
-                db.GanttTasks.Remove(entity);
-                db.SaveChanges();
+                    db.GanttTasks.Remove(entity);
+                    db.SaveChanges();
+                }
             }
         }
 
         private void DeleteEntityChildren(GanttTask task)
         {
-            var childTasks = db.GanttTasks.Where(t => t.ParentID == task.ID);
-
-            foreach (var childTask in childTasks)
+            using (var db = GetContext())
             {
-                DeleteEntityChildren(childTask);
-                db.GanttTasks.Remove(childTask);
+                var childTasks = db.GanttTasks.Where(t => t.ParentID == task.ID);
+
+                foreach (var childTask in childTasks)
+                {
+                    DeleteEntityChildren(childTask);
+                    db.GanttTasks.Remove(childTask);
+                }
             }
         }
 
@@ -166,7 +179,7 @@ namespace Kendo.Mvc.Examples.Models.Gantt
                 DeleteSessionChildren(childTask, tasks);
                 tasks.Remove(childTask);
             }
-        }
+        } 
 
         private bool ValidateModel(TaskViewModel task, ModelStateDictionary modelState)
         {
@@ -177,11 +190,6 @@ namespace Kendo.Mvc.Examples.Models.Gantt
             }
             
             return true;
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
         }
     }
 }

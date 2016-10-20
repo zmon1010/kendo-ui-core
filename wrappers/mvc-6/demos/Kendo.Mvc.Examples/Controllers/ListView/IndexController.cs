@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class ListViewController : Controller
+    public partial class ListViewController : BaseController
     {
         private IProductService productService;
 
@@ -29,20 +29,21 @@ namespace Kendo.Mvc.Examples.Controllers
             return Json(GetProducts().ToDataSourceResult(request));
         }
 
-        private static IEnumerable<ProductViewModel> GetProducts()
+        private IEnumerable<ProductViewModel> GetProducts()
         {
-            var northwind = new SampleEntitiesDataContext();
-
-            return northwind.Products.Select(product => new ProductViewModel
+            using (var northwind = GetContext())
             {
-                ProductID = product.ProductID,
-                ProductName = product.ProductName,
-                UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
-                UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(int),
-                UnitsOnOrder = product.UnitsOnOrder.HasValue ? product.UnitsOnOrder.Value : default(int),
-                Discontinued = product.Discontinued,
-                LastSupply = DateTime.Today
-            });
+                return northwind.Products.Select(product => new ProductViewModel
+                {
+                    ProductID = product.ProductID,
+                    ProductName = product.ProductName,
+                    UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
+                    UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(int),
+                    UnitsOnOrder = product.UnitsOnOrder.HasValue ? product.UnitsOnOrder.Value : default(int),
+                    Discontinued = product.Discontinued,
+                    LastSupply = DateTime.Today
+                }).ToList();
+            }
         }
     }
 }

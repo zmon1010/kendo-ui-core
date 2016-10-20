@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class GridController : Controller
+    public partial class GridController : BaseController
     {
         [Demo]
         public ActionResult ForeignKeyColumn()
@@ -67,17 +67,19 @@ namespace Kendo.Mvc.Examples.Controllers
 
         private void PopulateCategories()
         {
-            var dataContext = new SampleEntitiesDataContext();
-            var categories = dataContext.Categories
-                        .Select(c => new CategoryViewModel
-                        {
-                            CategoryID = c.CategoryID,
-                            CategoryName = c.CategoryName
-                        })
-                        .OrderBy(e => e.CategoryName);
+            using (var dataContext = new SampleEntitiesDataContext())
+            {
+                var categories = dataContext.Categories
+                            .Select(c => new CategoryViewModel
+                            {
+                                CategoryID = c.CategoryID,
+                                CategoryName = c.CategoryName
+                            })
+                            .OrderBy(e => e.CategoryName);
 
-            ViewData["categories"] = categories;
-            ViewData["defaultCategory"] = categories.First();
+                ViewData["categories"] = categories.ToList();
+                ViewData["defaultCategory"] = categories.First();
+            }
         }
     }
 }

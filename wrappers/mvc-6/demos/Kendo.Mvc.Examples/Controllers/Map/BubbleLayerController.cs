@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class MapController : Controller
+    public partial class MapController : BaseController
     {
         [Demo]
         public IActionResult Bubble_Layer()
@@ -18,7 +18,7 @@ namespace Kendo.Mvc.Examples.Controllers
         {
             IEnumerable<UrbanArea> result;
 
-            using (var db = new SampleEntitiesDataContext())
+            using (var db = GetContext())
             {
                 result = db.UrbanAreas.ToList();
             }

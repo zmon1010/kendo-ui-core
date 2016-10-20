@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class GridController
+    public partial class GridController : BaseController
     {
         [Demo]
         public ActionResult ColumnSettings()

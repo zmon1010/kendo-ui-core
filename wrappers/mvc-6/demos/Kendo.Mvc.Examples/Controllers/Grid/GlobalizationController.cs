@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class GridController
+    public partial class GridController : BaseController
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {

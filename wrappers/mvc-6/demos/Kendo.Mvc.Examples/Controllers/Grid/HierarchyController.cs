@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class GridController : Controller
+    public partial class GridController : BaseController
     {
         [Demo]
         public ActionResult Hierarchy()
@@ -29,20 +29,21 @@ namespace Kendo.Mvc.Examples.Controllers
 
 		private static IEnumerable<EmployeeViewModel> GetEmployees()
 		{
-			var northwind = new SampleEntitiesDataContext();
-
-			return northwind.Employees.ToList().Select(employee => new EmployeeViewModel
-			{
-				EmployeeID = employee.EmployeeID,
-				FirstName = employee.FirstName,
-				LastName = employee.LastName,
-				Country = employee.Country,
-				City = employee.City,
-				Notes = employee.Notes,
-				Title = employee.Title,
-				Address = employee.Address,
-				HomePhone = employee.HomePhone
-			});
+            using (var northwind = new SampleEntitiesDataContext())
+            {
+                return northwind.Employees.Select(employee => new EmployeeViewModel
+                {
+                    EmployeeID = employee.EmployeeID,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Country = employee.Country,
+                    City = employee.City,
+                    Notes = employee.Notes,
+                    Title = employee.Title,
+                    Address = employee.Address,
+                    HomePhone = employee.HomePhone
+                }).ToList();
+            }
 		}
 	}
 }

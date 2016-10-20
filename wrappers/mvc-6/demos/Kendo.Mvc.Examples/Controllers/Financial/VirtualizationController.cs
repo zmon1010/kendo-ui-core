@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class FinancialController : Controller
+    public partial class FinancialController : BaseController
     {
         private readonly DateTime MIN_DATE = new DateTime(1990, 1, 1);
         private readonly BaseUnit DEFAULT_UNIT = BaseUnit.Months;

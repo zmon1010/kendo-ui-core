@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class GridController : Controller
+    public partial class GridController : BaseController
     {
         [Demo]
         public ActionResult Filter_Menu_Customization()
@@ -17,19 +17,23 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public ActionResult FilterMenuCustomization_Read([DataSourceRequest] DataSourceRequest request)
         {
-            return Json(GetEmployees().ToDataSourceResult(request));
+            return Json(GetEmployees().ToList().ToDataSourceResult(request));
         }
 
         public ActionResult FilterMenuCustomization_Cities()
         {
-            var db = new SampleEntitiesDataContext();
-            return Json(db.Employees.Select(e => e.City).Distinct());
+            using (var db = new SampleEntitiesDataContext())
+            {
+                return Json(db.Employees.Select(e => e.City).Distinct().ToList());
+            }
         }
 
         public ActionResult FilterMenuCustomization_Titles()
         {
-            var db = new SampleEntitiesDataContext();
-            return Json(db.Employees.Select(e => e.Title).Distinct());
+            using (var db = new SampleEntitiesDataContext())
+            {
+                return Json(db.Employees.Select(e => e.Title).Distinct().ToList());
+            }
         } 
     }
 }

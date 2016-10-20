@@ -5,7 +5,7 @@ using Kendo.Mvc.UI;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class MenuController : Controller
+    public partial class MenuController : BaseController
     {
         [Demo]
         public IActionResult Context_Menu()

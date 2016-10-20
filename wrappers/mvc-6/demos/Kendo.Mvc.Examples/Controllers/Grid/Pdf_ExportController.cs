@@ -7,7 +7,7 @@ using Kendo.Mvc.Examples.Models;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-	public partial class GridController : Controller
+	public partial class GridController : BaseController
     {
         [Demo]
         public ActionResult Pdf_Export()
@@ -19,7 +19,7 @@ namespace Kendo.Mvc.Examples.Controllers
         {
             using (var northwind = new SampleEntitiesDataContext())
             {
-                return Json(northwind.Employees.ToList().ToDataSourceResult(request, e => new EmployeeViewModel
+                return Json(northwind.Employees.ToDataSourceResult(request, e => new EmployeeViewModel
                     {
                         EmployeeID = e.EmployeeID,
                         Country = e.Country,

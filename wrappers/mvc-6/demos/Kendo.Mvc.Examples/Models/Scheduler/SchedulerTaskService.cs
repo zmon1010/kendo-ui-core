@@ -1,27 +1,23 @@
 ﻿namespace Kendo.Mvc.Examples.Models.Scheduler
 {
     using System.Linq;
-    using Microsoft.AspNetCore.Mvc;
     using Kendo.Mvc.UI;
     using System;
-    using System.Data;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Http;
     using System.Collections.Generic;
     using Extensions;
 
-    public class SchedulerTaskService : ISchedulerEventService<TaskViewModel>
+    public class SchedulerTaskService : BaseService, ISchedulerEventService<TaskViewModel>
     {
         private static bool UpdateDatabase = false;
-        private SampleEntitiesDataContext db;
         private ISession _session;
 
         public ISession Session { get { return _session; } }
 
-        public SchedulerTaskService(IHttpContextAccessor httpContextAccessor, SampleEntitiesDataContext context)
+        public SchedulerTaskService(IHttpContextAccessor httpContextAccessor)
         {
-            db = context;
             _session = httpContextAccessor.HttpContext.Session;
         }
 
@@ -32,30 +28,33 @@
 
         private IList<TaskViewModel> GetAllTasks()
         {
-            var result = Session.GetObjectFromJson<IList<TaskViewModel>>("SchedulerTasks");
-
-            if (result == null || UpdateDatabase)
+            using (var db = GetContext())
             {
-                result = db.Tasks.ToList().Select(task => new TaskViewModel
+                var result = Session.GetObjectFromJson<IList<TaskViewModel>>("SchedulerTasks");
+
+                if (result == null || UpdateDatabase)
                 {
-                    TaskID = task.TaskID,
-                    Title = task.Title,
-                    Start = DateTime.SpecifyKind(task.Start, DateTimeKind.Utc),
-                    End = DateTime.SpecifyKind(task.End, DateTimeKind.Utc),
-                    StartTimezone = task.StartTimezone,
-                    EndTimezone = task.EndTimezone,
-                    Description = task.Description,
-                    IsAllDay = task.IsAllDay,
-                    RecurrenceRule = task.RecurrenceRule,
-                    RecurrenceException = task.RecurrenceException,
-                    RecurrenceID = task.RecurrenceID,
-                    OwnerID = task.OwnerID
-                }).ToList();
+                    result = db.Tasks.ToList().Select(task => new TaskViewModel
+                    {
+                        TaskID = task.TaskID,
+                        Title = task.Title,
+                        Start = DateTime.SpecifyKind(task.Start, DateTimeKind.Utc),
+                        End = DateTime.SpecifyKind(task.End, DateTimeKind.Utc),
+                        StartTimezone = task.StartTimezone,
+                        EndTimezone = task.EndTimezone,
+                        Description = task.Description,
+                        IsAllDay = task.IsAllDay,
+                        RecurrenceRule = task.RecurrenceRule,
+                        RecurrenceException = task.RecurrenceException,
+                        RecurrenceID = task.RecurrenceID,
+                        OwnerID = task.OwnerID
+                    }).ToList();
 
-                Session.SetObjectAsJson("SchedulerTasks", result);
+                    Session.SetObjectAsJson("SchedulerTasks", result);
+                }
+
+                return result;
             }
-
-            return result;
         }
 
         public virtual void Insert(TaskViewModel task, ModelStateDictionary modelState)
@@ -77,17 +76,20 @@
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(task.Title))
+                    using (var db = GetContext())
                     {
-                        task.Title = "";
+                        if (string.IsNullOrEmpty(task.Title))
+                        {
+                            task.Title = "";
+                        }
+
+                        var entity = task.ToEntity();
+
+                        db.Tasks.Add(entity);
+                        db.SaveChanges();
+
+                        task.TaskID = entity.TaskID;
                     }
-
-                    var entity = task.ToEntity();
-
-                    db.Tasks.Add(entity);
-                    db.SaveChanges();
-
-                    task.TaskID = entity.TaskID;
                 }
             }
         }
@@ -120,15 +122,18 @@
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(task.Title))
+                    using (var db = GetContext())
                     {
-                        task.Title = "";
-                    }
+                        if (string.IsNullOrEmpty(task.Title))
+                        {
+                            task.Title = "";
+                        }
 
-                    var entity = task.ToEntity();
-                    db.Tasks.Attach(entity);
-                    db.Entry(entity).State = EntityState.Modified;
-                    db.SaveChanges();
+                        var entity = task.ToEntity();
+                        db.Tasks.Attach(entity);
+                        db.Entry(entity).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
             }
         }
@@ -156,18 +161,21 @@
             }
             else
             {
-                var entity = task.ToEntity();
-                db.Tasks.Attach(entity);
-
-                var recurrenceExceptions = db.Tasks.Where(t => t.RecurrenceID == task.TaskID);
-
-                foreach (var recurrenceException in recurrenceExceptions)
+                using (var db = GetContext())
                 {
-                    db.Tasks.Remove(recurrenceException);
-                }
+                    var entity = task.ToEntity();
+                    db.Tasks.Attach(entity);
 
-                db.Tasks.Remove(entity);
-                db.SaveChanges();
+                    var recurrenceExceptions = db.Tasks.Where(t => t.RecurrenceID == task.TaskID);
+
+                    foreach (var recurrenceException in recurrenceExceptions)
+                    {
+                        db.Tasks.Remove(recurrenceException);
+                    }
+
+                    db.Tasks.Remove(entity);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -181,11 +189,6 @@
             }
             
             return true;
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
         }
     }
 }

@@ -7,7 +7,7 @@ using Kendo.Mvc.Examples.Models;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class ComboBoxController : Controller
+    public partial class ComboBoxController : BaseController
     {
         [Demo]
         public ActionResult Grouping()
@@ -27,24 +27,26 @@ namespace Kendo.Mvc.Examples.Controllers
             return Json(result);
         }
 
-        private static IEnumerable<CustomerViewModel> GetCustomers()
+        private IEnumerable<CustomerViewModel> GetCustomers()
         {
-            var northwind = new SampleEntitiesDataContext();
-            return northwind.Customers.Select(customer => new CustomerViewModel
+            using (var northwind = GetContext())
             {
-                CustomerID = customer.CustomerID,
-                CompanyName = customer.CompanyName,
-                ContactName = customer.ContactName,
-                ContactTitle = customer.ContactTitle,
-                Address = customer.Address,
-                City = customer.City,
-                Region = customer.Region,
-                PostalCode = customer.PostalCode,
-                Country = customer.Country,
-                Phone = customer.Phone,
-                Fax = customer.Fax,
-                Bool = customer.Bool
-            });
+                return northwind.Customers.Select(customer => new CustomerViewModel
+                {
+                    CustomerID = customer.CustomerID,
+                    CompanyName = customer.CompanyName,
+                    ContactName = customer.ContactName,
+                    ContactTitle = customer.ContactTitle,
+                    Address = customer.Address,
+                    City = customer.City,
+                    Region = customer.Region,
+                    PostalCode = customer.PostalCode,
+                    Country = customer.Country,
+                    Phone = customer.Phone,
+                    Fax = customer.Fax,
+                    Bool = customer.Bool
+                }).ToList();
+            }
         }
     }
 }

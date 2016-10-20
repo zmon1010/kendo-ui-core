@@ -7,38 +7,39 @@ using Kendo.Mvc.Examples.Extensions;
 
 namespace Kendo.Mvc.Examples.Models.Gantt
 {
-    public class GanttDependencyService : IGanttDependencyService, IDisposable
+    public class GanttDependencyService : BaseService, IGanttDependencyService
     {
         private static bool UpdateDatabase = false;
-        private SampleEntitiesDataContext db;
         private ISession _session;
 
         public ISession Session { get { return _session; } }
 
-        public GanttDependencyService(IHttpContextAccessor httpContextAccessor, SampleEntitiesDataContext context)
+        public GanttDependencyService(IHttpContextAccessor httpContextAccessor)
         {
-            db = context;
             _session = httpContextAccessor.HttpContext.Session;
         }
 
         public virtual IList<DependencyViewModel> GetAll()
         {
-            var result = Session.GetObjectFromJson<IList<DependencyViewModel>>("GanttDependencies");
-
-            if (result == null || UpdateDatabase)
+            using (var db = GetContext())
             {
-                result = db.GanttDependencies.ToList().Select(dependency => new DependencyViewModel
+                var result = Session.GetObjectFromJson<IList<DependencyViewModel>>("GanttDependencies");
+
+                if (result == null || UpdateDatabase)
                 {
-                    DependencyID = dependency.ID,
-                    PredecessorID = dependency.PredecessorID,
-                    SuccessorID = dependency.SuccessorID,
-                    Type = (DependencyType)dependency.Type
-                }).ToList();
+                    result = db.GanttDependencies.ToList().Select(dependency => new DependencyViewModel
+                    {
+                        DependencyID = dependency.ID,
+                        PredecessorID = dependency.PredecessorID,
+                        SuccessorID = dependency.SuccessorID,
+                        Type = (DependencyType)dependency.Type
+                    }).ToList();
 
-                Session.SetObjectAsJson("GanttDependencies", result);
+                    Session.SetObjectAsJson("GanttDependencies", result);
+                }
+
+                return result;
             }
-
-            return result;
         }
 
         public virtual void Insert(DependencyViewModel dependency)
@@ -57,12 +58,15 @@ namespace Kendo.Mvc.Examples.Models.Gantt
             }
             else
             {
-                var entity = dependency.ToEntity();
+                using (var db = GetContext())
+                {
+                    var entity = dependency.ToEntity();
 
-                db.GanttDependencies.Add(entity);
-                db.SaveChanges();
+                    db.GanttDependencies.Add(entity);
+                    db.SaveChanges();
 
-                dependency.DependencyID = entity.ID;
+                    dependency.DependencyID = entity.ID;
+                }
             }
         }
 
@@ -82,16 +86,14 @@ namespace Kendo.Mvc.Examples.Models.Gantt
             }
             else
             {
-                var entity = dependency.ToEntity();
-                db.GanttDependencies.Attach(entity);
-                db.GanttDependencies.Remove(entity);
-                db.SaveChanges();
+                using (var db = GetContext())
+                {
+                    var entity = dependency.ToEntity();
+                    db.GanttDependencies.Attach(entity);
+                    db.GanttDependencies.Remove(entity);
+                    db.SaveChanges();
+                }
             }
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
         }
     }
 }

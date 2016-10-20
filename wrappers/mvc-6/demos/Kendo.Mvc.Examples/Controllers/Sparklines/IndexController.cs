@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class SparklinesController : Controller
+    public partial class SparklinesController : BaseController
     {
         [Demo]
         public IActionResult Index()

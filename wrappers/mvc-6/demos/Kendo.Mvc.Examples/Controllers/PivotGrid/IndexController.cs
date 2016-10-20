@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class PivotGridController : Controller
+    public partial class PivotGridController : BaseController
     {
         private IProductService productService;
 
@@ -30,22 +30,24 @@ namespace Kendo.Mvc.Examples.Controllers
 
         private static IEnumerable<CustomerViewModel> GetCustomers()
         {
-            var northwind = new SampleEntitiesDataContext();
-            return northwind.Customers.Select(customer => new CustomerViewModel
+            using (var northwind = new SampleEntitiesDataContext())
             {
-                CustomerID = customer.CustomerID,
-                CompanyName = customer.CompanyName,
-                ContactName = customer.ContactName,
-                ContactTitle = customer.ContactTitle,
-                Address = customer.Address,
-                City = customer.City,
-                Region = customer.Region,
-                PostalCode = customer.PostalCode,
-                Country = customer.Country,
-                Phone = customer.Phone,
-                Fax = customer.Fax,
-                Bool = customer.Bool
-            });
+                return northwind.Customers.Select(customer => new CustomerViewModel
+                {
+                    CustomerID = customer.CustomerID,
+                    CompanyName = customer.CompanyName,
+                    ContactName = customer.ContactName,
+                    ContactTitle = customer.ContactTitle,
+                    Address = customer.Address,
+                    City = customer.City,
+                    Region = customer.Region,
+                    PostalCode = customer.PostalCode,
+                    Country = customer.Country,
+                    Phone = customer.Phone,
+                    Fax = customer.Fax,
+                    Bool = customer.Bool
+                }).ToList();
+            }
         }
     }
 }

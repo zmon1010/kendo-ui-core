@@ -7,7 +7,7 @@ using Kendo.Mvc.Examples.Models;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class ComboBoxController : Controller
+    public partial class ComboBoxController : BaseController
     {
         [Demo]
         public ActionResult Virtualization()
@@ -42,24 +42,25 @@ namespace Kendo.Mvc.Examples.Controllers
             return Json(indices);
         }
 
-        private static IEnumerable<OrderViewModel> GetOrders()
+        private IEnumerable<OrderViewModel> GetOrders()
         {
-            var northwind = new SampleEntitiesDataContext();
-
-            return northwind.Orders.Select(order => new OrderViewModel
+            using (var northwind = GetContext())
             {
-                ContactName = order.Customer.ContactName,
-                Freight = order.Freight,
-                OrderDate = order.OrderDate,
-                ShippedDate = order.ShippedDate,
-                OrderID = order.OrderID,
-                ShipAddress = order.ShipAddress,
-                ShipCountry = order.ShipCountry,
-                ShipName = order.ShipName,
-                ShipCity = order.ShipCity,
-                EmployeeID = order.EmployeeID,
-                CustomerID = order.CustomerID
-            });
+                return northwind.Orders.Select(order => new OrderViewModel
+                {
+                    ContactName = order.Customer.ContactName,
+                    Freight = order.Freight,
+                    OrderDate = order.OrderDate,
+                    ShippedDate = order.ShippedDate,
+                    OrderID = order.OrderID,
+                    ShipAddress = order.ShipAddress,
+                    ShipCountry = order.ShipCountry,
+                    ShipName = order.ShipName,
+                    ShipCity = order.ShipCity,
+                    EmployeeID = order.EmployeeID,
+                    CustomerID = order.CustomerID
+                }).ToList();
+            }
         }
     }
 }

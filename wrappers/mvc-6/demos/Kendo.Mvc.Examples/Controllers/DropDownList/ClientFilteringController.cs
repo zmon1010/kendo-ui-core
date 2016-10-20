@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class DropDownListController : Controller
+    public partial class DropDownListController : BaseController
     {
         [Demo]
         public ActionResult ClientFiltering()
