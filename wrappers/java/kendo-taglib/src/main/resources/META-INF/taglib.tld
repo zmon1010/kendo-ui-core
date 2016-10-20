@@ -47345,6 +47345,11 @@ client-side events to build your own UI.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Triggered when files are cleared by clicking on the "Clear" button. Note: Cancelling this event will prevent the clearing the selected files.</description>
+            <name>clear</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is in
 async mode.</description>
             <name>complete</name>
@@ -47624,6 +47629,12 @@ This option will be ignored if the browser doesn't support File API.</descriptio
         <description>Fires when the upload has been cancelled while in progress.</description>
         <name>upload-cancel</name>
         <tag-class>com.kendoui.taglib.upload.CancelFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when files are cleared by clicking on the "Clear" button. Note: Cancelling this event will prevent the clearing the selected files.</description>
+        <name>upload-clear</name>
+        <tag-class>com.kendoui.taglib.upload.ClearFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

@@ -76,6 +76,10 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("cancel", value.getBody());
     }
 
+    public void setClear(ClearFunctionTag value) {
+        setEvent("clear", value.getBody());
+    }
+
     public void setComplete(CompleteFunctionTag value) {
         setEvent("complete", value.getBody());
     }
@@ -154,6 +158,18 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setCancel(String value) {
         setProperty("cancel", new Function(value));
+    }
+
+    public String getClear() {
+        Function property = ((Function)getProperty("clear"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setClear(String value) {
+        setProperty("clear", new Function(value));
     }
 
     public String getComplete() {
