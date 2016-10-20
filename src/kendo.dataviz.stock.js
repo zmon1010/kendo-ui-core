@@ -903,7 +903,7 @@ var __meta__ = { // jshint ignore:line
             tooltip
                 .html(text)
                 .css({
-                    left: bbox.center().x - tooltip.outerWidth() / 2,
+                    left: bbox.center().x - kendo._outerWidth(tooltip) / 2,
                     top: bbox.y1
                 });
 

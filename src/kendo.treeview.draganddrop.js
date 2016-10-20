@@ -109,7 +109,7 @@ var __meta__ = { // jshint ignore:line
 
                 if (hoveredItem.length) {
                     this._removeTouchHover();
-                    itemHeight = hoveredItem.outerHeight();
+                    itemHeight = kendo._outerHeight(hoveredItem);
                     itemContent = itemData.content;
 
                     if (options.reorderable) {

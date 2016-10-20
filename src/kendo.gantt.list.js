@@ -21,6 +21,8 @@ var __meta__ = { // jshint ignore:line
     var ui = kendo.ui;
     var Widget = ui.Widget;
     var extend = $.extend;
+    var outerWidth = kendo._outerWidth;
+    var outerHeight = kendo._outerHeight;
     var map = $.map;
     var isFunction = $.isFunction;
     var oldIE = browser.msie && browser.version < 9;
@@ -128,7 +130,7 @@ var __meta__ = { // jshint ignore:line
                     tableCols = this.content.find("col");
 
                     this.header.find("th").not(':last').each(function(index) {
-                        var width = $(this).outerWidth();
+                        var width = outerWidth($(this));
 
                         headerCols.eq(index).width(width);
                         tableCols.eq(index).width(width);
@@ -141,7 +143,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _adjustHeight: function() {
-            this.content.height(this.element.height() - this.header.parent().outerHeight());
+            this.content.height(this.element.height() - outerHeight(this.header.parent()));
         },
 
         destroy: function() {
@@ -239,7 +241,7 @@ var __meta__ = { // jshint ignore:line
                 var height;
 
                 that.content.append(table);
-                height = table.find("tr").outerHeight();
+                height = outerHeight(table.find("tr"));
                 table.remove();
 
                 return height;
@@ -997,7 +999,7 @@ var __meta__ = { // jshint ignore:line
                 var resizeHandle = that.resizeHandle;
                 var position = th.position();
                 var left = position.left;
-                var cellWidth = th.outerWidth();
+                var cellWidth = outerWidth(th);
                 var container = th.closest("div");
                 var clientX = e.clientX + $(window).scrollLeft();
                 var indicatorWidth = that.options.columnResizeHandleWidth;
@@ -1025,7 +1027,7 @@ var __meta__ = { // jshint ignore:line
                     .css({
                         top: position.top,
                         left: left + cellWidth - indicatorWidth - 1,
-                        height: th.outerHeight(),
+                        height: outerHeight(th),
                         width: indicatorWidth * 3
                     })
                     .data("th", th);
@@ -1057,9 +1059,9 @@ var __meta__ = { // jshint ignore:line
 
                     this.th = th;
                     this.startLocation = e.x.location;
-                    this.columnWidth = th.outerWidth();
+                    this.columnWidth = outerWidth(th);
                     this.table = header.add(contentTable);
-                    this.totalWidth = (this.table.width() - header.find("th:last").outerWidth());
+                    this.totalWidth = (this.table.width() - outerWidth(header.find("th:last")));
                 },
                 resize: function(e) {
                     var minColumnWidth = 11;
@@ -1078,7 +1080,7 @@ var __meta__ = { // jshint ignore:line
                     that.element.removeClass("k-grid-column-resizing");
 
                     var oldWidth = Math.floor(this.columnWidth);
-                    var newWidth = Math.floor(this.th.outerWidth());
+                    var newWidth = Math.floor(outerWidth(this.th));
                     var column = that.columns[this.th.index()];
 
                     that.trigger("columnResize", {

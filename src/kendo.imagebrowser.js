@@ -310,7 +310,7 @@ var __meta__ = { // jshint ignore:line
                 clearTimeout(that._timeout);
 
                 that._timeout = setTimeout(function() {
-                    var height = that.list.outerHeight(),
+                    var height = kendo._outerHeight(that.list),
                         viewTop = that.list.scrollTop(),
                         viewBottom = viewTop + height;
 

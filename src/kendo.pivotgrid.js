@@ -43,6 +43,8 @@ var __meta__ = { // jshint ignore:line
         Class = kendo.Class,
         Widget = ui.Widget,
         DataSource = kendo.data.DataSource,
+        outerWidth = kendo._outerWidth,
+        outerHeight = kendo._outerHeight,
         toString = {}.toString,
         identity = function(o) { return o; },
         map = $.map,
@@ -3868,7 +3870,7 @@ var __meta__ = { // jshint ignore:line
             var leftColumn = rowsHeader.parent(".k-pivot-rowheaders").width(AUTO);
             var width;
 
-            width = Math.max(this.measureFields.outerWidth(), this.rowFields.outerWidth());
+            width = Math.max(outerWidth(this.measureFields), outerWidth(this.rowFields));
             width = Math.max(rowsHeader.children("table").width(), width);
 
             leftColumn.width(width);
@@ -3929,8 +3931,8 @@ var __meta__ = { // jshint ignore:line
                     return;
                 }
 
-                innerHeight -= that.columnFields.outerHeight();
-                innerHeight -= that.columnsHeader.outerHeight();
+                innerHeight -= outerHeight(that.columnFields);
+                innerHeight -= outerHeight(that.columnsHeader);
 
                 if (innerHeight <= scrollbar * 2) { // do not set height if proper scrollbar cannot be displayed
                     innerHeight = scrollbar * 2 + 1;

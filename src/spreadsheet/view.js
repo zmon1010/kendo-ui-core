@@ -588,9 +588,10 @@
         },
 
         _resize: function() {
-            var tabstripHeight = this.tabstrip ? this.tabstrip.element.outerHeight() : 0;
-            var formulaBarHeight = this.formulaBar ? this.formulaBar.element.outerHeight() : 0;
-            var sheetsBarHeight = this.sheetsbar ? this.sheetsbar.element.outerHeight() : 0;
+            var outerHeight = kendo._outerHeight;
+            var tabstripHeight = this.tabstrip ? outerHeight(this.tabstrip.element) : 0;
+            var formulaBarHeight = this.formulaBar ? outerHeight(this.formulaBar.element) : 0;
+            var sheetsBarHeight = this.sheetsbar ? outerHeight(this.sheetsbar.element) : 0;
 
             this.wrapper.height(
                 this.element.height() -

@@ -17,6 +17,8 @@ var __meta__ = { // jshint ignore:line
         isArray = $.isArray,
 
         kendo = window.kendo,
+        outerHeight = kendo._outerHeight,
+        outerWidth = kendo._outerWidth,
         Class = kendo.Class,
         Widget = kendo.ui.Widget,
         template = kendo.template,
@@ -143,8 +145,8 @@ var __meta__ = { // jshint ignore:line
                 item = this._wrapItem(items[0]);
                 this._layout.createRoot(
                     item,
-                    this.element.outerWidth(),
-                    this.element.outerHeight(),
+                    outerWidth(this.element),
+                    outerHeight(this.element),
                     this.options.type === "vertical"
                 );
                 this._view.createRoot(item);
@@ -318,8 +320,8 @@ var __meta__ = { // jshint ignore:line
             if (root) {
                 var element = this.element;
                 var rootElement = element.children();
-                root.coord.width = element.outerWidth();
-                root.coord.height = element.outerHeight();
+                root.coord.width = outerWidth(element);
+                root.coord.height = outerHeight(element);
 
                 rootElement.css({
                     width: root.coord.width,
@@ -613,7 +615,7 @@ var __meta__ = { // jshint ignore:line
 
                 rootElement.append(this._createWrap());
 
-                this.offset = (rootElement.outerWidth() - rootElement.innerWidth()) / 2;
+                this.offset = (outerWidth(rootElement) - rootElement.innerWidth()) / 2;
             }
 
             return htmlSize;
@@ -901,7 +903,7 @@ var __meta__ = { // jshint ignore:line
 
                 rootElement.append(this._createWrap());
 
-                this.offset = (rootElement.outerWidth() - rootElement.innerWidth()) / 2;
+                this.offset = (outerWidth(rootElement) - rootElement.innerWidth()) / 2;
             }
 
             return htmlSize;

@@ -16,6 +16,8 @@ var __meta__ = { // jshint ignore:line
         ui = kendo.ui,
         setTime = kendo.date.setTime,
         SchedulerView = ui.SchedulerView,
+        outerWidth = kendo._outerWidth,
+        outerHeight = kendo._outerHeight,
         extend = $.extend,
         proxy = $.proxy,
         getDate = kendo.date.getDate,
@@ -342,7 +344,7 @@ var __meta__ = { // jshint ignore:line
                     .addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-down");
 
             timesTableMarker.css({
-                left: view._adjustLeftPosition(left - (timesTableMarker.outerWidth() * BORDER_SIZE_COEFF / 2)),
+                left: view._adjustLeftPosition(left - (outerWidth(timesTableMarker) * BORDER_SIZE_COEFF / 2)),
                 top: headerWrap.find("tr:last").prev().position().top
             });
 
@@ -695,14 +697,14 @@ var __meta__ = { // jshint ignore:line
             var timesTableMarkerCss = {};
 
             if (this._isRtl) {
-                timesTableMarkerCss.right = firstTimesCell.position().left + firstTimesCell.outerHeight() - lastTimesCell.outerHeight();
+                timesTableMarkerCss.right = firstTimesCell.position().left + outerHeight(firstTimesCell) - outerHeight(lastTimesCell);
                 timesTableMarker.addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-left");
             } else {
                 timesTableMarkerCss.left = lastTimesCell.position().left;
                 timesTableMarker.addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-right");
             }
 
-            timesTableMarkerCss.top = markerTopPosition - (timesTableMarker.outerWidth() * BORDER_SIZE_COEFF / 2);
+            timesTableMarkerCss.top = markerTopPosition - (outerWidth(timesTableMarker) * BORDER_SIZE_COEFF / 2);
 
             timesTableMarker.css(timesTableMarkerCss);
 
@@ -1012,7 +1014,7 @@ var __meta__ = { // jshint ignore:line
                                 .addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-down");
 
                         timesTableMarker.css({
-                            left: this._adjustLeftPosition(left - (timesTableMarker.outerWidth() * BORDER_SIZE_COEFF / 2)),
+                            left: this._adjustLeftPosition(left - (outerWidth(timesTableMarker) * BORDER_SIZE_COEFF / 2)),
                             top: headerWrap.find("tr:last").prev().position().top
                         });
 

@@ -1168,7 +1168,7 @@
         },
 
         quickAccessAdjust: function() {
-            this.tabGroup.css("padding-left", this.quickAccessToolBar.outerWidth());
+            this.tabGroup.css("padding-left", kendo._outerWidth(this.quickAccessToolBar));
         },
 
         _toolbar: function(container, name, tools) {

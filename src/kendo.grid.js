@@ -79,6 +79,8 @@ var __meta__ = { // jshint ignore:line
         tbodySupportsInnerHtml = kendo.support.tbodyInnerHtml,
         activeElement = kendo._activeElement,
         Widget = ui.Widget,
+        outerWidth = kendo._outerWidth,
+        outerHeight = kendo._outerHeight,
         keys = kendo.keys,
         isPlainObject = $.isPlainObject,
         extend = $.extend,
@@ -1885,11 +1887,11 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (groups > 0) {
-                    left += container.find(".k-group-cell:first").outerWidth() * groups;
+                    left += outerWidth(container.find(".k-group-cell:first")) * groups;
                 }
 
                 if (that._hasDetails()) {
-                    left += container.find(".k-hierarchy-cell:first").outerWidth();
+                    left += outerWidth(container.find(".k-hierarchy-cell:first"));
                 }
 
            } else {
@@ -1907,7 +1909,7 @@ var __meta__ = { // jshint ignore:line
             resizeHandle.css({
                 top: th.position().top,//scrollable ? 0 : heightAboveHeader(that.wrapper),
                 left: left - indicatorWidth,
-                height: th.outerHeight(),
+                height: outerHeight(th),
                 width: indicatorWidth * 3
             })
             .data("th", th)
@@ -2034,7 +2036,7 @@ var __meta__ = { // jshint ignore:line
                     handle: (!!options.scrollable ? "" : ">") + ".k-resize-handle",
                     hint: function(handle) {
                         return $('<div class="k-grid-resize-indicator" />').css({
-                            height: handle.data("th").outerHeight() + that.tbody.attr("clientHeight")
+                            height: outerHeight(handle.data("th")) + that.tbody.attr("clientHeight")
                         });
                     },
                     start: function(e) {
@@ -2067,9 +2069,9 @@ var __meta__ = { // jshint ignore:line
                         }
 
                         columnStart = e.x.location;
-                        columnWidth = th.outerWidth();
+                        columnWidth = outerWidth(th);
                         columnMinWidth = that.columns[index].minResizableWidth || 10;
-                        gridWidth = isLocked ? contentTable.children("tbody").outerWidth() : that.tbody.outerWidth(); // IE returns 0 if grid is empty and scrolling is enabled
+                        gridWidth = isLocked ? outerWidth(contentTable.children("tbody")) : outerWidth(that.tbody); // IE returns 0 if grid is empty and scrolling is enabled
 
                         // fix broken UI in Chrome38+
                         if (browser.webkit) {
@@ -2129,7 +2131,7 @@ var __meta__ = { // jshint ignore:line
                         }
                     },
                     resizeend: function() {
-                        var newWidth = th.outerWidth(),
+                        var newWidth = outerWidth(th),
                             column,
                             header;
 
@@ -2455,7 +2457,7 @@ var __meta__ = { // jshint ignore:line
 
             var tables = headerTable.add(contentTable).add(footerTable);
 
-            var oldColumnWidth = th.outerWidth();
+            var oldColumnWidth = outerWidth(th);
 
             // reset the table and autofitted column widths
             // if scrolling is disabled, we need some additional repainting of the table
@@ -2467,9 +2469,9 @@ var __meta__ = { // jshint ignore:line
 
             // +1 is required by IE, regardless of the border widths, otherwise unexpected wrapping may occur with hyphenated text
             var newColumnWidth = Math.ceil(Math.max(
-                th.outerWidth(),
-                contentTable.find("tr:not(.k-grouping-row)").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth(),
-                footerTable.find("tr").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth()
+                outerWidth(th),
+                outerWidth(contentTable.find("tr:not(.k-grouping-row)").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index)),
+                outerWidth(footerTable.find("tr").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index))
             )) + 1;
 
             col.width(newColumnWidth);
@@ -5162,7 +5164,7 @@ var __meta__ = { // jshint ignore:line
                     footerWrap;
 
                 if (groups > 0) {
-                    width += this.lockedHeader.find(".k-group-cell:first").outerWidth() * groups;
+                    width += outerWidth(this.lockedHeader.find(".k-group-cell:first")) * groups;
                 }
 
                 if (width >= contentWidth) {
@@ -5201,22 +5203,22 @@ var __meta__ = { // jshint ignore:line
 
             if (options.scrollable && that.wrapper.is(":visible")) {
 
-                height -= header.outerHeight();
+                height -= outerHeight(header);
 
                 if (that.pager) {
-                    height -= that.pager.element.outerHeight();
+                    height -= outerHeight(that.pager.element);
                 }
 
                 if(options.groupable) {
-                    height -= that.wrapper.children(".k-grouping-header").outerHeight();
+                    height -= outerHeight(that.wrapper.children(".k-grouping-header"));
                 }
 
                 if(options.toolbar) {
-                    height -= that.wrapper.children(".k-grid-toolbar").outerHeight();
+                    height -= outerHeight(that.wrapper.children(".k-grid-toolbar"));
                 }
 
                 if (that.footerTemplate) {
-                    height -= that.wrapper.children(".k-grid-footer").outerHeight();
+                    height -= outerHeight(that.wrapper.children(".k-grid-footer"));
                 }
 
                 var isGridHeightSet = function(el) {
@@ -5263,12 +5265,12 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (!that._rowHeight) {
-                that._rowHeight = rowHeight = that.table.outerHeight() / itemsCount;
+                that._rowHeight = rowHeight = outerHeight(that.table) / itemsCount;
                 that._sum = rowHeight;
                 that._measures = 1;
             }
 
-            var currentRowHeight = that.table.outerHeight() / itemsCount;
+            var currentRowHeight = outerHeight(that.table) / itemsCount;
 
             if (rowHeight !== currentRowHeight) {
                 that._measures ++;

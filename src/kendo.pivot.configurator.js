@@ -369,6 +369,7 @@ var __meta__ = { // jshint ignore:line
             var element = this.element;
             var height = this.options.height;
             var border, fields;
+            var outerHeight = kendo._outerHeight;
 
             if (!height) {
                 return;
@@ -382,8 +383,8 @@ var __meta__ = { // jshint ignore:line
 
                 height = element.innerHeight();
 
-                border = (element.outerHeight() - height) / 2;
-                height = height - (fields.outerHeight(true) - fields.height()) - border;
+                border = (outerHeight(element) - height) / 2;
+                height = height - (outerHeight(fields, true) - fields.height()) - border;
 
                 fields.height(height);
             }

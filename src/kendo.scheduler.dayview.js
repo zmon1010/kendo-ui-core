@@ -16,6 +16,8 @@ var __meta__ = { // jshint ignore:line
         ui = kendo.ui,
         setTime = kendo.date.setTime,
         SchedulerView = ui.SchedulerView,
+        outerWidth = kendo._outerWidth,
+        outerHeight = kendo._outerHeight,
         extend = $.extend,
         proxy = $.proxy,
         getDate = kendo.date.getDate,
@@ -246,14 +248,14 @@ var __meta__ = { // jshint ignore:line
                     var timesTableMarkerCss = {};
 
                     if (this._isRtl) {
-                        timesTableMarkerCss.right = firstTimesCell.position().left + firstTimesCell.outerHeight() - lastTimesCell.outerHeight();
+                        timesTableMarkerCss.right = firstTimesCell.position().left + outerHeight(firstTimesCell) - outerHeight(lastTimesCell);
                         timesTableMarker.addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-left");
                     } else {
                         timesTableMarkerCss.left = lastTimesCell.position().left;
                         timesTableMarker.addClass(CURRENT_TIME_MARKER_ARROW_CLASS + "-right");
                     }
 
-                    timesTableMarkerCss.top = markerTopPosition - (timesTableMarker.outerWidth() * BORDER_SIZE_COEFF / 2);
+                    timesTableMarkerCss.top = markerTopPosition - (outerWidth(timesTableMarker) * BORDER_SIZE_COEFF / 2);
 
                     timesTableMarker.css(timesTableMarkerCss);
 
@@ -1222,14 +1224,14 @@ var __meta__ = { // jshint ignore:line
                 var th = $(e.currentTarget).closest("th");
                 var offset = th.offset();
                 var additioanlWidth = 0;
-                var additionalHeight = th.outerHeight();
+                var additionalHeight = outerHeight(th);
 
                 if (that._isGroupedByDate()) {
                     if (that._isVerticallyGrouped()) {
-                        additioanlWidth = that.times.outerWidth();
+                        additioanlWidth = outerWidth(that.times);
                         additionalHeight = 0;
                     } else {
-                        additionalHeight = that.datesHeader.outerHeight();
+                        additionalHeight = outerHeight(that.datesHeader);
                     }
                 }
 

@@ -13,6 +13,7 @@ var __meta__ = { // jshint ignore:line
 (function ($, undefined) {
     var kendo = window.kendo,
         Widget = kendo.ui.Widget,
+        outerWidth = kendo._outerWidth,
         proxy = $.proxy,
         isRtl = false,
         NS = ".kendoGroupable",
@@ -121,7 +122,7 @@ var __meta__ = { // jshint ignore:line
                         var element = e.currentTarget,
                             marginLeft = parseInt(element.css("marginLeft"), 10),
                             elementPosition = element.position(),
-                            left = isRtl ? elementPosition.left - marginLeft : elementPosition.left + element.outerWidth();
+                            left = isRtl ? elementPosition.left - marginLeft : elementPosition.left + outerWidth(element);
 
                         intializePositions();
                         dropCue.css({top: dropCueOffsetTop(that.groupContainer), left: left}).appendTo(that.groupContainer);
@@ -163,7 +164,7 @@ var __meta__ = { // jshint ignore:line
                     if(dropCuePositions.length) {
                         element = dropCuePositions[dropCuePositions.length - 1].element;
                         marginRight = parseInt(element.css("marginRight"), 10);
-                        left = element.position().left + element.outerWidth() + marginRight;
+                        left = element.position().left + outerWidth(element) + marginRight;
                     } else {
                         left = 0;
                     }
@@ -325,7 +326,7 @@ var __meta__ = { // jshint ignore:line
 
             if(position >= right && !isRtl || position < left && isRtl) {
                 position = {
-                    left: lastCuePosition.element.position().left + (!isRtl ? lastCuePosition.element.outerWidth() + marginRight : - marginLeft),
+                    left: lastCuePosition.element.position().left + (!isRtl ? outerWidth(lastCuePosition.element) + marginRight : - marginLeft),
                     element: lastCuePosition.element,
                     before: false
                 };
@@ -336,7 +337,7 @@ var __meta__ = { // jshint ignore:line
 
                 if(position) {
                     position = {
-                        left: isRtl ? position.element.position().left + position.element.outerWidth() + marginRight : position.element.position().left - marginLeft,
+                        left: isRtl ? position.element.position().left + outerWidth(position.element) + marginRight : position.element.position().left - marginLeft,
                         element: position.element,
                         before: true
                     };
@@ -390,7 +391,7 @@ var __meta__ = { // jshint ignore:line
                 left = kendo.getOffset(item).left;
                 return {
                     left: parseInt(left, 10),
-                    right: parseInt(left + item.outerWidth(), 10),
+                    right: parseInt(left + outerWidth(item), 10),
                     element: item
                 };
             });

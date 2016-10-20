@@ -55,6 +55,8 @@ var __meta__ = { // jshint ignore:line
         getter = kendo.getter,
         isFn = kendo.isFunction,
         template = kendo.template,
+        outerWidth = kendo._outerWidth,
+        outerHeight = kendo._outerHeight,
 
         dataviz = kendo.dataviz,
         Axis = dataviz.Axis,
@@ -11777,8 +11779,8 @@ var __meta__ = { // jshint ignore:line
                 movable = (this._mobileScroller || {}).movable;
 
             if (!movable || movable.scale === 1) {
-                top += tooltip._fit(top - scrollTop, size.height, viewport.outerHeight() / zoomLevel);
-                left += tooltip._fit(left - scrollLeft, size.width, viewport.outerWidth() / zoomLevel);
+                top += tooltip._fit(top - scrollTop, size.height, outerHeight(viewport) / zoomLevel);
+                left += tooltip._fit(left - scrollLeft, size.width, outerWidth(viewport) / zoomLevel);
             } else {
                 var transform = geom.transform().scale(movable.scale, movable.scale, [movable.x, movable.y]);
                 var point = new geom.Point(left, top).transform(transform);
@@ -11843,8 +11845,8 @@ var __meta__ = { // jshint ignore:line
             this._ensureElement();
 
             var size = {
-                width: this.element.outerWidth(),
-                height: this.element.outerHeight()
+                width: outerWidth(this.element),
+                height: outerHeight(this.element)
             };
 
             return size;

@@ -16,6 +16,7 @@ var __meta__ = { // jshint ignore:line
     var kendo = window.kendo,
         ui = kendo.ui,
         Widget = ui.Widget,
+        outerHeight = kendo._outerHeight,
         keys = kendo.keys,
         NS = ".kendoSchedulerView",
         math = Math;
@@ -1903,15 +1904,15 @@ var __meta__ = { // jshint ignore:line
                 paddingDirection = this._isRtl ? "left" : "right";
 
             for (var idx = 0; idx < toolbar.length; idx++) {
-                height -= toolbar.eq(idx).outerHeight();
+                height -= outerHeight(toolbar.eq(idx));
             }
 
             if (that.datesHeader) {
-                headerHeight = that.datesHeader.outerHeight();
+                headerHeight = outerHeight(that.datesHeader);
             }
 
-            if (that.timesHeader && that.timesHeader.outerHeight() > headerHeight) {
-                headerHeight = that.timesHeader.outerHeight();
+            if (that.timesHeader && outerHeight(that.timesHeader) > headerHeight) {
+                headerHeight = outerHeight(that.timesHeader);
             }
 
             if (that.datesHeader && that.timesHeader) {
@@ -1927,7 +1928,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (that.footer) {
-                height -= that.footer.outerHeight();
+                height -= outerHeight(that.footer);
             }
 
             var isSchedulerHeightSet = function(el) {

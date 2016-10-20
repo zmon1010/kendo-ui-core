@@ -12,6 +12,8 @@ var __meta__ = { // jshint ignore:line
 
 (function ($, undefined) {
     var kendo = window.kendo,
+        outerWidth = kendo._outerWidth,
+        outerHeight = kendo._outerHeight,
         getOffset = kendo.getOffset,
         Widget = kendo.ui.Widget,
         CHANGE =  "change",
@@ -71,12 +73,12 @@ var __meta__ = { // jshint ignore:line
                             that._dropTarget = dropTarget;
                         } else {
                             if (that._index(dropTarget) > that._index(that._draggable)) {
-                                left += dropTarget.outerWidth();
+                                left += outerWidth(dropTarget);
                             }
                         }
 
                         that.reorderDropCue.css({
-                             height: dropTarget.outerHeight(),
+                             height: outerHeight(dropTarget),
                              top: offset.top,
                              left: left
                         })
@@ -130,7 +132,7 @@ var __meta__ = { // jshint ignore:line
                         }
 
                         var dropStartOffset = getOffset(that._dropTarget).left;
-                        var width = that._dropTarget.outerWidth();
+                        var width = outerWidth(that._dropTarget);
 
                         if (e.pageX > dropStartOffset + width / 2) {
                             that.reorderDropCue.css({ left: dropStartOffset + width });

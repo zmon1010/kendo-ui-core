@@ -8,6 +8,7 @@
         }
 
         var $ = kendo.jQuery;
+        var outerWidth = kendo._outerWidth;
         var DOT = ".";
         var EMPTYCHAR = " ";
         var sheetsBarClassNames = {
@@ -134,8 +135,8 @@
                 var scrollNextButton = sheetsWrapper.children(DOT + classNames.sheetsBarNext);
                 var gapWidth = 2;
                 var addButton = that.element.find(DOT + classNames.sheetsBarAdd);
-                var addButtonWidth = addButton.outerWidth() + addButton.position().left + gapWidth;
-                var scrollPrevButtonWidth = scrollPrevButton.outerWidth() + gapWidth;
+                var addButtonWidth = outerWidth(addButton) + addButton.position().left + gapWidth;
+                var scrollPrevButtonWidth = outerWidth(scrollPrevButton) + gapWidth;
                 var sheetsGroup = that._sheetsGroup();
 
                 scrollPrevButton.css({ left: addButtonWidth });
@@ -157,7 +158,7 @@
 
                     sheetsGroup.css({
                         marginLeft: scrollPrevButtonWidth + addButtonWidth,
-                        marginRight: scrollNextButton.outerWidth() + scrollNextButtonRight + gapWidth
+                        marginRight: outerWidth(scrollNextButton) + scrollNextButtonRight + gapWidth
                     });
                 } else {
                     if (that._scrollableModeActive && sheetsGroupScrollWidth <= wrapperOffsetWidth) {
@@ -402,7 +403,7 @@
                 var sheetsGroup = that._sheetsGroup();
 
                 var currentScrollOffset = sheetsGroup.scrollLeft();
-                var itemWidth = item.outerWidth();
+                var itemWidth = outerWidth(item);
                 var itemOffset = that._isRtl ? item.position().left : item.position().left - sheetsGroup.children().first().position().left;
                 var sheetsGroupWidth = sheetsGroup[0].offsetWidth;
                 var sheetsGroupPadding = Math.ceil(parseFloat(sheetsGroup.css("padding-left")));
