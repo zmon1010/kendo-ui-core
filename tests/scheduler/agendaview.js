@@ -4,13 +4,14 @@
     var dom;
 
     module("Agenda view", {
-        setup: function() {
-            dom = $("<div>")
+       setup: function() {
+            dom = document.createElement("div");
+            QUnit.fixture[0].appendChild(dom);
+            dom = $(dom).addClass("k-scheduler");
         },
         teardown: function() {
-            if (agenda) {
-                agenda.destroy();
-            }
+            dom.data("kendoagenda").destroy();
+            kendo.destroy(QUnit.fixture);
         }
     });
 
@@ -807,10 +808,13 @@
     });
 
     module("grouped by date agenda view", {
+       setup: function() {
+            dom = document.createElement("div");
+            QUnit.fixture[0].appendChild(dom);
+            dom = $(dom).addClass("k-scheduler");
+        },
         teardown: function() {
-            if (agenda) {
-                agenda.destroy();
-            }
+            dom.data("kendoagenda").destroy();
             kendo.destroy(QUnit.fixture);
         }
     });
