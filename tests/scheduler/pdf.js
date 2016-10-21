@@ -173,11 +173,11 @@
     asyncTest("avoidLinks is passed through", 1, function() {
         pdfStubMethod(draw, "drawDOM", function(group, options) {
             ok(options.avoidLinks);
-            return $.Deferred().promise(new kendo.drawing.Group());
+            return $.Deferred().resolve(new kendo.drawing.Group());
         }, function() {
             scheduler.options.pdf.avoidLinks = true;
             return scheduler.saveAsPDF()
-                .done(function(e) {
+                .fail(function(e) {
                     ok(true);
                 });
         });
@@ -186,7 +186,7 @@
      asyncTest("avoidLinks is false by default", 1, function() {
         pdfStubMethod(draw, "drawDOM", function(group, options) {
             ok(!options.avoidLinks);
-            return $.Deferred().promise(new kendo.drawing.Group());
+            return $.Deferred().resolve(new kendo.drawing.Group());
         }, function() {
             return scheduler.saveAsPDF()
                 .fail(function(e) {
