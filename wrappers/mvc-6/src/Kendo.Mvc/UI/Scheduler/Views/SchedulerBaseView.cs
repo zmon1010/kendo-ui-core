@@ -60,6 +60,12 @@
             set;
         }
 
+        public string SelectedShortDateFormat
+        {
+            get;
+            set;
+        }
+
         public bool Selected
         {
             get;
@@ -103,6 +109,11 @@
             if (!string.IsNullOrEmpty(SelectedDateFormat))
             {
                 json["selectedDateFormat"] = SelectedDateFormat;
+            }
+             
+            if (!string.IsNullOrEmpty(SelectedShortDateFormat))
+            {
+                json["selectedShortDateFormat"] = SelectedShortDateFormat;
             }
 
             if (Selected != false)

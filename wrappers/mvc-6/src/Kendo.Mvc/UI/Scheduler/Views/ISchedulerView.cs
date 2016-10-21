@@ -38,6 +38,12 @@
             set;
         }
 
+        string SelectedShortDateFormat
+        {
+            get;
+            set;
+        }
+
         bool Selected
         {
             get;

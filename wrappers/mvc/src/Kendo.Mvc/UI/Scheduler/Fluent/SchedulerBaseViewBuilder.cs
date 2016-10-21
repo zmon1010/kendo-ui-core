@@ -161,6 +161,42 @@
         }
 
         /// <summary>
+        /// The format used to display the selected short date. Uses kendo.format.
+        /// Contains two placeholders - "{0}" and "{1}" which represent the start and end date displayed by the view.
+        /// </summary>
+        /// <param name="selectedShortDateFormat">The selectedShortDateFormat.</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+        ///     .Name(&quot;scheduler&quot;)
+        ///     .Date(new DateTime(2013, 6, 13))
+        ///     .Views(views =&gt;
+        ///     {
+        ///         views.DayView(dayView =&gt; {
+        ///             dayView.Title(&quot;Day&quot;);
+        ///             dayView.Editable(false);
+        ///             dayView.SelectedShortDateFormat(&quot;{0:dd-MM-yyyy}&quot;);
+        ///         });
+        ///         views.AgendaView();
+        ///     })
+        ///     .DataSource(d =&gt; d
+        ///         .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        ///             .Read(&quot;Read&quot;, &quot;Scheduler&quot;)
+        ///             .Create(&quot;Create&quot;, &quot;Scheduler&quot;)
+        ///             .Destroy(&quot;Destroy&quot;, &quot;Scheduler&quot;)
+        ///             .Update(&quot;Update&quot;, &quot;Scheduler&quot;)
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public TViewBuilder SelectedShortDateFormat(string selectedShortDateFormat)
+        {
+            view.SelectedShortDateFormat = selectedShortDateFormat;
+
+            return (TViewBuilder)this;
+        }
+
+        /// <summary>
         /// If set to true the view will be initially selected by the scheduler widget. Default value is false.
         /// </summary>
         /// <param name="isSelected">The isSelected</param>
