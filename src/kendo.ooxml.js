@@ -701,7 +701,7 @@ var Workbook = kendo.Class.extend({
                     };
                 }
             }),
-            userNames: $.map(this.options.names, function(def){
+            userNames: $.map(this.options.names || [], function(def){
                 return {
                     name: def.localName,
                     localSheetId: def.sheet ? sheetIds[def.sheet.toLowerCase()] : null,
