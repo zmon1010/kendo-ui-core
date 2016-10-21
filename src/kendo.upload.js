@@ -23,6 +23,7 @@ var __meta__ = { // jshint ignore:line
         ERROR = "error",
         COMPLETE = "complete",
         CANCEL = "cancel",
+        CLEAR = "clear",
         PROGRESS = "progress",
         REMOVE = "remove",
         VALIDATIONERRORS = "validationErrors",
@@ -102,6 +103,7 @@ var __meta__ = { // jshint ignore:line
             ERROR,
             COMPLETE,
             CANCEL,
+            CLEAR,
             PROGRESS,
             REMOVE
         ],
@@ -734,8 +736,9 @@ var __meta__ = { // jshint ignore:line
         _onClearSelected: function() {
             var that = this;
             var wrapper = that.wrapper;
-
-            if(!wrapper.hasClass("k-state-disabled")) {
+            
+            var clearEventArgs = { };
+            if(!wrapper.hasClass("k-state-disabled") && !that.trigger(CLEAR, clearEventArgs)) {
                 that.clearAllFiles();
             }
 

@@ -536,13 +536,16 @@ var testContext = {
     validJSON: validJSON,
     simulateRemoveWithResponse: simulateRemoveWithResponse,
     simulateRemove: simulateRemove,
-    simulateRemoveError: simulateRemoveError
+    simulateRemoveError: simulateRemoveError,
+    noAutoConfig: noAutoConfig,
+    simulateFileSelect: simulateFileSelect
 };
 
 uploadSuccess(testContext);
 uploadError(testContext);
 uploadCancel(createUpload);
 uploadRemoveEvent(testContext);
+uploadClearEvent(testContext);
 
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

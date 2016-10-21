@@ -10,10 +10,11 @@
             .Async(a => a
                 .Save("Save", "Upload")
                 .Remove("Remove", "Upload")
-                .AutoUpload(true)
+                .AutoUpload(false)
             )
             .Events(events => events
                 .Cancel("onCancel")
+                .Clear("onClear")
                 .Complete("onComplete")
                 .Error("onError")
                 .Progress("onProgress")
@@ -61,6 +62,10 @@
 
     function onProgress(e) {
         kendoConsole.log("Upload progress :: " + e.percentComplete + "% :: " + getFileInfo(e));
+    }
+
+    function onClear(e) {
+        kendoConsole.log("Clear");
     }
 
     function getFileInfo(e) {

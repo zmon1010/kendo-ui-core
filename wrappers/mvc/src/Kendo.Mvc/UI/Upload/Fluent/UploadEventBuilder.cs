@@ -375,5 +375,50 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Defines the inline handler of the Clear client-side event
+        /// </summary>
+        /// <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Upload()
+        ///            .Name("Upload")
+        ///            .Events(events => events.Clear(
+        ///                 @&lt;text&gt;
+        ///                 function(e) {
+        ///                     //event handling code
+        ///                 }
+        ///                 &lt;/text&gt;
+        ///            ))
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadEventBuilder Clear(Func<object, object> inlineCodeBlock)
+        {
+            Handler("clear", inlineCodeBlock);
+
+            return this;
+        }
+
+        /// <summary>
+        ///  Defines the name of the JavaScript function that will handle the the Clear client-side event.
+        /// </summary>
+        /// <param name="onClearHandlerName">The name of the JavaScript function that will handle the event.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().Upload()
+        ///             .Name("Upload")
+        ///             .Events(events => events.Clear("onClear"))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public UploadEventBuilder Clear(string onClearHandlerName)
+        {
+            Handler("clear", onClearHandlerName);
+
+            return this;
+        }
     }
 }

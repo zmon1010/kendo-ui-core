@@ -142,6 +142,20 @@ client-side events to build your own UI.
     }
 
     /**
+    * Sets the clear event of the Upload.
+    * Triggered when files are cleared by clicking on the "Clear" button. Note: Cancelling this event will prevent the clearing the selected files.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Upload
+    */
+    public function clear($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('clear', $value);
+    }
+
+    /**
     * Sets the complete event of the Upload.
     * Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is in
 async mode.

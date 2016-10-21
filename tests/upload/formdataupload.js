@@ -778,6 +778,13 @@ var removeEventTestsParameters = {
 };
 uploadRemoveEvent(removeEventTestsParameters);
 
+var clearEventTestsParameters = {
+    createUpload: createUpload,
+    simulateFileSelect: simulateFileSelect,
+    noAutoConfig: noAutoConfig
+};
+uploadClearEvent(clearEventTestsParameters);
+
 // ------------------------------------------------------------
 module("Upload / FormDataUpload / batch = true", {
     setup: function() {
