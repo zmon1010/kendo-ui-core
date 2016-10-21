@@ -10,7 +10,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Web.Spreadsheet", "..\..\dpl\Telerik.Web.Spreadsheet\Telerik.Web.Spreadsheet.csproj", "{D697E6A6-319F-44FA-A757-443415FF43BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kendo.Mvc.Export", "Kendo.Mvc.Export\Kendo.Mvc.Export.csproj", "{9D23A875-D933-455E-AA70-A0A3A434F1AB}"
-EndProjec
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

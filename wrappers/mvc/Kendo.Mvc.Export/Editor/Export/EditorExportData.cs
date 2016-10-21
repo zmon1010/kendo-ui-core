@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Telerik.Windows.Documents.Flow.FormatProviders.Docx;
+﻿using Telerik.Windows.Documents.Flow.FormatProviders.Docx;
 using Telerik.Windows.Documents.Flow.FormatProviders.Html;
 using Telerik.Windows.Documents.Flow.FormatProviders.Pdf.Export;
 using Telerik.Windows.Documents.Flow.FormatProviders.Rtf;
