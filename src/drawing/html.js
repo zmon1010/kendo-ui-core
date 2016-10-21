@@ -376,7 +376,11 @@
                 if (options.keepTogether && jqel.is(options.keepTogether) && jqel.height() <= pageHeight - adjust) {
                     return true;
                 }
-                return (jqel.data("kendoChart") || /^(?:img|tr|thead|th|tfoot|iframe|svg|object|canvas|input|textarea|select|video|h[1-6])/i.test(jqel[0].tagName));
+                var tag = jqel[0].tagName;
+                if (/^h[1-6]$/i.test(tag) && jqel.height() >= pageHeight - adjust) {
+                    return false;
+                }
+                return (jqel.data("kendoChart") || /^(?:img|tr|thead|th|tfoot|iframe|svg|object|canvas|input|textarea|select|video|h[1-6])$/i.test(tag));
             }
 
             function splitElement(element) {
