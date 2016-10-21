@@ -36,6 +36,28 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Triggered when files are cleared by clicking on the "Clear" button. Note: Cancelling this event will prevent the clearing the selected files.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the clear event.</param>
+        public UploadEventBuilder Clear(string handler)
+        {
+            Handler("clear", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when files are cleared by clicking on the "Clear" button. Note: Cancelling this event will prevent the clearing the selected files.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public UploadEventBuilder Clear(Func<object, object> handler)
+        {
+            Handler("clear", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is in\n\t\t/// async mode.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the complete event.</param>
