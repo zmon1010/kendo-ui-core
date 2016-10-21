@@ -750,6 +750,7 @@
             } else if (name == "+") {
                 arrayArgs += "while (i < args.length) { ";
                 resolve += "while (i < args.length) { ";
+                code += "if (i >= args.length) return new CalcError('N/A'); ";
                 code += "xargs.push(tmp = []); stack.push(xargs); xargs = tmp; ";
                 code += "do { ";
                 code += x.slice(1).map(comp).join("");
@@ -912,7 +913,7 @@
                 return "(" + forceNum() + " && (($"+name+" |= 0) > 0 ? true : ((err = 'NUM'), false)))";
             }
             if (type == "string") {
-                return "((typeof " + force() + " == 'string' || typeof $"+name+" == 'boolean' || typeof $"+name+" == 'number') ? ($"+name+" += '', true) : false)";
+                return "((typeof " + force() + " == 'string' || typeof $"+name+" == 'boolean' || typeof $"+name+" == 'number') ? ($"+name+" += '', true) : ($"+name+" === undefined ? (($"+name+" = ''), true) : false))";
             }
             if (type == "boolean") {
                 return "(typeof " + force() + " == 'boolean')";

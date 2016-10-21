@@ -1435,7 +1435,7 @@
             ss.expectEqual({
                 A4: "d",
                 A5: "#N/A!",
-                A6: "#VALUE!",
+                A6: "#N/A!",
                 A7: "x",
             });
             // result of A8 should be a Matrix object
@@ -2544,7 +2544,7 @@ TRUE, TRUE),, 1)": [[ -234.2371645 ],
 
     test("CONCATENATE", function(){
         calcTest({
-            "=CONCATENATE()"         : "#VALUE!",
+            "=CONCATENATE()"         : "#N/A!",
             '=CONCATENATE("1")'      : "1",
             '=CONCATENATE("1", "2")' : "12"
         });
