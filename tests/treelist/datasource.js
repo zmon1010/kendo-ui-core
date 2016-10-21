@@ -1124,17 +1124,25 @@
     });
 
     test("load resolves promise", 1, function() {
+        jasmine.clock().install();
+
         var read = controlledRead();
         var ds = new TreeListDataSource({ transport: { read: read } });
 
         ds.read();
         read.resolve([ { id: 1, hasChildren: true } ]);
 
-        ds.load(ds.get(1)).done(function() {
+        jasmine.clock().tick();
+
+        ds.load(ds.get(1)).then(function() {
             ok(true);
         });
 
         read.resolve([]);
+
+        jasmine.clock().tick();
+
+        jasmine.clock().uninstall();
     });
 
     test("load rejects promise upon error", 1, function() {
@@ -1152,6 +1160,7 @@
     });
 
     test("load queues requests", 3, function() {
+        jasmine.clock().install();
         var read = controlledRead();
         var ds = new TreeListDataSource({ transport: { read: read } });
 
@@ -1162,11 +1171,15 @@
             { id: 3, hasChildren: true }
         ]);
 
-        ds.load(ds.get(1)).done($.proxy(ok, this, true));
-        ds.load(ds.get(2)).done($.proxy(ok, this, true));
-        ds.load(ds.get(3)).done($.proxy(ok, this, true));
+        ds.load(ds.get(1)).then($.proxy(ok, this, true));
+        ds.load(ds.get(2)).then($.proxy(ok, this, true));
+        ds.load(ds.get(3)).then($.proxy(ok, this, true));
 
         read.resolve([]).resolve([]).resolve([]);
+
+        jasmine.clock().tick();
+
+        jasmine.clock().uninstall();
     });
 
     test("read clears dataSource data", function() {

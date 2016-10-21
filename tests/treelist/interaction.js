@@ -390,6 +390,8 @@
         };
 
         instance.content.find(".k-grid-add").click();
+
+        jasmine.clock().tick();
     });
 
     test("command name is case-insensitive", function() {
@@ -406,6 +408,8 @@
         };
 
         instance.content.find(".k-grid-add").click();
+
+        jasmine.clock().tick();
     });
 
     test("editing row shows update and cancel buttons", function() {

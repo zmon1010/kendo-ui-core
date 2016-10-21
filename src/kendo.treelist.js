@@ -2884,7 +2884,7 @@ var __meta__ = { // jshint ignore:line
                 model[parent.parentIdField] = parent.id;
                 index = this.dataSource.indexOf(parent) + 1;
 
-                this.expand(parent).done(proxy(this._insertAt, this, model, index));
+                this.expand(parent).then(proxy(this._insertAt, this, model, index));
 
                 return;
             }

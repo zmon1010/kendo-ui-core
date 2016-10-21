@@ -5,12 +5,14 @@
 
     module("TreeList inline editing", {
         setup: function() {
+           jasmine.clock().install();
            dom = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
 
             dom = instance = null;
+            jasmine.clock().uninstall();
         }
     });
 
@@ -543,8 +545,10 @@
         createTreeList();
 
         instance.addRow(instance.content.find("tr:first"));
+        jasmine.clock().tick();
 
         var row = instance.content.find("tr").eq(1);
+
         ok(instance.dataItem(row).isNew());
         ok(row.data("kendoEditable"));
     });
@@ -569,9 +573,11 @@
         });
 
         instance.addRow(instance.content.find("tr:first"));
+        jasmine.clock().tick();
 
         var row = instance.content.find("tr").eq(1);
         var model = instance.dataItem(row);
+
         ok(model.isNew());
         equal(model.parentId, 1);
         equal(model.reportsTo, 1);
@@ -583,6 +589,7 @@
 
         var model = instance.dataItem(instance.content.find("tr:first"));
         instance.addRow(model);
+        jasmine.clock().tick();
 
         var row = instance.content.find("tr").eq(1);
         ok(instance.dataItem(row).isNew());
@@ -658,6 +665,7 @@
         });
 
         instance.addRow(ds.get(1));
+        jasmine.clock().tick();
 
         var row = instance.content.find("tr").eq(1);
         equal(instance.dataItem(row).parentId, 1);
@@ -678,6 +686,7 @@
         });
 
         instance.addRow(instance.content.find("tr:first"));
+        jasmine.clock().tick();
 
         var row = instance.content.find("tr").eq(1);
         var dataItem = instance.dataItem(row);
@@ -753,6 +762,7 @@
         });
 
         instance.addRow(ds.get(1));
+        jasmine.clock().tick();
 
         var row = instance.content.find("tr").eq(1);
         ok(row.data("kendoEditable"));
@@ -808,6 +818,7 @@
         });
 
         instance.addRow(ds.get(1));
+        jasmine.clock().tick();
 
         var row = instance.content.find("tr").eq(1);
 
