@@ -856,4 +856,58 @@
         equal($(div).find(".k-i-sort-asc").length, 1);
     });
 
+    test("removing a sorted item removes its sort expression", function () {
+        var dataSource = new kendo.data.PivotDataSource({
+            columns: ["foo", "bar"],
+            sortable: true
+        });
+
+        var setting = new PivotSettingTarget($(div), {
+            dataSource: dataSource,
+            template: settingTemplateWithSort(),
+            sortable: true
+        });
+
+        setting.sort({
+            field: "foo",
+            dir: "asc"
+        });
+
+        setting.sort({
+            field: "bar",
+            dir: "asc"
+        });
+
+        setting.setDataSource(dataSource);
+        setting.remove("foo");
+
+        equal(setting.dataSource.sort().length, 1);
+        equal(setting.dataSource.sort()[0].field, "bar");
+    });
+
+    test("removing an item removes the related filters", function () {
+        var dataSource = new kendo.data.PivotDataSource({
+            columns: ["foo", "bar"],
+            filter: {
+                logic: "and",
+                filters: [
+                    { field: "foo", operator: "in", value: "foo.&[1]" },
+                    { field: "bar", operator: "in", value: "bar.&[1]" }
+                ]
+            },
+            filterable: true
+        });
+
+        var setting = new PivotSettingTarget($(div), {
+            dataSource: dataSource,
+            filterable: true
+        });
+
+        setting.setDataSource(dataSource);
+        setting.remove("bar");
+
+        equal(setting.dataSource.filter().filters.length, 1);
+        equal(setting.dataSource.filter().filters[0].field, "foo");
+    });
+
 })();

@@ -3418,11 +3418,21 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        remove: function(name) {
+        remove: function (name) {
             var items = this.dataSource[this.options.setting]();
-
             var idx = this._indexOf(name, items);
+            var sortExpressions = this.dataSource.sort();
+            var filter = this.dataSource.filter();
+
             if (idx > -1) {
+                if (filter) {
+                    filter.filters = removeExpr(filter.filters, name);
+                    this.dataSource._filter.filters = filter.filters;
+                }
+                if (sortExpressions) {
+                    sortExpressions = removeExpr(sortExpressions, name);
+                    this.dataSource._sort = sortExpressions;
+                }
                 items.splice(idx, 1);
                 this.dataSource[this.options.setting](items);
             }
