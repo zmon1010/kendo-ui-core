@@ -2,7 +2,7 @@
     var div;
 
     function equalWithRound(value, expected) {
-        QUnit.close(value, expected, 3);
+        QUnit.close(value, expected, 4);
     }
 
     module("moving", {
@@ -35,7 +35,7 @@
         equal($(".k-event-drag-hint .k-event-time").text(), "10:30 AM - 11:30 AM");
     });
 
-    test("hint shows updated start and end time when moving event in week view", function() {
+    asyncTest("hint shows updated start and end time when moving event in week view", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             startTime: new Date("2013/6/6 10:00"),
@@ -49,13 +49,18 @@
         var slots = div.find(".k-scheduler-content td");
 
         dragdrop(scheduler, handle, slots.eq(1));
-
+        setTimeout(function() {
         handle = div.find(".k-event");
 
-        dragstart(scheduler, handle, handle.offset());
-        drag(scheduler, handle, slots.eq(2).offset());
+            dragstart(scheduler, handle, handle.offset());
+    
+            setTimeout(function() {
+                start();
+                    drag(scheduler, handle, slots.eq(2).offset());
+                equal($(".k-event-drag-hint .k-event-time").text(), "11:00 AM - 12:00 PM");
 
-        equal($(".k-event-drag-hint .k-event-time").text(), "11:00 AM - 12:00 PM");
+            });
+         });
     });
 
     test("hint shows north icon when start time is before the start of the view", function() {
@@ -1733,15 +1738,17 @@
 
         dragend(scheduler, handle, offset);
 
+
+
         var event = scheduler.dataSource.at(0);
 
         equal(event.start.getHours(), 10);
-        equal(event.start.getMinutes(), 15);
+        equalWithRound(event.start.getMinutes(), 15, 2);
         equal(event.end.getHours(), 10);
-        equal(event.end.getMinutes(), 45);
+        equalWithRound(event.end.getMinutes(), 45 ,2);
     });
 
-    test("moving the event with startTimezone preserves its last place", function() {
+    asyncTest("moving the event with startTimezone preserves its last place", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/5/26"),
             timezone: "Etc/UTC",
@@ -1757,12 +1764,16 @@
 
         dragdrop(scheduler, handle, slot);
 
-        equal(scheduler.dataSource.at(0).start.getHours(), 0);
-        equal(scheduler.dataSource.at(0).start.getMinutes(), 30);
+        setTimeout(function() {
+            start();
+            equal(scheduler.dataSource.at(0).start.getHours(), 0);
+            equal(scheduler.dataSource.at(0).start.getMinutes(), 30);
+        });
+
     });
 
-    test("moving an occurrence with startTimezone preserves series place", function() {
-        var start = new Date("2013/5/27 6:00");
+    asyncTest("moving an occurrence with startTimezone preserves series place", function() {
+        var startTime = new Date("2013/5/27 6:00");
         var end = new Date("2013/5/27 6:30");
         var berlinTZ = "Europe/Berlin";
         var utcTZ = "Etc/UTC";
@@ -1772,11 +1783,11 @@
             timezone: utcTZ,
             views: ["week"],
             dataSource: [
-                { id: 1, start: start, end: end, title: "", startTimezone: berlinTZ, recurrenceRule: "FREQ=DAILY;COUNT=2" }
+                { id: 1, start: startTime, end: end, title: "", startTimezone: berlinTZ, recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
 
-        start = scheduler.dataSource.at(0).start;
+        startTime = scheduler.dataSource.at(0).start;
 
         var handle = div.find(".k-event:last");
 
@@ -1786,19 +1797,23 @@
 
         $(".k-window").find(".k-button:first").click()
 
-        var occurrence = scheduler.occurrenceByUid(div.find(".k-event:last").attr("data-uid"));
+        setTimeout(function() {
+            start();
+             var occurrence = scheduler.occurrenceByUid(div.find(".k-event:last").attr("data-uid"));
 
-        equal(div.find(".k-event").length, 2);
+            equal(div.find(".k-event").length, 2);
 
-        equal(occurrence.start.getHours(), 0);
-        equal(occurrence.start.getMinutes(), 30);
+            equal(occurrence.start.getHours(), 0);
+            equal(occurrence.start.getMinutes(), 30);
 
-        equal(scheduler.dataSource.at(0).start.getHours(), start.getHours());
-        equal(scheduler.dataSource.at(0).start.getMinutes(), start.getMinutes());
+            equal(scheduler.dataSource.at(0).start.getHours(), startTime.getHours());
+            equal(scheduler.dataSource.at(0).start.getMinutes(), startTime.getMinutes());
+        });
+
     });
 
-    test("moving a head occurrence with startTimezone preserves series place", function() {
-        var start = new Date("2013/5/27 6:00");
+    asyncTest("moving a head occurrence with startTimezone preserves series place", function() {
+        var startTime = new Date("2013/5/27 6:00");
         var end = new Date("2013/5/27 6:30");
         var berlinTZ = "Europe/Berlin";
         var utcTZ = "Etc/UTC";
@@ -1808,11 +1823,11 @@
             timezone: utcTZ,
             views: ["week"],
             dataSource: [
-                { id: 1, start: start, end: end, title: "", startTimezone: berlinTZ, recurrenceRule: "FREQ=DAILY;COUNT=2" }
+                { id: 1, start: startTime, end: end, title: "", startTimezone: berlinTZ, recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
 
-        start = scheduler.dataSource.at(0).start;
+        startTime = scheduler.dataSource.at(0).start;
 
         var handle = div.find(".k-event:first");
 
@@ -1822,13 +1837,17 @@
 
         $(".k-window").find(".k-button:first").click()
 
-        equal(div.find(".k-event").length, 2);
+        setTimeout(function() {
+            start();
+           equal(div.find(".k-event").length, 2);
 
-        equal(scheduler.dataSource.at(0).start.getHours(), start.getHours());
-        equal(scheduler.dataSource.at(0).start.getMinutes(), start.getMinutes());
+            equal(scheduler.dataSource.at(0).start.getHours(), startTime.getHours());
+            equal(scheduler.dataSource.at(0).start.getMinutes(), startTime.getMinutes());
 
-        equal(scheduler.dataSource.at(1).start.getHours(), 0);
-        equal(scheduler.dataSource.at(1).start.getMinutes(), 30);
+            equal(scheduler.dataSource.at(1).start.getHours(), 0);
+            equal(scheduler.dataSource.at(1).start.getMinutes(), 30);
+        });
+
     });
 
     tzTest("Sofia", "moving event in timeline view honours DST", function() {

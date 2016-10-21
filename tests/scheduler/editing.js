@@ -1163,7 +1163,7 @@
         ok(exception.isNew())
     });
 
-    test("creating exception adds exception date to event exception property", function() {
+    asyncTest("creating exception adds exception date to event exception property", function() {
         var now = new Date("2013/6/6 10:00");
         now.setMilliseconds(0);
 
@@ -1183,18 +1183,23 @@
 
         scheduler.saveEvent();
 
-        events = scheduler.element.find(".k-event");
+        setTimeout(function() {
+             events = scheduler.element.find(".k-event");
 
-        scheduler.editEvent(events.first().data("uid"));
+            scheduler.editEvent(events.first().data("uid"));
 
-        $(".k-window .k-button:first").click();
+            
+            $(".k-window .k-button:first").click();
+            scheduler.saveEvent();
+            setTimeout(function() {
+                start();
+            var result = kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(1).start, 0), "yyyyMMddTHHmmssZ") + "," +
+                         kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(2).start, 0), "yyyyMMddTHHmmssZ");
 
-        scheduler.saveEvent();
-
-        var result = kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(1).start, 0), "yyyyMMddTHHmmssZ") + "," +
-                     kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(2).start, 0), "yyyyMMddTHHmmssZ");
-
-        equal(origin.recurrenceException, result);
+            equal(origin.recurrenceException, result);
+            });
+        });
+       
     });
 
     test("updating exception replaces ';' separator with ','", function() {
@@ -1979,19 +1984,19 @@
         deepEqual(head.start, headStart);
     });
 
-    test("save an exception honors start/end timezone", function() {
-        var start = new Date(2013, 10, 10, 12);
+    asyncTest("save an exception honors start/end timezone", function() {
+        var startTime = new Date(2013, 10, 10, 12);
         var end = new Date(2013, 10, 10, 14);
         var startTimezone = "Europe/Berlin";
         var endTimezone = "Asia/Beirut";
 
         var scheduler = setup({
-            date: new Date(start),
+            date: new Date(startTime),
             dataSource: {
                 data: [ {
                     id:1,
                     recurrenceRule: "FREQ=DAILY;COUNT=2;",
-                    start: new Date(start),
+                    start: new Date(startTime),
                     end: new Date(end),
                     startTimezone: startTimezone,
                     endTimezone: endTimezone,
@@ -2009,27 +2014,30 @@
         $(".k-popup-edit-form").find(".k-button:first").click();
         $(".k-popup-edit-form").find(".k-scheduler-update").click();
 
-        var uid = scheduler.wrapper.find(".k-event:last").data("uid");
-        var occurrence = scheduler.occurrenceByUid(uid);
-        var head = scheduler.dataSource.data()[0];
+                setTimeout(function() {
+                    start();
+                    var uid = scheduler.wrapper.find(".k-event:last").data("uid");
+                    var occurrence = scheduler.occurrenceByUid(uid);
+                    var head = scheduler.dataSource.data()[0];
 
-        deepEqual(occurrence.start, occurrenceStart);
-        deepEqual(head.start, headStart);
+                    deepEqual(occurrence.start, occurrenceStart);
+                    deepEqual(head.start, headStart);
+                });
     });
 
-    test("save a recurring head honors start/end timezone", function() {
-        var start = new Date(2013, 10, 10, 12);
+    asyncTest("save a recurring head honors start/end timezone", function() {
+        var startTime = new Date(2013, 10, 10, 12);
         var end = new Date(2013, 10, 10, 14);
         var startTimezone = "Europe/Berlin";
         var endTimezone = "Asia/Beirut";
 
         var scheduler = setup({
-            date: new Date(start),
+            date: new Date(startTime),
             dataSource: {
                 data: [ {
                     id:1,
                     recurrenceRule: "FREQ=DAILY;COUNT=2;",
-                    start: new Date(start),
+                    start: new Date(startTime),
                     end: new Date(end),
                     startTimezone: startTimezone,
                     endTimezone: endTimezone,
@@ -2037,7 +2045,7 @@
                 }, {
                     id:2,
                     recurrenceId: 1,
-                    start: new Date(start),
+                    start: new Date(startTime),
                     end: new Date(end),
                     startTimezone: startTimezone,
                     endTimezone: endTimezone,
@@ -2055,12 +2063,15 @@
         $(".k-popup-edit-form").find(".k-button:last").click();
         $(".k-popup-edit-form").find(".k-scheduler-update").click();
 
-        var uid = scheduler.wrapper.find(".k-event:first").data("uid");
-        var occurrence = scheduler.occurrenceByUid(uid);
-        var head = scheduler.dataSource.data()[0];
+        setTimeout(function() {
+            start();
+                var uid = scheduler.wrapper.find(".k-event:first").data("uid");
+                var occurrence = scheduler.occurrenceByUid(uid);
+                var head = scheduler.dataSource.data()[0];
 
-        deepEqual(occurrence.start, occurrenceStart);
-        deepEqual(head.start, headStart);
+                deepEqual(occurrence.start, occurrenceStart);
+                deepEqual(head.start, headStart);
+        });
     });
 
     test("saveEvent reverts applied StartTimezone if no changes have been made", function() {
@@ -2094,8 +2105,8 @@
         deepEqual(model.end, end);
     });
 
-    test("saveEvent does not revert applied Start/EndTimezone if start/end was edited", function() {
-        var start = new Date(2013, 10, 10, 10),
+    asyncTest("saveEvent does not revert applied Start/EndTimezone if start/end was edited", function() {
+        var startTime = new Date(2013, 10, 10, 10),
             end = new Date(2013, 10, 10, 11),
             zone = "America/New_York";
 
@@ -2104,7 +2115,7 @@
                 data: [
                     { start: new Date(), end: new Date(), isAllDay: false, title: "my event" },
                     {
-                        start: new Date(start),
+                        start: new Date(startTime),
                         end: new Date(end),
                         startTimezone: zone,
                         title: "my event"
@@ -2114,14 +2125,14 @@
             timezone: "Etc/UTC"
         });
 
-        start.setTime(start.getTime() + (start.getTimezoneOffset() * (60 * 1000))); //simulate UTC
+        startTime.setTime(startTime.getTime() + (startTime.getTimezoneOffset() * (60 * 1000))); //simulate UTC
         end.setTime(end.getTime() + (end.getTimezoneOffset() * (60 * 1000))); //simulate UTC
 
         var model = scheduler.dataSource.data()[1];
         scheduler.editEvent(model.uid);
 
 
-        start.setHours(start.getHours() - 2);
+        startTime.setHours(startTime.getHours() - 2);
         end.setHours(end.getHours() - 2);
 
         var datepickers = $(".k-window .k-edit-form-container").find("[data-role=datetimepicker]");
@@ -2132,16 +2143,20 @@
         endPicker.value(end);
         endPicker.trigger("change");
 
-        startPicker.value(start);
+        startPicker.value(startTime);
         startPicker.trigger("change");
 
         scheduler.saveEvent();
 
-        deepEqual(model.start, timezone.convert(start, zone, "Etc/UTC"));
-        deepEqual(model.end, timezone.convert(end, zone, "Etc/UTC"));
+        setTimeout(function() {
+            start();
+             deepEqual(scheduler.dataSource.data()[1].start, timezone.convert(startTime, zone, "Etc/UTC"));
+             deepEqual(scheduler.dataSource.data()[1].end, timezone.convert(end, zone, "Etc/UTC"));
+        });
+       
     });
 
-    test("updateEvent refreshes the ui", 2, function() {
+    asyncTest("updateEvent refreshes the ui", 1, function() {
         var scheduler = setup({
             dataSource: {
                 data: [
@@ -2149,11 +2164,16 @@
                 ]
             },
             dataBound: function() {
-                ok(true);
+                flag = true;
             }
         });
 
         var event = scheduler.dataSource.at(0);
+        var flag = false;
         scheduler._updateEvent(null, event, {});
+        setTimeout(function() {
+             start();
+             ok(flag);
+        },10);
     });
 })();

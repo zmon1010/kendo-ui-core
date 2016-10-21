@@ -520,9 +520,10 @@
             new SchedulerEvent({
                 uid: "uid",
                 start: new Date("2013/6/6 2:00"),
-                end: new Date("2013/6/6 2:00"),
+                end: new Date("2013/6/7 2:00"),
                 isAllDay: true,
-                title: ""
+                title: "",
+                rooms: 1, persons: 1
             })
         ];
 
@@ -1311,7 +1312,8 @@
                 start: new Date("2013/6/6 2:00"),
                 end: new Date("2013/6/6 2:00"),
                 isAllDay: true,
-                title: ""
+                title: "",
+                rooms: 1, persons: 1
             })
         ];
 

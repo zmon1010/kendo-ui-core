@@ -686,7 +686,7 @@
 
         drag(scheduler, handle, slots.eq(1).offset());
 
-        equal(div.find(".k-marquee").outerWidth(), slots.eq(1).outerWidth());
+        equalWithRound(div.find(".k-marquee").outerWidth(), slots.eq(1).outerWidth());
     });
 
     test("dragging and dropping the south resize handle over the next day changes the end time of the event", function() {

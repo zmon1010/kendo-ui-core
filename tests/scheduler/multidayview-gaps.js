@@ -31,7 +31,7 @@
     }
 
     function equalWithRound(value, expected) {
-        QUnit.close(value, expected, 3);
+        QUnit.close(value, expected, 5);
     }
 
     test("event which starts in a missing day and ends in existing day", function() {

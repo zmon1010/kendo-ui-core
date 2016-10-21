@@ -1967,7 +1967,7 @@
         var eventElement = view.content.find("div.k-event").last();
         var timeSlot = view.content.find("tr").eq(16).find("td:first");
 
-        equal(eventElement.width(), applySlotDefaultRightOffset(timeSlot[0].clientWidth - 4, timeSlot));
+        equalWithRound(eventElement.width(), applySlotDefaultRightOffset(timeSlot[0].clientWidth - 4, timeSlot));
     });
 
     test("long events reposition other events in the same date slot", function() {

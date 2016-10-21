@@ -213,7 +213,7 @@
         var eventWidth = view.content.find(".k-event").width();
         var slotWidth = view.content.find("td").eq(9).outerWidth();
 
-        equal(applyDefaultRightOffset(eventWidth), slotWidth);
+        equalWithRound(applyDefaultRightOffset(eventWidth), slotWidth);
     });
 
     test("width of multi day event", function() {
@@ -227,7 +227,7 @@
         var firstSlotWidth = view.content.find("td").eq(9).outerWidth();
         var secondSlotWidth = view.content.find("td").eq(10).outerWidth();
 
-        equal(applyDefaultRightOffset(eventWidth), firstSlotWidth + secondSlotWidth);
+        equalWithRound(applyDefaultRightOffset(eventWidth), firstSlotWidth + secondSlotWidth);
     });
 
     test("three day event which end on the first day of the next week is split correctly", function() {
@@ -462,7 +462,7 @@
             new kendo.data.SchedulerEvent({ start: new Date("2013/1/27 10:00"), end: new Date("2013/1/28 12:00 AM"),  title: "" })
         ]);
 
-        equal(view.content.find(".k-event").outerWidth(), removeDefaultHorizontalOffset(view.content.find("td").outerWidth()));
+        equalWithRound(view.content.find(".k-event").outerWidth(), removeDefaultHorizontalOffset(view.content.find("td").outerWidth()));
     });
 
     test("event which is two days long and ends at 12:00 AM occupies two slots", function() {

@@ -5,7 +5,7 @@
     var div;
 
     function equalWithRound(value, expected) {
-        QUnit.close(value, expected, 3);
+        QUnit.close(value, expected, 4);
     }
 
     module("rtl", {
