@@ -28,6 +28,7 @@
             STATE_PAUSE = "k-i-pause",
             TITLEBAR = "k-mediaplayer-titlebar",
             TITLE = "k-title",
+            TOOLBARWRAP = "k-mediaplayer-toolbar-wrap",
             TOOLBAR = "k-mediaplayer-toolbar",
             SLIDER = "k-mediaplayer-seekbar",
             VOLUME_SLIDER = "k-mediaplayer-volume",
@@ -48,11 +49,10 @@
             template = kendo.template,
             proxy = $.proxy,
             keys = kendo.keys,
-            //each = $.each,
             templates = {
                 htmlPlayer: "<video class='" + MEDIA + "'> </video>",
                 titleBar: template("<div class='" + TITLEBAR + "' role='heading'><span class='" + TITLE + "'>Video Title</span></div>"),
-                toolBar: "<div class='" + TOOLBAR + "'> </div>",
+                toolBar: "<div class='" + TOOLBARWRAP + "'><div class='" + TOOLBAR + "'></div></div>",
                 youtubePlayer: "<div class='" + YTPLAYER + "'> </div>",
                 toolBarTime: "<span class='k-mediaplayer-currenttime'>00:00:00</span> / <span class='k-mediaplayer-duration'>00:00:00</span>",
                 slider: "<input class='" + SLIDER + "' value='0' title='seekbar' />",
@@ -139,7 +139,6 @@
             _createTitlebar: function () {
                 this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 if (this._titleBar.length === 0) {
-                    this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                     this.wrapper.append(templates.titleBar);
                     this._titleBar = this.wrapper.find(DOT + TITLEBAR);
                 }
@@ -171,7 +170,6 @@
                 if (!this._volumeSlider) {
                     this._volumeDraggingHandler = proxy(this._volumeDragging, this);
                     this._volumeChangeHandler = proxy(this._volumeChange, this);
-                    volumeSliderElement = $(DOT + VOLUME_SLIDER);
                     volumeSliderElement.width(87);
                     this._volumeSlider = new ui.Slider(volumeSliderElement[0], {
                         smallStep: 1,
@@ -257,34 +255,50 @@
                 if (toolBarElement.length === 0) {
                     this._toolbarClickHandler = proxy(this._toolbarClick, this);
                     this.wrapper.append(templates.toolBar);
-                    toolBarElement = $(DOT + TOOLBAR);
-                    toolBarElement.width($(DOT + MEDIA).width());
+                    toolBarElement = this.wrapper.find(DOT + TOOLBAR);
+                    toolBarElement.width(this.wrapper.find(DOT + MEDIA).width());
                     this._toolBar = new ui.ToolBar(toolBarElement, {
                         click: this._toolbarClickHandler,
                         resizable: false,
                         items: [
                             {
-                                template: templates.slider
-                            },
-                            { type: "button", spriteCssClass: "k-icon k-font-icon k-i-play" },
-                            {
-                                template: templates.toolBarTime
-                            },
-                            { type: "button", spriteCssClass: "k-icon k-font-icon k-i-volume-high" },
-                            {
-                                template: templates.volumeSlider
+                                type: "button",
+                                attributes: { "class": "k-play-button" },
+                                spriteCssClass: "k-icon k-font-icon k-i-play"
                             },
                             {
-                                template: templates.qualityDropDown
+                                template: templates.toolBarTime,
+                                attributes: { "class": "k-mediaplayer-currenttime-wrap" }
                             },
-                            { type: "button", spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter" }
+                            {
+                                type: "separator",
+                                attributes: { "class": "k-toolbar-spacer" }
+                            },
+                            {
+                                type: "button",
+                                attributes: { "class": "k-volume-button" },
+                                spriteCssClass: "k-icon k-font-icon k-i-volume-high"
+                            },
+                            {
+                                template: templates.volumeSlider,
+                                attributes: { "class": "k-mediaplayer-volume-wrap" }
+                            },
+                            {
+                                template: templates.qualityDropDown,
+                                attributes: { "class": "k-mediaplayer-quality-wrap" }
+                            },
+                            {
+                                type: "button",
+                                attributes: { "class": "k-fullscreen-button" },
+                                spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter"
+                            }
                         ]
                     });
 
-                    var volumeSpan = toolBarElement.find('span[class*="k-i-volume"]');
-                    this._volumeButton = volumeSpan.parent("a");
-                    var fullScreenSpan = toolBarElement.find('span[class*="k-i-fullscreen"]');
-                    this._fullscreenButton = fullScreenSpan.parent("a");
+                    toolBarElement.before(templates.slider);
+
+                    this._volumeButton = toolBarElement.find(".k-volume-button");
+                    this._fullscreenButton = toolBarElement.find(".k-fullscreen-button");
                     this._volumeButton.attr("title", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
                     this._volumeButton.attr("aria-label", this.options.mute ? this.options.messages.unmute : this.options.messages.mute);
                     this._fullscreenButton.attr("title", this.options.messages.fullscreen);
@@ -293,15 +307,20 @@
                     toolBarElement.width("auto");
                     this._currentTimeElement = toolBarElement.find(".k-mediaplayer-currenttime");
                     this._durationElement = toolBarElement.find(".k-mediaplayer-duration");
-                    this._playButtonSpan = toolBarElement.find('span[class*="k-i-play"]');
-                    this._playButton = this._playButtonSpan.parent("a");
+                    this._playButton = toolBarElement.find(".k-play-button");
+                    this._playButtonSpan = this._playButton.find(".k-i-play");
 
                     if (this.options.autoPlay) {
                         this._playStateToggle(true);
                     }
 
-                    $([this._volumeButton[0], toolBarElement.find(".k-mediaplayer-volume").parent()[0], toolBarElement.find(".k-mediaplayer-quality").parent()[0], this._fullscreenButton[0]]).wrapAll("<div class='k-align-right' />");
-                    $(".k-button", toolBarElement).addClass("k-button-bare");
+                    $([
+                        this._volumeButton[0],
+                        toolBarElement.find(".k-mediaplayer-volume-wrap")[0],
+                        toolBarElement.find(".k-mediaplayer-quality-wrap")[0],
+                        this._fullscreenButton[0]
+                    ]).wrapAll("<div class='k-align-right' />");
+                    toolBarElement.find(".k-button").addClass("k-button-bare");
                 }
             },
 
@@ -537,9 +556,21 @@
                     });
 
                 if (!window.YT || !window.YT.Player) {
-                    $.getScript("https://www.youtube.com/iframe_api");
-                    this._youtubeApiReadyHandler = proxy(this._youtubeApiReady, this);
-                    window.onYouTubeIframeAPIReady = this._youtubeApiReadyHandler;
+                    if (!window.onYouTubeIframeAPIReadyRegister) {
+                        window.onYouTubeIframeAPIReadyRegister = [];
+                        $.getScript("https://www.youtube.com/iframe_api");
+                        window.onYouTubeIframeAPIReady =
+                            function () {
+                                if (window.onYouTubeIframeAPIReadyRegister) {
+                                    for (var i = 0; i < window.onYouTubeIframeAPIReadyRegister.length; i++) {
+                                        window.onYouTubeIframeAPIReadyRegister[i]._youtubeApiReady();
+                                    }
+                                }
+                                window.onYouTubeIframeAPIReadyRegister.length = 0;
+                                window.onYouTubeIframeAPIReadyRegister = undefined;
+                            };
+                    }
+                    window.onYouTubeIframeAPIReadyRegister[window.onYouTubeIframeAPIReadyRegister.length] = this;
                 }
                 else {
                     this._configurePlayer();
@@ -751,8 +782,8 @@
             _uiDisplay: function (state) {
                 var animationSpeed = 'slow';
                 var uiElements = this._titleBar
-                    .add(this._toolBar.element)
-                    .add(this._slider.wrapper);
+                    .add(this._toolBar.element.parent());
+
                 if (state) {
                     uiElements.fadeIn(animationSpeed);
                 }
