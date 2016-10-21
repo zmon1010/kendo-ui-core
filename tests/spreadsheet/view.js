@@ -110,7 +110,7 @@
         var tabstrip = spreadsheet._view.tabstrip;
         var quickAccessToolBar = $(".k-spreadsheet-quick-access-toolbar");
 
-        equal(tabstrip.tabGroup.css("padding-left"), quickAccessToolBar.outerWidth() + "px");
+        equal(parseInt(tabstrip.tabGroup.css("padding-left"), 10), parseInt(quickAccessToolBar.outerWidth(), 10));
     });
 
     test("createFilterMenu creates filter menu for column range", function() {

@@ -749,7 +749,7 @@
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
 
-    test("reads sheet dimensions", function() {
+    asyncTest("reads sheet dimensions", function() {
         const RELS = `
             <Relationships>
               <Relationship Id="rId1"
@@ -788,10 +788,13 @@
             activeSheet: () => null
         };
 
-        kendo.spreadsheet._readWorkbook(zip, workbook);
+        var deferred = new $.Deferred();
+        kendo.spreadsheet._readWorkbook(zip, workbook, deferred);
+
+        deferred.then(start);
     });
 
-    test("applies default dimensions", function() {
+    asyncTest("applies default dimensions", function() {
         const RELS = `
             <Relationships>
               <Relationship Id="rId1"
@@ -833,10 +836,13 @@
             activeSheet: () => null
         };
 
-        kendo.spreadsheet._readWorkbook(zip, workbook);
+        var deferred = new $.Deferred();
+        kendo.spreadsheet._readWorkbook(zip, workbook, deferred);
+
+        deferred.then(start);
     });
 
-    test("reads default column width and row height", function() {
+    asyncTest("reads default column width and row height", function() {
         const RELS = `
             <Relationships>
               <Relationship Id="rId1"
@@ -876,7 +882,10 @@
             activeSheet: () => null
         };
 
-        kendo.spreadsheet._readWorkbook(zip, workbook);
+        var deferred = new $.Deferred();
+        kendo.spreadsheet._readWorkbook(zip, workbook, deferred);
+
+        deferred.then(start);
     });
 
     asyncTest("reads active sheet", function() {
