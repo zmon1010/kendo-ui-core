@@ -7,7 +7,7 @@
         numericAxis,
         gridLayout,
         chartBox = new Box2D(0, 0, 800, 600),
-        COORDINATE_LIMIT = 100000,
+        COORDINATE_LIMIT = 300000,
         TOLERANCE = 1.5;
 
     NumericAxis = dataviz.NumericAxis.extend({
@@ -1135,16 +1135,6 @@
 
     (function() {
 
-        function testVmlCoordinateLimit(callback) {
-            var supportVML = kendo.support.vml;
-            try {
-                kendo.support.vml = true;
-                callback();
-            } finally {
-                kendo.support.vml = supportVML;
-            }
-        }
-
         module("Slots / Vertical", {
             setup: function() {
                 createNumericAxis();
@@ -1191,10 +1181,8 @@
         });
 
         test("a value capped to maximum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
-                arrayClose([slot.y1, slot.y2], [99.8, COORDINATE_LIMIT], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
+            arrayClose([slot.y1, slot.y2], [99.8, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("b value capped to maximum value", function() {
@@ -1208,10 +1196,8 @@
         });
 
         test("b value capped to minimum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
-                arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 599], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
+            arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 599], TOLERANCE);
         });
 
         test("slot method returns slot as rect", function() {
@@ -1252,10 +1238,8 @@
         });
 
         test("a value capped to minimum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
-                arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 499.1], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
+            arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 499.1], TOLERANCE);
         });
 
         test("b value capped to minimum value", function() {
@@ -1269,10 +1253,8 @@
         });
 
         test("b value capped to maximum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
-                arrayClose([slot.y1, slot.y2], [0, COORDINATE_LIMIT], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
+            arrayClose([slot.y1, slot.y2], [0, COORDINATE_LIMIT], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -1324,10 +1306,8 @@
         });
 
         test("a value capped to minimum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
-                arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 665.8], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
+            arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 665.8], TOLERANCE);
         });
 
         test("b value capped to maximum value", function() {
@@ -1341,10 +1321,8 @@
         });
 
         test("b value capped to maximum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
-                arrayClose([slot.x1, slot.x2], [0, COORDINATE_LIMIT], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
+            arrayClose([slot.x1, slot.x2], [0, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("slot method returns slot as rect", function() {
@@ -1385,10 +1363,8 @@
         });
 
         test("a value capped to maximum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
-                arrayClose([slot.x1, slot.x2], [133.1, COORDINATE_LIMIT], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
+            arrayClose([slot.x1, slot.x2], [133.1, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("b value capped to minimum value", function() {
@@ -1402,10 +1378,8 @@
         });
 
         test("b value capped to minimum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
-                arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 799], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
+            arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 799], TOLERANCE);
         });
     })();
 

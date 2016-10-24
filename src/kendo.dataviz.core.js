@@ -56,7 +56,7 @@ var __meta__ = { // jshint ignore:line
         DEG_TO_RAD = math.PI / 180,
         FORMAT_REGEX = /\{\d+:?/,
         HEIGHT = "height",
-        VML_COORDINATE_LIMIT = 100000,
+        COORDINATE_LIMIT = kendo.support.vml ? 100000 : 300000,
         INITIAL_ANIMATION_DURATION = 600,
         INSIDE = "inside",
         LEFT = "left",
@@ -3190,8 +3190,8 @@ var __meta__ = { // jshint ignore:line
                 p2 = math.max(a, b) - logMin;
             }
 
-            slotBox[valueAxis + 1] = lineStart + step * (reverse ? p2 : p1);
-            slotBox[valueAxis + 2] = lineStart + step * (reverse ? p1 : p2);
+            slotBox[valueAxis + 1] = limitCoordinate(lineStart + step * (reverse ? p2 : p1));
+            slotBox[valueAxis + 2] = limitCoordinate(lineStart + step * (reverse ? p1 : p2));
 
             return slotBox;
         },
@@ -4220,10 +4220,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function limitCoordinate(value) {
-        if (kendo.support.vml) {
-            value = math.max(math.min(value, VML_COORDINATE_LIMIT), -VML_COORDINATE_LIMIT);
-        }
-        return value;
+        return math.max(math.min(value, COORDINATE_LIMIT), -COORDINATE_LIMIT);
     }
 
     decodeEntities._element = document.createElement("span");
