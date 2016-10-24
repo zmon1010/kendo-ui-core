@@ -2,7 +2,8 @@ require 'tasks'
 
 TESTS = FileList["tests/**/*"]
 DEPS = [FileList["src/**/*.js"], FileList['styles/**/*.*'], KENDO_CONFIG_FILE, TESTS].flatten
-SUPPORTED_JQUERY_VERSIONS = ["2.2.4", "3.1.1"]
+JQUERY_VERSION_2 = "2.2.4"
+JQUERY_VERSION_3 = "3.1.1"
 JSHINT_FILES = FileList[JSON.parse(File.read("package.json"))['jshintFiles']]
 
 scripts_arg =  "--scripts=kendo.{all,aspnetmvc}.js"
@@ -24,16 +25,14 @@ namespace :tests do
         sh "build/xunit-2.0/xunit.console.exe #{SPREADSHEET_ROOT }/Telerik.Web.Spreadsheet.Tests/bin/Debug/Telerik.Web.Spreadsheet.Tests.dll"
     end
 
-    desc "Run tests in supported jQuery versions"
-    task :jquery => DEPS do
-        SUPPORTED_JQUERY_VERSIONS.each do |version|
-            gulp_xvfb "ci", "--junit-results=jquery-#{version}-test-results.xml", "--single-run=true", "--jquery=#{version}", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
-        end
+    desc "Run tests in jQuery 2"
+    task :jquery2 => DEPS do
+        gulp_xvfb "ci", "--junit-results=jquery-2-test-results.xml", "--single-run=true", "--jquery=#{JQUERY_VERSION_2}", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
     end
 
     desc "Run tests in jQuery 3"
     task :jquery3 => DEPS do
-        gulp_xvfb "ci", "--junit-results=jquery-3-test-results.xml", "--single-run=true", "--jquery=3.1.1", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
+        gulp_xvfb "ci", "--junit-results=jquery-3-test-results.xml", "--single-run=true", "--jquery=#{JQUERY_VERSION_3}", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
     end
 
     desc "Run tests in firefox"
