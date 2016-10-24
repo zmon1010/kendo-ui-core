@@ -181,6 +181,6 @@ test("Invalid files message is displayed when multiple files selected at once an
         {name: "second.png", size: 2000}
     ]);
 
-    equal($(".k-file-validation-message", uploadInstance.wrapper).text(), "Invalid files(s). Please check file upload requirements.");
+    equal($(".k-file-validation-message", uploadInstance.wrapper).text(), "Invalid file(s). Please check file upload requirements.");
 });
 }

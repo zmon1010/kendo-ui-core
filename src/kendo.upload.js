@@ -531,7 +531,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if(filesHaveValidationErrors) {
-                template += "<span class='k-file-validation-message'>Invalid files(s). Please check file upload requirements.</span>";
+                template += "<span class='k-file-validation-message'>Invalid file(s). Please check file upload requirements.</span>";
             } else {
                 template += "<span class='k-file-information'>Total: " + files.length + " files, " + totalFileSize + "</span>";
             }
