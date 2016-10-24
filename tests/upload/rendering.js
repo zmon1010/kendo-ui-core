@@ -175,7 +175,6 @@ module("Upload / Rendering / Drag and drop", {
 });
 
 test("drop zone is rendered when supported by the browser", function() {
-    debugger
     equal($("> .k-dropzone", uploadInstance.wrapper).length, 1);
 });
 
