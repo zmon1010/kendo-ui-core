@@ -3428,6 +3428,9 @@ var __meta__ = { // jshint ignore:line
                 if (filter) {
                     filter.filters = removeExpr(filter.filters, name);
                     this.dataSource._filter.filters = filter.filters;
+                    if (!filter.filters.length) {
+                        this.dataSource._filter = null;
+                    }
                 }
                 if (sortExpressions) {
                     sortExpressions = removeExpr(sortExpressions, name);

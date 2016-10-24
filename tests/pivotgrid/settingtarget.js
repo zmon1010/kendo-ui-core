@@ -910,4 +910,27 @@
         equal(setting.dataSource.filter().filters[0].field, "foo");
     });
 
+    test("removing the last filter clears the filters", function () {
+        var dataSource = new kendo.data.PivotDataSource({
+            columns: ["foo", "bar"],
+            filter: {
+                logic: "and",
+                filters: [
+                    { field: "bar", operator: "in", value: "bar.&[1]" }
+                ]
+            },
+            filterable: true
+        });
+
+        var setting = new PivotSettingTarget($(div), {
+            dataSource: dataSource,
+            filterable: true
+        });
+
+        setting.setDataSource(dataSource);
+        setting.remove("bar");
+
+        equal(setting.dataSource.filter(), null);
+    });
+
 })();
