@@ -532,10 +532,13 @@ var BackspaceHandler = Class.extend({
     _merge: function(dest, src) {
         dom.removeTrailingBreak(dest);
 
-        while (src.firstChild) {
+        while (dest && src.firstChild) {
             if (dest.nodeType == 1) {
                 dest = dom.list(dest) ? dest.children[dest.children.length - 1] : dest;
-                dest.appendChild(src.firstChild);
+
+                if (dest) {
+                    dest.appendChild(src.firstChild);
+                }
             } else if (dest.nodeType === nodeTypes.TEXT_NODE) {
                 this._mergeWithTextNode(dest, src.firstChild);
             } else {
