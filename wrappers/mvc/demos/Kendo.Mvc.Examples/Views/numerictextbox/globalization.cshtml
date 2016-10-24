@@ -10,8 +10,10 @@
 @{ 
     Culture = "de-DE";
 }
-
-@(Html.Kendo().CurrencyTextBox()
+<div class="demo-section k-content">
+    @(Html.Kendo().CurrencyTextBox()
       .Name("CurrencyTextBox")
       .Value(25)
-)
+      .HtmlAttributes(new { style = "width: 100%" })
+    )
+</div>
