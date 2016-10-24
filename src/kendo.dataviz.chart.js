@@ -174,6 +174,7 @@ var __meta__ = { // jshint ignore:line
         MAX_EXPAND_DEPTH = 5,
         MAX_VALUE = Number.MAX_VALUE,
         MIN = "min",
+        MIN_CATEGORY_POINTS_RANGE = 0.01,
         MIN_VALUE = -Number.MAX_VALUE,
         MINUTES = "minutes",
         MONTHS = "months",
@@ -209,7 +210,8 @@ var __meta__ = { // jshint ignore:line
         SELECT_END = "selectEnd",
         SERIES_CLICK = "seriesClick",
         SERIES_HOVER = "seriesHover",
-        START_SCALE = 0.001,
+        START_SCALE = kendo.support.browser.msie &&
+            kendo.support.browser.version === 10 ? 0.001 : 0,
         STEP = "step",
         SMOOTH = "smooth",
         STD_ERR = "stderr",
@@ -2996,11 +2998,15 @@ var __meta__ = { // jshint ignore:line
 
             var min = range.min + diffStart / scale;
             var max = range.min + diffEnd / scale;
+            var rangeMin = math.min(min, max);
+            var rangeMax = math.max(min, max);
 
-            return {
-                min: math.min(min, max),
-                max: math.max(min, max)
-            };
+            if (rangeMax - rangeMin >= MIN_CATEGORY_POINTS_RANGE) {
+                return {
+                    min: rangeMin,
+                    max: rangeMax
+                };
+            }
         },
 
         valueRange: function() {
@@ -13113,10 +13119,12 @@ var __meta__ = { // jshint ignore:line
                 vertical = axis.options.vertical;
                 if (!(lock == X && !vertical) && !(lock === Y && vertical)) {
                     var range = axis.pointsRange(start, end);
-                    axisRanges.push({
-                        axis: axis,
-                        range: range
-                    });
+                    if (range) {
+                        axisRanges.push({
+                            axis: axis,
+                            range: range
+                        });
+                    }
                 }
             }
 

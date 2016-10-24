@@ -56,13 +56,14 @@ var __meta__ = { // jshint ignore:line
         DEG_TO_RAD = math.PI / 180,
         FORMAT_REGEX = /\{\d+:?/,
         HEIGHT = "height",
-        VML_COORDINATE_LIMIT = 100000,
+        COORDINATE_LIMIT = kendo.support.vml ? 100000 : 300000,
         INITIAL_ANIMATION_DURATION = 600,
         INSIDE = "inside",
         LEFT = "left",
         LINEAR = "linear",
         MAX_VALUE = Number.MAX_VALUE,
         MIN_VALUE = -Number.MAX_VALUE,
+        MIN_VALUE_RANGE = Math.pow(10, -DEFAULT_PRECISION + 1),
         NONE = "none",
         NOTE_CLICK = "noteClick",
         NOTE_HOVER = "noteHover",
@@ -3094,10 +3095,12 @@ var __meta__ = { // jshint ignore:line
             var min = math.min(startValue, endValue);
             var max = math.max(startValue, endValue);
 
-            return {
-                min: min,
-                max: max
-            };
+            if (this.isValidRange(min, max)) {
+                return {
+                    min: min,
+                    max: max
+                };
+            }
         },
 
         zoomRange: function(delta) {
@@ -3106,14 +3109,17 @@ var __meta__ = { // jshint ignore:line
             var totalMin = this.totalMin;
             var min = util.limitValue(newRange.min, totalMin, totalMax);
             var max = util.limitValue(newRange.max, totalMin, totalMax);
-            var optionsRange = this.options.max - this.options.min;
 
-            if (optionsRange < this.totalMajorUnit || max - min >= this.totalMajorUnit) {
+            if (this.isValidRange(min, max)) {
                 return {
                     min: min,
                     max: max
                 };
             }
+        },
+
+        isValidRange: function(min, max) {
+            return max - min > MIN_VALUE_RANGE;
         }
     });
 
@@ -3190,8 +3196,8 @@ var __meta__ = { // jshint ignore:line
                 p2 = math.max(a, b) - logMin;
             }
 
-            slotBox[valueAxis + 1] = lineStart + step * (reverse ? p2 : p1);
-            slotBox[valueAxis + 2] = lineStart + step * (reverse ? p1 : p2);
+            slotBox[valueAxis + 1] = limitCoordinate(lineStart + step * (reverse ? p2 : p1));
+            slotBox[valueAxis + 2] = limitCoordinate(lineStart + step * (reverse ? p1 : p2));
 
             return slotBox;
         },
@@ -4220,10 +4226,7 @@ var __meta__ = { // jshint ignore:line
     }
 
     function limitCoordinate(value) {
-        if (kendo.support.vml) {
-            value = math.max(math.min(value, VML_COORDINATE_LIMIT), -VML_COORDINATE_LIMIT);
-        }
-        return value;
+        return math.max(math.min(value, COORDINATE_LIMIT), -COORDINATE_LIMIT);
     }
 
     decodeEntities._element = document.createElement("span");

@@ -7,7 +7,7 @@
         numericAxis,
         gridLayout,
         chartBox = new Box2D(0, 0, 800, 600),
-        COORDINATE_LIMIT = 100000,
+        COORDINATE_LIMIT = 300000,
         TOLERANCE = 1.5;
 
     NumericAxis = dataviz.NumericAxis.extend({
@@ -1135,16 +1135,6 @@
 
     (function() {
 
-        function testVmlCoordinateLimit(callback) {
-            var supportVML = kendo.support.vml;
-            try {
-                kendo.support.vml = true;
-                callback();
-            } finally {
-                kendo.support.vml = supportVML;
-            }
-        }
-
         module("Slots / Vertical", {
             setup: function() {
                 createNumericAxis();
@@ -1191,10 +1181,8 @@
         });
 
         test("a value capped to maximum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
-                arrayClose([slot.y1, slot.y2], [99.8, COORDINATE_LIMIT], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
+            arrayClose([slot.y1, slot.y2], [99.8, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("b value capped to maximum value", function() {
@@ -1208,10 +1196,8 @@
         });
 
         test("b value capped to minimum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
-                arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 599], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
+            arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 599], TOLERANCE);
         });
 
         test("slot method returns slot as rect", function() {
@@ -1252,10 +1238,8 @@
         });
 
         test("a value capped to minimum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
-                arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 499.1], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
+            arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 499.1], TOLERANCE);
         });
 
         test("b value capped to minimum value", function() {
@@ -1269,10 +1253,8 @@
         });
 
         test("b value capped to maximum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
-                arrayClose([slot.y1, slot.y2], [0, COORDINATE_LIMIT], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
+            arrayClose([slot.y1, slot.y2], [0, COORDINATE_LIMIT], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -1324,10 +1306,8 @@
         });
 
         test("a value capped to minimum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
-                arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 665.8], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
+            arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 665.8], TOLERANCE);
         });
 
         test("b value capped to maximum value", function() {
@@ -1341,10 +1321,8 @@
         });
 
         test("b value capped to maximum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
-                arrayClose([slot.x1, slot.x2], [0, COORDINATE_LIMIT], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
+            arrayClose([slot.x1, slot.x2], [0, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("slot method returns slot as rect", function() {
@@ -1385,10 +1363,8 @@
         });
 
         test("a value capped to maximum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
-                arrayClose([slot.x1, slot.x2], [133.1, COORDINATE_LIMIT], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
+            arrayClose([slot.x1, slot.x2], [133.1, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("b value capped to minimum value", function() {
@@ -1402,10 +1378,8 @@
         });
 
         test("b value capped to minimum coordinate value", function() {
-            testVmlCoordinateLimit(function() {
-                var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
-                arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 799], TOLERANCE);
-            });
+            var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
+            arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 799], TOLERANCE);
         });
     })();
 
@@ -2282,4 +2256,92 @@
         });
     })();
 
+    (function() {
+        var axis;
+
+        function setupAxis(options) {
+            axis = new NumericAxis(1, 10, kendo.deepExtend({
+                vertical: false,
+                min: 3,
+                max: 7,
+                majorUnit: 1
+            }, options));
+            axis.reflow(new Box2D(0, 0, 50, 50));
+        }
+
+        // ------------------------------------------------------------
+        module("Numeric Axis / zoomRange", {
+            setup: function() {
+                setupAxis();
+            }
+        });
+
+        test("returns zoomed-out range for negative delta", function() {
+            var range = axis.zoomRange(-1);
+            equal(range.min, 2);
+            equal(range.max, 8);
+        });
+
+        test("returns zoomed-in range for positive delta", function() {
+            var range = axis.zoomRange(1);
+            equal(range.min, 4);
+            equal(range.max, 6);
+        });
+
+        test("limits zoomed-out range to series auto limits", function() {
+            var range = axis.zoomRange(-6);
+            equal(range.min, 0);
+            equal(range.max, 12);
+        });
+
+        test("returns nothing if range becomes smaller than the default precision", function() {
+            setupAxis({
+                min: 0.000000001,
+                max: 0.000000003,
+                majorUnit: 0.0000000005
+            });
+
+            ok(!axis.zoomRange(1));
+        });
+
+    })();
+
+    (function() {
+        var axis;
+
+        function setupAxis(options) {
+            axis = new NumericAxis(1, 10, kendo.deepExtend({
+                vertical: false,
+                min: 3,
+                max: 7,
+                majorUnit: 1
+            }, options));
+            axis.reflow(new Box2D(0, 0, 50, 50));
+        }
+
+        // ------------------------------------------------------------
+        module("Numeric Axis / pointsRange", {
+            setup: function() {
+                setupAxis();
+            }
+        });
+
+        test("returns range based on the passed points", function() {
+            var range = axis.pointsRange({ x: 10} , { x: 30 });
+            close(range.min, 3.8, 0.1);
+            close(range.max, 5.4, 0.1);
+        });
+
+        test("returns min and max value no matter th orther of the points", function() {
+            var range = axis.pointsRange({ x: 30 }, { x: 10});
+            close(range.min, 3.8, 0.1);
+            close(range.max, 5.4, 0.1);
+        });
+
+        test("returns nothing if the range is smaller than the default precision", function() {
+            var range = axis.pointsRange({ x: 10.00000001} , { x: 10.00000002 });
+            ok(!range);
+        });
+
+    })();
 })();

@@ -558,6 +558,13 @@
                 close(range.max, 3, TOLERANCE);
             });
 
+            test("returns nothing if range is too small",  function() {
+                setupAxis({});
+
+                range = categoryAxis.pointsRange(new Point2D(200, 0), new Point2D(200.01, 0));
+                ok(!range);
+            });
+
         })();
 
         // ------------------------------------------------------------
