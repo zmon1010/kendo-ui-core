@@ -63,6 +63,7 @@ var __meta__ = { // jshint ignore:line
         LINEAR = "linear",
         MAX_VALUE = Number.MAX_VALUE,
         MIN_VALUE = -Number.MAX_VALUE,
+        MIN_VALUE_RANGE = Math.pow(10, -DEFAULT_PRECISION + 1),
         NONE = "none",
         NOTE_CLICK = "noteClick",
         NOTE_HOVER = "noteHover",
@@ -3094,10 +3095,12 @@ var __meta__ = { // jshint ignore:line
             var min = math.min(startValue, endValue);
             var max = math.max(startValue, endValue);
 
-            return {
-                min: min,
-                max: max
-            };
+            if (this.isValidRange(min, max)) {
+                return {
+                    min: min,
+                    max: max
+                };
+            }
         },
 
         zoomRange: function(delta) {
@@ -3106,14 +3109,17 @@ var __meta__ = { // jshint ignore:line
             var totalMin = this.totalMin;
             var min = util.limitValue(newRange.min, totalMin, totalMax);
             var max = util.limitValue(newRange.max, totalMin, totalMax);
-            var optionsRange = this.options.max - this.options.min;
 
-            if (optionsRange < this.totalMajorUnit || max - min >= this.totalMajorUnit) {
+            if (this.isValidRange(min, max)) {
                 return {
                     min: min,
                     max: max
                 };
             }
+        },
+
+        isValidRange: function(min, max) {
+            return max - min > MIN_VALUE_RANGE;
         }
     });
 
