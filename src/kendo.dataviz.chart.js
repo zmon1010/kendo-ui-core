@@ -209,7 +209,8 @@ var __meta__ = { // jshint ignore:line
         SELECT_END = "selectEnd",
         SERIES_CLICK = "seriesClick",
         SERIES_HOVER = "seriesHover",
-        START_SCALE = 0.001,
+        START_SCALE = kendo.support.browser.msie &&
+            kendo.support.browser.version === 10 ? 0.001 : 0,
         STEP = "step",
         SMOOTH = "smooth",
         STD_ERR = "stderr",

@@ -4,7 +4,7 @@
         geom = kendo.geometry,
         Box2D = dataviz.Box2D,
         Point2D = dataviz.Point2D,
-        START_SCALE = 0.001;
+        START_SCALE = 0;
 
     (function() {
         var SIZE = 100,
