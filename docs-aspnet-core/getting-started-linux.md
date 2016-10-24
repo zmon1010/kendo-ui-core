@@ -2,7 +2,7 @@
 title: Get Started on Linux
 page_title: Get Started on Linux | Telerik UI for ASP.NET Core
 description: "Learn the basics when working with Telerik UI for ASP.NET Core (aka MVC 6 or ASP.NET Core MVC) on Linux."
-previous_url: /aspnet-mvc/aspnetmvc-apps/mvc-6/getting-started-linux, aspnet-mvc/mvc-6/getting-started-linux
+previous_url: /aspnet-mvc/aspnetmvc-apps/mvc-6/getting-started-linux, /aspnet-mvc/mvc-6/getting-started-linux
 slug: gettingstartedlinux_aspnetmvc6_aspnetmvc
 position: 3
 ---
