@@ -83,7 +83,7 @@
             links: ["insertImage", "insertFile", "createLink", "unlink"],
             lists: ["insertUnorderedList", "insertOrderedList", "indent", "outdent"],
             tables: [ "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn" ],
-            advanced: [ "viewHtml", "cleanFormatting", "print", "pdf", "exportAs"],
+            advanced: [ "viewHtml", "cleanFormatting", "print", "pdf", "exportAs", "import"],
             fonts: [ "fontName", "fontSize" ],
             colors: [ "foreColor", "backColor" ]
         },
