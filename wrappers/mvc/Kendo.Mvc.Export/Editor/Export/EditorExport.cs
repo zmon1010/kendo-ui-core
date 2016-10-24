@@ -8,19 +8,25 @@ namespace Kendo.Mvc.Export
 {
     public static partial class EditorExport
     {
+
+        /// <summary>
+        /// Creates FileStreamResult based on the provided parameter, having a streem to be sent as response
+        /// </summary>
+        /// <param name="data">EditorExportData nesseary for all kinds of export</param>
+        /// <returns>FileStreamResult</returns>
         public static FileStreamResult Export(EditorExportData data)
         {
             switch (data.ExportType)
             {
-                case "docx":
+                case EditorExportType.Docx:
                     return ToDocxExportResult(data.Value, data.FileName, data.HtmlImportSettings, data.DocxExportSettings);
-                case "rtf":
+                case EditorExportType.Rtf:
                     return ToRtfExportResult(data.Value, data.FileName, data.HtmlImportSettings, data.RtfExportSettings);
-                case "pdf":
+                case EditorExportType.Pdf:
                     return ToPdfExportResult(data.Value, data.FileName, data.HtmlImportSettings, data.PdfExportSettings);
-                case "html":
+                case EditorExportType.Html:
                     return ToHtmlExportResult(data.Value, data.FileName, data.HtmlImportSettings, data.HtmlExportSettings);
-                case "plainText":
+                case EditorExportType.PlainText:
                     return ToTxtExportResult(data.Value, data.FileName, data.HtmlImportSettings);
             }
             return new FileStreamResult(new MemoryStream(), "txt/plain");

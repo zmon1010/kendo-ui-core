@@ -10,6 +10,13 @@ namespace Kendo.Mvc.Export
 {
     public static partial class EditorExport
     {
+        /// <summary>
+        /// Creates FileStreamResult based on the provided parameters, having txt streem to be sent as response
+        /// </summary>
+        /// <param name="value">HTML content</param>
+        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
+        /// <returns>FileStreamResult</returns>
         public static FileStreamResult ToTxtExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings)
         {
 

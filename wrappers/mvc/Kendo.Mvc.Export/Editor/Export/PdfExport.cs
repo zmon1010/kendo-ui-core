@@ -9,6 +9,14 @@ namespace Kendo.Mvc.Export
 {
     public static partial class EditorExport
     {
+        /// <summary>
+        /// Creates FileStreamResult based on the provided parameters, having pdf streem to be sent as response
+        /// </summary>
+        /// <param name="value">HTML content</param>
+        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
+        /// <param name="pdfEportSetting">Optional settings set to the PdfFormatProvider exporting a RadFlowDocument</param>
+        /// <returns>FileStreamResult</returns>
         public static FileStreamResult ToPdfExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings, PdfExportSettings pdfExportSettings)
         {
             RadFlowDocument htmlDocument = GetHtmlFlowDocument(value, htmlImportSettings);
@@ -21,11 +29,24 @@ namespace Kendo.Mvc.Export
             };
         }
 
+        /// <summary>
+        /// Creates FileStreamResult based on the provided parameters, having pdf streem to be sent as response
+        /// </summary>
+        /// <param name="value">HTML content</param>
+        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
+        /// <returns>FileStreamResult</returns>
         public static FileStreamResult ToPdfExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings)
         {
             return ToPdfExportResult(value, fileName, htmlImportSettings, new PdfExportSettings());
         }
 
+        /// <summary>
+        /// Creates FileStreamResult based on the provided parameters, having pdf streem to be sent as response
+        /// </summary>
+        /// <param name="value">HTML content</param>
+        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <returns>FileStreamResult</returns>
         public static FileStreamResult ToPdfExportResult(string value, string fileName)
         {
             return ToPdfExportResult(value, fileName, new HtmlImportSettings(), new PdfExportSettings());

@@ -7,11 +7,25 @@ namespace Kendo.Mvc.Export
 {
     public class EditorExportData
     {
+        /// <summary>
+        /// Gets or sets the exported HTML content
+        /// </summary
         public string Value { get; set; }
-        public string ExportType { get; set; }
+
+        /// <summary>
+        /// Gets or sets type to which the content will be exported
+        /// </summary
+        public EditorExportType ExportType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the fine name of the export result
+        /// </summary
         public string FileName { get; set; }
 
         private HtmlImportSettings importSettings = new HtmlImportSettings();
+        /// <summary>
+        /// Gets or sets the HtmlIMportSettings, which are used to convert the HTML content to RadFlowDocument
+        /// </summary
         public HtmlImportSettings HtmlImportSettings
         {
             get
@@ -25,6 +39,9 @@ namespace Kendo.Mvc.Export
         }
 
         private DocxExportSettings docxExportSettings = new DocxExportSettings();
+        /// <summary>
+        /// Gets or sets DocxExportSettings, which configure the DocxFormatProvider used for DOCX export
+        /// </summary
         public DocxExportSettings DocxExportSettings
         {
             get
@@ -38,6 +55,9 @@ namespace Kendo.Mvc.Export
         }
 
         private RtfExportSettings rtfExportSettings = new RtfExportSettings();
+        /// <summary>
+        /// Gets or sets RtfExportSettings, which configure the RtfFormatProvider used for RTF export
+        /// </summary
         public RtfExportSettings RtfExportSettings
         {
             get
@@ -51,6 +71,9 @@ namespace Kendo.Mvc.Export
         }
 
         private PdfExportSettings pdfExportSettings = new PdfExportSettings();
+        /// <summary>
+        /// Gets or sets PdfExportSettings, which configure the PdfFormatProvider used for PDF export
+        /// </summary
         public PdfExportSettings PdfExportSettings
         {
             get
@@ -64,6 +87,9 @@ namespace Kendo.Mvc.Export
         }
 
         private HtmlExportSettings htmlExportSettings = new HtmlExportSettings();
+        /// <summary>
+        /// Gets or sets HtmlExportSettings, which configure the HtmlFormatProvider used for HTML export
+        /// </summary
         public HtmlExportSettings HtmlExportSettings
         {
             get
