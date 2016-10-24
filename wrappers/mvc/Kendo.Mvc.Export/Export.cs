@@ -77,12 +77,12 @@ namespace Kendo.Mvc.Export
                             {
                                 column.SetHidden(true);
                             }
-                            columnStyleAction?.Invoke(new ExportColumnStyle(column, idx, current.Title ?? current.Field));
+                            columnStyleAction.Invoke(new ExportColumnStyle(column, idx, current.Title ?? current.Field));
                         }
                     }
                     using (IRowExporter row = worksheet.CreateRowExporter())
                     {
-                        rowStyleAction?.Invoke(new ExportRowStyle(row, 0));
+                        rowStyleAction.Invoke(new ExportRowStyle(row, 0));
                         for (int idx = 0; idx < model.Count; idx++)
                         {
                             var modelCol = model[idx];
@@ -90,7 +90,7 @@ namespace Kendo.Mvc.Export
                             using (ICellExporter cell = row.CreateCellExporter())
                             {
                                 cell.SetValue(columnName);
-                                cellStyleAction?.Invoke(new ExportCellStyle(cell, idx, 0));
+                                cellStyleAction.Invoke(new ExportCellStyle(cell, idx, 0));
                             }
                         }
                     }
@@ -99,13 +99,13 @@ namespace Kendo.Mvc.Export
                     {
                         using (IRowExporter row = worksheet.CreateRowExporter())
                         {
-                            rowStyleAction?.Invoke(new ExportRowStyle(row, i));
+                            rowStyleAction.Invoke(new ExportRowStyle(row, i));
                             for (int colIdx = 0; colIdx < model.Count; colIdx++)
                             {
                                 using (ICellExporter cell = row.CreateCellExporter())
                                 {
                                     SetCellValue(cell, ExtractItemValue(item, properties[colIdx]));
-                                    cellStyleAction?.Invoke(new ExportCellStyle(cell, colIdx, i));
+                                    cellStyleAction.Invoke(new ExportCellStyle(cell, colIdx, i));
                                 }
                             }
                         }
