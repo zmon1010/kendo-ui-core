@@ -24,11 +24,9 @@ namespace :tests do
         sh "build/xunit-2.0/xunit.console.exe #{SPREADSHEET_ROOT }/Telerik.Web.Spreadsheet.Tests/bin/Debug/Telerik.Web.Spreadsheet.Tests.dll"
     end
 
-    desc "Run tests in supported jQuery versions"
-    task :jquery => DEPS do
-        SUPPORTED_JQUERY_VERSIONS.each do |version|
-            gulp_xvfb "ci", "--junit-results=jquery-#{version}-test-results.xml", "--single-run=true", "--jquery=#{version}", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
-        end
+    desc "Run tests in jQuery 2"
+    task :jquery2 => DEPS do
+        gulp_xvfb "ci", "--junit-results=jquery-2-test-results.xml", "--single-run=true", "--jquery=2.2.4", "--skip-cultures", "--skip-source-maps", scripts_arg, styles_arg
     end
 
     desc "Run tests in jQuery 3"
