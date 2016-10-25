@@ -3,7 +3,7 @@ title: Fundamentals
 page_title: Fundamentals | Telerik UI for ASP.NET MVC
 description: "Download, install, and configure Telerik UI for ASP.NET MVC."
 slug: fundamentals_aspnetmvc
-previous_url: /aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbb
+previous_url: fundamentals
 position: 2
 ---
 

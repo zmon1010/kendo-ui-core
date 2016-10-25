@@ -1,11 +1,12 @@
 # The public documentation URL, used for sitemap.xml
-url: "http://docs.telerik.com/aspnet-mvc"
+url: "http://docs.telerik.com/aspnet-mvc/"
 
 # Exclude files which should not be in the output
 exclude: [readme.md, Gemfile, Gemfile.lock,api_sort.rb]
 navigation:
 ## List your directory names and order here, like this:
-      "getting-started":
+
+     "getting-started":
         title: "Getting Started"
         position: 5
      "how-to":
@@ -17,7 +18,7 @@ navigation:
      "vs-integration":
         title: "Visual Studio Integration"
         position: 60
-      "migration":
+     "migration":
         title: "Migration"
         position: 70
      "tutorials":
@@ -26,6 +27,8 @@ navigation:
      "troubleshoot":
         title: "Troubleshooting"
         position: 90
+  
+     
 
 ## The application virtual path
 baseurl: /aspnet-mvc
