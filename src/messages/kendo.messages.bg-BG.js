@@ -902,7 +902,7 @@ $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
 }
 
 /* Dialog */
-
+debugger;
 if (kendo.ui.Dialog) {
 kendo.ui.Dialog.prototype.options.messages =
 $.extend(true, kendo.ui.Dialog.prototype.options.localization,{
