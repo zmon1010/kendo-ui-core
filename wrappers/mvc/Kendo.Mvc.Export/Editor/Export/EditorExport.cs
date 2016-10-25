@@ -27,7 +27,7 @@ namespace Kendo.Mvc.Export
                     return ToPdfExportResult(data, settings.HtmlImportSettings, settings.PdfExportSettings);
                 case EditorExportType.Html:
                     return ToHtmlExportResult(data, settings.HtmlImportSettings, settings.HtmlExportSettings);
-                case EditorExportType.PlainText:
+                case EditorExportType.Txt:
                     return ToTxtExportResult(data, settings.HtmlImportSettings);
             }
             return new FileStreamResult(new MemoryStream(), "txt/plain");

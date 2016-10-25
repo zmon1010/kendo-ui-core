@@ -16,7 +16,7 @@
                 { text: 'Rtf', value: 'rtf' },
                 { text: 'Pdf', value: 'pdf' },
                 { text: 'Html', value: 'html' },
-                { text: 'Plain Text', value: 'plainText' }
+                { text: 'Plain Text', value: 'txt' }
             ];
 
         var ExportAsCommand = Command.extend({

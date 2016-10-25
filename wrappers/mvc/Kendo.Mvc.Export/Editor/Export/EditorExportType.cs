@@ -28,6 +28,6 @@
 		/// <summary>
 		/// Export to TXT
 		/// </summary>
-		PlainText = 16
+		Txt = 16
 	}
 }

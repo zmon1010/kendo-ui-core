@@ -35,7 +35,7 @@
         equal(dataItems[2].text, "Pdf");
         equal(dataItems[3].value, "html");
         equal(dataItems[3].text, "Html");
-        equal(dataItems[4].value, "plainText");
+        equal(dataItems[4].value, "txt");
         equal(dataItems[4].text, "Plain Text");
     });
 
