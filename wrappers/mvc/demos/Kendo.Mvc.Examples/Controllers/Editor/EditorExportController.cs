@@ -16,10 +16,11 @@ namespace Kendo.Mvc.Examples.Controllers
         [HttpPost]
         public ActionResult Export(EditorExportData data)
         {
-            data.HtmlImportSettings.LoadFromUri += HtmlImportSettings_LoadFromUri;
+            var settings = new EditorDocumentsSettings();
+            settings.HtmlImportSettings.LoadFromUri += HtmlImportSettings_LoadFromUri;
             try
             {
-                return EditorExport.Export(data);
+                return EditorExport.Export(data, settings);
             }
             catch
             {

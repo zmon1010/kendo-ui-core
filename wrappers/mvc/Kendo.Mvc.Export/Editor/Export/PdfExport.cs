@@ -12,44 +12,41 @@ namespace Kendo.Mvc.Export
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having pdf streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <param name="pdfEportSetting">Optional settings set to the PdfFormatProvider exporting a RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToPdfExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings, PdfExportSettings pdfExportSettings)
+        public static FileStreamResult ToPdfExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings, PdfExportSettings pdfExportSettings)
         {
-            RadFlowDocument htmlDocument = GetHtmlFlowDocument(value, htmlImportSettings);
+            RadFlowDocument htmlDocument = GetHtmlFlowDocument(data.Value, htmlImportSettings);
             var exportProvider = new Telerik.Windows.Documents.Flow.FormatProviders.Pdf.PdfFormatProvider();
             exportProvider.ExportSettings = pdfExportSettings;
             byte[] stream = exportProvider.Export(htmlDocument);
 
             return new FileStreamResult(new MemoryStream(stream), "application/pdf") {
-                FileDownloadName = String.Format("{0}.pdf", fileName)
+                FileDownloadName = String.Format("{0}.pdf", data.FileName)
             };
         }
 
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having pdf streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToPdfExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings)
+        public static FileStreamResult ToPdfExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings)
         {
-            return ToPdfExportResult(value, fileName, htmlImportSettings, new PdfExportSettings());
+            return ToPdfExportResult(data, htmlImportSettings, new PdfExportSettings());
         }
 
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having pdf streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToPdfExportResult(string value, string fileName)
+        public static FileStreamResult ToPdfExportResult(EditorExportData data)
         {
-            return ToPdfExportResult(value, fileName, new HtmlImportSettings(), new PdfExportSettings());
+            return ToPdfExportResult(data, new HtmlImportSettings(), new PdfExportSettings());
         }
     }
 }

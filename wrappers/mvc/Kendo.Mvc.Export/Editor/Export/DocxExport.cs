@@ -12,44 +12,41 @@ namespace Kendo.Mvc.Export
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having docx streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <param name="docxEportSetting">Optional settings set to the DocxFormatProvider exporting a RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToDocxExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings, DocxExportSettings docxExportSettings)
+        public static FileStreamResult ToDocxExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings, DocxExportSettings docxExportSettings)
         {
-            RadFlowDocument htmlDocument = GetHtmlFlowDocument(value, htmlImportSettings);
+            RadFlowDocument htmlDocument = GetHtmlFlowDocument(data.Value, htmlImportSettings);
             var exportProvider = new DocxFormatProvider();
             exportProvider.ExportSettings = docxExportSettings;
             byte[] stream = exportProvider.Export(htmlDocument);
 
             return new FileStreamResult(new MemoryStream(stream), "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-                FileDownloadName = String.Format("{0}.docx", fileName)
+                FileDownloadName = String.Format("{0}.docx", data.FileName)
             };
         }
 
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having docx streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToDocxExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings)
+        public static FileStreamResult ToDocxExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings)
         {
-            return ToDocxExportResult(value, fileName, htmlImportSettings, new DocxExportSettings());
+            return ToDocxExportResult(data, htmlImportSettings, new DocxExportSettings());
         }
 
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having docx streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToDocxExportResult(string value, string fileName)
+        public static FileStreamResult ToDocxExportResult(EditorExportData data)
         {
-            return ToDocxExportResult(value, fileName, new HtmlImportSettings(), new DocxExportSettings());
+            return ToDocxExportResult(data, new HtmlImportSettings(), new DocxExportSettings());
         }
     }
 }

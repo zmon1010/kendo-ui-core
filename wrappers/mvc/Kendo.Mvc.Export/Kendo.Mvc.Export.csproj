@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Editor\Export\EditorDocumentsSettings.cs" />
     <Compile Include="Editor\Export\EditorExportType.cs" />
     <Compile Include="Editor\Export\TxtExport.cs" />
     <Compile Include="Editor\Export\PdfExport.cs" />

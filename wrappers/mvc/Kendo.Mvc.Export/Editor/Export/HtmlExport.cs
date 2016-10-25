@@ -12,44 +12,42 @@ namespace Kendo.Mvc.Export
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having html streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <param name="htmlEportSetting">Optional settings set to the HtmlFormatProvider exporting a RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToHtmlExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings, HtmlExportSettings htmlExportSettings)
+        public static FileStreamResult ToHtmlExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings, HtmlExportSettings htmlExportSettings)
         {
 
-            RadFlowDocument htmlDocument = GetHtmlFlowDocument(value, htmlImportSettings);
+            RadFlowDocument htmlDocument = GetHtmlFlowDocument(data.Value, htmlImportSettings);
             var exportProvider = new HtmlFormatProvider();
             exportProvider.ExportSettings = htmlExportSettings;
             string output = exportProvider.Export(htmlDocument);
             return new FileStreamResult(new MemoryStream(Encoding.UTF8.GetBytes(output)), "text/html")
             {
-                FileDownloadName = String.Format("{0}.html", fileName)
+                FileDownloadName = String.Format("{0}.html", data.FileName)
             };
         }
 
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having html streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToHtmlExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings)
+        public static FileStreamResult ToHtmlExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings)
         {
-            return ToHtmlExportResult(value, fileName, htmlImportSettings, new HtmlExportSettings());
+            return ToHtmlExportResult(data, htmlImportSettings, new HtmlExportSettings());
         }
 
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having html streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToHtmlExportResult(string value, string fileName)
+        public static FileStreamResult ToHtmlExportResult(EditorExportData data)
         {
-            return ToHtmlExportResult(value, fileName, new HtmlImportSettings(), new HtmlExportSettings());
+            return ToHtmlExportResult(data, new HtmlImportSettings(), new HtmlExportSettings());
         }
     }
 }

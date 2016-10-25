@@ -13,45 +13,42 @@ namespace Kendo.Mvc.Export
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having rtf streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <param name="rtfEportSetting">Optional settings set to the RtfFormatProvider exporting a RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToRtfExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings, RtfExportSettings rtfExportSettings)
+        public static FileStreamResult ToRtfExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings, RtfExportSettings rtfExportSettings)
         {
 
-            RadFlowDocument htmlDocument = GetHtmlFlowDocument(value, htmlImportSettings);
+            RadFlowDocument htmlDocument = GetHtmlFlowDocument(data.Value, htmlImportSettings);
             var exportProvider = new RtfFormatProvider();
             exportProvider.ExportSettings = rtfExportSettings;
             string output = exportProvider.Export(htmlDocument);
             return new FileStreamResult(new MemoryStream(Encoding.UTF8.GetBytes(output)), "application/rtf")
             {
-                FileDownloadName = String.Format("{0}.rtf", fileName)
+                FileDownloadName = String.Format("{0}.rtf", data.FileName)
             };
         }
 
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having rtf streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToRtfExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings)
+        public static FileStreamResult ToRtfExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings)
         {
-            return ToRtfExportResult(value, fileName, htmlImportSettings, new RtfExportSettings());
+            return ToRtfExportResult(data, htmlImportSettings, new RtfExportSettings());
         }
 
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having rtf streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToRtfExportResult(string value, string fileName)
+        public static FileStreamResult ToRtfExportResult(EditorExportData data)
         {
-            return ToRtfExportResult(value, fileName, new HtmlImportSettings(), new RtfExportSettings());
+            return ToRtfExportResult(data, new HtmlImportSettings(), new RtfExportSettings());
         }
     }
 }

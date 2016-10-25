@@ -13,25 +13,29 @@ namespace Kendo.Mvc.Export
         /// <summary>
         /// Creates FileStreamResult based on the provided parameters, having txt streem to be sent as response
         /// </summary>
-        /// <param name="value">HTML content</param>
-        /// <param name="fileName">The file name set to the FileStreamResult</param>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
         /// <param name="htmlImportSettings">Optional settings set to the HtmlFormatProvider converting the value to RadFlowDocument</param>
         /// <returns>FileStreamResult</returns>
-        public static FileStreamResult ToTxtExportResult(string value, string fileName, HtmlImportSettings htmlImportSettings)
+        public static FileStreamResult ToTxtExportResult(EditorExportData data, HtmlImportSettings htmlImportSettings)
         {
 
-            RadFlowDocument htmlDocument = GetHtmlFlowDocument(value, htmlImportSettings);
+            RadFlowDocument htmlDocument = GetHtmlFlowDocument(data.Value, htmlImportSettings);
             var exportProvider = new TxtFormatProvider();
             string output = exportProvider.Export(htmlDocument);
             return new FileStreamResult(new MemoryStream(Encoding.UTF8.GetBytes(output)), "text/plain")
             {
-                FileDownloadName = String.Format("{0}.txt", fileName)
+                FileDownloadName = String.Format("{0}.txt", data.FileName)
             };
         }
 
-        public static FileStreamResult ToTxtExportResult(string value, string fileName)
+        /// <summary>
+        /// Creates FileStreamResult based on the provided parameters, having txt streem to be sent as response
+        /// </summary>
+        /// <param name="data">Data containing the exported HTML content and the file name set to the FileStreamResult return value</param>
+        /// <returns>FileStreamResult</returns>
+        public static FileStreamResult ToTxtExportResult(EditorExportData data)
         {
-            return ToTxtExportResult(value, fileName, new HtmlImportSettings());
+            return ToTxtExportResult(data, new HtmlImportSettings());
         }
     }
 }
