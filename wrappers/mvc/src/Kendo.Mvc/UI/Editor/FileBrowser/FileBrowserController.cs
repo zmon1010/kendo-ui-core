@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI
         }
 
         protected virtual bool CanAccess(string path)
-        {            
+        {
             return permission.CanAccess(pathProvider.ToAbsolute(ContentPath), path);
         }
 
@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI
             {
                 return pathProvider.ToAbsolute(ContentPath);
             }
-            
+
             return pathProvider.CombinePaths(pathProvider.ToAbsolute(ContentPath), path);
         }
 
@@ -116,8 +116,8 @@ namespace Kendo.Mvc.UI
                 if (entry.EntryType == FileBrowserEntryType.File)
                 {
                     DeleteFile(path);
-                } 
-                else 
+                }
+                else
                 {
                     DeleteDirectory(path);
                 }
@@ -145,40 +145,40 @@ namespace Kendo.Mvc.UI
         public virtual bool AuthorizeDeleteDirectory(string path)
         {
             return CanAccess(path);
-        } 
+        }
 
-        protected virtual void DeleteFile(string path) 
+        protected virtual void DeleteFile(string path)
         {
             if (!AuthorizeDeleteFile(path))
             {
                 throw new HttpException(403, "Forbidden");
-            } 
+            }
 
             var physicalPath = Server.MapPath(path);
 
             if (System.IO.File.Exists(physicalPath))
             {
                 System.IO.File.Delete(physicalPath);
-            }           
+            }
         }
 
-        protected virtual void DeleteDirectory(string path) 
+        protected virtual void DeleteDirectory(string path)
         {
             if (!AuthorizeDeleteDirectory(path))
             {
                 throw new HttpException(403, "Forbidden");
-            } 
+            }
 
             var physicalPath = Server.MapPath(path);
 
             if (Directory.Exists(physicalPath))
             {
                 Directory.Delete(physicalPath, true);
-            }             
+            }
         }
 
         /// <summary>
-        /// Determines if a folder can be created. 
+        /// Determines if a folder can be created.
         /// </summary>
         /// <param name="path">The path to the parent folder in which the folder should be created.</param>
         /// <param name="name">Name of the folder.</param>
@@ -260,6 +260,6 @@ namespace Kendo.Mvc.UI
             }
 
             throw new HttpException(403, "Forbidden");
-        }    
+        }
     }
 }

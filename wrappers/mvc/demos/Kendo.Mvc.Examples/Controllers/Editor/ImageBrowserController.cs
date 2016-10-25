@@ -7,7 +7,7 @@ namespace Kendo.Mvc.Examples.Controllers
     public class ImageBrowserController : EditorImageBrowserController
     {
         private const string contentFolderRoot = "~/Content/";
-        private const string prettyName = "Images/";        
+        private const string prettyName = "Images/";
         private static readonly string[] foldersToCopy = new[] { "~/Content/shared/" };
 
 
@@ -20,10 +20,10 @@ namespace Kendo.Mvc.Examples.Controllers
             {
                 return CreateUserFolder();
             }
-        }        
+        }
 
         private string CreateUserFolder()
-        {            
+        {
             var virtualPath = Path.Combine(contentFolderRoot, "UserFiles", prettyName);
 
             var path = Server.MapPath(virtualPath);

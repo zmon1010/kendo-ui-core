@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
         {
             var directory = new DirectoryInfo(Server.MapPath(path));
 
-            var extensions = (filter ?? "*").Split(",|;".ToCharArray(), System.StringSplitOptions.RemoveEmptyEntries);
+            var extensions = (filter ?? "*").Split(new string[] { ", ", ",", "; ", ";" }, System.StringSplitOptions.RemoveEmptyEntries);
 
             return extensions.SelectMany(directory.GetFiles)
                 .Select(file => new FileBrowserEntry
@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI
             var directory = new DirectoryInfo(Server.MapPath(path));
 
             return directory.GetDirectories()
-                .Select(subDirectory => new FileBrowserEntry { 
+                .Select(subDirectory => new FileBrowserEntry {
                     Name = subDirectory.Name,
                     EntryType = FileBrowserEntryType.Directory
                 });
@@ -37,6 +37,6 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
-        }     
+        }
     }
 }
