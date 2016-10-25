@@ -243,12 +243,12 @@ end
 desc('JavaScript')
 
 task :js do
-  gulp :scripts, '--license-pad'
+  #gulp :scripts, '--license-pad'
 end
 
 desc "Build less files in dist/styles"
 task :less do
-  gulp :styles, '--license-pad'
+  #gulp :styles, '--license-pad'
 end
 
 desc('Build all Kendo UI distributions')
@@ -637,8 +637,8 @@ bundle :name => 'aspnet.core.internal.commercial-source',
                                               .exclude('**/*.user'),
        },
        :prerequisites => [
-           'dist/bundles/aspnet.core.internal.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
-           'dist/bundles/aspnet.core.internal.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
+           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
        ]
 
 bundle :name => 'aspnetmvc.hotfix.commercial',
