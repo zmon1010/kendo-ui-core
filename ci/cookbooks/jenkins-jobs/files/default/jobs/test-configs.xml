@@ -1,12 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Build for the execution of functional tests with WebDriverIO.</description>
+  <description>Checks for missing configs</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.8">
-      <projectUrl>https://github.com/jivanova/wdioKendo.git/</projectUrl>
-    </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.7">
       <teamDomain></teamDomain>
       <token></token>
@@ -26,10 +23,14 @@
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>master</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H * * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -37,15 +38,15 @@
 
 set +e
 cd ../../
-
+FLAG=0
 for dir in */ ; do
     CONFIG=&quot;config.xml&quot;
     if [ ! -f $dir$CONFIG ]; then
         echo &quot;File not found! $dir&quot;
-        exit 1
+        FLAG=1
     fi
 done
-exit 0
+exit $FLAG
 </command>
     </hudson.tasks.Shell>
   </builders>

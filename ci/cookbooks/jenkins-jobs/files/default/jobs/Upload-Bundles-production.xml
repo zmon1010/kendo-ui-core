@@ -21,7 +21,8 @@
     </jenkins.plugins.slack.SlackNotifier_-SlackJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <canRoam>true</canRoam>
+  <assignedNode>master</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
@@ -31,7 +32,7 @@
     <org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration plugin="Parameterized-Remote-Trigger@2.1.3">
       <token></token>
       <remoteJenkinsName>VSX_Jenkins</remoteJenkinsName>
-      <job>Kendo_Upload_Production</job>
+      <job>Upload_Kendo_Production</job>
       <shouldNotFailBuild>false</shouldNotFailBuild>
       <pollInterval>10</pollInterval>
       <connectionRetryLimit>5</connectionRetryLimit>

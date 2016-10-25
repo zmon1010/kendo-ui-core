@@ -56,7 +56,8 @@
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
-  <canRoam>true</canRoam>
+  <assignedNode>master</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
@@ -65,6 +66,9 @@
   <builders>
     <hudson.tasks.Shell>
       <command>DOCS_BRANCH=production ./build/run-build-task cdn:deploy</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>git clean -xdf .</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

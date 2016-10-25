@@ -102,7 +102,7 @@
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>CI-Multiple-jQuery,CI-Firefox</childProjects>
+      <childProjects>CI-jQuery-2_old,CI-Firefox,CI-jQuery-3</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

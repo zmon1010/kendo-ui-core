@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Deploy the react/angular docs to staging server</description>
+  <description>Deploy the react/angular docs to &lt;a href=&quot;/ui-for-angular/&quot;&gt;staging server&lt;/a&gt;</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>7</daysToKeep>
     <numToKeep>20</numToKeep>
@@ -51,12 +51,16 @@
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
     </extensions>
   </scm>
-  <assignedNode>master</assignedNode>
+  <assignedNode>slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec># Once every two hours every weekday
+H 8-20/2 * * 1-5</spec>
+    </hudson.triggers.TimerTrigger>
     <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.8">
       <spec></spec>
     </com.cloudbees.jenkins.GitHubPushTrigger>
@@ -64,15 +68,18 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>ruby2.2 /usr/local/bin/bundle --without development --path ~/gems2.2
+      <command>#ruby2.2 /usr/local/bin/bundle --without development --path ~/gems2.2
+
+export GEM_PATH=$HOME/gems2.2
+ruby2.2 /usr/local/bin/bundle --without development --path ~/gems2.2
 
 # build angular docs
 ruby2.2 /usr/local/bin/bundle exec jekyll build --config _config.yml,_staging-angular.yml --destination _site-angular
-rsync -avc --delete _site-angular/ /var/www/ui-for-angular
+rsync -avc --delete _site-angular/ kendobuild.telerik.com:/var/www/ui-for-angular
 
 # build react docs
-ruby2.2 /usr/local/bin/bundle exec jekyll build --config _react.yml,_staging-react.yml --destination _site-react
-rsync -avc --delete _site-react/ /var/www/ui-for-react
+# ruby2.2 /usr/local/bin/bundle exec jekyll build --config _react.yml,_staging-react.yml --destination _site-react
+# rsync -avc --delete _site-react/ /var/www/ui-for-react
 
 </command>
     </hudson.tasks.Shell>

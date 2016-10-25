@@ -98,7 +98,11 @@ H 6,12 * * 1-5</spec>
       <command>BETA=true DOCS_BRANCH=master ./build/run-build-task build:master:bundles</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>git reset --hard</command>
+      <command>git reset --hard
+git clean -xdf .</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>git clean -xdf</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

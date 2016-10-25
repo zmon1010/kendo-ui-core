@@ -63,7 +63,7 @@
         <port>22</port>
         <credentialsId>5c87bc89-008e-409a-bae7-85d270f6681b</credentialsId>
       </launcher>
-      <label>slave</label>
+      <label>slave slavewithnetwork</label>
       <nodeProperties/>
       <userId>anonymous</userId>
     </slave>
@@ -86,8 +86,10 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>aot-test</string>
         <string>qa-staging</string>
         <string>selenium2-no-timeout</string>
+        <string>test-configs</string>
         <string>wdio-e2e</string>
       </jobNames>
       <jobFilters/>
@@ -120,6 +122,7 @@
         <string>CI-Download-Builder</string>
         <string>CI-Download-Builder-production</string>
         <string>CI-Firefox</string>
+        <string>CI-jQuery-2</string>
         <string>CI-jQuery-3</string>
         <string>CI-Multiple-jQuery</string>
         <string>CI-Production</string>
@@ -198,8 +201,10 @@
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[4]/jobNames/comparator"/>
         <string>ASP.NET-MVC-Binaries</string>
         <string>ASP.NET-MVC-Binaries-production</string>
+        <string>ASP.NET-MVC-Core-Demos</string>
         <string>Bundles</string>
         <string>Bundles-production</string>
+        <string>New-bundling-test</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -224,6 +229,7 @@
         <string>Staging-Demos</string>
         <string>Staging-Demos-production</string>
         <string>Staging-Docs</string>
+        <string>Staging-Docs-MVC-Core</string>
         <string>Staging-Docs-Test</string>
         <string>Staging-Dojo</string>
       </jobNames>
@@ -250,6 +256,7 @@
         <string>Upload-Docs-Production</string>
         <string>Upload-docs-production-old</string>
         <string>Upload-Dojo-production</string>
+        <string>Upload-K2-Docs-Production</string>
       </jobNames>
       <jobFilters/>
       <columns>

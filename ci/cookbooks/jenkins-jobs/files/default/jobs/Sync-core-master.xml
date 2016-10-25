@@ -41,7 +41,7 @@
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.LocalBranch>
-        <localBranch>remotes/core/core-master</localBranch>
+        <localBranch>master</localBranch>
       </hudson.plugins.git.extensions.impl.LocalBranch>
     </extensions>
   </scm>
@@ -58,6 +58,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
+      <command>git remote add core git@github.com:telerik/kendo-ui-core.git || true
+git checkout remotes/core/core-master</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
       <command>#!/bin/bash
 
 export ORIGIN=git@github.com:telerik/kendo.git
@@ -67,6 +71,7 @@ if [ $(git remote | wc -l) -ne 2 ]; then
     git remote add origin $ORIGIN
     INITIAL=true
 fi
+
 
 git fetch origin +refs/heads/master:private-master &amp;&gt;/dev/null
 

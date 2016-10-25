@@ -62,7 +62,7 @@ H 1 * * 1-5</spec>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>BRANCH=master ./build/check-links http://kendobuild.telerik.com/kendo-ui/introduction</command>
+      <command>BRANCH=master ./build/check-links http://kendobuild.telerik.com/kendo-ui/introduction 3</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
