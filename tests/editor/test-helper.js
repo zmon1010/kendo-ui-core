@@ -20,6 +20,7 @@ function editor_module(name, options, editorOptions) {
     QUnit.moduleDone(function(details) {
         if (details.name == name) {
             $("#editor-fixture").kendoEditor("destroy").closest(".k-editor").remove();
+            $(".k-popup").remove();
             // debug for editor leftovers
             // console.log(name, $(document.body).children(":not(script,#editor-fixture)").length);
             QUnit.suppressCleanupCheck = false;

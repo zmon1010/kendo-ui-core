@@ -2,11 +2,11 @@
     var DataSource = kendo.data.DataSource,
         MultiCheck = kendo.ui.FilterMultiCheck,
         dom,
-        async,
         dataSource;
 
     module("kendo.ui.FilterMultiCheck", {
         setup: function() {
+            jasmine.clock().install();
             kendo.effects.disable();
             kendo.ns = "kendo-";
             dataSource = function (options) {
@@ -39,14 +39,7 @@
                                         { foo: "some other", bar: 33, baz: kendo.parseDate("11/11/11", "dd/MM/yy"), boo: false }
                                         ].slice(0, e.data.pageSize)
                                     };
-                            if (async == true) {
-                                setTimeout(function() {
-                                        e.success(data)
-                                }, 200);
-                            }
-                            else {
-                                e.success(data)
-                            }
+                            e.success(data)
                         }
                     }
                 }, options));
@@ -56,11 +49,11 @@
         },
 
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.effects.enable();
             kendo.destroy(QUnit.fixture);
             QUnit.fixture.empty();
             kendo.ns = "";
-            async = false;
         }
     });
 
@@ -68,24 +61,22 @@
         var menu = new MultiCheck(dom, options);
         if (init !== false) {
             menu._init();
+            jasmine.clock().tick();
         }
         return menu;
     }
 
-    asyncTest("renders checkboxes with corresponding values", 5, function() {
-        async = true;
+    test("renders checkboxes with corresponding values", 5, function() {
         var menu = setup({
             dataSource: dataSource()
         });
-        menu.one("refresh" , function () {
-            var chkbxs = menu.container.find(":checkbox:not(.k-check-all)");
-            equal(chkbxs.length, 2);
-            equal(chkbxs.eq(0).val(), "some string");
-            equal(chkbxs.eq(1).val(), "some other");
-            equal(chkbxs.eq(0).closest("label").text(), "some string");
-            equal(chkbxs.eq(1).closest("label").text(), "some other");
-            start();
-        })
+
+        var chkbxs = menu.container.find(":checkbox:not(.k-check-all)");
+        equal(chkbxs.length, 2);
+        equal(chkbxs.eq(0).val(), "some string");
+        equal(chkbxs.eq(1).val(), "some other");
+        equal(chkbxs.eq(0).closest("label").text(), "some string");
+        equal(chkbxs.eq(1).closest("label").text(), "some other");
     });
 
     test("renders checkboxes with corresponding values when providing initial data", function() {
@@ -441,6 +432,7 @@
         equal(chkbxs.eq(0).closest("label").text(), "some string");
 
         ds.pushUpdate({id:0, foo: "new string" });
+        jasmine.clock().tick();
 
         chkbxs = widget.container.find(":checkbox:not(.k-check-all)");
         equal(chkbxs.length, 1);
