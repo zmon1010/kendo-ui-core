@@ -139,19 +139,19 @@ Telerik UI for ASP.NET MVC is a set of server-side wrappers. A server-wrapper do
 - Allows the developer to configure a Kendo UI widget via C# or VB.NET code&mdash;set its value, data source, etc.
 - Renders the HTML and JavaScript needed to initialize the Kendo UI widget. The widget options propagate to the client side via the widget initialization script.
 
-![Server-side wrapper outputs HTML and JavaScript](images/chapter2/wrapper-output.png)
+![Server-side wrapper outputs HTML and JavaScript](/images/wrapper-output.png)
 
 #### Configuration
 
 The Kendo UI HtmlHelper exposes all Kendo UI server wrappers.
 
-![Kendo HtmlHelper extension method](images/chapter2/kendo-extension.png)
+![Kendo HtmlHelper extension method](/images/kendo-extension.png)
 
 #### Widget Options
 
 The widget options are exposed via a fluent interface.
 
-![Fluent interface](images/chapter2/fluent-interface.png)
+![Fluent interface](/images/fluent-interface.png)
 
 Below is an example of how a NumericTextBox input is created.
 

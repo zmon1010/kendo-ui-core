@@ -20,7 +20,7 @@ A server-side wrapper:
 
 **Figure 1. Server-side wrapper HTML and JavaScript output**
 
-![Server-side wrapper outputs HTML and JavaScript](/aspnet-mvc/images/wrapper-output.png)
+![Server-side wrapper outputs HTML and JavaScript](/images/wrapper-output.png)
 
 ## Configuration
 
@@ -30,7 +30,7 @@ The Kendo UI [HtmlHelper](http://www.asp.net/mvc/overview/older-versions-1/views
 
 **Figure 2. Kendo UI HtmlHelper extension method**
 
-![Kendo HtmlHelper extension method](/aspnet-mvc/images/kendo-extension.png)
+![Kendo HtmlHelper extension method](/images/kendo-extension.png)
 
 ### Widget Options
 
@@ -38,7 +38,7 @@ The widget options are exposed via [fluent interface](https://en.wikipedia.org/w
 
 **Figure 3. Application of fluent interface**
 
-![Fluent interface](/aspnet-mvc/images/fluent-interface.png)
+![Fluent interface](/images/fluent-interface.png)
 
 To set an option, call the corresponding method and pass the required option value.
 
@@ -58,7 +58,7 @@ IDs (Names) of widgets should meet the requirements for valid HTML `ID` attribut
 
 **Figure 4. An example of a server-side wrapper name**
 
-![Wrapper name](/aspnet-mvc/images/wrapper-name.png)
+![Wrapper name](/images/wrapper-name.png)
 
 Alternatively, use `NumericTextBoxFor`. All Kendo UI server-side wrappers which accept a value can be initialized via a `[WidgetName]For` method. For example, `DatePicker` > `DatePickerFor`. These methods set the `Name` of the server-side wrapper automatically. Thus, `@Html.Kendo().NumericTextBoxFor(model => model.Age)` is the same as `@Html.Kendo().NumericTextBox().Name("Age").Value(Model.Age)`.
 
