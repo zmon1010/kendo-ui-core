@@ -72,7 +72,8 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/',
     'wrappers/aspnetmvc/Binaries/Mvc4' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Binaries/Mvc5' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/',
-    'wrappers/aspnetmvc/Binaries/AspNet.Core' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
+    'wrappers/AspNet.Core/Binaries/AspNet.Core' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
+    'wrappers/AspNet.Core/EditorTemplates/razor' => 'wrappers/mvc/demos/Kendo.Mvc.Examples/Views/Shared/EditorTemplates/',
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
     'spreadsheet/' => 'dpl/',
@@ -174,11 +175,11 @@ MVC_BINARIES = {
 }
 
 MVC_CORE_BINARIES_COMMERCIAL = {
-    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_COMMERCIAL
+    'wrappers/AspNet.Core/Binaries/AspNet.Core' => MVC6_REDIST_COMMERCIAL
 }
 
 MVC_CORE_BINARIES_TRIAL = {
-    'wrappers/aspnetmvc/Binaries/AspNet.Core' => MVC6_REDIST_TRIAL
+    'wrappers/AspNet.Core/Binaries/AspNet.Core' => MVC6_REDIST_TRIAL
 }
 
 MVC_CONTENT = {
@@ -208,13 +209,13 @@ MVC_CONTENT = {
 end
 
 ROOT_MAP.merge!( {
-    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
-    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
+    "wrappers/AspNet.Core/Examples/AspNet.Core/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
+    "wrappers/AspNet.Core/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
 } )
 
 MVC_CORE_CONTENT = {
-    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples" => MVC_6_DEMOS,
-    "wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
+    "wrappers/AspNet.Core/Examples/AspNet.Core/Kendo.Mvc.Examples" => MVC_6_DEMOS,
+    "wrappers/AspNet.Core/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
 }
 
 JSP_CONTENT = {
@@ -384,12 +385,13 @@ bundle :name => 'aspnet.core.trial',
        :contents => {
            'js' => TRIAL_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
            'styles' => MIN_CSS_RESOURCES,
+           'wrappers/AspNet.Core/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_TRIAL),
        :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps_trial', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
-           'dist/bundles/aspnet.core.trial/wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples',
-           'dist/bundles/aspnet.core.trial/wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared'
+           'dist/bundles/aspnet.core.trial/wrappers/AspNet.Core/Examples/AspNet.Core/Kendo.Mvc.Examples',
+           'dist/bundles/aspnet.core.trial/wrappers/AspNet.Core/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared'
        ]
 
 bundle :name => 'aspnetmvc.hotfix.trial',
@@ -426,8 +428,7 @@ bundle :name => 'aspnet.core.hotfix.trial',
        :contents => {
            'js' => TRIAL_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
            'styles' => MIN_CSS_RESOURCES,
-           'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
-           'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
+           'wrappers/AspNet.Core/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_TRIAL),
        :post_build => ['mvc:copy_trials', 'spreadsheet:copy_trials'],
        :prerequisites => [
@@ -490,13 +491,14 @@ bundle :name => 'aspnet.core.commercial',
        :contents => {
            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
            'styles' => MIN_CSS_RESOURCES,
+           'wrappers/AspNet.Core/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
        :post_build => 'mvc_6:update_demo_deps_commercial',
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
-           'dist/bundles/aspnet.core.commercial/wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples',
-           'dist/bundles/aspnet.core.commercial/wrappers/aspnetmvc/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared'
+           'dist/bundles/aspnet.core.commercial/wrappers/AspNet.Core/Examples/AspNet.Core/Kendo.Mvc.Examples',
+           'dist/bundles/aspnet.core.commercial/wrappers/AspNet.Core/Examples/AspNet.Core/Kendo.Mvc.Examples/wwwroot/shared'
        ]
 
 bundle :name => 'aspnetmvc.commercial-source',
@@ -546,8 +548,8 @@ bundle :name => 'aspnet.core.commercial-source',
                                               .exclude('**/*.user'),
        },
        :prerequisites => [
-           'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
-           'dist/bundles/aspnetmvc.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk'
+           'dist/bundles/aspnet.core.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
+           'dist/bundles/aspnet.core.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk'
        ]
 
 bundle :name => 'aspnetmvc.internal.commercial',
@@ -583,8 +585,7 @@ bundle :name => 'aspnet.core.internal.commercial',
        :contents => {
            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
            'styles' => MIN_CSS_RESOURCES,
-           'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
-           'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
+           'wrappers/AspNet.Core/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
        :prerequisites => [
            'mvc:assets',
@@ -636,8 +637,8 @@ bundle :name => 'aspnet.core.internal.commercial-source',
                                               .exclude('**/*.user'),
        },
        :prerequisites => [
-           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
-           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
+           'dist/bundles/aspnet.core.internal.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
+           'dist/bundles/aspnet.core.internal.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
        ]
 
 bundle :name => 'aspnetmvc.hotfix.commercial',
@@ -674,8 +675,7 @@ bundle :name => 'aspnet.core.hotfix.commercial',
        :contents => {
            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
            'styles' => MIN_CSS_RESOURCES,
-           'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
-           'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
+           'wrappers/AspNet.Core/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
        :prerequisites => [
            'mvc:assets',
