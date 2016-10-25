@@ -1,7 +1,7 @@
 #!/bin/bash
-SYNC='rsync -rvcz --delete --inplace'
-DEST='/usr/share/nginx/html/$2'
-USER='nginx'
+SYNC="rsync -rvcz --delete --inplace"
+DEST="/usr/share/nginx/html/$2/"
+USER="nginx"
 declare -a HOSTS=("ordkendowww01.telerik.local" "ordkendowww02.telerik.local")
 
 function log {
