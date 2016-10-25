@@ -46,9 +46,13 @@
     }
 
     function onSelect(e) {
-        if ("kendoConsole" in window) {
-            var dataItem = this.dataItem(e.item.index());
-            kendoConsole.log("event :: select (" + dataItem.Text + " : " + dataItem.Value + ")" );
+    	if ("kendoConsole" in window) {
+    		if (e.item) {
+    			var dataItem = this.dataItem(e.item.index());
+    			kendoConsole.log("event :: select (" + dataItem.Text + " : " + dataItem.Value + ")");
+    		} else {
+    			kendoConsole.log("event :: select");
+    		}
         }
     }
 
