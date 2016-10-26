@@ -1,4 +1,17 @@
-<div class="demo-section">
+<div class="demo-section wide">
+    <div class="dairy-description">
+        <h2>
+            Dairy Products
+        </h2>
+        <p>
+            Queso Cabrales, Queso Manchego La Pastora, Gorgonzola Telino, Mascarpone Fabioli,
+            Geitost, Raclette Courdavault, Camembert Pierrott, Gudbrandsdalsost, Flotemysost,
+            Mozzarella di Giovanni
+        </p>
+        <p class="demo-hint">
+            Hover an image for details.
+        </p>
+    </div>
     <ul id="products" class="dairy-photos">
         <li><a href="#" data-id="11">
             <img src="@Url.Content("~/shared/web/foods/11.jpg")" /></a> </li>
@@ -19,16 +32,6 @@
         <li><a href="#" data-id="72">
             <img src="@Url.Content("~/shared/web/foods/72.jpg")" /></a> </li>
     </ul>
-    <div class="dairy-description">
-        <h2>
-            Dairy Products</h2>
-        <p>
-            Queso Cabrales, Queso Manchego La Pastora, Gorgonzola Telino, Mascarpone Fabioli,
-            Geitost, Raclette Courdavault, Camembert Pierrott, Gudbrandsdalsost, Flotemysost,
-            Mozzarella di Giovanni</p>
-        <p>
-            Hover an image for details.</p>
-    </div>
 </div>
 @(Html.Kendo().Tooltip()
     .For("#products")
@@ -47,17 +50,10 @@
     }
 </script>
 <style>
-    .demo-section
-    {
-        height: 460px;
-    }
     .dairy-photos
     {
-        float: left;
         list-style-type: none;
-        margin: 60px 0 0 60px;
         padding: 0;
-        width: 430px;
         line-height: 0;
     }
     .dairy-photos li
@@ -85,12 +81,6 @@
     .dairy-photos a
     {
         display: inline-block;
-    }
-    .dairy-description
-    {
-        float: right;
-        width: 250px;
-        margin: 80px 60px 0 0;
     }
     .dairy-description h2
     {
