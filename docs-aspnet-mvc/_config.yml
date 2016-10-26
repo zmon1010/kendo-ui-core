@@ -6,6 +6,9 @@ exclude: [readme.md, Gemfile, Gemfile.lock,api_sort.rb,SlugLog.log]
 navigation:
 ## List your directory names and order here, like this:
 
+     "api":
+        title: "API Reference"
+        position: 0
      "getting-started":
         title: "Getting Started"
         position: 5
@@ -27,9 +30,6 @@ navigation:
      "troubleshoot":
         title: "Troubleshooting"
         position: 90
-     "api":
-        title: "API Reference"
-        position: 150
 
 
 ## The application virtual path
