@@ -22,19 +22,19 @@ Below are listed the steps for you to follow when configuring the Kendo UI TreeL
 
 **Figure 1. A new entity model**
 
-![New entity data model](/aspnet-mvc/helpers/treelist/images/treelist-new-entity-data-model.png)
+![New entity data model](/helpers/treelist/images/treelist-new-entity-data-model.png)
 
 **Step 3**  Pick the **Generate from database** option and click **Next**. Configure a connection to the Northwind database. Click **Next**.
 
 **Figure 2. Choose the connection**
 
-![Choose the connection](/aspnet-mvc/helpers/treelist/images/treelist-entity-data-model.png)
+![Choose the connection](/helpers/treelist/images/treelist-entity-data-model.png)
 
 **Step 4** Choose the **Employees** table from the `Which database objects do you want to include in your model?`. Leave all other options as they are set by default. Click **Finish**.
 
 **Figure 3. Choose the Employees table**
 
-![Choose the Employees table](/aspnet-mvc/helpers/treelist/images/treelist-database-objects.png)
+![Choose the Employees table](/helpers/treelist/images/treelist-database-objects.png)
 
 **Step 5** Right-click the `~/Models` folder in the solution explorer and add a new `EmployeeViewModel` class.
 
@@ -131,7 +131,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI TreeL
 
 **Figure 4. The final result**
 
-![Final result](/aspnet-mvc/helpers/treelist/images/treelist-bound.png)
+![Final result](/helpers/treelist/images/treelist-bound.png)
 
 ## Event Handling
 

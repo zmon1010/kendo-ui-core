@@ -33,13 +33,13 @@ Below are listed the steps for you to follow when configuring the Kendo UI TreeV
 
 **Figure 1. A new entity model**
 
-![New entity data model](/aspnet-mvc/helpers/treeview/images/tree-entity-data-model.png)
+![New entity data model](/helpers/treeview/images/tree-entity-data-model.png)
 
 **Step 2** Select the **Employees** table and click **Finish**.
 
 **Figure 2. Choose the Employees table**
 
-![Choose the Employees table](/aspnet-mvc/helpers/treeview/images/tree-employees-table.png)
+![Choose the Employees table](/helpers/treeview/images/tree-employees-table.png)
 
 ### Configure the New Action Method
 
@@ -118,7 +118,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI TreeV
 
 **Figure 3. The final result**
 
-![Final result](/aspnet-mvc/helpers/treeview/images/tree-employees.png)
+![Final result](/helpers/treeview/images/tree-employees.png)
 
 ## See Also
 

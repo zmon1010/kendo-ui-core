@@ -27,19 +27,19 @@ Below are the steps for you to follow when configuring the Kendo UI Grid for ASP
 
 **Figure 1. A new entity data model**
 
-![New entity data model](/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png)
+![New entity data model](/helpers/grid/images/grid-entity-data-model.png)
 
 **Step 3** Select **Generate from database** and click **Next**. Configure a connection to the **Northwind** database. Click **Next**.
 
 **Figure 2. Choosing a connection**
 
-![Choose the connection](/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png)
+![Choose the connection](/helpers/grid/images/grid-entity-data-model.png)
 
 **Step 4** Choose the **Products** table from **Which database objects do you want to include in your model?**. Leave all other options as they are set by default. Click **Finish**.
 
 **Figure 3. Choosing the Products table**
 
-![Choose the Products table](/aspnet-mvc/helpers/grid/images/grid-database-objects.png)
+![Choose the Products table](/helpers/grid/images/grid-database-objects.png)
 
 **Step 5** Open `HomeController.cs` and edit the `Index` action method.
 
@@ -132,7 +132,7 @@ Below are the steps for you to follow when configuring the Kendo UI Grid for ASP
 
 **Figure 4. Choosing the Products table**
 
-![Server detail template](/aspnet-mvc/helpers/grid/images/grid-detail-template.png)
+![Server detail template](/helpers/grid/images/grid-detail-template.png)
 
 To download the Visual Studio Project, refer to [this GitHub repository](https://github.com/telerik/ui-for-aspnet-mvc-examples/tree/master/grid/server-detail-template).
 
@@ -146,13 +146,13 @@ Below are listed the steps for you to follow when configuring the Kendo UI Grid 
 
 **Figure 1. A new entity data model**
 
-![New entity data model](/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png)
+![New entity data model](/helpers/grid/images/grid-entity-data-model.png)
 
 **Step 3** Select **Generate from database** and click **Next**. Configure a connection to the **Northwind** database. Click **Next**.
 
 **Figure 2. Choosing the connection**
 
-![Choose the connection](/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png)
+![Choose the connection](/helpers/grid/images/grid-entity-data-model.png)
 
 **Step 4** Choose the **Products** and **Categories** tables from the **Which database objects do you want to include in your model?**. Leave all other options as they are set by default. Click **Finish**.
 
@@ -253,7 +253,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI Grid 
 
 **Figure 3. The final result**
 
-![Server hierarchy](/aspnet-mvc/helpers/grid/images/grid-hierarchy.png)
+![Server hierarchy](/helpers/grid/images/grid-hierarchy.png)
 
 ## See Also
 

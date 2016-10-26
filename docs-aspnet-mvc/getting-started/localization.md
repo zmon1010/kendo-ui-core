@@ -56,7 +56,7 @@ Below are listed the steps for you to follow when willing to change the provided
 
 **Figure 1. The `Resources` directory when changing localization messages**
 
-![Resources](/aspnet-mvc/images/resources.png)
+![Resources](/images/resources.png)
 
 **Step 3** Open the resource file which corresponds to the target culture, e.g. `Messages.es-ES.resx`.
 
@@ -105,7 +105,7 @@ Below are listed the steps for you to follow when you want to add new localizati
 
 **Figure 2. The `Resources` directory when adding new cultures**
 
-![Resources](/aspnet-mvc/images/resources.png)
+![Resources](/images/resources.png)
 
 **Step 3** Copy `Messages.resx` and paste it. Rename the copy to `Messages.culture-code.resx`, e.g. `Messages.es-MX.resx`.
 

@@ -23,19 +23,19 @@ Below are listed the steps for you to follow when configuring the Kendo UI Grid 
 
 **Figure 1. A new entity data model**
 
-![New entity data model](/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png)
+![New entity data model](/helpers/grid/images/grid-entity-data-model.png)
 
 **Step 3** Pick the **Generate from database** option and click **Next**. Configure a connection to the Northwind database. Click **Next**.
 
 **Figure 2. Choose the connection**
 
-![Choose the connection](/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png)
+![Choose the connection](/helpers/grid/images/grid-entity-data-model.png)
 
 **Step 4** Choose the **Products** table from the **Which database objects do you want to include in your model?**. Leave all other options as they are set by default. Click **Finish**.
 
 **Figure 3. Choose the Products table**
 
-![Choose the Products table](/aspnet-mvc/helpers/grid/images/grid-database-objects.png)
+![Choose the Products table](/helpers/grid/images/grid-database-objects.png)
 
 **Step 5** Add a new class to the `~/Models` folder. Name it `ProductViewModel`.
 
@@ -228,7 +228,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI Grid 
 
 **Figure 4. The final result**
 
-![Final result](/aspnet-mvc/helpers/grid/images/grid-inline-grid.png)
+![Final result](/helpers/grid/images/grid-inline-grid.png)
 
 To download the Visual Studio Project, refer to [this GitHub repository](https://github.com/telerik/ui-for-aspnet-mvc-examples/tree/master/grid/ajax-editing).
 

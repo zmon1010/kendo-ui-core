@@ -97,7 +97,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI Pivot
 
 **Figure 1. The finished application**
 
-![Final result](/aspnet-mvc/helpers/pivotgrid/images/pivotgrid.png)
+![Final result](/helpers/pivotgrid/images/pivotgrid.png)
 
 ## See Also
 

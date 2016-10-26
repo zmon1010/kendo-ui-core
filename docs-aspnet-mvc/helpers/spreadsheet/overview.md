@@ -159,7 +159,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI Sprea
 
 **Figure 1. The final result**
 
-![Final result](/aspnet-mvc/helpers/spreadsheet/images/spreadsheet-inline.png)
+![Final result](/helpers/spreadsheet/images/spreadsheet-inline.png)
 
 ## Event Handling
 

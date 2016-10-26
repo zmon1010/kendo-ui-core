@@ -22,7 +22,7 @@ The example below demonstrates how to display HTML entities in Grid columns.
 
 ### How to Customize the Way Properties Are Displayed in Grid-Bound Columns?
 
-If the Grid is [server-bound](/aspnet-mvc/helpers/grid/server-binding), use the `Template` method.
+If the Grid is [server-bound](/helpers/grid/server-binding), use the `Template` method.
 
 The example below demonstrates how to customize the column appearance of a server-bound Grid.
 

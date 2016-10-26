@@ -99,7 +99,7 @@ Below are the steps for you to follow when running the sample application.
 
 **Figure 1 The start-up screen of the sample application**
 
-![Telerik UI for ASP.NET MVC Sample Application](/aspnet-mvc/images/demos.png)
+![Telerik UI for ASP.NET MVC Sample Application](/images/demos.png)
 
 ### Contents
 

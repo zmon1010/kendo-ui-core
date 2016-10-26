@@ -23,7 +23,7 @@ Below are listed the steps for you to follow when implementing the CRUD data ope
 
 **Figure 1. A new entity data model**
 
-![New entity data model](/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png)
+![New entity data model](/helpers/grid/images/grid-entity-data-model.png)
 
 **Step 3** Select **Generate from database** and click **Next**. Configure a connection to the Northwind database. Click **Next**.
 
@@ -31,7 +31,7 @@ Below are listed the steps for you to follow when implementing the CRUD data ope
 
 **Figure 2. Choosing the connection**
 
-![Choose the Products table](/aspnet-mvc/helpers/grid/images/grid-database-objects.png)
+![Choose the Products table](/helpers/grid/images/grid-database-objects.png)
 
 **Step 4** Right click the `Controllers` folder in Visual Studio solution explorer. Select **Add** > **Controller**.
 
@@ -39,7 +39,7 @@ Below are listed the steps for you to follow when implementing the CRUD data ope
 
 **Figure 2. Adding the Controller**
 
-![Add Controller](/aspnet-mvc/helpers/grid/images/grid-api-controller.png)
+![Add Controller](/helpers/grid/images/grid-api-controller.png)
 
 **Step 6** Open `Controllers/ProductsController.cs`.
 
@@ -151,7 +151,7 @@ Below are listed the steps for you to follow when implementing the CRUD data ope
 
 **Figure 3. The final result**
 
-![Final result](/aspnet-mvc/helpers/grid/images/grid-inline-grid.png)
+![Final result](/helpers/grid/images/grid-inline-grid.png)
 
 ## See Also
 
