@@ -55,11 +55,6 @@ defaults:
     values:
         product: "aspnet-mvc"
 
- 
-
--
-
-
 type_links:
     "kendo.Class": "/api/javascript/class"
     "kendo.data.DataSource": "/api/javascript/data/datasource"
