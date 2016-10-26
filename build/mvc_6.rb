@@ -151,11 +151,11 @@ namespace :mvc_6 do
 
     desc('Copy NuGet packages to trial demos')
     task :update_demo_deps_trial do
-        update_demo_deps 'aspnetmvc.trial'
+        update_demo_deps 'aspnet.core.trial'
     end
 
     desc('Copy NuGet packages to commercial demos')
     task :update_demo_deps_commercial do
-        update_demo_deps 'aspnetmvc.commercial'
+        update_demo_deps 'aspnet.core.commercial'
     end
 end
