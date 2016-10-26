@@ -15,7 +15,7 @@ Telerik UI for ASP.NET MVC is a set of server-side wrappers.
 
 A server-side wrapper:
 
-* Allows you to configure a [Kendo UI widget]({% slug welcometo_kendoui %}) via the C# or VB.NET code&mdash;to set its value, data source, etc.
+* Allows you to configure a [Kendo UI widgets](../../kendo-ui/introduction) via the C# or VB.NET code&mdash;to set its value, data source, etc.
 * Renders the HTML and JavaScript needed to initialize a Kendo UI widget. The widget options propagate to the client-side via the widget initialization script.
 
 **Figure 1. Server-side wrapper HTML and JavaScript output**
@@ -305,6 +305,6 @@ Other articles on getting started with UI for ASP.NET MVC:
 * [Use Telerik UI for ASP.NET MVC in MVC 3 Applications]({% slug aspnetmvc3_aspnetmvc %})
 * [Use Telerik UI for ASP.NET MVC in MVC 4 Applications]({% slug aspnetmvc4_aspnetmvc %})
 * [Use Telerik UI for ASP.NET MVC in MVC 5 Applications]({% slug aspnetmvc5_aspnetmvc %})
-* [Use Telerik UI for ASP.NET Core]({% slug overview_aspnetmvc6_aspnetmvc %})
+* [Use Telerik UI for ASP.NET Core](../../aspnet-core/introduction)
 * [Use Telerik UI for ASP.NET MVC Visual Studio Extensions]({% slug overview_visualstudio_aspnetmvc %})
 * [Telerik UI for ASP.NET MVC Troubleshooting]({% slug troubleshooting_aspnetmvc %})
