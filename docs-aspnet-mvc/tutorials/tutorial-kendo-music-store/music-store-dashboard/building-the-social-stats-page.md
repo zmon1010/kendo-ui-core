@@ -10,7 +10,7 @@ position: 5
 
 **Figure 1. A snapshot of the Kendo UI Music Store Social Networking page**
 
-![social-overview](/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/social-overview.png)
+![social-overview](/tutorials/tutorial-kendo-music-store/music-store-dashboard/images/social-overview.png)
 
 The **Social Stats** page contains various views of social networking data taken from the Kendo UI Music Store. This includes Facebook Likes, Twitter tweets, Google Plus pluses, and Pintrest pins. The different social networks can be selected to show their data in the main graph view, potentially combining the views and adding axes to the graph.
 

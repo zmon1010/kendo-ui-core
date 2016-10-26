@@ -10,7 +10,7 @@ position: 2
 
 **Figure 1. An overview of the Kendo UI Music Store Sales page**
 
-![dashboard-overview](/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/dashboard-overview.png)
+![dashboard-overview](/tutorials/tutorial-kendo-music-store/music-store-dashboard/images/dashboard-overview.png)
 
 The Music Store Dashboard is constructed as a single-page app (SPA) that is built to deliver smooth transitions and high performance. Using the `Sammy.js` framework, the various pages of the application are routed through it and in ASP.NET MVC.
 

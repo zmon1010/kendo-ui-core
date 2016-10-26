@@ -10,7 +10,7 @@ position: 4
 
 **Figure 1. A snapshot of the Kendo UI Music Store Sales Overview page**
 
-![sales-overview](/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/sales-overview.png)
+![sales-overview](/tutorials/tutorial-kendo-music-store/music-store-dashboard/images/sales-overview.png)
 
 This page is constructed to show a collection of data visualization graphs, exposing several different views of store data. The page is dominated by a general sales graph, which can be filtered by five different dimensions, selectable by the buttons to the left of graph.
 

@@ -10,7 +10,7 @@ position: 2
 
 **Figure 1. Overview of the main menu**
 
-![kendo-menu-overview](/tutorial-kendo-music-store/music-store-web/images/kendo-menu-overview.png)
+![kendo-menu-overview](/tutorials/tutorial-kendo-music-store/music-store-web/images/kendo-menu-overview.png)
 
 The main menu of the Music Store application features some of the [Kendo UI Menu widget functionalities](http://demos.telerik.com/kendo-ui/web/menu/index.html) and consists of the items listed below:
 

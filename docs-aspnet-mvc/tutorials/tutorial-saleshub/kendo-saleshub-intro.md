@@ -13,13 +13,13 @@ This article is an overview of the Kendo UI Sales Hub sample project. The Kendo 
 
 **Figure 1. A screenshot of the Kendo UI Sales Hub Home page**
 
-![kendo-saleshub-intro-home-screenshot](/tutorial-saleshub/images/kendo-saleshub-intro-home-screenshot.png)
+![kendo-saleshub-intro-home-screenshot](/tutorials/tutorial-saleshub/images/kendo-saleshub-intro-home-screenshot.png)
 
 ## Basic Concepts
 
 The Sales Hub project is an Order Management System that demonstrates the usage of Telerik UI for ASP.NET MVC in an enterprise environment.
 
-The goal of this sample project to is show how to use a subset of Kendo UI widgets using Telerik UI for ASP.NET MVC as well as to show how to easily implement server-side filtering for [DataSource](/api/javascript/data/datasource) requests, using the server-side components that Telerik UI for ASP.NET MVC provides.
+The goal of this sample project to is show how to use a subset of Kendo UI widgets using Telerik UI for ASP.NET MVC as well as to show how to easily implement server-side filtering for [DataSource](../../../kendo-ui/api/javascript/data/datasource) requests, using the server-side components that Telerik UI for ASP.NET MVC provides.
 
 This sample is not feature-complete and is only meant to be used as a reference for how to use Telerik UI for ASP.NET MVC.
 
