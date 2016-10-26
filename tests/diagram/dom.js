@@ -2384,6 +2384,7 @@
     (function() {
         var Shape = dataviz.diagram.Shape;
         var Connection = dataviz.diagram.Connection;
+        var Point = dataviz.diagram.Point;
         var shape1, shape2, shape3;
         var connection;
 
@@ -2435,6 +2436,55 @@
             equal(connection._resolvedTargetConnector.options.name, "Left");
         });
 
+        test("custom connectors in shapes are not excluded from resolving auto connectors", function() {
+            var connectors = [
+                    {
+                        name: "rightPoint",
+                        position: function (shape) {
+                            var topLeftPoint = shape.bounds().topLeft();
+                            shape.point = new Point(topLeftPoint.x + 70 , topLeftPoint.y + 34);
+                            return shape.point;
+                        }
+                    },
+                    {
+                        name: "auto",
+                        position: function (shape) {
+                            var leftPoint = shape.bounds().topLeft();
+                            var pointToSet = new Point(leftPoint.x + 34, leftPoint.y + 34);
+                            shape.point = pointToSet;
+                            return shape.point;
+                        }
+                        
+                    },
+                    {
+                        name: "topPoint",
+                        position: function (shape) {
+                            var topLeftPoint = shape.bounds().topLeft();
+                            var pointToSet = new Point(topLeftPoint.x + 35, topLeftPoint.y);
+                            shape.point = pointToSet;
+                            return shape.point;
+                        }
+                    },
+                    {
+                        name: "leftPoint",
+                        position: function (shape) {
+                            var topLeftPoint = shape.bounds().topLeft();
+                            var pointToSet = new Point(topLeftPoint.x + 20, topLeftPoint.y + 34);
+                            shape.point = pointToSet;
+                            return shape.point;
+                        }
+                    }
+                 ];
+            var shape4 = diagram.addShape({x: 100, width: 100, height: 100, connectors: connectors});
+            var shape5 = diagram.addShape({x: 200, width: 100, height: 100, connectors: connectors});
+
+            connection = diagram.connect(shape4, shape5, {
+                type: "cascading"
+            });
+
+            equal(connection._resolvedSourceConnector.options.name, "rightPoint");
+            equal(connection._resolvedTargetConnector.options.name, "leftPoint");
+        });        
     })();
 
     (function() {
@@ -3514,7 +3564,7 @@
         };
         this.rotate = function() {
             return {
-                angle: this.angle
+                angle: this._angle
             };
         }
     };
@@ -3577,6 +3627,11 @@
 
             equal(root.hitTestRect(targetRect), true);
         });
+
+        test("returns false if passed rect overlaps a shape but the shape is excluded", function() {
+            var targetRect = new Rect(50, 100, 100, 10);
+            ok(!root.hitTestRect(targetRect, [shape]));
+        });        
 
     })();
 
@@ -3681,6 +3736,18 @@
             equal(node.hitTestRect(new Rect(0, 0, 30, 30)), true);
         });
 
+        test("hitTestRect returns false if it contains a shape that overlaps the rect but it it is excluded", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.hitTestRect(bounds, [shape]), false);
+        });
+
+        test("hitTestRect returns false if its children contain a shape that overlaps the rect but it it is excluded", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.hitTestRect(new Rect(0, 0, 30, 30), [node.children[0].shapes[0].shape]), false);
+        });       
+
     })();
 
      // ------------------------------------------------------------
@@ -3770,6 +3837,18 @@
             tree.insert(shape);
             equal(tree.hitTestRect(new Rect(-1050, 0, 3000, 50)), true);
         });
+
+        test("hitTestRect returns false if the root contains a shape that overlaps the rect but the shape is excluded", function() {
+            shape = new ShapeMock(new Rect(-50, 0, 100, 100));
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(-100, 0, 50, 50), [shape]), false);
+        }); 
+
+        test("hitTestRect returns false if a sector root contains a shape that overlaps the rect but the shape is excluded", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(80, 0, 50, 50), [shape]), false);
+        });               
 
     })();
 

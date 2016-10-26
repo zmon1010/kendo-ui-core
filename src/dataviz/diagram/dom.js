@@ -1572,7 +1572,7 @@
                             if (!isAutoConnector(targetConnector)) {
                                 targetPoint = targetConnector.position();
                                 dist = math.round(sourcePoint.distanceTo(targetPoint));
-
+                                
                                 if (dist < minNonConflict && this.diagram && this._testRoutePoints(sourcePoint, targetPoint, sourceConnector, targetConnector)) {
                                     minNonConflict = dist;
                                     minNonConflictSource = sourceConnector;
@@ -1604,7 +1604,9 @@
                 if (router instanceof CascadingRouter) {
                     var points = router.routePoints(sourcePoint, targetPoint, sourceConnector, targetConnector),
                         start, end,
-                         rect;
+                         rect, exclude;
+
+                    exclude = this._getRouteExclude(sourcePoint, targetPoint, sourceConnector.shape, targetConnector.shape);
                     points.unshift(sourcePoint);
                     points.push(targetPoint);
 
@@ -1623,13 +1625,37 @@
                             rect.height-=2;
                         }
 
-                        if (!rect.isEmpty() && this.diagram._shapesQuadTree.hitTestRect(rect)) {
+                        if (!rect.isEmpty() && this.diagram._shapesQuadTree.hitTestRect(rect, exclude)) {
                             passRoute = false;
                             break;
                         }
                     }
                 }
                 return passRoute;
+            },
+
+            _getRouteExclude: function(sourcePoint, targetPoint, sourceShape, targetShape) {
+                var exclude = [];
+                if (this._isPointInsideShape(sourcePoint, sourceShape)){
+                    exclude.push(sourceShape);
+                }
+                if (this._isPointInsideShape(targetPoint, targetShape)){
+                    exclude.push(targetShape);
+                }
+                return exclude;
+            },
+
+            _isPointInsideShape: function (point, shape) {
+                var bounds = shape.bounds(), rotatedPoint,
+                    angle = shape.rotate().angle,
+                    pointX, pointY, 
+                    boundsX = bounds.x, 
+                    boundsY = bounds.y;
+
+                rotatedPoint = point.clone().rotate(bounds.center(), angle);
+                pointX = rotatedPoint.x;
+                pointY = rotatedPoint.y;
+                return pointX > boundsX && pointX < (boundsX + bounds.width) && pointY > boundsY && pointY < (boundsY + bounds.height);
             },
 
             redraw: function (options) {
@@ -4898,12 +4924,12 @@
                 }
             },
 
-            hitTestRect: function(rect) {
+            hitTestRect: function(rect, exclude) {
                 var shapes = this.shapes;
                 var length = shapes.length;
 
                 for (var i = 0; i < length; i++) {
-                    if (this._testRect(shapes[i].shape, rect)) {
+                    if (this._testRect(shapes[i].shape, rect) && !dataviz.inArray(shapes[i].shape, exclude)) {
                         return true;
                     }
                 }
@@ -4996,18 +5022,18 @@
                 }
             },
 
-            hitTestRect: function(rect) {
+            hitTestRect: function(rect, exclude) {
                 var idx;
                 var children = this.children;
                 var length = children.length;
                 var hit = false;
 
                 if (this.overlapsBounds(rect)) {
-                    if (QuadRoot.fn.hitTestRect.call(this, rect)) {
+                    if (QuadRoot.fn.hitTestRect.call(this, rect, exclude)) {
                         hit = true;
                     } else {
                          for (idx = 0; idx < length; idx++) {
-                            if (children[idx].hitTestRect(rect)) {
+                            if (children[idx].hitTestRect(rect, exclude)) {
                                hit = true;
                                break;
                             }
@@ -5094,12 +5120,12 @@
                 return sectors;
             },
 
-            hitTestRect: function(rect) {
+            hitTestRect: function(rect, exclude) {
                 var sectors = this.getSectors(rect);
                 var xIdx, yIdx, x, y;
                 var root;
 
-                if (this.root.hitTestRect(rect)) {
+                if (this.root.hitTestRect(rect, exclude)) {
                     return true;
                 }
 
@@ -5108,7 +5134,7 @@
                     for (yIdx = 0; yIdx < sectors[1].length; yIdx++) {
                         y = sectors[1][yIdx];
                         root = (this.rootMap[x] || {})[y];
-                        if (root && root.hitTestRect(rect)) {
+                        if (root && root.hitTestRect(rect, exclude)) {
                             return true;
                         }
                     }
