@@ -637,8 +637,8 @@ bundle :name => 'aspnet.core.internal.commercial-source',
                                               .exclude('**/*.user'),
        },
        :prerequisites => [
-           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
-           'dist/bundles/aspnetmvc.internal.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
+           'dist/bundles/aspnet.core.internal.commercial-source/src/AspNet.Core/Kendo.Mvc.sln',
+           'dist/bundles/aspnet.core.internal.commercial-source/src/AspNet.Core/Kendo.Mvc/Kendo.snk',
        ]
 
 bundle :name => 'aspnetmvc.hotfix.commercial',
