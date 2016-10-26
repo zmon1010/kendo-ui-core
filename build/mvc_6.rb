@@ -53,8 +53,10 @@ MVC_6_DEMOS = FileList[MVC_6_DEMOS_ROOT + '**/*']
 def update_nuget_reference name
     return unless File.exists? name
 
+    suffix = name =~ 'trial' ? '.Trial' : ''
+
     content = File.read(name)
-    content.sub!(/"Kendo.Mvc": ".*"/, '"Telerik.UI.for.AspNet.Core": "' + VERSION + '"')
+    content.sub!(/"Kendo.Mvc": ".*"/, "\"Telerik.UI.for.AspNet.Core#{suffix}\": \"" + VERSION + '"')
 
     puts "Updating examples NuGet reference to #{VERSION}"
 
