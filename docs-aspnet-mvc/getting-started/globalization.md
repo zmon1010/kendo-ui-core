@@ -36,7 +36,7 @@ Below are listed the steps for you to follow when you want to make Telerik UI fo
       <script src="@Url.Content("~/Scripts/cultures/kendo.culture.es-ES.min.js")"></script>
 ```
 
-**Step 3** Set the current culture by calling the [`kendo.culture`](/api/javascript/kendo#methods-culture) method. Note that you must add the script block after the culture JavaScript file.
+**Step 3** Set the current culture by calling the [`kendo.culture`](../../kendo-ui/api/javascript/kendo#methods-culture) method. Note that you must add the script block after the culture JavaScript file.
 
 ###### Example
 
@@ -117,7 +117,7 @@ Below are listed the steps for you to follow when you want to make the widgets u
     <script src="@Url.Content("~/Scripts/cultures/kendo.culture." + culture + ".min.js")"></script>
 ```
 
-**Step 4** Set the current culture by calling the [`kendo.culture`](/api/javascript/kendo#methods-culture) method. Note that you must add the script block after the culture JavaScript file.
+**Step 4** Set the current culture by calling the [`kendo.culture`](../../kendo-ui/api/javascript/kendo#methods-culture) method. Note that you must add the script block after the culture JavaScript file.
 
 ###### Example
 
