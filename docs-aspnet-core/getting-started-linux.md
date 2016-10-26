@@ -207,7 +207,7 @@ Copy the `js` and `styles` folders from the `telerik.ui.for.aspnetmvc` archive t
 
 ![Kendo UI resources](images/resources.png)
 
-* **[Kendo UI Professional Bower package installation]({% slug kendoui_bower_packages_kendoui_installation %})**
+* **[Kendo UI Professional Bower package installation](../kendo-ui/intro/installation/bower-install)**
 
 **Step 6.** Register Kendo UI styles and scripts in `~/Views/Shared/Layout.cshtml`.
 
