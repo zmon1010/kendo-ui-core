@@ -3008,7 +3008,6 @@
         "text": "Responsive Panel",
         "name": "responsive-panel",
         "api": "web/responsivepanel",
-        "packages": [ "!mvc-core" ],  
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/responsivepanel/mvc-responsivepanel-overview"
         },
@@ -3028,10 +3027,7 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This demo shows the basic functionality of the Telerik $FRAMEWORK ResponsivePanel control."
-                },
-                "packages": [
-                    "!mvc-core"
-                ]
+                }
             }
         ],
         "category": "Layout"
