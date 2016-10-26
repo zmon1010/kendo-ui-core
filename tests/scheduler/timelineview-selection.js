@@ -9,23 +9,25 @@
 
     module("Selection timeline", {
         setup: function() {
+            jasmine.clock().install();
             container = $("<div />");
             QUnit.fixture.append(container);
         },
 
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
 
     function createSelection(options) {
         return $.extend(true, {
-                events: [],
-                start: new Date(2013, 1, 2),
-                end: new Date(2013, 1, 2),
-                isAllDay: true,
-                groupIndex: 0
-            },
+            events: [],
+            start: new Date(2013, 1, 2),
+            end: new Date(2013, 1, 2),
+            isAllDay: true,
+            groupIndex: 0
+        },
             options
         );
     }
@@ -33,7 +35,7 @@
     function setupWidget(options, selectedView) {
         startDate = new Date(2013, 1, 3, 0, 0, 0, 0);
         options = options || {};
-         selectedView = selectedView || "timeline";
+        selectedView = selectedView || "timeline";
         var end = new Date(startDate);
         end.setHours(1);
 
@@ -44,18 +46,18 @@
                 selectedView
             ],
             dataSource: [
-                { start: startDate, end: end, title: "Test", roomId: 2}
+                { start: startDate, end: end, title: "Test", roomId: 2 }
             ]
         }, options);
 
         scheduler = new Scheduler(container, options);
+         jasmine.clock().tick(1);
         view = scheduler.view();
-
         container.focus();
     }
 
     function addHours(date, hours) {
-        return new Date(+ date + (3600000 * hours));
+        return new Date(+date + (3600000 * hours));
     }
 
     function keydown(keyCode, options) {
@@ -76,6 +78,7 @@
 
     test("selects first cell on focus", function() {
         setupWidget();
+        jasmine.clock().tick(1);
         container.focusout().focus();
         var td = container.find(".k-scheduler-content td:first");
 
@@ -84,6 +87,7 @@
 
     test("focuses wrapper on mousedown", function() {
         setupWidget();
+        jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
 
         td.trigger({
@@ -96,6 +100,7 @@
 
     test("creates selection on mousedown", function() {
         setupWidget();
+        jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
 
         td.trigger({
@@ -200,8 +205,8 @@
     test("pressing TAB key moves to next event element", function() {
         setupWidget({
             dataSource: [
-                { start: startDate, end: addHours(startDate, 2), title: "Test", roomId: 1},
-                { start: addHours(startDate, 4), end: addHours(startDate, 6), title: "Test 2", roomId: 1}
+                { start: startDate, end: addHours(startDate, 2), title: "Test", roomId: 1 },
+                { start: addHours(startDate, 4), end: addHours(startDate, 6), title: "Test 2", roomId: 1 }
             ]
         });
 
@@ -221,8 +226,8 @@
             startTime: new Date(2013, 1, 2, 10, 0, 0, 0),
             endTime: new Date(2013, 1, 2, 18, 0, 0, 0),
             dataSource: [
-                { start: startDate, end: addHours(startDate, 2), isAllDay: true, title: "Test", roomId: 1},
-                { start: addHours(startDate, 4), end: addHours(startDate, 6), isAllDay: true, title: "Test 2", roomId: 1}
+                { start: startDate, end: addHours(startDate, 2), isAllDay: true, title: "Test", roomId: 1 },
+                { start: addHours(startDate, 4), end: addHours(startDate, 6), isAllDay: true, title: "Test 2", roomId: 1 }
             ]
         });
 
@@ -248,7 +253,7 @@
             endTime: new Date(2013, 1, 3, 18, 0, 0, 0),
             views: ["timelineWeek"],
             dataSource: [
-                { start: startDate, end: addHours(startDate, 2), isAllDay: true, title: "Test", roomId: 1},
+                { start: startDate, end: addHours(startDate, 2), isAllDay: true, title: "Test", roomId: 1 },
             ]
         });
 
@@ -655,7 +660,7 @@
         equal($(currentSelection[0]).index(), 1);
     });
 
-  test("move to previous view in horizontal by date grouping", function() {
+    test("move to previous view in horizontal by date grouping", function() {
         setupWidget({
             startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
             endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
@@ -684,7 +689,7 @@
         equal(currentSelection.index(), 3);
     });
 
-     test("move to next view in horizontal by date grouping", function() {
+    test("move to next view in horizontal by date grouping", function() {
         setupWidget({
             startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
             endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
@@ -716,7 +721,7 @@
         equal(currentSelection.index(), 0);
     });
 
-       //vertical grouping by date
+    //vertical grouping by date
     test("move to next group in vertical by date grouping restarts selection to single cell", function() {
         setupWidget({
             startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
@@ -742,12 +747,12 @@
         keydown(keys.DOWN);
 
         var oldSelection = $(".k-scheduler-content .k-state-selected");
-         var oldDViewDate = scheduler.view()._dates[0];
+        var oldDViewDate = scheduler.view()._dates[0];
 
         keydown(keys.DOWN);
 
         var currentSelection = $(".k-scheduler-content .k-state-selected");
-         var currentViewDate = scheduler.view()._dates[0];
+        var currentViewDate = scheduler.view()._dates[0];
 
         equal(oldSelection.index(), 0);
         equal(currentSelection.index(), 0);
@@ -855,11 +860,11 @@
         keydown(keys.RIGHT);
 
         var oldSelection = $(".k-scheduler-content .k-state-selected");
-         var oldDViewDate = scheduler.view()._dates[0];
+        var oldDViewDate = scheduler.view()._dates[0];
         keydown(keys.UP);
 
         var currentSelection = $(".k-scheduler-content .k-state-selected");
-         var currentViewDate = scheduler.view()._dates[0];
+        var currentViewDate = scheduler.view()._dates[0];
 
         equal(oldSelection.length, 1);
         equal($(oldSelection[0]).index(), 1);
@@ -868,7 +873,7 @@
         notEqual(currentViewDate, oldDViewDate);
     });
 
-  test("move to previous view in vertical by date grouping", function() {
+    test("move to previous view in vertical by date grouping", function() {
         setupWidget({
             startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
             endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
@@ -897,7 +902,7 @@
         equal(currentSelection.index(), 3);
     });
 
-     test("move to next view in vertical by date grouping", function() {
+    test("move to next view in vertical by date grouping", function() {
         setupWidget({
             startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
             endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
@@ -918,19 +923,19 @@
                 }]
 
         });
-
+         jasmine.clock().tick(1);
         keydown(keys.RIGHT);
         keydown(keys.RIGHT);
         keydown(keys.RIGHT);
         keydown(keys.RIGHT);
-
+         jasmine.clock().tick(1);
         var currentSelection = $(".k-scheduler-content .k-state-selected");
-
+         jasmine.clock().tick(1);
         equal(currentSelection.index(), 0);
-     });
+    });
 
-      test("View moves selection to the prev visible date and group slot timelineWorkWeek", function() {
-         setupWidget({
+    test("View moves selection to the prev visible date and group slot timelineWorkWeek", function() {
+        setupWidget({
             startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
             endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
             group: {
@@ -950,23 +955,23 @@
                 }]
 
         }, "timelineWorkWeek");
- 
-        var selection = {
-             start: new Date(2013, 0, 28, 10, 0, 0, 0),
-             end: new Date(2013, 0, 28, 11, 0, 0),
-             groupIndex: 0,
-             events: []
-         };
- 
-         scheduler.view().move(selection, keys.UP);
 
-       
-         deepEqual(selection.start,  new Date(2013, 0, 25, 10, 0, 0, 0));
-         deepEqual(selection.end,  new Date(2013, 0, 25, 11, 0, 0, 0));
-     });
- 
-      test("View moves selection to the prev visible date and group slot timelineWorkWeek", function() {
-         setupWidget({
+        var selection = {
+            start: new Date(2013, 0, 28, 10, 0, 0, 0),
+            end: new Date(2013, 0, 28, 11, 0, 0),
+            groupIndex: 0,
+            events: []
+        };
+         jasmine.clock().tick(1);
+        scheduler.view().move(selection, keys.UP);
+
+
+        deepEqual(selection.start, new Date(2013, 0, 25, 10, 0, 0, 0));
+        deepEqual(selection.end, new Date(2013, 0, 25, 11, 0, 0, 0));
+    });
+
+    test("View moves selection to the prev visible date and group slot timelineWorkWeek", function() {
+        setupWidget({
             startTime: new Date(2013, 1, 3, 10, 0, 0, 0),
             endTime: new Date(2013, 1, 3, 11, 0, 0, 0),
             group: {
@@ -986,22 +991,22 @@
                 }]
 
         }, "timelineWorkWeek");
- 
+
         var selection = {
-             start: new Date(2013, 1, 1, 10, 0, 0, 0),
-             end: new Date(2013, 1, 1, 11, 0, 0),
-             groupIndex: 0,
-             events: []
-         };
- 
-         scheduler.view().move(selection, keys.DOWN);
+            start: new Date(2013, 1, 1, 10, 0, 0, 0),
+            end: new Date(2013, 1, 1, 11, 0, 0),
+            groupIndex: 0,
+            events: []
+        };
+        jasmine.clock().tick(1);
+        scheduler.view().move(selection, keys.DOWN);
 
-       
-         deepEqual(selection.start,  new Date(2013, 1, 4, 10, 0, 0, 0));
-         deepEqual(selection.end,  new Date(2013, 1, 4, 11, 0, 0, 0));
-     });
 
-      function setupScheduler(options, selectedView) {
+        deepEqual(selection.start, new Date(2013, 1, 4, 10, 0, 0, 0));
+        deepEqual(selection.end, new Date(2013, 1, 4, 11, 0, 0, 0));
+    });
+
+    function setupScheduler(options, selectedView) {
         options = options || {};
         selectedView = selectedView || "timeline";
         options = $.extend({
@@ -1032,9 +1037,9 @@
         scheduler = new Scheduler(container, options);
     }
 
-    test("grouped view view moveToEvent: finds next closest event", function() {        
-           setupScheduler();
-
+    test("grouped view view moveToEvent: finds next closest event", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var view = sch.view();
         var event = new kendo.data.SchedulerEvent({
@@ -1062,221 +1067,221 @@
         ok(found);
     });
 
-     test("grouped view moveToEvent: returns false if event is not found", function() {
-          setupScheduler();
-
-        var sch = $(container).data("kendoScheduler");
-        var view = sch.view();
-         var selection = createSelection({
-             start: new Date(2013, 1, 1, 12, 0, 0),
-             end: new Date(2013, 1, 1, 12, 30, 0),
-             groupIndex: 0,
-             isAllDay: false
-         });
-
-         ok(!view.moveToEvent(selection));
-     });
-
-     test("grouped view moveToEvent: updates selection to event slot", function() {
-           setupScheduler();
-
-         var sch = $(container).data("kendoScheduler");
-         var view = sch.view();
-         var event = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1, 13, 0, 0),
-             end: new Date(2013, 1, 1, 13, 30, 0),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-             start: new Date(2013, 1, 1, 12, 0, 0),
-             end: new Date(2013, 1, 1, 12, 30, 0),
-             groupIndex: 0,
-             isAllDay: false
-         });
-
-         view.render([
-             event
-         ]);
-
-         var found = view.moveToEvent(selection);
-
-         equal(selection.events[0], event.uid);
-         deepEqual(selection.start, event.start);
-         deepEqual(selection.end, new Date(2013, 1, 1, 13, 30, 0));
-     });
-
-     test("view moveToEvent: move selection from current event to next", function() {
-          setupScheduler();
-
-        var sch = $(container).data("kendoScheduler");
-        var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "one day event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-            start: new Date(2013, 1, 1, 13, 0, 0),
-             end: new Date(2013, 1, 1, 13, 30, 0),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-               start: new Date(2013, 1, 1, 12, 0, 0),
-             end: new Date(2013, 1, 1, 12, 30, 0),
-             events: [firstEvent.uid],
-             groupIndex: 0,
-             isAllDay: false
-         });
-
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
-
-         ok(view.moveToEvent(selection));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], secondEvent.uid);
-     });
-
-     test("view moveToEvent: with shift finds previous closest event", function() {
-         setupScheduler();
-
-         var sch = $(container).data("kendoScheduler");
-         var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "one day event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1, 12, 0, 0),
-             end: new Date(2013, 1, 1, 12, 30, 0),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-             start: new Date(2013, 1, 1, 13, 0, 0),
-             end: new Date(2013, 1, 1, 13, 30, 0),
-             groupIndex: 0,
-             isAllDay: false
-         });
-
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
-
-         ok(view.moveToEvent(selection, true));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], secondEvent.uid);
-     });
-
-     test("view moveToEvent: with shift finds previous closest event when selection is between events", function() {
+    test("grouped view moveToEvent: returns false if event is not found", function() {
         setupScheduler();
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "one day event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1, 13, 0, 0),
-             end: new Date(2013, 1, 1, 13, 30, 0),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-               start: new Date(2013, 1, 1, 12, 0, 0),
-             end: new Date(2013, 1, 1, 12, 30, 0),
-             groupIndex: 0,
-             isAllDay: false
-         });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1, 12, 0, 0),
+            end: new Date(2013, 1, 1, 12, 30, 0),
+            groupIndex: 0,
+            isAllDay: false
+        });
 
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
+        ok(!view.moveToEvent(selection));
+    });
 
-         ok(view.moveToEvent(selection, true));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], firstEvent.uid);
-     });
-
-     test("view moveToEvent: move selection from current event to previous", function() {
-         setupScheduler();
-
+    test("grouped view moveToEvent: updates selection to event slot", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "one day event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1, 13, 0, 0),
-             end: new Date(2013, 1, 1, 13, 30, 0),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-               start: new Date(2013, 1, 1, 12, 0, 0),
-             end: new Date(2013, 1, 1, 12, 30, 0),
-             events: [secondEvent.uid],
-              groupIndex: 0,
-             isAllDay: false
-         });
+        var event = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1, 13, 0, 0),
+            end: new Date(2013, 1, 1, 13, 30, 0),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1, 12, 0, 0),
+            end: new Date(2013, 1, 1, 12, 30, 0),
+            groupIndex: 0,
+            isAllDay: false
+        });
 
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
+        view.render([
+            event
+        ]);
 
-         ok(view.moveToEvent(selection, true));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], firstEvent.uid);
-     });
+        var found = view.moveToEvent(selection);
 
-     test("view moveToEvent: move selection from event to previous event in same slot", function() {
-         setupScheduler();
+        equal(selection.events[0], event.uid);
+        deepEqual(selection.start, event.start);
+        deepEqual(selection.end, new Date(2013, 1, 1, 13, 30, 0));
+    });
 
+    test("view moveToEvent: move selection from current event to next", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "first event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1, 13, 0, 0),
-             end: new Date(2013, 1, 1, 13, 30, 0),
-             title: "second event",
-             roomId: 1
-         });
-         var selection = createSelection({
-              start: new Date(2013, 1, 1, 12, 0, 0),
-              end: new Date(2013, 1, 1, 12, 30, 0),
-             events: [ secondEvent.uid ],
-              groupIndex: 0,
-             isAllDay: false
-         });
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "one day event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1, 13, 0, 0),
+            end: new Date(2013, 1, 1, 13, 30, 0),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1, 12, 0, 0),
+            end: new Date(2013, 1, 1, 12, 30, 0),
+            events: [firstEvent.uid],
+            groupIndex: 0,
+            isAllDay: false
+        });
 
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
 
-         ok(view.moveToEvent(selection, true));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], firstEvent.uid);
-     });
+        ok(view.moveToEvent(selection));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], secondEvent.uid);
+    });
+
+    test("view moveToEvent: with shift finds previous closest event", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
+        var sch = $(container).data("kendoScheduler");
+        var view = sch.view();
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "one day event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1, 12, 0, 0),
+            end: new Date(2013, 1, 1, 12, 30, 0),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1, 13, 0, 0),
+            end: new Date(2013, 1, 1, 13, 30, 0),
+            groupIndex: 0,
+            isAllDay: false
+        });
+
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
+
+        ok(view.moveToEvent(selection, true));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], secondEvent.uid);
+    });
+
+    test("view moveToEvent: with shift finds previous closest event when selection is between events", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
+        var sch = $(container).data("kendoScheduler");
+        var view = sch.view();
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "one day event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1, 13, 0, 0),
+            end: new Date(2013, 1, 1, 13, 30, 0),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1, 12, 0, 0),
+            end: new Date(2013, 1, 1, 12, 30, 0),
+            groupIndex: 0,
+            isAllDay: false
+        });
+
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
+
+        ok(view.moveToEvent(selection, true));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], firstEvent.uid);
+    });
+
+    test("view moveToEvent: move selection from current event to previous", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
+        var sch = $(container).data("kendoScheduler");
+        var view = sch.view();
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "one day event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1, 13, 0, 0),
+            end: new Date(2013, 1, 1, 13, 30, 0),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1, 12, 0, 0),
+            end: new Date(2013, 1, 1, 12, 30, 0),
+            events: [secondEvent.uid],
+            groupIndex: 0,
+            isAllDay: false
+        });
+
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
+
+        ok(view.moveToEvent(selection, true));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], firstEvent.uid);
+    });
+
+    test("view moveToEvent: move selection from event to previous event in same slot", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
+        var sch = $(container).data("kendoScheduler");
+        var view = sch.view();
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "first event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1, 13, 0, 0),
+            end: new Date(2013, 1, 1, 13, 30, 0),
+            title: "second event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1, 12, 0, 0),
+            end: new Date(2013, 1, 1, 12, 30, 0),
+            events: [secondEvent.uid],
+            groupIndex: 0,
+            isAllDay: false
+        });
+
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
+
+        ok(view.moveToEvent(selection, true));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], firstEvent.uid);
+    });
 
 })();

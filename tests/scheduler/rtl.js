@@ -10,11 +10,13 @@
 
     module("rtl", {
         setup: function() {
+            jasmine.clock().install();
             var rtl = $('<div class="k-rtl"/>').appendTo(QUnit.fixture);
             div = $("<div/>").width(500).height(1000);
             div.appendTo(rtl);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -27,7 +29,7 @@
                 new SchedulerEvent( { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "" } )
             ]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
         var event = div.find(".k-event");
 
@@ -42,12 +44,13 @@
             dataSource: []
         });
 
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view._updateCurrentTimeMarker(date);
 
-        var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
-        var top = scheduler.view().content[0].offsetTop;
+        var timeElementsCount = view.element.find(".k-current-time").length;
+        var top = view.content[0].offsetTop;
         var slot = scheduler.slotByPosition($(".k-current-time").offset().left, top);
 
         //ok(slot.startDate <= date);
@@ -63,7 +66,7 @@
                 new SchedulerEvent( { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "" } ),
             ]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
         var event = div.find(".k-event");
 
@@ -79,7 +82,7 @@
                 new SchedulerEvent( { start: new Date("2013/6/6 12:00 AM"), end: new Date("2013/6/6 12:00 AM"), isAllDay: true, title: "" } )
             ]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-header-all-day td");
         var event = div.find(".k-event");
 
@@ -108,7 +111,7 @@
                 new SchedulerEvent( { start: new Date("2013/6/6 12:00 AM"), end: new Date("2013/6/6 12:00 AM"), isAllDay: true, title: "", foo: 1 } )
             ]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-header-all-day td");
         var event = div.find(".k-event");
 
@@ -125,7 +128,7 @@
             ],
             views:["day"]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         var handle = div.find(".k-resize-s");
@@ -147,7 +150,7 @@
             ],
             views:["week"]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-header-all-day td");
         var event = div.find(".k-event");
 
@@ -165,7 +168,7 @@
             ],
             views:["week"]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-header-all-day td");
         var event = div.find(".k-event");
 
@@ -185,7 +188,7 @@
             ],
             views:["month"]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content tr:first td");
         var event = div.find(".k-event");
 
@@ -203,7 +206,7 @@
             ],
             views: ["month"]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
         var event = div.find(".k-event");
 
@@ -219,7 +222,7 @@
                 new SchedulerEvent( { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "" } )
             ]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
         var event = div.find(".k-event");
 
@@ -240,7 +243,7 @@
             ],
             views: ["week"]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-header-all-day td");
         var handle = div.find(".k-resize-e");
 
@@ -261,7 +264,7 @@
             ],
             views: ["month"]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content tr:first td");
 
         var handle = div.find(".k-resize-e");
@@ -286,7 +289,7 @@
             ],
             views: ["month"]
         });
-
+         jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content tr:eq(1) td");
         var event = div.find(".k-event").first();
 

@@ -35,10 +35,12 @@
     }
 
     function module_setup() {
+        jasmine.clock().install();
         container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
     }
 
     function module_teardown() {
+        jasmine.clock().uninstall();
         if (container.data("kendoMultiDayView")) {
             container.data("kendoMultiDayView").destroy();
         }
@@ -1711,6 +1713,7 @@
     module("Horizontally grouped Multi Day View selection", {
         setup: module_setup,
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
         }
     });
@@ -1718,6 +1721,7 @@
     test("View select method selects cell in first group", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start = new Date(2013, 5, 8, 1);
@@ -1741,7 +1745,7 @@
     test("View select method selects cell in second group", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var start = new Date(2013, 5, 8, 1);
         var end = new Date(2013, 5, 8, 1, 30);
@@ -1764,6 +1768,7 @@
     test("View select method selects multiple columns in second group", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var start = new Date(2013, 5, 7, 1);
         var selection = {
@@ -1785,6 +1790,7 @@
     test("View select method selects only in view range", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var start = new Date(2013, 5, 8, 1);
         var end = new Date(2013, 5, 10);
@@ -1808,6 +1814,7 @@
     test("View select method selects cells in three columns", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var start = new Date(2013, 5, 6, 0);
         var end = new Date(2013, 5, 10);
@@ -1831,6 +1838,7 @@
     test("View selects allDay cell in first group", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var start = new Date(2013, 5, 8);
 
@@ -1853,6 +1861,7 @@
     test("View selects allDay cell in second group", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var start = new Date(2013, 5, 8);
         var selection = {
@@ -1875,6 +1884,7 @@
         setupGroupedScheduler();
 
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -1896,6 +1906,7 @@
         bindGroupedScheduler();
 
         var model = scheduler.dataSource.data()[0];
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -1914,6 +1925,7 @@
     test("View does not select multiple allDay slots in different groups", function() {
         setupGroupedScheduler("horizontal", "day");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -1932,6 +1944,7 @@
     test("View moves to the last cells in the current group", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 7, 3),
@@ -1951,6 +1964,7 @@
     test("View moves to the first cells in the current group", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3, 3),
@@ -1970,6 +1984,7 @@
     test("View moves the selection to the next group", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -1989,6 +2004,7 @@
     test("View moves the selection to the next group (AllDay cell)", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2009,6 +2025,7 @@
     test("View navigates to next period if last group has been reached", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2029,6 +2046,7 @@
     test("View navigates to next period if last group has been reached (all day cell)", function() {
         setupGroupedScheduler("horizontal", "day");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2049,6 +2067,7 @@
     test("View moves the selection to the next group (day view)", function() {
         setupGroupedScheduler("horizontal", "day");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2070,6 +2089,7 @@
     test("View does not allow multiple selection if end moves to the next group", function() {
         setupGroupedScheduler("horizontal", "day");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2089,6 +2109,7 @@
     test("View moves the selection to the prev group (AllDay cell)", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2),
@@ -2109,6 +2130,7 @@
     test("View navigates to prev period if first group has been reached", function() {
         setupGroupedScheduler();
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 3),
@@ -2128,6 +2150,7 @@
     test("View moves the selection to the prev group", function() {
         setupGroupedScheduler("horizontal", "day");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2148,6 +2171,7 @@
     test("View moves the selection to the prev group (all day cell)", function() {
         setupGroupedScheduler("horizontal", "day");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2169,6 +2193,7 @@
     test("View does not move selection to previous group on UP key", function() {
         setupGroupedScheduler("horizontal", "day");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2189,6 +2214,7 @@
     test("View does not move selection to next group on DOWN key", function() {
         setupGroupedScheduler("horizontal", "day");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 30),
@@ -2208,6 +2234,7 @@
     test("View does not move selection if SHIFT + DOWN", function() {
         setupGroupedScheduler("horizontal");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2228,6 +2255,7 @@
     test("View does not move selection if SHIFT + UP", function() {
         setupGroupedScheduler("horizontal");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2248,6 +2276,7 @@
     module("Vertically grouped Multi Day View selection/navigation", {
         setup: module_setup,
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
         }
     });
@@ -2255,6 +2284,7 @@
     test("View select method selects cell in the first group", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 30),
@@ -2275,6 +2305,7 @@
     test("View select method selects cell in the second group", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 30),
@@ -2295,6 +2326,7 @@
     test("View select method selects multiple columns only in one group", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var start = new Date(2013, 5, 7, 23, 30);
         var end = new Date(2013, 5, 9);
@@ -2319,6 +2351,7 @@
     test("View selects allDay cell in first group", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start = new Date(2013, 5, 8);
@@ -2343,6 +2376,7 @@
     test("View selects allDay cell in second group", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start = new Date(2013, 5, 8);
@@ -2366,7 +2400,7 @@
     test("View moves selection to the next group allDay slot", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 30),
@@ -2386,7 +2420,7 @@
     test("View does nothing when end of the view is reached", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 30),
@@ -2405,7 +2439,7 @@
     test("View moves selection to the prev group", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2426,7 +2460,7 @@
     test("View does nothing if first slot if view is reached", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2448,7 +2482,7 @@
 
         scheduler.date(new Date(2013, 5, 8));
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2470,7 +2504,7 @@
 
         scheduler.date(new Date(2013, 5, 8));
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2490,6 +2524,7 @@
     test("View does not move selection if SHIFT + RIGHT", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2511,6 +2546,7 @@
     test("View does not move selection if SHIFT + LEFT", function() {
         setupGroupedScheduler("vertical");
         scheduler.wrapper.focus();
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2),
@@ -2599,6 +2635,7 @@
      module("Horizontally grouped by date Multi Day View selection", {
         setup: module_setup,
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
         }
     });
@@ -2606,6 +2643,7 @@
      test("View select method selects cell in first group", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
+          jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start = new Date(2013, 5, 8, 1);
@@ -2629,7 +2667,7 @@
       test("View moves selection to the next group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+           jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3, 23, 30),
@@ -2649,7 +2687,7 @@
     test("View moves selection to the next date and group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3, 23, 30),
@@ -2669,7 +2707,7 @@
      test("View moves selection to the next visible date and group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 00),
@@ -2688,7 +2726,7 @@
      test("View moves allday selection to the next group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3),
@@ -2709,7 +2747,7 @@
     test("View moves allday selection to the next date and group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3),
@@ -2730,7 +2768,7 @@
      test("View moves selection to the next date and group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -2751,7 +2789,7 @@
     test("View moves selection to the prev group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3, 23, 30),
@@ -2771,7 +2809,7 @@
     test("View moves selection to the prev date and group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3, 23, 30),
@@ -2791,7 +2829,7 @@
      test("View moves selection to the prev visible date and group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 00),
@@ -2810,7 +2848,7 @@
       test("View moves selection to the prev visible date and group slot workWeek", function() {
         setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 1 ,5);
         scheduler.wrapper.focus();
-
+           jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 00),
@@ -2829,7 +2867,7 @@
     test("View moves selection to the prev visible date and group slot workWeek starts on sunday", function() {
         setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 0 ,3);
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 00),
@@ -2848,7 +2886,7 @@
    test("View moves selection to the prev visible date and group slot workWeek ends on saturday", function() {
         setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 3 ,6);
         scheduler.wrapper.focus();
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 5, 23, 00),
@@ -2867,7 +2905,7 @@
 test("View moves selection to the next visible date and group slot workWeek", function() {
         setupGroupedByDateSchedulerWorkWeek();
         scheduler.wrapper.focus();
-
+     jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 7, 23, 00),
@@ -2886,7 +2924,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
     test("View moves selection to the next visible date and group slot workWeek starts on sunday", function() {
         setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 0 ,3);
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 5, 23, 00),
@@ -2905,7 +2943,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
    test("View moves selection to the next visible date and group slot workWeek ends on saturday", function() {
         setupGroupedByDateSchedulerWorkWeek("horizontal","workWeek", 3 ,6);
         scheduler.wrapper.focus();
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 00),
@@ -2925,7 +2963,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves allday selection to the prev group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3),
@@ -2946,7 +2984,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
     test("View moves allday selection to the prev date and group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3),
@@ -2967,7 +3005,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the prev visible date and group slot", function() {
         setupGroupedByDateScheduler();
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2),
@@ -2988,6 +3026,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      module("Vertically grouped by date Multi Day View selection", {
         setup: module_setup,
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
         }
      });
@@ -2996,7 +3035,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
       test("View moves selection to the next group slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+           jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 30),
@@ -3016,7 +3055,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the first group slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 30),
@@ -3036,7 +3075,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the prev group slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 30),
@@ -3056,7 +3095,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the last group slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 30),
@@ -3078,7 +3117,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves allday selection to the next group slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2),
@@ -3099,7 +3138,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves allday selection to the first group slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 30),
@@ -3120,7 +3159,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves allday selection to the prev group slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 30),
@@ -3141,7 +3180,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves allday selection to the last group slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2),
@@ -3164,7 +3203,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the next date slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 30),
@@ -3184,7 +3223,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the first date slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3),
@@ -3205,7 +3244,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the prev date slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 30),
@@ -3226,7 +3265,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the next date slot", function() {
         setupGroupedByDateScheduler("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2),
@@ -3247,7 +3286,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
     test("View day view moves selection to the prev date slot", function() {
         setupGroupedByDateScheduler("vertical", "day");
         scheduler.wrapper.focus();
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8),
@@ -3302,7 +3341,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the next date slot not allday", function() {
         setupGroupedByDateSchedulerNoALLDay("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2, 23, 30),
@@ -3322,7 +3361,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the previous date slot not allday", function() {
         setupGroupedByDateSchedulerNoALLDay("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 3),
@@ -3343,7 +3382,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the prev date slot not allday", function() {
         setupGroupedByDateSchedulerNoALLDay("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 23, 30),
@@ -3364,7 +3403,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View moves selection to the next date slot not allday", function() {
         setupGroupedByDateSchedulerNoALLDay("vertical");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 2),
@@ -3385,7 +3424,7 @@ test("View moves selection to the next visible date and group slot workWeek", fu
      test("View day view moves selection to the prev date slot not allday", function() {
         setupGroupedByDateSchedulerNoALLDay("vertical", "day");
         scheduler.wrapper.focus();
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = {
             start: new Date(2013, 5, 8, 0, 0, 0),

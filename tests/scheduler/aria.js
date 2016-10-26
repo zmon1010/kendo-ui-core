@@ -6,6 +6,7 @@
 
     module("scheduler ARIA", {
         setup: function() {
+            jasmine.clock().install();
             now = new Date();
 
             container = $("<div>");
@@ -29,6 +30,7 @@
         },
 
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
         }
     });
@@ -42,31 +44,34 @@
     }
 
     test("scheduler persists last selected cell", function() {
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
 
         td.trigger({
             type: "mousedown",
             currentTarget: td
         });
-
+          jasmine.clock().tick(1);
         var cell = scheduler.view().current();
         equal(cell, td[0]);
     });
 
     test("scheduler persists last selected event", function() {
         createSampleEvent();
+          jasmine.clock().tick(1);
         var event = container.find(".k-event").eq(0);
 
         event.trigger({
             type: "mousedown",
             currentTarget: event
         });
-
+          jasmine.clock().tick(1);
         var div = scheduler.view().current();
         equal(div, event[0]);
     });
 
     test("scheduler sets id to the cell", function() {
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
 
         td.trigger({
@@ -78,6 +83,7 @@
     });
 
     test("scheduler adds aria-label to the selected cell", function() {
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
 
         td.trigger({
@@ -91,6 +97,7 @@
 
     test("scheduler adds aria-label to the selected event", function() {
         createSampleEvent();
+          jasmine.clock().tick(1);
         var event = container.find(".k-event").eq(0);
 
         event.trigger({
@@ -102,6 +109,7 @@
     });
 
     test("scheduler adds aria-selected to the selected slot", function() {
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
 
         td.trigger({
@@ -114,6 +122,7 @@
 
     test("scheduler adds aria-selected to the selected event", function() {
         createSampleEvent();
+          jasmine.clock().tick(1);
         var event = container.find(".k-event").eq(0);
 
         event.trigger({
@@ -125,6 +134,7 @@
     });
 
     test("scheduler sets aria-activedescendant to the wrapper", function() {
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
 
         td.trigger({
@@ -136,6 +146,7 @@
     });
 
     test("scheduler removes id from current cell", function() {
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
         var td2 = container.find(".k-scheduler-content td").eq(1);
 
@@ -154,6 +165,7 @@
     });
 
     test("scheduler removes aria-label from current cell", function() {
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
         var td2 = container.find(".k-scheduler-content td").eq(1);
 
@@ -172,6 +184,7 @@
     });
 
     test("scheduler sets aria-selected to false on selection of other cell", function() {
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-content td:first");
         var td2 = container.find(".k-scheduler-content td").eq(1);
 

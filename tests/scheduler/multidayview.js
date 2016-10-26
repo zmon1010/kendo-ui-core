@@ -85,9 +85,11 @@
 
     module("Multi Day View rendering", {
         setup: function() {
+            jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (container.data("kendoMultiDayView")) {
                 container.data("kendoMultiDayView").destroy();
             }
@@ -260,7 +262,7 @@
                 }
             }
         });
-
+         jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -276,7 +278,7 @@
                 return data.text + data.value;
             }
         });
-
+         jasmine.clock().tick(1);
         var view = element.getKendoScheduler().view();
 
         equal(texts.indexOf("Room1"), 0);
@@ -312,7 +314,7 @@
                 }
             }
         });
-
+         jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -342,7 +344,7 @@
                 }
             }
         });
-
+         jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -372,7 +374,7 @@
                 }
             }
         });
-
+         jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -1282,7 +1284,7 @@
             views: [viewName],
             dataSource: []
         }).data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var view = scheduler.view().name;
         equal(viewName, view);
     });
@@ -1294,7 +1296,7 @@
             views: [viewName],
             dataSource: []
         }).data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var view = scheduler.view().name;
         equal(viewName, view);
     });
@@ -1306,7 +1308,7 @@
             views: [viewName],
             dataSource: []
         }).data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var view = scheduler.view().name;
         equal(viewName, view);
     });
@@ -1321,7 +1323,7 @@
             startTime: new Date("2013/6/6 01:00"),
             endTime: new Date("2013/6/6 00:59"),
         }).data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,2);
     });
@@ -1337,7 +1339,7 @@
             endTime: new Date("2013/6/6 00:59"),
             currentTimeMarker: false
         }).data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,0);
     });
@@ -1353,7 +1355,7 @@
             endTime: new Date("2013/6/6 00:59"),
             currentTimeMarker: true
         }).data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,0);
     });
@@ -1369,7 +1371,7 @@
         });
 
         var scheduler = element.data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,2);
     });
@@ -1409,7 +1411,7 @@
         });
 
         var scheduler = element.data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,2);
     });
@@ -1433,7 +1435,7 @@
                 title: "Room"
             }]
         });
-
+         jasmine.clock().tick(1);
         var scheduler = element.data("kendoScheduler");
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,0);
@@ -1448,7 +1450,7 @@
             startTime: new Date("2013/6/6 01:00"),
             endTime: new Date("2013/6/6 00:59"),
         });
-
+         jasmine.clock().tick(1);
         var scheduler = element.data("kendoScheduler");
         var timeElementsCount = scheduler.view().element.find(".k-current-time-arrow-right").length;
         equal(timeElementsCount,1);
@@ -1463,7 +1465,7 @@
             startTime: new Date("2013/6/6 01:00"),
             endTime: new Date("2013/6/6 00:59"),
         });
-
+         jasmine.clock().tick(1);
         var scheduler = element.data("kendoScheduler");
         var arrowLeftPosition = scheduler.view().element.find(".k-current-time-arrow-right").position().left;
         equal(scheduler.view().times.find("tr:first th:last").position().left,arrowLeftPosition);
@@ -1478,7 +1480,7 @@
             startTime: new Date("2013/6/6 01:00"),
             endTime: new Date("2013/6/6 00:59"),
         });
-
+         jasmine.clock().tick(1);
         var scheduler = element.data("kendoScheduler");
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,8);
@@ -1493,7 +1495,7 @@
             startTime: new Date("2013/6/6 01:00"),
             endTime: new Date("2013/6/6 00:59"),
         });
-
+         jasmine.clock().tick(1);
         var scheduler = element.data("kendoScheduler");
         var timeElementsCount = scheduler.view().element.find(".k-current-time-arrow-right").length;
         equal(timeElementsCount,4);
@@ -1501,10 +1503,12 @@
 
     module("Multi Day View event positioning", {
         setup: function() {
+            jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (container.data("kendoMultiDayView")) {
                 container.data("kendoMultiDayView").destroy();
             }
@@ -2434,9 +2438,9 @@
             date: new Date("2013/6/16"),
             dataSource: []
         }).data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         scheduler.toolbar.find(".k-nav-prev").click();
-
+        
         var view = scheduler.view();
         var row = view.content.find("tr:first");
         var offset = row.find("td:first").offset();
@@ -2453,9 +2457,9 @@
             date: new Date("2013/6/16"),
             dataSource: []
         }).data("kendoScheduler");
-
+          jasmine.clock().tick(1);
         scheduler.toolbar.find(".k-nav-next").click();
-
+       
         var view = scheduler.view();
         var row = view.content.find("tr:first");
         var offset = row.find("td:first").offset();
@@ -2473,7 +2477,7 @@
             date: new Date("2013/6/16"),
             dataSource: []
         }).data("kendoScheduler");
-
+                 jasmine.clock().tick(1);
         scheduler.toolbar.find(".k-nav-prev").click();
 
         var view = scheduler.view();
@@ -2492,9 +2496,9 @@
             date: new Date("2013/6/16"),
             dataSource: []
         }).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         scheduler.toolbar.find(".k-nav-next").click();
-
+         
         var view = scheduler.view();
         var row = view.content.find("tr:first");
         var offset = row.find("td:first").offset();
@@ -2515,7 +2519,7 @@
             date: new Date("2014/7/26"),
             dataSource: []
         }).data("kendoScheduler");
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var row = view.content.find("tr:first");
         var offset = row.find("td:first").offset();

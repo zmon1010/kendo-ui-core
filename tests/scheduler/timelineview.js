@@ -57,10 +57,12 @@
 
     module("Timeline View rendering", {
         setup: function() {
+            jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -234,7 +236,7 @@
                 }]
 
         });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.datesHeader.find("table tr:last").children().length,  view.content.find("table tr:first").children().length);
@@ -251,7 +253,7 @@
             ],
             mobile: "phone"
         });
-
+          jasmine.clock().tick(1);
         var oldViewName = scheduler.view().name;
         scheduler.view("day");
         var newViewName = scheduler.view().name;
@@ -286,7 +288,7 @@
                 }]
 
         });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.datesHeader.find("tr:first th:first").html(), "Resource1TEST");
@@ -319,7 +321,7 @@
                 }]
 
         });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.times.find("tr:first th:first").html(), "Resource1TEST");
@@ -352,7 +354,7 @@
                 }]
 
         });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var headerText = view.times.find("tr:first th:first").html();
 
@@ -386,7 +388,7 @@
                 }]
 
         });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.datesHeader.find("table tr:last").children().length,  view.content.find("table tr:first").children().length);
@@ -412,7 +414,7 @@
             eventHeight: 300,
             height:200
         });
-
+          jasmine.clock().tick(1);
         var timeElement = scheduler.view().element.find(".k-current-time").filter(":not(.k-current-time-arrow-down)");
 
         equal(timeElement.height(), timeElement.next().height() - 1);
@@ -466,7 +468,7 @@
                 }]
 
         });
-
+          jasmine.clock().tick(1);
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,2);
     });
@@ -486,7 +488,7 @@
                 }]
 
         });
-
+          jasmine.clock().tick(1);
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,0);
     });

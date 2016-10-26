@@ -7,6 +7,7 @@
 
     module("Selection", {
         setup: function() {
+            jasmine.clock().install();
             kendo.effects.disable();
 
             now = new Date();
@@ -24,11 +25,12 @@
                     { start: now, end: new Date(now.getTime() + (60 * 60 * 1000)), title: "Test" }
                 ]
             });
-
+            jasmine.clock().tick(1);
             container.focus();
         },
 
         teardown: function() {
+            jasmine.clock().uninstall();
           kendo.destroy(QUnit.fixture);
           kendo.effects.enable();
         }
@@ -139,7 +141,7 @@
             type: "mousedown",
             currentTarget: td
         });
-
+         jasmine.clock().tick(1);
         container.focusout();
 
         ok(!td.hasClass("k-state-focused"));
@@ -176,7 +178,7 @@
                 { type: "week", selected: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         secondScheduler.wrapper.focus();
         var td = secondContainer.find(".k-scheduler-content td:first");
         ok(td.hasClass("k-state-selected"));
@@ -187,7 +189,9 @@
         scheduler.dataSource.transport.data = [];
         scheduler.dataSource.data([]);
         delete scheduler._selection;
+
         scheduler.view("agenda");
+          jasmine.clock().tick(1);
         scheduler.wrapper.focus();
 
         equal(container.find(".k-state-selected").length, 0);
@@ -200,10 +204,10 @@
             type: "mousedown",
             currentTarget: td
         });
-
+          jasmine.clock().tick(1);
         container.focusout();
         container.focus();
-
+        jasmine.clock().tick(1);
         ok(td.hasClass("k-state-selected"));
         equal(container.find(".k-scheduler-content .k-state-selected").length, 1);
     });
@@ -391,6 +395,7 @@
 
     test("scheduler calls preventDefault on TAB", 1, function() {
         createSampleEvent();
+          jasmine.clock().tick(1);
         scheduler.wrapper.focus();
         keydown(keys.TAB, {
             preventDefault: function() {
@@ -413,6 +418,7 @@
 
     test("scheduler selects on moveToEvent", 1, function() {
         createSampleEvent();
+          jasmine.clock().tick(1);
         scheduler.wrapper.focus();
         var view = scheduler.view();
         stub(view, {
@@ -457,6 +463,7 @@
     }
 
     function selectEvent(evt) {
+        jasmine.clock().tick(10);
         scheduler._selection.events = [evt];
     }
 
@@ -512,7 +519,7 @@
         var end = new Date(now.setHours(11));
 
         stub(scheduler, "addEvent");
-
+        jasmine.clock().tick(1);
         scheduler.view().options.editable = false;
 
         $.extend(scheduler._selection, { start: start, end: end });
@@ -527,7 +534,7 @@
         var end = new Date(now.setHours(11));
 
         stub(scheduler, "addEvent");
-
+        jasmine.clock().tick(1);
         scheduler.view().options.editable = { create: false };
 
         $.extend(scheduler._selection, { start: start, end: end });
@@ -541,7 +548,7 @@
         var e = createSampleEvent();
 
         stub(scheduler, "editEvent");
-
+        jasmine.clock().tick(1);
         scheduler.view().options.editable = false;
 
         selectEvent(e);
@@ -555,7 +562,7 @@
         var e = createSampleEvent();
 
         stub(scheduler, "editEvent");
-
+        jasmine.clock().tick(1);
         scheduler.view().options.editable = { update: false };
 
         selectEvent(e);
@@ -567,7 +574,7 @@
 
     test("1 switches to day view", function() {
         keydown("1");
-
+        jasmine.clock().tick(1);
         equal(scheduler.view().title, "Day");
     });
 
@@ -575,15 +582,12 @@
         scheduler.view("day");
 
         keydown("2");
-
         equal(scheduler.view().title, "Week");
     });
 
     test("delete key triggers delete of event", function() {
         var e = createSampleEvent();
-
         stub(scheduler, "removeEvent");
-
         selectEvent(e);
 
         keydown(keys.DELETE);
@@ -593,27 +597,30 @@
 
     test("delete key does not delete event if editable:false", function() {
         var e = createSampleEvent();
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.options.editable = false;
 
         stub(scheduler, "removeEvent");
-
+        jasmine.clock().tick(1);
         selectEvent(e);
-
+        
         keydown(keys.DELETE);
 
         equal(scheduler.calls("removeEvent"), 0);
     });
 
     test("delete key does not delete event if destroy is disabled", function() {
+         jasmine.clock().tick(10);
         var e = createSampleEvent();
+        jasmine.clock().tick(10);
         var view = scheduler.view();
 
         view.options.editable = { destroy: false };
-
+         jasmine.clock().tick(10);
         stub(scheduler, "removeEvent");
-
+         jasmine.clock().tick(10);
         selectEvent(e);
 
         keydown(keys.DELETE);
@@ -623,11 +630,13 @@
 
     module("Selection events", {
         setup: function() {
+            jasmine.clock().install();
             container = $("<div />");
             QUnit.fixture.append(container);
         },
 
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -649,7 +658,7 @@
                 { start: today, end: end, title: "Test" }
             ]
         }, options);
-
+          jasmine.clock().tick(1);
         scheduler = new Scheduler(container, options);
     }
 
@@ -660,7 +669,7 @@
                 "month"
             ]
         });
-
+          jasmine.clock().tick(1);
         scheduler.wrapper.focus();
 
         scheduler.view("month");
@@ -675,7 +684,8 @@
 
     test("Scheduler raises change event on slot selection", 4, function() {
         setupWidget();
-
+           jasmine.clock().tick(1);
+        container.focus();
         scheduler.bind("change", function(e) {
             var selection = e;
             var td = container.find(".k-scheduler-header td").eq(5);
@@ -698,7 +708,7 @@
 
     test("Scheduler raises change event on shift + keydown navigation", 1, function() {
         setupWidget();
-
+          jasmine.clock().tick(1);
         container.focus();
 
         scheduler.bind("change", function(e) {
@@ -714,7 +724,8 @@
 
     test("Scheduler raises change event on event click", 2, function() {
         setupWidget();
-
+           jasmine.clock().tick(1);
+        container.focus();
         scheduler.bind("change", function(e) {
             var selection = e;
             var dataItem = scheduler.dataSource.view()[0];
@@ -756,7 +767,7 @@
 
     test("select event, slots argument is empty", 1, function() {
         setupWidget();
-
+          jasmine.clock().tick(1);
         var td = container.find(".k-scheduler-header td").eq(1);
 
         td.trigger({
@@ -823,9 +834,9 @@
             equal(resources.roomId, 2);
             equal(resources.roomId2, 4);
         });
-
+        jasmine.clock().tick(1);
         var event = scheduler.wrapper.find(".k-event");
-
+        jasmine.clock().tick(1);
         event.trigger({
             type: "mousedown",
             currentTarget: event
@@ -859,7 +870,7 @@
         ]
         });
 
-
+        jasmine.clock().tick(1);
         var event = scheduler.wrapper.find(".k-event").eq(0);
 
         event.trigger({
@@ -921,7 +932,7 @@
                 }
             ]
         });
-
+        jasmine.clock().tick(1);
         var wrapper = scheduler.wrapper;
         var cell = wrapper.find(".k-scheduler-content").find("tr:first").children().eq(20);
 
@@ -940,25 +951,30 @@
         equal(args.roomId2, 3);
     });
 
-    test("Scheduler raises change event on task click", 2, function() {
+    test("Scheduler raises change event on task click", 1, function() {
+        var eventsLength = 0;
+        var dataItem = null;
         setupWidget({
             views: ["agenda"]
         });
-
+          jasmine.clock().tick(1);
         scheduler.bind("change", function(e) {
             var selection = e;
             var dataItem = scheduler.dataSource.view()[0];
-
-            equal(selection.events.length, 1);
-            equal(selection.events[0], dataItem);
+             
+           eventsLength = selection.events.length;
         });
-
+        jasmine.clock().tick(1);
         var event = scheduler.wrapper.find(".k-task");
 
         event.trigger({
             type: "mousedown",
             currentTarget: event
         });
+
+        jasmine.clock().tick(1);
+         equal(eventsLength, 1);
+
     });
 
     test("Scheduler does not raise change event twice", 1, function() {
@@ -969,7 +985,7 @@
         scheduler.bind("change", function(e) {
             ok(true);
         });
-
+          jasmine.clock().tick(1);
         scheduler._createSelection(scheduler.wrapper.find(".k-task").parent());
         scheduler._select();
 
@@ -1001,7 +1017,7 @@
                 }
             ]
         });
-
+          jasmine.clock().tick(1);
         var td = $(scheduler.view().groups[1].getTimeSlotCollection(0).first().element);
 
         td.trigger({
@@ -1039,7 +1055,7 @@
                 }
             ]
         });
-
+          jasmine.clock().tick(1);
         var td = $(scheduler.view().groups[1].getTimeSlotCollection(0).first().element);
 
         td.trigger({
@@ -1054,11 +1070,13 @@
 
     module("Selection API", {
         setup: function() {
+            jasmine.clock().install();
             container = $("<div />");
             QUnit.fixture.append(container);
         },
 
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -1098,7 +1116,7 @@
                 }
             ]
         });
-
+          jasmine.clock().tick(1);
         var eventUid = scheduler.data()[0].uid;
 
         scheduler.select({
@@ -1108,7 +1126,7 @@
                 roomId: 2
             }
         });
-
+          jasmine.clock().tick(1);
         scheduler.wrapper.focus();
 
         ok(scheduler.wrapper.find("[data-uid=" + eventUid + "]").hasClass("k-state-selected"));
@@ -1151,7 +1169,7 @@
                 }
             ]
         });
-
+          jasmine.clock().tick(1);
         var eventUid = scheduler.data()[0].uid;
 
         scheduler.select({
@@ -1161,7 +1179,7 @@
                 roomId: 2
             }
         });
-
+          jasmine.clock().tick(1);
         scheduler.wrapper.focus();
 
         ok(scheduler.wrapper.find("[data-uid=" + eventUid + "]").closest("tr").hasClass("k-state-selected"));
@@ -1202,7 +1220,7 @@
                 }
             ]
         });
-
+          jasmine.clock().tick(1);
         var eventUid = scheduler.data()[0].uid;
 
         scheduler.select({
@@ -1219,6 +1237,7 @@
     });
 
     test("select method is returning current selection when no parameter is passed", function() {
+          jasmine.clock().tick(1);
         setupWidget({
             selectable: true,
             views: [
@@ -1226,14 +1245,14 @@
                 { type: "week", selected: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         var eventElement = container.find(".k-event");
-
+          jasmine.clock().tick(1);
         eventElement.trigger({
             type: "mousedown",
             currentTarget: eventElement
         });
-
+          jasmine.clock().tick(1);
         ok(eventElement.hasClass("k-state-selected"));
         equal(scheduler.select().events.length, 1);
     });
@@ -1246,7 +1265,7 @@
                 { type: "week", selected: true }
             ]
         });
-
+          jasmine.clock().tick(1);
         var eventElement = container.find(".k-event");
         var event = scheduler.dataSource.data()[0];
 
@@ -1266,7 +1285,7 @@
                 { type: "week", selected: true }
             ]
         });
-
+          jasmine.clock().tick(1);
         var eventElement = container.find(".k-event");
         var event = scheduler.dataSource.data()[0];
 
@@ -1293,7 +1312,7 @@
                 { type: "week", selected: true }
             ]
         });
-
+          jasmine.clock().tick(1);
         var start = new Date("2001-01-01T05:00:00.000Z");
         var end = new Date("2001-01-01T05:30:00.000Z");
         var view = scheduler.view();
@@ -1318,7 +1337,7 @@
                 { type: "week", selected: true }
             ]
         });
-
+          jasmine.clock().tick(1);
         var eventElement = container.find(".k-event");
         var event = scheduler.dataSource.data()[0];
 
@@ -1336,7 +1355,7 @@
                 { type: "week", selected: true }
             ]
         });
-
+          jasmine.clock().tick(1);
         var eventElement = container.find(".k-event");
         var event = scheduler.dataSource.data()[0];
 
@@ -1359,12 +1378,12 @@
             ],
             date: new Date("2001-01-01T00:00:00.000Z")
         });
+          jasmine.clock().tick(1);
 
         scheduler.select({
             events: ["invalidUID"]
         });
         scheduler.wrapper.focus();
-
         equal(scheduler.view().content.find("td.k-state-selected").length, 1);
         equal(scheduler.view().content.find("td.k-state-selected").index(), 0);
     });
@@ -1378,13 +1397,12 @@
             ],
             date: new Date("2001-01-01T00:00:00.000Z")
         });
-
+          jasmine.clock().tick(1);
         scheduler.select({
             start: new Date("2005-01-01T05:00:00.000Z"),
             end: new Date("2005-01-01T08:00:00.000Z")
         });
         scheduler.wrapper.focus();
-
         equal(scheduler.view().content.find(".k-state-selected").length, 1);
         equal(scheduler.view().content.find(".k-state-selected").index(), 0);
     });
@@ -1398,7 +1416,7 @@
             ],
             date: new Date("2001-01-01T00:00:00.000Z")
         });
-
+          jasmine.clock().tick(1);
         scheduler.select({
             start: new Date("2001-01-01T05:00:00.000Z"),
             end: new Date("2001-01-01T08:00:00.000Z"),
@@ -1419,7 +1437,7 @@
             ],
             date: new Date("2001-01-01T00:00:00.000Z")
         });
-
+          jasmine.clock().tick(1);
         var start = new Date("2001-01-01T05:00:00.000Z");
         var end = new Date("2001-01-01T05:30:00.000Z");
         var view = scheduler.view();
@@ -1448,13 +1466,13 @@
             }],
             date: new Date("2001-01-01T00:00:00.000Z")
         });
-
+          jasmine.clock().tick(1);
         scheduler.select({
             start: new Date("2001-01-01T10:00:00.000Z"),
             end: new Date("2001-01-01T11:00:00.000Z")
         });
+       
         scheduler.wrapper.focus();
-
         equal(scheduler.view().content.find(".k-state-selected").length, 0);
     });
 })();

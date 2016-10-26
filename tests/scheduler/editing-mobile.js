@@ -1,7 +1,7 @@
 (function() {
-   var Scheduler = kendo.ui.Scheduler,
-        SchedulerEvent = kendo.data.SchedulerEvent,
-        container;
+    var Scheduler = kendo.ui.Scheduler,
+         SchedulerEvent = kendo.data.SchedulerEvent,
+         container;
 
     function getDate(date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
@@ -9,12 +9,13 @@
 
     module("editing", {
         setup: function() {
+            jasmine.clock().install()
             kendo.UserEvents.minHold(50);
 
             container = $("<div>");
             container.appendTo(QUnit.fixture);
 
-            $.fn.press = function (x, y) {
+            $.fn.press = function(x, y) {
                 return triggerTouchEvent(this, "touchstart", {
                     pageX: x,
                     pageY: y,
@@ -22,7 +23,7 @@
                 })
             }
 
-            $.fn.move = function (x, y) {
+            $.fn.move = function(x, y) {
                 return triggerTouchEvent(this, "touchmove", {
                     pageX: x,
                     pageY: y,
@@ -30,7 +31,7 @@
                 })
             }
 
-            $.fn.release = function (x, y) {
+            $.fn.release = function(x, y) {
                 return triggerTouchEvent(this, "touchend", {
                     pageX: x,
                     pageY: y,
@@ -39,11 +40,16 @@
             }
 
             $.fn.tap = function(info) {
-                return this.trigger("click", { pageX: 10, pageY: 10});
+                return this.trigger("click", { pageX: 10, pageY: 10 });
             }
 
         },
         teardown: function() {
+            jasmine.clock().uninstall()
+            if (container.data("kendoScheduler")) {
+                container.data("kendoScheduler").destroy();
+            }
+            kendo.destroy(container);
             kendo.destroy(QUnit.fixture);
             kendo.UserEvents.minHold(800);
         }
@@ -53,14 +59,14 @@
         return new Scheduler(container,
             $.extend({
                 mobile: "tablet",
-                dataSource: [ { start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                dataSource: [{ start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
             }, options)
         );
     }
 
     test("edit form is wrapped within a view", 1, function() {
         var scheduler = setup();
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
 
         ok(scheduler._editor.container.closest(kendo.roleSelector("view")).length);
@@ -73,12 +79,13 @@
                 schema: {
                     model: {
                         fields: {
-                            description: { validation: { required: true} }
+                            description: { validation: { required: true } }
                         }
                     }
                 }
             }
         });
+        jasmine.clock().tick();
         var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
@@ -95,12 +102,13 @@
                 schema: {
                     model: {
                         fields: {
-                            description: { validation: { required: true, email: true} }
+                            description: { validation: { required: true, email: true } }
                         }
                     }
                 }
             }
         });
+        jasmine.clock().tick();
         var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
@@ -130,7 +138,7 @@
                 schema: {
                     model: {
                         fields: {
-                            foo: { validation: { required: true} }
+                            foo: { validation: { required: true } }
                         }
                     }
                 }
@@ -138,6 +146,7 @@
             views: ["day"]
         });
 
+        jasmine.clock().tick(10);
         var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
@@ -166,14 +175,14 @@
                 schema: {
                     model: {
                         fields: {
-                            foo: { validation: { required: true} }
+                            foo: { validation: { required: true } }
                         }
                     }
                 }
             },
             views: ["day"]
         });
-
+        jasmine.clock().tick(10);
         var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
@@ -186,6 +195,7 @@
 
     test("data-validate attribute value is set to the date/datetime pickers based on the isAllDay value", 4, function() {
         var scheduler = setup();
+        jasmine.clock().tick();
         scheduler.dataSource.view()[0].isAllDay = false;
 
         scheduler.editEvent(scheduler.dataSource.at(0));
@@ -195,7 +205,7 @@
         });
 
         scheduler._editor.container.find("[type*=datetime],[data-role=datetimepicker]").each(function() {
-            equal($(this).attr("data-validate"),"true");
+            equal($(this).attr("data-validate"), "true");
         });
     });
 
@@ -209,6 +219,7 @@
 
     test("editEvent binds toggleValidation change handler to model", function() {
         var scheduler = setup();
+        jasmine.clock().tick();
         var model = scheduler.dataSource.at(0);
         scheduler.editEvent(model.uid);
         ok($.inArray(scheduler._editor.toggleDateValidationHandler, model._events.change) >= 0);
@@ -220,6 +231,7 @@
                 e.preventDefault();
             }
         });
+        jasmine.clock().tick();
         var model = scheduler.dataSource.at(0);
         scheduler.editEvent(model.uid);
         ok($.inArray(scheduler._editor.toggleDateValidationHandler, model._events.change) < 0);
@@ -227,6 +239,7 @@
 
     test("cancleEvent unbinds toggleValidation change handler from model", function() {
         var scheduler = setup();
+        jasmine.clock().tick();
         var model = scheduler.dataSource.at(0);
         scheduler.editEvent(model.uid);
         scheduler.cancelEvent();
@@ -235,6 +248,7 @@
 
     test("changing isAllDay value updates pickers data-validation attribute", 8, function() {
         var scheduler = setup();
+        jasmine.clock().tick();
         var model = scheduler.dataSource.at(0);
         model.isAllDay = false;
         scheduler.editEvent(model.uid);
@@ -263,14 +277,14 @@
         var scheduler = setup();
 
         var close = stub(scheduler._editor, { close: scheduler._editor.close });
-
         scheduler.editEvent(scheduler.dataSource.at(0));
-        scheduler.cancelEvent();
 
+        scheduler.cancelEvent();
+        jasmine.clock().tick();
         equal(close.calls("close"), 1);
     });
 
-    test("editable is destroyed on close",1, function() {
+    test("editable is destroyed on close", 1, function() {
         var scheduler = setup();
 
         scheduler.editEvent(scheduler.dataSource.at(0));
@@ -283,7 +297,7 @@
         var scheduler = setup();
 
         scheduler._editor.options.animations = {};
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
         scheduler.cancelEvent();
 
@@ -296,11 +310,11 @@
                 ok(true);
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
     });
 
-    test("preventing the edit form opening calls cancel event",  function() {
+    test("preventing the edit form opening calls cancel event", function() {
         var scheduler = setup({
             edit: function(e) {
                 e.preventDefault();
@@ -308,7 +322,7 @@
         });
 
         var cancel = stub(scheduler, "cancelEvent");
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
 
         equal(cancel.calls("cancelEvent"), 2);
@@ -318,7 +332,7 @@
         var scheduler = setup();
 
         var cancel = stub(scheduler, "cancelEvent");
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
 
         scheduler._editor.container.find(".k-scheduler-cancel").click();
@@ -330,7 +344,7 @@
         var scheduler = setup();
 
         var save = stub(scheduler, "saveEvent");
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
 
         scheduler._editor.container.find(".k-scheduler-update").click();
@@ -344,7 +358,7 @@
                 template: "my custom edit form"
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
 
         equal(scheduler._editor.container.find(kendo.roleSelector("content")).text(), "my custom edit formDelete");
@@ -354,7 +368,7 @@
         var scheduler = setup({ editable: { destroy: false } });
 
         var remove = stub(scheduler, "removeEvent");
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
 
         ok(!scheduler._editor.container.find(".k-scheduler-delete").length);
@@ -364,7 +378,7 @@
         var scheduler = setup();
 
         var remove = stub(scheduler, "removeEvent");
-
+        jasmine.clock().tick();
         var model = scheduler.dataSource.add({});
 
         scheduler.editEvent(model);
@@ -376,7 +390,7 @@
         var scheduler = setup();
 
         var remove = stub(scheduler, "removeEvent");
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0));
 
         scheduler._editor.container.find(".k-scheduler-delete").click();
@@ -386,7 +400,7 @@
 
     test("delete dialog does not show additional cancel button", function() {
         var scheduler = setup();
-
+        jasmine.clock().tick();
         var showDialog = stub(scheduler._editor, "showDialog");
 
         scheduler.editEvent(scheduler.dataSource.at(0));
@@ -397,7 +411,7 @@
 
     test("tapping event calls editEvent in day view", function() {
         var scheduler = setup();
-
+        jasmine.clock().tick();
         var editEvent = stub(scheduler, "editEvent");
 
         scheduler.element.find(".k-event").tap();
@@ -405,104 +419,102 @@
         ok(editEvent.calls("editEvent"));
     });
 
-    asyncTest("tap and hold on event add class to the element", function() {
+    test("tap and hold on event add class to the element", function() {
         var scheduler = setup();
-
+        jasmine.clock().tick(10);
         var eventElement = scheduler.element.find(".k-event");
 
         eventElement.press(10, 10);
+        jasmine.clock().tick(100);
+        eventElement.release(10, 10);
+        ok(eventElement.hasClass("k-event-active"));
 
-        setTimeout(function() {
-            start();
-            eventElement.release(10, 10);
-            ok(eventElement.hasClass("k-event-active"));
-        }, 100);
     });
 
-    asyncTest("tap and hold on diffrent event cancel hold of the prev event", function() {
+    test("tap and hold on diffrent event cancel hold of the prev event", function() {
         var scheduler = setup({
-                dataSource: [
-                    { start: new Date(), end: new Date(), title: "my event" },
-                    { start: new Date(), end: new Date(), title: "my second event" }  ]
-            });
+            dataSource: [
+                { start: new Date(), end: new Date(), title: "my event" },
+                { start: new Date(), end: new Date(), title: "my second event" }]
+        });
 
+        jasmine.clock().tick(10);
         var eventElement = scheduler.element.find(".k-event").first();
 
         eventElement.press(10, 10);
+        jasmine.clock().tick(100);
+        eventElement.release(10, 10);
 
-        setTimeout(function() {
-            eventElement.release(10, 10);
+        eventElement = scheduler.element.find(".k-event").last();
 
-            eventElement = scheduler.element.find(".k-event").last();
+        eventElement.press(10, 10);
+        jasmine.clock().tick(100);
 
-            eventElement.press(10, 10);
+        eventElement.release(10, 10);
 
-            setTimeout(function() {
-                start();
-                eventElement.release(10, 10);
+        equal(scheduler.element.find(".k-event-active").length, 1);
+        ok(eventElement.hasClass("k-event-active"));
 
-                equal(scheduler.element.find(".k-event-active").length, 1);
-                ok(eventElement.hasClass("k-event-active"));
-            }, 100);
-        }, 100);
     });
 
-    asyncTest("tap and hold on event add class to the element if move is disabled", function() {
+  test("tap and hold on event add class to the element if move is disabled", function() {
         var scheduler = setup({ editable: { move: false } });
-
+        jasmine.clock().tick(10);
         var eventElement = scheduler.element.find(".k-event");
 
         eventElement.press(10, 10);
 
-        setTimeout(function() {
-            start();
+        jasmine.clock().tick(100);
             eventElement.release(10, 10);
             ok(eventElement.hasClass("k-event-active"));
-        }, 100);
     });
 
-    asyncTest("move on diffrent event cancel hold of the prev event", function() {
+    test("move on diffrent event cancel hold of the prev event", function() {
         var scheduler = setup({
-                dataSource: [
-                    { start: new Date(), end: new Date(), title: "my event" },
-                    { start: new Date(), end: new Date(), title: "my second event" }  ]
-            });
-
+            dataSource: [
+                { start: new Date(), end: new Date(), title: "my event" },
+                { start: new Date(), end: new Date(), title: "my second event" }]
+        });
+        jasmine.clock().tick(10);
         var eventElement = scheduler.element.find(".k-event").first();
 
         eventElement.press(10, 10);
 
-        setTimeout(function() {
-            eventElement.release(10, 10);
+        //  setTimeout(function() {
+        eventElement.release(10, 10);
 
-            var nextEventElement = scheduler.element.find(".k-event").last();
+        var nextEventElement = scheduler.element.find(".k-event").last();
 
-            nextEventElement.press(10, 10);
-            nextEventElement.move(20, 20);
+        nextEventElement.press(10, 10);
+        nextEventElement.move(20, 20);
 
-            start();
-            ok(!scheduler.element.find(".k-event-active").length);
+        //    start();
+        ok(!scheduler.element.find(".k-event-active").length);
 
-        }, 100);
+        //  }, 100);
     });
 
     module("Timezone editing", {
         setup: function() {
-            var scriptTag = $("script:last");
-
-            container = document.createElement("div");
-            QUnit.fixture[0].appendChild(container);
+            jasmine.clock().install()
+            container = $("<div>");
+            container.appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall()
+            if (container.data("kendoScheduler")) {
+                container.data("kendoScheduler").destroy();
+            }
+            kendo.destroy(container);
             kendo.destroy(QUnit.fixture);
-            $(".k-widget").remove();
         }
     });
 
     test("Render Timezone field", function() {
-        var scheduler = setup(),
-            event = scheduler.dataSource.data()[0],
-            uid = event.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var event = scheduler.dataSource.data()[0],
+        uid = event.uid;
 
         event.isAllDay = false;
 
@@ -514,10 +526,11 @@
     });
 
     test("Render Timezone button with startTimezone id as a text", function() {
-        var scheduler = setup(),
-            event = scheduler.dataSource.data()[0],
-            tzid = "America/Toronto",
-            uid = event.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var event = scheduler.dataSource.data()[0],
+        tzid = "America/Toronto",
+        uid = event.uid;
 
         event.isAllDay = false;
         event.startTimezone = tzid;
@@ -530,9 +543,10 @@
     });
 
     test("Hide Timezone field if isAllDay", function() {
-        var scheduler = setup(),
-            event = scheduler.dataSource.data()[0],
-            uid = event.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var event = scheduler.dataSource.data()[0],
+        uid = event.uid;
 
         event.isAllDay = true;
 
@@ -543,9 +557,10 @@
     });
 
     test("Show Timezone field if it isn't allDay", function() {
-        var scheduler = setup(),
-            event = scheduler.dataSource.data()[0],
-            uid = event.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var event = scheduler.dataSource.data()[0],
+        uid = event.uid;
 
         event.isAllDay = false;
 
@@ -556,9 +571,10 @@
     });
 
     test("Show Timezone field on isAllDay change", function() {
-        var scheduler = setup(),
-            event = scheduler.dataSource.data()[0],
-            uid = event.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var event = scheduler.dataSource.data()[0],
+        uid = event.uid;
 
         event.isAllDay = true;
 
@@ -571,8 +587,9 @@
     });
 
     test("Render start and end timezone editors", function() {
-        var scheduler = setup(),
-            uid = scheduler.dataSource.data()[0].uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var uid = scheduler.dataSource.data()[0].uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -585,8 +602,9 @@
     });
 
     test("Click Timezone anchor creates timezone popup", function() {
-        var scheduler = setup(),
-            uid = scheduler.dataSource.data()[0].uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var uid = scheduler.dataSource.data()[0].uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -601,16 +619,17 @@
     test("Mobile recurrenceEditor End label can be localized", function() {
         var mobileEndMessage = "cusom",
             scheduler = setup({
-                        messages: {
-                                recurrenceEditor: {
-                                    end: {
-                                        mobileLabel: mobileEndMessage
-                                    }
-                                }
-                            }
-                        }),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+                messages: {
+                    recurrenceEditor: {
+                        end: {
+                            mobileLabel: mobileEndMessage
+                        }
+                    }
+                }
+            });
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+          uid = model.uid;
 
         scheduler.editEvent(uid);
 
@@ -620,9 +639,10 @@
     });
 
     test("Mobile recurrenceEditor End label is loaded correctly", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         scheduler.editEvent(uid);
 
@@ -633,9 +653,10 @@
 
 
     test("Render popup editor with disabled checkbox", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
         scheduler.editEvent(uid);
@@ -649,9 +670,10 @@
     });
 
     test("Show second mobiletimezoneeditor if model.endTimezone is defined", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         model.isAllDay = false;
         scheduler.editEvent(uid);
@@ -663,9 +685,10 @@
     });
 
     test("Select correct timezone if startTimezone is defined", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         model.isAllDay = false;
 
@@ -687,6 +710,7 @@
                 }
             }
         });
+        jasmine.clock().tick();
         var model = scheduler.dataSource.data()[0];
         var uid = model.uid;
 
@@ -700,9 +724,10 @@
     });
 
     test("Click cancel reverts timezones to last selected", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        model = scheduler.dataSource.data()[0],
+        uid = model.uid;
 
         model.isAllDay = false;
         scheduler.editEvent(uid);
@@ -721,8 +746,9 @@
     });
 
     test("Click save button updates text of the timezone button", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
             uid = model.uid;
 
         model.isAllDay = false;
@@ -740,9 +766,10 @@
     });
 
     test("Select start timezone enables checkbox", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup({});
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         model.isAllDay = false;
         scheduler.editEvent(uid);
@@ -754,65 +781,71 @@
 
         editor.value("America/Toronto");
         editor.trigger("change");
-
         ok(!checkbox.prop("disabled"));
     });
 
     test("Clear start timezone disables checkbox and clears end timezone", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup({});
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+        uid = model.uid;
 
         model.isAllDay = false;
         scheduler.editEvent(uid);
 
         $(".k-timezone-button").click();
 
-        var start = $("[data-role=mobiletimezoneeditor]:first").data("kendoMobileTimezoneEditor");
+        var startTime = $("[data-role=mobiletimezoneeditor]:first").data("kendoMobileTimezoneEditor");
         var end = $("[data-role=mobiletimezoneeditor]:last").data("kendoMobileTimezoneEditor");
         var checkbox = $(".k-timezone-toggle");
 
-        start.value("America/Toronto");
-        start.trigger("change");
+        startTime.value("America/Toronto");
+        startTime.trigger("change");
 
         checkbox.click();
         end.value("America/Toronto");
         end.trigger("change");
 
-        start.value("");
-        start.trigger("change");
+        startTime.value("");
+        startTime.trigger("change");
 
         ok(checkbox.prop("disabled"));
         ok(!model.endTimezone);
         ok(!end.wrapper.parent(".k-edit-field").is(":visible"));
+
     });
 
     test("Click checkbox toggles endTimezone editor widget", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup({});
+
+        jasmine.clock().tick(20);
+        var model = scheduler.dataSource.data()[0],
+          uid = model.uid;
 
         model.isAllDay = false;
+
         scheduler.editEvent(uid);
 
         $(".k-timezone-button").click();
 
-        var start = $("[data-role=mobiletimezoneeditor]:first").data("kendoMobileTimezoneEditor");
+
+        var startTime = $("[data-role=mobiletimezoneeditor]:first").data("kendoMobileTimezoneEditor");
         var end = $("[data-role=mobiletimezoneeditor]:last").data("kendoMobileTimezoneEditor");
         var checkbox = $(".k-timezone-toggle");
 
-        start.value("America/Toronto");
-        start.trigger("change");
 
+
+        startTime.value("America/Toronto");
+        startTime.trigger("change");
         checkbox.triggerHandler("click");
 
         end.value("America/Toronto");
         end.trigger("change");
 
+
         equal(model.endTimezone, "America/Toronto");
 
         checkbox.triggerHandler("click");
-
         ok(!end.wrapper.closest(".k-edit-field").is(":visible"));
         ok(!model.endTimezone);
     });

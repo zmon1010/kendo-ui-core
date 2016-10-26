@@ -59,11 +59,13 @@
 
     module("Month View rendering", {
         setup: function() {
+            jasmine.clock().install();
             container = document.createElement("div");
             QUnit.fixture[0].appendChild(container);
             container = $(container).addClass("k-scheduler");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (container.data("kendomonth")) {
                 container.data("kendomonth").destroy();
             }
@@ -552,7 +554,7 @@
                 }
             }
         });
-
+         jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -568,7 +570,7 @@
                 return data.text + data.value;
             }
         });
-
+         jasmine.clock().tick(1);
         var view = element.getKendoScheduler().view();
 
         equal(texts.indexOf("Room1"), 0);
@@ -606,7 +608,7 @@
                 }
             }
         });
-
+         jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 

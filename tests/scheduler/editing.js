@@ -1,8 +1,8 @@
 (function() {
-   var Scheduler = kendo.ui.Scheduler,
-       SchedulerEvent = kendo.data.SchedulerEvent,
-       timezone = kendo.timezone,
-       container;
+    var Scheduler = kendo.ui.Scheduler,
+        SchedulerEvent = kendo.data.SchedulerEvent,
+        timezone = kendo.timezone,
+        container;
 
     function getDate(date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
@@ -10,10 +10,12 @@
 
     module("editing", {
         setup: function() {
+            jasmine.clock().install();
             container = $("<div>");
             kendo.effects.disable();
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
             kendo.effects.enable();
         }
@@ -24,7 +26,7 @@
             $.extend({
                 data: new Date(),
                 dataSource: {
-                    data: [ { start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                    data: [{ start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
                 }
             }, options)
         );
@@ -35,10 +37,10 @@
         date.setHours(10);
         var scheduler = setup({
             dataSource: {
-                data: [ { id:1, recurrenceRule: "FREQ=DAILY;BYHOUR=10,12,14;", start: date, end: date, title: "my event" } ]
+                data: [{ id: 1, recurrenceRule: "FREQ=DAILY;BYHOUR=10,12,14;", start: date, end: date, title: "my event" }]
             }
         });
-
+        jasmine.clock().tick();
         var uid = scheduler.wrapper.find(".k-event:first").data("uid");
 
         var occurrence = scheduler.occurrenceByUid(uid);
@@ -49,10 +51,10 @@
     test("occurrenceByUid method searches in scheduler._data events", function() {
         var scheduler = setup({
             dataSource: {
-                data: [ { id:1, recurrenceRule: "FREQ=DAILY;BYHOUR=10,12,14;", start: kendo.date.today(), end: kendo.date.today(), title: "my event" } ]
+                data: [{ id: 1, recurrenceRule: "FREQ=DAILY;BYHOUR=10,12,14;", start: kendo.date.today(), end: kendo.date.today(), title: "my event" }]
             }
         });
-
+        jasmine.clock().tick();
         var uid = scheduler.wrapper.find(".k-event:last").data("uid");
 
         var occurrence = scheduler.occurrenceByUid(uid);
@@ -61,9 +63,10 @@
     });
 
     test("adding model updates the view", function() {
-        var scheduler = setup(),
-            dataSource = scheduler.dataSource,
-            render = stub(scheduler.view(), "render");
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var dataSource = scheduler.dataSource,
+        render = stub(scheduler.view(), "render");
 
         dataSource.add({});
 
@@ -76,7 +79,7 @@
         var scheduler = setup(),
             dataSource = scheduler.dataSource,
             addEvent = stub(scheduler, "addEvent");
-
+        jasmine.clock().tick();
         var cell = scheduler.view().content.find("td").first();
         cell.trigger({ type: "dblclick", pageX: cell.offset().left, pageY: cell.offset().top });
 
@@ -109,10 +112,10 @@
 
     test("cancelling addEvent prevent adding the event to the DataSource", function() {
         var scheduler = setup({
-                add: function(e) {
-                    e.preventDefault();
-                }
-            }),
+            add: function(e) {
+                e.preventDefault();
+            }
+        }),
             dataSource = scheduler.dataSource,
             add = stub(dataSource, "add");
 
@@ -126,19 +129,19 @@
             dataSource = scheduler.dataSource;
 
         scheduler.addEvent({ isAllDay: true, start: new Date(2013, 1, 13, 0, 0, 0), end: new Date(2013, 1, 13, 0, 0, 0) });
-
+        jasmine.clock().tick();
         equal(dataSource.at(0).isAllDay, true);
     });
 
     test("dblclicking on event calls editEvent", function() {
         var scheduler = setup({
-                dataSource: {
-                    data: [ { start: new Date(), end: new Date(), title: "my event" } ]
-                }
-            }),
+            dataSource: {
+                data: [{ start: new Date(), end: new Date(), title: "my event" }]
+            }
+        }),
             dataSource = scheduler.dataSource,
             editEvent = stub(scheduler, "editEvent");
-
+        jasmine.clock().tick();
         scheduler.view().content.find(".k-event").first().dblclick();
 
         equal(editEvent.calls("editEvent"), 1);
@@ -148,7 +151,7 @@
         var scheduler = setup(),
             dataSource = scheduler.dataSource,
             editEvent = stub(scheduler, "editEvent");
-
+        jasmine.clock().tick();
         scheduler.view().datesHeader.find(".k-event").first().dblclick();
 
         equal(editEvent.calls("editEvent"), 1);
@@ -156,7 +159,7 @@
 
     test("editEvent creates window instance", function() {
         var scheduler = setup();
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         ok(scheduler._editor.container.data("kendoWindow"));
@@ -164,6 +167,7 @@
 
     test("default settings are applied to the window", function() {
         var scheduler = setup();
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var wnd = scheduler._editor.container.data("kendoWindow");
@@ -176,7 +180,7 @@
 
     test("custom settings are applied to the window", function() {
         var scheduler = setup({ editable: { window: { title: "foo" } } });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var wnd = scheduler._editor.container.data("kendoWindow");
@@ -186,7 +190,7 @@
 
     test("correct model is passed to the editable instance", function() {
         var scheduler = setup({ editable: { window: { title: "foo" } } });
-
+        jasmine.clock().tick();
         var event = scheduler.dataSource.at(0);
         scheduler.editEvent(event.uid);
 
@@ -196,12 +200,12 @@
 
     test("custom template is used if specified", 1, function() {
         var scheduler = setup({
-            editable: { template:'<div id="foo">#=title#</div>' },
+            editable: { template: '<div id="foo">#=title#</div>' },
             edit: function(e) {
                 equal(e.container.find("#foo").text(), "my event");
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
     });
 
@@ -209,10 +213,10 @@
         var scheduler = setup({
             editable: { template: kendo.template('<div id="foo"></div>') },
             edit: function(e) {
-               equal(e.container.find("#foo").length, 1);
+                equal(e.container.find("#foo").length, 1);
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
     });
 
@@ -222,7 +226,7 @@
                 e.preventDefault();
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
         ok(!scheduler._editor.editable);
     });
@@ -235,18 +239,19 @@
         });
 
         scheduler.addEvent({ start: new Date(), end: new Date() });
+        jasmine.clock().tick();
         equal(scheduler.dataSource.data().length, 1);
     });
 
     test("update and cancel buttons are added if template is set", 2, function() {
         var scheduler = setup({
-            editable: { template:"<div>#=title#</div>" },
+            editable: { template: "<div>#=title#</div>" },
             edit: function(e) {
                 equal(e.container.find("a.k-scheduler-update").length, 1);
                 equal(e.container.find("a.k-scheduler-cancel").length, 1);
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
     });
 
@@ -256,13 +261,13 @@
                 save: "myUpdate",
                 cancel: "myCancel"
             },
-            editable: { template:"<div>#=title#</div>" },
+            editable: { template: "<div>#=title#</div>" },
             edit: function(e) {
                 equal(e.container.find("a.k-scheduler-update").text(), "myUpdate");
                 equal(e.container.find("a.k-scheduler-cancel").text(), "myCancel");
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
     });
 
@@ -273,7 +278,7 @@
                 equal(e.container.find("a.k-scheduler-delete").length, 1);
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
     });
 
@@ -286,19 +291,19 @@
                 ok(!e.container.find("a.k-scheduler-delete").length);
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
     });
 
 
     test("destroy button is added to the popUp editor if template is set", 1, function() {
         var scheduler = setup({
-            editable: { template:"<div>#=title#</div>" },
+            editable: { template: "<div>#=title#</div>" },
             edit: function(e) {
                 equal(e.container.find("a.k-scheduler-delete").length, 1);
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
     });
 
@@ -307,19 +312,19 @@
             messages: {
                 destroy: "myDestroy"
             },
-            editable: { template:"<div>#=title#</div>" },
+            editable: { template: "<div>#=title#</div>" },
             edit: function(e) {
                 equal(e.container.find("a.k-scheduler-delete").text(), "myDestroy");
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
     });
 
     test("clicking destroy button in popUp editor calls delete event", function() {
         var scheduler = setup(),
             saveEvent = stub(scheduler, "removeEvent");
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         scheduler._editor.container.find("a.k-scheduler-delete").click();
@@ -339,7 +344,7 @@
     test("clicking update buttons calls update event", function() {
         var scheduler = setup(),
             saveEvent = stub(scheduler, "saveEvent");
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         scheduler._editor.container.find("a.k-scheduler-update").click();
@@ -350,7 +355,7 @@
     test("clicking cancel buttons calls cancel event", function() {
         var scheduler = setup(),
             cancelEvent = stub(scheduler, "cancelEvent");
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         scheduler._editor.container.find("a.k-scheduler-cancel").click();
@@ -359,9 +364,10 @@
     });
 
     test("clicking close button of the window calls cancelEvent", function() {
-        var scheduler = setup(),
-            eventElement = scheduler.dataSource.at(0).uid,
-            cancelEvent = stub(scheduler, "cancelEvent");
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid,
+          cancelEvent = stub(scheduler, "cancelEvent");
 
         scheduler.editEvent(eventElement);
 
@@ -372,9 +378,10 @@
     });
 
     test("editEvent call cancelEvent", function() {
-        var scheduler = setup(),
-            eventElement = scheduler.dataSource.at(0).uid,
-            cancelEvent = stub(scheduler, "cancelEvent");
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid,
+        cancelEvent = stub(scheduler, "cancelEvent");
 
         scheduler.editEvent(eventElement);
 
@@ -382,8 +389,9 @@
     });
 
     test("cancelEvent closes the popup", 2, function() {
-        var scheduler = setup(),
-            eventElement = scheduler.dataSource.at(0).uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
 
@@ -404,7 +412,7 @@
                 ok(e.container.length);
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         scheduler._editor.container.find("a.k-scheduler-cancel").click();
@@ -415,8 +423,9 @@
             cancel: function(e) {
                 e.preventDefault();
             }
-        }),
-        eventElement = scheduler.dataSource.at(0).uid;
+        });
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
 
@@ -431,8 +440,9 @@
                 equal(e.event, this.dataSource.at(0));
                 ok(e.container.length);
             }
-        }),
-        eventElement = scheduler.dataSource.at(0).uid;
+        });
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
 
@@ -444,8 +454,9 @@
             cancel: function(e) {
                 e.preventDefault();
             }
-        }),
-        eventElement = scheduler.dataSource.at(0).uid;
+        });
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
         scheduler._editor.container.parent().find(".k-i-close").click();
@@ -454,8 +465,9 @@
     });
 
     test("saveEvent calls validate", function() {
-         var scheduler = setup(),
-            eventElement = scheduler.dataSource.at(0).uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
 
@@ -472,15 +484,18 @@
                 template: "<input/>"
             },
             dataSource: {
-                    data: [ { start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ],
-                    schema: {
-                        model: {
-                            fields: {
-                                title: { validation: { custom: function() { return false; } } }
-                            }
+                data: [{ start: new Date(), end: new Date(), isAllDay: true, title: "my event" }],
+                schema: {
+                    model: {
+                        fields: {
+                            title: { validation: { custom: function() { return false; } } }
                         }
-            }}}),
-            eventElement = scheduler.dataSource.at(0).uid;
+                    }
+                }
+            }
+        });
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
 
@@ -491,17 +506,18 @@
 
     test("validation rules for description field are executed", function() {
         var scheduler = setup({
-                dataSource: {
-                    data: [{ start: new Date(), end: new Date(), isAllDay: true, title: "", description: "" }],
-                    schema: {
-                        model: {
-                            fields: {
-                                description: { validation: { required: true} }
-                            }
+            dataSource: {
+                data: [{ start: new Date(), end: new Date(), isAllDay: true, title: "", description: "" }],
+                schema: {
+                    model: {
+                        fields: {
+                            description: { validation: { required: true } }
                         }
                     }
                 }
+            }
         });
+        jasmine.clock().tick();
         var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
@@ -518,12 +534,13 @@
                 schema: {
                     model: {
                         fields: {
-                            description: { validation: { required: true, email: true} }
+                            description: { validation: { required: true, email: true } }
                         }
                     }
                 }
             }
         });
+        jasmine.clock().tick();
         var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
@@ -535,8 +552,9 @@
     });
 
     test("saveEvent calls DataSource sync", function() {
-        var scheduler = setup(),
-            eventElement = scheduler.dataSource.at(0).uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
 
@@ -552,8 +570,9 @@
             save: function(e) {
                 e.preventDefault();
             }
-        }),
-        eventElement = scheduler.dataSource.at(0).uid;
+        });
+        jasmine.clock().tick();
+        var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
 
@@ -572,7 +591,7 @@
 
     test("all fields are wrapped", function() {
         var scheduler = setup();
-
+        jasmine.clock().tick();
         scheduler.dataSource.view()[0].isAllDay = false;
 
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
@@ -589,7 +608,7 @@
 
     test("data-validate attribute value is set to the date/datetime pickers based on the isAllDay value", 4, function() {
         var scheduler = setup();
-
+        jasmine.clock().tick();
         scheduler.dataSource.view()[0].isAllDay = false;
 
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
@@ -599,13 +618,13 @@
         });
 
         scheduler._editor.container.find("[data-role=datetimepicker]").each(function() {
-            equal($(this).attr("data-validate"),"true");
+            equal($(this).attr("data-validate"), "true");
         });
     });
 
     test("addEvent binds toggleValidation change handler to model", function() {
         var scheduler = setup();
-
+        jasmine.clock().tick();
         scheduler.addEvent({ start: new Date(), end: new Date() });
         var model = scheduler._editor.editable.options.model;
         ok($.inArray(scheduler._editor.toggleDateValidationHandler, model._events.change) >= 0);
@@ -613,6 +632,7 @@
 
     test("editEvent binds toggleValidation change handler to model", function() {
         var scheduler = setup();
+        jasmine.clock().tick();
         var model = scheduler.dataSource.at(0);
         scheduler.editEvent(model.uid);
         ok($.inArray(scheduler._editor.toggleDateValidationHandler, model._events.change) >= 0);
@@ -624,6 +644,7 @@
                 e.preventDefault();
             }
         });
+        jasmine.clock().tick();
         var model = scheduler.dataSource.at(0);
         scheduler.editEvent(model.uid);
         ok($.inArray(scheduler._editor.toggleDateValidationHandler, model._events.change) < 0);
@@ -631,6 +652,7 @@
 
     test("cancleEvent unbinds toggleValidation change handler from model", function() {
         var scheduler = setup();
+        jasmine.clock().tick();
         var model = scheduler.dataSource.at(0);
         scheduler.editEvent(model.uid);
         scheduler.cancelEvent();
@@ -639,6 +661,7 @@
 
     test("changing isAllDay value updates pickers data-validation attribute", 8, function() {
         var scheduler = setup();
+        jasmine.clock().tick();
         var model = scheduler.dataSource.at(0);
         model.isAllDay = false;
         scheduler.editEvent(model.uid);
@@ -666,11 +689,11 @@
     test("non editable field value is shown", function() {
         var scheduler = setup({
             dataSource: {
-                data: [ { start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ],
-                schema: { model: { fields: { title: { editable:false } } } }
+                data: [{ start: new Date(), end: new Date(), isAllDay: true, title: "my event" }],
+                schema: { model: { fields: { title: { editable: false } } } }
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var container = scheduler._editor.container.children("div.k-edit-form-container");
@@ -686,10 +709,10 @@
     test("render description editor if exists", function() {
         var scheduler = setup({
             dataSource: {
-                data: [ { start: new Date(), end: new Date(), isAllDay: true, title: "my event", description: "foo" } ]
+                data: [{ start: new Date(), end: new Date(), isAllDay: true, title: "my event", description: "foo" }]
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var container = scheduler._editor.container.children("div.k-edit-form-container");
@@ -707,7 +730,7 @@
                 ]
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var container = scheduler._editor.container.children("div.k-edit-form-container");
@@ -719,10 +742,10 @@
     test("recurrence editor is rendered if recurrenceRule property exists", function() {
         var scheduler = setup({
             dataSource: {
-                data: [ { start: new Date(), end: new Date(), isAllDay: true, title: "my event", recurrenceRule: ""} ]
+                data: [{ start: new Date(), end: new Date(), isAllDay: true, title: "my event", recurrenceRule: "" }]
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var container = scheduler._editor.container.children("div.k-edit-form-container");
@@ -733,10 +756,12 @@
 
     module("recurrence editing", {
         setup: function() {
+            jasmine.clock().install();
             kendo.effects.disable();
             container = $("<div>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
             kendo.effects.enable();
         }
@@ -749,18 +774,18 @@
             views: ["week"],
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: exception}),
-                    new SchedulerEvent({ id: 2, recurrenceId: 1, start: startDate, end: new Date(), title: "my event"})
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: exception }),
+                    new SchedulerEvent({ id: 2, recurrenceId: 1, start: startDate, end: new Date(), title: "my event" })
                 ]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.dataSource.at(1).uid;
         scheduler.editEvent(eventUID);
 
         $(".k-window .k-button:first").click();
         $(".k-window .k-scheduler-delete").click();
-
+         jasmine.clock().tick();
         var windows = $(".k-window");
         var confirmationWindow = $(windows[1]);
 
@@ -774,11 +799,11 @@
             views: ["week"],
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"})
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })
                 ]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.dataSource.at(0).uid;
         scheduler.editEvent(eventUID);
 
@@ -802,12 +827,12 @@
             },
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: exception}),
-                    new SchedulerEvent({ id: 2, recurrenceId: 1, start: startDate, end: new Date(), title: "my event"})
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: exception }),
+                    new SchedulerEvent({ id: 2, recurrenceId: 1, start: startDate, end: new Date(), title: "my event" })
                 ]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.dataSource.at(1).uid;
         scheduler.editEvent(eventUID);
 
@@ -827,11 +852,11 @@
             },
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"})
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })
                 ]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.dataSource.at(0).uid;
         scheduler.editEvent(eventUID);
 
@@ -848,11 +873,11 @@
             views: ["week"],
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event"})
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event" })
                 ]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.dataSource.at(0).uid;
         scheduler.editEvent(eventUID);
 
@@ -875,11 +900,11 @@
             },
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event"})
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event" })
                 ]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.dataSource.at(0).uid;
         scheduler.editEvent(eventUID);
 
@@ -895,18 +920,18 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                data: [{ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" }],
                 schema: {
                     model: {
                         id: "id",
                         fields: {
-                            id: {type: "number"}
+                            id: { type: "number" }
                         }
                     }
                 }
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
         scheduler.editEvent(eventUID);
 
@@ -920,18 +945,18 @@
                 editRecurringMode: "series"
             },
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                data: [{ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" }],
                 schema: {
                     model: {
                         id: "id",
                         fields: {
-                            id: {type: "number"}
+                            id: { type: "number" }
                         }
                     }
                 }
             }
         });
-
+        jasmine.clock().tick(10);
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
         scheduler.editEvent(eventUID);
 
@@ -945,18 +970,18 @@
                 editRecurringMode: "occurrence"
             },
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                data: [{ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" }],
                 schema: {
                     model: {
                         id: "id",
                         fields: {
-                            id: {type: "number"}
+                            id: { type: "number" }
                         }
                     }
                 }
             }
         });
-
+        jasmine.clock().tick(10);
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
         scheduler.editEvent(eventUID);
 
@@ -966,20 +991,20 @@
     test("show recurring dialog when editRecurringMode option is object without editRecurringMode option", function() {
         var scheduler = setup({
             views: ["week"],
-            editable: { },
+            editable: {},
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                data: [{ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" }],
                 schema: {
                     model: {
                         id: "id",
                         fields: {
-                            id: {type: "number"}
+                            id: { type: "number" }
                         }
                     }
                 }
             }
         });
-
+        jasmine.clock().tick(10);
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
         scheduler.editEvent(eventUID);
 
@@ -993,18 +1018,18 @@
                 editRecurringMode: "dialog"
             },
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                data: [{ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" }],
                 schema: {
                     model: {
                         id: "id",
                         fields: {
-                            id: {type: "number"}
+                            id: { type: "number" }
                         }
                     }
                 }
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
         scheduler.editEvent(eventUID);
 
@@ -1016,18 +1041,18 @@
             views: ["week"],
             editable: false,
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                data: [{ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" }],
                 schema: {
                     model: {
                         id: "id",
                         fields: {
-                            id: {type: "number"}
+                            id: { type: "number" }
                         }
                     }
                 }
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
         scheduler.editEvent(eventUID);
 
@@ -1039,10 +1064,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ]
+                data: [{ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" }]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
 
         stub(scheduler, {
@@ -1063,10 +1088,10 @@
             views: ["week"],
             timezone: "Etc/UTC",
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ]
+                data: [{ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" }]
             }
         });
-
+        jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         $(".k-window .k-button:last").click();
@@ -1080,10 +1105,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
 
         stub(scheduler, {
@@ -1094,7 +1119,7 @@
 
         //edit current instance
         $(".k-window .k-button:first").click();
-
+        jasmine.clock().tick(10);
         equal(scheduler.calls("addEvent"), 1);
     });
 
@@ -1103,10 +1128,10 @@
             timezone: "Etc/UTC",
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.element.find(".k-event:last").data("uid"),
             origin = scheduler.dataSource.at(0),
             exception;
@@ -1124,10 +1149,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.element.find(".k-event:last").data("uid"),
             origin = scheduler.dataSource.at(0),
             exception;
@@ -1146,10 +1171,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick();
         var eventUID = scheduler.element.find(".k-event:last").data("uid"),
             origin = scheduler.dataSource.at(0),
             exception;
@@ -1163,17 +1188,17 @@
         ok(exception.isNew())
     });
 
-    asyncTest("creating exception adds exception date to event exception property", function() {
+    test("creating exception adds exception date to event exception property", function() {
         var now = new Date("2013/6/6 10:00");
         now.setMilliseconds(0);
 
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: now, end: now, title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: now, end: now, title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick();
         var events = scheduler.element.find(".k-event"),
             origin = scheduler.dataSource.at(0);
 
@@ -1183,23 +1208,21 @@
 
         scheduler.saveEvent();
 
-        setTimeout(function() {
-             events = scheduler.element.find(".k-event");
+        jasmine.clock().tick(10);
+        events = scheduler.element.find(".k-event");
 
-            scheduler.editEvent(events.first().data("uid"));
+        scheduler.editEvent(events.first().data("uid"));
 
-            
-            $(".k-window .k-button:first").click();
-            scheduler.saveEvent();
-            setTimeout(function() {
-                start();
-            var result = kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(1).start, 0), "yyyyMMddTHHmmssZ") + "," +
-                         kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(2).start, 0), "yyyyMMddTHHmmssZ");
 
-            equal(origin.recurrenceException, result);
-            });
-        });
-       
+        $(".k-window .k-button:first").click();
+        scheduler.saveEvent();
+        jasmine.clock().tick(10);
+
+        var result = kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(1).start, 0), "yyyyMMddTHHmmssZ") + "," +
+                     kendo.toString(kendo.timezone.apply(scheduler.dataSource.at(2).start, 0), "yyyyMMddTHHmmssZ");
+
+        equal(origin.recurrenceException, result);
+
     });
 
     test("updating exception replaces ';' separator with ','", function() {
@@ -1227,7 +1250,7 @@
                 ]
             }
         });
-
+        jasmine.clock().tick();
         var events = scheduler.element.find(".k-event"),
             origin = scheduler.dataSource.at(0);
 
@@ -1248,10 +1271,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         var events = scheduler.element.find(".k-event"),
             origin = scheduler.dataSource.at(0);
 
@@ -1279,10 +1302,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         var eventUID = scheduler.element.find(".k-event:last").data("uid"),
             origin = scheduler.dataSource.at(0),
             exception;
@@ -1300,10 +1323,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         var origin = scheduler.dataSource.at(0), exception;
 
         scheduler.editEvent(origin.uid);
@@ -1321,10 +1344,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
 
         stub(scheduler, {
@@ -1346,10 +1369,10 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"}) ]
+                data: [new SchedulerEvent({ id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         var event = scheduler.element.find(".k-event:last");
 
         scheduler.editEvent(event.data("uid"));
@@ -1382,10 +1405,10 @@
             views: ["week"],
             date: date,
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
+                data: [new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         scheduler.removeEvent(scheduler.element.find(".k-event").eq(2).data("uid"));
 
         $(".k-window .k-button:first").click();
@@ -1407,10 +1430,10 @@
             editable: {
             },
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
+                data: [new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         scheduler.removeEvent(scheduler.element.find(".k-event").eq(2).data("uid"));
 
         equal($(".k-window-title").text(), "Delete Recurring Item");
@@ -1430,10 +1453,10 @@
                 confirmation: false
             },
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
+                data: [new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         scheduler.removeEvent(scheduler.element.find(".k-event").eq(2).data("uid"));
 
         var model = scheduler.dataSource.at(0);
@@ -1455,10 +1478,10 @@
                 confirmation: false
             },
             dataSource: {
-                data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
+                data: [new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" })]
             }
         });
-
+        jasmine.clock().tick(10);
         scheduler.removeEvent(scheduler.element.find(".k-event").eq(2).data("uid"));
 
         equal(scheduler.dataSource.data().length, 0);
@@ -1474,14 +1497,14 @@
             date: date,
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException}),
+                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException }),
                     new SchedulerEvent({ id: 2, start: nextDate, end: nextDate, title: "my event", recurrenceId: "1" })
                 ]
             }
         });
-
+        jasmine.clock().tick(10);
         var event = scheduler.element.find(".k-event").eq(1);
-            origin = scheduler.dataSource.at(0);
+        origin = scheduler.dataSource.at(0);
 
         scheduler.removeEvent(event.data("uid"));
 
@@ -1503,12 +1526,12 @@
             date: date,
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException}),
+                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException }),
                     new SchedulerEvent({ id: 2, start: nextDate, end: nextDate, title: "my event", recurrenceId: 1 })
                 ]
             }
         });
-
+        jasmine.clock().tick(10);
         var event = scheduler.element.find(".k-event").eq(1);
 
         scheduler.removeEvent(event.data("uid"));
@@ -1530,12 +1553,12 @@
             date: date,
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException}),
+                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException }),
                     new SchedulerEvent({ id: 2, start: nextDate, end: nextDate, title: "my event", recurrenceId: "1" })
                 ]
             }
         });
-
+        jasmine.clock().tick(10);
         var event = scheduler.element.find(".k-event").eq(2);
 
         scheduler.removeEvent(event.data("uid"));
@@ -1558,13 +1581,13 @@
             date: date,
             dataSource: {
                 data: [
-                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException}),
+                    new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: recurrenceException }),
                     new SchedulerEvent({ id: 2, start: secondDate, end: secondDate, title: "my event", recurrenceId: "1" }),
                     new SchedulerEvent({ id: 0, start: fourthDate, end: fourthDate, title: "my event", recurrenceId: "1" })
                 ]
             }
         });
-
+        jasmine.clock().tick(10);
         scheduler.dataSource.cancelChanges(scheduler.dataSource.view()[2]);
 
         equal(scheduler.dataSource.view()[0].recurrenceException, kendo.toString(kendo.timezone.apply(secondDate, 0), "yyyyMMddTHHmmssZ"));
@@ -1572,19 +1595,22 @@
 
     module("Timezone editing", {
         setup: function() {
+            jasmine.clock().install();
             kendo.effects.disable();
 
             container = $("<div>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
             kendo.effects.enable();
         }
     });
 
     test("Render Timezone field", function() {
-        var scheduler = setup(),
-            uid = scheduler.dataSource.data()[0].uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var uid = scheduler.dataSource.data()[0].uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1596,22 +1622,24 @@
     });
 
     test("Hide Timezone field if isAllDay", function() {
-        var scheduler = setup(),
-            event = scheduler.dataSource.data()[0],
-            uid = event.uid;
+        var scheduler = setup();
+        jasmine.clock().tick(10);
+        var event = scheduler.dataSource.data()[0],
+         uid = event.uid;
 
         event.isAllDay = true;
-
+        jasmine.clock().tick(10);
         scheduler.editEvent(uid);
         var anchor = scheduler._editor.container.find(".k-edit-field > a");
-
+        jasmine.clock().tick(10);
         equal(anchor[0].style.display, "none");
     });
 
     test("Show Timezone field if it is not allday", function() {
-        var scheduler = setup(),
-            event = scheduler.dataSource.data()[0],
-            uid = event.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var event = scheduler.dataSource.data()[0],
+         uid = event.uid;
 
         event.isAllDay = false;
 
@@ -1622,9 +1650,10 @@
     });
 
     test("Show Timezone field on isAllDay change", function() {
-        var scheduler = setup(),
-            event = scheduler.dataSource.data()[0],
-            uid = event.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var event = scheduler.dataSource.data()[0],
+         uid = event.uid;
 
         event.isAllDay = true;
 
@@ -1638,8 +1667,9 @@
     });
 
     test("Render start and end timezone editors", function() {
-        var scheduler = setup(),
-            uid = scheduler.dataSource.data()[0].uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var uid = scheduler.dataSource.data()[0].uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1652,8 +1682,9 @@
     });
 
     test("Click Timezone anchor creates timezone popup", function() {
-        var scheduler = setup(),
-            uid = scheduler.dataSource.data()[0].uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var uid = scheduler.dataSource.data()[0].uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1666,9 +1697,10 @@
     });
 
     test("Render popup editor with disabled checkbox", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1679,9 +1711,10 @@
     });
 
     test("Show second TimezoneEditor if model.endTimezone is defined", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1694,9 +1727,10 @@
     });
 
     test("Select correct timezone if startTimezone is defined", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1716,6 +1750,7 @@
                 }
             }
         });
+        jasmine.clock().tick();
         var model = scheduler.dataSource.data()[0];
         var uid = model.uid;
 
@@ -1731,9 +1766,10 @@
     });
 
     test("Click done closes timezone popup", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1745,9 +1781,10 @@
     });
 
     test("Click close reverts timezones to last selected", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1765,9 +1802,10 @@
     });
 
     test("Select start timezone enables checkbox", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+         uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1783,9 +1821,10 @@
     });
 
     test("Clear start timezone disables checkbox and clears end timezone", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+        uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1809,9 +1848,11 @@
     });
 
     test("Click checkbox toggles endTimezone editor widget", function() {
-        var scheduler = setup(),
-            model = scheduler.dataSource.data()[0],
-            uid = model.uid;
+        var scheduler = setup();
+
+        jasmine.clock().tick();
+        var model = scheduler.dataSource.data()[0],
+          uid = model.uid;
 
         scheduler.dataSource.view()[0].isAllDay = false;
 
@@ -1820,7 +1861,7 @@
 
         var start = scheduler._editor._timezonePopup.find("[data-role=timezoneeditor]:first").data("kendoTimezoneEditor");
         var editor = scheduler._editor._timezonePopup.find("[data-role=timezoneeditor]:last").data("kendoTimezoneEditor");
-            checkbox = scheduler._editor._timezonePopup.find("input[type=checkbox]");
+        checkbox = scheduler._editor._timezonePopup.find("input[type=checkbox]");
 
         start.value("America/Toronto");
 
@@ -1840,13 +1881,12 @@
             start = new Date(2013, 10, 10, 10),
             end = new Date(2013, 10, 10, 11),
             zone = "America/New_York";
-
+        jasmine.clock().tick();
         scheduler.dataSource.view()[0].isAllDay = false;
 
         scheduler.addEvent({ start: start, end: end, startTimezone: zone });
 
         var model = scheduler.dataSource.data()[1];
-
         deepEqual(model.start, start);
         deepEqual(model.end, end);
     });
@@ -1871,7 +1911,7 @@
             },
             timezone: "Etc/UTC"
         });
-
+        jasmine.clock().tick();
         start.setTime(start.getTime() + (start.getTimezoneOffset() * (60 * 1000))); //simulate UTC
         end.setTime(end.getTime() + (end.getTimezoneOffset() * (60 * 1000))); //simulate UTC
 
@@ -1891,19 +1931,19 @@
         var scheduler = setup({
             date: new Date(start),
             dataSource: {
-                data: [ {
-                    id:1,
+                data: [{
+                    id: 1,
                     recurrenceRule: "FREQ=DAILY;COUNT=2;",
                     start: new Date(start),
                     end: new Date(end),
                     startTimezone: startTimezone,
                     endTimezone: endTimezone,
                     title: "my event"
-                } ]
+                }]
             },
             timezone: "Etc/UTC"
         });
-
+        jasmine.clock().tick();
         var uid = scheduler.wrapper.find(".k-event:last").data("uid");
         var occurrence = scheduler.occurrenceByUid(uid);
 
@@ -1923,19 +1963,19 @@
         var scheduler = setup({
             date: new Date(start),
             dataSource: {
-                data: [ {
-                    id:1,
+                data: [{
+                    id: 1,
                     recurrenceRule: "FREQ=DAILY;COUNT=2;",
                     start: new Date(start),
                     end: new Date(end),
                     startTimezone: startTimezone,
                     endTimezone: endTimezone,
                     title: "my event"
-                } ]
+                }]
             },
             timezone: "Etc/UTC"
         });
-
+        jasmine.clock().tick();
         var uid = scheduler.wrapper.find(".k-event:last").data("uid");
         var head = scheduler.dataSource.data()[0];
 
@@ -1955,19 +1995,19 @@
         var scheduler = setup({
             date: new Date(start),
             dataSource: {
-                data: [ {
-                    id:1,
+                data: [{
+                    id: 1,
                     recurrenceRule: "FREQ=DAILY;COUNT=2;",
                     start: new Date(start),
                     end: new Date(end),
                     startTimezone: startTimezone,
                     endTimezone: endTimezone,
                     title: "my event"
-                } ]
+                }]
             },
             timezone: "Etc/UTC"
         });
-
+        jasmine.clock().tick();
         var uid = scheduler.wrapper.find(".k-event:last").data("uid");
         var occurrenceStart = new Date(scheduler.occurrenceByUid(uid).start);
         var headStart = new Date(scheduler.dataSource.data()[0].start);
@@ -1984,7 +2024,7 @@
         deepEqual(head.start, headStart);
     });
 
-    asyncTest("save an exception honors start/end timezone", function() {
+    test("save an exception honors start/end timezone", function() {
         var startTime = new Date(2013, 10, 10, 12);
         var end = new Date(2013, 10, 10, 14);
         var startTimezone = "Europe/Berlin";
@@ -1993,19 +2033,19 @@
         var scheduler = setup({
             date: new Date(startTime),
             dataSource: {
-                data: [ {
-                    id:1,
+                data: [{
+                    id: 1,
                     recurrenceRule: "FREQ=DAILY;COUNT=2;",
                     start: new Date(startTime),
                     end: new Date(end),
                     startTimezone: startTimezone,
                     endTimezone: endTimezone,
                     title: "my event"
-                } ]
+                }]
             },
             timezone: "Etc/UTC"
         });
-
+        jasmine.clock().tick();
         var uid = scheduler.wrapper.find(".k-event:last").data("uid");
         var occurrenceStart = new Date(scheduler.occurrenceByUid(uid).start);
         var headStart = new Date(scheduler.dataSource.data()[0].start);
@@ -2014,18 +2054,16 @@
         $(".k-popup-edit-form").find(".k-button:first").click();
         $(".k-popup-edit-form").find(".k-scheduler-update").click();
 
-                setTimeout(function() {
-                    start();
-                    var uid = scheduler.wrapper.find(".k-event:last").data("uid");
-                    var occurrence = scheduler.occurrenceByUid(uid);
-                    var head = scheduler.dataSource.data()[0];
+        jasmine.clock().tick();
+        var uid = scheduler.wrapper.find(".k-event:last").data("uid");
+        var occurrence = scheduler.occurrenceByUid(uid);
+        var head = scheduler.dataSource.data()[0];
 
-                    deepEqual(occurrence.start, occurrenceStart);
-                    deepEqual(head.start, headStart);
-                });
+        deepEqual(occurrence.start, occurrenceStart);
+        deepEqual(head.start, headStart);
     });
 
-    asyncTest("save a recurring head honors start/end timezone", function() {
+    test("save a recurring head honors start/end timezone", function() {
         var startTime = new Date(2013, 10, 10, 12);
         var end = new Date(2013, 10, 10, 14);
         var startTimezone = "Europe/Berlin";
@@ -2034,8 +2072,8 @@
         var scheduler = setup({
             date: new Date(startTime),
             dataSource: {
-                data: [ {
-                    id:1,
+                data: [{
+                    id: 1,
                     recurrenceRule: "FREQ=DAILY;COUNT=2;",
                     start: new Date(startTime),
                     end: new Date(end),
@@ -2043,18 +2081,18 @@
                     endTimezone: endTimezone,
                     title: "my event"
                 }, {
-                    id:2,
+                    id: 2,
                     recurrenceId: 1,
                     start: new Date(startTime),
                     end: new Date(end),
                     startTimezone: startTimezone,
                     endTimezone: endTimezone,
                     title: "my event"
-                } ]
+                }]
             },
             timezone: "Etc/UTC"
         });
-
+        jasmine.clock().tick();
         var uid = scheduler.wrapper.find(".k-event:last").data("uid");
         var occurrenceStart = new Date(scheduler.occurrenceByUid(uid).start);
         var headStart = new Date(scheduler.dataSource.data()[0].start);
@@ -2063,15 +2101,13 @@
         $(".k-popup-edit-form").find(".k-button:last").click();
         $(".k-popup-edit-form").find(".k-scheduler-update").click();
 
-        setTimeout(function() {
-            start();
-                var uid = scheduler.wrapper.find(".k-event:first").data("uid");
-                var occurrence = scheduler.occurrenceByUid(uid);
-                var head = scheduler.dataSource.data()[0];
+        jasmine.clock().tick();
+        var uid = scheduler.wrapper.find(".k-event:first").data("uid");
+        var occurrence = scheduler.occurrenceByUid(uid);
+        var head = scheduler.dataSource.data()[0];
 
-                deepEqual(occurrence.start, occurrenceStart);
-                deepEqual(head.start, headStart);
-        });
+        deepEqual(occurrence.start, occurrenceStart);
+        deepEqual(head.start, headStart);
     });
 
     test("saveEvent reverts applied StartTimezone if no changes have been made", function() {
@@ -2093,7 +2129,7 @@
             },
             timezone: "Etc/UTC"
         });
-
+        jasmine.clock().tick();
         start.setTime(start.getTime() + (start.getTimezoneOffset() * (60 * 1000))); //simulate UTC
         end.setTime(end.getTime() + (end.getTimezoneOffset() * (60 * 1000))); //simulate UTC
 
@@ -2105,7 +2141,7 @@
         deepEqual(model.end, end);
     });
 
-    asyncTest("saveEvent does not revert applied Start/EndTimezone if start/end was edited", function() {
+    test("saveEvent does not revert applied Start/EndTimezone if start/end was edited", function() {
         var startTime = new Date(2013, 10, 10, 10),
             end = new Date(2013, 10, 10, 11),
             zone = "America/New_York";
@@ -2124,7 +2160,7 @@
             },
             timezone: "Etc/UTC"
         });
-
+        jasmine.clock().tick();
         startTime.setTime(startTime.getTime() + (startTime.getTimezoneOffset() * (60 * 1000))); //simulate UTC
         end.setTime(end.getTime() + (end.getTimezoneOffset() * (60 * 1000))); //simulate UTC
 
@@ -2148,15 +2184,15 @@
 
         scheduler.saveEvent();
 
-        setTimeout(function() {
-            start();
-             deepEqual(scheduler.dataSource.data()[1].start, timezone.convert(startTime, zone, "Etc/UTC"));
-             deepEqual(scheduler.dataSource.data()[1].end, timezone.convert(end, zone, "Etc/UTC"));
-        });
-       
+        jasmine.clock().tick(10);
+
+        deepEqual(scheduler.dataSource.data()[1].start, timezone.convert(startTime, zone, "Etc/UTC"));
+        deepEqual(scheduler.dataSource.data()[1].end, timezone.convert(end, zone, "Etc/UTC"));
+
+
     });
 
-    asyncTest("updateEvent refreshes the ui", 1, function() {
+    test("updateEvent refreshes the ui", 1, function() {
         var scheduler = setup({
             dataSource: {
                 data: [
@@ -2167,13 +2203,11 @@
                 flag = true;
             }
         });
-
+        jasmine.clock().tick(10);
         var event = scheduler.dataSource.at(0);
         var flag = false;
         scheduler._updateEvent(null, event, {});
-        setTimeout(function() {
-             start();
-             ok(flag);
-        },10);
+        jasmine.clock().tick(10);
+        ok(flag);
     });
 })();

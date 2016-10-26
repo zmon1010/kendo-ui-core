@@ -1,7 +1,7 @@
 (function() {
     var div;
 
-    function getTextFromElement(element){
+    function getTextFromElement(element) {
         return element.clone()
             .children()
             .remove()
@@ -11,10 +11,12 @@
 
     module("scheduler messages", {
         setup: function() {
+            jasmine.clock().install()
             kendo.effects.disable();
             div = $('<div style="width:500px;height:1000px">');
         },
         teardown: function() {
+            jasmine.clock().uninstall()
             kendo.destroy(div);
             kendo.effects.enable();
         }
@@ -29,15 +31,16 @@
             views: ["day"]
         });
 
-        var allDayText= scheduler.element.find(".k-scheduler-times-all-day").text();
+        jasmine.clock().tick();
+        var allDayText = scheduler.element.find(".k-scheduler-times-all-day").text();
         equal(allDayText, "custom");
     });
 
-     test("allDay message is changed correctly in agenda view", function() {
+    test("allDay message is changed correctly in agenda view", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             messages: {
-               allDay: "custom"
+                allDay: "custom"
             },
             views: ["agenda"],
             dataSource: {
@@ -49,8 +52,8 @@
                 }]
             }
         });
-
-        var allDayText= $(scheduler.element.find(".k-scheduler-timecolumn div")[0]).text();
+        jasmine.clock().tick();
+        var allDayText = $(scheduler.element.find(".k-scheduler-timecolumn div")[0]).text();
         equal(allDayText, "custom");
     });
 
@@ -67,8 +70,8 @@
                 }]
             }
         });
-
-        var allDayText= $(scheduler.element.find(".k-scheduler-timecolumn div")[0]).text();
+        jasmine.clock().tick();
+        var allDayText = $(scheduler.element.find(".k-scheduler-timecolumn div")[0]).text();
         equal(allDayText, "all day");
     });
 
@@ -80,7 +83,8 @@
             },
             views: ["week"]
         });
-        var allDayText= scheduler.element.find(".k-scheduler-times-all-day").text();
+        jasmine.clock().tick();
+        var allDayText = scheduler.element.find(".k-scheduler-times-all-day").text();
 
         equal(allDayText, "custom");
     });
@@ -89,13 +93,14 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 cancel: "custom"
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var cancelText = $(".k-scheduler-edit-form").find(".k-scheduler-cancel").text();
 
@@ -110,6 +115,7 @@
             },
             views: ["agenda"]
         });
+        jasmine.clock().tick();
         var dateText = scheduler.element.find(".k-scheduler-header-wrap th.k-scheduler-datecolumn").text();
 
         equal(dateText, "custom");
@@ -119,13 +125,14 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 deleteWindowTitle: "custom"
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event .k-si-close").click();
         var deleteWindowTitleText = $(".k-window-title").text();
         $(".k-window .k-i-close").click();
@@ -137,13 +144,14 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 destroy: "custom"
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event .k-si-close").click();
         var destroyText = $(".k-window .k-scheduler-delete").text();
         $(".k-window .k-i-close").click();
@@ -155,14 +163,14 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 event: "custom"
             },
             views: ["agenda"]
         });
-
+        jasmine.clock().tick();
         var eventText = scheduler.element.find(".k-scheduler-header th:last").text();
 
         equal(eventText, "custom");
@@ -172,13 +180,14 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 save: "custom"
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var saveText = $(".k-window").find(".k-scheduler-update").text();
 
@@ -193,7 +202,7 @@
             },
             views: ["day"]
         });
-
+        jasmine.clock().tick();
         var showWorkDayText = scheduler.element.find(".k-scheduler-fullday a").text();
 
         equal(showWorkDayText, "custom");
@@ -207,6 +216,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-scheduler-fullday a").click();
 
         var showFullDayText = scheduler.element.find(".k-scheduler-fullday a").text();
@@ -222,8 +232,8 @@
             },
             views: ["agenda"]
         });
-
-        var timeText =  scheduler.element.find(".k-scheduler-timecolumn").text();
+        jasmine.clock().tick();
+        var timeText = scheduler.element.find(".k-scheduler-timecolumn").text();
 
         equal(timeText, "custom");
     });
@@ -237,7 +247,7 @@
             views: ["agenda"]
         });
 
-        var todayText =  scheduler.element.find(".k-nav-today a").text();
+        var todayText = scheduler.element.find(".k-nav-today a").text();
 
         equal(todayText, "custom");
     });
@@ -247,7 +257,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -256,6 +266,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var allDayEventText = $("label[for=isAllDay]").text();
 
@@ -266,7 +277,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -275,6 +286,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var descriptionText = $("label[for=description]").text();
 
@@ -285,7 +297,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -294,6 +306,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var editorTitleText = $(".k-window .k-window-title").text();
 
@@ -304,7 +317,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -313,6 +326,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var endText = $("label[for=end]").text();
 
@@ -323,7 +337,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -332,6 +346,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var endTimezoneText = $("label[for=endTimezone]").text();
 
@@ -342,7 +357,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -351,6 +366,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var repeatText = $("label[for=recurrenceRule]").text();
 
@@ -361,7 +377,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -370,6 +386,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var separateTimezonesText = $(".k-timezone-toggle").parent().text();
 
@@ -380,7 +397,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -389,6 +406,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var startText = $("label[for=start]").text();
 
@@ -399,7 +417,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -408,6 +426,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var startTimezoneText = $("label[for=startTimezone]").text();
 
@@ -418,7 +437,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -427,6 +446,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var timezoneText = $("label[for=timezone]").text();
 
@@ -437,7 +457,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -446,6 +466,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var timezoneEditorButtonText = $("div[data-container-for=timezone] a").text();
 
@@ -456,7 +477,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -465,6 +486,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         $("div[data-container-for=timezone] a").click();
         var timezoneEditorTitleText = $(".k-scheduler-timezones").prev().find(".k-window-title").text();
@@ -476,7 +498,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 editor: {
@@ -485,6 +507,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
         var titleText = $("label[for=title]").text();
 
@@ -496,7 +519,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 recurrenceEditor: {
@@ -508,6 +531,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
 
         var dropDownList = $("[name=recurrenceRule] [data-role=dropdownlist]").data("kendoDropDownList");
@@ -529,7 +553,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: ""}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
             messages: {
                 recurrenceEditor: {
@@ -544,6 +568,7 @@
             },
             views: ["day"]
         });
+        jasmine.clock().tick();
         scheduler.element.find(".k-event").dblclick();
 
         var dropDownList = $("[name=recurrenceRule] [data-role=dropdownlist]").data("kendoDropDownList");

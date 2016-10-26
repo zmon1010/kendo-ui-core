@@ -7,10 +7,12 @@
 
     module("scheduler resizing", {
         setup: function() {
+            jasmine.clock().install();
             kendo.effects.disable();
             div = $("<div>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(div);
             kendo.effects.enable();
         }
@@ -23,7 +25,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-s").length, 1);
     });
 
@@ -35,7 +37,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/7 11:00"), isAllDay: true, title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-e").length, 1);
     });
 
@@ -46,7 +48,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-n").length, 1);
     });
 
@@ -57,7 +59,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), isAllDay: true, title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-e").length, 0);
     });
 
@@ -71,7 +73,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-resize-e,.k-resize-w,.k-resize-s,.k-resize-n").length, 0);
     });
 
@@ -84,7 +86,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-resize-e,.k-resize-w").length, 0);
     });
 
@@ -98,7 +100,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-resize-e,.k-resize-w,.k-resize-s,.k-resize-n").length, 0);
     });
 
@@ -111,7 +113,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-resize-e,.k-resize-w").length, 0);
     });
 
@@ -122,7 +124,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), isAllDay: true, title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-w").length, 0);
     });
 
@@ -134,7 +136,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/7 11:00"), isAllDay: true, title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-w").length, 1);
     });
 
@@ -145,7 +147,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/7 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-s").length, 0);
     });
 
@@ -157,7 +159,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/10 11:00"), isAllDay: true, title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-e").length, 0);
     });
 
@@ -169,7 +171,7 @@
                 { start: new Date("2013/6/1 10:00"), end: new Date("2013/6/6 11:00"), isAllDay: true, title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-w").length, 0);
     });
 
@@ -180,7 +182,7 @@
                 { start: new Date("2013/6/5 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-n").length, 0);
     });
 
@@ -192,7 +194,7 @@
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/9 11:30"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event:first .k-resize-e").length, 0);
     });
 
@@ -204,7 +206,7 @@
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/9 11:30"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event:last .k-resize-w").length, 0);
     });
 
@@ -216,7 +218,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-e").length, 1);
     });
 
@@ -228,7 +230,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/7 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-e").length, 0);
     });
 
@@ -240,7 +242,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-w").length, 1);
     });
 
@@ -252,7 +254,7 @@
                 { start: new Date("2013/6/5 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-event > .k-resize-w").length, 0);
     });
 
@@ -266,7 +268,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-resize-e,.k-resize-w,.k-resize-s,.k-resize-n").length, 0);
     });
 
@@ -280,16 +282,18 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         equal(div.find(".k-resize-e,.k-resize-w,.k-resize-s,.k-resize-n").length, 0);
     });
 
     module("scheduler resizing live dom", {
         setup: function() {
+            jasmine.clock().install();
             kendo.effects.disable();
             div = $("<div>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(div);
             kendo.effects.enable();
         }
@@ -304,7 +308,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
         var slots = div.find(".k-scheduler-content td");
 
@@ -323,7 +327,7 @@
                 { start: new Date("2013/2/3 00:00"), end: new Date("2013/2/3 00:00"), title: "", isAllDay: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
         var slots = div.find(".k-scheduler-content td");
 
@@ -345,7 +349,7 @@
                 { start: new Date("2013/2/3 00:00"), end: new Date("2013/2/3 00:00"), title: "", isAllDay: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
         var slots = div.find(".k-scheduler-content td");
 
@@ -367,7 +371,7 @@
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 12:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
         var slots = div.find(".k-scheduler-content td");
 
@@ -386,7 +390,7 @@
                 { start: new Date("2013/6/6 10:30 PM"), end: new Date("2013/6/6 11:00 PM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td");
@@ -407,7 +411,7 @@
                 { start: new Date("2013/6/6 10:30 PM"), end: new Date("2013/6/6 11:00 PM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td");
@@ -427,7 +431,7 @@
                 { start: new Date("2013/6/6 03:00 PM"), end: new Date("2013/6/6 05:00 PM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
         var handleOffset = handle.offset();
         var helperElement = kendo.format("<div id='resizeEnd' style='position: absolute;top:{0}px;left: {1}px'>resize end</div>",
@@ -455,7 +459,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td");
@@ -476,7 +480,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td");
@@ -495,7 +499,7 @@
                 { start: new Date("2014/3/30"), end: new Date("2014/3/30 1:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td");
@@ -517,7 +521,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td");
@@ -536,7 +540,7 @@
                 { start: new Date("2013/6/6 10:30 PM"), end: new Date("2013/6/6 11:00 PM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td");
@@ -556,7 +560,7 @@
                 { start: new Date("2013/6/6 10:30 PM"), end: new Date("2013/6/6 11:00 PM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td");
@@ -576,7 +580,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td");
@@ -596,7 +600,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td");
@@ -616,7 +620,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s").last();
 
         var slots = div.find(".k-scheduler-content td");
@@ -636,7 +640,7 @@
                 { start: new Date("2013/6/3"), end: new Date("2013/6/3"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w").last();
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -656,7 +660,7 @@
                 { start: new Date("2013/5/27"), end: new Date("2013/5/27"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w").last();
 
         var slots = div.find(".k-scheduler-content td");
@@ -677,7 +681,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s").last();
 
         var slots = div.find(".k-scheduler-content td");
@@ -698,7 +702,7 @@
                 { start: new Date("2013/6/3 10:00"), end: new Date("2013/6/3 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -719,7 +723,7 @@
                 { start: new Date("2013/6/3 10:00"), end: new Date("2013/6/3 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -739,7 +743,7 @@
                 { start: new Date("2013/6/3 10:00"), end: new Date("2013/6/3 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -762,7 +766,7 @@
                 { start: new Date("2013/6/3 10:00"), end: new Date("2013/6/3 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -783,7 +787,7 @@
                 { start: new Date("2013/6/3 10:00"), end: new Date("2013/6/3 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -803,7 +807,7 @@
                 { start: new Date("2013/6/3 10:00"), end: new Date("2013/6/3 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -825,7 +829,7 @@
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n");
 
         var slots = div.find(".k-scheduler-content td");
@@ -844,7 +848,7 @@
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td");
@@ -863,7 +867,7 @@
                 { start: new Date("2013/6/6 11:00 PM"), end: new Date("2013/6/7 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -887,7 +891,7 @@
                 { start: new Date("2013/6/3 10:00"), end: new Date("2013/6/3 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -907,7 +911,7 @@
                 { start: new Date("2013/6/3 11:00"), end: new Date("2013/6/3 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -926,7 +930,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n");
 
         var slots = div.find(".k-scheduler-content td");
@@ -945,7 +949,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td");
@@ -972,7 +976,7 @@
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n");
 
         var slots = div.find(".k-scheduler-content td");
@@ -999,7 +1003,7 @@
                 { start: new Date("2013/6/2 12:00 AM"), end: new Date("2013/6/2 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1019,7 +1023,7 @@
                 { start: new Date("2013/6/2 12:00 AM"), end: new Date("2013/6/3 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1039,7 +1043,7 @@
                 { start: new Date("2013/6/3 11:00"), end: new Date("2013/6/3 11:30"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1059,7 +1063,7 @@
                 { start: new Date("2013/6/2 11:00"), end: new Date("2013/6/3 11:30"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1079,7 +1083,7 @@
                 { start: new Date("2013/6/2 11:00"), end: new Date("2013/6/2 11:30"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1108,7 +1112,7 @@
                 { start: new Date("2013/6/3 11:00"), end: new Date("2013/6/3 11:30"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1138,7 +1142,7 @@
                 { start: new Date("2013/6/3 12:00 AM"), end: new Date("2013/6/3 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1158,7 +1162,7 @@
                 { start: new Date("2013/6/3 11:00"), end: new Date("2013/6/3 11:30"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1178,7 +1182,7 @@
                 { start: new Date("2013/5/26 11:00"), end: new Date("2013/5/27 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1199,7 +1203,7 @@
                 { start: new Date("2013/5/29 11:00"), end: new Date("2013/5/29 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(7)");
@@ -1221,7 +1225,7 @@
                 { start: new Date("2013/5/26 11:00"), end: new Date("2013/5/27 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-content td");
@@ -1241,7 +1245,7 @@
                 { start: new Date("2013/6/3 11:00"), end: new Date("2013/6/4 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1264,7 +1268,7 @@
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/7 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1285,7 +1289,7 @@
                 { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w:last");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1308,7 +1312,7 @@
                 { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w:first");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1329,7 +1333,7 @@
                 { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+         jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w:first");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1351,7 +1355,7 @@
                 { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w:first");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1370,7 +1374,7 @@
                 { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w:first");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1393,7 +1397,7 @@
                 { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w:first");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1417,7 +1421,7 @@
                 { id: 1, start: new Date("2013/6/2 11:00"), end: new Date("2013/6/2 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1442,7 +1446,7 @@
                 { id: 1, start: new Date("2013/6/2 11:00"), end: new Date("2013/6/2 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1467,7 +1471,7 @@
                 { id: 1, start: new Date("2013/6/2 11:30"), end: new Date("2013/6/2 12:00"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1492,7 +1496,7 @@
                 { id: 1, start: new Date("2013/6/2 11:30"), end: new Date("2013/6/2 12:00"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1517,7 +1521,7 @@
                 { id: 1, start: new Date("2013/6/2 11:30"), end: new Date("2013/6/2 12:00"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1541,7 +1545,7 @@
                 { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w:last");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1567,7 +1571,7 @@
                 { id: 2, recurrenceId: 1, start: new Date("2013/6/7 11:00"), end: new Date("2013/6/7 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w:last");
 
         var slots = div.find(".k-scheduler-content td.k-other-month");
@@ -1602,14 +1606,14 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td");
 
-        dragdrop(scheduler, handle, slots.eq(6), slots.eq(slots.length -2));
+        dragdrop(scheduler, handle, slots.eq(6), slots.eq(slots.length - 2));
 
         equal(scheduler.dataSource.at(0).end.getDate(), 9);
     });
@@ -1634,9 +1638,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1669,9 +1673,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-s");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1705,9 +1709,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-n");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1738,9 +1742,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(7)");
@@ -1772,9 +1776,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-content td:nth-child(7)");
@@ -1807,9 +1811,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(7)");
@@ -1843,9 +1847,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-content td:nth-child(6)");
@@ -1866,7 +1870,7 @@
                 { start: new Date("2013/6/2 12:00 AM"), end: new Date("2013/6/3 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(1)");
@@ -1886,7 +1890,7 @@
                 { start: new Date("2013/5/26 10:30 AM"), end: new Date("2013/5/27 10:30 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1906,7 +1910,7 @@
                 { start: new Date("2013/5/26 10:30 AM"), end: new Date("2013/5/27 10:30 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1926,7 +1930,7 @@
                 { start: new Date("2013/5/26 10:30 AM"), end: new Date("2013/5/27 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1); 
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1946,7 +1950,7 @@
                 { start: new Date("2013/6/2 10:30 AM"), end: new Date("2013/6/3 11:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(3)");
@@ -1966,7 +1970,7 @@
                 { start: new Date("2013/5/26 10:30 AM"), end: new Date("2013/5/27 12:00 AM"), title: "", isAllDay: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(3)");
@@ -1986,7 +1990,7 @@
                 { start: new Date("2013/6/2 12:00 AM"), end: new Date("2013/6/3 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(3)");
@@ -2006,7 +2010,7 @@
                 { start: new Date("2013/5/26 10:30 AM"), end: new Date("2013/5/27 11:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -2026,7 +2030,7 @@
                 { start: new Date("2013/6/2 10:30 AM"), end: new Date("2013/6/3 11:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(1)");
@@ -2046,7 +2050,7 @@
                 { start: new Date("2013/5/26 12:00 AM"), end: new Date("2013/5/27 12:00 AM"), title: "", isAllDay: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -2066,7 +2070,7 @@
                 { start: new Date("2013/6/2 12:00 AM"), end: new Date("2013/6/3 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(1)");
@@ -2086,7 +2090,7 @@
                 { start: new Date("2013/6/2 8:00"), end: new Date("2013/6/3 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -2106,7 +2110,7 @@
                 { start: new Date("2013/6/2 8:00"), end: new Date("2013/6/3 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -2129,7 +2133,7 @@
                 equal(e.event, scheduler.dataSource.at(0));
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -2151,7 +2155,7 @@
                 deepEqual(e.slot.end, new Date("2013/6/4"));
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -2171,7 +2175,7 @@
                 e.preventDefault();
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -2193,7 +2197,7 @@
                 e.preventDefault();
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -2222,7 +2226,7 @@
                 deepEqual(e.end, new Date("2013/6/3"));
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -2241,7 +2245,7 @@
                 e.preventDefault();
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-w");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");

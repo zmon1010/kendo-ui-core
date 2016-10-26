@@ -4,12 +4,14 @@
     var dom;
 
     module("Agenda view", {
-       setup: function() {
+        setup: function() {
+            jasmine.clock().install();
             dom = document.createElement("div");
             QUnit.fixture[0].appendChild(dom);
             dom = $(dom).addClass("k-scheduler");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             dom.data("kendoagenda").destroy();
             kendo.destroy(QUnit.fixture);
         }
@@ -670,6 +672,7 @@
 
     module("mobile phone agenda view", {
         teardown: function() {
+            jasmine.clock().uninstall();
             if (agenda) {
                 agenda.destroy();
             }
@@ -808,12 +811,14 @@
     });
 
     module("grouped by date agenda view", {
-       setup: function() {
+        setup: function() {
+            jasmine.clock().install();
             dom = document.createElement("div");
             QUnit.fixture[0].appendChild(dom);
             dom = $(dom).addClass("k-scheduler");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             dom.data("kendoagenda").destroy();
             kendo.destroy(QUnit.fixture);
         }
@@ -871,7 +876,7 @@
                 }, options);
 
                 scheduler = new Scheduler(dom, options);
-
+          jasmine.clock().tick(1);
                 dom.focus();
 
                 agenda = scheduler.view();

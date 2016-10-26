@@ -22,11 +22,13 @@
 
     module("Agenda View selection", {
         setup: function() {
+            jasmine.clock().install();
             container = document.createElement("div");
             QUnit.fixture[0].appendChild(container);
             container = $(container).addClass("k-scheduler");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             container.data("kendoagenda").destroy();
             kendo.destroy(QUnit.fixture);
         }
@@ -274,6 +276,7 @@
                 }, options);
 
                 scheduler = new Scheduler(container, options);
+                  jasmine.clock().tick(1);
                 view = scheduler.view();
 
                 container.focus();
@@ -300,7 +303,7 @@
 
                 ],
          });
-
+            jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = createSelection();
 
@@ -334,7 +337,7 @@
 
                 ],
          });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = createSelection({
             index: 1
@@ -368,7 +371,7 @@
 
                 ],
          });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
         var selection = createSelection();
 

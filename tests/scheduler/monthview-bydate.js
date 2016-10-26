@@ -23,10 +23,12 @@
 
     module("Month View rendering when grouped by date", {
         setup: function() {
+            jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -59,9 +61,9 @@
                 }]
 
         });
-
+       
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(10);
         ok(sch.view().datesHeader.hasClass("k-scheduler-header"));
         equal(sch.view().datesHeader.find("th").length, 21);
     });
@@ -98,7 +100,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(10);
         equal(sch.view().datesHeader.find("th").first().text(), "Sunday");
     });
 
@@ -134,7 +136,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+         jasmine.clock().tick(10);
         equal(sch.view().times.find("th").length, 0);
         equal(sch.view().times.find("th:first").text(), "");
     });
@@ -171,7 +173,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(10);
         equal(sch.view().times.find("th").length, 7);
         equal(sch.view().times.find("th:first").text(), "Sunday");
         equal(sch.view().times.find("th").eq(1).text(), "Monday");
@@ -209,7 +211,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(10);
         equal(sch.view().content.find("tr").length, 7);
         equal(sch.view().content.find("td").length, 84);
     });
@@ -242,7 +244,7 @@
                 }]
 
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.datesHeader.find("table tr:last").children().length,  view.content.find("table tr:first").children().length);
@@ -276,7 +278,7 @@
                 }]
 
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.datesHeader.find("tr").eq(1).find("th:first").html(), 'Resource1TEST');
@@ -310,7 +312,7 @@
                 }]
 
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
        equal(view.datesHeader.find("tr").eq(0).find("th:first").html(), 'Resource1TEST');
@@ -345,7 +347,7 @@
                 }]
 
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         var headerText = view.datesHeader.find("tr:first th:first").html();
 
@@ -380,18 +382,20 @@
                 }]
 
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.datesHeader.find("table tr:last").children().length,  view.content.find("table tr:first").children().length);
     });
 
       module("Month View grouped horizontally by date", {
-        setup: function() {
+          setup: function() {
+              jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
-        teardown: function() {
+          teardown: function() {
+              jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -419,7 +423,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -473,7 +477,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         view.render([new SchedulerEvent({
             uid: "foo",
@@ -528,7 +532,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -551,11 +555,13 @@
     });
 
      module("Month View grouped vertically by date", {
-        setup: function() {
+         setup: function() {
+             jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
-        teardown: function() {
+         teardown: function() {
+             jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -583,7 +589,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -639,7 +645,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -663,10 +669,12 @@
 
     module("Month View group by date horizontally", {
         setup: function() {
+            jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -694,7 +702,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -736,7 +744,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -778,7 +786,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -820,7 +828,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -868,7 +876,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -921,7 +929,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -959,7 +967,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -998,7 +1006,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1044,7 +1052,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1092,7 +1100,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1147,7 +1155,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start =  new Date(2013, 1, 3, 10, 0, 0);
@@ -1173,11 +1181,13 @@
     });
 
       module("Month View grouped vertically by date", {
-        setup: function() {
+          setup: function() {
+              jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
-        teardown: function() {
+          teardown: function() {
+              jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -1205,7 +1215,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1259,7 +1269,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         view.render([new SchedulerEvent({
             uid: "foo",
@@ -1312,7 +1322,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         view.render([new SchedulerEvent({
             uid: "foo",
@@ -1357,7 +1367,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1380,11 +1390,13 @@
     });
 
      module("Month View grouped vertically by date", {
-        setup: function() {
+         setup: function() {
+             jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
-        teardown: function() {
+         teardown: function() {
+             jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -1412,7 +1424,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1466,7 +1478,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         view.render([new SchedulerEvent({
             uid: "foo",
@@ -1519,7 +1531,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
         view.render([new SchedulerEvent({
             uid: "foo",
@@ -1564,7 +1576,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1588,10 +1600,12 @@
 
     module("Month View group by date horizontally", {
         setup: function() {
+            jasmine.clock().install();
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             QUnit.fixture.append(container);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
         }
     });
@@ -1619,7 +1633,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1663,7 +1677,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1707,7 +1721,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1750,7 +1764,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1796,7 +1810,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1834,7 +1848,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1873,7 +1887,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1919,7 +1933,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -1967,7 +1981,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.render([new SchedulerEvent({
@@ -2022,7 +2036,7 @@
                     title: "Room"
                 }]
         });
-
+         jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start =  new Date(2013, 1, 3, 10, 0, 0);
@@ -2072,7 +2086,7 @@
                     title: "Room"
                 }]
         });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start =  new Date(2013, 1, 3, 10, 0, 0);
@@ -2123,7 +2137,7 @@
                     title: "Room"
                 }]
         });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start =  new Date(2013, 1, 3, 10, 0, 0);
@@ -2174,7 +2188,7 @@
                     title: "Room"
                 }]
         });
-
+          jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var start =  new Date(2013, 1, 3, 10, 0, 0);

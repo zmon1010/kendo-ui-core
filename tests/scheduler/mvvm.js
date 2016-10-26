@@ -3,8 +3,10 @@
 
     module("MVVM", {
         setup: function() {
+            jasmine.clock().install();
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(dom);
         }
     });
@@ -49,7 +51,7 @@
             { start: new Date(), end: new Date(), title: "foo3" },
             { start: new Date(), end: new Date(), title: "foo4" }
         ] } );
-
+         jasmine.clock().tick(1);
         var events = dom.find(".k-event");
 
         equal(events.length, 2);
@@ -67,7 +69,7 @@
             { start: date, end: date, title: "foo3" },
             { start: date, end: date, title: "foo4" }
         ] } );
-
+         jasmine.clock().tick(1);
         var events = dom.find(".k-event");
 
         equal(events.length, dom.find(".k-event").length);
@@ -87,7 +89,7 @@
                 { start: date, end: date, title: "foo4" }
             ]
         } );
-
+         jasmine.clock().tick(1);
         dom.find(".k-event").find("input").val(newTitle).trigger("change");
         var title = dom.find(".k-event").find(".title").text();
         delete window.template;

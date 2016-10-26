@@ -63,11 +63,13 @@
 
     module("Multi Day View grouped by date horizontally", {
         setup: function() {
+            jasmine.clock().install();
             customOrientation = "horizontal";
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             container.appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (container.data("kendoMultiDayView")) {
                 container.data("kendoMultiDayView").destroy();
             }
@@ -83,7 +85,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         ok(container.find(".k-scheduler-times").length);
         equal(sch.view().timesHeader[0], container.find(".k-scheduler-times")[0]);
     });
@@ -95,7 +97,7 @@
         }, { allDaySlot: false });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         ok(sch.view().datesHeader.hasClass("k-scheduler-header"));
         equal(sch.view().datesHeader.find("th").length, 7);
     });
@@ -106,7 +108,7 @@
         }, { date: new Date() });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().datesHeader.find("th.k-today").length, 1);
     });
 
@@ -116,7 +118,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         ok(!sch.view().datesHeader.find("th.k-today").length);
     });
 
@@ -126,7 +128,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().datesHeader.find("th").first().text(), "Thu 6/06");
     });
 
@@ -137,7 +139,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().title, "the title");
     });
 
@@ -147,7 +149,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().times.find("th").length, 1);
         equal(sch.view().times.find("th:first").text(), "8:00 AM");
     });
@@ -158,7 +160,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().content.find("tr").length, 1);
         equal(sch.view().content.find("td").length, 28);
     });
@@ -171,7 +173,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().content.find("td").first().text(), "foo");
         equal(sch.view().content.find("td").last().text(), "foo");
     });
@@ -183,7 +185,7 @@
                 deepEqual(kendo.date.getDate(data.date), new Date("6/06/2013"));
             }
         });
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
 
 
@@ -215,7 +217,7 @@
                 }
             }
         });
-
+        jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -231,7 +233,7 @@
                 return data.text + data.value;
             }
         });
-
+        jasmine.clock().tick(1);
         var view = element.getKendoScheduler().view();
 
         equal(texts.indexOf("Room1"), 0);
@@ -241,7 +243,7 @@
         equal(view.datesHeader.find("tr:first th:first").html(), '<span class="k-link k-nav-day">Thu 6/06</span>');
     });
 
-  
+
 
     test("correct groupIndex is passed to slotTemplate (horizontal grouping)", function() {
         var group1, group2, group3, group4;
@@ -269,7 +271,7 @@
                 }
             }
         });
-
+        jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -280,7 +282,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().element.find(".k-scheduler-header-all-day td").first().text(), "foo");
     });
 
@@ -291,7 +293,7 @@
                 deepEqual(e.date, new Date("6/6/2013"));
             }
         });
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
     });
 
@@ -301,7 +303,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().content.find("tr.k-middle-row").length, 1);
         equal(sch.view().content.find("tr:not(.k-middle-row)").length, 0);
     });
@@ -313,7 +315,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().datesHeader.find(".k-scheduler-table").length, 2);
         equal(sch.view().element.find(".k-scheduler-header-all-day td").length, 4);
     });
@@ -326,7 +328,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().datesHeader.find(".k-scheduler-table").length, 1);
         ok(!sch.view().allDayHeader);
     });
@@ -341,7 +343,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 1);
@@ -360,7 +362,7 @@
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "event1", rooms: 1, persons: 1 }),
         new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "event2", rooms: 2, persons: 1 })
         ];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 2);
@@ -378,7 +380,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 27), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().datesHeader.find("div.k-event").length, 1);
@@ -397,7 +399,7 @@
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 27), title: "event1", rooms: 1, persons: 1 }),
         new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 27), title: "event2", rooms: 2, persons: 1 })
         ];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().datesHeader.find("div.k-event").length, 2);
@@ -416,7 +418,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").text(), "my event");
@@ -433,7 +435,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 27), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().datesHeader.find("div.k-event").text(), "my event");
@@ -450,7 +452,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 26), title: "all day event", isAllDay: true, rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().datesHeader.find("div.k-event").length, 0);
@@ -467,7 +469,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 26), title: "all day event", isAllDay: true, rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().datesHeader.find("div.k-event").length, 0);
@@ -485,7 +487,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 25), end: new Date(2013, 1, 26), title: "all day event", isAllDay: true, rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().datesHeader.find(".k-event .k-i-arrow-w").length, 1);
@@ -504,7 +506,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         var timeElementsCount = sch.view().element.find(".k-current-time").length;
         equal(timeElementsCount, 2);
     });
@@ -528,6 +530,7 @@
         ];
 
         var sch = $(container).data("kendoScheduler");
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         ok(sch.view().element.find(".k-scheduler-header-all-day td").outerHeight() >= sch.view().element.find(".k-event").outerHeight() * 2);
@@ -556,7 +559,7 @@
                 rooms: 1, persons: 1
             })
         ];
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         sch.view().render(events);
 
@@ -572,6 +575,7 @@
             endTime: new Date("2013/6/6 00:59")
         });
         var sch = $(container).data("kendoScheduler");
+        jasmine.clock().tick(1);
         var index = sch.view()._timeSlotIndex(new Date(2013, 1, 26, 10, 0, 0));
 
         equal(index, 18);
@@ -590,7 +594,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var eventPosition = sch.view().content.find("div.k-event").offset();
@@ -610,7 +614,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 27, 11, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var eventOffsetFirst = sch.view().datesHeader.find("div.k-event").first().offset();
@@ -635,7 +639,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 10, 0, 0), end: new Date(2013, 1, 27, 11, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
         var eventOffset = sch.view().datesHeader.find("div.k-event").offset();
         var slotOffset = sch.view().element.find(".k-scheduler-header-all-day td").eq(8).offset();
@@ -663,7 +667,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 24, 10, 0, 0), end: new Date(2013, 1, 26, 11, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var slotWidth = sch.view().element.find(".k-scheduler-header-all-day td")[0].clientWidth;
@@ -683,7 +687,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 10, 0, 0), end: new Date(2013, 1, 27, 11, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().datesHeader.find("div.k-event").length, 1);
@@ -701,7 +705,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 10, 0, 0), title: "my event", rooms: 2, persons: 2 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var eventElement = sch.view().content.find("div.k-event");
@@ -725,7 +729,7 @@
             new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), title: "second event", isAllDay: true, rooms: 1, persons: 1 }),
             new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), title: "third event", isAllDay: true, rooms: 1, persons: 1 })
         ];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var eventSlotOffsetHeight = sch.view().element.find(".k-scheduler-header-all-day td").eq(0)[0].offsetHeight;
@@ -742,7 +746,7 @@
             date: selectedDate
         });
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         var result = sch.view().selectionByElement(sch.view().content.find("td").eq(2));
 
         equal(result.groupIndex, 2);
@@ -758,7 +762,7 @@
             date: selectedDate
         });
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view()._dateSlotIndex(new Date(2013, 1, 25, 10, 0, 0)), 1);
     });
 
@@ -769,7 +773,7 @@
             date: new Date(2013, 1, 2)
         });
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         sch.view().render([new SchedulerEvent({
             uid: "foo", title: "",
             start: new Date(2013, 1, 1, 0, 0, 0),
@@ -792,7 +796,7 @@
             endTime: new Date("2013/6/6 20:00")
         });
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         var slots = sch.view().groups[0].getTimeSlotCollection(0);
         deepEqual(slots.last().startDate(), new Date("2013/6/6 19:30"));
         deepEqual(slots.last().endDate(), new Date("2013/6/6 20:00"));
@@ -807,7 +811,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         var slots = sch.view().groups[0].getTimeSlotCollection(0);
         var count = slots.count();
         deepEqual(slots.at(count - 2).startDate(), new Date("2013/6/6 23:00"));
@@ -822,7 +826,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         sch.view().bind("navigate", function(e) {
             equal(e.view, "day");
             equal(e.date.getTime(), new Date("2013/2/24 08:00").getTime());
@@ -844,19 +848,21 @@
 
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), isAllDay: true, title: '["my event"]', rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().element.find("div.k-event>div").length, 0);
     });
 
-        module("Multi Day View grouped by date vertically", {
+    module("Multi Day View grouped by date vertically", {
         setup: function() {
+            jasmine.clock().install();
             customOrientation = "vertical";
             container = $('<div class="k-scheduler" style="width:1000px;height:800px">');
             container.appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (container.data("kendoMultiDayView")) {
                 container.data("kendoMultiDayView").destroy();
             }
@@ -872,7 +878,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         ok(container.find(".k-scheduler-times").length);
         equal(sch.view().timesHeader[0], container.find(".k-scheduler-times")[0]);
     });
@@ -884,7 +890,7 @@
         }, { allDaySlot: false });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         ok(sch.view().datesHeader.hasClass("k-scheduler-header"));
         equal(sch.view().times.find("th").length, 14);
     });
@@ -895,7 +901,7 @@
         }, { date: new Date() });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().times.find("th.k-today").length, 1);
     });
 
@@ -905,7 +911,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         ok(!sch.view().datesHeader.find("th.k-today").length);
     });
 
@@ -915,7 +921,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().times.find("th").first().text(), "Thu 6/06");
     });
 
@@ -926,7 +932,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().title, "the title");
     });
 
@@ -936,7 +942,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().times.find("th").length, 3);
         equal(sch.view().times.find("th").eq(2).text(), "8:00 AM");
     });
@@ -947,7 +953,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().content.find("tr").length, 14);
         equal(sch.view().content.find("td").length, 56);
     });
@@ -961,7 +967,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().content.find("td").first().text(), "foo");
         equal(sch.view().content.find("td").last().text(), "foo");
     });
@@ -973,7 +979,7 @@
                 deepEqual(kendo.date.getDate(data.date), new Date("6/06/2013"));
             }
         });
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
 
     });
@@ -1004,7 +1010,7 @@
                 }
             }
         });
-
+        jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -1020,7 +1026,7 @@
                 return data.text + data.value;
             }
         });
-
+        jasmine.clock().tick(1);
         var view = element.getKendoScheduler().view();
 
         equal(texts.indexOf("Room1"), 0);
@@ -1030,7 +1036,7 @@
         equal(view.datesHeader.find("tr:first th:first").html(), 'Room11');
     });
 
-  
+
 
     test("correct groupIndex is passed to slotTemplate (horizontal grouping)", function() {
         var group1, group2, group3, group4;
@@ -1058,7 +1064,7 @@
                 }
             }
         });
-
+        jasmine.clock().tick(1);
         ok(group1 && group2 && group3 && group4);
     });
 
@@ -1069,18 +1075,18 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().element.find(".k-scheduler-header-all-day td").first().text(), "foo");
     });
 
-    test("slot date is pass in the slots template", function() { 
+    test("slot date is pass in the slots template", function() {
         setupGroupedScheduler(container, customOrientation, {
             type: "day",
             allDaySlotTemplate: function(e) {
                 deepEqual(e.date, new Date("6/6/2013"));
             }
         });
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
     });
 
@@ -1091,7 +1097,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().content.find("tr.k-middle-row").length, 1);
         equal(sch.view().content.find("tr:not(.k-middle-row)").length, 0);
     });
@@ -1103,7 +1109,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().datesHeader.find(".k-scheduler-table").length, 1);
         equal(sch.view().element.find(".k-scheduler-header-all-day td").length, 4);
     });
@@ -1116,7 +1122,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view().datesHeader.find(".k-scheduler-table").length, 1);
         ok(!sch.view().allDayHeader);
     });
@@ -1131,7 +1137,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 1);
@@ -1150,7 +1156,7 @@
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "event1", rooms: 1, persons: 1 }),
         new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "event2", rooms: 2, persons: 1 })
         ];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 2);
@@ -1168,7 +1174,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 27), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 1);
@@ -1187,7 +1193,7 @@
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 27), title: "event1", rooms: 1, persons: 1 }),
         new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 27), title: "event2", rooms: 2, persons: 1 })
         ];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 2);
@@ -1206,7 +1212,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").text(), "my event");
@@ -1223,7 +1229,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 27), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").text(), "my event");
@@ -1240,7 +1246,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 26), title: "all day event", isAllDay: true, rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 0);
@@ -1257,7 +1263,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26), end: new Date(2013, 1, 26), title: "all day event", isAllDay: true, rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 0);
@@ -1275,7 +1281,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 25), end: new Date(2013, 1, 26), title: "all day event", isAllDay: true, rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find(".k-event .k-i-arrow-w").length, 1);
@@ -1294,7 +1300,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         var timeElementsCount = sch.view().element.find(".k-current-time").length;
         equal(timeElementsCount, 8);
     });
@@ -1316,7 +1322,7 @@
                 rooms: 1, persons: 1
             })
         ];
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         sch.view().render(events);
 
@@ -1346,7 +1352,7 @@
                 rooms: 1, persons: 1
             })
         ];
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         sch.view().render(events);
 
@@ -1361,6 +1367,7 @@
             startTime: new Date("2013/6/6 01:00"),
             endTime: new Date("2013/6/6 00:59")
         });
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var index = sch.view()._timeSlotIndex(new Date(2013, 1, 26, 10, 0, 0));
 
@@ -1380,7 +1387,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 9, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var eventPosition = sch.view().content.find("div.k-event").offset();
@@ -1400,7 +1407,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 27, 11, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var eventOffsetFirst = sch.view().content.find("div.k-event").first().offset();
@@ -1425,7 +1432,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 10, 0, 0), end: new Date(2013, 1, 27, 11, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
         var eventOffset = sch.view().content.find("div.k-event").offset();
         var slotOffset = sch.view().element.find(".k-scheduler-header-all-day td").eq(8).offset();
@@ -1453,7 +1460,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 24, 10, 0, 0), end: new Date(2013, 1, 26, 11, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var slotWidth = sch.view().element.find(".k-scheduler-header-all-day td")[0].clientWidth;
@@ -1473,7 +1480,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 10, 0, 0), end: new Date(2013, 1, 27, 11, 0, 0), title: "my event", rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().content.find("div.k-event").length, 1);
@@ -1491,7 +1498,7 @@
         var sch = $(container).data("kendoScheduler");
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 8, 0, 0), end: new Date(2013, 1, 26, 10, 0, 0), title: "my event", rooms: 2, persons: 2 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var eventElement = sch.view().content.find("div.k-event");
@@ -1515,7 +1522,7 @@
             new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), title: "second event", isAllDay: true, rooms: 1, persons: 1 }),
             new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), title: "third event", isAllDay: true, rooms: 1, persons: 1 })
         ];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         var eventSlotOffsetHeight = sch.view().element.find(".k-scheduler-header-all-day td").eq(0)[0].offsetHeight;
@@ -1532,7 +1539,7 @@
             date: selectedDate
         });
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         var result = sch.view().selectionByElement(sch.view().content.find("tr").eq(1).find("td").eq(2));
 
         equal(result.groupIndex, 2);
@@ -1548,7 +1555,7 @@
             date: selectedDate
         });
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         equal(sch.view()._dateSlotIndex(new Date(2013, 1, 25, 10, 0, 0)), 1);
     });
 
@@ -1559,7 +1566,7 @@
             date: new Date(2013, 1, 2)
         });
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         sch.view().render([new SchedulerEvent({
             uid: "foo", title: "",
             start: new Date(2013, 1, 1, 0, 0, 0),
@@ -1582,7 +1589,7 @@
             endTime: new Date("2013/6/6 20:00")
         });
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         var slots = sch.view().groups[0].getTimeSlotCollection(0);
         deepEqual(slots.last().startDate(), new Date("2013/6/6 19:30"));
         deepEqual(slots.last().endDate(), new Date("2013/6/6 20:00"));
@@ -1597,7 +1604,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         var slots = sch.view().groups[0].getTimeSlotCollection(0);
         var count = slots.count();
         deepEqual(slots.at(count - 2).startDate(), new Date("2013/6/6 23:00"));
@@ -1612,7 +1619,7 @@
         });
 
         var sch = $(container).data("kendoScheduler");
-
+        jasmine.clock().tick(1);
         sch.view().bind("navigate", function(e) {
             equal(e.view, "day");
             equal(e.date.getTime(), new Date("2013/2/24 00:00").getTime());
@@ -1634,7 +1641,7 @@
 
 
         var events = [new SchedulerEvent({ uid: "uid", start: new Date(2013, 1, 26, 0, 0, 0), end: new Date(2013, 1, 26, 0, 0, 0), isAllDay: true, title: '["my event"]', rooms: 1, persons: 1 })];
-
+        jasmine.clock().tick(1);
         sch.view().render(events);
 
         equal(sch.view().element.find("div.k-event>div").length, 0);

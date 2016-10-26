@@ -9,11 +9,16 @@
 
     module("dst", {
         setup: function() {
+             jasmine.clock().install();
             div = $("<div/>").width(1000).height(1000);
             div.appendTo(QUnit.fixture);
             this.firsDay = kendo.culture().calendar.firstDay;
         },
         teardown: function() {
+             jasmine.clock().uninstall();
+            if ( div.data("kendoScheduler")) {
+                div.data("kendoScheduler").destroy();
+            }
             kendo.destroy(QUnit.fixture);
             kendo.culture().calendar.firstDay = this.firsDay;
         }
@@ -33,6 +38,7 @@
             dataSource: [
             ]
         });
+        jasmine.clock().tick(1);
 
         var slots = div.find(".k-scheduler-content td");
 
@@ -62,7 +68,7 @@
             dataSource: [
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         slots.eq(4).trigger({
@@ -92,7 +98,7 @@
                 new SchedulerEvent({ start: new Date("2013/3/31 2:30 AM"), end: new Date("2013/3/31 4:00 AM"), title: "" })
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         var event = div.find(".k-event");
@@ -114,7 +120,7 @@
                 new SchedulerEvent({ start: new Date("2013/3/31 4:00 AM"), end: new Date("2013/3/31 4:30 AM"), title: "" })
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         var event = div.find(".k-event");
@@ -135,7 +141,7 @@
                 new SchedulerEvent({ start: new Date("2013/3/31 2:00 AM"), end: new Date("2013/3/31 2:30 AM"), title: "" })
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         var handle = div.find(".k-resize-s");
@@ -162,7 +168,7 @@
                 new SchedulerEvent({ start: new Date("2013/3/31 4:00 AM"), end: new Date("2013/3/31 4:30 AM"), title: "" })
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         var handle = div.find(".k-resize-n");
@@ -189,7 +195,7 @@
                 new SchedulerEvent({ start: new Date("2013/3/31 4:00 AM"), end: new Date("2013/3/31 4:30 AM"), title: "" })
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         var event = div.find(".k-event");
@@ -201,7 +207,7 @@
         var hint = div.find(".k-event-drag-hint");
 
 
-        equalWithRound(hint.offset().top,  slots.eq(2).offset().top);
+        equalWithRound(hint.offset().top, slots.eq(2).offset().top);
     });
 
     test("displays event occurring in DST", function() {
@@ -217,7 +223,7 @@
                 new SchedulerEvent({ start: new Date("2013/3/30 3:00 AM"), end: new Date("2013/3/30 3:30 AM"), recurrenceRule: "FREQ=DAILY;COUNT=2", title: "" })
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         var diff = slots.eq(0).outerHeight() / 2;
@@ -248,7 +254,7 @@
                 new kendo.data.SchedulerEvent({ start: new Date("2014/3/10"), end: new Date("2014/3/10"), title: "event" })
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
 
         ok(!div.find(".k-event").length);

@@ -8,9 +8,11 @@
 
     module("DataBinding", {
         setup: function() {
+            jasmine.clock().install();
             container = $("<div>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
         }
     });
@@ -22,11 +24,12 @@
     });
 
     test("view is bound to the event data", 1, function() {
+        var eventsLength = 0;
         var scheduler = new Scheduler(container, {
             views: [ {
                     type: kendo.ui.MultiDayView.extend({
                         render: function(events) {
-                            equal(events.length, 2);
+                            eventsLength = events.length;
                         }
                     }),
                     title: "testView"
@@ -45,6 +48,9 @@
                 }
             }
         });
+
+        jasmine.clock().tick(1);
+        equal(eventsLength, 2);
     });
 
     test("dataItems method return valid events", function() {
@@ -72,7 +78,7 @@
                 }
             }
         });
-
+          jasmine.clock().tick(1);
         equal(scheduler.wrapper.find(".k-event")[0].getAttribute("data-uid"), scheduler.dataItems()[0].uid);
         equal(scheduler.wrapper.find(".k-event")[1].getAttribute("data-uid"), scheduler.dataItems()[1].uid);
         equal(scheduler.dataItems().length, scheduler.wrapper.find(".k-event").length);
@@ -80,11 +86,12 @@
     });
 
     test("data is filtered before is passed to the view", 1, function() {
+        var eventsLength = 0;
         var scheduler = new Scheduler(container, {
             views: [ {
                     type: kendo.ui.MultiDayView.extend({
                         render: function(events) {
-                            equal(events.length, 1);
+                            eventsLength = events.length;
                         }
                     }),
                     title: "testView"
@@ -103,6 +110,8 @@
                 }
             }
         });
+          jasmine.clock().tick(1);
+        equal(eventsLength, 1);
     });
 
     test("expand recurring events before calling render method", function() {
@@ -128,7 +137,7 @@
                 }
             ]
         });
-
+          jasmine.clock().tick(1);
         view = scheduler.view();
         stub(view, {
             render: view.render
@@ -140,16 +149,20 @@
         equal(events.length, 8);
     });
 
-    test("resetting DataSource rebinds the widget", 2, function() {
+    test("resetting DataSource rebinds the widget", 1, function() {
+        var flag = false;
         var scheduler = new Scheduler(container, {
             dataBinding: function() {
-                ok(true);
+                flag = true;
             }
         });
 
         scheduler.setDataSource(new kendo.data.SchedulerDataSource({
             data:[{ title: "", start: new Date(), end: new Date()}]
         }));
+
+         jasmine.clock().tick(1);
+         ok(flag);
     });
 
     test("dataBinding event can be prevented", 0, function() {
@@ -195,7 +208,7 @@
                 }
             ]
         });
-
+          jasmine.clock().tick(1);
         scheduler.refresh();
 
         equal(scheduler._data.length, 8);

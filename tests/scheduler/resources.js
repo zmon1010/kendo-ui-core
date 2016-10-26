@@ -11,10 +11,12 @@
 
     module("scheduler resources", {
         setup: function() {
+            jasmine.clock().install();
             kendo.effects.disable();
             div = $("<div>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(div);
             kendo.effects.enable();
         }
@@ -35,17 +37,19 @@
         equal(scheduler.resources[0].dataSource.data()[0].text, "foo");
     });
 
-    asyncTest("scheduler binds when resources and events are loaded", 2, function() {
+    test("scheduler binds when resources and events are loaded", 2, function() {
+        var resText = "";
+        var titleText = "";
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
-            dataSource:  {
+            dataSource: {
                 transport: {
                     read: function(options) {
-                        setTimeout(function() {
-                            options.success([
-                                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:00"), title: "foo" }
-                            ]);
-                        }, 1);
+                        //  setTimeout(function() {
+                        options.success([
+                            { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:00"), title: "foo" }
+                        ]);
+                        //   }, 1);
                     }
                 }
             },
@@ -55,11 +59,11 @@
                     dataSource: {
                         transport: {
                             read: function(options) {
-                                setTimeout(function() {
-                                    options.success([
-                                        { text: "foo", value: 1 }
-                                    ]);
-                                }, 1);
+                                // setTimeout(function() {
+                                options.success([
+                                    { text: "foo", value: 1 }
+                                ]);
+                                //  }, 1);
                             }
                         }
                     }
@@ -67,19 +71,21 @@
             ],
 
             dataBound: function() {
-                start();
-                equal(this.resources[0].dataSource.data()[0].text, "foo");
-                equal(this.dataSource.data()[0].title, "foo");
+                resText = this.resources[0].dataSource.data()[0].text;
+                titleText = this.dataSource.data()[0].title;
             }
         });
+        jasmine.clock().tick(1);
+        equal(resText, "foo");
+        equal(titleText, "foo");
     });
 
     test("scheduler throws error if the field option is not specified", 1, function() {
         try {
             var scheduler = new kendo.ui.Scheduler(div, {
-                resources: [ {} ]
+                resources: [{}]
             });
-        } catch(e) {
+        } catch (e) {
             equal(e.toString(), 'Error: The "field" and "dataSource" options of the scheduler resource are mandatory.')
         }
     });
@@ -87,16 +93,16 @@
     test("scheduler throws error if the dataSource option is not specified", 1, function() {
         try {
             var scheduler = new kendo.ui.Scheduler(div, {
-                resources: [ { field: "" } ]
+                resources: [{ field: "" }]
             });
-        } catch(e) {
+        } catch (e) {
             equal(e.toString(), 'Error: The "field" and "dataSource" options of the scheduler resource are mandatory.')
         }
     });
 
     test('dataTextField is "text" by default', function() {
         var scheduler = new kendo.ui.Scheduler(div, {
-            resources: [ { field: "foo", dataSource: [] } ]
+            resources: [{ field: "foo", dataSource: [] }]
         });
 
         equal(scheduler.resources[0].dataTextField, "text");
@@ -104,7 +110,7 @@
 
     test("specify custom dataTextField via the resource options", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
-            resources: [ { field: "foo", dataSource: [], dataTextField: "bar" } ]
+            resources: [{ field: "foo", dataSource: [], dataTextField: "bar" }]
         });
 
         equal(scheduler.resources[0].dataTextField, "bar");
@@ -112,7 +118,7 @@
 
     test('dataValueField is "value" by default', function() {
         var scheduler = new kendo.ui.Scheduler(div, {
-            resources: [ { field: "foo", dataSource: [] } ]
+            resources: [{ field: "foo", dataSource: [] }]
         });
 
         equal(scheduler.resources[0].dataValueField, "value");
@@ -120,7 +126,7 @@
 
     test("specify custom dataValueField via the resource options", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
-            resources: [ { field: "foo", dataSource: [], dataValueField: "bar" } ]
+            resources: [{ field: "foo", dataSource: [], dataValueField: "bar" }]
         });
 
         equal(scheduler.resources[0].dataValueField, "bar");
@@ -128,7 +134,7 @@
 
     test('dataColorField is "color" by default', function() {
         var scheduler = new kendo.ui.Scheduler(div, {
-            resources: [ { field: "foo", dataSource: [] } ]
+            resources: [{ field: "foo", dataSource: [] }]
         });
 
         equal(scheduler.resources[0].dataColorField, "color");
@@ -136,7 +142,7 @@
 
     test("specify custom dataColorField via the resource options", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
-            resources: [ { field: "foo", dataSource: [], dataColorField: "bar" } ]
+            resources: [{ field: "foo", dataSource: [], dataColorField: "bar" }]
         });
 
         equal(scheduler.resources[0].dataColorField, "bar");
@@ -158,9 +164,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: 1 }
             ],
-            views: [ "day" ]
+            views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equalBackgroundColor(events.eq(0), "green");
@@ -183,9 +189,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: true },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: false }
             ],
-            views: [ "day" ]
+            views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equalBackgroundColor(events.eq(0), "green");
@@ -206,12 +212,12 @@
                 }
             ],
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: { value: 2 }},
-                { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: { value: 1 }}
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: { value: 2 } },
+                { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: { value: 1 } }
             ],
-            views: [ "day" ]
+            views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equalBackgroundColor(events.eq(0), "green");
@@ -234,9 +240,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: 1 }
             ],
-            views: [ "day" ]
+            views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equal(events.eq(1).hasClass("k-event-inverse"), true);
@@ -260,9 +266,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: 1 }
             ],
-            views: [ "day" ]
+            views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equal(events.eq(1).hasClass("k-event-inverse"), false);
@@ -287,9 +293,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: 1 }
             ],
-            views: [ "week" ]
+            views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equalBackgroundColor(events.eq(0), "green");
@@ -325,11 +331,11 @@
                 }
             ],
             dataSource: [
-                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2, bar: [1,2]},
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2, bar: [1, 2] },
             ],
-            views: [ "week" ]
+            views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         equal(resourcesInEventTemplate[0].field == "foo", true);
         equal(resourcesInEventTemplate[0].title == "foo", true);
         equal(resourcesInEventTemplate[0].name == "foo", true);
@@ -350,9 +356,9 @@
             dataSource: [
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "" }
             ],
-            views: [ "week" ]
+            views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equalBackgroundColor(events.eq(0), "");
@@ -374,9 +380,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: 1 }
             ],
-            views: [ "week" ]
+            views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equal(events.eq(1).hasClass("k-event-inverse"), true);
@@ -400,9 +406,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: 1 }
             ],
-            views: [ "week" ]
+            views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equal(events.eq(1).hasClass("k-event-inverse"), false);
@@ -412,6 +418,9 @@
     });
 
     test("multiple resources are passed to template", 3, function() {
+        var resource = 0;
+        var resourceOneVal = 0;
+        var resourceTwoVal = 0;
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             resources: [
@@ -430,13 +439,20 @@
             views: [{
                 type: "agenda",
                 eventTemplate: function(data) {
-                    equal(data.resources.length, 2);
+                    resource = data.resources.length;
 
-                    equal(data.resources[0].value, 2);
-                    equal(data.resources[1].value, 1);
+                    resourceOneVal = data.resources[0].value;
+                   resourceTwoVal = data.resources[1].value;
                 }
             }]
         });
+
+         jasmine.clock().tick(1);
+        equal(resource, 2);
+
+        equal(resourceOneVal, 2);
+        equal(resourceTwoVal, 1);
+
     });
 
     test("scheduler creates a dropdownlist in the popup form for resources", function() {
@@ -455,10 +471,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var dropdownlist = scheduler._editor.container.find("select[data-role=dropdownlist]");
@@ -486,10 +502,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var multiselect = scheduler._editor.container.find("select[data-role=multiselect]").data("kendoMultiSelect");
@@ -516,14 +532,14 @@
                 schema: {
                     model: {
                         fields: {
-                            foo: { validation: { required: true} }
+                            foo: { validation: { required: true } }
                         }
                     }
                 }
             },
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
@@ -551,14 +567,14 @@
                 schema: {
                     model: {
                         fields: {
-                            foo: { validation: { required: true} }
+                            foo: { validation: { required: true } }
                         }
                     }
                 }
             },
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var eventElement = scheduler.dataSource.at(0).uid;
 
         scheduler.editEvent(eventElement);
@@ -585,10 +601,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var dropdownlist = scheduler._editor.container.find("select[data-role=dropdownlist]").data("kendoDropDownList");
@@ -615,10 +631,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var multiselect = scheduler._editor.container.find("select[data-role=multiselect]").data("kendoMultiSelect");
@@ -644,10 +660,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var dropdownlist = scheduler._editor.container.find("select[data-role=dropdownlist]").data("kendoDropDownList");
@@ -675,10 +691,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var multiselect = scheduler._editor.container.find("select[data-role=multiselect]").data("kendoMultiSelect");
@@ -692,7 +708,7 @@
     test("the current resource is selected in the dropdownlist", function() {
         var event = new kendo.data.SchedulerEvent({
             start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "",
-            foo: {  value: 2 }
+            foo: { value: 2 }
         });
 
         var scheduler = new kendo.ui.Scheduler(div, {
@@ -706,10 +722,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var dropdownlist = scheduler._editor.container.find("select[data-role=dropdownlist]").data("kendoDropDownList");
@@ -720,7 +736,7 @@
     test("the current resource is selected in the multiselect", function() {
         var event = new kendo.data.SchedulerEvent({
             start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "",
-            foo: [{  value: 2 }]
+            foo: [{ value: 2 }]
         });
 
         var scheduler = new kendo.ui.Scheduler(div, {
@@ -735,10 +751,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var multiselect = scheduler._editor.container.find("select[data-role=multiselect]").data("kendoMultiSelect");
@@ -749,7 +765,7 @@
     test("selecting an item from the multiselect adds a resource item to the current resources array of the event", function() {
         var event = new kendo.data.SchedulerEvent({
             start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "",
-            foo: [ 2 ]
+            foo: [2]
         });
 
         var scheduler = new kendo.ui.Scheduler(div, {
@@ -764,10 +780,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var multiselect = scheduler._editor.container.find("select[data-role=multiselect]").data("kendoMultiSelect");
@@ -782,7 +798,7 @@
     test("selecting the option label sets the resource field of the event to null", function() {
         var event = new kendo.data.SchedulerEvent({
             start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "",
-            foo: {  value: 2 }
+            foo: { value: 2 }
         });
 
         var scheduler = new kendo.ui.Scheduler(div, {
@@ -796,10 +812,10 @@
                     ]
                 }
             ],
-            dataSource: [ event ],
+            dataSource: [event],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
         var dropdownlist = scheduler._editor.container.find("select[data-role=dropdownlist]").data("kendoDropDownList");
@@ -814,7 +830,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -826,10 +842,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var headerRows = view.datesHeader.find("tr");
 
@@ -843,7 +859,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName1", "ResourceName2" ]
+                resources: ["ResourceName1", "ResourceName2"]
             },
             resources: [
                 {
@@ -864,10 +880,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var headerRows = view.datesHeader.find("tr");
 
@@ -882,7 +898,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName1" ]
+                resources: ["ResourceName1"]
             },
             resources: [
                 {
@@ -896,7 +912,7 @@
             dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var headerRows = view.datesHeader.find("tr");
 
@@ -907,7 +923,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             allDaySlot: false,
@@ -921,10 +937,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         equal(view.times.find("tr:first th:first").attr("rowspan"), 48);
         equal(view.times.find("tr:eq(48) th:first").attr("rowspan"), 48);
@@ -946,9 +962,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", foo: 1 }
             ],
-            views: [ "agenda" ]
+            views: ["agenda"]
         });
-
+        jasmine.clock().tick(1);
         var marks = scheduler.element.find(".k-scheduler-mark");
 
         equalBackgroundColor(marks.eq(0), "green");
@@ -973,7 +989,7 @@
             ],
             views: ["agenda"]
         });
-
+        jasmine.clock().tick(1);
         var marks = scheduler.element.find(".k-scheduler-mark");
 
         equalBackgroundColor(marks.eq(0), "green");
@@ -983,7 +999,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
             },
             resources: [
                 {
@@ -995,10 +1011,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 12:00"), title:"foo", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 12:00"), title: "foo", foo: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.content.find(".k-event").length, 1);
@@ -1009,7 +1025,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1023,12 +1039,12 @@
                 }
             ],
             dataSource: [
-                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 12:00"), title:"foo", foo: 2 },
-                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 12:00"), title:"foo", foo: 1 }
+                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 12:00"), title: "foo", foo: 2 },
+                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 12:00"), title: "foo", foo: 1 }
             ],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         equal(view.content.find(".k-event").length, 2);
         equal(view.groups[0].getTimeSlotCollection(0).events().length, 1);
@@ -1039,7 +1055,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
             },
             resources: [
                 {
@@ -1052,11 +1068,11 @@
                 }
             ],
             dataSource: [
-                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/8 12:00"), isAllDay: true, title:"foo", foo: 1 }
+                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/8 12:00"), isAllDay: true, title: "foo", foo: 1 }
             ],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var event = view.groups[0].getDaySlotCollection(0).events()[0];
         equal(view.datesHeader.find(".k-event").length, 1);
@@ -1069,7 +1085,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName", "ResourceName2" ]
+                resources: ["ResourceName", "ResourceName2"]
             },
             resources: [
                 {
@@ -1091,10 +1107,10 @@
                 }
 
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 12:00"), title:"foo", foo: 2, bar: [1, 2] } ],
+            dataSource: [{ start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 12:00"), title: "foo", foo: 2, bar: [1, 2] }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.content.find(".k-event").length, 2);
@@ -1109,7 +1125,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1122,10 +1138,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.content.find(".k-scheduler-header-all-day").length, 2);
@@ -1135,9 +1151,9 @@
     test("all day slot template is rendered for each resource group when orientation is horizontal in day view", 2, function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
-            allDaySlotTemplate: function(data) { deepEqual(data.date,new Date("2013/6/6")) },
+            allDaySlotTemplate: function(data) { deepEqual(data.date, new Date("2013/6/6")) },
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "horizontal"
             },
             resources: [
@@ -1150,19 +1166,19 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
     });
 
     test("all day slot template is rendered for each resource group when orientation is vertical in day view", 2, function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
-            allDaySlotTemplate: function(data) { deepEqual(data.date,new Date("2013/6/6")) },
+            allDaySlotTemplate: function(data) { deepEqual(data.date, new Date("2013/6/6")) },
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1175,10 +1191,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
     });
 
@@ -1186,7 +1202,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             allDaySlot: false,
@@ -1200,10 +1216,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         ok(!view.content.find(".k-scheduler-header-all-day").length);
@@ -1213,7 +1229,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1226,10 +1242,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), isAllDay: true, title: "", foo: 2 }],
+            dataSource: [{ start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), isAllDay: true, title: "", foo: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.content.find(".k-event").length, 1);
@@ -1239,7 +1255,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -1251,10 +1267,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), isAllDay: true, title: "", foo: 2 }],
+            dataSource: [{ start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), isAllDay: true, title: "", foo: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[1].getDaySlotCollection(0).events().length, 1);
@@ -1264,7 +1280,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1277,10 +1293,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), isAllDay: true, title: "", foo: 2 }],
+            dataSource: [{ start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), isAllDay: true, title: "", foo: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[1].getDaySlotCollection(0).events().length, 1);
@@ -1289,9 +1305,9 @@
     test("last slot in the group has correct date when groupped vertically", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
-            startTime: new Date(2013, 1,1, 11,0,0),
+            startTime: new Date(2013, 1, 1, 11, 0, 0),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1304,10 +1320,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var slot = view.groups[0].getTimeSlotCollection(0).last();
@@ -1340,10 +1356,10 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var slots = view.groups[0].getDaySlotCollection(0);
 
@@ -1386,10 +1402,10 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["week"]
         });
-
+        jasmine.clock().tick(1);
 
         var view = scheduler.view();
         var slots = view.groups[0].getDaySlotCollection(0);
@@ -1427,11 +1443,11 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["week"]
         });
 
-        var view = scheduler.view();
+        jasmine.clock().tick(1);
 
         var view = scheduler.view();
         var slots = view.groups[0].getTimeSlotCollection(0);
@@ -1459,7 +1475,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -1471,10 +1487,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         equal(view.datesHeader.find("tr").length, 2);
         equal(view.datesHeader.find("tr:first th").length, 2);
@@ -1485,7 +1501,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -1497,10 +1513,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.content.find("td").length, 42 * 2);
@@ -1510,7 +1526,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1523,13 +1539,13 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
-        equal(view.times.find("th.k-hidden").length, 6*2);
+        equal(view.times.find("th.k-hidden").length, 6 * 2);
     });
 
     test("grouping day view on a string value", 1, function() {
@@ -1553,7 +1569,7 @@
             ],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(div.find(".k-event").length, 1);
@@ -1580,7 +1596,7 @@
             ],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(div.find(".k-event").length, 1);
@@ -1588,12 +1604,14 @@
 
     module("scheduler resources live dom", {
         setup: function() {
+            jasmine.clock().install();
             kendo.effects.disable();
 
             div = $('<div style="width:500px;height:1000px">');
             div.appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(div);
             kendo.effects.enable();
         }
@@ -1615,9 +1633,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "", foo: 1 }
             ],
-            views: [ "month" ]
+            views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equalBackgroundColor(events.eq(0), "green");
@@ -1639,9 +1657,9 @@
             dataSource: [
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:30"), title: "" }
             ],
-            views: [ "month" ]
+            views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equalBackgroundColor(events.eq(0), "");
@@ -1663,9 +1681,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: 1 }
             ],
-            views: [ "month" ]
+            views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equal(events.eq(1).hasClass("k-event-inverse"), true);
@@ -1689,9 +1707,9 @@
                 { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: 2 },
                 { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: 1 }
             ],
-            views: [ "month" ]
+            views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var events = scheduler.element.find(".k-event");
 
         equal(events.eq(1).hasClass("k-event-inverse"), false);
@@ -1705,7 +1723,7 @@
             date: new Date("2013/6/6"),
             endTime: new Date("2013/6/6 14:00"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1719,11 +1737,11 @@
                 }
             ],
             dataSource: [
-                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 16:00"), title:"foo", foo: 1 }
+                { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 16:00"), title: "foo", foo: 1 }
             ],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var event = div.find(".k-event");
         var slots = div.find(".k-scheduler-content td");
@@ -1736,7 +1754,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -1748,10 +1766,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -1771,7 +1789,7 @@
             startTime: new Date("2013/6/6 9:00:00"),
             endTime: new Date("2013/6/6 14:00:00"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1784,10 +1802,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), title: "", foo: 2 }],
+            dataSource: [{ start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), title: "", foo: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var slotEvents = view.groups[1].getTimeSlotCollection(0).events();
@@ -1805,7 +1823,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1818,10 +1836,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), title: "", foo: 2 }],
+            dataSource: [{ start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), title: "", foo: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function() {
@@ -1837,7 +1855,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1850,10 +1868,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), title: "", foo: 2 }],
+            dataSource: [{ start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), title: "", foo: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function() {
@@ -1869,7 +1887,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1882,10 +1900,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var slots = view.groups[0].getTimeSlotCollection(0);
 
@@ -1907,7 +1925,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1920,10 +1938,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         var slot = view.content.find("td:last");
 
@@ -1937,7 +1955,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName"],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1950,10 +1968,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), title: "", foo: 2 }],
+            dataSource: [{ start: new Date("2013/6/6 10:00 AM"), end: new Date("2013/6/6 11:00 AM"), title: "", foo: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var eventInitialTop = view.content.find(".k-event")[0].offsetTop;
@@ -1983,10 +2001,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2027,10 +2045,10 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2074,10 +2092,10 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2125,10 +2143,10 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2174,10 +2192,10 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2222,10 +2240,10 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2268,10 +2286,10 @@
                 }
 
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2314,10 +2332,10 @@
                 }
 
             ],
-            dataSource: [ { start: new Date("2013/6/6 23:30"), end: new Date("2013/6/7 00:00"), title: "foo", foo: 1, bar: 2 } ],
+            dataSource: [{ start: new Date("2013/6/6 23:30"), end: new Date("2013/6/7 00:00"), title: "foo", foo: 1, bar: 2 }],
             views: ["day"]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td");
         var event = div.find(".k-event");
 
@@ -2329,7 +2347,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2341,10 +2359,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/5/30"), end: new Date("2013/5/30"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/5/30"), end: new Date("2013/5/30"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[0].getDaySlotCollection(0).events().length, 1);
@@ -2356,7 +2374,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2368,10 +2386,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[0].getDaySlotCollection(1).events().length, 1);
@@ -2383,7 +2401,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2395,10 +2413,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/13"), end: new Date("2013/6/13"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/6/13"), end: new Date("2013/6/13"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[0].getDaySlotCollection(2).events().length, 1);
@@ -2410,7 +2428,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2422,10 +2440,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/7/4"), end: new Date("2013/7/4"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/7/4"), end: new Date("2013/7/4"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[0].getDaySlotCollection(5).events().length, 1);
@@ -2437,7 +2455,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2449,10 +2467,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/5/30"), end: new Date("2013/5/30"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/5/30"), end: new Date("2013/5/30"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[1].getDaySlotCollection(0).events().length, 1);
@@ -2464,7 +2482,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2476,10 +2494,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[1].getDaySlotCollection(1).events().length, 1);
@@ -2491,7 +2509,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2503,10 +2521,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/13"), end: new Date("2013/6/13"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/6/13"), end: new Date("2013/6/13"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[1].getDaySlotCollection(2).events().length, 1);
@@ -2518,7 +2536,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2530,10 +2548,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/7/4"), end: new Date("2013/7/4"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/7/4"), end: new Date("2013/7/4"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         equal(view.groups[1].getDaySlotCollection(5).events().length, 1);
@@ -2545,7 +2563,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2557,10 +2575,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/1"), end: new Date("2013/7/13"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/6/1"), end: new Date("2013/7/13"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[1].getDaySlotCollection(5).events();
@@ -2572,7 +2590,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2584,10 +2602,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/5/1"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/5/1"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[1].getDaySlotCollection(0).events();
@@ -2603,7 +2621,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2615,10 +2633,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/5/1"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/5/1"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[0].getDaySlotCollection(0).events();
@@ -2634,7 +2652,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -2646,10 +2664,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/1"), end: new Date("2013/7/13"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/6/1"), end: new Date("2013/7/13"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[0].getDaySlotCollection(5).events();
@@ -2661,7 +2679,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName", "ResourceName2" ]
+                resources: ["ResourceName", "ResourceName2"]
             },
             resources: [
                 {
@@ -2682,10 +2700,10 @@
                 }
 
             ],
-            dataSource: [ { start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 2, bar: 2 } ],
+            dataSource: [{ start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 2, bar: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[3].getDaySlotCollection(1).events();
@@ -2697,7 +2715,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName", "ResourceName2" ]
+                resources: ["ResourceName", "ResourceName2"]
             },
             resources: [
                 {
@@ -2718,10 +2736,10 @@
                 }
 
             ],
-            dataSource: [ { start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 1, bar: 2 } ],
+            dataSource: [{ start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 1, bar: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[1].getDaySlotCollection(1).events();
@@ -2733,7 +2751,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName", "ResourceName2" ]
+                resources: ["ResourceName", "ResourceName2"]
             },
             resources: [
                 {
@@ -2754,10 +2772,10 @@
                 }
 
             ],
-            dataSource: [ { start: new Date("2013/6/1"), end: new Date("2013/7/13"), isAllDay: true, title: "", foo: 1, bar: 2 } ],
+            dataSource: [{ start: new Date("2013/6/1"), end: new Date("2013/7/13"), isAllDay: true, title: "", foo: 1, bar: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[1].getDaySlotCollection(3).events();
@@ -2781,10 +2799,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2816,10 +2834,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2851,10 +2869,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2886,10 +2904,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2921,10 +2939,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2956,10 +2974,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -2991,10 +3009,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3026,10 +3044,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3069,10 +3087,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3093,7 +3111,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3106,10 +3124,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/5/30"), end: new Date("2013/5/30"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/5/30"), end: new Date("2013/5/30"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[0].getDaySlotCollection(0).events();
@@ -3122,7 +3140,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3135,10 +3153,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[0].getDaySlotCollection(1).events();
@@ -3151,7 +3169,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3164,10 +3182,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/13"), end: new Date("2013/6/13"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/6/13"), end: new Date("2013/6/13"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[0].getDaySlotCollection(2).events();
@@ -3180,7 +3198,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3193,10 +3211,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/7/4"), end: new Date("2013/7/4"), isAllDay: true, title: "", foo: 1 } ],
+            dataSource: [{ start: new Date("2013/7/4"), end: new Date("2013/7/4"), isAllDay: true, title: "", foo: 1 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[0].getDaySlotCollection(5).events();
@@ -3209,7 +3227,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3222,10 +3240,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/5/30"), end: new Date("2013/5/30"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/5/30"), end: new Date("2013/5/30"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[1].getDaySlotCollection(0).events();
@@ -3238,7 +3256,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3251,10 +3269,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/6/6"), end: new Date("2013/6/6"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[1].getDaySlotCollection(1).events();
@@ -3267,7 +3285,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3280,10 +3298,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/6/13"), end: new Date("2013/6/13"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/6/13"), end: new Date("2013/6/13"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[1].getDaySlotCollection(2).events();
@@ -3296,7 +3314,7 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3309,10 +3327,10 @@
                     ]
                 }
             ],
-            dataSource: [ { start: new Date("2013/7/4"), end: new Date("2013/7/4"), isAllDay: true, title: "", foo: 2 } ],
+            dataSource: [{ start: new Date("2013/7/4"), end: new Date("2013/7/4"), isAllDay: true, title: "", foo: 2 }],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         var events = view.groups[1].getDaySlotCollection(5).events();
@@ -3338,10 +3356,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3374,10 +3392,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3410,10 +3428,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3446,10 +3464,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3482,10 +3500,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3518,10 +3536,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3554,10 +3572,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3590,10 +3608,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3634,10 +3652,10 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
 
         view.bind("add", function(e) {
@@ -3660,7 +3678,7 @@
             startTime: new Date("2013/6/6 10:00"),
             endTime: new Date("2013/6/6 11:00"),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -3678,7 +3696,7 @@
             ],
             views: ["week"]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
         var event = div.find(".k-event");
 

@@ -1,6 +1,6 @@
 (function() {
-   var Scheduler = kendo.ui.Scheduler,
-        container;
+    var Scheduler = kendo.ui.Scheduler,
+         container;
 
     function getDate(date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
@@ -22,170 +22,221 @@
                     confirmation: false
                 },
                 dataSource: {
-                    data: [ { start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                    data: [{ start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
                 }
             }, options)
         );
     }
 
-    test("removing model triggers updates the view", function() {
-        var scheduler = setup(),
-            dataSource = scheduler.dataSource,
-            render = stub(scheduler.view(), "render");
+    asyncTest("removing model triggers updates the view", function() {
+        var scheduler = setup();
 
-        dataSource.remove(dataSource.at(0));
+        setTimeout(function() {
+            var dataSource = scheduler.dataSource;
+            var render = stub(scheduler.view(), "render");
+            dataSource.remove(dataSource.at(0));
 
-        equal(render.calls("render"), 1);
+
+
+            start();
+            equal(render.calls("render"), 1);
+        });
     });
 
-    test("clicking the destroy button calls datasource remove", function() {
+    asyncTest("clicking the destroy button calls datasource remove", function() {
         var scheduler = setup(),
-            dataSource = scheduler.dataSource,
-            remove = stub(dataSource, "remove"),
-            uid = dataSource.at(0).uid;
-
-        scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
-
-        equal(remove.calls("remove"), 1);
-        equal(remove.args("remove")[0].uid, uid);
-    });
-
-    test("confirmation message is shown when editor template is set", function() {
-        var scheduler = setup({
-                editable: {
-                    template: " "
-                }
-            }),
             dataSource = scheduler.dataSource,
             remove = stub(dataSource, "remove");
 
-        scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
 
-        equal(remove.calls("remove"), 0);
+        setTimeout(function() {
+            var uid = dataSource.at(0).uid;
+            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            start()
+            equal(remove.calls("remove"), 1);
+            equal(remove.args("remove")[0].uid, uid);
+        });
     });
 
-    test("clicking the destroy button does not call datasource remove if editable is false", function() {
+    asyncTest("confirmation message is shown when editor template is set", function() {
+        var scheduler = setup({
+            editable: {
+                template: " "
+            }
+        }),
+            dataSource = scheduler.dataSource,
+            remove = stub(dataSource, "remove");
+        setTimeout(function() {
+            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            start();
+            equal(remove.calls("remove"), 0);
+        });
+    });
+
+    asyncTest("clicking the destroy button does not call datasource remove if editable is false", function() {
         var scheduler = setup({ editable: false }),
             dataSource = scheduler.dataSource,
             remove = stub(dataSource, "remove");
-
-        scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
-
-        equal(remove.calls("remove"), 0);
+        setTimeout(function() {
+            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            start();
+            equal(remove.calls("remove"), 0);
+        });
     });
 
-    test("clicking the destroy button calls datasource sync", function() {
+    asyncTest("clicking the destroy button calls datasource sync", function() {
         var scheduler = setup(),
-        dataSource = scheduler.dataSource,
-        sync = stub(dataSource, "sync");
+        dataSource = scheduler.dataSource;
 
-        scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+        var sync = stub(dataSource, "sync");
+        setTimeout(function() {
+            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
 
-        equal(sync.calls("sync"), 1);
+            start();
+            equal(sync.calls("sync"), 1);
+        });
     });
 
-    test("removeRow calls _confirmation if delete confirm is true", function() {
+    asyncTest("removeRow calls _confirmation if delete confirm is true", function() {
         var scheduler = setup(),
             method = stub(scheduler, "_confirmation");
 
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
-
-        ok(method.calls("_confirmation"));
+        setTimeout(function() {
+            scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
+            start();
+            ok(method.calls("_confirmation"));
+        });
     });
 
-    test("removeRow does not call datasource remove if element does not exist", function() {
+    asyncTest("removeRow does not call datasource remove if element does not exist", function() {
         var scheduler = setup(),
             remove = stub(scheduler.dataSource, "remove");
 
-        scheduler.removeEvent("<div/>");
-
-        equal(remove.calls("remove"), 0);
+        setTimeout(function() {
+            scheduler.removeEvent("<div/>");
+            start()
+            equal(remove.calls("remove"), 0);
+        });
     });
 
-    test("removeRow raises remove event", 1, function() {
+    asyncTest("removeRow raises remove event", 1, function() {
         var scheduler = setup({
-                remove: function() {
-                    ok(true);
-                }
-            });
-
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
+            remove: function() {
+                start();
+                ok(true);
+            }
+        });
+        setTimeout(function() {
+            scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
+        });
     });
 
-    test("removeRow raises remove event passing the event object and the element", 1, function() {
+    asyncTest("removeRow raises remove event passing the event object and the element", 1, function() {
         var scheduler = setup({
-                remove: function(e) {
-                    ok(e.event instanceof kendo.data.ObservableObject);
-                }
+            remove: function(e) {
+                start()
+                ok(e.event instanceof kendo.data.ObservableObject);
+            }
+        });
+        setTimeout(function() {
+            scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
+        });
+    });
+
+    asyncTest("the destroy confirmation uses the text set through the options", function() {
+        var scheduler = setup({
+            dataBound: scheduler_dataBound,
+            editable: { confirmation: "foo" }
+        });
+        function scheduler_dataBound(e) {
+            setTimeout(function() {
+                start();
+                scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
+
+                equal($(".k-popup-message").text(), "foo");
             });
-
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
+        }
     });
 
-    test("the destroy confirmation uses the text set through the options", function() {
-        var scheduler = setup({ editable: { confirmation: "foo" } });
+    asyncTest("the destroy confirmation uses the text set through the messages options", function() {
+        var scheduler = setup({
+            dataBound: scheduler_dataBound,
+            editable: true, messages: { editable: { confirmation: "foo" } }
+        });
+        function scheduler_dataBound(e) {
+            setTimeout(function() {
+                start();
+                scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
 
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
-
-        equal($(".k-popup-message").text(), "foo");
+                equal($(".k-popup-message").text(), "foo");
+            });
+        }
     });
 
-    test("the destroy confirmation uses the text set through the messages options", function() {
-        var scheduler = setup({editable: true, messages: { editable: {confirmation: "foo"} } });
+    asyncTest("the destroy confirmation uses default text if not set", 1, function() {
+        var scheduler = setup({
+            editable: true
+        });
+        setTimeout(function() {
+            start();
+            scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
 
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
 
-        equal($(".k-popup-message").text(), "foo");
+            equal($(".k-popup-message").text(), "Are you sure you want to delete this event?");
+        });
     });
 
-    test("the destroy confirmation uses default text if not set", 1, function() {
-        var scheduler = setup({ editable: true });
-
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
-
-        equal($(".k-popup-message").text(), "Are you sure you want to delete this event?");
-    });
-
-    test("switching views does not trigger multiple remove events", 1, function() {
-        var scheduler = setup({ }),
+    asyncTest("switching views does not trigger multiple remove events", 1, function() {
+        var scheduler = setup({}),
             removeEvent = stub(scheduler, "removeEvent");
 
         scheduler.view("week");
         scheduler.view("day");
+        setTimeout(function() {
+            start();
+            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
 
-        scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
-
-        equal(removeEvent.calls("removeEvent"), 1);
+            equal(removeEvent.calls("removeEvent"), 1);
+        });
     });
 
-    test("multiple calls to same views does not trigger multiple remove events", 1, function() {
-        var scheduler = setup({ }),
+    asyncTest("multiple calls to same views does not trigger multiple remove events", 1, function() {
+        var scheduler = setup({}),
             removeEvent = stub(scheduler, "removeEvent");
 
         scheduler.view("day");
         scheduler.view("day");
 
-        scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
-        equal(removeEvent.calls("removeEvent"), 1);
+        setTimeout(function() {
+            start();
+            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            equal(removeEvent.calls("removeEvent"), 1);
+        });
+        //  }
     });
 
-    test("Remove recurring event opens delete recurring dialog", 1, function() {
+    asyncTest("Remove recurring event opens delete recurring dialog", 1, function() {
         var scheduler = setup({
+            dataBound: scheduler_dataBound,
             dataSource: {
-                data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                data: [{ recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
             },
             editable: true
         });
+        function scheduler_dataBound(e) {
+            setTimeout(function() {
+                start();
+                scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
 
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
-
-        equal($(".k-popup-message").text(), "Do you want to delete only this event occurrence or the whole series?");
+                equal($(".k-popup-message").text(), "Do you want to delete only this event occurrence or the whole series?");
+            });
+        }
     });
 
-    test("Remove only current recurring event will remove only current occurrence", 1, function() {
+    asyncTest("Remove only current recurring event will remove only current occurrence", 1, function() {
         var scheduler = setup({
             dataSource: {
-                data: [ { id: 1, recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                data: [{ id: 1, recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
             },
             editable: true
         });
@@ -193,11 +244,13 @@
         stub(scheduler.dataSource, {
             remove: scheduler.dataSource.remove
         });
+        setTimeout(function() {
+            start();
+            scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
+            $(".k-window").find(".k-button:first").click();
 
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
-        $(".k-window").find(".k-button:first").click();
-
-        ok(scheduler.dataSource.args("remove")[0].isOccurrence());
+            ok(scheduler.dataSource.args("remove")[0].isOccurrence());
+        });
     });
 
     asyncTest("Remove an occurrence with startTimezone does not move head start date", 1, function() {
@@ -208,26 +261,29 @@
             timezone: "Etc/UTC",
             views: ["week"],
             dataSource: {
-                data: [ { startTimezone: "Europe/Berlin", id: 1, recurrenceRule: "FREQ=DAILY", start: new Date(startTime), end: new Date(end), title: "my event" } ]
+                data: [{ startTimezone: "Europe/Berlin", id: 1, recurrenceRule: "FREQ=DAILY", start: new Date(startTime), end: new Date(end), title: "my event" }]
             },
             editable: true
         });
 
-        startTime = new Date(scheduler.dataSource.at(0).start);
-
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
-        $(".k-window").find(".k-button:first").click();
-
         setTimeout(function() {
-            start();
-             deepEqual(scheduler.dataSource.data()[0].start, startTime);
+
+            startTime = new Date(scheduler.dataSource.at(0).start);
+
+            scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
+            $(".k-window").find(".k-button:first").click();
+
+            setTimeout(function() {
+                start();
+                deepEqual(scheduler.dataSource.data()[0].start, startTime);
+            });
         });
     });
 
-    test("Remove recurrence head will remove the corresponding series", 1, function() {
+    asyncTest("Remove recurrence head will remove the corresponding series", 1, function() {
         var scheduler = setup({
             dataSource: {
-                data: [ { id: 1, recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                data: [{ id: 1, recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
             },
             views: ["week"],
             editable: true
@@ -236,17 +292,20 @@
         stub(scheduler.dataSource, {
             remove: scheduler.dataSource.remove
         });
+        setTimeout(function() {
 
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
-        $(".k-window").find(".k-button:last").click();
-
-        ok(scheduler.dataSource.args("remove")[0].isRecurrenceHead());
+            scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
+            $(".k-window").find(".k-button:last").click();
+            start();
+            ok(scheduler.dataSource.args("remove")[0].isRecurrenceHead());
+        });
     });
 
-    test("Canceling event removal persist instance in the DataSource", 2, function() {
+    asyncTest("Canceling event removal persist instance in the DataSource", 2, function() {
         var scheduler = setup({
+            dataBound: scheduler_dataBound,
             dataSource: {
-                data: [ { id: 1, start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                data: [{ id: 1, start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
             },
             editable: true
         });
@@ -254,16 +313,21 @@
         stub(scheduler.dataSource, {
             remove: scheduler.dataSource.remove
         });
+        function scheduler_dataBound(e) {
+            setTimeout(function() {
+                start();
+                scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
+                $(".k-window").find(".k-button:last").click();
 
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
-        $(".k-window").find(".k-button:last").click();
-
-        equal(scheduler.dataSource.calls("remove"), 0);
-        equal(scheduler.dataSource.data().length, 1);
+                equal(scheduler.dataSource.calls("remove"), 0);
+                equal(scheduler.dataSource.data().length, 1);
+            });
+        }
     })
 
-    test("Cancel event after edit prevent does not throw exception", 0, function() {
+    asyncTest("Cancel event after edit prevent does not throw exception", 0, function() {
         var scheduler = setup({
+            dataBound: scheduler_dataBound,
             dataSource: {
                 data: [
                     { id: 1, start: new Date(), end: new Date(), isAllDay: true, title: "my event" }
@@ -273,46 +337,61 @@
                 e.preventDefault();
             }
         });
+        function scheduler_dataBound(e) {
+            setTimeout(function() {
+                start();
+                scheduler.editEvent(scheduler.dataSource.view()[0].uid);
 
-        scheduler.editEvent(scheduler.dataSource.view()[0].uid);
-
-        scheduler.cancelEvent();
+                scheduler.cancelEvent();
+            });
+        }
     })
 
-    test("Remove recurring event opens delete recurring dialog when editRecurringMode is set to series", 1, function() {
+    asyncTest("Remove recurring event opens delete recurring dialog when editRecurringMode is set to series", 1, function() {
         var scheduler = setup({
+            dataBound: scheduler_dataBound,
             dataSource: {
-                data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                data: [{ recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
             },
             editable: {
                 editRecurringMode: "series"
             }
         });
-
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
-
-        equal($(".k-popup-message").text(), "Are you sure you want to delete this event?");
+        function scheduler_dataBound(e) {
+            setTimeout(function() {
+                scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
+                start();
+                equal($(".k-popup-message").text(), "Are you sure you want to delete this event?");
+            });
+        }
     });
 
-    test("Remove recurring event opens delete recurring dialog when editRecurringMode is set to occurrence", 1, function() {
+    asyncTest("Remove recurring event opens delete recurring dialog when editRecurringMode is set to occurrence", 1, function() {
         var scheduler = setup({
+            dataBound: scheduler_dataBound,
             dataSource: {
-                data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                data: [{ recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
             },
             editable: {
                 editRecurringMode: "occurrence"
             }
         });
+        function scheduler_dataBound(e) {
+            setTimeout(function() {
+                e.sender.removeEvent(e.sender.wrapper.find(".k-event:first").data("uid"));
 
-        scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
+                start();
+                equal($(".k-popup-message").text(), "Are you sure you want to delete this event?");
+            });
 
-        equal($(".k-popup-message").text(), "Are you sure you want to delete this event?");
+        }
+
     });
 
     test("Remove recurring event does not open delete recurring dialog when editRecurringMode is set to series", 2, function() {
         var scheduler = setup({
             dataSource: {
-                data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+                data: [{ recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" }]
             },
             editable: {
                 editRecurringMode: "series",
@@ -326,7 +405,7 @@
         equal($(".k-event").length, 0);
     });
 
-    test("Remove recurring event does not open delete recurring dialog when editRecurringMode is set to occurrence", 2, function() {
+  test("Remove recurring event does not open delete recurring dialog when editRecurringMode is set to occurrence", 2, function() {
         var scheduler = setup({
             dataSource: {
                 data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]

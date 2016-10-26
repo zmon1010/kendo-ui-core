@@ -1,8 +1,8 @@
 (function() {
     var Scheduler = kendo.ui.Scheduler;
-   var MonthView = kendo.ui.MonthView,
-        keys = kendo.keys,
-        container;
+    var MonthView = kendo.ui.MonthView,
+         keys = kendo.keys,
+         container;
 
     function setup(options) {
         return new MonthView(container, $.extend(true, { eventHeight: 10, date: new Date(2013, 1, 2) }, options));
@@ -12,7 +12,7 @@
         return new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: orientation || "vertical"
             },
             resources: [
@@ -25,28 +25,30 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
     }
 
     function createSelection(options) {
         return $.extend(true, {
-                events: [],
-                start: new Date(2013, 1, 2),
-                end: new Date(2013, 1, 2),
-                isAllDay: true,
-                groupIndex: 0
-            },
+            events: [],
+            start: new Date(2013, 1, 2),
+            end: new Date(2013, 1, 2),
+            isAllDay: true,
+            groupIndex: 0
+        },
             options
         );
     }
 
     module("Month View selection", {
         setup: function() {
+            jasmine.clock().install();
             container = $('<div class="k-scheduler">')
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (container.data("kendomonth")) {
                 container.data("kendomonth").destroy();
             }
@@ -112,7 +114,7 @@
         var selection = createSelection({
             start: new Date(2013, 1, 1),
             end: new Date(2013, 1, 1),
-            events: [ event.uid ]
+            events: [event.uid]
         });
 
         view.render([
@@ -135,7 +137,7 @@
         var selection = createSelection({
             start: new Date(2013, 1, 1),
             end: new Date(2013, 1, 1),
-            events: [ event.uid ]
+            events: [event.uid]
         });
 
         view.render([
@@ -158,7 +160,7 @@
         var selection = createSelection({
             start: new Date(2013, 1, 1),
             end: new Date(2013, 1, 1),
-            events: [ event.uid ]
+            events: [event.uid]
         });
 
         view.render([
@@ -190,7 +192,7 @@
         var selection = createSelection({
             start: new Date(2013, 1, 1),
             end: new Date(2013, 1, 1),
-            events: [ firstEvent.uid, secondEvent.uid ]
+            events: [firstEvent.uid, secondEvent.uid]
         });
 
         view.render([
@@ -227,7 +229,7 @@
         view.select(createSelection({
             start: new Date(2013, 1, 1),
             end: new Date(2013, 1, 1),
-            events: [ firstEvent.uid ]
+            events: [firstEvent.uid]
         }));
 
         view.render([
@@ -237,7 +239,7 @@
         view.select(createSelection({
             start: new Date(2013, 1, 2),
             end: new Date(2013, 1, 2),
-            events: [ secondEvent.uid ]
+            events: [secondEvent.uid]
         }));
 
         var selected = view.table.find(".k-state-selected");
@@ -415,53 +417,53 @@
     test("view move: up key with shift move end selection to previous week same day", function() {
         var view = setup();
         var selection = createSelection({
-            start: new Date(2013,1,9),
-            end: new Date(2013,1,10)
+            start: new Date(2013, 1, 9),
+            end: new Date(2013, 1, 10)
         });
 
         view.move(selection, keys.UP, true);
 
-        deepEqual(selection.start, new Date(2013,1,2));
-        deepEqual(selection.end, new Date(2013,1,10));
+        deepEqual(selection.start, new Date(2013, 1, 2));
+        deepEqual(selection.end, new Date(2013, 1, 10));
     });
 
     test("view move: up key with shift move end selection to previous week same day (multiple selection)", function() {
         var view = setup();
         var selection = createSelection({
-            start: new Date(2013,1,12),
-            end: new Date(2013,1,14)
+            start: new Date(2013, 1, 12),
+            end: new Date(2013, 1, 14)
         });
 
         view.move(selection, keys.UP, true);
 
-        deepEqual(selection.start, new Date(2013,1,5));
-        deepEqual(selection.end, new Date(2013,1,14));
+        deepEqual(selection.start, new Date(2013, 1, 5));
+        deepEqual(selection.end, new Date(2013, 1, 14));
     });
 
     test("view move: down key with shift move end selection to previous week same day (multiple selection)", function() {
         var view = setup();
         var selection = createSelection({
-            start: new Date(2013,1,12),
-            end: new Date(2013,1,14)
+            start: new Date(2013, 1, 12),
+            end: new Date(2013, 1, 14)
         });
 
         view.move(selection, keys.DOWN, true);
 
-        deepEqual(selection.start, new Date(2013,1,12));
-        deepEqual(selection.end, new Date(2013,1,21));
+        deepEqual(selection.start, new Date(2013, 1, 12));
+        deepEqual(selection.end, new Date(2013, 1, 21));
     });
 
     test("view move: down key with shift move end selection to next week same day", function() {
         var view = setup();
         var selection = createSelection({
-            start: new Date(2013,1,2),
-            end: new Date(2013,1,3)
+            start: new Date(2013, 1, 2),
+            end: new Date(2013, 1, 3)
         });
 
         view.move(selection, keys.DOWN, true);
 
-        deepEqual(selection.start, new Date(2013,1,2));
-        deepEqual(selection.end, new Date(2013,1,10));
+        deepEqual(selection.start, new Date(2013, 1, 2));
+        deepEqual(selection.end, new Date(2013, 1, 10));
     });
 
     test("view move: clears selected event when key is handled", function() {
@@ -475,7 +477,7 @@
         var selection = createSelection({
             start: date,
             end: date,
-            events: [ event.uid ]
+            events: [event.uid]
         });
 
         view.render([
@@ -562,7 +564,7 @@
         var selection = createSelection({
             start: new Date(2013, 1, 1),
             end: new Date(2013, 1, 1),
-            events: [ firstEvent.uid ]
+            events: [firstEvent.uid]
         });
 
         view.render([
@@ -647,7 +649,7 @@
         var selection = createSelection({
             start: new Date(2013, 1, 3),
             end: new Date(2013, 1, 3),
-            events: [ secondEvent.uid ]
+            events: [secondEvent.uid]
         });
 
         view.render([
@@ -676,7 +678,7 @@
         var selection = createSelection({
             start: new Date(2013, 1, 1),
             end: new Date(2013, 1, 1),
-            events: [ secondEvent.uid ]
+            events: [secondEvent.uid]
         });
 
         view.render([
@@ -708,21 +710,21 @@
     test("view move doesn't modify the selection if range selection is out of current view", function() {
         var view = setup();
         var selection = createSelection({
-            start: new Date(2013,1,2),
-            end: new Date(2013,1,2)
+            start: new Date(2013, 1, 2),
+            end: new Date(2013, 1, 2)
         });
 
         view.move(selection, keys.UP, true);
 
-        deepEqual(selection.start, new Date(2013,1,2));
-        deepEqual(selection.end, new Date(2013,1,2));
+        deepEqual(selection.start, new Date(2013, 1, 2));
+        deepEqual(selection.end, new Date(2013, 1, 2));
     });
 
     test("left key in horizontally grouped view selects previous group cell on same row", function() {
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -734,7 +736,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -743,7 +745,7 @@
             isAllDay: true,
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 5, 8));
@@ -755,7 +757,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -767,7 +769,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -775,7 +777,7 @@
             end: new Date(2013, 5, 3),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 5, 1));
@@ -787,7 +789,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -799,7 +801,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -807,7 +809,7 @@
             end: new Date(2013, 4, 26),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 4, 25));
@@ -819,7 +821,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -831,7 +833,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -839,7 +841,7 @@
             end: new Date(2013, 5, 9),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 5, 2));
@@ -854,7 +856,7 @@
             end: new Date(2013, 5, 9),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 5, 9));
@@ -870,7 +872,7 @@
             end: new Date(2013, 5, 2),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.UP);
 
         deepEqual(selection.start, new Date(2013, 4, 25));
@@ -886,7 +888,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.DOWN);
 
         deepEqual(selection.start, new Date(2013, 6, 13));
@@ -898,7 +900,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -910,7 +912,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -918,7 +920,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 6, 7));
@@ -930,7 +932,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -943,7 +945,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -951,7 +953,7 @@
             end: new Date(2013, 4, 27),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 6, 6));
@@ -963,7 +965,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -976,7 +978,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -984,7 +986,7 @@
             end: new Date(2013, 4, 26),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 4, 25));
@@ -996,7 +998,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1009,7 +1011,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1017,7 +1019,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 4, 26));
@@ -1029,7 +1031,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1042,7 +1044,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1050,7 +1052,7 @@
             end: new Date(2013, 6, 6),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 6, 7));
@@ -1062,7 +1064,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1075,7 +1077,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1083,7 +1085,7 @@
             end: new Date(2013, 4, 27),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.UP);
 
         deepEqual(selection.start, new Date(2013, 5, 30));
@@ -1095,7 +1097,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1108,7 +1110,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1116,7 +1118,7 @@
             end: new Date(2013, 4, 26),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.UP);
 
         deepEqual(selection.start, new Date(2013, 4, 19));
@@ -1128,7 +1130,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1141,7 +1143,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1149,7 +1151,7 @@
             end: new Date(2013, 6, 2),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.DOWN);
 
         deepEqual(selection.start, new Date(2013, 4, 28));
@@ -1161,7 +1163,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1174,7 +1176,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1182,7 +1184,7 @@
             end: new Date(2013, 6, 3),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.DOWN);
 
         deepEqual(selection.start, new Date(2013, 6, 9));
@@ -1194,7 +1196,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -1206,7 +1208,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1214,7 +1216,7 @@
             end: new Date(2013, 5, 8),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         view.move(selection, keys.RIGHT, true);
         view.select(selection);
@@ -1232,7 +1234,7 @@
             end: new Date(2013, 5, 8),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         view.move(selection, keys.RIGHT, true);
         view.select(selection);
@@ -1250,7 +1252,7 @@
             end: new Date(2013, 5, 16),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         view.move(selection, keys.RIGHT, true);
         view.select(selection);
@@ -1268,7 +1270,7 @@
             groupIndex: 0,
             backward: true
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         view.move(selection, keys.LEFT, true);
         view.select(selection);
@@ -1285,7 +1287,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         view.move(selection, keys.RIGHT, true);
         view.select(selection);
@@ -1299,7 +1301,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ]
+                resources: ["ResourceName"]
             },
             resources: [
                 {
@@ -1311,7 +1313,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1319,7 +1321,7 @@
             end: new Date(2013, 5, 9),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         view.move(selection, keys.LEFT, true);
         view.select(selection);
@@ -1334,7 +1336,7 @@
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
-                resources: [ "ResourceName" ],
+                resources: ["ResourceName"],
                 orientation: "vertical"
             },
             resources: [
@@ -1347,7 +1349,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1355,7 +1357,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         var view = scheduler.view();
         view.move(selection, keys.DOWN, true);
         view.select(selection);
@@ -1366,7 +1368,7 @@
         equal(view.table.find(".k-state-selected").length, 1);
     });
 
-      test("left key in horizontally grouped view selects previous group cell on same row", function() {
+    test("left key in horizontally grouped view selects previous group cell on same row", function() {
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
@@ -1383,7 +1385,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1392,7 +1394,7 @@
             isAllDay: true,
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 5, 2));
@@ -1400,7 +1402,7 @@
         equal(selection.groupIndex, 0);
     });
 
-      test("left key in horizontally grouped view selects previous date cell on same row", function() {
+    test("left key in horizontally grouped view selects previous date cell on same row", function() {
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
@@ -1417,7 +1419,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1426,7 +1428,7 @@
             isAllDay: true,
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 5, 2));
@@ -1451,7 +1453,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1459,7 +1461,7 @@
             end: new Date(2013, 5, 3),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 5, 1));
@@ -1484,7 +1486,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1492,7 +1494,7 @@
             end: new Date(2013, 4, 26),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 4, 25));
@@ -1505,7 +1507,7 @@
             date: new Date(2013, 5, 6),
             group: {
                 resources: ["ResourceName"],
-                  date: true
+                date: true
             },
             resources: [
                 {
@@ -1517,7 +1519,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1525,7 +1527,7 @@
             end: new Date(2013, 5, 8),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 5, 7));
@@ -1533,12 +1535,12 @@
         equal(selection.groupIndex, 1);
     });
 
-     test("right key in horizontally grouped view selects next date cell on same row", function() {
+    test("right key in horizontally grouped view selects next date cell on same row", function() {
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
                 resources: ["ResourceName"],
-                  date: true
+                date: true
             },
             resources: [
                 {
@@ -1550,7 +1552,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1558,7 +1560,7 @@
             end: new Date(2013, 5, 8),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 5, 8));
@@ -1567,11 +1569,11 @@
     });
 
     test("right key in horizontally grouped view selects first group cell on next row", function() {
-       var scheduler = new kendo.ui.Scheduler(container, {
+        var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
                 resources: ["ResourceName"],
-                  date: true
+                date: true
             },
             resources: [
                 {
@@ -1583,7 +1585,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1591,7 +1593,7 @@
             end: new Date(2013, 5, 9),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 5, 9));
@@ -1600,11 +1602,11 @@
     });
 
     test("up key in horizontally grouped view persists group when change period", function() {
-      var scheduler = new kendo.ui.Scheduler(container, {
+        var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
                 resources: ["ResourceName"],
-                  date: true
+                date: true
             },
             resources: [
                 {
@@ -1616,7 +1618,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
 
@@ -1625,7 +1627,7 @@
             end: new Date(2013, 5, 2),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.UP);
 
         deepEqual(selection.start, new Date(2013, 4, 25));
@@ -1634,11 +1636,11 @@
     });
 
     test("down key in horizontally grouped view persists group when change period", function() {
-         var scheduler = new kendo.ui.Scheduler(container, {
+        var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
                 resources: ["ResourceName"],
-                  date: true
+                date: true
             },
             resources: [
                 {
@@ -1650,7 +1652,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
 
@@ -1659,7 +1661,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.DOWN);
 
         deepEqual(selection.start, new Date(2013, 6, 13));
@@ -1672,7 +1674,7 @@
             date: new Date(2013, 5, 6),
             group: {
                 resources: ["ResourceName"],
-                  date: true
+                date: true
             },
             resources: [
                 {
@@ -1684,7 +1686,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1692,7 +1694,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 6, 7));
@@ -1718,7 +1720,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1726,7 +1728,7 @@
             end: new Date(2013, 4, 27),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 4, 26));
@@ -1752,7 +1754,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1760,7 +1762,7 @@
             end: new Date(2013, 4, 27),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 4, 19));
@@ -1768,7 +1770,7 @@
         equal(selection.groupIndex, 1);
     });
 
-     test("left key in vertically grouped view changes view period", function() {
+    test("left key in vertically grouped view changes view period", function() {
         var scheduler = new kendo.ui.Scheduler(container, {
             date: new Date(2013, 5, 6),
             group: {
@@ -1786,7 +1788,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1794,7 +1796,7 @@
             end: new Date(2013, 4, 27),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.LEFT);
 
         deepEqual(selection.start, new Date(2013, 4, 20));
@@ -1820,7 +1822,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1828,7 +1830,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 6, 6));
@@ -1854,7 +1856,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1862,7 +1864,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.RIGHT);
 
         deepEqual(selection.start, new Date(2013, 6, 13));
@@ -1888,7 +1890,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1896,7 +1898,7 @@
             end: new Date(2013, 5, 6),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.UP);
 
         deepEqual(selection.start, new Date(2013, 5, 4));
@@ -1922,7 +1924,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1930,7 +1932,7 @@
             end: new Date(2013, 4, 27),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.UP);
 
         deepEqual(selection.start, new Date(2013, 4, 25));
@@ -1956,7 +1958,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1964,7 +1966,7 @@
             end: new Date(2013, 5, 9),
             groupIndex: 0
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.DOWN);
 
         deepEqual(selection.start, new Date(2013, 5, 9));
@@ -1990,7 +1992,7 @@
                     ]
                 }
             ],
-            dataSource: [ ],
+            dataSource: [],
             views: ["month"]
         });
         var selection = createSelection({
@@ -1998,7 +2000,7 @@
             end: new Date(2013, 6, 7),
             groupIndex: 1
         });
-
+        jasmine.clock().tick(1);
         scheduler.view().move(selection, keys.DOWN);
 
         deepEqual(selection.start, new Date(2013, 6, 7));
@@ -2017,7 +2019,7 @@
             views: [
                 {
                     type: "month",
-            }],
+                }],
             group: {
                 resources: ["Rooms"],
                 date: true,
@@ -2040,9 +2042,9 @@
         scheduler = new Scheduler(container, options);
     }
 
-    test("grouped view view moveToEvent: finds next closest event", function() {        
-           setupScheduler();
-
+    test("grouped view view moveToEvent: finds next closest event", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var view = sch.view();
         var event = new kendo.data.SchedulerEvent({
@@ -2070,218 +2072,218 @@
         ok(found);
     });
 
-     test("grouped view moveToEvent: returns false if event is not found", function() {
-          setupScheduler();
-
-        var sch = $(container).data("kendoScheduler");
-        var view = sch.view();
-         var selection = createSelection({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1)
-         });
-
-         ok(!view.moveToEvent(selection));
-     });
-
-     test("grouped view moveToEvent: updates selection to event slot", function() {
-           setupScheduler();
-
-         var sch = $(container).data("kendoScheduler");
-         var view = sch.view();
-         var event = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 2),
-             end: new Date(2013, 1, 2),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             groupIndex: 0,
-         });
-
-         view.render([
-             event
-         ]);
-
-         var found = view.moveToEvent(selection);
-
-         equal(selection.events[0], event.uid);
-         deepEqual(selection.start, event.start);
-         deepEqual(selection.end, new Date(2013, 1, 3));
-     });
-
-     test("view moveToEvent: move selection from current event to next", function() {
-          setupScheduler();
-
-        var sch = $(container).data("kendoScheduler");
-        var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "one day event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 3),
-             end: new Date(2013, 1, 3),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 2),
-             events: [firstEvent.uid],
-             groupIndex: 0,
-             isAllDay: true
-         });
-
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
-
-         ok(view.moveToEvent(selection));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], secondEvent.uid);
-     });
-
-     test("view moveToEvent: with shift finds previous closest event", function() {
-         setupScheduler();
-
-         var sch = $(container).data("kendoScheduler");
-         var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "one day event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 2),
-             end: new Date(2013, 1, 2),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-             start: new Date(2013, 1, 3),
-             end: new Date(2013, 1, 4),
-             groupIndex: 0,
-             isAllDay: true
-         });
-
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
-
-         ok(view.moveToEvent(selection, true));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], secondEvent.uid);
-     });
-
-     test("view moveToEvent: with shift finds previous closest event when selection is between events", function() {
+    test("grouped view moveToEvent: returns false if event is not found", function() {
         setupScheduler();
-
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "one day event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 3),
-             end: new Date(2013, 1, 3),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-             start: new Date(2013, 1, 2),
-             end: new Date(2013, 1, 3),
-             groupIndex: 0,
-             isAllDay: true
-         });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1)
+        });
 
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
+        ok(!view.moveToEvent(selection));
+    });
 
-         ok(view.moveToEvent(selection, true));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], firstEvent.uid);
-     });
-
-     test("view moveToEvent: move selection from current event to previous", function() {
-         setupScheduler();
-
+    test("grouped view moveToEvent: updates selection to event slot", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "one day event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 3),
-             end: new Date(2013, 1, 3),
-             title: "one day event",
-             roomId: 1
-         });
-         var selection = createSelection({
-             start: new Date(2013, 1, 3),
-             end: new Date(2013, 1, 3),
-             events: [secondEvent.uid],
-              groupIndex: 0,
-             isAllDay: true
-         });
+        var event = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 2),
+            end: new Date(2013, 1, 2),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            groupIndex: 0,
+        });
 
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
+        view.render([
+            event
+        ]);
 
-         ok(view.moveToEvent(selection, true));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], firstEvent.uid);
-     });
+        var found = view.moveToEvent(selection);
 
-     test("view moveToEvent: move selection from event to previous event in same slot", function() {
-         setupScheduler();
+        equal(selection.events[0], event.uid);
+        deepEqual(selection.start, event.start);
+        deepEqual(selection.end, new Date(2013, 1, 3));
+    });
 
+    test("view moveToEvent: move selection from current event to next", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
         var sch = $(container).data("kendoScheduler");
         var view = sch.view();
-         var firstEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "first event",
-             roomId: 1
-         });
-         var secondEvent = new kendo.data.SchedulerEvent({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             title: "second event",
-             roomId: 1
-         });
-         var selection = createSelection({
-             start: new Date(2013, 1, 1),
-             end: new Date(2013, 1, 1),
-             events: [ secondEvent.uid ],
-              groupIndex: 0,
-             isAllDay: true
-         });
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "one day event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 3),
+            end: new Date(2013, 1, 3),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 2),
+            events: [firstEvent.uid],
+            groupIndex: 0,
+            isAllDay: true
+        });
 
-         view.render([
-             firstEvent,
-             secondEvent
-         ]);
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
 
-         ok(view.moveToEvent(selection, true));
-         equal(selection.events.length, 1);
-         equal(selection.events[0], firstEvent.uid);
-     });
+        ok(view.moveToEvent(selection));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], secondEvent.uid);
+    });
+
+    test("view moveToEvent: with shift finds previous closest event", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
+        var sch = $(container).data("kendoScheduler");
+        var view = sch.view();
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "one day event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 2),
+            end: new Date(2013, 1, 2),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 3),
+            end: new Date(2013, 1, 4),
+            groupIndex: 0,
+            isAllDay: true
+        });
+
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
+
+        ok(view.moveToEvent(selection, true));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], secondEvent.uid);
+    });
+
+    test("view moveToEvent: with shift finds previous closest event when selection is between events", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
+        var sch = $(container).data("kendoScheduler");
+        var view = sch.view();
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "one day event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 3),
+            end: new Date(2013, 1, 3),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 2),
+            end: new Date(2013, 1, 3),
+            groupIndex: 0,
+            isAllDay: true
+        });
+
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
+
+        ok(view.moveToEvent(selection, true));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], firstEvent.uid);
+    });
+
+    test("view moveToEvent: move selection from current event to previous", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
+        var sch = $(container).data("kendoScheduler");
+        var view = sch.view();
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "one day event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 3),
+            end: new Date(2013, 1, 3),
+            title: "one day event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 3),
+            end: new Date(2013, 1, 3),
+            events: [secondEvent.uid],
+            groupIndex: 0,
+            isAllDay: true
+        });
+
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
+
+        ok(view.moveToEvent(selection, true));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], firstEvent.uid);
+    });
+
+    test("view moveToEvent: move selection from event to previous event in same slot", function() {
+        setupScheduler();
+        jasmine.clock().tick(1);
+        var sch = $(container).data("kendoScheduler");
+        var view = sch.view();
+        var firstEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "first event",
+            roomId: 1
+        });
+        var secondEvent = new kendo.data.SchedulerEvent({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            title: "second event",
+            roomId: 1
+        });
+        var selection = createSelection({
+            start: new Date(2013, 1, 1),
+            end: new Date(2013, 1, 1),
+            events: [secondEvent.uid],
+            groupIndex: 0,
+            isAllDay: true
+        });
+
+        view.render([
+            firstEvent,
+            secondEvent
+        ]);
+
+        ok(view.moveToEvent(selection, true));
+        equal(selection.events.length, 1);
+        equal(selection.events[0], firstEvent.uid);
+    });
 
 })();

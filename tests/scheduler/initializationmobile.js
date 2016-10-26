@@ -8,10 +8,12 @@
 
     module("Initialization", {
         setup: function() {
+               jasmine.clock().install()
             kendo.effects.disable();
             container = $("<div>");
         },
         teardown: function() {
+            jasmine.clock().uninstall()
             kendo.effects.enable();
             kendo.destroy(container);
         }
@@ -103,6 +105,7 @@
             dataSource: [ { start: new Date(), end: new Date(), isAllDay: true, title:"" }]
         });
 
+        jasmine.clock().tick();
         var headerCells = scheduler.view().datesHeader.find("th");
 
         equal(headerCells.length, 7);

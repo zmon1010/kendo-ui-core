@@ -7,10 +7,12 @@
 
     module("moving", {
         setup: function() {
+            jasmine.clock().install();
             div = $("<div>").width(500).height(1000);
             div.appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
             $(".k-window, .k-overlay").remove();
         }
@@ -24,7 +26,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -35,7 +37,7 @@
         equal($(".k-event-drag-hint .k-event-time").text(), "10:30 AM - 11:30 AM");
     });
 
-    asyncTest("hint shows updated start and end time when moving event in week view", function() {
+    test("hint shows updated start and end time when moving event in week view", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             startTime: new Date("2013/6/6 10:00"),
@@ -43,24 +45,22 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+         jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
 
         dragdrop(scheduler, handle, slots.eq(1));
-        setTimeout(function() {
+        jasmine.clock().tick(1);
         handle = div.find(".k-event");
 
-            dragstart(scheduler, handle, handle.offset());
-    
-            setTimeout(function() {
-                start();
-                    drag(scheduler, handle, slots.eq(2).offset());
-                equal($(".k-event-drag-hint .k-event-time").text(), "11:00 AM - 12:00 PM");
+        dragstart(scheduler, handle, handle.offset());
 
-            });
-         });
+        jasmine.clock().tick(1);
+
+        drag(scheduler, handle, slots.eq(2).offset());
+        equal($(".k-event-drag-hint .k-event-time").text(), "11:00 AM - 12:00 PM");
+
     });
 
     test("hint shows north icon when start time is before the start of the view", function() {
@@ -71,7 +71,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -92,7 +92,7 @@
                 { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/3 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -113,7 +113,7 @@
                 { start: new Date("2013/6/7 10:00"), end: new Date("2013/6/8 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -134,7 +134,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -154,7 +154,7 @@
                 { start: new Date("2013/5/26 10:00"), end: new Date("2013/5/27 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -174,7 +174,7 @@
                 { start: new Date("2013/5/26 10:00"), end: new Date("2013/5/28 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(3)");
@@ -194,7 +194,7 @@
                 { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/4 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(3)");
@@ -214,7 +214,7 @@
                 { start: new Date("2013/5/26 12:00 AM"), end: new Date("2013/5/27 12:00 AM"), isAllDay: true, title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(3)");
@@ -230,12 +230,12 @@
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),
             views: ["month"],
-            editable: { },
+            editable: {},
             dataSource: [
                 { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td");
@@ -256,7 +256,7 @@
                 { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td");
@@ -281,7 +281,7 @@
                 { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td");
@@ -302,7 +302,7 @@
                 { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td");
@@ -326,7 +326,7 @@
                 { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td");
@@ -349,7 +349,7 @@
                 { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:first");
 
         var slots = div.find(".k-scheduler-content td");
@@ -373,7 +373,7 @@
                 { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:first");
 
         var slots = div.find(".k-scheduler-content td");
@@ -397,7 +397,7 @@
                 { id: 2, recurrenceId: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:first");
 
         var slot = div.find(".k-scheduler-content tr").eq(0).find("td").eq(0);
@@ -417,7 +417,7 @@
                 { start: new Date("2013/7/5 10:00"), end: new Date("2013/7/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -437,7 +437,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -457,7 +457,7 @@
                 { start: new Date("2014/3/30"), end: new Date("2014/3/30 00:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -479,7 +479,7 @@
                 { start: new Date("2013/6/6 11:00 PM"), end: new Date("2013/6/7 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -502,7 +502,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -523,7 +523,7 @@
                 { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -551,7 +551,7 @@
                 { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/3 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -579,7 +579,7 @@
                 { start: new Date("2013/6/7 10:00"), end: new Date("2013/6/8 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -604,7 +604,7 @@
                 { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -630,7 +630,7 @@
                 { isAllDay: true, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -654,7 +654,7 @@
                 { isAllDay: true, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content .k-scheduler-table td");
@@ -679,7 +679,7 @@
                 { isAllDay: true, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content .k-scheduler-table td");
@@ -711,7 +711,7 @@
                 { isAllDay: false, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -736,7 +736,7 @@
                 { isAllDay: false, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -758,7 +758,7 @@
                 { isAllDay: false, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td:nth-child(2)");
@@ -780,7 +780,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "", isAllDay: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -799,7 +799,7 @@
                 { isAllDay: true, start: new Date("2013/6/2 10:00"), end: new Date("2013/6/4 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -825,7 +825,7 @@
                 { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
         var handle = div.find(".k-event");
 
@@ -848,7 +848,7 @@
                 { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/4 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(3)");
         var handle = div.find(".k-event");
 
@@ -875,7 +875,7 @@
                 { start: new Date("2013/5/26 10:00"), end: new Date("2013/5/27 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
         var handle = div.find(".k-event");
 
@@ -903,7 +903,7 @@
                 { start: new Date("2013/5/24 9:00 PM"), end: new Date("2013/5/27 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
         var handle = div.find(".k-event");
 
@@ -925,7 +925,7 @@
                 { start: new Date("2013/7/5 9:00 PM"), end: new Date("2013/7/7 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(7)");
         var handle = div.find(".k-event");
 
@@ -947,7 +947,7 @@
                 { start: new Date("2013/5/25 9:00 PM"), end: new Date("2013/5/27 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
         var handle = div.find(".k-event");
 
@@ -970,7 +970,7 @@
                 { start: new Date("2013/7/5 10:00"), end: new Date("2013/7/6 10:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(7)");
         var handle = div.find(".k-event");
 
@@ -994,7 +994,7 @@
                 { start: new Date("2013/7/4 9:00 PM"), end: new Date("2013/7/7 12:00 AM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var slots = div.find(".k-scheduler-content td:nth-child(6)");
         var handle = div.find(".k-event");
 
@@ -1017,7 +1017,7 @@
                 { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 11:10"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1045,7 +1045,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -1065,7 +1065,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -1082,10 +1082,10 @@
             date: new Date("2013/6/6"),
             views: ["week"],
             dataSource: [
-                { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 11:30"),  title: "" }
+                { start: new Date("2013/6/2 10:00"), end: new Date("2013/6/2 11:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1118,9 +1118,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(8)");
@@ -1154,9 +1154,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-header-all-day td");
@@ -1192,9 +1192,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1234,9 +1234,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1270,9 +1270,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1306,7 +1306,7 @@
                 }
             ]
         });
-
+        jasmine.clock().tick(1);
         scheduler.focus();
 
         var handle = div.find(".k-event:last");
@@ -1342,9 +1342,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1374,9 +1374,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(8)");
@@ -1409,9 +1409,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");
@@ -1444,9 +1444,9 @@
                     ],
                     title: "Owner"
                 }
-           ]
+            ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(7)");
@@ -1467,7 +1467,7 @@
                 { start: new Date("2013/6/6 11:30"), end: new Date("2013/6/7 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:first");
 
         var slots = div.find(".k-scheduler-content td:nth-child(4)");
@@ -1488,14 +1488,14 @@
                 { start: new Date("2013/6/2 10:30 PM"), end: new Date("2013/6/2 11:30 PM"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
 
         dragstart(scheduler, handle, handle.offset());
 
-        drag(scheduler, handle, slots.eq(slots.length-2).offset());
+        drag(scheduler, handle, slots.eq(slots.length - 2).offset());
 
         equal(div.find(".k-event-drag-hint").length, 1);
     });
@@ -1509,14 +1509,14 @@
                 { start: new Date("2013/6/2 10:30 PM"), end: new Date("2013/6/3 12:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
 
         dragstart(scheduler, handle, handle.offset());
 
-        drag(scheduler, handle, slots.eq(slots.length-2).offset());
+        drag(scheduler, handle, slots.eq(slots.length - 2).offset());
 
         equal(div.find(".k-event-drag-hint").length, 1);
     });
@@ -1530,14 +1530,14 @@
                 { start: new Date("2013/6/2 10:30 PM"), end: new Date("2013/6/3 12:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
 
         dragstart(scheduler, handle, handle.offset());
 
-        drag(scheduler, handle, slots.eq(slots.length-2).offset());
+        drag(scheduler, handle, slots.eq(slots.length - 2).offset());
 
         dragcancel(scheduler);
 
@@ -1556,7 +1556,7 @@
                 equal(e.event, scheduler.dataSource.at(0));
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1579,14 +1579,14 @@
                 deepEqual(e.slot.end, new Date("2013/6/2 11:30 PM"));
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
 
         dragstart(scheduler, handle, handle.offset());
 
-        drag(scheduler, handle, slots.eq(slots.length-2).offset());
+        drag(scheduler, handle, slots.eq(slots.length - 2).offset());
     });
 
     test("dropping event triggers moveend event", 4, function() {
@@ -1604,7 +1604,7 @@
                 deepEqual(e.slot.end, new Date("2013/6/2 11:30 PM"));
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1624,7 +1624,7 @@
                 e.preventDefault();
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1654,7 +1654,7 @@
                 ok(false);
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1679,7 +1679,7 @@
                 ok(false);
             }
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td:nth-child(1)");
@@ -1696,7 +1696,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -1723,32 +1723,28 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 10:30"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
 
         dragstart(scheduler, handle, handle.offset());
-
+        jasmine.clock().tick(1);
         var offset = slots.eq(0).offset();
 
         offset.top += slots.eq(0).outerHeight() / 2;
-
         drag(scheduler, handle, offset);
 
         dragend(scheduler, handle, offset);
-
-
-
         var event = scheduler.dataSource.at(0);
 
         equal(event.start.getHours(), 10);
         equalWithRound(event.start.getMinutes(), 15, 2);
         equal(event.end.getHours(), 10);
-        equalWithRound(event.end.getMinutes(), 45 ,2);
+        equalWithRound(event.end.getMinutes(), 45, 2);
     });
 
-    asyncTest("moving the event with startTimezone preserves its last place", function() {
+    test("moving the event with startTimezone preserves its last place", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/5/26"),
             timezone: "Etc/UTC",
@@ -1757,22 +1753,19 @@
                 { id: 1, start: new Date("2013/5/27 3:00"), end: new Date("2013/5/27 4:30"), title: "", startTimezone: "Europe/Berlin" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event:last");
 
         var slot = div.find(".k-scheduler-content tr").eq(1).find("td").eq(1);
 
         dragdrop(scheduler, handle, slot);
 
-        setTimeout(function() {
-            start();
-            equal(scheduler.dataSource.at(0).start.getHours(), 0);
-            equal(scheduler.dataSource.at(0).start.getMinutes(), 30);
-        });
-
+        jasmine.clock().tick(1);
+        equal(scheduler.dataSource.at(0).start.getHours(), 0);
+        equal(scheduler.dataSource.at(0).start.getMinutes(), 30);
     });
 
-    asyncTest("moving an occurrence with startTimezone preserves series place", function() {
+    test("moving an occurrence with startTimezone preserves series place", function() {
         var startTime = new Date("2013/5/27 6:00");
         var end = new Date("2013/5/27 6:30");
         var berlinTZ = "Europe/Berlin";
@@ -1786,7 +1779,7 @@
                 { id: 1, start: startTime, end: end, title: "", startTimezone: berlinTZ, recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         startTime = scheduler.dataSource.at(0).start;
 
         var handle = div.find(".k-event:last");
@@ -1796,23 +1789,20 @@
         dragdrop(scheduler, handle, slot);
 
         $(".k-window").find(".k-button:first").click()
+        jasmine.clock().tick(1);
+        var occurrence = scheduler.occurrenceByUid(div.find(".k-event:last").attr("data-uid"));
 
-        setTimeout(function() {
-            start();
-             var occurrence = scheduler.occurrenceByUid(div.find(".k-event:last").attr("data-uid"));
+        equal(div.find(".k-event").length, 2);
 
-            equal(div.find(".k-event").length, 2);
+        equal(occurrence.start.getHours(), 0);
+        equal(occurrence.start.getMinutes(), 30);
 
-            equal(occurrence.start.getHours(), 0);
-            equal(occurrence.start.getMinutes(), 30);
-
-            equal(scheduler.dataSource.at(0).start.getHours(), startTime.getHours());
-            equal(scheduler.dataSource.at(0).start.getMinutes(), startTime.getMinutes());
-        });
+        equal(scheduler.dataSource.at(0).start.getHours(), startTime.getHours());
+        equal(scheduler.dataSource.at(0).start.getMinutes(), startTime.getMinutes());
 
     });
 
-    asyncTest("moving a head occurrence with startTimezone preserves series place", function() {
+    test("moving a head occurrence with startTimezone preserves series place", function() {
         var startTime = new Date("2013/5/27 6:00");
         var end = new Date("2013/5/27 6:30");
         var berlinTZ = "Europe/Berlin";
@@ -1826,7 +1816,7 @@
                 { id: 1, start: startTime, end: end, title: "", startTimezone: berlinTZ, recurrenceRule: "FREQ=DAILY;COUNT=2" }
             ]
         });
-
+        jasmine.clock().tick(1);
         startTime = scheduler.dataSource.at(0).start;
 
         var handle = div.find(".k-event:first");
@@ -1837,16 +1827,14 @@
 
         $(".k-window").find(".k-button:first").click()
 
-        setTimeout(function() {
-            start();
-           equal(div.find(".k-event").length, 2);
+        jasmine.clock().tick(1);
+        equal(div.find(".k-event").length, 2);
 
-            equal(scheduler.dataSource.at(0).start.getHours(), startTime.getHours());
-            equal(scheduler.dataSource.at(0).start.getMinutes(), startTime.getMinutes());
+        equal(scheduler.dataSource.at(0).start.getHours(), startTime.getHours());
+        equal(scheduler.dataSource.at(0).start.getMinutes(), startTime.getMinutes());
 
-            equal(scheduler.dataSource.at(1).start.getHours(), 0);
-            equal(scheduler.dataSource.at(1).start.getMinutes(), 30);
-        });
+        equal(scheduler.dataSource.at(1).start.getHours(), 0);
+        equal(scheduler.dataSource.at(1).start.getMinutes(), 30);
 
     });
 
@@ -1858,7 +1846,7 @@
                 { start: new Date("2014/3/30"), end: new Date("2014/3/30 1:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
@@ -1881,7 +1869,7 @@
                 { start: new Date("2013/6/6 10:00"), end: new Date("2013/6/6 11:00"), title: "" }
             ]
         });
-
+        jasmine.clock().tick(1);
         var handle = div.find(".k-event");
 
         var slots = div.find(".k-scheduler-content td");
