@@ -27,8 +27,10 @@ navigation:
      "troubleshoot":
         title: "Troubleshooting"
         position: 90
-  
-     
+     "api":
+        title: "API Reference"
+        position: 150
+
 
 ## The application virtual path
 baseurl: /aspnet-mvc
