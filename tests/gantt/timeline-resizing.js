@@ -8,14 +8,16 @@
 
     module("Gantt Resizing", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
 
-    test("resizeStart event triggered on timeline resize start", 1,  function() {
+    test("resizeStart event triggered on timeline resize start", 1, function() {
         setupGantt();
 
         gantt.bind("resizeStart", function(e) {
@@ -298,9 +300,11 @@
 
     module("Timeline Resize clue", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -516,7 +520,7 @@
         equal(tooltip.children().eq(0).text(), "Start: 12:00 PM Tue, Apr 15");
         equal(tooltip.children().eq(1).text(), "End: 4:00 PM Tue, Apr 15");
     });
-    
+
     test("resize tooltip text messages are set", 2, function() {
         setupGantt({ messages: { views: { start: "Custom Start", end: "Custom End" } } });
 
@@ -533,7 +537,7 @@
         equal(tooltip.children().eq(0).text(), "Custom Start: 12:00 PM Tue, Apr 15");
         equal(tooltip.children().eq(1).text(), "Custom End: 4:00 PM Tue, Apr 15");
     });
-    
+
     test("resize tooltip date format is set", 2, function() {
         setupGantt({ views: [{ type: "day", resizeTooltipFormat: "ddd M/dd" }] });
 
@@ -572,6 +576,7 @@
 
         gantt = new kendo.ui.Gantt(element, options);
         timeline = gantt.timeline;
+        jasmine.clock().tick(1);
     }
 
     function setupTimeline(userOptions) {

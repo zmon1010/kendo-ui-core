@@ -7,9 +7,11 @@
 
     module("Gantt Dependency Drag", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
@@ -43,9 +45,11 @@
 
     module("Timeline Dependency Drag", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -153,9 +157,11 @@
 
     module("Timeline Dependency Drag Clue", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }

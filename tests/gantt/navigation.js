@@ -46,7 +46,7 @@
     ];
 
     function focusTable(table) {
-
+        jasmine.clock().tick(1);
         if (table) {
             table.focus();
         } else {
@@ -69,6 +69,7 @@
 
     module("Gantt navigatable", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
 
             columns = [
@@ -84,8 +85,10 @@
                     data: data
                 }
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt = null;
             kendo.destroy(element);
             element.remove();
@@ -280,7 +283,7 @@
         ok(gantt.list.calls("_startEditHandler"));
     });
 
-    test("enter does not trigger edit when non editable", function () {
+    test("enter does not trigger edit when non editable", function() {
         var content = gantt.list.content;
 
         gantt.options.editable = false;
@@ -292,7 +295,7 @@
         ok(!gantt.list.calls("_startEditHandler"));
     });
 
-    test("enter does not trigger edit when editable update is false", function () {
+    test("enter does not trigger edit when editable update is false", function() {
         var content = gantt.list.content;
 
         gantt.options.editable = { update: false };
@@ -398,6 +401,7 @@
 
     module("Gantt navigatable with column resizing", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
 
             columns = [
@@ -412,8 +416,10 @@
                     data: data
                 }
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt = null;
             kendo.destroy(element);
             element.remove();
@@ -433,6 +439,7 @@
 
     module("Action drop-down navigatable", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
 
             columns = [
@@ -448,8 +455,10 @@
                     data: data
                 }
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt = null;
             kendo.destroy(element);
             element.remove();
@@ -510,6 +519,7 @@
 
     module("Gantt non navigatable", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
 
             columns = [
@@ -525,8 +535,10 @@
                     data: data
                 }
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt = null;
             kendo.destroy(element);
             element.remove();
@@ -552,7 +564,7 @@
         ok(gantt.calls("removeTask"));
     });
 
-    asyncTest("delete key does not delete task when cell in edit", function() {
+    test("delete key does not delete task when cell in edit", function() {
         expect(1);
         var content = gantt.list.content;
         var removeTask;
@@ -563,10 +575,9 @@
         targetCell.trigger("dblclick");
         gantt.select(targetCell);
 
-        setTimeout(function() {
-            keyDown(content.find("table"), keys.DELETE);
-            ok(!removeTask.calls("removeTask"));
-            start();
-        }, 3);
+        jasmine.clock().tick(1);
+        keyDown(content.find("table"), keys.DELETE);
+        ok(!removeTask.calls("removeTask"));
+
     });
 })();

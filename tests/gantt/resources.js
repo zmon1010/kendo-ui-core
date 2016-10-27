@@ -50,9 +50,11 @@
 
     module("Gantt resources", {
         setup: function() {
+            jasmine.clock().install();
             element = $("div");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });
@@ -91,14 +93,15 @@
         equal(gantt.resources.dataSource.data().length, 1);
     });
 
-    asyncTest("gantt is bound when resources and tasks are loaded", function() {
+    test("gantt is bound when resources and tasks are loaded", function() {
+        var resources = 0;
+        var tasks = 0;
         gantt = new Gantt(element, {
             dataSource: {
                 transport: {
                     read: function(options) {
-                        setTimeout(function() {
-                            options.success([{}, {}]);
-                        }, 2);
+                        jasmine.clock().tick(2);
+                        options.success([{}, {}]);
                     }
                 }
             },
@@ -108,19 +111,24 @@
                 ]
             },
             dataBound: function() {
-                start();
-                equal(this.resources.dataSource.data().length, 1);
-                equal(this.dataSource.data().length, 2);
+                resources = this.resources.dataSource.data().length;
+                tasks = this.dataSource.data().length;
             },
             showWorkDays: false
         });
+        jasmine.clock().tick(1);
+        equal(resources, 1);
+        equal(tasks, 2);
     });
 
     module("Gantt assignments", {
+
         setup: function() {
+            jasmine.clock().install();
             element = $("div");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });
@@ -158,14 +166,16 @@
         equal(gantt.assignments.dataSource.data().length, 1);
     });
 
-    asyncTest("gantt is bound when assignments and tasks are loaded", function() {
+    test("gantt is bound when assignments and tasks are loaded", function() {
+        var tasks = 0;
+        var assignments = 0;
+
         gantt = new Gantt(element, {
             dataSource: {
                 transport: {
                     read: function(options) {
-                        setTimeout(function() {
-                            options.success([{}, {}]);
-                        }, 2);
+                        jasmine.clock().tick(2);
+                        options.success([{}, {}]);
                     }
                 }
             },
@@ -173,19 +183,24 @@
                 dataSource: [{}]
             },
             dataBound: function() {
-                start();
-                equal(this.assignments.dataSource.data().length, 1);
-                equal(this.dataSource.data().length, 2);
+                assignments = this.assignments.dataSource.data().length;
+                tasks = this.dataSource.data().length;
             },
             showWorkDays: false
         });
+        jasmine.clock().tick(1);
+
+        equal(assignments, 1);
+        equal(tasks, 2);
     });
 
     module("Gantt task resource assignments", {
         setup: function() {
+            jasmine.clock().install();
             element = $("div");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });
@@ -349,7 +364,7 @@
             },
             showWorkDays: false
         });
-
+        jasmine.clock().tick(1);
         var taskTree = gantt.dataSource.taskTree();
         var resources = taskTree[0].get("resources");
 
@@ -377,7 +392,7 @@
             },
             showWorkDays: false
         });
-
+        jasmine.clock().tick(1);
         var taskTree = gantt.dataSource.taskTree();
         var resources = taskTree[0].get("resources");
 
@@ -411,6 +426,7 @@
 
     module("Gantt timeline resource rendering", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
             gantt = new Gantt(element, {
                 dataSource: {
@@ -441,8 +457,10 @@
                 },
                 showWorkDays: false
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -485,6 +503,7 @@
 
     module("Gantt timeline resource rendering with rowHeight options", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
             gantt = new Gantt(element, {
                 dataSource: {
@@ -518,20 +537,24 @@
             });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
     });
 
     test("renders inline height to resource wrap container", function() {
+        jasmine.clock().tick(1);
         ok(gantt.timeline.view().content.find(".k-gantt-tasks tr:first div.k-resources-wrap").attr("style").match("height"));
     });
 
     module("Gantt list resources", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -548,7 +571,7 @@
         setup();
 
         var content = gantt.list.content;
-
+        jasmine.clock().tick(1);
         equal(content.find("tr:first td:first > span").text(), "foo [5 liters], bar [100 %]");
         equal(content.find("tr:eq(1) td:first > span").text(), "bar [100 %]");
     });
@@ -568,13 +591,12 @@
     });
 
     test("pass custom editor for resources column", function() {
-        var customEditor = function() {};
+        var customEditor = function() { };
         setup({
             columns: [
                 { field: "resources", title: "Task Resources", editor: customEditor, width: 200 }
             ]
         });
-
         var resourceColumn = gantt.list.columns[0];
 
         equal(resourceColumn.editor, customEditor);
@@ -590,7 +612,7 @@
                 { field: "resources", title: "Task Resources", editor: customEditor, editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td").trigger("dblclick");
     });
 
@@ -605,12 +627,12 @@
                 { field: "resources", title: "Task Resources", editor: customEditor, editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
     });
 
     test("does not attach editable widget to edited cell", function() {
-        var customEditor = function() {};
+        var customEditor = function() { };
 
         setup({
             columns: [
@@ -639,10 +661,12 @@
 
     module("ResourceEditor", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
             kendo.effects.disable();
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
             kendo.effects.enable();
@@ -655,7 +679,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         ok(gantt._resourceEditor);
@@ -667,7 +691,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -684,7 +708,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -698,7 +722,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var window = gantt._resourceEditor.window;
@@ -717,7 +741,7 @@
                 }
             }
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -735,7 +759,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -749,7 +773,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var grid = gantt._resourceEditor.grid;
@@ -771,7 +795,7 @@
                 }
             }
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var columns = gantt._resourceEditor.grid.options.columns;
@@ -791,7 +815,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var container = gantt._resourceEditor.container;
@@ -805,7 +829,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var container = gantt._resourceEditor.container;
@@ -820,7 +844,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var buttonsContainer = gantt._resourceEditor
@@ -836,7 +860,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -857,7 +881,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -878,7 +902,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -899,7 +923,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -925,7 +949,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -945,7 +969,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         var model = gantt.dataSource.at(0);
 
         gantt.list.content.find("td:first").trigger("dblclick");
@@ -967,7 +991,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         var model = gantt.dataSource.at(0);
 
         gantt.list.content.find("td:first").trigger("dblclick");
@@ -989,7 +1013,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -1009,7 +1033,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -1029,7 +1053,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -1050,7 +1074,7 @@
                 { field: "resources", title: "Task Resources", editable: true }
             ]
         });
-
+        jasmine.clock().tick(1);
         gantt.list.content.find("td:first").trigger("dblclick");
 
         var editor = gantt._resourceEditor;
@@ -1066,6 +1090,7 @@
 
     module("ResourceEditor grid", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
             kendo.effects.disable();
             setup({
@@ -1073,8 +1098,10 @@
                     { field: "resources", title: "Task Resources", editable: true }
                 ]
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
             kendo.effects.enable();
@@ -1186,6 +1213,7 @@
 
     module("Advanced form resource edit", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
             kendo.effects.disable();
             setup({
@@ -1193,8 +1221,10 @@
                     { field: "resources", title: "Task Resources", editable: true }
                 ]
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
             kendo.effects.enable();
@@ -1277,10 +1307,12 @@
 
     module("Gantt", {
         setup: function() {
+            jasmine.clock().install();
             element = $("div");
             setup();
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });

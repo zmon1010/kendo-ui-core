@@ -147,7 +147,7 @@
             return;
         }
 
-        tableDropArea.trigger("dragleave", { });
+        tableDropArea.trigger("dragleave", {});
     }
 
     function drop() {
@@ -168,6 +168,7 @@
 
     module("List Drag/Drop", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>")
                 .appendTo(QUnit.fixture);
 
@@ -181,6 +182,7 @@
             createHint();
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
             element.remove();
             draggable = null;
@@ -537,31 +539,35 @@
     });
 
     module("Gantt non-editable", {
-        setup: function () {
+        setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
 
             gantt = new Gantt(element, { editable: false });
         },
-        teardown: function () {
+        teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });
 
-    test("does not attach draggable widget to the list content", function () {
+    test("does not attach draggable widget to the list content", function() {
         ok(!gantt.list.content.data("kendoDraggable"));
     });
 
-    test("does not attach dropTargetArea widget to the list content", function () {
+    test("does not attach dropTargetArea widget to the list content", function() {
         ok(!gantt.list.content.data("kendoDropTargetArea"));
     });
 
     module("Gantt editable reorder false", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
 
             gantt = new Gantt(element, { editable: { reorder: false } });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });
@@ -576,11 +582,13 @@
 
     module("Gantt editable update false", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
 
-            gantt = new Gantt(element, { editable: { update: false, reorder:true } });
+            gantt = new Gantt(element, { editable: { update: false, reorder: true } });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });

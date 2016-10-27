@@ -11,6 +11,7 @@
 
     module("timeline rtl", {
         setup: function() {
+            jasmine.clock().install();
             rtl = $('<div class="k-rtl"/>').appendTo(QUnit.fixture);
             element = $("<div/>").appendTo(rtl);
             gantt = new Gantt(element, {
@@ -19,6 +20,7 @@
             });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(rtl);
         }
     });
@@ -30,7 +32,7 @@
         }, taskProperties))]);
     }
 
-    test("resize splitbar increase timeline width when resized right", function () {
+    test("resize splitbar increase timeline width when resized right", function() {
         var resizable = gantt._resizeDraggable;
         var timelineWrapper = gantt.wrapper.find(".k-gantt-timeline");
         var timelineWidth = timelineWrapper.width();
@@ -46,7 +48,7 @@
         equal(timelineWrapper.width(), timelineWidth + delta);
     });
 
-    test("resize splitbar decrease timeline width when resized left", function () {
+    test("resize splitbar decrease timeline width when resized left", function() {
         var resizable = gantt._resizeDraggable;
         var timelineWrapper = gantt.wrapper.find(".k-gantt-timeline");
         var timelineWidth = timelineWrapper.width();
@@ -128,6 +130,7 @@
 
     module("treelist rtl", {
         setup: function() {
+            jasmine.clock().install();
             rtl = $('<div class="k-rtl"/>').appendTo(QUnit.fixture);
             element = $("<div/>").appendTo(rtl);
             var dataSource = [{
@@ -144,8 +147,10 @@
                 editable: true,
                 dataSource: dataSource
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(rtl);
         }
     });
@@ -166,11 +171,13 @@
     });
 
     module("Gantt Date rtl ", {
-        setup: function () {
+        setup: function() {
+            jasmine.clock().install();
             rtl = $('<div class="k-rtl"/>').appendTo(QUnit.fixture);
             element = $("<div/>").appendTo(rtl);
         },
-        teardown: function () {
+        teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
@@ -195,7 +202,7 @@
         timeline = gantt.timeline;
     }
 
-    test("set custom date scrolls to slot day view", function () {
+    test("set custom date scrolls to slot day view", function() {
         setupGantt({
             date: new Date("2014/04/14"), views: ["day"],
             range: {
@@ -203,11 +210,11 @@
                 end: new Date("2014/04/15")
             },
         });
-
+        jasmine.clock().tick(1);
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/04/14")));
     });
 
-    test("set custom date scrolls to slot week view", function () {
+    test("set custom date scrolls to slot week view", function() {
         setupGantt({
             date: new Date("2014/04/14"), views: ["week"],
             range: {
@@ -215,11 +222,11 @@
                 end: new Date("2015/04/15")
             },
         });
-
+        jasmine.clock().tick(1);
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/04/14")));
     });
 
-    test("set custom date scrolls to slot month view", function () {
+    test("set custom date scrolls to slot month view", function() {
         setupGantt({
             date: new Date("2014/09/14"), views: ["month"],
             range: {
@@ -227,11 +234,11 @@
                 end: new Date("2015/10/15")
             },
         });
-
+        jasmine.clock().tick(1);
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/09/14")));
     });
 
-    test("set custom date scrolls to slot year view", function () {
+    test("set custom date scrolls to slot year view", function() {
         setupGantt({
             date: new Date("2014/08/14"), views: ["year"],
             range: {
@@ -239,14 +246,14 @@
                 end: new Date("2015/10/15")
             }
         });
-        console.log(kendo.scrollLeft(gantt.view().content) , gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14")));
+        jasmine.clock().tick(1);
         var isScrolled = kendo.scrollLeft(gantt.view().content) + 2 > gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14")) &&
-          kendo.scrollLeft(gantt.view().content) -2 < gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14")) ;
+          kendo.scrollLeft(gantt.view().content) - 2 < gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14"));
 
         ok(isScrolled);
     });
 
-    test("set date() scrolls to slot day view",2 , function () {
+    test("set date() scrolls to slot day view", 2, function() {
         setupGantt({
             views: ["day"],
             range: {
@@ -254,14 +261,14 @@
                 end: new Date("2014/04/15")
             },
         });
-
+        jasmine.clock().tick(1);
         var date = new Date("2014/04/14");
         gantt.date(date);
         equal(gantt.date(), date);
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/04/14")));
     });
 
-    test("set date() scrolls to slot week view",2, function () {
+    test("set date() scrolls to slot week view", 2, function() {
         setupGantt({
             views: ["week"],
             range: {
@@ -269,14 +276,14 @@
                 end: new Date("2015/04/15")
             },
         });
-
+        jasmine.clock().tick(1);
         var date = new Date("2014/04/14");
         gantt.date(date);
         equal(gantt.date(), date);
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/04/14")));
     });
 
-    test("set date() scrolls to slot month view", function () {
+    test("set date() scrolls to slot month view", function() {
         setupGantt({
             views: ["month"],
             range: {
@@ -284,14 +291,14 @@
                 end: new Date("2015/10/15")
             },
         });
-
+        jasmine.clock().tick(1);
         var date = new Date("2014/09/14")
         gantt.date(date);
         equal(gantt.date(), date);
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/09/14")));
     });
 
-    test("set date() scrolls to slot year view", function () {
+    test("set date() scrolls to slot year view", function() {
         setupGantt({
             date: new Date("2014/08/14"), views: ["year"],
             range: {
@@ -303,10 +310,10 @@
         var date = new Date("2014/08/14");
         gantt.date(date);
         equal(gantt.date(), date);
-
+        jasmine.clock().tick(1);
         var isScrolled = kendo.scrollLeft(gantt.view().content) + 2 > gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14")) &&
-            kendo.scrollLeft(gantt.view().content) -2 < gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14"));
-        
+            kendo.scrollLeft(gantt.view().content) - 2 < gantt.view()._tableWidth - gantt.view()._offset(new Date("2014/08/14"));
+
         ok(isScrolled);
     });
 

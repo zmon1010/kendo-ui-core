@@ -57,9 +57,11 @@
 
     module("Gantt", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
             kendo.destroy(element);
             element.remove();
@@ -129,7 +131,7 @@
         ok(gantt.timeline.calls("view"));
     });
 
-    test("range('range') calls timeline's view method", function () {
+    test("range('range') calls timeline's view method", function() {
         gantt = new Gantt(element);
 
         stub(gantt.timeline, "_render");
@@ -144,7 +146,7 @@
         ok(gantt.timeline.calls("_render"));
     });
 
-    test("range() returns the range of the timeline's view", 2, function () {
+    test("range() returns the range of the timeline's view", 2, function() {
         gantt = new Gantt(element);
 
         stub(gantt.timeline, "_render");
@@ -155,7 +157,7 @@
         equal(range.end, gantt.view().end);
     });
 
-    test("range() returns the range of the timeline's view with custom start and end", 2, function () {
+    test("range() returns the range of the timeline's view with custom start and end", 2, function() {
         gantt = new Gantt(element);
         gantt.options.range = {
             start: new Date("2014/01/16"),
@@ -390,9 +392,11 @@
 
     module("GanttList", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
             kendo.destroy(element);
             element.remove();
@@ -528,6 +532,7 @@
 
     module("GanttTimeline", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />");
             gantt = new Gantt(element);
             ganttTimeline = gantt.timeline;
@@ -560,6 +565,7 @@
             }];
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
 
             kendo.destroy(element);
@@ -582,7 +588,7 @@
 
         ok(!ganttTimeline.wrapper.find(".k-task:last").hasClass("k-state-selected"));
     });
-    
+
     test("select() retrieves selected element", function() {
         ganttTimeline._render(tasks);
 

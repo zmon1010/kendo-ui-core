@@ -37,10 +37,12 @@
 
     module("List Column Resizing Initialization", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>")
                .appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
             element.remove();
             kendo.destroy(QUnit.fixture);

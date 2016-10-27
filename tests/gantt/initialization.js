@@ -9,9 +9,11 @@
 
     module("Gantt initialization", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -30,20 +32,20 @@
         ok(element.data("kendoGantt").list instanceof ui.GanttList);
     });
 
-    test("kendoGantt creates GanttTimeline widget", function () {
+    test("kendoGantt creates GanttTimeline widget", function() {
         element.kendoGantt();
 
         ok(element.data("kendoGantt").timeline);
         ok(element.data("kendoGantt").timeline instanceof ui.GanttTimeline);
     });
-    
+
     test("kendoGantt creates Popup editor widget", 2, function() {
         element.kendoGantt();
 
         ok(element.data("kendoGantt")._editor);
         ok(element.data("kendoGantt")._editor instanceof kendo.Observable);
     });
-    
+
     test("kendoGantt dispose also disposes Popup editor", function() {
         element.kendoGantt();
 
@@ -57,19 +59,19 @@
         ok(editor.calls("destroy"));
     });
 
-    test("initialized with default height", function () {
+    test("initialized with default height", function() {
         var gantt = new Gantt(element);
 
         equal(element.height(), gantt.options.height);
     });
 
-    test("initialized with height from options", function () {
+    test("initialized with height from options", function() {
         element.kendoGantt({ height: 800 });
 
         equal(element.height(), 800);
     });
 
-    test("initialized with width from options", function () {
+    test("initialized with width from options", function() {
         element.kendoGantt({ width: 800 });
 
         equal(element.width(), 800);
@@ -89,7 +91,7 @@
         equal(gantt.wrapper.children(".k-gantt-toolbar")[0], gantt.toolbar[0]);
     });
 
-    test("css classes added to the toolbar", function () {
+    test("css classes added to the toolbar", function() {
         var gantt = new Gantt(element);
 
         ok(gantt.toolbar.hasClass("k-floatwrap k-header"));
@@ -114,7 +116,7 @@
         ok(!gantt.footer);
     });
 
-    test("css classes added to the footer", function () {
+    test("css classes added to the footer", function() {
         var gantt = new Gantt(element);
 
         ok(gantt.footer.hasClass("k-floatwrap k-header"));
@@ -149,7 +151,7 @@
         equal(gantt.toolbar.find(".k-current-view").length, 0);
     });
 
-    test("toolbar action button is added", function () {
+    test("toolbar action button is added", function() {
         var gantt = new Gantt(element);
 
         ok(gantt.toolbar.find(".k-gantt-actions").children().length);
@@ -162,12 +164,12 @@
     });
 
     test("toolbar action button are not added when editable create is false", function() {
-        var gantt = new Gantt(element, { editable: {create: false} });
+        var gantt = new Gantt(element, { editable: { create: false } });
 
         equal(gantt.toolbar.find(".k-gantt-actions").children().length, 0);
     });
 
-    test("toolbar action button's elements are rendered", 4, function () {
+    test("toolbar action button's elements are rendered", 4, function() {
         var gantt = new Gantt(element);
 
         ok(gantt.toolbar.find(".k-gantt-actions > button").length);
@@ -177,31 +179,31 @@
         ok(gantt.toolbar.find(".k-gantt-actions span").hasClass("k-icon k-i-plus"));
     });
 
-    test("toolbar action button data attributes are rendered", function () {
+    test("toolbar action button data attributes are rendered", function() {
         var gantt = new Gantt(element);
 
         equal(gantt.toolbar.find(".k-gantt-actions > button").attr("data-action"), "add");
     });
 
-    test("toolbar action button command style is rendered", function () {
+    test("toolbar action button command style is rendered", function() {
         var gantt = new Gantt(element);
 
         ok(gantt.toolbar.find(".k-gantt-actions > button").hasClass("k-gantt-create"));
     });
 
-    test("toolbar action button text is rendered", function () {
+    test("toolbar action button text is rendered", function() {
         var gantt = new Gantt(element);
 
         equal(gantt.toolbar.find(".k-gantt-actions > button").text(), "Add Task");
     });
 
-    test("footer action button is added", function () {
+    test("footer action button is added", function() {
         var gantt = new Gantt(element);
 
         ok(gantt.footer.find(".k-gantt-actions").length);
     });
 
-    test("footer action button's elements are rendered", 4, function () {
+    test("footer action button's elements are rendered", 4, function() {
         var gantt = new Gantt(element);
 
         ok(gantt.footer.find(".k-gantt-actions > button").length);
@@ -211,7 +213,7 @@
         ok(gantt.footer.find(".k-gantt-actions span").hasClass("k-icon k-i-plus"));
     });
 
-    test("footer action button data attributes are rendered", function () {
+    test("footer action button data attributes are rendered", function() {
         var gantt = new Gantt(element);
 
         equal(gantt.footer.find(".k-gantt-actions > button").attr("data-action"), "add");
@@ -223,7 +225,7 @@
         ok(gantt.footer.find(".k-gantt-actions > button").hasClass("k-gantt-create"));
     });
 
-    test("footer action button text is rendered", function () {
+    test("footer action button text is rendered", function() {
         var gantt = new Gantt(element);
 
         equal(gantt.footer.find(".k-gantt-actions > button").text(), "Add Task");
@@ -240,7 +242,7 @@
 
         equal(gantt.toolbar.find(".k-gantt-actions > button").text(), "bar");
     });
-    
+
     test("default action toolbar pdf button is localized", function() {
         var gantt = new Gantt(element, {
             messages: {
@@ -341,7 +343,7 @@
 
     test("footer action dropDown is not created when editable create is false", function() {
         var gantt = new Gantt(element, { editable: { create: false } });
-         
+
         ok(!gantt.footerDropDown);
     });
 
@@ -386,7 +388,7 @@
         equal(gantt.toolbar.find(".k-view-day").text(), "My Custom Day View Title");
     });
 
-    test("list's wrapper is created", function () {
+    test("list's wrapper is created", function() {
         var gantt = new Gantt(element);
         var listWrapper = gantt.wrapper.children(".k-gantt-treelist");
 
@@ -406,7 +408,7 @@
         equal(gantt.wrapper.find(".k-gantt-treelist").width(), gantt.options.listWidth);
     });
 
-    test("list's wrapper height is total height without the toolbar & footer", function () {
+    test("list's wrapper height is total height without the toolbar & footer", function() {
         var gantt = new Gantt(element, { listWidth: 800 });
         var toolbarHeight = gantt.toolbar.outerHeight();
         var footerHeight = gantt.footer.outerHeight();
@@ -423,7 +425,7 @@
         ok(timelineWrapper.hasClass("k-gantt-layout"));
     });
 
-    test("timeline's wrapper height is total height without the toolbar & footer", function () {
+    test("timeline's wrapper height is total height without the toolbar & footer", function() {
         var gantt = new Gantt(element, { listWidth: 800 });
         var toolbarHeight = gantt.toolbar.outerHeight();
         var footerHeight = gantt.footer.outerHeight();
@@ -432,13 +434,13 @@
         equal(gantt.wrapper.find(".k-gantt-timeline").height(), totalHeight - (toolbarHeight + footerHeight));
     });
 
-    test("resizable wrapper is created", function () {
+    test("resizable wrapper is created", function() {
         var gantt = new Gantt(element, { height: 400 });
 
         ok(gantt.wrapper.find(".k-splitbar"));
     });
 
-    test("resizable wrapper height is total height without the toolbar & footer", function () {
+    test("resizable wrapper height is total height without the toolbar & footer", function() {
         var gantt = new Gantt(element, { listWidth: 800 });
         var toolbarHeight = gantt.toolbar.outerHeight();
         var footerHeight = gantt.footer.outerHeight();
@@ -447,13 +449,13 @@
         equal(gantt.wrapper.find(".k-splitbar").height(), totalHeight - (toolbarHeight + footerHeight));
     });
 
-    test("attaches Resizable widget to gantt wrapper", function () {
+    test("attaches Resizable widget to gantt wrapper", function() {
         var gantt = new Gantt(element);
 
         ok(gantt.wrapper.data("kendoResizable") instanceof ui.Resizable);
     });
 
-    test("resizable initialized with correct options", function () {
+    test("resizable initialized with correct options", function() {
         var gantt = new Gantt(element);
 
         equal(gantt._resizeDraggable.options.orientation, "horizontal");
@@ -468,9 +470,11 @@
 
     module("TaskDropDown", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
@@ -511,7 +515,7 @@
         equal(dropDown.options.animation.open.effects, "slideIn:up");
     });
 
-    test("css classes added to popup container", function () {
+    test("css classes added to popup container", function() {
         var gantt = setup();
         var dropDown = gantt.headerDropDown;
 
@@ -526,7 +530,7 @@
         ok(dropDown.list.children("ul").hasClass("k-list k-reset"));
     });
 
-    test("renders popup list's content", 7, function () {
+    test("renders popup list's content", 7, function() {
         var gantt = setup();
         var dropDown = gantt.headerDropDown;
         var actions = dropDown.options.messages.actions;

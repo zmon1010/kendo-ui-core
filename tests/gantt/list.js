@@ -9,6 +9,10 @@
     var columns;
     var paddingStep = 26;
 
+    function equalWithRound(value, expected) {
+        QUnit.close(value, expected, 3);
+    }
+
     module("Gantt List", {
         setup: function() {
             element = $("<div/>");
@@ -56,7 +60,7 @@
         ok(!ganttList.columns[0].editable);
     });
 
-    test("adds css classes to wrapper", function () {
+    test("adds css classes to wrapper", function() {
         ganttList = new GanttList(element, { columns: [], dataSource: dataSource });
 
         ok(ganttList.element.hasClass("k-widget"));
@@ -90,6 +94,7 @@
 
     module("Gantt List header renders", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
 
             columns = [
@@ -104,6 +109,7 @@
             ganttList = new GanttList(element, { columns: columns, dataSource: dataSource, listWidth: 500 });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
         }
     });
@@ -114,7 +120,7 @@
         equal(header.children("table").length, 1);
     });
 
-    test("table element min-width", function () {
+    test("table element min-width", function() {
         var header = ganttList.header;
 
         equal(parseInt(header.children("table").css("min-width")), ganttList.options.listWidth);
@@ -173,7 +179,7 @@
         equal(header.find("th").length, ganttList.columns.length);
     });
 
-    test("table th element class", 4, function () {
+    test("table th element class", 4, function() {
         var header = ganttList.header;
         var test = function(idx, th) {
             ok($(th).hasClass("k-header"));
@@ -219,6 +225,7 @@
 
     module("Gantt List content renders", {
         setup: function() {
+            jasmine.clock().install();
             element = $("div");
 
             columns = [
@@ -230,7 +237,7 @@
 
             dataSource = new GanttDataSource({
                 data: [
-                { title: "Task1", parentId: null, id: 1, summary: true , expanded: true },
+                { title: "Task1", parentId: null, id: 1, summary: true, expanded: true },
                     { title: "Child 1.1", parentId: 1, id: 2, summary: true, expanded: true },
                         { title: "Child 1.1.1", parentId: 2, id: 3, summary: false },
                         { title: "Child 1.1.2", parentId: 2, id: 4, summary: true, expanded: true },
@@ -258,6 +265,7 @@
             ganttList._render(taskTree);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
         }
     });
@@ -268,7 +276,7 @@
         equal(content.children("table").length, 1);
     });
 
-    test("table element min-width", function () {
+    test("table element min-width", function() {
         var content = ganttList.content;
 
         equal(parseInt(content.children("table").css("min-width")), ganttList.options.listWidth);
@@ -292,7 +300,7 @@
         equal(content.find("col").length, ganttList.columns.length);
     });
 
-    test("table col elements with style attr when column width set", 4, function () {
+    test("table col elements with style attr when column width set", 4, function() {
         var content = ganttList.content;
         var cols = content.find("col");
 
@@ -370,11 +378,11 @@
         content.find("tr").each(test);
     });
 
-    test("table summary tr elements style", function () {
+    test("table summary tr elements style", function() {
         var content = ganttList.content;
-        var test = function (idx, tr) {
+        var test = function(idx, tr) {
             tr = $(tr);
-            
+
             if (taskTree[idx].get("summary")) {
                 ok(tr.hasClass("k-treelist-group"));
             } else {
@@ -400,9 +408,9 @@
         content.find("td").each(test);
     });
 
-    test("table td element with span as text container", function () {
+    test("table td element with span as text container", function() {
         var content = ganttList.content;
-        var test = function (idx, td) {
+        var test = function(idx, td) {
             ok($(td).children("span:not(.k-icon)").length);
         };
         content.find("tr").eq(0).children("td").each(test);
@@ -477,10 +485,12 @@
     }
 
     module("Gantt List rowHeight content", {
-        setup: function () {
+        setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
             element.remove();
         }
@@ -519,7 +529,7 @@
         var count = dataSource.total();
         var totalHeight = height * count;
 
-        equal(ganttList.content.find("table").height(), totalHeight);
+        equalWithRound(ganttList.content.find("table").height(), totalHeight);
     });
 
 })();

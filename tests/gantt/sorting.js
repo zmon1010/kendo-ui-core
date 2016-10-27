@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(function() {
 
     var element;
     var ui = kendo.ui;
@@ -8,6 +8,7 @@
 
     module("Gantt column sorting", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
 
             columns = [
@@ -20,6 +21,7 @@
             gantt = new Gantt(element, { columns: columns });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt = null;
             kendo.destroy(element);
             element.remove();

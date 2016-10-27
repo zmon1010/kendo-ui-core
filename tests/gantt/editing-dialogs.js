@@ -1,18 +1,20 @@
-﻿(function () {
+﻿(function() {
     var Gantt = kendo.ui.Gantt;
     var element;
 
     module("Task delete confirmation", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
 
     function setup(options) {
-        return new Gantt(element, 
+        return new Gantt(element,
             $.extend({
                 dataSource: {
                     data: [{ id: 1, parentId: null, percentComplete: 0, title: "Task 1", start: new Date("05/05/2014"), end: new Date("05/06/2014") }]
@@ -23,6 +25,7 @@
 
     test("is shown on delete icon click", function() {
         var gantt = setup();
+        jasmine.clock().tick(1);
         var target = gantt.wrapper.find(".k-gantt-tasks .k-task-delete").first();
 
         equal($(".k-popup-edit-form").length, 0);
@@ -34,6 +37,7 @@
 
     test("is shown on call to removeTask()", function() {
         var gantt = setup();
+        jasmine.clock().tick(1);
         var taskUid = gantt.wrapper.find(".k-task").data("uid");
 
         equal($(".k-popup-edit-form").length, 0);
@@ -45,6 +49,7 @@
 
     test("prevents call to datasource remove", function() {
         var gantt = setup();
+        jasmine.clock().tick(1);
         var dataSource = gantt.dataSource;
         var taskUid = gantt.wrapper.find(".k-task").data("uid");
 
@@ -57,6 +62,7 @@
 
     test("default text rendered", function() {
         var gantt = setup();
+        jasmine.clock().tick(1);
         var taskUid = gantt.wrapper.find(".k-task").data("uid");
 
         gantt.removeTask(taskUid);
@@ -66,6 +72,7 @@
 
     test("delete button rendered", function() {
         var gantt = setup();
+        jasmine.clock().tick(1);
         var taskUid = gantt.wrapper.find(".k-task").data("uid");
         var deleteButton;
 
@@ -78,6 +85,7 @@
 
     test("delete button click calls datasource remove", function() {
         var gantt = setup();
+        jasmine.clock().tick(1);
         var dataSource = gantt.dataSource;
         var taskUid = gantt.wrapper.find(".k-task").data("uid");
         var deleteButton;
@@ -95,6 +103,7 @@
 
     test("cancel button rendered", function() {
         var gantt = setup();
+        jasmine.clock().tick(1);
         var taskUid = gantt.wrapper.find(".k-task").data("uid");
         var cancelButton;
 
@@ -107,6 +116,7 @@
 
     test("cancel button click prevents call to  datasource remove", function() {
         var gantt = setup();
+        jasmine.clock().tick(1);
         var dataSource = gantt.dataSource;
         var taskUid = gantt.wrapper.find(".k-task").data("uid");
         var cancelButton;
@@ -124,15 +134,17 @@
 
     module("Dependency delete confirmation", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
-    
+
     function setupDependency(options) {
-        return new Gantt(element, 
+        return new Gantt(element,
             $.extend({
                 dataSource: {
                     data: [{ id: 1, parentId: null, title: "Task 1", start: new Date("05/05/2014"), end: new Date("05/06/2014") },
@@ -144,9 +156,10 @@
             }, options)
         );
     }
-    
+
     test("is shown on call to removeDependency()", function() {
         var gantt = setupDependency();
+        jasmine.clock().tick(1);
         var dependencyUid = gantt.wrapper.find(".k-line").data("uid");
 
         equal($(".k-popup-edit-form").length, 0);
@@ -155,9 +168,10 @@
 
         equal($(".k-popup-edit-form").length, 1);
     });
-    
+
     test("prevents call to datasource remove", function() {
         var gantt = setupDependency();
+        jasmine.clock().tick(1);
         var dataSource = gantt.dependencies;
         var dependencyUid = gantt.wrapper.find(".k-line").data("uid");
 
@@ -167,18 +181,20 @@
 
         equal(dataSource.calls("remove"), 0);
     });
-    
+
     test("default text rendered", function() {
         var gantt = setupDependency();
+        jasmine.clock().tick(1);
         var dependencyUid = gantt.wrapper.find(".k-line").data("uid");
-        
+
         gantt.removeDependency(dependencyUid);
 
         equal($(".k-popup-message").text(), "Are you sure you want to delete this dependency?");
     });
-    
+
     test("delete button rendered", function() {
         var gantt = setupDependency();
+        jasmine.clock().tick(1);
         var dependencyUid = gantt.wrapper.find(".k-line").data("uid");
         var deleteButton;
 
@@ -191,6 +207,7 @@
 
     test("delete button click calls datasource remove", function() {
         var gantt = setupDependency();
+        jasmine.clock().tick(1);
         var dataSource = gantt.dependencies;
         var dependencyUid = gantt.wrapper.find(".k-line").data("uid");
         var deleteButton;
@@ -205,9 +222,10 @@
 
         equal(dataSource.calls("remove"), 1);
     });
-    
+
     test("cancel button rendered", function() {
         var gantt = setupDependency();
+        jasmine.clock().tick(1);
         var dependencyUid = gantt.wrapper.find(".k-line").data("uid");
         var cancelButton;
 
@@ -234,13 +252,15 @@
 
         equal(dataSource.calls("remove"), 0);
     });
-    
+
     module("Advanced form edit", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
             kendo.effects.disable();
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             kendo.effects.enable();
         }
@@ -249,7 +269,7 @@
     test("dblclicking on task calls editTask", function() {
         var gantt = setup();
         var editTask = stub(gantt, "editTask");
-
+           jasmine.clock().tick(1);
         gantt.wrapper.find(".k-task").first().dblclick();
 
         equal(editTask.calls("editTask"), 1);
@@ -375,7 +395,7 @@
         });
 
         gantt.editTask(gantt.dataSource.at(0).uid);
-        
+
         gantt._editor.container.find("a.k-gantt-cancel").click();
 
         ok(gantt._editor.container.is(":visible"));
@@ -388,7 +408,7 @@
         gantt.editTask(gantt.dataSource.at(0).uid);
 
         $(gantt._editor.container.parent().find(".k-i-close")).click();
-        
+
         equal(cancelTask.calls("cancelTask"), 2); // May be called twice
     });
 
@@ -450,9 +470,9 @@
         var removeTask = stub(gantt, "removeTask");
 
         gantt.editTask(gantt.dataSource.at(0).uid);
-        
+
         gantt._editor.container.find("a.k-gantt-delete").click();
-        
+
         ok(removeTask.calls("removeTask"));
     });
 
@@ -495,7 +515,7 @@
             }}});
 
         gantt.editTask(gantt.dataSource.at(0).uid);
-        
+
         gantt.saveTask();
 
         ok(gantt._editor.container.find(".k-gantt-update").length);
@@ -535,7 +555,7 @@
         gantt.editTask(gantt.dataSource.at(0).uid);
 
         gantt.saveTask();
-        
+
         ok(gantt._editor.container.find(".k-gantt-update").length);
     });
 
@@ -662,7 +682,7 @@
 
         gantt.editTask(gantt.dataSource.at(0).uid);
     });
-    
+
     test("all fields are wrapped", function() {
         var gantt = setup();
 
@@ -685,7 +705,7 @@
                 schema: { model: { fields: { title: { editable:false } } } }
             }
         });
-
+           jasmine.clock().tick(1);
         gantt.editTask(gantt.dataSource.at(0).uid);
 
         var container = gantt._editor.container.children("div.k-edit-form-container");

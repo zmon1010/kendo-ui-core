@@ -26,9 +26,11 @@
 
     module("Gantt options api", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -53,11 +55,13 @@
     });
 
     test("setOptions does not create new instance of dependencies when no options for dependencies are passed", function() {
-        var gantt = setup({ dependencies: [{
+        var gantt = setup({
+            dependencies: [{
                 type: 1,
                 predecessorId: 1,
                 successorId: 2
-            }]});
+            }]
+        });
         var dependencies = gantt.dependencies;
 
         gantt.setOptions({ editable: false });
@@ -66,11 +70,13 @@
     });
 
     test("setOptions creates new instance of the dependencies when options for dependencies exist", function() {
-        var gantt = setup({ dependencies: [{
+        var gantt = setup({
+            dependencies: [{
                 type: 1,
                 predecessorId: 1,
                 successorId: 2
-            }]});
+            }]
+        });
         var dependencies = gantt.dependencies;
 
         gantt.setOptions({ editable: false, dependencies: [] });
@@ -79,12 +85,14 @@
     });
 
     test("setOptions does not create new instance of resources when no options for resources are passed", function() {
-        var gantt = setup({ resources: {
+        var gantt = setup({
+            resources: {
                 dataSource: [
                   { id: 1, name: "Resource 1", color: "green" },
                   { id: 2, name: "Resource 2", color: "#32cd32" }
                 ]
-            }});
+            }
+        });
         var resources = gantt.resources.dataSource;
 
         gantt.setOptions({ editable: false });
@@ -93,12 +101,14 @@
     });
 
     test("setOptions creates new instance of the resources when options for resources exist", function() {
-        var gantt = setup({ resources: {
+        var gantt = setup({
+            resources: {
                 dataSource: [
                   { id: 1, name: "Resource 1", color: "green" },
                   { id: 2, name: "Resource 2", color: "#32cd32" }
                 ]
-            }});
+            }
+        });
         var resources = gantt.resources.dataSource;
 
         gantt.setOptions({ editable: false, resources: { dataSource: [] } });
@@ -107,12 +117,14 @@
     });
 
     test("setOptions does not create new instance of assignments when no options for assignments are passed", function() {
-        var gantt = setup({ assignments: {
+        var gantt = setup({
+            assignments: {
                 dataSource: [
                   { taskId: 1, resourceId: 1, value: 1 },
                   { taskId: 1, resourceId: 2, value: 1 }
                 ]
-            }});
+            }
+        });
         var assignments = gantt.assignments.dataSource;
 
         gantt.setOptions({ editable: false });
@@ -121,12 +133,14 @@
     });
 
     test("setOptions creates new instance of the assignments when options for assignments exist", function() {
-        var gantt = setup({ assignments: {
+        var gantt = setup({
+            assignments: {
                 dataSource: [
                   { taskId: 1, resourceId: 1, value: 1 },
                   { taskId: 1, resourceId: 2, value: 1 }
                 ]
-            }});
+            }
+        });
         var assignments = gantt.assignments.dataSource;
 
         gantt.setOptions({ editable: false, assignments: { dataSource: [] } });
@@ -135,18 +149,22 @@
     });
 
     test("setOptions sets the new options and persists the current", function() {
-        var gantt = setup({ messages: {
+        var gantt = setup({
+            messages: {
                 views: {
                     day: "Day",
                     week: "Week"
                 }
-            }});
+            }
+        });
 
-        gantt.setOptions({ messages: {
+        gantt.setOptions({
+            messages: {
                 views: {
                     day: "New Day"
                 }
-            }});
+            }
+        });
 
         equal(gantt.options.messages.views.day, "New Day");
         equal(gantt.options.messages.views.week, "Week");
@@ -165,7 +183,7 @@
     });
 
     test("setOptions preserves user selected view when no options for views are passed and views are initialized with strings", function() {
-        var gantt = setup({ views: ["day", "week"]});
+        var gantt = setup({ views: ["day", "week"] });
 
         ok(gantt.view().name === "day");
 
@@ -179,10 +197,12 @@
     });
 
     test("setOptions preserves user selected view when no options for views are passed and views are initialized with objects", function() {
-        var gantt = setup({ views: [
-                { type: "day", selected: true },
-                { type: "week" }
-            ]});
+        var gantt = setup({
+            views: [
+                    { type: "day", selected: true },
+                    { type: "week" }
+            ]
+        });
 
         ok(gantt.view().name === "day");
 
@@ -207,25 +227,26 @@
 
     test("preserves initial set events", function() {
         var invoked = 0;
+
         var gantt = setup({
             dataBound: function() { invoked++; }
         });
-
+        jasmine.clock().tick(1);
         invoked = 0;
         gantt.setOptions({ editable: false });
-
+        jasmine.clock().tick(1);
         equal(invoked, 1);
     });
 
     test("preserves dynamically set events", function() {
         var invoked = 0;
         var gantt = setup();
-
+        jasmine.clock().tick(1);
         gantt.bind("dataBound", function() { invoked++; });
 
         invoked = 0;
         gantt.setOptions({ editable: false });
-
+        jasmine.clock().tick(1);
         equal(invoked, 1);
     });
 
@@ -234,12 +255,11 @@
         var gantt = setup({
             dataBound: function() { invoked++; }
         });
-
+        jasmine.clock().tick(1);
         gantt.bind("dataBound", function() { invoked++; });
         invoked = 0;
-
         gantt.setOptions({ editable: false });
-
+        jasmine.clock().tick(1);
         equal(invoked, 2);
     });
 

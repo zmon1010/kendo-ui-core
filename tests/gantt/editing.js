@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(function() {
     var Gantt = kendo.ui.Gantt;
     var GanttList = kendo.ui.GanttList;
     var GanttDataSource = kendo.data.GanttDataSource;
@@ -60,7 +60,7 @@
         ok(!ganttList.calls("_editCell"));
     });
 
-    test("applies css class to editable cell on dblclick", function () {
+    test("applies css class to editable cell on dblclick", function() {
         var targetCell = ganttList.content.find("td").eq(0);
 
         doubleTap(targetCell);
@@ -213,7 +213,7 @@
         ok(!targetCell.data("modelCopy"));
     });
 
-    test("removes css class after cell exists edit mode", function () {
+    test("removes css class after cell exists edit mode", function() {
         var targetCell = ganttList.content.find("td").eq(0);
 
         doubleTap(targetCell);
@@ -353,9 +353,11 @@
 
     module("Gantt custom date time editor", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
         }
     });
@@ -363,7 +365,7 @@
     test("edit date field with no type creates DateTimePicker", function() {
         setup({
             column: { field: "start" },
-            data: [{ start: new Date()}]
+            data: [{ start: new Date() }]
         });
         var targetCell = ganttList.content.find("td").eq(0);
 
@@ -596,6 +598,7 @@
 
     module("Gantt validation", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
 
             dataSource = new GanttDataSource({
@@ -607,7 +610,7 @@
                     end: new Date("05/06/2014")
                 }],
                 schema: {
-                    model:{
+                    model: {
                         id: "id",
                         fields: {
                             id: { from: "ID", type: "number" },
@@ -630,8 +633,10 @@
 
             ganttList = gantt.list;
             ganttTimeline = gantt.timeline;
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
             kendo.destroy(QUnit.fixture);
             element.remove();
@@ -877,10 +882,11 @@
         ganttList.content.find("tr:first").trigger("click");
     });
 
-    asyncTest("return focus to editable cell upon blur when validation fails", function() {
+    test("return focus to editable cell upon blur when validation fails", function() {
         expect(1);
 
         var focusable;
+        jasmine.clock().tick(1);
         var targetCell = ganttList.content.find("td").eq(0);
         var picker;
 
@@ -890,21 +896,22 @@
 
         ganttList.content.trigger("focusout");
 
-        setTimeout(function() {
-            focusable = ganttList.editable.element.find(":kendoFocusable:first");
+        jasmine.clock().tick(1);
+        focusable = ganttList.editable.element.find(":kendoFocusable:first");
 
-            equal(document.activeElement, focusable[0]);
-            start();
-        }, 3);
+        equal(document.activeElement, focusable[0]);
+
     });
 
     module("Gantt non-editable", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
 
             gantt = new Gantt(element, { editable: false });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });
@@ -915,11 +922,13 @@
 
     module("Gantt editable update false", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
 
-            gantt = new Gantt(element, { editable: {update: false} });
+            gantt = new Gantt(element, { editable: { update: false } });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
         }
     });
@@ -930,6 +939,7 @@
 
     module("Gantt inline editing with column resizing", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
 
             columns = [
@@ -951,6 +961,7 @@
             gantt = new Gantt(element, { columns: columns, dataSource: dataSource, resizable: true, navigatable: true });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
             kendo.destroy(QUnit.fixture);
             element.remove();

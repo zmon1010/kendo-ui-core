@@ -8,6 +8,7 @@
 
     module("GanttTask", {
         setup: function() {
+            jasmine.clock().install();
             dataSource = new GanttDataSource({
                 data: [
                 { title: "Task1", parentId: null, id: 1 },
@@ -19,6 +20,9 @@
                     }
                 }
             });
+        },
+        teardown: function() {
+            jasmine.clock().uninstall();
         }
     });
 
@@ -60,6 +64,7 @@
 
     module("GanttDataSource", {
         setup: function() {
+            jasmine.clock().install();
             dataSource = new GanttDataSource({
                 data: [
                 { title: "Task1", parentId: null, id: 1 },
@@ -81,6 +86,9 @@
             });
 
             dataSource.fetch();
+        },
+        teardown: function() {
+            jasmine.clock().uninstall();
         }
     });
 
@@ -261,6 +269,7 @@
 
     module("GanttDataSource update()", {
         setup: function() {
+            jasmine.clock().install();
             dataSource = new GanttDataSource({
                 data: [{
                     id: 1,
@@ -288,6 +297,9 @@
 
             dataSource.fetch();
             task = dataSource.at(0);
+        },
+        teardown: function() {
+            jasmine.clock().uninstall();
         }
     });
 
@@ -352,6 +364,7 @@
 
     module("GanttDataSource update() related tasks", {
         setup: function() {
+            jasmine.clock().install();
             dataSource = new GanttDataSource({
                 data: [
                 {
@@ -452,6 +465,9 @@
             });
 
             dataSource.fetch();
+        },
+        teardown: function() {
+            jasmine.clock().uninstall();
         }
     });
 
@@ -828,6 +844,7 @@
 
     module("GanttDataSource CRUD", {
         setup: function() {
+            jasmine.clock().install();
             dataSource = new GanttDataSource({
                 data: [
                 {
@@ -918,6 +935,9 @@
             });
 
             dataSource.fetch();
+        },
+        teardown: function() {
+            jasmine.clock().uninstall();
         }
     });
 
@@ -998,16 +1018,16 @@
         var task = dataSource.get(7);
 
         dataSource.remove(task);
-        
+
         equal(dataSource.total(), 6);
         equal(dataSource.get(8), undefined);
     });
-    
+
     test("remove() parent removes child items recursively", 3, function(e) {
         var task = dataSource.get(6);
 
         dataSource.remove(task);
-        
+
         equal(dataSource.total(), 5);
         equal(dataSource.get(8), undefined);
         equal(dataSource.get(7), undefined);
@@ -1161,7 +1181,14 @@
     });
 
 
-    module("GanttDependency", { });
+    module("GanttDependency", {
+          setup: function() {
+            jasmine.clock().install();
+        },
+        teardown: function() {
+            jasmine.clock().uninstall();
+        }
+    });
 
     test("GanttDependency inherits kendo.data.Model", function() {
         var task = new GanttDependency();
@@ -1178,6 +1205,7 @@
 
     module("GanttDependencyDataSource", {
         setup: function() {
+            jasmine.clock().install();
             dataSource = new GanttDependencyDataSource({
                 data: [
                 { id: 1, predecessorId: 1, successorId: 2, type: 1 },
@@ -1196,6 +1224,9 @@
             });
 
             dataSource.fetch();
+        },
+        teardown: function() {
+            jasmine.clock().uninstall();
         }
     });
 

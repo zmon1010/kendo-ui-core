@@ -78,9 +78,11 @@
 
     module("Expand / collapse ", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
             kendo.destroy(element);
             element.remove();
@@ -90,6 +92,7 @@
 
     test("clicking on icon toggles expanded/collapsed model field", 2, function() {
         setup({ columns: [], data: [{ title: "foo", parentId: null, id: 1, summary: true, expanded: true }] })
+
         var target = ganttList.content.find(".k-icon:not(.k-i-none)").eq(0);
 
         ok(ganttList.dataSource.at(0).get("expanded"));
@@ -110,9 +113,11 @@
 
     module("List Selection", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             ganttList.destroy();
             kendo.destroy(element);
             element.remove();
@@ -133,7 +138,7 @@
         stub(ganttList, "select");
 
         target.click();
-
+        jasmine.clock().tick(1);
         ok(ganttList.calls("select"));
     });
 
@@ -145,6 +150,7 @@
                 { title: "bar", parentId: null, id: 2, summary: false }
             ]
         });
+        jasmine.clock().tick(1);
         var e = new $.Event("click");
         var target = ganttList.content.find("tr:first")
             .addClass(".k-state-selected");
@@ -152,12 +158,12 @@
         e.ctrlKey = true;
         stub(ganttList, "clearSelection");
         target.trigger(e);
-
         ok(ganttList.calls("clearSelection"));
     });
 
     module("Timeline Interaction", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />");
             gantt = new Gantt(element);
             ganttTimeline = gantt.timeline;
@@ -175,8 +181,10 @@
                 end: new Date("2014/04/17")
             })];
             dependencies = dependenciesData;
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
 
             kendo.destroy(element);
@@ -328,17 +336,20 @@
 
     module("Header TaskDropDown", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
             gantt = new Gantt(element, {
                 dataSource: setupDataSource(data)
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
 
-    test("applies hover state to list item on mouseenter", function () {
+    test("applies hover state to list item on mouseenter", function() {
         var dropDown = gantt.headerDropDown;
 
         dropDown.list.find("li.k-item").eq(0).mouseenter();
@@ -346,7 +357,7 @@
         ok(dropDown.list.find("li.k-item").hasClass("k-state-hover"));
     });
 
-    test("removes hover state to list item on mouseleave", function () {
+    test("removes hover state to list item on mouseleave", function() {
         var dropDown = gantt.headerDropDown;
 
         dropDown.list.find("li.k-item").eq(0).mouseenter();
@@ -582,12 +593,15 @@
 
     module("Footer TaskDropDown", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
             gantt = new Gantt(element, {
                 dataSource: setupDataSource(data)
             });
+            jasmine.clock().tick(1);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
@@ -791,9 +805,9 @@
 
     test("'insertAfter' insert task with first time slot start/end when selected task is root", 2, function() {
         var dropDown = gantt.footerDropDown;
+        jasmine.clock().tick(1);
         var firstTimeSlot = gantt.timeline.view()._timeSlots()[0];
         var newTask;
-
         gantt.select("tr:first");
         dropDown.trigger("command", { type: "insert-after" });
         newTask = gantt.dataSource.taskChildren()[1];
@@ -804,9 +818,11 @@
 
     module("Views toolbar", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -883,33 +899,36 @@
     });
 
     module("Resizable", {
-        setup: function () {
+        setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
             gantt = new Gantt(element, {
                 dataSource: setupDataSource(data)
             });
+            jasmine.clock().tick(1);
         },
-        teardown: function () {
+        teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
             kendo.destroy(element);
             element.remove();
         }
     });
 
-    test("hover state applied on mouseenter", function () {
+    test("hover state applied on mouseenter", function() {
         gantt.wrapper.find(".k-splitbar").eq(0).mouseenter();
 
         ok(gantt.wrapper.find(".k-splitbar").hasClass("k-splitbar-horizontal-hover"));
     });
 
-    test("hover state removed on mouseleave", function () {
+    test("hover state removed on mouseleave", function() {
         gantt.wrapper.find(".k-splitbar").eq(0).mouseenter();
         gantt.wrapper.find(".k-splitbar").eq(0).mouseleave();
 
         ok(!gantt.wrapper.find(".k-splitbar").hasClass("k-splitbar-horizontal-hover"));
     });
 
-    test("resize decrease timeline size when resized right", function () {
+    test("resize decrease timeline size when resized right", function() {
         var resizable = gantt._resizeDraggable;
         var timelineWrapper = gantt.wrapper.find(".k-gantt-timeline");
         var timelineWidth = timelineWrapper.width();
@@ -925,7 +944,7 @@
         equal(timelineWrapper.width(), timelineWidth - delta);
     });
 
-    test("resize increase timeline size when resized left", function () {
+    test("resize increase timeline size when resized left", function() {
         var resizable = gantt._resizeDraggable;
         var timelineWrapper = gantt.wrapper.find(".k-gantt-timeline");
         var timelineWidth = timelineWrapper.width();
@@ -941,7 +960,7 @@
         equal(timelineWrapper.width(), timelineWidth - delta);
     });
 
-    test("resize change scroll upon resize", function () {
+    test("resize change scroll upon resize", function() {
         var resizable = gantt._resizeDraggable;
         var timelineWrapper = gantt.wrapper.find(".k-gantt-timeline");
         var timelineContent = timelineWrapper.find(".k-grid-content");
@@ -958,7 +977,7 @@
         equal(timelineContent.scrollLeft(), timelineScroll + delta);
     });
 
-    test("resize increase treelist size when resized right", function () {
+    test("resize increase treelist size when resized right", function() {
         var resizable = gantt._resizeDraggable;
         var treelistWrapper = gantt.wrapper.find(".k-gantt-treelist");
         var treelistWidth = treelistWrapper.width();
@@ -974,7 +993,7 @@
         equal(treelistWrapper.width(), treelistWidth + delta);
     });
 
-    test("resize decrease treelist size when resized left", function () {
+    test("resize decrease treelist size when resized left", function() {
         var resizable = gantt._resizeDraggable;
         var treelistWrapper = gantt.wrapper.find(".k-gantt-treelist");
         var treelistWidth = treelistWrapper.width();
@@ -990,7 +1009,7 @@
         equal(treelistWrapper.width(), treelistWidth + delta);
     });
 
-    module("Content Scrollable", {
+   module("Content Scrollable", {
         setup: function () {
             element = $("<div/>").appendTo(QUnit.fixture);
             gantt = new Gantt(element, {
@@ -1056,85 +1075,81 @@
 
     module("Content Focusable", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
     });
 
-    asyncTest("navigatable and editable gantt focus list table upon mouse down", function() {
+    test("navigatable and editable gantt focus list table upon mouse down", function() {
         expect(1);
         gantt = new Gantt(element, {
             dataSource: setupDataSource(data),
             navigatable: true
         });
-
+        jasmine.clock().tick(10);
         gantt.list.content.find("tr:first").mousedown();
+        jasmine.clock().tick(10);
+        //  setTimeout(function() {
+        equal(kendo._activeElement(), gantt.list.content.find("table").get(0));
 
-        setTimeout(function() {
-            equal(kendo._activeElement(), gantt.list.content.find("table").get(0));
-            start();
-        }, 3);
     });
 
-    asyncTest("navigatable and editable gantt focus list table upon mouse down on timeline task", function() {
+    test("navigatable and editable gantt focus list table upon mouse down on timeline task", function() {
         expect(1);
         gantt = new Gantt(element, {
             dataSource: setupDataSource(data),
             navigatable: true
         });
-
+        jasmine.clock().tick(10);
         gantt.timeline.wrapper.find("div[data-uid]:first").mousedown();
 
-        setTimeout(function() {
-            equal(kendo._activeElement(), gantt.list.content.find("table").get(0));
-            start();
-        }, 3);
+        jasmine.clock().tick(10);
+        equal(kendo._activeElement(), gantt.list.content.find("table").get(0));
+
     });
 
-    asyncTest("editable gantt focus list table upon mouse down", function() {
+    test("editable gantt focus list table upon mouse down", function() {
         expect(1);
         gantt = new Gantt(element, {
             dataSource: setupDataSource(data)
         });
-
+        jasmine.clock().tick(10);
         gantt.list.content.find("tr:first").mousedown();
 
-        setTimeout(function() {
-            equal(kendo._activeElement(), gantt.list.content.find("table").get(0));
-            start();
-        }, 3);
+        jasmine.clock().tick(10);
+        equal(kendo._activeElement(), gantt.list.content.find("table").get(0));
+
     });
 
-    asyncTest("editable gantt focus list table upon mouse down on timeline task", function() {
+    test("editable gantt focus list table upon mouse down on timeline task", function() {
         expect(1);
         gantt = new Gantt(element, {
             dataSource: setupDataSource(data)
         });
-
+        jasmine.clock().tick(10);
         gantt.timeline.wrapper.find("div[data-uid]:first").mousedown();
 
-        setTimeout(function() {
-            equal(kendo._activeElement(), gantt.list.content.find("table").get(0));
-            start();
-        }, 3);
+        jasmine.clock().tick(10);
+        equal(kendo._activeElement(), gantt.list.content.find("table").get(0));
+
     });
 
-    asyncTest("navigatable and editable gantt does not focus list table upon mouse down on timeline dependency", function() {
+    test("navigatable and editable gantt does not focus list table upon mouse down on timeline dependency", function() {
         expect(1);
         gantt = new Gantt(element, {
             dataSource: setupDataSource(data),
             dependencies: dependenciesData,
             navigatable: true
         });
-
+        jasmine.clock().tick(1);
         gantt.timeline.wrapper.find("div.k-line").mousedown();
 
-        setTimeout(function() {
-            notEqual(kendo._activeElement(), gantt.list.content.find("table").get(0));
-            start();
-        }, 3);
+        jasmine.clock().tick(1);
+        notEqual(kendo._activeElement(), gantt.list.content.find("table").get(0));
     });
 })();

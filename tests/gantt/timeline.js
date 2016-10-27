@@ -15,9 +15,11 @@
 
     module("Initialization", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -40,7 +42,7 @@
         equal(timeline.wrapper[0], element[0]);
     });
 
-    test("css classes added to wrapper", function () {
+    test("css classes added to wrapper", function() {
         timeline = new Timeline(element);
 
         ok(timeline.wrapper.hasClass("k-widget"));
@@ -100,7 +102,7 @@
     test("error is thrown if invalid view is set", 1, function() {
         throws(function() {
             var gantt = new Gantt(element, {
-                views: [ "NoExistingView" ]
+                views: ["NoExistingView"]
             });
         });
     });
@@ -110,7 +112,7 @@
         });
 
         var timeline = new Timeline(element, {
-            views: [ {
+            views: [{
                 title: "foo",
                 type: MyCustomView
             }]
@@ -161,7 +163,7 @@
 
         equal(timeline.view().element.find(".k-current-time").length, 0);
     });
-    
+
     test("current time marker is not rendered when the option is not an object", function() {
         timeline = new Timeline(element, {
             currentTimeMarker: true
@@ -214,7 +216,7 @@
     });
 
     test("editable move false does not initialize task draggable", function() {
-        timeline = new Timeline(element, { editable: { move:false } });
+        timeline = new Timeline(element, { editable: { move: false } });
 
         ok(!timeline._moveDraggable);
     });
@@ -238,7 +240,7 @@
     });
 
     test("editable update false does not initialize resize draggable", function() {
-        timeline = new Timeline(element, { editable: { update:false, resize: true } });
+        timeline = new Timeline(element, { editable: { update: false, resize: true } });
 
         ok(!timeline._resizeDraggable);
     });
@@ -269,6 +271,7 @@
 
     module("Day View", {
         setup: function() {
+            jasmine.clock().install();
             element = $(
                 "<div>\
                     <div class='k-grid-header'>\
@@ -288,6 +291,7 @@
             dependencyTree = new kendo.dom.Tree(element.find(".k-gantt-timeline-dependencies")[0]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (view) {
                 view.destroy();
             }
@@ -341,9 +345,9 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
     });
 
-    test("custom start range", 2, function () {
+    test("custom start range", 2, function() {
         view = dayView();
-        view.options.range = {start: new Date("2014/04/14")};
+        view.options.range = { start: new Date("2014/04/14") };
         var range = {
             start: new Date("2014/04/15"),
             end: new Date("2014/04/17")
@@ -355,7 +359,7 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/17");
     });
 
-    test("custom end range", 2, function () {
+    test("custom end range", 2, function() {
         view = dayView();
         view.options.range = { end: new Date("2014/04/18") };
         var range = {
@@ -369,7 +373,7 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
     });
 
-    test("custom start and end range", 2, function () {
+    test("custom start and end range", 2, function() {
         view = dayView();
         view.options.range = {
             start: new Date("2014/04/15 10:00"),
@@ -386,7 +390,7 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/18");
     });
 
-    test("custom start and end slot count", function () {
+    test("custom start and end slot count", function() {
         view = dayView();
         view.options.range = {
             start: new Date("2014/04/15 10:00"),
@@ -402,11 +406,11 @@
         equal(view._slots[1].length, 3);
     });
 
-   
 
-  
 
-   
+
+
+
 
     test("range() with equal start and end", 2, function() {
         view = dayView();
@@ -427,7 +431,7 @@
             start: new Date("2014/04/15 10:30:00"),
             end: new Date("2014/04/17 15:45:00")
         };
-        
+
         view.range(range);
 
         equal(kendo.date.getMilliseconds(view.start), 0);
@@ -526,7 +530,7 @@
 
         equal(view.header.find("tr:last th").eq(0).text(), "12:00 AM");
     });
-    
+
     test("renderLayout() creates hour headers for each hour in range", function() {
         view = dayView();
         var range = {
@@ -695,7 +699,7 @@
             start: new Date("2014/04/15"),
             end: new Date("2014/04/23")
         };
-        
+
         view = dayView();
         view.range(range);
         view.renderLayout();
@@ -880,6 +884,7 @@
 
     module("Week View", {
         setup: function() {
+            jasmine.clock().install();
             element = $(
                 "<div>\
                     <div class='k-grid-header'>\
@@ -899,6 +904,7 @@
             dependencyTree = new kendo.dom.Tree(element.find(".k-gantt-timeline-dependencies")[0]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (view) {
                 view.destroy();
             }
@@ -951,8 +957,8 @@
         equal(kendo.toString(view.start, "yyyy/MM/dd"), "2014/04/13");
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
     });
-    
-    test("custom start range is set", 2, function () {
+
+    test("custom start range is set", 2, function() {
         view = weekView();
 
         view.options.range = {
@@ -970,7 +976,7 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/27");
     });
 
-    test("custom end range is set to exact date", 2, function () {
+    test("custom end range is set to exact date", 2, function() {
         view = weekView();
 
         view.options.range = {
@@ -988,7 +994,7 @@
         equal(kendo.toString(view.end, "yyyy/MM/dd"), "2014/04/19");
     });
 
-    test("custom end range is not set to exact date", 2, function () {
+    test("custom end range is not set to exact date", 2, function() {
         view = weekView();
 
         view.options.range = {
@@ -1257,7 +1263,7 @@
         timeline.destroy();
     });
 
-    test("custom start and end slot count weekview", function () {
+    test("custom start and end slot count weekview", function() {
         view = weekView();
         view.options.range = {
             start: new Date("2014/04/15 10:00"),
@@ -1275,6 +1281,7 @@
 
     module("Month View", {
         setup: function() {
+            jasmine.clock().install();
             element = $(
                 "<div>\
                     <div class='k-grid-header'>\
@@ -1294,6 +1301,7 @@
             dependencyTree = new kendo.dom.Tree(element.find(".k-gantt-timeline-dependencies")[0]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (view) {
                 view.destroy();
             }
@@ -1588,7 +1596,7 @@
         equal(view.header.find("tr:first th")[2].colSpan, 23);
     });
 
-    test("custom start and end slot count monthview", function () {
+    test("custom start and end slot count monthview", function() {
         view = monthView();
         view.options.range = {
             start: new Date("2014/04/15 10:00"),
@@ -1606,7 +1614,7 @@
         equal(view._slots[1].length, 14);
     });
 
-    test("custom start slot count",3 , function () {
+    test("custom start slot count", 3, function() {
         view = monthView();
         view.options.range = {
             start: new Date("2014/04/15 10:00")
@@ -1619,13 +1627,13 @@
         view.range(range);
 
         view.renderLayout();
-       
+
         equal(view._slots[0].length, 1);
         equal(view._slots[1].length, 3);
         equal(view._slots[0][0].span, 16);
     });
 
-    test("custom end slot count exact date", 3, function () {
+    test("custom end slot count exact date", 3, function() {
         view = monthView();
         view.options.range = {
             end: new Date("2014/04/15")
@@ -1644,7 +1652,7 @@
         equal(view._slots[0][0].span, 14);
     });
 
-    test("custom end slot count",3 , function () {
+    test("custom end slot count", 3, function() {
         view = monthView();
         view.options.range = {
             end: new Date("2014/04/15 10:00")
@@ -1663,7 +1671,7 @@
         equal(view._slots[0][0].span, 15);
     });
 
-    test("custom start and end slot count", function () {
+    test("custom start and end slot count", function() {
         view = monthView();
         view.options.range = {
             start: new Date("2014/04/15 10:00"),
@@ -1682,7 +1690,7 @@
         equal(view._slots[1].length, 53);
     });
 
-    test("custom start and end slot count new year", function () {
+    test("custom start and end slot count new year", function() {
         view = monthView();
         view.options.range = {
             start: new Date("2014/12/15 10:00"),
@@ -1704,6 +1712,7 @@
 
     module("Year View", {
         setup: function() {
+            jasmine.clock().install();
             element = $(
                 "<div>\
                     <div class='k-grid-header'>\
@@ -1723,6 +1732,7 @@
             dependencyTree = new kendo.dom.Tree(element.find(".k-gantt-timeline-dependencies")[0]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (view) {
                 view.destroy();
             }
@@ -1891,7 +1901,7 @@
         equal(view.header.find("tr:first th")[1].colSpan, 12);
     });
 
-    test("custom start slot count", function () {
+    test("custom start slot count", function() {
         view = yearView();
         view.options.range = {
             start: new Date("2014/04/15 10:00")
@@ -1909,7 +1919,7 @@
         equal(view._slots[1].length, 9);
     });
 
-    test("custom end slot count", function () {
+    test("custom end slot count", function() {
         view = yearView();
         view.options.range = {
             end: new Date("2014/04/15 10:00")
@@ -1927,7 +1937,7 @@
         equal(view._slots[1].length, 4);
     });
 
-    test("custom start and end slot count to end of the month", function () {
+    test("custom start and end slot count to end of the month", function() {
         view = yearView();
         view.options.range = {
             start: new Date("2014/05/15 10:00"),
@@ -1946,7 +1956,7 @@
         equal(view._slots[1].length, 13);
     });
 
-    test("custom start and end slot count to start of the month", function () {
+    test("custom start and end slot count to start of the month", function() {
         view = yearView();
         view.options.range = {
             start: new Date("2014/05/15 10:00"),
@@ -1967,10 +1977,12 @@
 
 
     module("Gantt Date", {
-        setup: function () {
+        setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
         },
-        teardown: function () {
+        teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
@@ -1983,8 +1995,8 @@
         });
 
         var options = extend({}, {
-           
-           
+
+
             snap: false,
             views: ["day"],
             showWorkHours: false,
@@ -1995,7 +2007,7 @@
         timeline = gantt.timeline;
     }
 
-    test("set custom date scrolls to slot day view", function () {
+    test("set custom date scrolls to slot day view", function() {
         setupGantt({
             date: new Date("2014/04/14"), views: ["day"],
             range: {
@@ -2007,7 +2019,7 @@
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
     });
 
-    test("set custom date scrolls to slot week view", function () {
+    test("set custom date scrolls to slot week view", function() {
         setupGantt({
             date: new Date("2014/04/14"), views: ["week"],
             range: {
@@ -2019,7 +2031,7 @@
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
     });
 
-    test("set custom date scrolls to slot month view", function () {
+    test("set custom date scrolls to slot month view", function() {
         setupGantt({
             date: new Date("2014/09/14"), views: ["month"],
             range: {
@@ -2031,7 +2043,7 @@
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/09/14")));
     });
 
-    test("set custom date scrolls to slot year view", function () {
+    test("set custom date scrolls to slot year view", function() {
         setupGantt({
             date: new Date("2014/08/14"), views: ["year"],
             range: {
@@ -2043,7 +2055,7 @@
         equal(kendo.scrollLeft(gantt.view().content), Math.floor(gantt.view()._offset(new Date("2014/08/14"))));
     });
 
-    test("set date() scrolls to slot day view", 2, function () {
+    test("set date() scrolls to slot day view", 2, function() {
         setupGantt({
             views: ["day"],
             range: {
@@ -2058,7 +2070,7 @@
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
     });
 
-     test("set date() scrolls to slot day view to the beginning", 2, function () {
+    test("set date() scrolls to slot day view to the beginning", 2, function() {
         setupGantt({
             views: ["day"],
             range: {
@@ -2073,7 +2085,7 @@
         equal(kendo.scrollLeft(gantt.view().content), 0);
     });
 
-    test("set date() scrolls to slot week view", 2, function () {
+    test("set date() scrolls to slot week view", 2, function() {
         setupGantt({
             views: ["week"],
             range: {
@@ -2088,7 +2100,7 @@
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/04/14")));
     });
 
-    test("set date() scrolls to slot month view", function () {
+    test("set date() scrolls to slot month view", function() {
         setupGantt({
             views: ["month"],
             range: {
@@ -2103,7 +2115,7 @@
         equal(kendo.scrollLeft(gantt.view().content), gantt.view()._offset(new Date("2014/09/14")));
     });
 
-    test("set date() scrolls to slot year view", function () {
+    test("set date() scrolls to slot year view", function() {
         setupGantt({
             date: new Date("2014/08/14"), views: ["year"],
             range: {

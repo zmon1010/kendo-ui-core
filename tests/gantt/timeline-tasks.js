@@ -9,8 +9,13 @@
     var Timeline = kendo.ui.GanttTimeline;
     var tasks;
 
+    function equalWithRound(value, expected) {
+        QUnit.close(value, expected, 3);
+    }
+
     module("Rendering", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />");
             timeline = new Timeline(element);
             timeline.view("week");
@@ -26,6 +31,7 @@
             })];
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -222,9 +228,11 @@
 
     module("Task Tooltip", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
                 timeline.view()._removeTaskTooltip();
@@ -317,7 +325,7 @@
         kendo.support.mobileOS = mobileOS;
     });
 
-    asyncTest("on mobile device clear tooltip on second tap", function() {
+    test("on mobile device clear tooltip on second tap", function() {
         var taskElement;
         var mobileOS = kendo.support.mobileOS;
         kendo.support.mobileOS = true;
@@ -335,11 +343,10 @@
 
         equal(timeline.view().calls("_removeTaskTooltip"), 0);
 
-        setTimeout(function() {
-            start();
-            clickAt(taskElement);
-            equal(timeline.view().calls("_removeTaskTooltip"), 1);
-        }, 1);
+        jasmine.clock().tick(1);
+        clickAt(taskElement);
+        equal(timeline.view().calls("_removeTaskTooltip"), 1);
+
 
         kendo.support.mobileOS = mobileOS;
     });
@@ -417,11 +424,13 @@
 
     module("Single Task Rendering", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
             gantt = new Gantt(element);
             timeline = gantt.timeline;
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -440,7 +449,7 @@
         ok(timeline.view().content.find(".k-task-wrap").length);
     });
 
-    test("wrapper not rendered when it is before custom view range", 3, function () {
+    test("wrapper not rendered when it is before custom view range", 3, function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -457,7 +466,7 @@
         ok(!taskWrap.length);
     });
 
-    test("wrapper not rendered when it is after custom view range", 3, function () {
+    test("wrapper not rendered when it is after custom view range", 3, function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -474,7 +483,7 @@
         ok(!taskWrap.length);
     });
 
-    test("wrapper rendered when its end is in the custom view range", function () {
+    test("wrapper rendered when its end is in the custom view range", function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -491,7 +500,7 @@
         ok(taskWrap.length);
     });
 
-    test("wrapper not rendered when it is before custom view range in weekview", 3, function () {
+    test("wrapper not rendered when it is before custom view range in weekview", 3, function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -508,7 +517,7 @@
         ok(!taskWrap.length);
     });
 
-    test("wrapper not rendered when it is after custom view range in weekview", 3, function () {
+    test("wrapper not rendered when it is after custom view range in weekview", 3, function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -525,7 +534,7 @@
         ok(!taskWrap.length);
     });
 
-    test("wrapper rendered when its end is in the custom view range in weekview", function () {
+    test("wrapper rendered when its end is in the custom view range in weekview", function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -542,7 +551,7 @@
         ok(taskWrap.length);
     });
 
-    test("wrapper not rendered when it is before custom view range in monthview", 3, function () {
+    test("wrapper not rendered when it is before custom view range in monthview", 3, function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -559,7 +568,7 @@
         ok(!taskWrap.length);
     });
 
-    test("wrapper not rendered when it is after custom view range in monthview", 3, function () {
+    test("wrapper not rendered when it is after custom view range in monthview", 3, function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -576,7 +585,7 @@
         ok(!taskWrap.length);
     });
 
-    test("wrapper rendered when its end is in the custom view range in monthview", function () {
+    test("wrapper rendered when its end is in the custom view range in monthview", function() {
         var taskWrap;
 
         timeline.options.range = {
@@ -593,7 +602,7 @@
         ok(taskWrap.length);
     });
 
-    test("wrapper not rendered when it is before custom view range in yearview", 3, function () {
+    test("wrapper not rendered when it is before custom view range in yearview", 3, function() {
         var taskWrap;
 
         timeline.view("year");
@@ -610,7 +619,7 @@
         ok(!taskWrap.length);
     });
 
-    test("wrapper not rendered when it is after custom view range in yearview", 3, function () {
+    test("wrapper not rendered when it is after custom view range in yearview", 3, function() {
         var taskWrap;
 
         timeline.view().options.range = {
@@ -627,7 +636,7 @@
         ok(!taskWrap.length);
     });
 
-    test("wrapper rendered when its end is in the custom view range in yearview", function () {
+    test("wrapper rendered when its end is in the custom view range in yearview", function() {
         var taskWrap;
 
         timeline.view().options.range = {
@@ -793,7 +802,7 @@
     test("resize handles not rendered when editable update is false", function() {
         var taskWrap;
 
-        timeline.view().options.editable = { update:false, resize: true };
+        timeline.view().options.editable = { update: false, resize: true };
 
         renderTask();
 
@@ -850,7 +859,7 @@
     test("progress drag handle not rendered when editable dragPercentComplete is true and update is false", function() {
         var taskWrap;
 
-        timeline.view().options.editable = { dragPercentComplete: true, update: false  };
+        timeline.view().options.editable = { dragPercentComplete: true, update: false };
 
         renderTask();
 
@@ -1210,11 +1219,13 @@
 
     module("Summary Task Rendering", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
             gantt = new Gantt(element);
             timeline = gantt.timeline;
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -1643,11 +1654,13 @@
 
     module("Milestone Task Rendering", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
             gantt = new Gantt(element);
             timeline = gantt.timeline;
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -1777,9 +1790,11 @@
 
     module("Single Task Template Rendering", {
         setup: function() {
+                        jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -1820,7 +1835,7 @@
         equal(taskWrapper.find(".k-task-complete").length, 0);
     });
 
-    test("task template does not render progress drag handler", function () {
+    test("task template does not render progress drag handler", function() {
         setupGantt({ taskTemplate: "<strong>#: title #</strong>" });
 
         var taskWrapper = timeline.wrapper.find(".k-task-wrap");
@@ -1830,9 +1845,11 @@
 
     module("Rendering with rowHeight options", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
             element.remove();
         }
@@ -1858,11 +1875,9 @@
 
     test("renders correct height to 'task-wrap' elements", function() {
         setupGantt({ rowHeight: 100 });
-
         var tasksTable = timeline.wrapper.find(".k-gantt-tasks");
         var innerHeight = parseInt(tasksTable.find("td:first").height(), 10);
-
-        equal(timeline.wrapper.find(".k-task-wrap").height(), innerHeight);
+        equalWithRound(timeline.wrapper.find(".k-task-wrap").height(), innerHeight);
     });
 
     test("renders correct height when rowHeight set in pixels", function() {
@@ -1900,8 +1915,8 @@
         var rowHeight = tasksTable.find("tr:first").outerHeight();
         var totalHeight = rowHeight * count;
 
-        equal(tasksTable.height(), totalHeight);
-        equal(rowsTable.height(), totalHeight);
+        equalWithRound(tasksTable.height(), totalHeight);
+        equalWithRound(rowsTable.height(), totalHeight);
     });
 
 }());

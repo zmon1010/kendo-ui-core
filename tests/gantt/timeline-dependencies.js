@@ -11,9 +11,11 @@
 
     module("Rendering", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -63,6 +65,7 @@
 
     module("Dependency Finish-Finish Predecessor above and ending earlier than Successor end", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -76,6 +79,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -134,6 +138,7 @@
 
     module("Dependency Finish-Finish Predecessor above and ending later than Successor end", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -147,6 +152,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -205,6 +211,7 @@
 
     module("Dependency Finish-Finish Predecessor below and ending earlier than Successor end", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -218,6 +225,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -276,6 +284,7 @@
 
     module("Dependency Finish-Finish Predecessor below and ending later than Successor end", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -289,6 +298,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -349,6 +359,7 @@
 
     module("Dependency Finish-Start Predecessor above and ending earlier than Successor start", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -362,6 +373,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -420,6 +432,7 @@
 
     module("Dependency Finish-Start Predecessor above and ending later than Successor start", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -433,6 +446,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -506,6 +520,7 @@
 
     module("Dependency Finish-Start Predecessor below and ending earlier than Successor start", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -519,6 +534,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -577,6 +593,7 @@
 
     module("Dependency Finish-Start Predecessor below and ending later than Successor start", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -590,6 +607,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -664,6 +682,7 @@
 
     module("Dependency Start-Finish Predecessor above and starting later than Successor end", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -677,6 +696,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -735,6 +755,7 @@
 
     module("Dependency Start-Finish Predecessor above and starting earlier than Successor end", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -748,6 +769,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -820,6 +842,7 @@
 
     module("Dependency Start-Finish Predecessor below and starting later than Successor end", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -833,6 +856,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -891,6 +915,7 @@
 
     module("Dependency Start-Finish Predecessor below and starting earlier than Successor end", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -904,6 +929,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -978,6 +1004,7 @@
 
     module("Dependency Start-Start Predecessor above and starting earlier than Successor start", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -991,6 +1018,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -1049,6 +1077,7 @@
 
     module("Dependency Start-Start Predecessor above and starting later than Successor start", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -1062,6 +1091,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -1120,6 +1150,7 @@
 
     module("Dependency Start-Start Predecessor below and starting earlier than Successor start", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -1133,6 +1164,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -1192,6 +1224,7 @@
 
     module("Dependency Start-Start Predecessor below and starting later than Successor start", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
 
             setupTimeline();
@@ -1205,6 +1238,7 @@
             timeline._renderDependencies([dependency]);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }

@@ -8,9 +8,11 @@
 
     module("Gantt Dragging", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(element);
         }
     });
@@ -88,9 +90,11 @@
 
     module("Timeline Resizing", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }
@@ -194,9 +198,11 @@
 
     module("Timeline Resize clue", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div class='k-timeline k-grid k-widget' style='height: 500px;'/>").appendTo(QUnit.fixture);
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             if (timeline) {
                 timeline.destroy();
             }

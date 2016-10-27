@@ -8,6 +8,7 @@
 
     module("Gantt events", {
         setup: function() {
+            jasmine.clock().install();
             element = $("<div/>");
             gantt = new Gantt(element, {
                 editable: {
@@ -17,6 +18,7 @@
             });
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             gantt.destroy();
             kendo.destroy(element);
         }

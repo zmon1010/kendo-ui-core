@@ -23,9 +23,11 @@
 
     module("Gantt", {
         setup: function() {
+            jasmine.clock().install();
             container = $("<div />");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
         }
     });
@@ -58,12 +60,17 @@
         });
     });
 
-    test("dataBinding event is fired", function () {
+    test("dataBinding event is fired", function() {
+        var flag = false;
+
         new Gantt(container, {
-            dataBinding: function (e) {
-                ok(true);
+            dataBinding: function(e) {
+                flag = true;
+
             }
         });
+        jasmine.clock().tick(1);
+        ok(true);
     });
 
     test("dataBinding event is fired only once", function() {
@@ -73,16 +80,20 @@
                 counter++;
             }
         });
-
+        jasmine.clock().tick(1);
         equal(counter, 1);
     });
 
     test("dataBound event is fired", function() {
+        var flag = false;
+
         new Gantt(container, {
             dataBound: function(e) {
-                ok(true);
+                flag = true;
             }
         });
+        jasmine.clock().tick(1);
+        ok(true);
     });
 
     test("dataBound event is fired only once", function() {
@@ -92,38 +103,43 @@
                 counter++;
             }
         });
-
+        jasmine.clock().tick(1);
         equal(counter, 1);
     });
 
-    test("dataBinding event can be prevented", 0, function () {
+    test("dataBinding event can be prevented", 0, function() {
         new Gantt(container, {
-            dataBinding: function (e) {
+            dataBinding: function(e) {
                 e.preventDefault();
             },
-            dataBound: function () {
+            dataBound: function() {
                 ok(false);
             }
         });
     });
 
-    test("AutoBind=false prevents gantt from binding", 0, function () {
+    test("AutoBind=false prevents gantt from binding", 0, function() {
         new Gantt(container, {
             autoBind: false,
-            dataBinding: function () {
+            dataBinding: function() {
                 ok(false);
             }
         });
     });
 
-    test("resetting DataSource rebinds the widget", 2, function () {
+    test("resetting DataSource rebinds the widget", 1, function() {
+        var flag = false
+
         var gantt = new Gantt(container, {
-            dataBinding: function () {
-                ok(true);
+            dataBinding: function() {
+                flag = true;
+
             }
         });
 
         gantt.setDataSource(new kendo.data.GanttDataSource());
+        jasmine.clock().tick(1);
+        ok(true);
     });
 
     test("Initializing from JSON array populates items", function() {
@@ -172,9 +188,11 @@
 
     module("Dependencies", {
         setup: function() {
+            jasmine.clock().install();
             container = $("<div />");
         },
         teardown: function() {
+            jasmine.clock().uninstall();
             kendo.destroy(container);
         }
     });
