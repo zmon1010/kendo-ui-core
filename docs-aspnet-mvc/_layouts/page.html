@@ -26,13 +26,8 @@ layout: index
             },
             select: preventParentSelection,
             template: navigationTemplate("{{site.baseurl}}/"),
-            dataBound: function (e) {
-                expandNavigation("{{page.url | remove_first: '/' }}");
-                if (e.node && e.node.text().indexOf("Helpers") == 0) {
-                    e.node.addClass("capitalizeChildTitles");
-                }
-            }
-        });
+            dataBound: expandNavigation("{{page.url | remove_first: '/' }}")
+        }).data("kendoTreeView").bind("dataBound", capitalizeTocFolders);
         </script>
     </div>
     
