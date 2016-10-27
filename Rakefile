@@ -429,7 +429,7 @@ bundle :name => 'aspnet.core.hotfix.trial',
            'js' => TRIAL_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
            'styles' => MIN_CSS_RESOURCES,
            'wrappers/aspnetcore/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
-       }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_TRIAL),
+       }.merge(MVC_CORE_BINARIES_TRIAL),
        :prerequisites => [
            'mvc:assets',
            'spreadsheet:binaries',
@@ -674,7 +674,7 @@ bundle :name => 'aspnet.core.hotfix.commercial',
            'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
            'styles' => MIN_CSS_RESOURCES,
            'wrappers/aspnetcore/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
-       }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
+       }.merge(MVC_CORE_BINARIES_COMMERCIAL),
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test'
