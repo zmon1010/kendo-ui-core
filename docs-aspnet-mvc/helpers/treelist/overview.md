@@ -135,7 +135,7 @@ Below are listed the steps for you to follow when configuring the Kendo UI TreeL
 
 ## Event Handling
 
-You can subscribe to all TreeList [events](/api/javascript/ui/treelist#events).
+You can subscribe to all TreeList [events](../../../kendo-ui/api/javascript/ui/treelist#events).
 
 ### By Handler Name
 
@@ -256,7 +256,7 @@ The example below demonstrates how to subscribe to events by a template delegate
 
 ### Existing Instances
 
-You can reference an existing Kendo UI TreeList instance via [`jQuery.data()`](http://api.jquery.com/jQuery.data/). Once a reference is established, use the [TreeList API](/api/javascript/ui/treelist#methods) to control its behavior.
+You can reference an existing Kendo UI TreeList instance via [`jQuery.data()`](http://api.jquery.com/jQuery.data/). Once a reference is established, use the [TreeList API](../../../kendo-ui/api/javascript/ui/treelist#methods) to control its behavior.
 
 ###### Example
 
@@ -289,13 +289,13 @@ You can reference an existing Kendo UI TreeList instance via [`jQuery.data()`](h
 
 Other articles on Telerik UI for ASP.NET MVC and on the TreeList:
 
-* [ASP.NET MVC API Reference: TreeListBuilder](/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/TreeListBuilder)
+* [ASP.NET MVC API Reference: TreeListBuilder](/api/Kendo.Mvc.UI.Fluent/TreeListBuilder)
 * [How to Export Multiple TreeLists to Excel]({% slug howto_exportmultipletoexcel_treelistaspnetmvc %})
 * [Overview of the Kendo UI TreeList Widget]({% slug overview_kendoui_treelist_widget %})
 * [Overview of Telerik UI for ASP.NET MVC]({% slug overview_aspnetmvc %})
 * [Fundamentals of Telerik UI for ASP.NET MVC]({% slug fundamentals_aspnetmvc %})
 * [Scaffolding in Telerik UI for ASP.NET MVC]({% slug scaffolding_aspnetmvc %})
-* [Telerik UI for ASP.NET MVC API Reference Folder](/api/aspnet-mvc/Kendo.Mvc/AggregateFunction)
+* [Telerik UI for ASP.NET MVC API Reference Folder](/api/Kendo.Mvc/AggregateFunction)
 * [Telerik UI for ASP.NET MVC HtmlHelpers Folder]({% slug overview_barcodehelper_aspnetmvc %})
 * [Tutorials on Telerik UI for ASP.NET MVC]({% slug overview_timeefficiencyapp_aspnetmvc6 %})
 * [Telerik UI for ASP.NET MVC Troubleshooting]({% slug troubleshooting_aspnetmvc %})
