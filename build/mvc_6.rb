@@ -70,7 +70,7 @@ def update_demo_deps bundle
     root = "dist/bundles/#{bundle}/wrappers/aspnetcore/Examples/AspNet.Core/"
 
     mkdir_p root
-    cp 'wrappers/mvc-6/NuGet.config', root
+    cp 'build/NuGet.config.aspnetcore', "#{root}NuGet.config"
 
     puts "Updating demo dependencies for #{bundle}"
     update_nuget_reference "#{root}Kendo.Mvc.Examples/project.json"
