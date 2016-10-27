@@ -1,8 +1,17 @@
 "use strict";
 
-const shell = require('gulp-shell');
-const zip = require('gulp-zip');
+const execSync = require('child_process').execSync;
 const merge = require('merge-stream');
+const replace = require('gulp-replace');
+const shell = require('gulp-shell');
+const subset = require('gulp-subset-process');
+const zip = require('gulp-zip');
+
+const version = () =>
+    execSync(`ruby -e "require './build/version.rb'; puts VERSION;"`, {
+        cwd: '..',
+        encoding: 'ascii'
+    }).trim();
 
 const tasks = (gulp) => {
     gulp.task('mvc-core-demos:assets',
@@ -34,6 +43,7 @@ const tasks = (gulp) => {
             });
 
         return merge(distFiles, controllers)
+                   .pipe(subset('**/appsettings.json', (src) => src.pipe(replace('$CDN_ROOT', version()))))
                    .pipe(zip('online-mvc-core-examples.zip'))
                    .pipe(gulp.dest(dest));
     });
