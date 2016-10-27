@@ -81,6 +81,11 @@
     margin: -7px -10px -7px -40px;
 }
 
+.capitalizeChildTitles span.k-in
+{
+	text-transform: capitalize;
+}
+
 #page-nav .k-state-selected,
 #page-nav .k-state-selected a,
 #page-nav .k-state-selected a:hover {

@@ -26,7 +26,12 @@ layout: index
             },
             select: preventParentSelection,
             template: navigationTemplate("{{site.baseurl}}/"),
-            dataBound: expandNavigation("{{page.url | remove_first: '/' }}")
+            dataBound: function (e) {
+                expandNavigation("{{page.url | remove_first: '/' }}");
+                if (e.node && e.node.text().indexOf("Helpers") == 0) {
+                    e.node.addClass("capitalizeChildTitles");
+                }
+            }
         });
         </script>
     </div>
