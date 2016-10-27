@@ -355,7 +355,7 @@ bundle :name => 'aspnetmvc.trial',
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
        .merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
-       :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps_trial', 'spreadsheet:copy_trials'],
+       :post_build => ['mvc:copy_trials', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
            'spreadsheet:binaries',
@@ -387,7 +387,7 @@ bundle :name => 'aspnet.core.trial',
            'styles' => MIN_CSS_RESOURCES,
            'wrappers/aspnetcore/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_TRIAL),
-       :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps_trial', 'spreadsheet:copy_trials'],
+       :post_build => ['mvc_6:update_demo_deps_trial'],
        :prerequisites => [
            'mvc:assets',
            'dist/bundles/aspnet.core.trial/wrappers/aspnetcore/Examples/AspNet.Core/Kendo.Mvc.Examples',
@@ -430,7 +430,6 @@ bundle :name => 'aspnet.core.hotfix.trial',
            'styles' => MIN_CSS_RESOURCES,
            'wrappers/aspnetcore/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_TRIAL),
-       :post_build => ['mvc:copy_trials', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
            'spreadsheet:binaries',
@@ -493,7 +492,7 @@ bundle :name => 'aspnet.core.commercial',
            'styles' => MIN_CSS_RESOURCES,
            'wrappers/aspnetcore/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
        }.merge(MVC_CORE_CONTENT).merge(MVC_CORE_BINARIES_COMMERCIAL),
-       :post_build => 'mvc_6:update_demo_deps_commercial',
+       :post_build => ['mvc_6:update_demo_deps_commercial'],
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
