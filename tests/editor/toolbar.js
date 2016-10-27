@@ -1,6 +1,7 @@
 (function(){
 
 var editor;
+var keys = kendo.keys;
 
 editor_module("editor toolbar", {
     setup: function() {
@@ -289,6 +290,40 @@ test("clicking on tool executes editor command", function() {
     equal(args[0], "bold");
 });
 
+test("pressing enter on a button tool executes editor command", function() {
+    var editorMock = mockEditorTools([ "bold" ]);
+    var args;
+
+    editorMock.exec = function() { args = arguments; };
+
+    toolbar.bindTo(editorMock);
+
+    getTool("bold").trigger({ type: "keydown", keyCode: keys.ENTER });
+
+    ok(args);
+    equal(args[0], "bold");
+});
+
+test("pressing enter on a button tool with href attribute does not execute editor command", function() {
+    var editorMock = mockEditorTools([ "bold" ]);
+    spy(editorMock, "exec");
+    toolbar.bindTo(editorMock);
+
+    getTool("bold").attr("href", "#href").trigger({ type: "keydown", keyCode: keys.ENTER });
+
+    equal(editorMock.calls("exec"), 0);
+});
+
+test("pressing enter on a drop-down tool does not execute editor command", function() {
+    var editorMock = mockEditorTools([ "formatting" ]);
+    spy(editorMock, "exec");
+    toolbar.bindTo(editorMock);
+
+    getTool("formatting").trigger({ type: "keydown", keyCode: keys.ENTER });
+
+    equal(editorMock.calls("exec"), 0);
+});
+
 test("expands configured tools", function() {
     bindToMock([ {
         name: "formatting",
@@ -437,6 +472,29 @@ test("nameless custom commands are rendered", function() {
     equal(dom.find(".foo").length, 1);
 });
 
+module("editor toolbar button tool", mockedToolbarModule);
+
+test("should be rendered as anchor", function() {
+    bindToMock([ "bold" ]);;
+    var tool = getTool("bold");
+
+    equal($(tool).is("a"), true);
+});
+
+test("should be rendered with tabindex", function() {
+    bindToMock([ "bold" ]);;
+    var tool = getTool("bold");
+
+    equal($(tool).attr("tabindex"), 0);
+});
+
+test("should be rendered with role='button'", function() {
+    bindToMock([ "bold" ]);;
+    var tool = getTool("bold");
+
+    equal($(tool).attr("role"), "button");
+});
+
 module("destroy", {
     setup: function() {
         dom = $("<ul class='k-editor-toolbar' />").appendTo(QUnit.fixture);
@@ -499,8 +557,6 @@ function active() {
 function isToolActive(className) {
     return active()[0] == getTool(className)[0];
 }
-
-var keys = kendo.keys;
 
 test("focuses first tool if it is a drop-down", function() {
     bindToMock([ "formatting" ]);

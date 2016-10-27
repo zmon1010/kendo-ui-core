@@ -49,7 +49,7 @@
 
         buttonTemplate:
             '# var iconCssClass= "k-i-" + kendo.toHyphens(data.cssClass.replace("k-", ""));#' +
-            '<a href="" role="button" class="k-tool"' +
+            '<a tabindex="0" role="button" class="k-tool"' +
             '#= data.popup ? " data-popup" : "" #' +
             ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= iconCssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
 

@@ -659,20 +659,29 @@
                         e.preventDefault();
                         focusElement.focus();
                     }
+
+                    if (keyCode === keys.ENTER && $(current).is("a") && !$(current).attr("href")) {
+                        //anchors without href attribute do not respond to Enter key
+                        that._executeToolCommand(current, e);
+                    }
                 })
                 .on("click" + NS, enabledButtons, function(e) {
-                    var button = $(this);
-                    e.preventDefault();
-                    e.stopPropagation();
-                    button.removeClass("k-state-hover");
-                    if (!button.is("[data-popup]")) {
-                        that._editor.exec(that._toolName(this));
-                    }
+                    that._executeToolCommand(this, e);
                 })
                 .on("click" + NS, disabledButtons, function(e) { e.preventDefault(); });
 
         },
 
+        _executeToolCommand: function(toolElement, e) {
+            var that = this;
+            var button = $(toolElement);
+            e.preventDefault();
+            e.stopPropagation();
+            button.removeClass("k-state-hover");
+            if (!button.is("[data-popup]")) {
+                that._editor.exec(that._toolName(toolElement));
+            }
+        },
 
         _toolName: function (element) {
             if (!element) {
