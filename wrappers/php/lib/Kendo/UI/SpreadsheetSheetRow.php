@@ -32,6 +32,15 @@ class SpreadsheetSheetRow extends \Kendo\SerializableObject {
         return $this->setProperty('index', $value);
     }
 
+    /**
+    * The table row element role, in the context of the Grid table structure.
+    * @param string $value
+    * @return \Kendo\UI\SpreadsheetSheetRow
+    */
+    public function type($value) {
+        return $this->setProperty('type', $value);
+    }
+
 //<< Properties
 }
 

@@ -29,6 +29,8 @@ namespace Kendo.Mvc.UI
         
         public int? Index { get; set; }
         
+        public string Type { get; set; }
+        
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -50,6 +52,11 @@ namespace Kendo.Mvc.UI
                 json["index"] = Index;
             }
                 
+            if (Type.HasValue())
+            {
+                json["type"] = Type;
+            }
+            
         //<< Serialization
         }
     }

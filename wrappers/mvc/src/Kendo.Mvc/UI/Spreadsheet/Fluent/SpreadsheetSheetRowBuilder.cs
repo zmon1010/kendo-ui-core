@@ -51,6 +51,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// The table row element role, in the context of the Grid table structure.
+        /// </summary>
+        /// <param name="value">The value that configures the type.</param>
+        public SpreadsheetSheetRowBuilder Type(string value)
+        {
+            container.Type = value;
+
+            return this;
+        }
+        
         //<< Fields
     }
 }

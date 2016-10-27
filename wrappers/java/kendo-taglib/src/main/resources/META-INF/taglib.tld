@@ -37004,6 +37004,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
+        <attribute>
+            <description>The table row element role, in the context of the Grid table structure.</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
     <tag>

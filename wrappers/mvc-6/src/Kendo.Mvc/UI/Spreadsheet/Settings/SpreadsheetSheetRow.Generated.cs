@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public int? Index { get; set; }
 
+        public string Type { get; set; }
+
 
         public Spreadsheet Spreadsheet { get; set; }
 
@@ -38,6 +40,11 @@ namespace Kendo.Mvc.UI
             if (Index.HasValue)
             {
                 settings["index"] = Index;
+            }
+
+            if (Type?.HasValue() == true)
+            {
+                settings["type"] = Type;
             }
 
             return settings;
