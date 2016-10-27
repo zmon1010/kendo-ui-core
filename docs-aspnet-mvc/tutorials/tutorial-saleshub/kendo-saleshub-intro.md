@@ -61,7 +61,7 @@ The first time the application launches, it creates and seeds its database. Seed
 
 **Figure 2. The Solution Explorer structure**
 
-![kendo-saleshub-intro-project-structure-screenshot](/tutorial-saleshub/images/kendo-saleshub-intro-project-structure-screenshot.png)
+![kendo-saleshub-intro-project-structure-screenshot](/tutorials/tutorial-saleshub/images/kendo-saleshub-intro-project-structure-screenshot.png)
 
 There are three main projects in the Kendo UI Sales Hub sample application, as listed below.
 

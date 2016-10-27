@@ -41,7 +41,7 @@ Note the `buildSocialStatsSeries` and `buildSocialStatsValueAxis` functions. The
 
 **Figure 2. A snapshot of the social tiles**
 
-![social-tiles](/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/social-tiles.png)
+![social-tiles](/tutorials/tutorial-kendo-music-store/music-store-dashboard/images/social-tiles.png)
 
 These tiles are constructed by using standard declarative markup in HTML and JavaScript events. The example below demonstrates the HTML.
 

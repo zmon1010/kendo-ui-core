@@ -221,7 +221,7 @@ When a view is requested, its create method is called. For the Music Store Dashb
 
 **Figure 2. The navigation strip of the Music Store Dashboard**
 
-![navigation-strip](/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/navigation-strip.png)
+![navigation-strip](/tutorials/tutorial-kendo-music-store/music-store-dashboard/images/navigation-strip.png)
 
 The various pages of the Music Dashboard are accessed through the navigation strip at the top.
 
