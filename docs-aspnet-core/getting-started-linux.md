@@ -7,7 +7,7 @@ slug: gettingstartedlinux_aspnetmvc6_aspnetmvc
 position: 3
 ---
 
-# Get Started on Linux
+# Getting Started on Linux
 
 This article demonstrates how to configure an ASP.NET Core project that enables you to use Telerik UI for ASP.NET MVC on Linux.
 

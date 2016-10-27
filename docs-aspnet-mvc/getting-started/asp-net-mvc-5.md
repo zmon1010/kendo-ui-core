@@ -1,6 +1,6 @@
 ---
 title: Creating Applications
-page_title: Use with ASP.NET MVC 5 | Telerik UI for ASP.NET MVC
+page_title: Creating Applications | Telerik UI for ASP.NET MVC
 description: "Use Telerik UI for ASP.NET MVC in ASP.NET MVC 5 applications."
 previous_url: /aspnet-mvc/aspnetmvc-apps/asp-net-mvc-5
 slug: aspnetmvc5_aspnetmvc
@@ -8,7 +8,7 @@ previous_url: asp-net-mvc-5
 position: 14
 ---
 
-# Use with ASP.NET MVC 5
+# Creating Applications
 
 This article demonstrates how to use Telerik UI for ASP.NET MVC in ASP.NET MVC 5 applications. It uses Visual Studio 2013 but the examples are applicable to all Visual Studio versions that support ASP.NET MVC 5. The examples create a new ASP.NET MVC 5 application but the steps to use Telerik UI for ASP.NET MVC in existing ASP.NET MVC 5 applications are the same.
 

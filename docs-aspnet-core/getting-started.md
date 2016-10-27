@@ -7,7 +7,7 @@ slug: gettingstarted_aspnetmvc6_aspnetmvc
 position: 2
 ---
 
-# Get Started
+# Getting Started
 
 This article demonstrates how to configure an ASP.NET Core project to use Telerik UI for ASP.NET MVC.
 
