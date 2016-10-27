@@ -5,12 +5,12 @@
     saveAsPDFTests("Scheduler", function() {
         var dom = $("<div>").appendTo(QUnit.fixture);
         dom.kendoScheduler({});
-
         return dom.getKendoScheduler();
     });
 
-    module("Scheduler PDF Export / UI /",  {
+    module("Scheduler PDF Export / UI /", {
         setup: function() {
+            jasmine.clock().install();
             dom = $("<div>");
 
             QUnit.fixture.append(dom);
@@ -18,6 +18,8 @@
             kendo.ui.Scheduler.fn.saveAsPDF = $.noop;
         },
         teardown: function() {
+            jasmine.clock().uninstall();
+
             kendo.destroy(QUnit.fixture);
             kendo.ui.Scheduler.fn.saveAsPDF = saveAsPDF;
         }
@@ -25,7 +27,7 @@
 
     test("renders button for pdf command", function() {
         dom.kendoScheduler({
-            toolbar: [ { name: "pdf" }]
+            toolbar: [{ name: "pdf" }]
         });
 
         equal(dom.find(".k-pdf").length, 1);
@@ -33,7 +35,7 @@
 
     test("sets the default text of the pdf command", function() {
         dom.kendoScheduler({
-            toolbar: [ { name: "pdf" }]
+            toolbar: [{ name: "pdf" }]
         });
 
         equal(dom.find(".k-pdf").text(), "Export to PDF");
@@ -41,7 +43,7 @@
 
     test("clicking the pdf button calls the pdf export method", 1, function() {
         var scheduler = dom.kendoScheduler({
-            toolbar: [ { name: "pdf" }]
+            toolbar: [{ name: "pdf" }]
         }).data("kendoScheduler");
 
         scheduler.saveAsPDF = function() {
@@ -53,9 +55,9 @@
 
     test("clicking the pdf button fires the pdfExport event", 1, function() {
         var scheduler = dom.kendoScheduler({
-            toolbar: [ { name: "pdf" }],
+            toolbar: [{ name: "pdf" }],
             pdfExport: function() {
-              ok(true);
+                ok(true);
             }
         }).data("kendoScheduler");
 
@@ -86,12 +88,14 @@
     // ------------------------------------------------------------
     module("Scheduler PDF Export /", {
         setup: function() {
+            //    jasmine.clock().install();
             saveAs = kendo.saveAs;
             kendo.saveAs = exportNoop;
 
             createScheduler();
         },
         teardown: function() {
+            //  jasmine.clock().uninstall();
             kendo.destroy(QUnit.fixture);
             QUnit.fixture.empty();
             kendo.saveAs = saveAs;
@@ -160,39 +164,48 @@
     });
 
     asyncTest("promise is rejected on drawing error", 1, function() {
-        pdfStubMethod(draw, "drawDOM", function(group) {
-            return $.Deferred().reject();
-        }, function() {
-            return scheduler.saveAsPDF()
+        stub(draw, {
+            drawDOM: function() {
+                return $.Deferred().reject().promise();
+            }
+        });
+
+        scheduler.saveAsPDF()
+                .always(start)
                 .fail(function(e) {
                     ok(true);
                 });
-        });
     });
 
-    // asyncTest("avoidLinks is passed through", 1, function() {
-    //     pdfStubMethod(draw, "drawDOM", function(group, options) {
-    //         ok(options.avoidLinks);
-    //         return $.Deferred().resolve(new kendo.drawing.Group());
-    //     }, function() {
-    //         scheduler.options.pdf.avoidLinks = true;
-    //         return scheduler.saveAsPDF()
-    //             .fail(function(e) {
-    //                 ok(true);
-    //             });
-    //     });
-    // });
+    asyncTest("avoidLinks is passed through", 1, function() {
+        stub(draw, {
+            drawDOM: function(group, options) {
+                ok(options.avoidLinks);
+                return $.Deferred().resolve(new kendo.drawing.Group());
+            }
+        });
 
-    // asyncTest("avoidLinks is false by default", 1, function() {
-    //    pdfStubMethod(draw, "drawDOM", function(group, options) {
-    //        ok(!options.avoidLinks);
-    //        return $.Deferred().resolve(new kendo.drawing.Group());
-    //    }, function() {
-    //        return scheduler.saveAsPDF()
-    //            .fail(function(e) {
-    //                ok(true);
-    //            });
-    //    });
-    //});
+        scheduler.options.pdf.avoidLinks = true;
+        scheduler.saveAsPDF()
+                .always(start)
+                .fail(function(e) {
+                    ok(false);
+                });
+    });
+
+    asyncTest("avoidLinks is false by default", 1, function() {
+        stub(draw, {
+            drawDOM: function(group, options) {
+                ok(!options.avoidLinks);
+                return $.Deferred().resolve(new kendo.drawing.Group());
+            }
+        });
+
+        scheduler.saveAsPDF()
+                .always(start)
+                .fail(function(e) {
+                    ok(false);
+                });
+    });
 
 })();
