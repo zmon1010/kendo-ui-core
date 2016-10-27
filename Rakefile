@@ -459,7 +459,6 @@ bundle :name => 'aspnetmvc.commercial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
-       :post_build => 'mvc_6:update_demo_deps_commercial',
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',

@@ -72,7 +72,7 @@ def update_demo_deps bundle
     mkdir_p root
     cp 'wrappers/mvc-6/NuGet.config', root
 
-    puts "Updating demo depenencies for #{bundle}"
+    puts "Updating demo dependencies for #{bundle}"
     update_nuget_reference "#{root}Kendo.Mvc.Examples/project.json"
 end
 
