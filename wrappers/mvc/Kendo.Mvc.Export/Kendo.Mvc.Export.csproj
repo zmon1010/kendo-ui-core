@@ -67,6 +67,12 @@
     <Compile Include="Editor\Export\DocxExport.cs" />
     <Compile Include="Editor\Export\EditorExport.cs" />
     <Compile Include="Editor\Export\EditorExportData.cs" />
+    <Compile Include="Editor\Import\DocxImport.cs" />
+    <Compile Include="Editor\Import\EditorImport.cs" />
+    <Compile Include="Editor\Import\EditorImportSettings.cs" />
+    <Compile Include="Editor\Import\PdfImport.cs" />
+    <Compile Include="Editor\Import\RtfImport.cs" />
+    <Compile Include="Editor\Import\TextImport.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="ExportCellStyle.cs" />
     <Compile Include="ExportColumnSettings.cs" />

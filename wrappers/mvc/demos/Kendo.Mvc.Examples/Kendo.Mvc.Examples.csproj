@@ -240,6 +240,7 @@
     <Compile Include="Controllers\Dialog\ApiController.cs" />
     <Compile Include="Controllers\Dialog\IndexController.cs" />
     <Compile Include="Controllers\Editor\EditorExportController.cs" />
+    <Compile Include="Controllers\Editor\EditorImportController.cs" />
     <Compile Include="Controllers\Editor\ExportAsController.cs" />
     <Compile Include="Controllers\Editor\Immutable_ElementsController.cs" />
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />

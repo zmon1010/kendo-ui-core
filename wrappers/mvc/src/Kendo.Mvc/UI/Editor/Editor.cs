@@ -59,6 +59,8 @@ namespace Kendo.Mvc.UI
             FileBrowserSettings = new EditorFileBrowserSettings(Messages.FileBrowserMessages);
 
             ExportAsSettings = new EditorExportAsSettings(this);
+
+            ImportSettings = new EditorImportSettings(this);
         }
 
         //>> Fields
@@ -122,6 +124,12 @@ namespace Kendo.Mvc.UI
         }
 
         public EditorExportAsSettings ExportAsSettings
+        {
+            get;
+            private set;
+        }
+
+        public EditorImportSettings ImportSettings
         {
             get;
             private set;
@@ -344,6 +352,12 @@ namespace Kendo.Mvc.UI
             if (exportAsSettings.Any())
             {
                 json["exportAs"] = exportAsSettings;
+            }
+
+            var importSettings = ImportSettings.ToJson();
+            if (importSettings.Any())
+            {
+	            json["import"] = importSettings;
             }
 
             writer.Write(Initializer.Initialize(Selector, "Editor", json));

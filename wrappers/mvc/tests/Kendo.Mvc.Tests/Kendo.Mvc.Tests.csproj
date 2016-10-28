@@ -180,6 +180,8 @@
     <Compile Include="UI\Dialog\DialogActionBuilderTests.cs" />
     <Compile Include="UI\Dialog\DialogBuilderTests.cs" />
     <Compile Include="UI\Dialog\DialogTestHelper.cs" />
+    <Compile Include="UI\Editor\Serialization\EditorImportSettingsTests.cs" />
+    <Compile Include="UI\Editor\EditorImportBuilderTests.cs" />
     <Compile Include="UI\Editor\ImmutablesBuilderTests.cs" />
     <Compile Include="UI\Editor\PasteCleanupBuilderTests.cs" />
     <Compile Include="UI\Fluent\PDFSettingsBuilderTests.cs" />

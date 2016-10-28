@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Web;
+using System.Web.Mvc;
 using Telerik.Windows.Documents.Flow.FormatProviders.Docx;
 using Telerik.Windows.Documents.Flow.FormatProviders.Html;
 using Telerik.Windows.Documents.Flow.FormatProviders.Txt;
@@ -27,7 +28,7 @@ namespace Kendo.Mvc.Export
             return htmlProvider;
         }
 
-        private static String GetTextContent(HttpPostedFileBase file)
+        public static String GetTextContent(HttpPostedFileBase file)
         {
             BinaryReader b = new BinaryReader(file.InputStream);
             byte[] binData = b.ReadBytes((int)file.InputStream.Length);

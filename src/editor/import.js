@@ -30,11 +30,12 @@
                     showFileList: false,
                     multiple: false,
                     async: {
-                        saveUrl:  importOptions.proxyURL,
-                        autoUpload: true
+                        saveUrl:  importOptions.proxyUrl,
+                        autoUpload: true,
+                        saveField: "file"
                     },
                     validation: {
-                        allowedExtensions: importOptions.extensions.split(","),
+                        allowedExtensions: importOptions.allowedExtensions,
                         maxFileSize: importOptions.maxFileSize
                     }
                 }).getKendoUpload();
@@ -44,24 +45,24 @@
                 return upload;
             },
             _onUploadComplete: function(ev){
-                this._fireEvent("complete", ev);
+                this._trigger("complete", ev);
                 ev.sender.clearAllFiles();
             },
             _onUploadSuccess: function(ev){
-                this._fireEvent("success", ev);
+                this._trigger("success", ev);
                 this.editor.value(ev.response.html.replace(/<\/?body>/ig, ""));
             },
             _onUploadProgress: function(ev){
-                this._fireEvent("progress", ev);
+                this._trigger("progress", ev);
             },
             _onUploadSelect: function(ev){
-                this._fireEvent("select", ev);
+                this._trigger("select", ev);
             },
             _onUploadError: function(ev){
-                this._fireEvent("error", ev);
+                this._trigger("error", ev);
             },
 
-            _fireEvent: function(eventType, uploadEvent) {
+            _trigger: function(eventType, uploadEvent) {
                 var editor = this.editor;
                 var importOptions = editor.options.import;// jshint ignore:line
                 if (typeof importOptions[eventType] === "function") {
