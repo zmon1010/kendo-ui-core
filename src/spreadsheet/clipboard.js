@@ -135,7 +135,7 @@
                 doc.close();
                 var table = $(doc).find("table:first");
                 if (table.length) {
-                    state = parseHTML(table.find("tbody:first"));
+                    state = parseHTML(table);
                 } else if (!data.plain) {
                     var element = $(doc.body).find(":not(style)");
                     setStateData(state, 0, 0, cellState(element.text()));
@@ -249,11 +249,11 @@
         return state;
     }
 
-    function parseHTML(tbody) {
+    function parseHTML(table) {
         var state = newState();
 
-        tbody.find("tr").each(function(rowIndex, tr) {
-            $(tr).find("td").each(function(colIndex, td) {
+        table.find(">tr, >tbody>tr").each(function(rowIndex, tr) {
+            $(tr).find(">td, >th").each(function(colIndex, td) {
                 var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
                 var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
                 var blankCell = "<td/>";
@@ -261,7 +261,7 @@
                 if (rowspan){
                     var endRow = rowIndex + rowspan;
                     for (var ri = rowIndex; ri <= endRow; ri++) {
-                        var row = tbody.find("tr").eq(ri);
+                        var row = table.find("tr").eq(ri);
                         if (ri > rowIndex) {
                             blankCell = "<td class='rowspan'></td>";
                             if (colIndex === 0) {
@@ -289,8 +289,8 @@
             });
         });
 
-        tbody.find("tr").each(function(rowIndex, tr) {
-            $(tr).find("td").each(function(colIndex, td) {
+        table.find(">tr, >tbody>tr").each(function(rowIndex, tr) {
+            $(tr).find(">td, >th").each(function(colIndex, td) {
                 var rowspan = parseInt($(td).attr("rowspan"), 10) -1 || 0;
                 var colspan = parseInt($(td).attr("colspan"), 10) -1 || 0;
                 setStateData(state, rowIndex, colIndex, cellState($(td)));
