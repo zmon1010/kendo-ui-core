@@ -164,48 +164,45 @@
     });
 
     asyncTest("promise is rejected on drawing error", 1, function() {
-        stub(draw, {
-            drawDOM: function() {
-                return $.Deferred().reject().promise();
-            }
-        });
-
-        scheduler.saveAsPDF()
-                .always(start)
+        pdfStubMethod(draw, "drawDOM", function(group) {
+            return $.Deferred().reject();
+        }, function() {
+            return scheduler.saveAsPDF()
                 .fail(function(e) {
                     ok(true);
                 });
-    });
-
-    asyncTest("avoidLinks is passed through", 1, function() {
-        stub(draw, {
-            drawDOM: function(group, options) {
-                ok(options.avoidLinks);
-                return $.Deferred().resolve(new kendo.drawing.Group());
-            }
         });
-
-        scheduler.options.pdf.avoidLinks = true;
-        scheduler.saveAsPDF()
-                .always(start)
-                .fail(function(e) {
-                    ok(false);
-                });
     });
 
-    asyncTest("avoidLinks is false by default", 1, function() {
-        stub(draw, {
-            drawDOM: function(group, options) {
-                ok(!options.avoidLinks);
-                return $.Deferred().resolve(new kendo.drawing.Group());
-            }
-        });
+    //asyncTest("avoidLinks is passed through", 1, function() {
+    //    stub(draw, {
+    //        drawDOM: function(group, options) {
+    //            ok(options.avoidLinks);
+    //            return $.Deferred().resolve(new kendo.drawing.Group());
+    //        }
+    //    });
 
-        scheduler.saveAsPDF()
-                .always(start)
-                .fail(function(e) {
-                    ok(false);
-                });
-    });
+    //    scheduler.options.pdf.avoidLinks = true;
+    //    scheduler.saveAsPDF()
+    //            .always(start)
+    //            .fail(function(e) {
+    //                ok(false);
+    //            });
+    //});
+
+    //asyncTest("avoidLinks is false by default", 1, function() {
+    //    stub(draw, {
+    //        drawDOM: function(group, options) {
+    //            ok(!options.avoidLinks);
+    //            return $.Deferred().resolve(new kendo.drawing.Group());
+    //        }
+    //    });
+
+    //    scheduler.saveAsPDF()
+    //            .always(start)
+    //            .fail(function(e) {
+    //                ok(false);
+    //            });
+    //});
 
 })();
