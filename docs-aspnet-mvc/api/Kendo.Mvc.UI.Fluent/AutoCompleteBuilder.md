@@ -36,7 +36,7 @@ Configures the client-side events.
 
 #### Parameters
 
-##### clientEventsAction System.Action<[Kendo.Mvc.UI.Fluent.AutoCompleteEventBuilder](/api/aspnet-mvc/Kendo.Mvc.UI.Fluent/AutoCompleteEventBuilder)>
+##### clientEventsAction System.Action<[Kendo.Mvc.UI.Fluent.AutoCompleteEventBuilder](/api/Kendo.Mvc.UI.Fluent/AutoCompleteEventBuilder)>
 The client events action.
 
 

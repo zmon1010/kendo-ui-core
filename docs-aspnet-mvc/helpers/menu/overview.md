@@ -215,7 +215,7 @@ When the Menu items are removed because of lacking permissions, a parent item ma
 
 ## Event Handling
 
-You can subscribe to all Menu [events](/api/javascript/ui/menu#events).
+You can subscribe to all Menu [events](../../../kendo-ui/api/javascript/ui/menu#events).
 
 ### By Handler Name
 
