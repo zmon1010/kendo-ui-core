@@ -13,6 +13,9 @@ const version = () =>
         encoding: 'ascii'
     }).trim();
 
+const cdnRoot = () =>
+    `//kendo.cdn.telerik.com/${version()}`;
+
 const tasks = (gulp) => {
     gulp.task('mvc-core-demos:assets',
         // Inception!
@@ -43,7 +46,7 @@ const tasks = (gulp) => {
             });
 
         return merge(distFiles, controllers)
-                   .pipe(subset('**/appsettings.json', (src) => src.pipe(replace('$CDN_ROOT', version()))))
+                   .pipe(subset('**/appsettings.json', (src) => src.pipe(replace('$CDN_ROOT', cdnRoot()))))
                    .pipe(zip('online-mvc-core-examples.zip'))
                    .pipe(gulp.dest(dest));
     });
