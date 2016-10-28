@@ -22,7 +22,7 @@
     .ConnectWith("#sortable-right")
     .HintHandler("hint")
     .PlaceholderHandler("placeholder")
-    .Cursor("url(/shared/web/sortable/grabbing.cur), default")
+    .Cursor("url('" + Url.Content("~/shared/web/sortable/grabbing.cur") + "'), default")
     .Events(events => events.Start("onStart").Move("onMove").End("onEnd").Change("onChange").Cancel("onCancel"))
 )
 
@@ -31,7 +31,7 @@
     .ConnectWith("#sortable-left")
     .HintHandler("hint")
     .PlaceholderHandler("placeholder")
-    .Cursor("url(/shared/web/sortable/grabbing.cur), default")
+    .Cursor("url('" + Url.Content("~/shared/web/sortable/grabbing.cur") + "'), default")
     .Events(events => events.Start("onStart").Move("onMove").End("onEnd").Change("onChange").Cancel("onCancel"))
 )
 
@@ -127,7 +127,7 @@
         color: #ffffff;
         border: 1px solid transparent;
         border-radius: 4px;
-        cursor: url(/shared/web/sortable/grab.cur), default;
+        cursor: url(@Url.Content("~/shared/web/sortable/grab.cur")), default;
     }
 
     .list-left {

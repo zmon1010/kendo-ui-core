@@ -20,7 +20,7 @@
 
 @(Html.Kendo().Sortable()
     .For("#sortable-basic")
-    .Cursor("url(/shared/web/sortable/grabbing.cur), default")
+    .Cursor("url('" + Url.Content("~/shared/web/sortable/grabbing.cur") + "'), default")
     .CursorOffset(offset => offset.Left(-230).Top(-10))
     .HintHandler("hint")
     .PlaceholderHandler("placeholder")
@@ -54,7 +54,7 @@
 
     #playlist-title {
         height: 80px;
-        background: url(/shared/web/sortable/playlist.png) no-repeat 50% 50% #ffffff;
+        background: url(@Url.Content("~/shared/web/sortable/playlist.png")) no-repeat 50% 50% #ffffff;
         border-radius: 4px 4px 0 0;
         border-bottom: 1px solid rgba(0,0,0,.1);
     }
@@ -74,7 +74,7 @@
         margin: 0;
         color: #666;
         font-size: 1.2em;
-        cursor: url(/shared/web/sortable/grab.cur), default;
+        cursor: url(@Url.Content("~/shared/web/sortable/grab.cur")), default;
     }
 
     li.sortable:last-child {
