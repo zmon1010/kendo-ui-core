@@ -36,7 +36,7 @@
 <script>
     function change() {
         var colorId = this.value().substring(1);
-        $(".product-image").attr("src", "@Url.Content("/shared/web/colorpicker/")sofa-" + colorId + ".jpg");
+        $(".product-image").attr("src", "@Url.Content("~/shared/web/colorpicker/")sofa-" + colorId + ".jpg");
     }
 </script>
 
@@ -53,7 +53,6 @@
 
     .product-display {
         background-color: #fff;
-        background-image: url();
         height: 380px;
         width: 450px;
         margin: -10px 4%;
