@@ -3501,6 +3501,12 @@ The function return value is displayed instead of the individual points.The supp
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The name of the category axis to use for the series.The first axis will be used if no categoryAxis is specified.</description>
+            <name>categoryAxis</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The data item field which contains the category name or date.</description>
             <name>categoryField</name>
             <rtexprvalue>true</rtexprvalue>

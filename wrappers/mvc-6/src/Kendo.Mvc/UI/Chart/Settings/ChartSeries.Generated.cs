@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesBorderSettings<T> Border { get; } = new ChartSeriesBorderSettings<T>();
 
+        public string CategoryAxis { get; set; }
+
         public string CategoryField { get; set; }
 
         public string CloseField { get; set; }
@@ -186,6 +188,11 @@ namespace Kendo.Mvc.UI
             if (border.Any())
             {
                 settings["border"] = border;
+            }
+
+            if (CategoryAxis?.HasValue() == true)
+            {
+                settings["categoryAxis"] = CategoryAxis;
             }
 
             if (CategoryField?.HasValue() == true)

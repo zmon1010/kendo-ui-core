@@ -34,6 +34,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The name of the category axis to use for the series.The first axis will be used if no categoryAxis is specified.
+        /// </summary>
+        /// <param name="value">The value for CategoryAxis</param>
+        public ChartSeriesBuilder<T> CategoryAxis(string value)
+        {
+            Container.CategoryAxis = value;
+            return this;
+        }
+
+        /// <summary>
         /// The data item field which contains the category name or date.
         /// </summary>
         /// <param name="value">The value for CategoryField</param>

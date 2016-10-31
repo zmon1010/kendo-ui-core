@@ -34,6 +34,15 @@ The function return value is displayed instead of the individual points.The supp
     }
 
     /**
+    * The name of the category axis to use for the series.The first axis will be used if no categoryAxis is specified.
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\ChartSeriesItem
+    */
+    public function categoryAxis($value) {
+        return $this->setProperty('categoryAxis', $value);
+    }
+
+    /**
     * The data item field which contains the category name or date.
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
