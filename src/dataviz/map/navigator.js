@@ -14,11 +14,11 @@
     function button(dir) {
        return kendo.format(
            '<button class="k-button k-navigator-{0}">' +
-               '<span class="k-icon k-i-arrow-{0}"/>' +
+               '<span class="p-icon p-i-arrow-60-{0}"/>' +
            '</button>', dir);
     }
 
-    var BUTTONS = button("n") + button("e") + button("s") + button("w");
+    var BUTTONS = button("up") + button("right") + button("down") + button("left");
 
     var Navigator = Widget.extend({
         init: function(element, options) {
