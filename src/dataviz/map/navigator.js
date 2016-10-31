@@ -63,13 +63,13 @@
             var y = 0;
             var button = $(e.currentTarget);
 
-            if (button.is(".k-navigator-n")) {
+            if (button.is(".k-navigator-up")) {
                 y = 1;
-            } else if (button.is(".k-navigator-s")) {
+            } else if (button.is(".k-navigator-down")) {
                 y = -1;
-            } else if (button.is(".k-navigator-e")) {
+            } else if (button.is(".k-navigator-right")) {
                 x = 1;
-            } else if (button.is(".k-navigator-w")) {
+            } else if (button.is(".k-navigator-left")) {
                 x = -1;
             }
 
@@ -108,4 +108,3 @@
 })(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
-

@@ -17,29 +17,29 @@
     test("creates north button", function() {
         dom = $("<div>").kendoNavigator();
 
-        ok(dom.find("button:eq(0)").is(".k-button.k-navigator-n"));
-        ok(dom.find("button:eq(0) span").is(".k-icon.k-i-arrow-n"));
+        ok(dom.find("button:eq(0)").is(".k-button.k-navigator-up"));
+        ok(dom.find("button:eq(0) span").is(".p-icon.p-i-arrow-60-up"));
     });
 
     test("creates east button", function() {
         dom = $("<div>").kendoNavigator();
 
-        ok(dom.find("button:eq(1)").is(".k-button.k-navigator-e"));
-        ok(dom.find("button:eq(1) span").is(".k-icon.k-i-arrow-e"));
+        ok(dom.find("button:eq(1)").is(".k-button.k-navigator-right"));
+        ok(dom.find("button:eq(1) span").is(".p-icon.p-i-arrow-60-right"));
     });
 
     test("creates south button", function() {
         dom = $("<div>").kendoNavigator();
 
-        ok(dom.find("button:eq(2)").is(".k-button.k-navigator-s"));
-        ok(dom.find("button:eq(2) span").is(".k-icon.k-i-arrow-s"));
+        ok(dom.find("button:eq(2)").is(".k-button.k-navigator-down"));
+        ok(dom.find("button:eq(2) span").is(".p-icon.p-i-arrow-60-down"));
     });
 
     test("creates west button", function() {
         dom = $("<div>").kendoNavigator();
 
-        ok(dom.find("button:eq(3)").is(".k-button.k-navigator-w"));
-        ok(dom.find("button:eq(3) span").is(".k-icon.k-i-arrow-w"));
+        ok(dom.find("button:eq(3)").is(".k-button.k-navigator-left"));
+        ok(dom.find("button:eq(3) span").is(".p-icon.p-i-arrow-60-left"));
     });
 
     test("clicking north triggers the pan event with positive y argument and zero x argument", 2, function() {
@@ -50,7 +50,7 @@
             }
         });
 
-        dom.find(".k-navigator-n").trigger("click");
+        dom.find(".k-navigator-up").trigger("click");
     });
 
     test("clicking south triggers the pan event with negative y argument and zero x argument", 2, function() {
@@ -61,7 +61,7 @@
             }
         });
 
-        dom.find(".k-navigator-s").trigger("click");
+        dom.find(".k-navigator-down").trigger("click");
     });
 
     test("clicking east triggers the pan event with positive x argument and zero y argument", 2, function() {
@@ -72,7 +72,7 @@
             }
         });
 
-        dom.find(".k-navigator-e").trigger("click");
+        dom.find(".k-navigator-right").trigger("click");
     });
 
     test("clicking west triggers the pan event with negative x argument and zero y argument", 2, function() {
@@ -83,7 +83,7 @@
             }
         });
 
-        dom.find(".k-navigator-w").trigger("click");
+        dom.find(".k-navigator-left").trigger("click");
     });
 
     test("pressing up triggers the pan event with positive y argument and zero x argument", 2, function() {
@@ -138,7 +138,7 @@
             }
         });
 
-        dom.find(".k-navigator-e").trigger("click");
+        dom.find(".k-navigator-right").trigger("click");
     });
 
     test("pan event y argument is multiplied by panStep", function() {
@@ -149,7 +149,7 @@
             }
         });
 
-        dom.find(".k-navigator-n").trigger("click");
+        dom.find(".k-navigator-up").trigger("click");
     });
 
     test("tab index is set on navigator", function() {
