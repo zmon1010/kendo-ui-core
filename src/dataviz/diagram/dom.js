@@ -127,15 +127,15 @@
         var defaultButtons = {
             cancel: {
                 text: "Cancel",
-                imageClass: "k-i-cancel",
+                imageClass: "p-i-cancel",
                 className: "k-diagram-cancel",
-                iconClass: "k-icon"
+                iconClass: "p-icon"
             },
             update: {
                 text: "Update",
-                imageClass: "k-i-update",
+                imageClass: "p-i-checkmark",
                 className: "k-diagram-update",
-                iconClass: "k-icon"
+                iconClass: "p-icon"
             }
         };
 
@@ -1572,7 +1572,7 @@
                             if (!isAutoConnector(targetConnector)) {
                                 targetPoint = targetConnector.position();
                                 dist = math.round(sourcePoint.distanceTo(targetPoint));
-                                
+
                                 if (dist < minNonConflict && this.diagram && this._testRoutePoints(sourcePoint, targetPoint, sourceConnector, targetConnector)) {
                                     minNonConflict = dist;
                                     minNonConflictSource = sourceConnector;
@@ -1648,8 +1648,8 @@
             _isPointInsideShape: function (point, shape) {
                 var bounds = shape.bounds(), rotatedPoint,
                     angle = shape.rotate().angle,
-                    pointX, pointY, 
-                    boundsX = bounds.x, 
+                    pointX, pointY,
+                    boundsX = bounds.x,
                     boundsY = bounds.y;
 
                 rotatedPoint = point.clone().rotate(bounds.center(), angle);
@@ -2192,7 +2192,7 @@
                 this.scrollable
                     .on("mouseover" + NS, proxy(that._mouseover, that))
                     .on("mouseout" + NS, proxy(that._mouseout, that))
-                    .on("mousemove" + NS, proxy(that._mouseMove, that))                    
+                    .on("mousemove" + NS, proxy(that._mouseMove, that))
                     .on("mousedown" + NS, proxy(that._mouseDown, that))
                     .on("mouseup" + NS, proxy(that._mouseUp, that));
 
@@ -2248,7 +2248,7 @@
 
             _mouseUp: function () {
                 this._pauseMouseHandlers = false;
-            },    
+            },
 
             _tap: function(e) {
                 var toolService = this.toolService;
@@ -4412,7 +4412,7 @@
 
             editTool: function() {
                 this._tools.push({
-                    spriteCssClass: "k-icon k-i-pencil",
+                    spriteCssClass: "p-icon p-i-edit",
                     showText: "overflow",
                     type: "button",
                     text: "Edit",
@@ -4422,7 +4422,7 @@
 
             deleteTool: function() {
                 this._tools.push({
-                    spriteCssClass: "k-icon k-i-close",
+                    spriteCssClass: "p-icon p-i-close",
                     showText: "overflow",
                     type: "button",
                     text: "Delete",
@@ -4433,7 +4433,7 @@
             rotateAnticlockwiseTool: function(options) {
                 this._appendGroup("rotate");
                 this._rotateGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-rotate-ccw",
+                    spriteCssClass: "p-icon p-i-rotate-left",
                     showText: "overflow",
                     text: "RotateAnticlockwise",
                     group: "rotate",
@@ -4444,7 +4444,7 @@
             rotateClockwiseTool: function(options) {
                 this._appendGroup("rotate");
                 this._rotateGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-rotate-cw",
+                    spriteCssClass: "p-icon p-i-rotate-right",
                     attributes: this._setAttributes({ action: "rotateClockwise", step: options.step }),
                     showText: "overflow",
                     text: "RotateClockwise",
@@ -4455,7 +4455,7 @@
             createShapeTool: function() {
                 this._appendGroup("create");
                 this._createGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-shape",
+                    spriteCssClass: "p-icon p-i-shape",
                     showText: "overflow",
                     text: "CreateShape",
                     group: "create",
@@ -4466,7 +4466,7 @@
             createConnectionTool: function() {
                 this._appendGroup("create");
                 this._createGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-connector",
+                    spriteCssClass: "p-icon p-i-connector",
                     showText: "overflow",
                     text: "CreateConnection",
                     group: "create",
@@ -4477,7 +4477,7 @@
             undoTool: function() {
                 this._appendGroup("history");
                 this._historyGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-undo",
+                    spriteCssClass: "p-icon p-i-undo",
                     showText: "overflow",
                     text: "Undo",
                     group: "history",
@@ -4488,7 +4488,7 @@
             redoTool: function() {
                 this._appendGroup("history");
                 this._historyGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-redo",
+                    spriteCssClass: "p-icon p-i-redo",
                     showText: "overflow",
                     text: "Redo",
                     group: "history",
