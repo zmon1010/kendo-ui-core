@@ -16,7 +16,7 @@ class TelerikReleaseNotesBot
         driver.find_element(:xpath, "//input[contains(@id,'password')]").send_keys SITE_DOWNLOAD_BUILDER_UPLOAD_PASS
         click_element(driver.find_element(:xpath, "//button[contains(@id,'LoginButton')]"))
 
-        @products = ["Kendo UI", "UI for ASP.NET MVC", "UI for JSP", "UI for PHP"]
+        @products = ["Kendo UI", "UI for ASP.NET MVC", "UI for ASP.NET Core", "UI for JSP", "UI for PHP"]
 
     end
 
@@ -131,6 +131,8 @@ def upload_files_and_validate(bot, archive_path, productName)
          full_path = File.expand_path(archive_path + "/telerik.kendoui.professional.#{VERSION}.trial.xml", File.join(File.dirname(__FILE__), ".."))
       when "UI for ASP.NET MVC"
         full_path = File.expand_path(archive_path + "/telerik.ui.for.aspnetmvc.#{VERSION}.trial.xml", File.join(File.dirname(__FILE__), ".."))
+      when "UI for ASP.NET Core"
+        full_path = File.expand_path(archive_path + "/telerik.ui.for.aspnet.core.#{VERSION}.trial.xml", File.join(File.dirname(__FILE__), ".."))
       when "UI for JSP"
         full_path = File.expand_path(archive_path + "/telerik.ui.for.jsp.#{VERSION}.trial.xml", File.join(File.dirname(__FILE__), ".."))
       when "UI for PHP"

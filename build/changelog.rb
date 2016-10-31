@@ -96,6 +96,7 @@ class ChangeLog
         @suites = [
             Suite.new("Components", "components"),
             Suite.new("Wrappers (ASP.NET MVC)", "aspnetmvc"),
+            Suite.new("Wrappers (ASP.NET Core)", "aspnetcore"),
             Suite.new("Wrappers (Java)", "java"),
             Suite.new("Wrappers (PHP)", "php")
         ]
