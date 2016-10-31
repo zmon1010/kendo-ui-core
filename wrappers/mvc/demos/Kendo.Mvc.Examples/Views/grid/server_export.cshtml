@@ -18,9 +18,7 @@
         columns.Bound(p => p.UnitsInStock).Width(150);
     })
     .Pageable()
-    .Sortable()
     .Scrollable()
-    .Filterable()
     .HtmlAttributes(new { style = "height: 500px;" })
     .DataSource(dataSource => dataSource
         .Server()
