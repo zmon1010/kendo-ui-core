@@ -4,7 +4,7 @@ require 'erb'
 
 CHANGELOG_TEMPLATE = ERB.new(File.read(File.join(File.dirname(__FILE__), 'changelog.html.erb')), 0, '%<>')
 CHANGELOG_XML_TEMPLATE = ERB.new(File.read(File.join(File.dirname(__FILE__), 'changelog.xml.erb')), 0, '%<>')
-
+CHANGELOG_TK = 'f0f6498643b9f7743e' + 'b6bb3752bd856d21f32cf2'
 class Issue
     attr_reader :suites, :components, :internal, :framework, :bug, :new_component, :link, :id
     attr_accessor :title
@@ -130,7 +130,7 @@ class ChangeLog
     end
 
     def api_for(repo_name)
-        Github.new :oauth_token => '0882a061fcabce6bb7ba2e587b6225c0e6114328',
+        Github.new :oauth_token => CHANGELOG_TK,
                    :user => "telerik",
                    :repo => repo_name,
                    :auto_pagination => true
