@@ -20,23 +20,26 @@
 
     kendo.spreadsheet.Sheet.prototype.activeCellCustomEditor = function() {
         var cell = this.activeCell().first();
-        var val = this.validation(cell);
-        var key = this._properties.get("editor", this._grid.cellRefIndex(cell));
-        var editor;
 
-        if (key != null) {
-            editor = EDITORS[key];
-        }
-        else if (val && val.showButton) {
-            key = "_validation_" + val.dataType;
-            editor = EDITORS[key];
-        }
+        if (this.range(cell).enable()) {
+            var val = this.validation(cell);
+            var key = this._properties.get("editor", this._grid.cellRefIndex(cell));
+            var editor;
 
-        if (typeof editor == "function") {
-            editor = EDITORS[key] = editor();
-        }
+            if (key != null) {
+                editor = EDITORS[key];
+            }
+            else if (val && val.showButton) {
+                key = "_validation_" + val.dataType;
+                editor = EDITORS[key];
+            }
 
-        return editor;
+            if (typeof editor == "function") {
+                editor = EDITORS[key] = editor();
+            }
+
+            return editor;
+        }
     };
 
     registerEditor("_validation_date", function(){
