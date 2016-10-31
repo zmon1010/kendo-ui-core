@@ -368,7 +368,7 @@
                     return true;
                 }
             }
-            return false;
+            return key === keys.ENTER;
         },
 
         _tokenContext: function() {
