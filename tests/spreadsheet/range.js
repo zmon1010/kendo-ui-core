@@ -748,6 +748,9 @@
     test("range.input handles various numeric formats", function(){
         var r = sheet.range("A1");
         function test(input, value, format) {
+            if (/\$/.test(format)) {
+                format += ";-" + format;
+            }
             r.format(null);
             r.input(input);
             equal(r.value(), value);

@@ -1484,9 +1484,14 @@
             .replace(new RegExp("\\" + comma, "g"), "")
             .replace(new RegExp("\\" + dot, "g"), ".");
 
+        format += suffix;
+        if (has_currency) {
+            format += ';-' + format;
+        }
+
         return {
             type: "number",
-            format: format + suffix,
+            format: format,
             value: sign * parseFloat(value)
         };
     });

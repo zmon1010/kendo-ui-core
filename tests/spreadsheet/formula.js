@@ -351,10 +351,10 @@
 
     test("parse number with currency", function(){
         var exp = calc.parse(Sheet1, 0, 0, "$ 1234.50");
-        equal(exp.format, '"$ "#,#.00');
+        equal(exp.format, '"$ "#,#.00;-"$ "#,#.00');
         equal(exp.value, 1234.50);
         var exp = calc.parse(Sheet1, 0, 0, "1234.50 $");
-        equal(exp.format, '#,#.00" $"');
+        equal(exp.format, '#,#.00" $";-#,#.00" $"');
         equal(exp.value, 1234.50);
     });
 
