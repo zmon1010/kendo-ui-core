@@ -1,5 +1,5 @@
 #!/bin/bash
-SYNC="rsync -n -rvcz --delete --inplace"
+SYNC="rsync -rvcz --delete --inplace"
 DEST="/usr/share/nginx/html/$2/"
 USER="nginx"
 declare -a HOSTS=("ordkendowww01.telerik.local" "ordkendowww02.telerik.local")
@@ -7,6 +7,11 @@ declare -a HOSTS=("ordkendowww01.telerik.local" "ordkendowww02.telerik.local")
 function log {
     echo "[$(date +%T)] $1"
 }
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <source-dir> <dest-dir>"
+    exit 1
+fi
 
 for host in "${HOSTS[@]}"
 do
