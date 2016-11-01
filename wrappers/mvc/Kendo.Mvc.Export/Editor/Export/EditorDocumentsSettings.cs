@@ -7,7 +7,7 @@ namespace Kendo.Mvc.Export
 {
     public class EditorDocumentsSettings
     {
-        private HtmlImportSettings importSettings = new HtmlImportSettings();
+        private HtmlImportSettings importSettings;
         /// <summary>
         /// Gets or sets the HtmlIMportSettings, which are used to convert the HTML content to RadFlowDocument
         /// </summary
@@ -15,15 +15,16 @@ namespace Kendo.Mvc.Export
         {
             get
             {
+                if (importSettings == null)
+                {
+                    importSettings = new HtmlImportSettings();
+                }
+
                 return importSettings;
-            }
-            set
-            {
-                importSettings = value;
             }
         }
 
-        private DocxExportSettings docxExportSettings = new DocxExportSettings();
+        private DocxExportSettings docxExportSettings;
         /// <summary>
         /// Gets or sets DocxExportSettings, which configure the DocxFormatProvider used for DOCX export
         /// </summary
@@ -31,6 +32,10 @@ namespace Kendo.Mvc.Export
         {
             get
             {
+                if (docxExportSettings == null)
+                {
+                    docxExportSettings = new DocxExportSettings();
+                }
                 return docxExportSettings;
             }
             set
@@ -39,7 +44,7 @@ namespace Kendo.Mvc.Export
             }
         }
 
-        private RtfExportSettings rtfExportSettings = new RtfExportSettings();
+        private RtfExportSettings rtfExportSettings;
         /// <summary>
         /// Gets or sets RtfExportSettings, which configure the RtfFormatProvider used for RTF export
         /// </summary
@@ -47,6 +52,10 @@ namespace Kendo.Mvc.Export
         {
             get
             {
+                if (rtfExportSettings == null)
+                {
+                    rtfExportSettings = new RtfExportSettings();
+                }
                 return rtfExportSettings;
             }
             set
@@ -55,7 +64,7 @@ namespace Kendo.Mvc.Export
             }
         }
 
-        private PdfExportSettings pdfExportSettings = new PdfExportSettings();
+        private PdfExportSettings pdfExportSettings;
         /// <summary>
         /// Gets or sets PdfExportSettings, which configure the PdfFormatProvider used for PDF export
         /// </summary
@@ -63,6 +72,10 @@ namespace Kendo.Mvc.Export
         {
             get
             {
+                if (pdfExportSettings == null)
+                {
+                    pdfExportSettings = new PdfExportSettings();
+                }
                 return pdfExportSettings;
             }
             set
@@ -71,7 +84,7 @@ namespace Kendo.Mvc.Export
             }
         }
 
-        private HtmlExportSettings htmlExportSettings = new HtmlExportSettings();
+        private HtmlExportSettings htmlExportSettings;
         /// <summary>
         /// Gets or sets HtmlExportSettings, which configure the HtmlFormatProvider used for HTML export
         /// </summary
@@ -79,6 +92,10 @@ namespace Kendo.Mvc.Export
         {
             get
             {
+                if (htmlExportSettings == null)
+                {
+                    htmlExportSettings = new HtmlExportSettings();
+                }
                 return htmlExportSettings;
             }
             set
