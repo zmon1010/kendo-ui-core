@@ -1366,6 +1366,41 @@
             equal(shape.connections().length, 0);
         });
 
+        test("stores the target of touchmove event when starting to create a connection", 1, function() {
+            setupTool();
+            var shape1 = d.addShape({ x: 0, y: 0});
+            var sourceConnector = shape1.getConnector("Bottom");
+            toolservice._hoveredConnector = new ConnectorVisual(sourceConnector);
+            connectionTool.start(new Point(), { type: "touchmove" });
+
+            ok(d._cachedTouchTarget);
+        });
+
+        test("clears the stored target of touchmove event when connection is created", 1, function() {
+            setupTool();
+            var shape1 = d.addShape({ x: 0, y: 0});
+            var sourceConnector = shape1.getConnector("Bottom");
+            toolservice._hoveredConnector = new ConnectorVisual(sourceConnector);
+            connectionTool.start(new Point(), { type: "touchmove" });
+            connectionTool.end(new Point());
+
+            ok(!d._cachedTouchTarget);
+        });
+
+        test("the target of the touchmove event is not cleared when showing connector adorners on new shape", 2, function() {
+            setupTool();
+            var shape1 = d.addShape({ x: 0, y: 0});
+            var shape2 = d.addShape({ x: 100, y: 100});
+            d._connectorsAdorner.show(shape1);
+            d._cachedTouchTarget = d._connectorsAdorner.visual.children[1];
+            var connectorsCountBeforeShow = d._connectorsAdorner.visual.children.length;
+
+            d._connectorsAdorner.show(shape2);
+           
+            equal(d._connectorsAdorner.visual.children.length, connectorsCountBeforeShow + 1);
+            equal(d._connectorsAdorner.visual.children[0], d._cachedTouchTarget);
+        });                
+
         // ------------------------------------------------------------
         module("ConnectionTool / start", {
             setup: function() {

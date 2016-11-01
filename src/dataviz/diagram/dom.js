@@ -2308,7 +2308,7 @@
             },
 
             _meta: function (e) {
-                return { ctrlKey: e.ctrlKey, metaKey: e.metaKey, altKey: e.altKey, shiftKey: e.shiftKey };
+                return { ctrlKey: e.ctrlKey, metaKey: e.metaKey, altKey: e.altKey, shiftKey: e.shiftKey, type: e.type };
             },
 
             _eventPositions: function (e, start) {
