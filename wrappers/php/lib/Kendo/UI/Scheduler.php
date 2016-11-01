@@ -161,6 +161,28 @@ If the developer wants to control the day and month order, then one needs to def
     }
 
     /**
+    * Sets the groupHeaderTemplate option of the Scheduler.
+    * The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\Scheduler
+    */
+    public function groupHeaderTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('groupHeaderTemplate', $value);
+    }
+
+    /**
+    * Sets the groupHeaderTemplate option of the Scheduler.
+    * The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
+    * @param string $value The template content.
+    * @return \Kendo\UI\Scheduler
+    */
+    public function groupHeaderTemplate($value) {
+        return $this->setProperty('groupHeaderTemplate', $value);
+    }
+
+    /**
     * The height of the widget. Numeric values are treated as pixels.
     * @param float|string $value
     * @return \Kendo\UI\Scheduler
@@ -348,28 +370,6 @@ That way all users would see the same dates and times no matter their configured
     */
     public function addView($value) {
         return $this->add('views', func_get_args());
-    }
-
-    /**
-    * Sets the groupHeaderTemplate option of the Scheduler.
-    * The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
-    * @param string $value The id of the element which represents the kendo template.
-    * @return \Kendo\UI\Scheduler
-    */
-    public function groupHeaderTemplateId($value) {
-        $value = new \Kendo\Template($value);
-
-        return $this->setProperty('groupHeaderTemplate', $value);
-    }
-
-    /**
-    * Sets the groupHeaderTemplate option of the Scheduler.
-    * The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
-    * @param string $value The template content.
-    * @return \Kendo\UI\Scheduler
-    */
-    public function groupHeaderTemplate($value) {
-        return $this->setProperty('groupHeaderTemplate', $value);
     }
 
     /**

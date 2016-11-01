@@ -35,6 +35,10 @@ namespace Kendo.Mvc.UI
 
         public SchedulerFooterSettings<T> Footer { get; } = new SchedulerFooterSettings<T>();
 
+        public string GroupHeaderTemplate { get; set; }
+
+        public string GroupHeaderTemplateId { get; set; }
+
         public double? Height { get; set; }
 
         public int? MajorTick { get; set; }
@@ -66,10 +70,6 @@ namespace Kendo.Mvc.UI
         public DateTime? StartTime { get; set; }
 
         public string Timezone { get; set; }
-
-        public string GroupHeaderTemplate { get; set; }
-
-        public string GroupHeaderTemplateId { get; set; }
 
         public double? Width { get; set; }
 
@@ -167,6 +167,19 @@ namespace Kendo.Mvc.UI
                 settings["footer"] = Footer.Enabled;
             }
 
+            if (GroupHeaderTemplateId.HasValue())
+            {
+                settings["groupHeaderTemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, GroupHeaderTemplateId
+                    )
+                };
+            }
+            else if (GroupHeaderTemplate.HasValue())
+            {
+                settings["groupHeaderTemplate"] = GroupHeaderTemplate;
+            }
+
             if (Height.HasValue)
             {
                 settings["height"] = Height;
@@ -253,19 +266,6 @@ namespace Kendo.Mvc.UI
             if (Timezone?.HasValue() == true)
             {
                 settings["timezone"] = Timezone;
-            }
-
-            if (GroupHeaderTemplateId.HasValue())
-            {
-                settings["groupHeaderTemplate"] = new ClientHandlerDescriptor {
-                    HandlerName = string.Format(
-                        "jQuery('{0}{1}').html()", IdPrefix, GroupHeaderTemplateId
-                    )
-                };
-            }
-            else if (GroupHeaderTemplate.HasValue())
-            {
-                settings["groupHeaderTemplate"] = GroupHeaderTemplate;
             }
 
             if (Width.HasValue)

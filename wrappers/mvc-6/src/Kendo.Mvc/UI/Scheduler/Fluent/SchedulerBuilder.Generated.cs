@@ -163,6 +163,26 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
+        /// </summary>
+        /// <param name="value">The value for GroupHeaderTemplate</param>
+        public SchedulerBuilder<T> GroupHeaderTemplate(string value)
+        {
+            Container.GroupHeaderTemplate = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
+        /// </summary>
+        /// <param name="value">The ID of the template element for GroupHeaderTemplate</param>
+        public SchedulerBuilder<T> GroupHeaderTemplateId(string templateId)
+        {
+            Container.GroupHeaderTemplateId = templateId;
+            return this;
+        }
+
+        /// <summary>
         /// The height of the widget. Numeric values are treated as pixels.
         /// </summary>
         /// <param name="value">The value for Height</param>
@@ -345,26 +365,6 @@ namespace Kendo.Mvc.UI.Fluent
         public SchedulerBuilder<T> Timezone(string value)
         {
             Container.Timezone = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
-        /// </summary>
-        /// <param name="value">The value for GroupHeaderTemplate</param>
-        public SchedulerBuilder<T> GroupHeaderTemplate(string value)
-        {
-            Container.GroupHeaderTemplate = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
-        /// </summary>
-        /// <param name="value">The ID of the template element for GroupHeaderTemplate</param>
-        public SchedulerBuilder<T> GroupHeaderTemplateId(string templateId)
-        {
-            Container.GroupHeaderTemplateId = templateId;
             return this;
         }
 
