@@ -976,6 +976,7 @@ namespace :build do
         [
             'professional.trial',
             'aspnetmvc.trial',
+            'aspnet.core.trial',
             'php.trial',
             'jsp.trial'
         ].map do |bundle|
