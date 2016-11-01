@@ -252,5 +252,28 @@
             chart._tooltip.hide = $.noop;
         });
 
+        asyncTest("supresses mouseleave", 0, function() {
+
+            setTimeout(function() {
+                $(chart.element).trigger("mouseleave");
+            }, 0);
+
+            tap();
+
+            chart._highlight.hide = function() {
+                ok(false);
+            };
+
+            $(chart.element).trigger("mouseleave");
+
+            setTimeout(function() {
+                chart._highlight.hide = $.noop;
+
+                start();
+            }, 0);
+
+
+        });
+
     })();
 })();
