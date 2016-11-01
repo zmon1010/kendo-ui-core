@@ -1276,6 +1276,11 @@ var __meta__ = { // jshint ignore:line
 
                 chart._propagateClick(element, e);
             }
+
+            chart._supressMouseleave = true;
+            setTimeout(function() {
+                chart._supressMouseleave = false;
+            }, 0);
         },
 
         _click: function(e) {
@@ -1320,14 +1325,15 @@ var __meta__ = { // jshint ignore:line
 
                 highlight.show(point);
 
-                return point.tooltipTracking;
+                return point;
             }
         },
 
         _mouseover: function(e) {
             var chart = this;
+            var point = chart._startHover(e.element, e.originalEvent);
 
-            if (chart._startHover(e.element, e.originalEvent)) {
+            if (point && point.tooltipTracking) {
                 $(document).on(MOUSEMOVE_TRACKING, proxy(chart._mouseMoveTracking, chart));
             }
         },
@@ -1435,7 +1441,7 @@ var __meta__ = { // jshint ignore:line
                 highlight = chart._highlight,
                 target = e.relatedTarget;
 
-            if (!(target && $(target).closest(tooltip.element).length)) {
+            if (!(target && $(target).closest(tooltip.element).length) && !chart._supressMouseleave) {
                 chart._mousemove.cancel();
 
                 plotArea.hideCrosshairs();
