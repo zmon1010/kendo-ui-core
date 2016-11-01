@@ -1320,14 +1320,15 @@ var __meta__ = { // jshint ignore:line
 
                 highlight.show(point);
 
-                return point.tooltipTracking;
+                return point;
             }
         },
 
         _mouseover: function(e) {
             var chart = this;
+            var point = chart._startHover(e.element, e.originalEvent);
 
-            if (chart._startHover(e.element, e.originalEvent)) {
+            if (point && point.tooltipTracking) {
                 $(document).on(MOUSEMOVE_TRACKING, proxy(chart._mouseMoveTracking, chart));
             }
         },

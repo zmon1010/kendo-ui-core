@@ -202,4 +202,55 @@
 
     })();
 
+    (function() {
+        function tap(index) {
+            var plotArea = chart._model.children[1];
+            var bar = plotArea.charts[0].points[index || 0];
+            var barElement = getChartDomElement(bar);
+            clickChart(chart, barElement);
+        }
+
+        module("tap", {
+            setup: function() {
+                setupChart({
+                    series: [{ data: [1] }],
+                    tooltip: {
+                        visible: true
+                    }
+                });
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("shows tooltip when tapping on a point", 1, function() {
+            chart._tooltip.hide = function() {
+                ok(false);
+            };
+            chart._tooltip.show = function() {
+                ok(true);
+            };
+
+            tap();
+
+            chart._tooltip.hide = $.noop;
+        });
+
+        test("does not show tooltip when tapping on already tapped point", 0, function() {
+            tap();
+
+            chart._tooltip.hide = function() {
+                ok(false);
+            };
+            chart._tooltip.show = function() {
+                ok(false);
+            };
+
+            tap();
+
+            chart._tooltip.hide = $.noop;
+        });
+
+    })();
 })();
