@@ -202,7 +202,7 @@ class ChangeLog
     class << self
         def milestone_name(year, quarter, service_pack)
             service_pack = "." + service_pack if service_pack == "next"
-            "#{year}.Q#{quarter}#{".SP#{service_pack}" if service_pack}"
+            "#{year}.R#{quarter}#{".SP#{service_pack}" if service_pack}"
         end
     end
 end
