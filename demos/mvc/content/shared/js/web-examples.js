@@ -1,16 +1,16 @@
 $(function () {
     populateSearchDataSource(desktopExamples);
 
-    var isRoot = window.location.href.match("/(.+kendo-ui|aspnet-mvc|aspnet-core|staging-mvc|staging-core|php-ui|jsp-ui)/?$") !== null;
-    var baseUrl = isRoot ? "" : "../";
+    var regex = /\/(kendo-ui|staging-kendo-ui|aspnet-mvc|aspnet-core|staging-mvc|staging-core|php-ui|jsp-ui)/i;
+    var basePathName = regex.exec(window.location.href)[0] + "/";
 
     $("#example-search").kendoExampleSearch({
         product: product,
         minLength: 3,
-        template: '<a href="' + baseUrl + '#: url #"> #: text # </a>',
+        template: '<a href="' + basePathName + '#: url #"> #: text # </a>',
         dataTextField: "text",
         select: function (e) {
-            location.href = e.item.find("a").attr("href");
+            location.pathname = e.item.find("a").attr("href");
         },
         height: 300
     });
