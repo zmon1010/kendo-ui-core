@@ -7,10 +7,10 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// The series name.
         /// </summary>
-        string Name 
-        { 
+        string Name
+        {
             get;
-            set; 
+            set;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
-        
+
         IChartSerializer CreateSerializer();
     }
 }

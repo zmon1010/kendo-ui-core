@@ -10,6 +10,11 @@ namespace Kendo.Mvc.UI.Fluent
         private readonly INavigationItemContainer<ContextMenuItem> container;
         private readonly ViewContext viewContext;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MenuItemFactory"/> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="viewContext">The view context.</param>
         public ContextMenuItemFactory(INavigationItemContainer<ContextMenuItem> container, ViewContext viewContext)
         {
 
@@ -17,6 +22,10 @@ namespace Kendo.Mvc.UI.Fluent
             this.viewContext = viewContext;
         }
 
+        /// <summary>
+        /// Adds an item.
+        /// </summary>
+        /// <returns></returns>
         public ContextMenuItemBuilder Add()
         {
             ContextMenuItem item = new ContextMenuItem();

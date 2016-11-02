@@ -1,6 +1,10 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
 {
     using System;
+
+    /// <summary>
+    /// Defines the fluent interface for configuring the legend items.
+    /// </summary>
     public class ChartLegendItemBuilder
     {
         private readonly ChartLegendItem legendItem;
@@ -17,7 +21,7 @@
         /// <summary>
         /// Sets the legend item cursor style
         /// </summary>
-        /// <param name="cursor">The cursor style.</param>  
+        /// <param name="cursor">The cursor style.</param>
         public ChartLegendItemBuilder Cursor(string cursor)
         {
             legendItem.Cursor = cursor;
@@ -28,7 +32,7 @@
         /// <summary>
         /// Sets the legend item visual handler
         /// </summary>
-        /// <param name="handler">The handler name.</param>  
+        /// <param name="handler">The handler name.</param>
         public ChartLegendItemBuilder Visual(string handler)
         {
             legendItem.Visual = new ClientHandlerDescriptor
@@ -41,7 +45,7 @@
         /// <summary>
         /// Sets the note visual handler
         /// </summary>
-        /// <param name="handler">The handler</param>  
+        /// <param name="handler">The handler</param>
         public ChartLegendItemBuilder Visual(Func<object, object> handler)
         {
             legendItem.Visual = new ClientHandlerDescriptor
