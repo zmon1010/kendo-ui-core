@@ -111,19 +111,26 @@
                 var editor = initOptions.editor;
                 var options = tool.options;
                 var toolName = options.name;
-                var toolTitle = editor.options.messages[toolName];
                 var changeHandler = proxy(tool.changeHandler, tool);
+                var dataSource = options.items || editor.options[toolName];
 
+                dataSource.unshift({
+                    text: editor.options.messages[toolName],
+                    value: ""
+                });
                 tool.editor = editor;
-
                 ui.width(options.width);
                 ui.kendoSelectBox({
                     dataTextField: 'text',
                     dataValueField: 'value',
-                    dataSource: options.items || editor.options[toolName],
-                    title: toolTitle,
+                    dataSource: dataSource,
                     autoSize: true,
                     change: changeHandler,
+                    open: function(e) {
+                        var sender = e.sender;
+                        sender.items()[0].style.display = "none";
+                        sender.unbind("open");
+                    },
                     highlightFirst: false,
                     template: kendo.template('<span unselectable="on" style="display:block;#=(data.style||"")#">#:data.text#</span>')
                 });
@@ -131,17 +138,18 @@
             },
 
             changeHandler: function(e) {
-                var tool = this;
-                var dataItem = e.sender.dataItem();
-                if (e.sender.popup.visible() && dataItem) {
-                    tool._exec(dataItem.value);
-                }
-                e.sender.value(-1);
+                var sender = e.sender;
+                var dataItem = sender.dataItem();
+                var value = dataItem && dataItem.value;
+
+                this._exec(value);
+                sender.value("");
             },
 
             _exec: function(value) {
-                var tool = this;
-                Tool.exec(tool.editor, tool.options.name, { exportType: value } );
+                if (value) {
+                    Tool.exec(this.editor, this.options.name, { exportType: value } );
+                }
             },
 
             destroy: function() {

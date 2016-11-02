@@ -26,17 +26,19 @@
         var tool = exportAsTool(editor);
         var dataItems = tool.dataItems();
 
-        equal(dataItems.length, 5);
-        equal(dataItems[0].value, "docx");
-        equal(dataItems[0].text, "Docx");
-        equal(dataItems[1].value, "rtf");
-        equal(dataItems[1].text, "Rtf");
-        equal(dataItems[2].value, "pdf");
-        equal(dataItems[2].text, "Pdf");
-        equal(dataItems[3].value, "html");
-        equal(dataItems[3].text, "Html");
-        equal(dataItems[4].value, "txt");
-        equal(dataItems[4].text, "Plain Text");
+        equal(dataItems.length, 6);
+        equal(dataItems[0].value, "");
+        equal(dataItems[0].text, "Export As");
+        equal(dataItems[1].value, "docx");
+        equal(dataItems[1].text, "Docx");
+        equal(dataItems[2].value, "rtf");
+        equal(dataItems[2].text, "Rtf");
+        equal(dataItems[3].value, "pdf");
+        equal(dataItems[3].text, "Pdf");
+        equal(dataItems[4].value, "html");
+        equal(dataItems[4].text, "Html");
+        equal(dataItems[5].value, "txt");
+        equal(dataItems[5].text, "Plain Text");
     });
 
     test("default tool items are set from the tool declaration", function() {
@@ -52,9 +54,11 @@
         var tool = exportAsTool(editor);
         var dataItems = tool.dataItems();
 
-        equal(dataItems.length, 1);
-        equal(dataItems[0].value, "rtf");
-        equal(dataItems[0].text, "Rtf");
+        equal(dataItems.length, 2);
+        equal(dataItems[0].value, "");
+        equal(dataItems[0].text, "Export As");
+        equal(dataItems[1].value, "rtf");
+        equal(dataItems[1].text, "Rtf");
     });
 
     test("item click does not change the tool text", function() {
