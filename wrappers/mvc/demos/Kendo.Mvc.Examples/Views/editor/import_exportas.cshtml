@@ -16,7 +16,9 @@
     .Import(import => import
         .Proxy("Import", "EditorImport")
         .AllowedExtensions(new[] { "docx", "rtf", "pdf", "html", "txt" })
-        .MaxFileSize(9999999)
+        .MaxFileSize(104857600)
+        .Select("onSelect")
+        .Error("onError")
     )
     .Value(@<text>
         <p>
@@ -53,3 +55,20 @@
 
     </text>)
 )
+
+<script type="text/javascript">
+    function onSelect(e) {
+        var file = e.files[0];
+        var errors = file.validationErrors;
+        if (errors) {
+            var localization = e.sender.options.localization;
+            for (var i = 0; i < errors.length; i++) {
+                alert(localization[errors[i]]);
+            }
+        }
+    }
+
+    function onError(e) {
+        alert("The Document Processing Library fails to convert the input file stream to html");
+    }
+</script>

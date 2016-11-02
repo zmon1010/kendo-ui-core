@@ -241,7 +241,7 @@
     <Compile Include="Controllers\Dialog\IndexController.cs" />
     <Compile Include="Controllers\Editor\EditorExportController.cs" />
     <Compile Include="Controllers\Editor\EditorImportController.cs" />
-    <Compile Include="Controllers\Editor\ExportAsController.cs" />
+    <Compile Include="Controllers\Editor\Import_ExportAsController.cs" />
     <Compile Include="Controllers\Editor\Immutable_ElementsController.cs" />
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
     <Compile Include="Controllers\Financial\Stock_HistoryController.cs" />
@@ -2970,8 +2970,8 @@
     <Content Include="Views\dialog\treeview_integration.cshtml" />
     <Content Include="Views\dialog\treelist_integration.cshtml" />
     <Content Include="Views\spreadstreamprocessing\index.cshtml" />
-    <Content Include="Views\editor\exportas.cshtml" />
     <Content Include="Views\financial\stock_history.cshtml" />
+    <Content Include="Views\editor\import_exportas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

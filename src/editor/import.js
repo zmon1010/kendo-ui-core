@@ -47,16 +47,25 @@
             _onUploadComplete: function(ev){
                 this._trigger("complete", ev);
                 ev.sender.clearAllFiles();
+                if (this.tool) {
+                    $(this.tool).removeClass("k-i-loading k-icon").addClass("k-tool-icon");
+                }
             },
             _onUploadSuccess: function(ev){
-                this._trigger("success", ev);
                 this.editor.value(ev.response.html.replace(/<\/?body>/ig, ""));
+                this._trigger("success", ev);
             },
             _onUploadProgress: function(ev){
                 this._trigger("progress", ev);
             },
             _onUploadSelect: function(ev){
                 this._trigger("select", ev);
+                if (!ev.files[0].validationErrors) {
+                    this.tool = this.editor.toolbar.element.find(".k-i-import");
+                    if (this.tool) {
+                        $(this.tool).removeClass("k-tool-icon").addClass("k-i-loading k-icon");
+                    }
+                }
             },
             _onUploadError: function(ev){
                 this._trigger("error", ev);
