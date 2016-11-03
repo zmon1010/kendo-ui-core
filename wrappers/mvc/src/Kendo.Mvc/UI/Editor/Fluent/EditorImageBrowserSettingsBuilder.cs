@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Fluent
         private readonly ViewContext viewContext;
         private readonly IUrlGenerator urlGenerator;
 
-         /// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="EditorImageBrowserSettingsBuilder{T}"/> class.
         /// </summary>
         /// <param name="settings">The Image Browser settings.</param>
@@ -262,7 +262,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
-        /// <param name="routeValues">The route values.</param>
         /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Destroy(string actionName, string controllerName)
         {
@@ -300,9 +299,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines the Destroy action.
         /// </summary>
-        /// <param name="actionName">The name of the action.</param>
-        /// <param name="controllerName">The name of the controller</param>
-        /// <param name="routeValues">The route values.</param>
+        /// <param name="configurator">The configuration action.</param>
         /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Destroy(Action<EditorImageBrowserOperationBuilder> configurator)
         {
@@ -316,7 +313,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="actionName">The name of the action.</param>
         /// <param name="controllerName">The name of the controller</param>
-        /// <param name="routeValues">The route values.</param>
         /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Create(string actionName, string controllerName)
         {
@@ -354,9 +350,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Defines the Create action.
         /// </summary>
-        /// <param name="actionName">The name of the action.</param>
-        /// <param name="controllerName">The name of the controller</param>
-        /// <param name="routeValues">The route values.</param>
+        /// <param name="configurator">The configuration action.</param>
         /// <returns></returns>
         public EditorImageBrowserSettingsBuilder Create(Action<EditorImageBrowserOperationBuilder> configurator)
         {
