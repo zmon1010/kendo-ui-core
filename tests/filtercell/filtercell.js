@@ -343,10 +343,10 @@
         equal(counter, 0);
     });
 
-    test("creates clear icon", function() {
-        filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
-        equal(filterCell.element.find(".k-icon.k-i-close").length, 2);
-    });
+    // test("creates clear icon", function() {
+    //     filterCell = setup(dom, { dataSource: dataSource, field: "foo" });
+    //     equal(filterCell.element.find(".k-icon.k-i-close").length, 2);
+    // });
 
     test("clear icon clears the filter", function() {
         dataSource.filter({field: "foo", value: "someVal"})
