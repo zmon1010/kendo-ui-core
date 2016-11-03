@@ -2,7 +2,9 @@ $(function () {
     populateSearchDataSource(desktopExamples);
 
     var regex = /\/(kendo-ui|staging-kendo-ui|aspnet-mvc|aspnet-core|staging-mvc|staging-core|php-ui|jsp-ui)/i;
-    var basePathName = regex.exec(window.location.href)[0] + "/";
+    var match = regex.exec(window.location.href);
+
+    var basePathName = match ? match[0] + "/" : "/";
 
     $("#example-search").kendoExampleSearch({
         product: product,
