@@ -436,6 +436,7 @@
             this._state = this._range.getState();
         },
         exec: function() {
+            this._clipboard.parse();
             var status = this._clipboard.canPaste();
             this._clipboard.menuInvoked = true;
             if (!status.canPaste) {

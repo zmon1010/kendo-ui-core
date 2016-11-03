@@ -12,14 +12,20 @@
 
     var Clipboard = kendo.Class.extend({
         init: function(workbook) {
+            this._content = {};
+            this._externalContent = {};
+            this._internalContent = {};
             this.workbook = workbook;
             this.origin = kendo.spreadsheet.NULLREF;
             this.iframe = document.createElement("iframe");
             this.iframe.className = "k-spreadsheet-clipboard-paste";
             this.menuInvoked = true;
-            this._external = {};
             this._uid = kendo.guid();
             document.body.appendChild(this.iframe);
+        },
+
+        destroy: function() {
+            document.body.removeChild(this.iframe);
         },
 
         canCopy: function() {
@@ -43,12 +49,6 @@
             var sheet = this.workbook.activeSheet();
             var ref = this.pasteRef();
             var status = {canPaste: true};
-            if (ref === kendo.spreadsheet.NULLREF) {
-                var external = this.isExternal();
-                status.pasteOnMerged = this.intersectsMerged();
-                status.canPaste = status.pasteOnMerged ? false : external;
-                return status;
-            }
             if (!ref.eq(sheet.unionWithMerged(ref))) {
                 status.canPaste = false;
                 status.pasteOnMerged = true;
@@ -66,8 +66,8 @@
 
         intersectsMerged: function() {
             var sheet = this.workbook.activeSheet();
-            var state = this.parse(this._external);
-            this.origin = getSourceRef(state);
+            this.parse();
+            this.origin = this._content.origRef;
             var ref = this.pasteRef();
             return !ref.eq(sheet.unionWithMerged(ref));
         },
@@ -75,9 +75,9 @@
         copy: function() {
             var sheet = this.workbook.activeSheet();
             this.origin = sheet.select();
-            this.contents = sheet.selection().getState();
-            delete this._external.html;
-            delete this._external.plain;
+            this._internalContent = sheet.selection().getState();
+            delete this._externalContent.html;
+            delete this._externalContent.plain;
         },
 
         cut: function() {
@@ -96,29 +96,18 @@
             return this.origin.relative(rowDelta, colDelta, 3);
         },
 
-        destroy: function() {
-            document.body.removeChild(this.iframe);
-        },
-
         paste: function() {
-            var state = {};
             var sheet = this.workbook.activeSheet();
-            if (this._isInternal()) {
-                state = this.contents;
-            } else {
-                state = this.parse(this._external);
-                this.origin = getSourceRef(state);
-            }
             var pasteRef = this.pasteRef();
-            sheet.range(pasteRef).setState(state, this);
+            sheet.range(pasteRef).setState(this._content, this);
             sheet.triggerChange({ recalc: true, ref: pasteRef });
         },
 
         external: function(data) {
             if (data && (data.html || data.plain)) {
-                this._external = data;
+                this._externalContent = data;
             } else {
-                return this._external;
+                return this._externalContent;
             }
         },
 
@@ -126,38 +115,40 @@
             return !this._isInternal();
         },
 
-        parse: function(data) {
+        parse: function() {
             var state = newState();
-            if (data.html) {
-                var doc = this.iframe.contentWindow.document;
-                doc.open();
-                doc.write(data.html);
-                doc.close();
-                var table = $(doc).find("table:first");
-                if (table.length) {
-                    state = parseHTML(table);
-                } else if (!data.plain) {
-                    var element = $(doc.body).find(":not(style)");
-                    setStateData(state, 0, 0, cellState(element.text()));
+
+            if (this._isInternal()) {
+                state = this._internalContent;
+            } else {
+                var data = this._externalContent;
+                if (data.html) {
+                    var doc = this.iframe.contentWindow.document;
+                    doc.open();
+                    doc.write(data.html);
+                    doc.close();
+                    var table = $(doc).find("table:first");
+                    if (table.length) {
+                        state = parseHTML(table);
+                    } else {
+                        state = parseTSV(data.plain);
+                    }
                 } else {
                     state = parseTSV(data.plain);
                 }
-            } else {
-                state = parseTSV(data.plain);
+                this.origin = state.origRef;
             }
-            return state;
+
+            this._content = state;
         },
 
         _isInternal: function() {
-            if (this._external.html === undefined) {
+            if (this._externalContent.html === undefined) {
                 return true;
             }
-            var internalHTML = $("<div/>").html(this._external.html).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
-            var internalPlain = $("<div/>").html(this._external.plain).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
-            if (internalHTML || internalPlain) {
-                return true;
-            }
-            return false;
+            var internalHTML = $("<div/>").html(this._externalContent.html).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
+            var internalPlain = $("<div/>").html(this._externalContent.plain).find("table.kendo-clipboard-"+ this._uid).length ? true : false;
+            return (internalHTML || internalPlain);
         }
     });
     kendo.spreadsheet.Clipboard = Clipboard;
@@ -182,10 +173,6 @@
         var br = state.origRef.bottomRight;
         br.row = Math.max(br.row, row);
         br.col = Math.max(br.col, col);
-    }
-
-    function getSourceRef(state) {
-        return state.origRef;
     }
 
     function stripStyle(style) {
