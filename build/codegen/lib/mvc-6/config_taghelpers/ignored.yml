@@ -18,3 +18,5 @@
 - dialog.content
 - dialog.actions
 - dialog.messages
+- splitter.panes
+- splitter.orientation

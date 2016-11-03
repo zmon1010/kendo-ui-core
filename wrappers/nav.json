@@ -3531,6 +3531,16 @@
                 "meta": {
                     "aspnet-mvc": "Users can easily manipulate the behaviour of $FRAMEWORK Slider by using different keyboard keys and combinations."
                 }
+            },
+            {
+                "text": "Tag Helper",
+                "url": "splitter/tag-helper",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK Splitter Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ]
             }
         ],
         "category": "Layout"
