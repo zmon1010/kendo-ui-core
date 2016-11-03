@@ -25,6 +25,7 @@ namespace Kendo.Mvc.Examples.Controllers
             return RedirectToAction("Result");
         }
 
+        [Demo]
         public ActionResult Result()
         {
             return View();
