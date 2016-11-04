@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 using System.Web;
 using System.Web.Mvc;
 using Telerik.Windows.Documents.Flow.FormatProviders.Html;
@@ -29,8 +29,9 @@ namespace Kendo.Mvc.Export
                     return ToHtmlExportResult(data, settings.HtmlImportSettings, settings.HtmlExportSettings);
                 case EditorExportType.Txt:
                     return ToTxtExportResult(data, settings.HtmlImportSettings);
+                default:
+                    throw new ArgumentException("The EditorExportType property of the data argument is not set.");
             }
-            return new FileStreamResult(new MemoryStream(), "txt/plain");
         }
 
         /// <summary>

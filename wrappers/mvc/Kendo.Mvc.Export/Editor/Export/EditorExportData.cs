@@ -1,4 +1,6 @@
-﻿namespace Kendo.Mvc.Export
+﻿using System;
+
+namespace Kendo.Mvc.Export
 {
     public class EditorExportData
     {
@@ -12,9 +14,24 @@
         /// </summary
         public EditorExportType ExportType { get; set; }
 
+        string fileName;
         /// <summary>
         /// Gets or sets the fine name of the export result
         /// </summary
-        public string FileName { get; set; }
+        public string FileName {
+            get
+            {
+                if (String.IsNullOrEmpty(fileName))
+                {
+                    fileName = "Editor";
+                }
+
+                return fileName;
+            }
+            set
+            {
+                fileName = value;
+            }
+        }
     }
 }
