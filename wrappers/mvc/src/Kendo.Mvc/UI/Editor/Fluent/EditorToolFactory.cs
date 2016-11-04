@@ -156,16 +156,28 @@ namespace Kendo.Mvc.UI.Fluent
             return Button("pdf");
         }
 
+        /// <summary>
+        /// Adds Import tool.
+        /// </summary>
+        /// <returns></returns>
         public EditorToolFactory Import()
         {
             return Button("import");
         }
 
+        /// <summary>
+        /// Adds ExportAs tool.
+        /// </summary>
+        /// <returns></returns>
         public EditorToolFactory ExportAs()
         {
             return SelectBox("exportAs", null);
         }
 
+        /// <summary>
+        /// Adds ExportAs tool.
+        /// </summary>
+        /// <returns></returns>
         public EditorToolFactory ExportAs(Action<EditorDropDownItemBuilder> configurator)
         {
             var items = new List<DropDownListItem>();
