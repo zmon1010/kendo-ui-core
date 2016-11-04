@@ -1,28 +1,47 @@
-/* jshint browser:false, node:true, esnext: true, loopfunc: true */
-var karma = require('karma');
-var gulp = require('gulp');
-var glob = require('glob');
-var path = require('path');
-var argv = require('yargs').argv;
-var meta = require("../../kendo-meta.js");
+"use strict";
 
-// all files (including subfiles like editor/main.js etc.)
-var allKendoFiles = meta.loadAll().map((f) => path.join('src', f));
+const karma = require('karma');
+const gulp = require('gulp');
+const glob = require('glob');
+const path = require('path');
+const runSequence = require('run-sequence');
+const fs = require('fs');
+const meta = require("../../kendo-meta.js");
+
+const argv = require('yargs').argv;
+const browserOption = argv.browser;
+const testsOption = argv.tests;
+const jqueryOption = argv.jquery;
+const excludeOption = argv.exclude;
+
+// Load a list of all files (including subfiles like editor/main.js etc.)
+const allKendoFiles = () =>
+    meta.loadAll().map((f) => path.join('src', f));
 
 // support different test sets for public|private repo
-var TESTS = require(glob.sync('../../test-paths-*.js', { cwd: __dirname })[0]);
+const TESTS = require(glob.sync('../../test-paths-*.js', { cwd: __dirname })[0]);
 
-var browserOption = argv.browser;
-var testsOption = argv.tests;
-var jqueryOption = argv.jquery;
-var excludeOption = argv.exclude;
+const BATCH_SIZE = 10;
 
-var tests, jquery, browsers, exclude;
+var jquery, browsers, exclude;
+var batches = [];
 
 if (testsOption) {
-    tests = [ testsOption ];
+    batches = [ [ testsOption ] ];
 } else {
-    tests = [ "tests/!(download-builder)/**/*.js" ];
+    const paths = fs.readdirSync('tests').filter((file) =>
+        fs.statSync(path.join('tests', file)).isDirectory() && file !== 'download-builder'
+    ).map(path => `tests/${path}/**/*.js`);
+
+    let batch = [];
+    paths.forEach((path, i) => {
+        batch.push(path);
+
+        if ((i + 1) % BATCH_SIZE === 0) {
+            batches.push(batch);
+            batch = [];
+        }
+    });
 }
 
 exclude = excludeOption ? [excludeOption] : [];
@@ -64,7 +83,6 @@ var defaultOptions = {
             flags: ['--no-sandbox']
         }
     },
-
     junitReporter: {
       outputDir: '.',
       outputFile: argv['junit-results']
@@ -72,7 +90,7 @@ var defaultOptions = {
     captureTimeout: 60000,
     browserNoActivityTimeout: 60000,
     singleRun: argv['single-run'],
-    exclude:exclude
+    exclude: exclude
 };
 
 var flavours = {
@@ -81,9 +99,9 @@ var flavours = {
         singleRun: true,
         browsers: browsers,
 
-        files: [].concat(
+        files: (tests) => [].concat(
             TESTS.beforeTestFiles,
-            allKendoFiles,
+            allKendoFiles(),
             TESTS.afterTestFiles,
             tests
         )
@@ -94,7 +112,7 @@ var flavours = {
         singleRun: true,
         browsers: [ 'ChromiumTravis' ],
 
-        files: [].concat(
+        files: (tests) => [].concat(
             TESTS.beforeTestFiles,
             TESTS.ciFiles,
             TESTS.afterTestFiles,
@@ -103,22 +121,35 @@ var flavours = {
     },
 
     unit: {
-        files: [].concat(
+        files: (tests) => [].concat(
             TESTS.beforeTestFiles,
-            allKendoFiles,
+            allKendoFiles(),
             TESTS.afterTestFiles,
             tests
         )
     }
 };
 
-for (var flavour in flavours) {
-    (function(flavour) {
-        gulp.task('karma-' + flavour, function(done) {
+const components = (batch) => batch.map((path) => path.match(/\/(\w+)\//)[1]);
+Object.keys(flavours).forEach((flavour) => {
+    const tasks = [];
+    batches.forEach((batch, i) => {
+        const name = `karma-${flavour}-batch-${i + 1}.${batches.length}`;
+        tasks.push(name);
+
+        // Spawn sub-tasks for each batch
+        gulp.task(name, (done) => {
+            const options = Object.assign({}, defaultOptions, flavours[flavour]);
+            options.files = options.files(batch);
+
+            console.log(`INFO: Components: [${components(batch).join(', ')}]`);
+
             new karma.Server(
-                Object.assign({}, defaultOptions, flavours[flavour]),
-                (exitCode) => done(exitCode ? "Tests failed" : null)
+                options,
+                (exitCode) => done(exitCode ? new Error("Tests failed") : null)
             ).start();
         });
-    })(flavour);
-}
+    });
+
+    gulp.task(`karma-${flavour}`, (done) => runSequence.apply(this, [].concat(tasks, done)));
+});
