@@ -193,7 +193,7 @@
         rows: "Rows",
         selectAllCells: "Select All Cells",
         exportAs: "Export As",
-        import: "Import"// jshint ignore:line
+        "import": "Import"
     };
 
     var supportedBrowser = !os || (os.ios && os.flatVersion >= 500) || (!os.ios && typeof(document.documentElement.contentEditable) != 'undefined');

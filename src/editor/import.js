@@ -20,7 +20,7 @@
             _initializeUploadWidget: function(){
                 var cmd = this;
                 var editor = cmd.editor;
-                var importOptions = editor.options.import;// jshint ignore:line
+                var importOptions = editor.options["import"];
                 var upload = $('<input id="editorImport" name="files" type="file" />').kendoUpload({
                     success: proxy(cmd._onUploadSuccess, cmd),
                     progress: proxy(cmd._onUploadProgress, cmd),
@@ -73,7 +73,7 @@
 
             _trigger: function(eventType, uploadEvent) {
                 var editor = this.editor;
-                var importOptions = editor.options.import;// jshint ignore:line
+                var importOptions = editor.options["import"];
                 if (typeof importOptions[eventType] === "function") {
                     importOptions[eventType].call(editor, uploadEvent);
                 }
