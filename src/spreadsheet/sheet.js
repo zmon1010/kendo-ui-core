@@ -1226,6 +1226,11 @@
         },
 
         _compileValidation: function(row, col, validation) {
+            if (validation instanceof kendo.spreadsheet.validation.Validation) {
+                // do not alter an existing object.
+                return validation.clone(this._name(), row, col);
+            }
+
             if (validation.from != null) { // jshint ignore: line
                 validation.from = (validation.from + "").replace(/^=/, "");
             }
