@@ -134,7 +134,7 @@ var InlineFormatter = Class.extend({
             this.activate(range, nodes);
         }
     },
-    
+
     immutables: function(){
         return this.editor && this.editor.options.immutables;
     },
@@ -143,7 +143,7 @@ var InlineFormatter = Class.extend({
         var formatNodes = [];
         var i, l, node, formatNode;
         var attributes = this.attributes;
-        var styleAttr = attributes ? attributes.style || {} : {}; 
+        var styleAttr = attributes ? attributes.style || {} : {};
 
         for (i = 0, l = nodes.length; i < l; i++) {
             node = nodes[i];
@@ -452,6 +452,8 @@ var ColorTool = Tool.extend({
                 if (color) {
                     Tool.exec(editor, toolName, color);
                 }
+                ui.value(null);
+
                 editor.focus();
             },
             activate: function(e) {
