@@ -272,7 +272,6 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Specifies whether TreeList selection is allowed. By default selection is disabled
         /// </summary>
-        /// <param name="enabled">Enables or disables the selectable option.</param>
         public TreeListBuilder<T> Selectable()
         {
             container.Selectable.Enabled = true;
