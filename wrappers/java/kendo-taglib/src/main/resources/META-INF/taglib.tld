@@ -29329,7 +29329,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Which element the popup will be appended to.</description>
+            <description>Which element the popup will be appended to. The element needs to be relatively positioned.</description>
             <name>appendTo</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>

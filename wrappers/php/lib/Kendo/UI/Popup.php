@@ -36,7 +36,7 @@ class Popup extends \Kendo\UI\Widget {
     }
 
     /**
-    * Which element the popup will be appended to.
+    * Which element the popup will be appended to. The element needs to be relatively positioned.
     * @param string| $value
     * @return \Kendo\UI\Popup
     */
