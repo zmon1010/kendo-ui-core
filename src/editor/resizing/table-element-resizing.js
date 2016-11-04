@@ -37,7 +37,7 @@
                 that._attachEventHandlers();
             }
         },
-        
+
         destroy: function() {
             var that = this;
             var eventNamespace = that.options.eventNamespace;
@@ -173,7 +173,7 @@
 
         _hideResizeMarker: function() {
             var that = this;
-        
+
             that.resizeHandle.find(DOT + that.options.handle.classNames.marker).hide();
         },
 
@@ -248,7 +248,7 @@
         _forceResizing: function(e) {
             var resizable = this._resizable;
 
-            if (resizable && resizable.userEvents) { 
+            if (resizable && resizable.userEvents) {
                 resizable.userEvents._end(e);
             }
         }
@@ -315,6 +315,10 @@
                 });
         },
 
+        dispose: function(editor, options) {
+            $(editor.body).off(options.eventNamespace);
+        },
+
         _initResizing: function(editor, tableElement, options) {
             var resizingName = options.name;
             var resizingType = options.type;
@@ -338,6 +342,10 @@
 
     TableElementResizing.create = function(editor, options) {
         ResizingFactory.current.create(editor, options);
+    };
+
+    TableElementResizing.dispose = function(editor, options) {
+        ResizingFactory.current.dispose(editor, options);
     };
 
     extend(Editor, {

@@ -59,7 +59,7 @@
 
     var DOT = ".";
 
-    function isUndefined(value) { 
+    function isUndefined(value) {
         return typeof(value) === "undefined";
     }
 
@@ -146,7 +146,7 @@
                 that._initialElementWidth = currentWidth;
             }
 
-            //use initial delta instead of delta as changing the width with a small value (e.g. 1px) 
+            //use initial delta instead of delta as changing the width with a small value (e.g. 1px)
             //on each drag does not work due to browser calculation of computed styles
             constrainedWidth = constrain({
                 value: that._initialElementWidth + initialDelta,
@@ -199,7 +199,7 @@
                 that._initialElementHeight = currentHeight;
             }
 
-            //use initial delta instead of delta as changing the height with a small value (e.g. 1px) 
+            //use initial delta instead of delta as changing the height with a small value (e.g. 1px)
             //on each drag does not work due to browser calculation of computed styles
             constrainedHeight = constrain({
                 value: that._initialElementHeight + initialDelta,
@@ -474,6 +474,10 @@
                 });
         },
 
+        dispose: function(editor) {
+            $(editor.body).off(NS);
+        },
+
         _initResizing: function(editor, table) {
             //table resizing is natively supported in IE and Firefox
             if (!browser.msie && !browser.mozilla) {
@@ -489,6 +493,10 @@
 
     TableResizing.create = function(editor) {
         TableResizingFactory.current.create(editor);
+    };
+
+    TableResizing.dispose = function(editor) {
+        TableResizingFactory.current.dispose(editor);
     };
 
     extend(Editor, {

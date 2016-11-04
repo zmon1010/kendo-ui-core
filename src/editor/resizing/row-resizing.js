@@ -52,7 +52,7 @@
                             '<div class="' + RESIZE_HANDLE_MARKER_WRAPPER_CLASS + '">' +
                                 '<div class="' + RESIZE_MARKER_CLASS + '"></div>' +
                             '</div>'+
-                        '</div>' + 
+                        '</div>' +
                     '</div>'
             }
         },
@@ -117,7 +117,7 @@
             resizeHandle.css({ top: handleOffset });
         },
 
-        resize: function(e) { 
+        resize: function(e) {
             var that = this;
             var options = that.options;
             var row = $(e.currentTarget).data(options.handle.dataAttribute);
@@ -189,6 +189,12 @@
         TableElementResizing.create(editor, {
             name: "rowResizing",
             type: RowResizing,
+            eventNamespace: NS
+        });
+    };
+
+    RowResizing.dispose = function(editor) {
+        TableElementResizing.dispose(editor, {
             eventNamespace: NS
         });
     };

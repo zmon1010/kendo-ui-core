@@ -245,6 +245,12 @@
         });
     };
 
+    ColumnResizing.dispose = function(editor) {
+        TableElementResizing.dispose(editor, {
+            eventNamespace: NS
+        });
+    };
+
     extend(Editor, {
         ColumnResizing: ColumnResizing
     });

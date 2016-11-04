@@ -22,10 +22,6 @@
         deepExtend = kendo.deepExtend,
         keys = kendo.keys;
 
-    var COLUMN_RESIZING_NS = ".kendoEditorColumnResizing";
-    var ROW_RESIZING_NS = ".kendoEditorRowResizing";
-    var TABLE_RESIZING_NS = ".kendoEditorTableResizing";
-
     var SELECT = "select";
 
     // options can be: template (as string), cssClass, title, defaultValue
@@ -274,9 +270,6 @@
 
             that._resizable();
             that._initializeContentElement(that);
-            that._initializeColumnResizing();
-            that._initializeRowResizing();
-            that._initializeTableResizing();
 
             that.keyboard = new editorNS.Keyboard([
                 new editorNS.BackspaceHandler(that),
@@ -382,7 +375,9 @@
             var editor = this;
 
             kendo.ui.editor.TableResizing.create(editor);
-            editor.bind(SELECT, proxy(editor._showTableResizeHandles, editor));
+
+            editor._showTableResizeHandlesProxy = proxy(editor._showTableResizeHandles, editor);
+            editor.bind(SELECT, editor._showTableResizeHandlesProxy);
         },
 
         _destroyTableResizing: function() {
@@ -392,6 +387,10 @@
             if (tableResizing) {
                 tableResizing.destroy();
                 editor.tableResizing = null;
+            }
+
+            if (editor._showTableResizeHandlesProxy) {
+                editor.unbind(SELECT, editor._showTableResizeHandlesProxy);
             }
         },
 
@@ -793,6 +792,10 @@
                     }, 10);
                 }
             });
+
+            editor._initializeColumnResizing();
+            editor._initializeRowResizing();
+            editor._initializeTableResizing();
         },
 
         _initializeImmutables: function(){
@@ -854,6 +857,7 @@
             var that = this;
 
             if (that.textarea) {
+                that._destroyResizings();
                 // preserve updated value before re-initializing
                 // don't use update() to prevent the editor from encoding the content too early
                 that.textarea.val(that.value());
@@ -950,7 +954,6 @@
 
         destroy: function() {
             var editor = this;
-            var body = $(editor.body);
 
             Widget.fn.destroy.call(this);
 
@@ -964,14 +967,20 @@
 
             this.toolbar.destroy();
 
-            editor._destroyTableResizing();
-            body.off(TABLE_RESIZING_NS);
-            editor._destroyRowResizing();
-            body.off(ROW_RESIZING_NS);
-            editor._destroyColumnResizing();
-            body.off(COLUMN_RESIZING_NS);
+            editor._destroyResizings();
 
             kendo.destroy(this.wrapper);
+        },
+
+        _destroyResizings: function() {
+            var editor = this;
+
+            editor._destroyTableResizing();
+            kendo.ui.editor.TableResizing.dispose(editor);
+            editor._destroyRowResizing();
+            kendo.ui.editor.RowResizing.dispose(editor);
+            editor._destroyColumnResizing();
+            kendo.ui.editor.ColumnResizing.dispose(editor);
         },
 
         _focusOutside: function () {

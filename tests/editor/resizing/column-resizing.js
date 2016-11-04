@@ -37,7 +37,7 @@
     var PERCENTAGE = "%";
     var ROW = "tr";
     var COLUMN = "td";
-    
+
     var TD = "td";
     var TH = "th";
     var TBODY = "tbody";
@@ -812,7 +812,7 @@
         triggerResize(cell, 0, 20);
 
         $(rootElement).trigger(keydownEvent);
-        
+
         equal(keydownEvent.isDefaultPrevented(), true);
     });
 
@@ -821,7 +821,7 @@
         triggerBorderHover(cell);
 
         resizeColumn(cell, 0, 1);
-        
+
         equal(jQueryEventsInfo(columnResizing.rootElement, "keydown"), undefined);
     });
 
@@ -879,7 +879,7 @@
 
         ok(cell.data("kendoResizable") === undefined);
     });
-    
+
     test("hovering a second cell should create resizable for second cell", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
         triggerBorderHover(cell);
@@ -1036,7 +1036,7 @@
         var initialWidth = cell.outerWidth();
 
         triggerResize(cell, initialWidth, initialWidth + 10);
-    
+
         ok(columnResizing.resizingInProgress() === true);
     });
 
@@ -1117,7 +1117,7 @@
         var initialAdjacentColumnWidths = getColumnWidths(tableElement, cellIndex + 1);
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + differenceInPixels);
-        
+
         for (var i = 0; i < rows.length; i++) {
             roughlyEqual($(rows[i]).children()[cellIndex + 1].style.width, (initialAdjacentColumnWidths[i] - differenceInPercentages) + PERCENTAGE, 1.5);
         }
@@ -1157,7 +1157,7 @@
         var minInPercentages = (options.min / $(tableElement).outerWidth()) * 100;
 
         resizeColumn(cell, initialWidthInPixels, initialWidthInPixels + (-1) * MAX);
-        
+
         for (var i = 0; i < rows.length; i++) {
         roughlyEqual($(rows[i]).children()[cellIndex + 1].style.width,
             (initialWidthInPercentages + initialAdjacentColumnWidths[i] - minInPercentages) + PERCENTAGE, 2.5);
@@ -1427,7 +1427,7 @@
             kendo.destroy(QUnit.fixture);
         }
     });
-    
+
     test("hovering the border of the first cell should create resize handle", function() {
         var cell = $(columnResizing.element).find(FIRST_COLUMN);
 
@@ -1916,6 +1916,42 @@
         editor.columnResizing.resizingInProgress = function() { return false; };
 
         $(editor.body).trigger(leaveEvent);
+
+        equal(destroySpy.calls("destroy"), 1);
+    });
+
+    editor_module("editor column resizing refresh()", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.columnResizing = null;
+            $(editor.body).append($(CONTENT_HTML)[0]);
+        },
+
+        afterEach: function() {
+            if (editor.columnResizing) {
+                editor.columnResizing.destroy();
+            }
+
+            $(editor.body).find("*").remove();
+
+            removeMocksIn(editor.tableResizing);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should re-attach column resizing initialization handlers", function() {
+        editor.refresh();
+        triggerEvent($(editor.body).find("#table")[0], { type: MOUSE_ENTER });
+
+        ok(editor.columnResizing instanceof kendo.ui.editor.ColumnResizing);
+        equal(editor.columnResizing.element, $(editor.body).find("#table")[0]);
+    });
+
+    test("should destroy current column resizing", function() {
+        triggerEvent($(editor.body).find("#table")[0], { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.columnResizing, "destroy");
+
+        editor.refresh();
 
         equal(destroySpy.calls("destroy"), 1);
     });

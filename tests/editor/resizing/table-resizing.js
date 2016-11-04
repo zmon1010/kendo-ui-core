@@ -382,7 +382,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         equal(editor.tableResizing.options.appendHandlesTo, editor.body);
     });
 
-    editor_module("editor table resizing destroying on click", {
+    editor_module("editor table resizing", {
         beforeEach: function() {
             editor = $("#editor-fixture").data("kendoEditor");
             tableElement = $(TABLE_HTML).appendTo(editor.body)[0];
@@ -432,7 +432,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("clicking on a resize handle wrapper should not destroy table resizing", function() {
         spy(tableResizing, "destroy");
         tableResizing.showResizeHandles();
-        
+
         triggerEvent(tableResizing.handles[0].element, { type: MOUSE_DOWN });
 
         equal(tableResizing.calls("destroy"), 0);
@@ -441,7 +441,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
     test("clicking on a resize handle should not destroy table resizing", function() {
         spy(editor.tableResizing, "destroy");
         tableResizing.showResizeHandles();
-        
+
         triggerEvent($(tableResizing.handles[0].element).children()[0], { type: MOUSE_DOWN });
 
         equal(tableResizing.calls("destroy"), 0);
@@ -525,26 +525,10 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         }
     });
 
-    module("editor table resizing", {
-        setup: function() {
-            tableElement = $(TABLE_HTML).appendTo(QUnit.fixture)[0];
-            tableResizing = new TableResizing(tableElement, {
-                rootElement: QUnit.fixture
-            });
-        },
-
-        teardown: function() {
-            if (tableResizing) {
-                tableResizing.destroy();
-            }
-            kendo.destroy(QUnit.fixture);
-        }
-    });
-
-    test("click event on editor body should be removed on destroy", function() {
+    test("sould remove mousedown handler on root element", function() {
         tableResizing.destroy();
 
-        equal(jQueryEventsInfo(tableResizing.options.rootElement, "click"), undefined);
+        equal(jQueryEventsInfo(tableResizing.options.rootElement, "mousedown"), undefined);
     });
 
     module("editor table resizing resize", {
@@ -1357,7 +1341,7 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         triggerResize(tableResizing.handles[0].element, 0, 20);
 
         $(rootElement).trigger(keydownEvent);
-        
+
         equal(keydownEvent.isDefaultPrevented(), true);
     });
 
@@ -1368,8 +1352,57 @@ if (!kendo.support.browser.msie && !kendo.support.browser.mozilla) {
         triggerEvent(tableResizing.handles[0].element, { type: MOUSE_DOWN });
         triggerEvent(tableResizing.handles[0].element, { type: MOUSE_MOVE });
         triggerEvent(tableResizing.handles[0].element, { type: MOUSE_UP });
-        
+
         equal(jQueryEventsInfo(tableResizing.options.rootElement, "keydown"), undefined);
     });
+
+    editor_module("editor table resizing refresh()", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.tableResizing = null;
+            $(editor.body).append($(CONTENT_HTML)[0]);
+            tableElement = $(editor.body).find("#table")[0];
+        },
+
+        afterEach: function() {
+            if (editor.tableResizing) {
+                editor.tableResizing.destroy();
+            }
+
+            $(editor.body).find("*").remove();
+
+            removeMocksIn(editor.tableResizing);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should re-attach table resizing initialization handlers", function() {
+        editor.refresh();
+        triggerEvent($(editor.body).find("#table")[0], { type: MOUSE_DOWN });
+
+        ok(editor.tableResizing instanceof kendo.ui.editor.TableResizing);
+        equal(editor.tableResizing.element, $(editor.body).find("#table")[0]);
+    });
+
+    test("should destroy current table resizing", function() {
+        triggerEvent($(editor.body).find("#table")[0], { type: MOUSE_DOWN });
+        var destroySpy = spy(editor.tableResizing, "destroy");
+
+        editor.refresh();
+
+        equal(destroySpy.calls("destroy"), 1);
+    });
+
+    test("should unbind table resizing handlers on selection change", function() {
+        triggerEvent($(editor.body).find("#table")[0], { type: MOUSE_DOWN });
+        editor.refresh();
+        triggerEvent($(editor.body).find("#table")[0], { type: MOUSE_DOWN });
+        spy(editor.tableResizing, "showResizeHandles");
+
+        editor.trigger(SELECT);
+
+        equal(editor.tableResizing.calls("showResizeHandles"), 1);
+    });
 }
+
 })();

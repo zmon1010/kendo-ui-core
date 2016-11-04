@@ -1139,7 +1139,7 @@
         triggerResize(row, 0, 20);
 
         $(rootElement).trigger(keydownEvent);
-        
+
         equal(keydownEvent.isDefaultPrevented(), true);
     });
 
@@ -1148,7 +1148,7 @@
         triggerBorderHover(row);
 
         resizeRow(row, 0, 20);
-        
+
         equal(jQueryEventsInfo(rowResizing.rootElement, "keydown"), undefined);
     });
 
@@ -1664,5 +1664,41 @@
         rowResizing.destroy();
 
         equal(rowResizing.resizeHandle, null);
+    });
+
+    editor_module("editor row resizing refresh()", {
+        beforeEach: function() {
+            editor = $("#editor-fixture").data("kendoEditor");
+            editor.rowResizing = null;
+            $(editor.body).append($(CONTENT_HTML)[0]);
+        },
+
+        afterEach: function() {
+            if (editor.rowResizing) {
+                editor.rowResizing.destroy();
+            }
+
+            $(editor.body).find("*").remove();
+
+            removeMocksIn(editor.tableResizing);
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should re-attach row resizing initialization handlers", function() {
+        editor.refresh();
+        triggerEvent($(editor.body).find("#table")[0], { type: MOUSE_ENTER });
+
+        ok(editor.rowResizing instanceof kendo.ui.editor.RowResizing);
+        equal(editor.rowResizing.element, $(editor.body).find("#table")[0]);
+    });
+
+    test("should destroy current row resizing", function() {
+        triggerEvent($(editor.body).find("#table")[0], { type: MOUSE_ENTER });
+        var destroySpy = spy(editor.rowResizing, "destroy");
+
+        editor.refresh();
+
+        equal(destroySpy.calls("destroy"), 1);
     });
 })();
