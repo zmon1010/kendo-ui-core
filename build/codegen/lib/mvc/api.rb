@@ -231,7 +231,7 @@ PARAMETER = ERB.new(%{
                 filename = "#{@path}#{component.namespace}/#{component.name}.md"
 
                 ensure_path(filename)
-
+                puts "#{component.namespace}:#{component.name}"
                 File.write(filename, component.to_markdown)
             end
 
