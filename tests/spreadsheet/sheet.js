@@ -835,4 +835,18 @@
         equal(sheet.range("A2").formula(), null);
     });
 
+    test("autofill throws proper error codes", function() {
+        try {
+            sheet.range("A2:A4").fillFrom("E1:E3");
+        } catch(ex) {
+            equal(ex.code, "noFillDirection");
+        }
+
+        try {
+            sheet.range("A2:A4").fillFrom("A2:B5");
+        } catch(ex) {
+            equal(ex.code, "incompatibleRanges");
+        }
+    });
+
 })();

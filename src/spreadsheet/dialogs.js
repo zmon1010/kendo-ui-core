@@ -142,6 +142,15 @@
         modifyMergedDialog: {
             errorMessage: "Cannot change part of a merged cell."
         },
+        rangeDisabledDialog: {
+            errorMessage: "Destination range contains disabled cells."
+        },
+        incompatibleRangesDialog: {
+            errorMessage: "Incompatible ranges"
+        },
+        noFillDirectionDialog: {
+            errorMessage: "Cannot determine fill direction"
+        },
         overflowDialog: {
             errorMessage: "Cannot paste, because the copy area and the paste area are not the same size and shape."
         },
@@ -1548,17 +1557,21 @@
     });
     kendo.spreadsheet.dialogs.register("exportAs", ExportAsDialog);
 
-    var ModifyMergedDialog = MessageDialog.extend({
-        options: { messageId: "modifyMergedDialog.errorMessage" }
-    });
+    function basicErrorDialog(id, msg) {
+        kendo.spreadsheet.dialogs.register(
+            id,
+            MessageDialog.extend({
+                options: { messageId: msg }
+            })
+        );
+    }
 
-    kendo.spreadsheet.dialogs.register("modifyMerged", ModifyMergedDialog);
-
-    var OverflowDialog = MessageDialog.extend({
-        options: { messageId: "overflowDialog.errorMessage" }
-    });
-
-    kendo.spreadsheet.dialogs.register("overflow", OverflowDialog);
+    basicErrorDialog("modifyMerged", "modifyMergedDialog.errorMessage");
+    basicErrorDialog("rangeDisabled", "rangeDisabledDialog.errorMessage");
+    basicErrorDialog("overflow", "overflowDialog.errorMessage");
+    basicErrorDialog("unsupportedSelection", "unsupportedSelectionDialog.errorMessage");
+    basicErrorDialog("incompatibleRanges", "incompatibleRangesDialog.errorMessage");
+    basicErrorDialog("noFillDirection", "noFillDirectionDialog.errorMessage");
 
     var UseKeyboardDialog = MessageDialog.extend({
         init: function(options) {
@@ -1581,12 +1594,6 @@
     });
 
     kendo.spreadsheet.dialogs.register("useKeyboard", UseKeyboardDialog);
-
-    var UnsupportedSelectionDialog = MessageDialog.extend({
-        options: { messageId: "unsupportedSelectionDialog.errorMessage" }
-    });
-
-    kendo.spreadsheet.dialogs.register("unsupportedSelection", UnsupportedSelectionDialog);
 
     var HyperlinkDialog = SpreadsheetDialog.extend({
         options: {

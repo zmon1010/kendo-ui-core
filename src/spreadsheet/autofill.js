@@ -16,16 +16,11 @@
     var runtime = spreadsheet.calc.runtime;
     var Formula = runtime.Formula;
 
-    var MSG_INCOMPATIBLE = "Incompatible ranges in fillFrom";
-    var MSG_NO_DIRECTION = "Cannot determine fill direction";
-    var MSG_READ_ONLY = "Destination range contains disabled cells";
+    var ERR_INCOMPATIBLE = "incompatibleRanges";
+    var ERR_NO_DIRECTION = "noFillDirection";
 
     var FillError = Range.FillError = function(msg) {
-        this.msg = msg;
-    };
-
-    FillError.prototype.toString = function() {
-        return this.msg;
+        this.code = msg;
     };
 
     // `srcRange`: the range containing data that we wish to fill.  `direction`: 0↓, 1→, 2↑, 3←.  So
@@ -54,7 +49,7 @@
                     dest.topLeft.col += src.width();
                     direction = 1;
                 } else {
-                    throw new FillError(MSG_INCOMPATIBLE);
+                    throw new FillError(ERR_INCOMPATIBLE);
                 }
             } else if (src.bottomRight.eq(dest.bottomRight)) {
                 if (src.width() == dest.width()) {
@@ -64,10 +59,10 @@
                     dest.bottomRight.col -= src.width();
                     direction = 3;
                 } else {
-                    throw new FillError(MSG_INCOMPATIBLE);
+                    throw new FillError(ERR_INCOMPATIBLE);
                 }
             } else {
-                throw new FillError(MSG_INCOMPATIBLE);
+                throw new FillError(ERR_INCOMPATIBLE);
             }
             return sheet.range(dest)._previewFillFrom(srcRange, direction);
         }
@@ -80,14 +75,14 @@
             } else if (src.topLeft.row == dest.topLeft.row) {
                 direction = src.topLeft.col < dest.topLeft.col ? 1 : 3;
             } else {
-                throw new FillError(MSG_NO_DIRECTION);
+                throw new FillError(ERR_NO_DIRECTION);
             }
         }
         var horizontal = direction & 1;
         var descending = direction & 2;
         if ((horizontal && src.height() != dest.height()) ||
             (!horizontal && src.width() != dest.width())) {
-            throw new FillError(MSG_INCOMPATIBLE);
+            throw new FillError(ERR_INCOMPATIBLE);
         }
         var data = srcRange._properties(), n;
         if (!horizontal) {
@@ -115,9 +110,6 @@
 
     Range.prototype.fillFrom = function(srcRange, direction) {
         var x = this._previewFillFrom(srcRange, direction);
-        if (!x.dest.enable()) {
-            throw new FillError(MSG_READ_ONLY);
-        }
         x.dest._properties(x.props);
         return x.dest;
     };

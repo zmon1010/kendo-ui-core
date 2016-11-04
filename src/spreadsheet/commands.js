@@ -163,6 +163,11 @@
         },
         exec: function() {
             var range = this.range();
+
+            if (!range.enable()) {
+                return { reason: "error", type: "rangeDisabled" };
+            }
+
             var value = this._value;
             this.getState();
 
@@ -547,12 +552,16 @@
             this._origin = origin;
         },
         exec: function() {
+            var range = this.range();
+            if (!range.enable()) {
+                return { reason: "error", type: "rangeDisabled" };
+            }
             this.getState();
             try {
-                this.range().fillFrom(this._origin);
+                range.fillFrom(this._origin);
             } catch(ex) {
                 if (ex instanceof kendo.spreadsheet.Range.FillError) {
-                    return { reason: "error", body: ex+"" };
+                    return { reason: "error", type: ex.code };
                 }
                 throw ex;
             }

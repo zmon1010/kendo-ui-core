@@ -1239,4 +1239,22 @@
         equal(status.reason, "error");
     });
 
+    test("EditCommand errors out when range is disabled", function(){
+        var c = new kendo.spreadsheet.EditCommand({ value: 1 });
+        c.range( sheet.range("A1").enable(false) );
+        var status = c.exec();
+        equal(status.reason, "error");
+        equal(status.type, "rangeDisabled");
+    });
+
+    test("AutoFillCommand errors out when the range is disabled", function(){
+        var c = new kendo.spreadsheet.AutoFillCommand({});
+        c.range(sheet.range("A1:A4"));
+        c.origin(sheet.range("A1"));
+        sheet.range("A3").enable(false);
+        var status = c.exec();
+        equal(status.reason, "error");
+        equal(status.type, "rangeDisabled");
+    });
+
 })();

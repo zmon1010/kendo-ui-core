@@ -260,7 +260,7 @@
                 return value;
             }
 
-            this._property("enable", value);
+            return this._property("enable", value);
         },
 
         formula: function(value) {

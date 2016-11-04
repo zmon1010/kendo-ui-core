@@ -660,7 +660,7 @@
         },
 
         _executeCommand: function(e) {
-            this._workbook.execute(e);
+            this._sheet.trigger("commandRequest", e);
         },
 
         workbook: function(workbook) {
