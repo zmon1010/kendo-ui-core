@@ -9,10 +9,12 @@ const fs = require('fs');
 const meta = require("../../kendo-meta.js");
 
 const argv = require('yargs').argv;
+const batchSizeOption = argv['batch-size'];
 const browserOption = argv.browser;
 const testsOption = argv.tests;
 const jqueryOption = argv.jquery;
 const excludeOption = argv.exclude;
+const resultsFile = argv['junit-results'];
 
 // Load a list of all files (including subfiles like editor/main.js etc.)
 const allKendoFiles = () =>
@@ -21,10 +23,13 @@ const allKendoFiles = () =>
 // support different test sets for public|private repo
 const TESTS = require(glob.sync('../../test-paths-*.js', { cwd: __dirname })[0]);
 
-const BATCH_SIZE = 10;
+let jquery, browsers, exclude;
+let batches = [];
 
-var jquery, browsers, exclude;
-var batches = [];
+let batchSize = 10;
+if (batchSizeOption) {
+    batchSize = parseInt(batchSizeOption, 10);
+}
 
 if (testsOption) {
     batches = [ [ testsOption ] ];
@@ -37,7 +42,7 @@ if (testsOption) {
     paths.forEach((path, i) => {
         batch.push(path);
 
-        if ((i + 1) % BATCH_SIZE === 0) {
+        if ((i + 1) % batchSize === 0) {
             batches.push(batch);
             batch = [];
         }
@@ -65,7 +70,7 @@ TESTS.beforeTestFiles.push('tests/angular-route.js');
 TESTS.beforeTestFiles.push('tests/jasmine.js');
 TESTS.beforeTestFiles.push('tests/jasmine-boot.js');
 
-var defaultOptions = {
+const defaultOptions = Object.freeze({
     reportSlowerThan: 500,
     basePath: '',
     frameworks: ['qunit'],
@@ -84,16 +89,15 @@ var defaultOptions = {
         }
     },
     junitReporter: {
-      outputDir: '.',
-      outputFile: argv['junit-results']
+      outputDir: '.'
     },
     captureTimeout: 60000,
     browserNoActivityTimeout: 60000,
     singleRun: argv['single-run'],
     exclude: exclude
-};
+});
 
-var flavours = {
+const flavours = Object.freeze({
     jenkins: {
         reporters: ['dots', 'junit'],
         singleRun: true,
@@ -128,7 +132,7 @@ var flavours = {
             tests
         )
     }
-};
+});
 
 const components = (batch) => batch.map((path) => path.match(/\/(\w+)\//)[1]);
 Object.keys(flavours).forEach((flavour) => {
@@ -141,6 +145,7 @@ Object.keys(flavours).forEach((flavour) => {
         gulp.task(name, (done) => {
             const options = Object.assign({}, defaultOptions, flavours[flavour]);
             options.files = options.files(batch);
+            options.junitReporter.outputFile = `${name}-${resultsFile}`;
 
             console.log(`INFO: Components: [${components(batch).join(', ')}]`);
 
