@@ -841,7 +841,7 @@ if (require.main === module) (function(){
 
     if (ARGV["kendo-config"]) {
         var cf = buildKendoConfig();
-        SYS.puts(JSON.stringify(cf, null, 2));
+        console.log(JSON.stringify(cf, null, 2));
         return;
     }
 
@@ -851,16 +851,16 @@ if (require.main === module) (function(){
 
     if (ARGV["subfiles"]) {
         files = getKendoFile(ARGV["subfiles"]).getCompFiles();
-        SYS.puts(beautify(files));
+        console.log(beautify(files));
         return;
     }
 
     if (ARGV["build"]) {
         var comp = getKendoFile(ARGV["build"]);
         if (ARGV["min"]) {
-            SYS.puts(comp.buildMinSource());
+            console.log(comp.buildMinSource());
         } else {
-            SYS.puts(comp.buildFullSource());
+            console.log(comp.buildFullSource());
         }
         return;
     }
@@ -896,10 +896,10 @@ if (require.main === module) (function(){
         if (ARGV["min"]) {
             code = minify(code).print_to_string();
         }
-        SYS.puts(code);
+        console.log(code);
         return;
     }
 
-    SYS.puts(beautify(files));
+    console.log(beautify(files));
 
 })();
