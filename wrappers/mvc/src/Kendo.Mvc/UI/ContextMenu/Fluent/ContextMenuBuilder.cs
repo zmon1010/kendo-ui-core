@@ -247,6 +247,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Which DOM element the ContextMenu will be appended to. The element needs to be relatively positioned.
+        /// </summary>
+        /// <param name="value">The value for AppendTo</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ContextMenu()
+        ///             .Name("ContextMenu")
+        ///             .AppendTo("#container")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ContextMenuBuilder AppendTo(string value)
+        {
+            Container.AppendTo = value;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the delay in ms before the menu is opened/closed - used to avoid accidental closure on leaving.
         /// </summary>
         /// <example>

@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
 
             UrlGenerator = urlGenerator;
             Authorization = authorization;
-          
+
             Items = new LinkedObjectCollection<ContextMenuItem>(null);
 
             CloseOnClick = true;
@@ -113,6 +113,13 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public string AppendTo
+        {
+            get;
+            set;
+        }
+
+
         public SecurityTrimming SecurityTrimming
         {
             get;
@@ -145,7 +152,7 @@ namespace Kendo.Mvc.UI
             {
                 options["orientation"] = Orientation.ToString().ToLower();
             }
-            
+
             if (OpenOnClick)
             {
                 options["openOnClick"] = true;
@@ -159,6 +166,11 @@ namespace Kendo.Mvc.UI
             if (AlignToAnchor)
             {
                 options["alignToAnchor"] = true;
+            }
+
+            if (AppendTo?.HasValue() == true)
+            {
+                options["appendTo"] = AppendTo;
             }
 
             if (Target.HasValue())
@@ -210,7 +222,7 @@ namespace Kendo.Mvc.UI
 
                 menuTag.WriteTo(writer);
             }
-            
+
             base.WriteHtml(writer);
         }
 

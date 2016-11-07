@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public bool? AlignToAnchor { get; set; }
 
+        public string AppendTo { get; set; }
+
         public bool? CloseOnClick { get; set; }
 
         public string Filter { get; set; }
@@ -29,6 +31,11 @@ namespace Kendo.Mvc.UI
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
+
+            if (AppendTo?.HasValue() == true)
+            {
+                settings["appendTo"] = AppendTo;
+            }
 
             if (Filter?.HasValue() == true)
             {

@@ -12075,6 +12075,12 @@ by setting the close animation. Each animation also has a direction which can be
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Which DOM element the ContextMenu will be appended to. The element needs to be relatively positioned.</description>
+            <name>appendTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>Specifies that sub menus should close after item selection (provided they won't navigate).</description>
             <name>closeOnClick</name>
             <rtexprvalue>true</rtexprvalue>

@@ -44,6 +44,15 @@ by setting the close animation. Each animation also has a direction which can be
     }
 
     /**
+    * Which DOM element the ContextMenu will be appended to. The element needs to be relatively positioned.
+    * @param string| $value
+    * @return \Kendo\UI\ContextMenu
+    */
+    public function appendTo($value) {
+        return $this->setProperty('appendTo', $value);
+    }
+
+    /**
     * Specifies that sub menus should close after item selection (provided they won't navigate).
     * @param boolean $value
     * @return \Kendo\UI\ContextMenu

@@ -103,6 +103,14 @@ public class ContextMenuTag extends WidgetWithItemsTag /* interfaces */implement
         setProperty("animation", value);
     }
 
+    public java.lang.Object getAppendTo() {
+        return (java.lang.Object)getProperty("appendTo");
+    }
+
+    public void setAppendTo(java.lang.Object value) {
+        setProperty("appendTo", value);
+    }
+
     public boolean getCloseOnClick() {
         return (Boolean)getProperty("closeOnClick");
     }
