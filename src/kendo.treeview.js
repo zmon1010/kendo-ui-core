@@ -1965,7 +1965,7 @@ var __meta__ = { // jshint ignore:line
                     return that._insert(data, model, index);
                 }
 
-                loadModel.then(function() {
+                loadModel.done(function() {
                     inserted = add();
                     success = success || $.noop;
                     success(inserted);

@@ -963,6 +963,7 @@
     });
 
     test("expandPath expands loaded nodes", function() {
+        jasmine.clock().install();
         createTreeView([
             { id: 1, text: "foo", items: [
                 { id: 2, text: "bar", items: [
@@ -974,6 +975,8 @@
         var dataSource = treeviewObject.dataSource;
 
         treeviewObject.expandPath([ 1, 2 ]);
+        jasmine.clock().tick();
+        jasmine.clock().uninstall();
 
         ok(dataSource.get(1).expanded);
         ok(dataSource.get(2).expanded);

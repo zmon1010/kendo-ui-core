@@ -610,7 +610,7 @@
         treeviewObject.setDataSource({
             transport: {
                 read: function(options) {
-                    deferred.then(options.success, options.error);
+                    deferred.done(options.success, options.error);
                 }
             }
         });
@@ -933,6 +933,7 @@
     });
 
     test("dataSource can be searched within dataBound handler", 2, function() {
+        jasmine.clock().install();
         var read = controlledRead();
 
         createTreeView({
@@ -944,19 +945,25 @@
         });
 
         read.resolve([ { id: 1, expanded: true, hasChildren: true } ]);
+        jasmine.clock().tick();
+        jasmine.clock().uninstall();
     });
 
     test("appending to unloaded remote node calls read once", 1, function() {
+        jasmine.clock().install();
         var read = controlledRead();
 
         createTreeView({ dataSource: { transport: { read: read } } });
 
         read.resolve([ {id: 1, text: "foo", hasChildren: true} ]);
+        jasmine.clock().tick();
 
         treeviewObject.append({ text: "bar", hasChildren: true }, $(".k-item:first"));
 
         read.resolve([]);
+        jasmine.clock().tick();
 
         equal(read.queueLength(), 0);
+        jasmine.clock().uninstall();
     });
 })();

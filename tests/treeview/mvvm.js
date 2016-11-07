@@ -462,6 +462,8 @@
         });
 
         test("expandTo on collapsed hierarchy", function() {
+            jasmine.clock().install();
+
             var dom = $('<div data-role="treeview" data-bind="source: items" />').appendTo(QUnit.fixture);
 
             var viewModel = kendo.observable({
@@ -477,11 +479,13 @@
             kendo.bind(dom, viewModel);
 
             dom.data("kendoTreeView").expandTo(3);
+            jasmine.clock().tick(100);
 
             var node = dom.find(".k-item .k-item .k-item");
 
             equal(node.length, 1);
             ok(node.is(":visible"));
+            jasmine.clock().uninstall();
         });
 
     })();
