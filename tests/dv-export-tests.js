@@ -165,20 +165,23 @@ function legacyExportTests(name, createWidget) {
 function pdfStubMethod(obj, name, impl, func, sync) {
     var prev = obj[name];
     obj[name] = function() {
-        if (!sync) {
-            setTimeout(function() {
-                start();
-            }, 0);
-        }
         return impl.apply(this, arguments);
     };
     var p = func();
     if (p) {
         return p.always(function(){
             obj[name] = prev;
+
+            if (!sync) {
+                start();
+            }
         });
     } else {
         obj[name] = prev;
+
+        if (!sync) {
+            start();
+        }
     }
 }
 
