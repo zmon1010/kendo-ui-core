@@ -1051,7 +1051,8 @@ namespace :build do
             changelog
         ].flatten
 
-        task :generate_help => [ :get_binaries, 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.xml', 'generate:php:api', 'generate:jsp:api', 'generate:mvc:api' ]
+        task :generate_mvc_api => [ :get_binaries, 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.xml', 'generate:mvc:api' ]
+        task :generate_kendo_api => [ 'generate:php:api', 'generate:jsp:api' ]
 
         components_changelog_path = File.join("dist", "nuget", "changelog.xml")
         core_components_changelog_path = File.join("dist", "nuget", "changelog-core.xml")
@@ -1139,7 +1140,8 @@ namespace :build do
             changelogs("Stable")
         ].flatten
 
-        task :generate_help => [ :get_binaries, 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.xml', 'generate:php:api', 'generate:jsp:api', 'generate:mvc:api' ]
+        task :generate_mvc_api => [ :get_binaries, 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.xml', 'generate:mvc:api' ]
+        task :generate_kendo_api => [ 'generate:php:api', 'generate:jsp:api' ]
     end
 
     namespace :update do
