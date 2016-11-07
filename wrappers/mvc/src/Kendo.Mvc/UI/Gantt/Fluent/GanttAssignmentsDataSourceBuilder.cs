@@ -12,6 +12,13 @@
     public class GanttAssignmentsDataSourceBuilder<TModel> : FilterableAjaxDataSourceBuilder<TModel, GanttAssignmentsDataSourceBuilder<TModel>>
         where TModel : class
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GanttAssignmentsDataSourceBuilder"/> class.
+        /// </summary>
+        /// <param name="dataSource">The datasource</param>
+        /// <param name="viewContext">The viewContext</param>
+        /// <param name="urlGenerator">The Url generator</param>
         public GanttAssignmentsDataSourceBuilder(DataSource dataSource, ViewContext viewContext, IUrlGenerator urlGenerator)
             : base(dataSource, viewContext, urlGenerator)
         {
