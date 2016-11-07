@@ -166,7 +166,9 @@ function pdfStubMethod(obj, name, impl, func, sync) {
     var prev = obj[name];
     obj[name] = function() {
         if (!sync) {
-            start();
+            setTimeout(function() {
+                start();
+            }, 0);
         }
         return impl.apply(this, arguments);
     };
