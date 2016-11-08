@@ -2,7 +2,7 @@
 
 module("editor api", {
     setup: function() {
-        QUnit.fixture.append(
+        QUnit.fixture.appendTo(document.body).append(
             '<textarea cols="20" rows="4" id="editor"></textarea>' +
             '<div id="inline" contentEditable></div>'
         );

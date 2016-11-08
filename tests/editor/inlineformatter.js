@@ -309,6 +309,7 @@ test("format whitespace content", function() {
 
 test("format fonts", function() {
     QUnit.fixture.html('<font size="2">bar</font>');
+    fixture = QUnit.fixture[0];
 
     var formatter = new InlineFormatter([{tags:["font"]}], {style:{fontSize:"large"}});
     var font = fixture.firstChild;

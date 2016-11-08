@@ -178,14 +178,14 @@ $.mockjaxSettings.logging = false;
         return $(document.body).children(":not(script,#editor-fixture)").length;
     }
 
-    $(function() {
-        QUnit.fixture = $("<div id='qunit-fixture' style='height: 100px'></div>").appendTo(document.body);
+    QUnit.testStart(function() {
+        QUnit.fixture = $("<div id='qunit-fixture'></div>").appendTo(document.body);
         QUnit.config.fixture = "";
         domContentsLength = getDomContentsLength();
     });
 
     QUnit.testDone(function() {
-        QUnit.fixture.empty().attr("class", "").attr("style", "").css("height", "100px");
+        QUnit.fixture.remove();
     });
 
     var browser = kendo.support.browser;
@@ -220,9 +220,9 @@ $.mockjaxSettings.logging = false;
                 console.error.apply(console, [ details.module, details.name, 'active widgets left'].concat(widgets.map(function(widget) {
                     var name = widget.options.name;
 
-                    if (widget.element[0].className) {
-                        name = name + "(" + widget.element[0].className + ")";
-                    }
+                    //if (widget.element[0].className) {
+                    //    name = name + "(" + widget.element[0].className + ")";
+                    //}
 
                     return name;
                 })));

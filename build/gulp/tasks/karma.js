@@ -89,7 +89,6 @@ const defaultOptions = Object.freeze({
         }
     },
     junitReporter: {
-      outputDir: '.'
     },
     captureTimeout: 60000,
     browserNoActivityTimeout: 60000,
@@ -125,6 +124,7 @@ const flavours = Object.freeze({
     },
 
     unit: {
+        concurrency: 1,
         files: (tests) => [].concat(
             TESTS.beforeTestFiles,
             allKendoFiles(),
@@ -145,7 +145,7 @@ Object.keys(flavours).forEach((flavour) => {
         gulp.task(name, (done) => {
             const options = Object.assign({}, defaultOptions, flavours[flavour]);
             options.files = options.files(batch);
-            options.junitReporter.outputFile = `${name}-${resultsFile}`;
+            options.junitReporter.outputFile = `../${name}-${resultsFile}`;
 
             console.log(`INFO: Components: [${components(batch).join(', ')}]`);
 

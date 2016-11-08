@@ -8,7 +8,7 @@ function editor_module(name, options, editorOptions) {
     QUnit.moduleStart(function(details) {
         if (details.name == name) {
             if (editorOptions && editorOptions.element) {
-                $(editorOptions.element).appendTo(QUnit.fixture).kendoEditor(editorOptions);
+                $(editorOptions.element).appendTo(document.body).kendoEditor(editorOptions);
             }
             else {
                 $('<textarea id="editor-fixture"></textarea>').appendTo("body").kendoEditor(editorOptions);
