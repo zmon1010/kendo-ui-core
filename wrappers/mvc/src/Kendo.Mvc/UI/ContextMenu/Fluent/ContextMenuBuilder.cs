@@ -260,7 +260,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public ContextMenuBuilder AppendTo(string value)
         {
-            Container.AppendTo = value;
+            Component.AppendTo = value;
             return this;
         }
 
