@@ -4853,8 +4853,7 @@
         },
         "meta": {
           "kendo-ui": "This demo shows how to select date and visible range, using the corresponding Kendo UI Gantt properties."
-        },
-        "new": "true"
+        }
       },
       {
         "text": "Events",
@@ -5888,8 +5887,7 @@
         },
         "packages": [
           "!mvc",
-          "!jsp",
-          "!php"
+          "!jsp"
         ]
       },
       {
