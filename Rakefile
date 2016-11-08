@@ -164,7 +164,6 @@ require 'bower'
 require 'npm'
 require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin/
 require 'playground'
-require 'vs_plugin'
 require 'vs_scaffold'
 require './build/localization'
 
@@ -1005,8 +1004,7 @@ namespace :build do
             desc 'Build and publish ASP.NET MVC DLLs for #{destination} distribution'
             task :aspnetmvc_binaries => [ "mvc:binaries", "tests:aspnetmvc",
                                           "spreadsheet:binaries", "tests:spreadsheet",
-                                          'demos:release',
-                                          'vs_plugin:build', 'vs_scaffold:build' ] do
+                                          'demos:release', 'vs_scaffold:build' ] do
                 map_archive_root 'L:'
 
                 target_dir = "L:\\#{destination}\\binaries\\"
@@ -1014,7 +1012,6 @@ namespace :build do
                 sh "if not exist #{target_dir} ( mkdir #{target_dir} )"
                 sh "xcopy dist\\binaries\\* #{target_dir} /E /Y"
 
-                sh "xcopy plugins\\KendoBootstrapper\\KendoBootstrapper\\bin\\*.vsix L:\\#{destination}\\ /E /Y"
                 sh "xcopy plugins\\KendoScaffolder\\KendoScaffolder\\KendoScaffolderExtension\\bin\\Release\\*.vsix L:\\#{destination}\\binaries\\scaffolding\\ /Y"
             end
 
