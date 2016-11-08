@@ -1,0 +1,80 @@
+﻿@addTagHelper *, Kendo.Mvc
+
+<kendo-splitter name="vertical" orientation="SplitterOrientation.Vertical">
+    <kendo-splitter-pane scrollable="false" collapsible="false">
+        <div name="top-pane">
+            <kendo-splitter name="horizontal" style="height: 100%; width:100%;" orientation="SplitterOrientation.Horizontal">
+                <kendo-splitter-pane size="220px" collapsible="true">
+                    <div id="left-pane">
+                        <div class="pane-content">
+                            <h3>Inner splitter / left pane</h3>
+                            <p>Resizable and collapsible.</p>
+                        </div>
+                    </div>
+                </kendo-splitter-pane>
+                <kendo-splitter-pane>
+                    <div id="center-pane">
+                        <div class="pane-content">
+                            <h3>Inner splitter / center pane</h3>
+                            <p>Resizable only.</p>
+                        </div>
+                    </div>
+                </kendo-splitter-pane>
+                <kendo-splitter-pane size="220px" collapsible="true">
+                    <div id="right-pane">
+                        <div class="pane-content">
+                            <h3>Inner splitter / right pane</h3>
+                            <p>Resizable and collapsible.</p>
+                        </div>
+                    </div>
+                </kendo-splitter-pane>
+            </kendo-splitter>
+        </div>
+    </kendo-splitter-pane>
+
+    <kendo-splitter-pane size="100px" collapsible="false">
+        <div id="middle-pane">
+            <div class="pane-content">
+                <h3>Outer splitter / middle pane</h3>
+                <p>Resizable only.</p>
+            </div>
+        </div>
+    </kendo-splitter-pane>
+    <kendo-splitter-pane size="100px" collapsible="false" resizable="false">
+        <div id="bottom-pane">
+            <div class="pane-content">
+                <h3>Outer splitter / bottom pane</h3>
+                <p>Non-resizable and non-collapsible.</p>
+            </div>
+        </div>
+    </kendo-splitter-pane>
+</kendo-splitter>
+<style>
+    #vertical {
+        height: 380px;
+    }
+
+    #middle-pane {
+        background-color: rgba(60, 70, 80, 0.10);
+    }
+
+    #bottom-pane {
+        background-color: rgba(60, 70, 80, 0.15);
+    }
+
+    #left-pane {
+        background-color: rgba(60, 70, 80, 0.05);
+    }
+
+    #center-pane {
+        background-color: rgba(60, 70, 80, 0.05);
+    }
+
+    #right-pane {
+        background-color: rgba(60, 70, 80, 0.05);
+    }
+
+    .pane-content {
+        padding: 0 10px;
+    }
+</style>
