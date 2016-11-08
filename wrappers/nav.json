@@ -3568,6 +3568,34 @@
         }
     },
     {
+    "text": "SpreadStreamProcessing",
+    "name": "spreadstreamprocessing",
+    "packages": [ "!mvc-core" ],
+    "api": "http://docs.telerik.com/devtools/document-processing/libraries/radspreadstreamprocessing/overview",
+    "category": "Editors",
+    "spriteCssClass": "spreadstreamprocessingIcon",
+    "new": "true",
+    "items": [
+      {
+        "text": "Large Document Export",
+        "url": "spreadstreamprocessing/index",
+        "new": "true",
+        "title": {
+          "aspnet-mvc": "Demo and source code for Telerik RadSpreadStreamProcessing in MVC"
+        },
+        "meta": {
+          "aspnet-mvc": "See how the Telerik RadSpreadStreamProcessing can be integrated in MVC applications."
+        },
+        "description": {
+          "aspnet-mvc": "With <strong>SpreadStreamProcessing</strong> you can effortlessly generate large XLSX and CSV files."
+        }
+      }
+    ],
+    "documentation": {
+      "aspnet-mvc": "http://docs.telerik.com/devtools/document-processing/libraries/radspreadstreamprocessing/overview"
+    }
+  },
+    {
         "text": "TabStrip",
         "name": "tabstrip",
         "api": "web/tabstrip",
