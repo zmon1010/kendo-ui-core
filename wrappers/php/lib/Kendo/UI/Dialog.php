@@ -45,15 +45,6 @@ class Dialog extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies the content of a Dialog.
-    * @param string $value
-    * @return \Kendo\UI\Dialog
-    */
-    public function content($value) {
-        return $this->setProperty('content', $value);
-    }
-
-    /**
     * Specifies height of the dialog.
     * @param float|string $value
     * @return \Kendo\UI\Dialog
@@ -213,6 +204,29 @@ class Dialog extends \Kendo\UI\Widget {
         return $this->setProperty('show', $value);
     }
 
+
+    /**
+    * Sets the HTML content of the Dialog.
+    * @param string $value
+    * @return \Kendo\UI\Dialog
+    */
+    public function content($value) {
+        return $this->setProperty('content', $value);
+    }
+
+    /**
+    * Starts output bufferring. Any following markup will be set as the content of the Dialog.
+    */
+    public function startContent() {
+        ob_start();
+    }
+
+    /**
+    * Stops output bufferring and sets the preceding markup as the content of the Dialog.
+    */
+    public function endContent() {
+        $this->content(ob_get_clean());
+    }
 
 //<< Properties
 }

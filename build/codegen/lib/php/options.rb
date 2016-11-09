@@ -5,6 +5,7 @@ module CodeGen::PHP
         'Editor' => ['content'],
         'Tooltip' => ['content'],
         'Window' => ['content'],
+        'Dialog' => ['content'],
         'column' => ['columns']
     }
 

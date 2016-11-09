@@ -18473,7 +18473,7 @@ See visual.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Specifies the content of a Dialog.</description>
+            <description>The content of the dialog</description>
             <name>content</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

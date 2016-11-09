@@ -45,8 +45,6 @@ namespace Kendo.Mvc.UI
         
         public bool? Closable { get; set; }
         
-        public string Content { get; set; }
-        
         public double? Height { get; set; }
         
         public double? MaxHeight { get; set; }
@@ -70,6 +68,8 @@ namespace Kendo.Mvc.UI
         public bool? Visible { get; set; }
         
         public double? Width { get; set; }
+        
+        public string Content { get; set; }
         
         //<< Fields
 
@@ -108,11 +108,6 @@ namespace Kendo.Mvc.UI
                 json["closable"] = Closable;
             }
                 
-            if (Content.HasValue())
-            {
-                json["content"] = Content;
-            }
-            
             if (Height.HasValue)
             {
                 json["height"] = Height;
@@ -163,6 +158,11 @@ namespace Kendo.Mvc.UI
                 json["width"] = Width;
             }
                 
+            if (Content.HasValue())
+            {
+                json["content"] = Content;
+            }
+            
         //<< Serialization
 
             writer.Write(Initializer.Initialize(Selector, "Dialog", json));

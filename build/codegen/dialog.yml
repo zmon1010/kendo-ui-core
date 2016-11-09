@@ -1,0 +1,5 @@
+:options:
+    - :name: content
+      :type: String
+      :description: The content of the dialog
+:content: true

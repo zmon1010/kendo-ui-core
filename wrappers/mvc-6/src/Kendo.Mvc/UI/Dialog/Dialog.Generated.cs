@@ -17,8 +17,6 @@ namespace Kendo.Mvc.UI
 
         public bool? Closable { get; set; }
 
-        public string Content { get; set; }
-
         public double? Height { get; set; }
 
         public double? MaxHeight { get; set; }
@@ -39,6 +37,8 @@ namespace Kendo.Mvc.UI
 
         public double? Width { get; set; }
 
+        public string Content { get; set; }
+
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -58,11 +58,6 @@ namespace Kendo.Mvc.UI
             if (Closable.HasValue)
             {
                 settings["closable"] = Closable;
-            }
-
-            if (Content?.HasValue() == true)
-            {
-                settings["content"] = Content;
             }
 
             if (Height.HasValue)
@@ -114,6 +109,11 @@ namespace Kendo.Mvc.UI
             if (Width.HasValue)
             {
                 settings["width"] = Width;
+            }
+
+            if (Content?.HasValue() == true)
+            {
+                settings["content"] = Content;
             }
 
             return settings;

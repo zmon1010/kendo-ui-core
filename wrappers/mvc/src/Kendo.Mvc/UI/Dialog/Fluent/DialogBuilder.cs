@@ -56,17 +56,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Specifies the content of a Dialog.
-        /// </summary>
-        /// <param name="value">The value that configures the content.</param>
-        public DialogBuilder Content(string value)
-        {
-            container.Content = value;
-
-            return this;
-        }
-        
-        /// <summary>
         /// Specifies height of the dialog.
         /// </summary>
         /// <param name="value">The value that configures the height.</param>
@@ -171,6 +160,17 @@ namespace Kendo.Mvc.UI.Fluent
         public DialogBuilder Width(double value)
         {
             container.Width = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The content of the dialog
+        /// </summary>
+        /// <param name="value">The value that configures the content.</param>
+        public DialogBuilder Content(string value)
+        {
+            container.Content = value;
 
             return this;
         }
