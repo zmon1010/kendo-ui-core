@@ -168,7 +168,7 @@ namespace Kendo.Mvc.UI
                 options["alignToAnchor"] = true;
             }
 
-            if (AppendTo?.HasValue() == true)
+            if (AppendTo.HasValue() == true)
             {
                 options["appendTo"] = AppendTo;
             }
