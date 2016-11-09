@@ -15,22 +15,22 @@
     "accord": {
       "version": "0.26.3",
       "from": "accord@>=0.26.0 <0.27.0",
-      "resolved": "http://kendobuild-registry/accord/-/accord-0.26.3.tgz",
+      "resolved": "https://registry.npmjs.org/accord/-/accord-0.26.3.tgz",
       "dependencies": {
         "glob": {
           "version": "7.1.1",
           "from": "glob@>=7.0.5 <8.0.0",
-          "resolved": "http://kendobuild-registry/glob/-/glob-7.1.1.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.1.tgz"
         },
         "lodash.defaults": {
           "version": "4.2.0",
           "from": "lodash.defaults@>=4.0.1 <5.0.0",
-          "resolved": "http://kendobuild-registry/lodash.defaults/-/lodash.defaults-4.2.0.tgz"
+          "resolved": "https://registry.npmjs.org/lodash.defaults/-/lodash.defaults-4.2.0.tgz"
         },
         "lodash.merge": {
           "version": "4.6.0",
           "from": "lodash.merge@>=4.4.0 <5.0.0",
-          "resolved": "http://kendobuild-registry/lodash.merge/-/lodash.merge-4.6.0.tgz"
+          "resolved": "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.0.tgz"
         },
         "minimatch": {
           "version": "3.0.3",
@@ -84,7 +84,7 @@
     "amdefine": {
       "version": "1.0.1",
       "from": "amdefine@>=0.0.4",
-      "resolved": "http://kendobuild-registry/amdefine/-/amdefine-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.1.tgz"
     },
     "ansi-regex": {
       "version": "2.0.0",
@@ -124,7 +124,7 @@
     "array-find-index": {
       "version": "1.0.2",
       "from": "array-find-index@>=1.0.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/array-find-index/-/array-find-index-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/array-find-index/-/array-find-index-1.0.2.tgz"
     },
     "array-slice": {
       "version": "0.2.3",
@@ -166,7 +166,7 @@
     "asap": {
       "version": "2.0.5",
       "from": "asap@>=2.0.3 <2.1.0",
-      "resolved": "http://kendobuild-registry/asap/-/asap-2.0.5.tgz"
+      "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.5.tgz"
     },
     "asn1": {
       "version": "0.1.11",
@@ -196,7 +196,7 @@
     "async-each": {
       "version": "1.0.1",
       "from": "async-each@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/async-each/-/async-each-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/async-each/-/async-each-1.0.1.tgz"
     },
     "async-each-series": {
       "version": "0.1.1",
@@ -206,7 +206,7 @@
     "autoprefixer": {
       "version": "6.5.1",
       "from": "autoprefixer@>=6.0.0 <7.0.0",
-      "resolved": "http://kendobuild-registry/autoprefixer/-/autoprefixer-6.5.1.tgz"
+      "resolved": "https://registry.npmjs.org/autoprefixer/-/autoprefixer-6.5.1.tgz"
     },
     "aws-sign2": {
       "version": "0.6.0",
@@ -231,12 +231,12 @@
     "base64-arraybuffer": {
       "version": "0.1.5",
       "from": "base64-arraybuffer@0.1.5",
-      "resolved": "http://kendobuild-registry/base64-arraybuffer/-/base64-arraybuffer-0.1.5.tgz"
+      "resolved": "https://registry.npmjs.org/base64-arraybuffer/-/base64-arraybuffer-0.1.5.tgz"
     },
     "base64-js": {
       "version": "1.2.0",
       "from": "base64-js@>=1.0.2 <2.0.0",
-      "resolved": "http://kendobuild-registry/base64-js/-/base64-js-1.2.0.tgz"
+      "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.2.0.tgz"
     },
     "base64id": {
       "version": "0.1.0",
@@ -271,12 +271,12 @@
     "binary-extensions": {
       "version": "1.7.0",
       "from": "binary-extensions@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/binary-extensions/-/binary-extensions-1.7.0.tgz"
+      "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-1.7.0.tgz"
     },
     "binaryextensions": {
       "version": "1.0.1",
       "from": "binaryextensions@>=1.0.0 <1.1.0",
-      "resolved": "http://kendobuild-registry/binaryextensions/-/binaryextensions-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/binaryextensions/-/binaryextensions-1.0.1.tgz"
     },
     "bl": {
       "version": "1.0.3",
@@ -303,17 +303,17 @@
     "bluebird": {
       "version": "3.4.6",
       "from": "bluebird@>=3.3.0 <4.0.0",
-      "resolved": "http://kendobuild-registry/bluebird/-/bluebird-3.4.6.tgz"
+      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.4.6.tgz"
     },
     "body-parser": {
       "version": "1.15.2",
       "from": "body-parser@>=1.12.4 <2.0.0",
-      "resolved": "http://kendobuild-registry/body-parser/-/body-parser-1.15.2.tgz",
+      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-1.15.2.tgz",
       "dependencies": {
         "qs": {
           "version": "6.2.0",
           "from": "qs@6.2.0",
-          "resolved": "http://kendobuild-registry/qs/-/qs-6.2.0.tgz"
+          "resolved": "https://registry.npmjs.org/qs/-/qs-6.2.0.tgz"
         }
       }
     },
@@ -372,7 +372,7 @@
     "browser-sync-client": {
       "version": "2.4.3",
       "from": "browser-sync-client@>=2.3.3 <3.0.0",
-      "resolved": "http://kendobuild-registry/browser-sync-client/-/browser-sync-client-2.4.3.tgz"
+      "resolved": "https://registry.npmjs.org/browser-sync-client/-/browser-sync-client-2.4.3.tgz"
     },
     "browser-sync-ui": {
       "version": "0.5.19",
@@ -387,12 +387,12 @@
     "browserslist": {
       "version": "1.4.0",
       "from": "browserslist@>=1.4.0 <1.5.0",
-      "resolved": "http://kendobuild-registry/browserslist/-/browserslist-1.4.0.tgz"
+      "resolved": "https://registry.npmjs.org/browserslist/-/browserslist-1.4.0.tgz"
     },
     "buffer": {
       "version": "4.9.1",
       "from": "buffer@>=4.9.0 <5.0.0",
-      "resolved": "http://kendobuild-registry/buffer/-/buffer-4.9.1.tgz",
+      "resolved": "https://registry.npmjs.org/buffer/-/buffer-4.9.1.tgz",
       "dependencies": {
         "isarray": {
           "version": "1.0.0",
@@ -424,7 +424,7 @@
     "bytes": {
       "version": "2.4.0",
       "from": "bytes@2.4.0",
-      "resolved": "http://kendobuild-registry/bytes/-/bytes-2.4.0.tgz"
+      "resolved": "https://registry.npmjs.org/bytes/-/bytes-2.4.0.tgz"
     },
     "callsite": {
       "version": "1.0.0",
@@ -444,7 +444,7 @@
     "caniuse-db": {
       "version": "1.0.30000574",
       "from": "caniuse-db@>=1.0.30000554 <2.0.0",
-      "resolved": "http://kendobuild-registry/caniuse-db/-/caniuse-db-1.0.30000574.tgz"
+      "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000574.tgz"
     },
     "caseless": {
       "version": "0.11.0",
@@ -464,12 +464,12 @@
     "chokidar": {
       "version": "1.6.1",
       "from": "chokidar@>=1.0.5 <2.0.0",
-      "resolved": "http://kendobuild-registry/chokidar/-/chokidar-1.6.1.tgz"
+      "resolved": "https://registry.npmjs.org/chokidar/-/chokidar-1.6.1.tgz"
     },
     "clean-css": {
       "version": "3.4.20",
       "from": "clean-css@>=3.4.20 <4.0.0",
-      "resolved": "http://kendobuild-registry/clean-css/-/clean-css-3.4.20.tgz",
+      "resolved": "https://registry.npmjs.org/clean-css/-/clean-css-3.4.20.tgz",
       "dependencies": {
         "commander": {
           "version": "2.8.1",
@@ -503,17 +503,17 @@
     "clone": {
       "version": "1.0.2",
       "from": "clone@^1.0.2",
-      "resolved": "http://kendobuild-registry/clone/-/clone-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/clone/-/clone-1.0.2.tgz"
     },
     "clone-stats": {
       "version": "0.0.1",
       "from": "clone-stats@~0.0.1",
-      "resolved": "http://kendobuild-registry/clone-stats/-/clone-stats-0.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/clone-stats/-/clone-stats-0.0.1.tgz"
     },
     "code-point-at": {
       "version": "1.1.0",
       "from": "code-point-at@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/code-point-at/-/code-point-at-1.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/code-point-at/-/code-point-at-1.1.0.tgz"
     },
     "colors": {
       "version": "1.1.2",
@@ -523,12 +523,12 @@
     "combine-lists": {
       "version": "1.0.1",
       "from": "combine-lists@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/combine-lists/-/combine-lists-1.0.1.tgz",
+      "resolved": "https://registry.npmjs.org/combine-lists/-/combine-lists-1.0.1.tgz",
       "dependencies": {
         "lodash": {
           "version": "4.16.6",
           "from": "lodash@>=4.5.0 <5.0.0",
-          "resolved": "http://kendobuild-registry/lodash/-/lodash-4.16.6.tgz"
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.6.tgz"
         }
       }
     },
@@ -594,12 +594,12 @@
     "connect": {
       "version": "3.5.0",
       "from": "connect@>=3.4.0 <4.0.0",
-      "resolved": "http://kendobuild-registry/connect/-/connect-3.5.0.tgz"
+      "resolved": "https://registry.npmjs.org/connect/-/connect-3.5.0.tgz"
     },
     "connect-history-api-fallback": {
       "version": "1.3.0",
       "from": "connect-history-api-fallback@>=1.1.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/connect-history-api-fallback/-/connect-history-api-fallback-1.3.0.tgz"
+      "resolved": "https://registry.npmjs.org/connect-history-api-fallback/-/connect-history-api-fallback-1.3.0.tgz"
     },
     "console-browserify": {
       "version": "1.1.0",
@@ -614,17 +614,17 @@
     "content-type": {
       "version": "1.0.2",
       "from": "content-type@>=1.0.2 <1.1.0",
-      "resolved": "http://kendobuild-registry/content-type/-/content-type-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/content-type/-/content-type-1.0.2.tgz"
     },
     "conventional-commit-types": {
       "version": "2.1.0",
       "from": "conventional-commit-types@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/conventional-commit-types/-/conventional-commit-types-2.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/conventional-commit-types/-/conventional-commit-types-2.1.0.tgz"
     },
     "convert-source-map": {
       "version": "1.3.0",
       "from": "convert-source-map@>=1.2.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/convert-source-map/-/convert-source-map-1.3.0.tgz"
+      "resolved": "https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.3.0.tgz"
     },
     "cookiejar": {
       "version": "1.3.0",
@@ -634,7 +634,7 @@
     "core-js": {
       "version": "2.4.1",
       "from": "core-js@>=2.2.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/core-js/-/core-js-2.4.1.tgz"
+      "resolved": "https://registry.npmjs.org/core-js/-/core-js-2.4.1.tgz"
     },
     "core-util-is": {
       "version": "1.0.2",
@@ -644,12 +644,12 @@
     "cross-spawn-async": {
       "version": "2.2.5",
       "from": "cross-spawn-async@>=2.1.1 <3.0.0",
-      "resolved": "http://kendobuild-registry/cross-spawn-async/-/cross-spawn-async-2.2.5.tgz",
+      "resolved": "https://registry.npmjs.org/cross-spawn-async/-/cross-spawn-async-2.2.5.tgz",
       "dependencies": {
         "lru-cache": {
           "version": "4.0.1",
           "from": "lru-cache@>=4.0.0 <5.0.0",
-          "resolved": "http://kendobuild-registry/lru-cache/-/lru-cache-4.0.1.tgz"
+          "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-4.0.1.tgz"
         }
       }
     },
@@ -676,12 +676,12 @@
     "custom-event": {
       "version": "1.0.1",
       "from": "custom-event@>=1.0.0 <1.1.0",
-      "resolved": "http://kendobuild-registry/custom-event/-/custom-event-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/custom-event/-/custom-event-1.0.1.tgz"
     },
     "cz-conventional-changelog": {
       "version": "1.2.0",
       "from": "cz-conventional-changelog@1.2.0",
-      "resolved": "http://kendobuild-registry/cz-conventional-changelog/-/cz-conventional-changelog-1.2.0.tgz"
+      "resolved": "https://registry.npmjs.org/cz-conventional-changelog/-/cz-conventional-changelog-1.2.0.tgz"
     },
     "date-now": {
       "version": "0.1.4",
@@ -741,7 +741,7 @@
     "detect-file": {
       "version": "0.1.0",
       "from": "detect-file@>=0.1.0 <0.2.0",
-      "resolved": "http://kendobuild-registry/detect-file/-/detect-file-0.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/detect-file/-/detect-file-0.1.0.tgz"
     },
     "dev-ip": {
       "version": "1.0.1",
@@ -756,7 +756,7 @@
     "dom-serialize": {
       "version": "2.2.1",
       "from": "dom-serialize@>=2.2.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/dom-serialize/-/dom-serialize-2.2.1.tgz"
+      "resolved": "https://registry.npmjs.org/dom-serialize/-/dom-serialize-2.2.1.tgz"
     },
     "dom-serializer": {
       "version": "0.1.0",
@@ -808,7 +808,7 @@
     "duplexify": {
       "version": "3.5.0",
       "from": "duplexify@>=3.4.2 <4.0.0",
-      "resolved": "http://kendobuild-registry/duplexify/-/duplexify-3.5.0.tgz",
+      "resolved": "https://registry.npmjs.org/duplexify/-/duplexify-3.5.0.tgz",
       "dependencies": {
         "end-of-stream": {
           "version": "1.0.0",
@@ -862,7 +862,7 @@
     "emojis-list": {
       "version": "2.1.0",
       "from": "emojis-list@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/emojis-list/-/emojis-list-2.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/emojis-list/-/emojis-list-2.1.0.tgz"
     },
     "encodeurl": {
       "version": "1.0.1",
@@ -884,17 +884,17 @@
     "engine.io": {
       "version": "1.7.2",
       "from": "engine.io@1.7.2",
-      "resolved": "http://kendobuild-registry/engine.io/-/engine.io-1.7.2.tgz"
+      "resolved": "https://registry.npmjs.org/engine.io/-/engine.io-1.7.2.tgz"
     },
     "engine.io-client": {
       "version": "1.7.2",
       "from": "engine.io-client@1.7.2",
-      "resolved": "http://kendobuild-registry/engine.io-client/-/engine.io-client-1.7.2.tgz"
+      "resolved": "https://registry.npmjs.org/engine.io-client/-/engine.io-client-1.7.2.tgz"
     },
     "engine.io-parser": {
       "version": "1.3.1",
       "from": "engine.io-parser@1.3.1",
-      "resolved": "http://kendobuild-registry/engine.io-parser/-/engine.io-parser-1.3.1.tgz",
+      "resolved": "https://registry.npmjs.org/engine.io-parser/-/engine.io-parser-1.3.1.tgz",
       "dependencies": {
         "has-binary": {
           "version": "0.1.6",
@@ -948,12 +948,12 @@
     "escodegen": {
       "version": "1.8.1",
       "from": "escodegen@>=1.4.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/escodegen/-/escodegen-1.8.1.tgz"
+      "resolved": "https://registry.npmjs.org/escodegen/-/escodegen-1.8.1.tgz"
     },
     "esprima": {
       "version": "2.7.3",
       "from": "esprima@>=2.7.1 <3.0.0",
-      "resolved": "http://kendobuild-registry/esprima/-/esprima-2.7.3.tgz"
+      "resolved": "https://registry.npmjs.org/esprima/-/esprima-2.7.3.tgz"
     },
     "estraverse": {
       "version": "1.9.3",
@@ -978,12 +978,12 @@
     "events": {
       "version": "1.1.1",
       "from": "events@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/events/-/events-1.1.1.tgz"
+      "resolved": "https://registry.npmjs.org/events/-/events-1.1.1.tgz"
     },
     "execa": {
       "version": "0.4.0",
       "from": "execa@>=0.4.0 <0.5.0",
-      "resolved": "http://kendobuild-registry/execa/-/execa-0.4.0.tgz",
+      "resolved": "https://registry.npmjs.org/execa/-/execa-0.4.0.tgz",
       "dependencies": {
         "object-assign": {
           "version": "4.1.0",
@@ -1000,7 +1000,7 @@
     "expand-braces": {
       "version": "0.1.2",
       "from": "expand-braces@>=0.1.1 <0.2.0",
-      "resolved": "http://kendobuild-registry/expand-braces/-/expand-braces-0.1.2.tgz",
+      "resolved": "https://registry.npmjs.org/expand-braces/-/expand-braces-0.1.2.tgz",
       "dependencies": {
         "braces": {
           "version": "0.1.5",
@@ -1037,7 +1037,7 @@
     "expand-tilde": {
       "version": "1.2.2",
       "from": "expand-tilde@>=1.2.2 <2.0.0",
-      "resolved": "http://kendobuild-registry/expand-tilde/-/expand-tilde-1.2.2.tgz"
+      "resolved": "https://registry.npmjs.org/expand-tilde/-/expand-tilde-1.2.2.tgz"
     },
     "express": {
       "version": "2.5.11",
@@ -1074,7 +1074,7 @@
     "fast-levenshtein": {
       "version": "2.0.5",
       "from": "fast-levenshtein@>=2.0.4 <2.1.0",
-      "resolved": "http://kendobuild-registry/fast-levenshtein/-/fast-levenshtein-2.0.5.tgz"
+      "resolved": "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.5.tgz"
     },
     "faye": {
       "version": "0.8.3",
@@ -1106,7 +1106,7 @@
     "finalhandler": {
       "version": "0.5.0",
       "from": "finalhandler@0.5.0",
-      "resolved": "http://kendobuild-registry/finalhandler/-/finalhandler-0.5.0.tgz"
+      "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-0.5.0.tgz"
     },
     "find-index": {
       "version": "0.1.1",
@@ -1121,7 +1121,7 @@
     "findup": {
       "version": "0.1.5",
       "from": "findup@0.1.5",
-      "resolved": "http://kendobuild-registry/findup/-/findup-0.1.5.tgz",
+      "resolved": "https://registry.npmjs.org/findup/-/findup-0.1.5.tgz",
       "dependencies": {
         "colors": {
           "version": "0.6.2",
@@ -1138,17 +1138,17 @@
     "findup-sync": {
       "version": "0.4.3",
       "from": "findup-sync@>=0.4.2 <0.5.0",
-      "resolved": "http://kendobuild-registry/findup-sync/-/findup-sync-0.4.3.tgz"
+      "resolved": "https://registry.npmjs.org/findup-sync/-/findup-sync-0.4.3.tgz"
     },
     "fined": {
       "version": "1.0.2",
       "from": "fined@>=1.0.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/fined/-/fined-1.0.2.tgz",
+      "resolved": "https://registry.npmjs.org/fined/-/fined-1.0.2.tgz",
       "dependencies": {
         "lodash.isplainobject": {
           "version": "4.0.6",
           "from": "lodash.isplainobject@>=4.0.4 <5.0.0",
-          "resolved": "http://kendobuild-registry/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz"
+          "resolved": "https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz"
         }
       }
     },
@@ -1160,12 +1160,12 @@
     "flagged-respawn": {
       "version": "0.3.2",
       "from": "flagged-respawn@>=0.3.2 <0.4.0",
-      "resolved": "http://kendobuild-registry/flagged-respawn/-/flagged-respawn-0.3.2.tgz"
+      "resolved": "https://registry.npmjs.org/flagged-respawn/-/flagged-respawn-0.3.2.tgz"
     },
     "for-in": {
       "version": "0.1.6",
       "from": "for-in@>=0.1.5 <0.2.0",
-      "resolved": "http://kendobuild-registry/for-in/-/for-in-0.1.6.tgz"
+      "resolved": "https://registry.npmjs.org/for-in/-/for-in-0.1.6.tgz"
     },
     "for-own": {
       "version": "0.1.4",
@@ -1185,17 +1185,17 @@
     "form-data": {
       "version": "1.0.1",
       "from": "form-data@>=1.0.0-rc3 <1.1.0",
-      "resolved": "http://kendobuild-registry/form-data/-/form-data-1.0.1.tgz",
+      "resolved": "https://registry.npmjs.org/form-data/-/form-data-1.0.1.tgz",
       "dependencies": {
         "async": {
           "version": "2.1.2",
           "from": "async@>=2.0.1 <3.0.0",
-          "resolved": "http://kendobuild-registry/async/-/async-2.1.2.tgz"
+          "resolved": "https://registry.npmjs.org/async/-/async-2.1.2.tgz"
         },
         "lodash": {
           "version": "4.16.6",
           "from": "lodash@>=4.14.0 <5.0.0",
-          "resolved": "http://kendobuild-registry/lodash/-/lodash-4.16.6.tgz"
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.6.tgz"
         }
       }
     },
@@ -1229,17 +1229,17 @@
     "fs-access": {
       "version": "1.0.1",
       "from": "fs-access@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/fs-access/-/fs-access-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/fs-access/-/fs-access-1.0.1.tgz"
     },
     "fs-exists-sync": {
       "version": "0.1.0",
       "from": "fs-exists-sync@>=0.1.0 <0.2.0",
-      "resolved": "http://kendobuild-registry/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz"
     },
     "fs.realpath": {
       "version": "1.0.0",
       "from": "fs.realpath@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/fs.realpath/-/fs.realpath-1.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
     },
     "gaze": {
       "version": "0.5.2",
@@ -1264,7 +1264,7 @@
     "ghooks": {
       "version": "1.3.2",
       "from": "ghooks@1.3.2",
-      "resolved": "http://kendobuild-registry/ghooks/-/ghooks-1.3.2.tgz"
+      "resolved": "https://registry.npmjs.org/ghooks/-/ghooks-1.3.2.tgz"
     },
     "glob": {
       "version": "5.0.15",
@@ -1328,12 +1328,12 @@
     "global-modules": {
       "version": "0.2.3",
       "from": "global-modules@>=0.2.3 <0.3.0",
-      "resolved": "http://kendobuild-registry/global-modules/-/global-modules-0.2.3.tgz"
+      "resolved": "https://registry.npmjs.org/global-modules/-/global-modules-0.2.3.tgz"
     },
     "global-prefix": {
       "version": "0.1.4",
       "from": "global-prefix@>=0.1.4 <0.2.0",
-      "resolved": "http://kendobuild-registry/global-prefix/-/global-prefix-0.1.4.tgz"
+      "resolved": "https://registry.npmjs.org/global-prefix/-/global-prefix-0.1.4.tgz"
     },
     "globule": {
       "version": "0.1.0",
@@ -1375,7 +1375,7 @@
     "graceful-fs": {
       "version": "4.1.10",
       "from": "graceful-fs@>=4.1.2 <5.0.0",
-      "resolved": "http://kendobuild-registry/graceful-fs/-/graceful-fs-4.1.10.tgz"
+      "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.10.tgz"
     },
     "graceful-readlink": {
       "version": "1.0.1",
@@ -1385,7 +1385,7 @@
     "gulp": {
       "version": "3.9.1",
       "from": "gulp@>=3.9.1 <4.0.0",
-      "resolved": "http://kendobuild-registry/gulp/-/gulp-3.9.1.tgz",
+      "resolved": "https://registry.npmjs.org/gulp/-/gulp-3.9.1.tgz",
       "dependencies": {
         "semver": {
           "version": "4.3.6",
@@ -1419,7 +1419,7 @@
     "gulp-clean-css": {
       "version": "2.0.13",
       "from": "gulp-clean-css@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/gulp-clean-css/-/gulp-clean-css-2.0.13.tgz",
+      "resolved": "https://registry.npmjs.org/gulp-clean-css/-/gulp-clean-css-2.0.13.tgz",
       "dependencies": {
         "isarray": {
           "version": "1.0.0",
@@ -1574,7 +1574,7 @@
     "gulp-debug": {
       "version": "2.1.2",
       "from": "gulp-debug@>=2.1.1 <2.2.0",
-      "resolved": "http://kendobuild-registry/gulp-debug/-/gulp-debug-2.1.2.tgz",
+      "resolved": "https://registry.npmjs.org/gulp-debug/-/gulp-debug-2.1.2.tgz",
       "dependencies": {
         "object-assign": {
           "version": "4.1.0",
@@ -1601,7 +1601,7 @@
         "multimatch": {
           "version": "2.1.0",
           "from": "multimatch@>=2.0.0 <3.0.0",
-          "resolved": "http://kendobuild-registry/multimatch/-/multimatch-2.1.0.tgz"
+          "resolved": "https://registry.npmjs.org/multimatch/-/multimatch-2.1.0.tgz"
         }
       }
     },
@@ -1695,7 +1695,7 @@
             "xtend": {
               "version": "4.0.1",
               "from": "xtend@>=4.0.0 <4.1.0-0",
-              "resolved": "http://kendobuild-registry/xtend/-/xtend-4.0.1.tgz"
+              "resolved": "https://registry.npmjs.org/xtend/-/xtend-4.0.1.tgz"
             }
           }
         },
@@ -1778,7 +1778,7 @@
     "gulp-less": {
       "version": "3.2.0",
       "from": "gulp-less@>=3.2.0 <4.0.0",
-      "resolved": "http://kendobuild-registry/gulp-less/-/gulp-less-3.2.0.tgz",
+      "resolved": "https://registry.npmjs.org/gulp-less/-/gulp-less-3.2.0.tgz",
       "dependencies": {
         "object-assign": {
           "version": "4.1.0",
@@ -1864,7 +1864,7 @@
     "gulp-plumber": {
       "version": "1.0.2",
       "from": "gulp-plumber@>=1.0.1 <1.1.0",
-      "resolved": "http://kendobuild-registry/gulp-plumber/-/gulp-plumber-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/gulp-plumber/-/gulp-plumber-1.0.2.tgz"
     },
     "gulp-progeny": {
       "version": "0.1.2",
@@ -2003,7 +2003,7 @@
         "lodash": {
           "version": "4.16.6",
           "from": "lodash@>=4.0.0 <5.0.0",
-          "resolved": "http://kendobuild-registry/lodash/-/lodash-4.16.6.tgz"
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.6.tgz"
         }
       }
     },
@@ -2025,7 +2025,7 @@
     "gulp-uglify": {
       "version": "1.5.4",
       "from": "gulp-uglify@>=1.4.2 <2.0.0",
-      "resolved": "http://kendobuild-registry/gulp-uglify/-/gulp-uglify-1.5.4.tgz",
+      "resolved": "https://registry.npmjs.org/gulp-uglify/-/gulp-uglify-1.5.4.tgz",
       "dependencies": {
         "camelcase": {
           "version": "1.2.1",
@@ -2045,7 +2045,7 @@
         "uglify-js": {
           "version": "2.6.4",
           "from": "uglify-js@2.6.4",
-          "resolved": "http://kendobuild-registry/uglify-js/-/uglify-js-2.6.4.tgz"
+          "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-2.6.4.tgz"
         },
         "vinyl-sourcemaps-apply": {
           "version": "0.2.1",
@@ -2154,7 +2154,7 @@
     "http-proxy": {
       "version": "1.15.2",
       "from": "http-proxy@>=1.9.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/http-proxy/-/http-proxy-1.15.2.tgz"
+      "resolved": "https://registry.npmjs.org/http-proxy/-/http-proxy-1.15.2.tgz"
     },
     "http-signature": {
       "version": "0.11.0",
@@ -2169,17 +2169,17 @@
     "iconv-lite": {
       "version": "0.4.13",
       "from": "iconv-lite@0.4.13",
-      "resolved": "http://kendobuild-registry/iconv-lite/-/iconv-lite-0.4.13.tgz"
+      "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.13.tgz"
     },
     "ieee754": {
       "version": "1.1.8",
       "from": "ieee754@>=1.1.4 <2.0.0",
-      "resolved": "http://kendobuild-registry/ieee754/-/ieee754-1.1.8.tgz"
+      "resolved": "https://registry.npmjs.org/ieee754/-/ieee754-1.1.8.tgz"
     },
     "image-size": {
       "version": "0.5.0",
       "from": "image-size@>=0.5.0 <0.6.0",
-      "resolved": "http://kendobuild-registry/image-size/-/image-size-0.5.0.tgz"
+      "resolved": "https://registry.npmjs.org/image-size/-/image-size-0.5.0.tgz"
     },
     "immutable": {
       "version": "3.8.1",
@@ -2204,22 +2204,22 @@
     "inflight": {
       "version": "1.0.6",
       "from": "inflight@>=1.0.4 <2.0.0",
-      "resolved": "http://kendobuild-registry/inflight/-/inflight-1.0.6.tgz"
+      "resolved": "https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz"
     },
     "inherits": {
       "version": "2.0.3",
       "from": "inherits@>=2.0.1 <2.1.0",
-      "resolved": "http://kendobuild-registry/inherits/-/inherits-2.0.3.tgz"
+      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz"
     },
     "ini": {
       "version": "1.3.4",
       "from": "ini@>=1.3.4 <2.0.0",
-      "resolved": "http://kendobuild-registry/ini/-/ini-1.3.4.tgz"
+      "resolved": "https://registry.npmjs.org/ini/-/ini-1.3.4.tgz"
     },
     "interpret": {
       "version": "1.0.1",
       "from": "interpret@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/interpret/-/interpret-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/interpret/-/interpret-1.0.1.tgz"
     },
     "invert-kv": {
       "version": "1.0.0",
@@ -2229,7 +2229,7 @@
     "irregular-plurals": {
       "version": "1.2.0",
       "from": "irregular-plurals@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/irregular-plurals/-/irregular-plurals-1.2.0.tgz"
+      "resolved": "https://registry.npmjs.org/irregular-plurals/-/irregular-plurals-1.2.0.tgz"
     },
     "is-absolute": {
       "version": "0.1.7",
@@ -2256,7 +2256,7 @@
     "is-buffer": {
       "version": "1.1.4",
       "from": "is-buffer@>=1.0.2 <2.0.0",
-      "resolved": "http://kendobuild-registry/is-buffer/-/is-buffer-1.1.4.tgz"
+      "resolved": "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.4.tgz"
     },
     "is-builtin-module": {
       "version": "1.0.0",
@@ -2286,7 +2286,7 @@
     "is-finite": {
       "version": "1.0.2",
       "from": "is-finite@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/is-finite/-/is-finite-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/is-finite/-/is-finite-1.0.2.tgz"
     },
     "is-fullwidth-code-point": {
       "version": "1.0.0",
@@ -2301,7 +2301,7 @@
     "is-my-json-valid": {
       "version": "2.15.0",
       "from": "is-my-json-valid@>=2.12.4 <3.0.0",
-      "resolved": "http://kendobuild-registry/is-my-json-valid/-/is-my-json-valid-2.15.0.tgz"
+      "resolved": "https://registry.npmjs.org/is-my-json-valid/-/is-my-json-valid-2.15.0.tgz"
     },
     "is-number": {
       "version": "2.1.0",
@@ -2311,7 +2311,7 @@
     "is-plain-obj": {
       "version": "1.1.0",
       "from": "is-plain-obj@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/is-plain-obj/-/is-plain-obj-1.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-1.1.0.tgz"
     },
     "is-posix-bracket": {
       "version": "0.1.1",
@@ -2336,17 +2336,17 @@
     "is-relative": {
       "version": "0.2.1",
       "from": "is-relative@>=0.2.1 <0.3.0",
-      "resolved": "http://kendobuild-registry/is-relative/-/is-relative-0.2.1.tgz"
+      "resolved": "https://registry.npmjs.org/is-relative/-/is-relative-0.2.1.tgz"
     },
     "is-stream": {
       "version": "1.1.0",
       "from": "is-stream@>=1.1.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/is-stream/-/is-stream-1.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/is-stream/-/is-stream-1.1.0.tgz"
     },
     "is-unc-path": {
       "version": "0.1.1",
       "from": "is-unc-path@>=0.1.1 <0.2.0",
-      "resolved": "http://kendobuild-registry/is-unc-path/-/is-unc-path-0.1.1.tgz"
+      "resolved": "https://registry.npmjs.org/is-unc-path/-/is-unc-path-0.1.1.tgz"
     },
     "is-utf8": {
       "version": "0.2.1",
@@ -2356,7 +2356,7 @@
     "is-windows": {
       "version": "0.2.0",
       "from": "is-windows@>=0.2.0 <0.3.0",
-      "resolved": "http://kendobuild-registry/is-windows/-/is-windows-0.2.0.tgz"
+      "resolved": "https://registry.npmjs.org/is-windows/-/is-windows-0.2.0.tgz"
     },
     "isarray": {
       "version": "0.0.1",
@@ -2366,12 +2366,12 @@
     "isbinaryfile": {
       "version": "3.0.1",
       "from": "isbinaryfile@>=3.0.0 <4.0.0",
-      "resolved": "http://kendobuild-registry/isbinaryfile/-/isbinaryfile-3.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/isbinaryfile/-/isbinaryfile-3.0.1.tgz"
     },
     "isexe": {
       "version": "1.1.2",
       "from": "isexe@>=1.1.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/isexe/-/isexe-1.1.2.tgz"
+      "resolved": "https://registry.npmjs.org/isexe/-/isexe-1.1.2.tgz"
     },
     "isobject": {
       "version": "2.1.0",
@@ -2447,12 +2447,12 @@
     "jsonpointer": {
       "version": "4.0.0",
       "from": "jsonpointer@>=4.0.0 <5.0.0",
-      "resolved": "http://kendobuild-registry/jsonpointer/-/jsonpointer-4.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/jsonpointer/-/jsonpointer-4.0.0.tgz"
     },
     "karma": {
       "version": "1.3.0",
       "from": "karma@>=1.3.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/karma/-/karma-1.3.0.tgz",
+      "resolved": "https://registry.npmjs.org/karma/-/karma-1.3.0.tgz",
       "dependencies": {
         "accepts": {
           "version": "1.1.4",
@@ -2472,7 +2472,7 @@
         "engine.io": {
           "version": "1.6.10",
           "from": "engine.io@1.6.10",
-          "resolved": "http://kendobuild-registry/engine.io/-/engine.io-1.6.10.tgz"
+          "resolved": "https://registry.npmjs.org/engine.io/-/engine.io-1.6.10.tgz"
         },
         "engine.io-client": {
           "version": "1.6.9",
@@ -2482,7 +2482,7 @@
             "component-emitter": {
               "version": "1.1.2",
               "from": "component-emitter@1.1.2",
-              "resolved": "http://kendobuild-registry/component-emitter/-/component-emitter-1.1.2.tgz"
+              "resolved": "https://registry.npmjs.org/component-emitter/-/component-emitter-1.1.2.tgz"
             }
           }
         },
@@ -2501,7 +2501,7 @@
         "glob": {
           "version": "7.1.1",
           "from": "glob@>=7.0.3 <8.0.0",
-          "resolved": "http://kendobuild-registry/glob/-/glob-7.1.1.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.1.tgz"
         },
         "json3": {
           "version": "3.3.2",
@@ -2551,7 +2551,7 @@
         "socket.io": {
           "version": "1.4.7",
           "from": "socket.io@1.4.7",
-          "resolved": "http://kendobuild-registry/socket.io/-/socket.io-1.4.7.tgz"
+          "resolved": "https://registry.npmjs.org/socket.io/-/socket.io-1.4.7.tgz"
         },
         "socket.io-client": {
           "version": "1.4.6",
@@ -2566,7 +2566,7 @@
             "component-emitter": {
               "version": "1.1.2",
               "from": "component-emitter@1.1.2",
-              "resolved": "http://kendobuild-registry/component-emitter/-/component-emitter-1.1.2.tgz"
+              "resolved": "https://registry.npmjs.org/component-emitter/-/component-emitter-1.1.2.tgz"
             }
           }
         },
@@ -2590,39 +2590,39 @@
     "karma-chrome-launcher": {
       "version": "2.0.0",
       "from": "karma-chrome-launcher@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/karma-chrome-launcher/-/karma-chrome-launcher-2.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/karma-chrome-launcher/-/karma-chrome-launcher-2.0.0.tgz"
     },
     "karma-firefox-launcher": {
       "version": "1.0.0",
       "from": "karma-firefox-launcher@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/karma-firefox-launcher/-/karma-firefox-launcher-1.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/karma-firefox-launcher/-/karma-firefox-launcher-1.0.0.tgz"
     },
     "karma-html2js-preprocessor": {
       "version": "1.1.0",
       "from": "karma-html2js-preprocessor@>=1.1.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/karma-html2js-preprocessor/-/karma-html2js-preprocessor-1.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/karma-html2js-preprocessor/-/karma-html2js-preprocessor-1.1.0.tgz"
     },
     "karma-junit-reporter": {
       "version": "1.1.0",
       "from": "karma-junit-reporter@>=1.1.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/karma-junit-reporter/-/karma-junit-reporter-1.1.0.tgz",
+      "resolved": "https://registry.npmjs.org/karma-junit-reporter/-/karma-junit-reporter-1.1.0.tgz",
       "dependencies": {
         "xmlbuilder": {
           "version": "8.2.2",
           "from": "xmlbuilder@8.2.2",
-          "resolved": "http://kendobuild-registry/xmlbuilder/-/xmlbuilder-8.2.2.tgz"
+          "resolved": "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-8.2.2.tgz"
         }
       }
     },
     "karma-qunit": {
       "version": "1.2.1",
       "from": "karma-qunit@1.2.1",
-      "resolved": "http://kendobuild-registry/karma-qunit/-/karma-qunit-1.2.1.tgz"
+      "resolved": "https://registry.npmjs.org/karma-qunit/-/karma-qunit-1.2.1.tgz"
     },
     "kind-of": {
       "version": "3.0.4",
       "from": "kind-of@>=3.0.2 <4.0.0",
-      "resolved": "http://kendobuild-registry/kind-of/-/kind-of-3.0.4.tgz"
+      "resolved": "https://registry.npmjs.org/kind-of/-/kind-of-3.0.4.tgz"
     },
     "lazy-cache": {
       "version": "1.0.4",
@@ -2642,7 +2642,7 @@
     "less": {
       "version": "2.7.1",
       "from": "less@>=2.7.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/less/-/less-2.7.1.tgz",
+      "resolved": "https://registry.npmjs.org/less/-/less-2.7.1.tgz",
       "dependencies": {
         "mime": {
           "version": "1.3.4",
@@ -2669,12 +2669,12 @@
     "liftoff": {
       "version": "2.3.0",
       "from": "liftoff@>=2.1.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/liftoff/-/liftoff-2.3.0.tgz",
+      "resolved": "https://registry.npmjs.org/liftoff/-/liftoff-2.3.0.tgz",
       "dependencies": {
         "lodash.isplainobject": {
           "version": "4.0.6",
           "from": "lodash.isplainobject@>=4.0.4 <5.0.0",
-          "resolved": "http://kendobuild-registry/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz"
+          "resolved": "https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz"
         }
       }
     },
@@ -2691,7 +2691,7 @@
     "loader-utils": {
       "version": "0.2.16",
       "from": "loader-utils@>=0.2.11 <0.3.0",
-      "resolved": "http://kendobuild-registry/loader-utils/-/loader-utils-0.2.16.tgz",
+      "resolved": "https://registry.npmjs.org/loader-utils/-/loader-utils-0.2.16.tgz",
       "dependencies": {
         "object-assign": {
           "version": "4.1.0",
@@ -2842,7 +2842,7 @@
     "lodash.assignwith": {
       "version": "4.2.0",
       "from": "lodash.assignwith@>=4.0.7 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.assignwith/-/lodash.assignwith-4.2.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.assignwith/-/lodash.assignwith-4.2.0.tgz"
     },
     "lodash.clone": {
       "version": "4.3.2",
@@ -2874,12 +2874,12 @@
     "lodash.flatten": {
       "version": "4.4.0",
       "from": "lodash.flatten@>=4.2.0 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.flatten/-/lodash.flatten-4.4.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.flatten/-/lodash.flatten-4.4.0.tgz"
     },
     "lodash.isarguments": {
       "version": "3.1.0",
       "from": "lodash.isarguments@>=3.0.0 <4.0.0",
-      "resolved": "http://kendobuild-registry/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz"
     },
     "lodash.isarray": {
       "version": "3.0.4",
@@ -2889,7 +2889,7 @@
     "lodash.isempty": {
       "version": "4.4.0",
       "from": "lodash.isempty@>=4.2.1 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.isempty/-/lodash.isempty-4.4.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.isempty/-/lodash.isempty-4.4.0.tgz"
     },
     "lodash.isobject": {
       "version": "2.4.1",
@@ -2904,7 +2904,7 @@
     "lodash.isstring": {
       "version": "4.0.1",
       "from": "lodash.isstring@>=4.0.1 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.isstring/-/lodash.isstring-4.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz"
     },
     "lodash.istypedarray": {
       "version": "3.0.6",
@@ -2924,12 +2924,12 @@
     "lodash.map": {
       "version": "4.6.0",
       "from": "lodash.map@>=4.5.1 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.map/-/lodash.map-4.6.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.map/-/lodash.map-4.6.0.tgz"
     },
     "lodash.mapvalues": {
       "version": "4.6.0",
       "from": "lodash.mapvalues@>=4.4.0 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz"
     },
     "lodash.merge": {
       "version": "3.3.2",
@@ -2939,12 +2939,12 @@
     "lodash.partialright": {
       "version": "4.2.1",
       "from": "lodash.partialright@>=4.1.4 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.partialright/-/lodash.partialright-4.2.1.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.partialright/-/lodash.partialright-4.2.1.tgz"
     },
     "lodash.pick": {
       "version": "4.4.0",
       "from": "lodash.pick@>=4.2.1 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.pick/-/lodash.pick-4.4.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.pick/-/lodash.pick-4.4.0.tgz"
     },
     "lodash.restparam": {
       "version": "3.6.1",
@@ -2954,7 +2954,7 @@
     "lodash.some": {
       "version": "4.6.0",
       "from": "lodash.some@>=4.2.2 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.some/-/lodash.some-4.6.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.some/-/lodash.some-4.6.0.tgz"
     },
     "lodash.template": {
       "version": "3.6.2",
@@ -2974,7 +2974,7 @@
     "lodash.uniq": {
       "version": "4.5.0",
       "from": "lodash.uniq@>=4.3.0 <5.0.0",
-      "resolved": "http://kendobuild-registry/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
+      "resolved": "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
     },
     "lodash.values": {
       "version": "2.4.1",
@@ -2996,7 +2996,7 @@
     "log4js": {
       "version": "0.6.38",
       "from": "log4js@>=0.6.31 <0.7.0",
-      "resolved": "http://kendobuild-registry/log4js/-/log4js-0.6.38.tgz",
+      "resolved": "https://registry.npmjs.org/log4js/-/log4js-0.6.38.tgz",
       "dependencies": {
         "readable-stream": {
           "version": "1.0.34",
@@ -3018,7 +3018,7 @@
     "loud-rejection": {
       "version": "1.6.0",
       "from": "loud-rejection@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/loud-rejection/-/loud-rejection-1.6.0.tgz"
+      "resolved": "https://registry.npmjs.org/loud-rejection/-/loud-rejection-1.6.0.tgz"
     },
     "lru-cache": {
       "version": "2.7.3",
@@ -3028,12 +3028,12 @@
     "manage-path": {
       "version": "2.0.0",
       "from": "manage-path@2.0.0",
-      "resolved": "http://kendobuild-registry/manage-path/-/manage-path-2.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/manage-path/-/manage-path-2.0.0.tgz"
     },
     "map-cache": {
       "version": "0.2.2",
       "from": "map-cache@>=0.2.0 <0.3.0",
-      "resolved": "http://kendobuild-registry/map-cache/-/map-cache-0.2.2.tgz"
+      "resolved": "https://registry.npmjs.org/map-cache/-/map-cache-0.2.2.tgz"
     },
     "map-obj": {
       "version": "1.0.1",
@@ -3094,12 +3094,12 @@
     "merge2": {
       "version": "0.3.7",
       "from": "merge2@>=0.3.6 <0.4.0",
-      "resolved": "http://kendobuild-registry/merge2/-/merge2-0.3.7.tgz"
+      "resolved": "https://registry.npmjs.org/merge2/-/merge2-0.3.7.tgz"
     },
     "micromatch": {
       "version": "2.3.11",
       "from": "micromatch@>=2.1.5 <3.0.0",
-      "resolved": "http://kendobuild-registry/micromatch/-/micromatch-2.3.11.tgz"
+      "resolved": "https://registry.npmjs.org/micromatch/-/micromatch-2.3.11.tgz"
     },
     "mime": {
       "version": "1.2.4",
@@ -3109,12 +3109,12 @@
     "mime-db": {
       "version": "1.24.0",
       "from": "mime-db@>=1.24.0 <1.25.0",
-      "resolved": "http://kendobuild-registry/mime-db/-/mime-db-1.24.0.tgz"
+      "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.24.0.tgz"
     },
     "mime-types": {
       "version": "2.1.12",
       "from": "mime-types@>=2.1.7 <2.2.0",
-      "resolved": "http://kendobuild-registry/mime-types/-/mime-types-2.1.12.tgz"
+      "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.12.tgz"
     },
     "minimatch": {
       "version": "0.3.0",
@@ -3163,7 +3163,7 @@
     "natives": {
       "version": "1.1.0",
       "from": "natives@>=1.1.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/natives/-/natives-1.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/natives/-/natives-1.1.0.tgz"
     },
     "negotiator": {
       "version": "0.6.1",
@@ -3173,7 +3173,7 @@
     "node-libs-browser": {
       "version": "0.6.0",
       "from": "node-libs-browser@>=0.6.0 <0.7.0",
-      "resolved": "http://kendobuild-registry/node-libs-browser/-/node-libs-browser-0.6.0.tgz"
+      "resolved": "https://registry.npmjs.org/node-libs-browser/-/node-libs-browser-0.6.0.tgz"
     },
     "node-uuid": {
       "version": "1.4.7",
@@ -3198,12 +3198,12 @@
     "normalize-range": {
       "version": "0.1.2",
       "from": "normalize-range@>=0.1.2 <0.2.0",
-      "resolved": "http://kendobuild-registry/normalize-range/-/normalize-range-0.1.2.tgz"
+      "resolved": "https://registry.npmjs.org/normalize-range/-/normalize-range-0.1.2.tgz"
     },
     "npm-run-path": {
       "version": "1.0.0",
       "from": "npm-run-path@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/npm-run-path/-/npm-run-path-1.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/npm-run-path/-/npm-run-path-1.0.0.tgz"
     },
     "null-check": {
       "version": "1.0.0",
@@ -3218,7 +3218,7 @@
     "number-is-nan": {
       "version": "1.0.1",
       "from": "number-is-nan@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/number-is-nan/-/number-is-nan-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/number-is-nan/-/number-is-nan-1.0.1.tgz"
     },
     "oauth-sign": {
       "version": "0.8.2",
@@ -3248,7 +3248,7 @@
     "object.omit": {
       "version": "2.0.1",
       "from": "object.omit@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/object.omit/-/object.omit-2.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/object.omit/-/object.omit-2.0.1.tgz"
     },
     "on-finished": {
       "version": "2.3.0",
@@ -3258,7 +3258,7 @@
     "once": {
       "version": "1.4.0",
       "from": "once@>=1.3.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/once/-/once-1.4.0.tgz"
+      "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz"
     },
     "openurl": {
       "version": "1.1.0",
@@ -3280,12 +3280,12 @@
     "opt-cli": {
       "version": "1.5.1",
       "from": "opt-cli@1.5.1",
-      "resolved": "http://kendobuild-registry/opt-cli/-/opt-cli-1.5.1.tgz",
+      "resolved": "https://registry.npmjs.org/opt-cli/-/opt-cli-1.5.1.tgz",
       "dependencies": {
         "spawn-command": {
           "version": "0.0.2-1",
           "from": "spawn-command@0.0.2-1",
-          "resolved": "http://kendobuild-registry/spawn-command/-/spawn-command-0.0.2-1.tgz"
+          "resolved": "https://registry.npmjs.org/spawn-command/-/spawn-command-0.0.2-1.tgz"
         }
       }
     },
@@ -3316,7 +3316,7 @@
     "optionator": {
       "version": "0.8.2",
       "from": "optionator@>=0.8.1 <0.9.0",
-      "resolved": "http://kendobuild-registry/optionator/-/optionator-0.8.2.tgz"
+      "resolved": "https://registry.npmjs.org/optionator/-/optionator-0.8.2.tgz"
     },
     "options": {
       "version": "0.0.6",
@@ -3341,7 +3341,7 @@
     "os-homedir": {
       "version": "1.0.2",
       "from": "os-homedir@>=1.0.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/os-homedir/-/os-homedir-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/os-homedir/-/os-homedir-1.0.2.tgz"
     },
     "os-locale": {
       "version": "1.4.0",
@@ -3351,32 +3351,32 @@
     "os-tmpdir": {
       "version": "1.0.2",
       "from": "os-tmpdir@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/os-tmpdir/-/os-tmpdir-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/os-tmpdir/-/os-tmpdir-1.0.2.tgz"
     },
     "osenv": {
       "version": "0.1.3",
       "from": "osenv@>=0.1.3 <0.2.0",
-      "resolved": "http://kendobuild-registry/osenv/-/osenv-0.1.3.tgz"
+      "resolved": "https://registry.npmjs.org/osenv/-/osenv-0.1.3.tgz"
     },
     "pad-right": {
       "version": "0.2.2",
       "from": "pad-right@>=0.2.2 <0.3.0",
-      "resolved": "http://kendobuild-registry/pad-right/-/pad-right-0.2.2.tgz"
+      "resolved": "https://registry.npmjs.org/pad-right/-/pad-right-0.2.2.tgz"
     },
     "pako": {
       "version": "0.2.9",
       "from": "pako@>=0.2.0 <0.3.0",
-      "resolved": "http://kendobuild-registry/pako/-/pako-0.2.9.tgz"
+      "resolved": "https://registry.npmjs.org/pako/-/pako-0.2.9.tgz"
     },
     "parse-filepath": {
       "version": "1.0.1",
       "from": "parse-filepath@>=1.0.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/parse-filepath/-/parse-filepath-1.0.1.tgz",
+      "resolved": "https://registry.npmjs.org/parse-filepath/-/parse-filepath-1.0.1.tgz",
       "dependencies": {
         "is-absolute": {
           "version": "0.2.6",
           "from": "is-absolute@>=0.2.3 <0.3.0",
-          "resolved": "http://kendobuild-registry/is-absolute/-/is-absolute-0.2.6.tgz"
+          "resolved": "https://registry.npmjs.org/is-absolute/-/is-absolute-0.2.6.tgz"
         }
       }
     },
@@ -3428,22 +3428,22 @@
     "path-is-absolute": {
       "version": "1.0.1",
       "from": "path-is-absolute@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/path-is-absolute/-/path-is-absolute-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz"
     },
     "path-key": {
       "version": "1.0.0",
       "from": "path-key@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/path-key/-/path-key-1.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/path-key/-/path-key-1.0.0.tgz"
     },
     "path-root": {
       "version": "0.1.1",
       "from": "path-root@>=0.1.1 <0.2.0",
-      "resolved": "http://kendobuild-registry/path-root/-/path-root-0.1.1.tgz"
+      "resolved": "https://registry.npmjs.org/path-root/-/path-root-0.1.1.tgz"
     },
     "path-root-regex": {
       "version": "0.1.2",
       "from": "path-root-regex@>=0.1.0 <0.2.0",
-      "resolved": "http://kendobuild-registry/path-root-regex/-/path-root-regex-0.1.2.tgz"
+      "resolved": "https://registry.npmjs.org/path-root-regex/-/path-root-regex-0.1.2.tgz"
     },
     "path-type": {
       "version": "1.1.0",
@@ -3473,7 +3473,7 @@
     "plur": {
       "version": "2.1.2",
       "from": "plur@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/plur/-/plur-2.1.2.tgz"
+      "resolved": "https://registry.npmjs.org/plur/-/plur-2.1.2.tgz"
     },
     "portscanner": {
       "version": "1.0.0",
@@ -3490,7 +3490,7 @@
     "postcss": {
       "version": "5.2.5",
       "from": "postcss@>=5.0.0 <6.0.0",
-      "resolved": "http://kendobuild-registry/postcss/-/postcss-5.2.5.tgz",
+      "resolved": "https://registry.npmjs.org/postcss/-/postcss-5.2.5.tgz",
       "dependencies": {
         "source-map": {
           "version": "0.5.6",
@@ -3507,7 +3507,7 @@
     "postcss-value-parser": {
       "version": "3.3.0",
       "from": "postcss-value-parser@>=3.2.3 <4.0.0",
-      "resolved": "http://kendobuild-registry/postcss-value-parser/-/postcss-value-parser-3.3.0.tgz"
+      "resolved": "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-3.3.0.tgz"
     },
     "prelude-ls": {
       "version": "1.1.2",
@@ -3522,7 +3522,7 @@
     "pretty-hrtime": {
       "version": "1.0.2",
       "from": "pretty-hrtime@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/pretty-hrtime/-/pretty-hrtime-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/pretty-hrtime/-/pretty-hrtime-1.0.2.tgz"
     },
     "private": {
       "version": "0.1.6",
@@ -3532,7 +3532,7 @@
     "process": {
       "version": "0.11.9",
       "from": "process@>=0.11.0 <0.12.0",
-      "resolved": "http://kendobuild-registry/process/-/process-0.11.9.tgz"
+      "resolved": "https://registry.npmjs.org/process/-/process-0.11.9.tgz"
     },
     "process-nextick-args": {
       "version": "1.0.7",
@@ -3542,7 +3542,7 @@
     "promise": {
       "version": "7.1.1",
       "from": "promise@>=7.1.1 <8.0.0",
-      "resolved": "http://kendobuild-registry/promise/-/promise-7.1.1.tgz"
+      "resolved": "https://registry.npmjs.org/promise/-/promise-7.1.1.tgz"
     },
     "prr": {
       "version": "0.0.0",
@@ -3552,7 +3552,7 @@
     "pseudomap": {
       "version": "1.0.2",
       "from": "pseudomap@>=1.0.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/pseudomap/-/pseudomap-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/pseudomap/-/pseudomap-1.0.2.tgz"
     },
     "punycode": {
       "version": "1.4.1",
@@ -3562,7 +3562,7 @@
     "qjobs": {
       "version": "1.1.5",
       "from": "qjobs@>=1.1.4 <2.0.0",
-      "resolved": "http://kendobuild-registry/qjobs/-/qjobs-1.1.5.tgz"
+      "resolved": "https://registry.npmjs.org/qjobs/-/qjobs-1.1.5.tgz"
     },
     "qs": {
       "version": "0.4.2",
@@ -3587,7 +3587,7 @@
     "qunitjs": {
       "version": "1.23.1",
       "from": "qunitjs@>=1.23.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/qunitjs/-/qunitjs-1.23.1.tgz"
+      "resolved": "https://registry.npmjs.org/qunitjs/-/qunitjs-1.23.1.tgz"
     },
     "randomatic": {
       "version": "1.1.5",
@@ -3602,7 +3602,7 @@
     "raw-body": {
       "version": "2.1.7",
       "from": "raw-body@>=2.1.7 <2.2.0",
-      "resolved": "http://kendobuild-registry/raw-body/-/raw-body-2.1.7.tgz"
+      "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-2.1.7.tgz"
     },
     "rcfinder": {
       "version": "0.1.9",
@@ -3612,7 +3612,7 @@
         "lodash.clonedeep": {
           "version": "4.5.0",
           "from": "lodash.clonedeep@>=4.3.2 <5.0.0",
-          "resolved": "http://kendobuild-registry/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz"
+          "resolved": "https://registry.npmjs.org/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz"
         }
       }
     },
@@ -3639,7 +3639,7 @@
     "readdirp": {
       "version": "2.1.0",
       "from": "readdirp@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/readdirp/-/readdirp-2.1.0.tgz",
+      "resolved": "https://registry.npmjs.org/readdirp/-/readdirp-2.1.0.tgz",
       "dependencies": {
         "isarray": {
           "version": "1.0.0",
@@ -3686,7 +3686,7 @@
     "repeat-string": {
       "version": "1.6.1",
       "from": "repeat-string@>=1.5.2 <2.0.0",
-      "resolved": "http://kendobuild-registry/repeat-string/-/repeat-string-1.6.1.tgz"
+      "resolved": "https://registry.npmjs.org/repeat-string/-/repeat-string-1.6.1.tgz"
     },
     "repeating": {
       "version": "2.0.1",
@@ -3701,7 +3701,7 @@
     "replacestream": {
       "version": "4.0.2",
       "from": "replacestream@>=4.0.0 <5.0.0",
-      "resolved": "http://kendobuild-registry/replacestream/-/replacestream-4.0.2.tgz",
+      "resolved": "https://registry.npmjs.org/replacestream/-/replacestream-4.0.2.tgz",
       "dependencies": {
         "isarray": {
           "version": "1.0.0",
@@ -3728,14 +3728,14 @@
         "qs": {
           "version": "5.2.1",
           "from": "qs@>=5.2.0 <5.3.0",
-          "resolved": "http://kendobuild-registry/qs/-/qs-5.2.1.tgz"
+          "resolved": "https://registry.npmjs.org/qs/-/qs-5.2.1.tgz"
         }
       }
     },
     "require-dir": {
       "version": "0.3.1",
       "from": "require-dir@>=0.3.0 <0.4.0",
-      "resolved": "http://kendobuild-registry/require-dir/-/require-dir-0.3.1.tgz"
+      "resolved": "https://registry.npmjs.org/require-dir/-/require-dir-0.3.1.tgz"
     },
     "requires-port": {
       "version": "1.0.0",
@@ -3745,12 +3745,12 @@
     "resolve": {
       "version": "1.1.7",
       "from": "resolve@>=1.1.7 <2.0.0",
-      "resolved": "http://kendobuild-registry/resolve/-/resolve-1.1.7.tgz"
+      "resolved": "https://registry.npmjs.org/resolve/-/resolve-1.1.7.tgz"
     },
     "resolve-dir": {
       "version": "0.1.1",
       "from": "resolve-dir@>=0.1.0 <0.2.0",
-      "resolved": "http://kendobuild-registry/resolve-dir/-/resolve-dir-0.1.1.tgz"
+      "resolved": "https://registry.npmjs.org/resolve-dir/-/resolve-dir-0.1.1.tgz"
     },
     "resp-modifier": {
       "version": "5.0.2",
@@ -3772,17 +3772,17 @@
     "right-pad": {
       "version": "1.0.1",
       "from": "right-pad@>=1.0.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/right-pad/-/right-pad-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/right-pad/-/right-pad-1.0.1.tgz"
     },
     "rimraf": {
       "version": "2.5.4",
       "from": "rimraf@>=2.3.3 <3.0.0",
-      "resolved": "http://kendobuild-registry/rimraf/-/rimraf-2.5.4.tgz",
+      "resolved": "https://registry.npmjs.org/rimraf/-/rimraf-2.5.4.tgz",
       "dependencies": {
         "glob": {
           "version": "7.1.1",
           "from": "glob@>=7.0.5 <8.0.0",
-          "resolved": "http://kendobuild-registry/glob/-/glob-7.1.1.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.1.tgz"
         },
         "minimatch": {
           "version": "3.0.3",
@@ -3804,12 +3804,12 @@
     "semver": {
       "version": "5.3.0",
       "from": "semver@>=2.0.0 <3.0.0||>=3.0.0 <4.0.0||>=4.0.0 <5.0.0||>=5.0.0 <6.0.0",
-      "resolved": "http://kendobuild-registry/semver/-/semver-5.3.0.tgz"
+      "resolved": "https://registry.npmjs.org/semver/-/semver-5.3.0.tgz"
     },
     "semver-regex": {
       "version": "1.0.0",
       "from": "semver-regex@1.0.0",
-      "resolved": "http://kendobuild-registry/semver-regex/-/semver-regex-1.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/semver-regex/-/semver-regex-1.0.0.tgz"
     },
     "send": {
       "version": "0.14.1",
@@ -3841,7 +3841,7 @@
     "set-immediate-shim": {
       "version": "1.0.1",
       "from": "set-immediate-shim@>=1.0.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/set-immediate-shim/-/set-immediate-shim-1.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/set-immediate-shim/-/set-immediate-shim-1.0.1.tgz"
     },
     "setprototypeof": {
       "version": "1.0.1",
@@ -3866,7 +3866,7 @@
     "signal-exit": {
       "version": "3.0.1",
       "from": "signal-exit@>=3.0.0 <4.0.0",
-      "resolved": "http://kendobuild-registry/signal-exit/-/signal-exit-3.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.1.tgz"
     },
     "sntp": {
       "version": "1.0.9",
@@ -3876,7 +3876,7 @@
     "socket.io": {
       "version": "1.5.1",
       "from": "socket.io@>=1.3.7 <2.0.0",
-      "resolved": "http://kendobuild-registry/socket.io/-/socket.io-1.5.1.tgz"
+      "resolved": "https://registry.npmjs.org/socket.io/-/socket.io-1.5.1.tgz"
     },
     "socket.io-adapter": {
       "version": "0.4.0",
@@ -3900,7 +3900,7 @@
     "socket.io-client": {
       "version": "1.5.1",
       "from": "socket.io-client@1.5.1",
-      "resolved": "http://kendobuild-registry/socket.io-client/-/socket.io-client-1.5.1.tgz",
+      "resolved": "https://registry.npmjs.org/socket.io-client/-/socket.io-client-1.5.1.tgz",
       "dependencies": {
         "component-emitter": {
           "version": "1.2.0",
@@ -3912,7 +3912,7 @@
     "socket.io-parser": {
       "version": "2.3.1",
       "from": "socket.io-parser@2.3.1",
-      "resolved": "http://kendobuild-registry/socket.io-parser/-/socket.io-parser-2.3.1.tgz",
+      "resolved": "https://registry.npmjs.org/socket.io-parser/-/socket.io-parser-2.3.1.tgz",
       "dependencies": {
         "json3": {
           "version": "3.3.2",
@@ -3939,7 +3939,7 @@
     "spawn-command": {
       "version": "0.0.2",
       "from": "spawn-command@0.0.2",
-      "resolved": "http://kendobuild-registry/spawn-command/-/spawn-command-0.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/spawn-command/-/spawn-command-0.0.2.tgz"
     },
     "spdx-correct": {
       "version": "1.0.2",
@@ -3949,12 +3949,12 @@
     "spdx-expression-parse": {
       "version": "1.0.4",
       "from": "spdx-expression-parse@>=1.0.0 <1.1.0",
-      "resolved": "http://kendobuild-registry/spdx-expression-parse/-/spdx-expression-parse-1.0.4.tgz"
+      "resolved": "https://registry.npmjs.org/spdx-expression-parse/-/spdx-expression-parse-1.0.4.tgz"
     },
     "spdx-license-ids": {
       "version": "1.2.2",
       "from": "spdx-license-ids@>=1.0.2 <2.0.0",
-      "resolved": "http://kendobuild-registry/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz"
+      "resolved": "https://registry.npmjs.org/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz"
     },
     "statuses": {
       "version": "1.3.0",
@@ -3979,7 +3979,7 @@
     "stream-shift": {
       "version": "1.0.0",
       "from": "stream-shift@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/stream-shift/-/stream-shift-1.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/stream-shift/-/stream-shift-1.0.0.tgz"
     },
     "stream-throttle": {
       "version": "0.1.3",
@@ -4026,12 +4026,12 @@
     "string-width": {
       "version": "1.0.2",
       "from": "string-width@>=1.0.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/string-width/-/string-width-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/string-width/-/string-width-1.0.2.tgz"
     },
     "stringify-object": {
       "version": "2.4.0",
       "from": "stringify-object@>=2.3.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/stringify-object/-/stringify-object-2.4.0.tgz"
+      "resolved": "https://registry.npmjs.org/stringify-object/-/stringify-object-2.4.0.tgz"
     },
     "stringstream": {
       "version": "0.0.5",
@@ -4051,7 +4051,7 @@
     "strip-eof": {
       "version": "1.0.0",
       "from": "strip-eof@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/strip-eof/-/strip-eof-1.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/strip-eof/-/strip-eof-1.0.0.tgz"
     },
     "strip-indent": {
       "version": "1.0.1",
@@ -4086,7 +4086,7 @@
     "textextensions": {
       "version": "1.0.2",
       "from": "textextensions@>=1.0.0 <1.1.0",
-      "resolved": "http://kendobuild-registry/textextensions/-/textextensions-1.0.2.tgz"
+      "resolved": "https://registry.npmjs.org/textextensions/-/textextensions-1.0.2.tgz"
     },
     "tfunk": {
       "version": "3.0.2",
@@ -4123,7 +4123,7 @@
     "tildify": {
       "version": "1.2.0",
       "from": "tildify@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/tildify/-/tildify-1.2.0.tgz"
+      "resolved": "https://registry.npmjs.org/tildify/-/tildify-1.2.0.tgz"
     },
     "time-stamp": {
       "version": "1.0.1",
@@ -4138,7 +4138,7 @@
     "tmp": {
       "version": "0.0.28",
       "from": "tmp@0.0.28",
-      "resolved": "http://kendobuild-registry/tmp/-/tmp-0.0.28.tgz"
+      "resolved": "https://registry.npmjs.org/tmp/-/tmp-0.0.28.tgz"
     },
     "to-array": {
       "version": "0.1.4",
@@ -4173,7 +4173,7 @@
     "type-is": {
       "version": "1.6.13",
       "from": "type-is@>=1.6.13 <1.7.0",
-      "resolved": "http://kendobuild-registry/type-is/-/type-is-1.6.13.tgz"
+      "resolved": "https://registry.npmjs.org/type-is/-/type-is-1.6.13.tgz"
     },
     "typedarray": {
       "version": "0.0.6",
@@ -4183,7 +4183,7 @@
     "typescript": {
       "version": "1.8.10",
       "from": "typescript@>=1.5.3 <2.0.0",
-      "resolved": "http://kendobuild-registry/typescript/-/typescript-1.8.10.tgz"
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-1.8.10.tgz"
     },
     "ua-parser-js": {
       "version": "0.7.10",
@@ -4198,7 +4198,7 @@
     "uglify-js": {
       "version": "2.7.4",
       "from": "uglify-js@>=2.7.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/uglify-js/-/uglify-js-2.7.4.tgz",
+      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-2.7.4.tgz",
       "dependencies": {
         "camelcase": {
           "version": "1.2.1",
@@ -4250,7 +4250,7 @@
     "unc-path-regex": {
       "version": "0.1.2",
       "from": "unc-path-regex@>=0.1.0 <0.2.0",
-      "resolved": "http://kendobuild-registry/unc-path-regex/-/unc-path-regex-0.1.2.tgz"
+      "resolved": "https://registry.npmjs.org/unc-path-regex/-/unc-path-regex-0.1.2.tgz"
     },
     "underscore": {
       "version": "1.7.0",
@@ -4287,7 +4287,7 @@
     "useragent": {
       "version": "2.1.9",
       "from": "useragent@>=2.1.9 <3.0.0",
-      "resolved": "http://kendobuild-registry/useragent/-/useragent-2.1.9.tgz",
+      "resolved": "https://registry.npmjs.org/useragent/-/useragent-2.1.9.tgz",
       "dependencies": {
         "lru-cache": {
           "version": "2.2.4",
@@ -4326,12 +4326,12 @@
     "v8flags": {
       "version": "2.0.11",
       "from": "v8flags@>=2.0.2 <3.0.0",
-      "resolved": "http://kendobuild-registry/v8flags/-/v8flags-2.0.11.tgz"
+      "resolved": "https://registry.npmjs.org/v8flags/-/v8flags-2.0.11.tgz"
     },
     "validate-commit-msg": {
       "version": "2.8.2",
       "from": "validate-commit-msg@2.8.2",
-      "resolved": "http://kendobuild-registry/validate-commit-msg/-/validate-commit-msg-2.8.2.tgz"
+      "resolved": "https://registry.npmjs.org/validate-commit-msg/-/validate-commit-msg-2.8.2.tgz"
     },
     "validate-npm-package-license": {
       "version": "3.0.1",
@@ -4341,7 +4341,7 @@
     "vinyl": {
       "version": "1.2.0",
       "from": "vinyl@>=1.0.0 <2.0.0",
-      "resolved": "http://kendobuild-registry/vinyl/-/vinyl-1.2.0.tgz"
+      "resolved": "https://registry.npmjs.org/vinyl/-/vinyl-1.2.0.tgz"
     },
     "vinyl-bufferstream": {
       "version": "1.0.1",
@@ -4361,7 +4361,7 @@
         "graceful-fs": {
           "version": "3.0.11",
           "from": "graceful-fs@>=3.0.0 <4.0.0",
-          "resolved": "http://kendobuild-registry/graceful-fs/-/graceful-fs-3.0.11.tgz"
+          "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.11.tgz"
         },
         "readable-stream": {
           "version": "1.0.34",
@@ -4410,7 +4410,7 @@
     "void-elements": {
       "version": "2.0.1",
       "from": "void-elements@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/void-elements/-/void-elements-2.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/void-elements/-/void-elements-2.0.1.tgz"
     },
     "watchpack": {
       "version": "0.2.9",
@@ -4427,12 +4427,12 @@
     "webpack": {
       "version": "1.13.3",
       "from": "webpack@>=1.13.1 <2.0.0",
-      "resolved": "http://kendobuild-registry/webpack/-/webpack-1.13.3.tgz",
+      "resolved": "https://registry.npmjs.org/webpack/-/webpack-1.13.3.tgz",
       "dependencies": {
         "acorn": {
           "version": "3.3.0",
           "from": "acorn@>=3.0.0 <4.0.0",
-          "resolved": "http://kendobuild-registry/acorn/-/acorn-3.3.0.tgz"
+          "resolved": "https://registry.npmjs.org/acorn/-/acorn-3.3.0.tgz"
         },
         "async": {
           "version": "1.5.2",
@@ -4491,12 +4491,12 @@
     "when": {
       "version": "3.7.7",
       "from": "when@>=3.7.7 <4.0.0",
-      "resolved": "http://kendobuild-registry/when/-/when-3.7.7.tgz"
+      "resolved": "https://registry.npmjs.org/when/-/when-3.7.7.tgz"
     },
     "which": {
       "version": "1.2.11",
       "from": "which@>=1.2.8 <2.0.0",
-      "resolved": "http://kendobuild-registry/which/-/which-1.2.11.tgz"
+      "resolved": "https://registry.npmjs.org/which/-/which-1.2.11.tgz"
     },
     "window-size": {
       "version": "0.1.4",
@@ -4506,7 +4506,7 @@
     "word-wrap": {
       "version": "1.1.0",
       "from": "word-wrap@>=1.0.3 <2.0.0",
-      "resolved": "http://kendobuild-registry/word-wrap/-/word-wrap-1.1.0.tgz"
+      "resolved": "https://registry.npmjs.org/word-wrap/-/word-wrap-1.1.0.tgz"
     },
     "wordwrap": {
       "version": "1.0.0",
@@ -4526,12 +4526,12 @@
     "ws": {
       "version": "1.1.1",
       "from": "ws@1.1.1",
-      "resolved": "http://kendobuild-registry/ws/-/ws-1.1.1.tgz"
+      "resolved": "https://registry.npmjs.org/ws/-/ws-1.1.1.tgz"
     },
     "wtf-8": {
       "version": "1.0.0",
       "from": "wtf-8@1.0.0",
-      "resolved": "http://kendobuild-registry/wtf-8/-/wtf-8-1.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/wtf-8/-/wtf-8-1.0.0.tgz"
     },
     "xmlbuilder": {
       "version": "0.4.2",
@@ -4556,7 +4556,7 @@
     "yallist": {
       "version": "2.0.0",
       "from": "yallist@>=2.0.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/yallist/-/yallist-2.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/yallist/-/yallist-2.0.0.tgz"
     },
     "yargs": {
       "version": "3.27.0",
@@ -4583,7 +4583,7 @@
     "yazl": {
       "version": "2.4.2",
       "from": "yazl@>=2.1.0 <3.0.0",
-      "resolved": "http://kendobuild-registry/yazl/-/yazl-2.4.2.tgz"
+      "resolved": "https://registry.npmjs.org/yazl/-/yazl-2.4.2.tgz"
     },
     "yeast": {
       "version": "0.1.2",
