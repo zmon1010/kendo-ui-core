@@ -23,6 +23,7 @@
         keys = kendo.keys;
 
     var SELECT = "select";
+    var SELECT_OVERLAY_SELECTOR = "select.k-select-overlay";
 
     // options can be: template (as string), cssClass, title, defaultValue
     var ToolTemplate = Class.extend({
@@ -303,7 +304,7 @@
             // using $.proxy here will break #5337
             this._registerHandler(document, {
                 "mousedown": function() { that._endTyping(); },
-                "mouseup": function() { that._mouseup(); }
+                "mouseup": function(e) { that._mouseup(e); }
             });
 
             that._initializeImmutables();
@@ -368,6 +369,11 @@
                         this.editor = null;
                     }
                 }));
+
+                if (kendo.support.mobileOS.ios) {
+                    var resizableWidget = this.wrapper.getKendoResizable();
+                    resizableWidget.draggable.options.ignore = SELECT_OVERLAY_SELECTOR;
+                }
             }
         },
 
@@ -824,8 +830,12 @@
             }
         },
 
-        _mouseup: function() {
+        _mouseup: function(e) {
             var that = this;
+
+            if (kendo.support.mobileOS.ios && e && $(e.target).is(SELECT_OVERLAY_SELECTOR)) {
+                return;
+            }
 
             if (that._selectionStarted) {
                 setTimeout(function() {
