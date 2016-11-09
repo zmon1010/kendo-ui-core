@@ -136,6 +136,10 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
+    <Reference Include="Telerik.Documents.SpreadsheetStreaming, Version=2016.3.1021.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Documents.SpreadsheetStreaming.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Windows.Documents.Flow, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Telerik.Windows.Documents.Flow.dll</HintPath>
@@ -249,6 +253,7 @@
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
+    <Compile Include="Controllers\SpreadStreamProcessing\IndexController.cs" />
     <Compile Include="Controllers\Upload\CustomDropZoneController.cs" />
     <Compile Include="Controllers\Upload\ValidationController.cs" />
     <Compile Include="Controllers\WordsProcessing\IndexController.cs" />
@@ -791,6 +796,12 @@
     <Compile Include="Models\PrintOptions.cs" />
     <Compile Include="Models\Scheduler\MeetingSignalRViewModel.cs" />
     <Compile Include="Models\ScriptGroups.cs" />
+    <Compile Include="Models\SpreadStreamProcessing\Client.cs" />
+    <Compile Include="Models\SpreadStreamProcessing\DocumentExportHelper.cs" />
+    <Compile Include="Models\SpreadStreamProcessing\DocumentHelper.cs" />
+    <Compile Include="Models\SpreadStreamProcessing\DocumentRow.cs" />
+    <Compile Include="Models\SpreadStreamProcessing\DocumentSettings.cs" />
+    <Compile Include="Models\SpreadStreamProcessing\Shipping.cs" />
     <Compile Include="Models\StyleGroups.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryService.cs" />
@@ -2954,6 +2965,7 @@
     <Content Include="Views\mediaplayer\keyboard_navigation.cshtml" />
     <Content Include="Views\dialog\treeview_integration.cshtml" />
     <Content Include="Views\dialog\treelist_integration.cshtml" />
+    <Content Include="Views\spreadstreamprocessing\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
@@ -3715,7 +3727,7 @@
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>  
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
