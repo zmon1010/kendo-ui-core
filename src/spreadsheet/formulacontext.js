@@ -184,6 +184,9 @@
                 if (Array.isArray(value)) {
                     value = value[0];
                 }
+                if (value === undefined) {
+                    value = null; // clear contents
+                }
             }
 
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
