@@ -834,7 +834,6 @@ function borderTemplate(border) {
    "</border>";
 }
 
-var SPAN_CELL = {};
 var EMPTY_CELL = {};
 function inflate(rows, mergedCells) {
     var rowData = [];
@@ -906,7 +905,7 @@ function fillCells(data, ctx) {
         var colSpan = cell.colSpan || 1;
 
         var cellIndex = insertCell(cellData, cell);
-        spanCell(cellData, cellIndex, colSpan);
+        spanCell(cell, cellData, cellIndex, colSpan);
 
         if (rowSpan > 1 || colSpan > 1) {
             ctx.mergedCells.push(
@@ -923,7 +922,7 @@ function fillCells(data, ctx) {
                     ctx.rowData.push(nextRow);
                 }
 
-                spanCell(nextRow.cells, cellIndex - 1, colSpan + 1);
+                spanCell(cell, nextRow.cells, cellIndex - 1, colSpan + 1);
             }
         }
     }
@@ -960,9 +959,15 @@ function appendCell(data, cell) {
     return index;
 }
 
-function spanCell(cellData, startIndex, colSpan) {
+function spanCell(cell, row, startIndex, colSpan) {
     for (var i = 1; i < colSpan; i++) {
-        insertCellAt(cellData, SPAN_CELL, startIndex + i);
+        var tmp = {
+            borderTop    : cell.borderTop,
+            borderRight  : cell.borderRight,
+            borderBottom : cell.borderBottom,
+            borderLeft   : cell.borderLeft
+        };
+        insertCellAt(row, tmp, startIndex + i);
     }
 }
 

@@ -1453,4 +1453,17 @@ test("relsToXML serializes sheet hyperlinks", function() {
     equal(rels.eq(1).attr("Target"), "http://example.com/bar");
 });
 
+test("Copy cell borders for merged cells", function(){
+    // https://github.com/telerik/kendo-ui-core/issues/2401
+    var worksheet = Worksheet({
+        columns: [ { width: 100}, { width: 100 } ],
+        rows: [
+            { cells: [ { value: "Occupies two columns", borderTop: { color: "#ff0000", size: 3 }, colSpan: 2 } ] }
+        ]
+    });
+    var dom = $(worksheet.toXML());
+    var cells = dom.find("c");
+    equal(cells[1].getAttribute("s"), cells[0].getAttribute("s"));
+});
+
 }());
