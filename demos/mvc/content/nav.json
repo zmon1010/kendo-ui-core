@@ -5886,8 +5886,7 @@
           "kendo-ui": "This Kendo UI demo shows how implement custom logic that allows end users to reorder or close a tab in Kendo UI TabStrip."
         },
         "packages": [
-          "!mvc",
-          "!jsp"
+          "!mvc"
         ]
       },
       {
