@@ -44,8 +44,7 @@ var karmaOptions = {
     browsers: ['Chrome'],
 
     junitReporter: {
-      outputDir: '.',
-      outputFile: argv['junit-results']
+      outputFile: '../download_builder-test-results.xml'
     },
     captureTimeout: 60000,
     browserNoActivityTimeout: 30000,

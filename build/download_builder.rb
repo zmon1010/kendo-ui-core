@@ -19,7 +19,7 @@ namespace :download_builder do
     end
 
     task :tests do
-        gulp_xvfb "download-builder-tests", "--junit-results=download_builder-test-results.xml", "--single-run=true"
+        gulp_xvfb "download-builder-tests", "--single-run=true"
     end
 
     def download_builder_prerequisites(path, service_url)
