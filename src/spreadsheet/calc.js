@@ -165,19 +165,20 @@
             fname = fname.value;
             skip("punc", "(");
             var args = [];
-            if (!is("punc", ")")) {
-                while (1) {
-                    if (is("op", ",")) {
-                        args.push({ type: "null" });
-                        input.next();
-                        continue;
-                    }
-                    args.push(parseExpression(false));
-                    if (input.eof() || is("punc", ")")) {
-                        break;
-                    }
-                    skip("op", ",");
+            while (1) {
+                if (is("punc", ")")) {
+                    break;
                 }
+                if (is("op", ",")) {
+                    args.push({ type: "null" });
+                    input.next();
+                    continue;
+                }
+                args.push(parseExpression(false));
+                if (input.eof() || is("punc", ")")) {
+                    break;
+                }
+                skip("op", ",");
             }
             skip("punc", ")", true);
             return {

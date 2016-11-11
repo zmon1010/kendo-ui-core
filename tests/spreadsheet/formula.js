@@ -1631,7 +1631,7 @@
     test("VLOOKUP", function(){
         ss.fill({
             a4: '=vlookup(4, a1:c3, 3)',
-            a5: '=vlookup(4.5, a1:c3, 3)',
+            a5: '=vlookup(4.5, a1:c3, 3, )',
             a6: '=vlookup(4.5, a1:c3, 3, false)',
         });
         ss.recalculate(function(){
