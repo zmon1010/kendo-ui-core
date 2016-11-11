@@ -38,7 +38,10 @@ namespace Kendo.Mvc.TagHelpers
                 metadata = For.Metadata;
                 Name = For.Name;
 
-                Value = Value ?? (double?)For.Model;
+                if (Value == null && For.Model != null)
+                {
+                    Value = Convert.ToDouble(For.Model);
+                }
 
                 Format = ExtractEditFormat(For.ModelExplorer.Metadata.EditFormatString);
 

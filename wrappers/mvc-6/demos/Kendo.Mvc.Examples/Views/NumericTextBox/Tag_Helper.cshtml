@@ -1,13 +1,14 @@
 @addTagHelper *, Kendo.Mvc
+@model ProductViewModel
 
 <div class="demo-section k-content">
     <p>
-        <kendo-numerictextbox name="currency"
+        <kendo-numerictextbox name="Quantity"
                               format="c"
                               min="0"
                               enable="true"
                               max="100"
-                              value="30">
+                              for="UnitsOnOrder">
         </kendo-numerictextbox>
     </p>
     <br />
