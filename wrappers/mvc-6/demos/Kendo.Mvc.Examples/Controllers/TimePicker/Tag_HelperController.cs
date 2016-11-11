@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Kendo.Mvc.Examples.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
@@ -7,7 +9,19 @@ namespace Kendo.Mvc.Examples.Controllers
         [Demo]
         public ActionResult Tag_Helper()
         {
-            return View();
+            return View(GetFirstOrder());
         }
+
+        private static OrderViewModel GetFirstOrder()
+        {
+            using (var northwind = new SampleEntitiesDataContext())
+            {
+                return northwind.Orders.Select(order => new OrderViewModel
+                {
+                    OrderDate = order.OrderDate,
+                }).First();
+            }
+        }
+
     }
 }
