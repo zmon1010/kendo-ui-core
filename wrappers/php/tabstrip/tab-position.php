@@ -6,7 +6,7 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 
 <div class="demo-section k-content">
-    <h4>Left</h4>
+    <h4 class="tab-header">Left</h4>
 <?php
     $tabstripleft = new \Kendo\UI\TabStrip('tabstrip-left');
     $tabstripleft->tabPosition('left');
@@ -50,7 +50,7 @@ require_once '../lib/Kendo/Autoload.php';
     echo $tabstripleft->render();
 ?>
 
-<h4>Right</h4>
+<h4 class="tab-header">Right</h4>
 
 <?php
     $tabstripright = new \Kendo\UI\TabStrip('tabstrip-right');
@@ -95,7 +95,7 @@ require_once '../lib/Kendo/Autoload.php';
     echo $tabstripright->render();
 ?>
 
-<h4>Bottom</h4>
+<h4 class="tab-header">Bottom</h4>
 
 <?php
     $tabstripbottom = new \Kendo\UI\TabStrip('tabstrip-bottom');
@@ -140,4 +140,9 @@ require_once '../lib/Kendo/Autoload.php';
     echo $tabstripbottom->render();
 ?>
 </div>
+<style>
+	.tab-header {
+		margin-top: 10px;
+	}
+</style>
 <?php require_once '../include/footer.php'; ?>
