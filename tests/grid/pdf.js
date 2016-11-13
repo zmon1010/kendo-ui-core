@@ -353,7 +353,7 @@
                 },
                 pdf: {
                     allPages: true,
-                    paperSize: ["20cm", "2.6cm"]
+                    paperSize: ["20cm", "2.7cm"]
                 }
             });
         },

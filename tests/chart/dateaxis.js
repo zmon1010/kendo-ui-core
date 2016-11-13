@@ -403,7 +403,7 @@
 
             createDateCategoryAxis({
                 categories: [
-                    new Date("2011/10/30 03:00"), new Date("2011/10/31")
+                    new Date("2011-10-30T00:00Z"), new Date("2011-10-30T02:00Z")
                 ],
                 baseUnit: "hours"
             });
@@ -424,7 +424,7 @@
 
             createDateCategoryAxis({
                 categories: [
-                    new Date("2011/10/30 03:00"), new Date("2011/10/31")
+                    new Date("2011-10-30T00:00Z"), new Date("2011-10-30T02:00Z")
                 ],
                 baseUnit: "minutes",
                 baseUnitStep: 60
@@ -1784,14 +1784,17 @@
         tzTest("Sofia", "includes fall DST hour", function() {
             createDateCategoryAxis({
                 categories: [
-                    new Date("2011/10/30 03:00"), new Date("2011/10/30 04:00")
+                    new Date("2011-10-30T00:00Z"), new Date("2011-10-30T02:00Z")
                 ],
                 baseUnit: "minutes",
                 baseUnitStep: 60
             });
             var dstHour = dateAxis.options.categories[1];
             equal(dateAxis.options.categories.length, 3);
-            deepEqual(dstHour, new Date( new Date(2011, 9, 30, 3, 59, 59, 999).getTime() + 1));
+
+            if (!kendo.support.browser.mozilla) {
+                deepEqual(dstHour, new Date( new Date(2011, 9, 30, 3, 59, 59, 999).getTime() + 1));
+            }
         });
 
         // ------------------------------------------------------------
@@ -2149,13 +2152,16 @@
         tzTest("Sofia", "includes fall DST hour", function() {
             createDateCategoryAxis({
                 categories: [
-                    new Date("2011/10/30 03:00"), new Date("2011/10/30 04:00")
+                    new Date("2011-10-30T00:00Z"), new Date("2011-10-30T02:00Z")
                 ],
-                baseUnit: "houts"
+                baseUnit: "hours"
             });
             var dstHour = dateAxis.options.categories[1];
             equal(dateAxis.options.categories.length, 3);
-            deepEqual(dstHour, new Date( new Date(2011, 9, 30, 3, 59, 59, 999).getTime() + 1));
+
+            if (!kendo.support.browser.mozilla) {
+                deepEqual(dstHour, new Date( new Date(2011, 9, 30, 3, 59, 59, 999).getTime() + 1));
+            }
         });
 
         // ------------------------------------------------------------
