@@ -353,9 +353,11 @@
                 },
                 pdf: {
                     allPages: true,
-                    paperSize: ["20cm", "2.7cm"]
+                    paperSize: ["20cm", "2.6cm"]
                 }
             });
+
+            $(".k-grid").css("font-size", "15px");
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
