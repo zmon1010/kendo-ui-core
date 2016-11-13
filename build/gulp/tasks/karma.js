@@ -31,8 +31,10 @@ if (batchSizeOption) {
     batchSize = parseInt(batchSizeOption, 10);
 }
 
+let watch = false;
 if (testsOption) {
     batches = [ [ testsOption ] ];
+    watch = true;
 } else {
     const paths = fs.readdirSync('tests').filter((file) =>
         fs.statSync(path.join('tests', file)).isDirectory() && file !== 'download-builder'
@@ -92,7 +94,7 @@ const defaultOptions = Object.freeze({
     },
     captureTimeout: 60000,
     browserNoActivityTimeout: 60000,
-    singleRun: argv['single-run'],
+    singleRun: !watch,
     exclude: exclude
 });
 

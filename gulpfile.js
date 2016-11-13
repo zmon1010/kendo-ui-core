@@ -196,14 +196,6 @@ gulp.task('build', [ 'scripts', 'styles' ]);
 gulp.task('tests', [ 'karma-unit' ]);
 
 gulp.task('ci', function(done) {
-  // Force karma-jenkins into a single-run mode
-  // otherwise it will sit and watch for changes
-  // after the first batch.
-  //
-  // For watching tests first limit the working set with
-  // --tests="tests/xxx/**/*.js"
-  require('yargs').argv['single-run'] = true;
-
   runSequence('build', 'karma-jenkins', done);
 });
 
