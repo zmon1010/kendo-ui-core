@@ -253,3 +253,8 @@ gulp.task('mdspell', shell.task(
 const taskListing = require('gulp-task-listing');
 gulp.task('tasks', taskListing.withFilters(/:/));
 
+// Exit immediately on Ctrl+C
+process.once('SIGINT', function () {
+    process.exit();
+});
+
