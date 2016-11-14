@@ -256,7 +256,8 @@
             var oldSheetName = sheet.name().toLowerCase();
 
             if (!newSheetName ||
-                oldSheetName === newSheetName.toLowerCase()) {
+                oldSheetName === newSheetName.toLowerCase() ||
+                this.sheetByName(newSheetName)) {
                 return;
             }
 

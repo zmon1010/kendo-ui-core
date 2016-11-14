@@ -151,6 +151,9 @@
         noFillDirectionDialog: {
             errorMessage: "Cannot determine fill direction"
         },
+        duplicateSheetNameDialog: {
+            errorMessage: "Duplicate sheet name"
+        },
         overflowDialog: {
             errorMessage: "Cannot paste, because the copy area and the paste area are not the same size and shape."
         },
@@ -1572,6 +1575,7 @@
     basicErrorDialog("unsupportedSelection", "unsupportedSelectionDialog.errorMessage");
     basicErrorDialog("incompatibleRanges", "incompatibleRangesDialog.errorMessage");
     basicErrorDialog("noFillDirection", "noFillDirectionDialog.errorMessage");
+    basicErrorDialog("duplicateSheetName", "duplicateSheetNameDialog.errorMessage");
 
     var UseKeyboardDialog = MessageDialog.extend({
         init: function(options) {

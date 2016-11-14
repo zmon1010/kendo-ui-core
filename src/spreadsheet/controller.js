@@ -294,6 +294,11 @@
         onSheetBarRename: function(e) {
             var sheet = this._workbook.sheetByIndex(e.sheetIndex);
 
+            if (this._workbook.sheetByName(e.name)) {
+                this.view.showError({ reason: "error", type: "duplicateSheetName" });
+                return;
+            }
+
             this._workbook.renameSheet(sheet, e.name);
 
             this.clipboardElement.focus();
