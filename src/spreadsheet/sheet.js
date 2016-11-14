@@ -772,6 +772,7 @@
 
             if (ref) {
                 ref = this._ref(ref);
+                ref = this._grid.normalize(ref);
                 expandedRef = this._grid.isAxis(ref) ? ref : this.unionWithMerged(ref);
             }
 
