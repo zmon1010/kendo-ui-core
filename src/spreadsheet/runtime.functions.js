@@ -1619,6 +1619,12 @@
 
     defineFunction("vlookup", function(value, m, col, approx){
         var resultRow = null;
+        if (typeof value != "number") {
+            approx = false;
+        }
+        if (typeof value == "string") {
+            value = value.toLowerCase();
+        }
         m.eachRow(function(row){
             var data = m.get(row, 0);
             if (approx) {
@@ -1626,9 +1632,14 @@
                     return true;
                 }
                 resultRow = row;
-            } else if (data === value) {
-                resultRow = row;
-                return true;
+            } else {
+                if (typeof data == "string") {
+                    data = data.toLowerCase();
+                }
+                if (data === value) {
+                    resultRow = row;
+                    return true;
+                }
             }
         });
         if (resultRow == null) {

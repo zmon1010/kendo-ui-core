@@ -1633,12 +1633,14 @@
             a4: '=vlookup(4, a1:c3, 3)',
             a5: '=vlookup(4.5, a1:c3, 3, )',
             a6: '=vlookup(4.5, a1:c3, 3, false)',
+            a7: '=vlookup("EEE", g1:h8, 2)'
         });
         ss.recalculate(function(){
             ss.expectEqual({
                 a4: 6,
                 a5: 6,
-                a6: "#N/A!"
+                a6: "#N/A!",
+                a7: "ddd"
             });
         });
     });
