@@ -1466,4 +1466,72 @@ test("Copy cell borders for merged cells", function(){
     equal(cells[1].getAttribute("s"), cells[0].getAttribute("s"));
 });
 
+test("Numeric dataValidation", function(){
+    var w = Worksheet([
+        {
+            cells: [
+                { validation: {
+                    dataType: "number",
+                    comparerType: "greaterThanOrEqualTo",
+                    from: 10
+                } },
+                { validation: {
+                    dataType: "number",
+                    comparerType: "between",
+                    from: "$A$5",
+                    to: "$B$5"
+                } }
+            ]
+        }
+    ]);
+    var dom = $(w.toXML()), v;
+    var dv = dom.find("dataValidations");
+    equal(dv.length, 1);
+
+    v = dv.find("dataValidation").eq(0);
+    equal(v.attr("operator"), "greaterThanOrEqual");
+    equal(v.attr("type"), "decimal");
+    equal(v.find("formula1").text(), "10");
+
+    v = dv.find("dataValidation").eq(1);
+    equal(v.attr("operator"), "between");
+    equal(v.attr("type"), "decimal");
+    equal(v.find("formula1").text(), "$A$5");
+    equal(v.find("formula2").text(), "$B$5");
+});
+
+test("Does not duplicate dataValidation elements and list validator tests", function(){
+    var validation = JSON.stringify({
+        dataType   : "list",
+        from       : "$X:$X",
+        showButton : true
+    });
+    var w = Worksheet([
+        {
+            cells: [
+                { validation: JSON.parse(validation) },
+                { validation: JSON.parse(validation) }
+            ]
+        }, {
+            cells: [
+                { validation: JSON.parse(validation) }
+            ]
+        }
+    ]);
+    var dom = $(w.toXML());
+    var v = dom.find("dataValidation");
+    equal(v.length, 1);
+
+    equal(v.attr("sqref"), "A1 B1 A2");
+    equal(v.attr("type"), "list");
+    ok(v.attr("operator") == null);
+    equal(v.find("formula1").text(), "$X:$X");
+
+    // Excel is redefining the meaning of English and/or booleans.
+    // The dropdown button is actually displayed only if showDropDown
+    // is falsy, so weird as it might seem (because showButton is true
+    // in our validator), this test is correct.
+    equal(v.attr("showDropDown"), "0");
+});
+
 }());
