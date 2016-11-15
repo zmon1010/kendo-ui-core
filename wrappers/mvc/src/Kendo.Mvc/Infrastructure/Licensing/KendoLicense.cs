@@ -8,8 +8,9 @@ namespace Kendo.Mvc.Infrastructure.Licensing
     {
         private const int TRIAL_DURATION = 30;
         private const int TRIAL_EXTENSION = 15;
-        private const string TRIAL_START_KEY_PERFIX = "Telerik";
-        private const string TRIAL_LAST_KEY_PERFIX = "TelerikLast";
+        private const string TRIAL_START_KEY_PREFIX = "Telerik";
+        private const string TRIAL_EXTENDED_START_KEY_PREFIX = "TelerikExtended";
+        private const string TRIAL_LAST_KEY_PREFIX = "TelerikLast";
         private const string REGISTRY_SUB_KEY = "Software\\Telerik\\MVC";
         private const string REGISTRY_SECONDARY_SUB_KEY = "Software\\Microsoft\\MSNT";
         private const string APP_SETTINGS_TRIAL_KEY = "Kendo.Mvc.UI.TrialKey";
@@ -47,7 +48,8 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             {
                 var trialKey = ConfigurationManager.AppSettings[APP_SETTINGS_TRIAL_KEY];
 
-                return !string.IsNullOrEmpty(trialKey) && trialKey.Equals(RegistryUtilities.EncodeString(AssemblyVersion.GetHashCode().ToString()));
+                return !string.IsNullOrEmpty(trialKey) &&
+                    trialKey.Equals(RegistryUtilities.EncodeString(AssemblyVersion.GetHashCode().ToString()));
             }
         }
 
@@ -57,7 +59,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
             {
                 if (IsExtended)
                 {
-                    return TRIAL_DURATION + TRIAL_EXTENSION;
+                    return TRIAL_EXTENSION;
                 }
 
                 return TRIAL_DURATION;
@@ -89,7 +91,8 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 
         private DateTime GetTrialStart()
         {
-            string registryKeyString = string.Concat(TRIAL_START_KEY_PERFIX, AssemblyVersion);
+            var prefix = IsExtended ? TRIAL_EXTENDED_START_KEY_PREFIX : TRIAL_START_KEY_PREFIX;
+            string registryKeyString = string.Concat(prefix, AssemblyVersion);
             DateTime trialStart = DateTime.MinValue;
 
             string trialStartHash = RegistryUtilities.ReadRegistryString(
@@ -134,7 +137,7 @@ namespace Kendo.Mvc.Infrastructure.Licensing
 
         private DateTime GetTrialLastUse()
         {
-            string registryKeyString = string.Concat(TRIAL_LAST_KEY_PERFIX, AssemblyVersion);
+            string registryKeyString = string.Concat(TRIAL_LAST_KEY_PREFIX, AssemblyVersion);
             DateTime trialLastUse = DateTime.Now;
 
             DateTime lastRegisteredUse = RegistryUtilities.ReadRegistryDate(
