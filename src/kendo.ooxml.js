@@ -181,6 +181,29 @@ var WORKSHEET = kendo.template(
        '</row>' +
    '# } #' +
    '</sheetData>' +
+   '# if (validations.length) { #' +
+   '<dataValidations>' +
+       '# for (var vi = 0; vi < validations.length; vi++) { #' +
+       '# var val = validations[vi]; #' +
+       '<dataValidation sqref="#= val.sqref.join(" ") #"' +
+                      ' showErrorMessage="#= val.showErrorMessage #"' +
+                      ' type="#= val.type #"' +
+                      '# if (val.operator != "list") {# operator="#= val.operator #" # } #' +
+                      ' allowBlank="#= val.allowBlank #"' +
+                      ' showDropDown="#= val.showDropDown #"' +
+                      '# if (val.error) {# error="#= val.error #" # } #' +
+                      '# if (val.errorTitle) {# errorTitle="#= val.errorTitle #" # } #' +
+                      '>' +
+           '# if (val.formula1) { #' +
+           '<formula1>#= val.formula1 #</formula1>' +
+           '# } #' +
+           '# if (val.formula2) { #' +
+           '<formula2>#= val.formula2 #</formula2>' +
+           '# } #' +
+       '</dataValidation>' +
+       '# } #' +
+   '</dataValidations>' +
+   '# } #' +
    '# if (hyperlinks.length) { #' +
    '<hyperlinks>' +
        '# for (var hi = 0; hi < hyperlinks.length; hi++) { #' +
@@ -389,6 +412,7 @@ var Worksheet = kendo.Class.extend({
         this._strings = sharedStrings;
         this._styles = styles;
         this._borders = borders;
+        this._validations = {};
     },
     relsToXML: function() {
         var hyperlinks = this.options.hyperlinks || [];
@@ -413,6 +437,13 @@ var Worksheet = kendo.Class.extend({
             };
         }
 
+        var validations = [];
+        for (var i in this._validations) {
+            if (Object.prototype.hasOwnProperty.call(this._validations, i)) {
+                validations.push(this._validations[i]);
+            }
+        }
+
         var freezePane = this.options.freezePane || {};
         return WORKSHEET({
             frozenColumns: this.options.frozenColumns || freezePane.colSplit,
@@ -424,7 +455,8 @@ var Worksheet = kendo.Class.extend({
             mergeCells: mergeCells,
             filter: filter,
             showGridLines: this.options.showGridLines,
-            hyperlinks: this.options.hyperlinks || []
+            hyperlinks: this.options.hyperlinks || [],
+            validations: validations
         });
     },
     _lookupString: function(value) {
@@ -571,15 +603,51 @@ var Worksheet = kendo.Class.extend({
 
         style = this._lookupStyle(style);
 
+        var cellName = ref(rowIndex, cellIndex);
+
+        if (data.validation) {
+            this._addValidation(data.validation, cellName);
+        }
+
         return {
             value: value,
             formula: data.formula,
             type: type,
             style: style,
-            ref: ref(rowIndex, cellIndex)
+            ref: cellName
         };
+    },
+    _addValidation: function(v, ref) {
+        var tmp = {
+            showErrorMessage : v.type == "reject" ? 1 : 0,
+            formula1         : v.from,
+            formula2         : v.to,
+            type             : MAP_EXCEL_TYPE[v.dataType] || v.dataType,
+            operator         : MAP_EXCEL_OPERATOR[v.comparerType] || v.comparerType,
+            allowBlank       : v.allowNulls ? 1 : 0,
+            showDropDown     : v.showButton ? 0 : 1, // LOL, Excel!
+            error            : v.messageTemplate,
+            errorTitle       : v.titleTemplate
+        };
+        var json = JSON.stringify(tmp);
+        if (!this._validations[json]) {
+            this._validations[json] = tmp;
+            tmp.sqref = [];
+        }
+        this._validations[json].sqref.push(ref);
     }
 });
+
+var MAP_EXCEL_OPERATOR = {
+    // includes only what differs; key is our operator, value is Excel
+    // operator.
+    greaterThanOrEqualTo : "greaterThanOrEqual",
+    lessThanOrEqualTo    : "lessThanOrEqual"
+};
+
+var MAP_EXCEL_TYPE = {
+    number: "decimal"
+};
 
 var defaultFormats = {
     "General": 0,
