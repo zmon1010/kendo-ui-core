@@ -723,7 +723,7 @@
             this.clipboard.menuInvoked = (e === undefined);
             this._execute({
                 command: "CopyCommand",
-                options: { workbook: this.view._workbook }
+                options: { workbook: this.view._workbook, event: e.originalEvent || e }
             });
         },
 

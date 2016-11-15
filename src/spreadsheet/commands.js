@@ -485,6 +485,7 @@
         init: function(options) {
             Command.fn.init.call(this, options);
             this._clipboard = options.workbook.clipboard();
+            this._event = options.event;
         },
         undo: $.noop,
         exec: function() {
@@ -497,6 +498,11 @@
                     return { reason: "error", type: "unsupportedSelection" };
                 }
                 return;
+            }
+            var range = this._workbook.activeSheet().selection();
+            var preventDefault = this._workbook.trigger("copy", {range: range});
+            if(preventDefault) {
+                this._event.preventDefault();
             }
             this._clipboard.copy();
         }

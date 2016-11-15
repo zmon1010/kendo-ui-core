@@ -59,6 +59,7 @@
         },
 
         events: [
+            "copy",
             "change",
             "excelImport",
             "excelExport"
