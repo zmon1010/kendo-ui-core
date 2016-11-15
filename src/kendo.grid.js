@@ -7420,6 +7420,7 @@ var __meta__ = { // jshint ignore:line
 
         _resize: function(size, force) {
 
+            this._syncLockedContentHeight();
             this._syncLockedHeaderHeight();
 
             if (this.content) {
