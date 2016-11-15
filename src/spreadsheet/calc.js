@@ -1360,10 +1360,28 @@
         }
     }
 
+    // The `sqref` attribute in dataValidation (XLSX) will contain a space-separated list of
+    // references.  This helper is called from excel-reader.js to parse them.
+    function parseSqref(input, row, col) {
+        row = row || 0;
+        col = col || 0;
+        input = TokenStream(input, { row: row, col: col });
+        var refs = [];
+        while (!input.eof()) {
+            var ref = input.next();
+            if (ref.type != "ref") {
+                throw new ParseError("Expecting a reference but got: " + JSON.stringify(ref));
+            }
+            refs.push(ref.absolute(row, col));
+        }
+        return refs;
+    }
+
     exports.parseNameDefinition = parseNameDefinition;
     exports.parseFormula = parseFormula;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
+    exports.parseSqref = parseSqref;
 
     exports.InputStream = InputStream;
     exports.ParseError = ParseError;

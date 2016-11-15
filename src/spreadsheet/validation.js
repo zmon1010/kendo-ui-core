@@ -19,9 +19,14 @@
     var DATE_FORMAT = 'DATEVALUE("{0}")';
 
     calc.runtime.defineFunction("_matrix", function(m){
+        if (typeof m == "string") {
+            // for constant list validation, Excel includes a string
+            // with comma-separated values — make a Matrix from it.
+            m = this.asMatrix([ m.split(/\s*,\s*/) ]);
+        }
         return m;
     }).args([
-        [ "m", "matrix" ]
+        [ "m", [ "or", "matrix", "string" ] ]
     ]);
 
     function compileValidation(sheet, row, col, validation) {
