@@ -861,6 +861,8 @@
             var cols = {};
             var allCols = false;
             var allRows = false;
+            var maxRow = this._grid.rowCount - 1;
+            var maxCol = this._grid.columnCount - 1;
 
             selection.forEach(function(ref) {
                 var i;
@@ -870,8 +872,8 @@
 
                 var bottomRight = ref.bottomRight;
 
-                var rowSelection = bottomRight.col === Infinity;
-                var colSelection = bottomRight.row === Infinity;
+                var rowSelection = bottomRight.col >= maxCol;
+                var colSelection = bottomRight.row >= maxRow;
 
                 if (colSelection) { //column selection
                     allRows = true;
