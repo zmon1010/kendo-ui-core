@@ -12075,7 +12075,7 @@ by setting the close animation. Each animation also has a direction which can be
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Which DOM element the ContextMenu will be appended to. The element needs to be relatively positioned.</description>
+            <description>The DOM element to which the ContextMenu will be appended. The element needs to be relatively positioned.</description>
             <name>appendTo</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>

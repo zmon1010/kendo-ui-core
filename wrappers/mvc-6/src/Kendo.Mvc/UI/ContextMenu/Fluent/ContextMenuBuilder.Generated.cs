@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Which DOM element the ContextMenu will be appended to. The element needs to be relatively positioned.
+        /// The DOM element to which the ContextMenu will be appended. The element needs to be relatively positioned.
         /// </summary>
         /// <param name="value">The value for AppendTo</param>
         public ContextMenuBuilder AppendTo(string value)

@@ -44,7 +44,7 @@ by setting the close animation. Each animation also has a direction which can be
     }
 
     /**
-    * Which DOM element the ContextMenu will be appended to. The element needs to be relatively positioned.
+    * The DOM element to which the ContextMenu will be appended. The element needs to be relatively positioned.
     * @param string| $value
     * @return \Kendo\UI\ContextMenu
     */
