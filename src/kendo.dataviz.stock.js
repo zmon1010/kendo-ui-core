@@ -413,7 +413,7 @@ var __meta__ = { // jshint ignore:line
             var plotArea = this.chart._createPlotArea(true);
             var axis = plotArea.namedCategoryAxes[NAVIGATOR_AXIS];
 
-            var range = axis.datesRange();
+            var range = axis.range();
             var min = range.min;
             var max = range.max;
 

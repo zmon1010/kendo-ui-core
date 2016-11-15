@@ -195,7 +195,7 @@
             });
 
             deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/01"));
-            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/11/01"));
+            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/11/02"));
         });
 
         // ------------------------------------------------------------
@@ -446,8 +446,8 @@
                 sales: 110
             }]);
 
-            deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/02"));
-            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/09/03"));
+            deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/02 00:00"));
+            deepEqual(chart.options.categoryAxis[0].max, new Date("2012/09/03 01:00"));
         });
 
         // ------------------------------------------------------------
@@ -476,7 +476,7 @@
 
             chart.trigger("zoomEnd");
             deepEqual(chart.dataSource._filter.filters[0].value, new Date("2012/08/30"));
-            deepEqual(chart.dataSource._filter.filters[1].value, new Date("2012/11/04"));
+            deepEqual(chart.dataSource._filter.filters[1].value, new Date("2012/11/05"));
         });
 
         test("main DS is not filtered during zoom", function() {
