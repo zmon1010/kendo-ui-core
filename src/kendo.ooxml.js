@@ -188,7 +188,7 @@ var WORKSHEET = kendo.template(
        '<dataValidation sqref="#= val.sqref.join(" ") #"' +
                       ' showErrorMessage="#= val.showErrorMessage #"' +
                       ' type="#= val.type #"' +
-                      '# if (val.operator != "list") {# operator="#= val.operator #" # } #' +
+                      '# if (val.type != "list") {# operator="#= val.operator #" # } #' +
                       ' allowBlank="#= val.allowBlank #"' +
                       ' showDropDown="#= val.showDropDown #"' +
                       '# if (val.error) {# error="#= val.error #" # } #' +
