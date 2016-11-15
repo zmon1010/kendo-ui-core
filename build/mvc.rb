@@ -223,11 +223,12 @@ namespace :mvc do
                                        MVC6_SRC_ROOT + 'project.json']
 
     desc('Copy the minified CSS and JavaScript to Content and Scripts folder')
-    task :assets => ['mvc:assets_js', 'mvc:assets_css', 'mvc_6:assets', 'spreadsheet:binaries']
+    task :assets => ['mvc:assets_js', 'mvc:assets_css', 'mvc_6:assets', 'spreadsheet:binaries', 'kendo_mvc_export:binaries']
 
     desc('Build ASP.NET MVC binaries')
     task :binaries => [
         "spreadsheet:binaries",
+        "kendo_mvc_export:binaries",
         MVC_BIN_ROOT + 'Release/Kendo.Mvc.dll',
         MVC_BIN_ROOT + 'Release-MVC3/Kendo.Mvc.dll',
         MVC_BIN_ROOT + 'Release-MVC5/Kendo.Mvc.dll',
