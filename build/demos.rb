@@ -460,9 +460,9 @@ namespace :demos do
 
     task :production_mvc_site => [] do
         sh 'mkdir -p dist/demos/mvc'
-        sh 'cp -rT dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples dist/demos/mvc'
+        sh 'rm -r dist/demos/mvc && cp -r dist/bundles/aspnetmvc.commercial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples dist/demos/mvc'
         sh 'cp -r dist/binaries/demos/Kendo.Mvc.Examples/bin/* dist/demos/mvc/bin'
-        sh "sed 's/\$CDN_ROOT/#{(CDN_ROOT + VERSION).gsub(/\//, '\/')}/' -i dist/demos/mvc/Web.config"
+        sh "sed -i.bak 's/\$CDN_ROOT/#{(CDN_ROOT + VERSION).gsub(/\//, '\/')}/' dist/demos/mvc/Web.config"
     end
 
     zip 'dist/demos/production.zip' => :production_site

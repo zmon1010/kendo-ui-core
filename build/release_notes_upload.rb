@@ -191,7 +191,7 @@ def die(message)
 end
 
 def upload_relnotes_file(bot, upload_id, full_path)
-    full_path.gsub!('/', '\\') unless PLATFORM =~ /linux|darwin/
+    full_path.gsub!('/', '\\') unless PLATFORM =~ /linux|darwin|bsd/
     die("File does not exist - #{full_path}") unless File.exist?(full_path)
 
     bot.set_upload_path(bot.driver.find_element(:css, "##{upload_id}"), full_path)

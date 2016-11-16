@@ -22,7 +22,7 @@ KENDO_CONFIG_FILE = File.join("download-builder", "config", "kendo-config.json")
 
 PLATFORM = RbConfig::CONFIG['host_os']
 
-if PLATFORM =~ /linux|darwin/
+if PLATFORM =~ /linux|darwin|bsd/
     RELEASE_ROOT = "/kendo-dist"
     WEB_INSTALLER_ROOT = "/installers-dist"
 else
@@ -162,7 +162,7 @@ require 'codegen'
 require 'nuget'
 require 'bower'
 require 'npm'
-require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin/
+require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin|bsd/
 require 'playground'
 require 'vs_scaffold'
 require './build/localization'

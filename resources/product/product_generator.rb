@@ -275,7 +275,7 @@ def set_product_icon_path(bot, product_icon_path)
   upload_file(bot, upload_id, product_icon_path)
 end
 def upload_file(bot, upload_id, product_icon_path)
-    product_icon_path.gsub!('/', '\\') unless PLATFORM =~ /linux|darwin/
+    product_icon_path.gsub!('/', '\\') unless PLATFORM =~ /linux|darwin|bsd/
     bot.set_upload_path(bot.driver.find_element(:css, "##{upload_id}"), product_icon_path)
     sleep (1)
     #bot.wait_for_element("##{upload_id} .ruRemove")

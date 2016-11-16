@@ -73,7 +73,7 @@ end
 namespace :spreadsheet do
     desc('Build Telerik.Web.Spreadsheet binaries')
     task :binaries do
-        if PLATFORM =~ /linux|darwin/
+        if PLATFORM =~ /linux|darwin|bsd/
             src = SPREADSHEET_REDIST_ROOT
             dst = "#{SPREADSHEET_SRC_ROOT}/bin/"
             system "cp -r #{src}/ #{dst}"

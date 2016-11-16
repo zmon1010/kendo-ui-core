@@ -271,7 +271,7 @@ namespace :mvc do
     end
 end
 
-if PLATFORM =~ /linux|darwin/
+if PLATFORM =~ /linux|darwin|bsd/
     # copy pre-built binaries
 
     FileList[

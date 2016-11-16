@@ -153,7 +153,7 @@ def upload_db_file(bot, upload_id, full_path)
                     upload.initialize();
                 })(Telerik.Web.UI.RadAsyncUpload.Modules, $telerik.$);")
 
-    full_path.gsub!('/', '\\') unless PLATFORM =~ /linux|darwin/
+    full_path.gsub!('/', '\\') unless PLATFORM =~ /linux|darwin|bsd/
     bot.set_upload_path(bot.driver.find_element(:css, "##{upload_id} input[type=file]"), full_path)
     bot.wait_for_element("##{upload_id} .ruRemove")
 end
