@@ -57,7 +57,7 @@
     "karma-junit-reporter": "^1.1.0",
     "karma-qunit": "1.2.1",
     "lazypipe": "~1.0.1",
-    "less": "^2.7.0",
+    "less": "2.6.1",
     "less-plugin-autoprefix": "^1.5.1",
     "merge-stream": "1.0.0",
     "merge2": "~0.3.6",
