@@ -48807,6 +48807,12 @@ Refer to the jQuery.ajax documentation for further info.</description>
         <tag-class>com.kendoui.taglib.ContentTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
+    <tag>
+        <description>Dialog content</description>
+        <name>dialog-content</name>
+        <tag-class>com.kendoui.taglib.ContentTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
 	<tag>
         <description>PivotDataSource</description>

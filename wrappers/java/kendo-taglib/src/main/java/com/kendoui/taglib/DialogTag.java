@@ -3,9 +3,10 @@ package com.kendoui.taglib;
 
 
 import com.kendoui.taglib.dialog.*;
-
-
+import com.kendoui.taglib.html.Div;
+import com.kendoui.taglib.html.Element;
 import com.kendoui.taglib.json.Function;
+
 
 
 import javax.servlet.jsp.JspException;
@@ -15,6 +16,15 @@ public class DialogTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public DialogTag() {
         super("Dialog");
+    }
+    
+    @Override
+    protected Element<?> createElement() {
+        Div element = new Div();
+
+        element.html(body());
+
+        return element;
     }
     
     @Override
