@@ -131,6 +131,10 @@
                 this.trigger("copy", e);
             },
 
+            _workbookPaste: function(e) {
+                this.trigger("paste", e);
+            },
+
             activeSheet: function(sheet) {
                 return this._workbook.activeSheet(sheet);
             },
@@ -293,6 +297,7 @@
 
             _bindWorkbookEvents: function() {
                 this._workbook.bind("copy", this._workbookCopy.bind(this));
+                this._workbook.bind("paste", this._workbookPaste.bind(this));
                 this._workbook.bind("change", this._workbookChange.bind(this));
                 this._workbook.bind("excelExport", this._workbookExcelExport.bind(this));
                 this._workbook.bind("excelImport", this._workbookExcelImport.bind(this));
@@ -369,6 +374,7 @@
 
             events: [
                 "copy",
+                "paste",
                 "pdfExport",
                 "excelExport",
                 "excelImport",

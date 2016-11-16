@@ -692,7 +692,7 @@
                         this.clipboardElement.empty().append(table);
                         this._execute({
                             command: "PasteCommand",
-                            options: { workbook: this.view._workbook }
+                            options: { workbook: this.view._workbook, event: e.originalEvent || e }
                         });
                         this.clipboard.menuInvoked = true;
                     }.bind(this));
@@ -714,7 +714,7 @@
             this.clipboard.external({html: html, plain:plain});
             this._execute({
                 command: "PasteCommand",
-                options: { workbook: this.view._workbook }
+                options: { workbook: this.view._workbook, event: e.originalEvent || e }
             });
 
         },

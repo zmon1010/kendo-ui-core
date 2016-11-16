@@ -429,7 +429,8 @@
     kendo.spreadsheet.PasteCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
-            this._clipboard = this._workbook.clipboard();
+            this._clipboard = options.workbook.clipboard();
+            this._event = options.event;
         },
         getState: function() {
             this._range = this._workbook.activeSheet().range(this._clipboard.pasteRef());
@@ -452,10 +453,14 @@
                 return { reason: "error" };
             }
             this.getState();
-            this._clipboard.paste();
-
-            var range = this._workbook.activeSheet().range(this._clipboard.pasteRef());
-            range._adjustRowHeight();
+            var range = this._workbook.activeSheet().selection();
+            var preventDefault = this._workbook.trigger("paste", {range: range});
+            if(preventDefault) {
+                this._event.preventDefault();
+            } else {
+                this._clipboard.paste();
+                range._adjustRowHeight();
+            }
         }
     });
 
