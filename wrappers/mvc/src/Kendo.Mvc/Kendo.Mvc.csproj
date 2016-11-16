@@ -345,6 +345,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.fr-FR.resx</DependentUpon>
     </Compile>
+	<Compile Include="Resources\Messages.he-IL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.he-IL.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Messages.it-IT.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1983,6 +1988,10 @@
     <EmbeddedResource Include="Resources\Messages.fr-FR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.fr-FR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+	<EmbeddedResource Include="Resources\Messages.he-IL.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.he-IL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Messages.it-IT.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
