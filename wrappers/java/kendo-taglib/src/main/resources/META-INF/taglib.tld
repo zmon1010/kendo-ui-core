@@ -22706,8 +22706,8 @@ Can be set to a JavaScript object which represents the allowCopy configuration.<
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-data source is fired. By default the widget will bind to the data source specified in the configuration.</description>
+            <description>If set to false, the Grid will not bind to the data source during initialization, i.e. it will not call the fetch method of the dataSource instance. In such scenarios data binding will occur when the change event of the
+dataSource instance is fired. By default, autoBind is set to true and the widget will bind to the data source specified in the configuration.</description>
             <name>autoBind</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -22903,17 +22903,17 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.</description>
             <name>filter</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.</description>
             <name>group</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.</description>
             <name>page</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -22943,7 +22943,7 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.</description>
             <name>sort</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -24630,19 +24630,19 @@ This class can be used to obtain reference to the button after Grid initializati
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.</description>
         <name>grid-filter</name>
         <tag-class>com.kendoui.taglib.grid.FilterFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.</description>
         <name>grid-group</name>
         <tag-class>com.kendoui.taglib.grid.GroupFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.</description>
         <name>grid-page</name>
         <tag-class>com.kendoui.taglib.grid.PageFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -24678,7 +24678,7 @@ This class can be used to obtain reference to the button after Grid initializati
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.</description>
         <name>grid-sort</name>
         <tag-class>com.kendoui.taglib.grid.SortFunctionTag</tag-class>
         <body-content>JSP</body-content>

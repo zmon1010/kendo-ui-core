@@ -322,7 +322,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the filter event.</param>
         public GridEventBuilder Filter(string handler)
@@ -333,7 +333,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public GridEventBuilder Filter(Func<object, object> handler)
@@ -344,7 +344,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the group event.</param>
         public GridEventBuilder Group(string handler)
@@ -355,7 +355,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public GridEventBuilder Group(Func<object, object> handler)
@@ -366,7 +366,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the page event.</param>
         public GridEventBuilder Page(string handler)
@@ -377,7 +377,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public GridEventBuilder Page(Func<object, object> handler)
@@ -498,7 +498,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the sort event.</param>
         public GridEventBuilder Sort(string handler)
@@ -509,7 +509,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public GridEventBuilder Sort(Func<object, object> handler)

@@ -19,8 +19,8 @@ Can be set to a JavaScript object which represents the allowCopy configuration.
     }
 
     /**
-    * If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
-data source is fired. By default the widget will bind to the data source specified in the configuration.
+    * If set to false, the Grid will not bind to the data source during initialization, i.e. it will not call the fetch method of the dataSource instance. In such scenarios data binding will occur when the change event of the
+dataSource instance is fired. By default, autoBind is set to true and the widget will bind to the data source specified in the configuration.
     * @param boolean $value
     * @return \Kendo\UI\Grid
     */
@@ -485,7 +485,7 @@ its resize handle. In this case the column will assume the smallest possible wid
 
     /**
     * Sets the filter event of the Grid.
-    * Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user is about to filter the DataSource via the filter UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Grid
     */
@@ -499,7 +499,7 @@ its resize handle. In this case the column will assume the smallest possible wid
 
     /**
     * Sets the group event of the Grid.
-    * Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user is about to group the DataSource or modify the group descriptors state via the Grid group panel.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Grid
     */
@@ -513,7 +513,7 @@ its resize handle. In this case the column will assume the smallest possible wid
 
     /**
     * Sets the page event of the Grid.
-    * Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user is about change the current page index of DataSource via the pager UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Grid
     */
@@ -597,7 +597,7 @@ its resize handle. In this case the column will assume the smallest possible wid
 
     /**
     * Sets the sort event of the Grid.
-    * Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user is about to modify the current state of sort descriptors of DataSource via the sort UI.The event handler function context (available via the this keyword) will be set to the widget instance.Introduced in the Kendo UI 2016 R3 (2016.3.914) release.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Grid
     */
