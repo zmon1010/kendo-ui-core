@@ -641,6 +641,12 @@ test("multiple css properties are persisted", function() {
     verifyCycle('<span style="background:url(data:image/png;base64,foobarbaz);color:#ff0000;"></span>');
 });
 
+test('data-role resize attribute is removed from table rows and cells removed', function() {
+    editor.body.innerHTML = '<table><tbody><tr data-role="resizable"><td data-role="resizable"></td></tr></tbody></table>';
+
+    equal(editor.value(), '<table><tbody><tr><td></td></tr></tbody></table>');
+});
+
     var root;
     editor_module("custom serialization", {
         beforeEach: function() {

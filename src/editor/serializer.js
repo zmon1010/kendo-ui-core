@@ -391,7 +391,7 @@ var Serializer = {
                 name = attribute.nodeName;
                 value = attribute.value;
                 specified = attribute.specified;
-
+                
                 // In IE < 8 the 'value' attribute is not returned as 'specified'. The same goes for type="text"
                 if (name == 'value' && 'value' in node && node.value) {
                     specified = true;
@@ -413,6 +413,8 @@ var Serializer = {
                     specified = false;
                 } else if (scriptAttr.test(name)) {
                     specified = !!options.scripts;
+                } else if (name == 'data-role' && value == 'resizable' && (dom.is(node, "tr") || dom.is(node, "td"))) {
+                    specified = false;
                 }
 
                 if (specified) {
