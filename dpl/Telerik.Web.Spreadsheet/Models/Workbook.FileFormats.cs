@@ -24,8 +24,8 @@ namespace Telerik.Web.Spreadsheet
         public static Workbook Load(string path)
         {
             Document document;
-            using (var file = File.OpenRead(path))
-            {
+            using (var file = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+			{
                 var extension = Path.GetExtension(path);
                 document = WorkbookFormatProvidersManager.Import(extension, file);
             }
