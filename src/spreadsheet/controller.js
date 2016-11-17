@@ -647,7 +647,7 @@
 
             this._execute({
                 command: "CutCommand",
-                options: { workbook: this.view._workbook }
+                options: { workbook: this.view._workbook, event: e.originalEvent || e }
             });
         },
 

@@ -59,7 +59,9 @@
         },
 
         events: [
+            "cut",
             "copy",
+            "paste",
             "change",
             "excelImport",
             "excelExport"

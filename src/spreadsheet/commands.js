@@ -508,8 +508,9 @@
             var preventDefault = this._workbook.trigger("copy", {range: range});
             if(preventDefault) {
                 this._event.preventDefault();
+            } else {
+                this._clipboard.copy();
             }
-            this._clipboard.copy();
         }
     });
 
@@ -547,11 +548,18 @@
         init: function(options) {
             Command.fn.init.call(this, options);
             this._clipboard = options.workbook.clipboard();
+            this._event = options.event;
         },
         exec: function() {
             if (this.range().enable() && this._clipboard.canCopy()) {
                 this.getState();
-                this._clipboard.cut();
+                var range = this._workbook.activeSheet().selection();
+                var preventDefault = this._workbook.trigger("cut", {range: range});
+                if(preventDefault) {
+                    this._event.preventDefault();
+                } else {
+                    this._clipboard.cut();
+                }
             }
         }
     });

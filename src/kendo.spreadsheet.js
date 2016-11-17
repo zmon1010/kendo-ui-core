@@ -127,6 +127,10 @@
                 }
             },
 
+            _workbookCut: function(e) {
+                this.trigger("cut", e);
+            },
+
             _workbookCopy: function(e) {
                 this.trigger("copy", e);
             },
@@ -296,6 +300,7 @@
             },
 
             _bindWorkbookEvents: function() {
+                this._workbook.bind("cut", this._workbookCut.bind(this));
                 this._workbook.bind("copy", this._workbookCopy.bind(this));
                 this._workbook.bind("paste", this._workbookPaste.bind(this));
                 this._workbook.bind("change", this._workbookChange.bind(this));
@@ -373,6 +378,7 @@
             },
 
             events: [
+                "cut",
                 "copy",
                 "paste",
                 "pdfExport",
