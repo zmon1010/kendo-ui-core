@@ -44,7 +44,7 @@
         "./kendo.editor",
         "./kendo.numerictextbox",
         "./kendo.maskedtextbox",
-		"./kendo.mediaplayer",
+        "./kendo.mediaplayer",
         "./kendo.menu",
         "./kendo.editable",
         "./kendo.pivot.fieldmenu",
@@ -77,9 +77,7 @@
         "./kendo.pivotgrid",
         "./kendo.spreadsheet",
         "./kendo.pivot.configurator",
-        "./kendo.angular",
-        "./kendo.webcomponents",
-        "./kendo.angular2"
+        "./kendo.angular"
     ], f);
 })(function(){
     "bundle all";

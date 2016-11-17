@@ -25,7 +25,6 @@ ID_MAP = {
 URL_MAP = {
     "core" => "https://github.com/telerik/kendo-ui-core",
     "angular" => "http://docs.telerik.com/kendo-ui/AngularJS/introduction",
-    "angular2" => "http://demos.telerik.com/kendo-ui/integration/angular2",
     "aspnetmvc" => "http://docs.telerik.com/kendo-ui/aspnet-mvc/introduction",
     "gauge" => "http://demos.telerik.com/kendo-ui/linear-gauge/index",
     "touch" => "http://demos.telerik.com/kendo-ui/m/index#touchevents/mobile",

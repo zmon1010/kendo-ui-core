@@ -28,9 +28,7 @@
         "./kendo.dataviz.map",
         "./kendo.dataviz.diagram",
         "./kendo.dataviz.treemap",
-        "./kendo.angular",
-        "./kendo.webcomponents",
-        "./kendo.angular2"
+        "./kendo.angular"
     ], f);
 })(function(){
     "bundle all";
