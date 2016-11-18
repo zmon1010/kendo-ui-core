@@ -196,15 +196,22 @@
         $("#filterText").keyup(function (e) {
             var filterText = $(this).val();
 
-            if (filterText !== "") {
-                $(".selectAll").css("visibility", "hidden");
-                $("#treeview .k-group .k-group .k-in").closest("li").hide();
-                $("#treeview .k-group .k-group .k-in:contains(" + filterText + ")").each(function () {
-                    $(this).parents("ul, li").each(function () {
-                        $(this).show();
-                    });
-                });
-            }
+			if (filterText !== "") {
+				$(".selectAll").css("visibility", "hidden");
+
+				$("#treeview .k-group .k-group .k-in").closest("li").hide();
+				$("#treeview .k-group").closest("li").hide();
+				$("#treeview .k-group .k-group .k-in:contains(" + filterText + ")").each(function () {
+					$(this).parents("ul, li").each(function () {
+						$(this).show();
+					});
+				});
+				$("#treeview .k-group .k-in:contains(" + filterText + ")").each(function () {
+					$(this).parents("ul, li").each(function () {
+						$(this).show();
+					});
+				});
+			}
             else {
                 $("#treeview .k-group").find("li").show();
                 $(".selectAll").css("visibility", "visible");
