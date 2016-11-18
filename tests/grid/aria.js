@@ -157,4 +157,17 @@
 
         equal(grid.table.find("tr td:first").attr("aria-expanded"), "true");
     });
+
+    test("Grid commands have role attribute set", function() {
+        var grid = new Grid(table, {
+            navigatable: true,
+            dataSource: [ { foo: "foo", bar: "bar" } ],
+            columns: [ {
+                command: ["edit", "destroy"]
+            } ],
+        });
+
+        equal(grid.table.find(".k-grid-edit").attr("role"), "button");
+        equal(grid.table.find(".k-grid-delete").attr("role"), "button");
+    });
 })();

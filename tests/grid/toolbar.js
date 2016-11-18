@@ -100,6 +100,16 @@
         equal(button.text(), "Add new record");
     });
 
+    test("toolbar create command renders add button with correct aria role", function() {
+        setup({
+            toolbar: ["create"]
+        });
+
+        var button = toolbar.children().first();
+        equal(button.attr("role"), "button");
+        equal(button.text(), "Add new record");
+    });
+
     test("toolbar create command from settings", function() {
         setup({
             toolbar: [ { name: "create", text: "foo" }]

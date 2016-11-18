@@ -137,7 +137,7 @@ var __meta__ = { // jshint ignore:line
         whitespaceRegExp = "[\\x20\\t\\r\\n\\f]",
         nonDataCellsRegExp = new RegExp("(^|" + whitespaceRegExp + ")" + "(k-group-cell|k-hierarchy-cell)" + "(" + whitespaceRegExp + "|$)"),
         filterRowRegExp = new RegExp("(^|" + whitespaceRegExp + ")" + "(k-filter-row)" + "(" + whitespaceRegExp + "|$)"),
-        COMMANDBUTTONTMPL = '<a class="k-button k-button-icontext #=className#" #=attr# href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>',
+        COMMANDBUTTONTMPL = '<a role="button" class="k-button k-button-icontext #=className#" #=attr# href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>',
         isRtl = false,
         browser = kendo.support.browser,
         isIE7 = browser.msie && browser.version == 7,
