@@ -12656,7 +12656,13 @@ makes a HTTP request for every CRUD operation.</description>
         <name>dataSource-sortItem</name>
         <tag-class>com.kendoui.taglib.datasource.SortItemTag</tag-class>
 
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Function which can be used for custom comparing of the DataSource items.</description>
+            <name>compare</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>The sort order (direction).The supported values are:</description>
             <name>dir</name>
@@ -12672,6 +12678,12 @@ makes a HTTP request for every CRUD operation.</description>
     </tag>
 
 
+    <tag>
+        <description>Function which can be used for custom comparing of the DataSource items.</description>
+        <name>dataSource-sortItem-compare</name>
+        <tag-class>com.kendoui.taglib.datasource.SortItemCompareFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.Remote data sources load and save data items from and to a remote end-point (also known as remote service or server). The transport option describes the remote service configuration - URL, HTTP verb, HTTP headers, and others. The transport option can also be used to implement custom data loading and saving.Local data sources are bound to a JavaScript array via the data option.</description>

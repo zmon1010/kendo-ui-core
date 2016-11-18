@@ -49,6 +49,22 @@ public class SortItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
         return "dataSource-sortItem";
     }
 
+    public void setCompare(SortItemCompareFunctionTag value) {
+        setEvent("compare", value.getBody());
+    }
+
+    public String getCompare() {
+        Function property = ((Function)getProperty("compare"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setCompare(String value) {
+        setProperty("compare", new Function(value));
+    }
+
     public java.lang.String getDir() {
         return (java.lang.String)getProperty("dir");
     }

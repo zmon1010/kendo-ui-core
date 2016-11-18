@@ -23,6 +23,20 @@ class DataSourceSortItem extends \Kendo\SerializableObject {
         return $this->setProperty('field', $value);
     }
 
+    /**
+    * Sets the compare option of the DataSourceSortItem.
+    * Function which can be used for custom comparing of the DataSource items.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Data\DataSourceSortItem
+    */
+    public function compare($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('compare', $value);
+    }
+
 //<< Properties
 }
 
