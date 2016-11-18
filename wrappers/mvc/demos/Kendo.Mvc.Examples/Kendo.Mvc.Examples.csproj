@@ -241,6 +241,7 @@
     <Compile Include="Controllers\Dialog\IndexController.cs" />
     <Compile Include="Controllers\Editor\Immutable_ElementsController.cs" />
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
+    <Compile Include="Controllers\Financial\Stock_HistoryController.cs" />
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Selected_Date_and_RangeController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
@@ -2966,6 +2967,7 @@
     <Content Include="Views\dialog\treeview_integration.cshtml" />
     <Content Include="Views\dialog\treelist_integration.cshtml" />
     <Content Include="Views\spreadstreamprocessing\index.cshtml" />
+    <Content Include="Views\financial\stock_history.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

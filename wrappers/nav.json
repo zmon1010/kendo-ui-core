@@ -6788,6 +6788,19 @@
                 "description": {
                     "aspnet-mvc": "<p>This example shows how to configure the PDF export settings of the Telerik MVC Charting helper. </p> <p>You can specify the Author, Creator, Date, FileName, AllPages, PaperSize, ProxyURL and other options, through the <strong>PDF</strong> property of the Chart helper.</p> The <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-saveAsPDF\">saveAsPDF</a> or <a href=\"http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#methods-exportPDF\">exportPDF</a> methods can be used to trigger export operation.</p>"
                 }
+            },
+            {
+                "text": "Stock History",
+                "url": "financial/stock-history",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK Chart controls application sample | Stock History"
+                },
+                "meta": {
+                    "aspnet-mvc": "The Stock History Dashboard demonstrates how the charting components in Kendo UI $FRAMEWORK DataViz HTML5 framework are used to build a complex finance application."
+                },
+                "description": {
+                    "aspnet-mvc": "<p>The Stock History Dashboard demonstrates how the charting components in Kendo UI $FRAMEWORK DataViz HTML5 framework are used to build a complex finance application.</p>"
+                }
             }
         ],
         "category": "Charts"
