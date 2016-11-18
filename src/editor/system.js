@@ -729,18 +729,24 @@ var Keyboard = Class.extend({
     toolFromShortcut: function (tools, e) {
         var key = String.fromCharCode(e.keyCode),
             toolName,
-            toolOptions;
+            toolOptions,
+            modifier = this._getShortcutModifier(e, navigator.platform);
 
         for (toolName in tools) {
             toolOptions = $.extend({ ctrl: false, alt: false, shift: false }, tools[toolName].options);
 
             if ((toolOptions.key == key || toolOptions.key == e.keyCode) &&
-                toolOptions.ctrl == e.ctrlKey &&
+                toolOptions.ctrl == modifier &&
                 toolOptions.alt == e.altKey &&
                 toolOptions.shift == e.shiftKey) {
                 return toolName;
             }
         }
+    },
+
+    _getShortcutModifier: function (e, platform) {
+        var mac = platform.toUpperCase().indexOf('MAC') >= 0;
+        return mac ? e.metaKey : e.ctrlKey;
     },
 
     toolsFromShortcut: function (tools, e) {

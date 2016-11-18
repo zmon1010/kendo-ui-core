@@ -335,4 +335,25 @@ test("IME keyCodes is considered as characters", function() {
     ok(keyboard.isCharacter(229));
 });
 
+test("toolFromShortcut gets the shortcut modifier", function() {
+    var getShortcutModifierSpy = spy(keyboard, "_getShortcutModifier");
+    var e = new $.Event();
+    e.keyCode = KEY_B;
+
+    keyboard.toolFromShortcut([], e);
+
+    equal(keyboard.calls("_getShortcutModifier"), 1);
+});
+
+test("the shortcut modifier is metaKey on Mac", function() {
+    var e = new $.Event();
+    e.keyCode = "Z".charCodeAt(0);
+    e.metaKey = true;
+    e.ctrlKey = false;
+
+    var modifier = keyboard._getShortcutModifier(e, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/534.16+ (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4");
+
+    ok(modifier);
+});
+
 }());
