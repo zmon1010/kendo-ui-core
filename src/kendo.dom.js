@@ -307,7 +307,11 @@ var __meta__ = { // jshint ignore:line
             var length;
 
             for (index = 0, length = children.length; index < length; index++) {
-               children[index].render(this.root, cachedChildren[index] || NULL_NODE);
+                var cached = cachedChildren[index];
+                if (!cached || !cached.node.parentNode) {
+                    cached = NULL_NODE;
+                }
+                children[index].render(this.root, cached);
             }
 
             for (index = length; index < cachedChildren.length; index++) {
