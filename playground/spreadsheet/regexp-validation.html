@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+     requireSync([
+         "../../src/jquery.js",
+         "../../src/kendo.spreadsheet.js"
+     ]);
+    </script>
+    <script src="../../src/jszip.js"></script>
+
+    <script>
+     // define a REGEXP_MATCH function that returns true if a string
+     // matches a given pattern (regexp).
+     kendo.spreadsheet.defineFunction("REGEXP_MATCH", function(str, pattern, flags){
+         var rx;
+         try {
+             rx = flags ? new RegExp(pattern, flags) : new RegExp(pattern);
+         } catch(ex) {
+             // could not compile regexp, return some error code
+             return new kendo.spreadsheet.CalcError("REGEXP");
+         }
+         return rx.test(str);
+     }).args([
+         [ "str", "string" ],
+         [ "pattern", "string" ],
+         [ "flags", [ "or", "string", "null" ] ]
+     ]);
+    </script>
+
+    <style type="text/css">
+     body {
+       font: 14px Arial,sans-serif;
+       padding: 0;
+       margin: 0;
+       overflow: hidden;
+     }
+     #spreadsheet {
+       position: absolute;
+       width: 100%;
+       height: 100%;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="spreadsheet"></div>
+    <script>
+     window.ss = $("#spreadsheet").kendoSpreadsheet({
+         columnWidth: 100
+     }).getKendoSpreadsheet();
+     window.sheet = ss.activeSheet();
+
+     sheet.range("A1").value("IP Address in B1:");
+
+     // using custom validation, we can pass any formula and the cell
+     // validates if the formula returns a non-false value.
+     sheet.range("B1").validation({
+         comparerType: "custom",
+         dataType: "custom",
+         from: 'REGEXP_MATCH(B1, "^[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}$")'
+     });
+
+     // note the difficulty of properly quoting a regexp in a string
+     // in a string.  An alternative would be to write the regexp in a
+     // variable and encode it with JSON.stringify, i.e.:
+     //
+     // var rx = "^[0-9]{1,3}\\.[0-9]{1,3}\\." etc
+     //
+     //     and then pass it like this
+     //
+     // from: '=REGEXP_MATCH(B1, ' + JSON.stringify(rx) + ')'
+
+    </script>
+  </body>
+</html>

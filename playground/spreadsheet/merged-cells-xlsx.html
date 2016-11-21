@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Kendo UI Snippet</title>
+
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+     requireSync([
+         "../../src/jquery.js",
+         "../../src/kendo.ooxml.js"
+     ]);
+    </script>
+    <script src="../../src/jszip.js"></script>
+  </head>
+  <body>
+
+    <script>
+     var workbook = new kendo.ooxml.Workbook({
+         sheets: [
+             {
+                 columns: [ { width: 100}, { width: 100 } ],
+                 rows: [
+                     { cells: [ { value: "Occupies two columns",borderTop: { color: "#ff0000", size: 3 }, colSpan: 2 } ] }
+                 ]
+             }
+         ]
+     });
+     kendo.saveAs({
+         dataURI: workbook.toDataURL(),
+         fileName: "Test.xlsx"
+     });
+    </script>
+  </body>
+</html>
