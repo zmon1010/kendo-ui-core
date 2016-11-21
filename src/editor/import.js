@@ -10,7 +10,8 @@
             Command = Editor.Command,
             Tool = Editor.Tool,
             registerTool = EditorUtils.registerTool,
-            ToolTemplate = Editor.ToolTemplate;
+            ToolTemplate = Editor.ToolTemplate,
+            loadingOverlay = '<div contenteditable="false" class="k-loading-mask" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;"><div class="k-loading-image"></div><div class="k-loading-color"></div></div>';
 
         var ImportCommand = Command.extend({
             exec: function() {
@@ -47,9 +48,8 @@
             _onUploadComplete: function(ev){
                 this._trigger("complete", ev);
                 ev.sender.clearAllFiles();
-                if (this.tool) {
-                    $(this.tool).removeClass("k-i-loading k-icon").addClass("k-tool-icon");
-                }
+
+                this._removeLoadingOverlay();
             },
             _onUploadSuccess: function(ev){
                 this.editor.value(ev.response.html.replace(/<\/?body>/ig, ""));
@@ -61,10 +61,7 @@
             _onUploadSelect: function(ev){
                 this._trigger("select", ev);
                 if (!ev.files[0].validationErrors) {
-                    this.tool = this.editor.toolbar.element.find(".k-i-import");
-                    if (this.tool) {
-                        $(this.tool).removeClass("k-tool-icon").addClass("k-i-loading k-icon");
-                    }
+                    this._initLoadingOverlay();
                 }
             },
             _onUploadError: function(ev){
@@ -77,6 +74,29 @@
                 if (typeof importOptions[eventType] === "function") {
                     importOptions[eventType].call(editor, uploadEvent);
                 }
+            },
+
+            _initLoadingOverlay: function (){
+                var editable = this.editor.body;
+                if (Editor.Dom.is(editable, "body")) {
+                    this._iframeWrapper = this._container =
+                        this.editor.wrapper.find("iframe").parent()
+                        .css({position: "relative"}).append(loadingOverlay);
+                } else {
+                    this._container = $(editable).append(loadingOverlay);
+                }
+
+                kendo.ui.progress(this._container, true);
+            },
+
+            _removeLoadingOverlay: function(){
+                kendo.ui.progress(this._container, false);
+                $(this._iframeWrapper).css({
+                    position: ""
+                });
+
+                delete this._container;
+                delete this._iframeWrapper;
             }
         });
 
