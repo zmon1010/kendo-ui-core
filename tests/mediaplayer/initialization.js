@@ -55,11 +55,11 @@
         ok(mediaPlayer._volumeButton.children().is('[class*="k-i-volume"]'));
     });
 
-    test("adds dropdown template to toolbar", function () {
+    skip("adds dropdown template to toolbar", function () {
         ok(mediaPlayer.dropdown().span.siblings().children().is(".k-i-HD"));
     });
 
-    skip("adds dropdown widget to toolbar", function () {
+    test("adds dropdown widget to toolbar", function () {
         ok(mediaPlayer.dropdown() instanceof kendo.ui.DropDownList);
     });
 
