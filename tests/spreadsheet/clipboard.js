@@ -43,6 +43,7 @@
         clipboard.copy();
         sheet.range("B1").select();
         clipboard.menuInvoked = false;
+        clipboard.parse();
         clipboard.paste();
 
         equal(sheet.range("B1").value(), "test");
@@ -53,6 +54,7 @@
         clipboard.copy();
         sheet.range("I1:J1").select();
         clipboard.menuInvoked = false;
+        clipboard.parse();
         clipboard.paste();
 
         equal(sheet.range("J1").value(), "test");
@@ -94,18 +96,19 @@
     });
 
     test("parse returns font-size as integer", function() {
-        var state = clipboard.parse({
+        clipboard._externalContent = {
             html: "<table><trbody><tr><td style='font-size: 8px'>foo</td></tr></tbody></table>"
-        });
-
-        equal(state.data[0][0].fontSize, 8);
+        };
+        clipboard.parse();
+        equal(clipboard._content.data[0][0].fontSize, 8);
     });
 
     test("parseHTML handles merged cells with rowspan", function() {
-        var state = clipboard.parse({
+        clipboard._externalContent = {
             html: '<table> <tbody> <tr> <td>0,0</td> <td rowspan="2">0,1 - 1,1</td> <td>0,2</td> </tr> <tr> <td>1,0</td> <td>1,2</td> </tr> </tbody> </table>'
-        });
-        hasProps(state, {
+        };
+        clipboard.parse();
+        hasProps(clipboard._content, {
             mergedCells: [ "B1:B2" ],
             data: [
                 [ {value:"0,0"}, {value:"0,1 - 1,1"}, {value:"0,2"} ],
@@ -115,10 +118,11 @@
     });
 
     test("parseHTML handles merged cells with colspan", function() {
-        var state = clipboard.parse({
+        clipboard._externalContent = {
             html: '<table> <tbody> <tr><td>0,0</td><td colspan="2">0,1 - 0,2</td><td>0,3</td></tr><tr><td>1,0</td><td>1,1</td><td>1,2</td><td>1,3</td></tr> </tbody> </table>'
-        });
-        hasProps(state, {
+        };
+        clipboard.parse();
+        hasProps(clipboard._content, {
             mergedCells: [ "B1:C1" ],
             data: [
                 [ {value:"0,0"}, {value:"0,1 - 0,2"}, {value:null}, {value:"0,3"} ],
@@ -128,10 +132,11 @@
     });
 
     test("parseHTML handles merged cells with colspan and rowspan", function() {
-        var state = clipboard.parse({
+        clipboard._externalContent = {
             html: '<table> <td>0,0</td> <td colspan="2" rowspan="3">0,1-0,2:2,1-2,2</td> </tr> <tr> <td>1,0</td> </tr> <tr> <td >2,0</td> </tr> </tbody> </table>'
-        });
-        hasProps(state, {
+        };
+        clipboard.parse();
+        hasProps(clipboard._content, {
             mergedCells: [ "B1:C3" ],
             data: [
                 [ {value:"0,0"}, {value:"0,1-0,2:2,1-2,2"}, {value:null} ],
@@ -145,6 +150,7 @@
         clipboard.external({
             html: "<table> <td>1</td> <td>true</td> <td>=sum(a1:b1)</td> </table>"
         });
+        clipboard.parse();
         clipboard.paste();
         equal(typeof sheet.range("A1").value(), "number");
         equal(typeof sheet.range("B1").value(), "boolean");
@@ -154,6 +160,7 @@
     test("Pasting from external source keeps cell formatting", function(){
         sheet.range("A1").format("#,#.00").value("1111").select();
         clipboard.external({ html: "<table><td>1234</td></table>" });
+        clipboard.parse();
         clipboard.paste();
         equal(sheet.range("A1").value(), 1234);
         equal(sheet.range("A1").format(), "#,#.00");
@@ -172,6 +179,7 @@
         }).select();
         clipboard.copy();
         sheet.range("B1").select();
+        clipboard.parse();
         clipboard.paste();
         equal(sheet.range("B1").value(), 1);
         equal(sheet.range("B2").value(), 3);

@@ -1227,9 +1227,20 @@
 
     test("errors out when paste is not available", function() {
         var command = PasteCommand({
+            //Mocky McMockface
             workbook: {
+                activeSheet: function() {
+                    return { range: function() { return {
+                        getState: function() {},
+                        setState: function() {}
+                    }; } };
+                },
                 clipboard: function() {
-                    return { canPaste: function() { return false; } };
+                    return {
+                        parse: function() { return {}; },
+                        canPaste: function() { return false; },
+                        pasteRef: function() { return {}; }
+                    };
                 }
             }
         });
