@@ -554,16 +554,18 @@
             this._event = options.event;
         },
         exec: function() {
-            if (this.range().enable() && this._clipboard.canCopy()) {
-                this.getState();
-                var range = this._workbook.activeSheet().selection();
-                var preventDefault = this._workbook.trigger("cut", {range: range});
-                if(preventDefault) {
-                    this._event.preventDefault();
-                } else {
-                    this._clipboard.cut();
-                }
+            if (!(this.range().enable() && this._clipboard.canCopy())) {
+                this._event.preventDefault();
+                return { reason: "error", type: "cannotModifyDisabled" };
             }
+            this.getState();
+            var range = this._workbook.activeSheet().selection();
+            var preventDefault = this._workbook.trigger("cut", {range: range});
+            if(preventDefault) {
+                this._event.preventDefault();
+                return;
+            }
+            this._clipboard.cut();
         }
     });
 
