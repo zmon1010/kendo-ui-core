@@ -130,7 +130,7 @@
     <value>Začíná po</value>
   </data>
   <data name="Filter_DateIsGreaterThanOrEqualTo" xml:space="preserve">
-    <value>Začáná od</value>
+    <value>Začíná od</value>
   </data>
   <data name="Filter_DateIsLessThan" xml:space="preserve">
     <value>Končí po</value>
@@ -754,37 +754,37 @@
     <value>All events</value>
   </data>
   <data name="Grid_Excel" xml:space="preserve">
-    <value>Export to Excel</value>
+    <value>Exportovat do Excelu</value>
   </data>
   <data name="Pager_AllPages" xml:space="preserve">
-    <value>All</value>
+    <value>Vše</value>
   </data>
   <data name="Filter_StringIsEmpty" xml:space="preserve">
-    <value>Is empty</value>
+    <value>Je prázdný</value>
   </data>
   <data name="Filter_StringIsNotEmpty" xml:space="preserve">
-    <value>Is not empty</value>
+    <value>Není prázdný</value>
   </data>
   <data name="Filter_StringIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Má hodnotu</value>
   </data>
   <data name="Filter_StringIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>Nemá hodnotu</value>
   </data>
   <data name="Filter_NumberIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Má hodnotu</value>
   </data>
   <data name="Filter_NumberIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>Nemá hodnotu</value>
   </data>
   <data name="Filter_DateIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Má hodnotu</value>
   </data>
   <data name="Filter_DateIsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>Nemá hodnotu</value>
   </data>
   <data name="Filter_EnumIsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Má hodnotu</value>
   </data>
   <data name="Filter_EnumIsNull" xml:space="preserve">
     <value>Is null</value>
@@ -809,5 +809,38 @@
   </data>
   <data name="Editor_Print" xml:space="preserve">
     <value>Print</value>
+  </data>
+  <data name="Grid_Pdf" xml:space="preserve">
+    <value>Exportovat do PDF</value>
+  </data>
+  <data name="Grid_CheckAll" xml:space="preserve">
+    <value>Vybrat vše</value>
+  </data>
+  <data name="Grid_NoRecords" xml:space="preserve">
+    <value>Žádná data.</value>
+  </data>
+  <data name="Filter_SelectedItemsFormat" xml:space="preserve">
+    <value>{0} vybraných položek</value>
+  </data>
+  <data name="MediaPlayer_Fullscreen" xml:space="preserve">
+    <value>Celá obrazovka</value>
+  </data>
+  <data name="MediaPlayer_Mute" xml:space="preserve">
+    <value>Ztlumit</value>
+  </data>
+  <data name="MediaPlayer_Pause" xml:space="preserve">
+    <value>Pauza</value>
+  </data>
+  <data name="MediaPlayer_Play" xml:space="preserve">
+    <value>Přehrát</value>
+  </data>
+  <data name="MediaPlayer_Quality" xml:space="preserve">
+    <value>Kvalita</value>
+  </data>
+  <data name="MediaPlayer_Unmute" xml:space="preserve">
+    <value>Nahlas</value>
+  </data>
+  <data name="Scheduler_View_WorkWeek" xml:space="preserve">
+    <value>Pracovní týden</value>
   </data>
 </root>
