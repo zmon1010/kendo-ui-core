@@ -59,7 +59,7 @@
         ok(mediaPlayer.dropdown().span.siblings().children().is(".k-i-HD"));
     });
 
-    test("adds dropdown widget to toolbar", function () {
+    skip("adds dropdown widget to toolbar", function () {
         ok(mediaPlayer.dropdown() instanceof kendo.ui.DropDownList);
     });
 
