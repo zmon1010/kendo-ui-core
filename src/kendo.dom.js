@@ -17,7 +17,9 @@ var __meta__ = { // jshint ignore:line
 
     Node.prototype = {
         remove: function() {
-            this.node.parentNode.removeChild(this.node);
+            if (this.node.parentNode) {
+                this.node.parentNode.removeChild(this.node);
+            }
             this.attr = {};
         },
         attr: {},
@@ -196,7 +198,7 @@ var __meta__ = { // jshint ignore:line
     };
 
     function TextNode(nodeValue) {
-        this.nodeValue = nodeValue;
+        this.nodeValue = String(nodeValue);
     }
 
     TextNode.prototype = new Node();
@@ -216,7 +218,12 @@ var __meta__ = { // jshint ignore:line
             node = cached.node;
 
             if (this.nodeValue !== cached.nodeValue) {
-                node.nodeValue = this.nodeValue;
+                if (node.parentNode) {
+                    // sometimes in IE parentNode is null (reason unknown),
+                    // and IE throws an error when you try to set a
+                    // parentless' nodeValue, because why not.
+                    node.nodeValue = this.nodeValue;
+                }
             }
         }
 
@@ -236,7 +243,10 @@ var __meta__ = { // jshint ignore:line
        attr: {},
        remove: function() {
            for (var index = 0; index < this.nodes.length; index++) {
-               this.nodes[index].parentNode.removeChild(this.nodes[index]);
+               var el = this.nodes[index];
+               if (el.parentNode) {
+                   el.parentNode.removeChild(el);
+               }
            }
        },
        render: function(parent, cached) {
