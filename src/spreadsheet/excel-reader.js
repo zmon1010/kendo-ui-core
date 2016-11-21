@@ -18,6 +18,13 @@
     var parseXML = kendo.util.parseXML;
     var parseReference = kendo.spreadsheet.calc.parseReference;
 
+    var MAP_EXCEL_OPERATOR = {
+        // includes only what differs; key is Excel's operator, value
+        // is our operator.
+        greaterThanOrEqual : "greaterThanOrEqualTo",
+        lessThanOrEqual    : "lessThanOrEqualTo"
+    };
+
     function readExcel(file, workbook, deferred) {
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -44,6 +51,9 @@
     var SEL_VIEW = ["bookViews", "workbookView"];
     var SEL_SHEET_VIEW = ["sheetViews", "sheetView"];
     var SEL_HYPERLINK = ["hyperlinks", "hyperlink"];
+    var SEL_VALIDATION = ["dataValidations", "dataValidation"];
+    var SEL_VALIDATION_FORMULA1 = ["dataValidations", "dataValidation", "formula1"];
+    var SEL_VALIDATION_FORMULA2 = ["dataValidations", "dataValidation", "formula2"];
 
     function xl(file) {
         if (!/^\//.test(file)) {
@@ -226,6 +236,7 @@
         var prevCellRef = null;
         var relsFile = file.replace(/worksheets\//, "worksheets/_rels/");
         var relationships = readRelationships(zip, relsFile);
+        var formula1, formula2;
 
         parse(zip, xl(file), {
             enter: function(tag, attrs) {
@@ -323,6 +334,7 @@
                 }
             },
             leave: function(tag) {
+                var attrs;
                 if (this.is(SEL_CELL)) {
                     if (formula != null) {
                         try {
@@ -352,6 +364,37 @@
                             }
                         }
                     }
+                } else if ((attrs = this.is(SEL_VALIDATION))) {
+                    (function(){
+                        var refs = kendo.spreadsheet.calc.parseSqref(attrs.sqref);
+                        var type = attrs.type.toLowerCase();
+                        var operator = attrs.operator;
+                        if (/^(?:whole|decimal)$/.test(type)) {
+                            // we only support "number"
+                            type = "number";
+                        } else if (type == "list") {
+                            // there'll be no operator from Excel for lists
+                            operator = "list";
+                        }
+                        if (!operator && /^(?:number|date)$/.test(type)) {
+                            // Excel skips setting the operator for
+                            // "between", because why not.
+                            operator = "between";
+                        }
+                        refs.forEach(function(ref){
+                            sheet.range(ref).validation({
+                                type             : bool(attrs.showErrorMessage, true) ? "reject" : "warning",
+                                from             : formula1,
+                                to               : formula2,
+                                dataType         : type,
+                                comparerType     : MAP_EXCEL_OPERATOR[operator] || operator,
+                                allowNulls       : bool(attrs.allowBlank),
+                                showButton       : bool(attrs.showDropDown) || type == "date" || type == "list",
+                                messageTemplate  : attrs.error,
+                                titleTemplate    : attrs.errorTitle
+                            });
+                        });
+                    })();
                 } else if (tag == "cols") {
                     sheet._columns._refresh();
                 } else if (tag == "sheetData") {
@@ -367,6 +410,10 @@
                     if (attrs.t == "shared") {
                         formulaRange = attrs.ref;
                     }
+                } else if (this.is(SEL_VALIDATION_FORMULA1)) {
+                    formula1 = text;
+                } else if (this.is(SEL_VALIDATION_FORMULA2)) {
+                    formula2 = text;
                 }
             }
         });

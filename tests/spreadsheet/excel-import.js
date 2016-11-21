@@ -29,6 +29,7 @@
             range: ref => ({
                 value: () => null,
                 formula: () => null,
+                validation: () => null,
                 _get: () => true
             }),
             options: {}
@@ -644,6 +645,79 @@
             range: ref => ({
                 value: () => null,
                 formula: val => equal(val, "1/0"),
+                _get: () => true
+            })
+        });
+
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+    });
+
+    test("reads dataValidations (date)", function() {
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="A1">
+                    <v>5</v>
+                  </c>
+                </row>
+              </sheetData>
+              <dataValidations>
+                <dataValidation type="date" operator="greaterThan" allowBlank="1" showInputMessage="1" showErrorMessage="1" errorTitle="Date wanted" error="Please enter date after 1979-03-08" sqref="B1:D1">
+                  <formula1>28922</formula1>
+                </dataValidation>
+                <dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="B7">
+                  <formula1>$E:$E</formula1>
+                </dataValidation>
+                <dataValidation type="date" operator="lessThan" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="B2">
+                  <formula1>42736</formula1>
+                </dataValidation>
+                <dataValidation type="date" errorStyle="warning" allowBlank="1" showInputMessage="1" showErrorMessage="1" errorTitle="Blah" error="Must be in 2016" sqref="B3">
+                  <formula1>42370</formula1>
+                  <formula2>42735</formula2>
+                </dataValidation>
+                <dataValidation type="whole" operator="greaterThan" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="B4">
+                  <formula1>10</formula1>
+                </dataValidation>
+                <dataValidation type="whole" operator="lessThan" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="B5">
+                  <formula1>10</formula1>
+                </dataValidation>
+                <dataValidation type="whole" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="B6">
+                  <formula1>5</formula1>
+                  <formula2>10</formula2>
+                </dataValidation>
+                <dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="B8">
+                  <formula1>"Foo, Bar, Baz"</formula1>
+                </dataValidation>
+                <dataValidation type="decimal" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="B9">
+                  <formula1>1</formula1>
+                  <formula2>10</formula2>
+                </dataValidation>
+              </dataValidations>
+            </worksheet>
+        `;
+
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var index = 0;
+        var expected = [
+            {type: 'reject', from: '28922', to: undefined, dataType: 'date', comparerType: 'greaterThan', allowNulls: true, showButton: true, messageTemplate: 'Please enter date after 1979-03-08', titleTemplate: 'Date wanted'},
+            {type: 'reject', from: '$E:$E', to: undefined, dataType: 'list', comparerType: 'list', allowNulls: true, showButton: true, messageTemplate: undefined, titleTemplate: undefined},
+            {type: 'reject', from: '42736', to: undefined, dataType: 'date', comparerType: 'lessThan', allowNulls: true, showButton: true, messageTemplate: undefined, titleTemplate: undefined},
+            {type: 'reject', from: '42370', to: '42735', dataType: 'date', comparerType: 'between', allowNulls: true, showButton: true, messageTemplate: 'Must be in 2016', titleTemplate: 'Blah'},
+            {type: 'reject', from: '10', to: '42735', dataType: 'number', comparerType: 'greaterThan', allowNulls: true, showButton: false, messageTemplate: undefined, titleTemplate: undefined},
+            {type: 'reject', from: '10', to: '42735', dataType: 'number', comparerType: 'lessThan', allowNulls: true, showButton: false, messageTemplate: undefined, titleTemplate: undefined},
+            {type: 'reject', from: '5', to: '10', dataType: 'number', comparerType: 'between', allowNulls: true, showButton: false, messageTemplate: undefined, titleTemplate: undefined},
+            {type: 'reject', from: '"Foo, Bar, Baz"', to: '10', dataType: 'list', comparerType: 'list', allowNulls: true, showButton: true, messageTemplate: undefined, titleTemplate: undefined},
+            {type: 'reject', from: '1', to: '10', dataType: 'number', comparerType: 'between', allowNulls: true, showButton: false, messageTemplate: undefined, titleTemplate: undefined}
+        ];
+        var sheet = mockSheet({
+            range: ref => ({
+                value: () => null,
+                validation: (val) => {
+                    deepEqual(val, expected[index++]);
+                },
                 _get: () => true
             })
         });
