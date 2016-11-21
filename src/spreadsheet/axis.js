@@ -32,6 +32,7 @@
                 this.values.value(start, start + delta - 1, this._value);
                 this._hidden.value(start, start + delta - 1, 0);
             }
+            this._refresh();
         },
 
         toJSON: function(field, positions) {
