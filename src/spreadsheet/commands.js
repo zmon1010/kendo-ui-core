@@ -437,9 +437,9 @@
             this._state = this._range.getState();
         },
         exec: function() {
+            this.getState();
             this._clipboard.parse();
             var status = this._clipboard.canPaste();
-            this._clipboard.menuInvoked = true;
             if (!status.canPaste) {
                 if (status.menuInvoked) {
                     return { reason: "error", type: "useKeyboard" };
@@ -450,9 +450,12 @@
                 if (status.overflow) {
                     return { reason: "error", type: "overflow" };
                 }
+                if (status.pasteOnDisabled) {
+                    this._event.preventDefault();
+                    return { reason: "error", type: "cannotModifyDisabled" };
+                }
                 return { reason: "error" };
             }
-            this.getState();
             var range = this._workbook.activeSheet().selection();
             var preventDefault = this._workbook.trigger("paste", {range: range});
             if(preventDefault) {

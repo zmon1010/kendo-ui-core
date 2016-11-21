@@ -48,7 +48,13 @@
         canPaste: function() {
             var sheet = this.workbook.activeSheet();
             var ref = this.pasteRef();
-            var status = {canPaste: true};
+            var range = sheet.range(ref);
+            var status = { canPaste: true, pasteOnMerged: false, pasteOnDisabled: false };
+
+            if (!range.enable()) {
+                status.canPaste =  false;
+                status.pasteOnDisabled = true;
+            }
             if (!ref.eq(sheet.unionWithMerged(ref))) {
                 status.canPaste = false;
                 status.pasteOnMerged = true;
