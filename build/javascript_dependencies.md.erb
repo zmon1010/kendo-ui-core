@@ -21,7 +21,7 @@ position: <%= category["position"] %>
 % component["features"].each do |feature|
 % feature["dependencies"].each do |dependency|
 % unless component["dependencies"].include? dependency
-| | kendo.<%= dependency %>.js | <%= feature["name"] %> feature |
+| | kendo.<%= dependency %>.js | <%= feature["name"] %> feature (optional) |
 % end # unless
 % end # f/deps
 % end # features
