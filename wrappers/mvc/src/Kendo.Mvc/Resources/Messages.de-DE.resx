@@ -775,34 +775,34 @@
     <value>Alle</value>
   </data>
   <data name="Filter_StringIsEmpty" xml:space="preserve">
-    <value>leer sind</value>
+    <value>Ist leer</value>
   </data>
   <data name="Filter_StringIsNotEmpty" xml:space="preserve">
-    <value>nicht leer sind</value>
+    <value>Ist nicht leer</value>
   </data>
   <data name="Filter_StringIsNotNull" xml:space="preserve">
-    <value>ist angegeben </value>
+    <value>Ist angegeben </value>
   </data>
   <data name="Filter_StringIsNull" xml:space="preserve">
-    <value>ist nicht angegeben</value>
+    <value>Ist nicht angegeben</value>
   </data>
   <data name="Filter_NumberIsNotNull" xml:space="preserve">
-    <value>ist angegeben</value>
+    <value>Ist angegeben</value>
   </data>
   <data name="Filter_NumberIsNull" xml:space="preserve">
-    <value>ist nicht angegeben</value>
+    <value>Ist nicht angegeben</value>
   </data>
   <data name="Filter_DateIsNotNull" xml:space="preserve">
-    <value>ist angegeben</value>
+    <value>Ist angegeben</value>
   </data>
   <data name="Filter_DateIsNull" xml:space="preserve">
-    <value>ist nicht angegeben</value>
+    <value>Ist nicht angegeben</value>
   </data>
   <data name="Filter_EnumIsNotNull" xml:space="preserve">
-    <value>ist angegeben</value>
+    <value>Ist angegeben</value>
   </data>
   <data name="Filter_EnumIsNull" xml:space="preserve">
-    <value>ist nicht angegeben</value>
+    <value>Ist nicht angegeben</value>
   </data>
   <data name="Filter_Search" xml:space="preserve">
     <value>Suchen</value>
