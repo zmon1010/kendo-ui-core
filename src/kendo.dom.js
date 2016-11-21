@@ -308,7 +308,10 @@ var __meta__ = { // jshint ignore:line
 
             for (index = 0, length = children.length; index < length; index++) {
                 var cached = cachedChildren[index];
-                if (!cached || !cached.node.parentNode) {
+                if (!cached) {
+                    cached = NULL_NODE;
+                } else if (!cached.node || !cached.node.parentNode) {
+                    cached.remove();
                     cached = NULL_NODE;
                 }
                 children[index].render(this.root, cached);
