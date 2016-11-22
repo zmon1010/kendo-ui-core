@@ -12,7 +12,7 @@
             kendo.destroy(QUnit.fixture);
         }
     });
-
+    //TODO: Test should be fixed after all font-icons cherrypicks are completed
     skip("changing input value changes preview bgcolor", function() {
         var colorIndicator = colorInput.closest(".k-widget").find(".k-i-arrow-s"),
             colorInputControl = colorInput.data("kendoColorInput");
@@ -47,7 +47,7 @@
 
         litmus.remove();
     });
-
+    //TODO: Test should be fixed after all font-icons cherrypicks are completed
     skip("preview bgcolor is changed upon init", function() {
         colorInput = $("<input value='#ff0000' />").appendTo(QUnit.fixture).kendoColorInput();
 

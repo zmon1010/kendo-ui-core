@@ -257,7 +257,7 @@
 
         equalPositions(reorderable.reorderDropCue, target, true);
     });
-
+    //TODO: Test should be fixed after all font-icons cherrypicks are completed
     skip("position is set to before", function() {
         var args,
             reorderable = new Reorderable(div, {
@@ -285,7 +285,7 @@
 
         equal(args.position, "after");
     });
-
+    //TODO: Test should be fixed after all font-icons cherrypicks are completed
     skip("reorder twice adjecent elements", function() {
         var args;
         new Reorderable(div, {
