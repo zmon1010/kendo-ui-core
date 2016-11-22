@@ -157,6 +157,38 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Adds Import tool.
+        /// </summary>
+        /// <returns></returns>
+        public EditorToolFactory Import()
+        {
+            return Button("import");
+        }
+
+        /// <summary>
+        /// Adds ExportAs tool.
+        /// </summary>
+        /// <returns></returns>
+        public EditorToolFactory ExportAs()
+        {
+            return SelectBox("exportAs", null);
+        }
+
+        /// <summary>
+        /// Adds ExportAs tool.
+        /// </summary>
+        /// <returns></returns>
+        public EditorToolFactory ExportAs(Action<EditorDropDownItemBuilder> configurator)
+        {
+            var items = new List<DropDownListItem>();
+            var builder = new EditorDropDownItemBuilder(items);
+
+            configurator(builder);
+
+            return SelectBox("exportAs", items);
+        }
+
+        /// <summary>
         /// Adds Outdent tool.
         /// </summary>
         /// <returns></returns>

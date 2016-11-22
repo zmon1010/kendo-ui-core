@@ -842,6 +842,8 @@
     <Compile Include="UI\Diagram\Settings\DiagramShapeFillGradientSettings.cs" />
     <Compile Include="UI\DropDownListBase\Fluent\VirtualSettingsBuilder.cs" />
     <Compile Include="UI\DropDownListBase\VirtualSettings.cs" />
+    <Compile Include="UI\Editor\EditorExportAsSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorExportAsSettingsBuilder.cs" />
     <Compile Include="UI\Editor\Fluent\EditorMessagesSettingsBuilder.cs" />
     <Compile Include="UI\Editor\Fluent\EditorPdfMarginSettingsBuilder.cs" />
     <Compile Include="UI\Editor\Fluent\EditorPdfSettingsBuilder.cs" />
@@ -2754,5 +2756,11 @@
     <Compile Include="UI\Dialog\Fluent\DialogMessagesSettingsBuilder.cs" />
     <Compile Include="UI\Dialog\Fluent\DialogEventBuilder.cs" />
     <Compile Include="UI\Dialog\Html\DialogHtmlBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Editor\Settings\EditorImportSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Editor\Fluent\EditorImportSettingsBuilder.cs" />
   </ItemGroup>
 </Project>

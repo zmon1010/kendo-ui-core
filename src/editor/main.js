@@ -191,7 +191,9 @@
         alignRemove: "Remove Alignment",
         columns: "Columns",
         rows: "Rows",
-        selectAllCells: "Select All Cells"
+        selectAllCells: "Select All Cells",
+        exportAs: "Export As",
+        "import": "Import"
     };
 
     var supportedBrowser = !os || (os.ios && os.flatVersion >= 500) || (!os.ios && typeof(document.documentElement.contentEditable) != 'undefined');
@@ -978,6 +980,8 @@
 
             this.toolbar.destroy();
 
+            editor._destroyUploadWidget();
+
             editor._destroyResizings();
 
             kendo.destroy(this.wrapper);
@@ -999,6 +1003,14 @@
             if (kendo.support.browser.msie && this.textarea) {
                 var tempInput = $("<input style='position:fixed;left:1px;top:1px;width:1px;height:1px;font-size:0;border:0;opacity:0' />").appendTo(document.body).focus();
                 tempInput.blur().remove();
+            }
+        },
+
+        _destroyUploadWidget: function(){
+            var editor = this;
+            if (editor._uploadWidget) {
+                editor._uploadWidget.destroy();
+                editor._uploadWidget = null;
             }
         },
 

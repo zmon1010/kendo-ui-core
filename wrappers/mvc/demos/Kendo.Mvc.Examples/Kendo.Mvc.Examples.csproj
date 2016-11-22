@@ -160,6 +160,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Telerik.Windows.Zip.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Kendo.Mvc.Export, Version=1.0.0.40, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Kendo.Mvc.Export.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -239,6 +243,9 @@
     <Compile Include="Controllers\Dialog\EventsController.cs" />
     <Compile Include="Controllers\Dialog\ApiController.cs" />
     <Compile Include="Controllers\Dialog\IndexController.cs" />
+    <Compile Include="Controllers\Editor\EditorExportController.cs" />
+    <Compile Include="Controllers\Editor\EditorImportController.cs" />
+    <Compile Include="Controllers\Editor\Import_ExportAsController.cs" />
     <Compile Include="Controllers\Editor\Immutable_ElementsController.cs" />
     <Compile Include="Controllers\Editor\Paste_CleanupController.cs" />
     <Compile Include="Controllers\Financial\Stock_HistoryController.cs" />
@@ -2968,6 +2975,7 @@
     <Content Include="Views\dialog\treelist_integration.cshtml" />
     <Content Include="Views\spreadstreamprocessing\index.cshtml" />
     <Content Include="Views\financial\stock_history.cshtml" />
+    <Content Include="Views\editor\import_exportas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

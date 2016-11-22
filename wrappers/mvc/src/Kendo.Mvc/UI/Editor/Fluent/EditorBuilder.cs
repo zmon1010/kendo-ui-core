@@ -144,7 +144,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///             .Value("&lt;blockquote&gt;A towel has &lt;strong&gt;immense&lt;/strong&gt; psychological value&lt;/blockquote&gt;")
         ///             .Encode(true)
         /// %&gt;
-        /// </code>   
+        /// </code>
         public EditorBuilder Encode(bool value)
         {
             Component.Encode = value;
@@ -167,7 +167,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///             .Name("Editor")
         ///             .StyleSheets(styleSheets => styleSheets.Add("editorStyles.css"))
         /// %&gt;
-        /// </code>        
+        /// </code>
         public EditorBuilder StyleSheets(Action<EditorStyleSheetBuilder> configurator)
         {
             configurator(new EditorStyleSheetBuilder(Component.StyleSheets));
@@ -226,9 +226,51 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Configure the exportAs settings.
+        /// </summary>
+        /// <param name="configurator">An action that configures the ExportAs settings.</param>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Editor()
+        ///             .Name("Editor")
+        ///             .ExportAs(exportAs => exportAs
+        ///                 .FileName("Editor")
+        ///                 .Proxy("Export", "Editor")
+        ///             )
+        /// %&gt;
+        /// </code>
+        public EditorBuilder ExportAs(Action<EditorExportAsSettingsBuilder> configurator)
+        {
+            var builder = new EditorExportAsSettingsBuilder(Component.ExportAsSettings);
+
+            configurator(builder);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configure the import settings.
+        /// </summary>
+        /// <param name="configurator">An action that configures the Import settings.</param>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().Editor()
+        ///             .Name("Editor")
+        ///             .Import(import => import
+        ///                 .Proxy("Import", "Editor")
+        ///             )
+        /// %&gt;
+        /// </code>
+        public EditorBuilder Import(Action<EditorImportSettingsBuilder> configurator)
+        {
+            var builder = new EditorImportSettingsBuilder(Component.ImportSettings);
+
+            configurator(builder);
+
+            return this;
+        }
 
         //>> Fields
-        
+
         /// <summary>
         /// Fine-tune deserialization in the Editor widget. Deserialization is the process of parsing the HTML string input from the value() method or from the viewHtml dialog into editable content.
         /// </summary>
@@ -238,7 +280,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new EditorDeserializationSettingsBuilder(container.Deserialization));
             return this;
         }
-        
+
         /// <summary>
         /// Relaxes the same-origin policy when using the iframe-based editor.
 		/// This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain.
@@ -252,7 +294,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
         /// <summary>
         /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
         /// </summary>
@@ -271,7 +313,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-        
+
         /// <summary>
         /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
         /// </summary>
@@ -279,11 +321,11 @@ namespace Kendo.Mvc.UI.Fluent
         public EditorBuilder Immutables(Action<EditorImmutablesSettingsBuilder> configurator)
         {
             container.Immutables.Enabled = true;
-            
+
             configurator(new EditorImmutablesSettingsBuilder(container.Immutables));
             return this;
         }
-        
+
         /// <summary>
         /// Defines the text of the labels that are shown within the editor. Used primarily for localization.
         /// </summary>
@@ -293,7 +335,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new EditorMessagesSettingsBuilder(container.Messages));
             return this;
         }
-        
+
         /// <summary>
         /// Options for controlling how the pasting content is modified before it is added in the editor.
         /// </summary>
@@ -303,7 +345,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new EditorPasteCleanupSettingsBuilder(container.PasteCleanup));
             return this;
         }
-        
+
         /// <summary>
         /// If enabled, the editor renders a resize handle to allow users to resize it.
         /// </summary>
@@ -322,7 +364,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-        
+
         /// <summary>
         /// If enabled, the editor renders a resize handle to allow users to resize it.
         /// </summary>
@@ -330,11 +372,11 @@ namespace Kendo.Mvc.UI.Fluent
         public EditorBuilder Resizable(Action<EditorResizableSettingsBuilder> configurator)
         {
             container.Resizable.Enabled = true;
-            
+
             configurator(new EditorResizableSettingsBuilder(container.Resizable));
             return this;
         }
-        
+
         /// <summary>
         /// Allows setting of serialization options.
         /// </summary>
@@ -344,7 +386,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new EditorSerializationSettingsBuilder(container.Serialization));
             return this;
         }
-        
+
         //<< Fields
     }
 }

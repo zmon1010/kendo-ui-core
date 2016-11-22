@@ -1122,6 +1122,24 @@
                 }
             },
             {
+                "text": "Import and Export",
+                "url": "editor/import-exportas",
+                "title": {
+                    "aspnet-mvc": "Editor export support in $FRAMEWORK Editor with Telerik Document Processing Library"
+                },
+                "meta": {
+                    "aspnet-mvc": "With $FRAMEWORK Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the Telerik Document Processing export integration in the component."
+                },
+                "description": {
+                    "aspnet-mvc": "<p>Telerik Document Processing is a bundle of UI-independent, cross-platform libraries enabling you to process the most commonly used flow, fixed and spreadsheet document formats. The components allow to create documents, import, modify and export them without external dependencies between the following different formats.</p><p>This demo demonstrates how to export the Telerik MVC Editor contents to the following formats with Telerik Document Processing Library.</p><ul><li>DOCX</li><li>RTF</li><li>PDF</li><li>HTML</li><li>TXT</li></ul><p>To export the content include the corresponding command to the editor’s toolbar .Tools(tools => tools.ExportAs()) and configure the export settings through the ExportAs attribute. For instance you should specify the Proxy option, which sets the Action to which the content will be submitted, or you can specify FileName attribute to set the name of the downloaded file.</p>"
+                },
+                "packages": [
+                    "!mvc-core",
+                    "!php",
+                    "!jsp"
+                ]
+            },
+            {
                 "text": "Paste Cleanup",
                 "url": "editor/paste-cleanup",
                 "title": {
@@ -4562,7 +4580,7 @@
         "category": "Framework",
         "text": "PDF Export",
         "name": "export",
-        "packages": [ "!mvc-core" ],  
+        "packages": [ "!mvc-core" ],
         "spriteCssClass": "drawingIcon",
         "items": [
             {
@@ -4620,7 +4638,7 @@
         "text": "Globalization",
         "name": "globalization",
         "api": "framework/kendo",
-        "packages": [ "!mvc-core" ],  
+        "packages": [ "!mvc-core" ],
         "documentation": {
             "kendo-ui": "getting-started/framework/globalization/overview"
         },
@@ -4652,7 +4670,7 @@
         "text": "Validator",
         "name": "validator",
         "api": "web/validator",
-        "packages": [ "!mvc-core" ],  
+        "packages": [ "!mvc-core" ],
         "documentation": {
             "kendo-ui": "getting-started/framework/validator/overview"
         },
@@ -4694,7 +4712,7 @@
                 "meta": {
                     "aspnet-mvc": "This example illustrates how jQuery and HTML5-based forms can be styled with Kendo UI Web."
                 }
-            },	
+            },
             {
                 "text": "Checkboxes",
                 "url": "styling/checkboxes",
@@ -5937,7 +5955,7 @@
         "text": "Diagram",
         "name": "diagram",
         "api": "dataviz/diagram",
-        "packages": [ "!mvc-core" ], 
+        "packages": [ "!mvc-core" ],
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/diagram/overview"
         },
