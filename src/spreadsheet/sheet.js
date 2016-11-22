@@ -871,9 +871,10 @@
                 ref = ref.toRangeRef();
 
                 var bottomRight = ref.bottomRight;
+                var topLeft = ref.topLeft;
 
-                var rowSelection = bottomRight.col >= maxCol;
-                var colSelection = bottomRight.row >= maxRow;
+                var rowSelection = topLeft.col <= 0 && bottomRight.col >= maxCol;
+                var colSelection = topLeft.row <= 0 && bottomRight.row >= maxRow;
 
                 if (colSelection) { //column selection
                     allRows = true;
@@ -886,7 +887,7 @@
                 }
 
                 if (!colSelection) { //column selection
-                    for (i = ref.topLeft.row; i <= bottomRight.row; i++) {
+                    for (i = topLeft.row; i <= bottomRight.row; i++) {
                         if (rows[i] !== "full") {
                             rows[i] = rowState;
                         }
@@ -894,7 +895,7 @@
                 }
 
                 if (!rowSelection) {
-                    for (i = ref.topLeft.col; i <= bottomRight.col; i++) {
+                    for (i = topLeft.col; i <= bottomRight.col; i++) {
                         if (cols[i] !== "full") {
                             cols[i] = colState;
                         }

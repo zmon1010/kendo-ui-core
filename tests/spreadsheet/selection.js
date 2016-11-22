@@ -184,6 +184,13 @@
         equal(selectedHeaders.allCols, true);
     });
 
+    test("selecting bottom-right cell does not trigger allCols / allRows", function(){
+        sheet.range(999, 99).select();
+        var selectedHeaders = sheet.selectedHeaders();
+        equal(selectedHeaders.allCols, false);
+        equal(selectedHeaders.allRows, false);
+    });
+
     function find(classTestRe, children) {
         for (var i = 0; i < children.length; i++) {
             if (classTestRe.test(children[i].attr.className)) {
