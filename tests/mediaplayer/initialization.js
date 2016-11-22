@@ -55,6 +55,7 @@
         ok(mediaPlayer._volumeButton.children().is('[class*="k-i-volume"]'));
     });
 
+    //TODO: Test should be fixed after all font-icons cherrypicks are completed
     skip("adds dropdown template to toolbar", function () {
         ok(mediaPlayer.dropdown().span.siblings().children().is(".k-i-HD"));
     });
