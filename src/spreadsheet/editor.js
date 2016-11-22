@@ -24,9 +24,6 @@
             this.barInput.bind("keyup", this._triggerUpdate.bind(this));
             this.cellInput.bind("keyup", this._triggerUpdate.bind(this));
 
-            this.barInput.bind("focus", this._focus.bind(this));
-            this.cellInput.bind("focus", this._focus.bind(this));
-
             this.barInput.bind("blur", this._blur.bind(this));
             this.cellInput.bind("blur", this._blur.bind(this));
         },
@@ -38,12 +35,8 @@
             "update"
         ],
 
-        _focus: function(e) {
-            this.lastActive = e.sender == this.barInput ? "bar" : "cell";
-        },
-
         _blur: function() {
-            //this.deactivate(); -- this breaks validation (the popup shows up twice and can't be dismissed)
+            this.deactivate();
         },
 
         _triggerUpdate: function() {
@@ -103,21 +96,12 @@
             this.cellInput.enable(enable);
         },
 
-        enableEditing: function (enable) {
-            this.barInput.enableEditing(enable);
-            this.cellInput.enableEditing(enable);
-        },
-
         barElement: function() {
             return this.barInput.element;
         },
 
         cellElement: function() {
             return this.cellInput.element;
-        },
-
-        focusLastActive: function () {
-            this.focus(this.lastActive);
         },
 
         focus: function(inputType) {

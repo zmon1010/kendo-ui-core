@@ -180,21 +180,10 @@
             }
 
             if (result) {
-                var closeHandler;
-
-                if (this.view.editor.isActive()) {
-                    this.enableEditor(false);
-                    closeHandler = this.enableEditor.bind(this, true, true);
-                }
-
                 if (result.reason === "error") {
-                    this._lastCommandRequest = null;
-
-                    this.view.showError(result, closeHandler);
+                    this.view.showError(result);
                 } else {
-                    this.view.openDialog(result.reason, {
-                        close: closeHandler
-                    });
+                    this.view.openDialog(result.reason);
                 }
             }
 
@@ -949,91 +938,31 @@
             this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet()._viewActiveCell()));
         },
 
-        deactivateEditor: function(callback, options) {
-            var viewEditor = this.view.editor;
-
-            this._lastCommandRequest = {
-                callback: callback,
-                options: options
-            };
-
-            if (!this.isEditorDeactivateBound) {
-                this.isEditorDeactivateBound = true;
-
-                viewEditor.one("deactivate", function () {
-                    this.isEditorDeactivateBound = false;
-
-                    if (this._lastCommandRequest) {
-                        this._lastCommandRequest.callback(this._lastCommandRequest.options);
-                        this._lastCommandRequest = null;
-                    }
-                }.bind(this));
-            }
-
-            viewEditor.deactivate();
-
-            this.enableEditor(false);
-        },
-
-        enableEditor: function(enable, focusLastActive, event) {
-            if (event && event.action === "revert") {
-                this.resetEditorValue();
-            }
-
-            enable = enable === undefined || enable;
-
-            this._enableEditorEvents(enable);
-            this.editor.enableEditing(enable);
-
-            this.isEditorDisabled = !enable;
-            this.view.enableClipboard(enable);
-
-            //last active is required only for validation
-            if (focusLastActive) {
-                this.editor.focusLastActive();
-            }
-        },
-
-        executeRequest: function(callback, options) {
-            if (this.view.editor.isActive()) {
-                this.deactivateEditor(callback, options);
-            } else {
-                callback(options);
-            }
+        deactivateEditor: function() {
+            this.view.editor.deactivate();
         },
 
         onCommandRequest: function(e) {
-            var executeCommand = function(e) {
-                if (e.command) {
-                    this._execute(e);
-                } else {
-                    this._workbook.undoRedoStack[e.action]();
-                }
-            }.bind(this);
-
-            this.executeRequest(executeCommand, e);
+            if (e.command) {
+                this._execute(e);
+            } else {
+                this._workbook.undoRedoStack[e.action]();
+            }
         },
 
         onDialogRequest: function(e) {
-            var executeDialog = function(e) {
-                this.enableEditor(false);
+            var additionalOptions = {
+                pdfExport: this._workbook.options.pdf,
+                excelExport: this._workbook.options.excel
+            };
 
-                var additionalOptions = {
-                    pdfExport: this._workbook.options.pdf,
-                    excelExport: this._workbook.options.excel,
-                    close: this.enableEditor.bind(this, true, false)
-                };
+            if (e.options) {
+                $.extend(true, e.options, additionalOptions);
+            } else {
+                e.options = additionalOptions;
+            }
 
-                if(e.options) {
-                    $.extend(true, e.options, additionalOptions);
-                } else {
-                    e.options = additionalOptions;
-                }
-
-                this.view.openDialog(e.name, e.options);
-            }.bind(this);
-
-            this.executeRequest(executeDialog, e);
+            this.view.openDialog(e.name, e.options);
         },
 
         onNameEditorEnter: function() {
