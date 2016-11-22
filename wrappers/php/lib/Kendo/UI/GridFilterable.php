@@ -24,21 +24,21 @@ class GridFilterable extends \Kendo\SerializableObject {
     }
 
     /**
-    * The text of the filter operators displayed in the filter menu.
-    * @param \Kendo\UI\GridFilterableOperators|array $value
-    * @return \Kendo\UI\GridFilterable
-    */
-    public function operators($value) {
-        return $this->setProperty('operators', $value);
-    }
-
-    /**
     * If set to row the user would be able to filter via extra row added below the headers. By default filtering is using the menu mode.Can also be set to the following string values:
     * @param string $value
     * @return \Kendo\UI\GridFilterable
     */
     public function mode($value) {
         return $this->setProperty('mode', $value);
+    }
+
+    /**
+    * The text of the filter operators displayed in the filter menu.
+    * @param \Kendo\UI\GridFilterableOperators|array $value
+    * @return \Kendo\UI\GridFilterable
+    */
+    public function operators($value) {
+        return $this->setProperty('operators', $value);
     }
 
 //<< Properties
