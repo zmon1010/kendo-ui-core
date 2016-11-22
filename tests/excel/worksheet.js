@@ -1534,4 +1534,18 @@ test("Does not duplicate dataValidation elements and list validator tests", func
     equal(v.attr("showDropDown"), "0");
 });
 
+test("Hides rows with height zero", function(){
+    var w = Worksheet([
+        {
+            height: 0,
+            cells: [ { value: "A1" } ]
+        }
+    ]);
+    var dom = $(w.toXML());
+    var row = dom.find("row");
+
+    // row.attr("hidden") is "hidden" for some reason.
+    equal(row[0].getAttribute("hidden"), "1");
+});
+
 }());

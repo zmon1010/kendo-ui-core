@@ -165,7 +165,8 @@ var WORKSHEET = kendo.template(
        '# var row = data[ri]; #' +
        '# var rowIndex = typeof row.index === "number" ? row.index + 1 : (ri + 1); #' +
        '<row r="${rowIndex}" x14ac:dyDescent="0.25" ' +
-           '# if (row.height) { # ht="#= kendo.ooxml.toHeight(row.height) #" customHeight="1" # } #' +
+           '# if (row.height === 0) { # hidden="1" # } ' +
+           '  else if (row.height) { # ht="#= kendo.ooxml.toHeight(row.height) #" customHeight="1" # } #' +
        ' >' +
        '# for (var ci = 0; ci < row.data.length; ci++) { #' +
            '# var cell = row.data[ci];#' +
