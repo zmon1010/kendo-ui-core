@@ -13,7 +13,7 @@
         }
     });
 
-    test("changing input value changes preview bgcolor", function() {
+    skip("changing input value changes preview bgcolor", function() {
         var colorIndicator = colorInput.closest(".k-widget").find(".k-i-arrow-s"),
             colorInputControl = colorInput.data("kendoColorInput");
 
@@ -48,7 +48,7 @@
         litmus.remove();
     });
 
-    test("preview bgcolor is changed upon init", function() {
+    skip("preview bgcolor is changed upon init", function() {
         colorInput = $("<input value='#ff0000' />").appendTo(QUnit.fixture).kendoColorInput();
 
         equal(kendo.parseColor(colorInput.closest(".k-widget").find(".k-i-arrow-s").css("backgroundColor")).toHex(), "ff0000");
