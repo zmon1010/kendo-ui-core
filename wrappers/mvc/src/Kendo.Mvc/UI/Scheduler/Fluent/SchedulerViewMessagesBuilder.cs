@@ -18,10 +18,10 @@
         }
 
 		/// <summary>
-		/// Sets the Day message of the scheduler.
-		/// </summary>
-		/// <param name="message">Day message</param>
-		public SchedulerViewMessagesBuilder Day(string message)
+        /// Sets the text displayed as the Scheduler's "day" view title.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public SchedulerViewMessagesBuilder Day(string message)
         {
             viewMessages.Day = message;
 
@@ -29,10 +29,10 @@
         }
 
 		/// <summary>
-		/// Sets the Week message of the scheduler.
-		/// </summary>
-		/// <param name="message">Week message</param>
-		public SchedulerViewMessagesBuilder Week(string message)
+        /// Sets the text displayed as the Scheduler's "week" view title.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public SchedulerViewMessagesBuilder Week(string message)
         {
             viewMessages.Week = message;
 
@@ -40,10 +40,10 @@
         }
 
 		/// <summary>
-		/// Sets the WorkWeek message of the scheduler.
-		/// </summary>
-		/// <param name="message">WorkWeek message</param>
-		public SchedulerViewMessagesBuilder WorkWeek(string message)
+        /// Sets the text displayed as the Scheduler's "workweek" view title.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public SchedulerViewMessagesBuilder WorkWeek(string message)
         {
             viewMessages.WorkWeek = message;
 
@@ -51,10 +51,10 @@
         }
 
 		/// <summary>
-		/// Sets the Month message of the scheduler.
-		/// </summary>
-		/// <param name="message">Month message</param>
-		public SchedulerViewMessagesBuilder Month(string message)
+        /// Sets the text displayed as the Scheduler's "month" view title.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public SchedulerViewMessagesBuilder Month(string message)
         {
             viewMessages.Month = message;
 
@@ -62,10 +62,10 @@
         }
 
 		/// <summary>
-		/// Sets the Agenda message of the scheduler.
-		/// </summary>
-		/// <param name="message">Agenda message</param>
-		public SchedulerViewMessagesBuilder Agenda(string message)
+        /// Sets the text displayed as the Scheduler's "agenda" view title.
+        /// </summary>
+        /// <param name="message">The message</param>
+        public SchedulerViewMessagesBuilder Agenda(string message)
         {
             viewMessages.Agenda = message;
 
