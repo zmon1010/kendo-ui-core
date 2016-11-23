@@ -7,11 +7,17 @@ namespace Kendo.Mvc.UI
     {
         private string loadContentFromUrl;
 
-        public TabStripItem()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TabStripItem"/> class.
+		/// </summary>
+		public TabStripItem()
         {
         }
 
-        public string ContentUrl
+		/// <summary>
+		/// Gets or sets the Content URL of the item.
+		/// </summary>
+		public string ContentUrl
         {
             get
             {
