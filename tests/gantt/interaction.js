@@ -1035,7 +1035,7 @@
         setTimeout(function () {
             equal(treelistContent.scrollTop(), timelineContent.scrollTop());
             start();
-        }, 50);
+        }, 200);
     });
 
     asyncTest("timeline scroll left scroll header", function () {
