@@ -1048,7 +1048,7 @@
         setTimeout(function () {
             equal(headerWrap.scrollLeft(), timelineContent.scrollLeft());
             start();
-        }, 2);
+        }, 20);
     });
 
     asyncTest("treelist scroll left scroll header", function () {
@@ -1070,7 +1070,7 @@
         setTimeout(function () {
             equal(headerWrap.scrollLeft(), treelistContent.scrollLeft());
             start();
-        }, 2);
+        }, 20);
     });
 
     module("Content Focusable", {
