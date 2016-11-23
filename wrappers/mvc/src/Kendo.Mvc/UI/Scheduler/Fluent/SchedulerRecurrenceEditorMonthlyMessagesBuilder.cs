@@ -16,28 +16,44 @@
             this.editorMessages = editorMessages;
         }
 
-        public SchedulerRecurrenceEditorMonthlyMessagesBuilder RepeatEvery(string message)
+		/// <summary>
+		/// Sets the Recurrence Editor RepeatEvery message of the scheduler in Monthly mode.
+		/// </summary>
+		/// <param name="message">Recurrence Editor RepeatEvery message</param>
+		public SchedulerRecurrenceEditorMonthlyMessagesBuilder RepeatEvery(string message)
         {
             editorMessages.RepeatEvery = message;
 
             return this;
         }
 
-        public SchedulerRecurrenceEditorMonthlyMessagesBuilder RepeatOn(string message)
+		/// <summary>
+		/// Sets the Recurrence Editor RepeatOn message of the scheduler in Monthly mode.
+		/// </summary>
+		/// <param name="message">Recurrence Editor RepeatOn message</param>
+		public SchedulerRecurrenceEditorMonthlyMessagesBuilder RepeatOn(string message)
         {
             editorMessages.RepeatOn = message;
 
             return this;
         }
 
-        public SchedulerRecurrenceEditorMonthlyMessagesBuilder Interval(string message)
+		/// <summary>
+		/// Sets the Recurrence Editor Interval message of the scheduler in Monthly mode.
+		/// </summary>
+		/// <param name="message">Recurrence Editor Interval message</param>
+		public SchedulerRecurrenceEditorMonthlyMessagesBuilder Interval(string message)
         {
             editorMessages.Interval = message;
 
             return this;
         }
 
-        public SchedulerRecurrenceEditorMonthlyMessagesBuilder Day(string message)
+		/// <summary>
+		/// Sets the Recurrence Editor Day message of the scheduler in Monthly mode.
+		/// </summary>
+		/// <param name="message">Recurrence Editor Day message</param>
+		public SchedulerRecurrenceEditorMonthlyMessagesBuilder Day(string message)
         {
             editorMessages.Day = message;
 
