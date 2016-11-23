@@ -1,5 +1,5 @@
 KENDO_MVC_EXPORT_SRC_ROOT = File.join(SPREADSHEET_ROOT, '/Kendo.Mvc.Export/bin')
-KENDO_MVC_EXPORT_REDIST_ROOT = ARCHIVE_ROOT + '/Keno.Mvc.Export/'
+KENDO_MVC_EXPORT_REDIST_ROOT = ARCHIVE_ROOT + '/Kendo.Mvc.Export/'
 KENDO_MVC_EXPORT_FILES = 'Kendo.Mvc.Export.*'
 
 namespace :kendo_mvc_export do
