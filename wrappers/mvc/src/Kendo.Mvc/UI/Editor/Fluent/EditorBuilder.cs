@@ -270,7 +270,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         //>> Fields
-
+        
         /// <summary>
         /// Fine-tune deserialization in the Editor widget. Deserialization is the process of parsing the HTML string input from the value() method or from the viewHtml dialog into editable content.
         /// </summary>
@@ -280,7 +280,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new EditorDeserializationSettingsBuilder(container.Deserialization));
             return this;
         }
-
+        
         /// <summary>
         /// Relaxes the same-origin policy when using the iframe-based editor.
 		/// This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain.
@@ -294,7 +294,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-
+        
         /// <summary>
         /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
         /// </summary>
@@ -313,7 +313,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-
+        
         /// <summary>
         /// If enabled, the editor disables the editing and command execution in elements marked with editablecontent="false" attribute.
         /// </summary>
@@ -321,11 +321,11 @@ namespace Kendo.Mvc.UI.Fluent
         public EditorBuilder Immutables(Action<EditorImmutablesSettingsBuilder> configurator)
         {
             container.Immutables.Enabled = true;
-
+            
             configurator(new EditorImmutablesSettingsBuilder(container.Immutables));
             return this;
         }
-
+        
         /// <summary>
         /// Defines the text of the labels that are shown within the editor. Used primarily for localization.
         /// </summary>
@@ -335,7 +335,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new EditorMessagesSettingsBuilder(container.Messages));
             return this;
         }
-
+        
         /// <summary>
         /// Options for controlling how the pasting content is modified before it is added in the editor.
         /// </summary>
@@ -345,7 +345,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new EditorPasteCleanupSettingsBuilder(container.PasteCleanup));
             return this;
         }
-
+        
         /// <summary>
         /// If enabled, the editor renders a resize handle to allow users to resize it.
         /// </summary>
@@ -364,7 +364,7 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-
+        
         /// <summary>
         /// If enabled, the editor renders a resize handle to allow users to resize it.
         /// </summary>
@@ -372,11 +372,11 @@ namespace Kendo.Mvc.UI.Fluent
         public EditorBuilder Resizable(Action<EditorResizableSettingsBuilder> configurator)
         {
             container.Resizable.Enabled = true;
-
+            
             configurator(new EditorResizableSettingsBuilder(container.Resizable));
             return this;
         }
-
+        
         /// <summary>
         /// Allows setting of serialization options.
         /// </summary>
@@ -386,7 +386,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new EditorSerializationSettingsBuilder(container.Serialization));
             return this;
         }
-
+        
         //<< Fields
     }
 }
