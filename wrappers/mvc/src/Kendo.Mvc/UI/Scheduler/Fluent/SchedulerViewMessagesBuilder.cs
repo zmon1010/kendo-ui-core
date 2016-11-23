@@ -17,35 +17,55 @@
             this.viewMessages = viewMessages;
         }
 
-        public SchedulerViewMessagesBuilder Day(string message)
+		/// <summary>
+		/// Sets the Day message of the scheduler.
+		/// </summary>
+		/// <param name="message">Day message</param>
+		public SchedulerViewMessagesBuilder Day(string message)
         {
             viewMessages.Day = message;
 
             return this;
         }
 
-        public SchedulerViewMessagesBuilder Week(string message)
+		/// <summary>
+		/// Sets the Week message of the scheduler.
+		/// </summary>
+		/// <param name="message">Week message</param>
+		public SchedulerViewMessagesBuilder Week(string message)
         {
             viewMessages.Week = message;
 
             return this;
         }
 
-        public SchedulerViewMessagesBuilder WorkWeek(string message)
+		/// <summary>
+		/// Sets the WorkWeek message of the scheduler.
+		/// </summary>
+		/// <param name="message">WorkWeek message</param>
+		public SchedulerViewMessagesBuilder WorkWeek(string message)
         {
             viewMessages.WorkWeek = message;
 
             return this;
         }
 
-        public SchedulerViewMessagesBuilder Month(string message)
+		/// <summary>
+		/// Sets the Month message of the scheduler.
+		/// </summary>
+		/// <param name="message">Month message</param>
+		public SchedulerViewMessagesBuilder Month(string message)
         {
             viewMessages.Month = message;
 
             return this;
         }
 
-        public SchedulerViewMessagesBuilder Agenda(string message)
+		/// <summary>
+		/// Sets the Agenda message of the scheduler.
+		/// </summary>
+		/// <param name="message">Agenda message</param>
+		public SchedulerViewMessagesBuilder Agenda(string message)
         {
             viewMessages.Agenda = message;
 
