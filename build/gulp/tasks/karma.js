@@ -92,8 +92,8 @@ const defaultOptions = Object.freeze({
     },
     junitReporter: {
     },
-    captureTimeout: 60000,
-    browserNoActivityTimeout: 60000,
+    captureTimeout: 100000,
+    browserNoActivityTimeout: 100000,
     singleRun: !watch,
     exclude: exclude
 });
