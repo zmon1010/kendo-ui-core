@@ -1026,7 +1026,7 @@
         }
     });
 
-    asyncTest("timeline scroll top scroll treelist", function () {
+    skip("timeline scroll top scroll treelist", function () {
         var timelineContent = gantt.timeline.wrapper.find(".k-grid-content");
         var treelistContent = gantt.list.element.find(".k-grid-content");
 
@@ -1038,7 +1038,7 @@
         }, 200);
     });
 
-    asyncTest("timeline scroll left scroll header", function () {
+    skip("timeline scroll left scroll header", function () {
         expect(1);
         var timelineContent = gantt.timeline.wrapper.find(".k-grid-content");
         var headerWrap = gantt.timeline.wrapper.find(".k-grid-header-wrap");
@@ -1051,7 +1051,7 @@
         }, 200);
     });
 
-    asyncTest("treelist scroll left scroll header", function () {
+    skip("treelist scroll left scroll header", function () {
         expect(1);
         var treelistContent = gantt.list.element.find(".k-grid-content");
         var headerWrap = gantt.list.element.find(".k-grid-header-wrap");
