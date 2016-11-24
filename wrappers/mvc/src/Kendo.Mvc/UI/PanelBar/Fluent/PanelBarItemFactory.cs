@@ -10,14 +10,23 @@ namespace Kendo.Mvc.UI.Fluent
         private readonly INavigationItemContainer<PanelBarItem> container;
         private readonly ViewContext viewContext;
 
-        public PanelBarItemFactory(INavigationItemContainer<PanelBarItem> container, ViewContext viewContext)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PanelBarItemFactory"/> class.
+		/// </summary>
+		/// <param name="container">The container.</param>
+		/// <param name="viewContext">The view context.</param>
+		public PanelBarItemFactory(INavigationItemContainer<PanelBarItem> container, ViewContext viewContext)
         {
 
             this.container = container;
             this.viewContext = viewContext;
         }
 
-        public virtual PanelBarItemBuilder Add()
+		/// <summary>
+		/// Adds a new item to the PanelBar.
+		/// </summary>
+		/// <returns></returns>
+		public virtual PanelBarItemBuilder Add()
         {
             PanelBarItem item = new PanelBarItem();
 

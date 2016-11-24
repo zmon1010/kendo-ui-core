@@ -5,9 +5,21 @@
 	/// </summary>
 	public enum TabStripTabPosition
     {
-        Top,
-        Left,
-        Right,
-        Bottom
-    }
+		/// <summary>
+		/// Tabs will be displayed above (before) the Tab content.
+		/// </summary>
+		Top,
+		/// <summary>
+		/// Tabs will be displayed to the left of the Tab content.
+		/// </summary>
+		Left,
+		/// <summary>
+		/// Tabs will be displayed to the right of the Tab content.
+		/// </summary>
+		Right,
+		/// <summary>
+		/// Tabs will be displayed below (after) the Tab content.
+		/// </summary>
+		Bottom
+	}
 }
