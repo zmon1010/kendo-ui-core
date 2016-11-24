@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public bool? Buttons { get; set; }
 
+        public bool? ClearButton { get; set; }
+
         public double? Columns { get; set; }
 
         public ColorPickerTileSizeSettings TileSize { get; } = new ColorPickerTileSizeSettings();
@@ -37,6 +39,11 @@ namespace Kendo.Mvc.UI
             if (Buttons.HasValue)
             {
                 settings["buttons"] = Buttons;
+            }
+
+            if (ClearButton.HasValue)
+            {
+                settings["clearButton"] = ClearButton;
             }
 
             if (Columns.HasValue)

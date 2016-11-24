@@ -32,6 +32,15 @@ class ColorPicker extends \Kendo\UI\Widget {
     }
 
     /**
+    * Specifies whether the widget should display the 'Clear color' button.Applicable only for the HSV selector, when a pallete is not specified.
+    * @param boolean $value
+    * @return \Kendo\UI\ColorPicker
+    */
+    public function clearButton($value) {
+        return $this->setProperty('clearButton', $value);
+    }
+
+    /**
     * The number of columns to show in the color dropdown when a pallete is specified.
 This is automatically initialized for the "basic" and "websafe" palettes.
 If you use a custom palette then you can set this to some value that makes sense for your colors.

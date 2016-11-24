@@ -37,6 +37,8 @@ namespace Kendo.Mvc.UI
         
         public bool? Buttons { get; set; }
         
+        public bool? ClearButton { get; set; }
+        
         public double? Columns { get; set; }
         
         public ColorPickerMessagesSettings Messages
@@ -91,6 +93,11 @@ namespace Kendo.Mvc.UI
             if (Buttons.HasValue)
             {
                 json["buttons"] = Buttons;
+            }
+                
+            if (ClearButton.HasValue)
+            {
+                json["clearButton"] = ClearButton;
             }
                 
             if (Columns.HasValue)

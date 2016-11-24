@@ -64,5 +64,14 @@ namespace Kendo.Mvc.UI.Tests
 
             output.ShouldContain("{\"opacity\":true}");
         }
+
+        [Fact]
+        public void ClearButton_is_serialized()
+        {
+            colorpicker.ClearButton = true;
+            colorpicker.WriteInitializationScript(textWriter.Object);
+
+            output.ShouldContain("{\"clearButton\":true}");
+        }
     }
 }

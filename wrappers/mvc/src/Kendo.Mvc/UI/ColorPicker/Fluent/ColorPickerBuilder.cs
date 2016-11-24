@@ -33,6 +33,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Specifies whether the widget should display the 'Clear color' button.Applicable only for the HSV selector, when a pallete is not specified.
+        /// </summary>
+        /// <param name="value">The value that configures the clearbutton.</param>
+        public ColorPickerBuilder ClearButton(bool value)
+        {
+            container.ClearButton = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// The number of columns to show in the color dropdown when a pallete is specified.
 		/// This is automatically initialized for the "basic" and "websafe" palettes.
 		/// If you use a custom palette then you can set this to some value that makes sense for your colors.

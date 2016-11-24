@@ -86,6 +86,14 @@ public class ColorPickerTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("buttons", value);
     }
 
+    public boolean getClearButton() {
+        return (Boolean)getProperty("clearButton");
+    }
+
+    public void setClearButton(boolean value) {
+        setProperty("clearButton", value);
+    }
+
     public float getColumns() {
         return (Float)getProperty("columns");
     }
