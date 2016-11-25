@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.
+        /// If set to true, the widget automatically adjusts the width of the popup element and does not wrap up the item label.
         /// </summary>
         /// <param name="value">The value for AutoWidth</param>
         public DropDownListBuilder AutoWidth(bool value)

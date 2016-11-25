@@ -32,7 +32,7 @@ class ComboBox extends \Kendo\UI\Widget {
     }
 
     /**
-    * If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.
+    * If set to true, the widget automatically adjusts the width of the popup element and does not wrap up the item label.
     * @param boolean $value
     * @return \Kendo\UI\ComboBox
     */

@@ -11676,7 +11676,7 @@ original value.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.</description>
+            <description>If set to true, the widget automatically adjusts the width of the popup element and does not wrap up the item label.</description>
             <name>autoWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -18760,7 +18760,7 @@ See visual.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.</description>
+            <description>If set to true, the widget automatically adjusts the width of the popup element and does not wrap up the item label.</description>
             <name>autoWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -27571,7 +27571,7 @@ by setting the close animation.  Each animation also has a direction which can b
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.</description>
+            <description>If set to true, the widget automatically adjusts the width of the popup element and does not wrap up the item label.</description>
             <name>autoWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
