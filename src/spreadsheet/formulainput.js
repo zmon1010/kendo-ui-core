@@ -368,7 +368,7 @@
                     return true;
                 }
             }
-            return key === keys.ENTER;
+            return key === keys.ENTER || key === keys.TAB;
         },
 
         _tokenContext: function() {
