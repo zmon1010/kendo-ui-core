@@ -31,5 +31,7 @@ namespace :kendo_mvc_export do
             files = Dir.glob("#{src}/#{build}/*.{dll,xml}")
             cp files, "#{dest}/#{build}", :verbose => VERBOSE 
         end
+
+        cp Dir.glob("#{dest}/Release/*.dll"), demos_dest, :verbose => VERBOSE
     end
 end
