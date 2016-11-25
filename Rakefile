@@ -77,6 +77,7 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'spreadsheet/binaries/net40' => 'dpl/Telerik.Web.Spreadsheet/bin/Release',
     'spreadsheet/' => 'dpl/',
+    'Kendo.Mvc.Export/binaries/net40' => 'dpl/Kendo.Mvc.Export/bin/Release',
     'wrappers/jsp/kendo-taglib' => 'wrappers/java/kendo-taglib/target/',
     'src/kendo-taglib' => 'wrappers/java/kendo-taglib/',
     'src/php' => 'wrappers/php/',
@@ -234,6 +235,10 @@ SPREADSHEET_CONTENT = {
     'spreadsheet/' => FileList[SPREADSHEET_ROOT + '/ReadMe.txt']
 }
 
+KENDO_MVC_EXPORT_CONTENT = {
+    'Kendo.Mvc.Export/binaries/net40' => KENDO_MVC_EXPORT_REDIST_NET40
+}
+
 
 file KENDO_CONFIG_FILE do |t|
     sh "./node_modules/.bin/gulp download-builder"
@@ -354,7 +359,7 @@ bundle :name => 'aspnetmvc.trial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
-       .merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
+       .merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT).merge(KENDO_MVC_EXPORT_CONTENT),
        :post_build => ['mvc:copy_trials', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
@@ -408,7 +413,7 @@ bundle :name => 'aspnetmvc.hotfix.trial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
-       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT).merge(KENDO_MVC_EXPORT_CONTENT),
        :post_build => ['mvc:copy_trials', 'spreadsheet:copy_trials'],
        :prerequisites => [
            'mvc:assets',
@@ -458,7 +463,7 @@ bundle :name => 'aspnetmvc.commercial',
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
-       }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT),
+       }.merge(MVC_CONTENT).merge(SPREADSHEET_CONTENT).merge(KENDO_MVC_EXPORT_CONTENT),
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
@@ -564,7 +569,7 @@ bundle :name => 'aspnetmvc.internal.commercial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
-       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT).merge(KENDO_MVC_EXPORT_CONTENT),
        :prerequisites => [
            'mvc:assets',
            'spreadsheet:binaries',
@@ -654,7 +659,7 @@ bundle :name => 'aspnetmvc.hotfix.commercial',
             'styles' => MIN_CSS_RESOURCES,
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES
-       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT),
+       }.merge(MVC_BINARIES).merge(SPREADSHEET_CONTENT).merge(KENDO_MVC_EXPORT_CONTENT),
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test'
