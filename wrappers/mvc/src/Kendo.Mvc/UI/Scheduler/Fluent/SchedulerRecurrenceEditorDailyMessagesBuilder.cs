@@ -16,22 +16,22 @@
             this.editorMessages = editorMessages;
         }
 
-		/// <summary>
-		/// Sets the Recurrence Editor RepeatEvery message of the scheduler in Daily mode.
-		/// </summary>
-		/// <param name="message">Recurrence Editor RepeatEvery message</param>
-		public SchedulerRecurrenceEditorDailyMessagesBuilder RepeatEvery(string message)
+        /// <summary>
+        /// Sets the Recurrence Editor RepeatEvery message of the scheduler in Daily mode.
+        /// </summary>
+        /// <param name="message">Recurrence Editor RepeatEvery message</param>
+        public SchedulerRecurrenceEditorDailyMessagesBuilder RepeatEvery(string message)
         {
             editorMessages.RepeatEvery = message;
 
             return this;
         }
 
-		/// <summary>
-		/// Sets the Recurrence Editor Interval message of the scheduler in Daily mode.
-		/// </summary>
-		/// <param name="message">Recurrence Editor Interval message</param>
-		public SchedulerRecurrenceEditorDailyMessagesBuilder Interval(string message)
+        /// <summary>
+        /// Sets the Recurrence Editor Interval message of the scheduler in Daily mode.
+        /// </summary>
+        /// <param name="message">Recurrence Editor Interval message</param>
+        public SchedulerRecurrenceEditorDailyMessagesBuilder Interval(string message)
         {
             editorMessages.Interval = message;
 

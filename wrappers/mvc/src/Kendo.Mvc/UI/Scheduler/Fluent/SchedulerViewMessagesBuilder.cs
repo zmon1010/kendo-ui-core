@@ -17,7 +17,7 @@
             this.viewMessages = viewMessages;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed as the Scheduler's "day" view title.
         /// </summary>
         /// <param name="message">The message</param>
@@ -28,7 +28,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed as the Scheduler's "week" view title.
         /// </summary>
         /// <param name="message">The message</param>
@@ -39,7 +39,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed as the Scheduler's "workweek" view title.
         /// </summary>
         /// <param name="message">The message</param>
@@ -50,7 +50,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed as the Scheduler's "month" view title.
         /// </summary>
         /// <param name="message">The message</param>
@@ -61,7 +61,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed as the Scheduler's "agenda" view title.
         /// </summary>
         /// <param name="message">The message</param>

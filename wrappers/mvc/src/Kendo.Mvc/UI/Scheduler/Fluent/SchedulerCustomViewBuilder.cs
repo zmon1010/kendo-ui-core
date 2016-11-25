@@ -6,11 +6,11 @@
     public class SchedulerCustomViewBuilder<TView> : SchedulerBaseViewBuilder<TView, SchedulerCustomViewBuilder<TView>>
         where TView : SchedulerCustomView
     {
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SchedulerCustomViewBuilder{TView, TViewBuilder}"/> class.
-		/// </summary>
-		/// <param name="view">The resource</param>
-		public SchedulerCustomViewBuilder(TView view)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchedulerCustomViewBuilder{TView, TViewBuilder}"/> class.
+        /// </summary>
+        /// <param name="view">The resource</param>
+        public SchedulerCustomViewBuilder(TView view)
             : base(view)
         {
         }

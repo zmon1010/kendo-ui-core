@@ -10,42 +10,42 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public class TreeViewItem : NavigationItem<TreeViewItem>, INavigationItemContainer<TreeViewItem>, IHierarchicalItem
     {
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TreeViewItem"/> class.
-		/// </summary>
-		public TreeViewItem()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeViewItem"/> class.
+        /// </summary>
+        public TreeViewItem()
         {
             this.Items = new LinkedObjectCollection<TreeViewItem>(this);
         }
 
-		/// <summary>
-		/// Gets the nested items collection of the item.
-		/// </summary>
-		public IList<TreeViewItem> Items
+        /// <summary>
+        /// Gets the nested items collection of the item.
+        /// </summary>
+        public IList<TreeViewItem> Items
         {
             get;
             private set;
         }
 
-		/// <summary>
-		/// Gets or sets the item ID.
-		/// </summary>
-		public string Id { get; set; }
+        /// <summary>
+        /// Gets or sets the item ID.
+        /// </summary>
+        public string Id { get; set; }
 
-		/// <summary>
-		/// Indicates whether the item is expanded.
-		/// </summary>
-		public bool Expanded { get; set; }
+        /// <summary>
+        /// Indicates whether the item is expanded.
+        /// </summary>
+        public bool Expanded { get; set; }
 
-		/// <summary>
-		/// Indicates whether the item has children.
-		/// </summary>
-		public bool HasChildren { get; set; }
+        /// <summary>
+        /// Indicates whether the item has children.
+        /// </summary>
+        public bool HasChildren { get; set; }
 
-		/// <summary>
-		/// Indicates whether the item is checked or not.
-		/// </summary>
-		public bool Checked { get; set; }
+        /// <summary>
+        /// Indicates whether the item is checked or not.
+        /// </summary>
+        public bool Checked { get; set; }
 
         private void Serialize<T>(IDictionary<string, object> json, string field, T value, T defaultValue)
              where T : IComparable<T>
@@ -71,10 +71,10 @@ namespace Kendo.Mvc.UI
             return url;
         }
 
-		/// <summary>
-		/// Serizlizes the item properties to IDictionary&lt;string, object&gt;.
-		/// </summary>
-		public IDictionary<string, object> Serialize(UrlHelper urlHelper)
+        /// <summary>
+        /// Serizlizes the item properties to IDictionary&lt;string, object&gt;.
+        /// </summary>
+        public IDictionary<string, object> Serialize(UrlHelper urlHelper)
         {
             var json = new Dictionary<string, object>();
 
