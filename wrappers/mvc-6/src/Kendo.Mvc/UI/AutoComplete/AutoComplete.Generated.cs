@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class AutoComplete 
     {
+        public bool? AutoWidth { get; set; }
+
         public bool? ClearButton { get; set; }
 
         public string DataTextField { get; set; }
@@ -71,6 +73,11 @@ namespace Kendo.Mvc.UI
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
+
+            if (AutoWidth.HasValue)
+            {
+                settings["autoWidth"] = AutoWidth;
+            }
 
             if (ClearButton.HasValue)
             {

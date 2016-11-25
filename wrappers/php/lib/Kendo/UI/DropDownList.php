@@ -31,6 +31,15 @@ class DropDownList extends \Kendo\UI\Widget {
     }
 
     /**
+    * If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.
+    * @param boolean $value
+    * @return \Kendo\UI\DropDownList
+    */
+    public function autoWidth($value) {
+        return $this->setProperty('autoWidth', $value);
+    }
+
+    /**
     * Use it to set the Id of the parent DropDownList widget.
 Help topic showing how cascading functionality works
     * @param string $value

@@ -110,6 +110,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("autoBind", value);
     }
 
+    public boolean getAutoWidth() {
+        return (Boolean)getProperty("autoWidth");
+    }
+
+    public void setAutoWidth(boolean value) {
+        setProperty("autoWidth", value);
+    }
+
     public java.lang.String getCascadeFrom() {
         return (java.lang.String)getProperty("cascadeFrom");
     }

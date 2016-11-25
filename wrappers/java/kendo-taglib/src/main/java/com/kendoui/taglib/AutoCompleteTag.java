@@ -94,6 +94,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("animation", value);
     }
 
+    public boolean getAutoWidth() {
+        return (Boolean)getProperty("autoWidth");
+    }
+
+    public void setAutoWidth(boolean value) {
+        setProperty("autoWidth", value);
+    }
+
     public boolean getClearButton() {
         return (Boolean)getProperty("clearButton");
     }

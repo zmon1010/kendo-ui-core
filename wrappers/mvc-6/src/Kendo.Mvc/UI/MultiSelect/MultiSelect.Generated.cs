@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public bool? AutoClose { get; set; }
 
+        public bool? AutoWidth { get; set; }
+
         public bool? ClearButton { get; set; }
 
         public string DataTextField { get; set; }
@@ -90,6 +92,11 @@ namespace Kendo.Mvc.UI
             if (AutoClose.HasValue)
             {
                 settings["autoClose"] = AutoClose;
+            }
+
+            if (AutoWidth.HasValue)
+            {
+                settings["autoWidth"] = AutoWidth;
             }
 
             if (ClearButton.HasValue)

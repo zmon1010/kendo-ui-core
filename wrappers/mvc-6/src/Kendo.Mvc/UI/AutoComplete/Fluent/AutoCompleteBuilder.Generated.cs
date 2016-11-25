@@ -10,6 +10,16 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
+        /// If set to true, the widget automatically adjusts the width of the popup element and does not wrap up the item label.
+        /// </summary>
+        /// <param name="value">The value for AutoWidth</param>
+        public AutoCompleteBuilder AutoWidth(bool value)
+        {
+            Container.AutoWidth = value;
+            return this;
+        }
+
+        /// <summary>
         /// Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
         /// </summary>
         /// <param name="value">The value for ClearButton</param>

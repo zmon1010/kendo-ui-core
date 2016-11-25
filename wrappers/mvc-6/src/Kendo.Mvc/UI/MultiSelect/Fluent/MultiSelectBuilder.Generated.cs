@@ -30,6 +30,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.
+        /// </summary>
+        /// <param name="value">The value for AutoWidth</param>
+        public MultiSelectBuilder AutoWidth(bool value)
+        {
+            Container.AutoWidth = value;
+            return this;
+        }
+
+        /// <summary>
         /// Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
         /// </summary>
         /// <param name="value">The value for ClearButton</param>

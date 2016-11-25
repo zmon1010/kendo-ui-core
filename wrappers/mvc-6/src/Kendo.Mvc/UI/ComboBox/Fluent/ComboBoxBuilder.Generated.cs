@@ -20,6 +20,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.
+        /// </summary>
+        /// <param name="value">The value for AutoWidth</param>
+        public ComboBoxBuilder AutoWidth(bool value)
+        {
+            Container.AutoWidth = value;
+            return this;
+        }
+
+        /// <summary>
         /// Use it to set the Id of the parent ComboBox widget.
 		/// Help topic showing how cascading functionality works
         /// </summary>

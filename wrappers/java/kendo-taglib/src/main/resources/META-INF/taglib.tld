@@ -31,6 +31,12 @@
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to true, the widget automatically adjusts the width of the popup element and does not wrap up the item label.</description>
+            <name>autoWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.</description>
             <name>clearButton</name>
             <rtexprvalue>true</rtexprvalue>
@@ -11492,6 +11498,12 @@ It can be a string with comma-separated colors in hex representation, an array o
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Specifies whether the widget should display the 'Clear color' button.Applicable only for the HSV selector, when a pallete is not specified.</description>
+            <name>clearButton</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The number of columns to show in the color dropdown when a pallete is specified.
 This is automatically initialized for the "basic" and "websafe" palettes.
 If you use a custom palette then you can set this to some value that makes sense for your colors.</description>
@@ -11660,6 +11672,12 @@ original value.</description>
         <attribute>
             <description>Controls whether to bind the widget to the data source on initialization.</description>
             <name>autoBind</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.</description>
+            <name>autoWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -18738,6 +18756,12 @@ See visual.</description>
         <attribute>
             <description>Controls whether to bind the widget to the data source on initialization.</description>
             <name>autoBind</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.</description>
+            <name>autoWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -27543,6 +27567,12 @@ by setting the close animation.  Each animation also has a direction which can b
         <attribute>
             <description>Controls whether to close the widget suggestion list on item selection.</description>
             <name>autoClose</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.</description>
+            <name>autoWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>

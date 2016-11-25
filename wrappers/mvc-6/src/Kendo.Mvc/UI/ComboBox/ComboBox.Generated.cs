@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public bool? AutoBind { get; set; }
 
+        public bool? AutoWidth { get; set; }
+
         public string CascadeFrom { get; set; }
 
         public string CascadeFromField { get; set; }
@@ -85,6 +87,11 @@ namespace Kendo.Mvc.UI
             if (AutoBind.HasValue)
             {
                 settings["autoBind"] = AutoBind;
+            }
+
+            if (AutoWidth.HasValue)
+            {
+                settings["autoWidth"] = AutoWidth;
             }
 
             if (CascadeFrom?.HasValue() == true)

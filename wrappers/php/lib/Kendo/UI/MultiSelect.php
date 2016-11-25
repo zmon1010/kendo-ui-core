@@ -40,6 +40,15 @@ class MultiSelect extends \Kendo\UI\Widget {
     }
 
     /**
+    * If set to true the widget will avoid wrapping longer item labels by automatically adjusting the popup element's width.
+    * @param boolean $value
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function autoWidth($value) {
+        return $this->setProperty('autoWidth', $value);
+    }
+
+    /**
     * Unless this options is set to false, a button will appear when hovering the widget. Clicking that button will reset the widget's value and will trigger the change event.
     * @param boolean $value
     * @return \Kendo\UI\MultiSelect

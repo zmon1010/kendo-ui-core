@@ -22,6 +22,15 @@ class AutoComplete extends \Kendo\UI\Widget {
     }
 
     /**
+    * If set to true, the widget automatically adjusts the width of the popup element and does not wrap up the item label.
+    * @param boolean $value
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function autoWidth($value) {
+        return $this->setProperty('autoWidth', $value);
+    }
+
+    /**
     * Sets the data source of the AutoComplete.
     * @param array|\Kendo\Data\DataSource $value
     * @return \Kendo\UI\AutoComplete
