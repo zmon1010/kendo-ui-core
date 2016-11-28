@@ -25,16 +25,17 @@ namespace :kendo_mvc_export do
         src = KENDO_MVC_EXPORT_REDIST_ROOT
         dest = KENDO_MVC_EXPORT_SRC_ROOT
         demos_dest = File.join(MVC_DEMOS_ROOT, 'bin/')
+        dlls = "*.{dll,xml}"
 
         if PLATFORM =~ /linux|darwin/
             [ 'Release', 'Release-Trial' ].each do |build|
 				build_dest = "#{dest}/#{build}"
 
                 mkdir_p build_dest
-                system "cp -rf #{src}/#{build}/*.{dll,xml} #{build_dest}"
+                cp Dir.glob(File.join(src, build, dlls)), build_dest, :verbose => VERBOSE
             end
 
-            system "cp -rf #{dest}/Release/*.{dll,xml} #{demos_dest}"
+            cp Dir.glob(File.join(dest, "Release", dlls)), demos_dest, :verbose => VERBOSE
         else
             src = src.gsub('/', '\\')
             dest = dest.gsub('/', '\\')
