@@ -85,20 +85,6 @@
         spreadsheet._controller._execute({ command: "EditCommand" });
     });
 
-    test("onEditorChange is prevented if model returns error", 1, function() {
-        spreadsheet._workbook.execute = function () {
-            return { reason: "error" };
-        };
-
-        var event = {
-            preventDefault: function () {
-                ok(true);
-            }
-        };
-
-        spreadsheet._controller.onEditorChange(event);
-    });
-
     test("onMouseDown is prevented if editor is not deactivated", 1, function() {
         spreadsheet._workbook.execute = function () {
             return { reason: "error" };
@@ -145,34 +131,6 @@
         };
 
         spreadsheet._controller.onMouseDown(event);
-    });
-
-    test("onEditorBlur prevent focus and navigation if editor is not deactivated", 0, function() {
-        spreadsheet._controller.editor.isFiltered = function() {
-            return false;
-        };
-
-        spreadsheet._controller.editor.isActive = function() {
-            return true;
-        };
-
-        spreadsheet._controller.editor.deactivate = function() {
-            return;
-        };
-
-        spreadsheet._controller.clipboardElement = {
-            focus: function() {
-                ok(true);
-            }
-        };
-
-        spreadsheet._controller.navigator = {
-            navigateInSelection: function() {
-                ok(true);
-            }
-        };
-
-        spreadsheet._controller.onEditorBlur();
     });
 
     test("renders when the active sheet changes", 1, function() {
@@ -309,24 +267,6 @@
         });
     });
 
-    test("edit errors prevent executing toolbar commands", 1, function() {
-        spreadsheet._workbook._view.editor.isActive = function(e) {
-            return true;
-        };
-
-        spreadsheet._workbook._view.editor.deactivate = function() {
-            //commands are executed on deativate event which is not called
-            //when validaiton error occurs
-            ok(true);
-        };
-
-        spreadsheet._workbook._view.openDialog = function() {
-            ok(false);
-        };
-
-        spreadsheet._controller.onDialogRequest({ options: {}});
-    });
-
     test("executing toolbar commands does not try deactvate the editor", 1, function() {
         spreadsheet._workbook._view.editor.isActive = function(e) {
             return false;
@@ -338,80 +278,6 @@
 
         spreadsheet.enableEditor = function(enable) {
             ok(false);
-        };
-
-        spreadsheet._workbook._view.openDialog = function() {
-            ok(true);
-        };
-
-        spreadsheet._controller.onDialogRequest({ options: {}});
-    });
-
-    test("editor value is set when revert action is received", 1, function() {
-        spreadsheet._workbook._view.editor.value = function() {
-            ok(true);
-        }
-
-        spreadsheet._controller.enableEditor(true, true, {
-            action: "revert"
-        });
-    });
-
-    test("editor value is not set when close action is received", 0, function() {
-        spreadsheet._workbook._view.editor.value = function() {
-            ok(false);
-        }
-
-        spreadsheet._controller.enableEditor(true, true, {
-            action: "close"
-        });
-    });
-
-    test("edit errors clear last command queue", 1, function() {
-        spreadsheet._lastCommandRequest = {
-            callback: function() {
-                ok(false);
-            },
-            options: {}
-        };
-
-        spreadsheet._workbook.execute = function(e) {
-            return {
-                reason: "error"
-            };
-        };
-
-        spreadsheet._controller._execute({});
-
-        ok(spreadsheet._controller._lastCommandRequest === null);
-    });
-
-    test("edit errors does not try deactivate editor if it is not active", 1, function() {
-        spreadsheet._workbook._view.editor.isActive = function(e) {
-            return false;
-        };
-
-        spreadsheet._workbook._view.showError = function(options, callback) {
-            ok(!callback);
-        };
-
-        spreadsheet._workbook.execute = function(e) {
-            return {
-                reason: "error"
-            };
-        };
-
-        spreadsheet._controller._execute({});
-    });
-
-    test("edit cell execute queued toolbar commands", 2, function() {
-        spreadsheet._workbook._view.editor.isActive = function(e) {
-            return true;
-        };
-
-        spreadsheet._workbook._view.editor.deactivate = function() {
-            ok(true);
-            spreadsheet._workbook._view.editor.trigger("deactivate");
         };
 
         spreadsheet._workbook._view.openDialog = function() {
