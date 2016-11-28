@@ -17,7 +17,7 @@
             this.recurrenceMessages = recurrenceMessages;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the delete window's title.
         /// </summary>
         /// <param name="message">The message</param>
@@ -28,7 +28,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed for the "Delete occurence" button in the delete window.
         /// </summary>
         /// <param name="message">The message</param>
@@ -39,7 +39,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed for the "Delete series" button in the delete window.
         /// </summary>
         /// <param name="message">The message</param>
@@ -50,7 +50,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the edit window's title.
         /// </summary>
         /// <param name="message">The message</param>
@@ -61,7 +61,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed for the "Edit occurence" button in the edit window.
         /// </summary>
         /// <param name="message">The message</param>
@@ -72,7 +72,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed for the "Edit series" button in the edit window.
         /// </summary>
         /// <param name="message">The message</param>
@@ -83,7 +83,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed inside the edit window.
         /// </summary>
         /// <param name="message">The message</param>
@@ -94,7 +94,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text displayed inside the delete window.
         /// </summary>
         /// <param name="message">The message</param>

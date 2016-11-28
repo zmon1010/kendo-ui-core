@@ -16,7 +16,7 @@
             this.editorMessages = editorMessages;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "Title" label in the Scheduler's event editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -27,7 +27,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "Start" label in the Scheduler's event editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -38,7 +38,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "End" label in the Scheduler's event editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -49,7 +49,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "All day event" label in the Scheduler's event editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -60,7 +60,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "Description" label in the Scheduler's event editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -71,7 +71,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "Repeat" label in the Scheduler's event editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -82,7 +82,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "Timezone" label in the Scheduler's event editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -93,7 +93,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "Start timezone" label in the timezone editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -104,7 +104,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "End timezone" label in the timezone editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -115,7 +115,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "No Timezone" option in the timezone editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -126,7 +126,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the "Use separate start and end time zones" label in the timezone editor.
         /// </summary>
         /// <param name="message">The message</param>
@@ -137,7 +137,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the timezone editor's title.
         /// </summary>
         /// <param name="message">The message</param>
@@ -148,7 +148,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the timezone editor's button.
         /// </summary>
         /// <param name="message">The message</param>
@@ -159,7 +159,7 @@
             return this;
         }
 
-		/// <summary>
+        /// <summary>
         /// Sets the text of the Scheduler event editor's title.
         /// </summary>
         /// <param name="message">The message</param>
