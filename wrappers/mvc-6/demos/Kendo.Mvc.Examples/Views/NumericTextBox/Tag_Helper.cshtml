@@ -1,36 +1,44 @@
 @addTagHelper *, Kendo.Mvc
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ProductViewModel
 
-<div class="demo-section k-content">
-    <p>
-        <kendo-numerictextbox name="currency"
-                              format="c"
-                              min="0"
-                              enable="true"
-                              max="100"
-                              value="30">
-        </kendo-numerictextbox>
-    </p>
-    <br />
-    <p>
-        <kendo-numerictextbox name="percentage"
-                              format="p0"
-                              min="0"
-                              max="0.9"
-                              step="0.01"
-                              value="0.05">
-        </kendo-numerictextbox>
-    </p>
-    <br />
-    <p>
-        <kendo-numerictextbox name="custom"
-                              format="#.00 kg"
-                              value="2">
-        </kendo-numerictextbox>
-    </p>
-    <br />
-    <p>
-        <kendo-numerictextbox name="numeric"
-                              placeholder="Enter numeric value">
-        </kendo-numerictextbox>
-    </p>
-</div>
+<form asp-controller="numerictextbox" asp-action="tag-helper" method="post" role="form">
+    <script>
+        $.validator.setDefaults({
+            ignore: [],
+        });
+    </script>
+    <div class="demo-section k-content">
+        <p>
+            <kendo-numerictextbox name="UnitPrice"
+                                  for="UnitPrice">
+            </kendo-numerictextbox>
+            <span asp-validation-for="UnitPrice" style="color:red"></span>
+        </p>
+        <br />
+        <p>
+            <kendo-numerictextbox name="percentage"
+                                  format="p0"
+                                  min="0"
+                                  max="0.9"
+                                  step="0.01"
+                                  value="0.05">
+            </kendo-numerictextbox>
+        </p>
+        <br />
+        <p>
+            <kendo-numerictextbox name="custom"
+                                  format="#.00 kg"
+                                  value="2">
+            </kendo-numerictextbox>
+        </p>
+        <br />
+        <p>
+            <kendo-numerictextbox name="numeric"
+                                  placeholder="Enter numeric value">
+            </kendo-numerictextbox>
+        </p>
+        <br />
+        <button id="btnSubmit" type="submit" class="k-button">Submit</button>
+    </div>
+</form>

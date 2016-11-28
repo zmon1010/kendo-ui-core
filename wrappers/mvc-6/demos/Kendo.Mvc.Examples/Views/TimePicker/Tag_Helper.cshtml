@@ -1,9 +1,18 @@
 @addTagHelper *, Kendo.Mvc
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model OrderViewModel
 
-<div class="demo-section" style="width: 500px;">
-    <kendo-timepicker name="timepicker"
-                      value='DateTime.Parse("8:00 AM")'
-                      min='DateTime.Parse("8:00 AM")'
-                      max='DateTime.Parse("6:00 PM")'>
-    </kendo-timepicker>
-</div>
+<form asp-controller="datepicker" asp-action="tag-helper" method="post" role="form">
+    <div class="demo-section" style="width: 500px;">
+        <kendo-timepicker name="timepicker"
+                          for="OrderDate"
+                          min='DateTime.Parse("8:00 AM")'
+                          max='DateTime.Parse("6:00 PM")'>
+        </kendo-timepicker>
+        <br />
+        <span asp-validation-for="OrderDate" style="color:red"></span>
+        <br />
+        <br />
+        <button id="btnSubmit" type="submit" class="k-button">Submit</button>
+    </div>
+</form>
