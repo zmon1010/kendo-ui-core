@@ -78,9 +78,7 @@
             }
 
             if (cellInput.value() != this._value) {
-                if (this.trigger("change", { value: cellInput.value() })) {
-                    return;
-                }
+                this.trigger("change", { value: cellInput.value() });
             }
 
             this._active = false;
@@ -165,6 +163,10 @@
         insertNewline: function() {
             this.activeEditor().insertNewline();
             this.scale();
+        },
+
+        select: function() {
+            this.activeEditor().select();
         }
     });
 

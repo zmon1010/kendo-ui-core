@@ -191,6 +191,10 @@
             this.setPos(0);
         },
 
+        select: function() {
+            this.setPos(0, this.length());
+        },
+
         length: function() {
             return this.value().length;
         },

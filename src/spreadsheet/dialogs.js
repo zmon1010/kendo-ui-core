@@ -581,11 +581,11 @@
             template:
             "<div class='k-spreadsheet-message-content' data-bind='text: text' />" +
             "<div class='k-action-buttons'>" +
-            "<button class='k-button k-primary' data-bind='click: close'>" +
+            "<button class='k-button k-primary' data-bind='click: retry'>" +
                 "#= messages.retry #" +
             "</button>" +
-            "<button class='k-button' data-bind='click: revert'>" +
-                "#= messages.revert #" +
+            "<button class='k-button' data-bind='click: cancel'>" +
+                "#= messages.cancel #" +
             "</button>" +
             "</div>"
         },
@@ -601,19 +601,13 @@
 
             kendo.bind(this.dialog().element, {
                 text: text,
-                close: this.close.bind(this),
-                revert: this.revert.bind(this)
+                retry: this.retry.bind(this),
+                cancel: this.close.bind(this)
             });
         },
-        activate: function(e) {
-            e.sender.dialog().element
-                .find(".k-button")
-                .focus();
-        },
-        revert: function () {
-            this._action = "revert";
-
-            this.dialog().close();
+        retry: function() {
+            this._retry = true;
+            this.close();
         }
     });
 

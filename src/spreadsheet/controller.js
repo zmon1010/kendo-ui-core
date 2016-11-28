@@ -180,8 +180,18 @@
             }
 
             if (result) {
+                this._preventNavigation = true;
                 if (result.reason === "error") {
-                    this.view.showError(result);
+                    this.view.showError(result, function(){
+                        // we only get here in case of a validation error when the user decided to retry.
+                        this.activateEditor();
+                        // reset to last input from user
+                        this.editor.value(this._lastEditorValue);
+                        // however, set _value manually such that it'll detect change properly.  ugly :-\
+                        this.editor._value = this._workbook._inputForRef(this._workbook.activeSheet()._viewActiveCell());
+                        // seems like a nice UX to have the whole input selected
+                        this.editor.select();
+                    }.bind(this));
                 } else {
                     this.view.openDialog(result.reason);
                 }
@@ -391,13 +401,7 @@
                     if (action !== ":edit") {
                         this.editor.value("");
                     }
-                    this.editor
-                        .activate({
-                            range: this._workbook.activeSheet()._viewActiveCell(),
-                            rect: this.view.activeCellRectangle(),
-                            tooltip: this._activeTooltip()
-                        })
-                        .focus();
+                    this.activateEditor();
                 } else {
                     this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
                     event.preventDefault();
@@ -830,18 +834,14 @@
 
         onEditorChange: function(e) {
             this._workbook.activeSheet().isInEditMode(false);
-
-            var result = this._execute({
+            this._lastEditorValue = e.value;
+            this._execute({
                 command: "EditCommand",
                 options: {
                     editActiveCell: true,
                     value: e.value
                 }
             });
-
-            if (result && result.reason === "error") {
-                e.preventDefault();
-            }
         },
 
         onEditorActivate: function() {
@@ -897,9 +897,10 @@
                 return;
             }
 
+            this._preventNavigation = false;
             this.editor.deactivate();
 
-            if (!this.editor.isActive()) {
+            if (!this._preventNavigation) {
                 this.clipboardElement.focus();
                 this.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
             }
@@ -936,6 +937,14 @@
 ////////////////////////////////////////////////////////////////////
         resetEditorValue: function() {
             this.editor.value(this._workbook._inputForRef(this._workbook.activeSheet()._viewActiveCell()));
+        },
+
+        activateEditor: function() {
+            this.editor.activate({
+                range: this._workbook.activeSheet()._viewActiveCell(),
+                rect: this.view.activeCellRectangle(),
+                tooltip: this._activeTooltip()
+            }).focus();
         },
 
         deactivateEditor: function() {
