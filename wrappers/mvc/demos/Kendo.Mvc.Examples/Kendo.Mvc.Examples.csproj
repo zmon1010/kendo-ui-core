@@ -3403,10 +3403,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\..\Kendo.Mvc.Export\Kendo.Mvc.Export.csproj">
-      <Project>{9d23a875-d933-455e-aa70-a0a3a434f1ab}</Project>
-      <Name>Kendo.Mvc.Export</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Kendo.Mvc\Kendo.Mvc.csproj">
       <Project>{a7f7c110-d7f0-49b7-8dda-fd2d1cc6f3b1}</Project>
       <Name>Kendo.Mvc</Name>
