@@ -94,17 +94,13 @@
                 return this.element.attr("contenteditable") === "true";
             }
 
-            this.enableEditing(enable);
-
-            this.element.toggleClass("k-state-disabled", !enable);
-        },
-
-        enableEditing:  function(enable) {
             if (enable) {
                 this.element.attr("contenteditable", enable);
             } else {
                 this.element.removeAttr("contenteditable");
             }
+
+            this.element.toggleClass("k-state-disabled", !enable);
         },
 
         getPos: function() {
@@ -193,6 +189,10 @@
 
         home: function() {
             this.setPos(0);
+        },
+
+        select: function() {
+            this.setPos(0, this.length());
         },
 
         length: function() {
@@ -443,13 +443,13 @@
         },
 
         hide: function() {
-            this.enableEditing(false);
+            this.enable(false);
             this.element.hide();
             this._cellTooltip.hide();
         },
 
         show: function() {
-            this.enableEditing(true);
+            this.enable(true);
             this.element.show();
         },
 
