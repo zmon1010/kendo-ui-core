@@ -2114,6 +2114,7 @@ a.footer-links:hover,
 {
     margin-right: 5px;
     background-image: url('edit-icon.png');
+    background-repeat: no-repeat;
 }
 
 #main .demos-button:hover,
