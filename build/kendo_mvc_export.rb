@@ -29,7 +29,7 @@ namespace :kendo_mvc_export do
         demos_dest = File.join(MVC_DEMOS_ROOT, 'bin/')
         dlls = "*.{dll,xml}"
 
-        if PLATFORM =~ /linux|darwin/
+        if PLATFORM =~ /linux|darwin|bsd/
             [ 'Release', 'Release-Trial' ].each do |build|
 				build_dest = "#{dest}/#{build}"
                 dpl_path = File.join(dpl, build)
