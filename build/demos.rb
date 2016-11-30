@@ -420,7 +420,7 @@ namespace :demos do
         'java:spring',
         'dist/demos/staging-java'
     ] do
-        sh "unzip -d dist/demos/staging-java/ --fo #{SPRING_DEMOS_WAR}"
+        sh "unzip -d dist/demos/staging-java/ -o #{SPRING_DEMOS_WAR}"
     end
 
     desc('Build php demos for staging')
