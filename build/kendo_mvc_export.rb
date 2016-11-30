@@ -36,7 +36,7 @@ namespace :kendo_mvc_export do
                 dpl_files = dpl_files.pathmap(dpl_path + "/%f")
 
                 mkdir_p build_dest
-                cp Dir.glob(File.join(src, build, dlls)), build_dest, :verbose => VERBOSE
+                cp Dir.glob(File.join(src, dlls)), build_dest, :verbose => VERBOSE
                 cp dpl_files, build_dest, :verbose => VERBOSE
             end
 
@@ -44,16 +44,18 @@ namespace :kendo_mvc_export do
         else
             src = src.gsub('/', '\\')
             dest = dest.gsub('/', '\\')
+			dpl.gsub!('/', '\\')
             demos_dest = demos_dest.gsub('/', '\\')
 
             [ 'Release', 'Release-Trial' ].each do |build|
+                target = "#{dest}\\#{build}\\"
 				["dll", "xml"].each do |ext|
-                    target = "#{dest}\\#{build}\\"
-                	system "xcopy #{src}\\#{build}\\*.#{ext} #{target} /y"
-                    KENDO_MVC_EXPORT_DPL_FILES.each do |file|
-                        system "xcopy #{dpl}\\#{build}\\#{file}.#{ext} #{target} /y"
-                    end
+                	system "xcopy #{src}\\*.#{ext} #{target} /y"
+
 				end
+                KENDO_MVC_EXPORT_DPL_FILES.each do |file|
+                    system "xcopy #{dpl}\\#{build}\\#{file} #{target} /y"
+                end
             end
 
 			["dll", "xml"].each do |ext|
