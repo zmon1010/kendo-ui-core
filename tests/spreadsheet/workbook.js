@@ -111,6 +111,41 @@
         equal(workbook.sheetByName(sheetName).range("B1").background(), "green");
     });
 
+    test("insertSheet method support defaultCellStyle", function() {
+        var sheetName = "somename";
+
+        var defaultCellStyle = {
+            background: "yellow",
+            color: "green",
+            fontFamily: "monospace",
+            fontSize: "50px",
+            italic: true,
+            bold: true,
+            underline: true,
+            wrap: true,
+            link: "notSupportedDefaultValue"
+        };
+
+        workbook.insertSheet({
+            name: sheetName,
+            defaultCellStyle: defaultCellStyle,
+            data: { rows: [{ cells: [{ value: 1, background: "customcolor" }] }] }
+        });
+
+        equal(workbook.sheetByName(sheetName).range("A2").background(), "yellow");
+        equal(workbook.sheetByName(sheetName).range("A2").link(), null);
+
+        equal(workbook.sheetByName(sheetName).range("A1").background(), "customcolor");
+        equal(workbook.sheetByName(sheetName).range("A1").color(), "green");
+        equal(workbook.sheetByName(sheetName).range("A1").fontFamily(), "monospace");
+        equal(workbook.sheetByName(sheetName).range("A1").fontSize(), "50px");
+        equal(workbook.sheetByName(sheetName).range("A1").italic(), true);
+        equal(workbook.sheetByName(sheetName).range("A1").bold(), true);
+        equal(workbook.sheetByName(sheetName).range("A1").underline(), true);
+        equal(workbook.sheetByName(sheetName).range("A1").wrap(), true);
+
+    });
+
     test("renameSheet method renames sheet correctly", function() {
         var newName = "0-89-09";
         var oldName = workbook.activeSheet(undefined, function() {}).name();

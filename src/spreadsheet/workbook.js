@@ -197,7 +197,8 @@
                 options.rowHeight || this.options.rowHeight,
                 options.columnWidth || this.options.columnWidth,
                 options.headerHeight || this.options.headerHeight,
-                options.headerWidth || this.options.headerWidth
+                options.headerWidth || this.options.headerWidth,
+                options.defaultCellStyle || this.options.defaultCellStyle
             );
 
             sheet._workbook = this;
