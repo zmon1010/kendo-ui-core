@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Run the tests against the &apos;production&apos; branch</description>
+  <description>Runs the unit test suite with supported jQuery 3</description>
   <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>-1</daysToKeep>
-    <numToKeep>10</numToKeep>
-    <artifactDaysToKeep>-1</artifactDaysToKeep>
-    <artifactNumToKeep>-1</artifactNumToKeep>
+    <daysToKeep>10</daysToKeep>
+    <numToKeep>20</numToKeep>
+    <artifactDaysToKeep>10</artifactDaysToKeep>
+    <artifactNumToKeep>20</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -56,18 +56,11 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers>
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.8">
-      <spec></spec>
-    </com.cloudbees.jenkins.GitHubPushTrigger>
-  </triggers>
+  <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>./build/diff-erb-encoding.sh</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>DOCS_BRANCH=production ./build/run-build-task build:production:tests</command>
+      <command>DOCS_BRANCH=master ./build/run-build-task tests:jquery3</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -79,30 +72,12 @@
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
-    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@0.16">
-      <buildSteps>
-        <hudson.tasks.Shell>
-          <command>rm *-test-results.xml</command>
-        </hudson.tasks.Shell>
-      </buildSteps>
-      <scriptOnlyIfSuccess>false</scriptOnlyIfSuccess>
-      <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
-    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
       <teamDomain>kendoui</teamDomain>
       <authToken>4Zwa8UKKWsEfUwjfnNvm9OZA</authToken>
       <buildServerUrl>http://kendobuild/build/</buildServerUrl>
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>Staging-Demos-production, CI-Production-JQuery3</childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-        <completeBuild>true</completeBuild>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
   </publishers>
   <buildWrappers>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.3.1">

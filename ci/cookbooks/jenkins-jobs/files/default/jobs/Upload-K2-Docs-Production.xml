@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Deploy the react/angular docs to ordkendowww01.telerik.local and ordkendowww02.telerik.local&#xd;
+  <description>Copy the angular docs to &lt;b&gt;ordkendowww01.telerik.local&lt;/b&gt; and &lt;b&gt;ordkendowww02.telerik.local&lt;/b&gt;&#xd;
+(&lt;a href=&quot;http://www.telerik.com/kendo-angular-ui/&quot;&gt;http://www.telerik.com/kendo-angular-ui/&lt;/a&gt;)&#xd;
 &#xd;
-&lt;p&gt;TRIGGERED MANUALLY&lt;/p&gt;</description>
+&lt;p&gt;TRIGGERED AUTOMATICALLY -- to deploy the latest changes from staging, run the &lt;a href=&quot;../Deploy-K2-Docs-Production&quot;&gt;Deploy-K2-Docs-Production job&lt;/a&gt;&lt;/p&gt;</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>7</daysToKeep>
     <numToKeep>20</numToKeep>
@@ -35,12 +36,12 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>git@github.com:telerik/k2-site.git</url>
+        <url>git@gitlab.telerik.com:kendo/kendo-angular-site-cd.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>master</name>
+        <name>production</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -62,14 +63,29 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.8">
+      <spec></spec>
+    </com.cloudbees.jenkins.GitHubPushTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>./_build/upload-angular.sh</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>rm -rf ./local-npm</command>
+      <command>#!/bin/bash
+
+SYNC=&apos;rsync -rvcz --delete --exclude &apos;.git&apos; --inplace&apos;
+DEST=&apos;/usr/share/nginx/html/angular&apos;
+USER=&apos;nginx&apos;
+declare -a HOSTS=(&quot;ordkendowww01.telerik.local&quot; &quot;ordkendowww02.telerik.local&quot;)
+
+for host in &quot;${HOSTS[@]}&quot;
+do
+   echo &quot;[$(date +%T)] Uploading documentation to $host&quot;
+   $SYNC . $USER@$host:$DEST
+done
+
+echo &quot;[$(date +%T)] Done&quot;
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

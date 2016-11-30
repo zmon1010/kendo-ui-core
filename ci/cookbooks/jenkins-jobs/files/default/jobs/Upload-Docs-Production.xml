@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Deploy the documentation production branch to ordkendowww01.telerik.local and ordkendowww02.telerik.local</description>
+  <description>Deploy the documentation production branch to ordkendowww01.telerik.local and ordkendowww02.telerik.local. Hosted at &lt;a href=&quot;http://docs.telerik.com/kendo-ui/&quot;&gt;http://docs.telerik.com/kendo-ui/&lt;/a&gt;</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>7</daysToKeep>
     <numToKeep>20</numToKeep>
@@ -56,56 +56,28 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.8">
-      <spec></spec>
-    </com.cloudbees.jenkins.GitHubPushTrigger>
+    <hudson.triggers.TimerTrigger>
+      <spec># Once every two hours every weekday
+H 8-20/2 * * 1-5</spec>
+    </hudson.triggers.TimerTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <hudson.plugins.parameterizedtrigger.TriggerBuilder plugin="parameterized-trigger@2.24">
-      <configs>
-        <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-          <configs class="empty-list"/>
-          <projects>ASP.NET-MVC-Binaries-production</projects>
-          <condition>ALWAYS</condition>
-          <triggerWithNoParameters>false</triggerWithNoParameters>
-          <block>
-            <buildStepFailureThreshold>
-              <name>FAILURE</name>
-              <ordinal>2</ordinal>
-              <color>RED</color>
-              <completeBuild>true</completeBuild>
-            </buildStepFailureThreshold>
-            <unstableThreshold>
-              <name>UNSTABLE</name>
-              <ordinal>1</ordinal>
-              <color>YELLOW</color>
-              <completeBuild>true</completeBuild>
-            </unstableThreshold>
-            <failureThreshold>
-              <name>FAILURE</name>
-              <ordinal>2</ordinal>
-              <color>RED</color>
-              <completeBuild>true</completeBuild>
-            </failureThreshold>
-          </block>
-          <buildAllNodesWithLabel>false</buildAllNodesWithLabel>
-        </hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-      </configs>
-    </hudson.plugins.parameterizedtrigger.TriggerBuilder>
     <hudson.tasks.Shell>
-      <command># Clean-up generated wrappers
-rm -rf docs/api/aspnet-mvc
-rm -rf docs/api/jsp
-rm -rf docs/api/php
-
-git clean -xf
-
-DOCS_BRANCH=production ./build/run-build-task build:production:generate_help
+      <command>git clean -xdf docs
+./build/run-build-task build:production:generate_kendo_api
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>./build/upload-docs-to-kendo-www.sh</command>
+      <command>cd docs
+
+export GEM_PATH=$HOME/gems
+ruby1.9.1 /usr/local/bin/bundle install --without development --path ~/gems
+ruby1.9.1 /usr/local/bin/bundle exec jekyll build
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>./build/upload-site-to-kendo-www.sh docs docs</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

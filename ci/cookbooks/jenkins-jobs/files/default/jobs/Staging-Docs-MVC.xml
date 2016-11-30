@@ -100,7 +100,9 @@ H 8-20/2 * * 1-5</spec>
       </configs>
     </hudson.plugins.parameterizedtrigger.TriggerBuilder>
     <hudson.tasks.Shell>
-      <command>./build/run-build-task build:production:generate_help
+      <command>git clean -xdf docs-aspnet-mvc
+
+./build/run-build-task build:production:generate_mvc_api
 
 cd docs-aspnet-mvc;
 
