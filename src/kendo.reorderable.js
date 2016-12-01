@@ -23,9 +23,9 @@ var __meta__ = { // jshint ignore:line
         hint = $(hint);
 
         if (denied) {
-            hint.find(".k-drag-status").removeClass("k-i-add").addClass("k-i-denied");
+            hint.find(".k-drag-status").removeClass("k-i-plus").addClass("k-i-cancel");
         } else {
-            hint.find(".k-drag-status").removeClass("k-i-denied").addClass("k-i-add");
+            hint.find(".k-drag-status").removeClass("k-i-cancel").addClass("k-i-plus");
         }
     }
 
@@ -47,7 +47,7 @@ var __meta__ = { // jshint ignore:line
                 hint: options.hint
             });
 
-            that.reorderDropCue = $('<div class="k-reorder-cue"><div class="k-icon k-i-arrow-s"></div><div class="k-icon k-i-arrow-n"></div></div>');
+            that.reorderDropCue = $('<div class="k-reorder-cue"><div class="k-icon k-i-arrow-60-down"></div><div class="k-icon k-i-arrow-60-up"></div></div>');
 
             element.find(draggable.options.filter).kendoDropTarget({
                 group: draggable.options.group,
@@ -127,7 +127,7 @@ var __meta__ = { // jshint ignore:line
                         that._elements = that.element.find(that.draggable.options.filter);
                     },
                     drag: function(e) {
-                        if (!that._dropTarget || this.hint.find(".k-drag-status").hasClass("k-i-denied")) {
+                        if (!that._dropTarget || this.hint.find(".k-drag-status").hasClass("k-i-cancel")) {
                             return;
                         }
 

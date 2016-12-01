@@ -257,8 +257,8 @@
 
         equalPositions(reorderable.reorderDropCue, target, true);
     });
-    //TODO: Test should be fixed after all font-icons cherrypicks are completed
-    skip("position is set to before", function() {
+
+    test("position is set to before", function() {
         var args,
             reorderable = new Reorderable(div, {
                 change: function() {
@@ -285,8 +285,8 @@
 
         equal(args.position, "after");
     });
-    //TODO: Test should be fixed after all font-icons cherrypicks are completed
-    skip("reorder twice adjecent elements", function() {
+
+    test("reorder twice adjecent elements", function() {
         var args;
         new Reorderable(div, {
             change: function() {
@@ -341,8 +341,8 @@
 
         moveOverDropTarget(div.children().eq(0), target);
 
-        ok(hint.find(".k-drag-status").hasClass("k-i-denied"), "drag hint is not in denied state");
-        ok(!hint.find(".k-drag-status").hasClass("k-i-add"), "drag hint is in add state");
+        ok(hint.find(".k-drag-status").hasClass("k-i-cancel"), "drag hint is not in denied state");
+        ok(!hint.find(".k-drag-status").hasClass("k-i-plus"), "drag hint is in add state");
     });
 
     test("drop cue is as not denied when in same container", function() {
@@ -362,8 +362,8 @@
 
         moveOverDropTarget(div.children().eq(0), target);
 
-        ok(!hint.find(".k-drag-status").hasClass("k-i-denied"), "drag hint is in denied state");
-        ok(hint.find(".k-drag-status").hasClass("k-i-add"), "drag hint is not in add state");
+        ok(!hint.find(".k-drag-status").hasClass("k-i-cancel"), "drag hint is in denied state");
+        ok(hint.find(".k-drag-status").hasClass("k-i-plus"), "drag hint is not in add state");
     });
 
     test("change event is not triggered when drag over containers is not allowed", function() {
