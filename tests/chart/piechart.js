@@ -1304,7 +1304,7 @@
                 ok(lines[0].options.stroke.width);
             });
 
-            test("sets specified connectors color and width", function() {debugger;
+            test("sets specified connectors color and width", function() {
                 createPieChart({
                     color: "red",
                     width: 5

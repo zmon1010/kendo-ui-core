@@ -259,7 +259,7 @@
             equal(range.max, 2);
         });
 
-        chart._start(createEventArg());debugger;
+        chart._start(createEventArg());
         chart._move(createEventArg({
             x: {
                 delta: 100

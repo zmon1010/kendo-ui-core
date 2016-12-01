@@ -127,15 +127,15 @@
         var defaultButtons = {
             cancel: {
                 text: "Cancel",
-                imageClass: "p-i-cancel",
+                imageClass: "k-i-cancel",
                 className: "k-diagram-cancel",
-                iconClass: "p-icon"
+                iconClass: "k-icon"
             },
             update: {
                 text: "Update",
-                imageClass: "p-i-checkmark",
+                imageClass: "k-i-checkmark",
                 className: "k-diagram-update",
-                iconClass: "p-icon"
+                iconClass: "k-icon"
             }
         };
 
@@ -4412,7 +4412,7 @@
 
             editTool: function() {
                 this._tools.push({
-                    spriteCssClass: "p-icon p-i-edit",
+                    spriteCssClass: "k-icon k-i-edit",
                     showText: "overflow",
                     type: "button",
                     text: "Edit",
@@ -4422,7 +4422,7 @@
 
             deleteTool: function() {
                 this._tools.push({
-                    spriteCssClass: "p-icon p-i-close",
+                    spriteCssClass: "k-icon k-i-close",
                     showText: "overflow",
                     type: "button",
                     text: "Delete",
@@ -4433,7 +4433,7 @@
             rotateAnticlockwiseTool: function(options) {
                 this._appendGroup("rotate");
                 this._rotateGroup.buttons.push({
-                    spriteCssClass: "p-icon p-i-rotate-left",
+                    spriteCssClass: "k-icon k-i-rotate-left",
                     showText: "overflow",
                     text: "RotateAnticlockwise",
                     group: "rotate",
@@ -4444,7 +4444,7 @@
             rotateClockwiseTool: function(options) {
                 this._appendGroup("rotate");
                 this._rotateGroup.buttons.push({
-                    spriteCssClass: "p-icon p-i-rotate-right",
+                    spriteCssClass: "k-icon k-i-rotate-right",
                     attributes: this._setAttributes({ action: "rotateClockwise", step: options.step }),
                     showText: "overflow",
                     text: "RotateClockwise",
@@ -4455,7 +4455,7 @@
             createShapeTool: function() {
                 this._appendGroup("create");
                 this._createGroup.buttons.push({
-                    spriteCssClass: "p-icon p-i-shape",
+                    spriteCssClass: "k-icon k-i-shape",
                     showText: "overflow",
                     text: "CreateShape",
                     group: "create",
@@ -4466,7 +4466,7 @@
             createConnectionTool: function() {
                 this._appendGroup("create");
                 this._createGroup.buttons.push({
-                    spriteCssClass: "p-icon p-i-connector",
+                    spriteCssClass: "k-icon k-i-connector",
                     showText: "overflow",
                     text: "CreateConnection",
                     group: "create",
@@ -4477,7 +4477,7 @@
             undoTool: function() {
                 this._appendGroup("history");
                 this._historyGroup.buttons.push({
-                    spriteCssClass: "p-icon p-i-undo",
+                    spriteCssClass: "k-icon k-i-undo",
                     showText: "overflow",
                     text: "Undo",
                     group: "history",
@@ -4488,7 +4488,7 @@
             redoTool: function() {
                 this._appendGroup("history");
                 this._historyGroup.buttons.push({
-                    spriteCssClass: "p-icon p-i-redo",
+                    spriteCssClass: "k-icon k-i-redo",
                     showText: "overflow",
                     text: "Redo",
                     group: "history",

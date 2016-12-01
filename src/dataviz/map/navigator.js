@@ -14,7 +14,7 @@
     function button(dir) {
        return kendo.format(
            '<button class="k-button k-navigator-{0}">' +
-               '<span class="p-icon p-i-arrow-60-{0}"/>' +
+               '<span class="k-icon k-i-arrow-60-{0}"/>' +
            '</button>', dir);
     }
 
