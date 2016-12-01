@@ -195,6 +195,17 @@
 }
 
 /* main colors */
+.k-icon {
+    color: @normal-text-color;
+    &:hover {
+        color: @hover-text-color;
+    }
+}
+
+.k-splitbar .k-resize-handle {
+    background-color: @normal-text-color;
+}
+
 .k-block,
 .k-widget
 {
@@ -474,10 +485,8 @@ html .km-pane-wrapper .k-header
     border-color: transparent;
 }
 
-.k-icon,
-.k-tool-icon,
 .k-grouping-dropclue,
-.k-drop-hint,
+.k-i-drag-and-drop,
 .k-column-menu .k-sprite,
 .k-grid-mobile .k-resize-handle-inner:before,
 .k-grid-mobile .k-resize-handle-inner:after,
@@ -993,11 +1002,6 @@ div.k-filebrowser-dropzone em,
 .k-draghandle.k-state-selected:hover
 {
     background-position: 50% 50%;
-}
-
-.k-tool-icon
-{
-    background-image: @sprite-image;
 }
 
 .k-state-hover>.k-link,
@@ -1543,16 +1547,6 @@ div.k-filebrowser-dropzone em
 }
 
 /* PivotGrid */
-
-.k-i-kpi-decrease,
-.k-i-kpi-denied,
-.k-i-kpi-equal,
-.k-i-kpi-hold,
-.k-i-kpi-increase,
-.k-i-kpi-open
-{
-    background-image: url('@{image-folder}/sprite_kpi.png');
-}
 
 /* Border radius */
 .k-block,
@@ -2313,39 +2307,11 @@ html .km-pane-wrapper .km-widget,
 // Retina sprite
 @media only screen and (-webkit-min-device-pixel-ratio: 1.2),
        only screen and (min-device-pixel-ratio: 1.2) {
-    .k-icon:not(.k-loading):not(.k-i-loading),
-    .k-grouping-dropclue,
-    .k-drop-hint,
-    .k-callout,
-    .k-tool-icon,
-    .k-state-hover .k-tool-icon,
-    .k-state-active .k-tool-icon,
-    .k-state-active.k-state-hover .k-tool-icon,
-    .k-state-selected .k-tool-icon,
-    .k-state-selected.k-state-hover .k-tool-icon,
-    .k-column-menu .k-sprite,
-    .k-mobile-list .k-check:checked,
-    .k-mobile-list .k-edit-field [type=checkbox]:checked,
-    .k-mobile-list .k-edit-field [type=radio]:checked {
-        background-image: url('@{image-folder}/sprite_2x.png');
-        background-size: 340px 336px;
-    }
     .k-dropdown-wrap .k-input,
     .k-picker-wrap .k-input,
     .k-numeric-wrap .k-input
     {
         border-radius: @inner-border-radius 0 0 @inner-border-radius;
-    }
-
-    .k-i-kpi-decrease,
-    .k-i-kpi-denied,
-    .k-i-kpi-equal,
-    .k-i-kpi-hold,
-    .k-i-kpi-increase,
-    .k-i-kpi-open
-    {
-        background-image: url('@{image-folder}/sprite_kpi_2x.png');
-        background-size: 96px 16px;
     }
 }
 
@@ -2480,22 +2446,22 @@ html .km-pane-wrapper .km-widget,
 .k-splitbar.k-splitbar-vertical-hover .k-icon,
 div.k-splitbar.k-state-focused .k-icon,
 .k-textbox:hover > .k-icon,
-.k-grouping-header .k-group-delete,
-.k-grouping-header .k-button-icon:hover > .k-icon.k-group-delete,
-.k-grouping-header .k-i-group-delete,
-.k-grouping-header .k-button-icon:hover > .k-icon.k-i-group-delete,
-.k-grouping-header .k-si-arrow-n,
-.k-grouping-header .k-link:hover > .k-icon.k-si-arrow-n,
-.k-grouping-header .k-i-sarrow-n,
-.k-grouping-header .k-link:hover > .k-icon.k-i-sarrow-n,
-.k-grouping-header .k-si-arrow-s,
-.k-grouping-header .k-link:hover > .k-icon.k-si-arrow-s,
-.k-grouping-header .k-i-sarrow-s,
-.k-grouping-header .k-link:hover > .k-icon.k-i-sarrow-s,
-.k-grid-toolbar .k-i-pdf,
-.k-grid-toolbar .k-button:hover > .k-i-pdf,
-.k-grid-toolbar .k-i-excel,
-.k-grid-toolbar .k-button:hover > .k-i-excel,
+.k-grouping-header .k-i-delete,
+.k-grouping-header .k-button-icon:hover > .k-icon.k-i-delete,
+.k-grouping-header .k-i-delete,
+.k-grouping-header .k-button-icon:hover > .k-icon.k-i-delete,
+.k-grouping-header .k-i-arrow-60-up,
+.k-grouping-header .k-link:hover > .k-icon.k-i-arrow-60-up,
+.k-grouping-header .k-i-arrow-60-up,
+.k-grouping-header .k-link:hover > .k-icon.k-i-arrow-60-up,
+.k-grouping-header .k-i-arrow-60-down,
+.k-grouping-header .k-link:hover > .k-icon.k-i-arrow-60-down,
+.k-grouping-header .k-i-arrow-60-down,
+.k-grouping-header .k-link:hover > .k-icon.k-i-arrow-60-down,
+.k-grid-toolbar .k-i-file-pdf,
+.k-grid-toolbar .k-button:hover > .k-i-file-pdf,
+.k-grid-toolbar .k-i-file-excel,
+.k-grid-toolbar .k-button:hover > .k-i-file-excel,
 .k-grid-toolbar .k-icon,
 .k-scheduler-toolbar .k-icon,
 .k-scheduler-footer .k-icon,
