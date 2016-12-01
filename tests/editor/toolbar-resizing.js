@@ -221,7 +221,6 @@ test('click on "overflow" button opens the overflowPopup if it contains items', 
     $("#wrapper").width(600);
     var editor = textarea.kendoEditor(options).data("kendoEditor");
     var toolbarElement = editor.toolbar.element;
-
     toolbarElement.find(".k-overflow-anchor").trigger("click");
 
     ok(editor.toolbar.overflowPopup.visible());
@@ -258,7 +257,6 @@ test('tool state does not change when the tool is send to the overflow popup', f
             "justifyCenter",
             "justifyRight",
             "justifyFull",
-
             "bold",
             "italic",
             "underline",
@@ -371,14 +369,14 @@ test('down arrow focuses last tool from next group in overflowPopup', function()
 
     getTool("strikethrough").focus().press(keys.DOWN);
 
-    ok(isToolActive("create-table"));
+    ok(isToolActive("table"));
 });
 
 test('up arrow focuses first tool from previous group in overflowPopup', function() {
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("create-table").focus().press(keys.UP);
+    getTool("table").focus().press(keys.UP);
 
     ok(isToolActive("strikethrough"));
 });
@@ -387,16 +385,16 @@ test('down arrow changes the activeElement when createTable tool has focus', fun
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("create-table").focus().press(keys.DOWN);
+    getTool("table").focus().press(keys.DOWN);
 
-    ok(isToolActive("justify-left"));
+    ok(isToolActive("align-left"));
 });
 
 test('up arrow changes the activeElement when createTable tool has focus', function() {
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("create-table").focus().press(keys.UP);
+    getTool("table").focus().press(keys.UP);
 
     ok(isToolActive("strikethrough"));
 });

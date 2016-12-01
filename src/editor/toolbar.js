@@ -25,10 +25,38 @@
                     ".k-tool-group:visible .k-dropdown," +
                     ".k-tool-group:visible .k-combobox .k-input";
 
+    var toolNamesByCssClass = {
+        "k-i-sup-script": "superscript",
+        "k-i-sub-script": "subscript",
+        "k-i-align-left": "justifyLeft",
+        "k-i-align-center": "justifyCenter",
+        "k-i-align-right": "justifyRight",
+        "k-i-align-justify": "justifyFull",
+        "k-i-list-unordered": "insertUnorderedList",
+        "k-i-list-ordered": "insertOrderedList",
+        "k-i-indent-increase": "indent",
+        "k-i-indent-decrease": "outdent",
+        "k-i-link-horizontal": "createLink",
+        "k-i-unlink-horizontal": "unlink",
+        "k-i-image": "insertImage",
+        "k-i-file-add": "insertFile",
+        "k-i-html": "viewHtml",
+        "k-i-foreground-color": "foreColor",
+        "k-i-paint": "backColor",
+        "k-i-table": "createTable",
+        "k-i-table-column-insert-left": "addColumnLeft",
+        "k-i-table-column-insert-right": "addColumnRight",
+        "k-i-table-row-insert-above": "addRowAbove",
+        "k-i-table-row-insert-below": "addRowBelow",
+        "k-i-table-row-delete": "deleteRow",
+        "k-i-table-column-delete": "deleteColumn",
+        "k-i-table-properties": "tableWizard",
+        "k-i-clear-css": "cleanFormatting"
+    };                
+
     var OverflowAnchorTool = Tool.extend({
         initialize: function(ui, options) {
             ui.attr({ unselectable: "on" });
-
             var toolbar = options.editor.toolbar;
             ui.on("click", $.proxy(function() {
                 this.overflowPopup.toggle();
@@ -95,7 +123,7 @@
             this.window = $(this.element)
                 .wrap("<div class='editorToolbarWindow k-header' />")
                 .parent()
-                .prepend("<button class='k-button k-button-bare k-editortoolbar-dragHandle'><span class='k-icon k-i-move' /></button>")
+                .prepend("<button class='k-button k-button-bare k-editortoolbar-dragHandle'><span class='k-icon k-i-handler-drag' /></button>")
                 .kendoWindow({
                     title: false,
                     resizable: false,
@@ -231,8 +259,9 @@
             that._attachEvents();
 
             that.items().each(function initializeTool() {
+                
                 var toolName = that._toolName(this),
-                    tool = toolName !== "more" ? that.tools[toolName] : that.tools.overflowAnchor,
+                    tool = toolName !== "moreVertical" ? that.tools[toolName] : that.tools.overflowAnchor,
                     options = tool && tool.options,
                     messages = editor.options.messages,
                     description = options && options.tooltip || messages[toolName],
@@ -392,7 +421,7 @@
                         extend(result[name].options, currentTool);
                     } else {
                         // custom tool
-                        options = extend({ cssClass: "k-i-custom", type: "button", title: "" }, currentTool);
+                        options = extend({ cssClass: "k-i-gear", type: "button", title: "" }, currentTool);
                         if (!options.name) {
                             options.name = "custom";
                         }
@@ -700,6 +729,9 @@
 
             if (tool[0]) {
                 var toolname = tool[0];
+                if (toolNamesByCssClass[toolname]) {
+                    toolname = toolNamesByCssClass[toolname];
+                }
                 if (toolname.indexOf("k-i-") >=0) {
                     return kendo.toCamelCase(toolname.substring(toolname.indexOf("k-i-") + 4));
                 }

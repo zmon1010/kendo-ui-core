@@ -114,7 +114,7 @@ test('handle mixed selection', function() {
 
     editor.trigger('select');
 
-    ok(!$('k-i-insert-unordered-list', editor.wrapper).hasClass('k-state-selected'));
+    ok(!$('k-i-list-unordered', editor.wrapper).hasClass('k-state-selected'));
 });
 
 test('handle image selection', function() {
@@ -127,7 +127,7 @@ test('handle image selection', function() {
 
     editor.trigger('select');
 
-    ok($('.k-i-justify-right', editor.wrapper).parent().hasClass('k-state-selected'));
+    ok($('.k-i-align-right', editor.wrapper).parent().hasClass('k-state-selected'));
 });
 
 if (!kendo.support.browser.msie) {
@@ -191,6 +191,12 @@ var toolbar;
 var dom;
 var editorElement = $("<div />");
 var editorNS = kendo.ui.editor;
+var toolCssClassNames = {
+
+    "unlink" : "unlink-horizontal",
+    "insert-image" : "image",
+    "create-link" : "link-horizontal"
+};
 
 var mockedToolbarModule = {
     setup: function() {
@@ -240,6 +246,9 @@ function bindToMock(array, options) {
 }
 
 function getTool(className) {
+    if (toolCssClassNames[className]) {
+        className = toolCssClassNames[className];
+    }
     var tool = dom.find(".k-" + className + ", .k-i-" + className);
 
     if (tool.hasClass("k-tool-icon")) {
@@ -398,7 +407,7 @@ test("hidden buttons do not end groups", function() {
         "createLink", "unlink"
     ]);
 
-    dom.find(".k-i-unlink").addClass(".k-state-disabled");
+    dom.find(".k-i-unlink-horizontal").addClass(".k-state-disabled");
     toolbar.update();
 
     ok(getTool("create-link").hasClass("k-group-end"));

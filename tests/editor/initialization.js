@@ -30,7 +30,7 @@ test("editor uses defaultValue if encoded and has encoded value", function() {
 
 test("color tools react to palette definition", function() {
     var palette = ["#ff1ff1"];
-
+editor._test = true;
     setup("bar", {
         tools: [
             { name: "foreColor", palette: palette }

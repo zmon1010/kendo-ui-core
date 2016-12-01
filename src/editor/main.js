@@ -45,13 +45,13 @@
             '</tbody></table>',
 
         buttonTemplate:
-            '# var iconCssClass= "k-i-" + kendo.toHyphens(data.cssClass.replace("k-", ""));#' +
+            '# var iconCssClass= "k-icon k-i-" + kendo.toHyphens(data.cssClass.replace("k-", ""));#' +
             '<a tabindex="0" role="button" class="k-tool"' +
             '#= data.popup ? " data-popup" : "" #' +
             ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= iconCssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
 
         colorPickerTemplate:
-            '<div class="k-colorpicker #= data.cssClass #" />',
+            '<div class="k-colorpicker k-icon k-i-#= data.cssClass.replace("k-", "") #" />',
 
         comboBoxTemplate:
             '<select title="#= data.title #" class="#= data.cssClass #" />',
@@ -64,7 +64,7 @@
 
         overflowAnchorTemplate:
             '<a href="" role="button" class="k-tool k-overflow-anchor" data-popup' +
-            ' unselectable="on"><span unselectable="on" class="k-icon k-i-more"></span></a>',
+            ' unselectable="on"><span unselectable="on" class="k-icon k-i-more-vertical"></span></a>',
 
         formatByName: function(name, format) {
             for (var i = 0; i < format.length; i++) {
@@ -74,11 +74,48 @@
             }
         },
 
+        getToolCssClass: function (name) {
+            var toolCssClassNames = {
+
+                superscript: "sup-script",
+                subscript: "sub-script",
+                justifyLeft: "align-left",
+                justifyCenter: "align-center",
+                justifyRight: "align-right",
+                justifyFull: "align-justify",
+                insertUnorderedList: "list-unordered",
+                insertOrderedList: "list-ordered",
+                indent: "indent-increase",
+                outdent: "indent-decrease",
+                createLink: "link-horizontal",
+                unlink: "unlink-horizontal",
+                insertImage: "image",
+                insertFile: "file-add",
+                viewHtml: "html",
+                foreColor: "foreground-color",
+                backColor: "paint",
+                createTable: "table",
+                addColumnLeft: "table-column-insert-left",
+                addColumnRight: "table-column-insert-right",
+                addRowAbove: "table-row-insert-above",
+                addRowBelow: "table-row-insert-below",
+                deleteRow: "table-row-delete",
+                deleteColumn: "table-column-delete",
+                tableWizard: "table-properties",
+                cleanFormatting: "clear-css"
+            };
+
+            var cssClass = toolCssClassNames[name];
+            if(cssClass) {
+                return cssClass;
+            }
+            return name;
+        },
+
         registerTool: function(toolName, tool) {
             var toolOptions = tool.options;
-
             if (toolOptions && toolOptions.template) {
-                toolOptions.template.options.cssClass = "k-" + toolName;
+                toolOptions.template.options.cssClass = "k-" + EditorUtils.getToolCssClass(toolName);
             }
 
             if (!tool.name) {
@@ -347,7 +384,7 @@
             var resizable = this.options.resizable;
             var isResizable = $.isPlainObject(resizable) ? (resizable.content === undefined || resizable.content === true) : resizable;
             if (isResizable && this.textarea) {
-                $("<div class='k-resize-handle'><span class='k-icon k-i-resize-se' /></div>")
+                $("<div class='k-resize-handle'><span class='k-icon k-i-arrow-45-down-right' /></div>")
                     .insertAfter(this.textarea);
 
                 this.wrapper.kendoResizable(extend({}, this.options.resizable, {

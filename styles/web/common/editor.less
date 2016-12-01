@@ -155,6 +155,14 @@ table.k-editor
     .disable-high-contrast();
 }
 
+.k-editor-toolbar .k-tool-icon.k-icon
+{
+    width: auto;
+    height: auto;
+    top: auto;
+    font-size: 16px;
+}
+
 .editor-icon(@x, @y) {
     background-position: @x @y;
 
@@ -168,39 +176,39 @@ table.k-editor
     }
 }
 
-.k-i-move { background-position: -160px -288px; }
-.k-bold, .k-i-bold { .editor-icon(-240px, 0); }
-.k-italic, .k-i-italic { .editor-icon(-240px, -24px); }
-.k-underline, .k-i-underline { .editor-icon(-240px, -48px); }
-.k-strikethrough, .k-i-strikethrough { .editor-icon(-240px, -72px); }
+.k-i-handler-drag { background-position: -160px -288px; }
+.k-i-bold, .k-i-bold { .editor-icon(-240px, 0); }
+.k-i-italic, .k-i-italic { .editor-icon(-240px, -24px); }
+.k-i-underline, .k-i-underline { .editor-icon(-240px, -48px); }
+.k-i-strikethrough, .k-i-strikethrough { .editor-icon(-240px, -72px); }
 .k-foreColor { .editor-icon(-240px, -96px); }
 .k-backColor { .editor-icon(-240px, -120px); }
 .k-colorpicker .k-foreColor { background-position: -240px -96px; }
 .k-colorpicker .k-backColor { background-position: -240px -120px; }
-.k-justifyLeft, .k-i-justify-left, .k-i-align-left { .editor-icon(-240px, -144px); }
-.k-justifyCenter, .k-i-justify-center, .k-i-align-center { .editor-icon(-240px, -168px); }
-.k-justifyRight, .k-i-justify-right, .k-i-align-right { .editor-icon(-240px, -192px); }
-.k-justifyFull, .k-i-justify-full, .k-i-align-justify { .editor-icon(-240px, -216px); }
-.k-insertUnorderedList, .k-i-insert-unordered-list, .k-i-unordered-list { .editor-icon(-240px, -264px); }
-.k-insertOrderedList, .k-i-insert-ordered-list, .k-i-ordered-list { .editor-icon(-240px, -288px); }
-.k-indent, .k-rtl .k-outdent, .k-i-indent, .k-rtl .k-i-outdent { .editor-icon(-288px, 0); }
-.k-outdent, .k-rtl .k-indent, .k-i-outdent, .k-rtl .k-i-indent { .editor-icon(-288px, -24px); }
+.k-i-align-left, .k-i-align-left, .k-i-align-left { .editor-icon(-240px, -144px); }
+.k-i-align-center, .k-i-align-center, .k-i-align-center { .editor-icon(-240px, -168px); }
+.k-i-align-right, .k-i-align-right, .k-i-align-right { .editor-icon(-240px, -192px); }
+.k-justifyFull, .k-i-align-justify, .k-i-align-justify { .editor-icon(-240px, -216px); }
+.k-i-list-unordered, .k-i-list-unordered, .k-i-list-unordered { .editor-icon(-240px, -264px); }
+.k-i-list-ordered, .k-i-list-ordered, .k-i-list-ordered { .editor-icon(-240px, -288px); }
+.k-indent, .k-rtl .k-outdent, .k-i-indent-increase, .k-rtl .k-i-indent-decrease { .editor-icon(-288px, 0); }
+.k-outdent, .k-rtl .k-indent, .k-i-indent-decrease, .k-rtl .k-i-indent-increase { .editor-icon(-288px, -24px); }
 .k-createLink, .k-i-create-link { .editor-icon(-288px, -48px); }
 .k-unlink, .k-i-unlink { .editor-icon(-288px, -72px); }
-.k-insertImage, .k-i-insert-image { .editor-icon(-288px, -96px); }
-.k-insertFile, .k-i-insert-file { .editor-icon(-288px, -216px); }
-.k-subscript, .k-i-subscript { .editor-icon(-288px, -144px); }
-.k-superscript, .k-i-superscript { .editor-icon(-288px, -168px); }
+.k-insertImage, .k-i-image-light-dialog { .editor-icon(-288px, -96px); }
+.k-insertFile, .k-i-file-add { .editor-icon(-288px, -216px); }
+.k-subscript, .k-i-sub-script { .editor-icon(-288px, -144px); }
+.k-superscript, .k-i-sup-script { .editor-icon(-288px, -168px); }
 .k-cleanFormatting, .k-i-clean-formatting { .editor-icon(-288px, -192px); }
-.k-createTable, .k-i-create-table { .editor-icon(-192px, 0); }
-.k-addColumnLeft, .k-i-add-column-left { .editor-icon(-192px, -24px); }
-.k-addColumnRight, .k-i-add-column-right { .editor-icon(-192px, -48px); }
-.k-addRowAbove, .k-i-add-row-above { .editor-icon(-192px, -72px); }
-.k-addRowBelow, .k-i-add-row-below { .editor-icon(-192px, -96px); }
-.k-deleteRow, .k-i-delete-row { .editor-icon(-192px, -120px); }
-.k-deleteColumn, .k-i-delete-column { .editor-icon(-192px, -144px); }
-.k-mergeCells, .k-i-merge-cells { .editor-icon(-192px, -168px); }
-.k-pdf, .k-tool-icon .k-i-pdf, .k-tool .k-i-pdf, .k-tool-group .k-tool .k-i-pdf { .editor-icon(-288px, -240px);}
+.k-createTable, .k-i-table-light-dialog { .editor-icon(-192px, 0); }
+.k-addColumnLeft, .k-i-table-column-insert-left { .editor-icon(-192px, -24px); }
+.k-addColumnRight, .k-i-table-column-insert-right { .editor-icon(-192px, -48px); }
+.k-addRowAbove, .k-i-table-row-insert-above { .editor-icon(-192px, -72px); }
+.k-addRowBelow, .k-i-table-row-insert-below { .editor-icon(-192px, -96px); }
+.k-deleteRow, .k-i-table-row-delete { .editor-icon(-192px, -120px); }
+.k-deleteColumn, .k-i-table-column-delete { .editor-icon(-192px, -144px); }
+.k-mergeCells, .k-i-cells-merge { .editor-icon(-192px, -168px); }
+.k-pdf, .k-tool-icon .k-i-file-pdf, .k-tool .k-i-file-pdf, .k-tool-group .k-tool .k-i-file-pdf { .editor-icon(-288px, -240px);}
 .k-print, .k-i-print { .editor-icon(-288px, -264px); }
 .k-i-table-wizard, .k-i-table-wizard-insert { .editor-icon(-192px, -192px); }
 
@@ -655,7 +663,7 @@ ul.k-tabstrip-items .k-loading {
     border-radius: 0;
 }
 
-.k-popup.k-align .k-list .k-font-icon {
+.k-popup.k-align .k-list .k-icon {
     vertical-align: bottom;
     vertical-align: -webkit-baseline-middle;
 }
@@ -695,6 +703,7 @@ ul.k-tabstrip-items .k-loading {
 .k-animation-container .k-editor-toolbar .k-tool-text {
     display: inline;
     vertical-align: sub;
+    padding: 0 0 0 .5em;
 }
 
 .k-editor-dialog.k-editor-table-wizard-dialog .k-edit-buttons {

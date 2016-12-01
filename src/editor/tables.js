@@ -91,7 +91,7 @@ var PopupTool = Tool.extend({
             insertNewTable: true
         });
 
-        registerTool("tableWizardInsert", tableWizard);
+        registerTool("tableProperties", tableWizard);
 
         var twTool = $("<div class='k-editor-toolbar'>" + tableWizard.options.template.getHtml() + "</div>");
         twTool.appendTo(popup.element);
