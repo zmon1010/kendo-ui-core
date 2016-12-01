@@ -21,13 +21,13 @@
                                    '<span class="k-scheduler-mark" style="background-color:#=resources[0].color#"></span>' +
                                    "# } #" +
                                    "# if (data.isException()) { #" +
-                                   '<span class="k-icon k-i-exception"></span>' +
+                                   '<span class="k-icon k-i-warning"></span>' +
                                    '# } else if (data.isRecurring()) {#' +
-                                   '<span class="k-icon k-i-refresh"></span>' +
+                                   '<span class="k-icon k-i-reload"></span>' +
                                    "# } #" +
                                    '{0}' +
                                    '#if (showDelete) {#' +
-                                       '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-si-close"></span></a>' +
+                                       '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-i-close"></span></a>' +
                                    '#}#' +
                                '</div>';
 
@@ -270,7 +270,7 @@
 
                 this.element.on("mouseenter" + NS, ".k-scheduler-agenda .k-scheduler-content tr", "_mouseenter")
                             .on("mouseleave" + NS, ".k-scheduler-agenda .k-scheduler-content tr", "_mouseleave")
-                            .on("click" + NS, ".k-scheduler-agenda .k-scheduler-content .k-link:has(.k-si-close)", "_remove");
+                            .on("click" + NS, ".k-scheduler-agenda .k-scheduler-content .k-link:has(.k-i-close)", "_remove");
 
                 this._renderLayout(options.date);
             },
@@ -448,9 +448,9 @@
 
                         tableRow.push(kendo.format(
                             '<td class="k-scheduler-timecolumn"><div>{0}{1}{2}</div></td><td>{3}</td>',
-                            task.tail || task.middle ? '<span class="k-icon k-i-arrow-w"></span>' : "",
+                            task.tail || task.middle ? '<span class="k-icon k-i-arrow-60-left"></span>' : "",
                             this._timeTemplate(task.clone({ start: task._startTime || task.start, end: task.endTime || task.end })),
-                            task.head || task.middle ? '<span class="k-icon k-i-arrow-e"></span>' : "",
+                            task.head || task.middle ? '<span class="k-icon k-i-arrow-60-right"></span>' : "",
                             this._eventTemplate(task.clone({ showDelete: showDelete }))
                         ));
 

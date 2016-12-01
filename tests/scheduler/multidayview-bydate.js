@@ -490,8 +490,8 @@
         jasmine.clock().tick(1);
         sch.view().render(events);
 
-        equal(sch.view().datesHeader.find(".k-event .k-i-arrow-w").length, 1);
-        equal(sch.view().datesHeader.find(".k-event .k-i-arrow-e").length, 0);
+        equal(sch.view().datesHeader.find(".k-event .k-i-arrow-60-left").length, 1);
+        equal(sch.view().datesHeader.find(".k-event .k-i-arrow-60-right").length, 0);
     });
 
 
@@ -1284,8 +1284,8 @@
         jasmine.clock().tick(1);
         sch.view().render(events);
 
-        equal(sch.view().content.find(".k-event .k-i-arrow-w").length, 1);
-        equal(sch.view().content.find(".k-event .k-i-arrow-e").length, 0);
+        equal(sch.view().content.find(".k-event .k-i-arrow-60-left").length, 1);
+        equal(sch.view().content.find(".k-event .k-i-arrow-60-right").length, 0);
     });
 
 

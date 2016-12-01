@@ -133,7 +133,7 @@
             views: ["day"]
         });
         jasmine.clock().tick();
-        scheduler.element.find(".k-event .k-si-close").click();
+        scheduler.element.find(".k-event .k-i-close").click();
         var deleteWindowTitleText = $(".k-window-title").text();
         $(".k-window .k-i-close").click();
 
@@ -152,7 +152,7 @@
             views: ["day"]
         });
         jasmine.clock().tick();
-        scheduler.element.find(".k-event .k-si-close").click();
+        scheduler.element.find(".k-event .k-i-close").click();
         var destroyText = $(".k-window .k-scheduler-delete").text();
         $(".k-window .k-i-close").click();
 

@@ -48,21 +48,21 @@ var __meta__ = { // jshint ignore:line
                 '>' +
                 '<span class="k-event-actions">' +
                     '# if(data.tail || data.middle) {#' +
-                        '<span class="k-icon k-i-arrow-w"></span>' +
+                        '<span class="k-icon k-i-arrow-60-left"></span>' +
                     '#}#' +
                     '# if(data.isException()) {#' +
-                        '<span class="k-icon k-i-exception"></span>' +
+                        '<span class="k-icon k-i-warning"></span>' +
                     '# } else if(data.isRecurring()) {#' +
-                        '<span class="k-icon k-i-refresh"></span>' +
+                        '<span class="k-icon k-i-reload"></span>' +
                     '# } #' +
                 '</span>' +
                 '{0}' +
                 '<span class="k-event-actions">' +
                     '#if (showDelete) {#' +
-                        '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-si-close"></span></a>' +
+                        '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-i-close"></span></a>' +
                     '#}#' +
                     '# if(data.head || data.middle) {#' +
-                        '<span class="k-icon k-i-arrow-e"></span>' +
+                        '<span class="k-icon k-i-arrow-60-right"></span>' +
                     '#}#' +
                 '</span>' +
                 '#if(resizable && !singleDay && !data.tail && !data.middle){#' +
@@ -83,25 +83,25 @@ var __meta__ = { // jshint ignore:line
                 '>' +
                  '<span class="k-event-actions">' +
                     '# if(data.isException()) {#' +
-                        '<span class="k-icon k-i-exception"></span>' +
+                        '<span class="k-icon k-i-warning"></span>' +
                     '# } else if(data.isRecurring()) {#' +
-                        '<span class="k-icon k-i-refresh"></span>' +
+                        '<span class="k-icon k-i-reload"></span>' +
                     '# } #' +
                 '</span>' +
                 '{0}' +
                 '<span class="k-event-actions">' +
                     '#if (showDelete) {#' +
-                        '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-si-close"></span></a>' +
+                        '<a href="\\#" class="k-link k-event-delete"><span class="k-icon k-i-close"></span></a>' +
                     '#}#' +
                 '</span>' +
                 '<span class="k-event-top-actions">' +
                     '# if(data.tail || data.middle) {#' +
-                    '<span class="k-icon k-i-arrow-n"></span>' +
+                    '<span class="k-icon k-i-arrow-60-up"></span>' +
                     '# } #' +
                 '</span>' +
                 '<span class="k-event-bottom-actions">' +
                     '# if(data.head || data.middle) {#' +
-                        '<span class="k-icon k-i-arrow-s"></span>' +
+                        '<span class="k-icon k-i-arrow-60-down"></span>' +
                     '# } #' +
                 '</span>' +
                 '# if(resizable && !data.tail && !data.middle) {#' +
@@ -785,7 +785,7 @@ var __meta__ = { // jshint ignore:line
 
         _mouseEditable: function() {
             var that = this;
-            that.element.on("click" + NS, ".k-event a:has(.k-si-close)", function(e) {
+            that.element.on("click" + NS, ".k-event a:has(.k-i-close)", function(e) {
                 that.trigger("remove", { uid: $(this).closest(".k-event").attr(kendo.attr("uid")) });
                 e.preventDefault();
             });

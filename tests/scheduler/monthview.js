@@ -270,11 +270,11 @@
         var firstEvent = view.content.find(".k-event:first");
         var secondEvent = view.content.find(".k-event:last");
 
-        ok(!firstEvent.find(".k-event-actions:first .k-i-arrow-w").length);
-        equal(firstEvent.find(".k-event-actions:last .k-i-arrow-e").length, 1);
+        ok(!firstEvent.find(".k-event-actions:first .k-i-arrow-60-left").length);
+        equal(firstEvent.find(".k-event-actions:last .k-i-arrow-60-right").length, 1);
 
-        equal(secondEvent.find(".k-event-actions:first .k-i-arrow-w").length, 1);
-        equal(secondEvent.find(".k-event-actions:last .k-i-arrow-e").length, 0);
+        equal(secondEvent.find(".k-event-actions:first .k-i-arrow-60-left").length, 1);
+        equal(secondEvent.find(".k-event-actions:last .k-i-arrow-60-right").length, 0);
     });
 
     test("event on multiple rows has arrows added", function() {
@@ -288,14 +288,14 @@
         var secondEvent = view.content.find(".k-event:eq(1)");
         var lastEvent = view.content.find(".k-event:last");
 
-        ok(!firstEvent.find(".k-event-actions:first .k-i-arrow-w").length);
-        equal(firstEvent.find(".k-event-actions:last .k-i-arrow-e").length, 1);
+        ok(!firstEvent.find(".k-event-actions:first .k-i-arrow-60-left").length);
+        equal(firstEvent.find(".k-event-actions:last .k-i-arrow-60-right").length, 1);
 
-        equal(secondEvent.find(".k-event-actions:first .k-i-arrow-w").length, 1);
-        equal(secondEvent.find(".k-event-actions:last .k-i-arrow-e").length, 1);
+        equal(secondEvent.find(".k-event-actions:first .k-i-arrow-60-left").length, 1);
+        equal(secondEvent.find(".k-event-actions:last .k-i-arrow-60-right").length, 1);
 
-        equal(lastEvent.find(".k-event-actions:first .k-i-arrow-w").length, 1);
-        ok(!lastEvent.find(".k-event-actions:last .k-i-arrow-e").length);
+        equal(lastEvent.find(".k-event-actions:first .k-i-arrow-60-left").length, 1);
+        ok(!lastEvent.find(".k-event-actions:last .k-i-arrow-60-right").length);
     });
 
     test("event ending after the endDate has arrows added", function() {
@@ -309,8 +309,8 @@
 
         ok(firstEvent.length);
 
-        ok(!firstEvent.find(".k-event-actions:first .k-i-arrow-w").length);
-        equal(firstEvent.find(".k-event-actions:last .k-i-arrow-e").length, 1);
+        ok(!firstEvent.find(".k-event-actions:first .k-i-arrow-60-left").length);
+        equal(firstEvent.find(".k-event-actions:last .k-i-arrow-60-right").length, 1);
    });
 
     test("event start after the start of the week and ending after the endDate has arrows added", function() {
@@ -322,8 +322,8 @@
 
         var firstEvent = view.content.find(".k-event:first");
 
-        ok(!firstEvent.find(".k-event-actions:first .k-i-arrow-w").length);
-        equal(firstEvent.find(".k-event-actions:last .k-i-arrow-e").length, 1);
+        ok(!firstEvent.find(".k-event-actions:first .k-i-arrow-60-left").length);
+        equal(firstEvent.find(".k-event-actions:last .k-i-arrow-60-right").length, 1);
    });
 
    test("event starting on a last week start and ending after the endDate", function() {
@@ -402,7 +402,7 @@
             new kendo.data.SchedulerEvent({ start: new Date(2013, 1, 5), end: new Date(2013, 1, 5), title: "day event", recurrenceRule: "FREQ=DAILY" })
         ]);
 
-        equal(view.content.find(".k-event .k-i-refresh").length, 1);
+        equal(view.content.find(".k-event .k-i-reload").length, 1);
     });
 
     test("refresh icon is shown if month event has recurrenceId", function() {
@@ -412,7 +412,7 @@
             new kendo.data.SchedulerEvent({ start: new Date(2013, 1, 5), end: new Date(2013, 1, 5), title: "day event", recurrenceId: "1" })
         ]);
 
-        equal(view.content.find(".k-event .k-i-refresh").length, 1);
+        equal(view.content.find(".k-event .k-i-reload").length, 1);
     });
 
     test("exception icon is shown if month event is exception recurring event", function() {
@@ -428,8 +428,8 @@
             })
         ]);
 
-        equal(view.content.find(".k-event .k-i-exception").length, 1);
-        equal(view.content.find(".k-event .k-i-refresh").length, 0);
+        equal(view.content.find(".k-event .k-i-warning").length, 1);
+        equal(view.content.find(".k-event .k-i-reload").length, 0);
     });
 
     test("event in the first slot is correctly positioned", function() {

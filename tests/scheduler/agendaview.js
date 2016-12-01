@@ -406,7 +406,7 @@
 
         var table = agenda.element.find(".k-scheduler-table");
 
-        equal(table.find(".k-si-close").length, 0);
+        equal(table.find(".k-i-close").length, 0);
     });
 
     test("agenda view WTF", function() {
@@ -443,7 +443,7 @@
 
         var table = agenda.element.find(".k-scheduler-table");
 
-        table.find(".k-si-close").click();
+        table.find(".k-i-close").click();
     });
 
     test("agenda wraps time cells in a div", function() {
@@ -478,7 +478,7 @@
         var timeCell = table.find("td.k-scheduler-timecolumn:first");
 
         equal(timeCell.find(".k-icon").length, 1);
-        equal(timeCell.find(".k-i-arrow-e").length, 1);
+        equal(timeCell.find(".k-i-arrow-60-right").length, 1);
     });
 
     test("agenda renders left icon for events which start on the previous day", function() {
@@ -496,7 +496,7 @@
         var timeCell = table.find("td.k-scheduler-timecolumn:last");
 
         equal(timeCell.find(".k-icon").length, 1);
-        equal(timeCell.find(".k-i-arrow-w").length, 1);
+        equal(timeCell.find(".k-i-arrow-60-left").length, 1);
     });
 
     test("agenda renders left and right icon for events which start on the previous day and end on the next day", function() {
@@ -514,8 +514,8 @@
         var timeCell = table.find("td.k-scheduler-timecolumn").eq(1);
 
         equal(timeCell.find(".k-icon").length, 2);
-        equal(timeCell.find(".k-i-arrow-w").length, 1);
-        equal(timeCell.find(".k-i-arrow-e").length, 1);
+        equal(timeCell.find(".k-i-arrow-60-left").length, 1);
+        equal(timeCell.find(".k-i-arrow-60-right").length, 1);
     });
 
     test("setDate makes endDate a week away from startDate", function() {
@@ -556,7 +556,7 @@
 
         var taskCell = table.find(".k-task");
 
-        equal(taskCell.find(".k-i-refresh").length, 1);
+        equal(taskCell.find(".k-i-reload").length, 1);
     });
 
     test("agenda renders refresh icon for event with recurrenceId", function() {
@@ -574,7 +574,7 @@
 
         var taskCell = table.find(".k-task");
 
-        equal(taskCell.find(".k-i-refresh").length, 1);
+        equal(taskCell.find(".k-i-reload").length, 1);
     });
 
     test("agenda renders exception icon for events which are recurring exception", function() {
@@ -594,8 +594,8 @@
 
         var taskCell = table.find(".k-task");
 
-        equal(taskCell.find(".k-i-exception").length, 1);
-        equal(taskCell.find(".k-i-refresh").length, 0);
+        equal(taskCell.find(".k-i-warning").length, 1);
+        equal(taskCell.find(".k-i-reload").length, 0);
     });
 
     test("editable:true allows only deletion of events", function() {
@@ -739,7 +739,7 @@
 
         var table = agenda.element.find(".k-scheduler-table");
 
-        equal(table.find(".k-si-close").length, 0);
+        equal(table.find(".k-i-close").length, 0);
     });
 
     test("agenda renders table with headers only for time and event", function() {
@@ -1033,7 +1033,7 @@
 
         var table = agenda.element.find(".k-scheduler-table").first();
 
-        equal(table.find(".k-si-close").length, 0);
+        equal(table.find(".k-i-close").length, 0);
     });
 
     test("agenda wraps time cells in a div", function() {
@@ -1054,7 +1054,7 @@
         var timeCell = table.find("td.k-scheduler-timecolumn").eq(1);
 
         equal(timeCell.find(".k-icon").length, 1);
-        equal(timeCell.find(".k-i-arrow-e").length, 1);
+        equal(timeCell.find(".k-i-arrow-60-right").length, 1);
     });
 
     test("agenda renders left icon for events which start on the previous day", function() {
@@ -1065,7 +1065,7 @@
         var timeCell = table.find("td.k-scheduler-timecolumn").eq(3);
 
         equal(timeCell.find(".k-icon").length, 1);
-        equal(timeCell.find(".k-i-arrow-w").length, 1);
+        equal(timeCell.find(".k-i-arrow-60-left").length, 1);
     });
 
     test("setDate makes endDate a week away from startDate", function() {

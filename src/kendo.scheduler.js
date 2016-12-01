@@ -91,13 +91,13 @@ var __meta__ = { // jshint ignore:line
         TOOLBARTEMPLATE = kendo.template('<div class="k-floatwrap k-header k-scheduler-toolbar">' +
            '# if (pdf) { #' +
            '<ul class="k-reset k-scheduler-tools">' +
-               '<li><a role="button" href="\\#" class="k-button k-pdf"><span class="k-icon k-i-pdf"></span>${messages.pdf}</a></li>' +
+               '<li><a role="button" href="\\#" class="k-button k-pdf"><span class="k-icon k-i-file-pdf"></span>${messages.pdf}</a></li>' +
            '</ul>' +
            '# } #' +
             '<ul class="k-reset k-scheduler-navigation">' +
                '<li class="k-state-default k-header k-nav-today"><a role="button" href="\\#" class="k-link">${messages.today}</a></li>' +
-               '<li class="k-state-default k-header k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-w"></span></a></li>' +
-               '<li class="k-state-default k-header k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-e"></span></a></li>' +
+               '<li class="k-state-default k-header k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-60-left"></span></a></li>' +
+               '<li class="k-state-default k-header k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-60-right"></span></a></li>' +
                '<li class="k-state-default k-nav-current">' +
                     '<a role="button" href="\\#" class="k-link">' +
                         '<span class="k-icon k-i-calendar"></span>' +
@@ -108,7 +108,7 @@ var __meta__ = { // jshint ignore:line
             '</ul>' +
             '#if(viewsCount === 1){#' +
                 '<a role="button" data-#=ns#name="#=view#" href="\\#" class="k-link k-scheduler-refresh">' +
-                    '<span class="k-icon k-i-refresh"></span>' +
+                    '<span class="k-icon k-i-reload"></span>' +
                 '</a>' +
             '#}else{#' +
                 '<ul class="k-reset k-header k-scheduler-views">' +
@@ -124,7 +124,7 @@ var __meta__ = { // jshint ignore:line
             '</ul>' +
             '#if(viewsCount === 1){#' +
                 '<a role="button" data-#=ns#name="#=view#" href="\\#" class="k-link k-scheduler-refresh">' +
-                    '<span class="k-icon k-i-refresh"></span>' +
+                    '<span class="k-icon k-i-reload"></span>' +
                 '</a>' +
             '#}else{#' +
                 '<ul class="k-reset k-header k-scheduler-views">' +
@@ -136,12 +136,12 @@ var __meta__ = { // jshint ignore:line
             '</div>'+
             '<div class="k-floatwrap k-header k-scheduler-toolbar">' +
                 '<ul class="k-reset k-header k-scheduler-navigation">' +
-                   '<li class="k-state-default k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-w"></span></a></li>' +
+                   '<li class="k-state-default k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-60-left"></span></a></li>' +
                    '<li class="k-state-default k-nav-current">' +
                         '<span class="k-sm-date-format" data-#=ns#bind="text: formattedShortDate"></span>' +
                         '<span class="k-lg-date-format" data-#=ns#bind="text: formattedDate"></span>' +
                     '</li>' +
-                   '<li class="k-state-default k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-e"></span></a></li>' +
+                   '<li class="k-state-default k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-60-right"></span></a></li>' +
                 '</ul>' +
             '</div>'),
         MOBILEDATERANGEEDITOR = function(container, options) {
@@ -799,7 +799,7 @@ var __meta__ = { // jshint ignore:line
         },
         destroy: {
             text: "Delete",
-            imageClass: "k-i-delete",
+            imageClass: "k-i-close",
             className: "k-primary k-scheduler-delete",
             iconClass: "k-icon"
         }

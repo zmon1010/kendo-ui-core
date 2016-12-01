@@ -51,7 +51,7 @@
 
         setTimeout(function() {
             var uid = dataSource.at(0).uid;
-            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            scheduler.wrapper.find(".k-event a:has(.k-i-close)").click();
             start()
             equal(remove.calls("remove"), 1);
             equal(remove.args("remove")[0].uid, uid);
@@ -67,7 +67,7 @@
             dataSource = scheduler.dataSource,
             remove = stub(dataSource, "remove");
         setTimeout(function() {
-            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            scheduler.wrapper.find(".k-event a:has(.k-i-close)").click();
             start();
             equal(remove.calls("remove"), 0);
         });
@@ -78,7 +78,7 @@
             dataSource = scheduler.dataSource,
             remove = stub(dataSource, "remove");
         setTimeout(function() {
-            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            scheduler.wrapper.find(".k-event a:has(.k-i-close)").click();
             start();
             equal(remove.calls("remove"), 0);
         });
@@ -90,7 +90,7 @@
 
         var sync = stub(dataSource, "sync");
         setTimeout(function() {
-            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            scheduler.wrapper.find(".k-event a:has(.k-i-close)").click();
 
             start();
             equal(sync.calls("sync"), 1);
@@ -194,7 +194,7 @@
         scheduler.view("day");
         setTimeout(function() {
             start();
-            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            scheduler.wrapper.find(".k-event a:has(.k-i-close)").click();
 
             equal(removeEvent.calls("removeEvent"), 1);
         });
@@ -209,7 +209,7 @@
 
         setTimeout(function() {
             start();
-            scheduler.wrapper.find(".k-event a:has(.k-si-close)").click();
+            scheduler.wrapper.find(".k-event a:has(.k-i-close)").click();
             equal(removeEvent.calls("removeEvent"), 1);
         });
         //  }

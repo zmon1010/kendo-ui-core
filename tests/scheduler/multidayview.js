@@ -875,8 +875,8 @@
 
         view.render(events);
 
-        equal(view.content.find(".k-event a>.k-si-close").length, 1);
-        equal(view.datesHeader.find(".k-event a>.k-si-close").length, 1);
+        equal(view.content.find(".k-event a>.k-i-close").length, 1);
+        equal(view.datesHeader.find(".k-event a>.k-i-close").length, 1);
     });
 
     test("close button is not rendered if editable.destroy is false", function() {
@@ -895,8 +895,8 @@
 
         view.render(events);
 
-        ok(!view.content.find(".k-event a>.k-si-close").length);
-        ok(!view.datesHeader.find(".k-event a>.k-si-close").length);
+        ok(!view.content.find(".k-event a>.k-i-close").length);
+        ok(!view.datesHeader.find(".k-event a>.k-i-close").length);
     });
 
     test("close button is rendered if set as editable", function() {
@@ -914,7 +914,7 @@
 
         view.render(events);
 
-        equal(view.datesHeader.find(".k-event a:has(.k-si-close)").length, 1);
+        equal(view.datesHeader.find(".k-event a:has(.k-i-close)").length, 1);
     });
 
     test("close button is not rendered if set to not editable", function() {
@@ -933,8 +933,8 @@
 
         view.render(events);
 
-        ok(!view.content.find(".k-event a>.k-si-close").length);
-        ok(!view.datesHeader.find(".k-event a>.k-si-close").length);
+        ok(!view.content.find(".k-event a>.k-i-close").length);
+        ok(!view.datesHeader.find(".k-event a>.k-i-close").length);
     });
 
     test("clicking on close button triggers destroy event", 1, function() {
@@ -955,7 +955,7 @@
 
         view.render(events);
 
-        view.content.find(".k-event a:has(.k-si-close)").click();
+        view.content.find(".k-event a:has(.k-i-close)").click();
     });
 
     test("double clicking an all day event triggers edit event", 1, function() {
@@ -1047,8 +1047,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date("2013/5/30"), end: new Date("2013/6/15") })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-arrow-w").length, 1);
-        equal(view.datesHeader.find(".k-event .k-i-arrow-e").length, 0);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-left").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-right").length, 0);
     });
 
     test("west arrow is shown if multiday event starts before view's start date and ends at end of the view", function() {
@@ -1056,8 +1056,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date("2013/5/30"), end: new Date("2013/6/16") })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-arrow-w").length, 1);
-        equal(view.datesHeader.find(".k-event .k-i-arrow-e").length, 0);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-left").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-right").length, 0);
     });
 
     test("east arrow is not shown if all day event ends at the end of the view", function() {
@@ -1065,8 +1065,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date("2013/6/12"), end: new Date("2013/6/15 10:00"), isAllDay: true })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-arrow-w").length, 0);
-        equal(view.datesHeader.find(".k-event .k-i-arrow-e").length, 0);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-left").length, 0);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-right").length, 0);
     });
 
     test("west and east arrow is shown if all day event starts before view's start date and ends at end of the view", function() {
@@ -1074,8 +1074,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date("2013/5/30"), end: new Date("2013/6/16"), isAllDay: true })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-arrow-w").length, 1);
-        equal(view.datesHeader.find(".k-event .k-i-arrow-e").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-left").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-right").length, 1);
     });
 
     test("arrow is shown if multiday event starts before view's start date", function() {
@@ -1083,7 +1083,7 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date(2013, 1, 1), end: new Date(2013, 1, 2), isAllDay: true })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-arrow-w").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-left").length, 1);
     });
 
     test("arrow is shown if multiday event ends after view's end date", function() {
@@ -1091,7 +1091,7 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date(2013, 1, 2), end: new Date(2013, 1, 4) })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-arrow-e").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-right").length, 1);
     });
 
     test("arrow is shown if multiday event starts before view's start date and ends after view's end date", function() {
@@ -1099,8 +1099,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date(2013, 1, 1), end: new Date(2013, 1, 4) })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-arrow-e").length, 1);
-        equal(view.datesHeader.find(".k-event .k-i-arrow-w").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-right").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-arrow-60-left").length, 1);
     });
 
     test("arrow is shown if event starts before view's start time", function() {
@@ -1108,8 +1108,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date(2013, 1, 2, 9, 0, 0), end: new Date(2013, 1, 2, 11, 0, 0) })]);
 
-        equal(view.content.find(".k-event .k-i-arrow-n").length, 1);
-        ok(!view.content.find(".k-event .k-i-arrow-s").length);
+        equal(view.content.find(".k-event .k-i-arrow-60-up").length, 1);
+        ok(!view.content.find(".k-event .k-i-arrow-60-down").length);
     });
 
     test("arrow is shown if event ends after view's end time", function() {
@@ -1117,8 +1117,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date(2013, 1, 2, 9, 0, 0), end: new Date(2013, 1, 2, 11, 0, 0) })]);
 
-        equal(view.content.find(".k-event .k-i-arrow-s").length, 1);
-        ok(!view.content.find(".k-event .k-i-arrow-n").length);
+        equal(view.content.find(".k-event .k-i-arrow-60-down").length, 1);
+        ok(!view.content.find(".k-event .k-i-arrow-60-up").length);
     });
 
     test("arrows are shown if event starts before and ends after view's start, end time", function() {
@@ -1126,8 +1126,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date(2013, 1, 2, 9, 0, 0), end: new Date(2013, 1, 2, 12, 0, 0) })]);
 
-        equal(view.content.find(".k-event .k-i-arrow-s").length, 1);
-        equal(view.content.find(".k-event .k-i-arrow-n").length, 1);
+        equal(view.content.find(".k-event .k-i-arrow-60-down").length, 1);
+        equal(view.content.find(".k-event .k-i-arrow-60-up").length, 1);
     });
 
     test("arrows are not shown if event ends in the midnight", function() {
@@ -1135,8 +1135,8 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date(2013, 1, 2, 9, 0, 0), end: new Date(2013, 1, 3, 0, 0, 0) })]);
 
-        equal(view.content.find(".k-event .k-i-arrow-s").length, 0);
-        equal(view.content.find(".k-event .k-i-arrow-n").length, 0);
+        equal(view.content.find(".k-event .k-i-arrow-60-down").length, 0);
+        equal(view.content.find(".k-event .k-i-arrow-60-up").length, 0);
     });
 
     test("refresh icon is shown if multiday event has recurring rule", function() {
@@ -1144,7 +1144,7 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "", start: new Date(2013, 1, 1), end: new Date(2013, 1, 2), isAllDay: true, recurrenceRule: "FREQ=DAILY" })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-refresh").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-reload").length, 1);
     });
 
     test("refresh icon is shown if multiday event has recurrenceId", function() {
@@ -1152,7 +1152,7 @@
 
         view.render([new SchedulerEvent({ uid: "foo", title: "",  start: new Date(2013, 1, 1), end: new Date(2013, 1, 2), isAllDay: true, recurrenceId: "1" })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-refresh").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-reload").length, 1);
     });
 
     test("refresh icon is shown if multiday event is recurring exception event", function() {
@@ -1166,8 +1166,8 @@
             recurrenceId: "1"
         })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-exception").length, 1);
-        equal(view.datesHeader.find(".k-event .k-i-refresh").length, 0);
+        equal(view.datesHeader.find(".k-event .k-i-warning").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-reload").length, 0);
     });
 
     test("same day event which starts and ends before the startTime is not rendered when week view", function() {
@@ -1198,7 +1198,7 @@
             id: "2"
         })]);
 
-        equal(view.element.find(".k-i-arrow-s").length, 0);
+        equal(view.element.find(".k-i-arrow-60-down").length, 0);
     });
 
     test("workDayStart is used when rendered in work mode", function() {
@@ -2223,8 +2223,8 @@
 
         view.render(events);
 
-        equal(view.content.find(".k-event a:has(.k-si-close)").css("display"), "none");
-        equal(view.datesHeader.find(".k-event a:has(.k-si-close)").css("display"), "none");
+        equal(view.content.find(".k-event a:has(.k-i-close)").css("display"), "none");
+        equal(view.datesHeader.find(".k-event a:has(.k-i-close)").css("display"), "none");
     });
 
     test("double clicking a cell triggers add event", 2, function() {

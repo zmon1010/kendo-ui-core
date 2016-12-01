@@ -80,7 +80,7 @@
 
         drag(scheduler, handle, slots.eq(0).offset());
 
-        equal($(".k-event-drag-hint .k-i-arrow-n").length, 1);
+        equal($(".k-event-drag-hint .k-i-arrow-60-up").length, 1);
     });
 
     test("hint shows west icon when start time is before the start of the view", function() {
@@ -101,7 +101,7 @@
 
         drag(scheduler, handle, slots.eq(0).offset());
 
-        equal($(".k-event-drag-hint .k-i-arrow-w").length, 1);
+        equal($(".k-event-drag-hint .k-i-arrow-60-left").length, 1);
     });
 
     test("hint shows east icon when end time is after the end of the view", function() {
@@ -122,7 +122,7 @@
 
         drag(scheduler, handle, slots.eq(6).offset());
 
-        equal($(".k-event-drag-hint .k-i-arrow-e").length, 1);
+        equal($(".k-event-drag-hint .k-i-arrow-60-right").length, 1);
     });
 
     test("hint shows south icon when end time is after the end of the view", function() {
@@ -143,7 +143,7 @@
 
         drag(scheduler, handle, slots.last().offset());
 
-        equal($(".k-event-drag-hint .k-i-arrow-s").length, 1);
+        equal($(".k-event-drag-hint .k-i-arrow-60-down").length, 1);
     });
 
     test("hint shows west icon when the start time is before the start of the month view", function() {
@@ -163,7 +163,7 @@
 
         drag(scheduler, handle, slots.first().offset());
 
-        equal($(".k-event-drag-hint .k-i-arrow-w").length, 1);
+        equal($(".k-event-drag-hint .k-i-arrow-60-left").length, 1);
     });
 
     test("move hint in month view is two slots long when the event is two days long", function() {
@@ -426,7 +426,7 @@
 
         drag(scheduler, handle, slots.last().offset());
 
-        equal($(".k-event-drag-hint .k-i-arrow-e").length, 1);
+        equal($(".k-event-drag-hint .k-i-arrow-60-right").length, 1);
     });
 
     test("moving event in day view changes its start time", function() {
