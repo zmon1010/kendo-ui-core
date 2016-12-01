@@ -18,11 +18,11 @@
             READY = "ready",
             TIMECHANGE = "timeChange",
             VOLUMECHANGE = "volumeChange",
-            FULLSCREEN_ENTER = "k-i-fullscreen-enter",
-            FULLSCREEN_EXIT = "k-i-fullscreen-exit",
-            MUTE = "k-i-volume-mute",
-            LOW_VOLUME = "k-i-volume-low",
-            HIGH_VOLUME = "k-i-volume-high",
+            FULLSCREEN_ENTER = "k-i-full-screen",
+            FULLSCREEN_EXIT = "k-i-full-screen-exit",
+            MUTE = "k-i-volume-off",
+            LOW_VOLUME = "k-i-volume-down",
+            HIGH_VOLUME = "k-i-volume-up",
             VIDEO_QUALITY = "k-mediaplayer-quality",
             STATE_PLAY = "k-i-play",
             STATE_PAUSE = "k-i-pause",
@@ -264,7 +264,7 @@
                             {
                                 type: "button",
                                 attributes: { "class": "k-play-button" },
-                                spriteCssClass: "k-icon k-font-icon k-i-play"
+                                spriteCssClass: "k-icon k-i-play"
                             },
                             {
                                 template: templates.toolBarTime,
@@ -277,7 +277,7 @@
                             {
                                 type: "button",
                                 attributes: { "class": "k-volume-button" },
-                                spriteCssClass: "k-icon k-font-icon k-i-volume-high"
+                                spriteCssClass: "k-icon k-i-volume-up"
                             },
                             {
                                 template: templates.volumeSlider,
@@ -290,7 +290,7 @@
                             {
                                 type: "button",
                                 attributes: { "class": "k-fullscreen-button" },
-                                spriteCssClass: "k-icon k-font-icon k-i-fullscreen-enter"
+                                spriteCssClass: "k-icon k-i-full-screen"
                             }
                         ]
                     });
@@ -353,9 +353,9 @@
 
                     this._dropDown.wrapper.addClass("k-button k-button-bare");
                     this._dropDown.wrapper.attr("title", this.options.messages.quality).hide();
-                    this._dropDown.wrapper.find("span.k-i-arrow-s")
-                        .removeClass('k-i-arrow-s')
-                        .addClass('k-font-icon k-i-HD');
+                    this._dropDown.wrapper.find("span.k-i-arrow-60-down")
+                        .removeClass('k-i-arrow-60-down')
+                        .addClass('k-icon k-i-hd');
                     this._dropDown.list.addClass("k-quality-list");
                 }
             },

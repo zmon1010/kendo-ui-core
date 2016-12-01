@@ -55,9 +55,8 @@
         ok(mediaPlayer._volumeButton.children().is('[class*="k-i-volume"]'));
     });
 
-    //TODO: Test should be fixed after all font-icons cherrypicks are completed
-    skip("adds dropdown template to toolbar", function () {
-        ok(mediaPlayer.dropdown().span.siblings().children().is(".k-i-HD"));
+    test("adds dropdown template to toolbar", function () {
+        ok(mediaPlayer.dropdown().span.siblings().children().is(".k-i-hd"));
     });
 
     test("adds dropdown widget to toolbar", function () {
@@ -69,7 +68,7 @@
     });
 
     test("adds fullscreen toolbar button", function () {
-        ok(mediaPlayer._fullscreenButton.children().is('[class*="k-i-fullscreen"]'));
+        ok(mediaPlayer._fullscreenButton.children().is('[class*="k-i-full-screen"]'));
     });
 
     test("adds kendo toolbar", function () { 
