@@ -91,7 +91,7 @@ var __meta__ = { // jshint ignore:line
         var defaultMobileTemplate =
             '<div data-#=ns#role="view" data-#=ns#init-widgets="false" data-#=ns#use-native-scrolling="true" class="k-grid-filter-menu">'+
                 '<div data-#=ns#role="header" class="k-header">'+
-                    '<button class="k-button k-cancel">#=messages.cancel#</button>'+
+                    '<button class="k-button k-i-cancel">#=messages.cancel#</button>'+
                     '#=title#'+
                     '<button type="submit" class="k-button k-submit">#=messages.filter#</button>'+
                 '</div>'+
@@ -157,7 +157,7 @@ var __meta__ = { // jshint ignore:line
     var booleanMobileTemplate =
             '<div data-#=ns#role="view" data-#=ns#init-widgets="false" data-#=ns#use-native-scrolling="true" class="k-grid-filter-menu">'+
                 '<div data-#=ns#role="header" class="k-header">'+
-                    '<button class="k-button k-cancel">#=messages.cancel#</button>'+
+                    '<button class="k-button k-i-cancel">#=messages.cancel#</button>'+
                     '#=title#'+
                     '<button type="submit" class="k-button k-submit">#=messages.filter#</button>'+
                 '</div>'+
@@ -429,7 +429,7 @@ var __meta__ = { // jshint ignore:line
                     that.form.submit();
                     e.preventDefault();
                 })
-                .on("click", ".k-cancel", function(e) {
+                .on("click", ".k-i-cancel", function(e) {
                     that._closeForm();
                     e.preventDefault();
                 });
@@ -809,7 +809,7 @@ var __meta__ = { // jshint ignore:line
     var multiCkeckMobileTemplate =
         '<div data-#=ns#role="view" data-#=ns#init-widgets="false" class="k-grid-filter-menu">' +
             '<div data-#=ns#role="header" class="k-header">' +
-                '<button class="k-button k-cancel">#=messages.cancel#</button>' +
+                '<button class="k-button k-i-cancel">#=messages.cancel#</button>' +
                 '#=title#' +
                 '<button type="submit" class="k-button k-submit">#=messages.filter#</button>' +
             '</div>' +
@@ -817,7 +817,7 @@ var __meta__ = { // jshint ignore:line
                 '#if(search){#' +
                 "<div class='k-textbox k-space-right'>" +
                     "<input placeholder='#=messages.search#'/>" +
-                    "<span class='k-icon k-font-icon k-i-search' />" +
+                    "<span class='k-icon k-i-zoom' />" +
                     "</div>" +
                 '#}#' +
                 '<ul class="k-multicheck-wrap"></ul>' +
@@ -992,7 +992,7 @@ var __meta__ = { // jshint ignore:line
                 if (options.search) {
                     html += "<div class='k-textbox k-space-right'>" +
                     "<input placeholder='" + options.messages.search + "'/>" +
-                    "<span class='k-icon k-font-icon k-i-search' />" +
+                    "<span class='k-icon k-i-zoom' />" +
                     "</div>";
                 }
                 html += "<ul class='k-reset k-multicheck-wrap'></ul>";
@@ -1026,7 +1026,7 @@ var __meta__ = { // jshint ignore:line
                         that.form.submit();
                         e.preventDefault();
                     })
-                    .on("click", ".k-cancel", function (e) {
+                    .on("click", ".k-i-cancel", function (e) {
                         that._closeForm();
                         e.preventDefault();
                     });
