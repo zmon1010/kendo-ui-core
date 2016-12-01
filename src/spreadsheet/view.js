@@ -976,18 +976,37 @@
             }
         },
 
-        showError: function(options, callback) {
+        showError: function(options, reopenEditor) {
             var errorMessages = this.options.messages.errors;
+
+            var focusButton = function(e) {
+                var cont = e.sender.dialog().element;
+                cont.find(".k-button:first").focus();
+                cont.find(".k-button, input").on("keydown", function(ev){
+                    if (ev.keyCode == kendo.keys.ESC) {
+                        e.sender.close();
+                    }
+                });
+            };
+
+            var onClose = function(e) {
+                var dlg = e.sender;
+                this.selectClipBoardContents();
+                if (dlg._retry && reopenEditor) {
+                    reopenEditor();
+                }
+            }.bind(this);
 
             if (kendo.spreadsheet.dialogs.registered(options.type)) {
                 var dialogOptions = {
-                    close: callback
+                    close: onClose
                 };
 
                 if (options.type === "validationError") {
                     dialogOptions = $.extend(dialogOptions, {
                         title: options.title || "Error",
-                        text: options.body ? options.body : errorMessages[options.type]
+                        text: options.body ? options.body : errorMessages[options.type],
+                        activate: focusButton
                     });
                 }
 
@@ -996,13 +1015,8 @@
                 this.openDialog("message", {
                     title : options.title || "Error",
                     text  : options.body ? options.body : errorMessages[options.type],
-                    activate: function(e) {
-                        e.sender.dialog().element
-                            .find(".k-button")
-                            .focus();
-
-                    }.bind(this),
-                    close: callback
+                    activate: focusButton,
+                    close: onClose
                 });
             }
         },

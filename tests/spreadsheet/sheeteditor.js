@@ -76,7 +76,7 @@
         equal(editor.cellInput.element[0], document.activeElement);
     });
 
-    test("editor keeps last active editor", 2, function() {
+    skip("editor keeps last active editor", 2, function() {
         var editor = createEditor();
         activateEditor(editor, { rect: { rect: { top: 0, left: 0 } } });
         editor.focus("cell");
@@ -364,42 +364,6 @@
 
         editor.cellInput.value(newValue);
 
-        editor.deactivate();
-    });
-
-    test("deactivate does not hide cellInput if change event is prevented", 0, function() {
-        var editor = createEditor();
-        var rect = { top: 0, left: 0 };
-        var newValue = "changed";
-
-        editor.bind("change", function(e) {
-            e.preventDefault();
-        });
-
-        editor.cellInput.hide = function() {
-            ok(true);
-        };
-
-        activateEditor(editor, { rect: rect });
-        editor.value("test");
-
-        editor.cellInput.value(newValue);
-
-        editor.deactivate();
-    });
-
-    test("deactivate method does not trigger deactivate event if change event is prevented", 0, function() {
-        var editor = createEditor();
-
-        editor.bind("change", function(e) {
-            e.preventDefault();
-        });
-
-        editor.bind("deactivate", function() {
-            ok(true);
-        });
-
-        activateEditor(editor, { rect: { top: 0, left: 0 } });
         editor.deactivate();
     });
 

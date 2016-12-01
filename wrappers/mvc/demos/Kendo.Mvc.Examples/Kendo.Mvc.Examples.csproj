@@ -252,6 +252,7 @@
     <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\Gantt\Selected_Date_and_RangeController.cs" />
     <Compile Include="Controllers\Gantt\Task_TemplateController.cs" />
+    <Compile Include="Controllers\Grid\ServerExportController.cs" />
     <Compile Include="Controllers\ListView\Remote_Data_Binding.cs" />
     <Compile Include="Controllers\MediaPlayer\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\MediaPlayer\ApiController.cs" />
@@ -2976,6 +2977,7 @@
     <Content Include="Views\spreadstreamprocessing\index.cshtml" />
     <Content Include="Views\financial\stock_history.cshtml" />
     <Content Include="Views\editor\import_exportas.cshtml" />
+    <Content Include="Views\grid\server_export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

@@ -43,9 +43,11 @@ See &lt;a href=&quot;https://github.com/telerik/kendo/wiki/Release-Checklist#int
       <connectionRetryLimit>5</connectionRetryLimit>
       <preventRemoteBuildQueue>true</preventRemoteBuildQueue>
       <blockBuildUntilComplete>true</blockBuildUntilComplete>
-      <parameters>SkipUploadOnUAT=true,SkipUploadOnLIVE=false</parameters>
+      <parameters>SkipUploadOnUAT=true
+SkipUploadOnLIVE=false</parameters>
       <parameterList>
-        <string>SkipUploadOnUAT=true,SkipUploadOnLIVE=false</string>
+        <string>SkipUploadOnUAT=true</string>
+        <string>SkipUploadOnLIVE=false</string>
       </parameterList>
       <overrideAuth>false</overrideAuth>
       <auth>

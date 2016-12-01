@@ -82,7 +82,7 @@
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Staging-Demos,ASP.NET-MVC-Core-Demos</childProjects>
+      <childProjects>Staging-Demos</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

@@ -15,7 +15,7 @@ def mvc_export_dll_for(configuration)
             .pathmap(KENDO_MVC_EXPORT_SRC_ROOT + "/#{configuration}/%f")
 end
 
-KENDO_MVC_EXPORT_REDIST_ROOT = ARCHIVE_ROOT + '/Kendo.Mvc.Export'
+KENDO_MVC_EXPORT_REDIST_ROOT = ARCHIVE_ROOT + '/ExportExtensions'
 KENDO_MVC_EXPORT_REDIST_NET40 = mvc_export_dll_for("Release")
 KENDO_MVC_EXPORT_REDIST_NET40_TRIAL = mvc_export_dll_for("Release-Trial")
 
@@ -24,26 +24,38 @@ namespace :kendo_mvc_export do
     task :binaries do
         src = KENDO_MVC_EXPORT_REDIST_ROOT
         dest = KENDO_MVC_EXPORT_SRC_ROOT
+        dpl = SPREADSHEET_REDIST_ROOT
+        dpl_files = FileList[*KENDO_MVC_EXPORT_DPL_FILES]
         demos_dest = File.join(MVC_DEMOS_ROOT, 'bin/')
+        dlls = "*.{dll,xml}"
 
         if PLATFORM =~ /linux|darwin/
             [ 'Release', 'Release-Trial' ].each do |build|
 				build_dest = "#{dest}/#{build}"
+                dpl_path = File.join(dpl, build)
+                dpl_files = dpl_files.pathmap(dpl_path + "/%f")
 
                 mkdir_p build_dest
-                system "cp -rf #{src}/#{build}/*.{dll,xml} #{build_dest}"
+                cp Dir.glob(File.join(src, dlls)), build_dest, :verbose => VERBOSE
+                cp dpl_files, build_dest, :verbose => VERBOSE
             end
 
-            system "cp -rf #{dest}/Release/*.{dll,xml} #{demos_dest}"
+            cp Dir.glob(File.join(dest, "Release", dlls)), demos_dest, :verbose => VERBOSE
         else
             src = src.gsub('/', '\\')
             dest = dest.gsub('/', '\\')
+			dpl.gsub!('/', '\\')
             demos_dest = demos_dest.gsub('/', '\\')
 
             [ 'Release', 'Release-Trial' ].each do |build|
+                target = "#{dest}\\#{build}\\"
 				["dll", "xml"].each do |ext|
-                	system "xcopy #{src}\\#{build}\\*.#{ext} #{dest}\\#{build}\\ /y"
+                	system "xcopy #{src}\\*.#{ext} #{target} /y"
+
 				end
+                KENDO_MVC_EXPORT_DPL_FILES.each do |file|
+                    system "xcopy #{dpl}\\#{build}\\#{file} #{target} /y"
+                end
             end
 
 			["dll", "xml"].each do |ext|

@@ -65,6 +65,12 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
+      <command>node -v
+npm -v
+npm i
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
       <command>export PATH=$PATH::./node_modules/.bin:../node_modules/.bin:$HOME/AppData/Roaming/npm
 export REDIST_PATH=//telerik.com/distributions/DailyBuilds/KendoUI/BUILDS/Production
 ./build/run-wrappers-build-task mvc-core-demos:pack
@@ -72,7 +78,8 @@ export REDIST_PATH=//telerik.com/distributions/DailyBuilds/KendoUI/BUILDS/Produc
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>git reset --hard</command>
+      <command>git reset --hard
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

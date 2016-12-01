@@ -24,12 +24,12 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>git@gitlab.telerik.com:kendo/angular-aot.git</url>
+        <url>git@gitlab.telerik.com:kendo/angular-universal-rendering.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>master</name>
+        <name>*/master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -53,10 +53,10 @@
 npm install</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>npm run process</command>
+      <command>npm run prestart</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>rsync -a ./ /var/www/angular-aot --exclude ./node_modules/</command>
+      <command>rsync -a ./ /var/www/angular-universal --exclude ./node_modules/</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>git clean -xdf</command>

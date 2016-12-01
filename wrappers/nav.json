@@ -1382,6 +1382,16 @@
                 }
             },
             {
+                "text": "Server Export",
+                "url": "grid/server-export",
+                "packages": [
+                    "!mvc-core"
+                ],
+                "title": {
+                    "aspnet-mvc": "Server Export in Telerik ASP.NET MVC Grid"
+                }
+            },
+            {
                 "text": "Batch editing",
                 "url": "grid/editing",
                 "title": {

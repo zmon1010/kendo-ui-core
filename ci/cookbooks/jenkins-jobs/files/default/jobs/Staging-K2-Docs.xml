@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Deploy the react/angular docs to &lt;a href=&quot;/ui-for-angular/&quot;&gt;staging server&lt;/a&gt;</description>
+  <description>&lt;p&gt;Deploy the react/angular docs to &lt;a href=&quot;/kendo-angular-ui/&quot;&gt;staging server&lt;/a&gt;&lt;/p&gt;&#xd;
+&#xd;
+&lt;p&gt;To deploy to the live site, run the &lt;a href=&quot;../Deploy-K2-Docs-Production/&quot;&gt;Deploy-K2-Docs-Production job&lt;/a&gt;&lt;/p&gt;</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>7</daysToKeep>
     <numToKeep>20</numToKeep>
@@ -34,6 +36,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <url>git@github.com:telerik/k2-site.git</url>
+        <credentialsId>137befcf-c575-405d-a2f8-8ab9d4006e6a</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -51,7 +54,7 @@
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
     </extensions>
   </scm>
-  <assignedNode>slave</assignedNode>
+  <assignedNode>master</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -68,20 +71,13 @@ H 8-20/2 * * 1-5</spec>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#ruby2.2 /usr/local/bin/bundle --without development --path ~/gems2.2
+      <command>export GEM_PATH=$HOME/gems2.2
 
-export GEM_PATH=$HOME/gems2.2
-ruby2.2 /usr/local/bin/bundle --without development --path ~/gems2.2
+# deploy to staging
+./_build/deploy-staging.sh _site-angular/ kendobuild.telerik.com:/var/www/kendo-angular-ui
 
-# build angular docs
-ruby2.2 /usr/local/bin/bundle exec jekyll build --config _config.yml,_staging-angular.yml --destination _site-angular
-rsync -avc --delete _site-angular/ kendobuild.telerik.com:/var/www/ui-for-angular
-
-# build react docs
-# ruby2.2 /usr/local/bin/bundle exec jekyll build --config _react.yml,_staging-react.yml --destination _site-react
-# rsync -avc --delete _site-react/ /var/www/ui-for-react
-
-</command>
+# deploy to staging
+ssh-agent bash -c &apos;ssh-add ~/.ssh/gitlab_write_rsa; ./_build/create-snapshot.sh _site-angular/ git@gitlab.telerik.com:kendo/kendo-angular-site-cd.git&apos;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

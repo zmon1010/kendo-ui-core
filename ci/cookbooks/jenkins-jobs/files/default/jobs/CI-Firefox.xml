@@ -62,6 +62,9 @@
     <hudson.tasks.Shell>
       <command>DOCS_BRANCH=master ./build/run-build-task tests:firefox</command>
     </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>git clean -xdf .</command>
+    </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.plugins.chucknorris.CordellWalkerRecorder plugin="chucknorris@0.5">

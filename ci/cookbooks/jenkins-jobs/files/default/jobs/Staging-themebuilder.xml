@@ -2,6 +2,12 @@
 <project>
   <actions/>
   <description></description>
+  <logRotator class="hudson.tasks.LogRotator">
+    <daysToKeep>10</daysToKeep>
+    <numToKeep>20</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.7">
@@ -24,43 +30,48 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>git@gitlab.telerik.com:kendo/angular-aot.git</url>
+        <url>git@gitlab.telerik.com:kendo/themebuilder.git</url>
+        <credentialsId>2da2cef6-1aed-463d-9b03-fedb24525353</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>master</name>
+        <name>*/master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>master</assignedNode>
+  <assignedNode>windows</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers>
-    <hudson.triggers.TimerTrigger>
-      <spec>H/30 8-19 * * 1-5</spec>
-    </hudson.triggers.TimerTrigger>
-  </triggers>
+  <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>rm -rf node_modules/
-npm install</command>
+      <command>cd themebuilder
+#npm install
+#npm run staging</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>npm run process</command>
+      <command>cd sass-compiler
+#npm install</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>rsync -a ./ /var/www/angular-aot --exclude ./node_modules/</command>
+      <command>cd widget-preview/angular
+npm install
+npm run staging</command>
     </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>git clean -xdf</command>
-    </hudson.tasks.Shell>
+    <hudson.tasks.BatchFile>
+      <command>xcopy themebuilder\dist c:\shares\staging-themebuilder /E /Y /D
+xcopy sass-compiler c:\shares\staging-themebuilder\sass-compiler /E /Y /D
+xcopy widget-preview\kendo c:\shares\staging-themebuilder\preview-kendo /E /Y /D
+xcopy widget-preview\aspnet-ajax c:\shares\staging-themebuilder\preview-ajax /E /Y
+xcopy widget-preview\angular\dist c:\shares\staging-themebuilder\preview-angular /E /Y /D</command>
+    </hudson.tasks.BatchFile>
   </builders>
   <publishers/>
   <buildWrappers/>

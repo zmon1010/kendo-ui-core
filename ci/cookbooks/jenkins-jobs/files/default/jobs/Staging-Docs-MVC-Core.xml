@@ -69,6 +69,9 @@ H 8-20/2 * * 1-5</spec>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
+      <command>git clean -xdf docs-aspnet-core</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
       <command>cd docs-aspnet-core;
 
 export GEM_PATH=$HOME/gems2.2
