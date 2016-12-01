@@ -565,7 +565,7 @@ module("Upload / IframeUpload / Templates / autoUpload = false", {
 
 test("k-upload-action button should contain remove icon", function() {
     simulateSingleFileSelect("image.jpg", 500);
-    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-close", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain remove title", function(){
@@ -634,7 +634,7 @@ test("k-upload-action button should contain retry title on unsuccessful upload",
 
 test("k-upload-action button should contain remove icon on successful upload", function(){
     simulateUpload();
-    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-close", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain remove title on successful upload", function(){

@@ -29,7 +29,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload( { async: { saveUrl: "javascript:;", removeUrl: null } } );
 
         simulateUpload();
-        equal($(".k-i-delete", uploadInstance.wrapper).length, 0);
+        equal($(".k-i-close", uploadInstance.wrapper).length, 0);
     });
 
     test("status icon wrapper is rendered", function() {
@@ -50,7 +50,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateUpload();
 
-        equal($(".k-i-delete", uploadInstance.wrapper).length, 1);
+        equal($(".k-i-close", uploadInstance.wrapper).length, 1);
     });
 
     test("k-upload-status-total shows loading icon when upload starts", function(){
@@ -87,7 +87,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         simulateUpload();
         simulateFileSelect();
         $(".k-i-cancel", uploadInstance.wrapper).trigger("click");
-        equal($(".k-upload-status-total .k-i-tick", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-status-total .k-i-check", uploadInstance.wrapper).length, 1);
     });
 
     test("k-upload-status-total icon reverts back to warning if upload is canceled and there are failed uploads", function(){
@@ -110,7 +110,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateUpload();
 
-        equal($(".k-upload-status-total .k-i-tick", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-status-total .k-i-check", uploadInstance.wrapper).length, 1);
     });
 
     test("k-upload-status-total contains correct text when upload is finished", function(){
@@ -131,7 +131,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         var uploadInstance = createUpload();
         simulateUpload();
 
-        equal($(".k-upload-status-total .k-i-tick", uploadInstance.wrapper).text(), "uploaded");
+        equal($(".k-upload-status-total .k-i-check", uploadInstance.wrapper).text(), "uploaded");
     });
 
     test("Header status icon is displayed when selecting invalid file", function() {
@@ -170,7 +170,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         simulateFileSelect("invalid.png");
         simulateRemoveClick(1);
 
-        equal($(".k-upload-status-total .k-i-tick", uploadInstance.wrapper).length, 1);
+        equal($(".k-upload-status-total .k-i-check", uploadInstance.wrapper).length, 1);
     });
 
     test("k-file-progress is rendered when upload starts", function() {

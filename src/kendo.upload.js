@@ -36,7 +36,7 @@ var __meta__ = { // jshint ignore:line
     var headerStatusIcon = {
         loading: "k-i-loading",
         warning: "k-i-warning",
-        success: "k-i-tick"
+        success: "k-i-check"
     };
 
     var Upload = Widget.extend({
@@ -627,8 +627,8 @@ var __meta__ = { // jshint ignore:line
         },
 
         _fileAction: function(fileElement, actionKey) {
-            var classDictionary = { remove: "k-i-delete", cancel: "k-i-cancel", retry: "k-i-retry" };
-            var iconsClassDictionary = {remove: "k-i-close", cancel: "k-i-close", retry: "k-i-refresh"};
+            var classDictionary = { remove: "k-i-x", cancel: "k-i-cancel", retry: "k-i-retry" };
+            var iconsClassDictionary = {remove: "k-i-close", cancel: "k-i-close", retry: "k-i-reload"};
 
             if (!classDictionary.hasOwnProperty(actionKey)) {
                 return;
@@ -694,7 +694,6 @@ var __meta__ = { // jshint ignore:line
 
         _onFileAction: function(e) {
             var that = this;
-
             if (!that.wrapper.hasClass("k-state-disabled")) {
                 var button = $(e.target).closest(".k-upload-action");
                 var icon = button.find(".k-icon");
@@ -703,7 +702,7 @@ var __meta__ = { // jshint ignore:line
                 var hasValidationErrors = that._filesContainValidationErrors(files);
                 var eventArgs = { files: files };
 
-                if (icon.hasClass("k-i-delete")) {
+                if (icon.hasClass("k-i-x")) {
                     if (!that.trigger(REMOVE, eventArgs)) {
                         that._module.onRemove({target : $(fileEntry, that.wrapper)}, eventArgs.data, !hasValidationErrors);
                     }
@@ -902,7 +901,7 @@ var __meta__ = { // jshint ignore:line
 
             if (currentlyUploading.length === 0 || currentlyInvalid.length > 0) {
                 failedUploads = $('.k-file.k-file-error, .k-file.k-file-invalid', that.wrapper);
-
+                
                 headerUploadStatus = $('.k-upload-status-total', that.wrapper);
                 headerUploadStatusIcon = $('.k-icon', headerUploadStatus).removeClass().addClass("k-icon")
                                               .addClass(failedUploads.length !== 0 ? headerStatusIcon.warning : headerStatusIcon.success)

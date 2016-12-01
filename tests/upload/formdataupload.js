@@ -168,7 +168,7 @@ test("data-uid attribute for list element has the same value as the file uid", f
 });
 
 test("file names are rendered for multiple files", 2, function() {
-    uploadInstance._inputFiles = function () { return getFileListMock() };
+    uploadInstance._inputFiles = function () { return getFileListMock(); };
     simulateFileSelect();
 
     var fileNames = $(".k-file-name", uploadInstance.wrapper).map(function() { return $(this).text(); });
@@ -451,7 +451,7 @@ test("clicking remove should call remove action for completed files", function()
     $(".k-upload-selected", uploadInstance.wrapper).trigger("click");
     uploadInstance._module.onRequestSuccess({ target: { responseText: "", status: 200 } }, $(".k-file", uploadInstance.wrapper));
 
-    $(".k-i-delete", uploadInstance.wrapper).trigger("click");
+    $(".k-i-close", uploadInstance.wrapper).trigger("click");
     ok(removeCalled);
 });
 
@@ -865,7 +865,7 @@ module("Upload / FormDataUpload / Templates / autoUpload = false", {
 
 test("k-upload-action button should contain remove icon", function() {
     simulateSingleFileSelect("image.jpg", 500);
-    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-close", uploadInstance.wrapper).length, 1);
 });
 
 test("progress bar is rendered in the template", function() {
@@ -936,7 +936,7 @@ test("k-upload-action button should contain retry title on unsuccessful upload",
 
 test("k-upload-action button should contain remove icon on successful upload", function(){
     simulateUpload();
-    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-close", uploadInstance.wrapper).length, 1);
 });
 
 test("k-upload-action button should contain remove title on successful upload", function(){
@@ -1023,7 +1023,7 @@ test("file entries contain 'files' data", function(){
 });
 
 test("remove icon is rendered for each file entry", function() {
-    equal($(".k-i-delete", uploadInstance.wrapper).length, 2);
+    equal($(".k-i-close", uploadInstance.wrapper).length, 2);
 });
 
 test("initial file entries have progress-bar with 0% width", function(){
@@ -1051,7 +1051,7 @@ module("Upload / FormDataUpload / Initial files without remove", {
 });
 
 test("remove icon is not rendered for the file entries", function() {
-    equal($(".k-i-delete", uploadInstance.wrapper).length, 0);
+    equal($(".k-i-close", uploadInstance.wrapper).length, 0);
 });
 
 // -----------------------------------------------------------------------------------

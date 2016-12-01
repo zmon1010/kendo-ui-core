@@ -80,32 +80,32 @@ test("status icon is rendered always", function() {
 test("clicking remove should remove file entry", function() {
     simulateFileSelect();
     simulateFileSelect();
-    $(".k-i-delete:first", uploadInstance.wrapper).trigger("click");
+    $(".k-i-close:first", uploadInstance.wrapper).trigger("click");
     equal($(".k-upload-files li.k-file", uploadInstance.wrapper).length, 1);
 });
 
 test("disable prevents clicking remove", function () {
     simulateFileSelect();
     uploadInstance.disable();
-    $(".k-i-delete:first", uploadInstance.wrapper).trigger("click");
+    $(".k-i-close:first", uploadInstance.wrapper).trigger("click");
     equal($(".k-file", uploadInstance.wrapper).length, 1);
 });
 
 test("clicking remove should remove file input", function() {
     simulateFileSelect();
-    $(".k-i-delete", uploadInstance.wrapper).trigger("click");
+    $(".k-i-close", uploadInstance.wrapper).trigger("click");
     equal($("input", uploadInstance.wrapper).length, 1);
 });
 
 test("removing last file should remove list", function() {
     simulateFileSelect();
-    $(".k-i-delete", uploadInstance.wrapper).trigger("click");
+    $(".k-i-close", uploadInstance.wrapper).trigger("click");
     equal($(".k-upload-files", uploadInstance.wrapper).length, 0);
 });
 
 test("list element is re-created after removing all files", function() {
     simulateFileSelect();
-    $(".k-i-delete", uploadInstance.wrapper).trigger("click");
+    $(".k-i-close", uploadInstance.wrapper).trigger("click");
     simulateFileSelect();
     equal($(".k-upload-files li.k-file", uploadInstance.wrapper).length, 1);
 });
@@ -198,7 +198,7 @@ test("rendered template should contain k-upload-action button", function() {
 
 test("k-upload-action button should contain remove icon", function() {
     simulateSingleFileSelect("image.jpg", 500);
-    equal($(".k-file button.k-upload-action > span.k-i-delete", uploadInstance.wrapper).length, 1);
+    equal($(".k-file button.k-upload-action > span.k-i-close", uploadInstance.wrapper).length, 1);
 });
 
 test("progress bar is rendered in the template", function() {

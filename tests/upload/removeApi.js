@@ -62,8 +62,8 @@ function removeApi(params) {
         setTimeout(function(){
             var statusTotal = uploadInstance.wrapper.find(".k-upload-status-total span");
 
-            ok(statusTotal.hasClass("k-i-tick"));
-            ok(!statusTotal.hasClass("k-warning"));
+            ok(statusTotal.hasClass("k-i-check"));
+            ok(!statusTotal.hasClass("k-i-warning"));
 
             start();
         }, 100);
@@ -167,8 +167,8 @@ function removeApi(params) {
         setTimeout(function(){
             var statusTotal = uploadInstance.wrapper.find(".k-upload-status-total span");
         
-            ok(statusTotal.hasClass("k-i-tick"));
-            ok(!statusTotal.hasClass("k-warning"));
+            ok(statusTotal.hasClass("k-i-check"));
+            ok(!statusTotal.hasClass("k-i-warning"));
             
             start();
         }, 100);

@@ -72,7 +72,7 @@ function getFileListMock() {
 
 function simulateRemoveClick(fileIndex) {
     var uploadInstance = $("#uploadInstance").data("kendoUpload");
-    $(".k-i-delete", uploadInstance.wrapper).eq(fileIndex || 0).trigger("click");
+    $(".k-i-close", uploadInstance.wrapper).eq(fileIndex || 0).trigger("click");
 }
 
 function assertSelectedFile(files) {
