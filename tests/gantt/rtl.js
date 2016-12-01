@@ -161,7 +161,7 @@
         var draggable = list.content.data("kendoDraggable");
 
         draggable.hint = $('<div class="k-header k-drag-clue"/>')
-            .append('<span class="k-icon k-drag-status k-denied" /><span class="k-clue-text"/>');
+            .append('<span class="k-icon k-drag-status k-i-cancel" /><span class="k-clue-text"/>');
 
         draggable.trigger("dragstart", {
             currentTarget: target

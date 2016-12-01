@@ -152,7 +152,7 @@ var __meta__ = { // jshint ignore:line
         taskDetailsPercent: "k-task-pct",
         link: "k-link",
         icon: "k-icon",
-        iconDelete: "k-si-close",
+        iconDelete: "k-i-close",
         taskResizeHandle: "k-resize-handle",
         taskResizeHandleWest: "k-resize-w",
         taskResizeHandleEast: "k-resize-e",

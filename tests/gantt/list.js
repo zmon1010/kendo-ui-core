@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
 
     var GanttList = kendo.ui.GanttList;
     var GanttDataSource = kendo.data.GanttDataSource;
@@ -443,7 +443,7 @@
         var span = content.find("tr").eq(0)
             .children("td").eq(0).children("span.k-icon");
 
-        ok(span.hasClass("k-i-collapse"));
+        ok(span.hasClass("k-i-arrow-60-up"));
     });
 
     test("table td element with span with expand icon collapsed summary tasks", function() {
@@ -451,7 +451,7 @@
         var span = content.find("tr").eq(11)
             .children("td").eq(0).children("span.k-icon");
 
-        ok(span.hasClass("k-i-expand"));
+        ok(span.hasClass("k-i-arrow-60-down"));
     });
 
     function setupGantt(options) {

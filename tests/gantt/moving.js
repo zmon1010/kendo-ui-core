@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
     var element;
     var gantt;
     var ganttList;
@@ -107,7 +107,7 @@
     };
     var createHint = function() {
         draggable.hint = $('<div class="k-header k-drag-clue"/>')
-            .append('<span class="k-icon k-drag-status k-denied" /><span class="k-clue-text"/>');
+            .append('<span class="k-icon k-drag-status k-i-cancel" /><span class="k-clue-text"/>');
     };
 
     function dragstart(target) {
@@ -230,7 +230,7 @@
         ok(!draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-i-denied"));
+            .hasClass("k-i-cancel"));
     });
 
     test("dragenter on denied target does not remove denied class", function() {
@@ -240,16 +240,16 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-i-denied"));
+            .hasClass("k-i-cancel"));
     });
 
     test("dragleave removes position class", function() {
         var statusHint = draggable.hint.children(".k-drag-status");
 
-        statusHint.addClass("k-i-add");
+        statusHint.addClass("k-i-plus");
         dragleave();
 
-        ok(!statusHint.hasClass("k-i-add"));
+        ok(!statusHint.hasClass("k-i-plus"));
     });
 
     test("drop on possible target trigger update event", 1, function() {
@@ -313,7 +313,7 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-i-insert-top"));
+            .hasClass("k-i-insert-up"));
     });
 
     test("drag on upper part of target between two sibling set drop position class", function() {
@@ -402,7 +402,7 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-i-add"));
+            .hasClass("k-i-plus"));
     });
 
     test("drag on middle part of target set update arguments", 2, function() {
@@ -436,7 +436,7 @@
         ok(draggable
             .hint
             .children(".k-drag-status")
-            .hasClass("k-i-insert-bottom"));
+            .hasClass("k-i-insert-down"));
     });
 
     test("drag on bottom part of target between two sibling set drop position class", function() {
