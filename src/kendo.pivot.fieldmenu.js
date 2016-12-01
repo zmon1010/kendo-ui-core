@@ -485,13 +485,13 @@ var __meta__ = { // jshint ignore:line
                         '# if (sortable) {#'+
                         '<li class="k-item k-sort-asc">'+
                             '<span class="k-link">'+
-                                '<span class="k-icon k-i-sort-asc"></span>'+
+                                '<span class="k-icon k-i-sort-asc-sm"></span>'+
                                 '${messages.sortAscending}'+
                             '</span>'+
                         '</li>'+
                         '<li class="k-item k-sort-desc">'+
                             '<span class="k-link">'+
-                                '<span class="k-icon k-i-sort-desc"></span>'+
+                                '<span class="k-icon k-i-sort-desc-sm"></span>'+
                                 '${messages.sortDescending}'+
                             '</span>'+
                         '</li>'+

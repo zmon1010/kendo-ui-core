@@ -95,9 +95,9 @@
 
         ok(asc[0]);
         ok(desc[0]);
-
-        ok(asc.find(".k-i-sort-asc")[0]);
-        ok(desc.find(".k-i-sort-desc")[0]);
+        
+        ok(asc.find(".k-i-sort-asc-sm")[0]);
+        ok(desc.find(".k-i-sort-desc-sm")[0]);
 
         equal(asc.find(".k-link").text(), "Sort Ascending");
         equal(desc.find(".k-link").text(), "Sort Descending");
@@ -108,8 +108,8 @@
             sortable: false
         });
 
-        var asc = fieldmenu.menu.element.find(".k-sort-asc");
-        var desc = fieldmenu.menu.element.find(".k-sort-desc");
+        var asc = fieldmenu.menu.element.find(".k-i-sort-asc-sm");
+        var desc = fieldmenu.menu.element.find(".k-i-sort-desc-sm");
 
         ok(!asc[0]);
         ok(!desc[0]);

@@ -401,8 +401,8 @@
         var icon1 = items.eq(0).find(".k-icon");
         var icon2 = items.eq(1).find(".k-icon");
 
-        ok(icon1.hasClass("k-i-dimension"));
-        ok(icon2.hasClass("k-i-dimension"));
+        ok(icon1.hasClass("k-i-arrows-dimensions"));
+        ok(icon2.hasClass("k-i-arrows-dimensions"));
     });
 
     test("treeview renders measure icon for measure field", function() {

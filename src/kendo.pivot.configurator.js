@@ -224,7 +224,7 @@ var __meta__ = { // jshint ignore:line
             var template = '# if (item.type == 2 || item.uniqueName == "[KPIs]") { #' +
                            '<span class="k-icon k-i-#= (item.type == 2 ? \"sum\" : \"kpi\") #"></span>' +
                            '# } else if (item.type && item.type !== "kpi") { #' +
-                           '<span class="k-icon k-i-dimension"></span>' +
+                           '<span class="k-icon k-i-arrows-dimensions"></span>' +
                            '# } #' +
                            '#: item.caption || item.name #';
 
@@ -242,11 +242,11 @@ var __meta__ = { // jshint ignore:line
                         }
                     },
                     drag: function(e) {
-                        var status = "k-i-denied";
+                        var status = "k-i-cancel";
 
                         var setting = settingTargetFromNode(e.dropTarget);
                         if (setting && setting.validate(this.dataItem(e.sourceNode))) {
-                            status = "k-i-add";
+                            status = "k-i-plus";
                         }
 
                         e.setStatusClass(status);
@@ -288,15 +288,15 @@ var __meta__ = { // jshint ignore:line
 
             if (sortable) {
                 icons += '#if (data.sortIcon) {#';
-                icons += '<span class="k-icon ${data.sortIcon} k-setting-sort"></span>';
+                icons += '<span class="k-icon ${data.sortIcon} k-i-sort-asc-sm"></span>';
                 icons += '#}#';
             }
 
             if (options.filterable || sortable) {
-                icons += '<span class="k-icon k-i-arrowhead-s k-setting-fieldmenu"></span>';
+                icons += '<span class="k-icon k-i-more-vertical k-setting-fieldmenu"></span>';
             }
 
-            icons += '<span class="k-icon k-si-close k-setting-delete"></span>';
+            icons += '<span class="k-icon k-i-close k-setting-delete"></span>';
             template += '<span class="k-field-actions">' + icons + '</span></li>';
 
             return new kendo.ui.PivotSettingTarget(element, $.extend({
@@ -316,10 +316,10 @@ var __meta__ = { // jshint ignore:line
         _targets: function() {
             var container = $('<div class="k-state-default"/>').appendTo(this.form);
 
-            var columnsContainer = $(SETTING_CONTAINER_TEMPLATE({ name: this.options.messages.columnsLabel, icon: "k-i-vbars" })).appendTo(container);
+            var columnsContainer = $(SETTING_CONTAINER_TEMPLATE({ name: this.options.messages.columnsLabel, icon: "k-i-columns" })).appendTo(container);
             var columns = $('<ul class="k-pivot-configurator-settings k-list k-reset" />').appendTo(columnsContainer.last());
 
-            var rowsContainer = $(SETTING_CONTAINER_TEMPLATE({ name: this.options.messages.rowsLabel, icon: "k-i-hbars" })).appendTo(container);
+            var rowsContainer = $(SETTING_CONTAINER_TEMPLATE({ name: this.options.messages.rowsLabel, icon: "k-i-rows" })).appendTo(container);
             var rows = $('<ul class="k-pivot-configurator-settings k-list k-reset" />').appendTo(rowsContainer.last());
 
             var measuresContainer = $(SETTING_CONTAINER_TEMPLATE({ name: this.options.messages.measuresLabel, icon: "k-i-sum"})).appendTo(container);

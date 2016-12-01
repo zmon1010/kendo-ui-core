@@ -918,8 +918,8 @@
 
         ok(button[0]);
         ok(button.hasClass("k-icon"));
-        ok(button.hasClass("k-i-arrow-e"));
-        ok(!button.hasClass("k-i-arrow-s"));
+        ok(button.hasClass("k-i-arrow-60-right"));
+        ok(!button.hasClass("k-i-arrow-60-down"));
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
@@ -963,8 +963,8 @@
 
         ok(button[0]);
         ok(button.hasClass("k-icon"));
-        ok(!button.hasClass("k-i-arrow-e"));
-        ok(button.hasClass("k-i-arrow-s"));
+        ok(!button.hasClass("k-i-arrow-60-right"));
+        ok(button.hasClass("k-i-arrow-60-down"));
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
@@ -2107,8 +2107,8 @@
 
         ok(button[0]);
         ok(button.hasClass("k-icon"));
-        ok(button.hasClass("k-i-arrow-e"));
-        ok(!button.hasClass("k-i-arrow-s"));
+        ok(button.hasClass("k-i-arrow-60-right"));
+        ok(!button.hasClass("k-i-arrow-60-down"));
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
@@ -2151,8 +2151,8 @@
 
         ok(button[0]);
         ok(button.hasClass("k-icon"));
-        ok(!button.hasClass("k-i-arrow-e"));
-        ok(button.hasClass("k-i-arrow-s"));
+        ok(!button.hasClass("k-i-arrow-60-right"));
+        ok(button.hasClass("k-i-arrow-60-down"));
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
@@ -4081,8 +4081,7 @@
         var rows = pivotgrid.wrapper.find(".k-grid-content").find("tbody").find("tr");
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
-
-        ok(icon.hasClass("k-i-kpi-open"));
+        ok(icon.hasClass("k-i-circle"));
         equal(icon.text(), "1");
     });
 
@@ -4126,8 +4125,7 @@
         var rows = pivotgrid.wrapper.find(".k-grid-content").find("tbody").find("tr");
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
-
-        ok(icon.hasClass("k-i-kpi-hold"));
+        ok(icon.hasClass("k-i-arrow-60-up"));
         equal(icon.text(), "0");
     });
 
@@ -4152,8 +4150,7 @@
         var rows = pivotgrid.wrapper.find(".k-grid-content").find("tbody").find("tr");
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
-
-        ok(icon.hasClass("k-i-kpi-denied"));
+        ok(icon.hasClass("k-i-stop"));
         equal(icon.text(), "-1");
     });
 
@@ -4179,7 +4176,7 @@
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
 
-        ok(icon.hasClass("k-i-kpi-increase"));
+        ok(icon.hasClass("k-i-arrow-60-up"));
         equal(icon.text(), "1");
     });
 
@@ -4205,7 +4202,7 @@
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
 
-        ok(icon.hasClass("k-i-kpi-equal"));
+        ok(icon.hasClass("k-i-minus"));
         equal(icon.text(), "0");
     });
 
@@ -4231,7 +4228,7 @@
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
 
-        ok(icon.hasClass("k-i-kpi-decrease"));
+        ok(icon.hasClass("k-i-arrow-60-down"));
         equal(icon.text(), "-1");
     });
 

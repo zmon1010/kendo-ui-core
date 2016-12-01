@@ -22,7 +22,7 @@
         var template = '<span class="k-button" data-name="${data.name || data}">${data.name || data}';
 
         var icons = '#if (data.sortIcon) {#';
-            icons += '<span class="k-icon ${data.sortIcon} k-setting-sort"></span>';
+            icons += '<span class="k-icon ${data.sortIcon} k-i-sort-asc"></span>';
             icons += '#}#';
 
         template += '<span class="k-field-actions">' + icons + '</span>';
@@ -498,7 +498,7 @@
             dataSource: dataSource
         });
 
-        var children = $(div).children().find(".k-setting-delete:first").click();
+        var children = $(div).children().find(".k-i-close:first").click();
 
         equal(dataSource.columns().length, 1);
         equal(dataSource.columns()[0].name, "bar");

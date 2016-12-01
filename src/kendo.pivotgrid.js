@@ -63,11 +63,11 @@ var __meta__ = { // jshint ignore:line
         DATABOUND = "dataBound",
         EXPANDMEMBER = "expandMember",
         COLLAPSEMEMBER = "collapseMember",
-        STATE_EXPANDED = "k-i-arrow-s",
-        STATE_COLLAPSED = "k-i-arrow-e",
+        STATE_EXPANDED = "k-i-arrow-60-down",
+        STATE_COLLAPSED = "k-i-arrow-60-right",
         HEADER_TEMPLATE = "<span>#: data.member.caption || data.member.name #</span>",
-        KPISTATUS_TEMPLATE = '<span class="k-icon k-i-kpi-#=data.dataItem.value > 0 ? \"open\" : data.dataItem.value < 0 ? \"denied\" : \"hold\"#">#:data.dataItem.value#</span>',
-        KPITREND_TEMPLATE = '<span class="k-icon k-i-kpi-#=data.dataItem.value > 0 ? \"increase\" : data.dataItem.value < 0 ? \"decrease\" : \"equal\"#">#:data.dataItem.value#</span>',
+        KPISTATUS_TEMPLATE = '<span class="k-icon k-i-#=data.dataItem.value > 0 ? \"circle\" : data.dataItem.value < 0 ? \"stop\" : \"arrow-60-up k-i-hold\"#">#:data.dataItem.value#</span>',
+        KPITREND_TEMPLATE = '<span class="k-icon k-i-#=data.dataItem.value > 0 ? \"arrow-60-up\" : data.dataItem.value < 0 ? \"arrow-60-down\" : \"minus\"#">#:data.dataItem.value#</span>',
         DATACELL_TEMPLATE = '#= data.dataItem ? kendo.htmlEncode(data.dataItem.fmtValue || data.dataItem.value) || "&nbsp;" : "&nbsp;" #',
         LAYOUT_TABLE = '<table class="k-pivot-layout">' +
                             '<tr>' +
@@ -3254,7 +3254,7 @@ var __meta__ = { // jshint ignore:line
             if (!options.template) {
                 that.options.template = "<div data-" + kendo.ns + 'name="${data.name || data}">${data.name || data}' +
                     (that.options.enabled ?
-                    '<a class="k-button k-button-icon k-button-bare"><span class="k-icon k-setting-delete"></span></a>' : "") + '</div>';
+                    '<a class="k-button k-button-icon k-button-bare"><span class="k-icon k-i-close k-setting-delete"></span></a>' : "") + '</div>';
             }
 
             that.template = kendo.template(that.options.template);
@@ -3271,12 +3271,12 @@ var __meta__ = { // jshint ignore:line
                     return;
                 }
 
-                if (target.hasClass("k-setting-delete")) {
+                if (target.hasClass("k-i-close")) {
                     that.remove(name);
                 } else if (that.options.sortable && target[0] === e.currentTarget) {
                     that.sort({
                         field: name,
-                        dir: target.find(".k-i-sort-asc")[0] ? "desc" : "asc"
+                        dir: target.find(".k-i-sort-asc-sm")[0] ? "desc" : "asc"
                     });
                 }
             });
@@ -3284,7 +3284,7 @@ var __meta__ = { // jshint ignore:line
             if (options.filterable || options.sortable) {
                 that.fieldMenu = new ui.PivotFieldMenu(that.element, {
                     messages: that.options.messages.fieldMenu,
-                    filter: ".k-setting-fieldmenu",
+                    filter: ".k-i-folder",
                     filterable: options.filterable,
                     sortable: options.sortable,
                     dataSource: that.dataSource
@@ -3761,15 +3761,15 @@ var __meta__ = { // jshint ignore:line
 
             if (sortable) {
                 icons += '#if (data.sortIcon) {#';
-                icons += '<span class="k-icon ${data.sortIcon} k-setting-sort"></span>';
+                icons += '<span class="k-icon ${data.sortIcon} k-i-sort-asc-sm"></span>';
                 icons += '#}#';
             }
 
             if (options.filterable || sortable) {
-                icons += '<span class="k-icon k-i-arrowhead-s k-setting-fieldmenu"></span>';
+                icons += '<span class="k-icon k-i-more-vertical k-setting-fieldmenu"></span>';
             }
             if (this.options.reorderable) {
-                icons += '<span class="k-icon k-si-close k-setting-delete"></span>';
+                icons += '<span class="k-icon k-i-close k-setting-delete"></span>';
             }
 
             if (icons) {
