@@ -11,16 +11,16 @@ var kendo = window.kendo,
 
 var tableAlignmentDropDownSettings = {
     dataSource: [{
-        className: "k-font-icon k-i-table-align-middle-left",
+        className: "k-icon k-i-table-align-middle-left",
         value: "left"
     }, {
-        className: "k-font-icon k-i-table-align-middle-center",
+        className: "k-icon k-i-table-align-middle-center",
         value: "center"
     }, {
-        className: "k-font-icon k-i-table-align-middle-right",
+        className: "k-icon k-i-table-align-middle-right",
         value: "right"
     }, {
-        className: "k-font-icon k-i-justify-clear",
+        className: "k-icon k-i-align-remove",
         value: ""
     }],
     dataTextField: "className",
@@ -31,34 +31,34 @@ var tableAlignmentDropDownSettings = {
 
 var cellAlignmentDropDownSettings = {
     dataSource: [{
-        className: "k-font-icon k-i-table-align-top-left",
+        className: "k-icon k-i-table-align-top-left",
         value: "left top"
     }, {
-        className: "k-font-icon k-i-table-align-top-center",
+        className: "k-icon k-i-table-align-top-center",
         value: "center top"
     }, {
-        className: "k-font-icon k-i-table-align-top-right",
+        className: "k-icon k-i-table-align-top-right",
         value: "right top"
     }, {
-        className: "k-font-icon k-i-table-align-middle-left",
+        className: "k-icon k-i-table-align-middle-left",
         value: "left middle"
     }, {
-        className: "k-font-icon k-i-table-align-middle-center",
+        className: "k-icon k-i-table-align-middle-center",
         value: "center middle"
     }, {
-        className: "k-font-icon k-i-table-align-middle-right",
+        className: "k-icon k-i-table-align-middle-right",
         value: "right middle"
     }, {
-        className: "k-font-icon k-i-table-align-bottom-left",
+        className: "k-icon k-i-table-align-bottom-left",
         value: "left bottom"
     }, {
-        className: "k-font-icon k-i-table-align-bottom-center",
+        className: "k-icon k-i-table-align-bottom-center",
         value: "center bottom"
     }, {
-        className: "k-font-icon k-i-table-align-bottom-right",
+        className: "k-icon k-i-table-align-bottom-right",
         value: "right bottom"
     }, {
-        className: "k-font-icon k-i-justify-clear",
+        className: "k-icon k-i-align-remove",
         value: ""
     }],
     dataTextField: "className",
@@ -69,25 +69,25 @@ var cellAlignmentDropDownSettings = {
 
 var accessibilityAlignmentDropDownSettings = {
     dataSource: [{
-        className: "k-font-icon k-i-table-align-top-left",
+        className: "k-icon k-i-table-align-top-left",
         value: "left top"
     }, {
-        className: "k-font-icon k-i-table-align-top-center",
+        className: "k-icon k-i-table-align-top-center",
         value: "center top"
     }, {
-        className: "k-font-icon k-i-table-align-top-right",
+        className: "k-icon k-i-table-align-top-right",
         value: "right top"
     }, {
-        className: "k-font-icon k-i-table-align-bottom-left",
+        className: "k-icon k-i-table-align-bottom-left",
         value: "left bottom"
     }, {
-        className: "k-font-icon k-i-table-align-bottom-center",
+        className: "k-icon k-i-table-align-bottom-center",
         value: "center bottom"
     }, {
-        className: "k-font-icon k-i-table-align-bottom-right",
+        className: "k-icon k-i-table-align-bottom-right",
         value: "right bottom"
     }, {
-        className: "k-font-icon k-i-justify-clear",
+        className: "k-icon k-i-align-remove",
         value: ""
     }],
     dataTextField: "className",
