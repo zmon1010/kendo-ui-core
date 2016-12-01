@@ -149,7 +149,7 @@
         var sorter = setup();
         button.click();
 
-        equal(button.find("span.k-icon.k-i-arrow-n").length, 1);
+        equal(button.find("span.k-icon.k-i-sort-asc-sm").length, 1);
     });
 
     test("desc arrow is rendered", function() {
@@ -157,7 +157,7 @@
         button.click();
         button.click();
 
-        equal(button.find("span.k-icon.k-i-arrow-s").length, 1);
+        equal(button.find("span.k-icon.k-i-sort-desc-sm").length, 1);
     });
 
     test("sort arrow is removed", function() {
@@ -166,8 +166,8 @@
         button.click();
         button.click();
 
-        equal(button.find("span.k-icon.k-i-arrow-s").length, 0);
-        equal(button.find("span.k-icon.k-i-arrow-n").length, 0);
+        equal(button.find("span.k-icon.k-i-sort-desc-sm").length, 0);
+        equal(button.find("span.k-icon.k-i-sort-asc-sm").length, 0);
     });
 
     test("multiple sorting on same field", function() {

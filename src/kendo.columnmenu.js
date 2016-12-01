@@ -76,7 +76,7 @@ var __meta__ = { // jshint ignore:line
             link = element.find(".k-header-column-menu");
 
             if (!link[0]) {
-                link = element.addClass("k-with-icon").prepend('<a class="k-header-column-menu" href="#"><span class="k-icon k-i-arrowhead-s">' + options.messages.settings + '</span></a>').find(".k-header-column-menu");
+                link = element.addClass("k-with-icon").prepend('<a class="k-header-column-menu" href="#"><span class="k-icon k-i-more-vertical">' + options.messages.settings + '</span></a>').find(".k-header-column-menu");
             }
 
             that.link = link
@@ -670,14 +670,14 @@ var __meta__ = { // jshint ignore:line
 
     var template = '<ul id="#=uid#">'+
                     '#if(sortable){#'+
-                        '<li class="k-item k-sort-asc"><span class="k-link"><span class="k-sprite k-i-sort-asc"></span>${messages.sortAscending}</span></li>'+
-                        '<li class="k-item k-sort-desc"><span class="k-link"><span class="k-sprite k-i-sort-desc"></span>${messages.sortDescending}</span></li>'+
+                        '<li class="k-item k-sort-asc"><span class="k-link"><span class="k-icon k-i-sort-asc-sm"></span>${messages.sortAscending}</span></li>'+
+                        '<li class="k-item k-sort-desc"><span class="k-link"><span class="k-icon k-i-sort-desc-sm"></span>${messages.sortDescending}</span></li>'+
                         '#if(showColumns || filterable){#'+
                             '<li class="k-separator" role="presentation"></li>'+
                         '#}#'+
                     '#}#'+
                     '#if(showColumns){#'+
-                        '<li class="k-item k-columns-item" aria-haspopup="true"><span class="k-link"><span class="k-sprite k-i-columns"></span>${messages.columns}</span><ul>'+
+                        '<li class="k-item k-columns-item" aria-haspopup="true"><span class="k-link"><span class="k-icon k-i-columns"></span>${messages.columns}</span><ul>'+
                         '#for (var idx = 0; idx < columns.length; idx++) {#'+
                             '<li role="menuitemcheckbox" aria-checked="false"><input type="checkbox" data-#=ns#field="#=columns[idx].field.replace(/\"/g,"&\\#34;")#" data-#=ns#index="#=columns[idx].index#" data-#=ns#locked="#=columns[idx].locked#"/>#=columns[idx].title#</li>'+
                         '#}#'+
@@ -687,7 +687,7 @@ var __meta__ = { // jshint ignore:line
                         '#}#'+
                     '#}#'+
                     '#if(filterable){#'+
-                        '<li class="k-item k-filter-item" aria-haspopup="true"><span class="k-link"><span class="k-sprite k-filter"></span>${messages.filter}</span><ul>'+
+                        '<li class="k-item k-filter-item" aria-haspopup="true"><span class="k-link"><span class="k-icon k-i-filter"></span>${messages.filter}</span><ul>'+
                             '<li><div class="k-filterable"></div></li>'+
                         '</ul></li>'+
                         '#if(lockedColumns){#'+
@@ -695,8 +695,8 @@ var __meta__ = { // jshint ignore:line
                         '#}#'+
                     '#}#'+
                     '#if(lockedColumns){#'+
-                        '<li class="k-item k-lock"><span class="k-link"><span class="k-sprite k-i-lock"></span>${messages.lock}</span></li>'+
-                        '<li class="k-item k-unlock"><span class="k-link"><span class="k-sprite k-i-unlock"></span>${messages.unlock}</span></li>'+
+                        '<li class="k-item k-lock"><span class="k-link"><span class="k-icon k-i-lock"></span>${messages.lock}</span></li>'+
+                        '<li class="k-item k-unlock"><span class="k-link"><span class="k-icon k-i-unlock"></span>${messages.unlock}</span></li>'+
                     '#}#'+
                     '</ul>';
 
@@ -709,17 +709,17 @@ var __meta__ = { // jshint ignore:line
                 '<div class="k-column-menu k-mobile-list"><ul><li>'+
                     '<span class="k-link">${title}</span><ul>'+
                 '#if(sortable){#'+
-                    '<li class="k-item k-sort-asc"><span class="k-link"><span class="k-sprite k-i-sort-asc"></span>${messages.sortAscending}</span></li>'+
-                    '<li class="k-item k-sort-desc"><span class="k-link"><span class="k-sprite k-i-sort-desc"></span>${messages.sortDescending}</span></li>'+
+                    '<li class="k-item k-sort-asc"><span class="k-link"><span class="k-icon k-i-sort-asc-sm"></span>${messages.sortAscending}</span></li>'+
+                    '<li class="k-item k-sort-desc"><span class="k-link"><span class="k-icon k-i-sort-desc-sm"></span>${messages.sortDescending}</span></li>'+
                 '#}#'+
                 '#if(lockedColumns){#'+
-                    '<li class="k-item k-lock"><span class="k-link"><span class="k-sprite k-i-lock"></span>${messages.lock}</span></li>'+
-                    '<li class="k-item k-unlock"><span class="k-link"><span class="k-sprite k-i-unlock"></span>${messages.unlock}</span></li>'+
+                    '<li class="k-item k-lock"><span class="k-link"><span class="k-icon k-i-lock"></span>${messages.lock}</span></li>'+
+                    '<li class="k-item k-unlock"><span class="k-link"><span class="k-icon k-i-unlock"></span>${messages.unlock}</span></li>'+
                 '#}#'+
                 '#if(filterable){#'+
                     '<li class="k-item k-filter-item">'+
                         '<span class="k-link k-filterable">'+
-                            '<span class="k-sprite k-filter"></span>'+
+                            '<span class="k-icon k-i-filter"></span>'+
                             '${messages.filter}</span>'+
                     '</li>'+
                 '#}#'+

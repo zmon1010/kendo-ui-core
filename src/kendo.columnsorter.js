@@ -92,14 +92,13 @@ var __meta__ = { // jshint ignore:line
             }
 
             dir = element.attr(kendo.attr(DIR));
-
-            element.find(".k-i-arrow-n,.k-i-arrow-s").remove();
+            element.find(".k-i-sort-asc-sm,.k-i-sort-desc-sm").remove();
 
             if (dir === ASC) {
-                $('<span class="k-icon k-i-arrow-n" />').appendTo(that.link);
+                $('<span class="k-icon k-i-sort-asc-sm" />').appendTo(that.link);
                 element.attr(ARIASORT, "ascending");
             } else if (dir === DESC) {
-                $('<span class="k-icon k-i-arrow-s" />').appendTo(that.link);
+                $('<span class="k-icon k-i-sort-desc-sm" />').appendTo(that.link);
                 element.attr(ARIASORT, "descending");
             }
         },
