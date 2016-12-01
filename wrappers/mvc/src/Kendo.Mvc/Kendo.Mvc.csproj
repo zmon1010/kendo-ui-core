@@ -2763,4 +2763,4 @@
   <ItemGroup>
     <Compile Include="UI\Editor\Fluent\EditorImportSettingsBuilder.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="UI\Spreadsheet\Settings\SpreadsheetDefaultCellStyleSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetDefaultCellStyleSettingsBuilder.cs" /></ItemGroup></Project>

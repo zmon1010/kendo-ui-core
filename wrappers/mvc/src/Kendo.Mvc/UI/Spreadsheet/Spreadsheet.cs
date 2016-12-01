@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
             UrlGenerator = urlGenerator;
 //>> Initialization
         
+            DefaultCellStyle = new SpreadsheetDefaultCellStyleSettings();
+                
             Excel = new SpreadsheetExcelSettings();
                 
             Pdf = new SpreadsheetPdfSettings();
@@ -35,6 +37,12 @@ namespace Kendo.Mvc.UI
         public double? ColumnWidth { get; set; }
         
         public double? Columns { get; set; }
+        
+        public SpreadsheetDefaultCellStyleSettings DefaultCellStyle
+        {
+            get;
+            set;
+        }
         
         public double? HeaderHeight { get; set; }
         
@@ -101,6 +109,11 @@ namespace Kendo.Mvc.UI
                 json["columns"] = Columns;
             }
                 
+            var defaultCellStyle = DefaultCellStyle.ToJson();
+            if (defaultCellStyle.Any())
+            {
+                json["defaultCellStyle"] = defaultCellStyle;
+            }
             if (HeaderHeight.HasValue)
             {
                 json["headerHeight"] = HeaderHeight;

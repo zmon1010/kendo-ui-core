@@ -47,6 +47,10 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
         return "spreadsheet";
     }
 
+    public void setDefaultCellStyle(com.kendoui.taglib.spreadsheet.DefaultCellStyleTag value) {
+        setProperty("defaultCellStyle", value);
+    }
+
     public void setExcel(com.kendoui.taglib.spreadsheet.ExcelTag value) {
         setProperty("excel", value);
     }

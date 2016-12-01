@@ -36626,6 +36626,65 @@ and is about to render it.</description>
     </tag>
 
     <tag>
+        <description>The default cell styles to be applyied to sheet cells.</description>
+        <name>spreadsheet-defaultCellStyle</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.DefaultCellStyleTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Sets the cell font to italic, if set to true.</description>
+            <name>Italic</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The background CSS color of the cell.</description>
+            <name>background</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the cell font to bold, if set to true.</description>
+            <name>bold</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The text CSS color of the cell.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font family for the cell.</description>
+            <name>fontFamily</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The font size of the cell in pixels.</description>
+            <name>fontSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the cell font to underline, if set to true.</description>
+            <name>underline</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Sets the cell wrap, if set to true.</description>
+            <name>wrap</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>Configures the Kendo UI Spreadsheet Excel export settings.</description>
         <name>spreadsheet-excel</name>
         <tag-class>com.kendoui.taglib.spreadsheet.ExcelTag</tag-class>
