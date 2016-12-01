@@ -626,8 +626,8 @@
 
         grid.cancelRow();
 
-        ok(grid.table.find(".k-icon:first").hasClass("k-i-collapse"));
-        ok(!grid.table.find(".k-icon:first").hasClass("k-i-expand"));
+        ok(grid.table.find(".k-icon:first").hasClass("k-i-arrow-60-right"));
+        ok(!grid.table.find(".k-icon:first").hasClass("k-i-arrow-60-down"));
     });
 
     asyncTest("saveRow detaches button click handlers", 1, function() {

@@ -449,7 +449,7 @@ var __meta__ = { // jshint ignore:line
     var defaultCommands = {
         create: {
             text: "Add new record",
-            imageClass: "k-i-add",
+            imageClass: "k-i-plus",
             className: "k-grid-add",
             iconClass: "k-icon"
         },
@@ -461,13 +461,13 @@ var __meta__ = { // jshint ignore:line
         },
         save: {
             text: "Save changes",
-            imageClass: "k-i-update",
+            imageClass: "k-i-check",
             className: "k-grid-save-changes",
             iconClass: "k-icon"
         },
         destroy: {
             text: "Delete",
-            imageClass: "k-i-delete",
+            imageClass: "k-i-close",
             className: "k-grid-delete",
             iconClass: "k-icon"
         },
@@ -479,7 +479,7 @@ var __meta__ = { // jshint ignore:line
         },
         update: {
             text: "Update",
-            imageClass: "k-i-update",
+            imageClass: "k-i-reload",
             className: "k-primary k-grid-update",
             iconClass: "k-icon"
         },
@@ -491,13 +491,13 @@ var __meta__ = { // jshint ignore:line
         },
         excel: {
             text: "Export to Excel",
-            imageClass: "k-i-excel",
+            imageClass: "k-i-file-excel",
             className: "k-grid-excel",
             iconClass: "k-icon"
         },
         pdf: {
             text: "Export to PDF",
-            imageClass: "k-i-pdf",
+            imageClass: "k-i-file-pdf",
             className: "k-grid-pdf",
             iconClass: "k-icon"
         }
@@ -2215,7 +2215,7 @@ var __meta__ = { // jshint ignore:line
                                 paddingBottom: target.css("paddingBottom")
                             })
                             .html(title || target.attr(kendo.attr("field")) || target.text())
-                            .prepend('<span class="k-icon k-drag-status k-i-denied" />');
+                            .prepend('<span class="k-icon k-drag-status k-i-cancel" />');
                     }
                 }).data("kendoDraggable");
             }
@@ -3414,8 +3414,8 @@ var __meta__ = { // jshint ignore:line
                 nextRow = newRow.next();
                 if (nextRow.hasClass("k-detail-row") && nextRow.is(":visible")) {
                     newRow.find(".k-hierarchy-cell .k-icon")
-                        .removeClass("k-i-expand")
-                        .addClass("k-i-collapse");
+                        .removeClass("k-i-arrow-60-down")
+                        .addClass("k-i-arrow-60-right");
                 }
             }
         },
@@ -3686,7 +3686,7 @@ var __meta__ = { // jshint ignore:line
                     var element = $(this),
                     group = element.closest("tr");
 
-                    if(element.hasClass('k-i-collapse')) {
+                    if(element.hasClass('k-i-arrow-60-right')) {
                         that.collapseGroup(group);
                     } else {
                         that.expandGroup(group);
@@ -3697,9 +3697,9 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (that._isLocked()) {
-                that.lockedTable.on(CLICK + NS, ".k-grouping-row .k-i-collapse, .k-grouping-row .k-i-expand", that._groupableClickHandler);
+                that.lockedTable.on(CLICK + NS, ".k-grouping-row .k-i-arrow-60-right, .k-grouping-row .k-i-arrow-60-down", that._groupableClickHandler);
             } else {
-                that.table.on(CLICK + NS, ".k-grouping-row .k-i-collapse, .k-grouping-row .k-i-expand", that._groupableClickHandler);
+                that.table.on(CLICK + NS, ".k-grouping-row .k-i-arrow-60-right, .k-grouping-row .k-i-arrow-60-down", that._groupableClickHandler);
             }
 
             that._attachGroupable();
@@ -4570,7 +4570,7 @@ var __meta__ = { // jshint ignore:line
             var row = current.parent();
 
             if (row.is(".k-grouping-row")) {
-                row.find(".k-icon:first").click();
+                row.find(".kendoEditable-icon:first").click();
 
                 return true;
             }
@@ -5953,7 +5953,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (hasDetails) {
-                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-i-expand" href="\\#" tabindex="-1"></a></td>';
+                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-i-arrow-60-down" href="\\#" tabindex="-1"></a></td>';
                 }
 
                 for (idx = 0; idx < length; idx++) {
@@ -6267,17 +6267,17 @@ var __meta__ = { // jshint ignore:line
                 throw new Error("Having both detail template and locked columns is not supported");
             }
 
-            that.table.on(CLICK + NS, ".k-hierarchy-cell .k-i-expand, .k-hierarchy-cell .k-i-collapse", function(e) {
+            that.table.on(CLICK + NS, ".k-hierarchy-cell .k-i-arrow-60-down, .k-hierarchy-cell .k-i-arrow-60-right", function(e) {
                 var button = $(this),
-                    expanding = button.hasClass("k-i-expand"),
+                    expanding = button.hasClass("k-i-arrow-60-down"),
                     masterRow = button.closest("tr.k-master-row"),
                     detailRow,
                     detailTemplate = that.detailTemplate,
                     data,
                     hasDetails = that._hasDetails();
 
-                button.toggleClass("k-i-expand", !expanding)
-                    .toggleClass("k-i-collapse", expanding);
+                button.toggleClass("k-i-arrow-60-down", !expanding)
+                    .toggleClass("k-i-arrow-60-right", expanding);
 
                 detailRow = masterRow.next();
 
@@ -6333,11 +6333,11 @@ var __meta__ = { // jshint ignore:line
         },
 
         expandRow: function(tr) {
-            $(tr).find('> td .k-i-expand').click();
+            $(tr).find('> td .k-i-arrow-60-down').click();
         },
 
         collapseRow: function(tr) {
-            $(tr).find('> td .k-i-collapse').click();
+            $(tr).find('> td .k-i-arrow-60-right').click();
         },
 
         _createHeaderCells: function(columns, rowSpan) {
@@ -6969,7 +6969,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             level = group.find(".k-group-cell").length;
-            group.find(".k-i-collapse").addClass("k-i-expand").removeClass("k-i-collapse");
+            group.find(".k-i-arrow-60-right").addClass("k-i-arrow-60-down").removeClass("k-i-arrow-60-right");
             group.find("td[aria-expanded='true']:first").attr("aria-expanded", false);
             group = group.nextAll("tr");
 
@@ -7022,7 +7022,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             level = group.find(".k-group-cell").length;
-            group.find(".k-i-expand").addClass("k-i-collapse").removeClass("k-i-expand");
+            group.find(".k-i-arrow-60-down").addClass("k-i-arrow-60-right").removeClass("k-i-arrow-60-down");
             group.find("td[aria-expanded='false']:first").attr("aria-expanded", true);
             group = group.nextAll("tr");
 
@@ -7037,11 +7037,11 @@ var __meta__ = { // jshint ignore:line
                     tr.show();
                     relatedGroup.eq(idx).show();
 
-                    if (tr.hasClass("k-grouping-row") && tr.find(".k-icon").hasClass("k-i-collapse")) {
+                    if (tr.hasClass("k-grouping-row") && tr.find(".k-icon").hasClass("k-i-arrow-60-right")) {
                         that.expandGroup(tr);
                     }
 
-                    if (tr.hasClass("k-master-row") && tr.find(".k-icon").hasClass("k-i-collapse")) {
+                    if (tr.hasClass("k-master-row") && tr.find(".k-icon").hasClass("k-i-arrow-60-right")) {
                         tr.next().show();
                         relatedGroup.eq(idx + 1).show();
                     }
@@ -8068,7 +8068,7 @@ var __meta__ = { // jshint ignore:line
            return;
        }
 
-       if ($(e.target).is("a.k-i-collapse, a.k-i-expand")) {
+       if ($(e.target).is("a.k-i-arrow-60-right, a.k-i-arrow-60-down")) {
            return;
        }
 
@@ -8104,7 +8104,7 @@ var __meta__ = { // jshint ignore:line
        return '<tr role="row" class="k-grouping-row">' + groupCells(level) +
            '<td colspan="' + colspan + '" aria-expanded="true">' +
            '<p class="k-reset">' +
-           '<a class="k-icon k-i-collapse" href="#" tabindex="-1"></a>' + text +
+           '<a class="k-icon k-i-arrow-60-right" href="#" tabindex="-1"></a>' + text +
        '</p></td></tr>';
    }
 

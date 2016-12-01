@@ -651,8 +651,7 @@
         grid.dataSource.group({ field: "foo", dir: "asc" });
 
         grid.table.focus().press(kendo.keys.ENTER);
-
-        ok(grid.table.find(".k-grouping-row").first().find(".k-i-expand").length);
+        ok(grid.table.find(".k-grouping-row").first().find(".k-i-arrow-60-right").length);
     });
 
     test("enter key on collapsed group header row expands it", function() {
@@ -660,8 +659,7 @@
         grid.dataSource.group({ field: "foo", dir: "asc" });
 
         grid.table.focus().press(kendo.keys.ENTER).press(kendo.keys.ENTER);
-
-        ok(grid.table.find(".k-grouping-row").first().find(".k-i-collapse").length);
+        ok(grid.table.find(".k-grouping-row").first().find(".k-i-arrow-60-right").length);
     });
 
     test("enter key on group header row collapse it (in editale grid)", function() {
@@ -670,7 +668,7 @@
 
         grid.table.focus().press(kendo.keys.ENTER);
 
-        ok(grid.table.find(".k-grouping-row").first().find(".k-i-expand").length);
+        ok(grid.table.find(".k-grouping-row").first().find(".k-i-arrow-60-right").length);
     });
 
     test("enter key on collapsed group header row expands it (in editale grid)", function() {
@@ -679,21 +677,21 @@
 
         grid.table.focus().press(kendo.keys.ENTER).press(kendo.keys.ENTER);
 
-        ok(grid.table.find(".k-grouping-row").first().find(".k-i-collapse").length);
+        ok(grid.table.find(".k-grouping-row").first().find(".k-i-arrow-60-right").length);
     });
 
     test("enter key on master row expands it", function() {
         var grid = setup({ detailTemplate: "<input class='foo' />" });
         grid.table.focus().press(kendo.keys.ENTER);
 
-        ok(grid.items().first().find(".k-i-collapse").length);
+        ok(grid.items().first().find(".k-i-arrow-60-right").length);
     });
 
     test("enter key on expanded master row collapse it", function() {
         var grid = setup({ detailTemplate: "<input class='foo' />" });
         grid.table.focus().press(kendo.keys.ENTER).press(kendo.keys.ENTER);
 
-        ok(grid.items().first().find(".k-i-expand").length);
+        ok(grid.items().first().find(".k-i-arrow-60-down").length);
     });
 
     test("enter key on master row does not expands it when grid is editable", function() {
@@ -703,7 +701,7 @@
         });
         grid.table.focus().press(kendo.keys.ENTER);
 
-        ok(grid.items().first().find(".k-i-expand").length, "row is expanded");
+        ok(grid.items().first().find(".k-i-arrow-60-down").length, "row is expanded");
         ok(grid.items().first().children(":not(.k-hierarchy-cell)").first().hasClass("k-edit-cell"), "first cell is not in edit mode");
     });
 
@@ -711,7 +709,7 @@
         var grid = setup({ detailTemplate: "<input class='foo' />" });
         grid.table.focus().press(kendo.keys.RIGHT, false, false, true);
 
-        ok(grid.items().first().find(".k-i-collapse").length);
+        ok(grid.items().first().find(".k-i-arrow-60-right").length);
     });
 
     test("enter key on expanded master row collapse it", function() {
@@ -720,7 +718,7 @@
             .press(kendo.keys.RIGHT, false, false, true)
             .press(kendo.keys.LEFT, false, false, true);
 
-        ok(grid.items().first().find(".k-i-expand").length);
+        ok(grid.items().first().find(".k-i-arrow-60-down").length);
     });
 
     test("esc key on focused button in column", function() {

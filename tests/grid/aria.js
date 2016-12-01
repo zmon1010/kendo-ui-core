@@ -101,9 +101,7 @@
             columns: [ "foo"],
             detailTemplate: "details"
         });
-
         grid.table.focus().find(".k-icon:first").click();
-
         equal(grid.current().attr("aria-expanded"), "true");
     });
 

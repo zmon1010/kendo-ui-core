@@ -245,11 +245,11 @@
         }),
         masterRow = grid.tbody.find("tr.k-master-row:first");
 
-        masterRow.find(".k-hierarchy-cell .k-i-expand").click();
+        masterRow.find(".k-hierarchy-cell .k-i-arrow-60-down").click();
 
         ok(masterRow.next(":visible").hasClass("k-detail-row"));
-        ok(!masterRow.find(".k-hierarchy-cell .k-i-expand").length);
-        ok(masterRow.find(".k-hierarchy-cell .k-i-collapse").length);
+        ok(!masterRow.find(".k-hierarchy-cell .k-i-arrow-60-down").length);
+        ok(masterRow.find(".k-hierarchy-cell .k-i-arrow-60-right").length);
     });
 
     test("clicking on the collapse button hides the detailView for given master row", function() {
@@ -263,7 +263,7 @@
 
         grid.expandRow(masterRow);
 
-        masterRow.find(".k-hierarchy-cell .k-i-collapse").click();
+        masterRow.find(".k-hierarchy-cell .k-i-arrow-60-right").click();
 
         ok(masterRow.next(":not(:visible)").hasClass("k-detail-row"));
     });
