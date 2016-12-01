@@ -23,8 +23,8 @@
 
         var item = $(".k-item:first", treeview);
 
-        item.find(".k-i-expand")
-            .toggleClass("k-plus-disabled", true)
+        item.find(".k-i-arrow-60-right")
+            .toggleClass("k-i-plus", true)
             .trigger("click");
 
         equal(item.find(".k-group").css("display"), "none");
@@ -37,10 +37,10 @@
 
         var item = $(".k-item:first", treeview);
 
-        item.find(".k-i-expand")
+        item.find(".k-i-arrow-60-right")
             .trigger("click");
 
-        ok(item.find(".k-icon").hasClass("k-i-collapse"));
+        ok(item.find(".k-icon").hasClass("k-i-arrow-45-down-right"));
         equal(item.find(".k-group").css("display"), "block");
     });
 
@@ -51,10 +51,10 @@
 
         var item = $(".k-item:first", treeview);
 
-        item.find(".k-i-collapse")
+        item.find(".k-i-arrow-45-down-right")
             .trigger("click");
 
-        ok(item.find(".k-icon").hasClass("k-i-expand"));
+        ok(item.find(".k-icon").hasClass("k-i-arrow-60-right"));
         equal(item.find(".k-group").css("display"), "none");
     });
 
@@ -81,15 +81,15 @@
         treeviewObject.append({ text: "bar" }, parentNode);
         treeviewObject.collapse(parentNode);
 
-        equal(treeview.find(".k-icon.k-i-expand").length, 1);
+        equal(treeview.find(".k-icon.k-i-arrow-60-right").length, 1);
     });
 
     test("toggle buttons work when initializing from ul", function() {
         var dom = treeFromHtml("<ul><li>foo<ul><li>bar</li></ul></li></ul>");
 
-        dom.find(".k-i-expand").trigger("click");
+        dom.find(".k-i-arrow-60-right").trigger("click");
 
-        ok(dom.find(".k-i-collapse").length);
+        ok(dom.find(".k-i-arrow-45-down-right").length);
     });
 
     module("selection", TreeViewHelpers.noAnimationMoudle);
@@ -226,7 +226,6 @@
         });
 
         moveNode(treeviewObject, "foo", "baz", "above");
-
         equal(treeview.text(), "barfoobaz");
     });
 
@@ -244,7 +243,7 @@
 
         moveNode(treeviewObject, "baz", "bar");
 
-        ok(treeviewObject.findByText("bar").find(".k-icon:first").hasClass("k-i-collapse"));
+        ok(treeviewObject.findByText("bar").find(".k-icon:first").hasClass("k-i-arrow-45-down-right"));
         ok(treeviewObject.findByText("bar").find(".k-group").is(":visible"));
     });
 
@@ -264,7 +263,7 @@
 
         moveNode(treeviewObject, "baz", "bar");
 
-        ok(treeviewObject.findByText("bar").find(".k-icon:first").hasClass("k-i-collapse"));
+        ok(treeviewObject.findByText("bar").find(".k-icon:first").hasClass("k-i-arrow-45-down-right"));
         ok(treeviewObject.findByText("bar").find(".k-group").is(":visible"));
     });
 
@@ -1322,7 +1321,7 @@
         });
 
         treeviewObject.expand(".k-item");
-        equal(treeview.find(".k-icon.k-i-refresh").length, 1);
+        equal(treeview.find(".k-icon.k-i-reload").length, 1);
     });
 
     test("failed requests can be retried", function() {
@@ -1385,14 +1384,14 @@
         treeviewObject.expand(".k-item");
 
         // error out, show refresh icon
-        equal(treeview.find(".k-i-refresh").length, 1);
+        equal(treeview.find(".k-i-reload").length, 1);
         ok(!treeviewObject.dataItem(".k-item").expanded);
 
-        treeview.find(".k-i-refresh").click();
+        treeview.find(".k-i-reload").click();
 
         // success, hide refresh icon
         equal(calls, 2);
-        equal(treeview.find(".k-i-refresh").length, 0);
+        equal(treeview.find(".k-i-reload").length, 0);
         equal(treeview.find(".k-item .k-item").length, 1);
     });
 

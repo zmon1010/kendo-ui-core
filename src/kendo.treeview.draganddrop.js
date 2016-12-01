@@ -17,7 +17,7 @@ var __meta__ = { // jshint ignore:line
     var extend = $.extend;
     var VISIBILITY = "visibility";
     var KSTATEHOVER = "k-state-hover";
-    var INPUTSELECTOR = "input,a,textarea,.k-multiselect-wrap,select,button,a.k-button>.k-icon,button.k-button>.k-icon,span.k-icon.k-i-expand,span.k-icon.k-i-collapse";
+    var INPUTSELECTOR = "input,a,textarea,.k-multiselect-wrap,select,button,a.k-button>.k-icon,button.k-button>.k-icon,span.k-icon.k-i-arrow-60-right,span.k-icon.k-i-arrow-45-down-right";
 
     ui.HierarchicalDragAndDrop = kendo.Class.extend({
         init: function (element, options) {
@@ -64,7 +64,7 @@ var __meta__ = { // jshint ignore:line
             if (newStatus) {
                 statusElement.className = "k-icon k-drag-status " + newStatus;
             } else {
-                return $.trim(statusElement.className.replace(/k-(icon|drag-status)/g, ""));
+                return $.trim(statusElement.className.replace(/(p|k)-(icon|drag-status)/g, ""));
             }
         },
 
@@ -76,7 +76,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (this.options.reorderable) {
-                this.dropHint = $("<div class='k-drop-hint' />")
+                this.dropHint = $("<div class='k-i-drag-and-drop' />")
                     .css(VISIBILITY, "hidden")
                     .appendTo(this.element);
             } else {
@@ -95,11 +95,11 @@ var __meta__ = { // jshint ignore:line
 
             if (!container.length) {
                 // dragging outside of allowed elements
-                status = "k-i-denied";
+                status = "k-i-cancel";
                 this._removeTouchHover();
             } else if (source[0] == target[0] || options.contains(source[0], target[0])) {
                 // dragging item within itself
-                status = "k-i-denied";
+                status = "k-i-cancel";
             } else {
                 // moving or reordering item
                 status = "k-i-insert-middle";
@@ -136,7 +136,7 @@ var __meta__ = { // jshint ignore:line
                     this._lastHover = itemContent.toggleClass(KSTATEHOVER, addChild);
 
                     if (addChild) {
-                        status = "k-i-add";
+                        status = "k-i-plus";
                     } else {
                         position = hoveredItem.position();
                         position.top += insertOnTop ? 0 : itemHeight;
@@ -146,11 +146,11 @@ var __meta__ = { // jshint ignore:line
                             (options.dropHintContainer(hoveredItem));
 
                         if (insertOnTop && itemData.first) {
-                            status = "k-i-insert-top";
+                            status = "k-i-insert-up";
                         }
 
                         if (insertOnBottom && itemData.last) {
-                            status = "k-i-insert-bottom";
+                            status = "k-i-insert-down";
                         }
                     }
                 } else if (target[0] != this.dropHint[0]) {
@@ -160,9 +160,9 @@ var __meta__ = { // jshint ignore:line
 
                     if (!$.contains(this.element[0], container[0])) {
                         // moving node to different element
-                        status = "k-i-add";
+                        status = "k-i-plus";
                     } else {
-                        status = "k-i-denied";
+                        status = "k-i-cancel";
                     }
                 }
             }
@@ -214,7 +214,7 @@ var __meta__ = { // jshint ignore:line
                 originalEvent: e.originalEvent,
                 source: source[0],
                 destination: destination[0],
-                valid: this._hintStatus() != "k-i-denied",
+                valid: this._hintStatus() != "k-i-cancel",
                 setValid: function(newValid) {
                     this.valid = newValid;
                 },

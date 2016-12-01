@@ -61,10 +61,9 @@
 
     test("dragstart creates drag hint when reorderable is true", function() {
         dnd = createHierarchicalDND({ reorderable: true });
-
         dnd.dragstart({ currentTarget: fixture });
 
-        equal(fixture.find(".k-drop-hint").length, 1);
+        equal(fixture.find(".k-i-drag-and-drop").length, 1);
     });
 
     test("dragstart does not create drag hint when reorderable is false", function() {
@@ -72,7 +71,7 @@
 
         dnd.dragstart({ currentTarget: fixture });
 
-        equal(fixture.find(".k-drop-hint").length, 0);
+        equal(fixture.find(".k-i-drag-and-drop").length, 0);
     });
 
     test("drag method triggers drag handler", function() {
