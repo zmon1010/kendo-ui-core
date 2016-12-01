@@ -178,7 +178,7 @@
         var breadcrumbs = setup({
             value: "/foo/bar"
         });
-        breadcrumbs.wrapper.find("a:not(.k-i-arrow-n)").first().click();
+        breadcrumbs.wrapper.find("a:not(.k-i-arrow-60-up)").first().click();
         equal(breadcrumbs.value(), "/foo");
     });
 })();

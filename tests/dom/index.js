@@ -322,7 +322,7 @@
 
     test("render updates children if node type has changed", function() {
         tree.render([ element("div", null, [ text("test_1") ]) ]);
-        tree.render([ element("div", null, [ element("span", { class: "k-icon k-i-arrow-s" }), text("test_1") ]) ]);
+        tree.render([ element("div", null, [ element("span", { class: "k-icon k-i-arrow-60-down" }), text("test_1") ]) ]);
 
         ok(true);
     });

@@ -20,11 +20,11 @@ var __meta__ = { // jshint ignore:line
         CHANGE = "change",
         indicatorTmpl = kendo.template('<div class="k-group-indicator" data-#=data.ns#field="${data.field}" data-#=data.ns#title="${data.title || ""}" data-#=data.ns#dir="${data.dir || "asc"}">' +
                 '<a href="\\#" class="k-link">' +
-                    '<span class="k-icon k-i-sarrow-${(data.dir || "asc") == "asc" ? "n" : "s"}">(sorted ${(data.dir || "asc") == "asc" ? "ascending": "descending"})</span>' +
+                    '<span class="k-icon k-i-sort-${(data.dir || "asc") == "asc" ? "asc-sm" : "desc-sm"}">(sorted ${(data.dir || "asc") == "asc" ? "ascending": "descending"})</span>' +
                     '${data.title ? data.title: data.field}' +
                 '</a>' +
                 '<a class="k-button k-button-icon k-button-bare">' +
-                    '<span class="k-icon k-i-group-delete"></span>' +
+                    '<span class="k-icon k-i-close"></span>' +
                 '</a>' +
              '</div>',  { useWithBlock:false }),
         hint = function(target) {
@@ -43,7 +43,7 @@ var __meta__ = { // jshint ignore:line
                     paddingBottom: target.css("paddingBottom")
                 })
                 .html(title || target.attr(kendo.attr("field")))
-                .prepend('<span class="k-icon k-drag-status k-i-denied" />');
+                .prepend('<span class="k-icon k-drag-status k-i-cancel" />');
         },
         dropCue = $('<div class="k-grouping-dropclue"/>');
 
@@ -76,12 +76,12 @@ var __meta__ = { // jshint ignore:line
                     group: draggable.options.group,
                     dragenter: function(e) {
                         if (that._canDrag(e.draggable.currentTarget)) {
-                            e.draggable.hint.find(".k-drag-status").removeClass("k-i-denied").addClass("k-i-add");
+                            e.draggable.hint.find(".k-drag-status").removeClass("k-i-cancel").addClass("k-i-plus");
                             dropCue.css("top", dropCueOffsetTop(that.groupContainer)).css(horizontalCuePosition, 0).appendTo(that.groupContainer);
                         }
                     },
                     dragleave: function(e) {
-                        e.draggable.hint.find(".k-drag-status").removeClass("k-i-add").addClass("k-i-denied");
+                        e.draggable.hint.find(".k-drag-status").removeClass("k-i-plus").addClass("k-i-cancel");
                         dropCue.remove();
                     },
                     drop: function(e) {
@@ -126,7 +126,7 @@ var __meta__ = { // jshint ignore:line
 
                         intializePositions();
                         dropCue.css({top: dropCueOffsetTop(that.groupContainer), left: left}).appendTo(that.groupContainer);
-                        this.hint.find(".k-drag-status").removeClass("k-i-denied").addClass("k-i-add");
+                        this.hint.find(".k-drag-status").removeClass("k-i-cancel").addClass("k-i-plus");
                     },
                     dragend: function() {
                         that._dragEnd(this);

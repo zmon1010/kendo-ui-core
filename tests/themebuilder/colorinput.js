@@ -12,9 +12,9 @@
             kendo.destroy(QUnit.fixture);
         }
     });
-    //TODO: Test should be fixed after all font-icons cherrypicks are completed
-    skip("changing input value changes preview bgcolor", function() {
-        var colorIndicator = colorInput.closest(".k-widget").find(".k-i-arrow-s"),
+
+    test("changing input value changes preview bgcolor", function() {
+        var colorIndicator = colorInput.closest(".k-widget").find(".k-i-arrow-60-down"),
             colorInputControl = colorInput.data("kendoColorInput");
 
         colorInputControl.value("#000000");
@@ -47,11 +47,11 @@
 
         litmus.remove();
     });
-    //TODO: Test should be fixed after all font-icons cherrypicks are completed
-    skip("preview bgcolor is changed upon init", function() {
+
+    test("preview bgcolor is changed upon init", function() {
         colorInput = $("<input value='#ff0000' />").appendTo(QUnit.fixture).kendoColorInput();
 
-        equal(kendo.parseColor(colorInput.closest(".k-widget").find(".k-i-arrow-s").css("backgroundColor")).toHex(), "ff0000");
+        equal(kendo.parseColor(colorInput.closest(".k-widget").find(".k-i-arrow-60-down").css("backgroundColor")).toHex(), "ff0000");
     });
 
     test("change handler is called only once on change", function() {
