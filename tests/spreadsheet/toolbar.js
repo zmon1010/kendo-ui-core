@@ -337,12 +337,12 @@
 
     test("renders toolbar button for Open command", function() {
         createWithTools();
-        equal(element.find("span.k-font-icon.k-i-folder-open").length, 1);
+        equal(element.find("span.k-icon.k-i-folder-open").length, 1);
     });
 
     test("renders toolbar button for Save As command", function() {
         createWithTools();
-        equal(element.find("span.k-font-icon.k-i-xls").length, 1);
+        equal(element.find("span.k-icon.k-i-file-excel").length, 1);
     });
 
     test("open popup on click", function() {

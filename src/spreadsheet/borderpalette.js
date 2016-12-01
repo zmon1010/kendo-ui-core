@@ -156,7 +156,7 @@
 
             _resetButton: function() {
                 this.resetButton = $("<a class='k-button k-reset-color' href='#'>" +
-                                    "<span class='k-icon k-font-icon k-i-reset-color'></span>" + BORDER_PALETTE_MESSAGES.reset +
+                                    "<span class='k-icon k-icon k-i-reset-color'></span>" + BORDER_PALETTE_MESSAGES.reset +
                                    "</a>").appendTo(this.element);
             },
 
@@ -210,7 +210,7 @@
                 var messages = BORDER_PALETTE_MESSAGES;
                 var buttons = BORDER_TYPES.map(function(type) {
                     return '<a title="' + messages[type] + '" href="#" data-border-type="' + type + '" class="k-button k-button-icon">' +
-                                '<span class="k-sprite k-font-icon k-icon k-i-' + kendo.toHyphens(type) + '"></span>' +
+                                '<span class="k-icon k-i-' + kendo.toHyphens(type) + '"></span>' +
                            '</a>';
                 }).join("");
 

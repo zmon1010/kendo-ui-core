@@ -14,10 +14,10 @@
             button: "k-button",
             detailsSummary: "k-details-summary",
             detailsContent: "k-details-content",
-            icon: "k-icon k-font-icon",
-            iconCollapse: "k-i-collapse-se",
-            iconExpand: "k-i-expand-e",
-            iconSearch: "k-i-search",
+            icon: "k-icon",
+            iconCollapse: "k-i-arrow-45-down-right",
+            iconExpand: "k-i-arrow-60-right",
+            iconSearch: "k-i-zoom",
             textbox: "k-textbox",
             wrapper: "k-spreadsheet-filter-menu",
             filterByCondition: "k-spreadsheet-condition-filter",
@@ -158,7 +158,7 @@
                 "<div class='" + classNames.detailsContent + "'>" +
                     "<div class='k-textbox k-space-right'>" +
                         "<input placeholder='#= messages.search #' data-#=ns#bind='events: { input: filterValues }' />" +
-                        "<span class='k-icon k-font-icon k-i-search' />" +
+                        "<span class='k-icon k-i-zoom' />" +
                     "</div>" +
                     "<div data-#=ns#bind='visible: hasActiveSearch'><input class='k-checkbox' type='checkbox' data-#=ns#bind='checked: appendToSearch' id='_#=guid#' /><label class='k-checkbox-label' for='_#=guid#'>#= messages.addToCurrent #</label></div>" +
                     "<div class='" + classNames.valuesTreeViewWrapper + "'>" +
@@ -197,7 +197,7 @@
                 "</div>",
             menuItem:
                 "<li data-command='#=command#' data-dir='#=dir#'>" +
-                    "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
+                    "<span class='k-icon k-i-#=iconClass#'></span>#=text#" +
                 "</li>",
             actionButtons:
                 "<button data-#=ns#bind='click: apply' class='k-button k-primary'>#=messages.apply#</button>" +

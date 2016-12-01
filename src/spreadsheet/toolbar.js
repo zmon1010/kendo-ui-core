@@ -124,39 +124,39 @@
 
     var toolDefaults = {
         //home tab
-        open:                  { type: "open",                                     overflow: "never",                          iconClass: "xlsa" },
-        exportAs:              { type: "exportAsDialog", dialogName: "exportAs",   overflow: "never",       text: "",        iconClass: "xlsa" },
+        open:                  { type: "open",                                     overflow: "never",                          iconClass: "file-excel" },
+        exportAs:              { type: "exportAsDialog", dialogName: "exportAs",   overflow: "never",       text: "",        iconClass: "file-excel" },
         bold:                  { type: "button", command: "PropertyChangeCommand", property: "bold",          value: true,     iconClass: "bold", togglable: true },
         italic:                { type: "button", command: "PropertyChangeCommand", property: "italic",        value: true,     iconClass: "italic", togglable: true },
         underline:             { type: "button", command: "PropertyChangeCommand", property: "underline",     value: true,     iconClass: "underline", togglable: true },
-        formatDecreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: -1,       iconClass: "decrease-decimal" },
-        formatIncreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: +1,       iconClass: "increase-decimal" },
+        formatDecreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: -1,       iconClass: "decimal-decrease" },
+        formatIncreaseDecimal: { type: "button", command: "AdjustDecimalsCommand",                            value: +1,       iconClass: "decimal-increase" },
         textWrap:              { type: "button", command: "TextWrapCommand",       property: "wrap",          value: true,     iconClass: "text-wrap", togglable: true },
         cut:                   { type: "button", command: "ToolbarCutCommand",                                                 iconClass: "cut" },
         copy:                  { type: "button", command: "ToolbarCopyCommand",                                                iconClass: "copy" },
         paste:                 { type: "button", command: "ToolbarPasteCommand",                                               iconClass: "paste" },
         separator:             { type: "separator" },
-        alignment:             { type: "alignment",                           iconClass: "justify-left" },
-        backgroundColor:       { type: "colorPicker", property: "background", iconClass: "background" },
-        textColor:             { type: "colorPicker", property: "color",      iconClass: "text" },
-        fontFamily:            { type: "fontFamily",  property: "fontFamily", iconClass: "text" },
+        alignment:             { type: "alignment",                           iconClass: "align-left" },
+        backgroundColor:       { type: "colorPicker", property: "background", iconClass: "paint" },
+        textColor:             { type: "colorPicker", property: "color",      iconClass: "foreground-color" },
+        fontFamily:            { type: "fontFamily",  property: "fontFamily", iconClass: "font-family" },
         fontSize:              { type: "fontSize",    property: "fontSize",   iconClass: "font-size" },
-        format:                { type: "format",      property: "format",     iconClass: "format-number" },
+        format:                { type: "format",      property: "format",     iconClass: "custom-format" },
         filter:                { type: "filter",      property: "hasFilter",  iconClass: "filter" },
-        merge:                 { type: "merge",                               iconClass: "merge-cells" },
-        freeze:                { type: "freeze",                              iconClass: "freeze-panes" },
-        borders:               { type: "borders",                             iconClass: "all-borders" },
+        merge:                 { type: "merge",                               iconClass: "cells-merge" },
+        freeze:                { type: "freeze",                              iconClass: "pane-freeze" },
+        borders:               { type: "borders",                             iconClass: "borders-all" },
         formatCells:           { type: "dialog", dialogName: "formatCells", overflow: "never" },
-        hyperlink:             { type: "dialog", dialogName: "hyperlink", iconClass: "hyperlink", overflow: "never", text: "" },
-        toggleGridlines:       { type: "button", command: "GridLinesChangeCommand", property: "gridLines", value: true, iconClass: "no-borders", togglable: true },
+        hyperlink:             { type: "dialog", dialogName: "hyperlink", iconClass: "link-horizontal", overflow: "never", text: "" },
+        toggleGridlines:       { type: "button", command: "GridLinesChangeCommand", property: "gridLines", value: true, iconClass: "border-no", togglable: true },
 
         //insert tab
-        addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "add-column-left"  },
-        addColumnRight:        { type: "button", command: "AddColumnCommand",    value: "right", iconClass: "add-column-right" },
-        addRowBelow:           { type: "button", command: "AddRowCommand",       value: "below", iconClass: "add-row-below"    },
-        addRowAbove:           { type: "button", command: "AddRowCommand",       value: "above", iconClass: "add-row-above"    },
-        deleteColumn:          { type: "button", command: "DeleteColumnCommand",                 iconClass: "delete-column"    },
-        deleteRow:             { type: "button", command: "DeleteRowCommand",                    iconClass: "delete-row"       },
+        addColumnLeft:         { type: "button", command: "AddColumnCommand",    value: "left",  iconClass: "table-column-insert-left"  },
+        addColumnRight:        { type: "button", command: "AddColumnCommand",    value: "right", iconClass: "table-column-insert-right" },
+        addRowBelow:           { type: "button", command: "AddRowCommand",       value: "below", iconClass: "table-row-insert-below"    },
+        addRowAbove:           { type: "button", command: "AddRowCommand",       value: "above", iconClass: "table-row-insert-above"    },
+        deleteColumn:          { type: "button", command: "DeleteColumnCommand",                 iconClass: "table-column-delete"    },
+        deleteRow:             { type: "button", command: "DeleteRowCommand",                    iconClass: "table-row-delete"       },
 
         //data tab
         sort:                  { type: "sort", iconClass: "sort-desc" },
@@ -188,7 +188,7 @@
             function expandTool(toolName) {
                 // expand string to object, add missing tool properties
                 var options = $.isPlainObject(toolName) ? toolName : toolDefaults[toolName] || {};
-                var spriteCssClass = "k-icon k-font-icon k-i-" + options.iconClass;
+                var spriteCssClass = "k-icon k-i-" + options.iconClass;
                 var type = options.type;
                 var typeDefaults = {
                     splitButton: { spriteCssClass: spriteCssClass },
@@ -436,7 +436,7 @@
         init: function(options, toolbar) {
             this.element = $("<a href='#' class='k-button k-button-icon'>" +
                                 "<span class='" + options.spriteCssClass + "'>" +
-                                "</span><span class='k-icon k-i-arrow-s'></span>" +
+                                "</span><span class='k-icon k-i-arrow-60-down'></span>" +
                             "</a>");
 
             this.element
@@ -488,7 +488,7 @@
 
             this.toolbar = toolbar;
             this.element = $("<button class='k-button k-button-icon' title='" + options.attributes.title + "'>" +
-                                 "<span class='k-icon k-font-icon k-i-xls' />" +
+                                 "<span class='k-icon k-i-file-excel' />" +
                              "</button>").data("instance", this);
 
             this.element.bind("click", this.open.bind(this))
@@ -704,7 +704,7 @@
             DropDownTool.fn.init.call(this, options, toolbar);
 
             var ddl = this.dropDownList;
-            var icon = "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>";
+            var icon = "<span class='k-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>";
             ddl.bind("change", this._revertTitle.bind(this));
             ddl.bind("dataBound", this._revertTitle.bind(this));
             ddl.setOptions({
@@ -804,10 +804,10 @@
             });
         },
         buttons: [
-            { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: MESSAGES.alignmentButtons.justtifyLeft },
-            { property: "textAlign",     value: "center",  iconClass: "justify-center", text: MESSAGES.alignmentButtons.justifyCenter },
-            { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: MESSAGES.alignmentButtons.justifyRight },
-            { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: MESSAGES.alignmentButtons.justifyFull },
+            { property: "textAlign",     value: "left",    iconClass: "align-left",   text: MESSAGES.alignmentButtons.justtifyLeft },
+            { property: "textAlign",     value: "center",  iconClass: "align-center", text: MESSAGES.alignmentButtons.justifyCenter },
+            { property: "textAlign",     value: "right",   iconClass: "align-right",  text: MESSAGES.alignmentButtons.justifyRight },
+            { property: "textAlign",     value: "justify", iconClass: "align-justify",   text: MESSAGES.alignmentButtons.justifyFull },
             { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: MESSAGES.alignmentButtons.alignTop },
             { property: "verticalAlign", value: "center",  iconClass: "align-middle",   text: MESSAGES.alignmentButtons.alignMiddle },
             { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: MESSAGES.alignmentButtons.alignBottom }
@@ -836,7 +836,7 @@
             var element = $("<div />").appendTo(this.popup.element);
             buttons.forEach(function(options, index) {
                 var button = "<a title='" + options.text + "' data-property='" + options.property + "' data-value='" + options.value + "' class='k-button k-button-icon'>" +
-                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" +
+                                "<span class='k-icon k-i-" + options.iconClass + "'></span>" +
                              "</a>";
                 if (index !== 0 && buttons[index - 1].property !== options.property) {
                     element.append($("<span class='k-separator' />"));
@@ -882,10 +882,10 @@
             });
         },
         buttons: [
-            { value: "cells",        iconClass: "merge-cells",        text: MESSAGES.mergeButtons.mergeCells },
-            { value: "horizontally", iconClass: "merge-horizontally", text: MESSAGES.mergeButtons.mergeHorizontally },
-            { value: "vertically",   iconClass: "merge-vertically",   text: MESSAGES.mergeButtons.mergeVertically },
-            { value: "unmerge",      iconClass: "normal-layout",      text: MESSAGES.mergeButtons.unmerge }
+            { value: "cells",        iconClass: "cells-merge",        text: MESSAGES.mergeButtons.mergeCells },
+            { value: "horizontally", iconClass: "cells-merge-horizontally", text: MESSAGES.mergeButtons.mergeHorizontally },
+            { value: "vertically",   iconClass: "cells-merge-vertically",   text: MESSAGES.mergeButtons.mergeVertically },
+            { value: "unmerge",      iconClass: "table-unmerge",      text: MESSAGES.mergeButtons.unmerge }
         ],
         destroy: function() {
             this.popup.element.off();
@@ -895,7 +895,7 @@
             var element = $("<div />").appendTo(this.popup.element);
             this.buttons.forEach(function(options) {
                 var button = "<a title='" + options.text + "' data-value='" + options.value + "' class='k-button k-button-icontext'>" +
-                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + options.text +
+                                "<span class='k-icon k-i-" + options.iconClass + "'></span>" + options.text +
                              "</a>";
                 element.append(button);
             });
@@ -936,10 +936,10 @@
             });
         },
         buttons: [
-            { value: "panes",    iconClass: "freeze-panes",  text: MESSAGES.freezeButtons.freezePanes },
-            { value: "rows",     iconClass: "freeze-row",    text: MESSAGES.freezeButtons.freezeRows },
-            { value: "columns",  iconClass: "freeze-col",    text: MESSAGES.freezeButtons.freezeColumns },
-            { value: "unfreeze", iconClass: "normal-layout", text: MESSAGES.freezeButtons.unfreeze }
+            { value: "panes",    iconClass: "pane-freeze",  text: MESSAGES.freezeButtons.freezePanes },
+            { value: "rows",     iconClass: "row-freeze",    text: MESSAGES.freezeButtons.freezeRows },
+            { value: "columns",  iconClass: "column-freeze",    text: MESSAGES.freezeButtons.freezeColumns },
+            { value: "unfreeze", iconClass: "table-unmerge", text: MESSAGES.freezeButtons.unfreeze }
         ],
         destroy: function() {
             this.popup.element.off();
@@ -949,7 +949,7 @@
             var element = $("<div />").appendTo(this.popup.element);
             this.buttons.forEach(function(options) {
                 var button = "<a title='" + options.text + "' data-value='" + options.value + "' class='k-button k-button-icontext'>" +
-                                "<span class='k-icon k-font-icon k-i-" + options.iconClass + "'></span>" + options.text +
+                                "<span class='k-icon k-i-" + options.iconClass + "'></span>" + options.text +
                              "</a>";
                 element.append(button);
             });
@@ -986,8 +986,8 @@
             ddl.bind("change", this._revertTitle.bind(this));
             ddl.bind("dataBound", this._revertTitle.bind(this));
             ddl.setOptions({
-                valueTemplate: "<span class='k-icon k-font-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>",
-                template: "<span class='k-icon k-font-icon k-i-#= iconClass #' style='line-height: 1em; width: 1.35em;'></span>#=text#",
+                valueTemplate: "<span class='k-icon k-i-" + options.iconClass + "' style='line-height: 1em; width: 1.35em;'></span>",
+                template: "<span class='k-icon k-i-#= iconClass #' style='line-height: 1em; width: 1.35em;'></span>#=text#",
                 dataTextField: "text",
                 dataValueField: "value"
             });
@@ -1072,7 +1072,7 @@
         init: function(options, toolbar) {
             this.toolbar = toolbar;
             this.element = $("<div class='k-button k-upload-button k-button-icon'>" +
-                                 "<span class='k-icon k-font-icon k-i-folder-open' />" +
+                                 "<span class='k-icon k-i-folder-open' />" +
                              "</div>").data("instance", this);
 
             this._title = options.attributes.title;
@@ -1147,10 +1147,10 @@
 
         _quickAccessButtons: function() {
             var buttons = [
-                { title: MESSAGES.quickAccess.undo, iconClass: "undo-large", action: "undo" },
-                { title: MESSAGES.quickAccess.redo, iconClass: "redo-large", action: "redo" }
+                { title: MESSAGES.quickAccess.undo, iconClass: "undo", action: "undo" },
+                { title: MESSAGES.quickAccess.redo, iconClass: "redo", action: "redo" }
             ];
-            var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' data-action='#= action #' class='k-button k-button-icon'><span class='k-icon k-font-icon k-i-#=iconClass#'></span></a>");
+            var buttonTemplate = kendo.template("<a href='\\#' title='#= title #' data-action='#= action #' class='k-button k-button-icon'><span class='k-icon k-i-#=iconClass#'></span></a>");
 
             this.quickAccessToolBar = $("<div />", {
                 "class": "k-spreadsheet-quick-access-toolbar",

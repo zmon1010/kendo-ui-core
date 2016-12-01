@@ -837,10 +837,10 @@
             var defaultOptions = {
                 title: messages.title,
                 buttons: [
-                    { property: "textAlign",     value: "left",    iconClass: "justify-left",   text: messages.buttons.justtifyLeft },
-                    { property: "textAlign",     value: "center",  iconClass: "justify-center", text: messages.buttons.justifyCenter },
-                    { property: "textAlign",     value: "right",   iconClass: "justify-right",  text: messages.buttons.justifyRight },
-                    { property: "textAlign",     value: "justify", iconClass: "justify-full",   text: messages.buttons.justifyFull },
+                    { property: "textAlign",     value: "left",    iconClass: "align-left",   text: messages.buttons.justtifyLeft },
+                    { property: "textAlign",     value: "center",  iconClass: "align-center", text: messages.buttons.justifyCenter },
+                    { property: "textAlign",     value: "right",   iconClass: "align-right",  text: messages.buttons.justifyRight },
+                    { property: "textAlign",     value: "justify", iconClass: "align-justify",   text: messages.buttons.justifyFull },
                     { property: "verticalAlign", value: "top",     iconClass: "align-top",      text: messages.buttons.alignTop },
                     { property: "verticalAlign", value: "center",  iconClass: "align-middle",   text: messages.buttons.alignMiddle },
                     { property: "verticalAlign", value: "bottom",  iconClass: "align-bottom",   text: messages.buttons.alignBottom }
@@ -860,7 +860,7 @@
             this.list = new kendo.ui.StaticList(ul, {
                 dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
                 template: "<a title='#=text#' data-property='#=property#' data-value='#=value#'>" +
-                                "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>" +
+                                "<span class='k-icon k-i-#=iconClass#'></span>" +
                                 "#=text#" +
                            "</a>",
                 change: this.apply.bind(this)
@@ -890,10 +890,10 @@
             var defaultOptions = {
                 title: messages.title,
                 buttons: [
-                    { value: "cells",        iconClass: "merge-cells",        text: messages.buttons.mergeCells },
-                    { value: "horizontally", iconClass: "merge-horizontally", text: messages.buttons.mergeHorizontally },
-                    { value: "vertically",   iconClass: "merge-vertically",   text: messages.buttons.mergeVertically },
-                    { value: "unmerge",      iconClass: "normal-layout",      text: messages.buttons.unmerge }
+                    { value: "cells",        iconClass: "cells-merge",        text: messages.buttons.mergeCells },
+                    { value: "horizontally", iconClass: "cells-merge-horizontally", text: messages.buttons.mergeHorizontally },
+                    { value: "vertically",   iconClass: "cells-merge-vertically",   text: messages.buttons.mergeVertically },
+                    { value: "unmerge",      iconClass: "table-unmerge",      text: messages.buttons.unmerge }
                 ]
             };
 
@@ -910,7 +910,7 @@
             this.list = new kendo.ui.StaticList(ul, {
                 dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
                 template: "<a title='#=text#' data-value='#=value#'>" +
-                            "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
+                            "<span class='k-icon k-icon k-i-#=iconClass#'></span>#=text#" +
                           "</a>",
                 change: this.apply.bind(this)
             });
@@ -938,10 +938,10 @@
             var defaultOptions = {
                 title: messages.title,
                 buttons: [
-                    { value: "panes",    iconClass: "freeze-panes",  text: messages.buttons.freezePanes },
-                    { value: "rows",     iconClass: "freeze-row",    text: messages.buttons.freezeRows },
-                    { value: "columns",  iconClass: "freeze-col",    text: messages.buttons.freezeColumns },
-                    { value: "unfreeze", iconClass: "normal-layout", text: messages.buttons.unfreeze }
+                    { value: "panes",    iconClass: "pane-freeze",  text: messages.buttons.freezePanes },
+                    { value: "rows",     iconClass: "row-freeze",    text: messages.buttons.freezeRows },
+                    { value: "columns",  iconClass: "column-freeze",    text: messages.buttons.freezeColumns },
+                    { value: "unfreeze", iconClass: "table-unmerge", text: messages.buttons.unfreeze }
                 ]
             };
 
@@ -958,7 +958,7 @@
             this.list = new kendo.ui.StaticList(ul, {
                 dataSource: new kendo.data.DataSource({ data: this.options.buttons }),
                 template: "<a title='#=text#' data-value='#=value#'>" +
-                            "<span class='k-icon k-font-icon k-i-#=iconClass#'></span>#=text#" +
+                            "<span class='k-icon k-icon k-i-#=iconClass#'></span>#=text#" +
                           "</a>",
                 change: this.apply.bind(this)
             });

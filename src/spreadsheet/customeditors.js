@@ -157,7 +157,7 @@
                 context = options;
                 open();
             },
-            icon: "k-i-arrow-s"
+            icon: "k-i-arrow-60-down"
         };
     });
 
