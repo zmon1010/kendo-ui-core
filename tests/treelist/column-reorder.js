@@ -201,7 +201,7 @@
         var ths = instance.thead.find("tr:first").children();
 
         equal(ths.eq(0).text(), "parentId");
-        ok(ths.eq(0).find(".k-i-arrow-n")[0]);
+        ok(ths.eq(0).find(".k-i-sort-asc-sm")[0]);
     });
 
     test("reorder with hidden column", function() {

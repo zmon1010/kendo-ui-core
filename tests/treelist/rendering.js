@@ -95,7 +95,7 @@
     test("renders expand arrows", function() {
         createTreeList();
 
-        equal(instance.content.find("span.k-icon.k-i-expand").length, 1);
+        equal(instance.content.find("span.k-icon.k-i-arrow-60-right").length, 1);
     });
 
     test("renders expand arrows in expandable column", function() {
@@ -103,7 +103,7 @@
             columns: [ "id", { field: "parentId", expandable: true } ]
         });
 
-        var expandArrow = instance.content.find("span.k-icon.k-i-expand")
+        var expandArrow = instance.content.find("span.k-icon.k-i-arrow-60-right")
         equal(expandArrow.closest("td").index(), 1);
     });
 
@@ -210,7 +210,7 @@
             }
         });
 
-        equal(instance.content.find(".k-icon.k-i-expand").length, 0);
+        equal(instance.content.find(".k-icon.k-i-arrow-60-right").length, 0);
     });
 
     test("column template as string", function() {

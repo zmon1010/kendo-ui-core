@@ -118,7 +118,7 @@ var __meta__ = { // jshint ignore:line
         gridFilter: "k-grid-filter",
         footerTemplate: "k-footer-template",
         loading: "k-i-loading",
-        refresh: "k-i-refresh",
+        refresh: "k-i-reload",
         retry: "k-request-retry",
         selected: "k-state-selected",
         status: "k-status",
@@ -127,17 +127,17 @@ var __meta__ = { // jshint ignore:line
         filterable: "k-filterable",
         icon: "k-icon",
         iconFilter: "k-i-filter",
-        iconCollapse: "k-i-collapse",
-        iconExpand: "k-i-expand",
+        iconCollapse: "k-i-arrow-45-down-right",
+        iconExpand: "k-i-arrow-60-right",
         iconHidden: "k-i-none",
         iconPlaceHolder: "k-icon k-i-none",
         input: "k-input",
-        dropPositions: "k-i-insert-top k-i-insert-bottom k-i-add k-i-insert-middle",
-        dropTop: "k-i-insert-top",
-        dropBottom: "k-i-insert-bottom",
-        dropAdd: "k-i-add",
+        dropPositions: "k-i-insert-up k-i-insert-down k-i-plus k-i-insert-middle",
+        dropTop: "k-i-insert-up",
+        dropBottom: "k-i-insert-down",
+        dropAdd: "k-i-plus",
         dropMiddle: "k-i-insert-middle",
-        dropDenied: "k-i-denied",
+        dropDenied: "k-i-cancel",
         dragStatus: "k-drag-status",
         dragClue: "k-drag-clue",
         dragClueText: "k-clue-text"
@@ -145,17 +145,17 @@ var __meta__ = { // jshint ignore:line
 
     var defaultCommands = {
         create: {
-            imageClass: "k-i-add",
+            imageClass: "k-i-plus",
             className: "k-grid-add",
             methodName: "addRow"
         },
         createchild: {
-            imageClass: "k-i-add",
+            imageClass: "k-i-plus",
             className: "k-grid-add",
             methodName: "addRow"
         },
         destroy: {
-            imageClass: "k-i-delete",
+            imageClass: "k-i-close",
             className: "k-grid-delete",
             methodName: "removeRow"
         },
@@ -165,7 +165,7 @@ var __meta__ = { // jshint ignore:line
             methodName: "editRow"
         },
         update: {
-            imageClass: "k-i-update",
+            imageClass: "k-i-check",
             className: "k-primary k-grid-update",
             methodName: "saveRow"
         },
@@ -175,12 +175,12 @@ var __meta__ = { // jshint ignore:line
             methodName: "_cancelEdit"
         },
         excel: {
-            imageClass: "k-i-excel",
+            imageClass: "k-i-file-excel",
             className: "k-grid-excel",
             methodName: "saveAsExcel"
         },
         pdf: {
-            imageClass: "k-i-pdf",
+            imageClass: "k-i-file-pdf",
             className: "k-grid-pdf",
             methodName: "saveAsPDF"
         }
@@ -3082,7 +3082,7 @@ var __meta__ = { // jshint ignore:line
                         paddingBottom: target.css("paddingBottom")
                     })
                     .html(target.attr(kendo.attr("title")) || target.attr(kendo.attr("field")) || target.text())
-                    .prepend('<span class="k-icon k-drag-status k-i-denied" />');
+                    .prepend('<span class="k-icon k-drag-status k-i-cancel" />');
                 }
             });
 

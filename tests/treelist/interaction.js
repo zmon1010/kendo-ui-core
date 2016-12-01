@@ -80,7 +80,7 @@
     test("click on expand arrow shows child rows", function() {
         createTreeList();
 
-        instance.content.find(".k-i-expand").click();
+        instance.content.find(".k-i-arrow-60-right").click();
 
         equal(instance.content.find("tr").length, 2);
     });
@@ -93,7 +93,7 @@
             ]
         });
 
-        instance.content.find(".k-i-collapse").mousedown();
+        instance.content.find(".k-i-arrow-45-down-right").mousedown();
 
         var rows = instance.content.find("tr");
 
@@ -116,7 +116,7 @@
 
         createTreeList({ dataSource: ds });
 
-        instance.content.find(".k-i-expand").mousedown();
+        instance.content.find(".k-i-arrow-60-right").mousedown();
 
         equal(instance.content.find("tr").length, 2);
     });
@@ -134,7 +134,7 @@
         read.resolve([ { id: 1, hasChildren: true } ]);
 
         // expand item
-        instance.content.find(".k-i-expand").mousedown();
+        instance.content.find(".k-i-arrow-60-right").mousedown();
 
         equal(loadingIcons().length, 1, "loading icon not shown upon expanding");
 
@@ -152,11 +152,11 @@
 
         read.resolve([ { id: 1, hasChildren: true } ]);
 
-        instance.content.find(".k-i-expand").mousedown();
+        instance.content.find(".k-i-arrow-60-right").mousedown();
 
         read.resolve([]);
 
-        equal(instance.content.find(".k-icon.k-i-collapse").length, 0);
+        equal(instance.content.find(".k-icon.k-i-arrow-45-down-right").length, 0);
     });
 
     test("clicks on loading icon are ignored", function() {
@@ -168,11 +168,11 @@
 
         read.resolve([ { id: 1, hasChildren: true } ]);
 
-        instance.content.find(".k-i-expand").mousedown();
+        instance.content.find(".k-i-arrow-60-right").mousedown();
 
-        instance.content.find(".k-i-collapse").mousedown();
+        instance.content.find(".k-i-arrow-45-down-right").mousedown();
 
-        equal(instance.content.find(".k-i-expand").length, 0);
+        equal(instance.content.find(".k-i-arrow-60-right").length, 0);
         equal(instance.content.find(".k-i-loading").length, 1);
     });
 
@@ -260,11 +260,11 @@
 
         read.resolve([ { id: 1, hasChildren: true } ]);
 
-        instance.content.find(".k-i-expand").mousedown();
+        instance.content.find(".k-i-arrow-60-right").mousedown();
 
         read.reject({});
 
-        equal(instance.content.find(".k-i-refresh").length, 1);
+        equal(instance.content.find(".k-i-reload").length, 1);
     });
 
     test("clicking refresh icon fetches rows", function() {
@@ -276,11 +276,11 @@
 
         read.resolve([ { id: 1, hasChildren: true } ]);
 
-        instance.content.find(".k-i-expand").mousedown();
+        instance.content.find(".k-i-arrow-60-right").mousedown();
 
         read.reject({});
 
-        instance.content.find(".k-i-refresh").mousedown();
+        instance.content.find(".k-i-reload").mousedown();
 
         read.resolve([ { id: 2, parentId: 1 } ]);
 
@@ -669,8 +669,8 @@
 
         equal(content.find(".k-state-selected").length, 1);
 
-        content.find(".k-i-collapse").mousedown();
-        content.find(".k-i-expand").mousedown();
+        content.find(".k-i-arrow-45-down-right").mousedown();
+        content.find(".k-i-arrow-60-right").mousedown();
 
         equal(content.find(".k-state-selected").length, 1);
     });
