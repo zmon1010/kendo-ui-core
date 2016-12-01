@@ -212,7 +212,8 @@ var __meta__ = { // jshint ignore:line
                 selectable: true,
                 autoBind: false,
                 dataBinding: function(e) {
-                    that.toolbar.find(".k-i-delete").parent().addClass("k-state-disabled");
+
+                    that.toolbar.find(".k-i-close").parent().addClass("k-state-disabled");
 
                     if (e.action === "remove" || e.action === "sync") {
                         e.preventDefault();
