@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public double? Columns { get; set; }
 
+        public SpreadsheetDefaultCellStyleSettings DefaultCellStyle { get; } = new SpreadsheetDefaultCellStyleSettings();
+
         public double? HeaderHeight { get; set; }
 
         public double? HeaderWidth { get; set; }
@@ -53,6 +55,12 @@ namespace Kendo.Mvc.UI
             if (Columns.HasValue)
             {
                 settings["columns"] = Columns;
+            }
+
+            var defaultCellStyle = DefaultCellStyle.Serialize();
+            if (defaultCellStyle.Any())
+            {
+                settings["defaultCellStyle"] = defaultCellStyle;
             }
 
             if (HeaderHeight.HasValue)

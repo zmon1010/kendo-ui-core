@@ -36,6 +36,15 @@ class Spreadsheet extends \Kendo\UI\Widget {
     }
 
     /**
+    * The default cell styles to be applyied to sheet cells.
+    * @param \Kendo\UI\SpreadsheetDefaultCellStyle|array $value
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function defaultCellStyle($value) {
+        return $this->setProperty('defaultCellStyle', $value);
+    }
+
+    /**
     * The height of the header row in pixels.
     * @param float $value
     * @return \Kendo\UI\Spreadsheet

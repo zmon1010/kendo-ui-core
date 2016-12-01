@@ -98,13 +98,17 @@
             { property: Property, name: "editor", value: null, sortable: false, serializable: true }
         ],
 
-        init: function(cellCount) {
+        init: function(cellCount, defaultValues) {
+            defaultValues = defaultValues || {};
+
             this.properties = {};
 
             this.lists = {};
 
             this.specs.forEach(function(spec) {
-               this.lists[spec.name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, spec.value);
+                var value = defaultValues[spec.name] !== undefined ? defaultValues[spec.name] : spec.value;
+
+               this.lists[spec.name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
             }, this);
 
             this.specs.forEach(function(spec) {

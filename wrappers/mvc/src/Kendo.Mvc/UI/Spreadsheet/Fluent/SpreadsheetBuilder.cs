@@ -56,6 +56,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// The default cell styles to be applyied to sheet cells.
+        /// </summary>
+        /// <param name="configurator">The action that configures the defaultcellstyle.</param>
+        public SpreadsheetBuilder DefaultCellStyle(Action<SpreadsheetDefaultCellStyleSettingsBuilder> configurator)
+        {
+            configurator(new SpreadsheetDefaultCellStyleSettingsBuilder(container.DefaultCellStyle));
+            return this;
+        }
+        
+        /// <summary>
         /// The height of the header row in pixels.
         /// </summary>
         /// <param name="value">The value that configures the headerheight.</param>
