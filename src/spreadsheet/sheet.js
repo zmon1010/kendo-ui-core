@@ -107,14 +107,14 @@
             defaultCellStyle = defaultCellStyle || {};
 
             this._defaultCellStyle = {
-                background: defaultCellStyle["background"],
-                color: defaultCellStyle["color"],
-                fontFamily: defaultCellStyle["fontFamily"],
-                fontSize: defaultCellStyle["fontSize"],
-                italic: defaultCellStyle["italic"],
-                bold: defaultCellStyle["bold"],
-                underline: defaultCellStyle["underline"],
-                wrap: defaultCellStyle["wrap"]
+                background: defaultCellStyle.background,
+                color: defaultCellStyle.color,
+                fontFamily: defaultCellStyle.fontFamily,
+                fontSize: defaultCellStyle.fontSize,
+                italic: defaultCellStyle.italic,
+                bold: defaultCellStyle.bold,
+                underline: defaultCellStyle.underline,
+                wrap: defaultCellStyle.wrap
             };
 
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
