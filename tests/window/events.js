@@ -73,6 +73,7 @@
                     triggers++;
                 }
             });
+
         dialog.wrapper.find(".k-i-refresh").trigger("click");
 
         equal(triggers, 1);

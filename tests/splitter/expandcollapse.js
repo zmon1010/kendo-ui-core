@@ -139,6 +139,7 @@
         };
 
         splitter.dom.find(".k-splitbar").trigger("dblclick");
+
         equal(called, splitter.dom.find(".k-pane:first")[0]);
     });
 
