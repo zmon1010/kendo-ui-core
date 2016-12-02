@@ -178,6 +178,18 @@
         equal(size.height, 600);
     });
 
+    test("event position is retrieved from originalEvent on wheel", 2, function(e) {
+        createDiagram({
+            selectable: true
+        });        
+        var event  = jQuery.Event("scroll", {originalEvent: { pageX: 20, pageY: 20}});
+        diagram.element.offset({ top: 5, left: 5 });
+        var pos = diagram._eventPositions(event);
+
+        equal(pos.x, 15);
+        equal(pos.y, 15);
+    });      
+
     // ------------------------------------------------------------
     module("Diagram / interaction defaults", {
         setup: function() {
@@ -271,7 +283,7 @@
             }
         });
         equal(diagram.options.pannable.key, "shift");
-    });
+    });     
 
     // ------------------------------------------------------------
     (function() {
@@ -497,7 +509,7 @@
     // ------------------------------------------------------------
     (function() {
         function trigger(name, x, y, which) {
-            var event = jQuery.Event(name, { pageX: x, pageY: y, which: which || 0});
+            var event = jQuery.Event(name, { pageX: x, pageY: y, which: which || 0, originalEvent: { pageX: x, pageY: y}});
             diagram.scrollable.trigger(event);
         }
 
@@ -564,7 +576,7 @@
             move(10, 10, 1);
             move(150, 150, 1);
             move(0, 0, 1);
-        });    
+        });           
     })();
 
     // ------------------------------------------------------------

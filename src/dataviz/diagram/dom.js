@@ -2317,7 +2317,8 @@
                     var field = start ? "startLocation" : "location";
                     point = new Point(e.x[field], e.y[field]);
                 } else {
-                    point = new Point(e.pageX, e.pageY);
+                    var event = e.originalEvent;
+                    point = new Point(event.pageX, event.pageY);
                 }
 
                 return this.documentToModel(point);
