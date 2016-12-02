@@ -1,13 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
-  <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>10</daysToKeep>
-    <numToKeep>20</numToKeep>
-    <artifactDaysToKeep>-1</artifactDaysToKeep>
-    <artifactNumToKeep>-1</artifactNumToKeep>
-  </logRotator>
+  <description>Builds &lt;a href=&quot;https://gitlab.telerik.com/kendo/angular-rollup&quot;&gt;angular-rollup&lt;/a&gt; to verify Rollup compatibility of the included components</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.7">
@@ -30,49 +24,40 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>git@gitlab.telerik.com:kendo/themebuilder.git</url>
-        <credentialsId>2da2cef6-1aed-463d-9b03-fedb24525353</credentialsId>
+        <url>git@gitlab.telerik.com:kendo/angular-rollup.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/master</name>
+        <name>master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>windows</assignedNode>
+  <assignedNode>master</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H/30 8-19 * * 1-5</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd themebuilder
-#npm install
-npm run staging</command>
+      <command>rm -r node_modules
+npm install</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>cd sass-compiler
-#npm install</command>
+      <command>npm run build</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>cd widget-preview/angular
-#npm install
-npm run staging</command>
+      <command>rsync -a ./dist /var/www/angular-rollup</command>
     </hudson.tasks.Shell>
-    <hudson.tasks.BatchFile>
-      <command>xcopy themebuilder\dist c:\shares\staging-themebuilder /E /Y /D
-xcopy themebuilder\web.config c:\shares\staging-themebuilder /Y /D
-xcopy sass-compiler c:\shares\staging-themebuilder\sass-compiler /E /Y /D
-xcopy widget-preview\kendo c:\shares\staging-themebuilder\preview-kendo /E /Y /D
-xcopy widget-preview\aspnet-ajax c:\shares\staging-themebuilder\preview-ajax /E /Y
-xcopy widget-preview\angular\dist c:\shares\staging-themebuilder\preview-angular /E /Y /D</command>
-    </hudson.tasks.BatchFile>
   </builders>
   <publishers/>
   <buildWrappers/>

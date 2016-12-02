@@ -87,6 +87,7 @@
       </buildSteps>
       <scriptOnlyIfSuccess>false</scriptOnlyIfSuccess>
       <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
+      <executeOn>BOTH</executeOn>
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <jenkins.plugins.slack.SlackNotifier plugin="slack@1.7">
       <teamDomain>kendoui</teamDomain>
@@ -95,7 +96,7 @@
       <room></room>
     </jenkins.plugins.slack.SlackNotifier>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Staging-Demos-production, CI-Production-JQuery3</childProjects>
+      <childProjects>Staging-Demos-production,CI-Production-JQuery3</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

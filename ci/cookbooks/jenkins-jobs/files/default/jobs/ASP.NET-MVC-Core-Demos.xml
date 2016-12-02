@@ -72,7 +72,8 @@ export REDIST_PATH=//telerik.com/distributions/DailyBuilds/KendoUI/BUILDS/Stable
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>git reset --hard</command>
+      <command>git reset --hard
+git clean -xdf .</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
