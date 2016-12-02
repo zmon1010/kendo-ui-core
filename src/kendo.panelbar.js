@@ -149,6 +149,7 @@ var __meta__ = { // jshint ignore:line
                 var result = "k-icon";
 
                 result += item.expanded ? " k-i-arrow-60-up k-panelbar-collapse" : " k-i-arrow-60-down k-panelbar-expand";
+
                 return result;
             },
             text: function(item) {
