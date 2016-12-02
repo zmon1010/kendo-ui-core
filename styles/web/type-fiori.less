@@ -488,20 +488,6 @@ html .km-pane-wrapper .k-header
     border-color: transparent;
 }
 
-.k-grouping-dropclue,
-.k-i-drag-and-drop,
-.k-column-menu .k-sprite,
-.k-grid-mobile .k-resize-handle-inner:before,
-.k-grid-mobile .k-resize-handle-inner:after,
-.k-pager-numbers .k-current-page .k-link:after,
-.k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view > .k-link:after,
-.k-gantt-views > .k-current-view > .k-link:after
-{
-    background-image: @sprite-image;
-    border-color: transparent;
-}
-
-
 /* IE will ignore the above selectors if these are added too */
 .k-mobile-list .k-check:checked,
 .k-mobile-list .k-edit-field [type=checkbox]:checked,
@@ -1581,18 +1567,6 @@ div.k-filebrowser-dropzone em
     background-color: @widget-background-color;
 }
 
-/* PivotGrid */
-
-.k-i-arrow-60-down,
-.k-i-stop,
-.k-i-minus,
-.k-i-arrow-60-up,
-.k-i-arrow-60-up,
-.k-i-circle
-{
-    background-image: url('@{image-folder}/sprite_kpi.png');
-}
-
 /* Border radius */
 .k-block,
 .k-button,
@@ -2351,17 +2325,6 @@ html .km-pane-wrapper .km-widget,
 
 .k-radio:disabled:checked + .k-radio-label:active:before {
     border-color: @radio-disabled-border-color;
-}
-
-// Retina sprite
-@media only screen and (-webkit-min-device-pixel-ratio: 1.2),
-       only screen and (min-device-pixel-ratio: 1.2) {
-    .k-dropdown-wrap .k-input,
-    .k-picker-wrap .k-input,
-    .k-numeric-wrap .k-input
-    {
-        border-radius: @inner-border-radius 0 0 @inner-border-radius;
-    }
 }
 
 // High contrast mode
