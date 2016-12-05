@@ -5,4 +5,6 @@ git clean -dfx src styles dist demos wrappers dpl
 npm install
 bundle --without development --path ~/gems
 
+gulp import-dependencies
+
 bundle exec rake "$1"
