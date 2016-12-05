@@ -25,6 +25,8 @@
         lessThanOrEqual    : "lessThanOrEqualTo"
     };
 
+    var ERROR_LOG = null;
+
     function readExcel(file, workbook, deferred) {
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -65,6 +67,8 @@
     }
 
     function readWorkbook(zip, workbook, progress) {
+        ERROR_LOG = workbook.excelImportErrors = [];
+
         var strings = readStrings(zip);
         var relationships = readRelationships(zip, "_rels/workbook.xml");
         var theme = readTheme(zip, relationships.byType.theme[0]);
@@ -112,7 +116,9 @@
                     if (sheet) {
                         name = "'" + sheet.replace(/\'/g, "\\'") + "'!" + name;
                     }
-                    workbook.defineName(name, text, bool(attrs.hidden));
+                    withErrorLog(sheet, null, function(){
+                        workbook.defineName(name, text, bool(attrs.hidden));
+                    }, "reading user-defined name: " + name);
                 }
             }
         });
@@ -237,6 +243,7 @@
         var relsFile = file.replace(/worksheets\//, "worksheets/_rels/");
         var relationships = readRelationships(zip, relsFile);
         var formula1, formula2;
+        ERROR_LOG = sheet._workbook.excelImportErrors;
 
         parse(zip, xl(file), {
             enter: function(tag, attrs) {
@@ -337,12 +344,12 @@
                 var attrs;
                 if (this.is(SEL_CELL)) {
                     if (formula != null) {
-                        try {
+                        var failed = withErrorLog(sheet, formulaRange || ref, function(){
                             sheet.range(formulaRange || ref).formula(formula);
-                        } catch(ex) {
+                        }, "parsing formula");
+                        if (failed) {
                             sheet.range(formulaRange || ref).value(formula)
                                 .background("#ffaaaa");
-                            // console.error(text);
                         }
                     } else if (value != null) {
                         var range = sheet.range(ref);
@@ -382,17 +389,19 @@
                             operator = "between";
                         }
                         refs.forEach(function(ref){
-                            sheet.range(ref).validation({
-                                type             : bool(attrs.showErrorMessage, true) ? "reject" : "warning",
-                                from             : formula1,
-                                to               : formula2,
-                                dataType         : type,
-                                comparerType     : MAP_EXCEL_OPERATOR[operator] || operator,
-                                allowNulls       : bool(attrs.allowBlank),
-                                showButton       : bool(attrs.showDropDown) || type == "date" || type == "list",
-                                messageTemplate  : attrs.error,
-                                titleTemplate    : attrs.errorTitle
-                            });
+                            withErrorLog(sheet, ref, function(){
+                                sheet.range(ref).validation({
+                                    type             : bool(attrs.showErrorMessage, true) ? "reject" : "warning",
+                                    from             : formula1,
+                                    to               : formula2,
+                                    dataType         : type,
+                                    comparerType     : MAP_EXCEL_OPERATOR[operator] || operator,
+                                    allowNulls       : bool(attrs.allowBlank),
+                                    showButton       : bool(attrs.showDropDown) || type == "date" || type == "list",
+                                    messageTemplate  : attrs.error,
+                                    titleTemplate    : attrs.errorTitle
+                                });
+                            }, "parsing validation");
                         });
                     })();
                 } else if (tag == "cols") {
@@ -417,6 +426,23 @@
                 }
             }
         });
+    }
+
+    function withErrorLog(sheet, ref, func, context) {
+        try {
+            func();
+            return false;
+        } catch(ex) {
+            var err = { context: context, error: String(ex) };
+            if (sheet) {
+                err.sheet = sheet.name();
+            }
+            if (ref) {
+                err.location = String(ref);
+            }
+            ERROR_LOG.push(err);
+            return true;
+        }
     }
 
     var BORDER_WIDTHS = {

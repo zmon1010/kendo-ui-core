@@ -26,6 +26,9 @@
             _rows: {
                 _refresh: () => null
             },
+            _workbook: {
+                excelImportErrors: []
+            },
             range: ref => ({
                 value: () => null,
                 formula: () => null,
@@ -652,7 +655,41 @@
         kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
     });
 
-    test("reads dataValidations (date)", function() {
+    test("maintains error log in workbook", function(){
+        var STRINGS = [];
+        var STYLES = {};
+        var SHEET = `
+            <worksheet>
+              <sheetData>
+                <row r="1">
+                  <c r="A1" t="e">
+                    <f> :( </f>
+                  </c>
+                  <c r="B1" t="e">
+                    <f> :) </f>
+                  </c>
+                </row>
+              </sheetData>
+            </worksheet>
+`;
+        addFile("xl/worksheets/sheet1.xml", SHEET);
+        var sheet = mockSheet({
+            range: ref => ({
+                formula: val => { throw "Found sad smiley" },
+                value: function(){ return this },
+                validation: () => function(){ return this },
+                background: () => function(){ return this },
+                _get: () => true
+            })
+        }, { name: "Sheet1" });
+        kendo.spreadsheet._readSheet(zip, "worksheets/sheet1.xml", sheet, STRINGS, STYLES);
+        var err = sheet._workbook.excelImportErrors[0];
+        deepEqual(err, { context: 'parsing formula', error: 'Found sad smiley', sheet: 'Sheet1', location: 'A1' });
+        var err = sheet._workbook.excelImportErrors[1];
+        deepEqual(err, { context: 'parsing formula', error: 'Found sad smiley', sheet: 'Sheet1', location: 'B1' });
+    });
+
+    test("reads dataValidations", function() {
         var STRINGS = [];
         var STYLES = {};
         var SHEET = `
