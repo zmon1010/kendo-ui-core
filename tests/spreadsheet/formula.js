@@ -553,6 +553,13 @@
         });
     });
 
+    test("parse names with weird unicode letters", function(){
+        var exp = calc.parse(Sheet1, 0, 0, "=SUM(整理1)");
+        var ref = exp.ast.args[0];
+        ok(ref instanceof spreadsheet.NameRef);
+        equal(ref.name, "整理1");
+    });
+
     test("parse .1 numbers", function(){
         var exp = calc.parse(Sheet1, 0, 0, "=.1");
         hasProps(exp.ast, { type: "num", value: 0.1 });

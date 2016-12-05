@@ -14,6 +14,7 @@
     /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, -W054 */
     /* jshint latedef: nofunc */
 
+    var util = kendo.util;
     var spreadsheet = kendo.spreadsheet;
     var Ref = spreadsheet.Ref;
     var RangeRef = spreadsheet.RangeRef;
@@ -228,6 +229,9 @@
             }
             else if (!input.peek()) {
                 input.croak("Incomplete expression");
+            }
+            else if (is("punc", "[")) {
+                input.croak("External reference not supported");
             }
             else {
                 input.croak("Parse error");
@@ -984,7 +988,7 @@
         }
 
         function isIdStart(ch) {
-            return (/[a-z$_]/i.test(ch) || ch.toLowerCase() != ch.toUpperCase());
+            return (/[a-z$_]/i.test(ch) || util.isUnicodeLetter(ch));
         }
 
         function isId(ch) {
