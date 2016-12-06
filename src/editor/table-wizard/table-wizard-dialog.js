@@ -563,7 +563,7 @@ var TableWizardDialog = kendo.Class.extend({
 
     _initColorPicker: function(element, property, data, storage) {
         var component = storage[property] =
-            element.kendoColorPicker({buttons: false}).data("kendoColorPicker");
+            element.kendoColorPicker({buttons: false, clearButton: true}).data("kendoColorPicker");
 
         if (data[property]) {
             component.value(data[property]);
