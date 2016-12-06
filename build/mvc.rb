@@ -110,6 +110,7 @@ MVC_DEMOS = FileList[MVC_DEMOS_ROOT + '**/*']
                 )
                 .include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll')
                 .include(FileList[SPREADSHEET_REDIST_NET40].pathmap(MVC_DEMOS_ROOT + 'bin/%f'))
+                .include(FileList[KENDO_MVC_EXPORT_REDIST_NET40].pathmap(MVC_DEMOS_ROOT + 'bin/%f'))
                 .exclude('**/System*.dll')
                 .exclude('**/*.csproj')
                 .exclude('**/*resources.dll')
@@ -338,6 +339,10 @@ else
     tree :to => 'dist/binaries/demos/Kendo.Mvc.Examples/bin/',
          :from => SPREADSHEET_REDIST_NET40,
          :root => SPREADSHEET_SRC_ROOT + '/bin/Release'
+
+    tree :to => 'dist/binaries/demos/Kendo.Mvc.Examples/bin/',
+         :from => KENDO_MVC_EXPORT_REDIST_NET40,
+         :root => KENDO_MVC_EXPORT_SRC_ROOT + '/Release'
 
     # MVC6 package
     file MVC6_NUGET => MVC6_SOURCES do
