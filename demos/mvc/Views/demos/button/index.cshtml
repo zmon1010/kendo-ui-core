@@ -13,7 +13,7 @@
                     <h4>Disabled buttons</h4>
                     <p>
                          <a id="primaryDisabledButton" class="k-primary">Disabled Primary Button</a>
-                         <a id="disabledButton">Disabled Button</a>                       
+                         <a id="disabledButton">Disabled Button</a>
                     </p>
                 </div>
 
@@ -24,7 +24,7 @@
                         <a id="kendoIconTextButton">Clear Filter</a>
                         <em id="iconButton"><span class="k-sprite">Refresh</span></em>
                     </p>
-                </div> 
+                </div>
             </div>
 
             <script>
@@ -42,19 +42,19 @@
                     });
 
                     $("#iconTextButton").kendoButton({
-                        spriteCssClass: "k-icon k-i-funnel"
+                        spriteCssClass: "k-icon k-i-filter"
                     });
 
                     $("#kendoIconTextButton").kendoButton({
-                        icon: "funnel-clear"
+                        icon: "k-icon k-i-filter-clear"
                     });
 
                     $("#iconButton").kendoButton({
                         spriteCssClass: "k-icon k-i-refresh"
-                    });               
+                    });
                 });
             </script>
-            
+
             <style>
                 .demo-section p {
                     margin: 0 0 30px;
@@ -65,6 +65,6 @@
                 }
                 .k-primary {
                     min-width: 150px;
-                }                
+                }
             </style>
         </div>

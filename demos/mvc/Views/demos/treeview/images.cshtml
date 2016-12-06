@@ -64,6 +64,40 @@
                 });
             </script>
 
+            <div class="demo-section k-content">
+            <h4>TreeView with font icons</h4>
+
+            <div id="treeview-font-icons"></div>
+            </div>
+            <script>
+                $("#treeview-font-icons").kendoTreeView({
+                    dataSource: [{
+                        text: "My Documents", expanded: true, spriteCssClass: "rootfolder", items: [
+                            {
+                                text: "Kendo UI Project", expanded: true, spriteCssClass: "k-icon k-i-folder", items: [
+                                    { text: "about.html", spriteCssClass: "k-icon k-i-html" },
+                                    { text: "index.html", spriteCssClass: "k-icon k-i-html" },
+                                    { text: "logo.png", spriteCssClass: "k-icon k-i-image" }
+                                ]
+                            },
+                            {
+                                text: "New Web Site", expanded: true, spriteCssClass: "folder", items: [
+                                    { text: "mockup.jpg", spriteCssClass: "k-icon k-i-image" },
+                                    { text: "Research.pdf", spriteCssClass: "k-icon k-i-pdf" },
+                                ]
+                            },
+                            {
+                                text: "Reports", expanded: true, spriteCssClass: "k-icon k-i-folder", items: [
+                                    { text: "February.pdf", spriteCssClass: "k-icon k-i-pdf" },
+                                    { text: "March.pdf", spriteCssClass: "k-icon k-i-pdf" },
+                                    { text: "April.pdf", spriteCssClass: "k-icon k-i-pdf" }
+                                ]
+                            }
+                        ]
+                    }]
+                });
+            </script>
+
             <style>
                 #treeview-sprites .k-sprite {
                     background-image: url("../content/web/treeview/coloricons-sprite.png");
@@ -74,5 +108,24 @@
                 .pdf { background-position: 0 -32px; }
                 .html { background-position: 0 -48px; }
                 .image { background-position: 0 -64px; }
+
+                /* Backward compatibility support for custom sprites */
+                .k-sprite {
+                    display: inline-block;
+                    width: 16px;
+                    height: 16px;
+                    overflow: hidden;
+                    background-repeat: no-repeat;
+                    font-size: 0;
+                    line-height: 0;
+                    text-align: center;
+                    -ms-high-contrast-adjust: none;
+                }
+
+                /* Removes sprite styles from font icons */
+                .k-sprite.k-icon {
+                    font-size: 16px;
+                    line-height: 1;
+                }
             </style>
         </div>
