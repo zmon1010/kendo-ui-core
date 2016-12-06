@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Should_not_serialize_confirm_delete_if_false()
+        public void Should_serialize_confirmation_if_false()
         {
             var grid = GridTestHelper.CreateGrid<Customer>();
             grid.Editable.Enabled = true;
@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Tests
 
             var result = grid.Editable.ToJson();
 
-            result.ContainsKey("confirmation").ShouldBeFalse();
+            ((bool)result["confirmation"]).ShouldBeFalse();
         }
 
         [Fact]
