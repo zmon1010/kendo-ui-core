@@ -221,6 +221,10 @@ namespace Kendo.Mvc.UI
                     json["confirmation"] = Confirmation;
                 }
             }
+            else
+            {
+                json["confirmation"] = false;
+            }
 
             FluentDictionary.For(json)
                 .Add("confirmDelete", ConfirmDelete)
