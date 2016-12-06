@@ -631,16 +631,15 @@
             var topLeft = this._grid.normalize(ref.topLeft);
             var bottomRight = this._grid.normalize(ref.bottomRight);
 
-            for (var ci = topLeft.col; ci <= bottomRight.col; ci ++) {
-                var ri = topLeft.row;
+            function doIt(value) {
+                callback(ri++, ci, value);
+            }
 
+            for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
+                var ri = topLeft.row;
                 var startCellIndex = this._grid.index(ri, ci);
                 var endCellIndex = this._grid.index(bottomRight.row, ci);
-
-                /* jshint loopfunc: true */
-                this._properties.forEach(startCellIndex, endCellIndex, function(value) {
-                    callback(ri++, ci, value);
-                });
+                this._properties.forEach(startCellIndex, endCellIndex, doIt);
             }
         },
 
@@ -956,8 +955,19 @@
             var columns = this._columns.toJSON("width", {});
             var viewSelection = this._viewSelection;
             var hyperlinks = [];
+            var defaultCellStyle = this._defaultCellStyle || {};
+
+            function clearDefaultStyle(cell) {
+                Object.keys(defaultCellStyle).forEach(function(key){
+                    if (cell[key] === defaultCellStyle[key]) {
+                        delete cell[key];
+                    }
+                });
+            }
 
             this.forEach(kendo.spreadsheet.SHEETREF, function(row, col, cell) {
+                clearDefaultStyle(cell);
+
                 if (Object.keys(cell).length === 0) {
                     return;
                 }
@@ -973,9 +983,7 @@
 
                 if (position === undefined) {
                     position = rows.length;
-
                     rows.push({ index: row });
-
                     positions[row] = position;
                 }
 
@@ -1036,7 +1044,8 @@
                 mergedCells: this._mergedCells.map(function(ref) {
                     return ref.toString();
                 }),
-                hyperlinks: hyperlinks
+                hyperlinks: hyperlinks,
+                defaultCellStyle: defaultCellStyle
             };
 
             if (this._sort) {

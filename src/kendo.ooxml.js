@@ -141,15 +141,20 @@ var WORKSHEET = kendo.template(
    '<sheetFormatPr x14ac:dyDescent="0.25" defaultRowHeight="#= defaults.rowHeight ? defaults.rowHeight * 0.75 : 15 #" ' +
        '# if (defaults.columnWidth) { # defaultColWidth="#= kendo.ooxml.toWidth(defaults.columnWidth) #" # } #' +
    ' />' +
-   '# if (columns && columns.length > 0) { #' +
+   '# if (defaultCellStyleId != null || (columns && columns.length > 0)) { #' +
    '<cols>' +
+   '# if (!columns || !columns.length) { #' +
+       '<col min="1" max="16384" style="${defaultCellStyleId}" />' +
+   '# } #' +
    '# for (var ci = 0; ci < columns.length; ci++) { #' +
        '# var column = columns[ci]; #' +
        '# var columnIndex = typeof column.index === "number" ? column.index + 1 : (ci + 1); #' +
        '# if (column.width === 0) { #' +
-           '<col min="${columnIndex}" max="${columnIndex}" hidden="1" customWidth="1" />' +
+           '<col #if(defaultCellStyleId!=null){# style="${defaultCellStyleId}" #}#' +
+           'min="${columnIndex}" max="${columnIndex}" hidden="1" customWidth="1" />' +
        '# } else if (column.width) { #' +
-           '<col min="${columnIndex}" max="${columnIndex}" customWidth="1"' +
+           '<col #if(defaultCellStyleId!=null){# style="${defaultCellStyleId}" #}#' +
+           'min="${columnIndex}" max="${columnIndex}" customWidth="1"' +
            '# if (column.autoWidth) { #' +
                ' width="${((column.width*7+5)/7*256)/256}" bestFit="1"' +
            '# } else { #' +
@@ -445,6 +450,11 @@ var Worksheet = kendo.Class.extend({
             }
         }
 
+        var defaultCellStyleId = null;
+        if (this.options.defaultCellStyle) {
+            defaultCellStyleId = this._lookupStyle(this.options.defaultCellStyle);
+        }
+
         var freezePane = this.options.freezePane || {};
         return WORKSHEET({
             frozenColumns: this.options.frozenColumns || freezePane.colSplit,
@@ -457,7 +467,8 @@ var Worksheet = kendo.Class.extend({
             filter: filter,
             showGridLines: this.options.showGridLines,
             hyperlinks: this.options.hyperlinks || [],
-            validations: validations
+            validations: validations,
+            defaultCellStyleId: defaultCellStyleId
         });
     },
     _lookupString: function(value) {
@@ -547,20 +558,33 @@ var Worksheet = kendo.Class.extend({
 
         border = this._lookupBorder(border);
 
-        var style = {
-            bold: data.bold,
-            color: data.color,
-            background: data.background,
-            italic: data.italic,
-            underline: data.underline,
-            fontFamily: data.fontFamily || data.fontName,
-            fontSize: data.fontSize,
-            format: data.format,
-            textAlign: data.textAlign || data.hAlign,
-            verticalAlign: data.verticalAlign || data.vAlign,
-            wrap: data.wrap,
-            borderId: border
-        };
+        var defStyle = this.options.defaultCellStyle || {};
+        var style = { borderId: border };
+
+        (function(add){
+            add("color");
+            add("background");
+            add("bold");
+            add("italic");
+            add("underline");
+            if (!add("fontFamily")) { add("fontName", "fontFamily"); }
+            add("fontSize");
+            add("format");
+            if (!add("textAlign")) { add("hAlign", "textAlign"); }
+            if (!add("verticalAlign")) { add("vAlign", "verticalAlign"); }
+            add("wrap");
+        })(
+            function(prop, target){
+                var val = data[prop];
+                if (val === undefined) {
+                    val = defStyle[prop];
+                }
+                if (val !== undefined) {
+                    style[target || prop] = val;
+                    return true;
+                }
+            }
+        );
 
         var columns = this.options.columns || [];
 

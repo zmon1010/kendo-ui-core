@@ -780,15 +780,28 @@
         },
 
         hasValue: function() {
-            var result = false;
-
-            this.forEachCell(function(row, col, cell) {
-                if (Object.keys(cell).length !== 0) {
-                    result = true;
+            var yesItHas = {};
+            var defStyle = this._sheet._defaultCellStyle;
+            try {
+                this.forEachCell(function(row, col, cell) {
+                    // we must not consider cells that only have same values
+                    // as defaultCellStyle, or otherwise we will forbid
+                    // inserting rows/cols in an empty sheet.
+                    for (var key in cell) {
+                        var val = cell[key];
+                        if (val !== undefined && val !== defStyle[key]) {
+                            throw yesItHas;
+                        }
+                    }
+                });
+            } catch(ex) {
+                if (ex === yesItHas) {
+                    return true;
+                } else {
+                    throw ex;
                 }
-            });
-
-            return result;
+            }
+            return false;
         },
 
         wrap: function(flag) {
