@@ -90,7 +90,7 @@ def run_shell(cmd, args)
 end
 
 def sync(source, dest)
-    sh "rsync -rvz --del #{source} #{dest}"
+    sh "rsync -rlv --del #{source} #{dest}"
 end
 
 def uglifyjs(from, to)
