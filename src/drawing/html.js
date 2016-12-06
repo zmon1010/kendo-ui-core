@@ -1128,8 +1128,9 @@
     function createsStackingContext(style) {
         function prop(name) { return getPropertyValue(style, name); }
         if (prop("transform") != "none" ||
-            (prop("position") != "static" && prop("z-index") != "auto") ||
-            (prop("opacity") < 1)) {
+            prop("position") != "static" ||
+            prop("z-index") != "auto" ||
+            prop("opacity") < 1) {
             return true;
         }
     }
@@ -2392,7 +2393,7 @@
         if (isNaN(zb)) {
             return za === 0 ? 0 : za > 0 ? 1 : -1;
         }
-        return parseFloat(za) - parseFloat(zb);
+        return za - zb;
     }
 
     function isFormField(element) {
