@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>html { font-size: 14px; font-family: "DejaVu Sans", Helvetica, sans-serif; }</style>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="./loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.all.js"
+     ]);
+    </script>
+    <script src="./pako.min.js"></script>
+  </head>
+  <body>
+    <div id="example">
+
+      <div class="box wide hidden-on-narrow">
+        <h4>Export page content</h4>
+        <div class="box-col">
+          <button class='export-pdf k-button'>Export as PDF</button>
+        </div>
+        <div class="box-col">
+          <button class='export-img k-button'>Export as Image</button>
+        </div>
+        <div class="box-col">
+          <button class='export-svg k-button'>Export as SVG</button>
+        </div>
+      </div>
+
+      <div class="demo-section k-content export-app wide hidden-on-narrow">
+        <div class="demo-section content-wrapper wide">
+          <div class="demo-section charts-wrapper wide">
+            <div id="users"></div>
+            <div id="applications"></div>
+            <div id="referrals"></div>
+          </div>
+          <div id="spreadsheet" style="width: 100%"></div>
+
+        </div>
+      </div>
+
+      <div class="responsive-message"></div>
+    </div>
+
+    <style>
+     /*
+        Use the DejaVu Sans font for display and embedding in the PDF file.
+        The standard PDF fonts have no support for Unicode characters.
+      */
+     .k-widget {
+       font-family: "DejaVu Sans", "Arial", sans-serif;
+       font-size: .9em;
+     }
+    </style>
+
+    <script>
+     $(document).ready(function() {
+
+         $(".export-pdf").click(function() {
+             // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+             kendo.drawing.drawDOM($(".content-wrapper"))
+                  .then(function(group) {
+                      // Render the result as a PDF file
+                      return kendo.drawing.exportPDF(group, {
+                          paperSize: "auto",
+                          margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+                      });
+                  })
+                  .done(function(data) {
+                      // Save the PDF file
+                      kendo.saveAs({
+                          dataURI: data,
+                          fileName: "HR-Dashboard.pdf",
+                          proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                      });
+                  });
+         });
+
+         $(".export-img").click(function() {
+             // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+             kendo.drawing.drawDOM($(".content-wrapper"))
+                  .then(function(group) {
+                      // Render the result as a PNG image
+                      return kendo.drawing.exportImage(group);
+                  })
+                  .done(function(data) {
+                      // Save the image file
+                      kendo.saveAs({
+                          dataURI: data,
+                          fileName: "HR-Dashboard.png",
+                          proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                      });
+                  });
+         });
+
+         $(".export-svg").click(function() {
+             // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+             kendo.drawing.drawDOM($(".content-wrapper"))
+                  .then(function(group) {
+                      // Render the result as a SVG document
+                      return kendo.drawing.exportSVG(group);
+                  })
+                  .done(function(data) {
+                      // Save the SVG document
+                      kendo.saveAs({
+                          dataURI: data,
+                          fileName: "HR-Dashboard.svg",
+                          proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                      });
+                  });
+         });
+
+
+         var data = [{
+             "source": "Approved",
+             "percentage": 237
+         }, {
+             "source": "Rejected",
+             "percentage": 112
+         }];
+
+         var refs = [{
+             "source": "Dev",
+             "percentage": 42
+         }, {
+             "source": "Sales",
+             "percentage": 18
+         }, {
+             "source": "Finance",
+             "percentage": 29
+         }, {
+             "source": "Legal",
+             "percentage": 11
+         }];
+
+         $("#applications").kendoChart({
+             legend: {
+                 position: "bottom"
+             },
+             dataSource: {
+                 data: data
+             },
+             series: [{
+                 type: "donut",
+                 field: "percentage",
+                 categoryField: "source"
+             }],
+             chartArea: {
+                 background: "none"
+             },
+             tooltip: {
+                 visible: true,
+                 template: "${ category } - ${ value } applications"
+             }
+         });
+
+         $("#users").kendoChart({
+             legend: {
+                 visible: false
+             },
+             seriesDefaults: {
+                 type: "column"
+             },
+             series: [{
+                 name: "Users Reached",
+                 data: [340, 894, 1345, 1012, 3043, 2013, 2561, 2018, 2435, 3012]
+             }, {
+                 name: "Applications",
+                 data: [50, 80, 120, 203, 324, 297, 176, 354, 401, 349]
+             }],
+             valueAxis: {
+                 labels: {
+                     visible: false
+                 },
+                 line: {
+                     visible: false
+                 },
+                 majorGridLines: {
+                     visible: false
+                 }
+             },
+             categoryAxis: {
+                 categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
+                 line: {
+                     visible: false
+                 },
+                 majorGridLines: {
+                     visible: false
+                 }
+             },
+             chartArea: {
+                 background: "none"
+             },
+             tooltip: {
+                 visible: true,
+                 format: "{0}",
+                 template: "#= series.name #: #= value #"
+             }
+         });
+
+         $("#referrals").kendoChart({
+             legend: {
+                 position: "bottom"
+             },
+             dataSource: {
+                 data: refs
+             },
+             series: [{
+                 type: "pie",
+                 field: "percentage",
+                 categoryField: "source"
+             }],
+             chartArea: {
+                 background: "none"
+             },
+             tooltip: {
+                 visible: true,
+                 template: "${ category } - ${ value }%"
+             }
+         });
+
+         var crudServiceBaseUrl = "//demos.telerik.com/kendo-ui/service";
+
+         var dataSource = new kendo.data.DataSource({
+             transport: {
+                 read:  {
+                     url: crudServiceBaseUrl + "/Products",
+                     dataType: "jsonp"
+                 },
+                 update: {
+                     url: crudServiceBaseUrl + "/Products/Update",
+                     dataType: "jsonp"
+                 },
+                 destroy: {
+                     url: crudServiceBaseUrl + "/Products/Destroy",
+                     dataType: "jsonp"
+                 },
+                 create: {
+                     url: crudServiceBaseUrl + "/Products/Create",
+                     dataType: "jsonp"
+                 },
+                 parameterMap: function(options, operation) {
+                     if (operation !== "read" && options.models) {
+                         return {models: kendo.stringify(options.models)};
+                     }
+                 }
+             },
+             batch: true,
+             change: function() {
+                 $("#cancel, #save").toggleClass("k-state-disabled", !this.hasChanges());
+             },
+             schema: {
+                 model: {
+                     id: "ProductID",
+                     fields: {
+                         ProductID: { type: "number" },
+                         ProductName: { type: "string" },
+                         UnitPrice: { type: "number" },
+                         Discontinued: { type: "boolean" },
+                         UnitsInStock: { type: "number" }
+                     }
+                 }
+             }
+         });
+
+         $("#spreadsheet").kendoSpreadsheet({
+             columns: 20,
+             rows: 100,
+             toolbar: false,
+             sheetsbar: false,
+             sheets: [{
+                 name: "Products",
+                 dataSource: dataSource,
+                 rows: [{
+                     height: 40,
+                     cells: [
+                         {
+                             bold: "true",
+                             background: "#9c27b0",
+                             textAlign: "center",
+                             color: "white"
+                         },{
+                             bold: "true",
+                             background: "#9c27b0",
+                             textAlign: "center",
+                             color: "white"
+                         },{
+                             bold: "true",
+                             background: "#9c27b0",
+                             textAlign: "center",
+                             color: "white"
+                         },{
+                             bold: "true",
+                             background: "#9c27b0",
+                             textAlign: "center",
+                             color: "white"
+                         },{
+                             bold: "true",
+                             background: "#9c27b0",
+                             textAlign: "center",
+                             color: "white"
+                         }]
+                 }],
+                 columns: [
+                     { width: 100 },
+                     { width: 415 },
+                     { width: 145 },
+                     { width: 145 },
+                     { width: 145 }
+                 ]
+             }]
+         });
+
+     });
+    </script>
+
+    <style>
+     .export-app {
+       display: table;
+       width: 100%;
+       height: 750px;
+       padding: 0;
+     }
+
+     .export-app .demo-section {
+       margin: 0 auto;
+       border: 0;
+     }
+
+     .content-wrapper {
+       display: table-cell;
+       vertical-align: top;
+     }
+
+     .charts-wrapper {
+       height: 250px;
+       padding: 0 0 20px;
+     }
+
+     #applications,
+     #users,
+     #referrals {
+       display: inline-block;
+       width: 50%;
+       height: 240px;
+       vertical-align: top;
+     }
+     #applications,
+     #referrals {
+       width: 24%;
+       height: 250px;
+     }
+
+     .customer-photo {
+       display: inline-block;
+       width: 40px;
+       height: 40px;
+       border-radius: 50%;
+       background-size: 40px 44px;
+       background-position: center center;
+       vertical-align: middle;
+       line-height: 41px;
+       box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+     }
+     .customer-name {
+       display: inline-block;
+       vertical-align: middle;
+       line-height: 41px;
+       padding-left: 10px;
+     }
+    </style>
+
+
+  </body>
+</html>
