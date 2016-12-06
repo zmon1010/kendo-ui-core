@@ -85,6 +85,7 @@
                 justifyFull: "align-justify",
                 insertUnorderedList: "list-unordered",
                 insertOrderedList: "list-ordered",
+                "import": "login",
                 indent: "indent-increase",
                 outdent: "indent-decrease",
                 createLink: "link-horizontal",

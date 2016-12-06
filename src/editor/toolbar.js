@@ -34,6 +34,7 @@
         "k-i-align-justify": "justifyFull",
         "k-i-list-unordered": "insertUnorderedList",
         "k-i-list-ordered": "insertOrderedList",
+        "k-i-login": "import",
         "k-i-indent-increase": "indent",
         "k-i-indent-decrease": "outdent",
         "k-i-link-horizontal": "createLink",
@@ -52,7 +53,7 @@
         "k-i-table-column-delete": "deleteColumn",
         "k-i-table-properties": "tableWizard",
         "k-i-clear-css": "cleanFormatting"
-    };                
+    };
 
     var OverflowAnchorTool = Tool.extend({
         initialize: function(ui, options) {
@@ -259,7 +260,7 @@
             that._attachEvents();
 
             that.items().each(function initializeTool() {
-                
+
                 var toolName = that._toolName(this),
                     tool = toolName !== "moreVertical" ? that.tools[toolName] : that.tools.overflowAnchor,
                     options = tool && tool.options,
