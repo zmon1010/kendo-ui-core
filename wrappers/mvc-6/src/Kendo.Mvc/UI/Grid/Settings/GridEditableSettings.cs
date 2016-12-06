@@ -193,8 +193,12 @@ namespace Kendo.Mvc.UI
                     json["confirmation"] = Confirmation;
                 }
             }
+            else
+            {
+                json["confirmation"] = false;
+            }
 
-			json.AddRange(new Dictionary<string, object> {
+            json.AddRange(new Dictionary<string, object> {
 				["confirmDelete"] = ConfirmDelete,
 				["cancelDelete"] = CancelDelete,
 				["mode"] = Mode.ToString().ToLowerInvariant(),
