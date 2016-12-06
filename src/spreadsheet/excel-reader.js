@@ -298,6 +298,13 @@
                             sheet.hideColumn(ci);
                         }
                     }
+                    if (attrs.style != null) {
+                        // apply style on a whole range of columns
+                        applyStyle(sheet, new kendo.spreadsheet.RangeRef(
+                            new kendo.spreadsheet.CellRef(-Infinity, start),
+                            new kendo.spreadsheet.CellRef(+Infinity, stop)
+                        ), styles, attrs.style);
+                    }
                 }
                 else if (this.is(SEL_ROW)) {
                     var row = integer(attrs.r) - 1;
