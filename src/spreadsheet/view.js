@@ -177,7 +177,8 @@
 
         if (cell.wrap === true) {
             style.whiteSpace = "pre-wrap";
-            style.wordBreak = "break-all";
+            style.overflowWrap = "break-word";
+            style.wordWrap = "break-word";
         }
 
         if (cell.borderLeft) {
