@@ -285,10 +285,10 @@ if PLATFORM =~ /linux|darwin|bsd/
     end
 
     tree :to => 'wrappers/mvc/demos/Kendo.Mvc.Examples/bin/',
-         :from => FileList[SPREADSHEET_REDIST_NET40].pathmap('dist/binaries/Kendo.Mvc.Examples/bin/%f'),
+         :from => FileList[SPREADSHEET_REDIST_NET40 + KENDO_MVC_EXPORT_REDIST_NET40].pathmap('dist/binaries/Kendo.Mvc.Examples/bin/%f'),
          :root => 'dist/binaries/Kendo.Mvc.Examples/bin'
 
-    FileList[SPREADSHEET_REDIST_NET40].pathmap('%f').each do |file|
+    FileList[SPREADSHEET_REDIST_NET40 + KENDO_MVC_EXPORT_REDIST_NET40].pathmap('%f').each do |file|
         file_copy :to => "wrappers/mvc/demos/Kendo.Mvc.Examples/bin/#{file}",
                   :from => "dist/binaries/demos/Kendo.Mvc.Examples/bin/#{file}"
     end
