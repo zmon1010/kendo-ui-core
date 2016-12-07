@@ -302,7 +302,8 @@
             var that = this,
                 window = that.window,
                 editorOptions = that.options.editor,
-                wrapper, editorElement, editorOffset;
+                wrapper, editorElement, editorOffset,
+                browser = kendo.support.browser;
 
             if (window) {
                 wrapper = window.wrapper;
@@ -323,10 +324,31 @@
                         });
                     }
 
-                    window.open();
+                    if ((browser.msie || browser.edge) && that._overlaps(editorElement)) {
+                        setTimeout(function() {
+                            window.open();                        
+                        }, 0);
+                    } else {
+                        window.open();                            
+                    }
                 }
             }
         },
+
+        _overlaps: function(box) {
+            var toolbarWrapper = this.window.wrapper,
+                toolbarWrapperOffset = toolbarWrapper.offset(),
+                toolbarWrapperLeft = toolbarWrapperOffset.left,
+                toolbarWrapperTop = toolbarWrapperOffset.top,
+                boxOffset = box.offset(),
+                boxOffsetLeft = boxOffset.left,
+                boxOffsetTop = boxOffset.top;
+
+            return !(boxOffsetLeft + box.width() < toolbarWrapperLeft || 
+                    boxOffsetLeft > toolbarWrapperLeft + toolbarWrapper.width() || 
+                    boxOffsetTop + box.height() < toolbarWrapperTop || 
+                    boxOffsetTop > toolbarWrapperTop + toolbarWrapper.height());
+        },        
 
         hide: function() {
             if (this.window) {
