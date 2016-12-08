@@ -375,11 +375,10 @@
                         task.head = true;
                         for (var day = 1; day < eventDurationInDays; day++) {
                             start = task.end;
-                            task = event.clone();
-                            task.start = start;
-                            task.startDate = kendo.date.getDate(start);
+                            task = event.clone();                           
+                            task.start = task.startDate = kendo.date.getDate(start);
                             task.end = kendo.date.nextDay(start);
-                            if (day == eventDurationInDays -1) {
+                            if (day == eventDurationInDays - 1) {
                                 task.end = new Date(task.start.getFullYear(), task.start.getMonth(), task.start.getDate(), end.getHours(), end.getMinutes(), end.getSeconds(), end.getMilliseconds());
                                 task.tail = true;
                             } else {

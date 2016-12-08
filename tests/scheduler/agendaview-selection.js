@@ -203,7 +203,7 @@
         var handled = view.move(selection, keys.DOWN);
 
         ok(handled);
-        deepEqual(selection.start, new Date(2013, 1, 3, 7, 0, 0));
+        deepEqual(selection.start, new Date(2013, 1, 3, 0, 0, 0));
         deepEqual(selection.end, new Date(2013, 1, 3, 12, 0, 0));
         equal(selection.index, 2);
     });
