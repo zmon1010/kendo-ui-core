@@ -162,6 +162,10 @@
             return this._sheet.canInsertRow(0, rowCount);
         },
 
+        canAddColumn: function() {
+            return this._sheet.canInsertColumn();
+        },
+
         addRowAbove: function() {
             this.forEachSelectedRow(function(sheet, index, i) {
                 sheet.insertRow(index - i);

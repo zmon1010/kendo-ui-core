@@ -802,6 +802,12 @@
     kendo.spreadsheet.AddColumnCommand = AddCommand.extend({
         exec: function() {
             var sheet = this.range().sheet();
+            var result = sheet.axisManager().canAddColumn();
+
+            if (result && result.reason) {
+                return result;
+            }
+
             this._state = sheet.getState();
 
             if (this._value === "left") {
@@ -815,9 +821,10 @@
     kendo.spreadsheet.AddRowCommand = AddCommand.extend({
         exec: function() {
             var sheet = this.range().sheet();
+            var result = sheet.axisManager().canAddRow();
 
-            if (!sheet.axisManager().canAddRow()) {
-                return { reason: "error", type: "shiftingNonblankCells" };
+            if (result && result.reason) {
+                return result;
             }
 
             this._state = sheet.getState();
