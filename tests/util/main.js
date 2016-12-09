@@ -4,7 +4,7 @@
     module("kendo.util");
 
     test("now returns current time", function() {
-        equal(util.now(), new Date().getTime());
+        ok((util.now() - new Date().getTime()) < 2);
     });
 
     test("sparseArrayLimits ignores undefined values", function() {
