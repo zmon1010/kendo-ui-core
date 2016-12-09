@@ -3,7 +3,7 @@
   "license": "LicenseRef-LICENSE",
   "version": "$KENDO_VERSION",
   "dependencies": {
-        "jquery": "<3.0.0"
+        "jquery": "<=3"
   },
   "main": "js/kendo.all.js"
 }
