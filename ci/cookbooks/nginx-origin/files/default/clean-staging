@@ -1,3 +1,0 @@
-#!/bin/sh
-
-find /usr/share/nginx/html/staging -maxdepth 1 -type d -mtime +7 -exec rm -r {} \;

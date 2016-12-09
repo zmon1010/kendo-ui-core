@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<hudson.plugins.android__emulator.AndroidEmulator_-DescriptorImpl plugin="android-emulator@2.10">
-  <androidHome></androidHome>
-  <shouldInstallSdk>true</shouldInstallSdk>
-  <shouldKeepInWorkspace>false</shouldKeepInWorkspace>
-</hudson.plugins.android__emulator.AndroidEmulator_-DescriptorImpl>

@@ -1,6 +1,0 @@
-StrictHostKeyChecking no
-
-Host ordkendouicdn01.telerik.local
-    Hostname 172.17.82.75
-    User     nginx
-    Port     22

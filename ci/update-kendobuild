@@ -1,5 +1,0 @@
-#!/bin/bash
-
-./deploy master.json root@kendobuild
-./deploy slave.json root@kendobuild-slave1
-./deploy slave.json root@kendobuild-slave2
