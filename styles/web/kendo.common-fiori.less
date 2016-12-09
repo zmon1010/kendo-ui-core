@@ -11,6 +11,10 @@
 
 @import "common/all.less";
 
+.k-icon {
+    .use-font-icon();
+}
+
 .k-textbox > input,
 span.k-autocomplete .k-input,
 span.k-picker-wrap .k-input,
@@ -38,7 +42,6 @@ input.k-textbox,
 html .k-mediaplayer-toolbar .k-button-bare {
 	padding: .82em;
 }
-
 
 .k-tabstrip > .k-content,
 .k-panelbar .k-tabstrip > .k-content
@@ -714,8 +717,8 @@ span.k-tooltip
 }
 
 /* PanelBar */
-.k-panelbar-expand,
-.k-panelbar-collapse {
+.k-panelbar-expand.k-icon,
+.k-panelbar-collapse.k-icon {
     right: auto;
     left: 9px;
 }
@@ -964,8 +967,8 @@ span.k-tooltip
     margin: 0 6px;
 }
 
-.k-rtl .k-panelbar .k-panelbar-expand,
-.k-rtl .k-panelbar .k-panelbar-collapse {
+.k-rtl .k-panelbar .k-panelbar-expand.k-icon,
+.k-rtl .k-panelbar .k-panelbar-collapse.k-icon {
     left: auto;
     right: 9px;
 }
