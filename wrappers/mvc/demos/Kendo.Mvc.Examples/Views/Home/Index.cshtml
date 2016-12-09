@@ -35,7 +35,7 @@
                 <div id="mobileDemosQR"></div>
 
                 <script type="text/javascript">
-                    $(function() {
+                    $(function () {
                         $("#mobileDemosQR").kendoQRCode({
                             value: window.location.href,
                             size: 110,
@@ -82,31 +82,43 @@
 
             @foreach (var column in columns)
             {<ul class="overview-col col-four">
-                    @foreach (var columnCategory in column)
+                @foreach (var columnCategory in column)
+                {
+                    var category = categories.FirstOrDefault(c => c.Key == columnCategory);
+                    if (category.Any(c => c.ShouldInclude()))
                     {
-                        var category = categories.FirstOrDefault(c => c.Key == columnCategory);
-                        if (category.Any(c => c.ShouldInclude()))
-                        {
-                            <li class="widget">
-                                <h2>@category.Key</h2>
-                                <ul>
-                                    @foreach (var widget in category)
+                        <li class="widget">
+                            <h2>@category.Key</h2>
+                            <ul>
+                                @foreach (var widget in category)
+                                {
+                                    if (widget.ShouldInclude())
                                     {
-                                        if (widget.ShouldInclude())
-                                        {
-                                            <li>@Html.WidgetLink(widget, (string)ViewBag.NavProduct)</li>
-                                        }
+                                        <li>@Html.WidgetLink(widget, (string)ViewBag.NavProduct)</li>
                                     }
-                                </ul>
-                            </li>
-                        }
+                                }
+                            </ul>
+                        </li>
                     }
-                </ul>
+                }
+            </ul>
 
                 colNumber++;
             }
         </div>
     </div>
-
+    <div id="applications-and-tools">
+        <div id="overview-applications">
+            <h1>Sample Applications</h1>
+            <ul>
+                <li class="application">
+                    <a href="http://demos.telerik.com/aspnet-mvc/bootstrap">
+                        <img src="@Url.Content("~/content/shared/images/dashboards/bootstrap.png")" alt="Kendo UI Bootstrap" class="application-image" />
+                        <p>Kendo UI<sup>&reg;</sup> ♥ Bootstrap</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
     @Html.Partial("Footer")
 </div>
