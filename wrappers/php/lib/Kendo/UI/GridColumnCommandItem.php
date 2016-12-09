@@ -6,6 +6,20 @@ class GridColumnCommandItem extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * Sets the visible option of the GridColumnCommandItem.
+    * The JavaScript function executed on initialization of the row which will determine whether the command button will be visible. The function receives a the data item object for the row as an argument.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\GridColumnCommandItem
+    */
+    public function visible($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visible', $value);
+    }
+
+    /**
     * The name of the command. The built-in commands are "edit" and "destroy". Can be set to a custom value.
     * @param string $value
     * @return \Kendo\UI\GridColumnCommandItem

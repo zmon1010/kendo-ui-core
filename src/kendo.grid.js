@@ -6010,9 +6010,13 @@ var __meta__ = { // jshint ignore:line
             if (column.command) {
                 if (isArray(column.command)) {
                     for (idx = 0, length = column.command.length; idx < length; idx++) {
-                        html += that._createButton(column.command[idx]);
+                        if(column.command[idx].visible) {
+                            html += kendo.format("#= {0}(data)? '{1}':'' #",column.command[idx].visible, that._createButton(column.command[idx]).replace(templateHashRegExp, "\\#"));
+                        } else {
+                            html += that._createButton(column.command[idx]).replace(templateHashRegExp, "\\#");
+                        }
                     }
-                    return html.replace(templateHashRegExp, "\\#");
+                    return html;
                 }
                 return that._createButton(column.command).replace(templateHashRegExp, "\\#");
             }

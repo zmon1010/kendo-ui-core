@@ -4,6 +4,7 @@ namespace Kendo.Mvc.UI.Fluent
     using System.Collections.Generic;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.Infrastructure;
+    using System;
 
     /// <summary>
     /// Defines the fluent interface for configuring command.
@@ -72,6 +73,30 @@ namespace Kendo.Mvc.UI.Fluent
             return this as TBuilder;
         }
 
+        /// <summary>
+        /// Sets the visible function which will determine if the command button will render.
+        /// </summary>
+        /// <param name="visible">The visible function.</param>
+        /// <returns></returns>
+        public TBuilder Visible(Func<object, object> handler)
+        {
+            Command.Visible.TemplateDelegate = handler;
+
+            return this as TBuilder;
+        }
+
+        /// <summary>
+        /// Sets the visible function which will determine if the command button will render.
+        /// </summary>
+        /// <param name="visible">The visible function.</param>
+        /// <returns></returns>
+        public TBuilder Visible(string handler)
+        {
+            Command.Visible.HandlerName = handler;
+
+            return this as TBuilder;
+        }
+
         //TODO: Implement command button image html attributes
         ///// <summary>
         ///// Sets the image HTML attributes.
@@ -82,7 +107,7 @@ namespace Kendo.Mvc.UI.Fluent
         //{
         //    return ImageHtmlAttributes(attributes.ToDictionary());
         //}        
-        
+
         ///// <summary>
         ///// Sets the image HTML attributes.
         ///// </summary>
@@ -91,7 +116,7 @@ namespace Kendo.Mvc.UI.Fluent
         //public TBuilder ImageHtmlAttributes(IDictionary<string, object> attributes)
         //{
         //    Command.ImageHtmlAttributes.Merge(attributes);
-            
+
         //    return this as TBuilder;
         //}
 

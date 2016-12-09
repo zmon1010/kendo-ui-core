@@ -33,6 +33,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public ClientHandlerDescriptor Visible
+        {
+            get;
+            set;
+        }
+
         //TODO: Implement command button image html attributes
         /*
         public IDictionary<string, object> ImageHtmlAttributes
@@ -45,7 +51,8 @@ namespace Kendo.Mvc.UI
         {
             ButtonType = GridButtonType.ImageAndText;
             HtmlAttributes = new RouteValueDictionary();
-          //  ImageHtmlAttributes = new RouteValueDictionary();
+            Visible = new ClientHandlerDescriptor();
+            //  ImageHtmlAttributes = new RouteValueDictionary();
         }
 
         public virtual IDictionary<string, object> Serialize(IGridUrlBuilder urlBuilder)
@@ -53,12 +60,13 @@ namespace Kendo.Mvc.UI
             var command = new Dictionary<string, object>();
 
             FluentDictionary.For(command)
-                .Add("name", Name)                
+                .Add("name", Name)
                 .Add("attr", HtmlAttributes.ToAttributeString(), HtmlAttributes.Any)
                 .Add("buttonType", ButtonType.ToString())
-                .Add("text", Text, (System.Func<bool>)Text.HasValue);
-                //TODO: Implement command button image html attributes
-                //.Add("imageAttr", ImageHtmlAttributes.ToAttributeString(), ImageHtmlAttributes.Any);
+                .Add("text", Text, (System.Func<bool>) Text.HasValue)
+                .Add("visible", Visible, (System.Func<bool>) Visible.HasValue);
+            //TODO: Implement command button image html attributes
+            //.Add("imageAttr", ImageHtmlAttributes.ToAttributeString(), ImageHtmlAttributes.Any);
 
             return command;
         }

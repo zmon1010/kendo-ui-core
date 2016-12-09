@@ -55,6 +55,10 @@ public class ColumnCommandItemTag extends  BaseTag  /* interfaces */ /* interfac
         setProperty("text", value);
     }
 
+    public void setVisible(ColumnCommandItemVisibleFunctionTag value) {
+        setEvent("visible", value.getBody());
+    }
+
     public void setClick(ColumnCommandItemClickFunctionTag value) {
         setEvent("click", value.getBody());
     }
@@ -93,6 +97,18 @@ public class ColumnCommandItemTag extends  BaseTag  /* interfaces */ /* interfac
 
     public void setText(java.lang.String value) {
         setProperty("text", value);
+    }
+
+    public String getVisible() {
+        Function property = ((Function)getProperty("visible"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisible(String value) {
+        setProperty("visible", new Function(value));
     }
 
 //<< Attributes

@@ -24,10 +24,17 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
-		
+
+        public ClientHandlerDescriptor Visible
+        {
+            get;
+            set;
+        }
+
         public GridActionCommandBase()
         {            
-            HtmlAttributes = new RouteValueDictionary();         
+            HtmlAttributes = new RouteValueDictionary();
+            Visible = new ClientHandlerDescriptor();
         }
 
         public virtual IDictionary<string, object> Serialize()
@@ -37,6 +44,7 @@ namespace Kendo.Mvc.UI
             command            
                 .Add("attr", HtmlAttributes.ToAttributeString(), HtmlAttributes.Any)				
 				.Add("text", Text, (System.Func<bool>)Text.HasValue)
+                .Add("visible", Visible, (System.Func<bool>) Visible.HasValue)
 				.Add("name", Name);                
 
             return command;

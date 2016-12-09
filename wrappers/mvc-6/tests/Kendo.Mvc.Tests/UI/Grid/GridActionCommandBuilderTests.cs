@@ -1,9 +1,10 @@
 namespace Kendo.Mvc.UI.Fluent.Tests
 {
-	using Kendo.Mvc.UI;
-	using Xunit;
+    using Kendo.Mvc.UI;
+    using System;
+    using Xunit;
 
-	public class GridActionCommandBuilderTests
+    public class GridActionCommandBuilderTests
     {
         internal static GridActionCommandBaseDouble command;
         internal static GridActionCommandBuilderBaseDouble builder;
@@ -31,7 +32,22 @@ namespace Kendo.Mvc.UI.Fluent.Tests
 
             Assert.IsType(typeof(GridActionCommandBuilderBaseDouble), builder.HtmlAttributes(style));
         }
-     
+
+        [Fact]
+        public void Visible_string_handler_is_set_as_expected()
+        {
+            builder.Visible("myCustomVisiblekHandler");
+            Assert.Equal(command.Visible.HandlerName, "myCustomVisiblekHandler");
+        }
+
+        [Fact]
+        public void Visible_TemplateDelegate_is_set_as_expected()
+        {
+            Func<object, object> handler = t => t;
+            builder.Visible(handler);
+            Assert.Equal(command.Visible.TemplateDelegate, handler);
+        }
+
     }
 
     public class GridActionCommandBaseDouble : GridActionCommandBase 
