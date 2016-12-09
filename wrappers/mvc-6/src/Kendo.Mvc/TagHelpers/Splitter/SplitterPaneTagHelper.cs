@@ -26,17 +26,11 @@ namespace Kendo.Mvc.TagHelpers
         }
 
         public bool? Collapsed { get; set; }
-
         public string CollapsedSize { get; set; }
-
         public bool? Collapsible { get; set; }
-
         public bool? Resizable { get; set; }
-
         public bool? Scrollable { get; set; }
-
         public string Size { get; set; }
-
         public string MaxSize { get; set; }
         public string MinSize { get; set; }
         public string ContentUrl { get; set; }
@@ -89,6 +83,7 @@ namespace Kendo.Mvc.TagHelpers
             {
                 settings["contentUrl"] = ContentUrl;
             }
+
             return settings;
         }
     }

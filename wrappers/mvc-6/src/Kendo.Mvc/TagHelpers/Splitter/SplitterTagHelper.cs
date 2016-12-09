@@ -34,11 +34,9 @@ namespace Kendo.Mvc.TagHelpers
             GenerateId(output);
 
             var htmlAttributes = new Dictionary<string, object>();
-
             var tagBuilder = Generator.GenerateTag("div", ViewContext, Id, Name, htmlAttributes);
 
             output.TagName = "div";
-
             output.MergeAttributes(tagBuilder);
         }
 
@@ -46,6 +44,7 @@ namespace Kendo.Mvc.TagHelpers
         {
             var settings = SerializeSettings();
             var panes = Panes.Select(i => i.SerializeSettings());
+
             if (panes.Any())
             {
                 settings["panes"] = panes;
@@ -76,15 +75,14 @@ namespace Kendo.Mvc.TagHelpers
             {
                 context.Items.Add(typeof(SplitterTagHelper), new List<SplitterTagHelper>());
             }
+
             var parents = context.Items[typeof(SplitterTagHelper)] as List<SplitterTagHelper>;
             parents.Add(this);
             var childContent = await output.GetChildContentAsync();
             parents.Remove(this);
 
             VerifySettings();
-
             WriteHtml(output);
-
             WriteInitializationScript(output);
         }
     }
