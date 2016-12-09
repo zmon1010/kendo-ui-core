@@ -453,9 +453,9 @@
 
     function drawText(text, color, cell, group) {
         // XXX: account for border and padding below.  depends on CSS.
-        var rect_left   = cell.left   + 2;
+        var rect_left   = cell.left   + 4;
         var rect_top    = cell.top    + 2;
-        var rect_width  = cell.width  - 4;
+        var rect_width  = cell.width  - 8;
         var rect_height = cell.height - 4;
         var font = makeFontDef(cell);
         var style = { font: font, whiteSpace: "pre" };
