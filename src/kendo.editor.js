@@ -1,6 +1,6 @@
 (function(f, define){
     define([
-        "./kendo.combobox", "./kendo.dropdownlist", "./kendo.resizable", "./kendo.window", "./kendo.colorpicker", "./kendo.imagebrowser",
+        "./kendo.combobox", "./kendo.dropdownlist", "./kendo.resizable", "./kendo.window", "./kendo.colorpicker", "./kendo.imagebrowser", "./kendo.tabstrip", "./kendo.numerictextbox",
 
         "./util/undoredostack",
         "./editor/main",
