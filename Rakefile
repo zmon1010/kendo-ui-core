@@ -164,7 +164,7 @@ require 'codegen'
 require 'nuget'
 require 'bower'
 require 'npm'
-require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin|bsd/
+require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin/
 require 'playground'
 require 'vs_scaffold'
 require './build/localization'
@@ -869,7 +869,7 @@ BUNDLES = [
 ]
 
 namespace :build do
-    WEB_ROOT = "/var/www"
+    WEB_ROOT = "/tmp"
     TOMCAT_ROOT = "/var/lib/tomcat7/webapps"
 
     def nuget_targets(destination)
@@ -1109,25 +1109,25 @@ namespace :build do
         ] do
             sync "dist/demos/staging/", "#{WEB_ROOT}/staging/"
             sync "dist/download-builder-staging/", "#{WEB_ROOT}/download-builder-staging/"
-            sync "dist/demos/staging-java/", "#{TOMCAT_ROOT}/staging-java/"
+            #sync "dist/demos/staging-java/", "#{TOMCAT_ROOT}/staging-java/"
             sync "dist/demos/staging-php/", "#{WEB_ROOT}/staging-php/"
 
-
+            #TODO to make those things to happen on new build machine
             # Deploy MVC demos on kendoiis
-            remote = WinRemote.new "kendoiis.telerik.com"
+            #remote = WinRemote.new "kendoiis.telerik.com"
 
-            sync "dist/aspnetmvc-demos/", "/mnt/kendo-iis/stable-demos-src/"
+            #sync "dist/aspnetmvc-demos/", "/mnt/kendo-iis/stable-demos-src/"
 
-            shares = "c:\\shares"
-            source = "#{shares}\\stable-demos-src"
+            #shares = "c:\\shares"
+            #source = "#{shares}\\stable-demos-src"
 
-            remote.build("#{source}\\VS2012\\Kendo.Mvc.Examples.sln")
-            remote.build("#{source}\\VS2013\\Kendo.Mvc.Examples.sln")
+            #remote.build("#{source}\\VS2012\\Kendo.Mvc.Examples.sln")
+            #remote.build("#{source}\\VS2013\\Kendo.Mvc.Examples.sln")
 
-            remote.stop_iis()
-            remote.deploy("#{source}\\VS2012\\Kendo.Mvc.Examples", "#{shares}\\staging-mvc\\")
-            remote.deploy("#{source}\\VS2013\\Kendo.Mvc.Examples", "#{shares}\\staging-mvc5\\")
-            remote.start_iis()
+            #remote.stop_iis()
+            #remote.deploy("#{source}\\VS2012\\Kendo.Mvc.Examples", "#{shares}\\staging-mvc\\")
+            #remote.deploy("#{source}\\VS2013\\Kendo.Mvc.Examples", "#{shares}\\staging-mvc5\\")
+            #remote.start_iis()
         end
 
         desc 'Package and publish bundles to the Stable directory'
