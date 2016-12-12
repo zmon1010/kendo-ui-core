@@ -402,7 +402,9 @@
                     sheet.revalidate(this._validationContext);
                     return sheet.toJSON();
                 }, this),
-                names: names
+                names: names,
+                columnWidth: this.options.columnWidth,
+                rowHeight: this.options.rowHeight
             };
         },
 

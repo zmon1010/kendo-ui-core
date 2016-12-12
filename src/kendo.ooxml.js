@@ -144,7 +144,9 @@ var WORKSHEET = kendo.template(
    '# if (defaultCellStyleId != null || (columns && columns.length > 0)) { #' +
    '<cols>' +
    '# if (!columns || !columns.length) { #' +
-       '<col min="1" max="16384" style="${defaultCellStyleId}" />' +
+       '<col min="1" max="16384" style="${defaultCellStyleId}" ' +
+       '# if (defaults.columnWidth) { # width="#= kendo.ooxml.toWidth(defaults.columnWidth) #" # } #' +
+       ' />' +
    '# } #' +
    '# for (var ci = 0; ci < columns.length; ci++) { #' +
        '# var column = columns[ci]; #' +
