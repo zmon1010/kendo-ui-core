@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using Kendo.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Kendo.Mvc.TagHelpers
 {
@@ -9,10 +10,27 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI <%= csharp_class %> TagHelper
     /// </summary>
     [HtmlTargetElement("<%= taghelper_element %>")]
+% if children.any? then
+%   _erbout << "    [RestrictChildren("
+%   children.each do |c|
+%       _erbout << "\"kendo-#{c}\""
+%       if not c.equal?(children.last)
+%           _erbout << ","
+%        end
+%   end
+%   _erbout << ")]\n"
+% end
     public partial class <%= taghelper_class %> : TagHelperBase
     {
         public <%= taghelper_class %>(IKendoHtmlGenerator generator) : base(generator)
         {
+        }
+
+        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        {
+            context.Items[this.GetType()] = this;
+            await output.GetChildContentAsync();
+            base.ProcessAsync(context, output);
         }
 
         protected override void WriteHtml(TagHelperOutput output)
@@ -25,7 +43,6 @@ namespace Kendo.Mvc.TagHelpers
             var tagBuilder = Generator.GenerateTag("div", ViewContext, Id, Name, htmlAttributes);
 
             output.TagName = "div";
-
             output.MergeAttributes(tagBuilder);
         }
 
@@ -36,7 +53,6 @@ namespace Kendo.Mvc.TagHelpers
             // TODO: Manually serialized settings go here
 
             var initializationScript = Initializer.Initialize(Selector, "<%= csharp_class %>", settings);
-
             output.PostElement.SetHtmlContent("<script>" + initializationScript + "</script>");
         }
     }

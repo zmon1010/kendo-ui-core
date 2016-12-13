@@ -15,12 +15,18 @@ module CodeGen::MVC6::Wrappers
     class Component < CodeGen::Component
         include Options
 
+        def initialize(settings)
+            @children = []
+            super(settings)
+        end
+
         COMPONENT = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component.erb"), 0, '%<>')
         COMPONENT_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component-settings.erb"), 0, '%<>')
         EVENT = ERB.new(File.read("build/codegen/lib/mvc-6/templates/event-builder.erb"), 0, '%<>')
         BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component-builder.erb"), 0, '%<>')
         BUILDER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component-builder-settings.erb"), 0, '%<>')
         TAG_HELPER = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper.erb"), 0, '%<>')
+        TAG_HELPER_ARRAY_OPTIONS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-declaration.erb"), 0, '%<>')
         TAG_HELPER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-settings.erb"), 0, '%<>')
         TAG_HELPER_EVENTS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-event-builder.erb"), 0, '%<>')
 
@@ -28,8 +34,20 @@ module CodeGen::MVC6::Wrappers
             name
         end
 
+        def children
+            @children
+        end
+
         def csharp_class
             name
+        end
+
+        def collection_component?
+            false
+        end
+
+        def composite_component?
+            false
         end
 
         def taghelper_element
@@ -84,7 +102,11 @@ module CodeGen::MVC6::Wrappers
         def to_tag_helper
             TAG_HELPER.result(binding)
         end
-        
+
+        def to_tag_helper_array_options
+
+        end
+
         def to_tag_helper_settings
             TAG_HELPER_SETTINGS.result(binding)
         end
@@ -92,6 +114,16 @@ module CodeGen::MVC6::Wrappers
         def to_tag_helper_events
             TAG_HELPER_EVENTS.result(binding)
         end
-    end
 
+        # used to render RestrictChildren Attribute
+        def initialize_children
+            options.each do |o|
+                if o.array? then
+                    @children.push(o.item.csharp_class.pluralize.kebab)
+                elsif o.composite?
+                    @children.push(o.csharp_class.kebab)
+                end
+            end
+        end
+    end
 end

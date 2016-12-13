@@ -1,0 +1,102 @@
+module CodeGen::MVC6
+end
+
+module CodeGen::MVC6::Wrappers
+end
+
+require 'codegen/lib/mvc-6/component'
+
+module CodeGen::MVC6::Wrappers
+
+    class SubComponent < Component
+        include Options
+
+        attr_reader :taghelper_collection_parent_element,
+                    :taghelper_class,
+                    :taghelper_parent_class,
+                    :taghelper_collection_parent_class,
+                    :collection_component,
+                    :parent
+
+        def initialize(settings)
+            super(settings)
+            @path = settings[:path]
+            @parent = settings[:taghelper_parent].kebab
+            @taghelper_collection_parent_element = settings[:taghelper_parent].kebab
+            @taghelper_element = settings[:taghelper_element].kebab
+            @taghelper_class = settings[:taghelper_class]
+            @taghelper_parent_class =
+                if settings[:collection_component]
+                    then
+                        settings[:array_reference].csharp_collection_class_name
+                    else
+                        settings[:taghelper_parent_class]
+                end
+            @taghelper_collection_parent_class = settings[:taghelper_parent_class]
+            @collection_component = settings[:collection_component]
+            @array_reference = settings[:array_reference]
+            @options.concat(settings[:options])
+        end
+
+        TAG_HELPER = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-sub.erb"), 0, '%<>')
+        TAG_HELPER_ARRAY = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array.erb"), 0, '%<>')
+        TAG_HELPER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-settings.erb"), 0, '%<>')
+        TAG_HELPER_EVENTS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-event-builder.erb"), 0, '%<>')
+
+        def path
+            @path
+        end
+
+        def array_reference
+            @array_reference
+        end
+
+        def composite_component?
+            true
+        end
+
+        def collection_component?
+            @collection_component
+        end
+
+        def taghelper_parent_element
+            if collection_component? then taghelper_collection_element else parent end
+        end
+
+        def taghelper_collection_element
+            "kendo-#{@taghelper_element.pluralize}"
+        end
+
+        def taghelper_element
+            "kendo-#{@taghelper_element}"
+        end
+
+        def taghelper_structure
+            if collection_component?
+                "TagStructure.NormalOrSelfClosing"
+            else
+                "TagStructure.WithoutEndTag"
+            end
+        end
+
+        def to_tag_helper
+            TAG_HELPER.result(binding)
+        end
+
+        def to_tag_helper_array
+            TAG_HELPER_ARRAY.result(binding)
+        end
+
+        def to_tag_helper_array_reference
+            array_reference.to_reference
+        end
+
+        def to_tag_helper_settings
+            TAG_HELPER_SETTINGS.result(binding)
+        end
+
+        def to_tag_helper_events
+            TAG_HELPER_EVENTS.result(binding)
+        end
+    end
+end

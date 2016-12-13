@@ -4,7 +4,7 @@ module CodeGen::MVC6::Wrappers::Options
 
     class Option < CodeGen::Option
         include CodeGen::MVC6::Wrappers::Options
-        
+
         attr_accessor :html_attribute_name
 
         DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-declaration.erb"), 0, '%<>')
@@ -14,9 +14,12 @@ module CodeGen::MVC6::Wrappers::Options
         SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/option-serialization.erb"), 0, '%<>')
         NAME_MAP = YAML.load(File.read("build/codegen/lib/mvc-6/config/name_map.yml"))
 
-        
         def struct?
             STRUCT_TYPES.include?(csharp_type) || enum?
+        end
+
+        def array?
+            false
         end
 
         def nullable_type?(type)
@@ -61,6 +64,10 @@ module CodeGen::MVC6::Wrappers::Options
 
         def to_serialization
             SERIALIZATION.result(binding)
+        end
+
+        def to_tag_helper_serialization
+            to_serialization
         end
 
         def to_enum

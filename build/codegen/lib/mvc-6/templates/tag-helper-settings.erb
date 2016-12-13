@@ -9,15 +9,22 @@ namespace Kendo.Mvc.TagHelpers
 {
     public partial class <%= taghelper_class %>
     {
-% unique_options.map { |o| o.to_full_declaration  }.each do |ser|
+% unique_options.map { |o| o.to_full_declaration }.each do |ser|
 % _erbout << ser
 %end
-
-        protected override Dictionary<string, object> SerializeSettings()
+% if (collection_component? || composite_component?) then
+% _erbout << "        internal Dictionary<string, object> Serialize()\n"
+% else
+% _erbout << "        protected override Dictionary<string, object> SerializeSettings()\n"
+% end
         {
-            var settings = base.SerializeSettings();
+% if (collection_component? || composite_component?) then
+% _erbout << "            var settings = new Dictionary<string, object>();\n"
+% else
+% _erbout << "            var settings = base.SerializeSettings();\n"
+% end
 
-% unique_options.map { |o| o.to_serialization }.each do |ser|
+% unique_options.map { |o| o.to_tag_helper_serialization }.each do |ser|
 % _erbout << ser
 %end
             return settings;

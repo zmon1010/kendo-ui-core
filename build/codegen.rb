@@ -284,19 +284,24 @@ namespace :generate do
 
             factory_file = 'wrappers/mvc-6/src/Kendo.Mvc/UI/WidgetFactory.cs'
         end
-        
+
         desc 'Generate MVC v6 Tag Helpers'
         task :taghelpers do
+            # markdown = FileList[
+            #     'docs/api/javascript/ui/button.md',
+            #     'docs/api/javascript/ui/datepicker.md',
+            #     'docs/api/javascript/ui/datetimepicker.md',
+            #     'docs/api/javascript/ui/numerictextbox.md',
+            #     'docs/api/javascript/ui/timepicker.md',
+            #     'docs/api/javascript/ui/window.md',
+            #     'docs/api/javascript/ui/dialog.md',
+            #     'docs/api/javascript/ui/responsivepanel.md',
+            #     'docs/api/javascript/ui/upload.md',
+            #     'docs/api/javascript/ui/splitter.md'
+            # ]
+
             markdown = FileList[
-                'docs/api/javascript/ui/button.md',
-                'docs/api/javascript/ui/datepicker.md',
-                'docs/api/javascript/ui/datetimepicker.md',
-                'docs/api/javascript/ui/numerictextbox.md',
-                'docs/api/javascript/ui/timepicker.md',
-                'docs/api/javascript/ui/window.md',
-                'docs/api/javascript/ui/dialog.md',
-                'docs/api/javascript/ui/responsivepanel.md',
-                'docs/api/javascript/ui/splitter.md'
+                'docs/api/javascript/ui/upload.md',
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }

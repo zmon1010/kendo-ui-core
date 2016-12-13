@@ -1,0 +1,32 @@
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using System.Threading.Tasks;
+
+namespace Kendo.Mvc.TagHelpers
+{
+    /// <summary>
+    /// Kendo UI <%= csharp_class %> TagHelper
+    /// </summary>
+    [HtmlTargetElement("<%= taghelper_element %>", ParentTag="<%= taghelper_parent_element %>", TagStructure=<%= taghelper_structure %> )]
+    [SupressTagRendering]
+    public partial class <%= taghelper_class %> : <%= if collection_component? then "TagHelperCollectionItemBase" else "TagHelperChildBase" end %>
+    {
+        public <%= taghelper_class %>() : base()
+        {
+        }
+
+        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        {
+            await base.ProcessAsync(context, output);
+        }
+
+        protected override void AddSelfToParent(TagHelperContext context)
+        {
+            var parent = typeof(<%= taghelper_parent_class %>);
+            if (context.Items.ContainsKey(parent))
+            {
+                (context.Items[parent] as <%= taghelper_parent_class %>).<%= if collection_component? then "Add(this);" else "#{csharp_name} = this;" end %>
+            }
+        }
+    }
+}
+

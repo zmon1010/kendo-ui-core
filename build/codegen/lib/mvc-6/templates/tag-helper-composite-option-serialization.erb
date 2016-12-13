@@ -1,0 +1,18 @@
+%if serialize?
+            if (<%= csharp_name %> != null)
+            {
+                var <%= var_name %> = <%= csharp_name %>.Serialize();
+
+                if (<%= var_name %>.Any())
+                {
+                    settings["<%= name %>"] = <%= var_name %>;
+                }
+            }
+% if toggleable
+            else if (<%= csharp_name %>.Enabled.HasValue)
+            {
+                settings["<%= name %>"] = <%= csharp_name %>.Enabled;
+            }
+%end
+%end
+

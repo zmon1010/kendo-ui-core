@@ -1,18 +1,21 @@
-module CodeGen::MVC6::Wrappers
+require 'codegen/lib/mvc-6/sub-component'
 
+module CodeGen::MVC6::Wrappers
     IGNORED_TAG_HELPER = YAML.load(File.read("build/codegen/lib/mvc-6/config_taghelpers/ignored.yml")).map(&:downcase)
 
     class TagHelperGenerator
         include Rake::DSL
-        
+
         def initialize(path)
             @path = path
         end
 
         def tag_helper(component)
             component.delete_ignored(IGNORED_TAG_HELPER)
+            component.initialize_children()
 
             write_tag_helper(component)
+            write_tag_helper_children(component)
             write_tag_helper_settings(component)
             write_tag_helper_events(component)
         end
@@ -23,6 +26,53 @@ module CodeGen::MVC6::Wrappers
             unless File.exists?(filename)
                 write_file(filename, component.to_tag_helper())
             end
+
+            if component.collection_component? then
+                write_file("#{@path}/#{component.path}/#{component.taghelper_class}Collection.cs", component.to_tag_helper_array())
+            end
+        end
+
+        def write_tag_helper_children(component)
+            component.unique_options.each do |option|
+                if option.array? then
+                    temp_component_options = self.array_item_options(component, option)
+                    temp_component = SubComponent.new(temp_component_options)
+                    self.tag_helper(temp_component)
+                    filename = "#{@path}/#{component.path}/#{component.taghelper_class}.cs"
+                elsif option.composite?
+                    temp_component_options = self.composite_item_options(component, option)
+                    temp_component = SubComponent.new(temp_component_options)
+                    self.tag_helper(temp_component)
+                    filename = "#{@path}/#{component.path}/#{component.taghelper_class}.cs"
+                end
+            end
+        end
+
+        def array_item_options(component, option)
+            {
+                name: option.csharp_item_class_name,
+                taghelper_parent_class: component.taghelper_class,
+                taghelper_parent: component.taghelper_element,
+                taghelper_element: option.csharp_item_class_name,
+                taghelper_class: option.taghelper_class,
+                path: component.name,
+                options: option.item.options,
+                array_reference: option,
+                collection_component: true
+            }
+        end
+
+        def composite_item_options(component, option)
+            {
+                name: option.name,
+                taghelper_parent_class: component.taghelper_class,
+                taghelper_parent: component.taghelper_element,
+                taghelper_element: option.csharp_class_name,
+                taghelper_class: option.taghelper_class,
+                path: component.name,
+                options: option.options,
+                collection_component: false
+            }
         end
 
         def write_tag_helper_settings(component)

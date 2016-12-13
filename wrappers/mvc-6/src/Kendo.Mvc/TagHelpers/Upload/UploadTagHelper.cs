@@ -1,0 +1,52 @@
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using Kendo.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Kendo.Mvc.TagHelpers
+{
+    /// <summary>
+    /// Kendo UI Upload TagHelper
+    /// </summary>
+    [HtmlTargetElement("kendo-upload")]
+    [RestrictChildren("kendo-uploadfiles")]
+    public partial class UploadTagHelper : TagHelperBase
+    {
+        public UploadTagHelper(IKendoHtmlGenerator generator) : base(generator)
+        {
+        }
+
+        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        {
+            context.Items[this.GetType()] = this;
+            await output.GetChildContentAsync();
+            base.ProcessAsync(context, output);
+        }
+
+        protected override void WriteHtml(TagHelperOutput output)
+        {
+            GenerateId(output);
+
+            var htmlAttributes = new Dictionary<string, object>();
+            htmlAttributes.Add("type", "file");
+
+            var tagBuilder = Generator.GenerateTag("input", ViewContext, Id, Name, htmlAttributes);
+
+            output.TagName = "input";
+            output.TagMode = TagMode.SelfClosing;
+            output.MergeAttributes(tagBuilder);
+        }
+
+        protected override void WriteInitializationScript(TagHelperOutput output)
+        {
+            var settings = SerializeSettings();
+
+            // TODO: Manually serialized settings go here
+
+            var initializationScript = Initializer.Initialize(Selector, "Upload", settings);
+            output.PostElement.SetHtmlContent("<script>" + initializationScript + "</script>");
+        }
+    }
+}
+

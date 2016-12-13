@@ -21,13 +21,20 @@ module CodeGen::MVC6::Wrappers::Options
         include CodeGen::Array
 
         DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/array-option-declaration.erb"), 0, '%<>')
+        REFERENCE = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-reference.erb"), 0, '%<>')
+        FULL_DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-declaration.erb"), 0, '%<>')
         FACTORY = ERB.new(File.read("build/codegen/lib/mvc-6/templates/composite-option-builder.erb"), 0, '%<>')
         FACTORY_GENERATED = ERB.new(File.read("build/codegen/lib/mvc-6/templates/array-option-factory-generated.erb"), 0, '%<>')
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/templates/composite-option-fluent.erb"), 0, '%<>')
         SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/array-option-serialization.erb"), 0, '%<>')
+        TAG_HELPER_SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-serialization.erb"), 0, '%<>')
 
         def item_class
             ArrayItem
+        end
+
+        def array?
+            true
         end
 
         def csharp_class
@@ -61,6 +68,10 @@ module CodeGen::MVC6::Wrappers::Options
             "#{csharp_class}"
         end
 
+        def csharp_collection_class_name
+            "#{csharp_item_class_name}sTagHelper"
+        end
+
         def csharp_builder_class
             "#{csharp_item_class}Factory"
         end
@@ -69,8 +80,20 @@ module CodeGen::MVC6::Wrappers::Options
             "#{csharp_item_class}Factory#{csharp_generic_args}"
         end
 
+        def taghelper_class
+            "#{csharp_item_class_name}TagHelper"
+        end
+
         def to_declaration
             DECLARATION.result(binding)
+        end
+
+        def to_full_declaration
+            FULL_DECLARATION.result(binding)
+        end
+
+        def to_reference
+            REFERENCE.result(binding)
         end
 
         def to_factory
@@ -87,6 +110,10 @@ module CodeGen::MVC6::Wrappers::Options
 
         def to_serialization
             SERIALIZATION.result(binding)
+        end
+
+        def to_tag_helper_serialization
+            TAG_HELPER_SERIALIZATION.result(binding)
         end
     end
 
