@@ -39,11 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $data = &$result['data'];
 
         for ($index = 0, $count = count($data); $index < $count; $index++) {
-            $categoryId = $data[$index]['CategoryID'];
+  
+            if ($type == "create") {
+                $categoryId = $data[$index]->CategoryID;
+            } else {
+                $categoryId = $data[$index]['CategoryID'];
+            }
 
             foreach ($categories['data'] as $category) {
-                if ($category['CategoryID'] == $categoryId) {
-                    $data[$index]['Category'] = $category;
+                if ($category['CategoryID'] == $categoryId) {                    
+                    if ($type == "create") {
+                        $data[$index]->Category = $category;
+                    } else {
+                        $data[$index]['Category'] = $category;
+                    }
                     break;
                 }
             }
