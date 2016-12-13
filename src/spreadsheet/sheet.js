@@ -296,15 +296,35 @@
             }, this);
         },
 
-        canInsertRow: function(rowIndex, count) {
+        preventInsertRow: function(rowIndex, count) {
+            if (this.selectedHeaders().allRows) {
+                return { reason: "error", type: "insertRowWhenColumnIsSelected" };
+            }
+
             count = count || 1;
             var grid = this._grid;
             var range = this.range(grid.rowCount - count, 0, count, grid.columnCount);
-            return !range.hasValue();
+
+            //TODO: Improve has value to return true only if real value is available?
+            if (range.hasValue()) {
+                return { reason: "error", type: "shiftingNonblankCells" };
+            }
+
+            return false;
+        },
+
+        preventInsertColumn: function() {
+            if (this.selectedHeaders().allCols) {
+                return { reason: "error", type: "insertColumnWhenRowIsSelected" };
+            }
+
+            return false;
         },
 
         insertRow: function(rowIndex) {
-            if (!this.canInsertRow(rowIndex)) {
+            var result = this.preventInsertRow(rowIndex);
+
+            if (result) {
                 throw new Error("Shifting nonblank cells off the worksheet is not supported!");
             }
 

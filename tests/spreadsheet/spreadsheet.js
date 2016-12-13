@@ -298,6 +298,18 @@
 
         spreadsheet.fromFile(BLOB, NAME);
     });
+
+    test("cellContextMenu returns the menu instance", function () {
+        equal(spreadsheet.cellContextMenu(), spreadsheet._view.cellContextMenu);
+    });
+
+    test("rowHeaderContextMenu returns the menu instance", function () {
+        equal(spreadsheet.rowHeaderContextMenu(), spreadsheet._view.rowHeaderContextMenu);
+    });
+
+    test("colHeaderContextMenu returns the menu instance", function () {
+        equal(spreadsheet.colHeaderContextMenu(), spreadsheet._view.colHeaderContextMenu);
+    });
     // ------------------------------------------------------------
     module("Spreadsheet options", {
         setup: function() {

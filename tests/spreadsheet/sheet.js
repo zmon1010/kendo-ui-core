@@ -358,20 +358,42 @@
         throws(function() { sheet.insertRow(0); });
     });
 
-    test("canInsertRows is true if data will not be lost", function() {
-        ok(sheet.canInsertRow(0));
+    test("preventInsertRow is true if data will not be lost", function() {
+        ok(!sheet.preventInsertRow(0));
     });
 
-    test("canInsertRow is false if data will be lost", function() {
+    test("preventInsertRow return reason if all rows are selected", function() {
+        sheet.range("A1:A" + sheet._grid.rowCount).select();
+
+        var result = sheet.preventInsertRow(0);
+        equal(result.reason, "error");
+        equal(result.type, "insertRowWhenColumnIsSelected");
+    });
+
+    test("preventInsertRow return reason if data will be lost", function() {
         sheet.range("A" + defaults.rows).values("some value");
 
-        ok(!sheet.canInsertRow(0));
+        var result = sheet.preventInsertRow(0);
+
+        equal(result.reason, "error");
+        equal(result.type, "shiftingNonblankCells");
     });
 
-    test("canInsertRow is false if data will be lost when inserting multiple rows", function() {
+    test("preventInsertRow return reason if data will be lost when inserting multiple rows", function() {
         sheet.range("A" + (defaults.rows-1)).values("some value");
 
-        ok(!sheet.canInsertRow(0, 2));
+        var result = sheet.preventInsertRow(0, 2);
+
+        equal(result.reason, "error");
+        equal(result.type, "shiftingNonblankCells");
+    });
+
+    test("canInsertColumn return reason if all columns are selected", function() {
+        sheet.range("R1C1:R1C" + sheet._grid.columnCount).select();
+
+        var result = sheet.preventInsertColumn();
+        equal(result.reason, "error");
+        equal(result.type, "insertColumnWhenRowIsSelected");
     });
 
     test("deleteColumn triggers the change event", 1, function() {
