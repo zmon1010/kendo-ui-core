@@ -381,6 +381,18 @@
                 return this._workbook.forEachName(func);
             },
 
+            cellContextMenu: function() {
+                return this._view.cellContextMenu;
+            },
+
+            rowHeaderContextMenu: function() {
+                return this._view.rowHeaderContextMenu;
+            },
+
+            colHeaderContextMenu: function() {
+                return this._view.colHeaderContextMenu;
+            },
+
             events: [
                 "cut",
                 "copy",
