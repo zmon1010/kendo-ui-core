@@ -296,7 +296,7 @@
             }, this);
         },
 
-        canInsertRow: function(rowIndex, count) {
+        preventInsertRow: function(rowIndex, count) {
             if (this.selectedHeaders().allRows) {
                 return { reason: "error", type: "insertRowWhenColumnIsSelected" };
             }
@@ -310,21 +310,21 @@
                 return { reason: "error", type: "shiftingNonblankCells" };
             }
 
-            return true;
+            return false;
         },
 
-        canInsertColumn: function() {
+        preventInsertColumn: function() {
             if (this.selectedHeaders().allCols) {
                 return { reason: "error", type: "insertColumnWhenRowIsSelected" };
             }
 
-            return true;
+            return false;
         },
 
         insertRow: function(rowIndex) {
-            var result = this.canInsertRow(rowIndex);
+            var result = this.preventInsertRow(rowIndex);
 
-            if (result && result.reason) {
+            if (result) {
                 throw new Error("Shifting nonblank cells off the worksheet is not supported!");
             }
 

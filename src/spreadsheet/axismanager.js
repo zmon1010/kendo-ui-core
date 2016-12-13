@@ -155,15 +155,15 @@
             });
         },
 
-        canAddRow: function() {
+        preventAddRow: function() {
             var range = this._sheet.select().toRangeRef();
             var rowCount = range.height();
 
-            return this._sheet.canInsertRow(0, rowCount);
+            return this._sheet.preventInsertRow(0, rowCount);
         },
 
-        canAddColumn: function() {
-            return this._sheet.canInsertColumn();
+        preventAddColumn: function() {
+            return this._sheet.preventInsertColumn();
         },
 
         addRowAbove: function() {

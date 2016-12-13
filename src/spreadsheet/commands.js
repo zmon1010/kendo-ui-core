@@ -802,9 +802,9 @@
     kendo.spreadsheet.AddColumnCommand = AddCommand.extend({
         exec: function() {
             var sheet = this.range().sheet();
-            var result = sheet.axisManager().canAddColumn();
+            var result = sheet.axisManager().preventAddColumn();
 
-            if (result && result.reason) {
+            if (result) {
                 return result;
             }
 
@@ -821,9 +821,9 @@
     kendo.spreadsheet.AddRowCommand = AddCommand.extend({
         exec: function() {
             var sheet = this.range().sheet();
-            var result = sheet.axisManager().canAddRow();
+            var result = sheet.axisManager().preventAddRow();
 
-            if (result && result.reason) {
+            if (result) {
                 return result;
             }
 
