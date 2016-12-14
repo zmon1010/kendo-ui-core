@@ -440,11 +440,16 @@ var __meta__ = { // jshint ignore:line
                     }
 
                 } else if (frequency === "weekly") {
-                    diff = (current.getFullYear() - start.getFullYear()) * 52;
+                    excess = this._getNumberOfWeeksBetweenDates(start, current);
 
-                    excess = weekInYear(current, weekStart) - weekInYear(start, weekStart) + diff;
+                    var normalizedCurrentIndex = normalizeDayIndex(current.getDay(), weekStart);
+                    var normalizedStartIndex = normalizeDayIndex(start.getDay(), weekStart);
+
+                    if (normalizedCurrentIndex < normalizedStartIndex) {
+                        excess += 1;
+                    }
+
                     excess = intervalExcess(excess, interval);
-
                     if (excess !== 0) {
                         kendoDate.setDayOfWeek(current, rule.weekStart, -1);
 
@@ -488,6 +493,17 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 return modified;
+            },
+
+            _getNumberOfWeeksBetweenDates: function(first, second){
+                 var weeks = (second - first) / 604800000;                  
+                 var exactWeeks = Math.floor(weeks);
+
+                //this is happening when weeks pass DST change
+                if (weeks - exactWeeks > 0.99) {
+                    exactWeeks = Math.round(weeks);
+                }
+                return exactWeeks;
             },
 
             _hour: function(date, rule, interval) {

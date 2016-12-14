@@ -1555,6 +1555,40 @@
         deepEqual(events[3].start, new Date(1997, 7, 31, 9));
     });
 
+     test("WEEKLY expands correctly durring year change", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "id",
+            title: "Title",
+            start: new Date("2015/12/27 09:00"),
+            end: new Date("2015/12/27 09:30"),
+            recurrenceRule: "FREQ=WEEKLY;BYDAY=MO,WE,FR;INTERVAL=2;COUNT=4;"
+        });
+
+        var events = occurrences(schedulerEvent, new Date(2015, 11, 26), new Date(2016, 2, 6));
+
+        deepEqual(events[0].start, new Date(2015, 11, 28, 9));
+        deepEqual(events[1].start, new Date(2015, 11, 30, 9));
+        deepEqual(events[2].start, new Date(2016, 0, 1, 9));
+        deepEqual(events[3].start, new Date(2016, 0, 11, 9));
+    });
+
+    test("WEEKLY expands correctly durring year change with MO wkst", function() {
+        var schedulerEvent = new SchedulerEvent({
+            uid: "id",
+            title: "Title",
+            start:  new Date("2016/12/27 09:00"),
+            end: new Date("2016/12/27 09:30"),
+            recurrenceRule: "FREQ=WEEKLY;BYDAY=TU;INTERVAL=2;WKST=MO;COUNT=4"
+        });
+
+        var events = occurrences(schedulerEvent, new Date(2016, 11, 26), new Date(2017, 2, 6));
+
+        deepEqual(events[0].start, new Date(2016, 11, 27, 9));
+        deepEqual(events[1].start, new Date(2017, 0, 10, 9));
+        deepEqual(events[2].start, new Date(2017, 0, 24, 9));
+        deepEqual(events[3].start, new Date(2017, 1, 7, 9));
+    });
+
     test("WEEKLY expands correctly with interval with one year interval", function() {
         var schedulerEvent = new SchedulerEvent({
             uid: "id",
