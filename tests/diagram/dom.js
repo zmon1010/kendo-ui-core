@@ -181,14 +181,14 @@
     test("event position is retrieved from originalEvent on wheel", 2, function(e) {
         createDiagram({
             selectable: true
-        });        
+        });
         var event  = jQuery.Event("scroll", {originalEvent: { pageX: 20, pageY: 20}});
         diagram.element.offset({ top: 5, left: 5 });
         var pos = diagram._eventPositions(event);
 
         equal(pos.x, 15);
         equal(pos.y, 15);
-    });      
+    });
 
     // ------------------------------------------------------------
     module("Diagram / interaction defaults", {
@@ -283,7 +283,7 @@
             }
         });
         equal(diagram.options.pannable.key, "shift");
-    });     
+    });
 
     // ------------------------------------------------------------
     (function() {
@@ -509,7 +509,16 @@
     // ------------------------------------------------------------
     (function() {
         function trigger(name, x, y, which) {
-            var event = jQuery.Event(name, { pageX: x, pageY: y, which: which || 0, originalEvent: { pageX: x, pageY: y}});
+            var event = jQuery.Event(name, {
+                pageX: x,
+                pageY: y,
+                which: which || 0,
+                originalEvent: {
+                    pageX: x,
+                    pageY: y,
+                    preventDefault: jQuery.noop
+                }
+            });
             diagram.scrollable.trigger(event);
         }
 
@@ -576,7 +585,7 @@
             move(10, 10, 1);
             move(150, 150, 1);
             move(0, 0, 1);
-        });           
+        });
     })();
 
     // ------------------------------------------------------------
@@ -2466,7 +2475,7 @@
                             shape.point = pointToSet;
                             return shape.point;
                         }
-                        
+
                     },
                     {
                         name: "topPoint",
@@ -2496,7 +2505,7 @@
 
             equal(connection._resolvedSourceConnector.options.name, "rightPoint");
             equal(connection._resolvedTargetConnector.options.name, "leftPoint");
-        });        
+        });
     })();
 
     (function() {
@@ -3643,7 +3652,7 @@
         test("returns false if passed rect overlaps a shape but the shape is excluded", function() {
             var targetRect = new Rect(50, 100, 100, 10);
             ok(!root.hitTestRect(targetRect, [shape]));
-        });        
+        });
 
     })();
 
@@ -3758,7 +3767,7 @@
             insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
                 new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
             equal(node.hitTestRect(new Rect(0, 0, 30, 30), [node.children[0].shapes[0].shape]), false);
-        });       
+        });
 
     })();
 
@@ -3854,13 +3863,13 @@
             shape = new ShapeMock(new Rect(-50, 0, 100, 100));
             tree.insert(shape);
             equal(tree.hitTestRect(new Rect(-100, 0, 50, 50), [shape]), false);
-        }); 
+        });
 
         test("hitTestRect returns false if a sector root contains a shape that overlaps the rect but the shape is excluded", function() {
             shape = new ShapeMock();
             tree.insert(shape);
             equal(tree.hitTestRect(new Rect(80, 0, 50, 50), [shape]), false);
-        });               
+        });
 
     })();
 
