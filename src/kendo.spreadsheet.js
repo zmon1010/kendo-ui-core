@@ -299,6 +299,30 @@
                 }
             },
 
+            _workbookInsertSheet: function(e) {
+                if (this.trigger("insertSheet", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookRemoveSheet: function(e) {
+                if (this.trigger("removeSheet", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookSelectSheet: function(e) {
+                if (this.trigger("selectSheet", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookRenameSheet: function(e) {
+                if (this.trigger("renameSheet", e)) {
+                    e.preventDefault();
+                }
+            },
+
             _bindWorkbookEvents: function() {
                 this._workbook.bind("cut", this._workbookCut.bind(this));
                 this._workbook.bind("copy", this._workbookCopy.bind(this));
@@ -307,6 +331,10 @@
                 this._workbook.bind("excelExport", this._workbookExcelExport.bind(this));
                 this._workbook.bind("excelImport", this._workbookExcelImport.bind(this));
                 this._workbook.bind("pdfExport", this._workbookPdfExport.bind(this));
+                this._workbook.bind("insertSheet", this._workbookInsertSheet.bind(this));
+                this._workbook.bind("removeSheet", this._workbookRemoveSheet.bind(this));
+                this._workbook.bind("selectSheet", this._workbookSelectSheet.bind(this));
+                this._workbook.bind("renameSheet", this._workbookRenameSheet.bind(this));
             },
 
             destroy: function() {

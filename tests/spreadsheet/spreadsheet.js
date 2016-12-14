@@ -310,6 +310,126 @@
     test("colHeaderContextMenu returns the menu instance", function () {
         equal(spreadsheet.colHeaderContextMenu(), spreadsheet._view.colHeaderContextMenu);
     });
+
+    test("activeSheet method triggers selectSheet event", function () {
+        var newSheet = spreadsheet.insertSheet();
+        var oldSheet = spreadsheet.activeSheet();
+
+        spreadsheet.bind("selectSheet", function(e) {
+            equal(spreadsheet, e.sender);
+            equal(newSheet, e.sheet);
+        });
+
+        spreadsheet.activeSheet(newSheet);
+    });
+
+    asyncTest("selectSheet event", 1, function () {
+        var newSheet = spreadsheet.insertSheet();
+        var oldSheet = spreadsheet.activeSheet();
+
+        spreadsheet.bind("selectSheet", function(e) {
+            setTimeout(function() {
+                start();
+                equal(oldSheet.name(), spreadsheet.activeSheet().name());
+            });
+
+            e.preventDefault();
+        });
+
+        spreadsheet.activeSheet(newSheet);
+    });
+
+    test("renameSheet method triggers renameSheet event", 3, function () {
+        var activeSheet = spreadsheet.activeSheet();
+        var oldName = activeSheet.name();
+        var newName = "newName";
+
+        spreadsheet.bind("renameSheet", function(e) {
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(newName, e.newSheetName);
+        });
+
+        spreadsheet.renameSheet(activeSheet, newName);
+    });
+
+    asyncTest("renameSheet event can be prevented", function () {
+        var activeSheet = spreadsheet.activeSheet();
+        var oldName = activeSheet.name();
+
+        spreadsheet.bind("renameSheet", function(e) {
+            setTimeout(function() {
+                start();
+                equal(oldName, spreadsheet.activeSheet().name());
+            });
+
+            e.preventDefault();
+        });
+
+        spreadsheet.bind("change", function(e) {
+            ok(false);
+        });
+
+        spreadsheet.renameSheet(activeSheet, "newName");
+    });
+
+    test("insertSheet method triggers insertSheet event", function () {
+        spreadsheet.bind("insertSheet", function(e) {
+            ok(true);
+        });
+
+        spreadsheet.insertSheet();
+    });
+
+    asyncTest("insertSheet event can be prevented", 1, function () {
+        var sheetsCount = spreadsheet.sheets().length;
+
+        spreadsheet.bind("insertSheet", function(e) {
+            setTimeout(function() {
+                start();
+                equal(sheetsCount, spreadsheet.sheets().length);
+            });
+
+            e.preventDefault();
+        });
+
+        spreadsheet.bind("change", function(e) {
+            ok(false);
+        });
+
+        spreadsheet.insertSheet();
+    });
+
+    test("removeSheet method triggers removeSheet event", function () {
+        spreadsheet.insertSheet();
+
+        spreadsheet.bind("removeSheet", function(e) {
+            ok(true);
+        });
+
+        spreadsheet.removeSheet(spreadsheet.activeSheet());
+    });
+
+    asyncTest("removeSheet event can be prevented", 1, function () {
+        spreadsheet.insertSheet();
+
+        var sheetsCount = spreadsheet.sheets().length;
+
+        spreadsheet.bind("removeSheet", function(e) {
+            setTimeout(function() {
+                start();
+                equal(sheetsCount, spreadsheet.sheets().length);
+            });
+
+            e.preventDefault();
+        });
+
+        spreadsheet.bind("change", function(e) {
+            ok(false);
+        });
+
+        spreadsheet.removeSheet(spreadsheet.activeSheet());
+    });
     // ------------------------------------------------------------
     module("Spreadsheet options", {
         setup: function() {

@@ -31,7 +31,7 @@
                 headerHeight: this.options.headerHeight,
                 headerWidth: this.options.headerWidth,
                 dataSource: this.options.dataSource
-            });
+            }, true);
 
             this.undoRedoStack = new kendo.util.UndoRedoStack();
             this.undoRedoStack.bind(["undo", "redo"], this._onUndoRedo.bind(this));
@@ -64,7 +64,11 @@
             "paste",
             "change",
             "excelImport",
-            "excelExport"
+            "excelExport",
+            "insertSheet",
+            "removeSheet",
+            "selectSheet",
+            "renameSheet"
         ],
 
         _sheetChange: function(e) {
@@ -134,12 +138,16 @@
             }
         },
 
-        activeSheet: function(sheet) {
+        activeSheet: function(sheet, skipEvent) {
             if (sheet === undefined) {
                 return this._sheet;
             }
 
             if (!this.sheetByName(sheet.name())) {
+                return;
+            }
+
+            if (skipEvent && this.trigger("selectSheet", { sheet: sheet })) {
                 return;
             }
 
@@ -164,7 +172,7 @@
             this.trigger("change", { sheetSelection: true });
         },
 
-        insertSheet: function(options) {
+        insertSheet: function(options, skipEvent) {
             options = options || {};
             var that = this;
             var insertIndex = typeof options.index === "number" ? options.index : that._sheets.length;
@@ -184,6 +192,10 @@
             };
 
             if (options.name && that.sheetByName(options.name)) {
+                return;
+            }
+
+            if (!skipEvent && this.trigger("insertSheet")) {
                 return;
             }
 
@@ -273,6 +285,13 @@
 
             this._sheetsSearchCache = {};
 
+            if (this.trigger("renameSheet", {
+                sheet: sheet,
+                newSheetName: newSheetName
+            })) {
+                return;
+            }
+
             // update references
             this._sheets.forEach(function(sheet){
                 sheet._forFormulas(function(formula){
@@ -307,6 +326,10 @@
             var index = that.sheetIndex(sheet);
 
             if (sheets.length === 1) {
+                return;
+            }
+
+            if (this.trigger("removeSheet", { sheet: sheet })) {
                 return;
             }
 
@@ -350,7 +373,7 @@
                         headerHeight : args.headerHeight,
                         headerWidth  : args.headerWidth,
                         data         : data
-                    });
+                    }, true);
 
                     if (data.dataSource) {
                         sheet.setDataSource(data.dataSource);
@@ -359,9 +382,9 @@
             }
 
             if (json.activeSheet) {
-                this.activeSheet(this.sheetByName(json.activeSheet));
+                this.activeSheet(this.sheetByName(json.activeSheet), true);
             } else {
-                this.activeSheet(this._sheets[0]);
+                this.activeSheet(this._sheets[0], true);
             }
 
             if (json.names) {
