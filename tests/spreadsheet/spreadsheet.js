@@ -311,11 +311,12 @@
         equal(spreadsheet.colHeaderContextMenu(), spreadsheet._view.colHeaderContextMenu);
     });
 
-    test("activeSheet method triggers selectSheet event", function () {
+    asyncTest("activeSheet method triggers selectSheet event", 2, function () {
         var newSheet = spreadsheet.insertSheet();
         var oldSheet = spreadsheet.activeSheet();
 
         spreadsheet.bind("selectSheet", function(e) {
+            start();
             equal(spreadsheet, e.sender);
             equal(newSheet, e.sheet);
         });
@@ -339,12 +340,13 @@
         spreadsheet.activeSheet(newSheet);
     });
 
-    test("renameSheet method triggers renameSheet event", 3, function () {
+    asyncTest("renameSheet method triggers renameSheet event", 3, function () {
         var activeSheet = spreadsheet.activeSheet();
         var oldName = activeSheet.name();
         var newName = "newName";
 
         spreadsheet.bind("renameSheet", function(e) {
+            start();
             equal(spreadsheet, e.sender);
             equal(activeSheet, e.sheet);
             equal(newName, e.newSheetName);
@@ -353,7 +355,7 @@
         spreadsheet.renameSheet(activeSheet, newName);
     });
 
-    asyncTest("renameSheet event can be prevented", function () {
+    asyncTest("renameSheet event can be prevented", 1, function () {
         var activeSheet = spreadsheet.activeSheet();
         var oldName = activeSheet.name();
 
@@ -373,9 +375,10 @@
         spreadsheet.renameSheet(activeSheet, "newName");
     });
 
-    test("insertSheet method triggers insertSheet event", function () {
+    asyncTest("insertSheet method triggers insertSheet event", 1, function () {
         spreadsheet.bind("insertSheet", function(e) {
-            ok(true);
+            start();
+            equal(spreadsheet, e.sender);
         });
 
         spreadsheet.insertSheet();
@@ -400,11 +403,13 @@
         spreadsheet.insertSheet();
     });
 
-    test("removeSheet method triggers removeSheet event", function () {
+    asyncTest("removeSheet method triggers removeSheet event", 2, function () {
         spreadsheet.insertSheet();
 
         spreadsheet.bind("removeSheet", function(e) {
-            ok(true);
+            start();
+            equal(spreadsheet, e.sender);
+            equal(spreadsheet.activeSheet(), e.sheet);
         });
 
         spreadsheet.removeSheet(spreadsheet.activeSheet());

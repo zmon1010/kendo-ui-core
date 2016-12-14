@@ -147,7 +147,7 @@
                 return;
             }
 
-            if (skipEvent && this.trigger("selectSheet", { sheet: sheet })) {
+            if (!skipEvent && this.trigger("selectSheet", { sheet: sheet })) {
                 return;
             }
 
