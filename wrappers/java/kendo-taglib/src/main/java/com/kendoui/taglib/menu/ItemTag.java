@@ -48,6 +48,10 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
         if (isSet("enabled") && getEnabled() == false) {
             element.attr("class", "k-state-disabled");
         }
+
+        if (isSet("select") && getSelect() != null) {
+            element.attr("onclick", getSelect());
+        }
     }
     
     @Override
@@ -91,6 +95,14 @@ public class ItemTag extends  BaseItemTag  /* interfaces */implements Items/* in
 
     public void setImageUrl(java.lang.String value) {
         setProperty("imageUrl", value);
+    }
+
+    public java.lang.String getSelect() {
+        return (java.lang.String)getProperty("select");
+    }
+
+    public void setSelect(java.lang.String value) {
+        setProperty("select", value);
     }
 
     public boolean getSelected() {

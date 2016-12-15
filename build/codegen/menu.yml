@@ -29,3 +29,7 @@
     - :name: items.selected
       :type: Boolean
       :description: Specifies whether the item is initially selected
+
+    - :name: items.select
+      :type: String
+      :description: Specifies the select event handler of an item.
