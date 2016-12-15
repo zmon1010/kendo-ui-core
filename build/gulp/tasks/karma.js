@@ -49,6 +49,7 @@ if (testsOption) {
             batch = [];
         }
     });
+    batches.push(batch);
 }
 
 exclude = excludeOption ? [excludeOption] : [];
