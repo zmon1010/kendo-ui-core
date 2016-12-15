@@ -23322,6 +23322,12 @@ Each table row consists of table cells (&lt;td&gt;) which represent the grid col
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>The JavaScript function executed on initialization of the row which will determine whether the command button will be visible. The function receives a the data item object for the row as an argument.</description>
+            <name>visible</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
     <tag>
@@ -23353,6 +23359,12 @@ Each table row consists of table cells (&lt;td&gt;) which represent the grid col
 
 
 
+    <tag>
+        <description>The JavaScript function executed on initialization of the row which will determine whether the command button will be visible. The function receives a the data item object for the row as an argument.</description>
+        <name>grid-column-commandItem-visible</name>
+        <tag-class>com.kendoui.taglib.grid.ColumnCommandItemVisibleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>The JavaScript function executed when the user clicks the command button. The function receives a jQuery Event as an argument.The function context (available via the this keyword) will be set to the grid instance.</description>
         <name>grid-column-commandItem-click</name>
