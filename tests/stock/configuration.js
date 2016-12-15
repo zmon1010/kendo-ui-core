@@ -327,6 +327,24 @@
                   plotArea.namedCategoryAxes["_navigator_ticks"].lineBox().y1);
         });
 
+        test("navigator axes position is not affected by crossing values", function() {
+            createStockChart({
+                categoryAxis: {
+                    axisCrossingValues: [0, 30]
+                },
+                valueAxes: [{
+                    name: "val1"
+                }, {
+                    name: "val2"
+                }]
+            });
+
+            var plotArea = chart._plotArea;
+
+            equal(plotArea.namedValueAxes["val1"].lineBox().x1,
+                  plotArea.namedValueAxes["_navigator"].lineBox().x1);
+        });
+
         test("passes mousewheel options to selection", function() {
             createStockChart({
                 dateField: "Date",

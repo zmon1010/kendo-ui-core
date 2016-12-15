@@ -755,8 +755,7 @@ var __meta__ = { // jshint ignore:line
                 weeks: [],
                 months: [1],
                 years: [1]
-            },
-            _overlap: true
+            }
         });
         var user = naviOptions.categoryAxis;
 
@@ -777,7 +776,8 @@ var __meta__ = { // jshint ignore:line
                 plotBands: [],
                 autoBaseUnitSteps: {
                     minutes: []
-                }
+                },
+                _overlap: true
             }), deepExtend({}, base, user, {
                 name: NAVIGATOR_AXIS + "_ticks",
                 maxDateGroups: 200,
@@ -786,7 +786,8 @@ var __meta__ = { // jshint ignore:line
                 },
                 plotBands: [],
                 title: null,
-                labels: { visible: false, mirror: true }
+                labels: { visible: false, mirror: true },
+                _overlap: true
             })
         );
 
