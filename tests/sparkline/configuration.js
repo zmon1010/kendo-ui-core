@@ -63,7 +63,7 @@
         });
 
         test("auto height equals line height of empty container", function() {
-            QUnit.close(sparkline.stage.height(), 19, TOLERANCE);
+            QUnit.close($(sparkline._instance.stage).height(), 19, TOLERANCE);
         });
 
         test("custom height is preserved", function() {
@@ -86,7 +86,8 @@
         });
 
         test("sets container width based on custom pointWidth", function() {
-            createSparkline({ dataSource: [1, 2], pointWidth: 10 });
+            createSparkline({ data: [1, 2], pointWidth: 10 });
+
             equal(sparkline.element.width(), 24);
         });
 
