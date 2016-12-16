@@ -51,8 +51,6 @@
         }
     });
 
-    /* -----[ exports ]----- */
-
     function getXY(thing) {
         if (typeof thing == "number") {
             return { x: thing, y: thing };
@@ -62,6 +60,8 @@
         }
         return { x: thing.x, y: thing.y };
     }
+
+    /* -----[ exports ]----- */
 
     function drawDOM(element, options) {
         if (!options) {
@@ -608,6 +608,23 @@
     drawing.drawDOM = drawDOM;
 
     drawDOM.getFontFaces = getFontFaces;
+
+    // This is needed for the Spreadsheet print functionality.  Since
+    // there we only need to draw text, this cuts through the ceremony
+    // of drawDOM/renderElement and renders the text node directly.
+    drawDOM.drawText = function(element) {
+        var group = new drawing.Group();
+        nodeInfo._clipbox = false;
+        nodeInfo._matrix = geo.Matrix.unit();
+        nodeInfo._stackingContext = {
+            element: element,
+            group: group
+        };
+        pushNodeInfo(element, getComputedStyle(element), group);
+        renderText(element, element.firstChild, group);
+        popNodeInfo();
+        return group;
+    };
 
     var parseBackgroundImage = (function(){
         var tok_linear_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?linear-gradient\s*)\(/;

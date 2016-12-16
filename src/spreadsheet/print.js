@@ -451,108 +451,56 @@
         }
     }
 
+    var CONT;
     function drawText(text, color, cell, group) {
-        // XXX: account for border and padding below.  depends on CSS.
-        var rect_left   = cell.left   + 4;
-        var rect_top    = cell.top    + 2;
-        var rect_width  = cell.width  - 8;
-        var rect_height = cell.height - 4;
-        var font = makeFontDef(cell);
-        var style = { font: font, whiteSpace: "pre" };
-        var props = {
-            font: font,
-            fill: { color: color }
-        };
-        var lines = [], text_height = 0, top = rect_top;
-        if (cell.wrap) {
-            paraBreak(text, style, rect_width).forEach(function(line){
-                var tmp = new drawing.Text(line.text, [ rect_left, top ], props);
-                top += line.box.height;
-                lines.push({ el: tmp, box: line.box });
-            });
-            text_height = top - rect_top;
-        } else {
-            var tmp = new drawing.Text(text, [ rect_left, top ], props);
-            var box = kendo.util.measureText(text, style);
-            lines.push({ el: tmp, box: box });
-            text_height = box.height;
+        if (!CONT) {
+            CONT = document.createElement("div");
+            CONT.style.position = "absolute";
+            CONT.style.left = "-10000px";
+            CONT.style.top = "-10000px";
+            CONT.style.overflow = "hidden";
+            CONT.style.boxSizing = "border-box";
+            CONT.style.padding = "2px 4px";
+            CONT.style.lineHeight = "normal";
+            document.body.appendChild(CONT);
         }
-        var cont = new drawing.Group();
-        group.append(cont);
+        CONT.style.color = color;
+        CONT.style.font = makeFontDef(cell);
+        CONT.style.width = cell.width + "px";
+        CONT.style.textAlign = cell.textAlign || "left";
+        CONT.style.textDecoration = cell.underline ? "underline" : "none";
+
+        if (cell.wrap) {
+            CONT.style.whiteSpace = "pre-wrap";
+            CONT.style.overflowWrap = CONT.style.wordWrap = "break-word";
+        } else {
+            CONT.style.whiteSpace = "pre";
+            CONT.style.overflowWrap = CONT.style.wordWrap = "normal";
+        }
+
+        if (CONT.firstChild) {
+            CONT.removeChild(CONT.firstChild);
+        }
+        CONT.appendChild(document.createTextNode(text));
+
         var vtrans = 0;
         switch (cell.verticalAlign) {
           case "center":
-            vtrans = (rect_height - text_height) >> 1;
+            vtrans = (cell.height - CONT.offsetHeight) >> 1;
             break;
 
           case undefined:
           case null:
           case "bottom":
-            vtrans = (rect_height - text_height);
+            vtrans = (cell.height - CONT.offsetHeight);
             break;
         }
         if (vtrans < 0) { vtrans = 0; }
-        lines.forEach(function(line){
-            cont.append(line.el);
-            var htrans = 0;
-            var text_width = line.box.width;
-            switch (cell.textAlign) {
-              case "center":
-                htrans = (rect_width - text_width) / 2;
-                break;
-              case "right":
-                htrans = rect_width - text_width;
-                break;
-            }
-            if (htrans < 0) { htrans = 0; }
-            if (htrans || vtrans) {
-                line.el.transform(geo.Matrix.translate(htrans, vtrans));
-            }
-            if (cell.underline) {
-                var height = cell.fontSize || 12;
-                var width = height / 12;
-                var path = new drawing.Path({ stroke: {
-                    width: width,
-                    color: color
-                }});
-                var pos = line.el.position();
-                var bottom = pos.y + height + vtrans + 2 * width;
-                path.moveTo(pos.x + htrans, bottom)
-                    .lineTo(pos.x + htrans + text_width, bottom);
-                cont.append(path);
-            }
-        });
-    }
 
-    function lineBreak(text, style, width, lines) {
-        var len = text.length;
-        var start = 0;
-        while (start < len) {
-            split(start, len, len);
-        }
-        function split(min, eol, max) {
-            var sub = text.substring(start, eol).trim();
-            var box = kendo.util.measureText(sub, style);
-            if (box.width <= width) {
-                if (eol < max-1) {
-                    split(eol, (eol+max)>>1, max);
-                } else {
-                    lines.push({ text: sub, box: box });
-                    start = eol;
-                }
-            } else if (min < eol) {
-                split(min, (min + eol) >> 1, eol);
-            }
-        }
-    }
-
-    function paraBreak(text, style, width) {
-        var a = text.split(/\r?\n/);
-        var lines = [];
-        a.forEach(function(text){
-            lineBreak(text, style, width, lines);
-        });
-        return lines;
+        var text_group  = kendo.drawing.drawDOM.drawText(CONT);
+        text_group.transform(geo.Matrix.translate(10000 + cell.left,
+                                                  10000 + cell.top + vtrans));
+        group.append(text_group);
     }
 
     function makeFontDef(cell) {
