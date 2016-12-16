@@ -19,7 +19,7 @@
         g = kendo.geometry,
         d = kendo.drawing,
 
-        defined = kendo.util.defined,
+        defined = d.util.defined,
 
         inArray = $.inArray;
 
@@ -1459,7 +1459,7 @@
     function lineAngle(p1, p2) {
         var xDiff = p2.x - p1.x;
         var yDiff = p2.y - p1.y;
-        var angle = kendo.util.deg(Math.atan2(yDiff, xDiff));
+        var angle = d.util.deg(Math.atan2(yDiff, xDiff));
         return angle;
     }
 

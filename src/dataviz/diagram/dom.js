@@ -52,7 +52,7 @@
             CascadingRouter = diagram.CascadingRouter,
             isUndefined = Utils.isUndefined,
             isDefined = Utils.isDefined,
-            defined = kendo.util.defined,
+            defined = draw.util.defined,
             isArray = $.isArray,
             isFunction = kendo.isFunction,
             isString = Utils.isString,
@@ -1349,7 +1349,7 @@
                     var point;
 
                     if (alignToPath) {
-                        var angle  = kendo.util.deg(math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x));
+                        var angle  = draw.util.deg(math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x));
                         point = new Point((endPoint.x - startPoint.x) / 2 + startPoint.x, (endPoint.y - startPoint.y) / 2 + startPoint.y);
 
                         if (math.abs(angle) === 90) {
@@ -3757,14 +3757,14 @@
                             var popupHeight = outerHeight(this.singleToolBar._popup.element);
                             if (element instanceof Shape) {
                                 var shapeBounds = this.modelToView(element.bounds(ROTATED));
-                                point = Point(shapeBounds.x, shapeBounds.y).minus(Point(
+                                point = new Point(shapeBounds.x, shapeBounds.y).minus(new Point(
                                     (popupWidth - shapeBounds.width) / 2,
                                     popupHeight + padding));
                             } else if (element instanceof Connection) {
                                 var connectionBounds = this.modelToView(element.bounds());
 
-                                point = Point(connectionBounds.x, connectionBounds.y)
-                                    .minus(Point(
+                                point = new Point(connectionBounds.x, connectionBounds.y)
+                                    .minus(new Point(
                                         (popupWidth - connectionBounds.width - 20) / 2,
                                         popupHeight + padding
                                     ));
@@ -3772,10 +3772,10 @@
 
                             if (point) {
                                 if (!this.canvas.translate) {
-                                    point = point.minus(Point(this.scroller.scrollLeft, this.scroller.scrollTop));
+                                    point = point.minus(new Point(this.scroller.scrollLeft, this.scroller.scrollTop));
                                 }
                                 point = this.viewToDocument(point);
-                                point = Point(math.max(point.x, 0), math.max(point.y, 0));
+                                point = new Point(math.max(point.x, 0), math.max(point.y, 0));
                                 this.singleToolBar.showAt(point);
                                 if (preventClosing) {
                                     this.singleToolBar._popup.one("close", preventDefault);

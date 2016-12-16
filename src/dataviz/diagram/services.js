@@ -19,7 +19,8 @@
             deepExtend = kendo.deepExtend,
             Movable = kendo.ui.Movable,
             browser = kendo.support.browser,
-            defined = kendo.util.defined,
+            util = kendo.drawing.util,
+            defined = util.defined,
             inArray = $.inArray,
             proxy = $.proxy;
 
@@ -1364,7 +1365,7 @@
                     bottomRight: shapeBounds.bottomRight()
                 };
                 var sides = this._connectorSides;
-                var min = kendo.util.MAX_NUM;
+                var min = util.MAX_NUM;
                 var sideDistance;
                 var minSide;
                 var axis;
