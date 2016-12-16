@@ -371,6 +371,10 @@
                 }
             },
 
+            _workbookSelect: function(e) {
+                this.trigger("select", e);
+            },
+
             _bindWorkbookEvents: function() {
                 this._workbook.bind("cut", this._workbookCut.bind(this));
                 this._workbook.bind("copy", this._workbookCopy.bind(this));
@@ -391,6 +395,7 @@
                 this._workbook.bind("hideColumn", this._workbookHideColumn.bind(this));
                 this._workbook.bind("unhideRow", this._workbookUnhideRow.bind(this));
                 this._workbook.bind("unhideColumn", this._workbookUnhideColumn.bind(this));
+                this._workbook.bind("select", this._workbookSelect.bind(this));
             },
 
             destroy: function() {
@@ -485,7 +490,20 @@
                 "excelExport",
                 "excelImport",
                 "change",
-                "render"
+                "render",
+                "removeSheet",
+                "selectSheet",
+                "renameSheet",
+                "insertRow",
+                "insertColumn",
+                "deleteRow",
+                "insertSheet",
+                "deleteColumn",
+                "hideRow",
+                "hideColumn",
+                "unhideRow",
+                "unhideColumn",
+                "select"
             ]
         });
 

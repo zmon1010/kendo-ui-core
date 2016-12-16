@@ -76,7 +76,8 @@
             "hideRow",
             "hideColumn",
             "unhideRow",
-            "unhideColumn"
+            "unhideColumn",
+            "select"
         ],
 
         _sheetChange: function(e) {
@@ -153,6 +154,10 @@
             })) {
                 e.preventDefault();
             }
+        },
+
+        _sheetSelect: function(e) {
+            this.trigger("select", e);
         },
 
         _sheetCommandRequest: function(e) {
@@ -324,6 +329,7 @@
             sheet.bind("hideColumn", this._sheetHideColumn.bind(this));
             sheet.bind("unhideRow", this._sheetUnhideRow.bind(this));
             sheet.bind("unhideColumn", this._sheetUnhideColumn.bind(this));
+            sheet.bind("select", this._sheetSelect.bind(this));
             sheet.bind("commandRequest", this._sheetCommandRequest.bind(this));
         },
 

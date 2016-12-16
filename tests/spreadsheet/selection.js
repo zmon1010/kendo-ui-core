@@ -191,6 +191,22 @@
         equal(selectedHeaders.allRows, false);
     });
 
+    test("select event is triggered", 4, function() {
+        var pane = createPane(0, 0);
+        var range = sheet.range("A1:C2");
+
+        sheet.bind("select", function(e) {
+            var ref = e.range._ref;
+
+            equal(ref.topLeft.row, 0);
+            equal(ref.topLeft.col, 0);
+            equal(ref.bottomRight.row, 1);
+            equal(ref.bottomRight.col, 2);
+        });
+
+        sheet.range(range).select();
+    });
+
     function find(classTestRe, children) {
         for (var i = 0; i < children.length; i++) {
             if (classTestRe.test(children[i].attr.className)) {

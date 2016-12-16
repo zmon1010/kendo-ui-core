@@ -691,6 +691,21 @@
 
         activeSheet.unhideColumn(0);
     });
+
+    test("select event is triggered", 4, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.range("A1").select();
+
+        spreadsheet.bind("select", function(e) {
+            equal(e.sender, spreadsheet);
+            equal(e.range._ref.row, 4);
+            equal(e.range._ref.col, 2);
+            ok(e.range instanceof kendo.spreadsheet.Range);
+        });
+
+        activeSheet.range("C5").select();
+    });
     // ------------------------------------------------------------
     module("Spreadsheet options", {
         setup: function() {

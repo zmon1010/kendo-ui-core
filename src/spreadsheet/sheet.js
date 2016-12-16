@@ -69,6 +69,8 @@
                     return;
                 }
 
+                this._sheet.triggerSelect(new Range(ref, this._sheet))
+
                 this.originalSelection = ref;
 
                 this.selection = expanded;
@@ -111,7 +113,8 @@
             "hideRow",
             "hideColumn",
             "unhideRow",
-            "unhideColumn"
+            "unhideColumn",
+            "select"
         ],
 
         _reinit: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth, defaultCellStyle) {
@@ -219,6 +222,10 @@
                 this.trigger("change", reason);
             }
             return this;
+        },
+
+        triggerSelect: function(range) {
+            this.trigger("select", { range: range });
         },
 
         setDataSource: function(dataSource, columns) {
