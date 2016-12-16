@@ -1062,7 +1062,7 @@ var __meta__ = { // jshint ignore:line
             },
 
             _renderBackground: function (size, border) {
-                var box = Box2D(0,0, size, size).unpad(border.width / 2);
+                var box = new Box2D(0,0, size, size).unpad(border.width / 2);
                 return draw.Path.fromRect(box.toRect(), {
                     fill: {
                         color: this.options.background
