@@ -413,9 +413,6 @@
         var browserOptions = deepExtend({}, kendo.support.browser);
 
         module("Navigator / Live drag", {
-            setup: function() {
-                createStockChart({ navigator: { dataSource: null } });
-            },
             teardown: function() {
                 deepExtend(kendo.support, support);
                 kendo.support.browser = deepExtend({}, browserOptions);
@@ -425,25 +422,22 @@
 
         test("disabled on touch", function() {
             kendo.support.touch = true;
-            ok(!chart._navigator._liveDrag());
+            createStockChart({ navigator: { dataSource: null } });
+            ok(!chart.navigator.options.liveDrag);
         });
 
         test("disabled on firefox", function() {
             kendo.support.browser.mozilla = true;
-            ok(!chart._navigator._liveDrag());
-        });
-
-        test("disabled on old IEs", function() {
-            kendo.support.browser.msie = true;
-            kendo.support.browser.version = 8;
-            ok(!chart._navigator._liveDrag());
+            createStockChart({ navigator: { dataSource: null } });
+            ok(!chart.navigator.options.liveDrag);
         });
 
         test("enabled on everything else", function() {
             kendo.support.touch = false;
             kendo.support.browser.mozilla = false;
             kendo.support.browser.version = 9;
-            ok(chart._navigator._liveDrag());
+            createStockChart({ navigator: { dataSource: null } });
+            ok(chart.navigator.options.liveDrag);
         });
     })();
 })();
