@@ -1,5 +1,5 @@
 (function() {
-    var Color = kendo.drawing.Color;
+    var Color = kendo.Color;
 
     module("Color");
 
