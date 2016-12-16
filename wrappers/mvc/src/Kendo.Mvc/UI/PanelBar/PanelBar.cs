@@ -28,10 +28,71 @@ namespace Kendo.Mvc.UI
             ExpandMode = PanelBarExpandMode.Multiple;
             HighlightPath = true;
 
+            LoadOnDemand = true;
+
+            DataSource = new DataSource();
+            DataSource.ModelType(typeof(object));
+
+            AutoBind = true;
+
+            DataTextField = new List<string>();
+
+            Messages = new PanelBarMessagesSettings();
+
             Items = new LinkedObjectCollection<PanelBarItem>(null);
 
             SelectedIndex = -1;
             SecurityTrimming = new SecurityTrimming();
+        }
+
+        public string DataImageUrlField { get; set; }
+
+        public string DataSpriteCssClassField { get; set; }
+
+        public string DataUrlField { get; set; }
+
+        public PanelBarMessagesSettings Messages
+        {
+            get;
+            set;
+        }
+
+        public List<string> DataTextField { get; set; }
+
+        public DataSource DataSource
+        {
+            get;
+            private set;
+        }
+
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
+
+        public bool AutoBind
+        {
+            get;
+            set;
+        }
+
+        public string Template
+        {
+            get;
+            set;
+        }
+
+        public string TemplateId
+        {
+            get;
+            set;
+        }
+
+        public bool LoadOnDemand
+        {
+            get;
+            set;
         }
 
         public INavigationItemAuthorization Authorization
@@ -114,13 +175,94 @@ namespace Kendo.Mvc.UI
             options["expandMode"] = ExpandMode;
             //options["contentUrls"] = Items;
 
+
+            if (string.IsNullOrEmpty(DataSourceId))
+            {
+                // use client-side rendering if templates are set
+                //if (Items.Any() && this.UsesTemplates())
+                //{
+                //    this.DataSource.Data = SerializeItems(Items);
+                //    this.LoadOnDemand = false;
+                //}
+
+                if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) || DataSource.Type == DataSourceType.Custom)
+                {
+                    options["dataSource"] = DataSource.ToJson();
+                }
+                else if (DataSource.Data != null)
+                {
+                    options["dataSource"] = DataSource.Data;
+                }
+            }
+            else
+            {
+                options["dataSourceId"] = DataSourceId;
+            }
+
+            if (!AutoBind)
+            {
+                options["autoBind"] = false;
+            }
+
+            if (!LoadOnDemand)
+            {
+                options["loadOnDemand"] = false;
+            }
+
+            var idPrefix = "#";
+            if (IsInClientTemplate)
+            {
+                idPrefix = "\\" + idPrefix;
+            }
+
+            if (!string.IsNullOrEmpty(TemplateId))
+            {
+                options["template"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, TemplateId) };
+            }
+            else if (!string.IsNullOrEmpty(Template))
+            {
+                options["template"] = Template;
+            }
+
+            if (DataImageUrlField.HasValue())
+            {
+                options["dataImageUrlField"] = DataImageUrlField;
+            }
+
+            if (DataSpriteCssClassField.HasValue())
+            {
+                options["dataSpriteCssClassField"] = DataSpriteCssClassField;
+            }
+
+            if (DataUrlField.HasValue())
+            {
+                options["dataUrlField"] = DataUrlField;
+            }
+
+            var messages = Messages.ToJson();
+            if (messages.Any())
+            {
+                options["messages"] = messages;
+            }
+
+            if (DataTextField.Any())
+            {
+                options["dataTextField"] = DataTextField;
+            }
+
             writer.Write(Initializer.Initialize(Selector, "PanelBar", options));
 
             base.WriteInitializationScript(writer);
         }
-        
+
+        internal bool UsesTemplates()
+        {
+            return !string.IsNullOrEmpty(TemplateId) || !string.IsNullOrEmpty(Template);
+        }
+
         protected override void WriteHtml(HtmlTextWriter writer)
         {
+            var builder = new PanelBarHtmlBuilder(this, DI.Current.Resolve<IActionMethodCache>());
 
             if (Items.Any())
             {
@@ -131,7 +273,7 @@ namespace Kendo.Mvc.UI
 
                 int itemIndex = 0;
 
-                var builder = new PanelBarHtmlBuilder(this, DI.Current.Resolve<IActionMethodCache>());
+              
 
                 IHtmlNode panelbarTag = builder.Build();
 
@@ -155,6 +297,14 @@ namespace Kendo.Mvc.UI
 
                 panelbarTag.WriteTo(writer);
             }
+            else
+            {
+                var tag = builder.PanelBarTag();
+
+                tag.WriteTo(writer);
+            }
+
+
             base.WriteHtml(writer);
         }
 

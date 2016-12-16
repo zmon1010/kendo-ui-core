@@ -40,31 +40,90 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Binds the panelbar to a list of objects
+        /// Configure the DataSource of the component
         /// </summary>
-        /// <typeparam name="T">The type of the data item</typeparam>
-        /// <param name="dataSource">The data source.</param>
-        /// <param name="itemDataBound">The action executed for every data bound item.</param>
+        /// <param name="configurator">The action that configures the <see cref="DataSource"/>.</param>
         /// <example>
         /// <code lang="CS">
         ///  &lt;%= Html.Kendo().PanelBar()
-        ///             .Name("PanelBar")
-        ///             .BindTo(new []{"First", "Second"}, (item, value) =>
-        ///             {
-        ///                item.Text = value;
-        ///             })
-        /// %&gt;
+        ///     .Name("PanelBar")
+        ///     .DataSource(dataSource => dataSource
+        ///         .Read(read => read
+        ///             .Action("Employees", "PanelBar")
+        ///         )
+        ///     )
+        ///  %&gt;
         /// </code>
         /// </example>
-        public PanelBarBuilder BindTo<T>(IEnumerable<T> dataSource, Action<PanelBarItem, T> itemDataBound)
+        public PanelBarBuilder DataSource(Action<HierarchicalDataSourceBuilder<object>> configurator)
         {
-            Component.BindTo(dataSource, itemDataBound);
+            configurator(new HierarchicalDataSourceBuilder<object>(Component.DataSource, this.Component.ViewContext, this.Component.UrlGenerator));
+
+            return this;
+        }
+        /// <summary>
+        /// Set ID of the DataSource that to be used for data binding
+        /// </summary>
+        /// <param name="dataSourceId"></param>
+        /// <returns></returns>
+        public PanelBarBuilder DataSource(string dataSourceId)
+        {
+            this.Component.DataSourceId = dataSourceId;
 
             return this;
         }
 
         /// <summary>
-        /// Binds the panelbar to a list of objects. The panelbar will create a hierarchy of items using the specified mappings.
+        /// Binds the PanelBar to a list of items.
+        /// Use if a hierarchy of items is being sent from the controller; to bind the PanelBar declaratively, use the Items() method.
+        /// </summary>
+        /// <param name="items">The list of items</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().PanelBar()
+        ///             .Name("PanelBar")
+        ///             .BindTo(model)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarBuilder BindTo(IEnumerable<PanelBarItemModel> items)
+        {
+            Component.BindTo(items, mapping => mapping
+                .For<PanelBarItemModel>(binding => binding
+                    .ItemDataBound((item, node) =>
+                    {
+                        item.Text = node.Text;
+                        item.Enabled = node.Enabled;
+                        item.Expanded = node.Expanded;
+                        item.Encoded = node.Encoded;
+                        item.Id = node.Id;
+                        item.Selected = node.Selected;
+                        item.SpriteCssClasses = node.SpriteCssClass;
+
+                        item.Url = node.Url;
+                        item.ImageUrl = node.ImageUrl;
+                        foreach (var key in node.ImageHtmlAttributes.Keys)
+                        {
+                            item.ImageHtmlAttributes[key] = node.ImageHtmlAttributes[key];
+                        }
+                        foreach (var key in node.HtmlAttributes.Keys)
+                        {
+                            item.HtmlAttributes[key] = node.HtmlAttributes[key];
+                        }
+                        foreach (var key in node.LinkHtmlAttributes.Keys)
+                        {
+                            item.LinkHtmlAttributes[key] = node.LinkHtmlAttributes[key];
+                        }
+                    })
+                    .Children(item => item.Items)
+                )
+            );
+
+            return this;
+        }
+
+        /// <summary>
+        /// Binds the PanelBar to a list of objects. The PanelBar will create a hierarchy of items using the specified mappings.
         /// </summary>
         /// <typeparam name="T">The type of the data item</typeparam>
         /// <param name="dataSource">The data source.</param>
@@ -89,7 +148,30 @@ namespace Kendo.Mvc.UI.Fluent
         public PanelBarBuilder BindTo(IEnumerable dataSource, Action<NavigationBindingFactory<PanelBarItem>> factoryAction)
         {
             Component.BindTo(dataSource, factoryAction);
+            return this;
+        }
 
+        /// <summary>
+        /// Binds the PanelBar to a list of objects. The PanelBar will be "flat" which means a PanelBar item will be created for
+        /// every item in the data source.
+        /// </summary>
+        /// <typeparam name="T">The type of the data item</typeparam>
+        /// <param name="dataSource">The data source.</param>
+        /// <param name="itemDataBound">The action executed for every data bound item.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().PanelBar()
+        ///             .Name("PanelBar")
+        ///             .BindTo(new []{"First", "Second"}, (item, value) =>
+        ///             {
+        ///                item.Text = value;
+        ///             })
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarBuilder BindTo<T>(IEnumerable<T> dataSource, Action<PanelBarItem, T> itemDataBound)
+        {
+            Component.BindTo(dataSource, itemDataBound);
             return this;
         }
 

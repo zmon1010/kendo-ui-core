@@ -345,7 +345,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.fr-FR.resx</DependentUpon>
     </Compile>
-	<Compile Include="Resources\Messages.he-IL.Designer.cs">
+    <Compile Include="Resources\Messages.he-IL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.he-IL.resx</DependentUpon>
@@ -878,6 +878,9 @@
     <Compile Include="UI\MobileCollapsible\IconPosition.cs" />
     <Compile Include="UI\MobileCollapsible\MobileCollapsible.cs" />
     <Compile Include="UI\MultiSelect\TagMode.cs" />
+    <Compile Include="UI\PanelBar\Fluent\PanelBarMessagesSettingsBuilder.cs" />
+    <Compile Include="UI\PanelBar\PanelBarItemModel.cs" />
+    <Compile Include="UI\PanelBar\Settings\PanelBarMessagesSettings.cs" />
     <Compile Include="UI\PivotDataSource\Fluent\PivotDataSourceMeasureDescriptorFactory.cs" />
     <Compile Include="UI\PivotDataSource\Fluent\PivotDataSourceMeasureDescriptorBuilder.cs" />
     <Compile Include="UI\PivotDataSource\PivotDataSourceMeasureDescriptor.cs" />
@@ -1991,7 +1994,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.fr-FR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-	<EmbeddedResource Include="Resources\Messages.he-IL.resx">
+    <EmbeddedResource Include="Resources\Messages.he-IL.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.he-IL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -2763,4 +2766,8 @@
   <ItemGroup>
     <Compile Include="UI\Editor\Fluent\EditorImportSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Spreadsheet\Settings\SpreadsheetDefaultCellStyleSettings.cs" /><Compile Include="UI\Spreadsheet\Fluent\SpreadsheetDefaultCellStyleSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Spreadsheet\Settings\SpreadsheetDefaultCellStyleSettings.cs" />
+    <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetDefaultCellStyleSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>

@@ -9,12 +9,15 @@ namespace Kendo.Mvc.UI.Fluent
     /// </summary>
     public class PanelBarBuilder : WidgetBuilderBase<PanelBar, PanelBarBuilder>, IHideObjectMembers
     {
+        private PanelBar container;
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelBarBuilder"/> class.
         /// </summary>
         /// <param name="component">The component.</param>
-        public PanelBarBuilder(PanelBar component) : base(component)
+        public PanelBarBuilder(PanelBar component)
+            : base(component)
         {
+            container = component;
         }
 
         /// <summary>
@@ -39,6 +42,60 @@ namespace Kendo.Mvc.UI.Fluent
             var factory = new PanelBarItemFactory(Component, Component.ViewContext);
 
             addAction(factory);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Controls whether to bind the widget to the DataSource on initialization.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().PanelBar()
+        ///             .Name("PanelBar")
+        ///             .AutoBind(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarBuilder AutoBind(bool autoBind)
+        {
+            Component.AutoBind = autoBind;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Template to be used for rendering the items in the panelbar.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().PanelBar()
+        ///             .Name("PanelBar")
+        ///             .Template("#= data #")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarBuilder Template(string template)
+        {
+            Component.Template = template;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Id of the template element to be used for rendering the items in the panelbar.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().PanelBar()
+        ///             .Name("PanelBar")
+        ///             .TemplateId("widgetTemplateId")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarBuilder TemplateId(string templateId)
+        {
+            Component.TemplateId = templateId;
 
             return this;
         }
@@ -109,6 +166,56 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Binds the PanelBar to a list of items.
+        /// Use if a hierarchy of items is being sent from the controller; to bind the PanelBar declaratively, use the Items() method.
+        /// </summary>
+        /// <param name="items">The list of items</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().PanelBar()
+        ///             .Name("PanelBar")
+        ///             .BindTo(model)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarBuilder BindTo(IEnumerable<PanelBarItemModel> items)
+        {
+
+            Component.BindTo(items, mapping => mapping
+                .For<PanelBarItemModel>(binding => binding
+                    .ItemDataBound((item, node) =>
+                    {
+                        item.Text = node.Text;
+                        item.Enabled = node.Enabled;
+                        item.Expanded = node.Expanded;
+                        item.Encoded = node.Encoded;
+                        item.Id = node.Id;
+                        item.Selected = node.Selected;
+                        item.SpriteCssClasses = node.SpriteCssClass;
+
+                        item.Url = node.Url;
+                        item.ImageUrl = node.ImageUrl;
+                        foreach (var key in node.ImageHtmlAttributes.Keys)
+                        {
+                            item.ImageHtmlAttributes[key] = node.ImageHtmlAttributes[key];
+                        }
+                        foreach (var key in node.HtmlAttributes.Keys)
+                        {
+                            item.HtmlAttributes[key] = node.HtmlAttributes[key];
+                        }
+                        foreach (var key in node.LinkHtmlAttributes.Keys)
+                        {
+                            item.LinkHtmlAttributes[key] = node.LinkHtmlAttributes[key];
+                        }
+                    })
+                    .Children(item => item.Items)
+                )
+            );
+
+            return this;
+        }
+
+        /// <summary>
         /// Binds the panelbar to a list of objects
         /// </summary>
         /// <typeparam name="T">The type of the data item</typeparam>
@@ -158,6 +265,113 @@ namespace Kendo.Mvc.UI.Fluent
         public PanelBarBuilder BindTo(IEnumerable dataSource, Action<NavigationBindingFactory<PanelBarItem>> factoryAction)
         {
             Component.BindTo(dataSource, factoryAction);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configure the DataSource of the component
+        /// </summary>
+        /// <param name="configurator">The action that configures the <see cref="DataSource"/>.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().PanelBar()
+        ///     .Name("PanelBar")
+        ///     .DataSource(dataSource => dataSource
+        ///         .Read(read => read
+        ///             .Action("Employees", "PanelBar")
+        ///         )
+        ///     )
+        ///  %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarBuilder DataSource(Action<HierarchicalDataSourceBuilder<object>> configurator)
+        {
+            configurator(new HierarchicalDataSourceBuilder<object>(Component.DataSource, this.Component.ViewContext, this.Component.UrlGenerator));
+
+            return this;
+        }
+
+        public PanelBarBuilder DataSource(string dataSourceId)
+        {
+            Component.DataSourceId = dataSourceId;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Allows the panelbar to fetch the entire datasource at initialization time.
+        /// </summary>
+        /// <param name="field">Whether the datasource should be loaded on demand.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().PanelBar()
+        ///             .Name("PanelBar")
+        ///             .LoadOnDemand(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarBuilder LoadOnDemand(bool value)
+        {
+            Component.LoadOnDemand = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the field of the data item that provides the image URL of the PanelBar nodes.
+        /// </summary>
+        /// <param name="value">The value that configures the dataimageurlfield.</param>
+        public PanelBarBuilder DataImageUrlField(string value)
+        {
+            container.DataImageUrlField = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the field of the data item that provides the sprite CSS class of the nodes.
+        /// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
+        /// </summary>
+        /// <param name="value">The value that configures the dataspritecssclassfield.</param>
+        public PanelBarBuilder DataSpriteCssClassField(string value)
+        {
+            container.DataSpriteCssClassField = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the field of the data item that provides the link URL of the nodes.
+        /// </summary>
+        /// <param name="value">The value that configures the dataurlfield.</param>
+        public PanelBarBuilder DataUrlField(string value)
+        {
+            container.DataUrlField = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// The text messages displayed in the widget. Use it to customize or localize the messages.
+        /// </summary>
+        /// <param name="configurator">The action that configures the messages.</param>
+        public PanelBarBuilder Messages(Action<PanelBarMessagesSettingsBuilder> configurator)
+        {
+            configurator(new PanelBarMessagesSettingsBuilder(container.Messages));
+            return this;
+        }
+
+        //<< Fields
+
+        /// <summary>
+        /// Sets the field of the data item that provides the text content of the nodes.
+        /// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
+        /// </summary>
+        /// <param name="value">The value that configures the datatextfield.</param>
+        public PanelBarBuilder DataTextField(params string[] value)
+        {
+            container.DataTextField.AddRange(value);
 
             return this;
         }

@@ -11,6 +11,23 @@ namespace Kendo.Mvc.UI
         {
         }
 
+        public IHtmlNode PanelBarTag()
+        {
+            IHtmlNode div = ComponentTag("div");
+
+            if (!Component.UsesTemplates())
+            {
+                div.PrependClass(UIPrimitives.Widget, "k-panelbar", UIPrimitives.ResetStyle);
+
+                if (Component.Items.Count > 0)
+                {
+                    ListTag().AppendTo(div);
+                }
+            }
+
+            return div;
+        }
+
         public IHtmlNode ChildrenTag(PanelBarItem item)
         {
             IHtmlNode ul = ListTag();

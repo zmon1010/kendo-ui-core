@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
             Items = new List<PanelBarItem>();
         }
 
+        public string Id { get; set; }
+
         public bool Expanded
         {
             get;

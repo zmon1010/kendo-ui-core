@@ -24,6 +24,11 @@ namespace Kendo.Mvc.UI
             ExpandMode = PanelBarExpandMode.Multiple;
 
             Items = new List<PanelBarItem>();
+            DataSource = new DataSource(ModelMetadataProvider);
+            DataSource.Schema.Model = new TreeListModelDescriptor(typeof(object), ModelMetadataProvider);
+
+            LoadOnDemand = true;
+            AutoBind = true;
 
             HighlightPath = true;
             SelectedIndex = -1;
@@ -31,6 +36,16 @@ namespace Kendo.Mvc.UI
 
         public IList<PanelBarItem> Items { get; private set; }
 
+        public DataSource DataSource
+        {
+            get;
+            private set;
+        }
+        public string DataSourceId
+        {
+            get;
+            set;
+        }
         public ExpandableAnimation Animation { get; private set; }
 
         public Action<PanelBarItem> ItemAction { get; set; }
@@ -76,6 +91,12 @@ namespace Kendo.Mvc.UI
                 });
 
                 panelbarTag.WriteTo(writer, HtmlEncoder);
+            }
+            else
+            {
+                var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
+
+                tag.WriteTo(writer, HtmlEncoder);
             }
 
             base.WriteHtml(writer);
@@ -146,6 +167,28 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
+
+            if (DataSourceId.HasValue())
+            {
+                settings["dataSourceId"] = DataSourceId;
+            }
+            else
+            {
+                //if (Items.Any())// && this.UsesTemplates())
+                //{
+                //    this.DataSource.Data = SerializeItems(Items);
+                //    this.LoadOnDemand = false;
+                //}
+
+                if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url) || DataSource.Type == DataSourceType.Custom)
+                {
+                    settings["dataSource"] = DataSource.ToJson();
+                }
+                else if (DataSource.Data != null)
+                {
+                    settings["dataSource"] = DataSource.Data;
+                }
+            }
 
             var animation = Animation.ToJson();
             if (animation.Keys.Any())

@@ -14,6 +14,16 @@ namespace Kendo.Mvc.UI
             Items = new LinkedObjectCollection<PanelBarItem>(this);
         }
 
+        /// <summary>
+        /// Gets or sets the item ID.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Indicates whether the item has children.
+        /// </summary>
+        public bool HasChildren { get; set; }
+
         public bool Expanded
         {
             get;

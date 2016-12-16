@@ -67,6 +67,10 @@ public class PanelBarTag extends WidgetWithItemsTag /* interfaces */implements D
 
     }
 
+    public void setMessages(com.kendoui.taglib.panelbar.MessagesTag value) {
+        setProperty("messages", value);
+    }
+
     public void setActivate(ActivateFunctionTag value) {
         setEvent("activate", value.getBody());
     }
@@ -99,6 +103,14 @@ public class PanelBarTag extends WidgetWithItemsTag /* interfaces */implements D
         setProperty("animation", value);
     }
 
+    public boolean getAutoBind() {
+        return (Boolean)getProperty("autoBind");
+    }
+
+    public void setAutoBind(boolean value) {
+        setProperty("autoBind", value);
+    }
+
     public java.lang.Object getContentUrls() {
         return (java.lang.Object)getProperty("contentUrls");
     }
@@ -107,8 +119,40 @@ public class PanelBarTag extends WidgetWithItemsTag /* interfaces */implements D
         setProperty("contentUrls", value);
     }
 
+    public java.lang.String getDataImageUrlField() {
+        return (java.lang.String)getProperty("dataImageUrlField");
+    }
+
+    public void setDataImageUrlField(java.lang.String value) {
+        setProperty("dataImageUrlField", value);
+    }
+
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
+    }
+
+    public java.lang.String getDataSpriteCssClassField() {
+        return (java.lang.String)getProperty("dataSpriteCssClassField");
+    }
+
+    public void setDataSpriteCssClassField(java.lang.String value) {
+        setProperty("dataSpriteCssClassField", value);
+    }
+
+    public java.lang.Object getDataTextField() {
+        return (java.lang.Object)getProperty("dataTextField");
+    }
+
+    public void setDataTextField(java.lang.Object value) {
+        setProperty("dataTextField", value);
+    }
+
+    public java.lang.String getDataUrlField() {
+        return (java.lang.String)getProperty("dataUrlField");
+    }
+
+    public void setDataUrlField(java.lang.String value) {
+        setProperty("dataUrlField", value);
     }
 
     public java.lang.String getExpandMode() {
@@ -117,6 +161,22 @@ public class PanelBarTag extends WidgetWithItemsTag /* interfaces */implements D
 
     public void setExpandMode(java.lang.String value) {
         setProperty("expandMode", value);
+    }
+
+    public boolean getLoadOnDemand() {
+        return (Boolean)getProperty("loadOnDemand");
+    }
+
+    public void setLoadOnDemand(boolean value) {
+        setProperty("loadOnDemand", value);
+    }
+
+    public java.lang.String getTemplate() {
+        return (java.lang.String)getProperty("template");
+    }
+
+    public void setTemplate(java.lang.String value) {
+        setProperty("template", value);
     }
 
     public String getActivate() {

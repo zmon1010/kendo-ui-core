@@ -28443,22 +28443,67 @@ user interactions. Setting this option to false will disable all animations. is 
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</description>
+            <name>autoBind</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Sets an array with the URLs from which the PanelBar items content to be loaded from. If only specific items should be loaded via Ajax, then you should set the URLs to the corresponding positions in the array and set the other elements to null.</description>
             <name>contentUrls</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The data source of the widget which is used to render its items. Can be a JSON object/Array that contains an item or an Array of items to be rendered.
-Refer to the example below for a list of the supported properties.</description>
+            <description>Sets the field of the data item that provides the image URL of the PanelBar nodes.</description>
+            <name>dataImageUrlField</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The data source of the widget which is used render nodes. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.HierarchicalDataSource instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.HierarchicalDataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.HierarchicalDataSource instance the widget will use that instance and will not initialize a new one.</description>
             <name>dataSource</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>Sets the field of the data item that provides the sprite CSS class of the nodes.
+If an array, each level uses the field that is at the same index in the array, or the last item in the array.</description>
+            <name>dataSpriteCssClassField</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the field of the data item that provides the text content of the nodes.
+If an array, each level uses the field that is at the same index in the array, or the last item in the array.</description>
+            <name>dataTextField</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Sets the field of the data item that provides the link URL of the nodes.</description>
+            <name>dataUrlField</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies how the PanelBar items are displayed when opened and closed. The following values
 are available:</description>
             <name>expandMode</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Indicates whether the child DataSources should be fetched lazily when parent groups get expanded.
+Setting this to false causes all child DataSources to be loaded at initialization time.</description>
+            <name>loadOnDemand</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Template for rendering each node.</description>
+            <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -28614,6 +28659,35 @@ is closed. Options include "fadeOut".</description>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+    </tag>
+
+
+
+    <tag>
+        <description>The text messages displayed in the widget. Use it to customize or localize the messages.</description>
+        <name>panelBar-messages</name>
+        <tag-class>com.kendoui.taglib.panelbar.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The text message shown while the root level items are loading.</description>
+            <name>loading</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text message shown when an error occurs while fetching the content.</description>
+            <name>requestFailed</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text message shown in the retry button.</description>
+            <name>retry</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
     </tag>
 
 
