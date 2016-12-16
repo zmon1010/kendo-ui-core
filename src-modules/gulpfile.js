@@ -126,6 +126,7 @@ stream.Stream.prototype.pipeReplaces = function(options) {
         .pipe(replace(DEFAULT_VALUE_REGEX, 'if ($1 === void 0) { $2; }'))
         .pipe(replace(TRAILING_SPACE_REGEX, ''))
         .pipe(replace(MULTI_EMPTY_LINE_REGEX, '\n'))
+        .pipe(replace('\n', '\r\n'))
 };
 
 
