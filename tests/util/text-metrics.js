@@ -1,5 +1,5 @@
 (function() {
-    var util = kendo.drawing.util;
+    var util = kendo.util;
 
     // ------------------------------------------------------------
     var metrics;
