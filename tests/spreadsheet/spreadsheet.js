@@ -435,6 +435,262 @@
 
         spreadsheet.removeSheet(spreadsheet.activeSheet());
     });
+
+    asyncTest("insertRow event is triggered", 3, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        spreadsheet.bind("insertRow", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(0, e.index);
+        });
+
+        activeSheet.insertRow(0);
+    });
+
+    asyncTest("insertRow event can be prevented", 1, function () {
+        var activeSheet = spreadsheet.activeSheet();
+        var value = "text1";
+        var range = "A1";
+
+        activeSheet.range(range).value(value);
+
+        spreadsheet.bind("insertRow", function(e) {
+            e.preventDefault();
+
+            setTimeout(function() {
+                start();
+                equal(activeSheet.range(range).value(), value);
+            });
+        });
+
+        activeSheet.insertRow(0);
+    });
+
+    asyncTest("deleteRow event is triggered", 3, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        spreadsheet.bind("deleteRow", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(0, e.index);
+        });
+
+        activeSheet.deleteRow(0);
+    });
+
+    asyncTest("deleteRow event can be prevented", 1, function () {
+        var activeSheet = spreadsheet.activeSheet();
+        var value = "text1";
+        var range = "A1";
+
+        activeSheet.range(range).value(value);
+
+        spreadsheet.bind("deleteRow", function(e) {
+            e.preventDefault();
+
+            setTimeout(function() {
+                start();
+                equal(activeSheet.range(range).value(), value);
+            });
+        });
+
+        activeSheet.deleteRow(0);
+    });
+
+    asyncTest("hideRow event is triggered", 3, function () {
+        spreadsheet.bind("hideRow", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(0, e.index);
+        });
+
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.hideRow(0);
+    });
+
+    asyncTest("hideRow event can be prevented", 1, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        spreadsheet.bind("hideRow", function(e) {
+            e.preventDefault();
+
+            setTimeout(function() {
+                start();
+                var element = spreadsheet.element.find(".k-spreadsheet-row-header")[0].children[0];
+                equal(element.textContent, "1");
+            });
+        });
+
+        activeSheet.hideRow(0);
+    });
+
+    asyncTest("unhideRow event is triggered", 3, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.hideRow(0);
+
+        spreadsheet.bind("unhideRow", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(0, e.index);
+        });
+
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.unhideRow(0);
+    });
+
+    asyncTest("unhideRow event can be prevented", 1, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.hideRow(0);
+
+        spreadsheet.bind("unhideRow", function(e) {
+            e.preventDefault();
+
+            setTimeout(function() {
+                start();
+                var element = spreadsheet.element.find(".k-spreadsheet-row-header")[0].children[0];
+                equal(element.textContent, "2");
+            });
+        });
+
+        activeSheet.unhideRow(0);
+    });
+
+    asyncTest("insertColumn event is triggered", 3, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        spreadsheet.bind("insertColumn", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(0, e.index);
+        });
+
+        activeSheet.insertColumn(0);
+    });
+
+    asyncTest("insertColumn event can be prevented", 1, function () {
+        var activeSheet = spreadsheet.activeSheet();
+        var value = "text1";
+        var range = "A1";
+
+        activeSheet.range(range).value(value);
+
+        spreadsheet.bind("insertColumn", function(e) {
+            e.preventDefault();
+
+            setTimeout(function() {
+                start();
+                equal(activeSheet.range(range).value(), value);
+            });
+        });
+
+        activeSheet.insertColumn(0);
+    });
+
+    asyncTest("deleteColumn event is triggered", 3, function () {
+        spreadsheet.bind("deleteColumn", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(0, e.index);
+        });
+
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.deleteColumn(0);
+    });
+
+    asyncTest("deleteColumn event can be prevented", 1, function () {
+        var activeSheet = spreadsheet.activeSheet();
+        var value = "text1";
+        var range = "A1";
+
+        activeSheet.range(range).value(value);
+
+        spreadsheet.bind("deleteColumn", function(e) {
+            e.preventDefault();
+
+            setTimeout(function() {
+                start();
+                equal(activeSheet.range(range).value(), value);
+            });
+        });
+
+        activeSheet.deleteColumn(0);
+    });
+
+    asyncTest("hideColumn event is triggered", 3, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        spreadsheet.bind("hideColumn", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(0, e.index);
+        });
+
+        activeSheet.hideColumn(0);
+    });
+
+    asyncTest("hideColumn event can be prevented", 1, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        spreadsheet.bind("hideColumn", function(e) {
+            e.preventDefault();
+
+            setTimeout(function() {
+                start();
+                var element = spreadsheet.element.find(".k-spreadsheet-column-header")[0].children[0];
+                equal(element.textContent, "A");
+            });
+        });
+
+        activeSheet.hideColumn(0);
+    });
+
+    asyncTest("unhideColumn event is triggered", 3, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.hideColumn(0);
+
+        spreadsheet.bind("unhideColumn", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            equal(activeSheet, e.sheet);
+            equal(0, e.index);
+        });
+
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.unhideColumn(0);
+    });
+
+    asyncTest("unhideColumn event can be prevented", 1, function () {
+        var activeSheet = spreadsheet.activeSheet();
+
+        activeSheet.hideColumn(0);
+
+        spreadsheet.bind("unhideColumn", function(e) {
+            e.preventDefault();
+
+            setTimeout(function() {
+                start();
+                var element = spreadsheet.element.find(".k-spreadsheet-column-header")[0].children[0];
+                equal(element.textContent, "B");
+            });
+        });
+
+        activeSheet.unhideColumn(0);
+    });
     // ------------------------------------------------------------
     module("Spreadsheet options", {
         setup: function() {

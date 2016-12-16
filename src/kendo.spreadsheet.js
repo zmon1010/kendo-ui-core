@@ -323,6 +323,54 @@
                 }
             },
 
+            _workbookInsertRow: function(e) {
+                if (this.trigger("insertRow", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookInsertColumn: function(e) {
+                if (this.trigger("insertColumn", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookDeleteRow: function(e) {
+                if (this.trigger("deleteRow", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookDeleteColumn: function(e) {
+                if (this.trigger("deleteColumn", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookHideRow: function(e) {
+                if (this.trigger("hideRow", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookHideColumn: function(e) {
+                if (this.trigger("hideColumn", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookUnhideRow: function(e) {
+                if (this.trigger("unhideRow", e)) {
+                    e.preventDefault();
+                }
+            },
+
+            _workbookUnhideColumn: function(e) {
+                if (this.trigger("unhideColumn", e)) {
+                    e.preventDefault();
+                }
+            },
+
             _bindWorkbookEvents: function() {
                 this._workbook.bind("cut", this._workbookCut.bind(this));
                 this._workbook.bind("copy", this._workbookCopy.bind(this));
@@ -335,6 +383,14 @@
                 this._workbook.bind("removeSheet", this._workbookRemoveSheet.bind(this));
                 this._workbook.bind("selectSheet", this._workbookSelectSheet.bind(this));
                 this._workbook.bind("renameSheet", this._workbookRenameSheet.bind(this));
+                this._workbook.bind("insertRow", this._workbookInsertRow.bind(this));
+                this._workbook.bind("insertColumn", this._workbookInsertColumn.bind(this));
+                this._workbook.bind("deleteRow", this._workbookDeleteRow.bind(this));
+                this._workbook.bind("deleteColumn", this._workbookDeleteColumn.bind(this));
+                this._workbook.bind("hideRow", this._workbookHideRow.bind(this));
+                this._workbook.bind("hideColumn", this._workbookHideColumn.bind(this));
+                this._workbook.bind("unhideRow", this._workbookUnhideRow.bind(this));
+                this._workbook.bind("unhideColumn", this._workbookUnhideColumn.bind(this));
             },
 
             destroy: function() {
