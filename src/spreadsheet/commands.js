@@ -855,7 +855,15 @@
                 return { reason: "error", type: "openUnsupported" };
             }
 
-            this.options.workbook.fromFile(this.options.file);
+            var workbook = this.options.workbook;
+            workbook.fromFile(this.options.file).then(function(){
+                var errors = workbook.excelImportErrors;
+                if (errors && errors.length) {
+                    workbook._view.openDialog("importError", {
+                        errors: errors
+                    });
+                }
+            });
         }
     });
 

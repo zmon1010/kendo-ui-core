@@ -933,7 +933,34 @@ div.k-spreadsheet-window {
     clear: both;
 }
 
-.k-spreadsheet-filter-menu .k-i-arrow-45-down-right 
+.k-spreadsheet-filter-menu .k-i-arrow-45-down-right
 {
     cursor: pointer;
+}
+
+.k-spreadsheet-import-errors {
+    .k--header-message {
+        font-weight: bold;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #888;
+        margin-bottom: 5px;
+    }
+    .k--errors {
+        max-height: 350px;
+        overflow: auto;
+
+        table {
+            border-collapse: collapse;
+            font-size: 90%;
+
+            td, th {
+                padding: 2px 4px;
+                border-bottom: 1px solid #bbb;
+            }
+            th {
+                text-align: left;
+                border-bottom: 1px solid #000;
+            }
+        }
+    }
 }

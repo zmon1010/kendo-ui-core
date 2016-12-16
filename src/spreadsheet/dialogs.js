@@ -216,7 +216,12 @@
                 this._dialog = $("<div class='k-spreadsheet-window k-action-window' />")
                     .addClass(this.options.className || "")
                     .append(kendo.template(this.options.template)({
-                        messages: kendo.spreadsheet.messages.dialogs || MESSAGES
+                        messages: kendo.spreadsheet.messages.dialogs || MESSAGES,
+
+                        // this is for ImportErrorDialog.  ugly that
+                        // we need this line here, but I couldn't
+                        // figure out a better way
+                        errors: this.options.errors
                     }))
                     .appendTo(document.body)
                     .kendoWindow({
@@ -1570,6 +1575,35 @@
     basicErrorDialog("incompatibleRanges", "incompatibleRangesDialog.errorMessage");
     basicErrorDialog("noFillDirection", "noFillDirectionDialog.errorMessage");
     basicErrorDialog("duplicateSheetName", "duplicateSheetNameDialog.errorMessage");
+
+    var ImportErrorDialog = MessageDialog.extend({
+        options: {
+            width: 640,
+            title: "Errors in import",
+            template:
+                "<div class='k-spreadsheet-message-content k-spreadsheet-import-errors'>" +
+                  "<div class='k--header-message'>We encountered #= errors.length # errors while reading this file.  Please be aware that some formulas might be missing, or contain invalid results.</div>" +
+                  "<div class='k--errors'>" +
+                    "<table>" +
+                      "<thead>" +
+                        "<tr><th>Context</th><th>Error message</th></tr>" +
+                      "</thead>" +
+                      "# for (var i = 0; i < errors.length; ++i) { #" +
+                        "# var err = errors[i]; #" +
+                        "<tr><td>#: err.context #</td><td>#: err.error #</td></tr>" +
+                      "# } #" +
+                    "</table>" +
+                  "</div>" +
+                "</div>" +
+                "<div class='k-action-buttons'>" +
+                  "<button class='k-button k-primary' data-bind='click: close'>" +
+                    "#: messages.okText #" +
+                  "</button>" +
+                "</div>"
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("importError", ImportErrorDialog);
 
     var UseKeyboardDialog = MessageDialog.extend({
         init: function(options) {
