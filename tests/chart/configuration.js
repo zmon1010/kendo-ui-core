@@ -1048,7 +1048,7 @@
         });
 
         equal(chart._model.children[0].options.font,
-              "16px Arial,Helvetica,sans-serif");
+              "16px Arial, Helvetica, sans-serif");
     });
 
     test("font is set", function() {

@@ -236,7 +236,7 @@
         });
 
         test("redraw unsets active point", function() {
-            chart._unsetActivePoint = function() { ok(true); };
+            chart._instance._unsetActivePoint = function() { ok(true); };
             chart.redraw();
         });
 
@@ -312,39 +312,23 @@
             chart.destroy();
             ok(!$("#container").data("kendoChart"));
         });
-
+        
+        test("destroys instance", 2, function() {
+            chart._instance.destroy();
+            chart._instance = { destroy: function() { ok(true); } };
+            chart.destroy();
+            ok(!chart._instance);
+        });
+        
         test("destroys tooltip", function() {
             chart._tooltip.destroy();
             chart._tooltip = { destroy: function() { ok(true); }, hide: $.noop };
             chart.destroy();
         });
 
-        test("destroys pannable", function() {
-            chart._pannable.destroy();
-            chart._pannable = { destroy: function() { ok(true); } };
+        test("unbinds mouseleave from DOM container", function() {
             chart.destroy();
-        });
-
-        test("destroys zoomSelection", function() {
-            chart._zoomSelection.destroy();
-            chart._zoomSelection = { destroy: function() { ok(true); } };
-            chart.destroy();
-        });
-
-        test("destroys zoomSelection", function() {
-            chart._mousewheelZoom.destroy();
-            chart._mousewheelZoom = { destroy: function() { ok(true); } };
-            chart.destroy();
-        });
-
-        test("unbinds click from DOM container", function() {
-            chart.destroy();
-            ok(!($("#container").data("events") || {}).click);
-        });
-
-        test("unbinds mouseOver from DOM container", function() {
-            chart.destroy();
-            ok(!($("#container").data("events") || {}).mouseover);
+            ok(!($._data($("#container")[0], "events") || {}).mouseout);
         });
 
         test("unbinds DataSource change handler", function() {
@@ -352,350 +336,6 @@
             equal(chart.dataSource._events["change"].length, 0);
         });
 
-        // ------------------------------------------------------------
-        var panePoint;
-        var origEvent;
-
-        function triggerMousewheel(delta) {
-            chart._mousewheel({
-                originalEvent: {
-                    detail: delta * 3,
-                    clientX: panePoint.x,
-                    clientY: panePoint.y
-                },
-                preventDefault: function() {},
-                stopPropagation: function() {}
-            });
-        }
-
-        function createEventArg(options) {
-            return kendo.deepExtend({
-                event: { },
-                x: {
-                    startLocation: 0,
-                    location: 0,
-                    client: panePoint.x,
-                    initialDelta: 0
-                },
-                y: {
-                    startLocation: 0,
-                    initialDelta: 0,
-                    location: 0,
-                    client: panePoint.y
-                }
-            }, options);
-        }
-
-        module("Events", {
-            setup: function() {
-                setupChart({
-                    series: [{}],
-                    valueAxis: { name: "value" },
-                    chartArea: { width: 600, height: 400 }
-                });
-                panePoint = chart._plotArea.panes[0].chartsBox().center();
-                origEvent = { clientX: panePoint.x, clientY: panePoint.y };
-            },
-            teardown: destroyChart
-        });
-
-        test("navigation does not start if no handlers are attached", 0, function() {
-            stubMethod(Chart.fn, "_startNavigation", function() {
-                ok(false);
-            }, function() {
-                chart._start(origEvent);
-            });
-        });
-
-        test("navigation starts if dragStart handler is attached", 1, function() {
-            chart.bind("dragStart", function() {});
-
-            stubMethod(Chart.fn, "_startNavigation", function() {
-                ok(true);
-            }, function() {
-                chart._start(origEvent);
-            });
-        });
-
-        test("navigation starts if drag handler is attached", 1, function() {
-            chart.bind("drag", function() {});
-
-            stubMethod(Chart.fn, "_startNavigation", function() {
-                ok(true);
-            }, function() {
-                chart._start(origEvent);
-            });
-        });
-
-        test("navigation starts if dragEnd handler is attached", 1, function() {
-            chart.bind("dragEnd", function() {});
-
-            stubMethod(Chart.fn, "_startNavigation", function() {
-                ok(true);
-            }, function() {
-                chart._start(origEvent);
-            });
-        });
-
-        test("mousewheel down triggers zoom event (zoom out)", function() {
-            chart.bind("zoom", function(e) {
-                equal(e.axisRanges.value.max, 3.2);
-            });
-            triggerMousewheel(10);
-        });
-
-        test("mousewheel up triggers zoom event (zoom in)", function() {
-            chart.bind("zoom", function(e) {
-                equal(e.axisRanges.value.max, -0.8);
-            });
-            triggerMousewheel(-10);
-        });
-
-        asyncTest("mousewheel triggers zoomEnd with axisRanges", function() {
-            chart.bind("zoomEnd", function(e) {
-                ok(e.axisRanges.value);
-                start();
-            });
-            triggerMousewheel(10);
-        });
-
-        // ------------------------------------------------------------
-        module("Events / zoom selection", {
-            setup: function() {
-                setupChart({
-                    series: [{}],
-                    valueAxis: { name: "value" },
-                    chartArea: { width: 600, height: 400 },
-                    zoomable: true
-                });
-
-                chart._plotArea.paneByPoint = function() {
-                    return chart._plotArea.panes[0];
-                };
-            },
-            teardown: destroyChart
-        });
-
-        test("zoom selection start triggers zoomStart event", function() {
-            chart.bind("zoomStart", function(e) {
-                ok(true)
-            });
-
-            chart._start(createEventArg({
-                event: {
-                    shiftKey:  true
-                }
-            }));
-        });
-
-        test("zoom selection end triggers zoom event", function() {
-            chart.bind("zoom", function(e) {
-                ok(true)
-            });
-
-            chart._start(createEventArg({
-                event: {
-                    shiftKey:  true
-                }
-            }));
-
-            chart._end(createEventArg({
-                event: {
-                    shiftKey:  true
-                }
-            }));
-        });
-
-        test("zoom event is preventable", 0, function() {
-            chart.bind("zoom", function(e) {
-                e.preventDefault();
-            });
-
-            chart._start(createEventArg({
-                event: {
-                    shiftKey:  true
-                }
-            }));
-
-            chart._plotArea.redraw = function() {
-                ok(false);
-            };
-
-            chart._end(createEventArg({
-                event: {
-                    shiftKey:  true
-                }
-            }));
-        });
-
-        test("zoom selection end triggers zoomEnd event", function() {
-            var redrawnPlotarea = false;
-            chart.bind("zoomEnd", function(e) {
-                ok(redrawnPlotarea);
-            });
-
-            chart._start(createEventArg({
-                event: {
-                    shiftKey:  true
-                }
-            }));
-
-            chart._plotArea.redraw = function() {
-                redrawnPlotarea = true;
-            };
-
-            chart._end(createEventArg({
-                event: {
-                    shiftKey:  true
-                }
-            }));
-        });
-
-        // ------------------------------------------------------------
-        module("Events / mousewheel zoom", {
-            setup: function() {
-                setupChart({
-                    series: [{}],
-                    categoryAxis: {
-                        categories: ["A", "B", "C", "D"],
-                        name: "foo",
-                        min: 1,
-                        max: 2
-                    },
-                    chartArea: { width: 600, height: 400 },
-                    zoomable: true
-                });
-            },
-            teardown: destroyChart
-        });
-
-        test("mousewheel triggers zoomStart", function() {
-            chart.bind("zoomStart", function(e) {
-                ok(true);
-            });
-            triggerMousewheel(10);
-        });
-
-        test("zoomStart is preventable", 0, function() {
-            chart.bind("zoomStart", function(e) {
-                e.preventDefault();
-            });
-            chart._plotArea.redraw = function() {
-                ok(false);
-            };
-            triggerMousewheel(10);
-        });
-
-        test("mousewheel triggers zoom with updated ranges", function() {
-            chart.bind("zoom", function(e) {
-                equal(e.axisRanges.foo.min, 0);
-                equal(e.axisRanges.foo.max, 4);
-            });
-            triggerMousewheel(10);
-        });
-
-        test("zoom event is preventable", 0, function() {
-            chart.bind("zoom", function(e) {
-                e.preventDefault();
-            });
-            chart._plotArea.redraw = function() {
-                ok(false);
-            };
-            triggerMousewheel(10);
-        });
-
-        asyncTest("mousewheel triggers zoomEnd event", function() {
-            chart.bind("zoomEnd", function(e) {
-                ok(true);
-                start();
-            });
-            triggerMousewheel(10);
-        });
-
-        asyncTest("zoomEnd sends axisRanges", function() {
-            chart.bind("zoomEnd", function(e) {
-                ok(e.axisRanges.foo);
-                start();
-            });
-            triggerMousewheel(10);
-        });
-
-
-        // ------------------------------------------------------------
-
-        function triggerPinchZoom(distance) {
-            chart._gesturestart({
-                distance: 10
-            });
-
-            chart._gesturechange({
-                distance: distance,
-                preventDefault: $.noop
-            });
-
-            chart._gestureend({
-                distance: distance
-            });
-        }
-
-        module("Events / pinch zoom", {
-            setup: function() {
-                setupChart({
-                    series: [{}],
-                    categoryAxis: {
-                        categories: ["A", "B", "C", "D"],
-                        name: "foo",
-                        min: 1,
-                        max: 2
-                    },
-                    chartArea: { width: 600, height: 400 },
-                    zoomable: true
-                });
-            },
-            teardown: destroyChart
-        });
-
-        test("triggers zoomStart", function() {
-            chart.bind("zoomStart", function(e) {
-                ok(true);
-            });
-            triggerPinchZoom(1);
-        });
-
-        test("zoomStart is preventable", 0, function() {
-            chart.bind("zoomStart", function(e) {
-                e.preventDefault();
-            });
-            chart._plotArea.redraw = function() {
-                ok(false);
-            };
-            triggerPinchZoom(1);
-        });
-
-        test("triggers zoom with updated ranges", function() {
-            chart.bind("zoom", function(e) {
-                equal(e.axisRanges.foo.min, 0);
-                equal(e.axisRanges.foo.max, 4);
-            });
-            triggerPinchZoom(1);
-        });
-
-        test("zoom event is preventable", 0, function() {
-            chart.bind("zoom", function(e) {
-                e.preventDefault();
-            });
-            chart._plotArea.redraw = function() {
-                ok(false);
-            };
-            triggerPinchZoom(1);
-        });
-
-        test("triggers zoomEnd event", function() {
-            chart.bind("zoomEnd", function(e) {
-                ok(true);
-            });
-            triggerPinchZoom(1);
-        });
 
     })();
 
@@ -1005,7 +645,7 @@
 
         asyncTest("binds mousemove handler if crosshairs are enabled with the new options", function() {
             setupChart();
-            chart._mousemove = function() {
+            chart._instance._mousemove = function() {
                 ok(true);
                 start();
             };
@@ -1018,7 +658,8 @@
                 }
             });
 
-            chart.element.trigger("mousemove");
+            var e = new MouseEvent("mousemove", {});
+            chart.element[0].dispatchEvent(e);
         });
 
         test("binds categories from series data", function() {
@@ -1093,7 +734,7 @@
                     data: [1, 2, 3]
                 }],
                 render: function(e) {
-                    ok(e.sender.surface._root.childNodes);
+                    ok(e.sender.surface._instance._root.childNodes);
                 }
             });
         });
@@ -1884,7 +1525,8 @@
         });
 
         test("shows tooltip for filtered point", function() {
-           chart._tooltip.show = function(point) {
+           chart._tooltip.show = function(e) {
+               var point = e.point;
                equal(point.value, 1);
            };
            chart.showTooltip(function(point) {
@@ -1893,7 +1535,8 @@
         });
 
         test("shows tooltip for the first point if the filter matches multiple points", function() {
-           chart._tooltip.show = function(point) {
+           chart._tooltip.show = function(e) {
+               var point = e.point;
                equal(point.value, 2);
                equal(point.categoryIx, 1);
            };
@@ -1903,14 +1546,14 @@
         });
 
         test("does nothing if no filter is passed", 0, function() {
-            chart._tooltip.show = function(point) {
+            chart._tooltip.show = function() {
                ok(false);
             };
             chart.showTooltip();
         });
 
         test("does nothing if the filter returns no points", 0, function() {
-            chart._tooltip.show = function(point) {
+            chart._tooltip.show = function() {
                ok(false);
             };
 
@@ -1920,7 +1563,7 @@
         });
 
         test("hide hides tooltip", function() {
-            chart._tooltip.hide = function(point) {
+            chart._tooltip.hide = function() {
                ok(true);
             };
             chart.hideTooltip();
@@ -1935,7 +1578,8 @@
                         data: [3, 4, 5]
                     }],
                     tooltip: {
-                        shared: true
+                        shared: true,
+                        visible: true
                     }
                 });
             },
@@ -1943,7 +1587,8 @@
         });
 
         test("shows tooltip for filtered point", function() {
-           chart._tooltip.showAt = function(points) {
+           chart._tooltip.show = function(e) {
+               var points = e.points;
                equal(points[0].value, 1);
                equal(points[1].value, 3);
            };
@@ -1953,7 +1598,8 @@
         });
 
         test("shows tooltip for the first point if the filter matches multiple points", function() {
-           chart._tooltip.showAt = function(points) {
+           chart._tooltip.show = function(e) {
+               var points = e.points;
                equal(points[0].value, 2);
                equal(points[1].value, 4);
                equal(points[0].categoryIx, 1);
@@ -1964,14 +1610,14 @@
         });
 
         test("does nothing if no filter is passed", 0, function() {
-            chart._tooltip.showAt = function(point) {
+            chart._tooltip.show = function() {
                ok(false);
             };
             chart.showTooltip();
         });
 
         test("does nothing if the filter returns no points", 0, function() {
-            chart._tooltip.showAt = function(point) {
+            chart._tooltip.show = function() {
                ok(false);
             };
 
@@ -1981,7 +1627,7 @@
         });
 
         test("hide hides tooltip", function() {
-            chart._tooltip.hide = function(point) {
+            chart._tooltip.hide = function() {
                ok(true);
             };
             chart.hideTooltip();
@@ -1989,47 +1635,6 @@
 
     })();
 
-    // ------------------------------------------------------------
-    (function() {
-        module("Custom fonts", {
-            setup: function() {
-            },
-            teardown: function() {
-                destroyChart();
-            }
-        });
 
-        test("loads custom fonts", function() {
-            var font = "16px Deja Mu";
-
-            stubMethod(kendo.util, "loadFonts", function(fonts) {
-                deepEqual(fonts, [font]);
-            }, function() {
-                createChart({
-                    categoryAxis: {
-                        labels: {
-                            font: font
-                        }
-                    }
-                });
-            });
-        });
-
-        test("does not crash with complex options", function() {
-            stubMethod(kendo.util, "loadFonts", function() {
-                ok(true)
-            }, function() {
-                createChart({
-                    dataSource: new kendo.data.DataSource(),
-                    foo: null,
-                    series: [{
-                        visual: function(e) {
-                            return e.createVisual();
-                        }
-                    }]
-                });
-            });
-        });
-    })();
 
 })();

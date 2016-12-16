@@ -78,7 +78,7 @@
                 }]
             });
 
-            equal(chart.options.categoryAxis.dataItems[1].sales, 110);
+            equal(chart._plotArea.categoryAxis.options.dataItems[1].sales, 110);
         });
 
         // ------------------------------------------------------------
@@ -179,8 +179,8 @@
                     period: "Feb",
                     sales: 110
                 }],
-                dataBound: function() {
-                    equal(this.options.categoryAxis.dataItems[1].sales, 110);
+                render: function() {
+                    equal(this._plotArea.categoryAxis.options.dataItems[1].sales, 110);
                     start();
                 }
             });
@@ -358,8 +358,8 @@
                     period: new Date("2013/02/01 00:00"),
                     sales: 110
                 }],
-                dataBound: function() {
-                    equal(this.options.categoryAxis.dataItems[1].sales, 110);
+                render: function() {
+                    equal(this._plotArea.categoryAxis.options.dataItems[1].sales, 110);
                     start();
                 }
             });
