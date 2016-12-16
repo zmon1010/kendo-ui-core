@@ -27,10 +27,13 @@
         EPSG3857 = map.crs.EPSG3857,
 
         util = kendo.util,
-        defined = util.defined,
-        limit = util.limitValue,
         renderPos = util.renderPos,
-        valueOrDefault = util.valueOrDefault;
+
+        drawingUtil = kendo.drawing.util,
+
+        defined = drawingUtil.defined,
+        limit = drawingUtil.limitValue,
+        valueOrDefault = drawingUtil.valueOrDefault;
 
     // Constants ==============================================================
     var CSS_PREFIX = "k-",

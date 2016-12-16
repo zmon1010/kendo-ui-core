@@ -576,7 +576,7 @@
 
         test("markerActivate has reference to layer", function() {
             map.bind("markerActivate", function(e) {
-                equal(dataviz.util.last(e.layer.items), e.marker);
+                equal(dataviz.last(e.layer.items), e.marker);
             });
             createBoundLayer();
         });

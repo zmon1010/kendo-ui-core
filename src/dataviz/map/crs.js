@@ -24,7 +24,7 @@
         map = dataviz.map,
         Location = map.Location,
 
-        util = kendo.util,
+        util = kendo.drawing.util,
         rad = util.rad,
         deg = util.deg,
         limit = util.limitValue;

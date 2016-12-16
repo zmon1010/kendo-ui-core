@@ -129,8 +129,8 @@
 
         function touchPan(x, y) {
             var element = map.scrollElement;
-            x = kendo.util.valueOrDefault(x, 100);
-            y = kendo.util.valueOrDefault(y, 100);
+            x = kendo.drawing.util.valueOrDefault(x, 100);
+            y = kendo.drawing.util.valueOrDefault(y, 100);
             press(element, 100, 100);
             map.scroller.scrollTo(100 + x, 100 + y);
             release(element, 100 + x, 100 + y);

@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../../kendo.drawing" ], f);
+    define([ "../../kendo.drawing", "../../util/main" ], f);
 })(function(){
 
 (function ($, undefined) {
@@ -20,13 +20,14 @@
         dataviz = kendo.dataviz,
         deepExtend = kendo.deepExtend,
 
-        util = kendo.util,
+        util = kendo.drawing.util,
         defined = util.defined,
         deg = util.deg,
         rad = util.rad,
         round = util.round,
-        sqr = util.sqr,
-        valueOrDefault = util.valueOrDefault;
+        valueOrDefault = util.valueOrDefault,
+
+        sqr = kendo.util.sqr;
 
     // Implementation =========================================================
     var Location = Class.extend({

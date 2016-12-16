@@ -14,7 +14,7 @@
 
         Extent = dataviz.map.Extent,
 
-        util = kendo.util,
+        util = kendo.drawing.util,
         defined = util.defined;
 
     // Implementation =========================================================

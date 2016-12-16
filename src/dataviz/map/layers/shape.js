@@ -12,13 +12,14 @@
 
         dataviz = kendo.dataviz,
         deepExtend = kendo.deepExtend,
-        last = kendo.util.last,
-        defined = kendo.util.defined,
 
         g = kendo.geometry,
 
         d = kendo.drawing,
         Group = d.Group,
+
+        last = d.util.last,
+        defined = d.util.defined,
 
         map = dataviz.map,
         Location = map.Location,
