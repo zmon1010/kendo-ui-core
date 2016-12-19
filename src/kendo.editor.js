@@ -50,6 +50,11 @@
             description: "Support for resizing the content area via a resize handle",
             depends: [ "resizable" ]
         }, {
+            id: "editor-tablewizard",
+            name: "Table wizard dialog",
+            description: "Support for table properties configuration",
+            depends: [ "tabstrip", "button", "numerictextbox" ]
+        }, {
             id: "editor-pdf-export",
             name: "PDF export",
             description: "Export Editor content as PDF",
