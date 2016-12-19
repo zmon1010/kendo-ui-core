@@ -956,6 +956,7 @@
                     self._executeCommand({
                         command: "EditCommand",
                         options: {
+                            operatingRange: range,
                             property: parse ? "input" : "value",
                             value: value
                         }
