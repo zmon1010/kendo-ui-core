@@ -15,6 +15,15 @@ class TreeListColumnCommandItem extends \Kendo\SerializableObject {
     }
 
     /**
+    * The CSS class applied to the icon span of the command button.
+    * @param string $value
+    * @return \Kendo\UI\TreeListColumnCommandItem
+    */
+    public function imageClass($value) {
+        return $this->setProperty('imageClass', $value);
+    }
+
+    /**
     * Sets the click option of the TreeListColumnCommandItem.
     * The JavaScript function executed when the user clicks the command button. The function receives a jQuery Event as an argument.The function context (available via the this keyword) will be set to the treelist instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

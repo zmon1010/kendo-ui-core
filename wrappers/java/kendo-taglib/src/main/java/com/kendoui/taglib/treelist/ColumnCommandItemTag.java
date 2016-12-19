@@ -74,6 +74,14 @@ public class ColumnCommandItemTag extends  BaseTag  /* interfaces */ /* interfac
         setProperty("click", new Function(value));
     }
 
+    public java.lang.String getImageClass() {
+        return (java.lang.String)getProperty("imageClass");
+    }
+
+    public void setImageClass(java.lang.String value) {
+        setProperty("imageClass", value);
+    }
+
     public java.lang.String getName() {
         return (java.lang.String)getProperty("name");
     }

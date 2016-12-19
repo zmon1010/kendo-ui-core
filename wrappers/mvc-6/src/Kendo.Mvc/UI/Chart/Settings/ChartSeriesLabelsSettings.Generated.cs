@@ -31,6 +31,8 @@ namespace Kendo.Mvc.UI
 
         public ChartSeriesLabelsPaddingSettings<T> Padding { get; } = new ChartSeriesLabelsPaddingSettings<T>();
 
+        public string Rotation { get; set; }
+
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
@@ -115,6 +117,11 @@ namespace Kendo.Mvc.UI
             if (padding.Any())
             {
                 settings["padding"] = padding;
+            }
+
+            if (Rotation?.HasValue() == true)
+            {
+                settings["rotation"] = Rotation;
             }
 
             if (TemplateId.HasValue())

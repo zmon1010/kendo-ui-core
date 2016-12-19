@@ -6,8 +6,7 @@ class DiagramShapeFillGradient extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The type of the gradient. Supported values are:Note that support for radial gradients in VML (IE8 and below) is limited.
-Not all configurations are guaranteed to work.
+    * The type of the gradient. Supported values are:
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeFillGradient
     */

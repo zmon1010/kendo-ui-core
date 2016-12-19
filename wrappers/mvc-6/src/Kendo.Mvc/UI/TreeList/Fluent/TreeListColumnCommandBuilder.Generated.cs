@@ -21,6 +21,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The CSS class applied to the icon span of the command button.
+        /// </summary>
+        /// <param name="value">The value for ImageClass</param>
+        public TreeListColumnCommandBuilder<T> ImageClass(string value)
+        {
+            Container.ImageClass = value;
+            return this;
+        }
+
+        /// <summary>
         /// The JavaScript function executed when the user clicks the command button. The function receives a jQuery Event as an argument.The function context (available via the this keyword) will be set to the treelist instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>

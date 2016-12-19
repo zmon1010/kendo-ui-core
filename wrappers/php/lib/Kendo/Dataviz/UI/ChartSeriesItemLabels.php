@@ -96,6 +96,15 @@ class ChartSeriesItemLabels extends \Kendo\SerializableObject {
     }
 
     /**
+    * The rotation angle of the labels. By default, the labels are not rotated.
+    * @param string|float $value
+    * @return \Kendo\Dataviz\UI\ChartSeriesItemLabels
+    */
+    public function rotation($value) {
+        return $this->setProperty('rotation', $value);
+    }
+
+    /**
     * Sets the template option of the ChartSeriesItemLabels.
     * The template which renders the chart series label.The fields which can be used in the template are:
     * @param string $value The id of the element which represents the kendo template.

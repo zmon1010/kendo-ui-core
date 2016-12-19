@@ -176,6 +176,14 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces
         setProperty("position", value);
     }
 
+    public java.lang.Object getRotation() {
+        return (java.lang.Object)getProperty("rotation");
+    }
+
+    public void setRotation(java.lang.Object value) {
+        setProperty("rotation", value);
+    }
+
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }

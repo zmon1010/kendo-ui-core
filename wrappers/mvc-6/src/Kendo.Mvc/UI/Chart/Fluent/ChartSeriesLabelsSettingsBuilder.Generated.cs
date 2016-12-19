@@ -188,6 +188,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The rotation angle of the labels. By default, the labels are not rotated.
+        /// </summary>
+        /// <param name="value">The value for Rotation</param>
+        public ChartSeriesLabelsSettingsBuilder<T> Rotation(string value)
+        {
+            Container.Rotation = value;
+            return this;
+        }
+
+        /// <summary>
         /// The template which renders the chart series label.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for Template</param>

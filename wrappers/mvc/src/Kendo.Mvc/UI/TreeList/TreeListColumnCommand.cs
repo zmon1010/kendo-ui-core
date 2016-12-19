@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
         
         public string ClassName { get; set; }
         
+        public string ImageClass { get; set; }
+        
         public ClientHandlerDescriptor Click { get; set; }
         
         public string Name { get; set; }
@@ -36,6 +38,11 @@ namespace Kendo.Mvc.UI
             if (ClassName.HasValue())
             {
                 json["className"] = ClassName;
+            }
+            
+            if (ImageClass.HasValue())
+            {
+                json["imageClass"] = ImageClass;
             }
             
             if (Click.HasValue())

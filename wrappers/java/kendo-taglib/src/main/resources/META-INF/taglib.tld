@@ -4369,6 +4369,12 @@ By default chart series highlighting is enabled.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The rotation angle of the labels. By default, the labels are not rotated.</description>
+            <name>rotation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The template which renders the chart series label.The fields which can be used in the template are:</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
@@ -5994,6 +6000,12 @@ The function return value is displayed instead of the individual points.The supp
             <name>padding</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The rotation angle of the labels. By default, the labels are not rotated.</description>
+            <name>rotation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The template which renders the chart series label.The fields which can be used in the template are:</description>
@@ -17144,8 +17156,7 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of the gradient. Supported values are:Note that support for radial gradients in VML (IE8 and below) is limited.
-Not all configurations are guaranteed to work.</description>
+            <description>The type of the gradient. Supported values are:</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18210,8 +18221,7 @@ For example [0, 0] is top left and [1, 1] is bottom right.</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The type of the gradient. Supported values are:Note that support for radial gradients in VML (IE8 and below) is limited.
-Not all configurations are guaranteed to work.</description>
+            <description>The type of the gradient. Supported values are:</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -20895,7 +20905,7 @@ the proxy should set the "Content-Disposition" header to inline; filename="&lt;f
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser is not capable of saving files locally, for example, Internet Explorer 9 and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 attachment; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
@@ -24425,7 +24435,7 @@ the proxy should set the "Content-Disposition" header to inline; filename="&lt;f
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser is not capable of saving files locally, for example, Internet Explorer 9 and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 attachment; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
@@ -29112,8 +29122,7 @@ About the data item structure review this help topic.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+            <description>The URL of the server side proxy which will stream the file to the end user.Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 attachment; filename="&lt;fileName.xslx&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
@@ -29338,7 +29347,7 @@ the proxy should set the "Content-Disposition" header to inline; filename="&lt;f
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser is not capable of saving files locally, for example, Internet Explorer 9 and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 attachment; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
@@ -36905,7 +36914,7 @@ the proxy should set the "Content-Disposition" header to inline; filename="&lt;f
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser is not capable of saving files locally, for example, Internet Explorer 9 and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 attachment; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
@@ -46303,6 +46312,12 @@ Each table row consists of table cells (&lt;td&gt;) which represent the treelist
         <attribute>
             <description>The JavaScript function executed when the user clicks the command button. The function receives a jQuery Event as an argument.The function context (available via the this keyword) will be set to the treelist instance.</description>
             <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The CSS class applied to the icon span of the command button.</description>
+            <name>imageClass</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
