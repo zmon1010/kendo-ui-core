@@ -37,7 +37,7 @@
 
         function stubArgs(x, y, options) {
             return deepExtend({
-                target: $("<div class='k-leftHandle' />")[0],
+                target: $("<div class='k-left-handle' />")[0],
                 x: { location: x || 0 },
                 y: { location: y || 0 },
                 preventDefault: function() {}
