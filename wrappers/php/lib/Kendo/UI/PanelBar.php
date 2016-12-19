@@ -216,6 +216,20 @@ Setting this to false causes all child DataSources to be loaded at initializatio
     }
 
     /**
+    * Sets the dataBound event of the PanelBar.
+    * Triggered after the dataSource change event has been processed (adding/removing items);
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\PanelBar
+    */
+    public function dataBound($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('dataBound', $value);
+    }
+
+    /**
     * Sets the error event of the PanelBar.
     * Fires when AJAX request results in an error.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

@@ -101,6 +101,43 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Defines the inline handler of the dataBound client-side event
+        /// </summary>
+        /// <param name="onDataBoundAction">The handler code wrapped in a text tag (Razor syntax).</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().PanelBar()
+        ///           .Name("PanelBar")
+        ///           .Events(events => events.DataBound(
+        ///                @&lt;text&gt;
+        ///                function(e) {
+        ///                    // event handling code
+        ///                }
+        ///                &lt;/text&gt;
+        ///           ))
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PanelBarEventBuilder DataBound(Func<object, object> onDataBoundAction)
+        {
+            Handler("dataBound", onDataBoundAction);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered after the dataSource change event has been processed (adding/removing items);
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dataBound event.</param>
+        public PanelBarEventBuilder DataBound(string handler)
+        {
+            Handler("dataBound", handler);
+
+            return this;
+        }
+
         public PanelBarEventBuilder Activate(Func<object, object> handler)
         {
             Handler("activate", handler);

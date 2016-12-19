@@ -28523,6 +28523,11 @@ Setting this to false causes all child DataSources to be loaded at initializatio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Triggered after the dataSource change event has been processed (adding/removing items);</description>
+            <name>dataBound</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fires when AJAX request results in an error.</description>
             <name>error</name>
             <rtexprvalue>true</rtexprvalue>
@@ -28708,6 +28713,12 @@ is closed. Options include "fadeOut".</description>
         <description>Fires when content is fetched from an AJAX request.</description>
         <name>panelBar-contentLoad</name>
         <tag-class>com.kendoui.taglib.panelbar.ContentLoadFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered after the dataSource change event has been processed (adding/removing items);</description>
+        <name>panelBar-dataBound</name>
+        <tag-class>com.kendoui.taglib.panelbar.DataBoundFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

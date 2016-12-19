@@ -80,6 +80,28 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Triggered after the dataSource change event has been processed (adding/removing items);
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dataBound event.</param>
+        public PanelBarEventBuilder DataBound(string handler)
+        {
+            Handler("dataBound", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered after the dataSource change event has been processed (adding/removing items);
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public PanelBarEventBuilder DataBound(Func<object, object> handler)
+        {
+            Handler("dataBound", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fires when AJAX request results in an error.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the error event.</param>

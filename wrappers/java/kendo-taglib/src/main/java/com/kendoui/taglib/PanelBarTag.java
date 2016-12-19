@@ -83,6 +83,10 @@ public class PanelBarTag extends WidgetWithItemsTag /* interfaces */implements D
         setEvent("contentLoad", value.getBody());
     }
 
+    public void setDataBound(DataBoundFunctionTag value) {
+        setEvent("dataBound", value.getBody());
+    }
+
     public void setError(ErrorFunctionTag value) {
         setEvent("error", value.getBody());
     }
@@ -213,6 +217,18 @@ public class PanelBarTag extends WidgetWithItemsTag /* interfaces */implements D
 
     public void setContentLoad(String value) {
         setProperty("contentLoad", new Function(value));
+    }
+
+    public String getDataBound() {
+        Function property = ((Function)getProperty("dataBound"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDataBound(String value) {
+        setProperty("dataBound", new Function(value));
     }
 
     public String getError() {
