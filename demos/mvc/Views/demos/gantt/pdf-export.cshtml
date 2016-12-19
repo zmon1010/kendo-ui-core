@@ -24,10 +24,10 @@
     // NOTE: Only required if the Kendo UI stylesheets are loaded
     // from a different origin, e.g. cdn.kendostatic.com
     kendo.pdf.defineFont({
-        "DejaVu Sans"             : "//kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
-        "DejaVu Sans|Bold"        : "//kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
-        "DejaVu Sans|Bold|Italic" : "//kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
-        "DejaVu Sans|Italic"      : "//kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+        "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+        "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+        "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+        "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
     });
 </script>
 
@@ -36,7 +36,7 @@
 
 <script>
 $(document).ready(function() {
-    var serviceRoot = "//demos.telerik.com/kendo-ui/service";
+    var serviceRoot = "https://demos.telerik.com/kendo-ui/service";
     var tasksDataSource = new kendo.data.GanttDataSource({
         batch: false,
         transport: {
@@ -133,7 +133,7 @@ $(document).ready(function() {
         toolbar: ["append", "pdf"],
         pdf: {
             fileName: "Kendo UI Gantt Export.pdf",
-            proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+            proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
         },
         height: 700,
 
