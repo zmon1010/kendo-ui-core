@@ -252,7 +252,7 @@ QUnit.extend( QUnit, {
     }
 });
 
-QUnit.config.testTimeout = 2500;
+QUnit.config.testTimeout = 10000;
 QUnit.config.reorder = false;
 
 var close = QUnit.close,
