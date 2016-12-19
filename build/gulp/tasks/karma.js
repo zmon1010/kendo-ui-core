@@ -107,6 +107,7 @@ const flavours = Object.freeze({
         reporters: ['dots', 'junit'],
         singleRun: true,
         browsers: browsers,
+        concurrency: 1,
 
         files: (tests) => [].concat(
             TESTS.beforeTestFiles,
@@ -120,6 +121,7 @@ const flavours = Object.freeze({
         reporters: ['dots'],
         singleRun: true,
         browsers: [ 'ChromiumTravis' ],
+        concurrency: 1,
 
         files: (tests) => [].concat(
             TESTS.beforeTestFiles,
