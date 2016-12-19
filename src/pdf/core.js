@@ -30,7 +30,7 @@ var kendoPdf = kendo.pdf;
 /* eslint-disable no-param-reassign, no-var, block-scoped-var */
 
 // XXX: remove this junk (assume `true`) when we no longer have to support IE < 10
-var HAS_TYPED_ARRAYS$1 = Boolean(typeof window !== 'undefined' && window.Uint8Array);
+var HAS_TYPED_ARRAYS$1 = typeof Uint8Array !== 'undefined';
 
 var BASE64 = (function(){
     var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -1441,7 +1441,7 @@ TTFFont.prototype = {
 
 var browser = kendo.support.browser;
 // XXX: remove this junk (assume `true`) when we no longer have to support IE < 10
-var HAS_TYPED_ARRAYS = Boolean(typeof window !== 'undefined' && window.Uint8Array);
+var HAS_TYPED_ARRAYS = typeof Uint8Array !== 'undefined';
 
 var NL = "\n";
 

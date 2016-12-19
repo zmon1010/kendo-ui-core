@@ -8364,8 +8364,8 @@ var Selection = Class.extend({
 
         selection.appendChild(createDiv("k-selection-bg"));
 
-        var leftHandle = this.leftHandle = createDiv("k-handle k-leftHandle");
-        var rightHandle = this.rightHandle = createDiv("k-handle k-rightHandle");
+        var leftHandle = this.leftHandle = createDiv("k-handle k-left-handle");
+        var rightHandle = this.rightHandle = createDiv("k-handle k-right-handle");
         leftHandle.appendChild(createDiv());
         rightHandle.appendChild(createDiv());
 
@@ -8550,13 +8550,13 @@ var Selection = Class.extend({
                 range.from + span,
                 max
             );
-        } else if (hasClasses(target, "k-leftHandle")) {
+        } else if (hasClasses(target, "k-left-handle")) {
             range.from = Math.min(
                 Math.max(min, from - offset),
                 max - 1
             );
             range.to = Math.max(range.from + 1, range.to);
-        } else if (hasClasses(target, "k-rightHandle")) {
+        } else if (hasClasses(target, "k-right-handle")) {
             range.to = Math.min(
                 Math.max(min + 1, to - offset),
                 max

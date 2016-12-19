@@ -1111,9 +1111,9 @@ var Transformation = Class.extend({
         return this;
     },
 
-    matrix: function(matrix) {
-        if (matrix) {
-            this._matrix = matrix;
+    matrix: function(value) {
+        if (value) {
+            this._matrix = value;
             this._optionsChange();
             return this;
         }
@@ -1167,9 +1167,9 @@ var Element$1 = Class.extend({
         this.options.addObserver(this);
     },
 
-    transform: function(transform$$1) {
-        if (defined(transform$$1)) {
-            this.options.set("transform", transform(transform$$1));
+    transform: function(value) {
+        if (defined(value)) {
+            this.options.set("transform", transform(value));
         } else {
             return this.options.get("transform");
         }
@@ -1212,22 +1212,22 @@ var Element$1 = Class.extend({
         }
     },
 
-    visible: function(visible) {
-        if (defined(visible)) {
-            this.options.set("visible", visible);
+    visible: function(value) {
+        if (defined(value)) {
+            this.options.set("visible", value);
             return this;
         }
 
         return this.options.get("visible") !== false;
     },
 
-    clip: function(clip) {
+    clip: function(value) {
         var options = this.options;
-        if (defined(clip)) {
-            if (clip && !clip.id) {
-                clip.id = definitionId();
+        if (defined(value)) {
+            if (value && !value.id) {
+                value.id = definitionId();
             }
-            options.set("clip", clip);
+            options.set("clip", value);
             return this;
         }
 
@@ -1883,9 +1883,9 @@ var ElementsArray = Class.extend({
         this._splice(0, array.length, array);
     },
 
-    elements: function(elements) {
-        if (elements) {
-            this._splice(0, this.length, elements);
+    elements: function(value) {
+        if (value) {
+            this._splice(0, this.length, value);
 
             this._change();
             return this;
@@ -4108,12 +4108,12 @@ var Surface = kendo.Observable.extend({
         }
     },
 
-    size: function(size) {
-        if (!size) {
+    size: function(value) {
+        if (!value) {
             return this.getSize();
         }
 
-        this.setSize(size);
+        this.setSize(value);
     },
 
     suspendTracking: function() {
@@ -7146,6 +7146,23 @@ function drawDOM(element, options) {
 }
 
 drawDOM.getFontFaces = getFontFaces;
+
+// This is needed for the Spreadsheet print functionality.  Since
+// there we only need to draw text, this cuts through the ceremony
+// of drawDOM/renderElement and renders the text node directly.
+drawDOM.drawText = function(element) {
+    var group = new Group();
+    nodeInfo._clipbox = false;
+    nodeInfo._matrix = Matrix.unit();
+    nodeInfo._stackingContext = {
+        element: element,
+        group: group
+    };
+    pushNodeInfo(element, getComputedStyle(element), group);
+    renderText(element, element.firstChild, group);
+    popNodeInfo();
+    return group;
+};
 
 var parseBackgroundImage = (function(){
     var tok_linear_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?linear-gradient\s*)\(/;
