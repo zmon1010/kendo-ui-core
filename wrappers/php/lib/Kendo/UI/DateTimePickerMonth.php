@@ -15,6 +15,15 @@ class DateTimePickerMonth extends \Kendo\SerializableObject {
     }
 
     /**
+    * The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year.
+    * @param string $value
+    * @return \Kendo\UI\DateTimePickerMonth
+    */
+    public function weekNumber($value) {
+        return $this->setProperty('weekNumber', $value);
+    }
+
+    /**
     * The template used for rendering cells in the calendar "month" view, which are outside the min/max range.
     * @param string $value
     * @return \Kendo\UI\DateTimePickerMonth

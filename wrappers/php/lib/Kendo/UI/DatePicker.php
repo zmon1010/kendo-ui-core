@@ -129,6 +129,15 @@ settings are available for the depth value:
     }
 
     /**
+    * If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
+    * @param boolean $value
+    * @return \Kendo\UI\DatePicker
+    */
+    public function showWeekNumber($value) {
+        return $this->setProperty('showWeekNumber', $value);
+    }
+
+    /**
     * Specifies a list of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.
  Note that the format option is always used during parsing.
     * @param array $value
