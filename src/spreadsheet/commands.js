@@ -615,16 +615,8 @@
         },
         exec: function() {
             var range = this.range();
-
             this._state = range.hasFilter();
-
-            if (range.hasFilter()) {
-                range.filter(false);
-            } else if (!range.intersectingMerged().length) {
-                range.filter(true);
-            } else {
-               return { reason: "error", type: "filterRangeContainingMerges" };
-            }
+            range.filter(!this._state);
         }
     });
 
