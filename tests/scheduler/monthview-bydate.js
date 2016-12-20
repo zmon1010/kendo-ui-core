@@ -2162,7 +2162,7 @@
         equalWithRound(view._resizeHint.first().width(), 75);
         equalWithRound(view._resizeHint.first().height(), 684);
         equalWithRound(view._resizeHint.last().width(), 75);
-        equal(view._resizeHint.last().height(), 292);
+        equalWithRound(view._resizeHint.last().height(), 292);
     });
 
      test("dragging clues are added correctly", function() {
