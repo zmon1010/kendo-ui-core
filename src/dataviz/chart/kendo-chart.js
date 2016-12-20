@@ -500,7 +500,7 @@ var FADEIN = "fadeIn";
 var GLASS = "glass";
 var BORDER_BRIGHTNESS = 0.8;
 var TOOLTIP_OFFSET = 5;
-var START_SCALE = browser.msie && browser.version === 10 ? 0.001 : 0;
+var START_SCALE = browser.msie ? 0.001 : 0;
 var ERROR_LOW_FIELD = "errorLow";
 var ERROR_HIGH_FIELD = "errorHigh";
 var X_ERROR_LOW_FIELD = "xErrorLow";
@@ -2897,7 +2897,7 @@ Bar.prototype.defaults = {
     },
     vertical: true,
     overlay: {
-        gradient: "none"
+        gradient: "glass"
     },
     labels: {
         visible: false,
@@ -3357,7 +3357,7 @@ setDefaultOptions(Candlestick, {
         width: 2
     },
     overlay: {
-        gradient: "none"
+        gradient: "glass"
     },
     tooltip: {
         format: "<table>\n                    <tr><th colspan='2'>{4:d}</th></tr>\n                    <tr><td>Open:</td><td>{0:C}</td></tr>\n                    <tr><td>High:</td><td>{1:C}</td></tr>\n                    <tr><td>Low:</td><td>{2:C}</td></tr>\n                    <tr><td>Close:</td><td>{3:C}</td></tr>\n                </table>"
@@ -3698,7 +3698,7 @@ setDefaultOptions(BoxPlot, {
         color: "#f6f6f6"
     },
     overlay: {
-        gradient: "none"
+        gradient: "glass"
     },
     tooltip: {
         format: "<table>\n                    <tr><th colspan=\"2\">{6:d}</th></tr>\n                    <tr><td>Lower:</td><td>{0:C}</td></tr>\n                    <tr><td>Q1:</td><td>{1:C}</td></tr>\n                    <tr><td>Median:</td><td>{2:C}</td></tr>\n                    <tr><td>Mean:</td><td>{5:C}</td></tr>\n                    <tr><td>Q3:</td><td>{3:C}</td></tr>\n                    <tr><td>Upper:</td><td>{4:C}</td></tr>\n                </table>"
@@ -9655,7 +9655,7 @@ function tooltipAlignment(angle) {
 setDefaultOptions(PieSegment, {
     color: WHITE,
     overlay: {
-        gradient: "none"
+        gradient: "roundedBevel"
     },
     border: {
         width: 0.5
@@ -10278,7 +10278,7 @@ var DonutSegment = PieSegment.extend({
 
 setDefaultOptions(DonutSegment, {
     overlay: {
-        gradient: "none"
+        gradient: "roundedGlass"
     },
     labels: {
         position: CENTER

@@ -15,7 +15,9 @@
         SANS12 = "12px " + SANS,
         WHITE = "#fff";
 
-    var chartBaseTheme = kendo.dataviz.chartBaseTheme();
+    var chartBaseTheme = kendo.dataviz.chartBaseTheme({
+        gradients: true
+    });
 
     var gaugeBaseTheme = {
         scale: {

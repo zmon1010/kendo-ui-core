@@ -237,10 +237,13 @@ var funnelSeries = function () { return ({
     }
 }); };
 
-var seriesDefaults = function () { return ({
+var seriesDefaults = function (options) { return ({
     visible: true,
     labels: {
         font: SANS11
+    },
+    overlay: options.gradients ? {} : {
+        gradient: "none"
     },
     area: areaSeries(),
     bar: barSeries(),
@@ -279,7 +282,10 @@ var legend = function () { return ({
     }
 }); };
 
-var baseTheme = function () { return ({
+var baseTheme = function (options) {
+    if (options === void 0) { options = {}; }
+
+    return ({
     axisDefaults: axisDefaults(),
     categoryAxis: {
         majorGridLines: {
@@ -294,10 +300,11 @@ var baseTheme = function () { return ({
             }
         }
     },
-    seriesDefaults: seriesDefaults(),
+    seriesDefaults: seriesDefaults(options),
     title: title(),
     legend: legend()
-}); };
+});
+};
 
 kendo.deepExtend(exports, {
     chartBaseTheme: baseTheme

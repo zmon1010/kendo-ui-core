@@ -1204,13 +1204,6 @@
         }
     });
 
-    dataviz.Bar.prototype.defaults.overlay.gradient = "glass";
-    dataviz.RangeBar.prototype.defaults.overlay.gradient = "glass";
-    dataviz.BoxPlot.prototype.options.overlay.gradient = "glass";
-    dataviz.Candlestick.prototype.options.overlay.gradient = "glass";
-    dataviz.DonutSegment.prototype.options.overlay.gradient = "roundedGlass";
-    dataviz.PieSegment.prototype.options.overlay.gradient = "roundedBevel";
-
     dataviz.Tooltip = Tooltip;
     dataviz.CrosshairTooltip = CrosshairTooltip;
     dataviz.ChartInstanceObserver = ChartInstanceObserver;
