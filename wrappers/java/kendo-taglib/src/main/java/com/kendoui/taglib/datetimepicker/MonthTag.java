@@ -66,6 +66,14 @@ public class MonthTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("empty", value);
     }
 
+    public java.lang.String getWeekNumber() {
+        return (java.lang.String)getProperty("weekNumber");
+    }
+
+    public void setWeekNumber(java.lang.String value) {
+        setProperty("weekNumber", value);
+    }
+
 //<< Attributes
 
 }
