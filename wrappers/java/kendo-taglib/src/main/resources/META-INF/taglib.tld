@@ -663,6 +663,12 @@ settings are available for the depth value:</description>
             <type>java.util.Date</type>
         </attribute>
         <attribute>
+            <description>If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.</description>
+            <name>showWeekNumber</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies the start view.
 The following settings are available for the start value:</description>
             <name>start</name>
@@ -705,6 +711,12 @@ The following settings are available for the start value:</description>
             <description>The template to be used for rendering the cells in the "month" view, which are not in the min/max range.
  By default, the widget renders an empty string.</description>
             <name>empty</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year.</description>
+            <name>weekNumber</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
