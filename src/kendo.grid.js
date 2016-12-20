@@ -5914,7 +5914,8 @@ var __meta__ = { // jshint ignore:line
                 type,
                 hasDetails = that._hasDetails(),
                 className = [],
-                groups = that._groups();
+                groups = that._groups(),
+                navigatable = that.options.navigatable;
 
             if (!rowTemplate) {
                 rowTemplate = "<tr";
@@ -5949,7 +5950,13 @@ var __meta__ = { // jshint ignore:line
                     column = columns[idx];
                     template = column.template;
                     type = typeof template;
-                    rowTemplate += "<td" + stringifyAttributes(column.attributes) + " aria-describedby='" + column.headerAttributes.id + "'" +  " role='gridcell'>";
+                    rowTemplate += "<td" + stringifyAttributes(column.attributes);
+
+                    if (navigatable) {
+                        rowTemplate += " aria-describedby='" + column.headerAttributes.id + "'";
+                    }
+
+                    rowTemplate += " role='gridcell'>";
                     rowTemplate += that._cellTmpl(column, state);
 
                     rowTemplate += "</td>";
