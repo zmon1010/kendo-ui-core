@@ -5,7 +5,7 @@
     var scheduler;
 
     function equalWithRound(value, expected) {
-        QUnit.close(value, expected, 3);
+        QUnit.close(value, expected, 4);
     }
 
     function setupScheduler(options) {
@@ -2160,7 +2160,7 @@
        view._updateResizeHint(event, 0,  new Date(2013, 1, 3, 10, 0, 0),  new Date(2013, 1, 12, 13, 0, 0));
 
         equalWithRound(view._resizeHint.first().width(), 75);
-        equal(view._resizeHint.first().height(), 684);
+        equalWithRound(view._resizeHint.first().height(), 684);
         equalWithRound(view._resizeHint.last().width(), 75);
         equal(view._resizeHint.last().height(), 292);
     });
