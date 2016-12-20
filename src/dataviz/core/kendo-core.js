@@ -5,7 +5,7 @@
     ], f);
 })(function(){
 
-(function () {
+(function ($) {
 /* jshint curly:false */
 
 window.kendo.dataviz = window.kendo.dataviz || {};
@@ -1119,7 +1119,7 @@ var ChartElement = Class.extend({
 
             if (customVisual) {
                 highlight = this._highlight = customVisual(
-                    Object.assign(this.highlightVisualArgs(), {
+                    $.extend(this.highlightVisualArgs(), {
                         createVisual: function () { return this$1.createHighlight(highlightOptions); },
                         sender: this.getChart(),
                         series: this.series,
@@ -1147,7 +1147,7 @@ var ChartElement = Class.extend({
     },
 
     createGradientOverlay: function(element, options, gradientOptions) {
-        var overlay = new Path(Object.assign({
+        var overlay = new Path($.extend({
             stroke: {
                 color: "none"
             },
@@ -1612,7 +1612,7 @@ var RootElement = ChartElement.extend({
         if (gradients[hashCode]) {
             drawingGradient = gradients[hashCode];
         } else {
-            var gradientOptions = Object.assign({}, gradient, options);
+            var gradientOptions = $.extend({}, gradient, options);
             if (gradient.type === "linear") {
                 drawingGradient = new drawing.LinearGradient(gradientOptions);
             } else {
@@ -1648,7 +1648,7 @@ function innerRadialStops(options) {
     var currentStops = [];
 
     for (var i = 0; i < length; i++) {
-        var currentStop = Object.assign({}, stops[i]);
+        var currentStop = $.extend({}, stops[i]);
         currentStop.offset = (currentStop.offset * (100 - usedSpace) + usedSpace) / 100;
         currentStops.push(currentStop);
     }
@@ -2038,7 +2038,7 @@ var Title = ChartElement.extend({
         ChartElement.fn.init.call(this, options);
 
         this.append(
-            new TextBox(this.options.text, Object.assign({}, this.options, {
+            new TextBox(this.options.text, $.extend({}, this.options, {
                 vAlign: this.options.position
             }))
         );
@@ -2057,7 +2057,7 @@ Title.buildTitle = function(options, parent, defaultOptions) {
         titleOptions = { text: options };
     }
 
-    titleOptions = Object.assign({ visible: true }, defaultOptions, titleOptions);
+    titleOptions = $.extend({ visible: true }, defaultOptions, titleOptions);
 
     var title;
     if (titleOptions && titleOptions.visible && titleOptions.text) {
@@ -2484,7 +2484,7 @@ var Note = BoxElement.extend({
         var options = this.options;
         var customVisual = options.visual;
         if (options.visible && customVisual) {
-            this.visual = customVisual(Object.assign(this.fields, {
+            this.visual = customVisual($.extend(this.fields, {
                 sender: this.getChart(),
                 rect: this.targetBox.toRect(),
                 options: {
@@ -2550,7 +2550,7 @@ var Note = BoxElement.extend({
     eventArgs: function(e) {
         var options = this.options;
 
-        return Object.assign(this.fields, {
+        return $.extend(this.fields, {
             element: eventElement(e),
             text: defined(options.label) ? options.label.text : "",
             visual: this.visual
@@ -6830,6 +6830,6 @@ kendoDeepExtend(kendo.dataviz, {
     toTime: toTime
 });
 
-})();
+})(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

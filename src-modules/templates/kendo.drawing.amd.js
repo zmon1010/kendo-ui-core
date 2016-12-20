@@ -2,7 +2,7 @@
     define([ "./util", "../kendo.color", '../util/text-metrics' ], f);
 })(function(){
 
-(function () {
+(function ($) {
 
 /* jshint eqnull:true */
 /* jshint -W069 */
@@ -17,6 +17,6 @@ kendo.drawing.util.measureText = kendo.util.measureText;
 kendo.drawing.util.objectKey = kendo.util.objectKey;
 kendo.drawing.Color = kendo.Color;
 
-})();
+})(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

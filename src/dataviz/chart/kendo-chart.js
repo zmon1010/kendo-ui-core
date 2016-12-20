@@ -7,7 +7,7 @@
     ], f);
 })(function(){
 
-(function () {
+(function ($) {
 
 window.kendo.dataviz = window.kendo.dataviz || {};
 var dataviz = kendo.dataviz;
@@ -1123,7 +1123,7 @@ var CategoricalChart = ChartElement.extend({
 
         var point = this.createPoint(data, fields);
         if (point) {
-            Object.assign(point, fields);
+            $.extend(point, fields);
 
             point.owner = this;
             point.dataItem = series.data[categoryIx];
@@ -3998,7 +3998,7 @@ var ScatterChart = ChartElement.extend({
         if (pointValue) {
             point = this.createPoint(pointValue, fields);
             if (point) {
-                Object.assign(point, fields);
+                $.extend(point, fields);
                 this.addErrorBar(point, X, fields);
                 this.addErrorBar(point, Y, fields);
             }
@@ -7091,7 +7091,7 @@ var CategoricalPlotArea = PlotAreaBase.extend({
         }
 
         var firstSeries = series[0];
-        var barChart = new BarChart(this, Object.assign({
+        var barChart = new BarChart(this, $.extend({
             series: series,
             invertAxes: this.invertAxes,
             gap: firstSeries.gap,
@@ -7140,7 +7140,7 @@ var CategoricalPlotArea = PlotAreaBase.extend({
         }
 
         var firstSeries = series[0];
-        var lineChart = new LineChart(this, Object.assign({
+        var lineChart = new LineChart(this, $.extend({
             invertAxes: this.invertAxes,
             series: series
         }, this.stackableChartOptions(firstSeries, pane)));
@@ -7154,7 +7154,7 @@ var CategoricalPlotArea = PlotAreaBase.extend({
         }
 
         var firstSeries = series[0];
-        var areaChart = new AreaChart(this, Object.assign({
+        var areaChart = new AreaChart(this, $.extend({
             invertAxes: this.invertAxes,
             series: series
         }, this.stackableChartOptions(firstSeries, pane)));
@@ -9869,7 +9869,7 @@ var PieChart = ChartElement.extend({
         }
 
         var segment = new PieSegment(value, sector, segmentOptions);
-        Object.assign(segment, fields);
+        $.extend(segment, fields);
         this.append(segment);
         this.points.push(segment);
     },
@@ -10305,7 +10305,7 @@ var DonutChart = PieChart.extend({
 
         var segment = new DonutSegment(value, sector, segmentOptions);
 
-        Object.assign(segment, fields);
+        $.extend(segment, fields);
         this.append(segment);
         this.points.push(segment);
     },
@@ -11255,7 +11255,7 @@ var FunnelChart = ChartElement.extend({
         if (fields.visible !== false) {
 
             var segment = new FunnelSegment(value, seriesOptions, fields);
-            Object.assign(segment, fields);
+            $.extend(segment, fields);
 
             this.append(segment);
             this.points.push(segment);
@@ -11631,7 +11631,7 @@ var Chart = Class.extend({
         var series = options.series || [];
 
         for (var i = 0; i < series.length; i++) {
-            seriesCopies.push(Object.assign({}, series[i]));
+            seriesCopies.push($.extend({}, series[i]));
         }
         options.series = seriesCopies;
 
@@ -13175,6 +13175,6 @@ kendo.deepExtend(kendo.dataviz, {
     singleItemOrArray: singleItemOrArray
 });
 
-})();
+})(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

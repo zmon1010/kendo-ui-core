@@ -2,7 +2,7 @@
     define([ "./util", "../kendo.color", '../util/text-metrics' ], f);
 })(function(){
 
-(function () {
+(function ($) {
 
 /* jshint eqnull:true */
 /* jshint -W069 */
@@ -3046,7 +3046,7 @@ var DEFAULT_OPTIONS = {
 
 var Layout = Group.extend({
     init: function(rect, options) {
-        Group.fn.init.call(this, Object.assign({}, DEFAULT_OPTIONS, options));
+        Group.fn.init.call(this, $.extend({}, DEFAULT_OPTIONS, options));
         this._rect = rect;
         this._fieldMap = {};
     },
@@ -3489,7 +3489,7 @@ Gradient.prototype.nodeType = "Gradient";
 
 ObserversMixin.extend(Gradient.prototype);
 
-Object.assign(Gradient.prototype, {
+$.extend(Gradient.prototype, {
     optionsChange: function(e) {
         this.trigger("optionsChange", {
             field: "gradient" + (e ? "." + e.field : ""),
@@ -3599,7 +3599,7 @@ var now = Date.now || function() {
 var Animation = Class.extend({
     init: function(element, options) {
 
-        this.options = Object.assign({}, this.options, options);
+        this.options = $.extend({}, this.options, options);
         this.element = element;
     },
 
@@ -4024,7 +4024,7 @@ var Surface = kendo.Observable.extend({
     init: function(element, options) {
         kendo.Observable.fn.init.call(this);
 
-        this.options = Object.assign({}, options);
+        this.options = $.extend({}, options);
         this.element = element;
 
         this._click = this._handler("click");
@@ -9625,7 +9625,7 @@ function exportImage(group, options) {
         defaults.height = size.height + "px";
     }
 
-    var surfaceOptions = Object.assign(defaults, options);
+    var surfaceOptions = $.extend(defaults, options);
 
     var container = document.createElement("div");
     var style = container.style;
@@ -9712,6 +9712,6 @@ kendo.drawing.util.measureText = kendo.util.measureText;
 kendo.drawing.util.objectKey = kendo.util.objectKey;
 kendo.drawing.Color = kendo.Color;
 
-})();
+})(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

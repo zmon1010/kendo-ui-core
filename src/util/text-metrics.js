@@ -4,7 +4,7 @@
     ], f);
 })(function(){
 
-(function () {
+(function ($) {
 
 window.kendo.util = window.kendo.util || {};
 
@@ -109,7 +109,7 @@ var TextMetrics = kendo.Class.extend({
     init: function(options) {
 
         this._cache = new LRUCache(1000);
-        this.options = Object.assign({}, DEFAULT_OPTIONS, options);
+        this.options = $.extend({}, DEFAULT_OPTIONS, options);
     },
 
     measure: function(text, style, box) {
@@ -178,6 +178,6 @@ kendo.deepExtend(kendo.util, {
     hashKey: hashKey
 });
 
-})();
+})(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
