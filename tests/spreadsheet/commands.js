@@ -806,19 +806,6 @@
         ok(!range.hasFilter());
     });
 
-    test("Returns warning on attempt to create filter within a range containing merges", function() {
-        var command = FilterCommand({});
-        var range = sheet.range("A1:A3");
-
-        sheet.range("A1:B2").merge();
-
-        var result = command.exec();
-
-        equal(result.reason, "error");
-        equal(result.type, "filterRangeContainingMerges");
-        ok(!range.hasFilter());
-    });
-
     module("SpreadSheet SortCommand", moduleOptions);
 
     var sortCommand = $.proxy(command, this, kendo.spreadsheet.SortCommand);
