@@ -94,6 +94,15 @@ settings are available for the depth value:
     }
 
     /**
+    * If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
+    * @param boolean $value
+    * @return \Kendo\UI\Calendar
+    */
+    public function showWeekNumber($value) {
+        return $this->setProperty('showWeekNumber', $value);
+    }
+
+    /**
     * Specifies the start view.
 The following settings are available for the start value:
     * @param string $value

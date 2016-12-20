@@ -16,6 +16,15 @@ class CalendarMonth extends \Kendo\SerializableObject {
     }
 
     /**
+    * The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year.
+    * @param string $value
+    * @return \Kendo\UI\CalendarMonth
+    */
+    public function weekNumber($value) {
+        return $this->setProperty('weekNumber', $value);
+    }
+
+    /**
     * The template to be used for rendering the cells in the "month" view, which are not in the min/max range.
  By default, the widget renders an empty string.
     * @param string $value
