@@ -4096,7 +4096,6 @@ var __meta__ = { // jshint ignore:line
             var headerId = $(current).data("headerId");
             $(current)
                 .removeClass(FOCUSED)
-                .removeAttr("aria-describedby")
                 .closest("table")
                 .removeAttr("aria-activedescendant");
 
@@ -4113,16 +4112,6 @@ var __meta__ = { // jshint ignore:line
                 .addClass(FOCUSED)
                 .closest("table")
                 .attr("aria-activedescendant", this._cellId);
-
-            if(!next.closest("tr").hasClass("k-grouping-row") && !next.hasClass("k-header")){
-                var column = this.columns[this.cellIndex(next)];
-                if(column){
-                    headerId = column.headerAttributes.id;
-                }
-                next.attr("aria-describedby", headerId + " " + this._cellId);
-            }else{
-                next.attr("aria-describedby", this._cellId);
-            }
 
             this._current = next;
         },
@@ -5960,8 +5949,7 @@ var __meta__ = { // jshint ignore:line
                     column = columns[idx];
                     template = column.template;
                     type = typeof template;
-
-                    rowTemplate += "<td" + stringifyAttributes(column.attributes) + " role='gridcell'>";
+                    rowTemplate += "<td" + stringifyAttributes(column.attributes) + " aria-describedby='" + column.headerAttributes.id + "'" +  " role='gridcell'>";
                     rowTemplate += that._cellTmpl(column, state);
 
                     rowTemplate += "</td>";

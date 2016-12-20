@@ -39,6 +39,14 @@
         equal($(table).find("td").attr("role"), "gridcell");
     });
 
+
+    test("Grid renders aria-describedby to the td", function() {
+        var grid = new Grid(table, [ { foo: "foo", bar: "bar" } ]);
+
+        equal($(table).find("td").first().attr("aria-describedby"), grid.wrapper.find("th")[0].id);
+        equal($(table).find("td").last().attr("aria-describedby"), grid.wrapper.find("th")[1].id);
+    });
+
     test("Grid renders role=columnheader to the th (scrollable: false)", function() {
         var grid = new Grid(table, {
             dataSource: [ { foo: "foo", bar: "bar" } ],
