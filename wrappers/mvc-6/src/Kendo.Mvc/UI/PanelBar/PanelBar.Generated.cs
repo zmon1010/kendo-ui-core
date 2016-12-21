@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
 
         public string DataSpriteCssClassField { get; set; }
 
-        public string DataTextField { get; set; }
+        public string[] DataTextField { get; set; }
 
         public string DataUrlField { get; set; }
 
@@ -51,7 +51,7 @@ namespace Kendo.Mvc.UI
                 settings["dataSpriteCssClassField"] = DataSpriteCssClassField;
             }
 
-            if (DataTextField?.HasValue() == true)
+            if (DataTextField?.Any() == true)
             {
                 settings["dataTextField"] = DataTextField;
             }
