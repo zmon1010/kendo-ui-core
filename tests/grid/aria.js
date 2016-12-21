@@ -39,6 +39,26 @@
         equal($(table).find("td").attr("role"), "gridcell");
     });
 
+    test("Grid renders aria-describedby to the td", function() {
+        var grid = new Grid(table, {
+            dataSource: [ { foo: "foo", bar: "bar" } ],
+            navigatable: true
+        });
+
+        equal($(table).find("td").first().attr("aria-describedby"), grid.wrapper.find("th")[0].id);
+        equal($(table).find("td").last().attr("aria-describedby"), grid.wrapper.find("th")[1].id);
+    });
+
+    test("Grid does not render aria-describedby when navigatable option is set to false", function() {
+        var grid = new Grid(table, {
+            dataSource: [ { foo: "foo", bar: "bar" } ],
+            navigatable: false
+        });
+
+        ok(!$(table).find("td").first().attr("aria-describedby"));
+        ok(!$(table).find("td").last().attr("aria-describedby"));
+    });
+
     test("Grid renders role=columnheader to the th (scrollable: false)", function() {
         var grid = new Grid(table, {
             dataSource: [ { foo: "foo", bar: "bar" } ],
