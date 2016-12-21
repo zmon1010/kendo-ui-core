@@ -71,9 +71,10 @@ function exportTests(name, createWidget) {
         });
     });
 
-    test("exportImage exports PNG", function() {
+    asyncTest("exportImage exports PNG", function() {
         widget.exportImage().done(function(data) {
             contains(data, "image/png");
+            start();
         });
     });
 
