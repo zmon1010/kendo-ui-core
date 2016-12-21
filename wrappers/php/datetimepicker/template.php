@@ -8,6 +8,7 @@ require_once '../include/header.php';
 <?php
 $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
 $dateTimePicker->value(new DateTime('today', new DateTimeZone('UTC')))
+            ->showWeekNumber(true)
             ->month(array(
                'content' => <<<TEMPLATE
 # if (isInArray(data.date, birthdays)) { #
@@ -15,7 +16,11 @@ $dateTimePicker->value(new DateTime('today', new DateTimeZone('UTC')))
 # } #
 #= data.value #
 TEMPLATE
-            ))
+,
+               'weekNumber' => <<<TEMPLATE
+ <a class="italic">#= data.weekNumber #</a>
+TEMPLATE
+ ))
             ->footer("Today - #= kendo.toString(data, 'd') #")
             ->open("onOpen")
             ->attr('style', 'width: 100%;');

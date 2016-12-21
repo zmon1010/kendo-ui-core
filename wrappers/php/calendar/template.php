@@ -23,9 +23,14 @@ $month->content(<<<TEMPLATE
 # } #
 TEMPLATE
 );
+$month->weekNumber(<<<TEMPLATE
+     <a class="italic">#= data.weekNumber #</a>
+TEMPLATE
+);
 
 $calendar = new \Kendo\UI\Calendar('calendar');
 $calendar->value(new DateTime('today', new DateTimeZone('UTC')))
+         ->showWeekNumber(true)
          ->month($month)
          ->footer(" ");
 
@@ -73,6 +78,9 @@ echo $calendar->render();
 
     .cocktail {
         color: #00a1e8;
+    }
+    .italic {
+        font-style: italic;
     }
 
 </style>

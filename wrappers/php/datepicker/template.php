@@ -7,16 +7,22 @@ require_once '../include/header.php';
 <div class="demo-section k-content">
      <h4>Birthday Calendar</h4><?php
 $datePicker = new \Kendo\UI\DatePicker('datepicker');
-$datePicker ->value(new DateTime('today', new DateTimeZone('UTC')))
-            ->month(array(
-               'content' => <<<TEMPLATE
+$month = new \Kendo\UI\CalendarMonth();
+$month->content(<<<TEMPLATE
 # if (isInArray(data.date, birthdays)) { #
     <div class="birthday"></div>
 # } #
-#= data.value #
+#= data.value # 
 TEMPLATE
-            ))
+);
+$month->weekNumber(<<<TEMPLATE
+ <a class="italic">#= data.weekNumber #</a>
+TEMPLATE
+);
+$datePicker ->value(new DateTime('today', new DateTimeZone('UTC')))
+            ->showWeekNumber(true)
             ->footer("Today - #= kendo.toString(data, 'd') #")
+            ->month($month)
             ->open("onOpen")
             ->attr('style', 'width: 100%');
 
@@ -62,6 +68,9 @@ echo $datePicker->render();
         height: 16px;
         vertical-align: middle;
         margin-right: 3px;
+    }
+    .italic{
+        font-style: italic;
     }
 </style>
 <?php require_once '../include/footer.php'; ?>

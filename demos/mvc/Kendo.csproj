@@ -1256,6 +1256,9 @@
     <Content Include="Views\demos\dialog\treeview-integration-angularjs.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\demos\calendar\week-column.cshtml" />
+    <Content Include="Views\demos\datepicker\week-column.cshtml" />
+    <Content Include="Views\demos\datetimepicker\week-column.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

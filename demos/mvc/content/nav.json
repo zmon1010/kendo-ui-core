@@ -457,6 +457,19 @@
           "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to disable dates"
         }
       },
+	  {
+        "text": "Week Column",
+        "url": "calendar/week-column",
+		"new": "true",
+        "title": {
+          "kendo-ui": "Week column in the Kendo UI Calendar widget | Kendo UI Web demos",
+          "aspnet-mvc": "Week column in the ASP.NET MVC Calendar | ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how Kendo UI Calendar allows you to display week column.",
+          "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to display the week column"
+        }
+      },
       {
         "text": "Events",
         "url": "calendar/events",
@@ -988,6 +1001,19 @@
           "aspnet-mvc": "This demo shows how ASP.NET MVC DatePicker allows you to disable dates"
         }
       },
+	  {
+        "text": "Week Column",
+        "url": "datepicker/week-column",
+		"new": "true",
+        "title": {
+          "kendo-ui": "Week column in the Kendo UI DatePicker widget | Kendo UI Web demos",
+          "aspnet-mvc": "Week column in the ASP.NET MVC DatePicker | ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how Kendo UI DatePicker allows you to display week column.",
+          "aspnet-mvc": "This demo shows how ASP.NET MVC DatePicker allows you to display the week column"
+        }
+      },
       {
         "text": "API",
         "url": "datepicker/api",
@@ -1156,6 +1182,19 @@
         "meta": {
           "kendo-ui": "This demo shows how Kendo UI DateTimePicker allows you to disable dates.",
           "aspnet-mvc": "This demo shows how ASP.NET MVC DateTImePicker allows you to disable dates"
+        }
+      },
+	  {
+        "text": "Week Column",
+        "url": "datetimepicker/week-column",
+		"new": "true",
+        "title": {
+          "kendo-ui": "Week column in the Kendo UI DateTimePicker widget | Kendo UI Web demos",
+          "aspnet-mvc": "Week column in the ASP.NET MVC DateTimePicker | ASP.NET MVC demos"
+        },
+        "meta": {
+          "kendo-ui": "This demo shows how Kendo UI DateTimePicker allows you to display week column.",
+          "aspnet-mvc": "This demo shows how ASP.NET MVC DateTimePicker allows you to display the week column"
         }
       },
       {

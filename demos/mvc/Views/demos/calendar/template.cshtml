@@ -26,6 +26,7 @@
                     $("#calendar").kendoCalendar({
                         value: today,
                         dates: events,
+                        showWeekNumber: true,
                         month: {
                             // template for dates in month view
                             content: '# if ($.inArray(+data.date, data.dates) != -1) { #' +
@@ -40,7 +41,8 @@
                                         '">#= data.value #</div>' +
                                      '# } else { #' +
                                      '#= data.value #' +
-                                     '# } #'
+                                     '# } #',
+                            weekNumber: '<a class="italic">#= data.weekNumber #</a>'
                         },
                         footer: false
                     });
@@ -71,6 +73,10 @@
 
                 .cocktail {
                     color: #00a1e8;
+                }
+
+                .italic{
+                    font-style: italic;
                 }
 
             </style>

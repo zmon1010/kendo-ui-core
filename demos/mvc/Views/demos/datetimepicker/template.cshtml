@@ -35,12 +35,14 @@
                     $("#datetimepicker").kendoDateTimePicker({
                         value: today,
                         dates: birthdays,
+                        showWeekNumber: true,
                         month: {
                             // template for dates in month view
                             content: '# if (isInArray(data.date, data.dates)) { #' +
                                          '<div class="birthday"></div>' +
                                      '# } #' +
-                                     '#= data.value #'
+                                     '#= data.value #',
+                            weekNumber: ' <a class="italic">#= data.weekNumber #</a>'
                         },
                         footer: "Today - #=kendo.toString(data, 'd') #",
                         open: function () {
@@ -61,6 +63,9 @@
                     height: 16px;
                     vertical-align: middle;
                     margin-right: 3px;
+                }
+                .italic {
+                    font-style: italic;
                 }
             </style>
         </div>
