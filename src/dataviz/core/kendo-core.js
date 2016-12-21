@@ -1824,6 +1824,8 @@ setDefaultOptions(FloatElement, {
     spacing: 0
 });
 
+var DrawingText = drawing.Text;
+
 var Text = ChartElement.extend({
     init: function(content, options) {
         ChartElement.fn.init.call(this, options);
@@ -1851,7 +1853,7 @@ var Text = ChartElement.extend({
         var opacity = ref.opacity;
         var cursor = ref.cursor;
 
-        this.visual = new drawing.Text(this.content, this.box.toRect().topLeft(), {
+        this.visual = new DrawingText(this.content, this.box.toRect().topLeft(), {
             font: font,
             fill: { color: color, opacity: opacity },
             cursor: cursor
