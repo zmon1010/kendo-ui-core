@@ -123,7 +123,22 @@
             div.kendoSparkline();
 
             sparkline = div.data("kendoSparkline");
-            equal(sparkline.element.innerWidth(), 30);
+
+            equal($(sparkline._instance.stage).width(), 30);
+        });
+
+        test("custom width is preserved after resize", function() {
+            destroySparkline();
+
+            var div = $("<div id='container' />").css("width", "30").appendTo(QUnit.fixture);
+            div.kendoSparkline();
+
+            div.css("width", 100);
+
+            sparkline = div.data("kendoSparkline");
+            sparkline.resize();
+
+            equal($(sparkline._instance.stage).width(), 100);
         });
 
         test("custom width is preserved for bullet series", function() {
@@ -133,7 +148,7 @@
             div.kendoSparkline({ type: "bullet" });
 
             sparkline = div.data("kendoSparkline");
-            equal(sparkline.element.innerWidth(), 30);
+            equal($(sparkline._instance.stage).width(), 30);
         });
 
         test("custom width is preserved for bar series", function() {
@@ -143,7 +158,7 @@
             div.kendoSparkline({ type: "bar" });
 
             sparkline = div.data("kendoSparkline");
-            equal(sparkline.element.innerWidth(), 30);
+            equal($(sparkline._instance.stage).width(), 30);
         });
 
         // ------------------------------------------------------------

@@ -9,6 +9,7 @@
 window.kendo.dataviz = window.kendo.dataviz || {};
 var dataviz = kendo.dataviz;
 var constants = dataviz.constants;
+var Chart = dataviz.Chart;
 var elementSize = dataviz.elementSize;
 var deepExtend = dataviz.deepExtend;
 
@@ -37,15 +38,26 @@ function wrapNumber(value) {
     return dataviz.isNumber(value) ? [ value ] : value;
 }
 
-var Sparkline = dataviz.Chart.extend({
+var Sparkline = Chart.extend({
     _setElementClass: function(element) {
         dataviz.addClass(element, 'k-sparkline');
     },
 
     _initElement: function(element) {
-        dataviz.Chart.fn._initElement.call(this, element);
+        Chart.fn._initElement.call(this, element);
 
         this._initialWidth = Math.floor(elementSize(element).width);
+    },
+
+    _resize: function() {
+        var element = this.element;
+        var state = hide(element.childNodes);
+
+        this._initialWidth = Math.floor(elementSize(element).width);
+
+        show(element.childNodes, state);
+
+        Chart.fn._resize.call(this);
     },
 
     _modelOptions: function() {
@@ -89,7 +101,7 @@ var Sparkline = dataviz.Chart.extend({
     },
 
     _createPlotArea: function(skipSeries) {
-        var plotArea = dataviz.Chart.fn._createPlotArea.call(this, skipSeries);
+        var plotArea = Chart.fn._createPlotArea.call(this, skipSeries);
         this._autoWidth = this._initialWidth || this._calculateWidth(plotArea);
 
         return plotArea;
