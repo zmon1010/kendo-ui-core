@@ -117,5 +117,23 @@ namespace Kendo.Mvc.UI.Tests.Grid
 
             column.EditorTemplateName.ShouldEqual(expectedValue);
         }
+
+        [Fact]
+        public void Should_set_editable_handlerName()
+        {
+            const string expectedValue = "EditableHandler";
+            builder.Editable(expectedValue);
+
+            column.Editable.HandlerName.ShouldEqual(expectedValue);
+        }
+
+        [Fact]
+        public void Should_set_editable_handler()
+        {
+            Func<object, object> editable = t => t;
+            builder.Editable(editable);
+
+            column.Editable.TemplateDelegate.ShouldEqual(editable);
+        }
     }
 }

@@ -74,7 +74,8 @@ namespace Kendo.Mvc.UI
                 Title = Member.AsTitle();
             }
 
-            FilterableSettings = new GridBoundColumnFilterableSettings(Grid.ModelMetadataProvider);            
+            FilterableSettings = new GridBoundColumnFilterableSettings(Grid.ModelMetadataProvider);
+            Editable = new ClientHandlerDescriptor();
         }
 
         /// <summary>
@@ -114,6 +115,12 @@ namespace Kendo.Mvc.UI
         }
 
         public string EditorTemplateName
+        {
+            get;
+            set;
+        }
+
+        public ClientHandlerDescriptor Editable
         {
             get;
             set;
@@ -248,6 +255,11 @@ namespace Kendo.Mvc.UI
 			{
 				json["groupHeaderTemplate"] = ClientGroupHeaderTemplate;
 			}
+
+            if (Editable.HasValue())
+            {
+                json["editable"] = Editable;
+            }
 
             SerializeValues(json);
         }

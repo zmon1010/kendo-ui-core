@@ -58,6 +58,10 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("sortable", value);
     }
 
+    public void setEditable(ColumnEditableFunctionTag value) {
+        setEvent("editable", value.getBody());
+    }
+
     public void setEditor(ColumnEditorFunctionTag value) {
         setEvent("editor", value.getBody());
     }
@@ -104,6 +108,18 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
 
     public void setCommand(java.lang.String value) {
         setProperty("command", value);
+    }
+
+    public String getEditable() {
+        Function property = ((Function)getProperty("editable"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setEditable(String value) {
+        setProperty("editable", new Function(value));
     }
 
     public String getEditor() {

@@ -656,4 +656,37 @@
         ok(true);
     });
 
+    test("cell click does not enter edit mode if editable returns false", function() {
+        var grid = setup({ columns: [
+                {
+                    field: "foo", 
+                    editable: function (dataItem) {
+                        return dataItem.name !== "tom";
+                    }
+                },	
+                { field: "name" }
+            ], editable: "inline" }),
+            tr = table.find("tr:first");
+
+        grid.editRow(tr);
+        equal(tr.find("td:first > input").length, 0);
+    });
+
+    test("cell enters edit mode if editable returns true", function() {
+        var grid = setup({ columns: [
+                {
+                    field: "foo", 
+                    editable: function (dataItem) {
+                        return dataItem.name === "tom";
+                    }
+                },	
+                { field: "name" }
+            ], editable: "inline" }),
+            tr = table.find("tr:first");
+
+        grid.editRow(tr);
+
+        equal(tr.find("td:first > input").length, 1);
+    });
+
 })();
