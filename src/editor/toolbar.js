@@ -326,10 +326,10 @@
 
                     if ((browser.msie || browser.edge) && that._overlaps(editorElement)) {
                         setTimeout(function() {
-                            window.open();                        
+                            window.open();
                         }, 0);
                     } else {
-                        window.open();                            
+                        window.open();
                     }
                 }
             }
@@ -344,11 +344,11 @@
                 boxOffsetLeft = boxOffset.left,
                 boxOffsetTop = boxOffset.top;
 
-            return !(boxOffsetLeft + box.width() < toolbarWrapperLeft || 
-                    boxOffsetLeft > toolbarWrapperLeft + toolbarWrapper.width() || 
-                    boxOffsetTop + box.height() < toolbarWrapperTop || 
+            return !(boxOffsetLeft + box.width() < toolbarWrapperLeft ||
+                    boxOffsetLeft > toolbarWrapperLeft + toolbarWrapper.width() ||
+                    boxOffsetTop + box.height() < toolbarWrapperTop ||
                     boxOffsetTop > toolbarWrapperTop + toolbarWrapper.height());
-        },        
+        },
 
         hide: function() {
             if (this.window) {
@@ -650,12 +650,16 @@
             var that = this,
                 buttons = "[role=button].k-tool",
                 enabledButtons = buttons + ":not(.k-state-disabled)",
-                disabledButtons = buttons + ".k-state-disabled";
+                disabledButtons = buttons + ".k-state-disabled",
+                dropdown = ".k-dropdown",
+                colorpicker = ".k-colorpicker",
+                combobox = ".k-combobox",
+                editorTools = [buttons, dropdown, colorpicker, combobox].join(",");
 
                 element.off(NS)
                 .on("mouseenter" + NS, enabledButtons, function() { $(this).addClass("k-state-hover"); })
                 .on("mouseleave" + NS, enabledButtons, function() { $(this).removeClass("k-state-hover"); })
-                .on("mousedown" + NS, buttons, function(e) {
+                .on("mousedown" + NS, editorTools, function(e) {
                     e.preventDefault();
                 })
                 .on("keydown" + NS, focusable, function(e) {

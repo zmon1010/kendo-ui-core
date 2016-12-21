@@ -1110,11 +1110,18 @@
             var iframe = this.wrapper && this.wrapper.find("iframe")[0];
             var documentElement = this.document.documentElement;
             var activeElement = kendo._activeElement();
+            var scrollTop;
 
-            if (activeElement != body && activeElement != iframe) {
-                var scrollTop = documentElement.scrollTop;
+            if (iframe) {
+                if (activeElement != body && activeElement != iframe) {
+                    scrollTop = documentElement.scrollTop;
+                    body.focus();
+                    documentElement.scrollTop = scrollTop;
+                }
+            } else {
+                scrollTop = body.scrollTop;
                 body.focus();
-                documentElement.scrollTop = scrollTop;
+                body.scrollTop = scrollTop;
             }
         },
 
@@ -1207,7 +1214,7 @@
 
             if (!that.keyboard.isTypingInProgress()) {
                 that._focusBody();
-                that.selectRange(that.getRange());
+                that.selectRange(that._range || that.getRange());
             }
 
             tool = that.toolbar.toolById(name);
