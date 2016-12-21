@@ -40,11 +40,13 @@
                      "#= data.value #";
     
     String footer = "Today - #=kendo.toString(data, 'd') #";
+    
+    String weekNumberTemplate = "<a class='italic'>#= data.weekNumber #</a>";
     %>
      <div class="demo-section k-content">
         <h4>Birthday Calendar</h4>
-        <kendo:datePicker name="datepicker" value="<%=new Date()%>" dates="${dates}" footer="<%=footer%>" open="onOpen" style="width: 100%;">
-            <kendo:datePicker-month content="<%=template%>"/>
+        <kendo:datePicker name="datepicker" showWeekNumber="true" value="<%=new Date()%>" dates="${dates}" footer="<%=footer%>" open="onOpen" style="width: 100%;">
+            <kendo:datePicker-month content="<%=template%>" weekNumber="<%=weekNumberTemplate%>"/>
         </kendo:datePicker>
     </div>
 	
@@ -57,5 +59,8 @@
          vertical-align: middle;
          margin-right: 3px;
      }
+     .italic {
+        font-style: italic;
+      }
  </style>
 <demo:footer />
