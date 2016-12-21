@@ -16,6 +16,8 @@ var kendo = window.kendo,
     extend = $.extend,
     registerTool = Editor.EditorUtils.registerTool,
     registerFormat = Editor.EditorUtils.registerFormat,
+    preventDefault = function(ev){ ev.preventDefault(); },
+    MOUSEDOWN_NS = "mousedown.kendoEditor",
     KMARKER = "k-marker";
 
 var InlineFormatFinder = Class.extend({
@@ -379,6 +381,7 @@ var FontTool = DelayedExecutionTool.extend({
             options = this.options,
             toolName = options.name,
             dataSource,
+            range,
             defaultValue = [];
 
         if (options.defaultValue) {
@@ -396,14 +399,27 @@ var FontTool = DelayedExecutionTool.extend({
             dataValueField: "value",
             dataSource: dataSource,
             change: function () {
+                editor._range = range;
                 Tool.exec(editor, toolName, this.value());
+            },
+            close: function (){
+                setTimeout(function(){
+                    if ("_range" in editor) {
+                        delete editor._range;
+                    }
+                },0);
             },
             highlightFirst: false
         });
 
         ui.closest(".k-widget").removeClass("k-" + toolName).find("*").addBack().attr("unselectable", "on");
 
-        ui.data(this.type).value("inherit");
+        var widget = ui.data(this.type);
+        widget.value("inherit");
+
+        widget.wrapper.on(MOUSEDOWN_NS, ".k-select", function() {
+            range = editor.getRange();
+        });
     }
 
 });
@@ -439,7 +455,7 @@ var ColorTool = Tool.extend({
     },
 
     initialize: function(ui, initOptions) {
-       
+
         var editor = initOptions.editor,
             toolName = this.name,
             options =  extend({}, ColorTool.fn.options, this.options),
@@ -455,6 +471,12 @@ var ColorTool = Tool.extend({
                 ui.value(null);
 
                 editor.focus();
+            },
+            open: function (e) {
+                e.sender._popup.element.on(MOUSEDOWN_NS, preventDefault);
+            },
+            close: function(e) {
+                e.sender._popup.element.off(MOUSEDOWN_NS);
             },
             activate: function(e) {
                 e.preventDefault();
