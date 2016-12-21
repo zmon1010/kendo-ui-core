@@ -46,7 +46,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
         /// </summary>
         /// <param name="value">The value for DataTextField</param>
-        public PanelBarBuilder DataTextField(string value)
+        public PanelBarBuilder DataTextField(params string[] value)
         {
             Container.DataTextField = value;
             return this;
