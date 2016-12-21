@@ -85,5 +85,11 @@ namespace Kendo.Mvc.UI
         {
             get;
         }
+
+        ClientHandlerDescriptor Editable
+        {
+            get;
+            set;
+        }
     }
 }

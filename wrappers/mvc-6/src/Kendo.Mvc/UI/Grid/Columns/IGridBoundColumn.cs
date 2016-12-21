@@ -74,6 +74,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-		string GetEditor(IHtmlHelper helper, HtmlEncoder encoder);		
+		string GetEditor(IHtmlHelper helper, HtmlEncoder encoder);
+
+        ClientHandlerDescriptor Editable
+        {
+            get;
+            set;
+        }
     }
 }

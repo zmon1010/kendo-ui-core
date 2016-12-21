@@ -664,4 +664,54 @@
         ok(grid.table.find("tr:first td:first").hasClass("k-state-selected"));
     });
 
+    test("editor is not created if editable returns false", function() {
+        var grid = setup({
+            selectable: "cell",
+            columns: [
+                {
+                    field: "foo", 
+                    editable: function (dataItem) {
+                        return dataItem.name !== "tom";
+                    }
+                },
+                { field: "name" }
+            ],
+            editable: "popup"
+        }),
+        row = table.find("tr:first");
+
+        grid.select(row.find("td:first"));
+
+        grid.editRow(row);
+
+        var container = grid._editContainer;
+
+        equal(container.find(".k-edit-field:first > input").length, 0);
+    });
+
+    test("editor is not created if editable returns false", function() {
+        var grid = setup({
+            selectable: "cell",
+            columns: [
+                {
+                    field: "foo", 
+                    editable: function (dataItem) {
+                        return dataItem.name === "tom";
+                    }
+                },
+                { field: "name" }
+            ],
+            editable: "popup"
+        }),
+        row = table.find("tr:first");
+
+        grid.select(row.find("td:first"));
+
+        grid.editRow(row);
+
+        var container = grid._editContainer;
+
+        equal(container.find(".k-edit-field:first > input").length, 1);
+    });
+
 })();
