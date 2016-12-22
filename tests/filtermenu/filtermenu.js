@@ -69,6 +69,86 @@
         equal(filterMenu.form.find("input[" + kendo.attr("bind") + "='value:filters[0].value']").length, 1);
     });
 
+    test("render title attribute to the form element", function(){
+        filterMenu = setup(dom, {dataSource: dataSource});
+
+        equal(filterMenu.form.attr("title"), filterMenu.options.messages.info);
+    });
+
+    test("render title attribute to the first operator editor", function(){
+        filterMenu = setup(dom, {dataSource: dataSource});
+
+        var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value: filters[0].operator']");
+
+        equal(firstEditor.attr("title"), filterMenu.options.messages.operator);
+    });
+
+    test("render title attribute to the first value editor", function(){
+        filterMenu = setup(dom, {dataSource: dataSource});
+
+        var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value:filters[0].value']");
+
+        equal(firstEditor.attr("title"), filterMenu.options.messages.value);
+    });
+
+    test("render title attribute to the first value editor with values", function(){
+        filterMenu = setup(dom, {dataSource: dataSource, values: ["1", "2"]});
+
+        var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value:filters[0].value']");
+
+        equal(firstEditor.attr("title"), filterMenu.options.messages.value);
+    });
+
+    test("render title attribute to the extra logic editor", function(){
+        filterMenu = setup(dom, {dataSource: dataSource});
+
+        var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value: logic']");
+
+        equal(firstEditor.attr("title"), filterMenu.options.messages.extraLogic);
+    });
+
+
+    test("render title attribute to the second operator editor", function(){
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            messages: {
+                extraOperator: "extraOperator"
+            }
+        });
+
+        var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value: filters[1].operator']");
+
+        equal(firstEditor.attr("title"), filterMenu.options.messages.extraOperator);
+    });
+
+    test("render title attribute to the second value editor", function(){
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            messages: {
+                extraValue: "extraValue"
+            }
+        });
+
+        var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value: filters[1].value']");
+
+        equal(firstEditor.attr("title"), filterMenu.options.messages.extraValue);
+    });
+
+    test("render title attribute to the second value editor with values", function(){
+        filterMenu = setup(dom, {
+            dataSource: dataSource,
+            values: ["1", "2"],
+            messages: {
+                extraValue: "extraValue"
+            }
+        });
+
+        var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value:filters[1].value']");
+
+        equal(firstEditor.attr("title"), filterMenu.options.messages.extraValue);
+    });
+
+
     test("renders binding for the extra value input from the field", function(){
         filterMenu = setup(dom, {dataSource: dataSource});
 
@@ -868,7 +948,6 @@
         ok(!dom1.data("kendoFilterMenu"));
     });
 
-
     test("boolean filter template", function() {
         var filterMenu = setup(dom.attr("data-kendo-field", "boo"), {
             dataSource: dataSource
@@ -876,7 +955,6 @@
 
         equal(filterMenu.form.find("[type='radio']").length, 2)
     });
-
 
     test("boolean filtering true values", function() {
         var filterMenu = setup(dom.attr("data-kendo-field", "boo"), {

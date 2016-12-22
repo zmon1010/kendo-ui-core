@@ -54,32 +54,32 @@ var __meta__ = { // jshint ignore:line
     var defaultTemplate =
             '<div>' +
                 '<div class="k-filter-help-text">#=messages.info#</div>'+
-                '<select data-#=ns#bind="value: filters[0].operator" data-#=ns#role="dropdownlist">'+
+                '<select title="#=messages.operator#" data-#=ns#bind="value: filters[0].operator" data-#=ns#role="dropdownlist">'+
                     '#for(var op in operators){#'+
                         '<option value="#=op#">#=operators[op]#</option>' +
                     '#}#'+
                 '</select>'+
                 '#if(values){#' +
-                    '<select data-#=ns#bind="value:filters[0].value" data-#=ns#text-field="text" data-#=ns#value-field="value" data-#=ns#source=\'#=kendo.stringify(values).replace(/\'/g,"&\\#39;")#\' data-#=ns#role="dropdownlist" data-#=ns#option-label="#=messages.selectValue#" data-#=ns#value-primitive="true">' +
+                    '<select title="#=messages.value#" data-#=ns#bind="value:filters[0].value" data-#=ns#text-field="text" data-#=ns#value-field="value" data-#=ns#source=\'#=kendo.stringify(values).replace(/\'/g,"&\\#39;")#\' data-#=ns#role="dropdownlist" data-#=ns#option-label="#=messages.selectValue#" data-#=ns#value-primitive="true">' +
                     '</select>' +
                 '#}else{#' +
-                    '<input data-#=ns#bind="value:filters[0].value" class="k-textbox" type="text" #=role ? "data-" + ns + "role=\'" + role + "\'" : ""# />'+
+                    '<input title="#=messages.value#" data-#=ns#bind="value:filters[0].value" class="k-textbox" type="text" #=role ? "data-" + ns + "role=\'" + role + "\'" : ""# />'+
                 '#}#' +
                 '#if(extra){#'+
-                    '<select class="k-filter-and" data-#=ns#bind="value: logic" data-#=ns#role="dropdownlist">'+
+                    '<select title="#=messages.extraLogic#" class="k-filter-and" data-#=ns#bind="value: logic" data-#=ns#role="dropdownlist">'+
                         '<option value="and">#=messages.and#</option>'+
                         '<option value="or">#=messages.or#</option>'+
                     '</select>'+
-                    '<select data-#=ns#bind="value: filters[1].operator" data-#=ns#role="dropdownlist">'+
+                    '<select title="#=messages.extraOperator#" data-#=ns#bind="value: filters[1].operator" data-#=ns#role="dropdownlist">'+
                         '#for(var op in operators){#'+
                             '<option value="#=op#">#=operators[op]#</option>'+
                         '#}#'+
                     '</select>'+
                     '#if(values){#' +
-                        '<select data-#=ns#bind="value:filters[1].value" data-#=ns#text-field="text" data-#=ns#value-field="value" data-#=ns#source=\'#=kendo.stringify(values).replace(/\'/g,"&\\#39;")#\' data-#=ns#role="dropdownlist" data-#=ns#option-label="#=messages.selectValue#" data-#=ns#value-primitive="true">' +
+                        '<select title="#=messages.extraValue#" data-#=ns#bind="value:filters[1].value" data-#=ns#text-field="text" data-#=ns#value-field="value" data-#=ns#source=\'#=kendo.stringify(values).replace(/\'/g,"&\\#39;")#\' data-#=ns#role="dropdownlist" data-#=ns#option-label="#=messages.selectValue#" data-#=ns#value-primitive="true">' +
                         '</select>'+
                     '#}else{#' +
-                        '<input data-#=ns#bind="value: filters[1].value" class="k-textbox" type="text" #=role ? "data-" + ns + "role=\'" + role + "\'" : ""#/>'+
+                        '<input title="#=messages.extraValue#" data-#=ns#bind="value: filters[1].value" class="k-textbox" type="text" #=role ? "data-" + ns + "role=\'" + role + "\'" : ""#/>'+
                     '#}#' +
                 '#}#'+
                 '<div>'+
@@ -95,7 +95,7 @@ var __meta__ = { // jshint ignore:line
                     '#=title#'+
                     '<button type="submit" class="k-button k-submit">#=messages.filter#</button>'+
                 '</div>'+
-                '<form class="k-filter-menu k-mobile-list">'+
+                '<form title="#=messages.info#" class="k-filter-menu k-mobile-list">'+
                     '<ul class="k-filter-help-text"><li><span class="k-link">#=messages.info#</span>'+
                     '<ul>'+
                         '<li class="k-item"><label class="k-label">#=messages.operator#'+
@@ -125,14 +125,14 @@ var __meta__ = { // jshint ignore:line
                             '<li class="k-item"><label class="k-label"><input type="radio" name="logic" class="k-check" data-#=ns#bind="checked: logic" value="or" />#=messages.or#</label></li>'+
                         '</ul>'+
                         '<ul class="k-filter-help-text"><li><span class="k-link"></span>'+
-                            '<li class="k-item"><label class="k-label">#=messages.operator#'+
+                            '<li class="k-item"><label class="k-label">#=messages.extraOperator#'+
                                 '<select data-#=ns#bind="value: filters[1].operator">'+
                                     '#for(var op in operators){#'+
                                         '<option value="#=op#">#=operators[op]#</option>' +
                                     '#}#'+
                                 '</select>'+
                             '</label></li>'+
-                            '<li class="k-item"><label class="k-label">#=messages.value#'+
+                            '<li class="k-item"><label class="k-label">#=messages.extraValue#'+
                                 '#if(values){#' +
                                     '<select data-#=ns#bind="value:filters[1].value">'+
                                         '<option value="">#=messages.selectValue#</option>' +
@@ -161,7 +161,7 @@ var __meta__ = { // jshint ignore:line
                     '#=title#'+
                     '<button type="submit" class="k-button k-submit">#=messages.filter#</button>'+
                 '</div>'+
-                '<form class="k-filter-menu k-mobile-list">'+
+                '<form title="#=messages.info#" class="k-filter-menu k-mobile-list">'+
                     '<ul class="k-filter-help-text"><li><span class="k-link">#=messages.info#</span>'+
                     '<ul>'+
                         '<li class="k-item"><label class="k-label">'+
@@ -364,7 +364,7 @@ var __meta__ = { // jshint ignore:line
 
             operators = operators[type] || options.operators[type];
 
-            that.form = $('<form class="k-filter-menu"/>')
+            that.form = $('<form title="' + that.options.messages.info + '" class="k-filter-menu"/>')
                 .html(kendo.template(type === "boolean" ? booleanTemplate : defaultTemplate)({
                     field: that.field,
                     format: options.format,
@@ -736,6 +736,9 @@ var __meta__ = { // jshint ignore:line
                 selectValue: "-Select value-",
                 operator: "Operator",
                 value: "Value",
+                extraValue: "Extra value",
+                extraOperator: "Extra operator",
+                extraLogic: "Extra filter logic",
                 cancel: "Cancel"
             },
             animations: {
