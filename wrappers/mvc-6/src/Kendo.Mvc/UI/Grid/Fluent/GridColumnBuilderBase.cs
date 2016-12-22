@@ -161,6 +161,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets the minimum screen width in pixels at which the column will become hidden.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid(Model)
+        ///     .Name("Grid")
+        ///     .Columns(columns => columns.Bound(o => o.OrderID).MinScreenWidth(450))
+        /// )
+        /// </code>
+        /// </example>
+        public TColumnBuilder MinScreenWidth(int value)
+        {
+            Column.MinScreenWidth = value;
+
+            return this as TColumnBuilder;
+        }
+
+        /// <summary>
         /// Sets the width of the column in pixels.
         /// </summary>
         /// <param name="pixelWidth">The width in pixels.</param>

@@ -89,7 +89,13 @@ namespace Kendo.Mvc.UI
             get; 
             set; 
         }
-        
+
+        int MinScreenWidth
+        {
+            get;
+            set;
+        }
+
         string Width 
         { 
             get; 

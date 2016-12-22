@@ -77,5 +77,16 @@ namespace Kendo.Mvc.UI.Tests
 
             json["lockable"].ShouldEqual(false);
         }
+
+        [Fact]
+        public void Should_serialize_minScreenWidth()
+        {
+            column.Object.MinScreenWidth = 800;
+
+            var json = column.Object.ToJson();
+
+            json["minScreenWidth"].ShouldEqual(800);
+        }
+
     }
 }
