@@ -99,39 +99,38 @@
         equal(firstEditor.attr("title"), filterMenu.options.messages.value);
     });
 
-    test("render title attribute to the extra logic editor", function(){
+    test("render title attribute to the logic editor", function(){
         filterMenu = setup(dom, {dataSource: dataSource});
 
         var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value: logic']");
 
-        equal(firstEditor.attr("title"), filterMenu.options.messages.extraLogic);
+        equal(firstEditor.attr("title"), filterMenu.options.messages.logic);
     });
-
 
     test("render title attribute to the second operator editor", function(){
         filterMenu = setup(dom, {
             dataSource: dataSource,
             messages: {
-                extraOperator: "extraOperator"
+                additionalOperator: "extraOperator"
             }
         });
 
         var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value: filters[1].operator']");
 
-        equal(firstEditor.attr("title"), filterMenu.options.messages.extraOperator);
+        equal(firstEditor.attr("title"), filterMenu.options.messages.additionalOperator);
     });
 
     test("render title attribute to the second value editor", function(){
         filterMenu = setup(dom, {
             dataSource: dataSource,
             messages: {
-                extraValue: "extraValue"
+                additionalValue: "extraValue"
             }
         });
 
         var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value: filters[1].value']");
 
-        equal(firstEditor.attr("title"), filterMenu.options.messages.extraValue);
+        equal(firstEditor.attr("title"), filterMenu.options.messages.additionalValue);
     });
 
     test("render title attribute to the second value editor with values", function(){
@@ -139,13 +138,13 @@
             dataSource: dataSource,
             values: ["1", "2"],
             messages: {
-                extraValue: "extraValue"
+                additionalValue: "extraValue"
             }
         });
 
         var firstEditor = filterMenu.form.find("[" + kendo.attr("bind") + "='value:filters[1].value']");
 
-        equal(firstEditor.attr("title"), filterMenu.options.messages.extraValue);
+        equal(firstEditor.attr("title"), filterMenu.options.messages.additionalValue);
     });
 
 
