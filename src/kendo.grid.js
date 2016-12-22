@@ -2771,7 +2771,7 @@ var __meta__ = { // jshint ignore:line
 
             that.closeCell();
 
-            if (model && (!model.editable || model.editable(column.field)) && !column.command && column.field) {
+            if (model && isColumnEditable(column, model) && !column.command) {
 
                 that._attachModelChange(model);
 
@@ -3137,7 +3137,7 @@ var __meta__ = { // jshint ignore:line
                     if (!column.command) {
                         html += '<div class="k-edit-label"><label for="' + column.field + '">' + (column.title || column.field || "") + '</label></div>';
 
-                        if ((!model.editable || model.editable(column.field)) && column.field) {
+                        if (isColumnEditable(column, model)) {
                             fields.push({ field: column.field, format: column.format, editor: column.editor, values: column.values });
                             html += '<div ' + kendo.attr("container-for") + '="' + column.field + '" class="k-edit-field"></div>';
                         } else {
@@ -3270,7 +3270,7 @@ var __meta__ = { // jshint ignore:line
                 cell = $(this);
                 column = leafColumns(that.columns)[that.cellIndex(cell)];
 
-                if (!column.command && column.field && (!model.editable || model.editable(column.field))) {
+                if (!column.command && isColumnEditable(column, model)) {
                     fields.push({ field: column.field, format: column.format, editor: column.editor, values: column.values });
                     cell.attr(kendo.attr("container-for"), column.field);
                     cell.empty();
@@ -8040,6 +8040,19 @@ var __meta__ = { // jshint ignore:line
       } else {
          $(table).one("focusin", function(e) { e.preventDefault(); }).focus();
       }
+   }
+
+   function isColumnEditable(column, model) {
+       if(!column.field) {
+           return false;
+       }
+       if(model.editable && !model.editable(column.field)) {
+           return false;
+       }
+       if(column.editable && !column.editable(model)) {
+           return false;
+       }
+       return true;
    }
 
    function isInputElement(element) {

@@ -1093,4 +1093,38 @@
         ok(cell.find(":input").length);
     });
 
+    test("cell click does not enter edit mode if editable returns false", function() {
+        setup({
+            columns: [
+                {
+                    field: "foo", 
+                    editable: function (dataItem) {
+                        return dataItem.name !== "tom";
+                    }
+                },
+                { field: "name" }
+            ]
+        });
+
+        var cell = table.find("td:first").click();
+        equal(cell.find(":input").length, 0);
+    });
+
+    test("cell enters edit mode if editable returns true", function() {
+        setup({
+            columns: [
+                {
+                    field: "foo", 
+                    editable: function (dataItem) {
+                        return dataItem.name === "tom";
+                    }
+                },
+                { field: "name" }
+            ]
+        });
+
+        var cell = table.find("td:first").click();
+        equal(cell.find(":input").length, 1);
+    });
+
 })();

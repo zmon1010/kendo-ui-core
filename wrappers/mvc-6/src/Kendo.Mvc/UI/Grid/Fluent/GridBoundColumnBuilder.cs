@@ -179,7 +179,30 @@ namespace Kendo.Mvc.UI.Fluent
             Column.ClientGroupHeaderTemplate = value;
 
             return this;
-        }       
-        
+        }
+
+
+        /// <summary>
+        /// Sets the editable function.
+        /// </summary>
+        /// <param name="editable">The editable function in a text tag.</param>
+        public GridBoundColumnBuilder<T> Editable(Func<object, object> editable)
+        {
+            Column.Editable.TemplateDelegate = editable;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the editable function.
+        /// </summary>
+        /// <param name="editable">The name of the JavaScript function that will determine if the cell will be editable.</param>
+        public GridBoundColumnBuilder<T> Editable(string editable)
+        {
+            Column.Editable.HandlerName = editable;
+
+            return this;
+        }
+
     }
 }
