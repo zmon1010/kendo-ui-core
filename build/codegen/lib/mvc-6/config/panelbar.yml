@@ -11,3 +11,7 @@
           - :value: multiple
             :member: Multiple
             :description: Display multiple items at a time
+
+    - :name: DataTextField
+      :merge: true
+      :type: string[]
