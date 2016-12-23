@@ -271,6 +271,10 @@
             var workbook = this._workbook;
 
             if (e.isAddButton) {
+                if (this._workbook.trigger("insertSheet")) {
+                    return;
+                }
+
                 sheet = workbook.insertSheet();
             } else {
                 sheet = workbook.sheetByName(e.name);
@@ -278,6 +282,10 @@
 
             //TODO: move to model
             if (workbook.activeSheet().name() !== sheet.name()) {
+                if (this._workbook.trigger("selectSheet", { sheet: sheet })) {
+                    return;
+                }
+
                 workbook.activeSheet(sheet);
             }
         },

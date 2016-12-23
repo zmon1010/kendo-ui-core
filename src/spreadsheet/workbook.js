@@ -31,7 +31,7 @@
                 headerHeight: this.options.headerHeight,
                 headerWidth: this.options.headerWidth,
                 dataSource: this.options.dataSource
-            }, true);
+            });
 
             this.undoRedoStack = new kendo.util.UndoRedoStack();
             this.undoRedoStack.bind(["undo", "redo"], this._onUndoRedo.bind(this));
@@ -223,16 +223,12 @@
             }
         },
 
-        activeSheet: function(sheet, skipEvent) {
+        activeSheet: function(sheet) {
             if (sheet === undefined) {
                 return this._sheet;
             }
 
             if (!this.sheetByName(sheet.name())) {
-                return;
-            }
-
-            if (!skipEvent && this.trigger("selectSheet", { sheet: sheet })) {
                 return;
             }
 
@@ -257,7 +253,7 @@
             this.trigger("change", { sheetSelection: true });
         },
 
-        insertSheet: function(options, skipEvent) {
+        insertSheet: function(options) {
             options = options || {};
             var that = this;
             var insertIndex = typeof options.index === "number" ? options.index : that._sheets.length;
@@ -277,10 +273,6 @@
             };
 
             if (options.name && that.sheetByName(options.name)) {
-                return;
-            }
-
-            if (!skipEvent && this.trigger("insertSheet")) {
                 return;
             }
 
@@ -471,7 +463,7 @@
                         headerHeight : args.headerHeight,
                         headerWidth  : args.headerWidth,
                         data         : data
-                    }, true);
+                    });
 
                     if (data.dataSource) {
                         sheet.setDataSource(data.dataSource);
@@ -480,9 +472,9 @@
             }
 
             if (json.activeSheet) {
-                this.activeSheet(this.sheetByName(json.activeSheet), true);
+                this.activeSheet(this.sheetByName(json.activeSheet));
             } else {
-                this.activeSheet(this._sheets[0], true);
+                this.activeSheet(this._sheets[0]);
             }
 
             if (json.names) {

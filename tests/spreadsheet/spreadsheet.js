@@ -321,10 +321,10 @@
             equal(newSheet, e.sheet);
         });
 
-        spreadsheet.activeSheet(newSheet);
+        spreadsheet.element.find(".k-spreadsheet-sheets-bar .k-tabstrip-items li:not(.k-state-active)").trigger("click");
     });
 
-    asyncTest("selectSheet event", 1, function () {
+    asyncTest("selectSheet event can be prevented", 1, function () {
         var newSheet = spreadsheet.insertSheet();
         var oldSheet = spreadsheet.activeSheet();
 
@@ -337,7 +337,7 @@
             e.preventDefault();
         });
 
-        spreadsheet.activeSheet(newSheet);
+        spreadsheet.element.find(".k-spreadsheet-sheets-bar .k-tabstrip-items li:not(.k-state-active)").trigger("click");
     });
 
     asyncTest("renameSheet method triggers renameSheet event", 3, function () {
@@ -375,13 +375,13 @@
         spreadsheet.renameSheet(activeSheet, "newName");
     });
 
-    asyncTest("insertSheet method triggers insertSheet event", 1, function () {
+    asyncTest("insertSheet button triggers insertSheet event", 1, function () {
         spreadsheet.bind("insertSheet", function(e) {
             start();
             equal(spreadsheet, e.sender);
         });
 
-        spreadsheet.insertSheet();
+        spreadsheet.element.find(".k-spreadsheet-sheets-bar-add").trigger("click");
     });
 
     asyncTest("insertSheet event can be prevented", 1, function () {
@@ -400,7 +400,7 @@
             ok(false);
         });
 
-        spreadsheet.insertSheet();
+        spreadsheet.element.find(".k-spreadsheet-sheets-bar-add").trigger("click");
     });
 
     asyncTest("removeSheet method triggers removeSheet event", 2, function () {
