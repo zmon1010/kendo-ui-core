@@ -90,6 +90,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
+        /// </summary>
+        /// <param name="value">The value for ShowWeekNumber</param>
+        public DatePickerBuilder ShowWeekNumber(bool value)
+        {
+            Container.ShowWeekNumber = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
+        /// </summary>
+        public DatePickerBuilder ShowWeekNumber()
+        {
+            Container.ShowWeekNumber = true;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies a list of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.
 		///  Note that the format option is always used during parsing.
         /// </summary>
