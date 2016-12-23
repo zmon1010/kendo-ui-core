@@ -35,7 +35,7 @@ The supported aggregates are "average", "count", "max", "min" and "sum".
 
     /**
     * Sets the editable option of the GridColumn.
-    * The JavaScript function executed when the cell is about to be opened for edit. The result returned will determine whether the cell will be available for edit.
+    * The JavaScript function executed when the cell/row is about to be opened for edit. The result returned will determine whether an editor for the column will be created.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\GridColumn
     */
