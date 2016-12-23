@@ -36776,6 +36776,71 @@ and is about to render it.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Triggered when sheet is inserted. Introduced in 2017 Q1.</description>
+            <name>insertSheet</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when sheet will be removed. Introduced in 2017 Q1.</description>
+            <name>removeSheet</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when sheet will be renamed. Introduced in 2017 Q1.</description>
+            <name>renameSheet</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when sheet will be activated. Introduced in 2017 Q1.</description>
+            <name>selectSheet</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when column will be shown. Introduced in 2017 Q1.</description>
+            <name>unhideColumn</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when row will be shown. Introduced in 2017 Q1.</description>
+            <name>unhideRow</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when column will be hidden. Introduced in 2017 Q1.</description>
+            <name>hideColumn</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when row will be hidden. Introduced in 2017 Q1.</description>
+            <name>hideRow</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when column will be deleted. Introduced in 2017 Q1.</description>
+            <name>deleteColumn</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when row will be deleted. Introduced in 2017 Q1.</description>
+            <name>deleteRow</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when column will be inserted. Introduced in 2017 Q1.</description>
+            <name>insertColumn</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when row will be inserted. Introduced in 2017 Q1.</description>
+            <name>insertRow</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered when spreadsheet selection is changed. Introduced in 2017 Q1.</description>
+            <name>select</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
@@ -37643,6 +37708,84 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
 
+    <tag>
+        <description>Triggered when sheet is inserted. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-insertSheet</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.InsertSheetFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when sheet will be removed. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-removeSheet</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.RemoveSheetFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when sheet will be renamed. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-renameSheet</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.RenameSheetFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when sheet will be activated. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-selectSheet</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SelectSheetFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when column will be shown. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-unhideColumn</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.UnhideColumnFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when row will be shown. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-unhideRow</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.UnhideRowFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when column will be hidden. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-hideColumn</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.HideColumnFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when row will be hidden. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-hideRow</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.HideRowFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when column will be deleted. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-deleteColumn</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.DeleteColumnFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when row will be deleted. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-deleteRow</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.DeleteRowFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when column will be inserted. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-insertColumn</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.InsertColumnFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when row will be inserted. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-insertRow</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.InsertRowFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when spreadsheet selection is changed. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-select</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.SelectFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.</description>
         <name>spreadsheet-change</name>

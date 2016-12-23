@@ -126,6 +126,188 @@ class Spreadsheet extends \Kendo\UI\Widget {
     }
 
     /**
+    * Sets the insertSheet event of the Spreadsheet.
+    * Triggered when sheet is inserted. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function insertSheet($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('insertSheet', $value);
+    }
+
+    /**
+    * Sets the removeSheet event of the Spreadsheet.
+    * Triggered when sheet will be removed. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function removeSheet($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('removeSheet', $value);
+    }
+
+    /**
+    * Sets the renameSheet event of the Spreadsheet.
+    * Triggered when sheet will be renamed. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function renameSheet($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('renameSheet', $value);
+    }
+
+    /**
+    * Sets the selectSheet event of the Spreadsheet.
+    * Triggered when sheet will be activated. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function selectSheet($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('selectSheet', $value);
+    }
+
+    /**
+    * Sets the unhideColumn event of the Spreadsheet.
+    * Triggered when column will be shown. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function unhideColumn($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('unhideColumn', $value);
+    }
+
+    /**
+    * Sets the unhideRow event of the Spreadsheet.
+    * Triggered when row will be shown. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function unhideRow($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('unhideRow', $value);
+    }
+
+    /**
+    * Sets the hideColumn event of the Spreadsheet.
+    * Triggered when column will be hidden. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function hideColumn($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('hideColumn', $value);
+    }
+
+    /**
+    * Sets the hideRow event of the Spreadsheet.
+    * Triggered when row will be hidden. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function hideRow($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('hideRow', $value);
+    }
+
+    /**
+    * Sets the deleteColumn event of the Spreadsheet.
+    * Triggered when column will be deleted. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function deleteColumn($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('deleteColumn', $value);
+    }
+
+    /**
+    * Sets the deleteRow event of the Spreadsheet.
+    * Triggered when row will be deleted. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function deleteRow($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('deleteRow', $value);
+    }
+
+    /**
+    * Sets the insertColumn event of the Spreadsheet.
+    * Triggered when column will be inserted. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function insertColumn($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('insertColumn', $value);
+    }
+
+    /**
+    * Sets the insertRow event of the Spreadsheet.
+    * Triggered when row will be inserted. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function insertRow($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('insertRow', $value);
+    }
+
+    /**
+    * Sets the select event of the Spreadsheet.
+    * Triggered when spreadsheet selection is changed. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function select($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('select', $value);
+    }
+
+    /**
     * Sets the change event of the Spreadsheet.
     * Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
