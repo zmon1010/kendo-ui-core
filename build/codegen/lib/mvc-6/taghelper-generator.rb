@@ -90,6 +90,8 @@ module CodeGen::MVC6::Wrappers
         end
 
         def write_file(filename, content)
+            filename = filename.gsub(/(\<\w+\>)/, '')
+
             $stderr.puts("Updating #{filename}") if VERBOSE
 
             ensure_path(filename)
