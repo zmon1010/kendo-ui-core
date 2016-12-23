@@ -25,12 +25,21 @@ class String
         return self.gsub('&', '&amp;').gsub('<', '&lt;').gsub('>', '&gt;')
     end
 
+    def underscore
+        self.gsub(/::/, '/')
+        .gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+        .gsub(/([a-z\d])([A-Z])/,'\1_\2')
+        .tr("-", "_")
+        .downcase
+    end
+
+    def kebab
+        self.underscore.gsub('_', '-')
+    end
+
     def dos
-
         new_line = RUBY_PLATFORM =~ /w32/ ? "\n" : "\r\n"
-
         self.gsub(/\r?\n/, new_line)
-
     end
 
     def to_attribute
