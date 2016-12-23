@@ -18,7 +18,7 @@ namespace Kendo.Mvc.TagHelpers
         /// <summary>
         /// Specifies a template used to populate value of the aria-label attribute.
         /// </summary>
-        /// <param name="value">The ID of the template element for ARIATemplate</param>    
+        /// <param name="value">The ID of the template element for ARIATemplate</param>
         [HtmlAttributeName("ariatemplate-id")]
         public string ARIATemplateId { get; set; }
 
@@ -82,7 +82,6 @@ namespace Kendo.Mvc.TagHelpers
         /// Specifies the navigation depth.
         /// </summary>
         public CalendarView? Depth { get; set; }
-
 
         protected override Dictionary<string, object> SerializeSettings()
         {
