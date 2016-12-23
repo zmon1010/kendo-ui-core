@@ -13,10 +13,18 @@ namespace Kendo.Mvc.TagHelpers
     {
         public SplitterPaneTagHelper() : base()
         {
+            this.TagName = "div";
         }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            output.TagName = null;
+            if (string.IsNullOrEmpty(TagName))
+            {
+                output.TagName = null;
+            }
+            else
+            {
+                output.TagName = TagName;
+            }
             var parents = context.Items[typeof(SplitterTagHelper)] as List<SplitterTagHelper>;
 
             if (parents.Count > 0)
@@ -24,6 +32,8 @@ namespace Kendo.Mvc.TagHelpers
                 parents[parents.Count - 1].Panes.Add(this);
             }
         }
+
+        public string TagName { get; set; }
 
         public bool? Collapsed { get; set; }
         public string CollapsedSize { get; set; }
