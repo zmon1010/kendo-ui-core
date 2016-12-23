@@ -14,6 +14,292 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Triggered when sheet is inserted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the insertSheet event.</param>
+        public SpreadsheetEventBuilder InsertSheet(string handler)
+        {
+            Handler("insertSheet", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when sheet is inserted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder InsertSheet(Func<object, object> handler)
+        {
+            Handler("insertSheet", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when sheet will be removed. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the removeSheet event.</param>
+        public SpreadsheetEventBuilder RemoveSheet(string handler)
+        {
+            Handler("removeSheet", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when sheet will be removed. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder RemoveSheet(Func<object, object> handler)
+        {
+            Handler("removeSheet", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when sheet will be renamed. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the renameSheet event.</param>
+        public SpreadsheetEventBuilder RenameSheet(string handler)
+        {
+            Handler("renameSheet", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when sheet will be renamed. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder RenameSheet(Func<object, object> handler)
+        {
+            Handler("renameSheet", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when sheet will be activated. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the selectSheet event.</param>
+        public SpreadsheetEventBuilder SelectSheet(string handler)
+        {
+            Handler("selectSheet", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when sheet will be activated. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder SelectSheet(Func<object, object> handler)
+        {
+            Handler("selectSheet", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when column will be shown. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the unhideColumn event.</param>
+        public SpreadsheetEventBuilder UnhideColumn(string handler)
+        {
+            Handler("unhideColumn", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when column will be shown. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder UnhideColumn(Func<object, object> handler)
+        {
+            Handler("unhideColumn", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when row will be shown. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the unhideRow event.</param>
+        public SpreadsheetEventBuilder UnhideRow(string handler)
+        {
+            Handler("unhideRow", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when row will be shown. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder UnhideRow(Func<object, object> handler)
+        {
+            Handler("unhideRow", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when column will be hidden. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the hideColumn event.</param>
+        public SpreadsheetEventBuilder HideColumn(string handler)
+        {
+            Handler("hideColumn", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when column will be hidden. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder HideColumn(Func<object, object> handler)
+        {
+            Handler("hideColumn", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when row will be hidden. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the hideRow event.</param>
+        public SpreadsheetEventBuilder HideRow(string handler)
+        {
+            Handler("hideRow", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when row will be hidden. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder HideRow(Func<object, object> handler)
+        {
+            Handler("hideRow", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when column will be deleted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the deleteColumn event.</param>
+        public SpreadsheetEventBuilder DeleteColumn(string handler)
+        {
+            Handler("deleteColumn", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when column will be deleted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder DeleteColumn(Func<object, object> handler)
+        {
+            Handler("deleteColumn", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when row will be deleted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the deleteRow event.</param>
+        public SpreadsheetEventBuilder DeleteRow(string handler)
+        {
+            Handler("deleteRow", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when row will be deleted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder DeleteRow(Func<object, object> handler)
+        {
+            Handler("deleteRow", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when column will be inserted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the insertColumn event.</param>
+        public SpreadsheetEventBuilder InsertColumn(string handler)
+        {
+            Handler("insertColumn", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when column will be inserted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder InsertColumn(Func<object, object> handler)
+        {
+            Handler("insertColumn", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when row will be inserted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the insertRow event.</param>
+        public SpreadsheetEventBuilder InsertRow(string handler)
+        {
+            Handler("insertRow", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when row will be inserted. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder InsertRow(Func<object, object> handler)
+        {
+            Handler("insertRow", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when spreadsheet selection is changed. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the select event.</param>
+        public SpreadsheetEventBuilder Select(string handler)
+        {
+            Handler("select", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when spreadsheet selection is changed. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder Select(Func<object, object> handler)
+        {
+            Handler("select", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>

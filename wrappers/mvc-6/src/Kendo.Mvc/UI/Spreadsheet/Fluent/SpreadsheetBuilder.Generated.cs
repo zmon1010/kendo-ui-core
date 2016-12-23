@@ -178,7 +178,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// @(Html.Kendo().Spreadsheet()
         ///       .Name("Spreadsheet")
         ///       .Events(events => events
-        ///           .Change("onChange")
+        ///           .InsertSheet("onInsertSheet")
         ///       )
         /// )
         /// </code>
