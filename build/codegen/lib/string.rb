@@ -17,6 +17,10 @@ class String
         self.sub(/s$/, '')
     end
 
+    def pluralize
+        return self + 's'
+    end
+
     def html_encode
         return self.gsub('&', '&amp;').gsub('<', '&lt;').gsub('>', '&gt;')
     end
