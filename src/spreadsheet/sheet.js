@@ -69,6 +69,8 @@
                     return;
                 }
 
+                this._sheet.triggerSelect(new Range(ref, this._sheet))
+
                 this.originalSelection = ref;
 
                 this.selection = expanded;
@@ -100,6 +102,22 @@
             kendo.Observable.prototype.init.call(this);
             this._reinit.apply(this, arguments);
         },
+
+
+        events: [
+            "commandRequest",
+            "afterInsertRow",
+            "afterDeleteRow",
+            "insertRow",
+            "insertColumn",
+            "deleteRow",
+            "deleteColumn",
+            "hideRow",
+            "hideColumn",
+            "unhideRow",
+            "unhideColumn",
+            "select"
+        ],
 
         _reinit: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth, defaultCellStyle) {
             var cellCount = rowCount * columnCount - 1;
@@ -208,6 +226,10 @@
             return this;
         },
 
+        triggerSelect: function(range) {
+            this.trigger("select", { range: range });
+        },
+
         setDataSource: function(dataSource, columns) {
             if (this.dataSourceBinder) {
                 this.dataSourceBinder.destroy();
@@ -223,10 +245,18 @@
         },
 
         hideColumn: function(columnIndex) {
+            if (this.trigger("hideColumn", { index: columnIndex })) {
+                return;
+            }
+
             return this._property(this._columns.hide.bind(this._columns), columnIndex, { layout: true });
         },
 
         unhideColumn: function(columnIndex) {
+            if (this.trigger("unhideColumn", { index: columnIndex })) {
+                return;
+            }
+
             return this._property(this._columns.unhide.bind(this._columns), columnIndex, { layout: true });
         },
 
@@ -328,6 +358,10 @@
                 throw new Error("Shifting nonblank cells off the worksheet is not supported!");
             }
 
+            if (this.trigger("insertRow", { index: rowIndex })) {
+                return;
+            }
+
             this.batch(function() {
 
                 var grid = this._grid;
@@ -366,7 +400,7 @@
                 ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
             });
 
-            this.trigger("insertRow", { index: rowIndex });
+            this.trigger("afterInsertRow", { index: rowIndex })
 
             return this;
         },
@@ -379,6 +413,10 @@
         deleteRow: function(rowIndex) {
             if (!this.isEnabledRow(rowIndex)) {
                 return this;
+            }
+
+            if (this.trigger("deleteRow", { index: rowIndex })) {
+                return;
             }
 
             this.batch(function() {
@@ -420,12 +458,16 @@
                 ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
             });
 
-            this.trigger("deleteRow", { index: rowIndex });
+            this.trigger("afterDeleteRow", { index: rowIndex })
 
             return this;
         },
 
         insertColumn: function(columnIndex) {
+            if (this.trigger("insertColumn", { index: columnIndex })) {
+                return;
+            }
+
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
@@ -479,6 +521,10 @@
                 return this;
             }
 
+            if (this.trigger("deleteColumn", { index: columnIndex })) {
+                return;
+            }
+
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
@@ -523,10 +569,18 @@
         },
 
         hideRow: function(rowIndex) {
+            if (this.trigger("hideRow", { index: rowIndex })) {
+                return;
+            }
+
             return this._property(this._rows.hide.bind(this._rows), rowIndex, { layout: true });
         },
 
         unhideRow: function(rowIndex) {
+            if (this.trigger("unhideRow", { index: rowIndex })) {
+                return;
+            }
+
             return this._property(this._rows.unhide.bind(this._rows), rowIndex, { layout: true });
         },
 

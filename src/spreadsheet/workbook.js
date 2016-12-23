@@ -64,11 +64,100 @@
             "paste",
             "change",
             "excelImport",
-            "excelExport"
+            "excelExport",
+            "insertSheet",
+            "removeSheet",
+            "selectSheet",
+            "renameSheet",
+            "insertRow",
+            "insertColumn",
+            "deleteRow",
+            "deleteColumn",
+            "hideRow",
+            "hideColumn",
+            "unhideRow",
+            "unhideColumn",
+            "select"
         ],
 
         _sheetChange: function(e) {
             this.trigger("change", e);
+        },
+
+        _sheetInsertRow: function(e) {
+            if (this.trigger("insertRow", {
+                sheet: e.sender,
+                index: e.index
+            })) {
+                e.preventDefault();
+            }
+        },
+
+        _sheetInsertColumn: function(e) {
+            if (this.trigger("insertColumn", {
+                sheet: e.sender,
+                index: e.index
+            })) {
+                e.preventDefault();
+            }
+        },
+
+        _sheetDeleteRow: function(e) {
+            if (this.trigger("deleteRow", {
+                sheet: e.sender,
+                index: e.index
+            })) {
+                e.preventDefault();
+            }
+        },
+
+        _sheetDeleteColumn: function(e) {
+            if (this.trigger("deleteColumn", {
+                sheet: e.sender,
+                index: e.index
+            })) {
+                e.preventDefault();
+            }
+        },
+
+        _sheetHideRow: function(e) {
+            if (this.trigger("hideRow", {
+                sheet: e.sender,
+                index: e.index
+            })) {
+                e.preventDefault();
+            }
+        },
+
+        _sheetHideColumn: function(e) {
+            if (this.trigger("hideColumn", {
+                sheet: e.sender,
+                index: e.index
+            })) {
+                e.preventDefault();
+            }
+        },
+
+        _sheetUnhideRow: function(e) {
+            if (this.trigger("unhideRow", {
+                sheet: e.sender,
+                index: e.index
+            })) {
+                e.preventDefault();
+            }
+        },
+
+        _sheetUnhideColumn: function(e) {
+            if (this.trigger("unhideColumn", {
+                sheet: e.sender,
+                index: e.index
+            })) {
+                e.preventDefault();
+            }
+        },
+
+        _sheetSelect: function(e) {
+            this.trigger("select", e);
         },
 
         _sheetCommandRequest: function(e) {
@@ -205,8 +294,7 @@
 
             sheet._name(sheetName);
 
-            sheet.bind("change", this._sheetChange.bind(this));
-            sheet.bind("commandRequest", this._sheetCommandRequest.bind(this));
+            this._bindSheetEvents(sheet);
 
             sheets.splice(insertIndex, 0, sheet);
 
@@ -221,6 +309,20 @@
             this.trigger("change", { sheetSelection: true });
 
             return sheet;
+        },
+
+        _bindSheetEvents: function(sheet) {
+            sheet.bind("change", this._sheetChange.bind(this));
+            sheet.bind("insertRow", this._sheetInsertRow.bind(this));
+            sheet.bind("insertColumn", this._sheetInsertColumn.bind(this));
+            sheet.bind("deleteRow", this._sheetDeleteRow.bind(this));
+            sheet.bind("deleteColumn", this._sheetDeleteColumn.bind(this));
+            sheet.bind("hideRow", this._sheetHideRow.bind(this));
+            sheet.bind("hideColumn", this._sheetHideColumn.bind(this));
+            sheet.bind("unhideRow", this._sheetUnhideRow.bind(this));
+            sheet.bind("unhideColumn", this._sheetUnhideColumn.bind(this));
+            sheet.bind("select", this._sheetSelect.bind(this));
+            sheet.bind("commandRequest", this._sheetCommandRequest.bind(this));
         },
 
         sheets: function() {
@@ -273,6 +375,13 @@
 
             this._sheetsSearchCache = {};
 
+            if (this.trigger("renameSheet", {
+                sheet: sheet,
+                newSheetName: newSheetName
+            })) {
+                return;
+            }
+
             // update references
             this._sheets.forEach(function(sheet){
                 sheet._forFormulas(function(formula){
@@ -307,6 +416,10 @@
             var index = that.sheetIndex(sheet);
 
             if (sheets.length === 1) {
+                return;
+            }
+
+            if (this.trigger("removeSheet", { sheet: sheet })) {
                 return;
             }
 
