@@ -30,7 +30,7 @@ class MenuItem extends \Kendo\UI\NavigationalItem {
         }
 
         $select = $this->getProperty('select');
-        if ($select !== "") {
+        if ($select) {
              $element->attr('onclick', $select);
         }
 
