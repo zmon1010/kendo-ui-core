@@ -106,6 +106,8 @@
 
         events: [
             "commandRequest",
+            "afterInsertRow",
+            "afterDeleteRow",
             "insertRow",
             "insertColumn",
             "deleteRow",
@@ -398,6 +400,8 @@
                 ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
             });
 
+            this.trigger("afterInsertRow", { index: rowIndex })
+
             return this;
         },
 
@@ -453,6 +457,8 @@
                 deleteRow: { index: rowIndex },
                 ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
             });
+
+            this.trigger("afterDeleteRow", { index: rowIndex })
 
             return this;
         },

@@ -34,8 +34,8 @@
             this._sheetInsertRowHandler = this._sheetInsertRow.bind(this);
 
             this.sheet.bind("change", this._sheetChangeHandler)
-                .bind("deleteRow", this._sheetDeleteRowHandler)
-                .bind("insertRow", this._sheetInsertRowHandler);
+                .bind("afterDeleteRow", this._sheetDeleteRowHandler)
+                .bind("afterInsertRow", this._sheetInsertRowHandler);
         },
 
         _sheetInsertRow: function(e) {
