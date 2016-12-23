@@ -69,7 +69,7 @@
                     return;
                 }
 
-                this._sheet.triggerSelect(new Range(ref, this._sheet))
+                this._sheet.triggerSelect(new Range(ref, this._sheet));
 
                 this.originalSelection = ref;
 
@@ -400,7 +400,7 @@
                 ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
             });
 
-            this.trigger("afterInsertRow", { index: rowIndex })
+            this.trigger("afterInsertRow", { index: rowIndex });
 
             return this;
         },
@@ -458,7 +458,7 @@
                 ref: new RangeRef(new CellRef(rowIndex, 0), new CellRef(Infinity, Infinity))
             });
 
-            this.trigger("afterDeleteRow", { index: rowIndex })
+            this.trigger("afterDeleteRow", { index: rowIndex });
 
             return this;
         },
