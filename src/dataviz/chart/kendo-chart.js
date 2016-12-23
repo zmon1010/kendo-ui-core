@@ -1704,6 +1704,11 @@ LinePoint.prototype.defaults = {
                 width: 2
             }
         }
+    },
+    errorBars: {
+        line: {
+            width: 1
+        }
     }
 };
 
