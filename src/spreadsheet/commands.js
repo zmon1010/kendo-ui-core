@@ -131,6 +131,11 @@
             var range = this.range();
             if (range.enable()) {
                 this.getState();
+
+                if (this.options.property === "format") {
+                    this._workbook.trigger("changeFormat", { range: range });
+                }
+
                 range[this._property](this._value);
             }
         }
