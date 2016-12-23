@@ -31,7 +31,7 @@
   <body>
     <div id="spreadsheet"></div>
     <script>
-     window.ss = $("#spreadsheet").kendoSpreadsheet().getKendoSpreadsheet();
+     window.ss = $("#spreadsheet").kendoSpreadsheet({ rows: 4000 }).getKendoSpreadsheet();
      window.sheet = ss.activeSheet();
 
      sheet.batch(function(){
@@ -42,6 +42,10 @@
          sheet.range("D1").value("Underlined").underline(true).bold(true);
          sheet.range("E1").value("Much\nUnderlined\nText").underline(true).wrap(true).textAlign("right").italic(true);
          sheet.range("F1").value("Some text that wraps without newlines").wrap(true);
+
+         sheet.range("J3:K4").merge().value("a");
+         sheet.range("J5:K6").merge().value("b");
+         sheet.range("J7:K8").merge().value("c");
      }, { recalc: true });
     </script>
   </body>

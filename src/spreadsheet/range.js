@@ -488,16 +488,55 @@
         },
 
         isSortable: function() {
-            return !(this._ref instanceof UnionRef || this._ref === kendo.spreadsheet.NULLREF);
+            return !this.cantSort();
+        },
+
+        cantSort: function() {
+            if (this._ref instanceof UnionRef) {
+                return { code: "cantSortMultipleSelection",
+                         message: "Unsupported for multiple ranges." };
+            }
+            if (this._ref === kendo.spreadsheet.NULLREF) {
+                return { code: "cantSortNullRef",
+                         message: "Unsupported for NULLREF." };
+            }
+            var mc = this._sheet._getMergedCells(this._ref.toRangeRef());
+            var primary = mc.primary;
+            var secondary = mc.secondary;
+            var width = null, height = null;
+            var cant = {};
+            try {
+                this._sheet.forEach(this, function(row, col){
+                    var id = new CellRef(row, col).print();
+                    var merged = primary[id];
+                    if (merged) {
+                        if (width === null) {
+                            width = merged.width();
+                            height = merged.height();
+                        } else if (!(width == merged.width() && height == merged.height())) {
+                            throw cant;
+                        }
+                    }
+                    else if (!secondary[id] && mc.hasMerged) {
+                        throw cant;
+                    }
+                });
+            } catch(ex) {
+                if (ex !== cant) {
+                    throw ex;
+                }
+                return {
+                    code: "cantSortMixedCells",
+                    message: "Unsupported for range containing cells of different shapes."
+                };
+            }
+            return false;
         },
 
         sort: function(spec) {
-            if (this._ref instanceof UnionRef) {
-                throw new Error("Unsupported for multiple ranges.");
-            }
-
-            if (this._ref === kendo.spreadsheet.NULLREF) {
-                throw new Error("Unsupported for NULLREF.");
+            var reason = this.cantSort();
+            if (reason) {
+                throw new Error(reason.message);
             }
 
             if (spec === undefined) {

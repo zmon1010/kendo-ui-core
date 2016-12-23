@@ -638,11 +638,12 @@
                 range = this.expandRange();
             }
 
-            if (!range.intersectingMerged().length) {
-                range.sort({ column: col, ascending: ascending });
-            } else {
-                return { reason: "error", type: "sortRangeContainingMerges" };
+            var reason = range.cantSort();
+            if (reason) {
+                return { reason: "error", type: reason.code };
             }
+
+            range.sort({ column: col, ascending: ascending });
         },
         expandRange: function() {
             var sheet = this.range().sheet();

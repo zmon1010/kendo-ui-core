@@ -589,6 +589,28 @@
             return new Range(this._ref(row, column, numRows, numColumns), this);
         },
 
+        _getMergedCells: function(range) {
+            var grid = this._grid;
+            var primary = {};
+            var secondary = {};
+            var hasMerged = false;
+
+            this.forEachMergedCell(range, function(ref) {
+                var topLeft = ref.topLeft;
+                grid.forEach(ref, function(cellRef) {
+                    if (topLeft.eq(cellRef)) {
+                        primary[cellRef.print()] = ref;
+                        hasMerged = true;
+                    } else if (range.contains(cellRef)) {
+                        secondary[cellRef.print()] = topLeft;
+                        hasMerged = true;
+                    }
+                });
+            });
+
+            return { primary: primary, secondary: secondary, hasMerged: hasMerged };
+        },
+
         forEachMergedCell: function(ref, callback) {
             var selectAll = false;
 

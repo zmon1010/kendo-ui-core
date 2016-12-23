@@ -943,13 +943,14 @@
         var command = sortCommand({ sheet: false, value: "asc", column: 1 });
         var range = sheet.range("A1:A3");
 
+        command.range(sheet.range("A1:B3"));
         range.values([ ["a"], ["c"], ["b"] ]);
         sheet.range("A1:B2").merge();
 
         var result = command.exec();
 
         equal(result.reason, "error");
-        equal(result.type, "sortRangeContainingMerges");
+        equal(result.type, "cantSortMixedCells");
     });
 
     module("SpreadSheet ApplyFilterCommand", moduleOptions);

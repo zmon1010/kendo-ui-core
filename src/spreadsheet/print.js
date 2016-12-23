@@ -49,25 +49,6 @@
         return out;
     }
 
-    function getMergedCells(sheet, range) {
-        var grid = sheet._grid;
-        var primary = {};
-        var secondary = {};
-
-        sheet.forEachMergedCell(range, function(ref) {
-            var topLeft = ref.topLeft;
-            grid.forEach(ref, function(cellRef) {
-                if (topLeft.eq(cellRef)) {
-                    primary[cellRef.print()] = ref;
-                } else if (range.contains(cellRef)) {
-                    secondary[cellRef.print()] = topLeft;
-                }
-            });
-        });
-
-        return { primary: primary, secondary: secondary };
-    }
-
     function doLayout(sheet, range, options) {
         // 1. obtain the list of cells that need to be printed, the
         //    row heights and column widths.  Place in each cell row,
@@ -76,7 +57,7 @@
         var cells = [];
         var rowHeights = [];
         var colWidths = [];
-        var mergedCells = getMergedCells(sheet, range);
+        var mergedCells = sheet._getMergedCells(range);
         var maxRow = -1, maxCol = -1;
         sheet.forEach(range, function(row, col, cell){
             var relrow = row - range.topLeft.row;

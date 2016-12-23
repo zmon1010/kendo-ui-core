@@ -45,6 +45,9 @@
             insertRowWhenColumnIsSelected: "Cannot insert row when all rows are selected.",
             filterRangeContainingMerges: "Cannot create a filter within a range containing merges",
             sortRangeContainingMerges: "Cannot sort a range containing merges",
+            cantSortMultipleSelection: "Cannot sort multiple selection",
+            cantSortNullRef: "Cannot sort empty selection",
+            cantSortMixedCells: "Cannot sort range containing cells of mixed shapes",
             validationError: "The value that you entered violates the validation rules set on the cell.",
             cannotModifyDisabled: "Cannot modify disabled cells."
         },
@@ -1143,7 +1146,6 @@
             ]);
         },
 
-
         renderClipboardContents: function() {
             var sheet = this._sheet;
             var grid = sheet._grid;
@@ -1170,20 +1172,9 @@
                 table.addColumn(width);
             });
 
-            var primaryMergedCells = {};
-            var secondaryMergedCells = {};
-
-            sheet.forEachMergedCell(selection, function(ref) {
-                var topLeft = ref.topLeft;
-
-                grid.forEach(ref, function(cellRef) {
-                    if (topLeft.eq(cellRef)) {
-                        primaryMergedCells[cellRef.print()] = ref;
-                    } else {
-                        secondaryMergedCells[cellRef.print()] = true;
-                    }
-                });
-            });
+            var tmp = sheet._getMergedCells(selection);
+            var primaryMergedCells = tmp.primary;
+            var secondaryMergedCells = tmp.secondary;
 
             sheet.forEach(selection, function(row, col, cell) {
                 var location = new CellRef(row, col).print();
