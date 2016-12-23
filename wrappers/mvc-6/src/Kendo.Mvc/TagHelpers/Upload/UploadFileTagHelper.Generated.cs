@@ -24,7 +24,6 @@ namespace Kendo.Mvc.TagHelpers
         /// </summary>
         public double? Size { get; set; }
 
-
         internal Dictionary<string, object> Serialize()
         {
             var settings = new Dictionary<string, object>();

@@ -8,8 +8,8 @@ namespace Kendo.Mvc.TagHelpers
     /// <summary>
     /// Kendo UI UploadFile TagHelper
     /// </summary>
-    [HtmlTargetElement("kendo-uploadfiles", ParentTag="kendo-upload")]
-    [RestrictChildren("kendo-uploadfile")]
+    [HtmlTargetElement("kendo-upload-files", ParentTag="kendo-upload")]
+    [RestrictChildren("kendo-upload-file")]
     [SupressTagRendering]
     public partial class UploadFilesTagHelper : TagHelperCollectionBase<UploadFileTagHelper>
     {

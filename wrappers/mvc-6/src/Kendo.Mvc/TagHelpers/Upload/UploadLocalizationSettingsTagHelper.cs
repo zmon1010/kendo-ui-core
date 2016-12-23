@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 namespace Kendo.Mvc.TagHelpers
 {
     /// <summary>
-    /// Kendo UI UploadFile TagHelper
+    /// Kendo UI localization TagHelper
     /// </summary>
-    [HtmlTargetElement("kendo-upload-file", ParentTag="kendo-upload-files", TagStructure=TagStructure.WithoutEndTag)]
+    [HtmlTargetElement("kendo-upload-localization-settings", ParentTag="kendo-upload", TagStructure=TagStructure.WithoutEndTag )]
     [SupressTagRendering]
-    public partial class UploadFileTagHelper : TagHelperCollectionItemBase
+    public partial class UploadLocalizationSettingsTagHelper : TagHelperChildBase
     {
-        public UploadFileTagHelper() : base()
+        public UploadLocalizationSettingsTagHelper() : base()
         {
         }
 
@@ -21,10 +21,10 @@ namespace Kendo.Mvc.TagHelpers
 
         protected override void AddSelfToParent(TagHelperContext context)
         {
-            var parent = typeof(UploadFilesTagHelper);
+            var parent = typeof(UploadTagHelper);
             if (context.Items.ContainsKey(parent))
             {
-                (context.Items[parent] as UploadFilesTagHelper).Add(this);
+                (context.Items[parent] as UploadTagHelper).Localization = this;
             }
         }
     }

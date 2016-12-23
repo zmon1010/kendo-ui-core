@@ -10,7 +10,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI Upload TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-upload")]
-    [RestrictChildren("kendo-uploadfiles")]
+    [RestrictChildren("kendo-upload-async-settings","kendo-upload-files","kendo-upload-localization-settings","kendo-upload-validation-settings")]
     public partial class UploadTagHelper : TagHelperBase
     {
         public UploadTagHelper(IKendoHtmlGenerator generator) : base(generator)

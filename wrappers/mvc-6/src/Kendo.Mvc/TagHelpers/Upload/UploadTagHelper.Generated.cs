@@ -9,6 +9,8 @@ namespace Kendo.Mvc.TagHelpers
 {
     public partial class UploadTagHelper
     {
+        public UploadAsyncSettingsTagHelper Async { get; set; }
+
         /// <summary>
         /// Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
         /// </summary>
@@ -21,6 +23,8 @@ namespace Kendo.Mvc.TagHelpers
         public bool? Enabled { get; set; }
 
         public UploadFilesTagHelper Files { get; set; }
+
+        public UploadLocalizationSettingsTagHelper Localization { get; set; }
 
         /// <summary>
         /// Enables (true) or disables (false) the ability to select multiple files.
@@ -47,10 +51,21 @@ namespace Kendo.Mvc.TagHelpers
         /// <param name="value">The ID of the template element for Template</param>
         public string TemplateId { get; set; }
 
+        public UploadValidationSettingsTagHelper Validation { get; set; }
 
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
+
+            if (Async != null)
+            {
+                var async = Async.Serialize();
+
+                if (async.Any())
+                {
+                    settings["async"] = async;
+                }
+            }
 
             if (DropZone?.HasValue() == true)
             {
@@ -62,10 +77,24 @@ namespace Kendo.Mvc.TagHelpers
                 settings["enabled"] = Enabled;
             }
 
-            var files = Files.Select(i => i.Serialize());
-            if (files.Any())
+            if (Files != null)
             {
-                settings["files"] = files;
+                var files = Files.Select(i => i.Serialize());
+
+                if (files.Any())
+                {
+                    settings["files"] = files;
+                }
+            }
+
+            if (Localization != null)
+            {
+                var localization = Localization.Serialize();
+
+                if (localization.Any())
+                {
+                    settings["localization"] = localization;
+                }
             }
 
             if (Multiple.HasValue)
@@ -89,6 +118,16 @@ namespace Kendo.Mvc.TagHelpers
             else if (Template.HasValue())
             {
                 settings["template"] = Template;
+            }
+
+            if (Validation != null)
+            {
+                var validation = Validation.Serialize();
+
+                if (validation.Any())
+                {
+                    settings["validation"] = validation;
+                }
             }
 
             return settings;
