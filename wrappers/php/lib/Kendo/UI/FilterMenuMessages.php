@@ -42,6 +42,33 @@ class FilterMenuMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The text of the additional filter value editor.
+    * @param string $value
+    * @return \Kendo\UI\FilterMenuMessages
+    */
+    public function additionalValue($value) {
+        return $this->setProperty('additionalValue', $value);
+    }
+
+    /**
+    * The text of the additional filter operator editor.
+    * @param string $value
+    * @return \Kendo\UI\FilterMenuMessages
+    */
+    public function additionalOperator($value) {
+        return $this->setProperty('additionalOperator', $value);
+    }
+
+    /**
+    * The text of the filter logic editor.
+    * @param string $value
+    * @return \Kendo\UI\FilterMenuMessages
+    */
+    public function logic($value) {
+        return $this->setProperty('logic', $value);
+    }
+
+    /**
     * The text of the radio button for false values. Displayed when filtering Boolean fields.
     * @param string $value
     * @return \Kendo\UI\FilterMenuMessages

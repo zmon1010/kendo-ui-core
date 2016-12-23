@@ -21214,6 +21214,18 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
         <body-content>empty</body-content>
 
         <attribute>
+            <description>The text of the additional filter operator editor.</description>
+            <name>additionalOperator</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the additional filter value editor.</description>
+            <name>additionalValue</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The text of the option which represents the "and" logical operation.</description>
             <name>and</name>
             <rtexprvalue>true</rtexprvalue>
@@ -21246,6 +21258,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
         <attribute>
             <description>The text of the radio button for true values. Displayed when filtering Boolean fields.</description>
             <name>isTrue</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the filter logic editor.</description>
+            <name>logic</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
