@@ -2,50 +2,38 @@
 
 <kendo-splitter name="vertical" orientation="SplitterOrientation.Vertical">
     <kendo-splitter-pane scrollable="false" collapsible="false">
-        <div name="top-pane">
-            <kendo-splitter name="horizontal" style="height: 100%; width:100%;" orientation="SplitterOrientation.Horizontal">
-                <kendo-splitter-pane size="220px" collapsible="true">
-                    <div id="left-pane">
-                        <div class="pane-content">
-                            <h3>Inner splitter / left pane</h3>
-                            <p>Resizable and collapsible.</p>
-                        </div>
-                    </div>
-                </kendo-splitter-pane>
-                <kendo-splitter-pane>
-                    <div id="center-pane">
-                        <div class="pane-content">
-                            <h3>Inner splitter / center pane</h3>
-                            <p>Resizable only.</p>
-                        </div>
-                    </div>
-                </kendo-splitter-pane>
-                <kendo-splitter-pane size="220px" collapsible="true">
-                    <div id="right-pane">
-                        <div class="pane-content">
-                            <h3>Inner splitter / right pane</h3>
-                            <p>Resizable and collapsible.</p>
-                        </div>
-                    </div>
-                </kendo-splitter-pane>
-            </kendo-splitter>
-        </div>
+        <kendo-splitter name="horizontal" style="height: 100%; width:100%;" orientation="SplitterOrientation.Horizontal">
+            <kendo-splitter-pane size="220px" collapsible="true" id="left-pane">
+                <div class="pane-content">
+                    <h3>Inner splitter / left pane</h3>
+                    <p>Resizable and collapsible.</p>
+                </div>
+            </kendo-splitter-pane>
+            <kendo-splitter-pane id="center-pane">
+                <div class="pane-content">
+                    <h3>Inner splitter / center pane</h3>
+                    <p>Resizable only.</p>
+                </div>
+            </kendo-splitter-pane>
+            <kendo-splitter-pane size="220px" collapsible="true" id="right-pane">
+                <div class="pane-content">
+                    <h3>Inner splitter / right pane</h3>
+                    <p>Resizable and collapsible.</p>
+                </div>
+            </kendo-splitter-pane>
+        </kendo-splitter>
     </kendo-splitter-pane>
 
-    <kendo-splitter-pane size="100px" collapsible="false">
-        <div id="middle-pane">
-            <div class="pane-content">
-                <h3>Outer splitter / middle pane</h3>
-                <p>Resizable only.</p>
-            </div>
+    <kendo-splitter-pane size="100px" collapsible="false" id="middle-pane">
+        <div class="pane-content">
+            <h3>Outer splitter / middle pane</h3>
+            <p>Resizable only.</p>
         </div>
     </kendo-splitter-pane>
-    <kendo-splitter-pane size="100px" collapsible="false" resizable="false">
-        <div id="bottom-pane">
-            <div class="pane-content">
-                <h3>Outer splitter / bottom pane</h3>
-                <p>Non-resizable and non-collapsible.</p>
-            </div>
+    <kendo-splitter-pane size="100px" collapsible="false" resizable="false" id="bottom-pane">
+        <div class="pane-content">
+            <h3>Outer splitter / bottom pane</h3>
+            <p>Non-resizable and non-collapsible.</p>
         </div>
     </kendo-splitter-pane>
 </kendo-splitter>
