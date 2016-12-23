@@ -22,7 +22,6 @@ var supportBrowser = support.browser;
 var drawing = kendo.drawing;
 var util = drawing.util;
 var kendoGeometry = kendo.geometry;
-var kendoPdf = kendo.pdf;
 
 /* eslint-disable no-multi-spaces, key-spacing, indent, camelcase, space-before-blocks, eqeqeq, brace-style */
 /* eslint-disable space-infix-ops, space-before-function-paren, array-bracket-spacing, object-curly-spacing */
@@ -3900,9 +3899,8 @@ kendo.deepExtend(kendo.pdf, {
     loadImages: loadImages,
     getPaperOptions: getPaperOptions,
     TEXT_RENDERING_MODE: TEXT_RENDERING_MODE,
-    exportPDF: exportPDF
-});kendoPdf.saveAs = saveAs$1;
-kendo.deepExtend(kendo.pdf, {
+    exportPDF: exportPDF,
+    saveAs: saveAs$1,
     toDataURL: toDataURL,
     toBlob: toBlob,
     render: render

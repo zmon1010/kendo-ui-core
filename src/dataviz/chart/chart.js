@@ -54,10 +54,10 @@
     var NOTE_HOVER = constants.NOTE_HOVER;
 
     var CHANGE = "change";
-    var VALUE = "value";
     var DATABOUND = "dataBound";
     var LEAVE = "leave";
 
+    var VALUE = constants.VALUE;
     var PIE = constants.PIE;
     var DONUT = constants.DONUT;
     var FUNNEL = constants.FUNNEL;

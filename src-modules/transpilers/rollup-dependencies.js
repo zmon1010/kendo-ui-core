@@ -4,17 +4,14 @@ const inStringOrComment = utils.inStringOrComment;
 const isUpperCase = utils.isUpperCase;
 
 const NEW_LINE = "\n";
-const EXPORTS_REGEX = /(^exports\.\w+ = \w+;$\n)+/gm;
-const EXPORT_NAME_REGEX = /exports\.(\w+) = (\w+);/g;
+const EXPORTS_REGEX = /(^exports\.\w+ = (.*?);$\n)+/gm;
+const EXPORT_NAME_REGEX = /exports\.(\w+) = (.*?);/g;
 const DEPENDENCIES_REGEX = /\(function \(exports,(.*?)\)\s*{([\s\S]*)}\(\(this.(\w+(?:\.\w+)*) = this.(?:\w+(?:\.\w+)*) \|\| \{\}\),(.*?)\)\);/gm;
 
 function replaceExports(options) {
-    var exclude = (options || {}).exclude || [];    
     return replace(EXPORTS_REGEX, function (match) {
         var exports = match.replace(EXPORT_NAME_REGEX, function(match, exportName, name) {
-            if (exclude.indexOf(name) < 0) {
-                return `    ${ exportName }: ${ name },`;
-            }
+            return `    ${ exportName }: ${ name },`;
         });
 
         exports = exports.substr(0, exports.lastIndexOf(","));

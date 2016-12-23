@@ -9,7 +9,6 @@
 /* jshint curly:false */
 
 window.kendo.dataviz = window.kendo.dataviz || {};
-var kendoDeepExtend = kendo.deepExtend;
 var drawing = kendo.drawing;
 var util = drawing.util;
 var Path = drawing.Path;
@@ -20,9 +19,8 @@ var Rect = geometry.Rect;
 var Circle = geometry.Circle;
 var geometryTransform = geometry.transform;
 var Segment = geometry.Segment;
-var dataviz = kendo.dataviz;
 
-var deepExtend = kendoDeepExtend;
+var deepExtend = kendo.deepExtend;
 
 var X = "x";
 var Y = "y";
@@ -6739,7 +6737,7 @@ function numberSign(value) {
     return value <= 0 ? -1 : 1;
 }
 
-kendoDeepExtend(kendo.dataviz, {
+kendo.deepExtend(kendo.dataviz, {
     constants: constants,
     services: services,
     autoMajorUnit: autoMajorUnit,
@@ -6796,9 +6794,8 @@ kendoDeepExtend(kendo.dataviz, {
     sparseArrayLimits: sparseArrayLimits,
     styleValue: styleValue,
     append: append,
-    bindEvents: bindEvents
-});dataviz.Class = Class;
-kendoDeepExtend(kendo.dataviz, {
+    bindEvents: bindEvents,
+    Class: Class,
     defined: defined,
     deg: deg,
     elementOffset: elementOffset,
@@ -6806,9 +6803,8 @@ kendoDeepExtend(kendo.dataviz, {
     eventElement: eventElement,
     eventCoordinates: eventCoordinates,
     last: last,
-    limitValue: limitValue
-});dataviz.logToConsole = kendo.logToConsole;
-kendoDeepExtend(kendo.dataviz, {
+    limitValue: limitValue,
+    logToConsole: kendo.logToConsole,
     objectKey: objectKey,
     rad: rad,
     round: round,
