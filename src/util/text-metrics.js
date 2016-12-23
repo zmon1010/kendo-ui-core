@@ -102,7 +102,9 @@ var defaultMeasureBox;
 
 if (typeof document !== "undefined") {
     defaultMeasureBox = document.createElement("div");
-    defaultMeasureBox.style.cssText = "position: absolute !important; top: -4000px !important; width: auto !important; height: auto !important;\n              padding: 0 !important; margin: 0 !important; border: 0 !important;\n              line-height: normal !important; visibility: hidden !important; white-space: nowrap!important;";
+    defaultMeasureBox.style.cssText = "position: absolute !important; top: -4000px !important; width: auto !important; height: auto !important;" +
+              "padding: 0 !important; margin: 0 !important; border: 0 !important;" +
+              "line-height: normal !important; visibility: hidden !important; white-space: nowrap!important;";
 }
 
 var TextMetrics = kendo.Class.extend({

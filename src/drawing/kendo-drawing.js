@@ -4004,7 +4004,8 @@ var SurfaceFactory = Class.extend({
         }
 
         kendo.logToConsole(
-            ("Warning: Unable to create Kendo UI Drawing Surface. Possible causes:\n            - The browser does not support SVG and Canvas. User agent: " + (navigator.userAgent)));
+            "Warning: Unable to create Kendo UI Drawing Surface. Possible causes:\n" +
+            "- The browser does not support SVG and Canvas. User agent: " + (navigator.userAgent));
     }
 });
 
@@ -4733,7 +4734,7 @@ var GradientNode = Node.extend({
 
 var LinearGradientNode = GradientNode.extend({
     template: function() {
-        return ("<linearGradient id='" + (this.id) + "' " + (this.renderCoordinates()) + ">\n                    " + (this.renderChildren()) + "\n                </linearGradient>");
+        return ("<linearGradient id='" + (this.id) + "' " + (this.renderCoordinates()) + ">" + (this.renderChildren()) + "</linearGradient>");
     },
 
     mapCoordinates: function() {
@@ -4754,7 +4755,7 @@ var LinearGradientNode = GradientNode.extend({
 
 var RadialGradientNode = GradientNode.extend({
     template: function() {
-        return ("<radialGradient id='" + (this.id) + "' " + (this.renderCoordinates()) + ">\n                    " + (this.renderChildren()) + "\n                </radialGradient>");
+        return ("<radialGradient id='" + (this.id) + "' " + (this.renderCoordinates()) + ">" + (this.renderChildren()) + "</radialGradient>");
     },
 
     mapCoordinates: function() {
@@ -5008,7 +5009,7 @@ var Surface$1 = Surface.extend({
     },
 
     _template: function() {
-        return ("<svg style='width: 100%; height: 100%; overflow: hidden;'\n                xmlns='" + SVG_NS + "' xmlns:xlink='http://www.w3.org/1999/xlink'\n                version='1.1'>" + (this._root.render()) + "</svg>");
+        return ("<svg style='width: 100%; height: 100%; overflow: hidden;' xmlns='" + SVG_NS + "' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1'>" + (this._root.render()) + "</svg>");
     }
 });
 
@@ -5232,12 +5233,8 @@ var PathNode = Node.extend({
     },
 
     template: function() {
-        return "<path " + (this.renderStyle()) + " " + (this.renderOpacity()) +
-                    "" + (renderAttr('d', this.renderData())) +
-                    "" + (this.renderStroke()) +
-                    "" + (this.renderFill()) +
-                    "" + (this.renderDefinitions()) +
-                    (this.renderTransform()) + "></path>";
+        return "<path " + (this.renderStyle()) + " " + (this.renderOpacity()) + " " + (renderAttr('d', this.renderData())) +
+                    "" + (this.renderStroke()) + (this.renderFill()) + (this.renderDefinitions()) + (this.renderTransform()) + "></path>";
     }
 });
 
@@ -5269,7 +5266,10 @@ var CircleNode = PathNode.extend({
     },
 
     template: function() {
-        return ("<circle " + (this.renderStyle()) + " " + (this.renderOpacity()) + "\n                    cx='" + (this.center().x) + "' cy='" + (this.center().y) + "'\n                    r='" + (this.radius()) + "'\n                    " + (this.renderStroke()) + "\n                    " + (this.renderFill()) + "\n                    " + (this.renderDefinitions()) + "\n                    " + (this.renderTransform()) + " ></circle>");
+        return "<circle " + (this.renderStyle()) + " " + (this.renderOpacity()) +
+                    "cx='" + (this.center().x) + "' cy='" + (this.center().y) + "' r='" + (this.radius()) + "'" +
+                    (this.renderStroke()) + " " + (this.renderFill()) + " " + (this.renderDefinitions()) +
+                    (this.renderTransform()) + " ></circle>";
     }
 });
 
@@ -5294,7 +5294,9 @@ var RectNode = PathNode.extend({
     },
 
     template: function() {
-        return ("<rect " + (this.renderStyle()) + " " + (this.renderOpacity()) + "\n                    x='" + (this.origin().x) + "' y='" + (this.origin().y) + "'\n                    width='" + (this.size().width) + "' height='" + (this.size().height) + "'\n                    " + (this.renderStroke()) + "\n                    " + (this.renderFill()) + "\n                    " + (this.renderDefinitions()) + "\n                    " + (this.renderTransform()) + " />");
+        return "<rect " + (this.renderStyle()) + " " + (this.renderOpacity()) + " x='" + (this.origin().x) + "' y='" + (this.origin().y) + "' " +
+                    "width='" + (this.size().width) + "' height='" + (this.size().height) + "' " + (this.renderStroke()) + " " +
+                    (this.renderFill()) + " " + (this.renderDefinitions()) + " " + (this.renderTransform()) + " />";
     }
 });
 
@@ -5345,7 +5347,9 @@ var ImageNode = PathNode.extend({
     },
 
     template: function() {
-        return ("<image preserveAspectRatio='none' " + (this.renderStyle()) + " " + (this.renderTransform()) + " " + (this.renderOpacity()) + "\n                    " + (this.renderPosition()) + " " + (this.renderSource()) + " " + (this.renderDefinitions()) + ">\n                    </image>");
+        return "<image preserveAspectRatio='none' " + (this.renderStyle()) + " " + (this.renderTransform()) + " " + (this.renderOpacity()) +
+               (this.renderPosition()) + " " + (this.renderSource()) + " " + (this.renderDefinitions()) + ">" +
+               "</image>";
     }
 });
 
@@ -5412,11 +5416,8 @@ var TextNode = PathNode.extend({
     },
 
     template: function() {
-        return "<text " + (this.renderStyle()) + " " + (this.renderOpacity()) +
-                    "x='" + (this.pos().x) + "' y='" + (this.pos().y) + "'" +
-                    "" + (this.renderStroke()) +
-                    "" + (this.renderTransform()) +
-                    "" + (this.renderDefinitions()) +
+        return "<text " + (this.renderStyle()) + " " + (this.renderOpacity()) + " x='" + (this.pos().x) + "' y='" + (this.pos().y) + "'" +
+                    (this.renderStroke()) + " " + (this.renderTransform()) + " " + (this.renderDefinitions()) +
                     (this.renderFill()) + ">" + (this.renderContent()) + "</text>";
     }
 });

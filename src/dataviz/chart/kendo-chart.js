@@ -3360,7 +3360,13 @@ setDefaultOptions(Candlestick, {
         gradient: "glass"
     },
     tooltip: {
-        format: "<table>\n                    <tr><th colspan='2'>{4:d}</th></tr>\n                    <tr><td>Open:</td><td>{0:C}</td></tr>\n                    <tr><td>High:</td><td>{1:C}</td></tr>\n                    <tr><td>Low:</td><td>{2:C}</td></tr>\n                    <tr><td>Close:</td><td>{3:C}</td></tr>\n                </table>"
+        format: "<table>" +
+                    "<tr><th colspan='2'>{4:d}</th></tr>" +
+                    "<tr><td>Open:</td><td>{0:C}</td></tr>" +
+                    "<tr><td>High:</td><td>{1:C}</td></tr>" +
+                    "<tr><td>Low:</td><td>{2:C}</td></tr>" +
+                    "<tr><td>Close:</td><td>{3:C}</td></tr>" +
+                "</table>"
     },
     highlight: {
         opacity: 1,
@@ -3701,7 +3707,15 @@ setDefaultOptions(BoxPlot, {
         gradient: "glass"
     },
     tooltip: {
-        format: "<table>\n                    <tr><th colspan=\"2\">{6:d}</th></tr>\n                    <tr><td>Lower:</td><td>{0:C}</td></tr>\n                    <tr><td>Q1:</td><td>{1:C}</td></tr>\n                    <tr><td>Median:</td><td>{2:C}</td></tr>\n                    <tr><td>Mean:</td><td>{5:C}</td></tr>\n                    <tr><td>Q3:</td><td>{3:C}</td></tr>\n                    <tr><td>Upper:</td><td>{4:C}</td></tr>\n                </table>"
+        format: "<table>" +
+                    "<tr><th colspan='2'>{6:d}</th></tr>" +
+                    "<tr><td>Lower:</td><td>{0:C}</td></tr>" +
+                    "<tr><td>Q1:</td><td>{1:C}</td></tr>" +
+                    "<tr><td>Median:</td><td>{2:C}</td></tr>" +
+                    "<tr><td>Mean:</td><td>{5:C}</td></tr>" +
+                    "<tr><td>Q3:</td><td>{3:C}</td></tr>" +
+                    "<tr><td>Upper:</td><td>{4:C}</td></tr>" +
+                "</table>"
     },
     highlight: {
         opacity: 1,
