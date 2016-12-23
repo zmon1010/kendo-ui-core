@@ -53,6 +53,22 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "filterMenu-messages";
     }
 
+    public java.lang.String getAdditionalOperator() {
+        return (java.lang.String)getProperty("additionalOperator");
+    }
+
+    public void setAdditionalOperator(java.lang.String value) {
+        setProperty("additionalOperator", value);
+    }
+
+    public java.lang.String getAdditionalValue() {
+        return (java.lang.String)getProperty("additionalValue");
+    }
+
+    public void setAdditionalValue(java.lang.String value) {
+        setProperty("additionalValue", value);
+    }
+
     public java.lang.String getAnd() {
         return (java.lang.String)getProperty("and");
     }
@@ -99,6 +115,14 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setIsTrue(java.lang.String value) {
         setProperty("isTrue", value);
+    }
+
+    public java.lang.String getLogic() {
+        return (java.lang.String)getProperty("logic");
+    }
+
+    public void setLogic(java.lang.String value) {
+        setProperty("logic", value);
     }
 
     public java.lang.String getOr() {

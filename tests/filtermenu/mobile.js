@@ -78,6 +78,12 @@
         equal(menu.form.closest(roleSelector("view")).length, 1);
     });
 
+    test("render title attribute to the form element", function() {
+        var menu = setup();
+
+        equal(menu.form.attr("title"), menu.options.messages.info);
+    });
+
     test("mobile view doesn't wrap the form if no pane available", function() {
         var menu = setup(container, { pane: null });
 

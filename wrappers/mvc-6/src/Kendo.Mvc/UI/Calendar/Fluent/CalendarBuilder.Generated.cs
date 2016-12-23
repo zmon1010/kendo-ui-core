@@ -70,6 +70,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
+        /// </summary>
+        /// <param name="value">The value for ShowWeekNumber</param>
+        public CalendarBuilder ShowWeekNumber(bool value)
+        {
+            Container.ShowWeekNumber = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
+        /// </summary>
+        public CalendarBuilder ShowWeekNumber()
+        {
+            Container.ShowWeekNumber = true;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the selected date.
         /// </summary>
         /// <param name="value">The value for Value</param>

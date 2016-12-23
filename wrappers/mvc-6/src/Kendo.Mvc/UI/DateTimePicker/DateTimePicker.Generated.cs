@@ -29,6 +29,8 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Min { get; set; }
 
+        public bool? ShowWeekNumber { get; set; }
+
         public string[] ParseFormats { get; set; }
 
         public string TimeFormat { get; set; }
@@ -87,6 +89,11 @@ namespace Kendo.Mvc.UI
             if (Min.HasValue)
             {
                 settings["min"] = Min;
+            }
+
+            if (ShowWeekNumber.HasValue)
+            {
+                settings["showWeekNumber"] = ShowWeekNumber;
             }
 
             if (ParseFormats?.Any() == true)

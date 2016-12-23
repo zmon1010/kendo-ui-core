@@ -53,6 +53,11 @@ namespace Kendo.Mvc.TagHelpers
         public DateTime? Min { get; set; }
 
         /// <summary>
+        /// If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
+        /// </summary>
+        public bool? ShowWeekNumber { get; set; }
+
+        /// <summary>
         /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
 		///  Note that value of the format option is always used. The timeFormat value also will be used if defined.
         /// </summary>
@@ -119,6 +124,11 @@ namespace Kendo.Mvc.TagHelpers
             if (Min.HasValue)
             {
                 settings["min"] = Min;
+            }
+
+            if (ShowWeekNumber.HasValue)
+            {
+                settings["showWeekNumber"] = ShowWeekNumber;
             }
 
             if (ParseFormats?.Any() == true)

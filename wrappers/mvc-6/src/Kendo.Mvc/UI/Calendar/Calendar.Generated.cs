@@ -23,6 +23,8 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Min { get; set; }
 
+        public bool? ShowWeekNumber { get; set; }
+
         public DateTime? Value { get; set; }
 
         public CalendarView? Start { get; set; }
@@ -59,6 +61,11 @@ namespace Kendo.Mvc.UI
             if (Min.HasValue)
             {
                 settings["min"] = Min;
+            }
+
+            if (ShowWeekNumber.HasValue)
+            {
+                settings["showWeekNumber"] = ShowWeekNumber;
             }
 
             if (Value.HasValue)
