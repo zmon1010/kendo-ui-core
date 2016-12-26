@@ -92,7 +92,8 @@ gulp.task("less", [ "import-dependencies" ], function() {
 });
 
 const CSS_DEPENDENCIES = [
-    "node_modules/@telerik/kendo-theme-*/dist/all.css"
+    "node_modules/@telerik/kendo-theme-*/dist/all.css", // temporary until bootstrap-v4 is renamed
+    "node_modules/@progress/kendo-theme-*/dist/all.css",
 ];
 
 gulp.task("import-dependencies", function() {
