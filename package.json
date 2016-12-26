@@ -13,7 +13,7 @@
     "gulp-subset-process": "0.1.0"
   },
   "devDependencies": {
-    "@telerik/kendo-theme-default": "2.0.0",
+    "@progress/kendo-theme-default": "2.0.0",
     "@telerik/kendo-theme-bootstrap": "0.10.0",
     "amd-optimize": "0.6.1",
     "bootstrap": "git://github.com/twbs/bootstrap.git#v4-dev",
