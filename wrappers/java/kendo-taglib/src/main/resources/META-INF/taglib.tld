@@ -36841,6 +36841,11 @@ and is about to render it.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Triggered when range format is changed from the UI. Introduced in 2017 Q1.</description>
+            <name>changeFormat</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
@@ -37784,6 +37789,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <description>Triggered when spreadsheet selection is changed. Introduced in 2017 Q1.</description>
         <name>spreadsheet-select</name>
         <tag-class>com.kendoui.taglib.spreadsheet.SelectFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered when range format is changed from the UI. Introduced in 2017 Q1.</description>
+        <name>spreadsheet-changeFormat</name>
+        <tag-class>com.kendoui.taglib.spreadsheet.ChangeFormatFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

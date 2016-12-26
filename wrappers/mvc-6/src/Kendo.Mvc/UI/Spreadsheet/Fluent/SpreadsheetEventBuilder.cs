@@ -300,6 +300,28 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Triggered when range format is changed from the UI. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the changeFormat event.</param>
+        public SpreadsheetEventBuilder ChangeFormat(string handler)
+        {
+            Handler("changeFormat", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Triggered when range format is changed from the UI. Introduced in 2017 Q1.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public SpreadsheetEventBuilder ChangeFormat(Func<object, object> handler)
+        {
+            Handler("changeFormat", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>

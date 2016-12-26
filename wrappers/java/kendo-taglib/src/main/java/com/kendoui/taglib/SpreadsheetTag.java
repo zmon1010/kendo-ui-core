@@ -73,6 +73,10 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
         setEvent("change", value.getBody());
     }
 
+    public void setChangeFormat(ChangeFormatFunctionTag value) {
+        setEvent("changeFormat", value.getBody());
+    }
+
     public void setDeleteColumn(DeleteColumnFunctionTag value) {
         setEvent("deleteColumn", value.getBody());
     }
@@ -223,6 +227,18 @@ public class SpreadsheetTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setChange(String value) {
         setProperty("change", new Function(value));
+    }
+
+    public String getChangeFormat() {
+        Function property = ((Function)getProperty("changeFormat"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setChangeFormat(String value) {
+        setProperty("changeFormat", new Function(value));
     }
 
     public String getDeleteColumn() {

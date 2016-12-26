@@ -77,7 +77,8 @@
             "hideColumn",
             "unhideRow",
             "unhideColumn",
-            "select"
+            "select",
+            "changeFormat"
         ],
 
         _sheetChange: function(e) {

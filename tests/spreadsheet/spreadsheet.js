@@ -11,7 +11,7 @@
         setup: function() {
             element = $("<div>").appendTo(QUnit.fixture);
 
-            initSpreadsheet(element, { rows: 10, columns: 10, toolbar: false });
+            initSpreadsheet(element, { rows: 10, columns: 10, toolbar: true });
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -311,7 +311,20 @@
         equal(spreadsheet.colHeaderContextMenu(), spreadsheet._view.colHeaderContextMenu);
     });
 
-    asyncTest("activeSheet method triggers selectSheet event", 2, function () {
+    asyncTest("changing format of cell triggers changeFormat event", 2, function () {
+        spreadsheet.bind("changeFormat", function(e) {
+            start();
+            equal(spreadsheet, e.sender);
+            ok(e.range);
+        });
+
+        var formatEditor = spreadsheet.element.find("[data-property=format] [data-role=dropdownlist]").data("kendoDropDownList");
+
+        formatEditor.select(3);
+        formatEditor.trigger("change");
+    });
+
+    asyncTest("click on add sheet button triggers selectSheet event", 2, function () {
         var newSheet = spreadsheet.insertSheet();
         var oldSheet = spreadsheet.activeSheet();
 

@@ -375,6 +375,10 @@
                 this.trigger("select", e);
             },
 
+            _workbookChangeFormat: function(e) {
+               this.trigger("changeFormat", e);
+            },
+
             _bindWorkbookEvents: function() {
                 this._workbook.bind("cut", this._workbookCut.bind(this));
                 this._workbook.bind("copy", this._workbookCopy.bind(this));
@@ -396,6 +400,7 @@
                 this._workbook.bind("unhideRow", this._workbookUnhideRow.bind(this));
                 this._workbook.bind("unhideColumn", this._workbookUnhideColumn.bind(this));
                 this._workbook.bind("select", this._workbookSelect.bind(this));
+                this._workbook.bind("changeFormat", this._workbookChangeFormat.bind(this));
             },
 
             destroy: function() {
@@ -503,7 +508,8 @@
                 "hideColumn",
                 "unhideRow",
                 "unhideColumn",
-                "select"
+                "select",
+                "changeFormat"
             ]
         });
 
