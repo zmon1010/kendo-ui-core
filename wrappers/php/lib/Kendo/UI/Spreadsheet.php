@@ -308,6 +308,20 @@ class Spreadsheet extends \Kendo\UI\Widget {
     }
 
     /**
+    * Sets the changeFormat event of the Spreadsheet.
+    * Triggered when range format is changed from the UI. Introduced in 2017 Q1.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Spreadsheet
+    */
+    public function changeFormat($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('changeFormat', $value);
+    }
+
+    /**
     * Sets the change event of the Spreadsheet.
     * Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
