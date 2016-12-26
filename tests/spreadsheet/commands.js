@@ -95,9 +95,15 @@
     test("command can be undone", function() {
         sheet.range("B1:C1").value("11/11/2011").format("mm-yy");
 
-        var c = new kendo.spreadsheet.PropertyChangeCommand({ property: "format", value: "d-mmm" });
-        c.range(sheet.range("A1:C1"));
+        var c = new kendo.spreadsheet.PropertyChangeCommand({
+            property: "format",
+            value: "d-mmm",
+            workbook: {
+                trigger: function() {}
+            }
+        });
 
+        c.range(sheet.range("A1:C1"));
         c.exec();
         c.undo();
 
