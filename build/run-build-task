@@ -2,7 +2,11 @@
 
 git clean -dfx src styles dist demos wrappers dpl
 
-npm install
+if [ ! -d "node_modules/" ]; then
+  npm install
+else
+  bundle exec rake npm_utils:install_optionally
+fi
 bundle --without development --path ~/gems
 
 gulp import-dependencies
