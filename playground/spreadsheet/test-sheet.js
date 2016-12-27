@@ -183,4 +183,8 @@ sheet.batch(function(){
     sheet.range("D15").input("=CEILING(C15*C16, 0.01)");
     sheet.range("D16").input("=ROUNDUP(C15*C16, 2)");
 
+    spreadsheet.bind("change", function(ev){
+        console.log(ev);
+    });
+
 }, { recalc: true });
