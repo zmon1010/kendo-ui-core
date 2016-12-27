@@ -31,7 +31,7 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def taghelper_class
-            "#{csharp_class_name}TagHelper"
+            "#{csharp_class}TagHelper"
         end
 
         def csharp_builder_class

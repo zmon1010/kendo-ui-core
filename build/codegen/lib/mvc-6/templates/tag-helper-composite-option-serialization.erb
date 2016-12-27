@@ -8,11 +8,5 @@
                     settings["<%= name %>"] = <%= var_name %>;
                 }
             }
-% if toggleable
-            else if (<%= csharp_name %>.Enabled.HasValue)
-            {
-                settings["<%= name %>"] = <%= csharp_name %>.Enabled;
-            }
-%end
 %end
 

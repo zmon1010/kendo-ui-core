@@ -69,7 +69,7 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def csharp_collection_class_name
-            "#{csharp_item_class_name.pluralize}TagHelper"
+            "#{csharp_item_class.pluralize}TagHelper#{csharp_generic_args}"
         end
 
         def csharp_builder_class
@@ -81,7 +81,7 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def taghelper_class
-            "#{csharp_item_class_name}TagHelper"
+            "#{csharp_item_class}TagHelper#{csharp_generic_args}"
         end
 
         def to_declaration

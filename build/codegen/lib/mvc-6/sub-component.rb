@@ -15,6 +15,7 @@ module CodeGen::MVC6::Wrappers
                     :taghelper_class,
                     :taghelper_parent_class,
                     :taghelper_collection_parent_class,
+                    :csharp_generic_args,
                     :collection_component,
                     :parent
 
@@ -33,6 +34,7 @@ module CodeGen::MVC6::Wrappers
                         settings[:taghelper_parent_class]
                 end
             @taghelper_collection_parent_class = settings[:taghelper_parent_class]
+            @csharp_generic_args = settings[:csharp_generic_args]
             @collection_component = settings[:collection_component]
             @array_reference = settings[:array_reference]
             @options.concat(settings[:options])
