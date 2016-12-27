@@ -38,12 +38,14 @@ module CodeGen::MVC6::Wrappers
                     temp_component_options = self.array_item_options(component, option)
                     temp_component = SubComponent.new(temp_component_options)
                     self.tag_helper(temp_component)
-                    filename = "#{@path}/#{component.path}/#{component.taghelper_class}.cs"
                 elsif option.composite?
                     temp_component_options = self.composite_item_options(component, option)
+                    puts "REAL PATH:"
+                    puts temp_component_options[:path]
                     temp_component = SubComponent.new(temp_component_options)
+                    puts "OBTAINED PATH:"
+                    puts temp_component.path
                     self.tag_helper(temp_component)
-                    filename = "#{@path}/#{component.path}/#{component.taghelper_class}.cs"
                 end
             end
         end
@@ -55,7 +57,7 @@ module CodeGen::MVC6::Wrappers
                 taghelper_parent: component.taghelper_element,
                 taghelper_element: option.csharp_item_class_name,
                 taghelper_class: option.taghelper_class,
-                path: component.name,
+                path: component.path,
                 options: option.item.options,
                 array_reference: option,
                 collection_component: true
@@ -69,7 +71,7 @@ module CodeGen::MVC6::Wrappers
                 taghelper_parent: component.taghelper_element,
                 taghelper_element: option.csharp_class_name,
                 taghelper_class: option.taghelper_class,
-                path: component.name,
+                path: component.path,
                 options: option.options,
                 collection_component: false
             }
