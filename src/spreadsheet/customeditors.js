@@ -72,6 +72,8 @@
             var date = context.range.value();
             if (date != null) {
                 calendar.value(kendo.spreadsheet.numberToDate(date));
+            } else {
+                calendar.value(null);
             }
             var val = context.validation;
             if (val) {
