@@ -69,7 +69,7 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def csharp_collection_class_name
-            "#{csharp_item_class_name}sTagHelper"
+            "#{csharp_item_class_name.pluralize}TagHelper"
         end
 
         def csharp_builder_class
