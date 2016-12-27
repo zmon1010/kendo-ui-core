@@ -14,6 +14,7 @@ module CodeGen::MVC6::Wrappers::Options
         SETTINGS_GENERATED = ERB.new(File.read("build/codegen/lib/mvc-6/templates/composite-option-settings.erb"), 0, '%<>')
         SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/composite-option-serialization.erb"), 0, '%<>')
         TAG_HELPER_SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-composite-option-serialization.erb"), 0, '%<>')
+
         def array?
             false
         end

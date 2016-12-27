@@ -15,9 +15,9 @@ module CodeGen::MVC6::Wrappers
             component.initialize_children()
 
             write_tag_helper(component)
-            write_tag_helper_children(component)
             write_tag_helper_settings(component)
             write_tag_helper_events(component)
+            write_tag_helper_children(component)
         end
 
         def write_tag_helper(component)
@@ -37,10 +37,11 @@ module CodeGen::MVC6::Wrappers
                 if option.array? then
                     temp_component_options = self.array_item_options(component, option)
                     temp_component = SubComponent.new(temp_component_options)
-                    self.tag_helper(temp_component)
+                    #self.tag_helper(temp_component)
                 elsif option.composite?
                     temp_component_options = self.composite_item_options(component, option)
                     temp_component = SubComponent.new(temp_component_options)
+                    temp_component.initialize_children()
                     self.tag_helper(temp_component)
                 end
             end

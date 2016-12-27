@@ -29,6 +29,7 @@ module CodeGen::MVC6::Wrappers
         TAG_HELPER_ARRAY_OPTIONS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-declaration.erb"), 0, '%<>')
         TAG_HELPER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-settings.erb"), 0, '%<>')
         TAG_HELPER_EVENTS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-event-builder.erb"), 0, '%<>')
+        TAG_HELPER_RESTRICT_CHILDREN = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-restrict-children.erb"), 0, '%<>')
 
         def path
             name
@@ -103,16 +104,16 @@ module CodeGen::MVC6::Wrappers
             TAG_HELPER.result(binding)
         end
 
-        def to_tag_helper_array_options
-
-        end
-
         def to_tag_helper_settings
             TAG_HELPER_SETTINGS.result(binding)
         end
 
         def to_tag_helper_events
             TAG_HELPER_EVENTS.result(binding)
+        end
+
+        def to_tag_helper_restrict_children
+            TAG_HELPER_RESTRICT_CHILDREN.result(binding)
         end
 
         # used to render RestrictChildren Attribute

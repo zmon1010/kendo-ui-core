@@ -10,16 +10,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI <%= csharp_class %> TagHelper
     /// </summary>
     [HtmlTargetElement("<%= taghelper_element %>")]
-% if children.any? then
-%   _erbout << "    [RestrictChildren("
-%   children.each do |c|
-%       _erbout << "\"kendo-#{c}\""
-%       if not c.equal?(children.last)
-%           _erbout << ","
-%        end
-%   end
-%   _erbout << ")]\n"
-% end
+    <%= to_tag_helper_restrict_children %>
     public partial class <%= taghelper_class %> : TagHelperBase
     {
         public <%= taghelper_class %>(IKendoHtmlGenerator generator) : base(generator)
@@ -51,7 +42,7 @@ namespace Kendo.Mvc.TagHelpers
             var settings = SerializeSettings();
 
             // TODO: Manually serialized settings go here
-            return Initializer.Initialize(Selector, "<%= csharp_class %>" settings);
+            return Initializer.Initialize(Selector, "<%= csharp_class %>", settings);
         }
     }
 }

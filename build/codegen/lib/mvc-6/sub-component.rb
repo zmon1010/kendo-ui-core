@@ -26,13 +26,7 @@ module CodeGen::MVC6::Wrappers
             @taghelper_collection_parent_element = settings[:taghelper_parent].kebab
             @taghelper_element = settings[:taghelper_element].kebab
             @taghelper_class = settings[:taghelper_class]
-            @taghelper_parent_class =
-                if settings[:collection_component]
-                    then
-                        settings[:array_reference].csharp_collection_class_name
-                    else
-                        settings[:taghelper_parent_class]
-                end
+            @taghelper_parent_class = parent_class(settings)
             @taghelper_collection_parent_class = settings[:taghelper_parent_class]
             @csharp_generic_args = settings[:csharp_generic_args]
             @collection_component = settings[:collection_component]
@@ -44,6 +38,15 @@ module CodeGen::MVC6::Wrappers
         TAG_HELPER_ARRAY = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array.erb"), 0, '%<>')
         TAG_HELPER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-settings.erb"), 0, '%<>')
         TAG_HELPER_EVENTS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-event-builder.erb"), 0, '%<>')
+
+        def parent_class(settings)
+            if settings[:collection_component]
+                then
+                    settings[:array_reference].csharp_collection_class_name
+                else
+                    settings[:taghelper_parent_class]
+            end
+        end
 
         def path
             @path
@@ -74,7 +77,7 @@ module CodeGen::MVC6::Wrappers
         end
 
         def taghelper_structure
-            if collection_component?
+            if collection_component? || children.size > 0
                 "TagStructure.NormalOrSelfClosing"
             else
                 "TagStructure.WithoutEndTag"
