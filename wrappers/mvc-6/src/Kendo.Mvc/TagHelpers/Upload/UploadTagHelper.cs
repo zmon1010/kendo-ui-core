@@ -10,7 +10,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI Upload TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-upload")]
-    [RestrictChildren("kendo-upload-async-settings","kendo-upload-files","kendo-upload-localization-settings","kendo-upload-validation-settings")]
+    [RestrictChildren("kendo-upload-async-settings", "kendo-upload-files", "kendo-upload-localization-settings", "kendo-upload-validation-settings")]
     public partial class UploadTagHelper : TagHelperBase
     {
         public UploadTagHelper(IKendoHtmlGenerator generator) : base(generator)
@@ -38,14 +38,13 @@ namespace Kendo.Mvc.TagHelpers
             output.MergeAttributes(tagBuilder);
         }
 
-        protected override void WriteInitializationScript(TagHelperOutput output)
+        protected override string GetInitializationScript()
         {
             var settings = SerializeSettings();
 
             // TODO: Manually serialized settings go here
 
-            var initializationScript = Initializer.Initialize(Selector, "Upload", settings);
-            output.PostElement.SetHtmlContent("<script>" + initializationScript + "</script>");
+            return Initializer.Initialize(Selector, "Upload", settings);
         }
     }
 }

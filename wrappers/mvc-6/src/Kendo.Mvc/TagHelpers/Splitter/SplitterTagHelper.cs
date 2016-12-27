@@ -40,7 +40,7 @@ namespace Kendo.Mvc.TagHelpers
             output.MergeAttributes(tagBuilder);
         }
 
-        protected override void WriteInitializationScript(TagHelperOutput output)
+        protected override string GetInitializationScript()
         {
             var settings = SerializeSettings();
             var panes = Panes.Select(i => i.SerializeSettings());
@@ -54,20 +54,8 @@ namespace Kendo.Mvc.TagHelpers
                 settings["orientation"] = Orientation;
             }
 
-            var initializationScript = Initializer.Initialize(Selector, "Splitter", settings);
-
-            output.PostElement.SetHtmlContent("<script>" + initializationScript + "</script>");
+            return Initializer.Initialize(Selector, "Splitter", settings);
         }
-
-        public override void Process(TagHelperContext context, TagHelperOutput output)
-        {
-            VerifySettings();
-
-            WriteHtml(output);
-
-            WriteInitializationScript(output);
-        }
-
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
@@ -81,9 +69,7 @@ namespace Kendo.Mvc.TagHelpers
             var childContent = await output.GetChildContentAsync();
             parents.Remove(this);
 
-            VerifySettings();
-            WriteHtml(output);
-            WriteInitializationScript(output);
+            base.Process(context, output);
         }
     }
 }
