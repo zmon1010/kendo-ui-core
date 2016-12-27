@@ -76,6 +76,7 @@
                 sheet.triggerChange({
                     recalc : name == "formula" || name == "value" || name == "validation",
                     value  : value,
+                    range  : self,
                     ref    : self._ref
                 });
             }

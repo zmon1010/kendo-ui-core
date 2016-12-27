@@ -85,6 +85,19 @@
         spreadsheet._controller._execute({ command: "EditCommand" });
     });
 
+    test("change event's range contains points to the right sheet", function(){
+        spreadsheet.insertSheet({ name: "first" });
+        var s1 = spreadsheet.sheetByName("first");
+        spreadsheet.insertSheet({ name: "second" });
+        var s2 = spreadsheet.sheetByName("second");
+        spreadsheet.activeSheet(s1);
+        spreadsheet.bind("change", function(ev){
+            equal(ev.range._sheet.name(), "second");
+            equal(spreadsheet.activeSheet().name(), "first");
+        });
+        s2.range("A1").value("foo");
+    });
+
     test("onMouseDown is prevented if editor is not deactivated", 1, function() {
         spreadsheet._workbook.execute = function () {
             return { reason: "error" };
