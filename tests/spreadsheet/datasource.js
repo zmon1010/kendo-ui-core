@@ -133,6 +133,26 @@
         equal(binder.dataSource.at(0).foo, "baz");
     });
 
+    test("changing sheet value is supported for column ranges", function() {
+        var binder = new SheetDataSourceBinder({
+            columns: [
+                { field: "foo" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: "foo1", bar: "bar1" },
+                    { foo: "foo2", bar: "bar2" },
+                    { foo: "foo3", bar: "bar3" }
+                ]
+            },
+            sheet: sheet
+        });
+
+        sheet.range("A:A").value(1);
+
+        equal(binder.dataSource.at(0).foo, 1);
+    });
+
     test("changing sheet value of non bound column does not modify the data record", function() {
         var binder = new SheetDataSourceBinder({
             columns: [

@@ -254,13 +254,15 @@
                             title: sheet.name()
                         }, [dom.text(sheet.name())]));
 
-                        var deleteIcon = element("span", {
-                            className: classNames.sheetsBarKIcon + EMPTYCHAR + classNames.sheetsBarKFontIcon + EMPTYCHAR + classNames.sheetsBarKIconX
-                        }, []);
+                        if (sheets.length > 1) {
+                            var deleteIcon = element("span", {
+                                className: classNames.sheetsBarKIcon + EMPTYCHAR + classNames.sheetsBarKFontIcon + EMPTYCHAR + classNames.sheetsBarKIconX
+                            }, []);
 
-                        elementContent.push(element("span", {
-                            className: classNames.sheetsBarKLink + EMPTYCHAR + classNames.sheetsBarRemove
-                        }, [deleteIcon]));
+                            elementContent.push(element("span", {
+                                className: classNames.sheetsBarKLink + EMPTYCHAR + classNames.sheetsBarRemove
+                            }, [deleteIcon]));
+                        }
                     }
 
                     sheetElements.push(element("li", attr, elementContent));

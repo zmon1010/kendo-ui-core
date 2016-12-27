@@ -92,10 +92,10 @@
                 });
 
                 this._skipRebind = true;
+                var normalizedRef = this.sheet._grid.normalize(e.ref);
+                var values = this.sheet.range(normalizedRef).values();
 
-                var values = this.sheet.range(e.ref).values();
-
-                e.ref.forEach(function(ref) {
+                normalizedRef.forEach(function(ref) {
                     ref = ref.toRangeRef();
                     var record;
                     var valueIndex = 0;
