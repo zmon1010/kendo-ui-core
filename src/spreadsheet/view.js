@@ -288,7 +288,8 @@
         if (validation && !validation.value) {
             children.push(kendo.dom.element("span", { className: "k-dirty" }));
             classNames.push("k-dirty-cell");
-            properties.title = validation._getOptions().messageTemplate;
+
+            properties.title = validation.message;
         }
         properties.className = classNames.join(" ");
 
@@ -454,7 +455,7 @@
                 children.push(kendo.dom.element("span", { className: "k-dirty" }));
 
                 className = (className || "") + (className ? " " : "") + "k-dirty-cell";
-                properties.title = validation._getOptions().messageTemplate;
+                properties.title = validation.message;
             }
 
             if (className) {

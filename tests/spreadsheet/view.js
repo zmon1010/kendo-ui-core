@@ -96,6 +96,19 @@
         equal(topCell.attr("title"), title);
     });
 
+    test("cell title is correctly formatted", function() {
+        var title = "{0}{1}{2}{3}{4}{5}{6}{7}";
+        var cell = singleCell({
+            borderTop: { size: 1, color: "rgb(255, 0 0)" },
+            validation: { from: "10", comparerType: "equalTo", messageTemplate: title }
+        });
+        sheet.fromJSON(cell);
+
+        var topCell = firstDataCell(element);
+
+        equal(topCell.attr("title"), "1010warningequalTo");
+    });
+
     test("renders tabstrip", function() {
         ok(spreadsheet._view.tabstrip instanceof kendo.ui.TabStrip);
         ok($(".k-tabstrip").length);
