@@ -264,13 +264,14 @@
     test("delete button is rendered", function() {
         var name = "Sheet1";
         var sheets = [
+            {name: function() {return name}},
             {name: function() {return name}}
         ];
 
         createSheetsBar();
         sheetsBar.renderSheets(sheets, 0);
 
-        equal(element.find(".k-spreadsheet-sheets-remove").length, 1);
+        equal(element.find(".k-spreadsheet-sheets-remove").length, 2);
     });
 
     test("delete trigger remove on click", function() {
@@ -288,6 +289,19 @@
         });
 
         element.find(".k-spreadsheet-sheets-remove").trigger("click");
+    });
+
+    test("delete button is not shown when single sheet is available", function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var sheets = [
+            {name: function() {return name}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+
+        ok(element.find(".k-spreadsheet-sheets-remove").length === 0);
     });
 
     test('scrolling buttons are not rendered if sheet tabs fit', 3, function () {
