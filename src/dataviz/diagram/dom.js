@@ -961,7 +961,7 @@
                 points: [],
                 selectable: true,
                 fromConnector: AUTO,
-                toConenctor: AUTO
+                toConnector: AUTO
             },
 
             _setOptionsFromModel: function(model) {
