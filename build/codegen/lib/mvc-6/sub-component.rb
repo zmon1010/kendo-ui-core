@@ -42,7 +42,7 @@ module CodeGen::MVC6::Wrappers
         def parent_class(settings)
             if settings[:collection_component]
                 then
-                    settings[:array_reference].csharp_collection_class_name
+                    settings[:array_reference].taghelper_collection_class_name
                 else
                     settings[:taghelper_parent_class]
             end
