@@ -28,7 +28,7 @@ module CodeGen::MVC6::Wrappers
             end
 
             if component.collection_component? then
-                write_file("#{@path}/#{component.path}/#{component.taghelper_class}Collection.cs", component.to_tag_helper_array())
+                write_file("#{@path}/#{component.path}/#{component.taghelper_class}Collection.cs", component.to_tag_helper_collection())
             end
         end
 
@@ -37,7 +37,7 @@ module CodeGen::MVC6::Wrappers
                 if option.array? then
                     temp_component_options = self.array_item_options(component, option)
                     temp_component = SubComponent.new(temp_component_options)
-                    #self.tag_helper(temp_component)
+                    self.tag_helper(temp_component)
                 elsif option.composite?
                     temp_component_options = self.composite_item_options(component, option)
                     temp_component = SubComponent.new(temp_component_options)
@@ -57,7 +57,7 @@ module CodeGen::MVC6::Wrappers
                 csharp_generic_args: option.csharp_generic_args,
                 path: component.path,
                 options: option.item.options,
-                array_reference: option,
+                collection_reference: option,
                 collection_component: true
             }
         end

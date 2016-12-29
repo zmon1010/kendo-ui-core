@@ -21,13 +21,13 @@ module CodeGen::MVC6::Wrappers::Options
         include CodeGen::Array
 
         DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/array-option-declaration.erb"), 0, '%<>')
-        REFERENCE = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-reference.erb"), 0, '%<>')
-        FULL_DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-declaration.erb"), 0, '%<>')
         FACTORY = ERB.new(File.read("build/codegen/lib/mvc-6/templates/composite-option-builder.erb"), 0, '%<>')
         FACTORY_GENERATED = ERB.new(File.read("build/codegen/lib/mvc-6/templates/array-option-factory-generated.erb"), 0, '%<>')
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/templates/composite-option-fluent.erb"), 0, '%<>')
         SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/array-option-serialization.erb"), 0, '%<>')
-        TAG_HELPER_SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-serialization.erb"), 0, '%<>')
+        REFERENCE = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-collection-reference.erb"), 0, '%<>')
+        FULL_DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-collection-declaration.erb"), 0, '%<>')
+        TAG_HELPER_SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-collection-serialization.erb"), 0, '%<>')
 
         def item_class
             ArrayItem
@@ -80,8 +80,12 @@ module CodeGen::MVC6::Wrappers::Options
             "#{csharp_item_class}Factory#{csharp_generic_args}"
         end
 
+        def taghelper_collection_item_class_name
+            csharp_item_class_name + "TagHelper"
+        end
+
         def taghelper_collection_class_name
-            csharp_item_class_name + TagHelper
+            csharp_collection_class_name + "TagHelper"
         end
 
         def taghelper_class

@@ -30,19 +30,19 @@ module CodeGen::MVC6::Wrappers
             @taghelper_collection_parent_class = settings[:taghelper_parent_class]
             @csharp_generic_args = settings[:csharp_generic_args]
             @collection_component = settings[:collection_component]
-            @array_reference = settings[:array_reference]
+            @collection_reference = settings[:collection_reference]
             @options.concat(settings[:options])
         end
 
         TAG_HELPER = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-sub.erb"), 0, '%<>')
-        TAG_HELPER_ARRAY = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array.erb"), 0, '%<>')
+        TAG_HELPER_COLLECTION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-collection.erb"), 0, '%<>')
         TAG_HELPER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-settings.erb"), 0, '%<>')
         TAG_HELPER_EVENTS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-event-builder.erb"), 0, '%<>')
 
         def parent_class(settings)
             if settings[:collection_component]
                 then
-                    settings[:array_reference].taghelper_collection_class_name
+                    settings[:collection_reference].taghelper_collection_class_name
                 else
                     settings[:taghelper_parent_class]
             end
@@ -52,8 +52,8 @@ module CodeGen::MVC6::Wrappers
             @path
         end
 
-        def array_reference
-            @array_reference
+        def collection_reference
+            @collection_reference
         end
 
         def composite_component?
@@ -88,12 +88,12 @@ module CodeGen::MVC6::Wrappers
             TAG_HELPER.result(binding)
         end
 
-        def to_tag_helper_array
-            TAG_HELPER_ARRAY.result(binding)
+        def to_tag_helper_collection
+            TAG_HELPER_COLLECTION.result(binding)
         end
 
-        def to_tag_helper_array_reference
-            array_reference.to_reference
+        def to_tag_helper_collection_reference
+            collection_reference.to_reference
         end
 
         def to_tag_helper_settings

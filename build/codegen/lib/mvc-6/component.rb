@@ -26,7 +26,7 @@ module CodeGen::MVC6::Wrappers
         BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component-builder.erb"), 0, '%<>')
         BUILDER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component-builder-settings.erb"), 0, '%<>')
         TAG_HELPER = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper.erb"), 0, '%<>')
-        TAG_HELPER_ARRAY_OPTIONS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-array-option-declaration.erb"), 0, '%<>')
+        TAG_HELPER_COLLECTION = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-collection-declaration.erb"), 0, '%<>')
         TAG_HELPER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-settings.erb"), 0, '%<>')
         TAG_HELPER_EVENTS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-event-builder.erb"), 0, '%<>')
         TAG_HELPER_RESTRICT_CHILDREN = ERB.new(File.read("build/codegen/lib/mvc-6/templates/tag-helper-restrict-children.erb"), 0, '%<>')

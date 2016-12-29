@@ -11,11 +11,11 @@ namespace Kendo.Mvc.TagHelpers
     [HtmlTargetElement("<%= taghelper_collection_element %>", ParentTag="<%= taghelper_collection_parent_element %>")]
     [RestrictChildren("<%= taghelper_element %>")]
     [SupressTagRendering]
-    public partial class <%= array_reference.taghelper_collection_class_name %> : TagHelperCollectionBase<<%= array_reference.csharp_item_class_name + "TagHelper" %>>
+    public partial class <%= collection_reference.taghelper_collection_class_name %> : TagHelperCollectionBase<<%= collection_reference.csharp_item_class_name + "TagHelper" %>>
     {
-% _erbout << to_tag_helper_array_reference
+% _erbout << to_tag_helper_collection_reference
 
-        public <%= array_reference.taghelper_collection_class_name %>() : base(new List<<%= array_reference.csharp_item_class_name + "TagHelper" %>>())
+        public <%= collection_reference.taghelper_collection_class_name %>() : base(new List<<%= collection_reference.csharp_item_class_name + "TagHelper" %>>())
         {
 
         }
