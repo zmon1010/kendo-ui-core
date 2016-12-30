@@ -7,7 +7,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI localization TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-upload-localization-settings", ParentTag="kendo-upload", TagStructure=TagStructure.WithoutEndTag )]
-    [SupressTagRendering]
+    [SuppressTagRendering]
     public partial class UploadLocalizationSettingsTagHelper : TagHelperChildBase
     {
         public UploadLocalizationSettingsTagHelper() : base()

@@ -2,7 +2,7 @@
 
 namespace Kendo.Mvc.TagHelpers
 {
-    public class SupressTagRenderingAttribute : Attribute
+    public class SuppressTagRenderingAttribute : Attribute
     {
     }
 }

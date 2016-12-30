@@ -7,7 +7,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI validation TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-upload-validation-settings", ParentTag="kendo-upload", TagStructure=TagStructure.WithoutEndTag )]
-    [SupressTagRendering]
+    [SuppressTagRendering]
     public partial class UploadValidationSettingsTagHelper : TagHelperChildBase
     {
         public UploadValidationSettingsTagHelper() : base()

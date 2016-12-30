@@ -26,7 +26,7 @@ namespace Kendo.Mvc.TagHelpers
         protected abstract void AddSelfToParent(TagHelperContext context);
         private bool SuppressTagRendering()
         {
-            return GetType().GetTypeInfo().GetCustomAttributes(true).Any(p => p.GetType() == typeof(SupressTagRenderingAttribute));
+            return GetType().GetTypeInfo().GetCustomAttributes(true).Any(p => p.GetType() == typeof(SuppressTagRenderingAttribute));
         }
     }
 }

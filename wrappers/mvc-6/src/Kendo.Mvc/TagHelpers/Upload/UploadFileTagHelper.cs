@@ -7,7 +7,7 @@ namespace Kendo.Mvc.TagHelpers
     /// Kendo UI UploadFile TagHelper
     /// </summary>
     [HtmlTargetElement("kendo-upload-file", ParentTag="kendo-upload-files", TagStructure=TagStructure.WithoutEndTag)]
-    [SupressTagRendering]
+    [SuppressTagRendering]
     public partial class UploadFileTagHelper : TagHelperCollectionItemBase
     {
         public UploadFileTagHelper() : base()
