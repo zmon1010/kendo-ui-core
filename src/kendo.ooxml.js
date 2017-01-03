@@ -447,7 +447,7 @@ var Worksheet = kendo.Class.extend({
                 from: ref(filterRowIndex(this.options), autoFilter.from),
                 to: ref(filterRowIndex(this.options), autoFilter.to)
             };
-        } else if (autoFilter) {
+        } else if (autoFilter && autoFilter.ref && autoFilter.columns) {
             // this is probably from the Spreadsheet
             filter = autoFilter;
             autoFilter = null;
@@ -1098,7 +1098,7 @@ var SPREADSHEET_CUSTOM_FILTER = kendo.template(
 );
 
 var SPREADSHEET_DYNAMIC_FILTER = kendo.template(
-  '<dynamicFilter type="${type}" />'
+  '<dynamicFilter type="${kendo.ooxml.spreadsheetFilters.dynamicFilterType(type)}" />'
 );
 
 var SPREADSHEET_TOP_FILTER = kendo.template(
@@ -1165,6 +1165,27 @@ spreadsheetFilters.customValue = function(f) {
         return "*" + esc(f.value) + "*";
     }
     return f.value;
+};
+
+spreadsheetFilters.dynamicFilterType = function(type) {
+    return {
+        quarter1  : "Q1",
+        quarter2  : "Q2",
+        quarter3  : "Q3",
+        quarter4  : "Q4",
+        january   : "M1",
+        february  : "M2",
+        march     : "M3",
+        april     : "M4",
+        may       : "M5",
+        june      : "M6",
+        july      : "M7",
+        august    : "M8",
+        september : "M9",
+        october   : "M10",
+        november  : "M11",
+        december  : "M12"
+    }[type.toLowerCase()] || type;
 };
 
 kendo.ooxml = {
