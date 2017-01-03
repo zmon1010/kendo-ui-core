@@ -542,7 +542,10 @@ var Box = Class.extend({
     },
 
     wrapPoint: function(point) {
-        this.wrap(new Box(point.x, point.y, point.x, point.y));
+        var arrayPoint = isArray(point);
+        var x = arrayPoint ? point[0] : point.x;
+        var y = arrayPoint ? point[1] : point.y;
+        this.wrap(new Box(x, y, x, y));
 
         return this;
     },
@@ -3193,13 +3196,17 @@ var Axis = ChartElement.extend({
                     item.hide();
                 }
 
-                slot = this$1.getSlot(value);
+                slot = this$1.noteSlot(value);
             } else {
                 item.hide();
             }
 
             item.reflow(slot || this$1.lineBox());
         }
+    },
+
+    noteSlot: function(value) {
+        return this.getSlot(value);
     },
 
     alignTo: function(secondAxis) {
@@ -3509,13 +3516,14 @@ var CategoryAxis = Axis.extend({
         var ref = this;
         var box = ref.box;
         var labels = ref.labels;
-        var valueAxis = this.options.vertical ? Y : X;
-        var start = box[valueAxis + 1];
-        var end = box[valueAxis + 2];
-        var firstLabel = labels[0];
-        var lastLabel = last(labels);
 
         if (labels.length) {
+            var valueAxis = this.options.vertical ? Y : X;
+            var start = box[valueAxis + 1];
+            var end = box[valueAxis + 2];
+            var firstLabel = labels[0];
+            var lastLabel = last(labels);
+
             if (firstLabel.box[valueAxis + 1] > end || firstLabel.box[valueAxis + 2] < start) {
                 firstLabel.options.visible = false;
             }
@@ -3741,9 +3749,38 @@ var CategoryAxis = Axis.extend({
     },
 
     shouldRenderNote: function(value) {
-        var categories = this.options.categories;
+        var range = this.totalRangeIndices();
 
-        return categories.length && (categories.length > value && value >= 0);
+        return Math.floor(range.min) <= value && value <= Math.ceil(range.max);
+    },
+
+    noteSlot: function(value) {
+        var options = this.options;
+        var index = value - Math.floor(options.min || 0);
+        return this.getSlot(index);
+    },
+
+    arrangeNotes: function() {
+        Axis.fn.arrangeNotes.call(this);
+        this.hideOutOfRangeNotes();
+    },
+
+    hideOutOfRangeNotes: function() {
+        var ref = this;
+        var notes = ref.notes;
+        var box = ref.box;
+        if (notes && notes.length) {
+            var valueAxis = this.options.vertical ? Y : X;
+            var start = box[valueAxis + 1];
+            var end = box[valueAxis + 2];
+
+            for (var idx = 0; idx < notes.length; idx++) {
+                var note = notes[idx];
+                if (note.box && (end < note.box[valueAxis + 1] || note.box[valueAxis + 2] < start)) {
+                    note.hide();
+                }
+            }
+        }
     },
 
     pan: function(delta) {
@@ -4149,6 +4186,10 @@ var DateCategoryAxis = CategoryAxis.extend({
 
     parseNoteValue: function(value) {
         return parseDate(this.chartService.intl, value);
+    },
+
+    noteSlot: function(value) {
+        return this.getSlot(value);
     },
 
     translateRange: function(delta) {
