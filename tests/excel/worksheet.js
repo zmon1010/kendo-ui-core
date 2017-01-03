@@ -1548,4 +1548,203 @@ test("Hides rows with height zero", function(){
     equal(row[0].getAttribute("hidden"), "1");
 });
 
+/* -----[ Spreadsheet Filters ]----- */
+
+test("CustomFilter (numeric ops)", function(){
+    var worksheet = Worksheet({
+        columns: [ {}, {} ],
+        filter: {
+            ref: "A1:B2",
+            columns: [
+                { index: 0, filter: "custom", logic: "and",
+                  criteria: [
+                      { operator: "gt", value: 5 },
+                      { operator: "lt", value: 10 },
+                      { operator: "eq", value: 7 },
+                      { operator: "ne", value: 2 },
+                      { operator: "gte", value: 5 },
+                      { operator: "lte", value: 10 },
+                  ]
+                }
+            ]
+        }
+    });
+    var dom = $(worksheet.toXML());
+
+    var af = dom.find("autoFilter");
+    equal(af.attr("ref"), "A1:B2");
+
+    var cols = af.find("filterColumn");
+    equal(cols.attr("colid"), 0);
+
+    var cfs = cols.find("customFilters");
+    equal(cfs.attr("and"), 1);
+
+    cfs = cols.find("customFilters customFilter");
+
+    equal(cfs.eq(0).attr("operator"), "greaterThan");
+    equal(cfs.eq(0).attr("val"), "5");
+
+    equal(cfs.eq(1).attr("operator"), "lessThan");
+    equal(cfs.eq(1).attr("val"), "10");
+
+    equal(cfs.eq(2).attr("operator"), "equal");
+    equal(cfs.eq(2).attr("val"), "7");
+
+    equal(cfs.eq(3).attr("operator"), "notEqual");
+    equal(cfs.eq(3).attr("val"), "2");
+
+    equal(cfs.eq(4).attr("operator"), "greaterThanOrEqual");
+    equal(cfs.eq(4).attr("val"), "5");
+
+    equal(cfs.eq(5).attr("operator"), "lessThanOrEqual");
+    equal(cfs.eq(5).attr("val"), "10");
+});
+
+test("CustomFilter (text ops)", function(){
+    var worksheet = Worksheet({
+        columns: [ {}, {} ],
+        filter: {
+            ref: "A1:B2",
+            columns: [
+                { index: 0, filter: "custom", logic: "or",
+                  criteria: [
+                      { operator: "startswith", value: "foo" },
+                      { operator: "doesnotstartwith", value: "bar" },
+                      { operator: "endswith", value: "bar" },
+                      { operator: "doesnotendwith", value: "foo" },
+                      { operator: "contains", value: "x" },
+                      { operator: "doesnotcontain", value: "y" }
+                  ]
+                }
+            ]
+        }
+    });
+    var dom = $(worksheet.toXML());
+    var cfs = dom.find("customFilters");
+    equal(cfs.attr("and"), null);
+
+    cfs = cfs.find("customFilter");
+    equal(cfs.eq(0).attr("operator"), null);
+    equal(cfs.eq(0).attr("val"), "foo*");
+
+    equal(cfs.eq(1).attr("operator"), "notEqual");
+    equal(cfs.eq(1).attr("val"), "bar*");
+
+    equal(cfs.eq(2).attr("operator"), null);
+    equal(cfs.eq(2).attr("val"), "*bar");
+
+    equal(cfs.eq(3).attr("operator"), "notEqual");
+    equal(cfs.eq(3).attr("val"), "*foo");
+
+    equal(cfs.eq(4).attr("operator"), null);
+    equal(cfs.eq(4).attr("val"), "*x*");
+
+    equal(cfs.eq(5).attr("operator"), "notEqual");
+    equal(cfs.eq(5).attr("val"), "*y*");
+});
+
+test("CustomFilter escapes wildcards for text operators", function(){
+    var worksheet = Worksheet({
+        columns: [ {}, {} ],
+        filter: {
+            ref: "A1:B2",
+            columns: [
+                { index: 0, filter: "custom", logic: "or",
+                  criteria: [
+                      { operator: "startswith", value: "*" },
+                      { operator: "doesnotstartwith", value: "?" },
+                      { operator: "endswith", value: "*" },
+                      { operator: "doesnotendwith", value: "?" },
+                      { operator: "contains", value: "*" },
+                      { operator: "doesnotcontain", value: "?" }
+                  ]
+                }
+            ]
+        }
+    });
+    var dom = $(worksheet.toXML());
+    var cfs = dom.find("customFilters customFilter");
+    equal(cfs.eq(0).attr("val"), "~**");
+    equal(cfs.eq(1).attr("val"), "~?*");
+    equal(cfs.eq(2).attr("val"), "*~*");
+    equal(cfs.eq(3).attr("val"), "*~?");
+    equal(cfs.eq(4).attr("val"), "*~**");
+    equal(cfs.eq(5).attr("val"), "*~?*");
+});
+
+test("DynamicFilter", function(){
+    var worksheet = Worksheet({
+        columns: [ {}, {} ],
+        filter: {
+            ref: "A1:D2",
+            columns: [
+                { index: 0, filter: "dynamic", type: "aboveAverage" },
+                { index: 1, filter: "dynamic", type: "belowAverage" },
+                { index: 2, filter: "dynamic", type: "quarter1" },
+                { index: 3, filter: "dynamic", type: "march" },
+            ]
+        }
+    });
+    var dom = $(worksheet.toXML());
+    var cols = dom.find("filterColumn");
+
+    equal(cols.eq(0).find("dynamicfilter").attr("type"), "aboveAverage");
+    equal(cols.eq(1).find("dynamicfilter").attr("type"), "belowAverage");
+    equal(cols.eq(2).find("dynamicfilter").attr("type"), "Q1");
+    equal(cols.eq(3).find("dynamicfilter").attr("type"), "M3");
+});
+
+test("TopFilter", function(){
+    var worksheet = Worksheet({
+        columns: [ {}, {} ],
+        filter: {
+            ref: "A1:D2",
+            columns: [
+                { index: 0, filter: "top", type: "topPercent", value: 20 },
+                { index: 1, filter: "top", type: "topNumber", value: 30 },
+                { index: 2, filter: "top", type: "bottomPercent", value: 40 },
+                { index: 3, filter: "top", type: "bottomNumber", value: 50 },
+            ]
+        }
+    });
+    var dom = $(worksheet.toXML());
+    var cols = dom.find("filterColumn");
+
+    equal(cols.eq(0).find("top10").attr("percent"), 1);
+    equal(cols.eq(0).find("top10").attr("top"), 1);
+    equal(cols.eq(0).find("top10").attr("val"), 20);
+
+    equal(cols.eq(1).find("top10").attr("percent"), 0);
+    equal(cols.eq(1).find("top10").attr("top"), 1);
+    equal(cols.eq(1).find("top10").attr("val"), 30);
+
+    equal(cols.eq(2).find("top10").attr("percent"), 1);
+    equal(cols.eq(2).find("top10").attr("top"), 0);
+    equal(cols.eq(2).find("top10").attr("val"), 40);
+
+    equal(cols.eq(3).find("top10").attr("percent"), 0);
+    equal(cols.eq(3).find("top10").attr("top"), 0);
+    equal(cols.eq(3).find("top10").attr("val"), 50);
+});
+
+test("ValueFilter", function(){
+    var worksheet = Worksheet({
+        columns: [ {}, {} ],
+        filter: {
+            ref: "A1:B2",
+            columns: [
+                { index: 0, filter: "value", values: [ 1, 2, 3 ], blanks: false },
+                { index: 1, filter: "value", values: [ "foo", "bar" ], blanks: true },
+            ]
+        }
+    });
+    var dom = $(worksheet.toXML());
+    var cols = dom.find("filterColumn");
+
+    // XXX: checking the HTML is ugly, but short.
+    equal(cols.eq(0).html(), '<filters><filter val="1"></filter><filter val="2"></filter><filter val="3"></filter></filters>');
+    equal(cols.eq(1).html(), '<filters blank="1"><filter val="foo"></filter><filter val="bar"></filter></filters>');
+});
+
 }());
