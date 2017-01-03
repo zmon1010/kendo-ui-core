@@ -11763,7 +11763,7 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
+            <description>The filtering method used to determine the suggestions for the current value. Filtration is turned off by default, and can be performed over string values only (either the widget's data has to be an array of strings, or over the field, configured in the dataTextField option).
 The supported filter values are startswith, endswith and contains.</description>
             <name>filter</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18863,7 +18863,7 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
+            <description>The filtering method used to determine the suggestions for the current value. Filtration is turned off by default, and can be performed over string values only (either the widget's data has to be an array of strings, or over the field, configured in the dataTextField option).
 The supported filter values are startswith, endswith and contains.</description>
             <name>filter</name>
             <rtexprvalue>true</rtexprvalue>
@@ -27714,7 +27714,7 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The filtering method used to determine the suggestions for the current value. Filtration is turned of by default.
+            <description>The filtering method used to determine the suggestions for the current value. Filtration is turned of by default, and can be performed over string values only (either the widget's data has to be an array of strings, or over the field, configured in the dataTextField option).
 The supported filter values are startswith, endswith and contains.</description>
             <name>filter</name>
             <rtexprvalue>true</rtexprvalue>
