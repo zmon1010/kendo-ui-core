@@ -12908,7 +12908,7 @@ function applyAxisDefaults(options, themeOptions) {
     var axisName, axisDefaults, axes;
 
     function mapAxisOptions(axisOptions) {
-        var axisColor = (axisOptions || {}).color;
+        var axisColor = (axisOptions || {}).color || axisDefaults.color;
         var result = deepExtend({},
             themeAxisDefaults,
             themeAxisDefaults[axisName],
