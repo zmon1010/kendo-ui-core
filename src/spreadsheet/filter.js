@@ -93,6 +93,7 @@
         toJSON: function() {
             return {
                 filter: "value",
+                blanks: this._blanks,
                 values: this._values.slice(0)
             };
         }
