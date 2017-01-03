@@ -2971,7 +2971,7 @@ html.k-materialblack .demo-section.k-content {
 }
 
 @media only screen and (max-width : 1199px) {
-  
+
 /* Homepage */
   #overview {
     margin: 0;
@@ -2979,15 +2979,15 @@ html.k-materialblack .demo-section.k-content {
     padding-right: 20px;
     text-align: left;
   }
-  
+
   #overview h1 {
     padding-top: 1.2em;
   }
-  
+
   #overview-tools h2 {
     padding-top: 2.5em;
   }
-  
+
   #overview h3 {
     font-size: 13px;
   }
@@ -2995,7 +2995,7 @@ html.k-materialblack .demo-section.k-content {
   #applications-and-tools {
     width: 100%;
   }
-  
+
   #overview-widgets h2,
   #most-popular h3,
   #most-popular .overview-col,
@@ -3003,84 +3003,84 @@ html.k-materialblack .demo-section.k-content {
     padding-left: 0;
     width: 100%;
   }
-  
+
   #overview-widgets ul li {
     font-size: 16px;
     line-height: 18px;
     padding: 0 0 1em;
   }
-  
+
   #most-popular,
   #widgets-all {
     display: block;
     text-align: left;
   }
-  
+
   #most-popular:after {
     content:"";
     display:block;
     clear:both;
   }
-  
+
   #most-popular li {
     float: left;
     width: 25%;
   }
-  
+
   #most-popular a{
     line-height: 26px;
     padding: 0;
   }
-  
+
   #mobileDemosQR {
     margin: 6px 0 0 0;
   }
-  
+
   .popular-widgets {
     float: left;
     width: 79%;
     margin-bottom: 0em;
   }
-  
+
   .qr-code {
     display: inline-block;
     width: 20%;
   }
-  
+
   #widgets-all {
     width: 79%;
   }
-  
+
   #widgets-all .overview-col.col-four:first-child:before {
     display: none;
   }
-  
+
   #widgets-all .overview-col.col-four {
     margin-left: -10px;
     width: calc(25% + 10px);
   }
-  
+
   #widgets-all .overview-col.col-four:first-child {
     margin-left: 0;
     width: 25%;
   }
-  
+
   #widgets-all .overview-col.col-four ul,
   #widgets-all .overview-col.col-four h3 {
     padding-left: 11px;
     margin-left: 0;
   }
-  
+
   #widgets-all .overview-col.col-four:first-child ul,
   #widgets-all .overview-col.col-four:first-child h3 {
     padding-left: 0;
     margin-left: 0;
   }
-  
+
   #applications-and-tools {
     width: 80%;
   }
-  
+
   .application {
     width: 25%;
   }
@@ -3088,7 +3088,7 @@ html.k-materialblack .demo-section.k-content {
   #webinar-banner {
    font-size: 1.4em;
   }
-  
+
 /* Single Demo Page */
 
   #example-sidebar {
@@ -3101,48 +3101,48 @@ html.k-materialblack .demo-section.k-content {
     -moz-box-shadow: 5px 0 15px 0 rgba(0,0,0,.15);
     box-shadow: 5px 0 15px 0 rgba(0,0,0,.15);
   }
-  
+
   .themechooser:before,
   .themechooser:after {
     background-position: -1px 0;
   }
-  
+
   .themechooser:after {
     background-position: 0 0;
   }
-  
+
   .tc-theme-list{
     padding: 3.333em;
   }
-  
+
   #exampleTitle {
     margin: 1.667em;
   }
-  
+
   #exampleWrap {
     margin: 3.333em;
   }
-  
+
   #codeStrip {
     margin: 3.333em;
   }
-  
+
   #wrappers-source-code {
     margin: 3.333em 3.333em -1em;
   }
-  
+
   #resources-technologies {
     margin: 3.333em 0 0;
     padding: 3.333em 3.333em 1.667em;
     border-width: 1px 0 0;
   }
-  
+
 }
 
 @media only screen and (max-width : 900px) {
-  
+
 /* Homepage */
-  
+
   .popular-widgets {
     width: 75%;
   }
@@ -3152,66 +3152,66 @@ html.k-materialblack .demo-section.k-content {
   #most-popular li {
     width: 33%;
   }
-  
+
   #widgets-all {
     width: 100%;
   }
-  
+
   #applications-and-tools {
     width: 100%;
   }
-  
+
 /* Single Demo Page */
 
   .tc-theme-list {
     padding: 1.667em;
   }
-  
+
   #exampleTitle {
     margin: 1.667em 0.833em 0.833em;
   }
-  
+
   #exampleWrap {
     margin: 1.667em;
   }
-  
+
   #wrappers-source-code {
     margin: 3.333em 1.667em 0;
   }
-  
+
   #wrappers-source-code h2 {
     float: left;
   }
-  
+
   .other-source {
     margin-bottom: 2em;
   }
-  
+
   #codeStrip {
     margin: 1.667em 1.667em 3.333em;
   }
-  
+
   #resources-technologies {
     margin: 1.667em 0 0;
     padding: 1.667em 1.667em 0;
     border-width: 1px 0 0;
   }
-  
+
   #exampleWrap .box {
     margin: 1.667rem auto;
     padding: 1.667rem;
   }
-  
+
   #codeStrip .prettyprint {
     padding: 5px;
   }
-  
+
   .tc-theme-list .themes-grid {
     -moz-columns: 3;
     -webkit-columns: 3;
     max-width: 700px;
   }
-  
+
   #source-code > div.k-content {
     height: 500px;
     overflow: scroll;
@@ -3222,34 +3222,34 @@ html.k-materialblack .demo-section.k-content {
 @media only screen and (max-width : 720px) {
 
 /* Homepage */
-  
+
   .btn {
     border: 0;
     line-height: 2em;
     border-radius: 0;
     margin: 0;
   }
-  
+
   .btn-primary {
     margin-right: 0;
   }
-  
+
   #logo-bar {
     margin-top: 0;
     margin-bottom: 0;
   }
-  
+
   #logo-bar a {
     display: block;
     text-align: center;
     padding-top: 1em;
     padding-bottom: 1em;
   }
-  
+
   #logo-bar span {
     display: none;
   }
-  
+
   #overview {
     padding-bottom: 260px;
   }
@@ -3257,22 +3257,22 @@ html.k-materialblack .demo-section.k-content {
     padding-left: 10px;
     padding-right: 10px;
   }
-  
+
   #layout-search-wrapper {
     padding: 1.467em;
   }
-  
+
   .popular-widgets {
     width: 100%;
   }
   .qr-code {
     display: none;
   }
-  
+
   #most-popular li {
     width: 50%;
   }
-  
+
   #widgets-all {
     width: 100%;
   }
@@ -3280,29 +3280,29 @@ html.k-materialblack .demo-section.k-content {
   #widgets-all .overview-col.col-four:nth-child(odd):before {
     display: none;
   }
-  
+
   #widgets-all .overview-col.col-four {
     margin-left: -10px;
     width: calc(50% + 10px);
   }
-  
+
   #widgets-all .overview-col.col-four:nth-child(odd) {
     margin-left: 0;
     width: 50%;
   }
-  
+
   #widgets-all .overview-col.col-four ul,
   #widgets-all .overview-col.col-four h3 {
     padding-left: 11px;
     margin-left: 0;
   }
-  
+
   #widgets-all .overview-col.col-four:nth-child(odd) ul,
   #widgets-all .overview-col.col-four:nth-child(odd) h3 {
     padding-left: 0;
     margin-left: 0;
   }
-  
+
   .footer-links {
     display: block;
     float: left;
@@ -3314,41 +3314,41 @@ html.k-materialblack .demo-section.k-content {
     clear: both;
     padding-top: 20px;
   }
-  
+
   .application {
     width: 50%;
   }
-  
-  
-  
+
+
+
   .themechooser .tc-activator {
     line-height: 3em;
   }
-  
+
   #sidebar-toggle {
     height: 42px;
     width: 42px;
     line-height: 38px;
   }
-  
+
   .other-source {
     float: left;
     clear: left;
     margin-top: 1.6em;
   }
-  
+
   #codeStrip .try-kendo {
     display: none;
   }
-  
+
   #codeStrip .documentation-link {
     padding: 11px;
   }
-  
+
   #source-code > div.k-content {
     height: 300px;
   }
-  
+
 }
 
 @media only screen and (max-width : 520px) {
@@ -3357,40 +3357,40 @@ html.k-materialblack .demo-section.k-content {
   .nav-buttons {
     display: none;
   }
-  
+
   #logo-bar {
     float: none;
     margin: 0;
   }
-  
+
   #logo-bar a {
     display: block;
     text-align: center;
     padding-top: 1em;
     padding-bottom: 1em;
   }
-  
+
   #logo-bar span {
     display: none;
   }
-  
+
   .popular-widgets {
     float: none;
     width: 100%;
   }
-  
+
   #widgets-all .overview-col.col-four {
     width: 100%;
   }
-  
+
   .application {
     width: 50%;
   }
-  
+
   #widgets-all .overview-col.col-four:before {
     display: none;
   }
-  
+
 /* Single Demo Page */
 
   #exampleWrap .box.description {
@@ -3398,21 +3398,21 @@ html.k-materialblack .demo-section.k-content {
     margin-right: -1.667rem;
     border-width: 1px 0;
   }
-  
+
   .tc-theme-list .themes-grid {
     -moz-columns: 2;
     -webkit-columns: 2;
     max-width: 500px;
   }
-  
+
   #exampleTitle, #wrappers-source-code h2 {
     font-size: 18px;
   }
-  
+
   #exampleTitle {
     margin: 1.667em 1.056em 1.056em;
   }
-  
+
   .demo-section {
     margin: 2em auto;
     padding: 1em;
@@ -3420,44 +3420,44 @@ html.k-materialblack .demo-section.k-content {
 }
 
 @media only screen and (max-width : 420px) {
-  
+
   #most-popular li {
     width: 100%;
   }
-  
+
   .application {
     width: 100%;
   }
-  
+
   .application p {
     font-size: 14px;
   }
-  
+
   .tc-theme-list .themes-grid {
     -moz-columns: 1;
     -webkit-columns: 1;
   }
-  
+
   .tc-column:first-child {
     margin-right: 0;
     padding-right: 0;
   }
-  
+
   .tc-item {
     width: 100%;
     padding: 10px 20px;
     font-size: 16px;
   }
-  
+
   .tc-theme-list ul {
     margin-right: 0;
   }
-  
+
   .tc-column h4+ul {
     margin-left: -20px;
     margin-right: -20px;
   }
-  
+
 }
 
 @media only screen and (max-width : 320px) {
