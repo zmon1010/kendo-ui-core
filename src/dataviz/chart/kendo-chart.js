@@ -11852,6 +11852,10 @@ var Chart = Class.extend({
         this._createMousewheelZoom();
 
         this.trigger(RENDER);
+
+        if (this.domEvents && this.domEvents.cancel) {
+            this.domEvents.cancel();
+        }
     },
 
     exportVisual: function(options) {
