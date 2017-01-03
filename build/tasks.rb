@@ -100,7 +100,7 @@ def uglifyjs(from, to)
 end
 
 def less(from, to)
-    sh "node #{LESSC} #{from} #{to}", :verbose => VERBOSE
+    sh "node #{LESSC} --strict-math=on #{from} #{to}", :verbose => VERBOSE
 end
 
 def cssmin(from, to)
