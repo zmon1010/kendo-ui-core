@@ -1028,6 +1028,8 @@ var ChartElement = Class.extend({
             this.clipRoot().visual.append(childVisual);
         } else if (defined(childVisual.options.zIndex)) {
             this.stackRoot().stackVisual(childVisual);
+        } else if (this.isStackRoot) {
+            this.stackVisual(childVisual);
         } else if (this.visual) {
             this.visual.append(childVisual);
         } else {

@@ -5093,6 +5093,8 @@ var ChartContainer = ChartElement.extend({
     }
 });
 
+ChartContainer.prototype.isStackRoot = true;
+
 var Pane = BoxElement.extend({
     init: function(options) {
         BoxElement.fn.init.call(this, options);
@@ -5279,6 +5281,8 @@ var ID = 1;
 function paneID() {
     return "pane" + ID++;
 }
+
+Pane.prototype.isStackRoot = true;
 
 setDefaultOptions(Pane, {
     zIndex: -1,
