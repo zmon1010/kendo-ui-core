@@ -312,14 +312,14 @@
             chart.destroy();
             ok(!$("#container").data("kendoChart"));
         });
-        
+
         test("destroys instance", 2, function() {
             chart._instance.destroy();
             chart._instance = { destroy: function() { ok(true); } };
             chart.destroy();
             ok(!chart._instance);
         });
-        
+
         test("destroys tooltip", function() {
             chart._tooltip.destroy();
             chart._tooltip = { destroy: function() { ok(true); }, hide: $.noop };
@@ -1635,6 +1635,50 @@
 
     })();
 
+    (function() {
 
+        // ------------------------------------------------------------
+        module("visual sender", {
+            teardown: destroyChart
+        });
+
+
+        test("sender is the chart widget", function() {
+            var sender;
+
+            var chart = createChart({
+                series: [{
+                    type: "bar",
+                    data: [1],
+                    visual: function(e) {
+                       sender = e.sender;
+                    }
+                }]
+            });
+
+            ok(sender === chart);
+        });
+
+        test("sender is the chart widget after partial redraw", function() {
+            var partial;
+
+            var chart = createChart({
+                series: [{
+                    type: "bar",
+                    data: [1],
+                    visual: function(e) {
+                        if (partial) {
+                            ok(chart === e.sender);
+                        }
+                    }
+                }]
+            });
+
+            partial = true;
+            var plotArea = chart._plotArea;
+            plotArea.redraw(plotArea.panes);
+        });
+
+    })();
 
 })();

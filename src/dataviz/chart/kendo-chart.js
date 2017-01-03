@@ -724,7 +724,7 @@ var ErrorBarBase = ChartElement.extend({
                 low: this.low,
                 high: this.high,
                 rect: this.box.toRect(),
-                sender: this.getChart(),
+                sender: this.getSender(),
                 options: {
                     endCaps: options.endCaps,
                     color: options.color,
@@ -2736,7 +2736,7 @@ var Bar = ChartElement.extend({
                     category: this.category,
                     dataItem: this.dataItem,
                     value: this.value,
-                    sender: this.getChart(),
+                    sender: this.getSender(),
                     series: this.series,
                     percentage: this.percentage,
                     stackValue: this.stackValue,
@@ -4774,11 +4774,11 @@ var BaseTooltip = Class.extend({
             options.className = "k-chart-tooltip-inverse";
         }
 
-        this.chartService.chart.trigger(SHOW_TOOLTIP, options);
+        this.chartService.notify(SHOW_TOOLTIP, options);
     },
 
     hide: function() {
-        this.chartService.chart.trigger(HIDE_TOOLTIP);
+        this.chartService.notify(HIDE_TOOLTIP);
     },
 
     destroy: function() {
@@ -4838,7 +4838,7 @@ var CrosshairTooltip = BaseTooltip.extend({
     },
 
     hide: function() {
-        this.chartService.chart.trigger(HIDE_TOOLTIP, {
+        this.chartService.notify(HIDE_TOOLTIP, {
             crosshair: this.crosshair,
             axisName: this.axisName,
             axisIndex: this.crosshair.axis.axisIndex
@@ -7903,6 +7903,12 @@ var MousewheelZoom = Class.extend({
 });
 
 var LegendLayout = ChartElement.extend({
+    init: function(options, chartService) {
+        ChartElement.fn.init.call(this, options);
+
+        this.chartService = chartService;
+    },
+
     render: function() {
         var ref = this;
         var children = ref.children;
@@ -8039,6 +8045,7 @@ var LegendItem = BoxElement.extend({
             this.visual = customVisual({
                 active: options.active,
                 series: options.series,
+                sender: this.getSender(),
                 pointIndex: options.pointIndex,
                 options: {
                     markers: this.markerOptions(),
@@ -8068,9 +8075,10 @@ var POINTER = "pointer";
 var CUSTOM = "custom";
 
 var Legend = ChartElement.extend({
-    init: function(options) {
-
+    init: function(options, chartService) {
         ChartElement.fn.init.call(this, options);
+
+        this.chartService = chartService;
 
         if (!inArray(this.options.position, [ TOP, RIGHT, BOTTOM, LEFT, CUSTOM ])) {
             this.options.position = RIGHT;
@@ -8122,12 +8130,13 @@ var Legend = ChartElement.extend({
     },
 
     createItems: function() {
+        var chartService = this.getService();
         var options = this.options;
         var vertical = this.isVertical();
         var innerElement = new LegendLayout({
             vertical: vertical,
             spacing: options.spacing
-        });
+        }, chartService);
         var items = options.items;
 
         if (options.reverse) {
@@ -8144,6 +8153,7 @@ var Legend = ChartElement.extend({
                 labels: options.labels
             }, options.item, item)));
         }
+
         innerElement.render();
 
         this.container.append(innerElement);
@@ -9507,6 +9517,7 @@ var PieSegment = ChartElement.extend({
                     startAngle: startAngle,
                     endAngle: startAngle + sector.angle,
                     options: options,
+                    sender: this.getSender(),
                     createVisual: function () {
                         var group = new Group();
                         this$1.createSegmentVisual(group);
@@ -11120,6 +11131,7 @@ var FunnelSegment = ChartElement.extend({
                 percentage: this.percentage,
                 points: this.points,
                 options: options,
+                sender: this.getSender(),
                 createVisual: function () { return this$1.createPath(); }
             });
         } else {
@@ -11609,7 +11621,7 @@ var Chart = Class.extend({
 
         this.observers = [];
         this.addObserver(context.observer);
-        this.chartService = new services.ChartService(this, context.intlService);
+        this.chartService = new services.ChartService(this, context);
         this.chartService.theme = themeOptions;
 
         this._initElement(element);
@@ -11954,7 +11966,7 @@ var Chart = Class.extend({
         dataviz.Title.buildTitle(options.title, model);
 
         if (options.legend.visible) {
-            model.append(new Legend(plotArea.options.legend));
+            model.append(new Legend(plotArea.options.legend, this.chartService));
         }
         model.append(plotArea);
         model.reflow();

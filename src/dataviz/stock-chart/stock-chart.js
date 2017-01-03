@@ -73,7 +73,8 @@
         _createChart: function(options, themeOptions) {
             this._initNavigatorOptions(options);
             this._instance = new KendoStockChart(this.element[0], options, themeOptions, {
-                observer: new StockInstanceObserver(this)
+                observer: new StockInstanceObserver(this),
+                sender: this
             });
         },
 

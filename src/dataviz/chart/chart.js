@@ -346,7 +346,8 @@
 
         _createChart: function(options, themeOptions) {
             this._instance = new KendoChart(this.element[0], options, themeOptions, {
-                observer: new ChartInstanceObserver(this)
+                observer: new ChartInstanceObserver(this),
+                sender: this
             });
         },
 

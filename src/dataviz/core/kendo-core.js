@@ -934,10 +934,20 @@ var ChartElement = Class.extend({
         return parent ? parent.getRoot() : null;
     },
 
-    getChart: function() {
-        var root = this.getRoot();
-        if (root) {
-            return root.chart;
+    getSender: function() {
+        var service = this.getService();
+        if (service) {
+            return service.sender;
+        }
+    },
+
+    getService: function() {
+        var element = this;
+        while (element) {
+            if (element.chartService) {
+                return element.chartService;
+            }
+            element = element.parent;
         }
     },
 
@@ -1122,7 +1132,7 @@ var ChartElement = Class.extend({
                 highlight = this._highlight = customVisual(
                     $.extend(this.highlightVisualArgs(), {
                         createVisual: function () { return this$1.createHighlight(highlightOptions); },
-                        sender: this.getChart(),
+                        sender: this.getSender(),
                         series: this.series,
                         dataItem: this.dataItem,
                         category: this.category,
@@ -1360,7 +1370,7 @@ var ShapeElement = BoxElement.extend({
             visual = customVisual({
                 value: pointData.value,
                 dataItem: pointData.dataItem,
-                sender: this.getChart(),
+                sender: this.getSender(),
                 series: pointData.series,
                 category: pointData.category,
                 rect: this.paddingBox.toRect(),
@@ -1992,7 +2002,7 @@ var TextBox = BoxElement.extend({
         return {
             text: this.content,
             rect: targetBox.toRect(),
-            sender: this.getChart(),
+            sender: this.getSender(),
             options: this.visualOptions(),
             createVisual: function () {
                 this$1._boxReflow = true;
@@ -2257,10 +2267,17 @@ Object.defineProperties(FormatService.fn, {
 });
 
 var ChartService = Class.extend({
-    init: function(chart, intlService) {
-        this._intlService = intlService;
-        this.format = new FormatService(intlService);
+    init: function(chart, context) {
+        if (context === void 0) { context = {}; }
+
+        this._intlService = context.intlService;
+        this.sender = context.sender || chart;
+        this.format = new FormatService(context.intlService);
         this.chart = chart;
+    },
+
+    notify: function(name, args) {
+        this.chart.trigger(name, args);
     }
 });
 
@@ -2488,7 +2505,7 @@ var Note = BoxElement.extend({
         var customVisual = options.visual;
         if (options.visible && customVisual) {
             this.visual = customVisual($.extend(this.fields, {
-                sender: this.getChart(),
+                sender: this.getSender(),
                 rect: this.targetBox.toRect(),
                 options: {
                     background: options.background,
