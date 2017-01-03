@@ -262,6 +262,7 @@
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
+    <Compile Include="Controllers\Spreadsheet\Custom_EditorsController.cs" />
     <Compile Include="Controllers\SpreadStreamProcessing\IndexController.cs" />
     <Compile Include="Controllers\Upload\CustomDropZoneController.cs" />
     <Compile Include="Controllers\Upload\ValidationController.cs" />
@@ -2978,6 +2979,7 @@
     <Content Include="Views\financial\stock_history.cshtml" />
     <Content Include="Views\editor\import_exportas.cshtml" />
     <Content Include="Views\grid\server_export.cshtml" />
+    <Content Include="Views\spreadsheet\custom_editors.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />
