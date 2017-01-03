@@ -3885,6 +3885,16 @@ function adjustDST(date, hours) {
     return false;
 }
 
+function addHours(date, hours) {
+    var roundedDate = new Date(date);
+
+    roundedDate.setMinutes(0, 0, 0);
+
+    var tzDiff = (date.getTimezoneOffset() - roundedDate.getTimezoneOffset()) * TIME_PER_MINUTE;
+
+    return addTicks(roundedDate, tzDiff + hours * TIME_PER_HOUR);
+}
+
 function addDuration(dateValue, value, unit, weekStartDay) {
     var result = dateValue;
 
@@ -3905,9 +3915,7 @@ function addDuration(dateValue, value, unit, weekStartDay) {
             result = new Date(date.getFullYear(), date.getMonth(), date.getDate() + value);
             adjustDST(result, hours);
         } else if (unit === HOURS) {
-            date = new Date(date);
-            date.setUTCMinutes(0, 0, 0);
-            result = addTicks(date, value * TIME_PER_HOUR);
+            result = addHours(date, value);
         } else if (unit === MINUTES) {
             result = addTicks(date, value * TIME_PER_MINUTE);
 
