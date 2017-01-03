@@ -2214,13 +2214,15 @@ IntlService.register = function(userImplementation) {
     current = userImplementation;
 };
 
-Object.defineProperties(IntlService, {
-    implementation: {
-        get: function() {
-            return current;
+if (Object.defineProperties) {
+    Object.defineProperties(IntlService, {
+        implementation: {
+            get: function() {
+                return current;
+            }
         }
-    }
-});
+    });
+}
 
 var FORMAT_REPLACE_REGEX = /\{(\d+)(:[^\}]+)?\}/g;
 
@@ -2260,13 +2262,15 @@ var FormatService = Class.extend({
     }
 });
 
-Object.defineProperties(FormatService.fn, {
-    intlService: {
-        get: function() {
-            return this._intlService || IntlService.implementation;
+if (Object.defineProperties) {
+    Object.defineProperties(FormatService.fn, {
+        intlService: {
+            get: function() {
+                return this._intlService || IntlService.implementation;
+            }
         }
-    }
-});
+    });
+}
 
 var ChartService = Class.extend({
     init: function(chart, context) {
@@ -2283,13 +2287,15 @@ var ChartService = Class.extend({
     }
 });
 
-Object.defineProperties(ChartService.fn, {
-    intl: {
-        get: function() {
-            return this._intlService || IntlService.implementation;
+if (Object.defineProperties) {
+    Object.defineProperties(ChartService.fn, {
+        intl: {
+            get: function() {
+                return this._intlService || IntlService.implementation;
+            }
         }
-    }
-});
+    });
+}
 
 var current$1;
 

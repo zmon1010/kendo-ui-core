@@ -826,13 +826,15 @@ Point.maxPoint = function() {
     return new Point(MAX_NUM, MAX_NUM);
 };
 
-Object.defineProperties(Point, {
-    ZERO: {
-        get: function() {
-            return new Point(0, 0);
+if (Object.defineProperties) {
+    Object.defineProperties(Point, {
+        ZERO: {
+            get: function() {
+                return new Point(0, 0);
+            }
         }
-    }
-});
+    });
+}
 
 defineAccessors(Point.prototype, [ "x", "y" ]);
 ObserversMixin.extend(Point.prototype);
@@ -875,13 +877,15 @@ Size.create = function(arg0, arg1) {
     }
 };
 
-Object.defineProperties(Size, {
-    ZERO: {
-        get: function() {
-            return new Size(0, 0);
+if (Object.defineProperties) {
+    Object.defineProperties(Size, {
+        ZERO: {
+            get: function() {
+                return new Size(0, 0);
+            }
         }
-    }
-});
+    });
+}
 
 defineAccessors(Size.prototype, [ "width", "height" ]);
 ObserversMixin.extend(Size.prototype);
@@ -7395,7 +7399,7 @@ var getFontURL = (function(cache){
         }
         return url;
     };
-})(Object.create(null));
+})(Object.create ? Object.create(null) : {});
 
 var getFontHeight = (function(cache){
     return function(font) {
@@ -7405,7 +7409,7 @@ var getFontHeight = (function(cache){
         }
         return height;
     };
-})(Object.create(null));
+})(Object.create ? Object.create(null) : {});
 
 function getFontFaces(doc) {
     if (doc == null) {

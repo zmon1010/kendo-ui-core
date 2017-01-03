@@ -115,8 +115,8 @@ function propertiesDefinition(objName, properties) {
             fieldAccessors = NEW_LINE + indent(properties[field].join(',' + NEW_LINE), 4) + NEW_LINE;
             result.push(`${ field }: {${ fieldAccessors }}`);
         }
-        var resultStr = `Object.defineProperties(${ objName }, {${ NEW_LINE }${ indent(result.join(',' + NEW_LINE), 4) }${ NEW_LINE }});`
-        return resultStr;
+        var definition = `Object.defineProperties(${ objName }, {${ NEW_LINE }${ indent(result.join(',' + NEW_LINE), 4) }${ NEW_LINE }});`;
+        return `if (Object.defineProperties) {${ NEW_LINE }${ indent(definition, 4) }${ NEW_LINE }}`;
 
     }
 

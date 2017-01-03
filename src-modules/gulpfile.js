@@ -124,6 +124,7 @@ stream.Stream.prototype.pipeReplaces = function(options) {
         .pipe(replaceExports(options))
         .pipe(replaceDependencies(options))
         .pipe(replace('Object.assign', '$.extend'))
+        .pipe(replace('Object.create(null)', 'Object.create ? Object.create(null) : {}'))
         .pipe(replace(DEFAULT_VALUE_REGEX, 'if ($1 === void 0) { $2; }'))
         .pipe(replace(TRAILING_SPACE_REGEX, ''))
         .pipe(replace(MULTI_EMPTY_LINE_REGEX, '\n'))
