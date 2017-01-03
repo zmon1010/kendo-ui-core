@@ -8,7 +8,7 @@
 
         dataviz = kendo.dataviz,
         deepExtend = kendo.deepExtend,
-        defined = kendo.util.defined,
+        defined = kendo.drawing.util.defined,
 
         Extent = dataviz.map.Extent,
         Location = dataviz.map.Location,

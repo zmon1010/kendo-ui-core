@@ -1,277 +1,8 @@
 (function() {
     var dataviz = kendo.dataviz,
-
-        g = kendo.geometry,
         d = kendo.drawing,
-        BaseNode = d.BaseNode,
-        OptionsStore = d.OptionsStore;
-
-    // ------------------------------------------------------------
-    var node,
-        child;
-
-    module("BaseNode", {
-        setup: function() {
-            node = new BaseNode();
-            child = new BaseNode();
-            node.append(child);
-        }
-    });
-
-    test("append adds child node", function() {
-        deepEqual(node.childNodes[0], child);
-    });
-
-    test("append sets parent", function() {
-        deepEqual(child.parent, node);
-    });
-
-    test("insertAt adds child node at position", function() {
-        var child = new BaseNode();
-        node.insertAt(child, 0);
-
-        deepEqual(node.childNodes[0], child);
-    });
-
-    test("insertAt sets parent", function() {
-        var child = new BaseNode();
-        node.insertAt(child, 0);
-
-        deepEqual(child.parent, node);
-    });
-
-    test("clear removes all child nodes", function() {
-        node.append(new BaseNode());
-        node.remove = function(i, c) {
-            equal(i, 0);
-            equal(c, 2);
-        };
-
-        node.clear();
-    });
-
-    test("remove updates childNodes", function() {
-        node.remove(0, 1);
-
-        equal(node.childNodes.length, 0);
-    });
-
-    test("remove unsets parent", function() {
-        node.remove(0, 1);
-
-        equal(child.parent, null);
-    });
-
-    test("remove clears child nodes", 2, function() {
-        var clear = function() {
-            ok(true);
-        };
-        var clearFalse = function() {
-            ok(false);
-        };
-        var child2 = new BaseNode();
-        var child3 = new BaseNode();
-        var child4 = new BaseNode();
-        node.append(child2);node.append(child3);node.append(child4);
-        child.clear = child4.clear = clearFalse;
-        child2.clear = child3.clear = clear;
-
-        node.remove(1, 2);
-    });
-
-    test("remove clears nested nodes", function() {
-        var grandChild = new BaseNode();
-        grandChild.clear = function() { ok(true); };
-        child.append(grandChild);
-
-        node.remove(0, 1);
-    });
-
-    test("invalidate propagates to parent", function() {
-        var child = new BaseNode();
-        node.append(child);
-        node.invalidate = function() { ok(true); };
-
-        child.invalidate();
-    });
-
-    test("geometryChange triggers invalidate", function() {
-        node.invalidate = function() { ok(true); };
-
-        node.geometryChange();
-    });
-
-    test("optionsChange triggers invalidate", function() {
-        node.invalidate = function() { ok(true); };
-
-        node.optionsChange();
-    });
-
-    test("childrenChange loads added source elements", function() {
-        node.load = function(items) { equal(items.length, 1); };
-
-        node.childrenChange({ action: "add", items: [{}] });
-    });
-
-    test("childrenChange removes deleted source elements", function() {
-        node.remove = function(index, count) {
-            equal(index, 10);
-            equal(count, 1);
-        };
-
-        node.childrenChange({ action: "remove", index: 10, items: [{}] });
-    });
-
-    // ------------------------------------------------------------
-    var options;
-    var ObserverClass = kendo.Class.extend({});
-    kendo.deepExtend(ObserverClass.fn, kendo.mixins.ObserversMixin);
-
-    module("Options Store", {
-        setup: function() {
-            options = new OptionsStore({
-                foo: {
-                    bar: { },
-                    baz: true
-                },
-                bar: true,
-                obj: new ObserverClass()
-            });
-        }
-    });
-
-    test("wraps value fields", function() {
-        ok(options.foo instanceof OptionsStore);
-    });
-
-    test("wraps nested fields", function() {
-        ok(options.foo.bar instanceof OptionsStore);
-    });
-
-    test("doesn't wrap kendo classes", function() {
-        ok(!(options.obj instanceof OptionsStore));
-    });
-
-    test("sets observer on functions", function() {
-        equal(options.obj.observers()[0], options);
-    });
-
-    test("clears previous field observer", function() {
-        var previous = options.obj;
-        options.set("obj", new ObserverClass());
-        equal(previous.observers().length, 0);
-    });
-
-    test("set", function() {
-        options.set("baz", true);
-        equal(options.baz, true);
-    });
-
-    test("set triggers optionsChange", function() {
-        options.addObserver({
-            optionsChange: function(e) {
-                equal(e.field, "baz");
-                equal(e.value, true);
-            }
-        });
-
-        options.set("baz", true);
-    });
-
-    test("nested set", function() {
-        options.set("baz.baz", true);
-        equal(options.baz.baz, true);
-    });
-
-    test("nested set on existing field triggers optionsChange", function() {
-        options.addObserver({
-            optionsChange: function(e) {
-                equal(e.field, "foo.bar.baz");
-            }
-        });
-
-        options.set("foo.bar.baz", true);
-    });
-
-    test("nested set on new field triggers optionsChange", function() {
-        options.addObserver({
-            optionsChange: function(e) {
-                equal(e.field, "baz.baz");
-            }
-        });
-
-        options.set("baz.baz", true);
-    });
-
-    test("get returns field", function() {
-        equal(options.get("foo.baz"), true);
-    });
-
-    test("get returns nested field", function() {
-        equal(options.get("foo.baz"), true);
-    });
-
-    // ------------------------------------------------------------
-    (function() {
-        var factory;
-
-        module("SurfaceFactory", {
-            setup: function() {
-                factory = new d.SurfaceFactory();
-            }
-        });
-
-        test("registers surfaces in ascending order", function() {
-            factory.register("bar", $.noop, 1);
-            factory.register("foo", $.noop, 0);
-
-            equal(factory._items[0].name, "foo");
-        });
-
-        test("instantiates surface with options", function() {
-            factory.register("foo", function(e, o) { ok(o.bar); }, 0);
-
-            factory.create(null, { bar: true });
-        });
-
-        test("instantiates default surface", function() {
-            factory.register("foo", function() { ok(true); }, 0);
-            factory.register("bar", function() { ok(false); }, 1);
-
-            factory.create();
-        });
-
-        test("instantiates preferred surface", function() {
-            factory.register("foo", function() { ok(false); }, 0);
-            factory.register("bar", function() { ok(true); }, 1);
-
-            factory.create(null, { type: "bar" });
-        });
-
-        test("ignores case of preferred surface", function() {
-            factory.register("foo", function() { ok(false); }, 0);
-            factory.register("bar", function() { ok(true); }, 1);
-
-            factory.create(null, { type: "Bar" });
-        });
-
-        test("instantiates default surface if the preferred is unavailable", function() {
-            factory.register("foo", function() { ok(true); }, 0);
-            factory.register("bar", function() { ok(false); }, 1);
-
-            factory.create(null, { type: "baz" });
-        });
-
-        asyncTest("logs warning if no surfaces are registered", 1, function() {
-            stubMethod(kendo, "logToConsole", function(message) {
-                ok(message.indexOf("Warning: Unable to create Kendo UI Drawing Surface.") > -1);
-                start();
-            }, function() {
-                factory.create();
-            });
-        });
-
-    })();
+        g = kendo.geometry,
+        Surface = d.Surface;
 
     // ------------------------------------------------------------
     (function() {
@@ -279,6 +10,258 @@
 
         test("kendo.drawing is aliased as kendo.dataviz.drawing", function() {
             deepEqual(kendo.drawing, kendo.dataviz.drawing);
+        });
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var surface, instance, container;
+
+        function createSurface(options) {
+            if (surface) {
+                surface.destroy();
+            }
+
+            surface = new Surface(container, options);
+            instance = surface._instance;
+        }
+
+        module("Surface", {
+            setup: function() {
+                container = $("<div>").appendTo(QUnit.fixture);
+                createSurface();
+            },
+            teardown: function() {
+                surface.destroy();
+                container.remove();
+            }
+        });
+
+        test("sets initial options", function() {
+            createSurface({ foo: true });
+            ok(surface.options.foo);
+        });
+
+        test("inits instance", function() {
+            ok(instance);
+        });
+
+        test("inits tooltip", function() {
+            ok(surface._tooltip);
+        });
+
+         test("does not create tooltip if kendo.ui.Popup is not available", function() {
+            var Popup = kendo.ui.Popup;
+            try {
+                kendo.ui.Popup = null;
+                createSurface();
+                ok(!surface._tooltip);
+            } finally {
+                kendo.ui.Popup = Popup;
+            }
+        });
+
+        test("draw calls the instance draw method", function() {
+            var group = new d.Group();
+            instance.draw = function(element) {
+                ok(element === group);
+            };
+            surface.draw(group);
+        });
+
+        test("clear calls the instance clear method", function() {
+            instance.clear = function() {
+                ok(true);
+            };
+            surface.clear();
+        });
+
+        test("clear hides tooltip", function() {
+            surface._tooltip.hide = function() {
+                ok(true);
+            };
+            surface.clear();
+        });
+
+        test("exportVisual returns result from the instance exportVisual method", function() {
+            surface._instance.exportVisual = function() {
+                return "foo";
+            };
+            equal(surface.exportVisual(), "foo");
+        });
+
+        test("eventTarget returns result from the instance eventTarget method", function() {
+            var arg = "bar";
+            surface._instance.eventTarget = function(e) {
+                equal(e, arg);
+                return "foo";
+            };
+            equal(surface.eventTarget(arg), "foo");
+        });
+
+        test("showTooltip shows tooltips", function() {
+            surface._tooltip.show = function() {
+                ok(true);
+            };
+            surface.showTooltip();
+        });
+
+        test("hideTooltip shows tooltips", function() {
+            surface._tooltip.hide = function() {
+                ok(true);
+            };
+            surface.hideTooltip();
+        });
+
+        test("suspendTracking calls the instance suspendTracking method", function() {
+            instance.suspendTracking = function() {
+                ok(true);
+            };
+            surface.suspendTracking();
+        });
+
+        test("suspendTracking hides tooltip", function() {
+            surface._tooltip.hide = function() {
+                ok(true);
+            };
+            surface.suspendTracking();
+        });
+
+        test("resumeTracking calls the instance resumeTracking method", function() {
+            instance.resumeTracking = function() {
+                ok(true);
+            };
+            surface.resumeTracking();
+        });
+
+        test("setSize sets element dimensions and instance dimensions", function() {
+            surface.setSize({
+                width: 100,
+                height: 100
+            });
+
+            deepEqual(surface._size, {
+                width: 100,
+                height: 100
+            });
+            deepEqual(surface._instance.currentSize(), {
+                width: 100,
+                height: 100
+            });
+            deepEqual({
+                width: surface.element.width(),
+                height: surface.element.height()
+            }, {
+                width: 100,
+                height: 100
+            });
+        });
+
+        test("_resize sets sets instance size and calls _resize", function() {
+            surface._size = {
+                width: 100,
+                height: 100
+            };
+            instance._resize = function() {
+                deepEqual(instance.currentSize(), {
+                    width: 100,
+                    height: 100
+                });
+            };
+            surface._resize();
+        });
+
+        test("size sets element dimensions", function() {
+            surface.size({
+                width: 100,
+                height: 100
+            });
+
+            deepEqual(surface.size(), {
+                width: 100,
+                height: 100
+            });
+        });
+
+        test("size caches size even if element is hidden", function() {
+            $(container).css("display", "none");
+            surface._resize = function() {
+                deepEqual(surface._size, {
+                    width: 100,
+                    height: 100
+                });
+            };
+
+            surface.size({
+                width: 100,
+                height: 100
+            });
+        });
+
+        test("destroy destroys instance", 2, function() {
+            instance.destroy();
+            instance.destroy = function() {
+                ok(true);
+            };
+
+            surface.destroy();
+            ok(!surface._instance);
+        });
+        
+        test("destroy destroys tooltip", 2, function() {
+            var tooltip = surface._tooltip;
+            tooltip.destroy();
+            tooltip.destroy = function() {
+                ok(true);
+            };
+
+            surface.destroy();
+            ok(!surface._tooltip);
+        });
+
+        // ------------------------------------------------------------
+        module("Surface / instance events", {
+            setup: function() {
+                container = $("<div>").appendTo(QUnit.fixture);
+                createSurface();
+            },
+            teardown: function() {
+                surface.destroy();
+                container.remove();
+            }
+        });
+
+        test("triggers click on instance click", function() {
+            surface.bind("click", function(e) {
+                equal(e.type, "click");
+                equal(e.foo, "bar");
+            });
+            instance.trigger("click", { type: "click", foo: "bar" });
+        });
+
+        test("triggers mouseenter on instance mouseenter", function() {
+            surface.bind("mouseenter", function(e) {
+                equal(e.type, "mouseenter");
+                equal(e.foo, "bar");
+            });
+            instance.trigger("mouseenter", { type: "mouseenter", foo: "bar" });
+        });
+
+
+        test("triggers mouseleave on instance mouseleave", function() {
+            surface.bind("mouseleave", function(e) {
+                equal(e.type, "mouseleave");
+                equal(e.foo, "bar");
+            });
+            instance.trigger("mouseleave", { type: "mouseleave", foo: "bar" });
+        });
+
+        test("triggers mousemove on instance mousemove", function() {
+            surface.bind("mousemove", function(e) {
+                equal(e.type, "mousemove");
+                equal(e.foo, "bar");
+            });
+            instance.trigger("mousemove", { type: "mousemove", foo: "bar" });
         });
     })();
 
@@ -305,11 +288,13 @@
                 kendo.Observable.fn.init.call(this);
             },
 
-            _elementOffset: function() {
-                return {
-                    left: 0,
-                    top: 0
-                };
+            _instance: {
+                _elementOffset: function() {
+                    return {
+                        left: 0,
+                        top: 0
+                    };
+                },
             },
 
             destroy: function() {
@@ -379,7 +364,7 @@
             ok(tooltip.content.hasClass("k-tooltip-content"));
         });
 
-        test("inits popup", function() {
+        test("inits popup on demand", function() {
             createTooltip(surface, {
                 appendTo: container,
                 animation: {
@@ -391,6 +376,11 @@
                     }
                 }
             });
+
+            ok(!tooltip.popup);
+
+            var shape = new d.Rect(new g.Rect([0, 0], [100, 100]), { tooltip: { content: "foo" } });
+            tooltip.show(shape);
 
             ok(tooltip.popup.options.appendTo.is(container));
             ok(tooltip.popup.element.is(tooltip.element));
@@ -407,10 +397,15 @@
                 testSetup = expected;
                 expected = null;
             }
+
             asyncTest(message, expected, function() {
                 testSetup();
                 setTimeout(function() {
-                    ok(tooltip.popup.visible() == isVisible);
+                    if (!isVisible) {
+                        ok(!tooltip.popup || tooltip.popup.visible() == isVisible);
+                    } else {
+                        ok(tooltip.popup && tooltip.popup.visible() == isVisible);
+                    }
                     start();
                 }, delay || 0);
             });
@@ -548,11 +543,12 @@
                 shared: true
             };
 
+            surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
+
             tooltip.popup.bind("close", function() {
                 ok(false);
             });
 
-            surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
             setTimeout(function() {
                 surface.trigger("mouseleave", { element: shape, type: "mouseleave", originalEvent: {}});
                 surface.trigger("mouseenter", { element: shape2, type: "mouseenter"});
@@ -570,11 +566,12 @@
                 shared: false
             };
 
+            surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
+
             tooltip.popup.bind("close", function() {
                 ok(true);
             });
 
-            surface.trigger("mouseenter", { element: shape, type: "mouseenter"});
             setTimeout(function() {
                 surface.trigger("mouseleave", { element: shape, type: "mouseleave", originalEvent: {}});
                 surface.trigger("mouseenter", { element: shape2, type: "mouseenter"});
@@ -759,7 +756,7 @@
         });
 
         test("takes surface offset into account", function() {
-            surface._offset = {
+            surface._instance._offset = {
                 x: -100,
                 y: -100
             };

@@ -21,7 +21,7 @@ var __meta__ = { // jshint ignore:line
 
         draw = kendo.drawing,
         geom = kendo.geometry,
-        util = kendo.util,
+        util = kendo.drawing.util,
         defined = util.defined,
         dataviz = kendo.dataviz,
         Box2D = dataviz.Box2D,
@@ -1596,7 +1596,7 @@ var __meta__ = { // jshint ignore:line
                 size = that._getSize(),
                 border = options.border || {},
                 encoding = that.encoding,
-                contentBox = Box2D(0, 0, size.width, size.height).unpad(border.width).unpad(options.padding),
+                contentBox = new Box2D(0, 0, size.width, size.height).unpad(border.width).unpad(options.padding),
                 barHeight = contentBox.height(),
                 result, textToDisplay,
                 textHeight;
@@ -1707,7 +1707,7 @@ var __meta__ = { // jshint ignore:line
                 options = that.options,
                 border = options.border || {};
 
-            var box = Box2D(0,0, size.width, size.height).unpad(border.width / 2);
+            var box = new Box2D(0,0, size.width, size.height).unpad(border.width / 2);
             var path = draw.Path.fromRect(box.toRect(), {
                 fill: {
                     color: options.background

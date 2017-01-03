@@ -14,7 +14,6 @@ var __meta__ = { // jshint ignore:line
 
     var math = Math,
         kendo = window.kendo,
-        util = kendo.util,
         Widget = kendo.ui.Widget,
         deepExtend = kendo.deepExtend,
 
@@ -25,8 +24,8 @@ var __meta__ = { // jshint ignore:line
         Axis = dataviz.Axis,
         Box2D = dataviz.Box2D,
         Class = kendo.Class,
-        defined = util.defined,
-        isNumber = util.isNumber,
+        defined = dataviz.defined,
+        isNumber = dataviz.isNumber,
         interpolateValue = dataviz.interpolateValue,
 
         getSpacing = dataviz.getSpacing,

@@ -297,19 +297,26 @@ function destroyChart() {
 }
 
 function clickChart(chart, element, x, y) {
-    chart._userEvents.press(x || 0, y || 0, element);
-    chart._userEvents.end(x || 0, y || 0);
+    chart._instance._tap({
+        target: element,        
+        x: {
+            location: x || 0
+        },
+        y: {
+            location: y || 0
+        }
+    });
 }
 
 function hoverChart(chart, element, x, y) {
     chart._mousemove({ x: { client: x || 0 }, y: { client: y || 0 } });
 }
 
-kendo.util.loadFonts = function(fonts, callback) {
+kendo.dataviz.FontLoader.loadFonts = function(fonts, callback) {
     callback();
 }
 
-kendo.drawing.util.TextMetrics.current = {
+kendo.util.TextMetrics.current = {
     measure: function(text, style) {
         return {
             width: text ? text.length * 8 : 0,

@@ -10,11 +10,11 @@
         dataviz = kendo.dataviz,
         deepExtend = kendo.deepExtend,
 
-        util = kendo.util,
-        defined = util.defined,
-
         g = kendo.geometry,
         d = kendo.drawing,
+
+        util = d.util,
+        defined = util.defined,
 
         map = dataviz.map,
         Location = map.Location,

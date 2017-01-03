@@ -37,7 +37,7 @@
 
         function stubArgs(x, y, options) {
             return deepExtend({
-                event: { target: $("<div class='k-leftHandle' />") },
+                target: $("<div class='k-left-handle' />")[0],
                 x: { location: x || 0 },
                 y: { location: y || 0 },
                 preventDefault: function() {}
@@ -217,7 +217,7 @@
                 ok(false);
             });
 
-            selection.bind("selectStart", function(e) {
+            chart.bind("selectStart", function(e) {
                 e.preventDefault();
             });
 

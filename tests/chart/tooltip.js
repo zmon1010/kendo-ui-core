@@ -1,14 +1,16 @@
 (function() {
     var dataviz = kendo.dataviz;
     var chartElement;
-    var plotArea;
     var tooltip;
     var pointMock;
-    var TOLERANCE = 1,
-        RED = "rgb(255,0,0)",
-        GREEN = "rgb(0,255,0)",
-        BLUE = "rgb(0,0,255)";
-
+    var TOLERANCE = 1;
+    var defaultAlign = {
+        horizontal: "left",
+        vertical: "top"
+    };
+    var RED = "rgb(255, 0, 0)";
+    var GREEN = "rgb(0, 255, 0)";
+    var BLUE = "rgb(0, 0, 255)";
 
     function destroyTooltip() {
         if (tooltip) {
@@ -20,15 +22,28 @@
         }
     }
 
+    function createAnchor(point, align) {
+        var left = 0;
+        var top = 0;
+        if (point) {
+            left = point.x;
+            top = point.y;
+        }
+        return {
+            point: { left: left, top: top },
+            align: kendo.deepExtend({}, defaultAlign, align)
+        }
+    }
+
     function createPoint(options) {
         pointMock = {
             value: 1,
-            box: new dataviz.Box2D(0, 0, 10, 10),
             options: {
                 aboveAxis: true,
                 color: RED
             },
             series: {
+                color: BLUE,
                 name: "series",
                 labels: {
                     color: GREEN
@@ -37,43 +52,10 @@
             category: "category",
             dataItem: {
                 field: "value"
-            },
-            tooltipAnchor: function() {
-                return new dataviz.Point2D();
-            },
-            owner: {
-                formatPointValue: function(value, tooltipFormat) {
-                    return kendo.dataviz.autoFormat(tooltipFormat, value);
-                }
-            },
-            formatValue: function(format) {
-                var point = this;
-
-                return point.owner.formatPointValue(point.value, format);
             }
         };
 
         kendo.deepExtend(pointMock, options);
-    }
-
-    function createPlotArea(axisOptions) {
-        plotArea = {
-            categoryAxis: kendo.deepExtend({
-                pointCategoryIndex: function() {
-                },
-
-                getCategory: function() {
-                },
-
-                getSlot: function() {
-                    return new dataviz.Box2D();
-                },
-
-                options: {
-                    vertical: false
-                }
-            }, axisOptions)
-        };
     }
 
     (function() {
@@ -87,8 +69,12 @@
             element = tooltip.element;
         }
 
-        function showTooltip() {
-            tooltip.show(pointMock);
+        function showTooltip(options) {
+            tooltip.show(kendo.deepExtend({
+                anchor: createAnchor(),
+                style: {},
+                point: pointMock
+            }, options));
             tooltip.move();
         }
 
@@ -175,38 +161,39 @@
             equal(element.css("fontFamily"), "Tahoma");
         });
 
-        test("sets series tooltip font", function() {
-            createPoint({
-                options: {
-                    tooltip: {
-                        font: "16px Tahoma"
-                    }
+        test("sets styles", function() {
+            showTooltip({
+                style: {
+                    font: "16px Tahoma",
+                    backgroundColor: RED
                 }
             });
-            showTooltip();
             equal(element.css("fontSize"), "16px");
             equal(element.css("fontFamily"), "Tahoma");
+            equal(element.css("backgroundColor"), RED);
+        });
+
+        test("sets k-chart-tooltip-inverse class", function() {
+            showTooltip({
+               className: "k-chart-tooltip-inverse"
+            });
+            ok(element.hasClass("k-chart-tooltip-inverse"));
+        });
+
+        test("remove already set k-chart-tooltip-inverse class", function() {
+            showTooltip({
+               className: "k-chart-tooltip-inverse"
+            });
+
+            ok(element.hasClass("k-chart-tooltip-inverse"));
+            showTooltip({});
+
+            ok(!element.hasClass("k-chart-tooltip-inverse"));
         });
 
         test("sets border width", function() {
             createTooltip({ border: { width: 1 } });
             equal(element.css("border-top-width"), "1px");
-        });
-
-        test("sets padding (all values)", function() {
-            createTooltip({ padding: 16 });
-            equal(element.css("padding-top"), "16px");
-            equal(element.css("padding-right"), "16px");
-            equal(element.css("padding-bottom"), "16px");
-            equal(element.css("padding-left"), "16px");
-        });
-
-        test("sets padding (single value)", function() {
-            createTooltip({ padding: { top: 16 } });
-            equal(element.css("padding-top"), "16px");
-            ok(element.css("padding-right") != "16px");
-            ok(element.css("padding-bottom") != "16px");
-            ok(element.css("padding-left") != "16");
         });
 
         test("sets opacity", function() {
@@ -215,59 +202,12 @@
         });
 
         asyncTest("show displays tooltip for last point with a delay", function() {
-            tooltip.show(pointMock);
+            showTooltip();
 
             setTimeout(function() {
                 equal(element.text(), "1");
                 start();
             }, 120);
-        });
-
-        test("can override border color", function() {
-            createTooltip({ border: { color: GREEN } });
-            showTooltip();
-            equal(element.css("border-top-color").replace(/\s/g, ''), GREEN);
-        });
-
-        test("sets border color to current point color", function() {
-            showTooltip();
-            equal(element.css("border-top-color").replace(/\s/g, ''), RED);
-        });
-
-        test("sets border color to current point color even if background is defined", function() {
-            createTooltip({ background: GREEN });
-            showTooltip();
-            equal(element.css("border-top-color").replace(/\s/g, ''), RED);
-        });
-
-        test("sets div background", function() {
-            tooltip.options.background = BLUE;
-            showTooltip();
-            equal(element.css("backgroundColor").replace(/\s/g, ''), BLUE);
-        });
-
-        test("sets div background from the current point color", function() {
-            pointMock.color = BLUE;
-            showTooltip();
-            equal(element.css("backgroundColor").replace(/\s/g, ''), BLUE);
-        });
-
-        test("sets text color", function() {
-            createTooltip({ color: GREEN });
-            showTooltip();
-            equal(element.css("color").replace(/\s/g, ''), GREEN);
-        });
-
-        test("applies full label format", function() {
-            createTooltip({ format: "{0}%" });
-            showTooltip();
-            equal(element.text(), "1%");
-        });
-
-        test("applies simple label format", function() {
-            createTooltip({ format: "p0" });
-            showTooltip();
-            equal(element.text(), "100 %");
         });
 
         test("renders template", function() {
@@ -306,57 +246,84 @@
             equal(element.text(), "value");
         });
 
-        test("positions tooltip on anchor", function() {
-            tooltip.anchor = new dataviz.Point2D(10, 20);
-            tooltip.options.animation.duration = 0;
-            tooltip.options.offsetX = 0;
-            tooltip.options.offsetY = 0;
-            tooltip.move();
+         // ------------------------------------------------------------
+        (function() {
 
-            var chartOffset = chartElement.offset();
-            var tooltipOffset = tooltip.element.offset();
-
-            equal(tooltipOffset.left, chartOffset.left + tooltip.anchor.x);
-            equal(tooltipOffset.top, chartOffset.top + tooltip.anchor.y);
-        });
-
-        test("tooltipAnchor receives correct tooltip size", function() {
-            createPoint({
-                tooltipAnchor: function(width, height) {
-                    ok(width > 100);
-                    ok(height > 20);
-                }
+            var size;
+            module("Tooltip / position", {
+                setup: function() {
+                    createTooltip();
+                    tooltip.options.animation.duration = 0;
+                    tooltip.options.offsetX = 0;
+                    tooltip.options.offsetY = 0;
+                    size = tooltip._measure();
+                },
+                teardown: destroyTooltip
             });
 
-            createTooltip({ template: "<div style='width: 100px; height: 20px;' />"});
-            showTooltip();
-        });
+            test("positions tooltip on anchor", function() {
+                tooltip.anchor = createAnchor(new dataviz.Point(100, 200));
 
-        test("positions accounts for chart padding", function() {
-            createTooltip();
-            createPoint();
+                tooltip.move();
 
-            chartElement.css({
-                "padding-left": "10px",
-                "padding-top": "20px"
+                var tooltipOffset = tooltip.element.offset();
+
+                equal(tooltipOffset.left, 100);
+                equal(tooltipOffset.top, 200);
             });
 
-            tooltip.anchor = new dataviz.Point2D(10, 20);
-            tooltip.options.animation.duration = 0;
-            tooltip.move();
+            test("positions tooltip with center alignment", function() {
+                tooltip.anchor = createAnchor(new dataviz.Point(100, 200), {
+                    horizontal: "center"
+                });
 
-            var chartOffset = chartElement.offset();
-            var tooltipOffset = tooltip.element.offset();
+                tooltip.move();
 
-            equal(tooltipOffset.left, chartOffset.left + tooltip.anchor.x + 10);
-            equal(tooltipOffset.top, chartOffset.top + tooltip.anchor.y + 20);
-        });
+                var tooltipOffset = tooltip.element.offset();
 
-        test("applies format from the series", function() {
-            createPoint({ options: { tooltip: { format: "{0:C}" } }});
-            showTooltip();
-            equal(element.text(), "$1.00");
-        });
+                equal(tooltipOffset.left, 100 - size.width / 2);
+                equal(tooltipOffset.top, 200);
+            });
+
+            test("positions tooltip with right alignment", function() {
+                tooltip.anchor = createAnchor(new dataviz.Point(100, 200), {
+                    horizontal: "right"
+                });
+
+                tooltip.move();
+
+                var tooltipOffset = tooltip.element.offset();
+
+                equal(tooltipOffset.left, 100 - size.width);
+                equal(tooltipOffset.top, 200);
+            });
+
+            test("positions tooltip with vertical center alignment", function() {
+                tooltip.anchor = createAnchor(new dataviz.Point(100, 200), {
+                    vertical: "center"
+                });
+
+                tooltip.move();
+
+                var tooltipOffset = tooltip.element.offset();
+
+                equal(tooltipOffset.left, 100);
+                equal(tooltipOffset.top, 200 - size.height / 2);
+            });
+
+            test("positions tooltip with bottom alignment", function() {
+                tooltip.anchor = createAnchor(new dataviz.Point(100, 200), {
+                    vertical: "bottom"
+                });
+
+                tooltip.move();
+
+                var tooltipOffset = tooltip.element.offset();
+
+                equal(tooltipOffset.left, 100);
+                equal(tooltipOffset.top, 200 - size.height);
+            });
+        })();
 
         // ------------------------------------------------------------
         module("Tooltip / currentPosition", {
@@ -411,7 +378,7 @@
             }
 
             function assertPosition(transform) {
-                tooltip.anchor = new dataviz.Point2D(10, 20);
+                tooltip.anchor = createAnchor(new dataviz.Point(10, 20));
                 tooltip.options.animation.duration = 0;
                 tooltip.options.offsetX = 0;
                 tooltip.options.offsetY = 0;
@@ -425,10 +392,7 @@
             }
 
             function defaultPosition(anchor) {
-                var chartOffset = chartElement.offset();
-                var left = chartOffset.left + anchor.x;
-                var top = chartOffset.top + anchor.y;
-                return new kendo.geometry.Point(left, top)
+                return new kendo.geometry.Point(anchor.point.left, anchor.point.top)
             }
 
             module("Tooltip / inside mobile scroller", {
@@ -474,162 +438,105 @@
 
         })();
 
-        // ------------------------------------------------------------
-        module("Tooltip / Inverse background", {
-            setup: function() {
-                createTooltip();
-                createPoint();
-            },
-            teardown: destroyTooltip
-        });
+        (function() {
 
-        test("removes inverse css class if backgorund is bright", function() {
-            tooltip.options.background = "#000";
-            showTooltip();
+            function createTooltip(options) {
+                createPoint({ options: { tooltip: { template: "foo" } } });
 
-            ok(!tooltip.element.hasClass("k-chart-tooltip-inverse"));
-        });
+                destroyTooltip();
 
-        test("sets inverse css class if backgorund is dark", function() {
-            tooltip.options.background = "#fff";
-            showTooltip();
+                chartElement = $("<div id='chart'></div>").appendTo(QUnit.fixture);
+                tooltip = new dataviz.Tooltip(chartElement, options);
+            }
 
-            ok(tooltip.element.hasClass("k-chart-tooltip-inverse"));
-        });
+            function showSharedTooltip(options) {
+                showTooltip(kendo.deepExtend({
+                    shared: true,
+                    points: [pointMock]
+                }, options));
+            }
 
-        // ------------------------------------------------------------
-        module("Tooltip / Series", {
-            setup: function() {
-                createTooltip();
-            },
-            teardown: destroyTooltip
-        });
-
-        test("sets border width", function() {
-            createPoint({
-                options: {
-                    tooltip: {
-                        border: {
-                            width: 2
-                        }
-                    }
-                }
-            });
-            showTooltip();
-
-            equal(element.css("border-top-width"), "2px");
-        });
-
-        test("sets opacity", function() {
-            createPoint({
-                options: {
-                    tooltip: {
-                        opacity: 0.5
-                    }
-                }
-            });
-            showTooltip();
-
-            equal(element.css("opacity"), 0.5);
-        });
-    })();
-
-    (function() {
-        var CHARTS_BOX = new dataviz.Box2D(0, 0, 500, 500);
-        var AXIS_SLOT = new dataviz.Box2D(100, 0, 200, 0);
-        function createTooltip(options) {
-            createPlotArea({
-                getSlot: function() {
-                    return AXIS_SLOT;
-                }
-            });
-            createPoint({ options: { tooltip: { template: "foo" } },
-                owner: {
-                    pane: {
-                        chartsBox: function() {
-                            return CHARTS_BOX;
-                        }
-                    }
-                }
+            // ------------------------------------------------------------
+            module("Tooltip / Shared", {
+                setup: function() {
+                    createTooltip();
+                },
+                teardown: destroyTooltip
             });
 
-            destroyTooltip();
+            test("shows shared tooltip", function() {
+                showSharedTooltip();
+                ok(tooltip.element.html().indexOf("foo") !== -1);
+            });
 
-            chartElement = $("<div id='chart'></div>").appendTo(QUnit.fixture);
-            tooltip = new dataviz.SharedTooltip(chartElement, plotArea, options);
-        }
+            test("adds k-chart-shared-tooltip class", function() {
+                showSharedTooltip();
+                ok(tooltip.element.hasClass("k-chart-shared-tooltip"));
+            });
 
-        function showTooltip() {
-            tooltip.showAt([pointMock], new dataviz.Point2D(0, 0));
-        }
+            test("removes k-chart-shared-tooltip class if the tooltip is no longer shared", function() {
+                showSharedTooltip();
+                ok(tooltip.element.hasClass("k-chart-shared-tooltip"));
+                showTooltip();
+                ok(!tooltip.element.hasClass("k-chart-shared-tooltip"));
+            });
 
-        // ------------------------------------------------------------
-        module("Shared Tooltip", {
-            setup: function() {
-                createTooltip();
-            },
-            teardown: destroyTooltip
-        });
+            test("shows series color in default template", function() {
+                showSharedTooltip();
+                equal(tooltip.element.find("td").length, 3);
+                equal(tooltip.element.find(".k-chart-shared-tooltip-marker").css("backgroundColor"), BLUE);
+            });
 
-        test("shows shared tooltip", function() {
-            showTooltip();
-            ok(tooltip.element.html().indexOf("foo") !== -1);
-        });
+            test("shows series name in default template", function() {
+                showSharedTooltip();
+                equal(tooltip.element.find("td").length, 3);
+                ok(tooltip.element.html().indexOf("series") !== -1);
+            });
 
-        test("shows series name in default template", function() {
-            showTooltip();
-            equal(tooltip.element.find("td").length, 2);
-            ok(tooltip.element.html().indexOf("series") !== -1);
-        });
+            test("shows shared tooltip for series w/o name", function() {
+                pointMock.series.name = null;
+                showSharedTooltip();
+                ok(tooltip.element.html().indexOf("foo") !== -1);
+            });
 
-        test("shows shared tooltip for series w/o name", function() {
-            pointMock.series.name = null;
-            showTooltip();
-            ok(tooltip.element.html().indexOf("foo") !== -1);
-        });
-
-        test("doesn't show empty series name in default template", function() {
-            pointMock.series.name = null;
-            showTooltip();
-            equal(tooltip.element.find("td").length, 1);
-        });
-
-        test("tooltip anchor accounts for tooltip height", function() {
-            createTooltip({ template: "<div style='width: 100px; height: 20px;' />"});
-            showTooltip();
-            ok(tooltip.anchor.y < -10);
-        });
-
-        test("tooltip anchor is in the center of the slot if no coordinates are passed", function() {
-            createTooltip({ template: "<div style='width: 100px; height: 20px;' />"});
-            tooltip.showAt([pointMock]);
-            var size = tooltip._measure();
-            equal(tooltip.anchor.x, 150 - size.width / 2);
-            equal(tooltip.anchor.y, 250 - size.height / 2);
-        });
+            test("doesn't show empty series name in default template", function() {
+                pointMock.series.name = null;
+                showSharedTooltip();
+                equal(tooltip.element.find("td").length, 2);
+            });
+        })();
 
     })();
 
     (function() {
-        var element;
-
+        var chartElement;
         function createTooltip(options) {
-            createPlotArea();
-            createPoint();
-
-            destroyTooltip();
-
-            chartElement = $("<div id='chart'></div>").appendTo(QUnit.fixture);
-            tooltip = new dataviz.SparklineSharedTooltip(chartElement, plotArea, options);
+            chartElement = $("<div id='chart' style='height: 50px;'></div>").appendTo(QUnit.fixture);
+            tooltip = new dataviz.CrosshairTooltip(chartElement, options);
         }
 
-        function showTooltip() {
-            tooltip.showAt([pointMock], new dataviz.Point2D(0, 0));
+        function destroyTooltip() {
+            if (tooltip) {
+                tooltip.destroy();
+            }
+        }
+
+        function showTooltip(options) {
+            tooltip.show(kendo.deepExtend({
+                anchor: createAnchor(),
+                style: {},
+                crosshair: {
+                    options: {
+                        tooltip: {}
+                    }
+                },
+                value: 1
+            }, options));
             tooltip.move();
         }
 
         // ------------------------------------------------------------
-        module("Sparkline Shared Tooltip", {
+        module("Crosshair / Tooltip", {
             setup: function() {
                 createTooltip();
             },
@@ -641,16 +548,37 @@
         });
 
         test("attaches to body on show", function() {
-            showTooltip();
 
+            showTooltip();
             equal(tooltip.element.parent("body").length, 1);
         });
 
-        test("hides element on hide", function() {
-            showTooltip();
-            tooltip.hide();
+        test("applies style", function() {
+            showTooltip({
+                style: {
+                    backgroundColor: "#fa7979"
+                }
+            });
 
-            equal(tooltip.element.css("display"), "none");
+            equal(tooltip.element.css("backgroundColor"), "rgb(250, 121, 121)");
+        });
+
+        test("adds k-chart-crosshair-tooltip class", function() {
+            ok(tooltip.element.hasClass("k-chart-crosshair-tooltip"));
+        });
+
+        test("applies template", function() {
+            showTooltip({
+                crosshair: {
+                    options: {
+                        tooltip: {
+                            template: "foo"
+                        }
+                    }
+                }
+            });
+
+            ok(tooltip.element.html().indexOf("foo") >= 0);
         });
 
         test("detaches from body on destroy", function() {
@@ -658,6 +586,8 @@
 
             equal($(".k-chart-tooltip").length, 0);
         });
+
+
     })();
 
 })();

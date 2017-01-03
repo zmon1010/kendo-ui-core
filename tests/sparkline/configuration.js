@@ -63,7 +63,7 @@
         });
 
         test("auto height equals line height of empty container", function() {
-            QUnit.close(sparkline.stage.height(), 19, TOLERANCE);
+            QUnit.close($(sparkline._instance.stage).height(), 19, TOLERANCE);
         });
 
         test("custom height is preserved", function() {
@@ -86,7 +86,8 @@
         });
 
         test("sets container width based on custom pointWidth", function() {
-            createSparkline({ dataSource: [1, 2], pointWidth: 10 });
+            createSparkline({ data: [1, 2], pointWidth: 10 });
+
             equal(sparkline.element.width(), 24);
         });
 
@@ -122,7 +123,22 @@
             div.kendoSparkline();
 
             sparkline = div.data("kendoSparkline");
-            equal(sparkline.element.innerWidth(), 30);
+
+            equal($(sparkline._instance.stage).width(), 30);
+        });
+
+        test("custom width is preserved after resize", function() {
+            destroySparkline();
+
+            var div = $("<div id='container' />").css("width", "30").appendTo(QUnit.fixture);
+            div.kendoSparkline();
+
+            div.css("width", 100);
+
+            sparkline = div.data("kendoSparkline");
+            sparkline.resize();
+
+            equal($(sparkline._instance.stage).width(), 100);
         });
 
         test("custom width is preserved for bullet series", function() {
@@ -132,7 +148,7 @@
             div.kendoSparkline({ type: "bullet" });
 
             sparkline = div.data("kendoSparkline");
-            equal(sparkline.element.innerWidth(), 30);
+            equal($(sparkline._instance.stage).width(), 30);
         });
 
         test("custom width is preserved for bar series", function() {
@@ -142,7 +158,7 @@
             div.kendoSparkline({ type: "bar" });
 
             sparkline = div.data("kendoSparkline");
-            equal(sparkline.element.innerWidth(), 30);
+            equal($(sparkline._instance.stage).width(), 30);
         });
 
         // ------------------------------------------------------------

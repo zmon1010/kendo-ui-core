@@ -33,6 +33,7 @@ styles/web/kendo.default-v2.less
 styles/web/kendo.bootstrap-v4.less
 !styles/web/kendo.rtl.css
 /node_modules
+src-modules/node_modules
 ./tags
 styles/*.css
 themebuilder/scripts/template.js

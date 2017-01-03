@@ -1,21 +1,10 @@
 (function(f, define){
     define([
-        "./kendo.color",
-        "./util/main",
-        "./util/text-metrics",
-        "./util/base64",
-        "./mixins/observers",
-        "./drawing/geometry",
-        "./drawing/core",
-        "./drawing/mixins",
-        "./drawing/shapes",
-        "./drawing/parser",
-        "./drawing/search",
-        "./drawing/svg",
-        "./drawing/canvas",
-        "./drawing/vml",
-        "./drawing/html",
-        "./drawing/animation"
+        "./drawing/util",
+        "./drawing/kendo-drawing",
+        "./drawing/surface-tooltip",
+        "./drawing/surface",
+        "./drawing/html"
     ], f);
 })(function(){
 

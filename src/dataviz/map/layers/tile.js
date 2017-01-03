@@ -21,9 +21,11 @@
         Layer = dataviz.map.layers.Layer,
 
         util = kendo.util,
-        round = util.round,
         renderSize = util.renderSize,
-        limit = util.limitValue;
+
+        drawingUtil = kendo.drawing.util,
+        round = drawingUtil.round,
+        limit = drawingUtil.limitValue;
 
     // Image tile layer =============================================================
     var TileLayer = Layer.extend({

@@ -75,30 +75,12 @@ test("saveAsPDF calls drawDOM with the widget wrapper", 1, function() {
     jasmine.clock().tick(1);
 });
 
-test("saveAsPDF calls pdf.toDataURL", 1, function() {
-    var widget = dom.kendoPDF({
-    }).data("kendoPDF");
-
-
-    kendo.drawing.pdf.toDataURL = function() {
-        ok(true)
-    };
-
-    widget.saveAsPDF();
-
-    jasmine.clock().tick(1);
-});
-
 test("saveAsPDF calls kendo.saveAs", 1, function() {
     var widget = dom.kendoPDF({
     }).data("kendoPDF");
 
-    kendo.drawing.pdf.toDataURL = function(root, callback) {
-        callback("foo");
-    };
-
     kendo.saveAs = function(options) {
-       equal(options.dataURI, "foo");
+       equal(options.dataURI.indexOf("data:application/pdf;base64,"), 0);
     };
 
     widget.saveAsPDF();

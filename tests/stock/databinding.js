@@ -124,9 +124,9 @@
         });
 
         test("slaves redrawn fully on main DS change", 2, function() {
-            stubMethod(Chart.fn, "_redraw", function() {
+            stubMethod(dataviz.Chart.fn, "_redraw", function() {
                 ok(true);
-                Chart.fn._stubbed._redraw.call(this);
+                dataviz.Chart.fn._stubbed._redraw.call(this);
             }, function() {
                 createStockChart({
                     autoBind: false,
@@ -207,7 +207,7 @@
         });
 
         test("data source is created", function() {
-            ok(chart._navigator.dataSource);
+            ok(chart._navigatorDataSource);
         });
 
         test("regular series are bound from the chart data source", function() {
@@ -355,7 +355,7 @@
                 ok(true);
             }, function() {
                 createStockChart();
-                chart._navigator.dataSource.fetch();
+                chart._navigatorDataSource.fetch();
             });
         });
 
@@ -366,14 +366,14 @@
             stubMethod(Navigator.fn, "_redrawSelf", function() {
                 ok(++partialRedrawCalls <= 2, "Expected two navigator redraws");
             }, function() {
-                stubMethod(Chart.fn, "_redraw", function() {
+                stubMethod(dataviz.Chart.fn, "_redraw", function() {
                     ok(++redrawCalls === 1, "Too many redraws");
-                    Chart.fn._stubbed._redraw.call(this);
+                    dataviz.Chart.fn._stubbed._redraw.call(this);
                 }, function() {
                     createStockChart({
                         dataSource: null
                     });
-                    chart._navigator.dataSource.fetch();
+                    chart._navigatorDataSource.fetch();
                 });
             });
         });
@@ -388,7 +388,7 @@
                         autoBind: false
                     }
                 });
-                chart._navigator.dataSource.fetch();
+                chart._navigatorDataSource.fetch();
             });
         });
 
@@ -467,14 +467,14 @@
         });
 
         test("main DS is filtered during zoomEnd", function() {
-            chart.trigger("zoom", {
+            chart._instance.trigger("zoom", {
                 originalEvent: {
                     preventDefault: function() {}
                 },
                 delta: -1
             });
 
-            chart.trigger("zoomEnd");
+            chart._instance.trigger("zoomEnd");
             deepEqual(chart.dataSource._filter.filters[0].value, new Date("2012/08/30"));
             deepEqual(chart.dataSource._filter.filters[1].value, new Date("2012/11/05"));
         });

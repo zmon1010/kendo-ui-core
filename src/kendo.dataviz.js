@@ -18,8 +18,6 @@
         "./kendo.dataviz.core",
         "./kendo.dataviz.themes",
         "./kendo.dataviz.chart",
-        "./kendo.dataviz.chart.polar",
-        "./kendo.dataviz.chart.funnel",
         "./kendo.dataviz.gauge",
         "./kendo.dataviz.barcode",
         "./kendo.dataviz.qrcode",

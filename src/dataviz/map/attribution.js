@@ -7,8 +7,9 @@
         Widget = kendo.ui.Widget,
         template = kendo.template,
 
-        valueOrDefault = kendo.util.valueOrDefault,
-        defined = kendo.util.defined;
+        util = kendo.drawing.util,
+        valueOrDefault = util.valueOrDefault,
+        defined = util.defined;
 
     var Attribution = Widget.extend({
         init: function(element, options) {
