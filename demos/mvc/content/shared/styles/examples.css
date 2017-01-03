@@ -711,6 +711,8 @@ div.submenu-box ol {
     max-width: 780px;
     box-shadow: none;
     margin-bottom: 2em;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 .tc-theme-list .themes-grid[data-cols="2"] {
