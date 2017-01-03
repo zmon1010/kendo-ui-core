@@ -189,8 +189,10 @@ var WORKSHEET = kendo.template(
        '</row>' +
    '# } #' +
    '</sheetData>' +
-   '# if (filter) { #' +
-   '<autoFilter ref="${filter.from}:${filter.to}"/>' +
+   '# if (autoFilter) { #' +
+   '<autoFilter ref="${autoFilter.from}:${autoFilter.to}"/>' +
+   '# } else if (filter) { #' +
+   '#= kendo.ooxml.spreadsheetFilters(filter) #' +
    '# } #' +
    '# if (mergeCells.length) { #' +
    '<mergeCells count="${mergeCells.length}">' +
@@ -437,12 +439,18 @@ var Worksheet = kendo.Class.extend({
 
         this._readCells(data);
 
-        var filter = this.options.filter;
-        if (filter && (typeof filter.from === "number") && (typeof filter.to === "number")) {
-            filter = {
-                from: ref(filterRowIndex(this.options), filter.from),
-                to: ref(filterRowIndex(this.options), filter.to)
+        var autoFilter = this.options.filter;
+        var filter;
+        if (autoFilter && (typeof autoFilter.from === "number") && (typeof autoFilter.to === "number")) {
+            // Grid enables auto filter
+            autoFilter = {
+                from: ref(filterRowIndex(this.options), autoFilter.from),
+                to: ref(filterRowIndex(this.options), autoFilter.to)
             };
+        } else if (autoFilter) {
+            // this is probably from the Spreadsheet
+            filter = autoFilter;
+            autoFilter = null;
         }
 
         var validations = [];
@@ -466,6 +474,7 @@ var Worksheet = kendo.Class.extend({
             data: data,
             index: index,
             mergeCells: mergeCells,
+            autoFilter: autoFilter,
             filter: filter,
             showGridLines: this.options.showGridLines,
             hyperlinks: this.options.hyperlinks || [],
@@ -1066,12 +1075,105 @@ function spanCell(cell, row, startIndex, colSpan) {
     }
 }
 
+var SPREADSHEET_FILTERS = kendo.template(
+  '<autoFilter ref="${ref}">' +
+    '# for (var i = 0; i < columns.length; ++i) { #' +
+      '# var col = columns[i]; #' +
+      '<filterColumn colId="${col.index}">' +
+        '#= generators[col.filter](col) #' +
+      '</filterColumn>' +
+    '# } #' +
+  '</autoFilter>'
+);
+
+var SPREADSHEET_CUSTOM_FILTER = kendo.template(
+  '<customFilters# if (logic == "and") {# and="1"# } #>' +
+    '# for (var i = 0; i < criteria.length; ++i) { #' +
+      '# var f = criteria[i]; #' +
+      '# var op = kendo.ooxml.spreadsheetFilters.customOperator(f); #' +
+      '# var val = kendo.ooxml.spreadsheetFilters.customValue(f); #' +
+      '<customFilter# if (op) {# operator="${op}"#}# val="${val}"/>' +
+    '# } #' +
+  '</customFilters>'
+);
+
+var SPREADSHEET_DYNAMIC_FILTER = kendo.template(
+  '<dynamicFilter type="${type}" />'
+);
+
+var SPREADSHEET_TOP_FILTER = kendo.template(
+  '<top10 percent="#= /percent$/i.test(type) ? 1 : 0 #"' +
+        ' top="#= /^top/i.test(type) ? 1 : 0 #" ' +
+        ' val="#: value #" />'
+);
+
+var SPREADSHEET_VALUE_FILTER = kendo.template(
+  '<filters# if (blanks) {# blank="1"#}#>' +
+    '# for (var i = 0; i < values.length; ++i) { #' +
+      '<filter val="${values[i]}" />' +
+    '# } #' +
+  '</filters>'
+);
+
+function spreadsheetFilters(filter) {
+    return SPREADSHEET_FILTERS({
+        ref: filter.ref,
+        columns: filter.columns,
+        generators: {
+            custom  : SPREADSHEET_CUSTOM_FILTER,
+            dynamic : SPREADSHEET_DYNAMIC_FILTER,
+            top     : SPREADSHEET_TOP_FILTER,
+            value   : SPREADSHEET_VALUE_FILTER
+        }
+    });
+}
+
+spreadsheetFilters.customOperator = function(f) {
+    return {
+        eq  : "equal",
+        gt  : "greaterThan",
+        gte : "greaterThanOrEqual",
+        lt  : "lessThan",
+        lte : "lessThanOrEqual",
+        ne  : "notEqual",
+
+        // These are not in the spec, but seems to be how Excel does
+        // it (see customValue below).  For the non-negated versions,
+        // the operator attribute is missing completely.
+        doesnotstartwith: "notEqual",
+        doesnotendwith: "notEqual",
+        doesnotcontain: "notEqual"
+    }[f.operator.toLowerCase()];
+};
+
+spreadsheetFilters.customValue = function(f) {
+    function esc(str) {
+        return str.replace(/([*?])/g, "~$1");
+    }
+
+    switch (f.operator.toLowerCase()) {
+      case "startswith":
+      case "doesnotstartwith":
+        return esc(f.value) + "*";
+
+      case "endswith":
+      case "doesnotendwith":
+        return "*" + esc(f.value);
+
+      case "contains":
+      case "doesnotcontain":
+        return "*" + esc(f.value) + "*";
+    }
+    return f.value;
+};
+
 kendo.ooxml = {
     Workbook: Workbook,
     Worksheet: Worksheet,
     toWidth: toWidth,
     toHeight: toHeight,
-    borderTemplate: borderTemplate
+    borderTemplate: borderTemplate,
+    spreadsheetFilters: spreadsheetFilters
 };
 
 })(kendo.jQuery, kendo);
