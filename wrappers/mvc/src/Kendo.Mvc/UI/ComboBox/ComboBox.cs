@@ -42,10 +42,10 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        public string DataValueField 
-        { 
-            get; 
-            set; 
+        public string DataValueField
+        {
+            get;
+            set;
         }
 
         public bool? HighlightFirst
@@ -67,6 +67,12 @@ namespace Kendo.Mvc.UI
         }
 
         public bool? Suggest
+        {
+            get;
+            set;
+        }
+
+        public bool? SyncValueAndText
         {
             get;
             set;
@@ -123,6 +129,11 @@ namespace Kendo.Mvc.UI
             if (Suggest != null)
             {
                 options["suggest"] = Suggest;
+            }
+
+            if (SyncValueAndText != null)
+            {
+                options["syncValueAndText"] = SyncValueAndText;
             }
 
             if (!string.IsNullOrEmpty(CascadeFrom))

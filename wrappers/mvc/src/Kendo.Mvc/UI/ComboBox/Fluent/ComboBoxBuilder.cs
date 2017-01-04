@@ -1,7 +1,7 @@
 namespace Kendo.Mvc.UI.Fluent
 {
     using Kendo.Mvc.UI;
-    
+
     using System;
     using System.Linq;
     using System.Web.Mvc;
@@ -267,7 +267,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
         /// <summary>
         /// Use it to set selected item index
         /// </summary>
@@ -305,6 +305,24 @@ namespace Kendo.Mvc.UI.Fluent
         public ComboBoxBuilder Suggest(bool suggest)
         {
             Component.Suggest = suggest;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Controls whether the ComboBox should automatically sync custom text with the selected value.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ComboBox()
+        ///             .Name("ComboBox")
+        ///             .SyncValueAndText(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ComboBoxBuilder SyncValueAndText(bool syncValueAndText)
+        {
+            Component.SyncValueAndText = syncValueAndText;
 
             return this;
         }
