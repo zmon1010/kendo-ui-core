@@ -574,7 +574,7 @@ var __meta__ = { // jshint ignore:line
                 template = kendo.template(template);
 
                 fileEntry = $("<li class='k-file'>" + template(templateData) + "</li>");
-                fileEntry.find(".k-upload-action").addClass("k-button k-button-bare");
+                fileEntry.find(".k-upload-action").addClass("k-button");
 
                 that.angular("compile", function(){
                     return {
@@ -643,7 +643,7 @@ var __meta__ = { // jshint ignore:line
                 );
             } else {
                 fileElement.find(".k-upload-action")
-                           .addClass("k-button k-button-bare")
+                           .addClass("k-button")
                            .append("<span class='k-icon " + iconsClassDictionary[actionKey] + " " + classDictionary[actionKey] +
                                    "' title='" + this.localization[actionKey] + "'" +
                                    "aria-label='" + this.localization[actionKey] + "'></span>")
@@ -674,7 +674,7 @@ var __meta__ = { // jshint ignore:line
         _renderAction: function (actionClass, actionText, iconClass) {
             if (actionClass !== "") {
                 return $(
-                "<button type='button' class='k-button k-button-bare k-upload-action'>" +
+                "<button type='button' class='k-button k-upload-action'>" +
                     "<span class='k-icon "+ iconClass + " " + actionClass + "' title='" + actionText + "' aria-label='" + actionText +"'></span>" +
                 "</button>"
                 );
