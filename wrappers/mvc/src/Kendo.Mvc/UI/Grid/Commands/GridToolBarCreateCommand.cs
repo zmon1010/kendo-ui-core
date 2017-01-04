@@ -16,7 +16,7 @@ namespace Kendo.Mvc.UI
             var button = factory.CreateButton<GridLinkButtonBuilder>(ButtonType);
 
             button.CssClass += " " + UIPrimitives.Grid.Add;
-            button.SpriteCssClass = "k-add";
+            button.SpriteCssClass = "k-i-add";
             button.Text = Text;            
             button.HtmlAttributes = HtmlAttributes;
             //TODO: Implement command button image html attributes

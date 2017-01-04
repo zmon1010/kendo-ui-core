@@ -20,8 +20,8 @@ namespace Kendo.Mvc.UI.Html
                 var a = new HtmlElement("a")
                         .Attribute("href", "#")
                         .AddClass(UIPrimitives.Icon)
-                        .ToggleClass("k-plus", !CurrentGridItem.Expanded)
-                        .ToggleClass("k-minus", CurrentGridItem.Expanded);
+                        .ToggleClass("k-i-expand", !CurrentGridItem.Expanded)
+                        .ToggleClass("k-i-collapse", CurrentGridItem.Expanded);
 
                 a.AppendTo(td);
             }

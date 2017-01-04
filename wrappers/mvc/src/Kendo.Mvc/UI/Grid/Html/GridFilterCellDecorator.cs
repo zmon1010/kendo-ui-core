@@ -26,7 +26,7 @@ namespace Kendo.Mvc.UI.Html
 
             td.Children.Insert(0, link);
 
-            new HtmlElement("span").AddClass("k-icon", "k-filter").Text(filterMessage).AppendTo(link);
+            new HtmlElement("span").AddClass("k-icon", "k-i-filter").Text(filterMessage).AppendTo(link);
         }
     }
 }

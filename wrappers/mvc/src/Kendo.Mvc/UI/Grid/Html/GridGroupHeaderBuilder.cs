@@ -81,8 +81,8 @@ namespace Kendo.Mvc.UI.Html
 
             new HtmlElement("span")
                 .AddClass(UIPrimitives.Icon)
-                .ToggleClass("k-si-arrow-n", group.SortDirection == ListSortDirection.Ascending)
-                .ToggleClass("k-si-arrow-s", group.SortDirection == ListSortDirection.Descending)
+                .ToggleClass("k-i-sarrow-n", group.SortDirection == ListSortDirection.Ascending)
+                .ToggleClass("k-i-sarrow-s", group.SortDirection == ListSortDirection.Descending)
                 .AppendTo(a);
 
             groups.Remove(group);
