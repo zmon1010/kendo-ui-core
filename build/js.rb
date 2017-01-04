@@ -10,7 +10,7 @@ MESSAGES = FileList['src/messages/*.js'].pathmap(File.join(DIST_JS_ROOT, "messag
 CULTURES_AND_TIMEZONES = FileList['src/cultures/*.js'].pathmap(File.join(DIST_JS_ROOT, "cultures", "%f")).include(MESSAGES).include('dist/js/kendo.timezones.js')
 
 def dependencies(component)
-    in_dist(FileList[YAML.load(`node #{METAJS} --all-deps kendo.#{component}.js`).keep_if { |file| file.include? "kendo" }]).include(CULTURES_AND_TIMEZONES)
+    in_dist(FileList[YAML.load(`node #{METAJS} --all-deps kendo.#{component}.js`).keep_if { |file| file.include? "kendo." }]).include(CULTURES_AND_TIMEZONES)
 end
 
 def maps(list)
