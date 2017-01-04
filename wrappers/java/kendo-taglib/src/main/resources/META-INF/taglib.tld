@@ -11843,6 +11843,13 @@ The noData template receives the widget itself as a part of the data argument. T
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>When set to true the widget will automatically set selected value to the typed custom text. Set the option to false to
+clear the selected value but keep the custom text.</description>
+            <name>syncValueAndText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The template used to render the items. By default the widget displays only the text of the data item (configured via dataTextField).</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
