@@ -165,12 +165,12 @@ namespace Kendo.Mvc.UI
             /// <summary>
             /// "Delete" icon
             /// </summary>
-            public const string Delete = "k-delete";
+            public const string Delete = "k-i-delete";
 
             /// <summary>
             /// "Delete Group" icon
             /// </summary>
-            public const string GroupDelete = "k-group-delete";
+            public const string GroupDelete = "k-i-group-delete";
 
             /// <summary>
             /// "Refresh" icon

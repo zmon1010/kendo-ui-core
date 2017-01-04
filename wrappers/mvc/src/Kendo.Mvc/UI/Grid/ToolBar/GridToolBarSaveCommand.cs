@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI
             var save = factory.CreateButton<GridLinkButtonBuilder>(ButtonType);
 
             save.CssClass += " " + UIPrimitives.Grid.SaveChanges;
-            save.SpriteCssClass = "k-update";
+            save.SpriteCssClass = "k-i-update";
             save.Text = SaveText;           
             save.HtmlAttributes = HtmlAttributes;
 
@@ -42,7 +42,7 @@ namespace Kendo.Mvc.UI
             var cancel = factory.CreateButton<GridLinkButtonBuilder>(ButtonType);
 
             cancel.CssClass += " " + UIPrimitives.Grid.CancelChanges;
-            cancel.SpriteCssClass = "k-cancel";
+            cancel.SpriteCssClass = "k-i-cancel";
             cancel.Text = CancelText;            
             cancel.HtmlAttributes = HtmlAttributes;
 
