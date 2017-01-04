@@ -64,7 +64,6 @@ namespace Kendo.Mvc.TagHelpers
         /// </summary>
         public double? Width { get; set; }
 
-
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();

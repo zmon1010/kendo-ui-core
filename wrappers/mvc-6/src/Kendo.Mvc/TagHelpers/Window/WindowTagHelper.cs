@@ -38,7 +38,7 @@ namespace Kendo.Mvc.TagHelpers
             output.MergeAttributes(tagBuilder);
         }
 
-        protected override void WriteInitializationScript(TagHelperOutput output)
+        protected override string GetInitializationScript()
         {
             var settings = SerializeSettings();
 
@@ -47,9 +47,7 @@ namespace Kendo.Mvc.TagHelpers
                 settings["content"] = new { url = ContentUrl };
             }
 
-            var initializationScript = Initializer.Initialize(Selector, "Window", settings);
-
-            output.PostElement.SetHtmlContent("<script>" + initializationScript + "</script>");
+            return Initializer.Initialize(Selector, "Window", settings);
         }
     }
 }

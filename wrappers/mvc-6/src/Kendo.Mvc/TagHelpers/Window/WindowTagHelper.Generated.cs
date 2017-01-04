@@ -84,7 +84,6 @@ namespace Kendo.Mvc.TagHelpers
         /// </summary>
         public bool? Resizable { get; set; }
 
-
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();

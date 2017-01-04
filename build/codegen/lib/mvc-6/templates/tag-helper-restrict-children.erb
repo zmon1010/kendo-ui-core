@@ -1,0 +1,10 @@
+% if children.any? then
+%   _erbout << "[RestrictChildren("
+%   children.each do |c|
+%       _erbout << "\"kendo-#{c}\""
+%       if not c.equal?(children.last)
+%           _erbout << ","
+%        end
+%   end
+%   _erbout << ")]"
+% end

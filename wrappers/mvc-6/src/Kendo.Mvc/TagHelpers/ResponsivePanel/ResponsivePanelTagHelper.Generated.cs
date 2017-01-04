@@ -29,7 +29,6 @@ namespace Kendo.Mvc.TagHelpers
         /// </summary>
         public string ToggleButton { get; set; }
 
-
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();

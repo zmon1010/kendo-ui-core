@@ -1,0 +1,12 @@
+%if serialize?
+            if (<%= csharp_name %> != null)
+            {
+                var <%= var_name %> = <%= csharp_name %>.Serialize();
+
+                if (<%= var_name %>.Any())
+                {
+                    settings["<%= name %>"] = <%= var_name %>;
+                }
+            }
+%end
+

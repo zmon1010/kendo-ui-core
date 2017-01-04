@@ -69,7 +69,7 @@ namespace Kendo.Mvc.TagHelpers
             output.MergeAttributes(tagBuilder);
         }
 
-        protected override void WriteInitializationScript(TagHelperOutput output)
+        protected override string GetInitializationScript()
         {
             var settings = SerializeSettings();
 
@@ -83,9 +83,7 @@ namespace Kendo.Mvc.TagHelpers
                 settings["month"] = new { content = MonthTemplate };
             }
 
-            var initializationScript = Initializer.Initialize(Selector, "DateTimePicker", settings);
-
-            output.PostElement.SetHtmlContent("<script>" + initializationScript + "</script>");
+            return Initializer.Initialize(Selector, "DateTimePicker", settings);
         }
     }
 }

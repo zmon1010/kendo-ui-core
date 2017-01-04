@@ -44,7 +44,6 @@ namespace Kendo.Mvc.TagHelpers
         /// </summary>
         public DateTime? Value { get; set; }
 
-
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();

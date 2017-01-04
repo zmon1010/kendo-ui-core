@@ -9,7 +9,6 @@ namespace Kendo.Mvc.TagHelpers
 {
     public partial class SplitterTagHelper
     {
-
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();

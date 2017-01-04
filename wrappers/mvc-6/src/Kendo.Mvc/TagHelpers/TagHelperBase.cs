@@ -14,6 +14,7 @@ namespace Kendo.Mvc.TagHelpers
 {
     public abstract class TagHelperBase : TagHelper
     {
+        internal static readonly string DeferredScriptsKey = "$DeferredScriptsKey$";
         private static readonly Regex StringFormatExpression = new Regex(@"(?<=\{\d:)(.)*(?=\})", RegexOptions.Compiled);
         protected const string MinimumValidator = "min";
         protected const string MaximumValidator = "max";
@@ -48,6 +49,7 @@ namespace Kendo.Mvc.TagHelpers
                 return "#";
             }
         }
+        public bool Deferred { get; set; }
 
         public TagHelperBase(IKendoHtmlGenerator generator)
         {
@@ -61,8 +63,32 @@ namespace Kendo.Mvc.TagHelpers
             VerifySettings();
 
             WriteHtml(output);
+            string initializationScript = GetInitializationScript();
+            if (Deferred)
+            {
+                AppendScriptToContext(initializationScript);
+            }
+            else
+            {
+                output.PostElement.SetHtmlContent("<script>" + initializationScript + "</script>");
+            }
+        }
+        private void AppendScriptToContext(string script)
+        {
+            var items = ViewContext.HttpContext.Items;
 
-            WriteInitializationScript(output);
+            var scripts = new List<KeyValuePair<string, string>>();
+
+            if (items.ContainsKey(DeferredScriptsKey))
+            {
+                scripts = (List<KeyValuePair<string, string>>)items[DeferredScriptsKey];
+            }
+            else
+            {
+                items[DeferredScriptsKey] = scripts;
+            }
+
+            scripts.Add(new KeyValuePair<string, string>(Name, script));
         }
         protected virtual void VerifySettings()
         {
@@ -71,7 +97,7 @@ namespace Kendo.Mvc.TagHelpers
 
         protected abstract void WriteHtml(TagHelperOutput output);
 
-        protected abstract void WriteInitializationScript(TagHelperOutput output);
+        protected abstract string GetInitializationScript();
 
         protected virtual Dictionary<string, object> SerializeSettings()
         {

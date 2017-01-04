@@ -76,7 +76,6 @@ module CodeGen::MVC6::Wrappers::Options
 
     def unique_options
         composite = composite_options.map { |o| o.name }
-
         f = options.find_all { |o| o.composite? || !composite.include?(o.name) }
     end
 

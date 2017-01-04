@@ -284,7 +284,7 @@ namespace :generate do
 
             factory_file = 'wrappers/mvc-6/src/Kendo.Mvc/UI/WidgetFactory.cs'
         end
-        
+
         desc 'Generate MVC v6 Tag Helpers'
         task :taghelpers do
             markdown = FileList[
@@ -296,6 +296,7 @@ namespace :generate do
                 'docs/api/javascript/ui/window.md',
                 'docs/api/javascript/ui/dialog.md',
                 'docs/api/javascript/ui/responsivepanel.md',
+                'docs/api/javascript/ui/upload.md',
                 'docs/api/javascript/ui/splitter.md'
             ]
 
