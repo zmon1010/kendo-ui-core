@@ -970,15 +970,17 @@
         },
 
         openDialog: function(name, options) {
-            var sheet = this._sheet;
-            var ref = sheet.activeCell();
-            var range = new kendo.spreadsheet.Range(ref, sheet);
             var dialog = kendo.spreadsheet.dialogs.create(name, options);
 
             if (dialog) {
                 dialog.bind("action", this._executeCommand.bind(this));
                 dialog.bind("deactivate", this._destroyDialog.bind(this));
                 this._dialogs.push(dialog);
+
+                var sheet = this._sheet;
+                var ref = sheet.activeCell();
+                var range = new kendo.spreadsheet.Range(ref, sheet);
+
                 dialog.open(range);
                 return dialog;
             }
