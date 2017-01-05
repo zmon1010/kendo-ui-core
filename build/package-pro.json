@@ -1,5 +1,5 @@
 {
-  "name": "kendo",
+  "name": "@progress/kendo-ui",
   "license": "LicenseRef-LICENSE",
   "version": "$KENDO_VERSION",
   "dependencies": {

@@ -1,7 +1,8 @@
-
-task :npm do
+task :npm_package do
     gulp "npm-pro"
+end
 
+task :npm_legacy => 'npm_package' do
     repo_url = "git@github.com:telerik/npm-kendo-ui.git"
     repo_path = "dist/npm-kendo-ui"
 
@@ -45,4 +46,9 @@ task :npm do
 
 end
 
-task "release_builds:bundles:all" => "npm"
+task :npm => 'npm_package' do
+    `cd dist/npm && npm publish`
+end
+
+task 'release_builds:bundles:all' => ['npm', 'npm_legacy']
+
