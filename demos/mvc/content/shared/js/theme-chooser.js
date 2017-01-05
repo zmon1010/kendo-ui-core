@@ -288,26 +288,24 @@
             }
         },
 
-        prefetch: function(files) {
-            if (!$.isArray(files)) {
-                files = [files];
-            }
-
-            files = $.grep(files, function(x) {
-                return !ThemeChooser.currentlyUsing(x);
-            });
-
-            if (!files.length) {
-                return $.Deferred().resolve().promise();
-            }
-
-            return $.when.apply($, $.map(files, ThemeChooser.preloadStylesheet));
-        },
-
         animateCssChange: function(options) {
             options = $.extend({ complete: $.noop, replace: $.noop }, options);
 
-            ThemeChooser.prefetch(options.prefetch).then(function() {
+            var prefetch = options.prefetch;
+
+            if (!$.isArray(prefetch)) {
+                prefetch = [prefetch];
+            }
+
+            prefetch = $.grep(prefetch, function(x) {
+                return !ThemeChooser.currentlyUsing(x);
+            });
+
+            if (!prefetch.length) {
+                return;
+            }
+
+            $.when.apply($, $.map(prefetch, ThemeChooser.preloadStylesheet)).then(function() {
                 var example = $("#example");
 
                 example.kendoStop().kendoAnimate(extend({}, animation.hide, {
@@ -323,7 +321,7 @@
                                     .kendoStop()
                                     .kendoAnimate(animation.show);
 
-                                if (options.prefetch.join(":").indexOf("common") > -1) {
+                                if (prefetch.join(":").indexOf("common") > -1) {
                                     kendo.resize(example, true);
                                 }
 
