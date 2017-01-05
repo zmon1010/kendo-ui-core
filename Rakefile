@@ -31,7 +31,7 @@ else
     WEB_INSTALLER_ROOT = File.join(distributions, "Guidance", "WebInstallers", "Current", "Release")
 end
 
-ARCHIVE_ROOT = File.join(RELEASE_ROOT, "Builds")
+ARCHIVE_ROOT = File.join(RELEASE_ROOT, "BUILDS")
 
 if ENV['DRY_RUN']
     ADMIN_URL = 'http://integrationadmin.telerik.com/'
