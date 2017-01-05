@@ -30,7 +30,7 @@ TEMPLATE
 
 $calendar = new \Kendo\UI\Calendar('calendar');
 $calendar->value(new DateTime('today', new DateTimeZone('UTC')))
-         ->showWeekNumber(true)
+         ->weekNumber(true)
          ->month($month)
          ->footer(" ");
 

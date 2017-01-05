@@ -20,7 +20,7 @@ $month->weekNumber(<<<TEMPLATE
 TEMPLATE
 );
 $datePicker ->value(new DateTime('today', new DateTimeZone('UTC')))
-            ->showWeekNumber(true)
+            ->weekNumber(true)
             ->footer("Today - #= kendo.toString(data, 'd') #")
             ->month($month)
             ->open("onOpen")

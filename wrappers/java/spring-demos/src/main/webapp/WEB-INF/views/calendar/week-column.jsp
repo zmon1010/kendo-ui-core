@@ -7,7 +7,7 @@
 <demo:header />
 <div class="demo-section k-content" style="text-align: center;">
     <h4>Pick a date</h4>	
-	<kendo:calendar name="calendar" showWeekNumber="true">
+	<kendo:calendar name="calendar" weekNumber="true">
 	</kendo:calendar>
 </div>
 <demo:footer />

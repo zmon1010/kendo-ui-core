@@ -8,7 +8,7 @@ require_once '../include/header.php';
 <?php
 $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
 $dateTimePicker->value(new DateTime('today', new DateTimeZone('UTC')))
-            ->showWeekNumber(true)
+            ->weekNumber(true)
             ->month(array(
                'content' => <<<TEMPLATE
 # if (isInArray(data.date, birthdays)) { #

@@ -8,7 +8,7 @@ require_once '../lib/Kendo/Autoload.php';
 <?php
 $calendar = new \Kendo\UI\Calendar('calendar');
 
-$calendar->showWeekNumber(true);
+$calendar->weekNumber(true);
 
 echo $calendar->render();
 ?>

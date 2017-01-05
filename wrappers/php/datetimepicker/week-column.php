@@ -10,7 +10,7 @@ $dateTimePicker = new \Kendo\UI\DateTimePicker('datetimepicker');
 
 $dateTimePicker->value(new DateTime('now', new DateTimeZone('UTC')))
            ->attr('style', 'width: 100%')
-           ->showWeekNumber(true);
+           ->weekNumber(true);
 
 echo $dateTimePicker->render();
 ?>

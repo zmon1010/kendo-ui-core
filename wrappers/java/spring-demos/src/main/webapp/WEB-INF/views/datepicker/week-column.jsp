@@ -7,7 +7,7 @@
 
 <div class="demo-section k-content">
         <h4>Show e-mails from:</h4>
-        <kendo:datePicker name="datepicker" showWeekNumber="true" value="${date}" style="width:100%"></kendo:datePicker>
+        <kendo:datePicker name="datepicker" weekNumber="true" value="${date}" style="width:100%"></kendo:datePicker>
 </div>
 
 <demo:footer />

@@ -34,7 +34,7 @@
         %>
          <div class="demo-section k-content">
             <div id="special-days">
-				<kendo:calendar name="calendar" showWeekNumber="true" value="<%= new Date()%>" dates="${dates}" footer="<#= false#>">
+				<kendo:calendar name="calendar" weekNumber="true" value="<%= new Date()%>" dates="${dates}" footer="<#= false#>">
 					<kendo:calendar-month weekNumber="<%=weekNumberTemplate%>" content="<%=template%>"/>
 				</kendo:calendar>
             </div>

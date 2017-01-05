@@ -45,7 +45,7 @@
     %>
      <div class="demo-section k-content">
         <h4>Birthday Calendar</h4>
-        <kendo:datePicker name="datepicker" showWeekNumber="true" value="<%=new Date()%>" dates="${dates}" footer="<%=footer%>" open="onOpen" style="width: 100%;">
+        <kendo:datePicker name="datepicker" weekNumber="true" value="<%=new Date()%>" dates="${dates}" footer="<%=footer%>" open="onOpen" style="width: 100%;">
             <kendo:datePicker-month content="<%=template%>" weekNumber="<%=weekNumberTemplate%>"/>
         </kendo:datePicker>
     </div>

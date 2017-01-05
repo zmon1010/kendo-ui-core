@@ -663,12 +663,6 @@ settings are available for the depth value:</description>
             <type>java.util.Date</type>
         </attribute>
         <attribute>
-            <description>If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.</description>
-            <name>showWeekNumber</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>boolean</type>
-        </attribute>
-        <attribute>
             <description>Specifies the start view.
 The following settings are available for the start value:</description>
             <name>start</name>
@@ -680,6 +674,12 @@ The following settings are available for the start value:</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.</description>
+            <name>weekNumber</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Fires when the selected date is changed.</description>
@@ -715,7 +715,8 @@ The following settings are available for the start value:</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year.</description>
+            <description>The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year. 
+ The properties available in the data object are:These properties can be used in the template to make additional calculations.</description>
             <name>weekNumber</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13157,12 +13158,6 @@ settings are available for the depth value:</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.</description>
-            <name>showWeekNumber</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>boolean</type>
-        </attribute>
-        <attribute>
             <description>Specifies the start view.
 The following settings are available for the start value:</description>
             <name>start</name>
@@ -13174,6 +13169,12 @@ The following settings are available for the start value:</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.</description>
+            <name>weekNumber</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Fires when the selected date is changed</description>
@@ -13267,7 +13268,8 @@ The following settings are available for the start value:</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year.</description>
+            <description>The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year. 
+ The properties available in the data object are:These properties can be used in the template to make additional calculations.</description>
             <name>weekNumber</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13383,12 +13385,6 @@ settings are available for the depth value:</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.</description>
-            <name>showWeekNumber</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>boolean</type>
-        </attribute>
-        <attribute>
             <description>Specifies the start view of the calendar.
  The following settings are available for the start value:</description>
             <name>start</name>
@@ -13406,6 +13402,12 @@ settings are available for the depth value:</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.</description>
+            <name>weekNumber</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Triggered when the underlying value of a DateTimePicker is changed.</description>
@@ -13499,7 +13501,8 @@ settings are available for the depth value:</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year.</description>
+            <description>The template to be used for rendering the cells in "week" column. By default, the widget renders the calculated week of the year. 
+ The properties available in the data object are:These properties can be used in the template to make additional calculations.</description>
             <name>weekNumber</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

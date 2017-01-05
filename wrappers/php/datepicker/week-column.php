@@ -11,7 +11,7 @@ $datePicker = new \Kendo\UI\DatePicker('datepicker');
 $datePicker->value(new DateTime('10/10/2011', new DateTimeZone('UTC')))
            ->attr('style', 'width: 100%');
 
-$datePicker->showWeekNumber(true);
+$datePicker->weekNumber(true);
 
 echo $datePicker->render();
 ?>

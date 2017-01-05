@@ -173,14 +173,6 @@ public class DateTimePickerTag extends WidgetTag /* interfaces *//* interfaces *
         setProperty("parseFormats", value);
     }
 
-    public boolean getShowWeekNumber() {
-        return (Boolean)getProperty("showWeekNumber");
-    }
-
-    public void setShowWeekNumber(boolean value) {
-        setProperty("showWeekNumber", value);
-    }
-
     public java.lang.String getStart() {
         return (java.lang.String)getProperty("start");
     }
@@ -203,6 +195,14 @@ public class DateTimePickerTag extends WidgetTag /* interfaces *//* interfaces *
 
     public void setValue(java.util.Date value) {
         setProperty("value", value);
+    }
+
+    public boolean getWeekNumber() {
+        return (Boolean)getProperty("weekNumber");
+    }
+
+    public void setWeekNumber(boolean value) {
+        setProperty("weekNumber", value);
     }
 
     public String getChange() {

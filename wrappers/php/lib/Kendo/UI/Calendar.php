@@ -98,8 +98,8 @@ settings are available for the depth value:
     * @param boolean $value
     * @return \Kendo\UI\Calendar
     */
-    public function showWeekNumber($value) {
-        return $this->setProperty('showWeekNumber', $value);
+    public function weekNumber($value) {
+        return $this->setProperty('weekNumber', $value);
     }
 
     /**
