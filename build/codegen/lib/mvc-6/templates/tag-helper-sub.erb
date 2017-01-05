@@ -8,7 +8,7 @@ namespace Kendo.Mvc.TagHelpers
     /// </summary>
     [HtmlTargetElement("<%= taghelper_element %>", ParentTag="<%= taghelper_parent_element %>", TagStructure=<%= taghelper_structure %> )]
     <%= to_tag_helper_restrict_children %>
-    [SupressTagRendering]
+    [SuppressTagRendering]
     public partial class <%= taghelper_class %> : <%= if collection_component? then "TagHelperCollectionItemBase" else "TagHelperChildBase" end %>
     {
         public <%= taghelper_class %>() : base()
