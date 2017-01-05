@@ -276,6 +276,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public EditorMessagesSettingsBuilder CleanFormatting(string message)
+        {
+            container.CleanFormatting = message;
+
+            return this;
+        }
+
         public EditorMessagesSettingsBuilder AddColumnLeft(string message)
         {
             container.AddColumnLeft = message;
