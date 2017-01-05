@@ -10,7 +10,6 @@ namespace Kendo.Mvc.TagHelpers
     public partial class UploadTagHelper
     {
         public UploadAsyncSettingsTagHelper Async { get; set; }
-
         /// <summary>
         /// Initializes a dropzone element(s) based on a given selector that provides drag and drop file upload.
         /// </summary>
@@ -25,7 +24,6 @@ namespace Kendo.Mvc.TagHelpers
         public UploadFilesTagHelper Files { get; set; }
 
         public UploadLocalizationSettingsTagHelper Localization { get; set; }
-
         /// <summary>
         /// Enables (true) or disables (false) the ability to select multiple files.
 		/// If false, users will be able to select only one file at a time. Note: This option does not
@@ -52,7 +50,6 @@ namespace Kendo.Mvc.TagHelpers
         public string TemplateId { get; set; }
 
         public UploadValidationSettingsTagHelper Validation { get; set; }
-
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
