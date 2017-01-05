@@ -282,14 +282,6 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("suggest", value);
     }
 
-    public boolean getSyncValueAndText() {
-        return (Boolean)getProperty("syncValueAndText");
-    }
-
-    public void setSyncValueAndText(boolean value) {
-        setProperty("syncValueAndText", value);
-    }
-
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }

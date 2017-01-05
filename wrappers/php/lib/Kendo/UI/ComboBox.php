@@ -297,16 +297,6 @@ refer to Popup documentation.
     }
 
     /**
-    * When set to true the widget will automatically set selected value to the typed custom text. Set the option to false to
-clear the selected value but keep the custom text.
-    * @param boolean $value
-    * @return \Kendo\UI\ComboBox
-    */
-    public function syncValueAndText($value) {
-        return $this->setProperty('syncValueAndText', $value);
-    }
-
-    /**
     * Sets the headerTemplate option of the ComboBox.
     * Specifies a static HTML content, which will be rendered as a header of the popup element.
     * @param string $value The id of the element which represents the kendo template.

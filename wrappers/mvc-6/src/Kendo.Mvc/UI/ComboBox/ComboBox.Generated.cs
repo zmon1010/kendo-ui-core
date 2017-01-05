@@ -61,8 +61,6 @@ namespace Kendo.Mvc.UI
 
         public bool? Suggest { get; set; }
 
-        public bool? SyncValueAndText { get; set; }
-
         public string HeaderTemplate { get; set; }
 
         public string HeaderTemplateId { get; set; }
@@ -222,11 +220,6 @@ namespace Kendo.Mvc.UI
             if (Suggest.HasValue)
             {
                 settings["suggest"] = Suggest;
-            }
-
-            if (SyncValueAndText.HasValue)
-            {
-                settings["syncValueAndText"] = SyncValueAndText;
             }
 
             if (HeaderTemplateId.HasValue())

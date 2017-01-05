@@ -286,17 +286,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// When set to true the widget will automatically set selected value to the typed custom text. Set the option to false to
-		/// clear the selected value but keep the custom text.
-        /// </summary>
-        /// <param name="value">The value for SyncValueAndText</param>
-        public ComboBoxBuilder SyncValueAndText(bool value)
-        {
-            Container.SyncValueAndText = value;
-            return this;
-        }
-
-        /// <summary>
         /// Specifies a static HTML content, which will be rendered as a header of the popup element.
         /// </summary>
         /// <param name="value">The value for HeaderTemplate</param>
