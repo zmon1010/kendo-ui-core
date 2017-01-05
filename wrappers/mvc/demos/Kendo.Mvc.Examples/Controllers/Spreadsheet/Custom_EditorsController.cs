@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Kendo.Mvc.Examples.Controllers.Spreadsheet
+namespace Kendo.Mvc.Examples.Controllers
 {
     public partial class SpreadsheetController : Controller
     {
