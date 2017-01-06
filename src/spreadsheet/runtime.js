@@ -569,7 +569,7 @@
                 }
 
                 var ctx = new Context(this.resolve, this, ss, parentContext);
-
+                var level = 0;
                 // if the call chain leads back to this same formula, we have a circular dependency.
                 while (parentContext) {
                     if (parentContext.formula === this) {
@@ -578,6 +578,7 @@
                         return;
                     }
                     parentContext = parentContext.parent;
+                    ++level;
                 }
 
                 // pending is still useful for ASYNC formulas
@@ -586,15 +587,23 @@
                 }
                 this.pending = true;
 
-                // compute and cache the absolute references
-                if (!this.absrefs) {
-                    this.absrefs = this.refs.map(function(ref){
-                        return ref.absolute(this.row, this.col);
-                    }, this);
-                }
+                var next = function() {
+                    // compute and cache the absolute references
+                    if (!this.absrefs) {
+                        this.absrefs = this.refs.map(function(ref){
+                            return ref.absolute(this.row, this.col);
+                        }, this);
+                    }
 
-                // finally invoke the handler given to us by the compiler in calc.js
-                this.handler.call(ctx);
+                    // finally invoke the handler given to us by the compiler in calc.js
+                    this.handler.call(ctx);
+                }.bind(this);
+
+                if (level < 20) {
+                    next();
+                } else {
+                    setTimeout(next, 0);
+                }
             }
         },
         reset: function() {
