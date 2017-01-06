@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class StockChartNavigatorSettings<T> where T : class 
     {
-        public List<StockChartNavigatorSettingsCategoryAxis<T>> CategoryAxis { get; set; } = new List<StockChartNavigatorSettingsCategoryAxis<T>>();
+        public StockChartNavigatorCategoryAxisSettings<T> CategoryAxis { get; } = new StockChartNavigatorCategoryAxisSettings<T>();
 
         public bool? AutoBind { get; set; }
 
@@ -32,7 +32,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            var categoryAxis = CategoryAxis.Select(i => i.Serialize());
+            var categoryAxis = CategoryAxis.Serialize();
             if (categoryAxis.Any())
             {
                 settings["categoryAxis"] = categoryAxis;

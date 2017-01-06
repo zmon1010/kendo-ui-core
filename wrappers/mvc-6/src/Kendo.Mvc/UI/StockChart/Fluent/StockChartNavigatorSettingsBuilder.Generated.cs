@@ -14,13 +14,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// The category axis configuration options.
         /// </summary>
         /// <param name="configurator">The configurator for the categoryaxis setting.</param>
-        public StockChartNavigatorSettingsBuilder<T> CategoryAxis(Action<StockChartNavigatorSettingsCategoryAxisFactory<T>> configurator)
+        public StockChartNavigatorSettingsBuilder<T> CategoryAxis(Action<StockChartNavigatorCategoryAxisSettingsBuilder<T>> configurator)
         {
 
-            configurator(new StockChartNavigatorSettingsCategoryAxisFactory<T>(Container.CategoryAxis)
-            {
-                StockChart = Container.StockChart
-            });
+            Container.CategoryAxis.StockChart = Container.StockChart;
+            configurator(new StockChartNavigatorCategoryAxisSettingsBuilder<T>(Container.CategoryAxis));
 
             return this;
         }

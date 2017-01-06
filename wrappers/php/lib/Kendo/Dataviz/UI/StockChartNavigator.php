@@ -6,12 +6,12 @@ class StockChartNavigator extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Adds StockChartNavigatorCategoryAxisItem to the StockChartNavigator.
-    * @param \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxisItem|array,... $value one or more StockChartNavigatorCategoryAxisItem to add.
+    * The category axis configuration options.
+    * @param \Kendo\Dataviz\UI\StockChartNavigatorCategoryAxis|array $value
     * @return \Kendo\Dataviz\UI\StockChartNavigator
     */
-    public function addCategoryAxisItem($value) {
-        return $this->add('categoryAxis', func_get_args());
+    public function categoryAxis($value) {
+        return $this->setProperty('categoryAxis', $value);
     }
 
     /**

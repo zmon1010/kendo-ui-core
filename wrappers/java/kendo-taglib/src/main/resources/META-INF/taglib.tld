@@ -39583,14 +39583,7 @@ It is used as a default field for the navigator axis.The data item field value m
         <name>stockChart-navigator-categoryAxis</name>
         <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisTag</tag-class>
         <body-content>JSP</body-content>
-    </tag>
 
-    <tag>
-        <description>The category axis configuration options.</description>
-        <name>stockChart-navigator-categoryAxisItem</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemTag</tag-class>
-
-        <body-content>JSP</body-content>
         <attribute>
             <description>Category index at which the first value axis crosses this axis (when set as an object).Category indices at which the value axes cross the category axis (when set as an array).</description>
             <name>axisCrossingValue</name>
@@ -39691,14 +39684,15 @@ set up a fixed date range.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
+
     </tag>
 
     <tag>
         <description>The discrete navigator.categoryAxis.baseUnitStep values when
 either navigator.categoryAxis.baseUnit is set to "fit" or
 navigator.categoryAxis.baseUnitStep is set to "auto".</description>
-        <name>stockChart-navigator-categoryAxisItem-autoBaseUnitSteps</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemAutoBaseUnitStepsTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-autoBaseUnitSteps</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisAutoBaseUnitStepsTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -39749,8 +39743,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The crosshair configuration options.</description>
-        <name>stockChart-navigator-categoryAxisItem-crosshair</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemCrosshairTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-crosshair</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisCrosshairTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -39782,8 +39776,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The crosshair tooltip options.</description>
-        <name>stockChart-navigator-categoryAxisItem-crosshair-tooltip</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemCrosshairTooltipTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-crosshair-tooltip</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisCrosshairTooltipTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -39833,8 +39827,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The border options.</description>
-        <name>stockChart-navigator-categoryAxisItem-crosshair-tooltip-border</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemCrosshairTooltipBorderTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-crosshair-tooltip-border</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisCrosshairTooltipBorderTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -39861,8 +39855,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The padding of the crosshair tooltip. A numeric value will set all paddings.</description>
-        <name>stockChart-navigator-categoryAxisItem-crosshair-tooltip-padding</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemCrosshairTooltipPaddingTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-crosshair-tooltip-padding</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisCrosshairTooltipPaddingTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -39896,15 +39890,15 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The template which renders the tooltip.The fields which can be used in the template are:</description>
-        <name>stockChart-navigator-categoryAxisItem-crosshair-tooltip-template</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemCrosshairTooltipTemplateFunctionTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-crosshair-tooltip-template</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisCrosshairTooltipTemplateFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
         <description>The axis labels configuration.</description>
-        <name>stockChart-navigator-categoryAxisItem-labels</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemLabelsTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-labels</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisLabelsTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -39990,8 +39984,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The border of the labels.</description>
-        <name>stockChart-navigator-categoryAxisItem-labels-border</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemLabelsBorderTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-labels-border</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisLabelsBorderTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40018,8 +40012,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The format used to display the labels when the categories are dates. Uses kendo.format. Contains one placeholder ("{0}") which represents the category value.</description>
-        <name>stockChart-navigator-categoryAxisItem-labels-dateFormats</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemLabelsDateFormatsTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-labels-dateFormats</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisLabelsDateFormatsTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40058,8 +40052,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The margin of the labels. A numeric value will set all margins.</description>
-        <name>stockChart-navigator-categoryAxisItem-labels-margin</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemLabelsMarginTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-labels-margin</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisLabelsMarginTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40092,8 +40086,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The padding of the labels. A numeric value will set all paddings.</description>
-        <name>stockChart-navigator-categoryAxisItem-labels-padding</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemLabelsPaddingTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-labels-padding</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisLabelsPaddingTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40127,14 +40121,14 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
 
     <tag>
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
-        <name>stockChart-navigator-categoryAxisItem-labels-template</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemLabelsTemplateFunctionTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-labels-template</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisLabelsTemplateFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <description>The configuration of the axis lines. Also affects the major and minor ticks, but not the grid lines.</description>
-        <name>stockChart-navigator-categoryAxisItem-line</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemLineTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-line</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisLineTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40168,8 +40162,8 @@ navigator.categoryAxis.baseUnitStep is set to "auto".</description>
     <tag>
         <description>The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
 body of the chart.</description>
-        <name>stockChart-navigator-categoryAxisItem-majorGridLines</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemMajorGridLinesTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-majorGridLines</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisMajorGridLinesTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40214,8 +40208,8 @@ body of the chart.</description>
 
     <tag>
         <description>The configuration of the category axis major ticks.</description>
-        <name>stockChart-navigator-categoryAxisItem-majorTicks</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemMajorTicksTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-majorTicks</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisMajorTicksTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40261,8 +40255,8 @@ body of the chart.</description>
     <tag>
         <description>The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
 body of the chart.</description>
-        <name>stockChart-navigator-categoryAxisItem-minorGridLines</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemMinorGridLinesTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-minorGridLines</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisMinorGridLinesTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40307,8 +40301,8 @@ body of the chart.</description>
 
     <tag>
         <description>The configuration of the category axis minor ticks.</description>
-        <name>stockChart-navigator-categoryAxisItem-minorTicks</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemMinorTicksTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-minorTicks</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisMinorTicksTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40353,8 +40347,8 @@ body of the chart.</description>
 
     <tag>
         <description>The category axis notes configuration.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -40368,15 +40362,15 @@ body of the chart.</description>
 
     <tag>
         <description>The items of the notes.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-data</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesDataTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-data</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesDataTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
         <description>The items of the notes.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-dataItem</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesDataItemTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-dataItem</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesDataItemTag</tag-class>
 
         <body-content>JSP</body-content>
         <attribute>
@@ -40395,8 +40389,8 @@ body of the chart.</description>
 
     <tag>
         <description>The icon of the note.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-dataItem-icon</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesDataItemIconTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-dataItem-icon</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesDataItemIconTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -40432,8 +40426,8 @@ body of the chart.</description>
 
     <tag>
         <description>The border of the icon.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-dataItem-icon-border</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesDataItemIconBorderTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-dataItem-icon-border</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesDataItemIconBorderTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40455,8 +40449,8 @@ body of the chart.</description>
 
     <tag>
         <description>The label of the note.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-dataItem-label</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesDataItemLabelTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-dataItem-label</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesDataItemLabelTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -40518,8 +40512,8 @@ body of the chart.</description>
 
     <tag>
         <description>The border of the label.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-dataItem-label-border</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesDataItemLabelBorderTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-dataItem-label-border</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesDataItemLabelBorderTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40547,14 +40541,14 @@ body of the chart.</description>
 
     <tag>
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-dataItem-label-template</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesDataItemLabelTemplateFunctionTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-dataItem-label-template</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesDataItemLabelTemplateFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <description>The line of the note.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-dataItem-line</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesDataItemLineTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-dataItem-line</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesDataItemLineTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40582,8 +40576,8 @@ body of the chart.</description>
 
     <tag>
         <description>The icon of the notes.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-icon</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesIconTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-icon</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesIconTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -40619,8 +40613,8 @@ body of the chart.</description>
 
     <tag>
         <description>The border of the icon.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-icon-border</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesIconBorderTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-icon-border</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesIconBorderTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40642,8 +40636,8 @@ body of the chart.</description>
 
     <tag>
         <description>The label of the notes.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-label</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesLabelTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-label</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesLabelTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -40699,8 +40693,8 @@ body of the chart.</description>
 
     <tag>
         <description>The border of the label.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-label-border</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesLabelBorderTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-label-border</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesLabelBorderTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40728,14 +40722,14 @@ body of the chart.</description>
 
     <tag>
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-label-template</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesLabelTemplateFunctionTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-label-template</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesLabelTemplateFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <description>The line of the notes.</description>
-        <name>stockChart-navigator-categoryAxisItem-notes-line</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemNotesLineTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-notes-line</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisNotesLineTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40763,15 +40757,15 @@ body of the chart.</description>
 
     <tag>
         <description>The plot bands of the category axis.</description>
-        <name>stockChart-navigator-categoryAxisItem-plotBands</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemPlotBandsTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-plotBands</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisPlotBandsTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
         <description>The plot bands of the category axis.</description>
-        <name>stockChart-navigator-categoryAxisItem-plotBand</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemPlotBandTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-plotBand</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisPlotBandTag</tag-class>
 
         <body-content>empty</body-content>
         <attribute>
@@ -40803,8 +40797,8 @@ body of the chart.</description>
 
     <tag>
         <description>The title configuration of the category axis.</description>
-        <name>stockChart-navigator-categoryAxisItem-title</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemTitleTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-title</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisTitleTag</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -40866,8 +40860,8 @@ body of the chart.</description>
 
     <tag>
         <description>The border of the title.</description>
-        <name>stockChart-navigator-categoryAxisItem-title-border</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemTitleBorderTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-title-border</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisTitleBorderTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40894,8 +40888,8 @@ body of the chart.</description>
 
     <tag>
         <description>The margin of the title. A numeric value will set all margins.</description>
-        <name>stockChart-navigator-categoryAxisItem-title-margin</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemTitleMarginTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-title-margin</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisTitleMarginTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
@@ -40928,8 +40922,8 @@ body of the chart.</description>
 
     <tag>
         <description>The padding of the title. A numeric value will set all paddings.</description>
-        <name>stockChart-navigator-categoryAxisItem-title-padding</name>
-        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisItemTitlePaddingTag</tag-class>
+        <name>stockChart-navigator-categoryAxis-title-padding</name>
+        <tag-class>com.kendoui.taglib.stockchart.NavigatorCategoryAxisTitlePaddingTag</tag-class>
         <body-content>empty</body-content>
 
         <attribute>
