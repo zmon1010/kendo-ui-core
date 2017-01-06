@@ -189,6 +189,16 @@ var WORKSHEET = kendo.template(
        '</row>' +
    '# } #' +
    '</sheetData>' +
+   '# if (filter) { #' +
+   '<autoFilter ref="${filter.from}:${filter.to}"/>' +
+   '# } #' +
+   '# if (mergeCells.length) { #' +
+   '<mergeCells count="${mergeCells.length}">' +
+       '# for (var ci = 0; ci < mergeCells.length; ci++) { #' +
+       '<mergeCell ref="${mergeCells[ci]}"/>' +
+       '# } #' +
+   '</mergeCells>' +
+   '# } #' +
    '# if (validations.length) { #' +
    '<dataValidations>' +
        '# for (var vi = 0; vi < validations.length; vi++) { #' +
@@ -211,16 +221,6 @@ var WORKSHEET = kendo.template(
        '</dataValidation>' +
        '# } #' +
    '</dataValidations>' +
-   '# } #' +
-   '# if (filter) { #' +
-   '<autoFilter ref="${filter.from}:${filter.to}"/>' +
-   '# } #' +
-   '# if (mergeCells.length) { #' +
-   '<mergeCells count="${mergeCells.length}">' +
-       '# for (var ci = 0; ci < mergeCells.length; ci++) { #' +
-       '<mergeCell ref="${mergeCells[ci]}"/>' +
-       '# } #' +
-   '</mergeCells>' +
    '# } #' +
    '# if (hyperlinks.length) { #' +
    '<hyperlinks>' +
