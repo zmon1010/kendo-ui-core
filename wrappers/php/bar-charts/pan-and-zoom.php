@@ -41,7 +41,8 @@ $chart->dataSource($dataSource)
 ?>
 <div class="box wide">
 
-	<p>Use SHIFT + Mouse Drag Region Selection combination on mouse-enabled devices to zoom in data for a specific period of time</p>
+    <p>Use SHIFT + Mouse Drag Region Selection combination on mouse-enabled devices to zoom in data for a specific period of time</p>
+    <p>Use the mousewheel to zoom in and out</p>
 
 </div>
 <div class="demo-section k-content wide">

@@ -7,17 +7,17 @@
              <kendo:dataSource data="${data}" />
              <kendo:chart-series>
                 <kendo:chart-seriesItem type="scatterLine" xfield="x" yfield="y" style="smooth">
-                	<kendo:chart-seriesItem-markers visible="false" />
+                    <kendo:chart-seriesItem-markers visible="false" />
                 </kendo:chart-seriesItem>
              </kendo:chart-series>
              <kendo:chart-xAxis>
                 <kendo:chart-xAxisItem min="-2" max="2">
-                    <kendo:chart-xAxisItem-labels format="{0:n1}" />                    
+                    <kendo:chart-xAxisItem-labels format="{0:n1}" />
                 </kendo:chart-xAxisItem>
              </kendo:chart-xAxis>
              <kendo:chart-yAxis>
                 <kendo:chart-yAxisItem>
-                    <kendo:chart-yAxisItem-labels format="{0:n2}" />                    
+                    <kendo:chart-yAxisItem-labels format="{0:n2}" />
                 </kendo:chart-yAxisItem>
              </kendo:chart-yAxis>
              <kendo:chart-pannable/>
