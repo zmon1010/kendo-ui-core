@@ -75,7 +75,7 @@ npm install --save @progress/kendo-ui
 
 ##### Legacy Package (Git repo)
 
-The legacy `kendo` package, accessible via Git, will not be updated after May 2017.
+The legacy `kendo` package, accessible via "git+https://bower.telerik.com/npm-kendo-ui/npm-kendo.git", will not be updated after May 2017.
 
 The repository itself will remain active.
 
