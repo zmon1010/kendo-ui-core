@@ -1,108 +1,132 @@
 
-
-        <div id="example">
-
-            <div class="demo-section k-content">
-
-                <h4>PanelBar with images</h4>
-
-                <div id="panelbar-images"></div>
-
-            </div>
-
-            <script>
-                $("#panelbar-images").kendoPanelBar({
-                    dataSource: [
-                        {
-                            text: "Baseball", imageUrl: "../content/shared/icons/sports/baseball.png",
-                            items: [
-                                { text: "Top News", imageUrl: "../content/shared/icons/16/star.png" },
-                                { text: "Photo Galleries", imageUrl: "../content/shared/icons/16/photo.png" },
-                                { text: "Videos Records", imageUrl: "../content/shared/icons/16/video.png" },
-                                { text: "Radio Records", imageUrl: "../content/shared/icons/16/speaker.png" }
-                            ]
-                        },
-                        {
-                            text: "Golf", imageUrl: "../content/shared/icons/sports/golf.png",
-                            items: [
-                                { text: "Top News", imageUrl: "../content/shared/icons/16/star.png" },
-                                { text: "Photo Galleries", imageUrl: "../content/shared/icons/16/photo.png" },
-                                { text: "Videos Records", imageUrl: "../content/shared/icons/16/video.png" },
-                                { text: "Radio Records", imageUrl: "../content/shared/icons/16/speaker.png" }
-                            ]
-                        },
-                        {
-                            text: "Swimming", imageUrl: "../content/shared/icons/sports/swimming.png",
-                            items: [
-                                { text: "Top News", imageUrl: "../content/shared/icons/16/star.png" },
-                                { text: "Photo Galleries", imageUrl: "../content/shared/icons/16/photo.png" }
-                            ]
-                        },
-                        {
-                            text: "Snowboarding", imageUrl: "../content/shared/icons/sports/snowboarding.png",
-                            items: [
-                                { text: "Photo Galleries", imageUrl: "../content/shared/icons/16/photo.png" },
-                                { text: "Videos Records", imageUrl: "../content/shared/icons/16/video.png" }
-                            ]
-                        }
-                    ]
-                });
-            </script>
-
-            <div class="demo-section k-content">
-
-                <h4>PanelBar with sprites</h4>
-
-                <div id="panelbar-sprites"></div>
-
-            </div>
-
-            <script>
-                $("#panelbar-sprites").kendoPanelBar({
-                    dataSource: [{
-                            text: "Brazil", spriteCssClass: "brazilFlag", items: [
-                                { text: "History", spriteCssClass: "historyIcon" },
-                                { text: "Geography", spriteCssClass: "geographyIcon" }
-                            ]
-                        },
-                        {
-                            text: "India", spriteCssClass: "indiaFlag", items: [
-                                { text: "History", spriteCssClass: "historyIcon" },
-                                { text: "Geography", spriteCssClass: "geographyIcon" }
-                            ]
-                        },
-                        {
-                            text: "Netherlands", spriteCssClass: "netherlandsFlag", items: [
-                                { text: "History", spriteCssClass: "historyIcon" },
-                                { text: "Geography", spriteCssClass: "geographyIcon" }
-                            ]
-                        }]
-                });
-            </script>
-
-            <style>
-                .k-panel
+<div id="example">
+    <div class="demo-section k-content">
+        <h4>PanelBar with images</h4>
+        <div id="panelbar-images"></div>
+    </div>
+    <script>
+        $("#panelbar-images").kendoPanelBar({
+            dataSource: [
                 {
-                    -webkit-transform: translatez(0);
+                    text: "Baseball", imageUrl: "../content/shared/icons/sports/baseball.png",
+                    items: [
+                        { text: "Top News", imageUrl: "../content/shared/icons/16/star.png" },
+                        { text: "Photo Galleries", imageUrl: "../content/shared/icons/16/photo.png" },
+                        { text: "Videos Records", imageUrl: "../content/shared/icons/16/video.png" },
+                        { text: "Radio Records", imageUrl: "../content/shared/icons/16/speaker.png" }
+                    ]
+                },
+                {
+                    text: "Golf", imageUrl: "../content/shared/icons/sports/golf.png",
+                    items: [
+                        { text: "Top News", imageUrl: "../content/shared/icons/16/star.png" },
+                        { text: "Photo Galleries", imageUrl: "../content/shared/icons/16/photo.png" },
+                        { text: "Videos Records", imageUrl: "../content/shared/icons/16/video.png" },
+                        { text: "Radio Records", imageUrl: "../content/shared/icons/16/speaker.png" }
+                    ]
+                },
+                {
+                    text: "Swimming", imageUrl: "../content/shared/icons/sports/swimming.png",
+                    items: [
+                        { text: "Top News", imageUrl: "../content/shared/icons/16/star.png" },
+                        { text: "Photo Galleries", imageUrl: "../content/shared/icons/16/photo.png" }
+                    ]
+                },
+                {
+                    text: "Snowboarding", imageUrl: "../content/shared/icons/sports/snowboarding.png",
+                    items: [
+                        { text: "Photo Galleries", imageUrl: "../content/shared/icons/16/photo.png" },
+                        { text: "Videos Records", imageUrl: "../content/shared/icons/16/video.png" }
+                    ]
                 }
+            ]
+        });
+    </script>
+    <div class="demo-section k-content">
+        <h4>PanelBar with sprites</h4>
+        <div id="panelbar-sprites"></div>
+    </div>
+    <script>
+        $("#panelbar-sprites").kendoPanelBar({
+            dataSource: [{
+                text: "Brazil", spriteCssClass: "brazilFlag", items: [
+                    { text: "History", spriteCssClass: "historyIcon" },
+                    { text: "Geography", spriteCssClass: "geographyIcon" }
+                ]
+            },
+                {
+                    text: "India", spriteCssClass: "indiaFlag", items: [
+                        { text: "History", spriteCssClass: "historyIcon" },
+                        { text: "Geography", spriteCssClass: "geographyIcon" }
+                    ]
+                },
+                {
+                    text: "Netherlands", spriteCssClass: "netherlandsFlag", items: [
+                        { text: "History", spriteCssClass: "historyIcon" },
+                        { text: "Geography", spriteCssClass: "geographyIcon" }
+                    ]
+                }]
+        });
+    </script>
+    <div class="demo-section k-content">
+        <h4>PanelBar with font icons</h4>
+        <div id="panelbar-font-icons"></div>
+    </div>
+    <script>
+        $("#panelbar-font-icons").kendoPanelBar({
+            dataSource: [{
+                text: "My Documents", expanded: true, spriteCssClass: "k-icon k-i-folder-open", items: [
+                    {
+                        text: "Kendo UI Project", spriteCssClass: "k-icon k-i-folder", items: [
+                            { text: "about.html", spriteCssClass: "k-icon k-i-html" },
+                            { text: "index.html", spriteCssClass: "k-icon k-i-html" },
+                            { text: "logo.png", spriteCssClass: "k-icon k-i-image" }
+                        ]
+                    },
+                    {
+                        text: "New Web Site", spriteCssClass: "k-icon k-i-folder", items: [
+                            { text: "mockup.jpg", spriteCssClass: "k-icon k-i-image" },
+                            { text: "Research.pdf", spriteCssClass: "k-icon k-i-pdf" },
+                        ]
+                    },
+                    {
+                        text: "Reports", spriteCssClass: "k-icon k-i-folder", items: [
+                            { text: "February.pdf", spriteCssClass: "k-icon k-i-pdf" },
+                            { text: "March.pdf", spriteCssClass: "k-icon k-i-pdf" },
+                            { text: "April.pdf", spriteCssClass: "k-icon k-i-pdf" }
+                        ]
+                    }
+                ]
+            }]
+        });
+    </script>
+<style>
+    .k-panel {
+        -webkit-transform: translatez(0);
+    }
 
-                #panelbar-sprites .k-sprite {
-                    background-image: url("../content/shared/styles/flags.png");
-                }
-                .brazilFlag {
-                	background-position: 0 0;
-                }
-                .indiaFlag {
-                	background-position: 0 -32px;
-                }
-                .netherlandsFlag {
-                	background-position: 0 -64px;
-                }
-                .historyIcon {
-                	background-position: 0 -96px;
-                }
-                .geographyIcon {
-                	background-position: 0 -128px;
-                }
-            </style>
+    #panelbar-sprites .k-sprite {
+        background-image: url("../content/shared/styles/flags.png");
+    }
+
+    .brazilFlag {
+        background-position: 0 0;
+    }
+
+    .indiaFlag {
+        background-position: 0 -32px;
+    }
+
+    .netherlandsFlag {
+        background-position: 0 -64px;
+    }
+
+    .historyIcon {
+        background-position: 0 -96px;
+    }
+
+    .geographyIcon {
+        background-position: 0 -128px;
+    }
+</style>
         </div>
