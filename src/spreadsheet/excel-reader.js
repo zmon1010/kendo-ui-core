@@ -243,10 +243,20 @@
         var relsFile = file.replace(/worksheets\//, "worksheets/_rels/");
         var relationships = readRelationships(zip, relsFile);
         var formula1, formula2;
+
+        var filterRef;
+        var filterColumn;
+        var customFilterLogic;
+        var customFilterCriteria;
+        var valueFilterBlanks;
+        var valueFilterValues;
+        var filters = [];
+
         ERROR_LOG = sheet._workbook.excelImportErrors;
 
         parse(zip, xl(file), {
             enter: function(tag, attrs) {
+                var tmp;
                 if (this.is(SEL_CELL)) {
                     value = null;
                     formula = null;
@@ -346,9 +356,58 @@
                         sheet.range(attrs.ref).link(target);
                     }
                 }
+                else if (this.is(["autoFilter"])) {
+                    filterRef = attrs.ref;
+                }
+                else if (filterRef) {
+                    if (this.is(["filterColumn"])) {
+                        filterColumn = parseInt(attrs.colId, 10);
+                    }
+                    else if (this.is(["customFilters"])) {
+                        customFilterLogic = bool(attrs.and) ? "and" : "or";
+                        customFilterCriteria = [];
+                    }
+                    else if (this.is(["customFilter"])) {
+                        tmp = getCustomFilter(attrs.operator, attrs.val);
+                        if (tmp) {
+                            customFilterCriteria.push({
+                                operator: tmp.operator,
+                                value: tmp.value
+                            });
+                        }
+                    }
+                    else if (this.is(["dynamicFilter"])) {
+                        filters.push({
+                            column: filterColumn,
+                            filter: new kendo.spreadsheet.DynamicFilter({
+                                type: dynamicFilterType(attrs.type)
+                            })
+                        });
+                    }
+                    else if (this.is(["top10"])) {
+                        filters.push({
+                            column: filterColumn,
+                            filter: new kendo.spreadsheet.TopFilter({
+                                value: getFilterVal(attrs.val),
+                                type: (function(percent, top){
+                                    return percent && top ? "topPercent"
+                                        :  top ? "topNumber"
+                                        :  percent ? "bottomPercent"
+                                        :  "bottomNumber";
+                                })(bool(attrs.percent), bool(attrs.top))
+                            })
+                        });
+                    }
+                    else if (this.is(["filters"])) {
+                        valueFilterBlanks = bool(attrs.blank);
+                        valueFilterValues = [];
+                    }
+                    else if (this.is(["filter"])) {
+                        valueFilterValues.push(getFilterVal(attrs.val));
+                    }
+                }
             },
-            leave: function(tag) {
-                var attrs;
+            leave: function(tag, attrs) {
                 if (this.is(SEL_CELL)) {
                     if (formula != null) {
                         var failed = withErrorLog(sheet, formulaRange || ref, function(){
@@ -378,7 +437,7 @@
                             }
                         }
                     }
-                } else if ((attrs = this.is(SEL_VALIDATION))) {
+                } else if (this.is(SEL_VALIDATION)) {
                     (function(){
                         var refs = kendo.spreadsheet.calc.parseSqref(attrs.sqref);
                         var type = attrs.type.toLowerCase();
@@ -415,6 +474,27 @@
                     sheet._columns._refresh();
                 } else if (tag == "sheetData") {
                     sheet._rows._refresh();
+                } else if (tag == "autoFilter") {
+                    sheet.range(filterRef).filter(filters);
+                    filterRef = null;
+                } else if (filterRef) {
+                    if (tag == "customFilters") {
+                        filters.push({
+                            column: filterColumn,
+                            filter: new kendo.spreadsheet.CustomFilter({
+                                logic: customFilterLogic,
+                                criteria: customFilterCriteria
+                            })
+                        });
+                    } else if (tag == "filters") {
+                        filters.push({
+                            column: filterColumn,
+                            filter: new kendo.spreadsheet.ValueFilter({
+                                values: valueFilterValues,
+                                blanks: valueFilterBlanks
+                            })
+                        });
+                    }
                 }
             },
             text: function(text) {
@@ -433,6 +513,94 @@
                 }
             }
         });
+    }
+
+    function getCustomFilter(op, value) {
+        function unesc(str) {
+            return typeof str == "string" ? str.replace(/~([?*])/g, "$1") : str;
+        }
+
+        var m, ourOp = {
+            equal               : "eq",
+            greaterThan         : "gt",
+            greaterThanOrEqual  : "gte",
+            lessThan            : "lt",
+            lessThanOrEqual     : "lte"
+        }[op];
+
+        if (ourOp) {
+            return { operator: ourOp, value: getFilterVal(value) };
+        }
+
+        if (op == "notEqual" || !op) {
+            // XXX: Excel filters allow some generic text matching
+            // when operator is `notEqual` (meaning “doesn't match”)
+            // or missing (meaning “does match”), using `*` and `?`
+            // wildcards We handle these cases (and their negation):
+            //
+            //   foo* - startswith "foo"
+            //   *foo - endswith "foo"
+            //   *foo* - contains "foo"
+            //
+            // but we don't handle arbitrary placement of wildcards
+            // (e.g. foo*bar) because we don't have such filter.
+            //
+            // Literal `?` and `*` characters are prefixed with a
+            // tilde, so we unescape the value (since to our filters,
+            // these characters are not special).
+
+            if ((m = /^\*(.*)\*$/.exec(value)) && !/~\*$/.test(value)) {
+                return {
+                    operator: op ? "doesnotcontain" : "contains",
+                    value: unesc(m[1])
+                };
+            }
+            if ((m = /^\*(.*)$/.exec(value))) {
+                return {
+                    operator: op ? "doesnotendwith" : "endswith",
+                    value: unesc(m[1])
+                };
+            }
+            if ((m = /^(.*)\*$/.exec(value)) && !/~\*$/.test(value)) {
+                return {
+                    operator: op ? "doesnotstartwith" : "startswith",
+                    value: unesc(m[1])
+                };
+            }
+            return {
+                operator: op ? "ne" : "eq",
+                value: unesc(getFilterVal(value))
+            };
+        }
+    }
+
+    function dynamicFilterType(type) {
+        return {
+            Q1  : "quarter1",
+            Q2  : "quarter2",
+            Q3  : "quarter3",
+            Q4  : "quarter4",
+            M1  : "january",
+            M2  : "february",
+            M3  : "march",
+            M4  : "april",
+            M5  : "may",
+            M6  : "june",
+            M7  : "july",
+            M8  : "august",
+            M9  : "september",
+            M10 : "october",
+            M11 : "november",
+            M12 : "december"
+        }[type.toUpperCase()] || type;
+    }
+
+    function getFilterVal(val) {
+        var tmp = parseFloat(val);
+        if (!isNaN(tmp) && tmp == val) {
+            return tmp;
+        }
+        return val;
     }
 
     function withErrorLog(sheet, ref, func, context) {
