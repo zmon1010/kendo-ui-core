@@ -4,20 +4,20 @@
     </div>
     <script>
         var serviceRoot = "https://demos.telerik.com/kendo-ui/service";
-            homogeneous = new kendo.data.HierarchicalDataSource({
-                transport: {
-                    read: {
-                        url: serviceRoot + "/Employees",
-                        dataType: "jsonp"
-                    }
-                },
-                schema: {
-                    model: {
-                        id: "EmployeeId",
-                        hasChildren: "HasEmployees"
-                    }
+        var homogeneous = new kendo.data.HierarchicalDataSource({
+            transport: {
+                read: {
+                    url: serviceRoot + "/Employees",
+                    dataType: "jsonp"
                 }
-            });
+            },
+            schema: {
+                model: {
+                    id: "EmployeeId",
+                    hasChildren: "HasEmployees"
+                }
+            }
+        });
 
         $("#treeview").kendoPanelBar({
             dataSource: homogeneous,
