@@ -98,54 +98,6 @@
         s2.range("A1").value("foo");
     });
 
-    test("onMouseDown is prevented if editor is not deactivated", 1, function() {
-        spreadsheet._workbook.execute = function () {
-            return { reason: "error" };
-        };
-
-        spreadsheet._controller.editor.isActive = function() {
-            return true;
-        };
-
-        spreadsheet._controller.editor.deactivate = function() {
-            return;
-        };
-
-        spreadsheet._controller.objectAt = function() {
-            return {};
-        };
-
-        var event = {
-            preventDefault: function () {
-                ok(true);
-            }
-        };
-
-        spreadsheet._controller.onMouseDown(event);
-    });
-
-    test("onMouseDown is prevented if editor is not deactivated", 1, function() {
-        spreadsheet._controller.editor.isActive = function() {
-            return true;
-        };
-
-        spreadsheet._controller.editor.deactivate = function() {
-            return;
-        };
-
-        spreadsheet._controller.objectAt = function() {
-            return {};
-        };
-
-        var event = {
-            preventDefault: function () {
-                ok(true);
-            }
-        };
-
-        spreadsheet._controller.onMouseDown(event);
-    });
-
     test("renders when the active sheet changes", 1, function() {
         spreadsheet.bind("render", function() {
             ok(true);

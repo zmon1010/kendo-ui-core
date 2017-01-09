@@ -459,11 +459,10 @@
                 event.preventDefault();
                 return;
             } else {
+                this._preventNavigation = false;
                 this.editor.deactivate();
-
-                if (this.editor.isActive()) {
-                    event.preventDefault();
-                    return;
+                if (this._preventNavigation) {
+                    return;     // validation error
                 }
             }
 
