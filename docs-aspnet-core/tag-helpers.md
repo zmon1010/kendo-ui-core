@@ -471,6 +471,48 @@ The ResponsivePanel Tag Helper configuration options are passed as attributes of
         </kendo-responsivepanel>
 ```
 
+## Upload Tag Helper
+
+### Overview
+
+The example below demonstrates how to define a Kendo UI Upload by using a Tag Helper.
+
+###### Example
+
+        <kendo-upload drop-zone="drop-zone1" name="test">
+            <kendo-upload-async-settings auto-upload="true" />
+            <kendo-upload-validation-settings allowed-extensions="@Model.Extensions" />
+            <kendo-upload-files>
+                <kendo-upload-file name="dummy" size="1024"/>
+            </kendo-upload-files>
+        </kendo-upload>
+
+
+### Configuration
+
+The Upload Tag Helper configuration options are passed as attributes of the tag or attributes of the nested composite and collection properties.
+
+###### Example
+
+```tab-cshtml
+
+        @(Html.Kendo().Upload()
+            .Name("upload1")
+            .DropZone("drop-zone1")
+            .Validation(v => v.AllowedExtensions(Model.Extensions))
+            .Files(f => f.Add().Name("dummy").Size(1024))
+    )
+```
+```tab-tagHelper
+        <kendo-upload drop-zone="drop-zone1" name="test">
+            <kendo-upload-async-settings auto-upload="true" />
+            <kendo-upload-validation-settings allowed-extensions="@Model.Extensions" />
+            <kendo-upload-files>
+                <kendo-upload-file name="dummy" size="1024"/>
+            </kendo-upload-files>
+        </kendo-upload>
+```
+
 
 ## See Also
 
