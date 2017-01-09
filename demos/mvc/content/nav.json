@@ -4343,7 +4343,11 @@
         "meta": {
           "kendo-ui": "This demo shows how items in the tree are displayed with the default settings of Kendo UI TreeView and how the component can be easily bound to local data.",
           "aspnet-mvc": "This demo shows how items in the tree are displayed with the default settings of ASP.NET MVC TreeView and how the component can be easily bound to local data."
-        }
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Binding to remote data",
@@ -4364,7 +4368,11 @@
         "meta": {
           "kendo-ui": "This example illustrates how the hierarchical tree can be bound to remote data and thus the items in the tree are populated from the external source.",
           "aspnet-mvc": "This example illustrates how the ASP.NET MVC hierarchical tree can be bound to remote data and the items in the tree populated from an external source."
-        }
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]      
       },
       {
         "text": "Templates",
@@ -4377,7 +4385,11 @@
         "meta": {
           "kendo-ui": "This demo illustrates how tree nodes in Kendo UI PanelBar component can be further customized by using templates.",
           "aspnet-mvc": "This demo illustrates how tree nodes in ASP.NET MVC PanelBar component can be further customized by using templates."
-        }
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Events",
