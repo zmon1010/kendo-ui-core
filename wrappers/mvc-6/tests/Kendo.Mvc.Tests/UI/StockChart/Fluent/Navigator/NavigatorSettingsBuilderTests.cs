@@ -92,5 +92,21 @@ namespace Kendo.Mvc.UI.Tests
         {
             builder.Series(delegate { }).ShouldBeSameAs(builder);
         }
+
+        [Fact]
+        public void Builder_should_set_CategoryAxis()
+        {
+            var value = 1;
+
+            builder.CategoryAxis(x => x.Min(value));
+
+            settings.CategoryAxis.Min.ShouldEqual(value);
+        }
+
+        [Fact]
+        public void CategoryAxis_should_return_builder()
+        {
+            builder.CategoryAxis(delegate { }).ShouldBeSameAs(builder);
+        }
     }
 }
