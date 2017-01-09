@@ -22,7 +22,7 @@
                     <p>
                         <a id="iconTextButton">Filter</a>
                         <a id="kendoIconTextButton">Clear Filter</a>
-                        <em id="iconButton"><span class="k-sprite">Refresh</span></em>
+                        <em id="iconButton"></em>
                     </p>
                 </div>
             </div>
@@ -42,15 +42,15 @@
                     });
 
                     $("#iconTextButton").kendoButton({
-                        spriteCssClass: "k-icon k-i-filter"
+                        icon: "filter"
                     });
 
                     $("#kendoIconTextButton").kendoButton({
-                        icon: "k-icon k-i-filter-clear"
+                        icon: "filter-clear"
                     });
 
                     $("#iconButton").kendoButton({
-                        spriteCssClass: "k-icon k-i-refresh"
+                        icon: "refresh"
                     });
                 });
             </script>

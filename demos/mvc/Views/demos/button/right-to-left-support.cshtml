@@ -10,7 +10,7 @@
                 <h4>Buttons with icons</h4>
                 <p>
                     <a id="iconTextButton">Filter</a>
-                    <em id="iconButton"><span class="k-sprite">Refresh</span></em>
+                    <em id="iconButton"></em>
                 </p>
 
                 <h4>Disabled Button</h4>
@@ -24,11 +24,11 @@
                     $("#textButton").kendoButton();
 
                     $("#iconTextButton").kendoButton({
-                        spriteCssClass: "k-icon k-i-filter"
+                        icon: "filter"
                     });
 
                     $("#iconButton").kendoButton({
-                         spriteCssClass: "k-icon k-i-refresh"
+                        icon: "refresh"
                     });
 
                     $("#disabledButton").kendoButton({
