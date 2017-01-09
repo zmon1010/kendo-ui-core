@@ -260,6 +260,9 @@
     <Compile Include="Controllers\MediaPlayer\IndexController.cs" />
     <Compile Include="Controllers\MediaPlayer\PlaylistController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\PanelBar\Local_Data_BindingController.cs" />
+    <Compile Include="Controllers\PanelBar\Remote_Data_BindingController.cs" />
+    <Compile Include="Controllers\PanelBar\TemplatesController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\SpreadProcessing\IndexController.cs" />
     <Compile Include="Controllers\Spreadsheet\Custom_EditorsController.cs" />
@@ -776,6 +779,8 @@
     <Compile Include="Models\Chart\ChartScatterPoint.cs" />
     <Compile Include="Models\ExampleFile.cs" />
     <Compile Include="Models\IFrameworkDescription.cs" />
+    <Compile Include="Models\PanelBarItemViewModel.cs" />
+    <Compile Include="Models\PanelBarRepository.cs" />
     <Compile Include="Models\SpreadsheetProductService.cs" />
     <Compile Include="Models\SpreadsheetProductViewModel.cs" />
     <Compile Include="Models\Diagram\DiagramConnectionService.cs" />
@@ -2980,6 +2985,9 @@
     <Content Include="Views\editor\import_exportas.cshtml" />
     <Content Include="Views\grid\server_export.cshtml" />
     <Content Include="Views\spreadsheet\custom_editors.cshtml" />
+    <Content Include="Views\panelbar\local_data_binding.cshtml" />
+    <Content Include="Views\panelbar\remote_data_binding.cshtml" />
+    <Content Include="Views\panelbar\templates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

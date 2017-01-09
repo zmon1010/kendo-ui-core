@@ -2731,6 +2731,7 @@
         "text": "PanelBar",
         "name": "panelbar",
         "api": "web/panelbar",
+        "new":  "true",
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/panelbar/overview"
         },
@@ -2753,14 +2754,25 @@
                 }
             },
             {
-                "text": "Images",
-                "url": "panelbar/images",
-                "title": {
-                    "aspnet-mvc": "Example of images in $FRAMEWORK PanelBar control"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows how images and sprites can be implemented in $FRAMEWORK Expandable PanelBar component."
-                }
+              "text": "Images",
+              "url": "panelbar/images",
+              "title": {
+                "aspnet-mvc": "Example of images in $FRAMEWORK PanelBar control"
+              },
+              "meta": {
+                "aspnet-mvc": "This demo shows how images and sprites can be implemented in $FRAMEWORK Expandable PanelBar component."
+              }
+            },
+            {
+              "text": "Templates",
+              "url": "panelbar/templates",
+               "new" :  "true",
+              "title": {
+                "aspnet-mvc": "Example of templates for $FRAMEWORK PanelBar"
+              },
+              "meta": {
+                "aspnet-mvc": "This demo illustrates how tree nodes in $FRAMEWORK PanelBar component can be further customized by using templates."
+              }
             },
             {
                 "text": "Loading content with AJAX",
@@ -2774,25 +2786,49 @@
                 "requiresServer": "true"
             },
             {
-                "text": "Animation effects",
-                "url": "panelbar/animation",
-                "title": {
-                    "aspnet-mvc": "Animation effects example in $FRAMEWORK Accordion component"
-                },
-                "meta": {
-                    "aspnet-mvc": "This demo shows how animations effects can be easily implemented into $FRAMEWORK PanelBar control."
-                }
+              "text": "Animation effects",
+              "url": "panelbar/animation",
+              "title": {
+                "aspnet-mvc": "Animation effects example in $FRAMEWORK Accordion component"
+              },
+              "meta": {
+                "aspnet-mvc": "This demo shows how animations effects can be easily implemented into $FRAMEWORK PanelBar control."
+              }
             },
             {
-                "text": "Events",
-                "url": "panelbar/events",
-                "title": {
-                    "aspnet-mvc": "Events in $FRAMEWORK accordion control | $FRAMEWORK PanelBar"
-                },
-                "meta": {
-                    "aspnet-mvc": "This example demonstrates how events work in $FRAMEWORK PanelBar control and how you can set them to expand the content area of the accordion."
-                },
-                "requiresServer": "true"
+              "text": "Binding to local data",
+              "url": "panelbar/local-data-binding",
+              "new": "true",
+              "title": {
+                "aspnet-mvc": "Binding to local data demo for $FRAMEWORK PanelBar control"
+              },
+              "meta": {
+                "aspnet-mvc": "This demo shows how items in the panelbar are displayed with the default settings of $FRAMEWORK PanelBar and how the component can be easily bound to local data."
+              },
+              "group": "Data Binding"
+            },
+            {
+              "text": "Binding to remote data",
+              "url": "panelbar/remote-data-binding",
+              "new": "true",
+              "title": {
+                "aspnet-mvc": "Binding $FRAMEWORK panelbar component to remote data"
+              },
+              "meta": {
+                "aspnet-mvc": "This example illustrates how the $FRAMEWORK hierarchical panelbar can be bound to remote data and the items in the panelbar populated from an external source."
+              }
+            },
+            {
+              "text": "Events",
+              "url": "panelbar/events",
+              "title": {
+                "aspnet-mvc": "Events in $FRAMEWORK accordion control | $FRAMEWORK PanelBar"
+              },
+              "meta": {
+                "aspnet-mvc": "This example demonstrates how events work in $FRAMEWORK PanelBar control and how you can set them to expand the content area of the accordion."
+              },
+              "requiresServer": "true",
+              "group": "API"
             },
             {
                 "text": "API",
@@ -2805,14 +2841,15 @@
                 }
             },
             {
-                "text": "RTL support",
-                "url": "panelbar/right-to-left-support",
-                "title": {
-                    "aspnet-mvc": "Keyboard navigation in $FRAMEWORK PanelBar | $FRAMEWORK demo"
-                },
-                "meta": {
-                    "aspnet-mvc": "See how directions of the arrows in $FRAMEWORK PanelBar are easily changed when moving from right to left."
-                }
+              "text": "RTL support",
+              "url": "panelbar/right-to-left-support",
+              "title": {
+                "aspnet-mvc": "Keyboard navigation in $FRAMEWORK PanelBar | $FRAMEWORK demo"
+              },
+              "meta": {
+                "aspnet-mvc": "See how directions of the arrows in $FRAMEWORK PanelBar are easily changed when moving from right to left."
+              },
+              "group": "Accessibility and Internationalization"
             },
             {
                 "text": "Keyboard navigation",
