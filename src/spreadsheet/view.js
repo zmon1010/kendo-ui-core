@@ -635,7 +635,11 @@
 
         _sheetsbar: function() {
             if (this.options.sheetsbar) {
-                this.sheetsbar = new kendo.spreadsheet.SheetsBar(this.element.find(DOT + View.classNames.sheetsBar), $.extend(true, {}, this.options.sheetsbar));
+                var options = $.extend(true, {
+                    openDialog: this.openDialog.bind(this)
+                }, this.options.sheetsbar);
+
+                this.sheetsbar = new kendo.spreadsheet.SheetsBar(this.element.find(DOT + View.classNames.sheetsBar), options);
             }
         },
 
