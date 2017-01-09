@@ -12,6 +12,8 @@
         return drawDOM($(element)[0], options);
     };
 
+    drawing.drawDOM.drawText = drawDOM.drawText;
+
 })(window.kendo.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });
