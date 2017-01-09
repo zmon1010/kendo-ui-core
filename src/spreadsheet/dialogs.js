@@ -621,8 +621,10 @@
                 cancel: this.close.bind(this)
             });
         },
+        isConfirmed: function() {
+            return this._confirmed;
+        },
         confirm: function() {
-            console.log("confirmed ");
             this._confirmed = true;
             this.close();
         }

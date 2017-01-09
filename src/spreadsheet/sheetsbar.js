@@ -355,7 +355,7 @@
                 var closeCallback = function(e) {
                     var dlg = e.sender;
 
-                    if (dlg._confirmed) {
+                    if (dlg.isConfirmed()) {
                         this.trigger("remove", { name: removedSheetName, confirmation: true });
                     }
                 }.bind(this);
