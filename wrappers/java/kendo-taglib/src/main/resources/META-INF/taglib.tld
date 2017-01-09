@@ -292,9 +292,7 @@ If the developer does not specify one, the framework will automatically set item
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
-The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
+            <description></description>
             <name>valueMapper</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -304,9 +302,7 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
 
 
     <tag>
-        <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
-The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
+        <description></description>
         <name>autoComplete-virtual-valueMapper</name>
         <tag-class>com.kendoui.taglib.autocomplete.VirtualValueMapperFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12037,8 +12033,7 @@ If the developer does not specify one, the framework will automatically set item
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
-The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+            <description>The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
 The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
             <name>valueMapper</name>
             <rtexprvalue>true</rtexprvalue>
@@ -12049,8 +12044,7 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
 
 
     <tag>
-        <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
-The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+        <description>The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
 The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
         <name>comboBox-virtual-valueMapper</name>
         <tag-class>com.kendoui.taglib.combobox.VirtualValueMapperFunctionTag</tag-class>
@@ -19140,9 +19134,11 @@ If the developer does not specify one, the framework will automatically set item
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
-The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
+            <description>The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.
+&gt; Important
+&gt;
+&gt; As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.</description>
             <name>valueMapper</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -19152,9 +19148,11 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
 
 
     <tag>
-        <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
-The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
+        <description>The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.
+&gt; Important
+&gt;
+&gt; As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.</description>
         <name>dropDownList-virtual-valueMapper</name>
         <tag-class>com.kendoui.taglib.dropdownlist.VirtualValueMapperFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -27993,9 +27991,11 @@ If the developer does not specify one, the framework will automatically set item
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
-The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
+            <description>The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.
+&gt; Important
+&gt;
+&gt; As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.</description>
             <name>valueMapper</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -28005,9 +28005,11 @@ The widget will pass the selected value(s) in the valueMapper function. In turn,
 
 
     <tag>
-        <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
-The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
-The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
+        <description>The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.
+&gt; Important
+&gt;
+&gt; As of the Kendo UI R3 2016 release, the implementation of the valueMapper function is optional. It is required only if the widget contains an initial value or if the value method is used.</description>
         <name>multiSelect-virtual-valueMapper</name>
         <tag-class>com.kendoui.taglib.multiselect.VirtualValueMapperFunctionTag</tag-class>
         <body-content>JSP</body-content>
