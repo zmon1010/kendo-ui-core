@@ -51,6 +51,8 @@
 
                 element.addClass(classNames.sheetsBarWrapper);
 
+                this._openDialog = options.openDialog;
+
                 this._tree = new kendo.dom.Tree(element[0]);
 
                 this._tree.render([this._addButton(), this._createSheetsWrapper([])]);
@@ -350,7 +352,17 @@
                     this._destroyEditor();
                 }
 
-                this.trigger("remove", {name: removedSheetName});
+                var closeCallback = function(e) {
+                    var dlg = e.sender;
+
+                    if (dlg.isConfirmed()) {
+                        this.trigger("remove", { name: removedSheetName, confirmation: true });
+                    }
+                }.bind(this);
+
+                this._openDialog("confirmation", {
+                    close: closeCallback
+                });
             },
 
             _onSheetSelect: function(e) {

@@ -282,7 +282,40 @@
             {name: function() {return name2}}
         ];
 
-        createSheetsBar();
+        createSheetsBar({
+            openDialog: function(type, options) {
+                options.close({
+                    sender: {
+                        isConfirmed: function() { return true; }
+                }});
+            }
+        });
+
+        sheetsBar.renderSheets(sheets, 0);
+        sheetsBar.bind("remove", function () {
+            ok(true);
+        });
+
+        element.find(".k-spreadsheet-sheets-remove").trigger("click");
+    });
+
+    test("delete does not trigger remove on click if it's not confirmed", 0, function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+
+        createSheetsBar({
+            openDialog: function(type, options) {
+                options.close({
+                    sender: {
+                        isConfirmed: function() { return false; }
+                }});
+            }
+        });
+
         sheetsBar.renderSheets(sheets, 0);
         sheetsBar.bind("remove", function () {
             ok(true);

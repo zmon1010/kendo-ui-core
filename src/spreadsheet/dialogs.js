@@ -65,6 +65,10 @@
                 unfreeze: "Unfreeze panes"
             }
         },
+        confirmationDialog: {
+            text: "Are you sure you want to remove this sheet?",
+            title: "Sheet remove"
+        },
         validationDialog: {
             title: "Data Validation",
             hintMessage: "Please enter a valid {0} value {1}.",
@@ -576,6 +580,57 @@
     });
 
     kendo.spreadsheet.dialogs.register("message", MessageDialog);
+
+    var ConfirmationDialog = SpreadsheetDialog.extend({
+        init: function(options) {
+            var messages = kendo.spreadsheet.messages.dialogs.confirmationDialog || MESSAGES;
+            var defaultOptions = {
+                title: messages.title,
+                text: messages.text
+            };
+
+            SpreadsheetDialog.fn.init.call(this, $.extend(defaultOptions, options));
+        },
+        options: {
+            className: "k-spreadsheet-message",
+            messageId: "",
+            template:
+                "<div class='k-spreadsheet-message-content' data-bind='text: text' />" +
+                "<div class='k-action-buttons'>" +
+                    "<button class='k-button k-primary' data-bind='click: confirm'>" +
+                        "#= messages.okText #" +
+                    "</button>" +
+                    "<button class='k-button' data-bind='click: cancel'>" +
+                        "#= messages.cancel #" +
+                    "</button>" +
+                "</div>"
+        },
+        open: function() {
+            SpreadsheetDialog.fn.open.call(this);
+
+            var options = this.options;
+            var text = options.text;
+
+            if (options.messageId) {
+                text = kendo.getter(options.messageId, true)(kendo.spreadsheet.messages.dialogs);
+            }
+
+            kendo.bind(this.dialog().element, {
+                text: text,
+                confirm: this.confirm.bind(this),
+                cancel: this.close.bind(this)
+            });
+        },
+        isConfirmed: function() {
+            return this._confirmed;
+        },
+        confirm: function() {
+            this._confirmed = true;
+            this.close();
+        }
+    });
+
+    kendo.spreadsheet.dialogs.register("confirmation", ConfirmationDialog);
 
     var ValidationErrorDialog = SpreadsheetDialog.extend({
         options: {

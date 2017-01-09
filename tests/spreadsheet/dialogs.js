@@ -87,6 +87,35 @@
         equal($(".k-spreadsheet-message .k-button:not(.k-primary)").text(), "Cancel");
     });
 
+    test("confirmation dialog buttons", function() {
+        spreadsheet._view.openDialog("confirmation", {
+            close: function() {}
+        });
+
+        equal($(".k-spreadsheet-message .k-button.k-primary").text(), "OK");
+        equal($(".k-spreadsheet-message .k-button:not(.k-primary)").text(), "Cancel");
+    });
+
+    test("confirmation dialog isConfirmed return true", function() {
+        spreadsheet._view.openDialog("confirmation", {
+            close: function(e) {
+                ok(e.sender.isConfirmed());
+            }
+        });
+
+        $(".k-spreadsheet-message .k-button.k-primary").trigger("click");
+    });
+
+    test("confirmation dialog isConfirmed return false", function() {
+        spreadsheet._view.openDialog("confirmation", {
+            close: function(e) {
+                ok(!e.sender.isConfirmed());
+            }
+        });
+
+        $(".k-spreadsheet-message .k-button:not(.k-primary)").trigger("click");
+    });
+
     var viewModel;
     var usCurrencyInfo = kendo.cultures["en-US"].numberFormat.currency;
     var bgCurrencyInfo = kendo.cultures["bg-BG"].numberFormat.currency;

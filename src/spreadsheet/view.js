@@ -635,7 +635,11 @@
 
         _sheetsbar: function() {
             if (this.options.sheetsbar) {
-                this.sheetsbar = new kendo.spreadsheet.SheetsBar(this.element.find(DOT + View.classNames.sheetsBar), $.extend(true, {}, this.options.sheetsbar));
+                var options = $.extend(true, {
+                    openDialog: this.openDialog.bind(this)
+                }, this.options.sheetsbar);
+
+                this.sheetsbar = new kendo.spreadsheet.SheetsBar(this.element.find(DOT + View.classNames.sheetsBar), options);
             }
         },
 
@@ -970,15 +974,17 @@
         },
 
         openDialog: function(name, options) {
-            var sheet = this._sheet;
-            var ref = sheet.activeCell();
-            var range = new kendo.spreadsheet.Range(ref, sheet);
             var dialog = kendo.spreadsheet.dialogs.create(name, options);
 
             if (dialog) {
                 dialog.bind("action", this._executeCommand.bind(this));
                 dialog.bind("deactivate", this._destroyDialog.bind(this));
                 this._dialogs.push(dialog);
+
+                var sheet = this._sheet;
+                var ref = sheet.activeCell();
+                var range = new kendo.spreadsheet.Range(ref, sheet);
+
                 dialog.open(range);
                 return dialog;
             }
