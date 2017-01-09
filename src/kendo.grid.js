@@ -479,7 +479,7 @@ var __meta__ = { // jshint ignore:line
         },
         update: {
             text: "Update",
-            imageClass: "k-i-reload",
+            imageClass: "k-i-check",
             className: "k-primary k-grid-update",
             iconClass: "k-icon"
         },
