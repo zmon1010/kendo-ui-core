@@ -34,9 +34,6 @@ public class NavigatorCategoryAxisTag extends BaseTag /* interfaces */ /* interf
     @Override
     public void initialize() {
 //>> initialize
-
-        categoryAxis = new ArrayList<Map<String, Object>>();
-
 //<< initialize
 
         super.initialize();
