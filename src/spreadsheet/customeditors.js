@@ -118,8 +118,8 @@
         var context, list, popup;
         function create() {
             if (!list) {
-                list = $("<div/>").kendoStaticList({
-                    template   : "<div>#:value#</div>",
+                list = $("<ul class='k-list k-reset'/>").kendoStaticList({
+                    template   : "#:value#",
                     selectable : true,
                     autoBind   : false
                 });
