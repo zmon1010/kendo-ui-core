@@ -1,73 +1,61 @@
-<div class="demo-section k-content">    
+<div class="demo-section k-content">
     @(Html.Kendo().TreeView()
         .Name("treeview")
         .Items(treeview =>
         {
             treeview.Add().Text("My Web Site")
-                .SpriteCssClasses("folder")
+                .SpriteCssClasses("k-icon k-i-folder")
                 .Expanded(true)
                 .Items(root =>
                 {
                     root.Add().Text("images")
                         .Expanded(true)
-                        .SpriteCssClasses("folder")
+                        .SpriteCssClasses("k-icon k-i-folder")
                         .Items(images =>
                         {
                             images.Add().Text("logo.png")
-                                .SpriteCssClasses("image");
+                                .SpriteCssClasses("k-icon k-i-image");
 
                             images.Add().Text("body-back.png")
-                                .SpriteCssClasses("image");
+                                .SpriteCssClasses("k-icon k-i-image");
 
                             images.Add().Text("my-photo.jpg")
-                                .SpriteCssClasses("image");
+                                .SpriteCssClasses("k-icon k-i-image");
                         });
 
                     root.Add().Text("resources")
                         .Expanded(true)
-                        .SpriteCssClasses("folder")
+                        .SpriteCssClasses("k-icon k-i-folder")
                         .Items(resources =>
                         {
                             resources.Add().Text("pdf")
                                 .Expanded(true)
-                                .SpriteCssClasses("folder")
+                                .SpriteCssClasses("k-icon k-i-folder")
                                 .Items(pdf =>
                                 {
                                     pdf.Add().Text("brochure.pdf")
-                                        .SpriteCssClasses("pdf");
+                                        .SpriteCssClasses("k-icon k-i-pdf");
 
                                     pdf.Add().Text("prices.pdf")
-                                        .SpriteCssClasses("pdf");
+                                        .SpriteCssClasses("k-icon k-i-pdf");
                                 });
 
                             resources.Add().Text("zip")
-                                .SpriteCssClasses("folder");
+                                .SpriteCssClasses("k-icon k-i-folder");
                         });
 
                     root.Add().Text("about.html")
-                        .SpriteCssClasses("html");
+                        .SpriteCssClasses("k-icon k-i-html");
 
                     root.Add().Text("contacts.html")
-                        .SpriteCssClasses("html");
+                        .SpriteCssClasses("k-icon k-i-html");
 
                     root.Add().Text("index.html")
-                        .SpriteCssClasses("html");
+                        .SpriteCssClasses("k-icon k-i-html");
 
                     root.Add().Text("portfolio.html")
-                        .SpriteCssClasses("html");
+                        .SpriteCssClasses("k-icon k-i-html");
                 });
         })
     )
 </div>
-
-<style>
-    #treeview .k-sprite {
-        background-image: url("@Url.Content("~/shared/web/treeview/coloricons-sprite.png")");
-    }
-
-    .rootfolder { background-position: 0 0; }
-    .folder { background-position: 0 -16px; }
-    .pdf { background-position: 0 -32px; }
-    .html { background-position: 0 -48px; }
-    .image { background-position: 0 -64px; }
-</style>
