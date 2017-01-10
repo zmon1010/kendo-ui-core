@@ -499,9 +499,7 @@
 
             var menu;
 
-            var location = { pageX: event.pageX, pageY: event.pageY };
-
-            var object = this.objectAt(location);
+            var object = this.objectAt(event);
 
             if (object.type === "columnresizehandle" || object.type === "rowresizehandle") {
                 return;
@@ -550,7 +548,7 @@
                 return;
             }
 
-            var location = { pageX: event.pageX, pageY: event.pageY };
+            var location = { clientX: event.clientX, clientY: event.clientY };
             var object = this.objectAt(location);
 
             var sheet = this._workbook.activeSheet();
@@ -751,13 +749,9 @@
         },
 
         objectAt: function(location) {
-            var offset = this.container.offset();
-            var coordinates = {
-                left: location.pageX - offset.left,
-                top: location.pageY - offset.top
-            };
-
-            return this.view.objectAt(coordinates.left, coordinates.top);
+            var box = this.container[0].getBoundingClientRect();
+            return this.view.objectAt(location.clientX - box.left,
+                                      location.clientY - box.top);
         },
 
         selectToLocation: function(cellLocation) {
