@@ -24,7 +24,7 @@
                     "aspnet-mvc": "See how the Telerik $FRAMEWORK Autocomplete control works and view the demo source code."
                 }
             },
-            {
+            { 
                 "text": "Server filtering",
                 "url": "autocomplete/serverfiltering",
                 "title": {
@@ -4422,16 +4422,16 @@
             },
             "new": true
           },
-            {
-                "text": "Events",
-                "url": "upload/events",
-                "title": {
-                    "aspnet-mvc": "Handling events in $FRAMEWORK Upload | UI for $FRAMEWORK Demos"
-                },
-                "meta": {
-                    "aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in $FRAMEWORK."
-                }
-            },
+          {
+              "text": "Events",
+              "url": "upload/events",
+              "title": {
+                  "aspnet-mvc": "Handling events in $FRAMEWORK Upload | UI for $FRAMEWORK Demos"
+              },
+              "meta": {
+                  "aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in $FRAMEWORK."
+              }
+          },
             {
                 "text": "API",
                 "url": "upload/api",
@@ -4474,6 +4474,17 @@
                 "meta": {
                     "aspnet-mvc": "This demo illustrates the right to left support in Telerik $FRAMEWORK Upload HtmlHelper extension."
                 }
+            },
+            {
+                "text": "Tag Helper",
+                "url": "upload/tag-helper",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK Upload Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ],
+                new: true
             }
         ],
         "category": "Editors"
