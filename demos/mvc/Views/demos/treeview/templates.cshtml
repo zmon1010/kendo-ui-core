@@ -15,25 +15,25 @@
                 template: kendo.template($("#treeview-template").html()),
 
                 dataSource: [{
-                    id: 1, text: "My Documents", expanded: true, spriteCssClass: "rootfolder k-icon k-i-folder", items: [
+                    id: 1, text: "My Documents", expanded: true, spriteCssClass: "rootfolder", items: [
                         {
-                            id: 2, text: "Kendo UI Project", expanded: true, spriteCssClass: "k-icon k-i-folder", items: [
-                                { id: 3, text: "about.html", spriteCssClass: "k-icon k-i-html" },
-                                { id: 4, text: "index.html", spriteCssClass: "k-icon k-i-html" },
-                                { id: 5, text: "logo.png", spriteCssClass: "k-icon k-i-image" }
+                            id: 2, text: "Kendo UI Project", expanded: true, spriteCssClass: "folder", items: [
+                                { id: 3, text: "about.html", spriteCssClass: "html" },
+                                { id: 4, text: "index.html", spriteCssClass: "html" },
+                                { id: 5, text: "logo.png", spriteCssClass: "image" }
                             ]
                         },
                         {
-                            id: 6, text: "New Web Site", expanded: true, spriteCssClass: "k-icon k-i-folder", items: [
-                                { id: 7, text: "mockup.jpg", spriteCssClass: "k-icon k-i-image" },
-                                { id: 8, text: "Research.pdf", spriteCssClass: "k-icon k-i-pdf" },
+                            id: 6, text: "New Web Site", expanded: true, spriteCssClass: "folder", items: [
+                                { id: 7, text: "mockup.jpg", spriteCssClass: "image" },
+                                { id: 8, text: "Research.pdf", spriteCssClass: "pdf" },
                             ]
                         },
                         {
-                            id: 9, text: "Reports", expanded: true, spriteCssClass: "k-icon k-i-folder", items: [
-                                { id: 10, text: "February.pdf", spriteCssClass: "k-icon k-i-pdf" },
-                                { id: 11, text: "March.pdf", spriteCssClass: "k-icon k-i-pdf" },
-                                { id: 12, text: "April.pdf", spriteCssClass: "k-icon k-i-pdf" }
+                            id: 9, text: "Reports", expanded: true, spriteCssClass: "folder", items: [
+                                { id: 10, text: "February.pdf", spriteCssClass: "pdf" },
+                                { id: 11, text: "March.pdf", spriteCssClass: "pdf" },
+                                { id: 12, text: "April.pdf", spriteCssClass: "pdf" }
                             ]
                         }
                     ]
@@ -49,3 +49,15 @@
         </script>
 
     </div>
+
+<style>
+    #treeview .k-sprite {
+        background-image: url("../content/web/treeview/coloricons-sprite.png");
+    }
+
+    .rootfolder { background-position: 0 0; }
+    .folder     { background-position: 0 -16px; }
+    .pdf        { background-position: 0 -32px; }
+    .html       { background-position: 0 -48px; }
+    .image      { background-position: 0 -64px; }
+</style>

@@ -205,7 +205,7 @@
         equal(treeviewObject.text(appendedNode), "bar");
         ok(appendedNode.find(">div").hasClass("k-bot"));
         ok(appendedNode.hasClass("k-last"));
-        equal(root.find(">div>.k-icon.k-i-arrow-45-down-right").length, 1);
+        equal(root.find(">div>.k-icon.k-i-collapse").length, 1);
     });
 
     test("append(nodeData, parentNode) appends new node to parent with existing group", function() {

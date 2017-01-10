@@ -70,7 +70,7 @@
         var element = fromHtml("<ul><li data-kendo-expanded='true'>foo<ul><li>bar</li></ul></li></ul>"),
             wrapper = element.find("div:first");
 
-        equal(wrapper.find("span.k-icon.k-i-arrow-45-down-right").length, 1);
+        equal(wrapper.find("span.k-icon.k-i-collapse").length, 1);
         equal(element.find(".k-group:not(.k-treeview-lines)").length, 1);
     });
 
@@ -296,7 +296,7 @@
             ] }
         ]);
 
-        equal(treeview.find(".k-icon.k-i-arrow-60-right").length, 1);
+        equal(treeview.find(".k-icon.k-i-expand").length, 1);
     });
 
     test("renders minus icon if item is expanded", function() {
@@ -306,7 +306,7 @@
             ] }
         ]);
 
-        equal(treeview.find(".k-i-arrow-45-down-right").length, 1);
+        equal(treeview.find(".k-i-collapse").length, 1);
     });
 
     test("does not render group, if there are no sub-items", function() {

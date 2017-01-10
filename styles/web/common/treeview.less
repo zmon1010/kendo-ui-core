@@ -56,15 +56,15 @@ div.k-treeview
 
 .k-treeview .k-i-plus,
 .k-treeview .k-i-minus,
-.k-treeview .k-i-arrow-60-right,
-.k-treeview .k-i-arrow-45-down-right
+.k-treeview .k-i-expand,
+.k-treeview .k-i-collapse
 {
     margin-top: .05em;
     margin-left: -16px;
     cursor: pointer;
 }
 
-.k-treeview .k-i-arrow-45-down-right {
+.k-treeview .k-i-collapse {
     margin-top: -.4em;
 }
 
@@ -106,8 +106,9 @@ div.k-treeview
     cursor: pointer;
 }
 
-.k-rtl .k-treeview .k-i-arrow-60-right,
-.k-rtl .k-treeview .k-i-arrow-45-down-right {
+.k-rtl .k-treeview .k-i-expand,
+.k-rtl .k-treeview .k-i-collapse {
     transform: scaleX(-1);
+    margin-left: 0;
     margin-right: -16px;
 }

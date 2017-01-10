@@ -50,17 +50,17 @@
             kendoConsole.log("event :: select (" + text + ")");
         },
         files: kendo.observableHierarchy([
-            { name: "My Web Site", type: "k-icon k-i-folder", expanded: true, items: [
-                { name: "images", type: "k-icon k-i-folder", expanded: true, items: [
-                    { name: "logo.png", type: "k-icon k-i-image" },
-                    { name: "my-photo.jpg", type: "k-icon k-i-image" }
+            { name: "My Web Site", type: "folder", expanded: true, items: [
+                { name: "images", type: "folder", expanded: true, items: [
+                    { name: "logo.png", type: "image" },
+                    { name: "my-photo.jpg", type: "image" }
                 ] },
-                { name: "resources", type: "k-icon k-i-folder", expanded: true, items: [
-                    { name: "resources", type: "k-icon k-i-folder" },
-                    { name: "zip", type: "k-icon k-i-folder" }
+                { name: "resources", type: "folder", expanded: true, items: [
+                    { name: "resources", type: "folder" },
+                    { name: "zip", type: "folder" }
                 ] },
-                { name: "about.html", type: "k-icon k-i-html" },
-                { name: "index.html", type: "k-icon k-i-html" }
+                { name: "about.html", type: "html" },
+                { name: "index.html", type: "html" }
             ] }
         ]),
         printFiles: function() {
@@ -113,5 +113,15 @@
     .files .k-treeview {
         height: 300px;
     }
+
+    .files .k-sprite {
+        background-image: url("../content/web/treeview/coloricons-sprite.png");
+    }
+
+    .rootfolder { background-position: 0 0; }
+    .folder { background-position: 0 -16px; }
+    .pdf { background-position: 0 -32px; }
+    .html { background-position: 0 -48px; }
+    .image { background-position: 0 -64px; }
 </style>
 </div>

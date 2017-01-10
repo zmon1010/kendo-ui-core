@@ -38,7 +38,7 @@
             ]
         });
 
-        $(".k-i-arrow-60-right", treeview).trigger("click");
+        $(".k-i-expand", treeview).trigger("click");
 
         equal(handler.calls, 1);
         equal(eventArgs(handler).node, $(".k-item")[0]);
@@ -54,7 +54,7 @@
             ]
         });
 
-        $(".k-i-arrow-45-down-right", treeview).trigger("click");
+        $(".k-i-collapse", treeview).trigger("click");
 
         equal(handler.calls, 1);
         equal(eventArgs(handler).node, $(".k-item")[0]);

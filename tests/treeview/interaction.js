@@ -23,7 +23,7 @@
 
         var item = $(".k-item:first", treeview);
 
-        item.find(".k-i-arrow-60-right")
+        item.find(".k-i-expand")
             .toggleClass("k-i-plus", true)
             .trigger("click");
 
@@ -37,10 +37,10 @@
 
         var item = $(".k-item:first", treeview);
 
-        item.find(".k-i-arrow-60-right")
+        item.find(".k-i-expand")
             .trigger("click");
 
-        ok(item.find(".k-icon").hasClass("k-i-arrow-45-down-right"));
+        ok(item.find(".k-icon").hasClass("k-i-collapse"));
         equal(item.find(".k-group").css("display"), "block");
     });
 
@@ -51,10 +51,10 @@
 
         var item = $(".k-item:first", treeview);
 
-        item.find(".k-i-arrow-45-down-right")
+        item.find(".k-i-collapse")
             .trigger("click");
 
-        ok(item.find(".k-icon").hasClass("k-i-arrow-60-right"));
+        ok(item.find(".k-icon").hasClass("k-i-expand"));
         equal(item.find(".k-group").css("display"), "none");
     });
 
@@ -81,15 +81,15 @@
         treeviewObject.append({ text: "bar" }, parentNode);
         treeviewObject.collapse(parentNode);
 
-        equal(treeview.find(".k-icon.k-i-arrow-60-right").length, 1);
+        equal(treeview.find(".k-icon.k-i-expand").length, 1);
     });
 
     test("toggle buttons work when initializing from ul", function() {
         var dom = treeFromHtml("<ul><li>foo<ul><li>bar</li></ul></li></ul>");
 
-        dom.find(".k-i-arrow-60-right").trigger("click");
+        dom.find(".k-i-expand").trigger("click");
 
-        ok(dom.find(".k-i-arrow-45-down-right").length);
+        ok(dom.find(".k-i-collapse").length);
     });
 
     module("selection", TreeViewHelpers.noAnimationMoudle);
@@ -243,7 +243,7 @@
 
         moveNode(treeviewObject, "baz", "bar");
 
-        ok(treeviewObject.findByText("bar").find(".k-icon:first").hasClass("k-i-arrow-45-down-right"));
+        ok(treeviewObject.findByText("bar").find(".k-icon:first").hasClass("k-i-collapse"));
         ok(treeviewObject.findByText("bar").find(".k-group").is(":visible"));
     });
 
@@ -263,7 +263,7 @@
 
         moveNode(treeviewObject, "baz", "bar");
 
-        ok(treeviewObject.findByText("bar").find(".k-icon:first").hasClass("k-i-arrow-45-down-right"));
+        ok(treeviewObject.findByText("bar").find(".k-icon:first").hasClass("k-i-collapse"));
         ok(treeviewObject.findByText("bar").find(".k-group").is(":visible"));
     });
 

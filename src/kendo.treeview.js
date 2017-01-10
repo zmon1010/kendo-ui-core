@@ -263,11 +263,11 @@ var __meta__ = { // jshint ignore:line
                 .on("mouseleave" + NS, clickableItems, function () { $(this).removeClass(KSTATEHOVER); })
                 .on(CLICK + NS, clickableItems, proxy(that._click, that))
                 .on("dblclick" + NS, ".k-in:not(.k-state-disabled)", proxy(that._toggleButtonClick, that))
-                .on(CLICK + NS, ".k-i-arrow-60-right,.k-i-arrow-45-down-right", proxy(that._toggleButtonClick, that))
+                .on(CLICK + NS, ".k-i-expand,.k-i-collapse", proxy(that._toggleButtonClick, that))
                 .on("keydown" + NS, proxy(that._keydown, that))
                 .on("focus" + NS, proxy(that._focus, that))
                 .on("blur" + NS, proxy(that._blur, that))
-                .on("mousedown" + NS, ".k-in,.k-checkbox-wrapper :checkbox,.k-i-arrow-60-right,.k-i-arrow-45-down-right", proxy(that._mousedown, that))
+                .on("mousedown" + NS, ".k-in,.k-checkbox-wrapper :checkbox,.k-i-expand,.k-i-collapse", proxy(that._mousedown, that))
                 .on("change" + NS, ".k-checkbox-wrapper :checkbox", proxy(that._checkboxChange, that))
                 .on("click" + NS, ".k-checkbox-wrapper :checkbox", proxy(that._checkboxClick, that))
                 .on("click" + NS, ".k-request-retry", proxy(that._retryRequest, that))
@@ -521,9 +521,9 @@ var __meta__ = { // jshint ignore:line
                     var result = "k-icon";
 
                     if (item.expanded !== true) {
-                        result += " k-i-arrow-60-right";
+                        result += " k-i-expand";
                     } else {
-                        result += " k-i-arrow-45-down-right";
+                        result += " k-i-collapse";
                     }
 
                     return result;
@@ -1279,7 +1279,7 @@ var __meta__ = { // jshint ignore:line
 
             // toggle button
             if (group.length || node.attr("data-hasChildren") == "true") {
-                wrapper.children(".k-icon").removeClass("k-i-arrow-60-right k-i-arrow-45-down-right")
+                wrapper.children(".k-icon").removeClass("k-i-expand k-i-collapse")
                     .addClass(templates.toggleButtonClass(nodeData));
 
                 group.addClass("k-group");
@@ -1779,7 +1779,7 @@ var __meta__ = { // jshint ignore:line
         toggle: function (node, expand) {
             node = $(node);
 
-            if (!nodeIcon(node).is(".k-i-arrow-60-right, .k-i-arrow-45-down-right")) {
+            if (!nodeIcon(node).is(".k-i-expand, .k-i-collapse")) {
                 return;
             }
 
