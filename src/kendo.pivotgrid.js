@@ -3761,7 +3761,7 @@ var __meta__ = { // jshint ignore:line
 
             if (sortable) {
                 icons += '#if (data.sortIcon) {#';
-                icons += '<span class="k-icon ${data.sortIcon} k-i-sort-asc-sm"></span>';
+                icons += '<span class="k-icon ${data.sortIcon}-sm"></span>';
                 icons += '#}#';
             }
 
