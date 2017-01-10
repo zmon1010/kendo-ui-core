@@ -985,6 +985,9 @@
     <Content Include="Content\shared\styles\tags.png" />
     <Content Include="Content\shared\styles\units.png" />
     <Content Include="favicon.ico" />
+    <Content Include="SharedContent\Images\SampleApps\bootstrap.png" />
+    <Content Include="SharedContent\Images\SampleApps\chart.png" />
+    <Content Include="SharedContent\Images\SampleApps\stock-history.png" />
     <Content Include="Views\combobox\grouping.cshtml" />
     <Content Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\bar_charts\pan_and_zoom.cshtml" />
