@@ -2766,13 +2766,17 @@
             {
               "text": "Templates",
               "url": "panelbar/templates",
-               "new" :  "true",
+              "new": "true",
               "title": {
                 "aspnet-mvc": "Example of templates for $FRAMEWORK PanelBar"
               },
               "meta": {
                 "aspnet-mvc": "This demo illustrates how tree nodes in $FRAMEWORK PanelBar component can be further customized by using templates."
-              }
+              },
+              "packages": [
+                "!jsp",
+                "!php"
+              ]
             },
             {
                 "text": "Loading content with AJAX",
@@ -2805,7 +2809,11 @@
               "meta": {
                 "aspnet-mvc": "This demo shows how items in the panelbar are displayed with the default settings of $FRAMEWORK PanelBar and how the component can be easily bound to local data."
               },
-              "group": "Data Binding"
+              "group": "Data Binding",
+              "packages": [
+                "!jsp",
+                "!php"
+              ]
             },
             {
               "text": "Binding to remote data",
@@ -2828,7 +2836,11 @@
                 "aspnet-mvc": "This example demonstrates how events work in $FRAMEWORK PanelBar control and how you can set them to expand the content area of the accordion."
               },
               "requiresServer": "true",
-              "group": "API"
+              "group": "API",
+              "packages": [
+                "!jsp",
+                "!php"
+              ]
             },
             {
                 "text": "API",
