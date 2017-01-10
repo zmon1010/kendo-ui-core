@@ -1262,6 +1262,7 @@
     <Content Include="Views\demos\panelbar\local-data-binding.cshtml" />
     <Content Include="Views\demos\panelbar\remote-data-binding.cshtml" />
     <Content Include="Views\demos\panelbar\templates.cshtml" />
+    <Content Include="Views\demos\panelbar\angular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
