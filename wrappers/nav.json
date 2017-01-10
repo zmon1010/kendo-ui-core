@@ -1124,6 +1124,7 @@
             {
                 "text": "Import and Export",
                 "url": "editor/import-exportas",
+                "new": true,
                 "title": {
                     "aspnet-mvc": "Editor export support in $FRAMEWORK Editor with Telerik Document Processing Library"
                 },
@@ -1158,7 +1159,6 @@
             {
                 "text": "Immutable Elements",
                 "url": "editor/immutable-elements",
-                "new": true,
                 "title": {
                     "aspnet-mvc": "Immutable Elements demo demo for $FRAMEWORK web editor | $FRAMEWORK Demos"
                 },
