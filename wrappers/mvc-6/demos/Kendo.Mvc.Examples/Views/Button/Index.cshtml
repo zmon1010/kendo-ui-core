@@ -51,21 +51,22 @@
 	<h4>Buttons with icons</h4>
 	<p>
 		@(Html.Kendo().Button()
-		.Name("iconTextButton")
-		.Tag("a")
-		.SpriteCssClass("k-icon k-i-ungroup")
-		.Content("Icon and text"))
+        .Name("iconTextButton")
+        .Tag("a")
+        .Icon("filter")
+        .Content("Filter"))
 
 		@(Html.Kendo().Button()
 		.Name("kendoIconTextButton")
 		.Tag("a")
-		.Icon("plus")
-		.Content("Kendo UI icon"))
+		.Icon("filter-clear")
+		.Content("Clear Filter"))
 
 		@(Html.Kendo().Button()
-		.Name("iconButton")
-		.Tag("em")
-		.SpriteCssClass("k-icon k-i-refresh")
-		.Content("<span class='k-sprite'>Refresh</span>"))
+        .Name("iconButton")
+        .Tag("em")
+        .Icon("refresh")
+        .Content("<span class='k-icon'>Refresh</span>"))
 	</p>
 </div>
+
