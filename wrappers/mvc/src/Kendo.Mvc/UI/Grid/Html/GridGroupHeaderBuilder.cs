@@ -19,7 +19,7 @@ namespace Kendo.Mvc.UI.Html
             {
                 AppendHint(div, groupingData);
             }
-            
+
             return div;
         }
 
@@ -31,13 +31,13 @@ namespace Kendo.Mvc.UI.Html
         private void AppendGroupIndicators(IHtmlNode div, GridGroupingData groupingData)
         {
             var groupDescriptors = groupingData.GroupDescriptors;
-            
+
             foreach (var group in groupDescriptors)
             {
                 AppendGroupIndicator(div, group, groupingData);
             }
         }
-        
+
         private void AppendGroupIndicator(IHtmlNode div, GroupDescriptor group, GridGroupingData groupingData)
         {
             var groups = new List<GroupDescriptor>(groupingData.GroupDescriptors);
@@ -54,7 +54,7 @@ namespace Kendo.Mvc.UI.Html
 
             AppendUngroupButton(indicator, groupingData.UrlBuilder, groups);
         }
-        
+
         private void AppendUngroupButton(IHtmlNode indicator, IGridUrlBuilder urlBuilder, List<GroupDescriptor> groups)
         {
             var button = new HtmlElement("a")
@@ -81,8 +81,8 @@ namespace Kendo.Mvc.UI.Html
 
             new HtmlElement("span")
                 .AddClass(UIPrimitives.Icon)
-                .ToggleClass("k-i-sarrow-n", group.SortDirection == ListSortDirection.Ascending)
-                .ToggleClass("k-i-sarrow-s", group.SortDirection == ListSortDirection.Descending)
+                .ToggleClass("k-i-sort-asc-sm", group.SortDirection == ListSortDirection.Ascending)
+                .ToggleClass("k-i-sort-desc-sm", group.SortDirection == ListSortDirection.Descending)
                 .AppendTo(a);
 
             groups.Remove(group);

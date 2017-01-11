@@ -97,7 +97,7 @@ namespace Kendo.Mvc.UI.Tests
             item.Selected = false;
 
             IHtmlNode tag = renderer.ItemTag(item);
-            
+
             Assert.Equal("k-item k-state-default", tag.Attribute("class"));
 		}
 
@@ -171,7 +171,7 @@ namespace Kendo.Mvc.UI.Tests
             IHtmlNode tag = renderer.ItemInnerContentTag(item, true /*there are children*/).Children[1];
 
             Assert.Equal("span", tag.TagName);
-            Assert.Equal("k-icon k-i-arrow-n k-panelbar-collapse", tag.Attribute("class"));
+            Assert.Equal("k-icon k-panelbar-collapse k-i-arrow-n", tag.Attribute("class"));
         }
 
         [Fact]
@@ -195,7 +195,7 @@ namespace Kendo.Mvc.UI.Tests
 
             IHtmlNode tag = renderer.ItemInnerContentTag(item, true).Children[1];
 
-            Assert.Equal("k-icon k-i-arrow-s k-panelbar-expand", tag.Attribute("class"));
+            Assert.Equal("k-icon k-panelbar-expand k-i-arrow-s", tag.Attribute("class"));
         }
 
         [Fact]
@@ -239,7 +239,7 @@ namespace Kendo.Mvc.UI.Tests
             item.Content = () => { };
 
             IHtmlNode tag = renderer.ItemContentTag(item);
-            
+
             Assert.Contains(UIPrimitives.Content, tag.Attribute("class"));
             Assert.NotNull(tag.Attribute("id"));
         }
@@ -249,7 +249,7 @@ namespace Kendo.Mvc.UI.Tests
         {
             item.ContentUrl = "url";
             item.ContentHtmlAttributes["class"] = "custom";
- 
+
             IHtmlNode tag = renderer.ItemContentTag(item);
 
             Assert.Contains(UIPrimitives.Content + " custom", tag.Attribute("class"));
@@ -325,13 +325,13 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
-        public void Should_render_down_arrow_when_disabled_and_there_are_children() 
+        public void Should_render_down_arrow_when_disabled_and_there_are_children()
         {
             item.Enabled = false;
             item.ContentUrl = "#";
 
             IHtmlNode tag = renderer.ItemInnerContentTag(item, true).Children[1];
-            Assert.Equal("k-icon k-i-arrow-s k-panelbar-expand", tag.Attribute("class"));
+            Assert.Equal("k-icon k-panelbar-expand k-i-arrow-s", tag.Attribute("class"));
         }
     }
 }

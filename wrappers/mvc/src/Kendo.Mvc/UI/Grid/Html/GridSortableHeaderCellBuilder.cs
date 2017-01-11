@@ -38,15 +38,15 @@ namespace Kendo.Mvc.UI.Html
 
             return th;
         }
-        
+
         private void AppendSortIcon(IHtmlNode container)
         {
             if (sortDirection != null)
             {
                 var sortIcon = new HtmlElement("span")
                                 .AddClass(UIPrimitives.Icon)
-                                .ToggleClass("k-i-arrow-n", sortDirection == ListSortDirection.Ascending)
-                                .ToggleClass("k-i-arrow-s", sortDirection == ListSortDirection.Descending);
+                                .ToggleClass("k-i-sort-asc-sm", sortDirection == ListSortDirection.Ascending)
+                                .ToggleClass("k-i-sort-desc-sm", sortDirection == ListSortDirection.Descending);
 
                 sortIcon.AppendTo(container);
             }

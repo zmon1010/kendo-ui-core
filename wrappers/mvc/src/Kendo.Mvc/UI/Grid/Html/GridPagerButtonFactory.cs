@@ -3,7 +3,7 @@ using System.Globalization;
 namespace Kendo.Mvc.UI.Html
 {
     class GridPagerButtonFactory : IGridPagerButtonFactory
-    {       
+    {
         public IHtmlNode CreateButton(GridPagerButtonType buttonType, bool enabled, string url, string text, int page, bool inClientTemplate)
         {
             if (buttonType == GridPagerButtonType.Icon)
@@ -45,8 +45,7 @@ namespace Kendo.Mvc.UI.Html
                 .ToggleAttribute("href", disabledUrl, !enabled);
 
             var span = new HtmlElement("span")
-                .AddClass(UIPrimitives.Icon, "k-i-" + text)
-                .Text(text);
+                .AddClass(UIPrimitives.Icon, "k-i-" + text);
 
             span.AppendTo(a);
             return a;

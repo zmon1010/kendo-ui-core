@@ -16,7 +16,6 @@ namespace Kendo.Mvc.UI.Html
 
             new HtmlElement("span")
                 .AddClass("k-icon", "k-i-refresh")
-                .Text(refreshText)
                 .AppendTo(a);
 
             return a;
