@@ -3623,6 +3623,7 @@
             {
                 "text": "Tag Helper",
                 "url": "splitter/tag-helper",
+                "new": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK Splitter Tag Helper sample"
                 },
