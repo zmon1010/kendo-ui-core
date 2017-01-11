@@ -9,17 +9,25 @@
 @(Html.Kendo().Button()
 	.Name("iconButton")
 	.HtmlAttributes(new { type = "button" })
-	.SpriteCssClass("k-icon k-i-ungroup")
+	.SpriteCssClass("k-icon netherlandsFlag")
 	.Content("Sprite icon"))
 
 @(Html.Kendo().Button()
 	.Name("kendoIconButton")
 	.HtmlAttributes(new { type = "button" })
 	.Icon("filter")
-	.Content("Kendo UI sprite icon"))
+	.Content("Kendo UI Font Icon"))
 
 @(Html.Kendo().Button()
 	.Name("imageButton")
 	.HtmlAttributes(new { type = "button" })
 	.ImageUrl(Url.Content("~/shared/icons/sports/snowboarding.png"))
 	.Content("Image icon"))
+
+
+<style>
+    .netherlandsFlag {
+        background-image: url('@Url.Content("~/shared/flags.png")');
+        background-position: 0 -64px;
+    }
+</style>
