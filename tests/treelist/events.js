@@ -72,7 +72,7 @@
             dataBound: handler
         });
 
-        instance.content.find(".k-i-arrow-60-right").mousedown();
+        instance.content.find(".k-i-expand").mousedown();
 
         equal(handler.calls, 1);
     });
@@ -89,7 +89,7 @@
 
         equal(handler.calls, 1);
 
-        instance.content.find(".k-i-arrow-60-right").mousedown();
+        instance.content.find(".k-i-expand").mousedown();
 
         equal(handler.calls, 1);
 
@@ -108,7 +108,7 @@
 
         read.resolve([ { id: 1, hasChildren: true } ]);
 
-        instance.content.find(".k-i-arrow-60-right").mousedown();
+        instance.content.find(".k-i-expand").mousedown();
 
         read.reject();
 
@@ -154,7 +154,7 @@
             expand: handler
         });
 
-        instance.content.find(".k-i-arrow-60-right").mousedown();
+        instance.content.find(".k-i-expand").mousedown();
 
         equal(handler.calls, 1);
     });
@@ -166,7 +166,7 @@
             }
         });
 
-        instance.content.find(".k-i-arrow-60-right").mousedown();
+        instance.content.find(".k-i-expand").mousedown();
 
         equal(instance.content.find("tr:visible").length, 1);
     });
@@ -180,7 +180,7 @@
             collapse: handler
         });
 
-        instance.content.find(".k-i-arrow-45-down-right").mousedown();
+        instance.content.find(".k-i-collapse").mousedown();
 
         equal(handler.calls, 1);
     });
@@ -196,7 +196,7 @@
             }
         });
 
-        instance.content.find(".k-i-arrow-45-down-right").mousedown();
+        instance.content.find(".k-i-collapse").mousedown();
 
         equal(instance.content.find("tr:visible").length, 2);
     });

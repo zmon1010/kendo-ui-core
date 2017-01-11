@@ -63,11 +63,11 @@ var __meta__ = { // jshint ignore:line
         DATABOUND = "dataBound",
         EXPANDMEMBER = "expandMember",
         COLLAPSEMEMBER = "collapseMember",
-        STATE_EXPANDED = "k-i-arrow-60-down",
-        STATE_COLLAPSED = "k-i-arrow-60-right",
+        STATE_EXPANDED = "k-i-collapse",
+        STATE_COLLAPSED = "k-i-expand",
         HEADER_TEMPLATE = "<span>#: data.member.caption || data.member.name #</span>",
-        KPISTATUS_TEMPLATE = '<span class="k-icon k-i-#=data.dataItem.value > 0 ? \"circle\" : data.dataItem.value < 0 ? \"stop\" : \"arrow-60-up k-i-hold\"#">#:data.dataItem.value#</span>',
-        KPITREND_TEMPLATE = '<span class="k-icon k-i-#=data.dataItem.value > 0 ? \"arrow-60-up\" : data.dataItem.value < 0 ? \"arrow-60-down\" : \"minus\"#">#:data.dataItem.value#</span>',
+        KPISTATUS_TEMPLATE = '<span class="k-icon k-i-#=data.dataItem.value > 0 ? \"circle\" : data.dataItem.value < 0 ? \"stop\" : \"arrow-60-up k-i-hold\"#" title="#:data.dataItem.value#"></span>',
+        KPITREND_TEMPLATE = '<span class="k-icon k-i-#=data.dataItem.value > 0 ? \"arrow-60-up\" : data.dataItem.value < 0 ? \"arrow-60-down\" : \"minus\"#" title="#:data.dataItem.value#"></span>',
         DATACELL_TEMPLATE = '#= data.dataItem ? kendo.htmlEncode(data.dataItem.fmtValue || data.dataItem.value) || "&nbsp;" : "&nbsp;" #',
         LAYOUT_TABLE = '<table class="k-pivot-layout">' +
                             '<tr>' +

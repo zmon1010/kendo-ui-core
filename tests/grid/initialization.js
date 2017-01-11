@@ -777,7 +777,7 @@
         ok(grid.thead.find("th").data("kendoFilterMenu"));
     });
 
-    test("filterable columns render text inside the filter button icon element", function () {
+    test("filterable columns renders title for filter button element", function () {
         $(table).html("<thead><tr><th data-kendo-field='col1'>col1</th></tr></thead><tbody><tr><td>&nbsp;</td></tr></tbody>");
         var grid = new Grid(table, {
             filterable: true,
@@ -793,8 +793,8 @@
         });
 
         var th = grid.thead.find("th").first();
-        var span = th.find(".k-icon");
-        equal(span.eq(0).text(), th.data("kendoFilterMenu").options.messages.filter);
+        var button = th.find(".k-grid-filter");
+        equal(button.eq(0).attr("title"), th.data("kendoFilterMenu").options.messages.filter);
     });
 
     test("filtercell does not get rendered by default", function() {

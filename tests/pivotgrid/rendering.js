@@ -918,8 +918,8 @@
 
         ok(button[0]);
         ok(button.hasClass("k-icon"));
-        ok(button.hasClass("k-i-arrow-60-right"));
-        ok(!button.hasClass("k-i-arrow-60-down"));
+        ok(button.hasClass("k-i-expand"));
+        ok(!button.hasClass("k-i-collapse"));
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
@@ -963,8 +963,8 @@
 
         ok(button[0]);
         ok(button.hasClass("k-icon"));
-        ok(!button.hasClass("k-i-arrow-60-right"));
-        ok(button.hasClass("k-i-arrow-60-down"));
+        ok(!button.hasClass("k-i-expand"));
+        ok(button.hasClass("k-i-collapse"));
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
@@ -2107,8 +2107,8 @@
 
         ok(button[0]);
         ok(button.hasClass("k-icon"));
-        ok(button.hasClass("k-i-arrow-60-right"));
-        ok(!button.hasClass("k-i-arrow-60-down"));
+        ok(button.hasClass("k-i-expand"));
+        ok(!button.hasClass("k-i-collapse"));
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
@@ -2151,8 +2151,8 @@
 
         ok(button[0]);
         ok(button.hasClass("k-icon"));
-        ok(!button.hasClass("k-i-arrow-60-right"));
-        ok(button.hasClass("k-i-arrow-60-down"));
+        ok(!button.hasClass("k-i-expand"));
+        ok(button.hasClass("k-i-collapse"));
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
@@ -4082,7 +4082,7 @@
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
         ok(icon.hasClass("k-i-circle"));
-        equal(icon.text(), "1");
+        equal(icon.attr("title"), "1");
     });
 
     test("PivotGrid renders kpi hold-status icon for Status measure", 2, function() {
@@ -4126,7 +4126,7 @@
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
         ok(icon.hasClass("k-i-arrow-60-up"));
-        equal(icon.text(), "0");
+        equal(icon.attr("title"), "0");
     });
 
     test("PivotGrid renders kpi denied-status icon for Status measure", 2, function() {
@@ -4151,7 +4151,7 @@
         var cell = rows.eq(0).find("td").eq(0);
         var icon = cell.children(":first");
         ok(icon.hasClass("k-i-stop"));
-        equal(icon.text(), "-1");
+        equal(icon.attr("title"), "-1");
     });
 
     test("PivotGrid renders kpi increase-trend icon for Trend measure", 2, function() {
@@ -4177,7 +4177,7 @@
         var icon = cell.children(":first");
 
         ok(icon.hasClass("k-i-arrow-60-up"));
-        equal(icon.text(), "1");
+        equal(icon.attr("title"), "1");
     });
 
     test("PivotGrid renders kpi equal-trend icon for Trend measure", 2, function() {
@@ -4203,7 +4203,7 @@
         var icon = cell.children(":first");
 
         ok(icon.hasClass("k-i-minus"));
-        equal(icon.text(), "0");
+        equal(icon.attr("title"), "0");
     });
 
     test("PivotGrid renders kpi decrease-trend icon for Trend measure", 2, function() {
@@ -4229,7 +4229,7 @@
         var icon = cell.children(":first");
 
         ok(icon.hasClass("k-i-arrow-60-down"));
-        equal(icon.text(), "-1");
+        equal(icon.attr("title"), "-1");
     });
 
     test("PivotGrid does not render status icon if no value", function() {

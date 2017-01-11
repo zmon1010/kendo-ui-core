@@ -300,7 +300,7 @@
 
         instance.expand(row);
 
-        equal(instance.content.find(".k-i-arrow-45-down-right").length, 1);
+        equal(instance.content.find(".k-i-collapse").length, 1);
     });
 
     test("collapse hides row children", function() {
@@ -315,7 +315,7 @@
 
         instance.collapse(row);
 
-        equal(instance.content.find(".k-i-arrow-60-right").length, 1);
+        equal(instance.content.find(".k-i-expand").length, 1);
     });
 
     test("collapse hides row footer", function() {

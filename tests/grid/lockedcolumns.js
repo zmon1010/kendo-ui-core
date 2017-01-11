@@ -631,7 +631,7 @@
 
         grid.collapseGroup(grid.lockedContent.find(".k-grouping-row:first"));
 
-        equal(grid.lockedContent.find(".k-grouping-row:first a.k-i-arrow-60-down").length, 1);
+        equal(grid.lockedContent.find(".k-grouping-row:first a.k-i-expand").length, 1);
         ok(!grid.lockedContent.find(".k-grouping-row:first").next().is(":visible"));
         ok(!grid.content.find(".k-grouping-row:first").next().is(":visible"));
     });
@@ -646,7 +646,7 @@
 
         grid.collapseGroup(grid.content.find(".k-grouping-row:first"));
 
-        equal(grid.lockedContent.find(".k-grouping-row:first a.k-i-arrow-60-down").length, 1);
+        equal(grid.lockedContent.find(".k-grouping-row:first a.k-i-expand").length, 1);
         ok(!grid.lockedContent.find(".k-grouping-row:first").next().is(":visible"));
         ok(!grid.content.find(".k-grouping-row:first").next().is(":visible"));
     });
@@ -663,7 +663,7 @@
         grid.collapseGroup(group);
         grid.expandGroup(group);
 
-        equal(grid.lockedContent.find(".k-grouping-row:first a.k-i-arrow-60-right").length, 1);
+        equal(grid.lockedContent.find(".k-grouping-row:first a.k-i-collapse").length, 1);
         ok(grid.lockedContent.find(".k-grouping-row:first").next().is(":visible"));
         ok(grid.content.find(".k-grouping-row:first").next().is(":visible"));
     });
@@ -680,7 +680,7 @@
         grid.collapseGroup(group);
         grid.expandGroup(group);
 
-        equal(grid.lockedContent.find(".k-grouping-row:first a.k-i-arrow-60-right").length, 1);
+        equal(grid.lockedContent.find(".k-grouping-row:first a.k-i-collapse").length, 1);
         ok(grid.lockedContent.find(".k-grouping-row:first").next().is(":visible"));
         ok(grid.content.find(".k-grouping-row:first").next().is(":visible"));
     });

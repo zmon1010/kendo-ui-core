@@ -626,8 +626,8 @@
 
         grid.cancelRow();
 
-        ok(grid.table.find(".k-icon:first").hasClass("k-i-arrow-60-right"));
-        ok(!grid.table.find(".k-icon:first").hasClass("k-i-arrow-60-down"));
+        ok(grid.table.find(".k-icon:first").hasClass("k-i-collapse"));
+        ok(!grid.table.find(".k-icon:first").hasClass("k-i-expand"));
     });
 
     asyncTest("saveRow detaches button click handlers", 1, function() {
@@ -659,11 +659,11 @@
     test("cell click does not enter edit mode if editable returns false", function() {
         var grid = setup({ columns: [
                 {
-                    field: "foo", 
+                    field: "foo",
                     editable: function (dataItem) {
                         return dataItem.name !== "tom";
                     }
-                },	
+                },
                 { field: "name" }
             ], editable: "inline" }),
             tr = table.find("tr:first");
@@ -675,11 +675,11 @@
     test("cell enters edit mode if editable returns true", function() {
         var grid = setup({ columns: [
                 {
-                    field: "foo", 
+                    field: "foo",
                     editable: function (dataItem) {
                         return dataItem.name === "tom";
                     }
-                },	
+                },
                 { field: "name" }
             ], editable: "inline" }),
             tr = table.find("tr:first");

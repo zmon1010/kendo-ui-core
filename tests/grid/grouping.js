@@ -291,7 +291,7 @@
         ok(dataRows.eq(1).is(":visible"));
     });
 
-    test("collapseGroup change button class to k-i-arrow-60-down", function() {
+    test("collapseGroup change button class to k-i-expand", function() {
         var grid = new Grid(table(), {
             dataSource:[{foo: "foo", bar: "bar"}, {foo: "fooz", bar: "baz"}],
             groupable: true
@@ -302,10 +302,10 @@
         groupingRow = grid.tbody.find("tr.k-grouping-row:first");
         grid.collapseGroup(groupingRow);
 
-        ok(groupingRow.find(".k-icon").hasClass("k-i-arrow-60-down"));
+        ok(groupingRow.find(".k-icon").hasClass("k-i-expand"));
     });
 
-    test("expandGroup change button class to k-i-arrow-60-right", function() {
+    test("expandGroup change button class to k-i-collapse", function() {
         var grid = new Grid(table(), {
             dataSource:[{foo: "foo", bar: "bar"}, {foo: "fooz", bar: "baz"}],
             groupable: true
@@ -317,7 +317,7 @@
         grid.collapseGroup(groupingRow);
         grid.expandGroup(groupingRow);
 
-        ok(groupingRow.find(".k-icon").hasClass("k-i-arrow-60-right"));
+        ok(groupingRow.find(".k-icon").hasClass("k-i-collapse"));
     });
 
     test("expandGroup shows all group data rows", function() {
@@ -357,7 +357,7 @@
         grid.expandGroup(masterGroup);
 
         equal(tbody.find("tr:visible").length, 4);
-        ok(subGroup.find(".k-icon").hasClass("k-i-arrow-60-down"));
+        ok(subGroup.find(".k-icon").hasClass("k-i-expand"));
     });
 
     test("expand parent group shows the footers of subgroups that are visible", function() {

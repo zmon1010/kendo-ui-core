@@ -20,7 +20,7 @@ var __meta__ = { // jshint ignore:line
         CHANGE = "change",
         indicatorTmpl = kendo.template('<div class="k-group-indicator" data-#=data.ns#field="${data.field}" data-#=data.ns#title="${data.title || ""}" data-#=data.ns#dir="${data.dir || "asc"}">' +
                 '<a href="\\#" class="k-link">' +
-                    '<span class="k-icon k-i-sort-${(data.dir || "asc") == "asc" ? "asc-sm" : "desc-sm"}">(sorted ${(data.dir || "asc") == "asc" ? "ascending": "descending"})</span>' +
+                    '<span class="k-icon k-i-sort-${(data.dir || "asc") == "asc" ? "asc-sm" : "desc-sm"}" title="(sorted ${(data.dir || "asc") == "asc" ? "ascending": "descending"})"></span>' +
                     '${data.title ? data.title: data.field}' +
                 '</a>' +
                 '<a class="k-button k-button-icon k-button-bare">' +

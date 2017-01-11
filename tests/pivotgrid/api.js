@@ -131,7 +131,7 @@
         var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
         var button = headerTable.find("th span").click();
 
-        ok(button.hasClass("k-i-arrow-60-right"));
+        ok(button.hasClass("k-i-expand"));
     });
 
     test("expandMember childrenLoaded argument is true ", 1 , function() {
@@ -199,7 +199,7 @@
         var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
         var button = headerTable.find("th span").click().click();
 
-        ok(button.hasClass("k-i-arrow-60-down"));
+        ok(button.hasClass("k-i-collapse"));
     });
 
     test("PivotGrid collapases tuple", function() {
@@ -417,7 +417,7 @@
         var headerTable = pivotgrid.wrapper.find(".k-pivot-rowheaders").find("table");
         var button = headerTable.find("td").find("span").click();
 
-        ok(button.hasClass("k-i-arrow-60-right"));
+        ok(button.hasClass("k-i-expand"));
     });
 
     test("collapseMember is triggered on row collapse", 1, function() {
@@ -468,7 +468,7 @@
         var headerTable = pivotgrid.wrapper.find(".k-pivot-rowheaders").find("table");
         var button = headerTable.find("td").find("span").click().click();
 
-        ok(button.hasClass("k-i-arrow-60-down"));
+        ok(button.hasClass("k-i-collapse"));
     });
 
     test("PivotGrid collapases tuple", function() {
