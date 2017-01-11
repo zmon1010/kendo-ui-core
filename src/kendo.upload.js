@@ -90,7 +90,7 @@ var __meta__ = { // jshint ignore:line
             .on("click", ".k-upload-action", $.proxy(that._onFileAction, that))
             .on("click", ".k-clear-selected", $.proxy(that._onClearSelected, that))
             .on("click", ".k-upload-selected", $.proxy(that._onUploadSelected, that));
-           
+
             if(that.element.val()) {
                 that._onInputChange({ target: that.element });
             }
