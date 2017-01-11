@@ -90,7 +90,7 @@ var __meta__ = { // jshint ignore:line
             .on("click", ".k-upload-action", $.proxy(that._onFileAction, that))
             .on("click", ".k-clear-selected", $.proxy(that._onClearSelected, that))
             .on("click", ".k-upload-selected", $.proxy(that._onUploadSelected, that));
-
+           
             if(that.element.val()) {
                 that._onInputChange({ target: that.element });
             }
@@ -677,7 +677,8 @@ var __meta__ = { // jshint ignore:line
                 "<button type='button' class='k-button k-upload-action'>" +
                     "<span class='k-icon "+ iconClass + " " + actionClass + "' title='" + actionText + "' aria-label='" + actionText +"'></span>" +
                 "</button>"
-                );
+                ).on("focus", function() { $(this).addClass("k-state-focused"); })
+                 .on("blur", function() { $(this).removeClass("k-state-focused"); });
             }
             else {
                 return $(
