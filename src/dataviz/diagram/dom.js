@@ -4413,7 +4413,7 @@
 
             editTool: function() {
                 this._tools.push({
-                    spriteCssClass: "k-icon k-i-edit",
+                    icon: "edit",
                     showText: "overflow",
                     type: "button",
                     text: "Edit",
@@ -4423,7 +4423,7 @@
 
             deleteTool: function() {
                 this._tools.push({
-                    spriteCssClass: "k-icon k-i-close",
+                    icon: "close",
                     showText: "overflow",
                     type: "button",
                     text: "Delete",
@@ -4434,7 +4434,7 @@
             rotateAnticlockwiseTool: function(options) {
                 this._appendGroup("rotate");
                 this._rotateGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-rotate-left",
+                    icon: "rotate-left",
                     showText: "overflow",
                     text: "RotateAnticlockwise",
                     group: "rotate",
@@ -4445,7 +4445,7 @@
             rotateClockwiseTool: function(options) {
                 this._appendGroup("rotate");
                 this._rotateGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-rotate-right",
+                    icon: "rotate-right",
                     attributes: this._setAttributes({ action: "rotateClockwise", step: options.step }),
                     showText: "overflow",
                     text: "RotateClockwise",
@@ -4456,7 +4456,7 @@
             createShapeTool: function() {
                 this._appendGroup("create");
                 this._createGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-shape",
+                    icon: "shape",
                     showText: "overflow",
                     text: "CreateShape",
                     group: "create",
@@ -4467,7 +4467,7 @@
             createConnectionTool: function() {
                 this._appendGroup("create");
                 this._createGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-connector",
+                    icon: "connector",
                     showText: "overflow",
                     text: "CreateConnection",
                     group: "create",
@@ -4478,7 +4478,7 @@
             undoTool: function() {
                 this._appendGroup("history");
                 this._historyGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-undo",
+                    icon: "undo",
                     showText: "overflow",
                     text: "Undo",
                     group: "history",
@@ -4489,7 +4489,7 @@
             redoTool: function() {
                 this._appendGroup("history");
                 this._historyGroup.buttons.push({
-                    spriteCssClass: "k-icon k-i-redo",
+                    icon: "redo",
                     showText: "overflow",
                     text: "Redo",
                     group: "history",
