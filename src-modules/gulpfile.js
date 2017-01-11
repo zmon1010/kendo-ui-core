@@ -38,8 +38,7 @@ const DRAWING_GLOBALS = {
 
 const PDF_GLOBALS = {
     'common': 'kendo',
-    'shapes': 'kendo.drawing',
-    'gradients': 'kendo.drawing',
+    'drawing': 'kendo.drawing',
     'geometry': 'kendo.geometry',
     'util': 'kendo.drawing.util'
 };
@@ -167,9 +166,9 @@ gulp.task('pack-color', () =>
 );
 
 gulp.task('pack-drawing', () =>
-    gulp.src(path.join(DRAWING_SRC, '**/*.js'))
+    gulp.src([path.join(DRAWING_SRC, '**/*.js'), path.resolve("./exports/**/*.js")])
         .pipe(rollup({
-            entry: path.join(DRAWING_SRC, 'main.js'),
+            entry: path.resolve("./exports/drawing/main.js"),
             format: 'iife',
             moduleName: 'kendo',
             useStrict: false,
