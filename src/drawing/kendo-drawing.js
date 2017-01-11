@@ -6513,6 +6513,60 @@ var canvas = {
 	MultiPathNode: MultiPathNode$2
 };
 
+function exportImage(group, options) {
+    var defaults = {
+        width: "800px", height: "600px",
+        cors: "Anonymous"
+    };
+
+    var exportRoot = group;
+    var bbox = group.clippedBBox();
+
+    if (bbox) {
+        var origin = bbox.getOrigin();
+        exportRoot = new Group();
+        exportRoot.transform(transform().translate(-origin.x, -origin.y));
+        exportRoot.children.push(group);
+
+        var size = bbox.getSize();
+        defaults.width = size.width + "px";
+        defaults.height = size.height + "px";
+    }
+
+    var surfaceOptions = $.extend(defaults, options);
+
+    var container = document.createElement("div");
+    var style = container.style;
+
+    style.display = "none";
+    style.width = surfaceOptions.width;
+    style.height = surfaceOptions.height;
+    document.body.appendChild(container);
+
+    var surface = new Surface$3(container, surfaceOptions);
+    surface.suspendTracking();
+    surface.draw(exportRoot);
+
+    var promise = surface.image();
+    var destroy = function () {
+        surface.destroy();
+        document.body.removeChild(container);
+    };
+    promise.then(destroy, destroy);
+
+    return promise;
+}
+
+function exportSVG(group, options) {
+    var svg = exportGroup(group);
+
+    if (!options || !options.raw) {
+        svg = "data:image/svg+xml;base64," + encodeBase64(svg);
+    }
+
+    return createPromise().resolve(svg);
+}
+
 /* eslint-disable no-multi-spaces, key-spacing, indent, camelcase, space-before-blocks, eqeqeq, brace-style */
 /* eslint-disable space-infix-ops, space-before-function-paren, array-bracket-spacing, object-curly-spacing */
 /* eslint-disable no-nested-ternary, max-params, default-case, no-else-return, no-empty, yoda */
@@ -6613,8 +6667,8 @@ function cloneNodes(el) {
     // re-draw canvases - https://github.com/telerik/kendo/issues/4872
     var canvases = el.querySelectorAll("canvas");
     if (canvases.length) {
-        slice$1(clone.querySelectorAll("canvas")).forEach(function(canvas, i){
-            canvas.getContext("2d").drawImage(canvases[i], 0, 0);
+        slice$1(clone.querySelectorAll("canvas")).forEach(function(canvas$$1, i){
+            canvas$$1.getContext("2d").drawImage(canvases[i], 0, 0);
         });
     }
 
@@ -7164,7 +7218,12 @@ drawDOM.drawText = function(element) {
         group: group
     };
     pushNodeInfo(element, getComputedStyle(element), group);
-    renderText(element, element.firstChild, group);
+    if (element.firstChild.nodeType == 3 /* Text */) {
+        // avoid the penalty of renderElement
+        renderText(element, element.firstChild, group);
+    } else {
+        _renderElement(element, group);
+    }
     popNodeInfo();
     return group;
 };
@@ -8909,13 +8968,13 @@ function maybeRenderWidget(element, group) {
                 return false;
             }
 
-            var wrap = new Group();
-            wrap.children.push(visual);
+            var wrap$$1 = new Group();
+            wrap$$1.children.push(visual);
 
             var bbox = element.getBoundingClientRect();
-            wrap.transform(transform().translate(bbox.left, bbox.top));
+            wrap$$1.transform(transform().translate(bbox.left, bbox.top));
 
-            group.append(wrap);
+            group.append(wrap$$1);
 
             return true;
         }
@@ -9175,8 +9234,8 @@ function renderText(element, node, group) {
 
     var color = getPropertyValue(style, "color");
     var range = element.ownerDocument.createRange();
-    var align = getPropertyValue(style, "text-align");
-    var isJustified = align == "justify";
+    var align$$1 = getPropertyValue(style, "text-align");
+    var isJustified = align$$1 == "justify";
     var whiteSpace = getPropertyValue(style, "white-space");
 
     // IE shrinks the text with text-overflow: ellipsis,
@@ -9610,64 +9669,9 @@ function mmul(a, b) {
     ];
 }
 
-function exportImage(group, options) {
-    var defaults = {
-        width: "800px", height: "600px",
-        cors: "Anonymous"
-    };
-
-    var exportRoot = group;
-    var bbox = group.clippedBBox();
-
-    if (bbox) {
-        var origin = bbox.getOrigin();
-        exportRoot = new Group();
-        exportRoot.transform(transform().translate(-origin.x, -origin.y));
-        exportRoot.children.push(group);
-
-        var size = bbox.getSize();
-        defaults.width = size.width + "px";
-        defaults.height = size.height + "px";
-    }
-
-    var surfaceOptions = $.extend(defaults, options);
-
-    var container = document.createElement("div");
-    var style = container.style;
-
-    style.display = "none";
-    style.width = surfaceOptions.width;
-    style.height = surfaceOptions.height;
-    document.body.appendChild(container);
-
-    var surface = new Surface$3(container, surfaceOptions);
-    surface.suspendTracking();
-    surface.draw(exportRoot);
-
-    var promise = surface.image();
-    var destroy = function () {
-        surface.destroy();
-        document.body.removeChild(container);
-    };
-    promise.then(destroy, destroy);
-
-    return promise;
-}
-
-function exportSVG(group, options) {
-    var svg = exportGroup(group);
-
-    if (!options || !options.raw) {
-        svg = "data:image/svg+xml;base64," + encodeBase64(svg);
-    }
-
-    return createPromise().resolve(svg);
-}
-
 var drawing = {
 	svg: svg,
 	canvas: canvas,
-	drawDOM: drawDOM,
 	util: util,
 	PathParser: PathParser,
 	Surface: Surface,
@@ -9701,13 +9705,13 @@ var drawing = {
 	GradientStop: GradientStop,
 	Gradient: Gradient,
 	Animation: Animation,
-	AnimationFactory: AnimationFactory
+	AnimationFactory: AnimationFactory,
+	drawDOM: drawDOM
 };
 
 kendo.deepExtend(kendo, {
     drawing: drawing,
-    geometry: geometry,
-    pdf: kendo.pdf
+    geometry: geometry
 });
 
 kendo.drawing.Segment = kendo.geometry.Segment;
