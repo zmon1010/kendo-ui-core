@@ -52,6 +52,7 @@
         "k-i-table-row-delete": "deleteRow",
         "k-i-table-column-delete": "deleteColumn",
         "k-i-table-properties": "tableWizard",
+        "k-i-table-wizard": "tableWizardInsert",
         "k-i-clear-css": "cleanFormatting"
     };
 

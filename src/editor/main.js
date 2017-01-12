@@ -103,6 +103,7 @@
                 deleteRow: "table-row-delete",
                 deleteColumn: "table-column-delete",
                 tableWizard: "table-properties",
+                tableWizardInsert: "table-wizard",
                 cleanFormatting: "clear-css"
             };
 
