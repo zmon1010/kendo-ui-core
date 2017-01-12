@@ -2371,6 +2371,7 @@ a.footer-links:hover,
 
 #example-search-wrapper input,
 #layout-search-wrapper input {
+    box-sizing: content-box;
     color: #2d3e50;
     border: none;
     width: 100%;
@@ -2392,6 +2393,10 @@ a.footer-links:hover,
     line-height: 19px;
     height: 1.188em;
     text-indent: 2.4em;
+}
+
+#layout-search-wrapper .k-clear-value {
+    top: 13px;
 }
 
 #example-search-wrapper .k-uniE600 {
