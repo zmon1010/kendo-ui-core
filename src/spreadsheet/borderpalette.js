@@ -156,7 +156,7 @@
 
             _resetButton: function() {
                 this.resetButton = $("<a class='k-button k-reset-color' href='#'>" +
-                                    "<span class='k-icon k-icon k-i-reset-color'></span>" + BORDER_PALETTE_MESSAGES.reset +
+                                    "<span class='k-icon k-i-reset-color'></span>" + BORDER_PALETTE_MESSAGES.reset +
                                    "</a>").appendTo(this.element);
             },
 
