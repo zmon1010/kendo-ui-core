@@ -264,7 +264,7 @@
                             {
                                 type: "button",
                                 attributes: { "class": "k-play-button" },
-                                spriteCssClass: "k-icon k-i-play"
+                                icon: "play"
                             },
                             {
                                 template: templates.toolBarTime,
@@ -277,7 +277,7 @@
                             {
                                 type: "button",
                                 attributes: { "class": "k-volume-button" },
-                                spriteCssClass: "k-icon k-i-volume-up"
+                                icon: "volume-up"
                             },
                             {
                                 template: templates.volumeSlider,
@@ -290,7 +290,7 @@
                             {
                                 type: "button",
                                 attributes: { "class": "k-fullscreen-button" },
-                                spriteCssClass: "k-icon k-i-full-screen"
+                                icon: "full-screen"
                             }
                         ]
                     });
