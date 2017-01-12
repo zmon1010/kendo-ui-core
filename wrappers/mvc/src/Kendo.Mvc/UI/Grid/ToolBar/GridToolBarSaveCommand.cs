@@ -3,7 +3,7 @@ namespace Kendo.Mvc.UI
     using System.Collections.Generic;
     using Kendo.Mvc.Resources;
     using Kendo.Mvc.UI.Html;
-    
+
     public class GridToolBarSaveCommand<T> : GridToolBarCommandBase<T> where T : class
     {
         public GridToolBarSaveCommand()
@@ -27,23 +27,23 @@ namespace Kendo.Mvc.UI
         public override IEnumerable<IGridButtonBuilder> CreateDisplayButtons(IGridUrlBuilder urlBuilder, IGridHtmlHelper htmlHelper)
         {
             var factory = new GridButtonFactory();
-            
+
             var save = factory.CreateButton<GridLinkButtonBuilder>(ButtonType);
 
             save.CssClass += " " + UIPrimitives.Grid.SaveChanges;
-            save.SpriteCssClass = "k-i-update";
-            save.Text = SaveText;           
+            save.SpriteCssClass = "k-i-check";
+            save.Text = SaveText;
             save.HtmlAttributes = HtmlAttributes;
 
             //TODO: Implement command button image html attributes
-            //save.ImageHtmlAttributes = ImageHtmlAttributes;           
+            //save.ImageHtmlAttributes = ImageHtmlAttributes;
             save.Url = delegate { return "javascript:void(0)"; };
 
             var cancel = factory.CreateButton<GridLinkButtonBuilder>(ButtonType);
 
             cancel.CssClass += " " + UIPrimitives.Grid.CancelChanges;
             cancel.SpriteCssClass = "k-i-cancel";
-            cancel.Text = CancelText;            
+            cancel.Text = CancelText;
             cancel.HtmlAttributes = HtmlAttributes;
 
             //TODO: Implement command button image html attributes
