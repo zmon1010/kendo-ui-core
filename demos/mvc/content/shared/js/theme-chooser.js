@@ -232,12 +232,19 @@
 
         updateLink: function(link, url) {
             var exampleElement = $("#example");
+            var RTL = function () { return (/kendo\.rtl/gi).test(this.href); }
             var rel = link.eq(0).attr("rel").replace(/-disabled/i, "");
-            var disabledRel = rel + "-disabled";
+            var rtlStylesheet = $("head link").filter(RTL).eq(0);
 
-            link.eq(0)
-              .attr("rel", /common-empty/.test(url) ? disabledRel : rel)
-              .attr("href", url);
+            // hack: disable old styles in SASS themes
+            if (/common-empty/.test(url)) {
+                rel += "-disabled";
+                rtlStylesheet.attr("rel", rel);
+            } else if (/common/.test(url)) {
+                rtlStylesheet.attr("rel", rel);
+            }
+
+            link.eq(0).attr("rel", rel).attr("href", url);
 
             if (exampleElement.length) {
                 exampleElement[0].style.cssText = exampleElement[0].style.cssText;

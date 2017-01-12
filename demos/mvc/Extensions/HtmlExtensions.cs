@@ -166,6 +166,7 @@ namespace Kendo.Extensions
             var urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             var disabled = "";
             if (common == "common-empty" && (
+                  styleName.Contains("kendo.rtl") ||
                   styleName.Contains("CURRENT_COMMON") ||
                   styleName.Contains("CURRENT_THEME.mobile"))) {
               disabled = "-disabled";
