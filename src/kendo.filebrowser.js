@@ -733,7 +733,7 @@ var __meta__ = { // jshint ignore:line
                 var dataSource = that.dataSource;
                 if (dataSource.hasChanges()) {
                     dataSource.cancelChanges();
-                }                
+                }
             }
         },
 
@@ -1045,10 +1045,10 @@ var __meta__ = { // jshint ignore:line
                 segment = segments[idx];
                 if (segment) {
                     if (!html) {
-                        html += '<a href="#" class="k-icon k-i-arrow-60-up">root</a>';
+                        html += '<a href="#" class="k-icon k-i-arrow-60-up" title="Go to parent folder"></a>';
                     }
                     html += '<a class="k-link" href="#">' + segments[idx] + '</a>';
-                    html += '<span class="k-icon k-i-arrow-60-right">&gt;</span>';
+                    html += '<span class="k-icon k-i-arrow-60-right" title="Go to child folder"></span>';
                 }
             }
             this.overlay.empty().append($(html));
