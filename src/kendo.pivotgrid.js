@@ -3284,7 +3284,7 @@ var __meta__ = { // jshint ignore:line
             if (options.filterable || options.sortable) {
                 that.fieldMenu = new ui.PivotFieldMenu(that.element, {
                     messages: that.options.messages.fieldMenu,
-                    filter: ".k-i-folder",
+                    filter: ".k-setting-fieldmenu",
                     filterable: options.filterable,
                     sortable: options.sortable,
                     dataSource: that.dataSource
