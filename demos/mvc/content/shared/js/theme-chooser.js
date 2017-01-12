@@ -232,7 +232,7 @@
 
         updateLink: function(link, url) {
             var exampleElement = $("#example");
-            var RTL = function () { return (/kendo\.rtl/gi).test(this.href); }
+            var RTL = function () { return (/kendo\.rtl/gi).test(this.href); };
             var rel = link.eq(0).attr("rel").replace(/-disabled/i, "");
             var rtlStylesheet = $("head link").filter(RTL).eq(0);
 
