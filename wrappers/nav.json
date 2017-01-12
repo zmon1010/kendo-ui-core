@@ -1684,8 +1684,7 @@
                 "text": "Server detail template",
                 "url": "grid/serverdetails",
                 "packages": [
-                    "!mvc-core",
-                    "!mvc"
+                    "!mvc-core"
                 ]
             },
             {
