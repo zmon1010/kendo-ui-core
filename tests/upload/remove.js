@@ -52,6 +52,27 @@ function uploadRemoveEvent(params) {
         simulateRemoveClick();
     });
 
+    test("user headers set in remove event are sent to server", function() {
+        var uploadInstance = createUpload({ remove:
+            function(e) {
+                e.headers = { foo: "bar" };
+            }
+        });
+
+        simulateUpload();
+
+        $.mockjax(function(s) {
+            equal(s.headers.foo, "bar");
+            return {
+                url: "/removeAction",
+                responseTime: 0,
+                responseText: ""
+            };
+        });
+
+        simulateRemoveClick();
+    });
+
     test("remove request sends credentials", 1, function(){
         var uploadInstance = createUpload();
         uploadInstance.options.async.withCredentials = false;
