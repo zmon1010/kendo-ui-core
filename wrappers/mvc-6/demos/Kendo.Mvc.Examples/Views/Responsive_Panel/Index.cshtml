@@ -5,7 +5,7 @@
 
     <div class="dash-head">
         <!-- toggle button for responsive panel, hidden on large screens -->
-        <button class="k-rpanel-toggle"><span class="k-icon k-i-hbars"></span></button>
+        <button class="k-rpanel-toggle"><span class="k-icon k-i-menu"></span></button>
     </div>
     <div class="panel-wrap">
         <kendo-responsivepanel name="slidebar" breakpoint="1000" orientation="left">
@@ -101,14 +101,14 @@
             border: 1px solid #e5e5e5;
         }
 
-        #sidebar {
+        #slidebar {
             margin: 0;
             padding: 20px 0 20px 20px;
             vertical-align: top;
         }
 
         @@media (max-width: 1000px) {
-            #sidebar {
+            #slidebar {
                 background: #fff;
                 padding: 20px;
                 border-left: 1px solid #e5e5e5;
@@ -119,7 +119,7 @@
                 bottom: 0;
             }
 
-            #sidebar.k-rpanel-expanded {
+            #slidebar.k-rpanel-expanded {
                 box-shadow: 0 0 10px rgba(0,0,0,.3);
             }
         }
@@ -210,15 +210,15 @@
             color: #787878;
         }
 
-        #sidebar #blogs h4 {
+        #slidebar #blogs h4 {
             font-size: 1em;
         }
 
-        #sidebar #blogs p {
+        #slidebar #blogs p {
             display: none;
         }
 
-        #sidebar #blogs .blog-info {
+        #slidebar #blogs .blog-info {
             display: block;
         }
 
@@ -235,11 +235,11 @@
             padding-right: 10px;
         }
 
-        #sidebar #news h4 {
+        #slidebar #news h4 {
             font-size: 1em;
         }
 
-        #sidebar #news h4 span {
+        #slidebar #news h4 span {
             display: block;
             margin-bottom: 3px;
             color: #000;
