@@ -594,9 +594,12 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (!that.multiple && existingFileEntries.length > 0) {
-                removeEventArgs = { files: existingFileEntries.data("fileNames") };
+                removeEventArgs = {
+                    files: existingFileEntries.data("fileNames"),
+                    headers: {}
+                };
                 if (!that.trigger(REMOVE, removeEventArgs)) {
-                    that._module.onRemove({target : $(existingFileEntries, that.wrapper)}, removeEventArgs.data);
+                    that._module.onRemove({target : $(existingFileEntries, that.wrapper)}, removeEventArgs);
                 }
             }
 
@@ -701,11 +704,14 @@ var __meta__ = { // jshint ignore:line
                 var fileEntry = button.closest(".k-file");
                 var files = fileEntry.data("fileNames");
                 var hasValidationErrors = that._filesContainValidationErrors(files);
-                var eventArgs = { files: files };
+                var eventArgs = {
+                    files: files,
+                    headers: {}
+                };
 
                 if (icon.hasClass("k-i-x")) {
                     if (!that.trigger(REMOVE, eventArgs)) {
-                        that._module.onRemove({target : $(fileEntry, that.wrapper)}, eventArgs.data, !hasValidationErrors);
+                        that._module.onRemove({target : $(fileEntry, that.wrapper)}, eventArgs, !hasValidationErrors);
                     }
                 } else if (icon.hasClass("k-i-cancel")) {
                     that.trigger(CANCEL, eventArgs);
@@ -1040,10 +1046,10 @@ var __meta__ = { // jshint ignore:line
             return !!this.options.async.removeUrl;
         },
 
-        _submitRemove: function(fileNames, data, onSuccess, onError) {
+        _submitRemove: function(fileNames, eventArgs, onSuccess, onError) {
             var upload = this,
                 removeField = upload.options.async.removeField || "fileNames",
-                params = $.extend(data, antiForgeryTokens());
+                params = $.extend(eventArgs.data, antiForgeryTokens());
 
             params[removeField] = fileNames;
 
@@ -1054,6 +1060,7 @@ var __meta__ = { // jshint ignore:line
                   url: this.options.async.removeUrl,
                   traditional: true,
                   data: params,
+                  headers: eventArgs.headers,
                   success: onSuccess,
                   error: onError,
                   xhrFields:{
@@ -1313,7 +1320,7 @@ var __meta__ = { // jshint ignore:line
             this.performUpload(fileEntry);
         },
 
-        onRemove: function(e, data, shouldSendRemoveRequest) {
+        onRemove: function(e, eventArgs, shouldSendRemoveRequest) {
             var module = this;
             var upload = module.upload;
             var fileEntry = getFileEntry(e);
@@ -1325,11 +1332,10 @@ var __meta__ = { // jshint ignore:line
                 module.cleanupFrame(iframe);
             } else {
                 if (fileEntry.hasClass("k-file-success")) {
-                    removeUploadedFile(fileEntry, upload, data, shouldSendRemoveRequest);
+                    removeUploadedFile(fileEntry, upload, eventArgs, shouldSendRemoveRequest);
                 } else {
                     upload._removeFileEntry(fileEntry);
                 }
-                //removeUploadedFile(fileEntry, this.upload, data, shouldSendRemoveRequest);
             }
         },
 
@@ -1540,13 +1546,13 @@ var __meta__ = { // jshint ignore:line
             this.performUpload(fileEntry);
         },
 
-        onRemove: function(e, data, shouldSendRemoveRequest) {
+        onRemove: function(e, eventArgs, shouldSendRemoveRequest) {
             var module = this;
             var upload = module.upload;
             var fileEntry = getFileEntry(e);
 
             if (fileEntry.hasClass("k-file-success")) {
-                removeUploadedFile(fileEntry, upload, data, shouldSendRemoveRequest);
+                removeUploadedFile(fileEntry, upload, eventArgs, shouldSendRemoveRequest);
             } else {
                 module.removeFileEntry(fileEntry);
             }
@@ -1794,7 +1800,7 @@ var __meta__ = { // jshint ignore:line
         return !upload.multiple && $(".k-file", upload.wrapper).length > 1;
     }
 
-    function removeUploadedFile(fileEntry, upload, data, shouldSendRemoveRequest) {
+    function removeUploadedFile(fileEntry, upload, eventArgs, shouldSendRemoveRequest) {
         if (!upload._supportsRemove()) {
             if(shouldRemoveFileEntry(upload) || !shouldSendRemoveRequest) {
                 upload._removeFileEntry(fileEntry);
@@ -1812,7 +1818,7 @@ var __meta__ = { // jshint ignore:line
             return;
         }
 
-        upload._submitRemove(fileNames, data,
+        upload._submitRemove(fileNames, eventArgs,
             function onSuccess(data, textStatus, xhr) {
                 var prevented = upload.trigger(SUCCESS, {
                     operation: "remove",
