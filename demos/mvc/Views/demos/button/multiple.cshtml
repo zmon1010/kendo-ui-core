@@ -17,11 +17,11 @@
                 <h4>Initialization with kendo.init</h4>
                 <div id="buttonContainer">
                     <p>
-                        <button type="button" data-role="button" data-sprite-css-class="k-icon k-i-edit">Edit Button 1</button>
+                        <button type="button" data-role="button" data-icon="edit">Edit Button 1</button>
                         <button type="button" data-role="button" data-icon="close">Close Button 1</button>
                     </p>
                     <p>
-                        <button type="button" data-role="button" data-sprite-css-class="k-icon k-i-edit" data-enable="false">Disabled via data attribute</button>
+                        <button type="button" data-role="button" data-icon="edit" data-enable="false">Disabled via data attribute</button>
                         <button type="button" data-role="button" data-icon="close" disabled="disabled">Disabled via HTML attribute</button>
                     </p>
                 </div>
@@ -30,7 +30,7 @@
             <script>
                 $(document).ready(function() {
                     $(".editButton").kendoButton({
-                        spriteCssClass: "k-icon k-i-edit"
+                        icon: "edit"
                     });
 
                     $(".closeButton").kendoButton({
