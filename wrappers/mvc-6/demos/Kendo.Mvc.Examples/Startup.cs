@@ -48,7 +48,7 @@ namespace Kendo.Mvc.Examples
             // Add Kendo UI services to the services container
             services.AddKendo();
 
-            // Add Deni datavase services to the services container
+            // Add Demo database services to the services container
             services.AddKendoDemo();
         }
 
