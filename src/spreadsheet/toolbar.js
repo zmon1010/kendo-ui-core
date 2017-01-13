@@ -191,19 +191,23 @@
                 var spriteCssClass = "k-icon k-i-" + options.iconClass;
                 var type = options.type;
                 var typeDefaults = {
-                    splitButton: { spriteCssClass: spriteCssClass },
                     button: {
                         showText: "overflow"
                     },
                     colorPicker: {
-                        toolIcon: spriteCssClass
-                    }
+                        toolIcon: spriteCssClass,
+                        spriteCssClass: spriteCssClass
+                    },
+                    borders: { spriteCssClass: spriteCssClass },
+                    alignment:  { spriteCssClass: spriteCssClass },
+                    merge:  { spriteCssClass: spriteCssClass },
+                    freeze:  { spriteCssClass: spriteCssClass }
                 };
 
                 var tool = $.extend({
                     name: options.name || toolName,
                     text: MESSAGES[options.name || toolName],
-                    spriteCssClass: spriteCssClass,
+                    icon: options.iconClass,
                     attributes: { title: MESSAGES[options.name || toolName] }
                 }, typeDefaults[type], options);
 
