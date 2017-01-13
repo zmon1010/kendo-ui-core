@@ -280,7 +280,7 @@ gulp.task('pack-stock', () =>
         .pipe(wrap({ src: './templates/kendo.dataviz.stock.amd.js' }))
         .pipe(concat('kendo-stock-chart.js'))
         .pipeReplaces()
-        .pipe(gulp.dest('../src/dataviz/stock-chart'))
+        .pipe(gulp.dest('../src/dataviz/stock'))
 );
 
 gulp.task('default', ['pack-text-metrics', 'pack-color', 'pack-drawing', 'pack-pdf', 'pack-core', 'pack-base-theme', 'pack-chart', 'pack-sparkline', 'pack-stock']);

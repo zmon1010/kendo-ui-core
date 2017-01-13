@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./dataviz/stock-chart/kendo-stock-chart", "./dataviz/stock-chart/stock-chart" ], f);
+    define([ "./dataviz/stock/kendo-stock-chart", "./dataviz/stock/stock-chart" ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
