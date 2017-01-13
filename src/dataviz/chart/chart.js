@@ -880,7 +880,7 @@
             this.anchor = e.anchor;
             this.element.css(e.style);
             this.element.toggleClass(TOOLTIP_INVERSE, !!e.className);
-            this.element.toggleClass(SHARED_TOOLTIP_CLASS, e.shared);
+            this.element.toggleClass(SHARED_TOOLTIP_CLASS, !!e.shared);
 
             var content = e.shared ? this._sharedContent(e) : this._pointContent(e.point);
             this.element.html(content);

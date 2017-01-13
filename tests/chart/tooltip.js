@@ -151,6 +151,11 @@
             ok(element.hasClass("k-chart-tooltip"));
         });
 
+        test("does not set k-chart-shared-tooltip class", function(){
+            showTooltip();
+            equal(element.hasClass("k-chart-shared-tooltip"), false);
+        });
+
         test("renders div with display none attribute", function() {
             ok(element.css("display"), "none");
         });
