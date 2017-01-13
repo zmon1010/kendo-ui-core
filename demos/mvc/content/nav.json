@@ -8050,21 +8050,6 @@
         ]
       },
       {
-        "text": "Icons",
-        "url": "styling/icons",
-        "title": {
-          "kendo-ui": "jQuery icons styling example | Kendo UI Web demos"
-        },
-        "meta": {
-          "kendo-ui": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
         "text": "Checkboxes",
         "url": "styling/checkboxes",
         "title": {
