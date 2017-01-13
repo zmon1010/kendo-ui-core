@@ -9,14 +9,14 @@
     var proxy = $.proxy;
 
     // Helper functions =======================================================
-    function button(dir, symbol) {
+    function button(dir, iconClass) {
        return kendo.format(
-           '<button class="k-button k-zoom-{0}" title="zoom-{0}">{1}</button>',
-           dir, symbol);
+           '<button class="k-button k-zoom-{0}" title="zoom-{0}"><span class="k-icon {1}"></span></button>',
+           dir, iconClass);
     }
 
     var NS = ".kendoZoomControl";
-    var BUTTONS = button("in", "+") + button("out", "-");
+    var BUTTONS = button("in", "k-i-plus") + button("out", "k-i-minus");
 
     var PLUS = 187;
     var MINUS = 189;
@@ -29,7 +29,7 @@
             Widget.fn.init.call(this, element, options);
             this._initOptions(options);
 
-            this.element.addClass("k-widget k-zoom-control k-button-wrap k-buttons-horizontal")
+            this.element.addClass("k-widget k-zoom-control k-button-wrap k-buttons-horizontal k-button-group k-group-horizontal")
                         .append(BUTTONS)
                         .on("click" + NS, ".k-button", proxy(this, "_click"));
 
