@@ -15,15 +15,15 @@
         items.Add().Type(CommandType.Separator);
         items.Add().Type(CommandType.ButtonGroup).Buttons(buttons =>
         {
-            buttons.Add().Text("Left").Togglable(true).Group("text-align").SpriteCssClass("k-tool-icon k-justifyLeft");
-            buttons.Add().Text("Center").Togglable(true).Group("text-align").SpriteCssClass("k-tool-icon k-justifyCenter");
-            buttons.Add().Text("Right").Togglable(true).Group("text-align").SpriteCssClass("k-tool-icon k-justifyRight");
+            buttons.Add().Text("Left").Togglable(true).Group("text-align").SpriteCssClass("k-i-align-left");
+            buttons.Add().Text("Center").Togglable(true).Group("text-align").SpriteCssClass("k-i-align-center");
+            buttons.Add().Text("Right").Togglable(true).Group("text-align").SpriteCssClass("k-i-align-right");
         });
         items.Add().Type(CommandType.ButtonGroup).Buttons(buttons =>
         {
-            buttons.Add().Text("Bold").Togglable(true).SpriteCssClass("k-tool-icon k-bold").ShowText(ShowIn.Overflow);
-            buttons.Add().Text("Italic").Togglable(true).SpriteCssClass("k-tool-icon k-italic").ShowText(ShowIn.Overflow);
-            buttons.Add().Text("Underline").Togglable(true).SpriteCssClass("k-tool-icon k-underline").ShowText(ShowIn.Overflow);
+            buttons.Add().Text("Bold").Togglable(true).SpriteCssClass("k-i-bold").ShowText(ShowIn.Overflow);
+            buttons.Add().Text("Italic").Togglable(true).SpriteCssClass("k-i-italic").ShowText(ShowIn.Overflow);
+            buttons.Add().Text("Underline").Togglable(true).SpriteCssClass("k-i-underline").ShowText(ShowIn.Overflow);
         });
         items.Add().Type(CommandType.Button).Text("Action").Overflow(ShowInOverflowPopup.Always);
         items.Add().Type(CommandType.Button).Text("Another Action").Overflow(ShowInOverflowPopup.Always);
