@@ -468,12 +468,13 @@ var ColorTool = Tool.extend({
                 if (color) {
                     Tool.exec(editor, toolName, color);
                 }
-                ui.value(null);
 
                 editor.focus();
             },
             open: function (e) {
-                e.sender._popup.element.on(MOUSEDOWN_NS, preventDefault);
+                var picker = e.sender;
+                picker.value(null);
+                picker._popup.element.on(MOUSEDOWN_NS, preventDefault);
             },
             close: function(e) {
                 e.sender._popup.element.off(MOUSEDOWN_NS);
