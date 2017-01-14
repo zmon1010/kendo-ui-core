@@ -642,6 +642,7 @@
         testOne("=1/(2*4)", "1/(2*4)");
         testOne("=(1*2)*4", "1*2*4");
         testOne("=1*(2*4)", "1*(2*4)"); // the parens are not really necessary here, but it's not a bug to include them either
+        testOne("=-(20+10)", "-(20+10)");
     });
 
     test("unary operator precedence", function(){

@@ -383,6 +383,7 @@
                 var op = node.op;
                 var needParens = (OPERATORS[op] < prec
                                   || (!prec && op == ",")
+                                  || (parent.type == "prefix" && prec == OPERATORS[op] && parent.op == "-")
                                   || (parent.type == "binary" && prec == OPERATORS[op] && node === parent.right));
                 return parenthesize(f(), needParens);
             }
