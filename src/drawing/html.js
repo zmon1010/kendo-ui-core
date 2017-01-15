@@ -13,6 +13,7 @@
     };
 
     drawing.drawDOM.drawText = drawDOM.drawText;
+    drawing.drawDOM.getFontFaces = drawDOM.getFontFaces;
 
 })(window.kendo.jQuery);
 
