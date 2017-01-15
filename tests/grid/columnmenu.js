@@ -40,14 +40,13 @@
         ok(th.eq(1).data("kendoColumnMenu") instanceof kendo.ui.ColumnMenu);
     });
 
-    test("column menu button renders text in the icon element", function () {
+    test("column menu button renders text as title", function () {
         var grid = setup({
             columns: ["foo", "bar"]
         });
 
         var th = grid.thead.find("th").first();
-        var span = th.find(".k-icon");
-        equal(span.eq(0).text(), th.data("kendoColumnMenu").options.messages.settings);
+        equal(th.find("a").attr("title"), th.data("kendoColumnMenu").options.messages.settings);
     });
 
     test("column menu initialized in Grid header when auto columns", function() {
