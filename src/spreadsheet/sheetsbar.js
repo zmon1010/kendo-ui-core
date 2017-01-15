@@ -395,7 +395,7 @@
                 var classNames = SheetsBar.classNames;
                 return element("a", {
                     className: classNames.sheetsBarAdd + EMPTYCHAR + classNames.sheetsBarKButton
-                }, [element("span", {className: classNames.sheetsBarKSprite + EMPTYCHAR + classNames.sheetsBarKIcon + EMPTYCHAR + classNames.sheetsBarKFontIcon + EMPTYCHAR + classNames.sheetsBarKIconPlus}, [])]);
+                }, [element("span", {className: classNames.sheetsBarKIcon + EMPTYCHAR + classNames.sheetsBarKFontIcon + EMPTYCHAR + classNames.sheetsBarKIconPlus}, [])]);
             },
 
             destroy: function() {
