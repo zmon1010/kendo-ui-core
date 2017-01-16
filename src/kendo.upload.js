@@ -174,7 +174,7 @@ var __meta__ = { // jshint ignore:line
             this.element.prop("disabled", enable);
         },
 
-        focus: function() {          
+        focus: function() {
             this.element.focus();
         },
 
@@ -482,7 +482,7 @@ var __meta__ = { // jshint ignore:line
                 template += "<li class='k-file'><span class='k-progress'></span>" +
                 "<span class='k-file-extension-wrapper'>" +
                     "<span class='k-file-extension'>" + file.extension.substring(1) + "</span>" +
-                    "<span class='k-file-state'></span>" +    
+                    "<span class='k-file-state'></span>" +
                 "</span>" +
                 "<span class='k-file-name-size-wrapper'><span class='k-file-name' title='" + file.name + "'>" + file.name + "</span>" +
                 "<span class='k-file-size'>" + fileSize + "</span></span>";
@@ -742,7 +742,7 @@ var __meta__ = { // jshint ignore:line
         _onClearSelected: function() {
             var that = this;
             var wrapper = that.wrapper;
-            
+
             var clearEventArgs = { };
             if(!wrapper.hasClass("k-state-disabled") && !that.trigger(CLEAR, clearEventArgs)) {
                 that.clearAllFiles();
@@ -885,10 +885,8 @@ var __meta__ = { // jshint ignore:line
 
             if(isUploading) {
                 headerUploadStatus = $(headerUploadStatus).append(localization.headerStatusUploading);
-                headerUploadStatus.find(".k-icon").addClass(headerStatusIcon.loading).text(localization.statusUploading);
             } else {
                 headerUploadStatus = $(headerUploadStatus).append(localization.headerStatusUploaded);
-                headerUploadStatus.find(".k-icon").addClass(headerStatusIcon.warning).text(localization.statusWarning);
             }
 
             if (dropZone.length > 0) {
@@ -908,11 +906,10 @@ var __meta__ = { // jshint ignore:line
 
             if (currentlyUploading.length === 0 || currentlyInvalid.length > 0) {
                 failedUploads = $('.k-file.k-file-error, .k-file.k-file-invalid', that.wrapper);
-                
+
                 headerUploadStatus = $('.k-upload-status-total', that.wrapper);
                 headerUploadStatusIcon = $('.k-icon', headerUploadStatus).removeClass().addClass("k-icon")
-                                              .addClass(failedUploads.length !== 0 ? headerStatusIcon.warning : headerStatusIcon.success)
-                                              .text((failedUploads.length !== 0) ? localization.statusWarning : localization.statusUploaded);
+                                              .addClass(failedUploads.length !== 0 ? headerStatusIcon.warning : headerStatusIcon.success);
 
                 headerUploadStatus.html(headerUploadStatusIcon)
                                   .append(that.localization.headerStatusUploaded);
