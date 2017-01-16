@@ -874,7 +874,6 @@
       "text": "Dialog",
       "name": "dialog",
       "api": "web/dialog",
-      "new":  true,
       "documentation": {
         "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dialog/overview"
       },
@@ -2207,7 +2206,6 @@
     "text": "MediaPlayer",
     "name": "mediaplayer",
     "api": "web/mediaplayer",
-    "new": true,
     "documentation": {
       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mediaplayer/overview"
     },
