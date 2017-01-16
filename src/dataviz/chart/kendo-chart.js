@@ -11869,8 +11869,8 @@ var Chart = Class.extend({
 
         this.trigger(RENDER);
 
-        if (this.domEvents && this.domEvents.cancel) {
-            this.domEvents.cancel();
+        if (!this._navState) {
+            this._cancelDomEvents();
         }
     },
 
@@ -12132,6 +12132,12 @@ var Chart = Class.extend({
         });
     },
 
+    _cancelDomEvents: function() {
+        if (this.domEvents && this.domEvents.cancel) {
+            this.domEvents.cancel();
+        }
+    },
+
     _gesturestart: function(e) {
         if (this._mousewheelZoom && !this._stopDragEvent(e)) {
             this._gestureDistance = e.distance;
@@ -12383,7 +12389,7 @@ var Chart = Class.extend({
         });
 
         if (prevented) {
-            //this._userEvents.cancel();
+            this._cancelDomEvents();
         } else {
             this._suppressHover = true;
             this._unsetActivePoint();
