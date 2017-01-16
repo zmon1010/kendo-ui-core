@@ -900,7 +900,6 @@ var __meta__ = { // jshint ignore:line
 
         _updateHeaderUploadStatus: function() {
             var that = this;
-            var localization = that.localization;
             var headerUploadStatus = $('.k-upload-status-total', this.wrapper);
             var currentlyUploading = $('.k-file', that.wrapper).not('.k-file-success, .k-file-error, .k-file-invalid');
             var currentlyInvalid = $('.k-file-invalid', that.wrapper);
