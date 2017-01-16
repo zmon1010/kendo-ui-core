@@ -56,8 +56,7 @@
             },
             {
                 "text": "Client filtering",
-                "url": "autocomplete/clientfiltering",
-				"new": true
+                "url": "autocomplete/clientfiltering"
             },
             {
                 "text": "Customizing templates",
@@ -71,8 +70,7 @@
             },
             {
                 "text": "Custom data source",
-                "url": "autocomplete/custom-datasource",
-				"new": true
+                "url": "autocomplete/custom-datasource"
             },
             {
                 "text": "Events",
@@ -443,8 +441,7 @@
             },
             {
                 "text": "Client filtering",
-                "url": "combobox/clientfiltering",
-				"new": true
+                "url": "combobox/clientfiltering"
             },
             {
                 "text": "Customizing templates",
@@ -468,8 +465,7 @@
             },
             {
                 "text": "Custom data source",
-                "url": "combobox/custom-datasource",
-				"new": true
+                "url": "combobox/custom-datasource"
             },
             {
                 "text": "Events",
@@ -805,8 +801,7 @@
             },
             {
                 "text": "Client filtering",
-                "url": "dropdownlist/clientfiltering",
-				"new": true
+                "url": "dropdownlist/clientfiltering"
             },
             {
                 "text": "Customizing templates",
@@ -830,8 +825,7 @@
             },
             {
                 "text": "Custom data source",
-                "url": "dropdownlist/custom-datasource",
-				"new": true
+                "url": "dropdownlist/custom-datasource"
             },
             {
                 "text": "Events",
@@ -1841,6 +1835,7 @@
         "text": "Spreadsheet",
         "name": "spreadsheet",
         "api": "web/spreadsheet",
+        "new":  "true",
         "documentation": {
             "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/spreadsheet/overview"
         },
@@ -2469,8 +2464,7 @@
             },
             {
                 "text": "Client filtering",
-                "url": "multiselect/clientfiltering",
-				"new": true
+                "url": "multiselect/clientfiltering"
             },
             {
                 "text": "Customizing templates",
@@ -3085,8 +3079,7 @@
       {
         "text": "Server binding",
         "url": "gantt/serverbinding",
-        "group": "Binding",
-		"new": true
+        "group": "Binding"
       }
     ],
         "category": "Scheduling"
@@ -3216,7 +3209,6 @@
             {
                 "text": "Date Grouping",
                 "url": "scheduler/date-grouping",
-                "new":  true,
                 "title": {
                     "aspnet-mvc": "Date grouping in $FRAMEWORK Scheduler control"
                 },
