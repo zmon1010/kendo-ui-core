@@ -5221,7 +5221,6 @@
       {
         "text": "Date Grouping",
         "url": "scheduler/date-grouping",
-        "new":  "true",
         "title": {
           "kendo-ui": "Date grouping in Kendo UI Scheduler",
           "aspnet-mvc": "Date grouping in ASP.NET MVC Scheduler control"
