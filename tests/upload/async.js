@@ -60,12 +60,12 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         equal($(".k-upload-status-total .k-i-loading", uploadInstance.wrapper).length, 1);
     });
 
-    test("k-upload-status-total loading icon span contains correct text when upload starts", function(){
-        var uploadInstance = createUpload();
-        simulateFileSelect();
+    // test("k-upload-status-total loading icon span contains correct text when upload starts", function(){
+    //     var uploadInstance = createUpload();
+    //     simulateFileSelect();
 
-        equal($(".k-upload-status-total .k-i-loading", uploadInstance.wrapper).text(), "uploading");
-    });
+    //     equal($(".k-upload-status-total .k-i-loading", uploadInstance.wrapper).text(), "uploading");
+    // });
 
     test("k-upload-status-total contains correct text when upload starts", function(){
         var uploadInstance = createUpload();
@@ -120,19 +120,19 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
         equal($(".k-upload-status-total", uploadInstance.wrapper).clone().children().remove().end().text(), "Done");
     });
 
-    test("k-upload-status-total warning icon span contains correct text when upload has finished with errors", function(){
-        var uploadInstance = createUpload();
-        simulateUploadWithResponse(errorResponse);
+    // test("k-upload-status-total warning icon span contains correct text when upload has finished with errors", function(){
+    //     var uploadInstance = createUpload();
+    //     simulateUploadWithResponse(errorResponse);
 
-        equal($(".k-upload-status-total .k-i-warning", uploadInstance.wrapper).text(), "warning");
-    });
+    //     equal($(".k-upload-status-total .k-i-warning", uploadInstance.wrapper).text(), "warning");
+    // });
 
-    test("k-upload-status-total success icon span contains correct text when upload has finished successfully", function(){
-        var uploadInstance = createUpload();
-        simulateUpload();
+    // test("k-upload-status-total success icon span contains correct text when upload has finished successfully", function(){
+    //     var uploadInstance = createUpload();
+    //     simulateUpload();
 
-        equal($(".k-upload-status-total .k-i-check", uploadInstance.wrapper).text(), "uploaded");
-    });
+    //     equal($(".k-upload-status-total .k-i-check", uploadInstance.wrapper).text(), "uploaded");
+    // });
 
     test("Header status icon is displayed when selecting invalid file", function() {
         var uploadInstance = createUpload({
@@ -190,7 +190,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
     test("uploading status text is rendered when upload starts", function() {
         var uploadInstance = createUpload();
         simulateFileSelect();
-        
+
         equal($(".k-upload-files .k-file span.k-file-state", uploadInstance.wrapper).text(), "uploading");
     });
 
@@ -204,7 +204,7 @@ function uploadAsync(createUpload, simulateUpload, simulateUploadWithResponse, s
     test("uploaded status text is rendered upon success", function() {
         var uploadInstance = createUpload();
         simulateUpload();
-        
+
         equal($(".k-upload-files .k-file span.k-file-state", uploadInstance.wrapper).text(), "uploaded");
     });
 
