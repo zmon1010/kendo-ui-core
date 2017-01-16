@@ -1142,7 +1142,8 @@ spreadsheetFilters.customOperator = function(f) {
         // the operator attribute is missing completely.
         doesnotstartwith: "notEqual",
         doesnotendwith: "notEqual",
-        doesnotcontain: "notEqual"
+        doesnotcontain: "notEqual",
+        doesnotmatch: "notEqual"
     }[f.operator.toLowerCase()];
 };
 

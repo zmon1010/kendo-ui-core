@@ -516,60 +516,29 @@
     }
 
     function getCustomFilter(op, value) {
-        function unesc(str) {
-            return typeof str == "string" ? str.replace(/~([?*])/g, "$1") : str;
-        }
-
-        var m, ourOp = {
+        var ourOp = {
             equal               : "eq",
+            notEqual            : "ne",
             greaterThan         : "gt",
             greaterThanOrEqual  : "gte",
             lessThan            : "lt",
             lessThanOrEqual     : "lte"
         }[op];
 
-        if (ourOp) {
-            return { operator: ourOp, value: getFilterVal(value) };
+        value = getFilterVal(value);
+
+        if (ourOp && typeof value == "number") {
+            return { operator: ourOp, value: value };
         }
 
-        if (op == "notEqual" || !op) {
-            // XXX: Excel filters allow some generic text matching
-            // when operator is `notEqual` (meaning “doesn't match”)
-            // or missing (meaning “does match”), using `*` and `?`
-            // wildcards We handle these cases (and their negation):
-            //
-            //   foo* - startswith "foo"
-            //   *foo - endswith "foo"
-            //   *foo* - contains "foo"
-            //
-            // but we don't handle arbitrary placement of wildcards
-            // (e.g. foo*bar) because we don't have such filter.
-            //
-            // Literal `?` and `*` characters are prefixed with a
-            // tilde, so we unescape the value (since to our filters,
-            // these characters are not special).
-
-            if ((m = /^\*(.*)\*$/.exec(value)) && !/~\*$/.test(value)) {
-                return {
-                    operator: op ? "doesnotcontain" : "contains",
-                    value: unesc(m[1])
-                };
-            }
-            if ((m = /^\*(.*)$/.exec(value))) {
-                return {
-                    operator: op ? "doesnotendwith" : "endswith",
-                    value: unesc(m[1])
-                };
-            }
-            if ((m = /^(.*)\*$/.exec(value)) && !/~\*$/.test(value)) {
-                return {
-                    operator: op ? "doesnotstartwith" : "startswith",
-                    value: unesc(m[1])
-                };
-            }
+        if ((op == "notEqual" || !op) && typeof value == "string") {
+            // Excel text operators support * and ? wildcards.  Since
+            // our startswith/endswith/contains filters do not, we
+            // can't really use them here, so we'll apply the more
+            // generic "matches" and "doesnotmatch" filters.
             return {
-                operator: op ? "ne" : "eq",
-                value: unesc(getFilterVal(value))
+                operator: op ? "doesnotmatch" : "matches",
+                value: value
             };
         }
     }
