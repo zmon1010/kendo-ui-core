@@ -885,8 +885,10 @@ var __meta__ = { // jshint ignore:line
 
             if(isUploading) {
                 headerUploadStatus = $(headerUploadStatus).append(localization.headerStatusUploading);
+                headerUploadStatus.find(".k-icon").addClass(headerStatusIcon.loading);
             } else {
                 headerUploadStatus = $(headerUploadStatus).append(localization.headerStatusUploaded);
+                headerUploadStatus.find(".k-icon").addClass(headerStatusIcon.warning);
             }
 
             if (dropZone.length > 0) {
