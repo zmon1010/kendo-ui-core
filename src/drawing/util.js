@@ -18,7 +18,7 @@
         promiseAll: promiseAll
     });
 
-})(jQuery);
+})(window.kendo.jQuery);
 
 return window.kendo;
 
