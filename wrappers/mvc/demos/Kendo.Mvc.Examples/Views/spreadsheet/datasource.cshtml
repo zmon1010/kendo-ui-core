@@ -16,6 +16,8 @@
     @(Html.Kendo().Spreadsheet()
         .Name("spreadsheet")
         .HtmlAttributes(new { style = "width:100%" })
+        .Toolbar(false)
+        .Sheetsbar(false)
         .Excel(excel => excel
             .ProxyURL(Url.Action("Index_Save", "Spreadsheet"))
         )
