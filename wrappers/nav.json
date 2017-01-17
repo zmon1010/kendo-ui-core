@@ -1606,8 +1606,7 @@
                 "text": "Server hierarchy",
                 "url": "grid/serverhierarchy",
                 "packages": [
-                    "!mvc-core",
-                    "!mvc"
+                    "!mvc-core"
                 ]
             },
             {
