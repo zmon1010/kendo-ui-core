@@ -703,7 +703,13 @@ span.k-tooltip
     }
 
     .k-selected-color {
-        height: @input-height;
+        @selected-icon-height: 2.57142857em;
+        height: @selected-icon-height;
+        width: @selected-icon-height;
+        .k-i-line {
+            line-height: @selected-icon-height;
+            font-size: @selected-icon-height;
+        }
     }
 }
 
