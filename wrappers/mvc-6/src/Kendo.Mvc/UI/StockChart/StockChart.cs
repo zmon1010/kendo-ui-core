@@ -18,15 +18,6 @@ namespace Kendo.Mvc.UI
             Navigator = new StockChartNavigatorSettings<T>(this, viewContext);
         }
 
-        protected override void WriteHtml(TextWriter writer)
-        {
-            var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
-
-            tag.WriteTo(writer, HtmlEncoder);
-
-            base.WriteHtml(writer);
-        }
-
         public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
