@@ -1023,7 +1023,7 @@ namespace :build do
 
             desc 'Copy ASP.NET MVC DLLs from distribution archive'
             task :get_binaries do
-                sync "#{ARCHIVE_ROOT}/#{destination}/binaries/*", "dist/binaries/"
+                sh "cp -r #{ARCHIVE_ROOT}/#{destination}/binaries", "dist/binaries"
             end
         end
     end
