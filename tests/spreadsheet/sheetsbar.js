@@ -259,7 +259,7 @@
         bar._editor.trigger(event);
     });
 
-    test("editing sheet title and pressing escape key cancel changes", 2, function() {
+    test("editing sheet title and pressing escape key cancel changes", 1, function() {
         var name = "Sheet1";
         var name2 = "Sheet2";
         var newTitle = "Foo";
@@ -274,7 +274,7 @@
         var bar = element.data("kendoSheetsBar");
 
         bar.bind("rename", function(e) {
-            ok(!e.name);
+            ok(false);
         });
 
         bar.element.find("li:first").trigger("dblclick");

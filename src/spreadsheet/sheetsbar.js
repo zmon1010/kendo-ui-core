@@ -383,7 +383,7 @@
             },
 
             _onSheetRename: function(newSheetName) {
-                if (this._sheets[this._selectedIndex].name() === newSheetName) {
+                if (this._sheets[this._selectedIndex].name() === newSheetName || newSheetName === null) {
                     return;
                 }
 
