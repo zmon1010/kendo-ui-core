@@ -231,6 +231,34 @@
         bar._editor.trigger(event);
     });
 
+    test("editing sheet title with same name does not trigger event", 0, function() {
+        var name = "Sheet1";
+        var name2 = "Sheet2";
+        var newTitle = name;
+        var sheets = [
+            {name: function() {return name}},
+            {name: function() {return name2}}
+        ];
+
+        createSheetsBar();
+        sheetsBar.renderSheets(sheets, 0);
+
+        var bar = element.data("kendoSheetsBar");
+
+        bar.bind("rename", function(e) {
+            notEqual(e.name, bar._sheets[0].name());
+        });
+
+        bar.element.find("li:first").trigger("dblclick");
+        bar._editor.val(newTitle);
+
+        var event = $.Event("keydown");
+        event.target = bar._editor;
+        event.which = 13;
+
+        bar._editor.trigger(event);
+    });
+
     test("editing sheet title and pressing escape key cancel changes", 2, function() {
         var name = "Sheet1";
         var name2 = "Sheet2";

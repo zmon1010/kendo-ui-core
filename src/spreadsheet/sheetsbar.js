@@ -383,6 +383,10 @@
             },
 
             _onSheetRename: function(newSheetName) {
+                if (this._sheets[this._selectedIndex].name() === newSheetName) {
+                    return;
+                }
+
                 this.trigger("rename", {name: newSheetName, sheetIndex: this._selectedIndex });
             },
 
