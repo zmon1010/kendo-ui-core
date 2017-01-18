@@ -356,6 +356,18 @@
         equal(filterCell.input.val(), "");
     });
 
+    test("clear icon triggers the change event", 1, function() {
+        dataSource.filter({field: "foo", value: "someVal"})
+        filterCell = setup(dom, {
+            dataSource: dataSource,
+            field: "foo" ,
+            change: function() {
+                ok(true);
+            }
+        });
+        filterCell.element.find(".k-icon.k-clear-value").click();
+    });
+
     test("clear icon is hidden when isnull filter on  numeric value is removed", function() {
         dataSource.filter({field: "bar", operator: "isnull", value: null })
 

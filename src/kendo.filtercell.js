@@ -357,7 +357,7 @@ var __meta__ = { // jshint ignore:line
                 prevented = that.trigger(CHANGE, { filter: expression, field: that.options.field });
             }
 
-            if (that._clearInProgress) {
+            if (that._clearInProgress || currentFilter.value === null) {
                 prevented = that.trigger(CHANGE, { filter: null, field: that.options.field });
             }
 
