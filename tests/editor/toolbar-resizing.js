@@ -369,14 +369,14 @@ test('down arrow focuses last tool from next group in overflowPopup', function()
 
     getTool("strikethrough").focus().press(keys.DOWN);
 
-    ok(isToolActive("table"));
+    ok(isToolActive("table-insert"));
 });
 
 test('up arrow focuses first tool from previous group in overflowPopup', function() {
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("table").focus().press(keys.UP);
+    getTool("table-insert").focus().press(keys.UP);
 
     ok(isToolActive("strikethrough"));
 });
@@ -385,7 +385,7 @@ test('down arrow changes the activeElement when createTable tool has focus', fun
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("table").focus().press(keys.DOWN);
+    getTool("table-insert").focus().press(keys.DOWN);
 
     ok(isToolActive("align-left"));
 });
@@ -394,7 +394,7 @@ test('up arrow changes the activeElement when createTable tool has focus', funct
     editor = textarea.kendoEditor(options).data("kendoEditor");
     editor.toolbar.overflowPopup.open();
 
-    getTool("table").focus().press(keys.UP);
+    getTool("table-insert").focus().press(keys.UP);
 
     ok(isToolActive("strikethrough"));
 });

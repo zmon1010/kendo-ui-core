@@ -95,7 +95,7 @@
                 viewHtml: "html",
                 foreColor: "foreground-color",
                 backColor: "paint",
-                createTable: "table",
+                createTable: "table-insert",
                 addColumnLeft: "table-column-insert-left",
                 addColumnRight: "table-column-insert-right",
                 addRowAbove: "table-row-insert-above",

@@ -44,7 +44,7 @@
         "k-i-html": "viewHtml",
         "k-i-foreground-color": "foreColor",
         "k-i-paint": "backColor",
-        "k-i-table": "createTable",
+        "k-i-table-insert": "createTable",
         "k-i-table-column-insert-left": "addColumnLeft",
         "k-i-table-column-insert-right": "addColumnRight",
         "k-i-table-row-insert-above": "addRowAbove",
