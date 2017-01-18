@@ -8,7 +8,18 @@
         }
 
         var $ = kendo.jQuery;
-        var BORDER_TYPES = [ "allBorders", "insideBorders", "insideHorizontalBorders", "insideVerticalBorders", "outsideBorders", "leftBorder", "topBorder", "rightBorder", "bottomBorder", "noBorders" ];
+        var BORDER_TYPES = [
+            "allBorders",
+            "insideBorders",
+            "insideHorizontalBorders",
+            "insideVerticalBorders",
+            "outsideBorders",
+            "leftBorder",
+            "topBorder",
+            "rightBorder",
+            "bottomBorder",
+            "noBorders"
+        ];
 
         var BORDER_PALETTE_MESSAGES = kendo.spreadsheet.messages.borderPalette = {
             allBorders: "All borders",
