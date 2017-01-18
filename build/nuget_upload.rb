@@ -20,5 +20,5 @@ end
 def upload_nuget(nuget)
     path = Pathname.new File.join(archive_path, nuget)
     pwd = Pathname.new Dir.pwd
-    sh "build/nuget/nuget.exe push '#{path.relative_path_from pwd}' -ApiKey #{API_KEY} -NonInteractive"
+    sh "mono build/nuget/nuget.exe push '#{path.relative_path_from pwd}' -ApiKey #{API_KEY} -NonInteractive"
 end
