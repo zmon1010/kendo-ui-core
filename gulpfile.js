@@ -252,7 +252,7 @@ gulp.task('mdspell', shell.task(
 ));
 
 [ 'pro', 'core' ].forEach((flavor) => {
-    gulp.task('npm-' + flavor, [  ] , function() {
+    gulp.task('npm-' + flavor, [ 'cjs', 'styles' ] , function() {
         const dest = 'dist/npm-' + flavor;
 
         const js = gulp.src('dist/cjs/**/*')
