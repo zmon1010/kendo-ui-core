@@ -19,7 +19,7 @@ const cdnRoot = () =>
 const tasks = (gulp) => {
     gulp.task('mvc-core-demos:assets',
         // Inception!
-        shell.task(['rake mvc:assets'], { cwd: '..' })
+        shell.task(['bundle exec rake mvc:assets'], { cwd: '..' })
     );
 
     gulp.task('mvc-core-demos:build', ['mvc-core-demos:assets'],
