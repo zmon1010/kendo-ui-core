@@ -243,10 +243,20 @@
         var relsFile = file.replace(/worksheets\//, "worksheets/_rels/");
         var relationships = readRelationships(zip, relsFile);
         var formula1, formula2;
+
+        var filterRef;
+        var filterColumn;
+        var customFilterLogic;
+        var customFilterCriteria;
+        var valueFilterBlanks;
+        var valueFilterValues;
+        var filters = [];
+
         ERROR_LOG = sheet._workbook.excelImportErrors;
 
         parse(zip, xl(file), {
             enter: function(tag, attrs) {
+                var tmp;
                 if (this.is(SEL_CELL)) {
                     value = null;
                     formula = null;
@@ -346,9 +356,58 @@
                         sheet.range(attrs.ref).link(target);
                     }
                 }
+                else if (this.is(["autoFilter"])) {
+                    filterRef = attrs.ref;
+                }
+                else if (filterRef) {
+                    if (this.is(["filterColumn"])) {
+                        filterColumn = parseInt(attrs.colId, 10);
+                    }
+                    else if (this.is(["customFilters"])) {
+                        customFilterLogic = bool(attrs.and) ? "and" : "or";
+                        customFilterCriteria = [];
+                    }
+                    else if (this.is(["customFilter"])) {
+                        tmp = getCustomFilter(attrs.operator, attrs.val);
+                        if (tmp) {
+                            customFilterCriteria.push({
+                                operator: tmp.operator,
+                                value: tmp.value
+                            });
+                        }
+                    }
+                    else if (this.is(["dynamicFilter"])) {
+                        filters.push({
+                            column: filterColumn,
+                            filter: new kendo.spreadsheet.DynamicFilter({
+                                type: dynamicFilterType(attrs.type)
+                            })
+                        });
+                    }
+                    else if (this.is(["top10"])) {
+                        filters.push({
+                            column: filterColumn,
+                            filter: new kendo.spreadsheet.TopFilter({
+                                value: getFilterVal(attrs.val),
+                                type: (function(percent, top){
+                                    return percent && top ? "topPercent"
+                                        :  top ? "topNumber"
+                                        :  percent ? "bottomPercent"
+                                        :  "bottomNumber";
+                                })(bool(attrs.percent), bool(attrs.top))
+                            })
+                        });
+                    }
+                    else if (this.is(["filters"])) {
+                        valueFilterBlanks = bool(attrs.blank);
+                        valueFilterValues = [];
+                    }
+                    else if (this.is(["filter"])) {
+                        valueFilterValues.push(getFilterVal(attrs.val));
+                    }
+                }
             },
-            leave: function(tag) {
-                var attrs;
+            leave: function(tag, attrs) {
                 if (this.is(SEL_CELL)) {
                     if (formula != null) {
                         var failed = withErrorLog(sheet, formulaRange || ref, function(){
@@ -378,7 +437,7 @@
                             }
                         }
                     }
-                } else if ((attrs = this.is(SEL_VALIDATION))) {
+                } else if (this.is(SEL_VALIDATION)) {
                     (function(){
                         var refs = kendo.spreadsheet.calc.parseSqref(attrs.sqref);
                         var type = attrs.type.toLowerCase();
@@ -415,6 +474,27 @@
                     sheet._columns._refresh();
                 } else if (tag == "sheetData") {
                     sheet._rows._refresh();
+                } else if (tag == "autoFilter") {
+                    sheet.range(filterRef).filter(filters);
+                    filterRef = null;
+                } else if (filterRef) {
+                    if (tag == "customFilters") {
+                        filters.push({
+                            column: filterColumn,
+                            filter: new kendo.spreadsheet.CustomFilter({
+                                logic: customFilterLogic,
+                                criteria: customFilterCriteria
+                            })
+                        });
+                    } else if (tag == "filters") {
+                        filters.push({
+                            column: filterColumn,
+                            filter: new kendo.spreadsheet.ValueFilter({
+                                values: valueFilterValues,
+                                blanks: valueFilterBlanks
+                            })
+                        });
+                    }
                 }
             },
             text: function(text) {
@@ -433,6 +513,63 @@
                 }
             }
         });
+    }
+
+    function getCustomFilter(op, value) {
+        var ourOp = {
+            equal               : "eq",
+            notEqual            : "ne",
+            greaterThan         : "gt",
+            greaterThanOrEqual  : "gte",
+            lessThan            : "lt",
+            lessThanOrEqual     : "lte"
+        }[op];
+
+        value = getFilterVal(value);
+
+        if (ourOp && typeof value == "number") {
+            return { operator: ourOp, value: value };
+        }
+
+        if ((op == "notEqual" || !op) && typeof value == "string") {
+            // Excel text operators support * and ? wildcards.  Since
+            // our startswith/endswith/contains filters do not, we
+            // can't really use them here, so we'll apply the more
+            // generic "matches" and "doesnotmatch" filters.
+            return {
+                operator: op ? "doesnotmatch" : "matches",
+                value: value
+            };
+        }
+    }
+
+    function dynamicFilterType(type) {
+        return {
+            Q1  : "quarter1",
+            Q2  : "quarter2",
+            Q3  : "quarter3",
+            Q4  : "quarter4",
+            M1  : "january",
+            M2  : "february",
+            M3  : "march",
+            M4  : "april",
+            M5  : "may",
+            M6  : "june",
+            M7  : "july",
+            M8  : "august",
+            M9  : "september",
+            M10 : "october",
+            M11 : "november",
+            M12 : "december"
+        }[type.toUpperCase()] || type;
+    }
+
+    function getFilterVal(val) {
+        var tmp = parseFloat(val);
+        if (!isNaN(tmp) && tmp == val) {
+            return tmp;
+        }
+        return val;
     }
 
     function withErrorLog(sheet, ref, func, context) {

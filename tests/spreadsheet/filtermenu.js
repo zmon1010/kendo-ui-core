@@ -617,13 +617,13 @@
         ok(!viewModel.isNumber(), 3);
         ok(!viewModel.isDate(), 4);
 
-        dropdown.select(5);//date_eq
+        dropdown.select(7);//date_eq
         dropdown.trigger("change");
         ok(!viewModel.isString(), 5);
         ok(!viewModel.isNumber(), 6);
         ok(viewModel.isDate(), 7);
 
-        dropdown.select(9);//number_eq
+        dropdown.select(11);//number_eq
         dropdown.trigger("change");
         ok(!viewModel.isString(), 8);
         ok(viewModel.isNumber(), 9);

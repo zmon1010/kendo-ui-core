@@ -87,7 +87,9 @@
                     contains: "Text contains",
                     doesnotcontain: "Text does not contain",
                     startswith: "Text starts with",
-                    endswith: "Text ends with"
+                    endswith: "Text ends with",
+                    matches: "Text matches",
+                    doesnotmatch: "Text does not match"
                 },
                 date: {
                     eq:  "Date is",
@@ -534,7 +536,9 @@
                         contains: "Text contains",
                         doesnotcontain: "Text does not contain",
                         startswith: "Text starts with",
-                        endswith: "Text ends with"
+                        endswith: "Text ends with",
+                        matches: "Text matches",
+                        doesnotmatch: "Text does not match"
                     },
                     date: {
                         eq:  "Date is",

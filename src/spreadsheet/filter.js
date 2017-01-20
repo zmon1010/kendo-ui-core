@@ -44,7 +44,7 @@
 
         _blanks: false,
 
-        init: function(options) {
+        init: function ValueFilter(options) {
             if (options.values !== undefined) {
                 this._values = options.values;
             }
@@ -93,6 +93,7 @@
         toJSON: function() {
             return {
                 filter: "value",
+                blanks: this._blanks,
                 values: this._values.slice(0)
             };
         }
@@ -100,7 +101,7 @@
 
     kendo.spreadsheet.CustomFilter = Filter.extend({
         _logic: "and",
-        init: function(options) {
+        init: function CustomFilter(options) {
             if (options.logic !== undefined) {
                 this._logic = options.logic;
             }
@@ -158,7 +159,7 @@
     });
 
     kendo.spreadsheet.TopFilter = Filter.extend({
-        init: function(options) {
+        init: function TopFilter(options) {
             this._type = options.type;
             this._value = options.value;
             this._values = [];
@@ -202,7 +203,7 @@
     });
 
     kendo.spreadsheet.DynamicFilter = Filter.extend({
-        init: function(options) {
+        init: function DynamicFilter(options) {
             this._type = options.type;
 
             this._predicate = this[options.type];

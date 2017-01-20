@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+      requireSync([
+        "../../src/jquery.js",
+        "../../src/kendo.dom.js",
+          "../../src/kendo.spreadsheet.js",
+          "../../src/kendo.window.js"
+      ]);
+    </script>
+    <script src="../../src/jszip.js"></script>
+
+    <style type="text/css">
+     body {
+       font: 14px Arial,sans-serif;
+       padding: 0;
+       margin: 0;
+       overflow: hidden;
+     }
+     #spreadsheet {
+       position: absolute;
+       width: 100%;
+       height: 100%;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="spreadsheet"></div>
+    <script>
+     window.ss = $("#spreadsheet").kendoSpreadsheet({ rows: 4000 }).getKendoSpreadsheet();
+     window.sheet = ss.activeSheet();
+
+     var random = [];
+     for (var i = 0; i < 30; ++i) {
+         random.push([ Math.random() * 100 | 0, Math.random() * 100 | 0 ]);
+     }
+
+     sheet.batch(function(){
+         sheet.range("A2:B30").values(random);
+         sheet.range("A1:B30").filter([
+             { column: 0,
+               filter: new kendo.spreadsheet.CustomFilter({
+                   logic: "or",
+                   criteria: [
+                       { operator: "lt", value: 30 },
+                       { operator: "gt", value: 70 }
+                   ]
+               })
+             },
+             { column: 1,
+               filter: new kendo.spreadsheet.CustomFilter({
+                   logic: "and",
+                   criteria: [
+                       { operator: "gt", value: 30 },
+                       { operator: "lt", value: 70 }
+                   ]
+               })
+             }
+         ]);
+
+         /* sheet.range("B33:B36").values([ ["foo"], ["bar"], ["baz"], ["qwe"] ]);
+          * sheet.range("B32:B36").filter([
+          *     { column: 0,
+          *       filter: new kendo.spreadsheet.CustomFilter({
+          *           criteria: [
+          *               { operator: "startswith", value: "b" }
+          *           ]
+          *       })
+          *     }
+          * ]);*/
+     }, { recalc: true });
+
+     var sheet2 = ss.insertSheet();
+     sheet2.batch(function(){
+         sheet2.range("A2:F10").values([
+             ["aaa", "aaa", "axaa", "aaa", "aaa*", "aaa"],
+             ["abb", "bbb", "bxbb", "bbb", "bbb*", "bbb"],
+             ["ccc", "ccc", "cxcc", "ccc", "ccc*", "ccc"],
+             ["add", "ddd", "dxdd", "dd*d", "ddd*", "ddd"],
+             ["aee", "eee", "exee", "eee", "eee*", "eee"],
+             ["aff", "fff", "fff", "fff", "fff*", "fff"],
+             ["agg", "ggg", "gxgg", "ggg", "ggg", "ggg"],
+             ["ahh", "hhh", "hxhh", "hhh", "hhh*", "hhh?"],
+         ]);
+         sheet2.range("A1:F10").filter([
+             { column: 0,
+               filter: new kendo.spreadsheet.CustomFilter({
+                   criteria: [
+                       { operator: "startswith", value: "a" }
+                   ]
+               })
+             },
+             { column: 1,
+               filter: new kendo.spreadsheet.CustomFilter({
+                   criteria: [
+                       { operator: "doesnotstartwith", value: "a" }
+                   ]
+               })
+             },
+             { column: 2,
+               filter: new kendo.spreadsheet.CustomFilter({
+                   criteria: [
+                       { operator: "contains", value: "x" }
+                   ]
+               })
+             },
+             { column: 3,
+               filter: new kendo.spreadsheet.CustomFilter({
+                   criteria: [
+                       { operator: "doesnotcontain", value: "*" }
+                   ]
+               })
+             },
+             { column: 4,
+               filter: new kendo.spreadsheet.CustomFilter({
+                   criteria: [
+                       { operator: "endswith", value: "*" }
+                   ]
+               })
+             },
+             { column: 5,
+               filter: new kendo.spreadsheet.CustomFilter({
+                   criteria: [
+                       { operator: "doesnotendwith", value: "?" }
+                   ]
+               })
+             }
+         ]);
+     }, { recalc: true });
+
+     var sheet3 = ss.insertSheet();
+     sheet3.batch(function(){
+         sheet3.range("A2:B30").values(random);
+         sheet3.range("A32:B32").formula("AVERAGE(A2:A30)");
+         sheet3.range("A1:B30").filter([
+             { column: 0,
+               filter: new kendo.spreadsheet.DynamicFilter({
+                   type: "aboveAverage"
+               })
+             },
+             { column: 1,
+               filter: new kendo.spreadsheet.DynamicFilter({
+                   type: "belowAverage"
+               })
+             }
+         ]);
+     }, { recalc: true });
+
+     var sheet4 = ss.insertSheet();
+     sheet4.batch(function(){
+         var values = [
+             [ "C 1", "C 2", "C 3" ],
+             [ new Date(), 5, 6 ],
+             [ new Date(2000, 10, 10), 8, 9 ],
+         ];
+         sheet4.range("A1:C6").values(values);
+         var filter = new kendo.spreadsheet.DynamicFilter({ type: "today" });
+         sheet4.range("A1:C6").filter([ { column: 0, filter: filter } ]);
+     }, { recalc: true });
+
+     var sheet5 = ss.insertSheet();
+     sheet5.batch(function(){
+         sheet5.range("A2:B30").values(random);
+         sheet5.range("A1:B30").filter([
+             { column: 0,
+               filter: new kendo.spreadsheet.TopFilter({
+                   type: "topPercent",
+                   value: 50
+               })
+             },
+             { column: 1,
+               filter: new kendo.spreadsheet.TopFilter({
+                   type: "bottomPercent",
+                   value: 50
+               })
+             }
+         ]);
+     }, { recalc: true });
+
+     var sheet6 = ss.insertSheet();
+     sheet6.batch(function(){
+         var values = [
+             [ "C 1", "C 2", "C 3" ],
+             [ 7, 5, 6 ],
+             [ null, null, null ],
+             [ 7, 8, 9 ],
+             [ 6, 3, 9 ]
+         ];
+         sheet6.range("A1:C5").values(values);
+         var filter = new kendo.spreadsheet.ValueFilter({ values: [ 7 ], blanks: true });
+         sheet6.range("A1:C5").filter([ { column: 0, filter: filter } ]);
+     }, { recalc: true });
+    </script>
+  </body>
+</html>
