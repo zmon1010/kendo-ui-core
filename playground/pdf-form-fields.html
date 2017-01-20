@@ -25,14 +25,14 @@
             <td>Input
             </td>
             <td>
-              <input type="text" value="foo" style="text-align: center" />
+              <input name="foo" type="text" value="foo" style="text-align: center" />
             </td>
           </tr>
           <tr>
             <td>aasdasdasdasdsad
             </td>
             <td>
-              <input type="text" value="bar" style="text-align: right" />
+              <input name="bar" type="text" value="bar" style="text-align: right" />
             </td>
           </tr>
           <tr>
@@ -40,7 +40,24 @@
             </td>
             <td>
               <input type="text" />
-
+            </td>
+          </tr>
+          <tr>
+            <td>Checkboxes</td>
+            <td>
+              <label><input type="checkbox" name="check1" /> Check 1</label><br />
+              <label><input type="checkbox" checked name="check2" /> Check 2</label><br />
+              <label><input type="checkbox" name="check3" /> Check 3</label><br />
+              <label><input type="checkbox" checked name="check4" /> Check 4</label><br />
+            </td>
+          </tr>
+          <tr>
+            <td>Radio buttons</td>
+            <td>
+              <label><input id="rd1" type="radio" name="radio" /> Radio 1</label><br />
+              <label><input id="rd2" type="radio" checked name="radio" /> Radio 2</label><br />
+              <label><input id="rd3" type="radio" name="radio" /> Radio 3</label><br />
+              <label><input id="rd4" type="radio" name="radio" /> Radio 4</label><br />
             </td>
           </tr>
         </table>
@@ -57,20 +74,20 @@
     </div>
     <button onclick="draw()">Draw</button>
     <script>
-      function draw(){
-        var draw = kendo.drawing;
+     function draw(){
+         var draw = kendo.drawing;
 
-        draw.drawDOM($("#fw1"))
-          .then(function(root) {
-          return draw.exportPDF(root);
-        })
-          .done(function(data) {
-          kendo.saveAs({
-            dataURI: data,
-            fileName: "test.pdf"
-          });
-        });
-      };
+         draw.drawDOM($("#fw1"), { paperSize: "A4" })
+             .then(function(root) {
+                 return draw.exportPDF(root);
+             })
+             .done(function(data) {
+                 kendo.saveAs({
+                     dataURI: data,
+                     fileName: "test.pdf"
+                 });
+             });
+     };
     </script>
   </body>
 </html>
