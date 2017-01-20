@@ -18,14 +18,7 @@ cp -rf $3/src $2
 rsync -av $3-source/src --exclude 'AspNet*' --exclude 'Kendo*' --exclude 'Telerik*' --exclude 'README' $2
 cp -rf $3/styles $2
 
-# OS X sed is quite peculiar - use gnu sed if present
-if which gsed; then
-   sed_bin="gsed"
-else
-   sed_bin="sed"
-fi
-
-$sed_bin -i "s/\"[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+\(+[[:alnum:]]\+\)\?\"/\"$VERSION\"/" $2/bower.json
+sed "s/\"version\".*/\"version\": \"$VERSION\",/" bower.json > bower.json.new && mv bower.json.new bower.json
 
 $bowergit add --all .
 $bowergit commit -m "Update to $VERSION"
