@@ -230,7 +230,7 @@ is displayed in the column header cell.
     }
 
     /**
-    * If set to true the column will be displayed as locked in the grid. Also see Frozen Columns.
+    * If set to true the column will be displayed as locked (frozen) in the grid. Also see the information about Locked Columns in the Grid Appearance article.
     * @param boolean $value
     * @return \Kendo\UI\GridColumn
     */

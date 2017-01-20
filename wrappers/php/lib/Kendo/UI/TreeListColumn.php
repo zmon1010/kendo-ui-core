@@ -221,7 +221,7 @@ Each table row consists of table cells (<td>) which represent the treelist colum
     }
 
     /**
-    * If set to true the column will be displayed as locked in the treelist. Also see Frozen Columns.
+    * If set to true the column will be displayed as locked (frozen) in the treelist. Also see the information about Frozen Columns in the Grid Appearance article.
     * @param boolean $value
     * @return \Kendo\UI\TreeListColumn
     */

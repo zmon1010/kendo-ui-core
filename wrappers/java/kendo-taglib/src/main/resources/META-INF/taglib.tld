@@ -23311,7 +23311,7 @@ is displayed in the column header cell.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the column will be displayed as locked in the grid. Also see Frozen Columns.</description>
+            <description>If set to true the column will be displayed as locked (frozen) in the grid. Also see the information about Locked Columns in the Grid Appearance article.</description>
             <name>locked</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -46470,7 +46470,7 @@ is displayed in the column header cell.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the column will be displayed as locked in the treelist. Also see Frozen Columns.</description>
+            <description>If set to true the column will be displayed as locked (frozen) in the treelist. Also see the information about Frozen Columns in the Grid Appearance article.</description>
             <name>locked</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>

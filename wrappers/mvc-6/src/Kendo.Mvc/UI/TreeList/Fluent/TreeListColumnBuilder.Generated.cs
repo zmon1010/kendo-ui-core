@@ -293,7 +293,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the column will be displayed as locked in the treelist. Also see Frozen Columns.
+        /// If set to true the column will be displayed as locked (frozen) in the treelist. Also see the information about Frozen Columns in the Grid Appearance article.
         /// </summary>
         /// <param name="value">The value for Locked</param>
         public TreeListColumnBuilder<T> Locked(bool value)
@@ -303,7 +303,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the column will be displayed as locked in the treelist. Also see Frozen Columns.
+        /// If set to true the column will be displayed as locked (frozen) in the treelist. Also see the information about Frozen Columns in the Grid Appearance article.
         /// </summary>
         public TreeListColumnBuilder<T> Locked()
         {
