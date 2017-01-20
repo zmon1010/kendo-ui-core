@@ -9264,10 +9264,22 @@ function renderText(element, node, group) {
     // we'll maintain this so we can workaround bugs in Chrome's Range.getClientRects
     // https://github.com/telerik/kendo/issues/5740
     var prevLineBottom = null;
+
+    var underline = nodeInfo["underline"];
+    var lineThrough = nodeInfo["line-through"];
+    var overline = nodeInfo["overline"];
+    var hasDecoration = underline || lineThrough || overline;
+
+    // doChunk returns true when all text has been rendered
     while (!doChunk()) {}
 
     if (browser.msie && textOverflow == "ellipsis") {
         element.style.textOverflow = saveTextOverflow;
+    }
+
+    if (hasDecoration) {
+        range.selectNode(node);
+        slice$1(range.getClientRects()).forEach(decorate);
     }
 
     return;                 // only function declarations after this line
@@ -9479,13 +9491,12 @@ function renderText(element, node, group) {
             }
         );
         group.append(text);
-        decorate(box);
     }
 
     function decorate(box) {
-        line(nodeInfo["underline"], box.bottom);
-        line(nodeInfo["line-through"], box.bottom - box.height / 2.7);
-        line(nodeInfo["overline"], box.top);
+        line(underline, box.bottom);
+        line(lineThrough, box.bottom - box.height / 2.7);
+        line(overline, box.top);
         function line(color, ypos) {
             if (color) {
                 var width = fontSize / 12;
