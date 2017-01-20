@@ -655,10 +655,7 @@
             if (value === undefined) {
                 // jQuery's .text() discards the newlines for some reason
                 var txt = this.element[0].innerText;
-                if (kendo.support.browser.mozilla) {
-                    txt = txt.replace(/\n$/, "");
-                }
-                return txt;
+                return txt.replace(/\n$/, "");
             }
 
             this._value(value);
