@@ -188,9 +188,11 @@
                     if (x.type == "exp") {
                         formula = kendo.spreadsheet.calc.compile(x);
                     } else if (existingFormat != "@") {
-                        if (x.type == "date") {
+                        var existingFormatType = existingFormat &&
+                            kendo.spreadsheet.formatting.type(x.value, existingFormat);
+                        if (x.type == "date" && existingFormatType != "date") {
                             this.format(x.format || toExcelFormat(kendo.culture().calendar.patterns.d));
-                        } else if (x.type == "percent") {
+                        } else if (x.type == "percent" && existingFormatType != "percent") {
                             this.format(x.value*100 == (x.value*100|0) ? "0%" : "0.00%");
                         } else if (x.format && !existingFormat) {
                             this.format(x.format);

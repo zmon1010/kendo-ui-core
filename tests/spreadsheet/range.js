@@ -732,17 +732,28 @@
 
     test("range.input handles time", function(){
         var r = sheet.range("A1");
+        r.format(null);
         r.input("10:30");
         equal(r.input(), "10:30");
         equal(r.format(), "hh:mm");
 
+        r.format(null);
         r.input("10:30:50");
         equal(r.input(), "10:30:50");
         equal(r.format(), "hh:mm:ss");
 
+        r.format(null);
         r.input("10:30.55");
         equal(r.input(), "10:30.55");
         equal(r.format(), "mm:ss.00");
+    });
+
+    test("range.input keeps existing date format", function(){
+        // https://github.com/telerik/kendo-ui-core/issues/2627
+        var r = sheet.range("A1");
+        r.format("d mmmm yyyy");
+        r.input("1979/3/8");
+        equal(r.input(), "8 March 1979");
     });
 
     test("range.input handles various numeric formats", function(){

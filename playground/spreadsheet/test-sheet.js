@@ -187,4 +187,6 @@ sheet.batch(function(){
         console.log(ev);
     });
 
+    sheet.range("F5").format("d mmm yyyy").value(20000);
+
 }, { recalc: true });
