@@ -1116,7 +1116,7 @@
             },
             {
                 "text": "Import and Export",
-                "url": "editor/import-exportas",
+                "url": "editor/import-export",
                 "new": true,
                 "title": {
                     "aspnet-mvc": "Editor export support in $FRAMEWORK Editor with Telerik Document Processing Library"

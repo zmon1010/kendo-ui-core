@@ -9,7 +9,7 @@ namespace Kendo.Mvc.Examples.Controllers
     public partial class EditorController : Controller
     {
         [Demo]
-        public ActionResult Import_ExportAs()
+        public ActionResult Import_Export()
         {
             return View();
         }
