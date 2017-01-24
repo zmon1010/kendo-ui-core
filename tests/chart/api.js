@@ -1642,7 +1642,6 @@
             teardown: destroyChart
         });
 
-
         test("sender is the chart widget", function() {
             var sender;
 
@@ -1681,4 +1680,38 @@
 
     })();
 
+    (function() {
+
+        // ------------------------------------------------------------
+        module("custom gradients", {
+            teardown: destroyChart
+        });
+
+        test("are recognized by the chart", function() {
+            kendo.dataviz.Gradients.custom = {
+              type: "linear",
+              stops: [{
+                offset: 0,
+                color: "foo"
+              }, {
+                offset: 1,
+                color: "bar"
+              }]
+            };
+
+            var chart = createChart({
+                series: [{
+                    type: "bar",
+                    data: [1],
+                    overlay: {
+                       gradient: "custom"
+                    }
+                }]
+            });
+
+            var overlayFill = chart._plotArea.charts[0].points[0].visual.children[1].options.fill;
+            equal(overlayFill.stops[0].options.color, "foo");
+            equal(overlayFill.stops[1].options.color, "bar");
+        });
+    })();
 })();

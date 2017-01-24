@@ -9,19 +9,24 @@ const EXPORT_NAME_REGEX = /exports\.(\w+) = (.*?);/g;
 const DEPENDENCIES_REGEX = /\(function \(exports,(.*?)\)\s*{([\s\S]*)}\(\(this.(\w+(?:\.\w+)*) = this.(?:\w+(?:\.\w+)*) \|\| \{\}\),(.*?)\)\);/gm;
 
 function replaceExports(options) {
+    const assignExport = (options || {}).assignExport || [];
     return replace(EXPORTS_REGEX, function (match) {
+        var extended = [];
         var exports = match.replace(EXPORT_NAME_REGEX, function(match, exportName, name) {
-            return `    ${ exportName }: ${ name },`;
+            if (assignExport.indexOf(name) >= 0)  {
+                return match;
+            } else {
+                extended.push(`    ${ exportName }: ${ name }`);
+                return '';
+            }
         });
 
-        exports = exports.substr(0, exports.lastIndexOf(","));
+        if (extended.length) {
+            extended = extended.join(',' + NEW_LINE);
+            exports += `kendo.deepExtend(exports, {${ NEW_LINE }${ extended }${ NEW_LINE }});`;
+        }
 
-        var result  =
-`kendo.deepExtend(exports, {
-${ exports }
-});`;
-
-        return result;
+        return exports;
     });
 }
 

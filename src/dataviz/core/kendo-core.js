@@ -19,6 +19,7 @@ var Rect = geometry.Rect;
 var Circle = geometry.Circle;
 var geometryTransform = geometry.transform;
 var Segment = geometry.Segment;
+var dataviz = kendo.dataviz;
 
 var deepExtend = kendo.deepExtend;
 
@@ -6811,6 +6812,8 @@ function numberSign(value) {
     return value <= 0 ? -1 : 1;
 }
 
+dataviz.Gradients = GRADIENTS;
+
 kendo.deepExtend(kendo.dataviz, {
     constants: constants,
     services: services,
@@ -6841,7 +6844,6 @@ kendo.deepExtend(kendo.dataviz, {
     RadarNumericAxis: RadarNumericAxis,
     RadarLogarithmicAxis: RadarLogarithmicAxis,
     CurveProcessor: CurveProcessor,
-    Gradients: GRADIENTS,
     rectToBox: rectToBox,
     addClass: addClass,
     removeClass: removeClass,

@@ -245,7 +245,7 @@ gulp.task('pack-core', () =>
         }))
         .pipe(concat('kendo-core.js'))
         .pipe(wrap({ src: './templates/kendo.dataviz.core.amd.js' }))
-        .pipeReplaces()
+        .pipeReplaces({ assignExport: "GRADIENTS" })
         .pipe(gulp.dest('../src/dataviz/core'))
 );
 
