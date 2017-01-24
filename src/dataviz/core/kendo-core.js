@@ -4325,7 +4325,7 @@ var DateCategoryAxis = CategoryAxis.extend({
         var options = this.options;
         var categories = options.categories;
         var baseUnit = options.baseUnit;
-        var baseUnitStep = options.baseUnitStep; if (baseUnitStep === void 0) { baseUnitStep = 1; }
+        var baseUnitStep = options.baseUnitStep || 1;
         var categoryLimits = this.categoriesRange();
         var min = toDate(options.min || categoryLimits.min);
         var max = toDate(options.max || categoryLimits.max);
@@ -4450,7 +4450,7 @@ var DateCategoryAxis = CategoryAxis.extend({
         var totalLimits = this.totalLimits();
         var weekStartDay = options.weekStartDay;
         var baseUnit = options.baseUnit;
-        var baseUnitStep = options.baseUnitStep; if (baseUnitStep === void 0) { baseUnitStep = 1; }
+        var baseUnitStep = options.baseUnitStep || 1;
         var ref = this.currentRange();
         var rangeMin = ref.min;
         var rangeMax = ref.max;
@@ -4593,7 +4593,7 @@ var DateCategoryAxis = CategoryAxis.extend({
     groupCategories: function(options) {
         var categories = options.categories;
         var baseUnit = options.baseUnit;
-        var baseUnitStep = options.baseUnitStep; if (baseUnitStep === void 0) { baseUnitStep = 1; }
+        var baseUnitStep = options.baseUnitStep || 1;
         var maxCategory = toDate(sparseArrayLimits(categories).max);
         var ref = this.range(options);
         var min = ref.min;
@@ -4617,7 +4617,7 @@ var DateCategoryAxis = CategoryAxis.extend({
     _roundToTotalStep: function(value, axisOptions, upper, roundToNext) {
         var options = axisOptions || this.options;
         var baseUnit = options.baseUnit;
-        var baseUnitStep = options.baseUnitStep; if (baseUnitStep === void 0) { baseUnitStep = 1; }
+        var baseUnitStep = options.baseUnitStep || 1;
         var start = this._groupsStart;
 
         if (start) {
@@ -5904,9 +5904,9 @@ var RadarCategoryAxis = CategoryAxis.extend({
 
         var ref = this;
         var labels = ref.labels;
-        var ref_options_labels = ref.options.labels;
-        var skip = ref_options_labels.skip; if (skip === void 0) { skip = 0; }
-        var step = ref_options_labels.step; if (step === void 0) { step = 1; }
+        var labelOptions = ref.options.labels;
+        var skip = labelOptions.skip || 0;
+        var step = labelOptions.step || 1;
         var measureBox = new Box();
 
         for (var i = 0; i < labels.length; i++) {
@@ -5919,15 +5919,15 @@ var RadarCategoryAxis = CategoryAxis.extend({
         }
     },
 
-    intervals: function(size, skip, step, skipAngles) {
-        if (skip === void 0) { skip = 0; }
-        if (step === void 0) { step = 1; }
+    intervals: function(size, skipOption, stepOption, skipAngles) {
         if (skipAngles === void 0) { skipAngles = false; }
 
         var options = this.options;
         var categories = options.categories.length;
         var divCount = categories / size || 1;
         var divAngle = 360 / divCount;
+        var skip = skipOption || 0;
+        var step = stepOption || 1;
         var divs = [];
         var angle = 0;
 
@@ -6138,9 +6138,10 @@ var PolarAxis = Axis.extend({
         var ref = this;
         var options = ref.options;
         var labels = ref.labels;
-        var ref_options_labels = ref.options.labels;
-        var skip = ref_options_labels.skip; if (skip === void 0) { skip = 0; }
-        var step = ref_options_labels.step; if (step === void 0) { step = 1; }
+        var labelOptions = ref.options.labels;
+        var skip = labelOptions.skip || 0;
+        var step = labelOptions.step || 1;
+
         var measureBox = new Box();
         var divs = this.intervals(options.majorUnit, skip, step);
 
@@ -6156,14 +6157,14 @@ var PolarAxis = Axis.extend({
         return this.box;
     },
 
-    intervals: function(size, skip, step, skipAngles) {
-        if (skip === void 0) { skip = 0; }
-        if (step === void 0) { step = 1; }
+    intervals: function(size, skipOption, stepOption, skipAngles) {
         if (skipAngles === void 0) { skipAngles = false; }
 
         var min = this.options.min;
         var divisions = this.getDivisions(size);
         var divs = [];
+        var skip = skipOption || 0;
+        var step = stepOption || 1;
 
         for (var i = skip; i < divisions; i += step) {
             var current = (360 + min + i * size) % 360;
