@@ -120,8 +120,6 @@
         ],
 
         _reinit: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth, defaultCellStyle) {
-            var cellCount = rowCount * columnCount - 1;
-
             defaultCellStyle = defaultCellStyle || {};
 
             this._defaultCellStyle = {
@@ -146,7 +144,7 @@
             this._gridLinesColor = null;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._sheetRef = this._grid.normalize(kendo.spreadsheet.SHEETREF);
-            this._properties = new kendo.spreadsheet.PropertyBag(cellCount, this._defaultCellStyle);
+            this._properties = new kendo.spreadsheet.PropertyBag(rowCount, columnCount, this._defaultCellStyle);
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
 
             this._viewSelection = new Selection(this);

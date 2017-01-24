@@ -16,15 +16,9 @@
     var PROPERTIES = [
         "color", "fontFamily", "underline",
         "italic", "bold", "textAlign",
-        "verticalAlign", "background", "format", "link", "editor"
+        "verticalAlign", "background", "format", "link", "editor",
+        "borderTop", "borderRight", "borderBottom", "borderLeft"
     ];
-
-    var borders = {
-        borderTop: { complement: "borderBottom", direction: { top: -1, bottom: -1 } },
-        borderLeft: { complement: "borderRight", direction: { left: -1, right: -1 } },
-        borderRight: { complement: "borderLeft", direction: { left: 1, right: 1 }  },
-        borderBottom: { complement: "borderTop", direction: { top: 1, bottom: 1 }  }
-    };
 
     var Range = kendo.Class.extend({
         init: function(ref, sheet) {
@@ -114,68 +108,6 @@
             return this._ref.map(function(ref) {
                 return ref.toRangeRef().resize(direction);
             });
-        },
-
-        _border: function(property, value) {
-            var result;
-            var complement = borders[property].complement;
-            var direction = borders[property].direction;
-            var sheet = this._sheet;
-
-            sheet.batch(function() {
-                result = this._property(property, value);
-
-                if (value !== undefined) {
-                    this._resizedRef(direction).forEach(function(ref) {
-                        if (ref !== kendo.spreadsheet.NULLREF) {
-                            new Range(ref, sheet)._property(complement, null);
-                        }
-                    });
-                }
-            }.bind(this), {});
-
-            return result;
-        },
-
-        _collapsedBorder: function(property) {
-            var result = this._property(property);
-            var complement = borders[property].complement;
-            var direction = borders[property].direction;
-
-            this._resizedRef(direction).forEach(function(ref) {
-                if (!result && ref !== kendo.spreadsheet.NULLREF) {
-                    var range = new Range(ref, this._sheet);
-                    result = range._property(complement);
-                }
-            }.bind(this));
-
-            return result;
-        },
-
-        borderTop: function(value) {
-            return this._border("borderTop", value);
-        },
-        borderRight: function(value) {
-            return this._border("borderRight", value);
-        },
-        borderBottom: function(value) {
-            return this._border("borderBottom", value);
-        },
-        borderLeft: function(value) {
-            return this._border("borderLeft", value);
-        },
-
-        collapsedBorderTop: function() {
-            return this._collapsedBorder("borderTop");
-        },
-        collapsedBorderRight: function() {
-            return this._collapsedBorder("borderRight");
-        },
-        collapsedBorderBottom: function() {
-            return this._collapsedBorder("borderBottom");
-        },
-        collapsedBorderLeft: function() {
-            return this._collapsedBorder("borderLeft");
         },
 
         input: function(value) {

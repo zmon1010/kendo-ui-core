@@ -51,16 +51,15 @@
     });
 
     var ValueProperty = Property.extend({
-        init: function(values, formats, validations) {
+        init: function(values, formats) {
             Property.prototype.init.call(this, values);
-
-            this.validations = validations;
             this.formats = formats;
         },
 
         set: function(start, end, value) {
-            //TODO: RESET VALIDATION AS WELL?
             if (value instanceof Date) {
+                // XXX: should we check if existing format is not
+                // already date, in which case not reset it?
                 value = kendo.spreadsheet.dateToNumber(value);
                 this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
             }
@@ -75,14 +74,12 @@
 
     kendo.spreadsheet.PropertyBag = kendo.Class.extend({
         specs: [
-            { property: ValueProperty, name: "value", value: null, sortable: true, serializable: true, depends: "format" },
             { property: Property, name: "format", value: null, sortable: true, serializable: true },
+            { property: ValueProperty, name: "value", value: null, sortable: true, serializable: true, depends: "format" },
             { property: Property, name: "formula", value: null, sortable: true, serializable: true },
             { property: Property, name: "background", value: null, sortable: true, serializable: true },
-            { property: JsonProperty, name: "borderBottom", value: null, sortable: false, serializable: true },
-            { property: JsonProperty, name: "borderRight", value: null, sortable: false, serializable: true },
-            { property: JsonProperty, name: "borderLeft", value: null, sortable: false, serializable: true },
-            { property: JsonProperty, name: "borderTop", value: null, sortable: false, serializable: true },
+            { property: JsonProperty, name: "vBorders", value: null, sortable: false, serializable: true },
+            { property: JsonProperty, name: "hBorders", value: null, sortable: false, serializable: true },
             { property: Property, name: "color", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontFamily", value: null, sortable: true, serializable: true },
             { property: Property, name: "underline", value: null, sortable: true, serializable: true },
@@ -98,21 +95,28 @@
             { property: Property, name: "editor", value: null, sortable: false, serializable: true }
         ],
 
-        init: function(cellCount, defaultValues) {
+        init: function(rowCount, columnCount, defaultValues) {
             defaultValues = defaultValues || {};
 
+            this.rowCount = rowCount;
+            this.columnCount = columnCount;
             this.properties = {};
-
             this.lists = {};
 
             this.specs.forEach(function(spec) {
-                var value = defaultValues[spec.name] !== undefined ? defaultValues[spec.name] : spec.value;
-
-               this.lists[spec.name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
-            }, this);
-
-            this.specs.forEach(function(spec) {
-                this.properties[spec.name] = new spec.property(this.lists[spec.name], this.lists[spec.depends]);
+                var cellCount = rowCount * columnCount - 1;
+                var name = spec.name;
+                var value = defaultValues[name];
+                if (value === undefined) {
+                    value = spec.value;
+                }
+                if (name == "hBorders") {
+                    cellCount += columnCount;
+                } else if (name == "vBorders") {
+                    cellCount += rowCount;
+                }
+                this.lists[name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
+                this.properties[name] = new spec.property(this.lists[name], this.lists[spec.depends]);
             }, this);
         },
 
@@ -137,10 +141,42 @@
                 return this.lists[name];
             }
 
+            switch (name) {
+              case "borderRight":
+                index += this.rowCount;
+                /* falls through */
+              case "borderLeft":
+                name = "vBorders";
+                break;
+
+              case "borderBottom":
+                index++;
+                /* falls through */
+              case "borderTop":
+                name = "hBorders";
+                break;
+            }
             return this.properties[name].get(index);
         },
 
         set: function(name, start, end, value) {
+            switch (name) {
+              case "borderRight":
+                start += this.rowCount;
+                end += this.rowCount;
+                /* falls through */
+              case "borderLeft":
+                name = "vBorders";
+                break;
+
+              case "borderBottom":
+                start++;
+                end++;
+                /* falls through */
+              case "borderTop":
+                name = "hBorders";
+                break;
+            }
             this.properties[name].set(start, end, value);
         },
 
@@ -175,7 +211,7 @@
 
         iterators: function(start, end) {
             var specs = this.specs.filter(function(spec) {
-                return spec.serializable;
+                return spec.serializable && !/Borders$/.test(spec.name);
             });
 
             return specs.map(function(spec) {
@@ -205,6 +241,12 @@
                         values[iterator.name] = value;
                     }
                 }
+
+                // XXX: this kinda sucks performance-wise, of course.
+                values.borderTop = this.get("borderTop", index);
+                values.borderRight = this.get("borderRight", index);
+                values.borderBottom = this.get("borderBottom", index);
+                values.borderLeft = this.get("borderLeft", index);
 
                 callback(values);
             }
