@@ -175,7 +175,7 @@ For more information on how to resolve this issue, refer to the resources listed
 * [Example: MVC Grid Popup Editing](http://demos.telerik.com/aspnet-mvc/grid/editing-popup)
 * [Example: Bind the Grid for ASP.NET MVC to a DataTable](/helpers/grid/how-to/Binding/grid-bind-to-datatable)
 * [Documentation: MVC Grid Editor Templates]({% slug editortemplates_grid_aspnetmvc %})&mdash;use a separate editor template for each data field.
-* [Documentation: Grid TemplateName setting](/api/kendo.mvc.ui.fluent/grideditingsettingsbuilder#methods-TemplateName(System.String))&mdash;use it
+* [Documentation: Grid TemplateName setting](/api/Kendo.Mvc.UI.Fluent/GridEditingSettingsBuilder#methods-TemplateName(System.String))&mdash;use it
 to set a single edit form template for the whole edit form.
 
 ### Invalid Template Error When Nesting Client Templates
