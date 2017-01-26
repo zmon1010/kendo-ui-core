@@ -797,6 +797,19 @@
                 sales: 100
             }]);
         });
+
+
+        test("axes are accessible on render", 1, function() {
+            var chart = createChart({
+                categoryAxis: {
+                    name: "cat"
+                },
+                render: function(e) {
+                    ok(e.sender.findAxisByName("cat"));
+                }
+            });
+        });
+
     })();
 
     // ------------------------------------------------------------

@@ -424,6 +424,8 @@
         },
 
         _copyMembers: function(instance) {
+            this._instance = instance;
+
             this.options = instance.options;
             this._originalOptions = instance._originalOptions;
             this.surface = instance.surface;
