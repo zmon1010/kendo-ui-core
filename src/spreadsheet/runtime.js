@@ -966,7 +966,9 @@
     }
 
     function roundFloatErrors(num) {
-        return Math.round(num * 1E15) / 1E15;
+        var integer = Math.floor(num);
+        var decimal = num - integer;
+        return integer + Math.round(decimal * 1E15) / 1E15;
     }
 
     function maybeRoundFloatErrors(num) {
