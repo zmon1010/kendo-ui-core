@@ -88,7 +88,9 @@ gulp.task("less", [ "import-dependencies" ], function() {
         .pipe(cssUtils.minify())
         .pipe(gulpIf(makeSourceMaps, sourcemaps.write("./", {
             mapSources: function(sourcePath) {
-                return sourcePath.replace(/(styles|mobile|web)\//, "");
+                return sourcePath
+                        .replace(/(styles|mobile|web)\//, "")
+                        .replace(/\.css$/, ".min.css");
             }
         })));
 
