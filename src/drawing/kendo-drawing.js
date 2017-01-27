@@ -6638,20 +6638,30 @@ function setCSS(el, styles) {
     });
 }
 
-function matches(el, selector) {
-    var p = Element.prototype;
-    var f = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function(s) {
+var matches = (function(p){
+    if (p.matches) {
+        return function(el, selector) { return el.matches(selector); };
+    }
+    if (p.webkitMatchesSelector) {
+        return function(el, selector) { return el.webkitMatchesSelector(selector); };
+    }
+    if (p.mozMatchesSelector) {
+        return function(el, selector) { return el.mozMatchesSelector(selector); };
+    }
+    if (p.msMatchesSelector) {
+        return function(el, selector) { return el.msMatchesSelector(selector); };
+    }
+    return function(s) {
 	return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
     };
-    return f.call(el, selector);
-}
+})(Element.prototype);
 
 function closest(el, selector) {
     if (el.closest) {
         return el.closest(selector);
     }
     // IE
-    while (el) {
+    while (el && el !== document) {
         if (matches(el, selector)) {
             return el;
         }
