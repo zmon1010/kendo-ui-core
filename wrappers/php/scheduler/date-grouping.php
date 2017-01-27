@@ -200,7 +200,7 @@ $scheduler->timezone("Etc/UTC")
         ->addResource($roomResource, $attendeesResource)
         ->group(array('date' => true, 'resources' => array('Rooms')))
         ->addView(array('type' => 'day', 'startTime' => new DateTime('2013/6/13 7:00')),
-            array('type' => 'week', 'selected' => true, 'startTime' => new DateTime('2013/6/13 7:00')), 'month', 'timeline');
+            array('type' => 'week', 'selected' => true, 'startTime' => new DateTime('2013/6/13 7:00')), 'month', 'timeline')
         ->dataSource($dataSource);
 
 echo $scheduler->render();
