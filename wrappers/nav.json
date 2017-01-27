@@ -4473,7 +4473,7 @@
                 "packages": [
                     "mvc-core"
                 ],
-                new: true
+                "new": "true"
             }
         ],
         "category": "Editors"
