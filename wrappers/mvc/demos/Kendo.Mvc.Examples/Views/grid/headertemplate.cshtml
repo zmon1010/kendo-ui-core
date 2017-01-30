@@ -57,7 +57,7 @@
 <script type="text/javascript">
     $(document).ready(function() {    
         $('#selectAllProducts').click(function() {                    
-            $("#Grid tbody input:checkbox").attr("checked", this.checked);
+            $("#Grid tbody input:checkbox").prop("checked", this.checked);
         });
     });   
 </script>
