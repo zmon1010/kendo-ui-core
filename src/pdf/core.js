@@ -2147,15 +2147,11 @@ var PDFString = defclass(function PDFString(value){
     this.value = value;
 }, {
     render: function(out) {
-        //out("(\xFE\xFF", utf16_be_encode(this.escape()), ")");
-        var txt = "", esc = this.escape();
-        for (var i = 0; i < esc.length; ++i) {
-            txt += String.fromCharCode(esc.charCodeAt(i) & 0xFF);
+        var txt = "", val = this.value;
+        for (var i = 0; i < val.length; ++i) {
+            txt += String.fromCharCode(val.charCodeAt(i) & 0xFF);
         }
-        out("(", txt, ")");
-    },
-    escape: function() {
-        return this.value.replace(/([\(\)\\])/g, "\\$1");
+        out("(", txt.replace(/([\(\)\\])/g, "\\$1"), ")");
     },
     toString: function() {
         return this.value;
