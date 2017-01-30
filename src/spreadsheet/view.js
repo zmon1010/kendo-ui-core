@@ -83,11 +83,7 @@
     }
 
     function cellBorder(value) {
-        return [
-            "solid",
-            (value.size || 1) + "px",
-            value.color || "#000"
-        ].join(" ");
+        return (value.size || 1) + "px solid " + (value.color || "#000");
     }
 
     function asURL(link) {

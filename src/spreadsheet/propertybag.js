@@ -78,8 +78,8 @@
             { property: ValueProperty, name: "value", value: null, sortable: true, serializable: true, depends: "format" },
             { property: Property, name: "formula", value: null, sortable: true, serializable: true },
             { property: Property, name: "background", value: null, sortable: true, serializable: true },
-            { property: JsonProperty, name: "vBorders", value: null, sortable: false, serializable: true },
-            { property: JsonProperty, name: "hBorders", value: null, sortable: false, serializable: true },
+            { property: JsonProperty, name: "vBorders", value: null, sortable: false, serializable: false },
+            { property: JsonProperty, name: "hBorders", value: null, sortable: false, serializable: false },
             { property: Property, name: "color", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontFamily", value: null, sortable: true, serializable: true },
             { property: Property, name: "underline", value: null, sortable: true, serializable: true },
@@ -199,36 +199,40 @@
         },
 
         iterator: function(name, start, end) {
-            return this.properties[name].iterator(start, end);
+            var prop = this.properties[name];
+            var iter = prop.iterator(start, end);
+            return {
+                name: name,
+                value: prop.list.range.value,
+                at: function(index) {
+                    return prop.parse(iter.at(index));
+                }
+            };
         },
 
         sortable: function() {
             return this.specs.filter(function(spec) { return spec.sortable; })
-                              .map(function(spec) {
-                                return this.lists[spec.name];
-                              }, this);
+                .map(function(spec) {
+                    return this.lists[spec.name];
+                }, this);
         },
 
         iterators: function(start, end) {
-            var specs = this.specs.filter(function(spec) {
-                return spec.serializable && !/Borders$/.test(spec.name);
-            });
-
-            return specs.map(function(spec) {
-                var iterator = this.iterator(spec.name, start, end);
-
-                return {
-                    name: spec.name,
-                    value: spec.value,
-                    at: function (index) {
-                        return spec.property.fn.parse(iterator.at(index));
-                    }
-                };
-            }, this);
+            return this.specs.reduce(function(ret, spec) {
+                if (spec.serializable) {
+                    ret.push(this.iterator(spec.name, start, end));
+                }
+                return ret;
+            }.bind(this), []);
         },
 
         forEach: function(start, end, callback) {
             var iterators = this.iterators(start, end);
+
+            var topBorders = this.iterator("hBorders", start, end);
+            var bottomBorders = this.iterator("hBorders", start + 1, end + 1);
+            var leftBorders = this.iterator("vBorders", start, end);
+            var rightBorders = this.iterator("vBorders", start + this.rowCount, end + this.rowCount);
 
             for (var index = start; index <= end; index++) {
                 var values = {};
@@ -242,11 +246,10 @@
                     }
                 }
 
-                // XXX: this kinda sucks performance-wise, of course.
-                values.borderTop = this.get("borderTop", index);
-                values.borderRight = this.get("borderRight", index);
-                values.borderBottom = this.get("borderBottom", index);
-                values.borderLeft = this.get("borderLeft", index);
+                values.borderTop = topBorders.at(index);
+                values.borderRight = rightBorders.at(index + this.rowCount);
+                values.borderBottom = bottomBorders.at(index + 1);
+                values.borderLeft = leftBorders.at(index);
 
                 callback(values);
             }

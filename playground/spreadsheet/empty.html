@@ -46,6 +46,14 @@
          sheet.range("J3:K4").merge().value("a");
          sheet.range("J5:K6").merge().value("b");
          sheet.range("J7:K8").merge().value("c");
+
+         var borderColor = "#F00";
+         sheet.range("B12:G13")
+              .merge()
+              .borderTop({ size: 1, color: borderColor })
+              .borderRight({ size: 1, color: borderColor })
+              .borderBottom({ size: 1, color: borderColor })
+              .borderLeft({ size: 1, color: borderColor });
      }, { recalc: true });
     </script>
   </body>
