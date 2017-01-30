@@ -16,6 +16,7 @@ kendo.dataviz.geometry = kendo.geometry;
 kendo.drawing.util.measureText = kendo.util.measureText;
 kendo.drawing.util.objectKey = kendo.util.objectKey;
 kendo.drawing.Color = kendo.Color;
+kendo.util.encodeBase64 = kendo.drawing.util.encodeBase64;
 
 })(window.kendo.jQuery);
 

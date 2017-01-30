@@ -11,6 +11,10 @@
         test("kendo.drawing is aliased as kendo.dataviz.drawing", function() {
             deepEqual(kendo.drawing, kendo.dataviz.drawing);
         });
+
+        test("encodeBase64 is aliased as kendo.util.encodeBase64", function() {
+            ok(kendo.util.encodeBase64);
+        });
     })();
 
     // ------------------------------------------------------------
