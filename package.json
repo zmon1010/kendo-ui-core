@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@progress/kendo-theme-default": "^2.0.0",
-    "@telerik/kendo-theme-bootstrap": "0.10.0",
+    "@progress/kendo-theme-bootstrap": "^0.11.0",
     "amd-optimize": "0.6.1",
     "bootstrap": "git://github.com/twbs/bootstrap.git#v4-dev",
     "browser-sync": "~2.9.10",
