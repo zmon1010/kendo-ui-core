@@ -1032,23 +1032,16 @@
 
         function getRC(a, b, c) {
             if (!a && !b && !c) {
-                return 0;
+                return null;
             }
             if ((!a && !c) || (a && c)) {
-                var negative = a && /-$/.test(a);
-                var num = parseInt(b, 10);
-                if (negative) {
-                    num = -num;
-                }
-                if (!a) {
-                    num--;
-                }
-                return num;
+                var num = b ? parseInt(b, 10) : 0;
+                return a ? num : num - 1;
             }
         }
 
         function readSymbol() {
-            var m = input.lookingAt(/^R(\[-?)?([0-9]+)?(\])?C(\[-?)?([0-9]+)?(\])?/i);
+            var m = input.lookingAt(/^R(\[)?(-?[0-9]+)?(\])?C(\[)?(-?[0-9]+)?(\])?/i);
             if (m) {
                 var row = getRC(m[1], m[2], m[3]);
                 var col = getRC(m[4], m[5], m[6]);
