@@ -413,8 +413,10 @@ var __meta__ = { // jshint ignore:line
                 position.borderWidth = taskBorderWidth;
 
                 row = kendoDomElement("tr", null);
+                cell = kendoDomElement("td");
+
                 if (task.start <= this.end && task.end >= this.start) {
-                    cell = kendoDomElement("td", null, [this._renderTask(tasks[i], position)]);
+                    cell.children.push(this._renderTask(tasks[i], position));
 
                     if (task[resourcesField] && task[resourcesField].length) {
                         if (isRtl) {
@@ -442,9 +444,9 @@ var __meta__ = { // jshint ignore:line
                         );
                     }
 
-                    row.children.push(cell);
                     addCoordinates(i);
                 }
+                row.children.push(cell);
                 rows.push(row);
             }
 
