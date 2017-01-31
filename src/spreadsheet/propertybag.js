@@ -228,14 +228,20 @@
 
         forEach: function(start, end, callback) {
             var iterators = this.iterators(start, end);
-
-            var topBorders = this.iterator("hBorders", start, end);
-            var bottomBorders = this.iterator("hBorders", start + 1, end + 1);
+            var hBorders = this.iterator("hBorders", start, end + 1);
             var leftBorders = this.iterator("vBorders", start, end);
             var rightBorders = this.iterator("vBorders", start + this.rowCount, end + this.rowCount);
+            var values, index;
 
-            for (var index = start; index <= end; index++) {
-                var values = {};
+            function addBorder(name, iterator, index) {
+                var val = iterator.at(index);
+                if (val !== iterator.value) {
+                    values[name] = val;
+                }
+            }
+
+            for (index = start; index <= end; index++) {
+                values = {};
 
                 for (var i = 0; i < iterators.length; i++) {
                     var iterator = iterators[i];
@@ -246,10 +252,10 @@
                     }
                 }
 
-                values.borderTop = topBorders.at(index);
-                values.borderRight = rightBorders.at(index + this.rowCount);
-                values.borderBottom = bottomBorders.at(index + 1);
-                values.borderLeft = leftBorders.at(index);
+                addBorder("borderLeft", leftBorders, index);
+                addBorder("borderRight", rightBorders, index + this.rowCount);
+                addBorder("borderTop", hBorders, index);
+                addBorder("borderBottom", hBorders, index + 1);
 
                 callback(values);
             }
