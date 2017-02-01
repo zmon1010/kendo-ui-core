@@ -8964,8 +8964,8 @@ function gradientRenderer(gradient) {
 }
 
 function maybeRenderWidget(element, group) {
-    if (window.kendo && window.$ && element.getAttribute(window.kendo.attr("role"))) {
-        var widget = window.kendo.widgetInstance(window.$(element));
+    if (window.kendo && window.kendo.jQuery && element.getAttribute(window.kendo.attr("role"))) {
+        var widget = window.kendo.widgetInstance(window.kendo.jQuery(element));
         if (widget && (widget.exportDOMVisual || widget.exportVisual)) {
             var visual;
             if (widget.exportDOMVisual) {
