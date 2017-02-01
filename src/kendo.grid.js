@@ -2070,7 +2070,7 @@ var __meta__ = { // jshint ignore:line
 
                         columnStart = e.x.location;
                         columnWidth = outerWidth(th);
-                        columnMinWidth = that.columns[index].minResizableWidth || 10;
+                        columnMinWidth = leafColumns(that.columns)[index].minResizableWidth || 10;
                         gridWidth = isLocked ? outerWidth(contentTable.children("tbody")) : outerWidth(that.tbody); // IE returns 0 if grid is empty and scrolling is enabled
 
                         // fix broken UI in Chrome38+
