@@ -327,10 +327,16 @@
 
     function continueBorder(array, index, b) {
         for (var i = index; --i >= 0;) {
-            var el = array[index];
-            if (el && sameBorder(el, b) && el.span + i == index) {
-                el.span++;
-                return el;
+            var el = array[i];
+            if (el) {
+                if (!el.span) {
+                    el.span = 1;
+                }
+                if (sameBorder(el, b) && el.span + i == index) {
+                    el.span++;
+                    return el;
+                }
+                return null;
             }
         }
     }
@@ -446,7 +452,7 @@
                                     .moveTo(x, top)
                                     .lineTo(x, endbottom)
                                     .close()
-                                    .stroke("#999", GUIDELINE_WIDTH)
+                                    .stroke("#aaa", GUIDELINE_WIDTH)
                             );
                         }
                     });
@@ -460,7 +466,7 @@
                                     .moveTo(left, y)
                                     .lineTo(endright, y)
                                     .close()
-                                    .stroke("#999", GUIDELINE_WIDTH)
+                                    .stroke("#aaa", GUIDELINE_WIDTH)
                             );
                         }
                     });

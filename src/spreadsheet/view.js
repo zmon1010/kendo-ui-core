@@ -1159,6 +1159,8 @@
         cell: "k-spreadsheet-cell",
         vaxis: "k-spreadsheet-vaxis",
         haxis: "k-spreadsheet-haxis",
+        vborder: "k-spreadsheet-vborder",
+        hborder: "k-spreadsheet-hborder",
         rowHeader: "k-spreadsheet-row-header",
         columnHeader: "k-spreadsheet-column-header",
         pane: "k-spreadsheet-pane",
@@ -1381,6 +1383,40 @@
             }
             layout.cells.forEach(function(cell){
                 drawCell(cont.children, cell, null, showGridLines);
+            });
+            layout.vBorders.forEach(function(a, col){
+                a.forEach(function(b, row){
+                    var x = layout.xCoords[col];
+                    var y = layout.yCoords[row];
+                    cont.children.push(kendo.dom.element("div", {
+                        className: paneClassNames.vborder,
+                        style: {
+                            top         : y + "px",
+                            left        : x + "px",
+                            height      : b.length + 1 + "px",
+                            borderWidth : b.size + "px",
+                            borderColor : b.color,
+                            transform   : "translateX(-" + (b.size-1)/2 + "px)"
+                        }
+                    }));
+                });
+            });
+            layout.hBorders.forEach(function(a, row){
+                a.forEach(function(b, col){
+                    var x = layout.xCoords[col];
+                    var y = layout.yCoords[row];
+                    cont.children.push(kendo.dom.element("div", {
+                        className: paneClassNames.hborder,
+                        style: {
+                            top         : y + "px",
+                            left        : x + "px",
+                            width       : b.length + "px",
+                            borderWidth : b.size + "px",
+                            borderColor : b.color,
+                            transform   : "translateY(-" + (b.size-1)/2 + "px)"
+                        }
+                    }));
+                });
             });
             return cont;
         },
