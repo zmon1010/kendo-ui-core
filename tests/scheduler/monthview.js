@@ -428,7 +428,7 @@
             })
         ]);
 
-        equal(view.content.find(".k-event .k-i-warning").length, 1);
+        equal(view.content.find(".k-event .k-i-non-recurrence").length, 1);
         equal(view.content.find(".k-event .k-i-reload").length, 0);
     });
 

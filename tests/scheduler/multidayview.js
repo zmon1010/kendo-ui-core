@@ -1166,7 +1166,7 @@
             recurrenceId: "1"
         })]);
 
-        equal(view.datesHeader.find(".k-event .k-i-warning").length, 1);
+        equal(view.datesHeader.find(".k-event .k-i-non-recurrence").length, 1);
         equal(view.datesHeader.find(".k-event .k-i-reload").length, 0);
     });
 
@@ -2440,7 +2440,7 @@
         }).data("kendoScheduler");
          jasmine.clock().tick(1);
         scheduler.toolbar.find(".k-nav-prev").click();
-        
+
         var view = scheduler.view();
         var row = view.content.find("tr:first");
         var offset = row.find("td:first").offset();
@@ -2459,7 +2459,7 @@
         }).data("kendoScheduler");
           jasmine.clock().tick(1);
         scheduler.toolbar.find(".k-nav-next").click();
-       
+
         var view = scheduler.view();
         var row = view.content.find("tr:first");
         var offset = row.find("td:first").offset();
@@ -2498,7 +2498,7 @@
         }).data("kendoScheduler");
         jasmine.clock().tick(1);
         scheduler.toolbar.find(".k-nav-next").click();
-         
+
         var view = scheduler.view();
         var row = view.content.find("tr:first");
         var offset = row.find("td:first").offset();

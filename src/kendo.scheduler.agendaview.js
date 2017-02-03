@@ -21,7 +21,7 @@
                                    '<span class="k-scheduler-mark" style="background-color:#=resources[0].color#"></span>' +
                                    "# } #" +
                                    "# if (data.isException()) { #" +
-                                   '<span class="k-icon k-i-warning"></span>' +
+                                   '<span class="k-icon k-i-non-recurrence"></span>' +
                                    '# } else if (data.isRecurring()) {#' +
                                    '<span class="k-icon k-i-reload"></span>' +
                                    "# } #" +
@@ -38,7 +38,7 @@
 
                 _getColumns: function(groupHeaders, columns){
                     return groupHeaders.concat(columns);
-                }, 
+                },
                 _getGroupsInDay: function(){
                     return [];
                 },
@@ -51,7 +51,7 @@
                     var view = this._view;
 
                     if (taskGroupIndex === 0 && taskIndex === 0 && groups.length) {
-                         view._renderTaskGroupsCells(headerCells, groups);                             
+                         view._renderTaskGroupsCells(headerCells, groups);
                     }
                 },
 
@@ -105,7 +105,7 @@
                     }
                 },
 
-                _compareDateGroups: function(currentGroup, prevGroup, index){           
+                _compareDateGroups: function(currentGroup, prevGroup, index){
                     if (currentGroup[index].text == prevGroup[index].text) {
                         if (index === 0) {
                             return true;
@@ -121,16 +121,16 @@
                       var groupsInDay = [];
                       var prevGroup = null;
 
-                       for (var tasksGroupIdx = 0; tasksGroupIdx < tasksGroups.length; tasksGroupIdx++) {                      
+                       for (var tasksGroupIdx = 0; tasksGroupIdx < tasksGroups.length; tasksGroupIdx++) {
                             for (var itemsIdx = 0; itemsIdx < tasksGroups[tasksGroupIdx].items.length; itemsIdx++) {
                                 var idx = 0;
 
-                                if (groupsInDay.length === 0) {                     
-                                    for (idx; idx < groups[tasksGroupIdx].length; idx++) {  
+                                if (groupsInDay.length === 0) {
+                                    for (idx; idx < groups[tasksGroupIdx].length; idx++) {
                                         groupsInDay.push([1]);
                                     }
                                 } else {
-                                    for (idx; idx < groups[tasksGroupIdx].length; idx++) {                         
+                                    for (idx; idx < groups[tasksGroupIdx].length; idx++) {
 
                                         if (this._compareDateGroups(groups[tasksGroupIdx], prevGroup, idx)) {
                                             groupsInDay[idx][groupsInDay[idx].length - 1]++;
@@ -143,10 +143,10 @@
                                         }
                                     }
                                 }
-                                prevGroup = groups[tasksGroupIdx];                  
+                                prevGroup = groups[tasksGroupIdx];
                             }
                         }
-                        
+
                         return groupsInDay;
                 },
 
@@ -154,8 +154,8 @@
                     var sumOfItemsForDate = 0;
 
                     for (var i = 0; i < tasksGroups.length; i++) {
-                                
-                        sumOfItemsForDate += tasksGroups[i].items.length;                  
+
+                        sumOfItemsForDate += tasksGroups[i].items.length;
                     }
                     return sumOfItemsForDate;
                 },
@@ -164,8 +164,8 @@
                     var view = this._view;
                     var isPhoneView = view._isMobilePhoneView();
 
-                     if(!isPhoneView){                        
-                        if (taskGroupIndex === 0 && taskIndex === 0 ) {                  
+                     if(!isPhoneView){
+                        if (taskGroupIndex === 0 && taskIndex === 0 ) {
                             headerCells.push(kendo.format(
                                 '<td class="k-scheduler-datecolumn k-first" rowspan="{0}">{1}</td>',
                                 sumOfItemsForDate,
@@ -181,11 +181,11 @@
                                     view._groupTemplate({ value: groups[taskGroupIndex][idx].text }),
                                     groups[taskGroupIndex][idx].className
                                 ));
-                            }                            
+                            }
                         }
                     }else{
                         if (taskGroupIndex === 0 && taskIndex === 0 && groups.length) {
-                            view._renderTaskGroupsCells(headerCells, groups);  
+                            view._renderTaskGroupsCells(headerCells, groups);
                         }
                     }
                 },
@@ -196,8 +196,8 @@
 
                 _renderDates: function(table){
                     var view = this._view;
-                    var sortedArray = view._groupsByDate.sort(function(a, b) { 
-                        return a.array[0].value.getTime() - b.array[0].value.getTime(); 
+                    var sortedArray = view._groupsByDate.sort(function(a, b) {
+                        return a.array[0].value.getTime() - b.array[0].value.getTime();
                     });
 
                     for (var i = 0; i < sortedArray.length; i++) {
@@ -277,7 +277,7 @@
 
             name: "agenda",
 
-             _getGroupedView: function() {           
+             _getGroupedView: function() {
                 if (this._isGroupedByDate()) {
                        return new kendo.ui.scheduler.AgendaGroupedByDateView(this);
                 } else {
@@ -341,7 +341,7 @@
                         groupHeaders.push({ text: "", className: "k-scheduler-groupcolumn"});
                     }
 
-                    columns = this._groupedView._getColumns(groupHeaders, columns);                 
+                    columns = this._groupedView._getColumns(groupHeaders, columns);
                 }
 
                 return {
@@ -375,7 +375,7 @@
                         task.head = true;
                         for (var day = 1; day < eventDurationInDays; day++) {
                             start = task.end;
-                            task = event.clone();                           
+                            task = event.clone();
                             task.start = task.startDate = kendo.date.getDate(start);
                             task.end = kendo.date.nextDay(start);
                             if (day == eventDurationInDays - 1) {
@@ -403,11 +403,11 @@
                 var isPhoneView = this._isMobilePhoneView();
                 var sumOfItemsForDate = this._groupedView._getSumOfItemsForDate(tasksGroups);
                 var groupsInDay = this._groupedView._getGroupsInDay(tasksGroups, groups);
-                var groupsRowSpanIndex = 0;               
+                var groupsRowSpanIndex = 0;
 
                 for (var taskGroupIndex = 0; taskGroupIndex < tasksGroups.length; taskGroupIndex++) {
                     var date = tasksGroups[taskGroupIndex].value;
-                   
+
                     var tasks = tasksGroups[taskGroupIndex].items;
 
                     var today = kendo.date.isToday(date);
@@ -516,7 +516,7 @@
                     if (groups[idx].groups) {
                         this._renderGroups(groups[idx].groups, table, parents);
                     } else {
-                        this._groupedView._renderTaskGroups(table, groups[idx].items, parents);  
+                        this._groupedView._renderTaskGroups(table, groups[idx].items, parents);
                     }
                 }
             },

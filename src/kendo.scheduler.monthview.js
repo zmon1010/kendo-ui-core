@@ -35,7 +35,7 @@ var __meta__ = { // jshint ignore:line
                         '<span class="k-icon k-i-arrow-60-left"></span>' +
                     '#}#' +
                     '# if(data.isException()) {#' +
-                        '<span class="k-icon k-i-warning"></span>' +
+                        '<span class="k-icon k-i-non-recurrence"></span>' +
                     '# } else if(data.isRecurring()) {#' +
                         '<span class="k-icon k-i-reload"></span>' +
                     '#}#' +
@@ -380,9 +380,9 @@ var __meta__ = { // jshint ignore:line
 
                 for (var i = range.start.index; i <= range.end.index; i++) {
                     var currentSlot = range.collection._slots[i];
-                    var dateRange = group.daySlotRanges(currentSlot.start, currentSlot.start, true)[0];                                  
+                    var dateRange = group.daySlotRanges(currentSlot.start, currentSlot.start, true)[0];
 
-                    var occurrence = event.clone({ 
+                    var occurrence = event.clone({
                         start: i === startIndex ? currentSlot.start : start,
                         end: i === endIndex ? currentSlot.end : end,
                         head: i !== endIndex || range.head,
@@ -464,7 +464,7 @@ var __meta__ = { // jshint ignore:line
                         left = slot.offsetLeft;
                         top = slot.offsetTop;
                         width = slot.offsetWidth;
-                        height = slot.offsetHeight - 2;                  
+                        height = slot.offsetHeight - 2;
                         hint = SchedulerView.fn._createResizeHint.call(view, left, top, width, height);
 
                         view._appendResizeHint(hint);
@@ -522,7 +522,7 @@ var __meta__ = { // jshint ignore:line
             if(this._isGroupedByDate()){
                 return new kendo.ui.scheduler.MonthGroupedByDateView(this);
             } else{
-                return new kendo.ui.scheduler.MonthGroupedView(this);   
+                return new kendo.ui.scheduler.MonthGroupedView(this);
             }
         },
 
@@ -561,7 +561,7 @@ var __meta__ = { // jshint ignore:line
                   collections = group._getCollections(group.daySlotCollectionCount());
                   index = slot.collectionIndex + 1;
                   var slotIndex = 0;
-                  
+
                   if (collections[index] && collections[index]._slots[slotIndex]) {
                       return  collections[index]._slots[slotIndex];
                   }
@@ -576,7 +576,7 @@ var __meta__ = { // jshint ignore:line
 
              return horizontalRange;
         },
-        
+
          _getNextVerticalRange: function(group, method, verticalRange, multiple){
              var isVertical = this._isVerticallyGrouped() && this._isGroupedByDate();
 
@@ -867,7 +867,7 @@ var __meta__ = { // jshint ignore:line
                 var startIdx = rowIdx*cellsPerRow;
 
                html += groupedView._createRows(start, startIdx, horizontalGroupCount, verticalGroupIndex);
-               start = groupedView._adjustStartDate(start, rowIdx === calendarRowsLength - 1); 
+               start = groupedView._adjustStartDate(start, rowIdx === calendarRowsLength - 1);
 
                 html += "</tr>";
             }
@@ -935,8 +935,8 @@ var __meta__ = { // jshint ignore:line
                     for (var idx = 0; idx < 6; idx++) {
                         inner.push({ text: "<div>&nbsp;</div>", className: "k-hidden k-slot-cell" });
                     }
-                    rows =  groupedView._createRowsLayout(resources, inner, this.groupHeaderTemplate, columns); 
-                    columns =  groupedView._createVerticalColumnsLayout(resources, inner, this.groupHeaderTemplate, columns); 
+                    rows =  groupedView._createRowsLayout(resources, inner, this.groupHeaderTemplate, columns);
+                    columns =  groupedView._createVerticalColumnsLayout(resources, inner, this.groupHeaderTemplate, columns);
 
                 } else {
                     columns =  groupedView._createColumnsLayout(resources, columns, this.groupHeaderTemplate, columns);
@@ -1181,7 +1181,7 @@ var __meta__ = { // jshint ignore:line
             for (var idx = 0; idx < groupCount; idx++) {
                 this._addResourceView(idx);
             }
-          
+
             this._groupedView._addDaySlotCollections(groupCount, tableRows, startDate);
         },
 
@@ -1197,7 +1197,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             start = kendo.date.toUtcTime(start);
-            end += start;     
+            end += start;
             var eventCount = Math.floor((clientHeight - firstChildHeight - this.options.moreButtonHeight) / (this.options.eventHeight + 3)) ;// add space for the more button
 
             cell.setAttribute("role", "gridcell");
@@ -1227,7 +1227,7 @@ var __meta__ = { // jshint ignore:line
        _renderEvents: function(events, groupIndex) {
             var event;
             var idx;
-            var length;           
+            var length;
 
             for (idx = 0, length = events.length; idx < length; idx++) {
                 event = events[idx];
@@ -1248,7 +1248,7 @@ var __meta__ = { // jshint ignore:line
                         var start = event.start;
                         var end = event.end;
 
-                        this._groupedView._positionEvent(event, group, range, rangeCount, start, end, rangeIndex);                                    
+                        this._groupedView._positionEvent(event, group, range, rangeCount, start, end, rangeIndex);
                     }
                 }
             }

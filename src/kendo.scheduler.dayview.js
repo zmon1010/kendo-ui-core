@@ -51,7 +51,7 @@ var __meta__ = { // jshint ignore:line
                         '<span class="k-icon k-i-arrow-60-left"></span>' +
                     '#}#' +
                     '# if(data.isException()) {#' +
-                        '<span class="k-icon k-i-warning"></span>' +
+                        '<span class="k-icon k-i-non-recurrence"></span>' +
                     '# } else if(data.isRecurring()) {#' +
                         '<span class="k-icon k-i-reload"></span>' +
                     '# } #' +
@@ -83,7 +83,7 @@ var __meta__ = { // jshint ignore:line
                 '>' +
                  '<span class="k-event-actions">' +
                     '# if(data.isException()) {#' +
-                        '<span class="k-icon k-i-warning"></span>' +
+                        '<span class="k-icon k-i-non-recurrence"></span>' +
                     '# } else if(data.isRecurring()) {#' +
                         '<span class="k-icon k-i-reload"></span>' +
                     '# } #' +
@@ -389,11 +389,11 @@ var __meta__ = { // jshint ignore:line
                     top: startSlot.offsetTop
                 };
 
-                if (this._isGroupedByDate() && multiday) {               
+                if (this._isGroupedByDate() && multiday) {
                     for (var slotIdx = startSlot.index; slotIdx <= range.end.index; slotIdx++) {
                         var slot = range.collection._slots[slotIdx];
 
-                        css.left = this._isRtl ? slot.clientWidth * 0.1 + slot.offsetLeft + 2 : slot.offsetLeft + 2;                      
+                        css.left = this._isRtl ? slot.clientWidth * 0.1 + slot.offsetLeft + 2 : slot.offsetLeft + 2;
                         css.height = slot.offsetHeight;
                         css.width = slot.clientWidth * 0.9 - 4;
 
@@ -548,7 +548,7 @@ var __meta__ = { // jshint ignore:line
             var interval = this._timeSlotInterval();
             var verticalViews = groupCount;
             var byDate = this._isGroupedByDate();
-            var tableRows = this.content.find("tr:not(.k-scheduler-header-all-day)");        
+            var tableRows = this.content.find("tr:not(.k-scheduler-header-all-day)");
             var group, time, rowIndex, cellIndex;
 
             tableRows.attr("role", "row");
@@ -560,11 +560,11 @@ var __meta__ = { // jshint ignore:line
                     verticalViews = columnCount;
                 }
                 rowCount = Math.floor(rowCount / verticalViews);
-            }                
+            }
 
-            for (var groupIndex = 0; groupIndex < verticalViews; groupIndex++) {   
+            for (var groupIndex = 0; groupIndex < verticalViews; groupIndex++) {
                 var rowMultiplier = 0;
-                var cellMultiplier = 0;    
+                var cellMultiplier = 0;
 
                 if (this._isVerticallyGrouped()) {
                     rowMultiplier = groupIndex;
@@ -572,18 +572,18 @@ var __meta__ = { // jshint ignore:line
                     cellMultiplier = groupIndex;
                 }
 
-                rowIndex = rowMultiplier * rowCount;         
+                rowIndex = rowMultiplier * rowCount;
 
               while (rowIndex < (rowMultiplier + 1) * rowCount) {
-                    var cells = tableRows[rowIndex].children;                   
+                    var cells = tableRows[rowIndex].children;
 
                     if (rowIndex % rowCount === 0) {
                         time = getMilliseconds(new Date(+this.startTime()));
                     }
 
                     var timeIndex = 0;
-                    if(byDate){                      
-                        if (this._isVerticallyGrouped()) {                           
+                    if(byDate){
+                        if (this._isVerticallyGrouped()) {
                             for (cellIndex = 0; cellIndex < groupCount; cellIndex++) {
                                 group = this.groups[cellIndex];
                                 this._addTimeSlotGroup(group, cells, cellIndex, time, interval, groupIndex);
@@ -594,15 +594,15 @@ var __meta__ = { // jshint ignore:line
                                 this._addTimeSlotGroup(group, cells, cellIndex, time, interval, timeIndex);
                                 timeIndex++;
                             }
-                        }                      
+                        }
                     } else {
                         group = this.groups[groupIndex];
                         for (cellIndex = cellMultiplier * columnCount; cellIndex < (cellMultiplier + 1) * columnCount; cellIndex++) {
-                          
+
                             this._addTimeSlotGroup(group, cells, cellIndex, time, interval,  timeIndex);
                              timeIndex++;
                         }
-                    }            
+                    }
 
                     time += interval;
                     rowIndex ++;
@@ -611,7 +611,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _addTimeSlotGroup: function(group, cells, cellIndex, time, interval, timeIndex) {
-              var cell = cells[cellIndex];                       
+              var cell = cells[cellIndex];
               var collection = group.getTimeSlotCollection(timeIndex);
               var currentDate = this._dates[timeIndex];
               var currentTime = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
@@ -627,7 +627,7 @@ var __meta__ = { // jshint ignore:line
          _addDaySlotGroup: function(collection, cells, cellIndex, columnCount, cellCount) {
                 var cell = cells[cellIndex];
                 var start = this._dates[cellCount];
-                var currentTime = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());  
+                var currentTime = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
 
                 cell.setAttribute("role", "gridcell");
                 cell.setAttribute("aria-selected", false);
@@ -685,7 +685,7 @@ var __meta__ = { // jshint ignore:line
                     group = this.groups[groupIndex];
                     collection = group.getDaySlotCollection(0);
                     for (cellIndex = cellMultiplier * columnCount; cellIndex < (cellMultiplier + 1) * columnCount; cellIndex++) {
-                          
+
                         this._addDaySlotGroup(collection, cells, cellIndex, columnCount, cellCount);
                         cellCount++;
                     }
@@ -944,7 +944,7 @@ var __meta__ = { // jshint ignore:line
                       if (byDate) {
                          columns = this._createColumnsLayout(resources, columns, this.groupHeaderTemplate, columns);
                       }else {
-                         columns = this._createColumnsLayout(resources, columns, this.groupHeaderTemplate);                      
+                         columns = this._createColumnsLayout(resources, columns, this.groupHeaderTemplate);
                       }
                 }
             }
@@ -1077,21 +1077,21 @@ var __meta__ = { // jshint ignore:line
                             var dateGroupIndex = byDate ? 0 : groupIndex;
                             var resources = function() {
                                 return that._resourceBySlot({ groupIndex: dateGroupIndex });
-                            };        
+                            };
 
-                            if (byDate) {                             
-                                for (; dateGroupIndex < groupsCount; dateGroupIndex++) {                                  
+                            if (byDate) {
+                                for (; dateGroupIndex < groupsCount; dateGroupIndex++) {
                                     result += "<td>" + allDaySlotTemplate({ date: dates[dateID], resources: resources }) + "</td>";
                                 }
-                            } else {                             
+                            } else {
                                 for (var idx = 0; idx < dates.length; idx++) {
                                     result += "<td>" + allDaySlotTemplate({ date: dates[idx], resources: resources }) + "</td>";
                                 }
-                            }                        
+                            }
 
                             return result + "</tr>";
                         };
-                    }                
+                    }
                 } else {
                     if (byDate) {
                          groupsCount = this._columnCountForLevel(this.columnLevels.length - 1) / this._columnCountForLevel(0);
@@ -1104,11 +1104,11 @@ var __meta__ = { // jshint ignore:line
             html += '<tbody>';
 
             var appendRow = function(date, majorTick) {
-                var content = "";       
+                var content = "";
                 var groupIdx = 0;
                 var idx, length;
 
-                content = '<tr' + (majorTick ? ' class="k-middle-row"' : "") + '>';           
+                content = '<tr' + (majorTick ? ' class="k-middle-row"' : "") + '>';
 
                 if (byDate) {
                     for (idx = 0, length = columnCount; idx < length; idx++) {
@@ -1118,20 +1118,20 @@ var __meta__ = { // jshint ignore:line
                                 dateIndex = dateID;
                             }
                             content = that._addCellsToContent(content, dates, date, dateIndex, groupIdx, rowIdx);
-                             
+
                         }
                         if (isVerticalGroupped) {
-                                
+
                             break;
                         }
-                    }                                     
+                    }
                 } else {
                      for (; groupIdx < groupsCount; groupIdx++) {
                         for (idx = 0, length = columnCount; idx < length; idx++) {
                             content = that._addCellsToContent(content, dates, date, idx, groupIdx, rowIdx);
                         }
                      }
-                }             
+                }
 
                 content += "</tr>";
 
@@ -1140,7 +1140,7 @@ var __meta__ = { // jshint ignore:line
 
             for (var rowIdx = 0; rowIdx < rowCount; rowIdx++) {
                 html += allDayVerticalGroupRow ? allDayVerticalGroupRow(rowIdx) : "";
-               
+
                 html += this._forTimeRange(start, end, appendRow);
                 if (isVerticalGroupped) {
                         dateID++;
@@ -1691,7 +1691,7 @@ var __meta__ = { // jshint ignore:line
                         if (ranges.length) {
                             range = ranges[0];
                             var startIndex = range.start.index;
-                            var endIndex = range.end.index;                          
+                            var endIndex = range.end.index;
 
                             if (byDate && startIndex !== endIndex) {
                                 start = range.start.start;
@@ -1701,7 +1701,7 @@ var __meta__ = { // jshint ignore:line
 
                                 for (var i = range.start.index; i <= range.end.index; i++) {
                                     element = this._createEventElement(event, !isMultiDayEvent, i !== endIndex, i !== startIndex);
-                                    
+
                                     var dateRange = group.daySlotRanges(newStart, newEnd, true)[0];
                                     newEnd.setDate(newEnd.getDate() + 1);
                                     newStart.setDate(newStart.getDate() + 1);
@@ -1712,7 +1712,7 @@ var __meta__ = { // jshint ignore:line
 
                                     element.appendTo(container);
                                 }
-                               } else {                           
+                               } else {
                                        element = this._createEventElement(event, !isMultiDayEvent);
 
                                        this._positionAllDayEvent(element, ranges[0]);
@@ -1842,13 +1842,13 @@ var __meta__ = { // jshint ignore:line
                 var group = this.groups[selection.groupIndex];
                 var collection = reverse ? group._timeSlotCollections : group._getCollections(group.daySlotCollectionCount());
                 var slots = collection[collection.length - 1]._slots;
-                var slotIndex = (!reverse && !group.daySlotCollectionCount()) ? 0 : slots.length - 1;   
-                var endMilliseconds;      
+                var slotIndex = (!reverse && !group.daySlotCollectionCount()) ? 0 : slots.length - 1;
+                var endMilliseconds;
 
                 selection.start = new Date(date);
                 selection.end = new Date(date);
 
-                if (verticalByDate) { 
+                if (verticalByDate) {
                     var newStart =new Date(slots[slotIndex].startDate());
                     var newEnd = new Date(slots[slotIndex].endDate());
                     endMilliseconds = getMilliseconds(newEnd) ? getMilliseconds(newEnd) : MS_PER_DAY ;
@@ -1863,7 +1863,7 @@ var __meta__ = { // jshint ignore:line
 
                     setTime(selection.start, getMilliseconds(start));
                     setTime(selection.end, endMilliseconds);
-                }  
+                }
 
                 if (!this._isVerticallyGrouped()) {
                     selection.groupIndex = reverse ? this.groups.length - 1 : 0;

@@ -594,7 +594,7 @@
 
         var taskCell = table.find(".k-task");
 
-        equal(taskCell.find(".k-i-warning").length, 1);
+        equal(taskCell.find(".k-i-non-recurrence").length, 1);
         equal(taskCell.find(".k-i-reload").length, 0);
     });
 
