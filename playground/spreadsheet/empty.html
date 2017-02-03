@@ -13,6 +13,7 @@
       ]);
     </script>
     <script src="../../src/jszip.js"></script>
+    <script src="../../src/pako_deflate.min.js"></script>
 
     <style type="text/css">
      body {
@@ -42,6 +43,14 @@
          sheet.range("D1").value("Underlined").underline(true).bold(true);
          sheet.range("E1").value("Much\nUnderlined\nText").underline(true).wrap(true).textAlign("right").italic(true);
          sheet.range("F1").value("Some text that wraps without newlines").wrap(true);
+
+         [ "D4:G7", "H4:H5", "C7:C8", "I3", "J3:K4", "J5:K6" ].forEach(function(ref){
+             sheet.range(ref)
+                  .borderTop({ size: 1, color: "#000" })
+                  .borderRight({ size: 1, color: "#000" })
+                  .borderBottom({ size: 1, color: "#000" })
+                  .borderLeft({ size: 1, color: "#000" });
+         });
 
          sheet.range("J3:K4").merge().value("a");
          sheet.range("J5:K6").merge().value("b");

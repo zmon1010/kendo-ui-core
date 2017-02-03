@@ -50,6 +50,10 @@
     }
 
     function doLayout(sheet, range, options) {
+        // normalize reference so we don't have to deal with Infinity here.
+        var grid = sheet._grid;
+        range = grid.normalize(range);
+
         // 1. obtain the list of cells that need to be printed, the
         //    row heights and column widths.  Place in each cell row,
         //    col (relative to range, i.e. first is 0,0), rowspan,
@@ -58,6 +62,15 @@
         var rowHeights = [];
         var colWidths = [];
         var mergedCells = sheet._getMergedCells(range);
+
+        // Merged cells should hide borders below them.  Ideally there
+        // would be no data stored non-primary merged cells, but there
+        // is, and we need to avoid drawing those borders.  Maintain
+        // these arrays to know what borders *not* to draw (they are
+        // used in `getBorders` below).
+        var hidden_hBorders = [];
+        var hidden_vBorders = [];
+
         var maxRow = -1, maxCol = -1;
         sheet.forEach(range, function(row, col, cell){
             var relrow = row - range.topLeft.row;
@@ -87,12 +100,15 @@
             } else {
                 cell.empty = true;
             }
+            cell.row = relrow;
+            cell.col = relcol;
             var m = mergedCells.primary[id];
             if (m) {
                 delete mergedCells.primary[id];
                 cell.merged = true;
                 cell.rowspan = m.height();
                 cell.colspan = m.width();
+                hideBordersBelow(cell);
                 if (options.forScreen) {
                     cell.width = sheet._columns.sum(m.topLeft.col, m.bottomRight.col);
                     cell.height = sheet._rows.sum(m.topLeft.row, m.bottomRight.row);
@@ -101,8 +117,6 @@
                 cell.rowspan = 1;
                 cell.colspan = 1;
             }
-            cell.row = relrow;
-            cell.col = relcol;
             cells.push(cell);
         });
 
@@ -116,7 +130,7 @@
 
         // when fitWidth is requested, we must update the page size
         // with the corresponding scale factor; the algorithm below
-        // (2) will continue to work, just drwaing on a bigger page.
+        // (2) will continue to work, just drawing on a bigger page.
         if (options.fitWidth) {
             var width = colWidths.reduce(sum, 0);
             if (width > pageWidth) {
@@ -199,13 +213,130 @@
         });
 
         return {
-            width  : boxWidth,
-            height : boxHeight,
-            cells  : cells.sort(normalOrder),
-            scale  : scaleFactor,
-            xCoords: xCoords,
-            yCoords: yCoords
+            width    : boxWidth,
+            height   : boxHeight,
+            cells    : cells.sort(normalOrder),
+            scale    : scaleFactor,
+            xCoords  : xCoords,
+            yCoords  : yCoords,
+            hBorders : getBorders("hBorders"),
+            vBorders : getBorders("vBorders")
         };
+
+        /*
+         * `getBorders` figures out horizontal and vertical borders in the requested
+         * range.  The returned value is an array of arrays like this:
+         *
+         * hBorders[row][col] = { size: 1, color: "red", length: 128 }
+         * vBorders[col][row] = { size: 1, color: "#000", length: 40 }
+         *
+         * Notice the reversed col/row for horizontal vs vertical borders.  `length` is
+         * the border length in pixels; coordinates can be figured out from the xCoords
+         * and yCoords arrays.
+         *
+         * The following example has 4 horizontal borders and 3 vertical borders:
+         *
+         *    ┌────────┬───────┬──────┬──────┬────────┬─────────┐
+         *    ├────────┼───────┼──────┼──────┼────────┼─────────┤
+         *    ├────────╆━━━━━━━╈━━━━━━┿━━━━━━╅────────┼─────────┤
+         *    ├────────┣━━━━━━━╋━━━━━━┿━━━━━━╉────────┼─────────┤
+         *    ├────────╊━━━━━━━╋━━━━━━┿━━━━━━╉────────┼─────────┤
+         *    ├────────╄━━━━━━━╇━━━━━━┿━━━━━━╃────────┼─────────┤
+         *    ├────────┼───────┼──────┼──────┼────────┼─────────┤
+         *    └────────┴───────┴──────┴──────┴────────┴─────────┘
+         *
+         * hBorders = [ *empty*, *empty*, HB, HB, HB, HB ]
+         * vBorders = [ *empty*, VB, VB, *empty*, VB ]
+         */
+        function getBorders(type) {
+            var props = sheet._properties;
+            var topLeft = range.topLeft;
+            var bottomRight = range.bottomRight;
+            var result = [], start, end;
+            var add = type == "hBorders"
+                ? // horizontal borders
+                function(value, index) {
+                    if (value != null) {
+                        var row = index - start;
+                        var col = ci - topLeft.col;
+                        if (!horizBorderHidden(row, col)) {
+                            var a = result[row] || (result[row] = []);
+                            var prev = continueBorder(a, col, value);
+                            var len = xCoords[col + 1] - xCoords[col];
+                            if (prev) {
+                                prev.length += len;
+                            } else {
+                                a[col] = value;
+                                value.length = len;
+                            }
+                        }
+                    }
+                }
+                : // vertical borders
+                function(value, index) {
+                    if (value != null) {
+                        var row = index - start;
+                        var col = ci - topLeft.col;
+                        if (!vertBorderHidden(col, row)) {
+                            var a = result[col] || (result[col] = []);
+                            var prev = continueBorder(a, row, value);
+                            var len = yCoords[row + 1] - yCoords[row];
+                            if (prev) {
+                                prev.length += len;
+                            } else {
+                                a[row] = value;
+                                value.length = len;
+                            }
+                        }
+                    }
+                };
+            for (var ci = topLeft.col; ci <= bottomRight.col + 1; ci++) {
+                start = grid.index(topLeft.row, ci);
+                end = grid.index(bottomRight.row + 1, ci);
+                props.iterator(type, start, end).forEach(add);
+            }
+            return result;
+        }
+
+        function hideBordersBelow(cell) {
+            var col, row, a;
+            for (col = cell.col + 1; col <= cell.col + cell.colspan - 1; ++col) {
+                a = hidden_vBorders[col] || (hidden_vBorders[col] = []);
+                for (row = cell.row; row <= cell.row + cell.rowspan; ++row) {
+                    a[row] = true;
+                }
+            }
+            for (row = cell.row + 1; row <= cell.row + cell.rowspan - 1; ++row) {
+                a = hidden_hBorders[row] || (hidden_hBorders[row] = []);
+                for (col = cell.col; col <= cell.col + cell.colspan; ++col) {
+                    a[col] = true;
+                }
+            }
+        }
+
+        function horizBorderHidden(row, col) {
+            var a = hidden_hBorders[row];
+            return a && a[col];
+        }
+
+        function vertBorderHidden(col, row) {
+            var a = hidden_vBorders[col];
+            return a && a[row];
+        }
+    }
+
+    function continueBorder(array, index, b) {
+        for (var i = index; --i >= 0;) {
+            var el = array[index];
+            if (el && sameBorder(el, b) && el.span + i == index) {
+                el.span++;
+                return el;
+            }
+        }
+    }
+
+    function sameBorder(a, b) {
+        return a.size === b.size && a.color === b.color;
     }
 
     function sum(a, b) {
@@ -335,16 +466,43 @@
                     });
                 }
 
-                var borders = new drawing.Group();
                 cells.forEach(function(cell){
-                    drawCell(cell, content, borders, options);
+                    drawCell(cell, content, options);
+                });
+
+                var borders = new drawing.Group();
+                layout.vBorders.forEach(function(a, col){
+                    a.forEach(function(b, row){
+                        var x = layout.xCoords[col];
+                        var y = layout.yCoords[row];
+                        borders.append(
+                            new drawing.Path()
+                                .moveTo(x, y)
+                                .lineTo(x, y + b.length)
+                                .close()
+                                .stroke(b.color, b.size)
+                        );
+                    });
+                });
+                layout.hBorders.forEach(function(a, row){
+                    a.forEach(function(b, col){
+                        var x = layout.xCoords[col];
+                        var y = layout.yCoords[row];
+                        borders.append(
+                            new drawing.Path()
+                                .moveTo(x, y)
+                                .lineTo(x + b.length, y)
+                                .close()
+                                .stroke(b.color, b.size)
+                        );
+                    });
                 });
                 content.append(borders);
             }
         }
     }
 
-    function drawCell(cell, content, borders, options) {
+    function drawCell(cell, content, options) {
         var g = new drawing.Group();
         content.append(g);
         var rect = new geo.Rect([ cell.left, cell.top ],
@@ -362,42 +520,6 @@
                 new drawing.Rect(r2d2)
                     .fill(cell.background || "#fff")
                     .stroke(null)
-            );
-        }
-        if (cell.borderLeft) {
-            borders.append(
-                new drawing.Path()
-                    .moveTo(cell.left, cell.top)
-                    .lineTo(cell.left, cell.bottom)
-                    .close()
-                    .stroke(cell.borderLeft.color, cell.borderLeft.size)
-            );
-        }
-        if (cell.borderTop) {
-            borders.append(
-                new drawing.Path()
-                    .moveTo(cell.left, cell.top)
-                    .lineTo(cell.right, cell.top)
-                    .close()
-                    .stroke(cell.borderTop.color, cell.borderTop.size)
-            );
-        }
-        if (cell.borderRight) {
-            borders.append(
-                new drawing.Path()
-                    .moveTo(cell.right, cell.top)
-                    .lineTo(cell.right, cell.bottom)
-                    .close()
-                    .stroke(cell.borderRight.color, cell.borderRight.size)
-            );
-        }
-        if (cell.borderBottom) {
-            borders.append(
-                new drawing.Path()
-                    .moveTo(cell.left, cell.bottom)
-                    .lineTo(cell.right, cell.bottom)
-                    .close()
-                    .stroke(cell.borderBottom.color, cell.borderBottom.size)
             );
         }
         var val = cell.value;

@@ -110,10 +110,8 @@
                 if (value === undefined) {
                     value = spec.value;
                 }
-                if (name == "hBorders") {
-                    cellCount += columnCount;
-                } else if (name == "vBorders") {
-                    cellCount += rowCount;
+                if (name == "hBorders" || name == "vBorders") {
+                    cellCount += columnCount + rowCount;
                 }
                 this.lists[name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
                 this.properties[name] = new spec.property(this.lists[name], this.lists[spec.depends]);
@@ -200,14 +198,13 @@
 
         iterator: function(name, start, end) {
             var prop = this.properties[name];
-            var iter = prop.iterator(start, end);
-            return {
-                name: name,
-                value: prop.list.range.value,
-                at: function(index) {
-                    return prop.parse(iter.at(index));
-                }
+            var iter = prop.iterator(start, end), at = iter.at;
+            iter.at = function(index) {
+                return prop.parse(at.call(iter, index));
             };
+            iter.name = name;
+            iter.value = prop.list.range.value;
+            return iter;
         },
 
         sortable: function() {
