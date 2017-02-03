@@ -50,11 +50,6 @@
         {
             IHtmlNode a = LinkTag(item, tag =>
             {
-                if (item.Parent == null)
-                {
-                    tag.PrependClass(UIPrimitives.Header);
-                }
-
                 if (item.Selected)
                 {
                     tag.PrependClass(UIPrimitives.SelectedState);

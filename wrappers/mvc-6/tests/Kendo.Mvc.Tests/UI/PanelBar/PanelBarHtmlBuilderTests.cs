@@ -120,7 +120,7 @@
         {
             IHtmlNode tag = renderer.ItemInnerContentTag(item, false);
 
-            Assert.Equal("k-link k-header", tag.Attribute("class"));
+            Assert.Equal("k-link", tag.Attribute("class"));
         }
 
         [Fact]
@@ -157,7 +157,7 @@
             StringWriter sw = new StringWriter();
             tag.Children[0].WriteTo(sw, HtmlEncoder.Default);
 
-            Assert.Equal("k-link k-header", tag.Attribute("class"));
+            Assert.Equal("k-link", tag.Attribute("class"));
             Assert.Equal("a", tag.TagName);
             Assert.Equal("text", sw.ToString());
         }
@@ -256,7 +256,7 @@
 
             IHtmlNode tag = renderer.ItemInnerContentTag(item, false);
 
-            Assert.Equal("k-link k-header custom", tag.Attribute("class"));
+            Assert.Equal("k-link custom", tag.Attribute("class"));
             Assert.Equal("overriden", tag.Attribute("href"));
         }
         [Fact]
