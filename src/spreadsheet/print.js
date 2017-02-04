@@ -108,7 +108,7 @@
                 cell.merged = true;
                 cell.rowspan = m.height();
                 cell.colspan = m.width();
-                hideBordersBelow(cell);
+                hideBordersUnder(cell);
                 if (options.forScreen) {
                     cell.width = sheet._columns.sum(m.topLeft.col, m.bottomRight.col);
                     cell.height = sheet._rows.sum(m.topLeft.row, m.bottomRight.row);
@@ -263,11 +263,13 @@
                             var a = result[row] || (result[row] = []);
                             var prev = continueBorder(a, col, value);
                             var len = xCoords[col + 1] - xCoords[col];
-                            if (prev) {
-                                prev.length += len;
-                            } else {
-                                a[col] = value;
-                                value.length = len;
+                            if (!isNaN(len)) {
+                                if (prev) {
+                                    prev.length += len;
+                                } else {
+                                    a[col] = value;
+                                    value.length = len;
+                                }
                             }
                         }
                     }
@@ -281,11 +283,13 @@
                             var a = result[col] || (result[col] = []);
                             var prev = continueBorder(a, row, value);
                             var len = yCoords[row + 1] - yCoords[row];
-                            if (prev) {
-                                prev.length += len;
-                            } else {
-                                a[row] = value;
-                                value.length = len;
+                            if (!isNaN(len)) {
+                                if (prev) {
+                                    prev.length += len;
+                                } else {
+                                    a[row] = value;
+                                    value.length = len;
+                                }
                             }
                         }
                     }
@@ -298,17 +302,17 @@
             return result;
         }
 
-        function hideBordersBelow(cell) {
+        function hideBordersUnder(cell) {
             var col, row, a;
             for (col = cell.col + 1; col <= cell.col + cell.colspan - 1; ++col) {
                 a = hidden_vBorders[col] || (hidden_vBorders[col] = []);
-                for (row = cell.row; row <= cell.row + cell.rowspan; ++row) {
+                for (row = cell.row; row < cell.row + cell.rowspan; ++row) {
                     a[row] = true;
                 }
             }
             for (row = cell.row + 1; row <= cell.row + cell.rowspan - 1; ++row) {
                 a = hidden_hBorders[row] || (hidden_hBorders[row] = []);
-                for (col = cell.col; col <= cell.col + cell.colspan; ++col) {
+                for (col = cell.col; col < cell.col + cell.colspan; ++col) {
                     a[col] = true;
                 }
             }
