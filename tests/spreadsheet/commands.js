@@ -149,10 +149,10 @@
     function getBorders(range) {
         var borders = [];
 
-        if (range.collapsedBorderLeft()) { borders.push("left"); }
-        if (range.collapsedBorderTop()) { borders.push("top"); }
-        if (range.collapsedBorderRight()) { borders.push("right"); }
-        if (range.collapsedBorderBottom()) { borders.push("bottom"); }
+        if (range.borderLeft()) { borders.push("left"); }
+        if (range.borderTop()) { borders.push("top"); }
+        if (range.borderRight()) { borders.push("right"); }
+        if (range.borderBottom()) { borders.push("bottom"); }
 
         return borders.toString();
     }

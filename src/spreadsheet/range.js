@@ -35,21 +35,17 @@
             var self = this, sheet = self._sheet;
             var skipHiddenRows = sheet.isHiddenRow.bind(sheet);
             var skipHiddenCols = sheet.isHiddenColumn.bind(sheet);
-            self._ref.forEach(function add(ref){
-                if (ref instanceof UnionRef) {
-                    ref.forEach(add);
-                } else {
-                    ref = self._normalize(ref.toRangeRef());
-                    var tl = ref.topLeft, br = ref.bottomRight;
-                    var rows = partition(tl.row, br.row, skipHiddenRows);
-                    var cols = partition(tl.col, br.col, skipHiddenCols);
-                    for (var i = 0; i < rows.length; ++i) {
-                        for (var j = 0; j < cols.length; ++j) {
-                            refs.push(new RangeRef(
-                                new CellRef(rows[i].begin, cols[j].begin),
-                                new CellRef(rows[i].end, cols[j].end)
-                            ));
-                        }
+            self._ref.forEach(function(ref){
+                ref = self._normalize(ref.toRangeRef());
+                var tl = ref.topLeft, br = ref.bottomRight;
+                var rows = partition(tl.row, br.row, skipHiddenRows);
+                var cols = partition(tl.col, br.col, skipHiddenCols);
+                for (var i = 0; i < rows.length; ++i) {
+                    for (var j = 0; j < cols.length; ++j) {
+                        refs.push(new RangeRef(
+                            new CellRef(rows[i].begin, cols[j].begin),
+                            new CellRef(rows[i].end, cols[j].end)
+                        ));
                     }
                 }
             });
@@ -830,6 +826,32 @@
 
         draw: function(options, callback) {
             this._sheet.draw(this, options, callback);
+        },
+
+        insideBorders: function(value) {
+            return this.insideVerticalBorders(value).insideHorizontalBorders(value);
+        },
+
+        insideVerticalBorders: function(value) {
+            this._ref.forEach(function(ref){
+                if (ref instanceof RangeRef && ref.width() > 1) {
+                    ref = ref.clone();
+                    ref.topLeft.col++;
+                    this._sheet.range(ref)._set("vBorders", value);
+                }
+            }, this);
+            return this;
+        },
+
+        insideHorizontalBorders: function(value) {
+            this._ref.forEach(function(ref){
+                if (ref instanceof RangeRef && ref.height() > 1) {
+                    ref = ref.clone();
+                    ref.topLeft.row++;
+                    this._sheet.range(ref)._set("hBorders", value);
+                }
+            }, this);
+            return this;
         }
     });
 
