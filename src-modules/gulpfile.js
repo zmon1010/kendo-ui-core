@@ -45,8 +45,8 @@ const PDF_GLOBALS = {
 
 const CORE_GLOBALS = {
     '@progress/kendo-drawing': 'kendo',
-    'base-class': 'kendo.Class',
-    'deep-extend': 'kendo.deepExtend'
+    'common/deep-extend': 'kendo.deepExtend',
+    'common/getter': 'kendo.getter'
 };
 
 const CHART_GLOBALS = {
@@ -91,22 +91,12 @@ function matchAbsolute(root, globals) {
     };
 }
 
-function matchGlobal(globals) {
-    return function(id) {
-        for (var field in globals) {
-            if (id.indexOf(field) >= 0) {
-                return globals[field];
-            }
-        }
-    }
-}
-
 const textMetricsGlobals = matchAbsolute(DRAWING_SRC, TEXT_METRICS_GLOBALS);
 const colorGlobals = matchAbsolute(DRAWING_SRC, COLOR_GLOBALS);
 const drawingGlobals = matchAbsolute(DRAWING_SRC, DRAWING_GLOBALS);
 const pdfGlobals = matchAbsolute(DRAWING_SRC, PDF_GLOBALS);
 const chartGlobals = matchAbsolute(CHARTS_SRC, CHART_GLOBALS);
-const coreGlobals = matchGlobal(CORE_GLOBALS);
+const coreGlobals = matchAbsolute(CHARTS_SRC, CORE_GLOBALS);
 const sparklineGlobals = matchAbsolute(CHARTS_SRC, SPARKLINE_GLOBALS);
 const stockGlobals = matchAbsolute(CHARTS_SRC, STOCK_GLOBALS);
 

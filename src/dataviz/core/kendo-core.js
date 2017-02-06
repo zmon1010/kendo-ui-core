@@ -22,6 +22,7 @@ var Segment = geometry.Segment;
 var dataviz = kendo.dataviz;
 
 var deepExtend = kendo.deepExtend;
+var __common_getter_js = kendo.getter;
 
 var X = "x";
 var Y = "y";
@@ -198,35 +199,6 @@ function getSpacing(value, defaultSpacing) {
     }
 
     return spacing;
-}
-
-var FIELD_REGEX = /\[(\d+)\]|([^\.]+)/g;
-var getterCache = {};
-
-getterCache['undefined'] = function(obj) {
-    return obj;
-};
-
-function getter(field) {
-    if (getterCache[field]) {
-        return getterCache[field];
-    }
-
-    var fields = [];
-    field.replace(FIELD_REGEX, function(match, index, field) {
-        fields.push(kendo.drawing.util.defined(index) ? index : field);
-    });
-
-    getterCache[field] = function(obj) {
-        var result = obj;
-        for (var idx = 0; idx < fields.length && result; idx++) {
-            result = result[fields[idx]];
-        }
-
-        return result;
-    };
-
-    return getterCache[field];
 }
 
 function grep(array, callback) {
@@ -6853,7 +6825,7 @@ kendo.deepExtend(kendo.dataviz, {
     deepExtend: deepExtend,
     elementStyles: elementStyles,
     getSpacing: getSpacing,
-    getter: getter,
+    getter: __common_getter_js,
     grep: grep,
     hasClasses: hasClasses,
     inArray: inArray,
