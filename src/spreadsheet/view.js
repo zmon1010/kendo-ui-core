@@ -126,10 +126,8 @@
 
         var style = {};
         var background = cell.background;
-        //var defaultBorder = background ? cellBorder({ color: background }) : null;
-        var defaultBorder = null;
         if (background) {
-            defaultBorder = background;
+            var defaultBorder = background;
             if (showGrid) {
                 // darken
                 defaultBorder = kendo.parseColor(defaultBorder).toHSV();
@@ -137,7 +135,7 @@
                 defaultBorder = defaultBorder.toCssRgba();
             }
             defaultBorder = cellBorder({ color: defaultBorder });
-            style.border = defaultBorder;
+            style.outline = defaultBorder;
         }
 
         if (background) {
