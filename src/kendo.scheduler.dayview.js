@@ -983,7 +983,7 @@ var __meta__ = { // jshint ignore:line
 
                 this.footer.on("click" + NS, ".k-scheduler-fullday", function(e) {
                     e.preventDefault();
-                    that.trigger("navigate", { view: that.name || options.name, date: that.startDate(), isWorkDay: !options.showWorkHours });
+                    that.trigger("navigate", { view: that.name || options.name, date: options.date, isWorkDay: !options.showWorkHours });
                 });
             }
         },

@@ -1232,11 +1232,26 @@
     });
 
     test("clicking workday button triggers naivgate event", 2, function() {
-        var view = setup();
+       var view = setup();
 
         view.bind("navigate",function(e) {
             equal(e.view, "MultiDayView");
             ok(e.isWorkDay);
+        });
+
+        view.footer.find(".k-scheduler-fullday").click();
+    });
+
+    test("clicking workday button persist the date", function() {
+         var date = new Date("2017/3/22")
+        var view = new MyWorkWeekView(container,  {
+            date: date,
+            workWeekStart: 0,
+        });
+
+        view.bind("navigate",function(e) {
+
+            equal(e.date, date);
         });
 
         view.footer.find(".k-scheduler-fullday").click();
