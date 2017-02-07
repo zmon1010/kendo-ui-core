@@ -1,7 +1,7 @@
 $("#spreadsheet").kendoSpreadsheet({
     columns: 26,
     rows: 30,
-    sheetsbar: false,
+    sheetsbar: true,
     sheets: [
         {
             name: "ContactsForm",
@@ -45,7 +45,7 @@ $("#spreadsheet").kendoSpreadsheet({
                             value: "Maria Anders",
                             validation: {
                                 dataType: "custom",
-                                from: "AND(LEN(A3)>3, LEN(A3)200)",
+                                from: "AND(LEN(A3)>3, LEN(A3)<200)",
                                 allowNulls: true,
                                 type: "reject",
                                 titleTemplate: "Full Name validation error",
@@ -110,7 +110,7 @@ $("#spreadsheet").kendoSpreadsheet({
                             value: "Ana Trujillo",
                             validation: {
                                 dataType: "custom",
-                                from: "AND(LEN(A4)>3, LEN(A4)200)",
+                                from: "AND(LEN(A4)>3, LEN(A4)<200)",
                                 allowNulls: true,
                                 type: "reject",
                                 titleTemplate: "Full Name validation error",
@@ -175,7 +175,7 @@ $("#spreadsheet").kendoSpreadsheet({
                             value: "Antonio Moreno",
                             validation: {
                                 dataType: "custom",
-                                from: "AND(LEN(A5)>3, LEN(A5)200)",
+                                from: "AND(LEN(A5)>3, LEN(A5)<200)",
                                 allowNulls: true,
                                 type: "reject",
                                 titleTemplate: "Full Name validation error",
@@ -240,7 +240,7 @@ $("#spreadsheet").kendoSpreadsheet({
                             value: "Thomas Hardy",
                             validation: {
                                 dataType: "custom",
-                                from: "AND(LEN(A6)>3, LEN(A6)200)",
+                                from: "AND(LEN(A6)>3, LEN(A6)<200)",
                                 allowNulls: true,
                                 type: "reject",
                                 titleTemplate: "Full Name validation error",
@@ -305,7 +305,7 @@ $("#spreadsheet").kendoSpreadsheet({
                             value: "Christina Toms",
                             validation: {
                                 dataType: "custom",
-                                from: "AND(LEN(A7)>3, LEN(A7)200)",
+                                from: "AND(LEN(A7)>3, LEN(A7)<200)",
                                 allowNulls: true,
                                 type: "reject",
                                 titleTemplate: "Full Name validation error",
@@ -370,7 +370,7 @@ $("#spreadsheet").kendoSpreadsheet({
                             value: "Hanna Moos",
                             validation: {
                                 dataType: "custom",
-                                from: "AND(LEN(A8)>3, LEN(A8)200)",
+                                from: "AND(LEN(A8)>3, LEN(A8)<200)",
                                 allowNulls: true,
                                 type: "reject",
                                 titleTemplate: "Full Name validation error",
@@ -434,7 +434,7 @@ $("#spreadsheet").kendoSpreadsheet({
                             value: "",
                             validation: {
                                 dataType: "custom",
-                                from: "AND(LEN(A9)>3, LEN(A9)200)",
+                                from: "AND(LEN(A9)>3, LEN(A9)<200)",
                                 allowNulls: true,
                                 type: "reject",
                                 titleTemplate: "Full Name validation error",

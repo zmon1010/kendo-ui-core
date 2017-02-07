@@ -215,10 +215,10 @@ var WORKSHEET = kendo.template(
                       '# if (val.errorTitle) {# errorTitle="#= val.errorTitle #" # } #' +
                       '>' +
            '# if (val.formula1) { #' +
-           '<formula1>#= val.formula1 #</formula1>' +
+           '<formula1>#: val.formula1 #</formula1>' +
            '# } #' +
            '# if (val.formula2) { #' +
-           '<formula2>#= val.formula2 #</formula2>' +
+           '<formula2>#: val.formula2 #</formula2>' +
            '# } #' +
        '</dataValidation>' +
        '# } #' +
