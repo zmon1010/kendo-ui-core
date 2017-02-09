@@ -57,7 +57,6 @@
         font-weight: bold;
         text-transform: uppercase;
         font-size: 12px;
-        color: #444;
     }
 
  </style>
