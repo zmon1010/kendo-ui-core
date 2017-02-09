@@ -1003,7 +1003,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _allowOpening: function() {
-            return this._allowSelection() && List.fn._allowOpening.call(this);
+            return List.fn._allowOpening.call(this);
         },
 
         _allowSelection: function() {
@@ -1097,7 +1097,7 @@ var __meta__ = { // jshint ignore:line
                 that._state = "";
             }
 
-            if (!that._allowSelection()) {
+            if (!that._allowSelection() && !isSelected) {
                 return resolved;
             }
 
