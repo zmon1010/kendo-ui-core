@@ -109,7 +109,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ToDataSourceResultAsyncTests.cs" />
     <Compile Include="Data\DynamicPropertyAccessExpressionBuilderTests.cs" />
+    <Compile Include="Data\ToTreeDataSourceResultAsyncTests.cs" />
     <Compile Include="Extensions\IHtmlNodeExtensions.cs" />
     <Compile Include="Infrastructure\CultureGeneratorTests.cs" />
     <Compile Include="Infrastructure\Implementation\CacheTests.cs" />
