@@ -6736,7 +6736,7 @@ var cloneNodes = (function($){
             return clone;
         };
     }
-})(window.kendo && window.kendo.jQuery);
+})(typeof window !== "undefined" && window.kendo && window.kendo.jQuery);
 
 function getXY(thing) {
     if (typeof thing == "number") {
