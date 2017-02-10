@@ -3,7 +3,7 @@
     .Columns(columns =>
     {
         columns.Bound(p => p.OrderID).Filterable(ftb => ftb.Cell(cell => cell.ShowOperators(false))).Width(225);
-        columns.Bound(p => p.ShipName).Width(500).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains")));
+        columns.Bound(p => p.ShipName).Width(500).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
         columns.Bound(p => p.Freight).Width(255).Filterable(ftb => ftb.Cell(cell => cell.Operator("gte")));
         columns.Bound(p => p.OrderDate).Format("{0:MM/dd/yyyy}");
     })

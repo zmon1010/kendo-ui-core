@@ -18,7 +18,7 @@
             </kendo:grid-column>
             <kendo:grid-column title="Ship Name" field="shipName" width="500px">
                 <kendo:grid-column-filterable>
-                    <kendo:grid-column-filterable-cell operator="contains" />
+                    <kendo:grid-column-filterable-cell operator="contains" suggestionOperator="contains" />
                 </kendo:grid-column-filterable>
             </kendo:grid-column>
             <kendo:grid-column title="Freight" field="freight" width="255px" >

@@ -82,6 +82,7 @@ $orderID->field('OrderID')
 
 $shipNameFilterableCell = new \Kendo\UI\GridColumnFilterableCell();
 $shipNameFilterableCell->operator("contains");
+$shipNameFilterableCell->suggestionOperator("contains");
 
 $shipNameFilterable = new \Kendo\UI\GridColumnFilterable();
 $shipNameFilterable->cell($shipNameFilterableCell);
