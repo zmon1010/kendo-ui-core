@@ -7135,6 +7135,7 @@ function drawDOM(element, options) {
             range.setEndBefore(el);
             page.appendChild(range.extractContents());
             copy.parentNode.insertBefore(page, copy);
+            preventBulletOnListItem(el.parentNode);
             if (table) {
                 table = closest(el, "table"); // that's the <table> on next page!
                 if (options.repeatHeaders && thead) {
@@ -7251,10 +7252,22 @@ function drawDOM(element, options) {
                     range.setStartBefore(copy);
                     page.appendChild(range.extractContents());
                     copy.parentNode.insertBefore(page, copy);
+                    preventBulletOnListItem(nextnode.parentNode);
                 }
             }
 
             splitText(nextnode);
+        }
+
+        function preventBulletOnListItem(el) {
+            // set a hint on continued LI elements, to tell the
+            // renderer not to draw the bullet again.
+            // https://github.com/telerik/kendo-ui-core/issues/2732
+            var li = closest(el, "li");
+            if (li) {
+                li.setAttribute("kendo-no-bullet", "1");
+                preventBulletOnListItem(li.parentNode);
+            }
         }
     }
 
@@ -8274,7 +8287,7 @@ function _renderElement(element, group) {
         drawOneBox(boxes[i], i === 0, i == boxes.length - 1);
     }
 
-    if (boxes.length > 0 && display == "list-item") {
+    if (boxes.length > 0 && display == "list-item" && !element.getAttribute("kendo-no-bullet")) {
         drawBullet(boxes[0]);
     }
 
