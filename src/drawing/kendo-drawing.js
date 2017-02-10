@@ -6625,11 +6625,24 @@ var TextRect = Text.extend({
 });
 
 function addClass(el, cls) {
-    el.classList.add(cls);
+    if (el.classList) {
+        el.classList.add(cls);
+    } else {
+        el.className += " " + cls;
+    }
 }
 
 function removeClass(el, cls) {
-    el.classList.remove(cls);
+    if (el.classList) {
+        el.classList.remove(cls);
+    } else {
+        el.className = el.className.split(/\s+/).reduce(function(a, word){
+            if (word != cls) {
+                a.push(word);
+            }
+            return a;
+        }, []).join(" ");
+    }
 }
 
 function setCSS(el, styles) {
@@ -6638,7 +6651,7 @@ function setCSS(el, styles) {
     });
 }
 
-var matches = (function(p){
+var matches = typeof Element !== "undefined" && Element.prototype && (function(p){
     if (p.matches) {
         return function(el, selector) { return el.matches(selector); };
     }
@@ -6671,25 +6684,59 @@ function closest(el, selector) {
 
 // clone nodes ourselves, so that we redraw <canvas> (DOM or
 // jQuery clone will not)
-function cloneNodes(el) {
-    var clone = el.cloneNode(true);
+var cloneNodes = (function($){
+    if ($) {
+        // if we have Kendo and jQuery, use this version as it will
+        // maintain proper links between cloned element and Kendo
+        // widgets (i.e. it clones jQuery data(), which isn't the same
+        // as element's data attributes).
+        // https://github.com/telerik/kendo-ui-core/issues/2750
+        return function cloneNodes(el) {
+            var clone = el.cloneNode(false);
+            if (el.nodeType == 1 /* Element */) {
+                var $el = $(el), $clone = $(clone), i;
+                var data = $el.data();
+                for (i in data) {
+                    $clone.data(i, data[i]);
+                }
+                if (/^canvas$/i.test(el.tagName)) {
+                    clone.getContext("2d").drawImage(el, 0, 0);
+                } else if (/^input$/i.test(el.tagName)) {
+                    // drop the name attributes so that we don't affect the selection of the
+                    // original nodes (i.e. checked status of radio buttons) when we insert our copy
+                    // into the DOM.  https://github.com/telerik/kendo/issues/5409
+                    el.removeAttribute("name");
+                } else {
+                    for (i = el.firstChild; i; i = i.nextSibling) {
+                        clone.appendChild(cloneNodes(i));
+                    }
+                }
+            }
+            return clone;
+        };
+    } else {
+        // the no-jQuery version
+        return function cloneNodes(el) {
+            var clone = el.cloneNode(true);
 
-    // re-draw canvases - https://github.com/telerik/kendo/issues/4872
-    var canvases = el.querySelectorAll("canvas");
-    if (canvases.length) {
-        slice$1(clone.querySelectorAll("canvas")).forEach(function(canvas$$1, i){
-            canvas$$1.getContext("2d").drawImage(canvases[i], 0, 0);
-        });
+            // re-draw canvases - https://github.com/telerik/kendo/issues/4872
+            var canvases = el.querySelectorAll("canvas");
+            if (canvases.length) {
+                slice$1(clone.querySelectorAll("canvas")).forEach(function(canvas$$1, i){
+                    canvas$$1.getContext("2d").drawImage(canvases[i], 0, 0);
+                });
+            }
+
+            // remove "name" attributes from <input> elements -
+            // https://github.com/telerik/kendo/issues/5409
+            slice$1(clone.querySelectorAll("input")).forEach(function(input){
+                input.removeAttribute("name");
+            });
+
+            return clone;
+        };
     }
-
-    // remove "name" attributes from <input> elements -
-    // https://github.com/telerik/kendo/issues/5409
-    slice$1(clone.querySelectorAll("input")).forEach(function(input){
-        input.removeAttribute("name");
-    });
-
-    return clone;
-}
+})(window.kendo && window.kendo.jQuery);
 
 function getXY(thing) {
     if (typeof thing == "number") {
