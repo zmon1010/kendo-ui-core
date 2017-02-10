@@ -153,7 +153,7 @@ sheet.batch(function(){
     spreadsheet.defineName("Sheet1!Const_PI", "3.14", true);
     spreadsheet.defineName("Const_Str", '"this is string"', true);
     spreadsheet.defineName("TESTREL", "SUM(Sheet1!R[-2]C[-2]:R[-1]C[-1])", true);
-    spreadsheet.defineName("TOTAL", "SUM(Sheet1!R1C:R[-1]C)", true);
+    spreadsheet.defineName("TOTAL", "SUM(Sheet1!R1C[]:R[-1]C[])", true);
     spreadsheet.defineName("Das_Ist_Long_Name", "$G$1:$G$20");
     sheet.range("D3").input("=SUM(foo)");
     sheet.range("D4").input("=SUM(Bar)");

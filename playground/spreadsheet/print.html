@@ -1,27 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <script src="../loader.js"></script>
 
-    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.min.css">
-    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.min.css">
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css">
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css">
     <script src="../../src/jszip.js"></script>
 
     <script>
-      requireSync([
-      "../../src/jquery.js",
-      "../../src/kendo.dom.js",
-      "../../src/cultures/kendo.culture.bg-BG.js",
-      "../../src/cultures/kendo.culture.de-DE.js",
-      "../../src/cultures/kendo.culture.el-GR.js",
-      "../../src/cultures/kendo.culture.en-GB.js",
-      "../../src/kendo.ooxml.js",
-      "../../src/kendo.spreadsheet.js",
-      "../../src/kendo.pdf.js"
-      ]);
+     requireSync([
+         "../../src/jquery.js",
+         "../../src/kendo.dom.js",
+         "../../src/kendo.spreadsheet.js",
+         "../../src/kendo.window.js"
+     ]);
     </script>
     <script src="../pako.min.js"></script>
-    <link rel="stylesheet" href="./tmp.css" />
+    <style type="text/css">
+     body {
+       font: 14px Arial,sans-serif;
+       padding: 0;
+       margin: 0;
+       overflow: hidden;
+     }
+     #spreadsheet {
+       position: absolute;
+       width: 100%;
+       height: 100%;
+     }
+     .k-spreadsheet-vborder {
+       position: absolute;
+       border-left-style: solid;
+     }
+     .k-spreadsheet-hborder {
+       position: absolute;
+       border-top-style: solid;
+     }
+    </style>
   </head>
 
   <body>
