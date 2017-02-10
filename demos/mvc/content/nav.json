@@ -3629,6 +3629,24 @@
         }
       },
       {
+        "text": "Bind Custom Attributes",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Bind Custom Attributes in Kendo UI Menu widget"
+        },
+        "url": "menu/menu-bind-attributes",
+        "meta": {
+          "kendo-ui": "In this example you can see how you can bind custom attributes in the Menu items and populate them with data. Which can be later used for executing your own logic."
+        },
+        "description": {
+          "kendo-ui": "<p>The <strong>Menu</strong> widget enables you to bind JSON data through the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/menu#configuration-dataSource' target='_blank'>dataSource option</a> exposed.</p><p>This demo shows how you can process data fecthed through remote binding, using <strong>DataSource</strong>, and populate the <strong>Menu Items</strong> with it. Additionally, to accomplish specific functionality requirments you can bind the items' attributes in order and use the values bound later to run operations based on the end user's selection.</p>"
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]     
+      },
+      {
         "packages": [
           "mvc-offline"
         ],

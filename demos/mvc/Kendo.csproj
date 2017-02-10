@@ -1263,6 +1263,7 @@
     <Content Include="Views\demos\panelbar\remote-data-binding.cshtml" />
     <Content Include="Views\demos\panelbar\templates.cshtml" />
     <Content Include="Views\demos\panelbar\angular.cshtml" />
+    <Content Include="Views\demos\menu\menu-bind-attributes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
