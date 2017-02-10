@@ -1379,41 +1379,51 @@
                     }
                 });
             }
+            var borders = kendo.spreadsheet.draw.Borders();
             layout.cells.forEach(function(cell){
+                borders.add(cell);
                 drawCell(cont.children, cell, null, showGridLines);
             });
-            layout.vBorders.forEach(function(a, col){
-                a.forEach(function(b, row){
-                    var x = layout.xCoords[col];
-                    var y = layout.yCoords[row];
-                    cont.children.push(kendo.dom.element("div", {
-                        className: paneClassNames.vborder,
-                        style: {
-                            top         : y + "px",
-                            left        : x + "px",
-                            height      : b.length + 1 + "px",
+            borders.vert.forEach(function(a){
+                a.forEach(function(b){
+                    if (!b.rendered) {
+                        b.rendered = true;
+                        var style = {
+                            left        : b.x + "px",
+                            top         : b.top + "px",
+                            height      : (b.bottom - b.top + 1) + "px",
                             borderWidth : b.size + "px",
-                            borderColor : b.color,
-                            transform   : "translateX(-" + (b.size-1)/2 + "px)"
+                            borderColor : b.color
+                        };
+                        if (b.size != 1) {
+                            style.transform = "translateX(-" + (b.size-1)/2 + "px)";
                         }
-                    }));
+                        cont.children.push(kendo.dom.element("div", {
+                            className: paneClassNames.vborder,
+                            style: style
+                        }));
+                    }
                 });
             });
-            layout.hBorders.forEach(function(a, row){
-                a.forEach(function(b, col){
-                    var x = layout.xCoords[col];
-                    var y = layout.yCoords[row];
-                    cont.children.push(kendo.dom.element("div", {
-                        className: paneClassNames.hborder,
-                        style: {
-                            top         : y + "px",
-                            left        : x + "px",
-                            width       : b.length + "px",
+            borders.horiz.forEach(function(a){
+                a.forEach(function(b){
+                    if (!b.rendered) {
+                        b.rendered = true;
+                        var style = {
+                            top         : b.y + "px",
+                            left        : b.left + "px",
+                            width       : (b.right - b.left) + "px",
                             borderWidth : b.size + "px",
-                            borderColor : b.color,
-                            transform   : "translateY(-" + (b.size-1)/2 + "px)"
+                            borderColor : b.color
+                        };
+                        if (b.size != 1) {
+                            style.transform = "translateY(-" + (b.size-1)/2 + "px)";
                         }
-                    }));
+                        cont.children.push(kendo.dom.element("div", {
+                            className: paneClassNames.hborder,
+                            style: style
+                        }));
+                    }
                 });
             });
             return cont;
