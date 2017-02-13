@@ -50,8 +50,8 @@
 
     var Grid = kendo.Class.extend({
         init: function(rows, columns, rowCount, columnCount, headerHeight, headerWidth) {
-            this.rowCount = rowCount + 1;
-            this.columnCount = columnCount + 1;
+            this.rowCount = rowCount;
+            this.columnCount = columnCount;
             this._columns = columns;
             this._rows = rows;
             this._headerHeight = headerHeight;
@@ -62,7 +62,7 @@
             ref = ref.toRangeRef();
             var topLeft = ref.topLeft;
             var bottomRight = ref.bottomRight;
-            return (topLeft.row === 0 && bottomRight.row === this.rowCount - 2) || (topLeft.col === 0 && bottomRight.col === this.columnCount - 2);
+            return (topLeft.row === 0 && bottomRight.row === this.rowCount - 1) || (topLeft.col === 0 && bottomRight.col === this.columnCount - 1);
         },
 
         width: function(start, end) {
@@ -90,11 +90,11 @@
         },
 
         rowRef: function(row) {
-            return new RangeRef(new CellRef(row, 0), new CellRef(row, this.columnCount - 2));
+            return new RangeRef(new CellRef(row, 0), new CellRef(row, this.columnCount - 1));
         },
 
         colRef: function(col) {
-            return new RangeRef(new CellRef(0, col), new CellRef(this.rowCount - 2, col));
+            return new RangeRef(new CellRef(0, col), new CellRef(this.rowCount - 1, col));
         },
 
         cellRefIndex: function(ref) {
@@ -117,8 +117,8 @@
 
             if (ref instanceof CellRef) {
                 ref = ref.clone();
-                ref.col = Math.max(0, Math.min(this.columnCount - 2, ref.col));
-                ref.row = Math.max(0, Math.min(this.rowCount - 2, ref.row));
+                ref.col = Math.max(0, Math.min(this.columnCount - 1, ref.col));
+                ref.row = Math.max(0, Math.min(this.rowCount - 1, ref.row));
             }
 
             return ref;

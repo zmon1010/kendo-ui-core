@@ -98,8 +98,8 @@
         init: function(rowCount, columnCount, defaultValues) {
             defaultValues = defaultValues || {};
 
-            this.rowCount = ++rowCount;
-            this.columnCount = ++columnCount;
+            this.rowCount = rowCount;
+            this.columnCount = columnCount;
             this.properties = {};
             this.lists = {};
 
@@ -109,6 +109,9 @@
                 var value = defaultValues[name];
                 if (value === undefined) {
                     value = spec.value;
+                }
+                if (name == "hBorders" || name == "vBorders") {
+                    cellCount += columnCount + rowCount;
                 }
                 this.lists[name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
                 this.properties[name] = new spec.property(this.lists[name], this.lists[spec.depends]);
