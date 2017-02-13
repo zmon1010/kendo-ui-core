@@ -11,17 +11,42 @@ namespace Kendo.Mvc.Extensions
     using Infrastructure.Implementation.Expressions;
     using Kendo.Mvc.UI;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Provides extension methods to process DataSourceRequest.
     /// </summary>
     public static class QueryableExtensions
     {
-
+        /// <summary>
+        /// Applies paging, sorting, filtering and grouping using the information from the DataSourceRequest object.
+        /// If the collection is already paged, the method returns an empty result.
+        /// </summary>
+        /// <param name="enumerable">An instance of <see cref="IEnumerable" />.</param>
+        /// <param name="request">An instance of <see cref="DataSourceRequest" />.</param>
+        /// <returns>
+        /// A <see cref="DataSourceResult" /> object, which contains the processed data after
+        /// paging, sorting, filtering and grouping are applied.
+        /// </returns>
         public static DataSourceResult ToDataSourceResult(this IEnumerable enumerable, DataSourceRequest request)
         {
             return enumerable.AsQueryable().ToDataSourceResult(request);
+        }
+
+        /// <summary>
+        /// Applies paging, sorting, filtering and grouping using the information from the DataSourceRequest object.
+        /// If the collection is already paged, the method returns an empty result.
+        /// </summary>
+        /// <param name="enumerable">An instance of <see cref="IEnumerable" />.</param>
+        /// <param name="request">An instance of <see cref="DataSourceRequest" />.</param>
+        /// <returns>
+        /// A Task of <see cref="DataSourceResult" /> object, which contains the processed data
+        /// after paging, sorting, filtering and grouping are applied.
+        /// It can be called with the "await" keyword for asynchronous operation.
+        /// </returns>
+        public static Task<DataSourceResult> ToDataSourceResultAsync(this IEnumerable enumerable, DataSourceRequest request)
+        {
+            return CreateDataSourceResultAsync(() => QueryableExtensions.ToDataSourceResult(enumerable, request));
         }
 
         public static DataSourceResult ToDataSourceResult(this IEnumerable enumerable, DataSourceRequest request, ModelStateDictionary modelState)
@@ -29,9 +54,40 @@ namespace Kendo.Mvc.Extensions
             return enumerable.AsQueryable().ToDataSourceResult(request, modelState);
         }
 
-        public static DataSourceResult ToDataSourceResult(this IQueryable enumerable, DataSourceRequest request)
+        public static Task<DataSourceResult> ToDataSourceResultAsync(
+            this IEnumerable enumerable, DataSourceRequest request, ModelStateDictionary modelState)
         {
-            return enumerable.ToDataSourceResult(request, null);
+            return CreateDataSourceResultAsync(() => QueryableExtensions.ToDataSourceResult(enumerable, request, modelState));
+        }
+
+        /// <summary>
+        /// Applies paging, sorting, filtering and grouping using the information from the DataSourceRequest object.
+        /// If the collection is already paged, the method returns an empty result.
+        /// </summary>
+        /// <param name="queryable">An instance of <see cref="IQueryable" />.</param>
+        /// <param name="request">An instance of <see cref="DataSourceRequest" />.</param>
+        /// <returns>
+        /// A <see cref="DataSourceResult" /> object, which contains the processed data after paging, sorting, filtering and grouping are applied.
+        /// </returns>
+        public static DataSourceResult ToDataSourceResult(this IQueryable queryable, DataSourceRequest request)
+        {
+            return queryable.ToDataSourceResult(request, null);
+        }
+
+        /// <summary>
+        /// Applies paging, sorting, filtering and grouping using the information from the DataSourceRequest object.
+        /// If the collection is already paged, the method returns an empty result.
+        /// </summary>
+        /// <param name="queryable">An instance of <see cref="IQueryable" />.</param>
+        /// <param name="request">An instance of <see cref="DataSourceRequest" />.</param>
+        /// <returns>
+        /// A Task of <see cref="DataSourceResult" /> object, which contains the processed data
+        /// after paging, sorting, filtering and grouping are applied.
+        /// It can be called with the "await" keyword for asynchronous operation.
+        /// </returns>
+        public static Task<DataSourceResult> ToDataSourceResultAsync(this IQueryable queryable, DataSourceRequest request)
+        {
+            return CreateDataSourceResultAsync(() => QueryableExtensions.ToDataSourceResult(queryable, request));
         }
 
         public static DataSourceResult ToDataSourceResult<TModel, TResult>(this IEnumerable<TModel> enumerable, DataSourceRequest request, Func<TModel, TResult> selector)
@@ -39,9 +95,21 @@ namespace Kendo.Mvc.Extensions
             return enumerable.AsQueryable().CreateDataSourceResult(request, null, selector);
         }
 
+        public static Task<DataSourceResult> ToDataSourceResultAsync<TModel, TResult>(
+            this IEnumerable<TModel> enumerable, DataSourceRequest request, Func<TModel, TResult> selector)
+        {
+            return CreateDataSourceResultAsync(() => QueryableExtensions.ToDataSourceResult(enumerable, request, selector));
+        }
+
         public static DataSourceResult ToDataSourceResult<TModel, TResult>(this IEnumerable<TModel> enumerable, DataSourceRequest request, ModelStateDictionary modelState, Func<TModel, TResult> selector)
         {
             return enumerable.AsQueryable().CreateDataSourceResult(request, modelState, selector);
+        }
+
+        public static Task<DataSourceResult> ToDataSourceResultAsync<TModel, TResult>(
+            this IEnumerable<TModel> enumerable, DataSourceRequest request, ModelStateDictionary modelState, Func<TModel, TResult> selector)
+        {
+            return CreateDataSourceResultAsync(() => QueryableExtensions.ToDataSourceResult(enumerable, request, modelState, selector));
         }
 
         public static DataSourceResult ToDataSourceResult<TModel, TResult>(this IQueryable<TModel> enumerable, DataSourceRequest request, Func<TModel, TResult> selector)
@@ -49,14 +117,31 @@ namespace Kendo.Mvc.Extensions
             return enumerable.CreateDataSourceResult(request, null, selector);
         }
 
+        public static Task<DataSourceResult> ToDataSourceResultAsync<TModel, TResult>
+            (this IQueryable<TModel> queryable, DataSourceRequest request, Func<TModel, TResult> selector)
+        {
+            return CreateDataSourceResultAsync(() => QueryableExtensions.ToDataSourceResult(queryable, request, selector));
+        }
+
         public static DataSourceResult ToDataSourceResult<TModel, TResult>(this IQueryable<TModel> enumerable, DataSourceRequest request, ModelStateDictionary modelState, Func<TModel, TResult> selector)
         {
             return enumerable.CreateDataSourceResult(request, modelState, selector);
         }
 
+        public static Task<DataSourceResult> ToDataSourceResultAsync<TModel, TResult>(
+            this IQueryable<TModel> queryable, DataSourceRequest request, ModelStateDictionary modelState, Func<TModel, TResult> selector)
+        {
+            return CreateDataSourceResultAsync(() => QueryableExtensions.ToDataSourceResult(queryable, request, modelState, selector)); ;
+        }
+
         public static DataSourceResult ToDataSourceResult(this IQueryable queryable, DataSourceRequest request, ModelStateDictionary modelState)
         {
             return queryable.CreateDataSourceResult<object, object>(request, modelState, null);
+        }
+
+        public static Task<DataSourceResult> ToDataSourceResultAsync(this IQueryable queryable, DataSourceRequest request, ModelStateDictionary modelState)
+        {
+            return CreateDataSourceResultAsync(() => QueryableExtensions.ToDataSourceResult(queryable, request, modelState));
         }
 
         private static DataSourceResult CreateDataSourceResult<TModel, TResult>(this IQueryable queryable, DataSourceRequest request, ModelStateDictionary modelState, Func<TModel, TResult> selector)
@@ -172,6 +257,11 @@ namespace Kendo.Mvc.Extensions
             return result;
         }
 
+        private static Task<DataSourceResult> CreateDataSourceResultAsync(Func<DataSourceResult> expression)
+        {
+            return Task.Run(expression);
+        }
+
         private static IQueryable CallQueryableMethod(this IQueryable source, string methodName, LambdaExpression selector)
         {
             IQueryable query = source.Provider.CreateQuery(
@@ -200,7 +290,7 @@ namespace Kendo.Mvc.Extensions
         }
 
         /// <summary>
-        /// Pages through the elements of a sequence until the specified 
+        /// Pages through the elements of a sequence until the specified
         /// <paramref name="pageIndex"/> using <paramref name="pageSize"/>.
         /// </summary>
         /// <param name="source">A sequence of values to page.</param>
@@ -227,7 +317,7 @@ namespace Kendo.Mvc.Extensions
         /// Projects each element of a sequence into a new form.
         /// </summary>
         /// <returns>
-        /// An <see cref="IQueryable" /> whose elements are the result of invoking a 
+        /// An <see cref="IQueryable" /> whose elements are the result of invoking a
         /// projection selector on each element of <paramref name="source" />.
         /// </returns>
         /// <param name="source"> A sequence of values to project. </param>
@@ -243,7 +333,7 @@ namespace Kendo.Mvc.Extensions
         /// <param name="source"> An <see cref="IQueryable" /> whose elements to group.</param>
         /// <param name="keySelector"> A function to extract the key for each element.</param>
         /// <returns>
-        /// An <see cref="IQueryable"/> with <see cref="IGrouping{TKey,TElement}"/> items, 
+        /// An <see cref="IQueryable"/> with <see cref="IGrouping{TKey,TElement}"/> items,
         /// whose elements contains a sequence of objects and a key.
         /// </returns>
         public static IQueryable GroupBy(this IQueryable source, LambdaExpression keySelector)
@@ -286,7 +376,7 @@ namespace Kendo.Mvc.Extensions
         }
 
         /// <summary>
-        /// Calls <see cref="OrderBy(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression)"/> 
+        /// Calls <see cref="OrderBy(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression)"/>
         /// or <see cref="OrderByDescending"/> depending on the <paramref name="sortDirection"/>.
         /// </summary>
         /// <param name="source">The source.</param>
@@ -316,7 +406,7 @@ namespace Kendo.Mvc.Extensions
         /// <param name="source"> An <see cref="IQueryable" /> whose elements to group. </param>
         /// <param name="groupDescriptors">The group descriptors used for grouping.</param>
         /// <returns>
-        /// An <see cref="IQueryable"/> with <see cref="IGroup"/> items, 
+        /// An <see cref="IQueryable"/> with <see cref="IGroup"/> items,
         /// whose elements contains a sequence of objects and a key.
         /// </returns>
         public static IQueryable GroupBy(this IQueryable source, IEnumerable<GroupDescriptor> groupDescriptors)
@@ -334,7 +424,7 @@ namespace Kendo.Mvc.Extensions
         /// <summary>
         /// Calculates the results of given aggregates functions on a sequence of elements.
         /// </summary>
-        /// <param name="source"> An <see cref="IQueryable" /> whose elements will 
+        /// <param name="source"> An <see cref="IQueryable" /> whose elements will
         /// be used for aggregate calculation.</param>
         /// <param name="aggregateFunctions">The aggregate functions.</param>
         /// <returns>Collection of <see cref="AggregateResult"/>s calculated for each function.</returns>
@@ -357,11 +447,11 @@ namespace Kendo.Mvc.Extensions
             return new AggregateResultCollection();
         }
 
-        /// <summary> 
-        /// Filters a sequence of values based on a predicate. 
+        /// <summary>
+        /// Filters a sequence of values based on a predicate.
         /// </summary>
         /// <returns>
-        /// An <see cref="IQueryable" /> that contains elements from the input sequence 
+        /// An <see cref="IQueryable" /> that contains elements from the input sequence
         /// that satisfy the condition specified by <paramref name="predicate" />.
         /// </returns>
         /// <param name="source"> An <see cref="IQueryable" /> to filter.</param>
@@ -377,13 +467,13 @@ namespace Kendo.Mvc.Extensions
                    Expression.Quote(predicate)));
         }
 
-        /// <summary> 
-        /// Filters a sequence of values based on a collection of <see cref="IFilterDescriptor"/>. 
+        /// <summary>
+        /// Filters a sequence of values based on a collection of <see cref="IFilterDescriptor"/>.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="filterDescriptors">The filter descriptors.</param>
         /// <returns>
-        /// An <see cref="IQueryable" /> that contains elements from the input sequence 
+        /// An <see cref="IQueryable" /> that contains elements from the input sequence
         /// that satisfy the conditions specified by each filter descriptor in <paramref name="filterDescriptors" />.
         /// </returns>
         public static IQueryable Where(this IQueryable source, IEnumerable<IFilterDescriptor> filterDescriptors)
@@ -405,7 +495,7 @@ namespace Kendo.Mvc.Extensions
         /// Returns a specified number of contiguous elements from the start of a sequence.
         /// </summary>
         /// <returns>
-        /// An <see cref="IQueryable" /> that contains the specified number 
+        /// An <see cref="IQueryable" /> that contains the specified number
         /// of elements from the start of <paramref name="source" />.
         /// </returns>
         /// <param name="source"> The sequence to return elements from.</param>
@@ -422,11 +512,11 @@ namespace Kendo.Mvc.Extensions
         }
 
         /// <summary>
-        /// Bypasses a specified number of elements in a sequence 
+        /// Bypasses a specified number of elements in a sequence
         /// and then returns the remaining elements.
         /// </summary>
         /// <returns>
-        /// An <see cref="IQueryable" /> that contains elements that occur 
+        /// An <see cref="IQueryable" /> that contains elements that occur
         /// after the specified index in the input sequence.
         /// </returns>
         /// <param name="source">
@@ -482,9 +572,9 @@ namespace Kendo.Mvc.Extensions
         }
 
         /// <summary>
-        /// Produces the set union of two sequences by using the default equality comparer.        
+        /// Produces the set union of two sequences by using the default equality comparer.
         /// </summary>
-        /// <returns>        
+        /// <returns>
         /// An <see cref="IQueryable" /> that contains the elements from both input sequences, excluding duplicates.
         /// </returns>
         /// <param name="source">
@@ -553,14 +643,45 @@ namespace Kendo.Mvc.Extensions
             }
         }
 
+        /// <summary>
+        /// Applies sorting, filtering and grouping using the information from the DataSourceRequest object.
+        /// If the collection is already paged, the method returns an empty result.
+        /// </summary>
+        /// <param name="enumerable">An instance of <see cref="IEnumerable" />.</param>
+        /// <param name="request">An instance of <see cref="DataSourceRequest" />.</param>
+        /// <returns>
+        /// A <see cref="TreeDataSourceResult" /> object, which contains the processed data after sorting, filtering and grouping are applied.
+        /// </returns>
         public static TreeDataSourceResult ToTreeDataSourceResult(this IEnumerable enumerable, DataSourceRequest request)
         {
             return enumerable.AsQueryable().ToTreeDataSourceResult(request, null);
         }
 
+        /// <summary>
+        /// Applies sorting, filtering and grouping using the information from the DataSourceRequest object.
+        /// If the collection is already paged, the method returns an empty result.
+        /// </summary>
+        /// <param name="enumerable">An instance of <see cref="IEnumerable" />.</param>
+        /// <param name="request">An instance of <see cref="DataSourceRequest" />.</param>
+        /// <returns>
+        /// A Task of <see cref="TreeDataSourceResult" /> object, which contains the processed data
+        /// after sorting, filtering and grouping are applied.
+        /// It can be called with the "await" keyword for asynchronous operation.
+        /// </returns>
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync(this IEnumerable enumerable, DataSourceRequest request)
+        {
+            return CreateTreeDataSourceResultAsync(() => QueryableExtensions.ToTreeDataSourceResult(enumerable, request));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult(this IEnumerable enumerable, DataSourceRequest request, ModelStateDictionary modelState)
         {
             return enumerable.AsQueryable().CreateTreeDataSourceResult<object, object, object, object>(request, null, null, modelState, null, null);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync(this IEnumerable enumerable,
+            DataSourceRequest request, ModelStateDictionary modelState)
+        {
+            return CreateTreeDataSourceResultAsync(() => QueryableExtensions.ToTreeDataSourceResult(enumerable, request, modelState));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, TResult>(this IQueryable<TModel> enumerable,
@@ -570,11 +691,23 @@ namespace Kendo.Mvc.Extensions
             return enumerable.ToTreeDataSourceResult<TModel, object, object, TResult>(request, null, null, selector);
         }
 
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, TResult>( this IQueryable<TModel> queryable,
+            DataSourceRequest request, Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() => QueryableExtensions.ToTreeDataSourceResult(queryable, request, selector));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, TResult>(this IEnumerable<TModel> enumerable,
             DataSourceRequest request,
             Func<TModel, TResult> selector)
         {
             return enumerable.ToTreeDataSourceResult<TModel, object, object, TResult>(request, null, null, selector);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, TResult>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request, Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() => QueryableExtensions.ToTreeDataSourceResult(enumerable, request, selector));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2>(this IQueryable<TModel> enumerable,
@@ -585,6 +718,15 @@ namespace Kendo.Mvc.Extensions
             return enumerable.CreateTreeDataSourceResult<TModel, T1, T2, TModel>(request, idSelector, parentIDSelector, null, null, null);
         }
 
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2>(this IQueryable<TModel> queryable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(queryable, request, idSelector, parentIDSelector));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2>(this IQueryable<TModel> enumerable,
             DataSourceRequest request,
             Expression<Func<TModel, T1>> idSelector,
@@ -592,6 +734,16 @@ namespace Kendo.Mvc.Extensions
             Expression<Func<TModel, bool>> rootSelector)
         {
             return enumerable.CreateTreeDataSourceResult<TModel, T1, T2, TModel>(request, idSelector, parentIDSelector, null, null, rootSelector);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2>(this IQueryable<TModel> queryable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Expression<Func<TModel, bool>> rootSelector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(queryable, request, idSelector, parentIDSelector, rootSelector));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2, TResult>(this IQueryable<TModel> queryable,
@@ -604,6 +756,17 @@ namespace Kendo.Mvc.Extensions
             return queryable.CreateTreeDataSourceResult(request, idSelector, parentIDSelector, null, selector, rootSelector);
         }
 
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2, TResult>(this IQueryable<TModel> queryable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Expression<Func<TModel, bool>> rootSelector,
+            Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(queryable, request, idSelector, parentIDSelector, rootSelector, selector));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2>(this IQueryable<TModel> queryable,
             DataSourceRequest request,
             Expression<Func<TModel, T1>> idSelector,
@@ -611,6 +774,16 @@ namespace Kendo.Mvc.Extensions
             ModelStateDictionary modelState)
         {
             return queryable.ToTreeDataSourceResult<TModel, T1, T2, TModel>(request, idSelector, parentIDSelector, modelState, null);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2>(this IQueryable<TModel> queryable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            ModelStateDictionary modelState)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(queryable, request, idSelector, parentIDSelector, modelState));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2>(this IQueryable<TModel> enumerable,
@@ -623,6 +796,17 @@ namespace Kendo.Mvc.Extensions
             return enumerable.CreateTreeDataSourceResult<TModel, T1, T2, TModel>(request, idSelector, parentIDSelector, modelState, null, rootSelector);
         }
 
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2>(this IQueryable<TModel> queryable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Expression<Func<TModel, bool>> rootSelector,
+            ModelStateDictionary modelState)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(queryable, request, idSelector, parentIDSelector, rootSelector, modelState));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2, TResult>(this IQueryable<TModel> queryable,
             DataSourceRequest request,
             Expression<Func<TModel, T1>> idSelector,
@@ -630,6 +814,16 @@ namespace Kendo.Mvc.Extensions
             Func<TModel, TResult> selector)
         {
             return queryable.CreateTreeDataSourceResult(request, idSelector, parentIDSelector, null, selector, null);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2, TResult>(this IQueryable<TModel> queryable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(queryable, request, idSelector, parentIDSelector, selector));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2, TResult>(this IQueryable<TModel> queryable,
@@ -640,6 +834,17 @@ namespace Kendo.Mvc.Extensions
             Func<TModel, TResult> selector)
         {
             return queryable.CreateTreeDataSourceResult(request, idSelector, parentIDSelector, modelState, selector, null);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2, TResult>(this IQueryable<TModel> queryable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            ModelStateDictionary modelState,
+            Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(queryable, request, idSelector, parentIDSelector, modelState, selector));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2, TResult>(this IQueryable<TModel> queryable,
@@ -653,12 +858,33 @@ namespace Kendo.Mvc.Extensions
             return queryable.CreateTreeDataSourceResult(request, idSelector, parentIDSelector, modelState, selector, rootSelector);
         }
 
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2, TResult>(this IQueryable<TModel> queryable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Expression<Func<TModel, bool>> rootSelector,
+            ModelStateDictionary modelState,
+            Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(queryable, request, idSelector, parentIDSelector, rootSelector, modelState, selector));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2>(this IEnumerable<TModel> enumerable,
             DataSourceRequest request,
             Expression<Func<TModel, T1>> idSelector,
             Expression<Func<TModel, T2>> parentIDSelector)
         {
             return enumerable.AsQueryable().CreateTreeDataSourceResult<TModel, T1, T2, TModel>(request, idSelector, parentIDSelector, null, null, null);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(enumerable, request, idSelector, parentIDSelector));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2>(this IEnumerable<TModel> enumerable,
@@ -668,6 +894,16 @@ namespace Kendo.Mvc.Extensions
             Expression<Func<TModel, bool>> rootSelector)
         {
             return enumerable.AsQueryable().CreateTreeDataSourceResult<TModel, T1, T2, TModel>(request, idSelector, parentIDSelector, null, null, rootSelector);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Expression<Func<TModel, bool>> rootSelector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(enumerable, request, idSelector, parentIDSelector, rootSelector));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2, TResult>(this IEnumerable<TModel> queryable,
@@ -680,6 +916,17 @@ namespace Kendo.Mvc.Extensions
             return queryable.AsQueryable().CreateTreeDataSourceResult(request, idSelector, parentIDSelector, null, selector, rootSelector);
         }
 
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2, TResult>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Expression<Func<TModel, bool>> rootSelector,
+            Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(enumerable, request, idSelector, parentIDSelector, rootSelector));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2>(this IEnumerable<TModel> queryable,
             DataSourceRequest request,
             Expression<Func<TModel, T1>> idSelector,
@@ -687,6 +934,16 @@ namespace Kendo.Mvc.Extensions
             ModelStateDictionary modelState)
         {
             return queryable.AsQueryable().ToTreeDataSourceResult<TModel, T1, T2, TModel>(request, idSelector, parentIDSelector, modelState, null);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            ModelStateDictionary modelState)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(enumerable, request, idSelector, parentIDSelector, modelState));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2>(this IEnumerable<TModel> enumerable,
@@ -699,6 +956,17 @@ namespace Kendo.Mvc.Extensions
             return enumerable.AsQueryable().CreateTreeDataSourceResult<TModel, T1, T2, TModel>(request, idSelector, parentIDSelector, modelState, null, rootSelector);
         }
 
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Expression<Func<TModel, bool>> rootSelector,
+            ModelStateDictionary modelState)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(enumerable, request, idSelector, parentIDSelector, rootSelector, modelState));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2, TResult>(this IEnumerable<TModel> queryable,
             DataSourceRequest request,
             Expression<Func<TModel, T1>> idSelector,
@@ -706,6 +974,16 @@ namespace Kendo.Mvc.Extensions
             Func<TModel, TResult> selector)
         {
             return queryable.AsQueryable().CreateTreeDataSourceResult(request, idSelector, parentIDSelector, null, selector, null);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2, TResult>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(enumerable, request, idSelector, parentIDSelector, selector));
         }
 
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2, TResult>(this IEnumerable<TModel> queryable,
@@ -718,6 +996,17 @@ namespace Kendo.Mvc.Extensions
             return queryable.AsQueryable().CreateTreeDataSourceResult(request, idSelector, parentIDSelector, modelState, selector, null);
         }
 
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2, TResult>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            ModelStateDictionary modelState,
+            Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(enumerable, request, idSelector, parentIDSelector, modelState, selector));
+        }
+
         public static TreeDataSourceResult ToTreeDataSourceResult<TModel, T1, T2, TResult>(this IEnumerable<TModel> queryable,
             DataSourceRequest request,
             Expression<Func<TModel, T1>> idSelector,
@@ -727,6 +1016,23 @@ namespace Kendo.Mvc.Extensions
             Func<TModel, TResult> selector)
         {
             return queryable.AsQueryable().CreateTreeDataSourceResult(request, idSelector, parentIDSelector, modelState, selector, rootSelector);
+        }
+
+        public static Task<TreeDataSourceResult> ToTreeDataSourceResultAsync<TModel, T1, T2, TResult>(this IEnumerable<TModel> enumerable,
+            DataSourceRequest request,
+            Expression<Func<TModel, T1>> idSelector,
+            Expression<Func<TModel, T2>> parentIDSelector,
+            Expression<Func<TModel, bool>> rootSelector,
+            ModelStateDictionary modelState,
+            Func<TModel, TResult> selector)
+        {
+            return CreateTreeDataSourceResultAsync(() =>
+                QueryableExtensions.ToTreeDataSourceResult(enumerable, request, idSelector, parentIDSelector, rootSelector, modelState, selector));
+        }
+
+        private static Task<TreeDataSourceResult> CreateTreeDataSourceResultAsync(Func<TreeDataSourceResult> expression)
+        {
+            return Task.Run(expression);
         }
 
         private static TreeDataSourceResult CreateTreeDataSourceResult<TModel, T1, T2, TResult>(this IQueryable queryable,
@@ -778,28 +1084,28 @@ namespace Kendo.Mvc.Extensions
 
             if (aggregates.Any())
             {
-                var dataSource = data;                
-                var groups = dataSource.GroupBy(parentIDSelector);                
+                var dataSource = data;
+                var groups = dataSource.GroupBy(parentIDSelector);
 
                 foreach (IGrouping<T2, TModel> group in groups)
                 {
-                    result.AggregateResults.Add(Convert.ToString(group.Key), group.AggregateForLevel(filteredData, aggregates, idSelector, parentIDSelector));                        
+                    result.AggregateResults.Add(Convert.ToString(group.Key), group.AggregateForLevel(filteredData, aggregates, idSelector, parentIDSelector));
                 }
-            }            
-        
+            }
+
             if (sort.Any())
             {
                 data = data.Sort(sort);
-            }            
+            }
 
             result.Data = data.Execute(selector);
 
             if (modelState != null && !modelState.IsValid)
             {
                 result.Errors = modelState.SerializeErrors();
-            }            
+            }
 
             return result;
-        }       
+        }
     }
 }
