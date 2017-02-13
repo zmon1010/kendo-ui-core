@@ -1038,23 +1038,20 @@
 
             var result = this.panes.map(function(pane) {
                 return pane.render(scrollLeft, scrollTop);
-            }, this);
-
-            var merged = [];
-            merged = Array.prototype.concat.apply(merged, result);
+            });
 
             var topCorner = kendo.dom.element("div", {
                 style: { width: grid._headerWidth + "px", height: grid._headerHeight + "px" },
                 className: View.classNames.topCorner
             });
 
-            merged.push(topCorner);
+            result.push(topCorner);
 
             if (sheet.resizeHandlePosition() && sheet.resizeHintPosition()) {
-                merged.push(this.renderResizeHint());
+                result.push(this.renderResizeHint());
             }
 
-            this.tree.render(merged);
+            this.tree.render(result);
 
             if (this.editor.isActive()) {
                 this.editor.toggleTooltip(this.activeCellRectangle());
