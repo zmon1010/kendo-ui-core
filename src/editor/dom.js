@@ -730,7 +730,7 @@ var Dom = {
     },
 
     getEffectiveBackground: function(element) {
-        var backgroundStyle = element.css("background-color");
+        var backgroundStyle = element.css("background-color") || "";
 
         if (backgroundStyle.indexOf("rgba(0, 0, 0, 0") < 0 && backgroundStyle !== "transparent") {
             return backgroundStyle;
