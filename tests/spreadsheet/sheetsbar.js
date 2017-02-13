@@ -375,7 +375,7 @@
         createSheetsBar();
 
         sheetsBar.renderSheets(sheets, 0);
-        var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-button-bare");
+        var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-bare");
 
         equal(buttons.length, 2);
         ok(!buttons.eq(0).is(".k-tabstrip-prev:visible"));
@@ -404,7 +404,7 @@
         //XX: If needed add additional renderHtml at beginning of the renderSheets method in order
         // to render sheets before calculating the scroll width.
 
-        var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-button-bare");
+        var buttons = sheetsBar._sheetsWrapper().children(".k-button.k-button-icon.k-bare");
 
         equal(buttons.length, 2);
         ok(buttons.eq(0).is(".k-tabstrip-prev"));

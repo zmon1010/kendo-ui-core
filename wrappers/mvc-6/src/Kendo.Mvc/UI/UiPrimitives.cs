@@ -25,7 +25,7 @@
         /// <summary>
         /// Bare button with an icon only (no background and borders)
         /// </summary>
-        public const string ButtonBare = "k-button-bare";
+        public const string ButtonBare = "k-bare";
 
         /// <summary>
         /// Content - rendered around custom content

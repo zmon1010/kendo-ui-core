@@ -3254,7 +3254,7 @@ var __meta__ = { // jshint ignore:line
             if (!options.template) {
                 that.options.template = "<div data-" + kendo.ns + 'name="${data.name || data}">${data.name || data}' +
                     (that.options.enabled ?
-                    '<a class="k-button k-button-icon k-button-bare"><span class="k-icon k-i-close k-setting-delete"></span></a>' : "") + '</div>';
+                    '<a class="k-button k-button-icon k-bare"><span class="k-icon k-i-close k-setting-delete"></span></a>' : "") + '</div>';
             }
 
             that.template = kendo.template(that.options.template);

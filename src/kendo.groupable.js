@@ -23,7 +23,7 @@ var __meta__ = { // jshint ignore:line
                     '<span class="k-icon k-i-sort-${(data.dir || "asc") == "asc" ? "asc-sm" : "desc-sm"}" title="(sorted ${(data.dir || "asc") == "asc" ? "ascending": "descending"})"></span>' +
                     '${data.title ? data.title: data.field}' +
                 '</a>' +
-                '<a class="k-button k-button-icon k-button-bare">' +
+                '<a class="k-button k-button-icon k-bare">' +
                     '<span class="k-icon k-i-close"></span>' +
                 '</a>' +
              '</div>',  { useWithBlock:false }),

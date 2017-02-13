@@ -30,7 +30,7 @@
             sheetsBarKIcon: "k-icon",
             sheetsBarKFontIcon: "k-icon",
             sheetsBarKButton: "k-button k-button-icon",
-            sheetsBarKButtonBare: "k-button-bare",
+            sheetsBarKButtonBare: "k-bare",
             sheetsBarKArrowW: "k-i-arrow-60-left",
             sheetsBarKArrowE: "k-i-arrow-60-right",
             sheetsBarKReset: "k-reset k-tabstrip-items",

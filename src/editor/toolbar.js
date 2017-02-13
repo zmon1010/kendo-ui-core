@@ -125,7 +125,7 @@
             this.window = $(this.element)
                 .wrap("<div class='editorToolbarWindow k-header' />")
                 .parent()
-                .prepend("<button class='k-button k-button-bare k-editortoolbar-dragHandle'><span class='k-icon k-i-handler-drag' /></button>")
+                .prepend("<button class='k-button k-bare k-editortoolbar-dragHandle'><span class='k-icon k-i-handler-drag' /></button>")
                 .kendoWindow({
                     title: false,
                     resizable: false,

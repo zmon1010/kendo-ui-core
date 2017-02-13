@@ -320,7 +320,7 @@
                         toolBarElement.find(".k-mediaplayer-quality-wrap")[0],
                         this._fullscreenButton[0]
                     ]).wrapAll("<div class='k-align-right' />");
-                    toolBarElement.find(".k-button").addClass("k-button-bare");
+                    toolBarElement.find(".k-button").addClass("k-bare");
                 }
             },
 
@@ -351,7 +351,7 @@
                         this._dropDown.select(0);
                     }
 
-                    this._dropDown.wrapper.addClass("k-button k-button-bare");
+                    this._dropDown.wrapper.addClass("k-button k-bare");
                     this._dropDown.wrapper.attr("title", this.options.messages.quality).hide();
                     this._dropDown.wrapper.find("span.k-i-arrow-60-down")
                         .removeClass('k-i-arrow-60-down')

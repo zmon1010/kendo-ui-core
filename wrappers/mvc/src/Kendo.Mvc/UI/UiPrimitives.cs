@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI
 		/// <summary>
 		/// Bare button with an icon only (no background and borders)
 		/// </summary>
-		public const string ButtonBare = "k-button-bare";
+		public const string ButtonBare = "k-bare";
 
 		/// <summary>
         /// Content - rendered around custom content
@@ -211,31 +211,31 @@ namespace Kendo.Mvc.UI
             public const string GroupFooter = "k-group-footer";
 
             public const string Action = "k-grid-action";
-            
+
             public const string Edit = "k-grid-edit";
-            
+
             public const string Delete = "k-grid-delete";
-            
+
             public const string Update = "k-grid-update";
 
             public const string SaveChanges = "k-grid-save-changes";
-            
+
             public const string CancelChanges = "k-grid-cancel-changes";
-            
+
             public const string Cancel = "k-grid-cancel";
-            
+
             public const string Insert = "k-grid-insert";
 
             public const string Add = "k-grid-add";
-            
+
             public const string Select = "k-grid-select";
 
             public const string GroupCell = "k-group-cell";
-            
+
             public const string HierarchyCell = "k-hierarchy-cell";
 
             public const string GroupCol = "k-group-col";
-            
+
             public const string HierarchyCol = "k-hierarchy-col";
 
             public const string GroupIndicator = "k-group-indicator";
@@ -243,7 +243,7 @@ namespace Kendo.Mvc.UI
             public const string FooterTemplateRow = "k-footer-template";
 
             public const string FooterTemplateRowWrap = "k-footer-template-wrap";
-            
+
             public const string ScrollableContent = "k-grid-content";
 
             /// <summary>
