@@ -270,8 +270,9 @@ var Navigator = dataviz.Class.extend({
         var plotArea = chart._plotArea;
         var slavePanes = plotArea.panes.slice(0, -1);
 
-        // Update the original series before partial refresh.
+        // Update the original series and categoryAxis before partial refresh.
         plotArea.srcSeries = chart.options.series;
+        plotArea.options.categoryAxis = chart.options.categoryAxis;
 
         plotArea.redraw(slavePanes);
     },
