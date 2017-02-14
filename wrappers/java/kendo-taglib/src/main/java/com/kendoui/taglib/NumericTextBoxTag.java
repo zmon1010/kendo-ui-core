@@ -83,6 +83,14 @@ public class NumericTextBoxTag extends WidgetTag /* interfaces *//* interfaces *
         setProperty("downArrowText", value);
     }
 
+    public float getFactor() {
+        return (Float)getProperty("factor");
+    }
+
+    public void setFactor(float value) {
+        setProperty("factor", value);
+    }
+
     public java.lang.String getFormat() {
         return (java.lang.String)getProperty("format");
     }

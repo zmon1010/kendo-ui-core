@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public string DownArrowText { get; set; }
 
+        public double? Factor { get; set; }
+
         public string Format { get; set; }
 
         public T? Max { get; set; }
@@ -57,6 +59,11 @@ namespace Kendo.Mvc.UI
             if (DownArrowText?.HasValue() == true)
             {
                 settings["downArrowText"] = DownArrowText;
+            }
+
+            if (Factor.HasValue)
+            {
+                settings["factor"] = Factor;
             }
 
             if (Format?.HasValue() == true)

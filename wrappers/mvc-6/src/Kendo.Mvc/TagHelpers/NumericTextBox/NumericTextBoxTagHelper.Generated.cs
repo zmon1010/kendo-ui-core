@@ -25,6 +25,11 @@ namespace Kendo.Mvc.TagHelpers
         public string DownArrowText { get; set; }
 
         /// <summary>
+        /// Specifies the factor by which the value is multiplied. The obtained result is used as edit value. So, if 15 as string is entered in the NumericTextBox and the factor value is set to 100 the visual value will be 1500. On blur the visual value will be divided by 100 thus scaling the widget value to the original proportion.
+        /// </summary>
+        public double? Factor { get; set; }
+
+        /// <summary>
         /// Specifies the number format used when the widget is not focused. Any valid number format is allowed.Compare with the decimals property.
         /// </summary>
         public string Format { get; set; }
@@ -96,6 +101,11 @@ namespace Kendo.Mvc.TagHelpers
             if (DownArrowText?.HasValue() == true)
             {
                 settings["downArrowText"] = DownArrowText;
+            }
+
+            if (Factor.HasValue)
+            {
+                settings["factor"] = Factor;
             }
 
             if (Format?.HasValue() == true)

@@ -59,6 +59,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public double? Factor
+        {
+            get;
+            set;
+        }
+
         public string Format
         {
             get;
@@ -104,6 +110,11 @@ namespace Kendo.Mvc.UI
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = new Dictionary<string, object>(Events);
+
+            if (Factor!=null)
+            {
+                options["factor"] = Factor;
+            }
 
             if (Format.HasValue())
             {
