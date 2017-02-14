@@ -3797,7 +3797,7 @@
                     },
                     notes: noteStyle(),
                     candlestick: {
-                        downColor: AXIS,
+                        downColor: TEXT,
                         line: {
                             color: INACTIVE_SHAPE
                         }
