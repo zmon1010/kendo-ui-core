@@ -527,7 +527,7 @@ Navigator.attachAxes = function(options, naviOptions) {
         majorTicks: { visible: true },
         tooltip: { visible: false },
         labels: { step: 1 },
-        autoBind: !naviOptions.filterable,
+        autoBind: options.autoBindElements || !naviOptions.filterable,
         autoBaseUnitSteps: {
             minutes: [ 1 ],
             hours: [ 1, 2 ],
@@ -586,6 +586,7 @@ Navigator.attachSeries = function(options, naviOptions, themeOptions) {
     var navigatorSeries = [].concat(naviOptions.series || []);
     var seriesColors = themeOptions.seriesColors;
     var defaults = naviOptions.seriesDefaults;
+    var autoBindSeries = options.autoBindElements || !naviOptions.filterable;
 
     for (var idx = 0; idx < navigatorSeries.length; idx++) {
         series.push(
@@ -599,7 +600,7 @@ Navigator.attachSeries = function(options, naviOptions, themeOptions) {
             }, defaults, navigatorSeries[idx], {
                 axis: NAVIGATOR_AXIS,
                 categoryAxis: NAVIGATOR_AXIS,
-                autoBind: !naviOptions.filterable
+                autoBind: autoBindSeries
             })
         );
     }
