@@ -177,10 +177,10 @@ var Navigator = dataviz.Class.extend({
 
     redraw: function() {
         this._redrawSelf();
-        this._initSelection();
+        this.initSelection();
     },
 
-    _initSelection: function() {
+    initSelection: function() {
         var ref = this;
         var chart = ref.chart;
         var options = ref.options;
@@ -230,7 +230,7 @@ var Navigator = dataviz.Class.extend({
         }
     },
 
-    _setRange: function() {
+    setRange: function() {
         var plotArea = this.chart._createPlotArea(true);
         var axis = plotArea.namedCategoryAxes[NAVIGATOR_AXIS];
 
@@ -615,7 +615,7 @@ function clone(obj) {
 var AUTO_CATEGORY_WIDTH = 28;
 
 var StockChart = Chart.extend({
-    _applyDefaults: function(options, themeOptions) {
+    applyDefaults: function(options, themeOptions) {
         var width = dataviz.elementSize(this.element).width || datavizConstants.DEFAULT_WIDTH;
         var theme = themeOptions;
 
@@ -646,7 +646,7 @@ var StockChart = Chart.extend({
 
         Navigator.setup(options, theme);
 
-        Chart.fn._applyDefaults.call(this, options, theme);
+        Chart.fn.applyDefaults.call(this, options, theme);
     },
 
     _setElementClass: function(element) {
@@ -654,7 +654,7 @@ var StockChart = Chart.extend({
     },
 
     setOptions: function(options) {
-        this._destroyNavigator();
+        this.destroyNavigator();
         Chart.fn.setOptions.call(this, options);
     },
 
@@ -667,7 +667,7 @@ var StockChart = Chart.extend({
     },
 
     _redraw: function() {
-        var navigator = this._navigator;
+        var navigator = this.navigator;
 
         if (!this._dirty() && navigator && navigator.options.filterable) {
             navigator.redrawSlaves();
@@ -687,16 +687,16 @@ var StockChart = Chart.extend({
     },
 
     _fullRedraw: function() {
-        var navigator = this._navigator;
+        var navigator = this.navigator;
 
         if (!navigator) {
-            navigator = this._navigator = new Navigator(this);
+            navigator = this.navigator = new Navigator(this);
             this.trigger("navigatorCreated", { navigator: navigator });
         }
 
-        navigator._setRange();
+        navigator.setRange();
         Chart.fn._redraw.call(this);
-        navigator._initSelection();
+        navigator.initSelection();
     },
 
     _trackSharedTooltip: function(coords) {
@@ -710,13 +710,32 @@ var StockChart = Chart.extend({
         }
     },
 
-    _destroyNavigator: function() {
-        this._navigator.destroy();
-        this._navigator = null;
+    bindCategories: function() {
+        Chart.fn.bindCategories.call(this);
+        this.copyNavigatorCategories();
+    },
+
+    copyNavigatorCategories: function() {
+        var definitions = [].concat(this.options.categoryAxis);
+        var categories;
+
+        for (var axisIx = 0; axisIx < definitions.length; axisIx++) {
+            var axis = definitions[axisIx];
+            if (axis.name === NAVIGATOR_AXIS) {
+                categories = axis.categories;
+            } else if (categories && axis.pane === NAVIGATOR_PANE) {
+                axis.categories = categories;
+            }
+        }
+    },
+
+    destroyNavigator: function() {
+        this.navigator.destroy();
+        this.navigator = null;
     },
 
     destroy: function() {
-        this._destroyNavigator();
+        this.destroyNavigator();
         Chart.fn.destroy.call(this);
     },
 

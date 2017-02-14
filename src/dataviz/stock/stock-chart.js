@@ -182,7 +182,7 @@
             if (instance._model) {
                 var navigator = this.navigator;
                 navigator.redraw();
-                navigator._setRange();
+                navigator.setRange();
 
                 if (!chart.options.dataSource || (chart.options.dataSource && chart._dataBound)) {
                     navigator.redrawSlaves();
@@ -191,19 +191,9 @@
         },
 
         _bindCategories: function() {
-            var options = this.options;
-            var definitions = [].concat(options.categoryAxis);
-            var axisIx, axis, categories;
-
             Chart.fn._bindCategories.call(this);
-
-            for (axisIx = 0; axisIx < definitions.length; axisIx++) {
-                axis = definitions[axisIx];
-                if (axis.name === NAVIGATOR_AXIS) {
-                    categories = axis.categories;
-                } else if (categories && axis.pane == NAVIGATOR_PANE){
-                    axis.categories = categories;
-                }
+            if (this._instance) {
+                this._instance.copyNavigatorCategories();
             }
         },
 
@@ -216,7 +206,7 @@
         setOptions: function(options) {
             this._removeNavigatorDataSource();
             this._initNavigatorOptions(options);
-            this._instance._destroyNavigator();
+            this._instance.destroyNavigator();
             Chart.fn.setOptions.call(this, options);
         },
 

@@ -171,8 +171,8 @@
         refresh: function() {
             var chart = this;
             var instance = chart._instance;
-            instance._applyDefaults(chart.options);
-            instance._applySeriesColors();
+            instance.applyDefaults(chart.options);
+            instance.applySeriesColors();
 
             chart._bindSeries();
             chart._bindCategories();
@@ -528,7 +528,7 @@
 
             chart._sourceSeries = series;
             options.series = processedSeries;
-            this._instance._applySeriesColors();
+            this._instance.applySeriesColors();
 
             chart._bindSeries();
             chart._bindCategories();
@@ -612,7 +612,7 @@
                     }
                 }
             } else if (this._instance) {
-                this._instance._bindCategoryAxisFromSeries(axis, axisIx);
+                this._instance.bindCategoryAxisFromSeries(axis, axisIx);
             }
         },
 
@@ -1144,7 +1144,7 @@
                     var axis = plotArea.seriesCategoryAxis(series);
                     var options = [].concat(chart.options.categoryAxis);
 
-                    chart._instance._bindCategoryAxisFromSeries(options[axis.axisIndex], axis.axisIndex);
+                    chart._instance.bindCategoryAxisFromSeries(options[axis.axisIndex], axis.axisIndex);
                 }
 
                 chart._noTransitionsRedraw();
@@ -1172,7 +1172,7 @@
                 elements = isArray(elements) ? elements : [elements];
             }
 
-            this._chart._instance._togglePointsHighlight(show, elements);
+            this._chart._instance.togglePointsHighlight(show, elements);
         },
 
         toggleVisibility: function(visible, filter) {

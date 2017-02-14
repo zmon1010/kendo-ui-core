@@ -169,7 +169,7 @@
                 }
             });
 
-            stubMethod(Navigator.fn, "_setRange", function() {
+            stubMethod(Navigator.fn, "setRange", function() {
                 deepEqual(chart.options.categoryAxis[0].min, new Date("2012/09/02 00:00:00"), "min");
                 deepEqual(chart.options.categoryAxis[0].max, new Date("2012/09/03 00:00:00"), "max");
             }, function() {
