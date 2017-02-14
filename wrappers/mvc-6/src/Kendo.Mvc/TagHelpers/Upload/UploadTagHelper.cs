@@ -21,7 +21,7 @@ namespace Kendo.Mvc.TagHelpers
         {
             context.Items[this.GetType()] = this;
             await output.GetChildContentAsync();
-            base.ProcessAsync(context, output);
+            await base.ProcessAsync(context, output);
         }
 
         protected override void WriteHtml(TagHelperOutput output)
