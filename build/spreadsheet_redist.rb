@@ -1,7 +1,7 @@
 require 'spreadsheet'
 
 DPL_DIST = "\\\\telerik.com\\distributions\\DailyBuilds\\DocumentProcessing"
-DPL_BRANCH = BETA ? 'Dev' : 'Current';
+DPL_BRANCH = 'Release';
 DPL_ROOT_DIR = "#{DPL_DIST}\\#{DPL_BRANCH}"
 
 def copy_dpl_binaries
