@@ -8,8 +8,6 @@
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Microsoft.AspNetCore.Session": "1.0.0",
-    "Microsoft.AspNetCore.Mvc.Abstractions": "1.0.0",
-    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
     "Microsoft.AspNetCore.Razor.Tools": {
       "version": "1.0.0-preview2-final",
       "type": "build"
