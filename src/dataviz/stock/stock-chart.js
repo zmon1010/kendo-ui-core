@@ -214,6 +214,16 @@
             this.dataSource.filter(buildFilter(e.from, e.to));
         },
 
+        requiresHandlers: function(names) {
+            if (dataviz.inArray('navigatorFilter', names)) {
+                var dataSource = this.dataSource;
+                var hasServerFiltering = dataSource && dataSource.options.serverFiltering;
+                return hasServerFiltering && this.options.navigator.dataSource;
+            }
+
+            return Chart.fn.requiresHandlers.call(this, names);
+        },
+
         _removeNavigatorDataSource: function() {
             var navigatorDataSource = this._navigatorDataSource;
             if (navigatorDataSource) {
