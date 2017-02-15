@@ -363,11 +363,8 @@ var Navigator = dataviz.Class.extend({
     filter: function() {
         var ref = this;
         var chart = ref.chart;
-        var ref_options = ref.options;
-        var filterable = ref_options.filterable;
-        var select = ref_options.select;
-
-        if (filterable) {
+        var select = ref.options.select;
+        if (chart.requiresHandlers(["navigatorFilter"])) {
             var axisOptions = new dataviz.DateCategoryAxis(deepExtend({
                 baseUnit: "fit"
             }, chart.options.categoryAxis[0], {
@@ -527,7 +524,7 @@ Navigator.attachAxes = function(options, naviOptions) {
         majorTicks: { visible: true },
         tooltip: { visible: false },
         labels: { step: 1 },
-        autoBind: options.autoBindElements || !naviOptions.filterable,
+        autoBind: !naviOptions.filterable,
         autoBaseUnitSteps: {
             minutes: [ 1 ],
             hours: [ 1, 2 ],
@@ -586,7 +583,7 @@ Navigator.attachSeries = function(options, naviOptions, themeOptions) {
     var navigatorSeries = [].concat(naviOptions.series || []);
     var seriesColors = themeOptions.seriesColors;
     var defaults = naviOptions.seriesDefaults;
-    var autoBindSeries = options.autoBindElements || !naviOptions.filterable;
+    var autoBindSeries = !naviOptions.filterable;
 
     for (var idx = 0; idx < navigatorSeries.length; idx++) {
         series.push(
@@ -669,7 +666,7 @@ var StockChart = Chart.extend({
     _redraw: function() {
         var navigator = this.navigator;
 
-        if (!this._dirty() && navigator && navigator.options.filterable) {
+        if (!this._dirty() && navigator && navigator.options.filterable !== false) {
             navigator.redrawSlaves();
         } else {
             this._fullRedraw();
