@@ -259,23 +259,29 @@
             ThemeChooser.updateLink(themeLink, newThemeUrl);
             $(doc.documentElement).removeClass("k-" + oldThemeName).addClass("k-" + themeName);
 
-            ThemeChooser.publishTheme(themeName);
+            setTimeout(function() {
+                // Wait for the CSS files to load
+                ThemeChooser.publishTheme(themeName);
+            }, 100);
+
             cookie("theme", themeName, Infinity, "/");
         },
 
         publishTheme: function (themeName) {
             var themable = ["Chart", "TreeMap", "Diagram", "StockChart", "Sparkline", "RadialGauge", "LinearGauge"];
 
-            if (kendo.dataviz) {
-                kendo.dataviz.autoTheme(true);
-            }
-
             if (kendo.dataviz && themeName) {
+                var isSass = themeName === "default-v2" || themeName === "bootstrap-v4";
+
+                if (isSass) {
+                    kendo.dataviz.autoTheme(true);
+                }
+
                 for (var i = 0; i < themable.length; i++) {
                     var widget = kendo.dataviz.ui[themable[i]];
 
                     if (widget) {
-                        widget.fn.options.theme = themeName;
+                        widget.fn.options.theme = isSass ? "inherit" : themeName;
                     }
                 }
             }
