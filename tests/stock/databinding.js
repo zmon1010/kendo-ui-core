@@ -379,16 +379,15 @@
         });
 
         test("slave panes are not redrawn during early navigator DS change", 0, function() {
-            stubMethod(Navigator.fn, "_redrawSlaves", function(silent) {
+            stubMethod(Navigator.fn, "redrawSlaves", function(silent) {
                 ok(false);
             }, function() {
                 createStockChart({
                     autoBind: false,
                     navigator: {
-                        autoBind: false
+                        autoBind: true
                     }
                 });
-                chart._navigatorDataSource.fetch();
             });
         });
 
@@ -480,7 +479,7 @@
         });
 
         test("main DS is not filtered during zoom", function() {
-            chart.trigger("zoom", {
+            chart._instance.trigger("zoom", {
                 originalEvent: {
                     preventDefault: function() {}
                 },
