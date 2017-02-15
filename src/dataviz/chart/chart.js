@@ -332,6 +332,10 @@
 
         _getThemeOptions: function(userOptions) {
             var themeName = (userOptions || {}).theme;
+            if (themeName === "inherit" || themeName === "default-v2") {
+                return dataviz.autoTheme().chart;
+            }
+
             if (defined(themeName)) {
                 var themes = dataviz.ui.themes || {};
                 var theme = themes[themeName] || themes[themeName.toLowerCase()] || {};

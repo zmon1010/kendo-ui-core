@@ -1,5 +1,10 @@
 (function(f, define){
-    define([ "./kendo.dataviz.core", "./dataviz/themes/chart-base-theme", "./dataviz/themes/themes" ], f);
+    define([
+        "./kendo.dataviz.core",
+        "./dataviz/themes/chart-base-theme",
+        "./dataviz/themes/auto-theme",
+        "./dataviz/themes/themes"
+    ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line

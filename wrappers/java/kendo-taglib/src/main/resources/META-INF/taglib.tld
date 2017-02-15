@@ -780,7 +780,8 @@ If it is not supported by the browser, the Chart will switch to the first availa
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The chart theme.The supported values are:</description>
+            <description>The chart theme. This can be either a built-in theme or "inherit".
+When set to "inherit" the chart will read the variables from the SASS-based themes.The supported values are:</description>
             <name>theme</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -32608,7 +32609,8 @@ If it is not supported by the browser, the Sparkline will switch to the first av
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>Sets Chart theme. Available themes: default, blueOpal, black.</description>
+            <description>The sparkline theme. This can be either a built-in theme or "inherit".
+When set to "inherit" the sparkline will read the variables from the SASS-based themes.The supported values are:</description>
             <name>theme</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -37884,7 +37886,8 @@ If it is not supported by the browser, the Chart will switch to the first availa
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>Sets Chart theme. Available themes: default, blueOpal, black.</description>
+            <description>The chart theme. This can be either a built-in theme or "inherit".
+When set to "inherit" the chart will read the variables from the SASS-based themes.The supported values are:</description>
             <name>theme</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

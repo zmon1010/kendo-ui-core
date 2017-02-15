@@ -1474,4 +1474,65 @@
 
         setupChart({ dataSource: ds });
     });
+
+    // ------------------------------------------------------------
+    (function() {
+        var style;
+
+        module("Auto Theme", {
+            setup: function() {
+                style = $(
+                    "<style>" +
+                        ".k-var--normal-text-color { background-color: red }" +
+                        ".k-var--chart-font { font: 10px Arial }" +
+                        ".k-var--series .k-var--series-a { background-color: rgb(1, 1, 1) }" +
+                        ".k-var--series .k-var--series-b { background-color: rgb(2, 2, 2) }" +
+                    "</style>").appendTo(document.head);
+
+                setupChart({ theme: "inherit" });
+            },
+            teardown: function() {
+                style.remove();
+
+                destroyChart();
+            }
+        });
+
+        test("sets colors for theme default-v2", function() {
+            setupChart({ theme: "default-v2" });
+            equal(chart.options.legend.labels.color, "rgb(255, 0, 0)");
+        });
+
+        test("sets colors", function() {
+            equal(chart.options.legend.labels.color, "rgb(255, 0, 0)");
+        });
+
+        test("sets font", function() {
+            equal(chart.options.legend.labels.font, "10px Arial");
+        });
+
+        test("sets series colors", function() {
+            deepEqual(chart.options.seriesColors, [
+                "rgb(1, 1, 1)",
+                "rgb(2, 2, 2)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)"
+            ]);
+        });
+
+        test("clearing cache reads new colors", function() {
+            style.remove();
+            style = $(
+                "<style>" +
+                ".k-var--normal-text-color { background-color: blue }" +
+                "</style>").appendTo(document.head);
+
+            kendo.dataviz.autoTheme(true);
+            setupChart({ theme: "inherit" });
+
+            equal(chart.options.legend.labels.color, "rgb(0, 0, 255)");
+        });
+    })();
 })();

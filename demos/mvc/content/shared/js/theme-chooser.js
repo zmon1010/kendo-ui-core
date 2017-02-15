@@ -266,6 +266,10 @@
         publishTheme: function (themeName) {
             var themable = ["Chart", "TreeMap", "Diagram", "StockChart", "Sparkline", "RadialGauge", "LinearGauge"];
 
+            if (kendo.dataviz) {
+                kendo.dataviz.autoTheme(true);
+            }
+
             if (kendo.dataviz && themeName) {
                 for (var i = 0; i < themable.length; i++) {
                     var widget = kendo.dataviz.ui[themable[i]];
