@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "Kendo.Mvc": "*",
+    "Microsoft.DotNet.InternalAbstractions": "1.0.0",
     "Microsoft.NETCore.Platforms": "1.1.0",
     "Microsoft.AspNetCore.Http": "1.1.0",
     "Microsoft.AspNetCore.Hosting": "1.0.0",
