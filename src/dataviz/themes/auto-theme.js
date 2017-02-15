@@ -127,7 +127,7 @@
 
             var series = $(".k-var--series div").toArray();
             var seriesColors = series.reduce(
-              (arr, el) => {
+              function(arr, el) {
                 var pos = seriesPos(el.className);
                 arr[pos] = $(el).css("backgroundColor");
 
