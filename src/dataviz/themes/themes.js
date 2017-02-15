@@ -3744,31 +3744,12 @@
 
     (function () {
         var TEXT = "#656565";
-        var INACTIVE = "rgba( 255, 255, 255, .5 )";
         var INACTIVE_SHAPE = "#bdbdbd";
         var AXIS = "rgba(0, 0, 0, .04)";
-        var AXIS_MINOR = "rgba(0, 0, 0, .08)";
         var SERIES = ["#ff6358", "#ffd246", "#78d237", "#28b4c8", "#2d73f5", "#aa46be"];
         var SERIES_LIGHT = ["#ffd9dc", "#ffeced", "#cceef3", "#e6f8fb", "#fff2da", "#fff7e8"];
         var PRIMARY = SERIES[0];
         var DIAGRAM_HOVER = WHITE;
-
-        function noteStyle() {
-            return {
-                icon: {
-                    background: "#007cc0",
-                    border: {
-                        color: "#007cc0"
-                    }
-                },
-                label: {
-                    color: "#ffffff"
-                },
-                line: {
-                    color: AXIS
-                }
-            };
-        }
 
         registerTheme("default-v2", {
             chart: { /* read from DOM */ },
