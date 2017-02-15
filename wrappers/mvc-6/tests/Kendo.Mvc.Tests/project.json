@@ -14,7 +14,8 @@
     "Microsoft.AspNetCore.Hosting": "1.0.0",
     "Moq": "4.2.1312.1622",
     "xunit": "2.2.0-*",
-    "dotnet-test-xunit": "2.2.0-*"
+    "dotnet-test-xunit": "2.2.0-*",
+    "xunit.runner.visualstudio": "2.1.0"
   },
   "testRunner": "xunit"
 }
