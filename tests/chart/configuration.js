@@ -1512,13 +1512,9 @@
         });
 
         test("sets series colors", function() {
-            deepEqual(chart.options.seriesColors, [
+            deepEqual(chart.options.seriesColors.slice(0, 2), [
                 "rgb(1, 1, 1)",
-                "rgb(2, 2, 2)",
-                "rgba(0, 0, 0, 0)",
-                "rgba(0, 0, 0, 0)",
-                "rgba(0, 0, 0, 0)",
-                "rgba(0, 0, 0, 0)"
+                "rgb(2, 2, 2)"
             ]);
         });
 
