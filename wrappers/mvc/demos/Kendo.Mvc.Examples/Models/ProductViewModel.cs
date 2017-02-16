@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System;
+using System.Web.Mvc;
 
 namespace Kendo.Mvc.Examples.Models
 {
@@ -15,6 +16,7 @@ namespace Kendo.Mvc.Examples.Models
 
         [Required]
         [DisplayName("Product name")]
+        [Remote("IsProductName_Available", "Validation")]
         public string ProductName
         {
             get;
