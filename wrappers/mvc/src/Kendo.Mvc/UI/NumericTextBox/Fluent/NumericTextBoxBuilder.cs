@@ -133,6 +133,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies the factor by which the value is multiplied. The obtained result is used as edit value. So, if 15 as string is entered in the NumericTextBox and the factor value is set to 100 the visual value will be 1500. On blur the visual value will be divided by 100 thus scaling the widget value to the original proportion.
+        /// </summary>
+        /// <param name="value">The value for Factor</param>
+        public NumericTextBoxBuilder<T> Factor(double value)
+        {
+            Component.Factor = value;
+            return this;
+        }
+
+        /// <summary>
         /// Stes the format of the NumericTextBox.
         /// </summary>
         /// <example>

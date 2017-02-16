@@ -40,6 +40,15 @@ class NumericTextBox extends \Kendo\UI\Widget {
     }
 
     /**
+    * Specifies the factor by which the value is multiplied. The obtained result is used as edit value. So, if 15 as string is entered in the NumericTextBox and the factor value is set to 100 the visual value will be 1500. On blur the visual value will be divided by 100 thus scaling the widget value to the original proportion.
+    * @param float $value
+    * @return \Kendo\UI\NumericTextBox
+    */
+    public function factor($value) {
+        return $this->setProperty('factor', $value);
+    }
+
+    /**
     * Specifies the number format used when the widget is not focused. Any valid number format is allowed.Compare with the decimals property.
     * @param string $value
     * @return \Kendo\UI\NumericTextBox
