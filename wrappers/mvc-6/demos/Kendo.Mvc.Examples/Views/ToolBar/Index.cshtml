@@ -5,9 +5,9 @@
         items.Add().Type(CommandType.Button).Text("Toggle Button").Togglable(true);
         items.Add().Type(CommandType.SplitButton).Text("Insert").MenuButtons(menuButtons =>
         {
-            menuButtons.Add().Text("Insert above").Icon("insert-n");
-            menuButtons.Add().Text("Insert between").Icon("insert-m");
-            menuButtons.Add().Text("Insert below").Icon("insert-s");
+            menuButtons.Add().Text("Insert above").Icon("insert-up");
+            menuButtons.Add().Text("Insert between").Icon("insert-middle");
+            menuButtons.Add().Text("Insert below").Icon("insert-down");
         });
         items.Add().Type(CommandType.Separator);
         items.Add().Template("<label>Format:</label>");
@@ -15,15 +15,15 @@
         items.Add().Type(CommandType.Separator);
         items.Add().Type(CommandType.ButtonGroup).Buttons(buttons =>
         {
-            buttons.Add().Text("Left").Togglable(true).Group("text-align").SpriteCssClass("k-i-align-left");
-            buttons.Add().Text("Center").Togglable(true).Group("text-align").SpriteCssClass("k-i-align-center");
-            buttons.Add().Text("Right").Togglable(true).Group("text-align").SpriteCssClass("k-i-align-right");
+            buttons.Add().Text("Left").Togglable(true).Group("text-align").Icon("align-left");
+            buttons.Add().Text("Center").Togglable(true).Group("text-align").Icon("align-center");
+            buttons.Add().Text("Right").Togglable(true).Group("text-align").Icon("align-right");
         });
         items.Add().Type(CommandType.ButtonGroup).Buttons(buttons =>
         {
-            buttons.Add().Text("Bold").Togglable(true).SpriteCssClass("k-i-bold").ShowText(ShowIn.Overflow);
-            buttons.Add().Text("Italic").Togglable(true).SpriteCssClass("k-i-italic").ShowText(ShowIn.Overflow);
-            buttons.Add().Text("Underline").Togglable(true).SpriteCssClass("k-i-underline").ShowText(ShowIn.Overflow);
+            buttons.Add().Text("Bold").Togglable(true).Icon("bold").ShowText(ShowIn.Overflow);
+            buttons.Add().Text("Italic").Togglable(true).Icon("italic").ShowText(ShowIn.Overflow);
+            buttons.Add().Text("Underline").Togglable(true).Icon("underline").ShowText(ShowIn.Overflow);
         });
         items.Add().Type(CommandType.Button).Text("Action").Overflow(ShowInOverflowPopup.Always);
         items.Add().Type(CommandType.Button).Text("Another Action").Overflow(ShowInOverflowPopup.Always);
