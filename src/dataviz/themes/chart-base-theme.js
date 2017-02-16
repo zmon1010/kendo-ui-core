@@ -257,7 +257,6 @@ var seriesDefaults = function (options) { return ({
     funnel: funnelSeries(),
     horizontalWaterfall: waterfallSeries(),
     line: lineSeries(),
-    verticalLine: lineSeries(),
     notes: notes(),
     ohlc: ohlcSeries(),
     radarArea: radarAreaSeries(),
@@ -269,8 +268,8 @@ var seriesDefaults = function (options) { return ({
     scatterLine: scatterLineSeries(),
     verticalArea: areaSeries(),
     verticalBoxPlot: boxPlotSeries(),
-    verticalLine: areaSeries(),
     verticalBullet: bulletSeries(),
+    verticalLine: lineSeries(),
     waterfall: waterfallSeries()
 }); };
 
