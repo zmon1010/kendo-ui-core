@@ -1489,7 +1489,7 @@
                         ".k-var--series .k-var--series-b { background-color: rgb(2, 2, 2) }" +
                     "</style>").appendTo(document.head);
 
-                setupChart({ theme: "inherit" });
+                setupChart({ theme: "sass" });
             },
             teardown: function() {
                 style.remove();
@@ -1530,7 +1530,7 @@
                 "</style>").appendTo(document.head);
 
             kendo.dataviz.autoTheme(true);
-            setupChart({ theme: "inherit" });
+            setupChart({ theme: "sass" });
 
             equal(chart.options.legend.labels.color, "rgb(0, 0, 255)");
         });

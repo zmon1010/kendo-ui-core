@@ -332,7 +332,7 @@
 
         _getThemeOptions: function(userOptions) {
             var themeName = (userOptions || {}).theme;
-            if (themeName === "inherit" || themeName === "default-v2") {
+            if (themeName === "sass" || themeName === "default-v2") {
                 return dataviz.autoTheme().chart;
             }
 

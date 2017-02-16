@@ -3859,6 +3859,8 @@
                 colors: fuse(SERIES, SERIES_LIGHT)
             }
         });
+
+        themes["sass"] = themes["default-v2"];
     })();
 
     function fuse(arr1, arr2) {

@@ -281,7 +281,7 @@
                     var widget = kendo.dataviz.ui[themable[i]];
 
                     if (widget) {
-                        widget.fn.options.theme = isSass ? "inherit" : themeName;
+                        widget.fn.options.theme = isSass ? "sass" : themeName;
                     }
                 }
             }
