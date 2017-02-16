@@ -3860,7 +3860,7 @@
             }
         });
 
-        themes["sass"] = themes["default-v2"];
+        themes.sass = themes["default-v2"];
     })();
 
     function fuse(arr1, arr2) {
