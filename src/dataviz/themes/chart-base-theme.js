@@ -268,6 +268,8 @@ var seriesDefaults = function (options) { return ({
     rangeColumn: rangeColumnSeries(),
     scatterLine: scatterLineSeries(),
     verticalArea: areaSeries(),
+    verticalBoxPlot: boxPlotSeries(),
+    verticalLine: areaSeries(),
     verticalBullet: bulletSeries(),
     waterfall: waterfallSeries()
 }); };
