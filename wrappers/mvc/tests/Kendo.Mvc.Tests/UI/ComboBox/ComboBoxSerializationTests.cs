@@ -32,7 +32,7 @@ namespace Kendo.Mvc.UI.Tests.Upload
 
             combobox.WriteInitializationScript(textWriter.Object);
 
-            output.ShouldContain("jQuery(function(){jQuery(\"#combobox\").kendoComboBox({\"text\":\"test\"});});");
+            output.ShouldContain("kendo.syncReady(function(){jQuery(\"#combobox\").kendoComboBox({\"text\":\"test\"});});");
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace Kendo.Mvc.UI.Tests.Upload
 
             combobox.WriteInitializationScript(textWriter.Object);
 
-            output.ShouldContain("jQuery(function(){jQuery(\"#combobox\").kendoComboBox({});});");
+            output.ShouldContain("kendo.syncReady(function(){jQuery(\"#combobox\").kendoComboBox({});});");
         }
     }
 }
