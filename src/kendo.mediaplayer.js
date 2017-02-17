@@ -534,8 +534,6 @@
                     min: baseTime.getTime(),
                     max: durationTime.getTime()
                 });
-                this._slider._distance = Math.round(this._slider.options.max - this._slider.options.min);
-                this._slider._resize();
 
                 if (!this._isFirstRun) {
                     this._resetTime();
