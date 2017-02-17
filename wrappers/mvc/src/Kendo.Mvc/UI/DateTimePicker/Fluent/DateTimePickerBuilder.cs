@@ -166,6 +166,17 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+
+        /// <summary>
+        /// If set to true a week of the year will be shown on the left side of the calendar. It is possible to define a template in order to customize what will be displayed.
+        /// </summary>
+        public DateTimePickerBuilder WeekNumber(Boolean weekNumber)
+        {
+            Component.WeekNumber = weekNumber;
+
+            return this;
+        }
+
         /// <summary>
         /// MonthTemplateId to be used for rendering the cells of the Calendar.
         /// </summary>

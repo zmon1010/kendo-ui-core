@@ -67,6 +67,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public Boolean? WeekNumber
+        {
+            get;
+            set;
+        }
+
         public IEnumerable<string> DisableDates
         {
             get;
@@ -104,6 +110,11 @@ namespace Kendo.Mvc.UI
             if (Culture.HasValue())
             {
                 options["culture"] = Culture;
+            }
+
+            if (WeekNumber.HasValue)
+            {
+                options["weekNumber"] = WeekNumber;
             }
 
             options["format"] = Format;

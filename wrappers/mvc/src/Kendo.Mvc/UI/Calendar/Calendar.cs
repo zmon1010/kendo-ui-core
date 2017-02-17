@@ -90,6 +90,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public Boolean? WeekNumber
+        {
+            get;
+            set;
+        }
+
         public IEnumerable<string> DisableDates
         {
             get;
@@ -135,6 +141,11 @@ namespace Kendo.Mvc.UI
             if (Max.HasValue)
             {
                 options["max"] = Max;
+            }
+
+            if (WeekNumber.HasValue)
+            {
+                options["weekNumber"] = WeekNumber;
             }
 
             if (Format.HasValue())

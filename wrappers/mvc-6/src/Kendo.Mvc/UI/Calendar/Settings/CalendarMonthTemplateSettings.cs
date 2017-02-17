@@ -33,6 +33,15 @@ namespace Kendo.Mvc.UI
                 settings["empty"] = Empty;
             }
 
+            if (WeekNumberId.HasValue())
+            {
+                settings["weekNumber"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", Calendar.IdPrefix, WeekNumberId) };
+            }
+            else if (WeekNumber.HasValue())
+            {
+                settings["weekNumber"] = WeekNumber;
+            }
+
             return settings;
         }
     }

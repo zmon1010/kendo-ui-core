@@ -19,6 +19,10 @@ namespace Kendo.Mvc.UI
 
         public string ContentId { get; set; }
 
+        public string WeekNumber { get; set; }
+
+        public string WeekNumberId { get; set; }
+
 
         public DatePicker DatePicker { get; set; }
 

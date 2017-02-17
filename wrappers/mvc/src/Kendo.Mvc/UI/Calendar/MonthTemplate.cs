@@ -10,9 +10,11 @@ namespace Kendo.Mvc.UI
 
         public string Content { get; set; }
         public string Empty { get; set; }
+        public string WeekNumber { get; set; }
 
         public string ContentId { get; set; }
         public string EmptyId { get; set; }
+        public string WeekNumberId { get; set; }
 
         protected override void Serialize(IDictionary<string, object> json)
         {         
@@ -32,6 +34,15 @@ namespace Kendo.Mvc.UI
             else if (Empty.HasValue())
             {
                 json["empty"] = Empty;
+            }
+
+            if (WeekNumberId.HasValue())
+            {
+                json["weekNumber"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", IdPrefix, WeekNumberId) };
+            }
+            else if (WeekNumber.HasValue())
+            {
+                json["weekNumber"] = WeekNumber;
             }
         }
     }

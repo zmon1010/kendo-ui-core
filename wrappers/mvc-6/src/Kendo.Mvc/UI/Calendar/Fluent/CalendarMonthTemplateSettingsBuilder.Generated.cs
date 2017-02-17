@@ -50,5 +50,25 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value">The value for WeekNumber</param>
+        public CalendarMonthTemplateSettingsBuilder WeekNumber(string value)
+        {
+            Container.WeekNumber = value;
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value">The value for WeekNumberId</param>
+        public CalendarMonthTemplateSettingsBuilder WeekNumberId(string value)
+        {
+            Container.WeekNumberId = value;
+            return this;
+        }
+
     }
 }

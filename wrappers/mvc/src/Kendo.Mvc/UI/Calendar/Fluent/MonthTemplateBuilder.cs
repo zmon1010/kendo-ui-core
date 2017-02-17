@@ -27,6 +27,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public MonthTemplateBuilder WeekNumberId(string id)
+        {
+            MonthTemplate.WeekNumberId = id;
+
+            return this;
+        }
+
         public MonthTemplateBuilder Content(string content)
         {
             MonthTemplate.Content = content;
@@ -37,6 +44,13 @@ namespace Kendo.Mvc.UI.Fluent
         public MonthTemplateBuilder Empty(string empty)
         {
             MonthTemplate.Empty = empty;
+
+            return this;
+        }
+
+        public MonthTemplateBuilder WeekNumber(string weekNumber)
+        {
+            MonthTemplate.WeekNumber = weekNumber;
 
             return this;
         }
