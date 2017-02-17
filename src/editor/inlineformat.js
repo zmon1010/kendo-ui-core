@@ -18,6 +18,7 @@ var kendo = window.kendo,
     registerFormat = Editor.EditorUtils.registerFormat,
     preventDefault = function(ev){ ev.preventDefault(); },
     MOUSEDOWN_NS = "mousedown.kendoEditor",
+    KEYDOWN_NS = "keydown.kendoEditor",
     KMARKER = "k-marker";
 
 var InlineFormatFinder = Class.extend({
@@ -417,8 +418,14 @@ var FontTool = DelayedExecutionTool.extend({
         var widget = ui.data(this.type);
         widget.value("inherit");
 
-        widget.wrapper.on(MOUSEDOWN_NS, ".k-select", function() {
-            range = editor.getRange();
+        widget.wrapper.on(MOUSEDOWN_NS, ".k-select,.k-input", function() {
+            var newRange = editor.getRange();
+            range = editor._containsRange(newRange) ? newRange : range;
+        })
+        .on(KEYDOWN_NS, function(e) {
+            if (e.keyCode === kendo.keys.ENTER) {
+                e.preventDefault();
+            }
         });
     }
 

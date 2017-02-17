@@ -1182,6 +1182,13 @@
             return range;
         },
 
+        _containsRange: function (range) {
+            var dom = kendo.ui.editor.Dom;
+            var body = this.body;
+            return range && dom.isAncestorOrSelf(body, range.startContainer) &&
+                dom.isAncestorOrSelf(body, range.endContainer);
+        },
+
         selectedHtml: function() {
             return kendo.ui.editor.Serializer.domToXhtml(this.getRange().cloneContents());
         },

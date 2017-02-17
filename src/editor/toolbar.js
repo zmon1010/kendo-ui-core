@@ -654,8 +654,7 @@
                 disabledButtons = buttons + ".k-state-disabled",
                 dropdown = ".k-dropdown",
                 colorpicker = ".k-colorpicker",
-                combobox = ".k-combobox",
-                editorTools = [buttons, dropdown, colorpicker, combobox].join(",");
+                editorTools = [buttons, dropdown, colorpicker].join(",");
 
                 element.off(NS)
                 .on("mouseenter" + NS, enabledButtons, function() { $(this).addClass("k-state-hover"); })
