@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="../dist/styles/web/kendo.common.css" />
+    <link href="../dist/styles/web/kendo.default.css" />
+    <script src="./loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.drawing.js",
+         "../src/kendo.pdf.js"
+     ]);
+    </script>
+    <body>
+      <div id="example">
+        <button class="export-pdf k-button" onclick="getPDF('#wrapper')">Export</button>
+        <div id="wrapper" class="kakao"></div>
+      </div>
+      <style>
+       #wrapper {
+         width: 700px;
+         height: 200px;
+         border: 1px solid red;
+       }
+
+       .kakao {
+         background: url("../demos/mvc/content/web/framework/company-logo.png");
+         background-position: center bottom;
+         background-repeat: no-repeat;
+         background-size: 100px 100px;
+       }
+      </style>
+
+    <script>
+     function getPDF(selector) {
+         kendo.drawing.drawDOM($(selector)).then(function(group){
+             kendo.drawing.pdf.saveAs(group, "Invoice.pdf");
+         });
+     }
+    </script>
+  </body>
+</html>
