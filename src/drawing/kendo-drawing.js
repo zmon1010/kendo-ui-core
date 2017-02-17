@@ -8554,7 +8554,25 @@ function _renderElement(element, group) {
                 }
             }
 
-            var pos = String(backgroundPosition).split(/\s+/);
+            var pos = String(backgroundPosition);
+
+            // IE sometimes reports single-word positions
+            // https://github.com/telerik/kendo-ui-core/issues/2786
+            //
+            // it seems to switch to percentages when the horizontal
+            // position is not "center", therefore we don't handle
+            // multi-word cases here.  All other browsers return
+            // percentages or pixels instead of keywords.  At least
+            // for now...
+            switch (pos) {
+              case "bottom" : pos = "50% 100%"; break;
+              case "top"    : pos = "50% 0"; break;
+              case "left"   : pos = "0 50%"; break;
+              case "right"  : pos = "100% 50%"; break;
+              case "center" : pos = "50% 50%"; break;
+            }
+
+            pos = pos.split(/\s+/);
             if (pos.length == 1) {
                 pos[1] = "50%";
             }
