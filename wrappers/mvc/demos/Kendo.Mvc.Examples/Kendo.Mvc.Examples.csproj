@@ -184,6 +184,7 @@
     <Compile Include="Controllers\Bar_Charts\VisualsController.cs" />
     <Compile Include="Controllers\Box_Plot_Charts\VerticalController.cs" />
     <Compile Include="Controllers\Calendar\DisableDatesController.cs" />
+    <Compile Include="Controllers\Calendar\Week_ColumnController.cs" />
     <Compile Include="Controllers\Chart_Api\ExportController.cs" />
     <Compile Include="Controllers\Chart_Api\Pdf_ExportController.cs" />
     <Compile Include="Controllers\Chart_Api\EventsController.cs" />
@@ -235,7 +236,9 @@
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
     <Compile Include="Controllers\DataSource\Shared_DatasourceController.cs" />
     <Compile Include="Controllers\DatePicker\DisableDatesController.cs" />
+    <Compile Include="Controllers\DatePicker\Week_ColumnController.cs" />
     <Compile Include="Controllers\DateTimePicker\DisableDatesController.cs" />
+    <Compile Include="Controllers\DateTimePicker\Week_ColumnController.cs" />
     <Compile Include="Controllers\Dialog\TreeList_IntegrationController.cs" />
     <Compile Include="Controllers\Dialog\TreeView_IntegrationController.cs" />
     <Compile Include="Controllers\Dialog\Right_to_Left_SupportController.cs" />
@@ -993,6 +996,7 @@
     <Content Include="Views\bar_charts\pan_and_zoom.cshtml" />
     <Content Include="Views\calendar\disable_dates.cshtml" />
     <Content Include="Views\box_plot_charts\vertical.cshtml" />
+    <Content Include="Views\calendar\week_column.cshtml" />
     <None Include="Views\combobox\grouping.cshtml" />
     <None Include="Views\combobox\virtualization.cshtml" />
     <Content Include="Views\diagram\pdf_export.cshtml" />
@@ -2985,6 +2989,8 @@
     <Content Include="Views\panelbar\local_data_binding.cshtml" />
     <Content Include="Views\panelbar\remote_data_binding.cshtml" />
     <Content Include="Views\panelbar\templates.cshtml" />
+    <Content Include="Views\datepicker\week_column.cshtml" />
+    <Content Include="Views\datetimepicker\week_column.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

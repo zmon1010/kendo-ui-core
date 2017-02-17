@@ -248,6 +248,17 @@
                     "aspnet-mvc": "This demo shows how $FRAMEWORK Calendar allows you to disable dates"
                 }
             },
+			{
+                "text": "Week Column",
+                "url": "calendar/week-column",
+				"new": true,
+                "title": {
+                    "aspnet-mvc": "Week column in the $FRAMEWORK Calendar | $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how $FRAMEWORK Calendar allows you to show a week number column in the month view"
+                }
+            },
             {
                 "text": "Events",
                 "url": "calendar/events",
@@ -575,6 +586,17 @@
                     "aspnet-mvc": "This demo shows how $FRAMEWORK DatePicker allows you to disable dates"
                 }
             },
+			{
+                "text": "Week Column",
+                "url": "datepicker/week-column",
+				"new": true,
+                "title": {
+                    "aspnet-mvc": "Week column in the $FRAMEWORK DatePicker | $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how $FRAMEWORK DatePicker allows you to show a week number column in the month view"
+                }
+            },
             {
                 "text": "API",
                 "url": "datepicker/api",
@@ -685,6 +707,17 @@
                 },
                 "meta": {
                     "aspnet-mvc": "This demo shows how $FRAMEWORK DateTImePicker allows you to disable dates"
+                }
+            },
+			{
+                "text": "Week Column",
+                "url": "datetimepicker/week-column",
+				"new": true,
+                "title": {
+                    "aspnet-mvc": "Week column in the $FRAMEWORK DateTimePicker | $FRAMEWORK demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This demo shows how $FRAMEWORK DateTimePicker allows you to show a week number column in the month view"
                 }
             },
             {

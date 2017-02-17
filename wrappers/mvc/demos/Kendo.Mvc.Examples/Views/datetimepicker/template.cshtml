@@ -4,12 +4,15 @@
           .Name("datetimepicker")
           .HtmlAttributes(new { style = "width:100%;" })
           .Value(DateTime.Now)
+          .WeekNumber(true)
           .Events(e => e.Open("onOpen"))
           .Footer("Today - #=kendo.toString(data, 'd') #")
-          .MonthTemplate("# if ($.inArray(+data.date, birthdays) != -1) { #" +
+          .MonthTemplate(month => month.Content("# if ($.inArray(+data.date, birthdays) != -1) { #" +
                              "<div class=\"birthday\"></div>" +
                          "# } #" +
                          "#= data.value #")
+                         .WeekNumber("<a class='italic'>#= data.weekNumber #</a>")
+                         )
     )
 </div>
 <script>

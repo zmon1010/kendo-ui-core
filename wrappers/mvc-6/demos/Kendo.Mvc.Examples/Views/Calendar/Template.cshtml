@@ -3,8 +3,9 @@
         @(Html.Kendo().Calendar()
         .Name("calendar")
         .Value(DateTime.Today)
+        .WeekNumber(true)
         .Footer(" ")
-        .MonthTemplate("# if ($.inArray(+data.date, events) != -1) { #" +
+        .MonthTemplate(month => month.Content("# if ($.inArray(+data.date, events) != -1) { #" +
                                 "<div class='" +
                             "# if (data.value < 10) { #" +
                                 "exhibition" +
@@ -17,6 +18,7 @@
                     "# } else { #" +
                     "#= data.value #" +
                     "# } #")
+            .WeekNumber("<a class='italic'>#= data.weekNumber #</a>"))
         )
     </div>
 </div>
