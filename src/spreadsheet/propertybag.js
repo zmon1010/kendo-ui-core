@@ -97,21 +97,19 @@
 
         init: function(rowCount, columnCount, defaultValues) {
             defaultValues = defaultValues || {};
+            var cellCount = rowCount * columnCount - 1;
 
             this.rowCount = rowCount;
             this.columnCount = columnCount;
+            this.cellCount = cellCount;
             this.properties = {};
             this.lists = {};
 
             this.specs.forEach(function(spec) {
-                var cellCount = rowCount * columnCount - 1;
                 var name = spec.name;
                 var value = defaultValues[name];
                 if (value === undefined) {
                     value = spec.value;
-                }
-                if (name == "hBorders" || name == "vBorders") {
-                    cellCount += columnCount + rowCount;
                 }
                 this.lists[name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
                 this.properties[name] = new spec.property(this.lists[name], this.lists[spec.depends]);
@@ -154,7 +152,7 @@
                 name = "hBorders";
                 break;
             }
-            return this.properties[name].get(index);
+            return index > this.cellCount ? null : this.properties[name].get(index);
         },
 
         set: function(name, start, end, value) {
@@ -175,7 +173,9 @@
                 name = "hBorders";
                 break;
             }
-            this.properties[name].set(start, end, value);
+            if (start <= end && end <= this.cellCount) {
+                this.properties[name].set(start, end, value);
+            }
         },
 
         fromJSON: function(index, value) {
@@ -199,8 +199,9 @@
         iterator: function(name, start, end) {
             var prop = this.properties[name];
             var iter = prop.iterator(start, end), at = iter.at;
+            var cellCount = this.cellCount;
             iter.at = function(index) {
-                return prop.parse(at.call(iter, index));
+                return index > cellCount ? null : prop.parse(at.call(iter, index));
             };
             iter.name = name;
             iter.value = prop.list.range.value;

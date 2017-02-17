@@ -52,7 +52,7 @@
     function insert(node, value) {
         if (node === NilNode) {
             return new RangeTreeNode(1, value, NilNode, NilNode);
-        } else if (node.value.start - value.start > 0) {
+        } else if (node.value.start > value.start) {
             node.left = insert(node.left, value);
         } else {
             node.right = insert(node.right, value);

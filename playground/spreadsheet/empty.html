@@ -40,7 +40,7 @@
   <body>
     <div id="spreadsheet"></div>
     <script>
-     window.ss = $("#spreadsheet").kendoSpreadsheet({ rows: 4000 }).getKendoSpreadsheet();
+     window.ss = $("#spreadsheet").kendoSpreadsheet({ rows: 20, columns: 15 }).getKendoSpreadsheet();
      window.sheet = ss.activeSheet();
 
      sheet.batch(function(){

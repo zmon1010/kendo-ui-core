@@ -382,12 +382,13 @@
         },
 
         clear: function(options) {
-            var clearAll = !options || !Object.keys(options).length;
+            options = options || {};
+            var clearAll = options.clearAll || !Object.keys(options).length;
 
             var sheet = this._sheet;
 
             var reason = {
-                recalc: clearAll || (options && options.contentsOnly === true),
+                recalc: clearAll || options.contentsOnly,
                 ref: this._ref
             };
 
@@ -401,9 +402,11 @@
                     this.validation(null);
                 }
 
-                if (clearAll || (options && options.formatOnly === true)) {
+                if (clearAll || options.formatOnly) {
                     PROPERTIES.forEach(function(x) {
-                        this[x](null);
+                        if (!(options.keepBorders && /^border/i.test(x))) {
+                            this[x](null);
+                        }
                     }.bind(this));
                     this.unmerge();
                 }

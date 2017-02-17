@@ -387,7 +387,7 @@
 
                     this._copyRange(nextRef, new CellRef(topLeft.row + 1, topLeft.col));
 
-                    new Range(ref, this).clear();
+                    new Range(ref, this).clear({ clearAll: true, keepBorders: true });
                 }
 
                 this._adjustReferences("row", rowIndex, 1, mergedCells);
@@ -431,7 +431,7 @@
                 for (var ci = 0; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
 
-                    new Range(ref, this).clear();
+                    new Range(ref, this).clear({ clearAll: true, keepBorders: true });
 
                     var topLeft = grid.normalize(ref.topLeft);
                     var bottomRight = grid.normalize(ref.bottomRight);
@@ -481,7 +481,7 @@
                 for (var ci = columnCount; ci >= columnIndex; ci--) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
 
-                    new Range(ref, this).clear();
+                    new Range(ref, this).clear({ clearAll: true, keepBorders: true });
 
                     if (ci == columnIndex) {
                         break;
@@ -538,7 +538,7 @@
                 for (var ci = columnIndex; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
 
-                    new Range(ref, this).clear();
+                    new Range(ref, this).clear({ clearAll: true, keepBorders: true });
 
                     if (ci == columnCount - 1) {
                         break;
