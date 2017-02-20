@@ -501,19 +501,19 @@ test("presentational tags are nested properly", function() {
 });
 
 test("elements with class k-table-resize-handle are not serialized", function() {
-    editor.body.innerHTML = '<div class="k-table-resize-handle"></div>';
+    editor.body.innerHTML = '<div class="k-table-resize-handle-wrapper"><div class="k-table-resize-handle"></div></div>';
 
     equal(editor.value(), "");
 });
 
 test("elements with class k-column-resize-handle are not serialized", function() {
-    editor.body.innerHTML = '<div class="k-column-resize-handle"></div>';
+    editor.body.innerHTML = '<div class="k-column-resize-handle-wrapper"><div class="k-column-resize-handle"></div></div>';
 
     equal(editor.value(), "");
 });
 
 test("elements with class k-row-resize-handle are not serialized", function() {
-    editor.body.innerHTML = '<div class="k-row-resize-handle"></div>';
+    editor.body.innerHTML = '<div class="k-row-resize-handle-wrapper"><div class="k-row-resize-handle"></div></div>';
 
     equal(editor.value(), "");
 });

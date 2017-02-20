@@ -391,7 +391,7 @@ var Serializer = {
                 name = attribute.nodeName;
                 value = attribute.value;
                 specified = attribute.specified;
-                
+
                 // In IE < 8 the 'value' attribute is not returned as 'specified'. The same goes for type="text"
                 if (name == 'value' && 'value' in node && node.value) {
                     specified = true;
@@ -514,16 +514,17 @@ var Serializer = {
         function child(node, skip, skipEncoding) {
             var nodeType = node.nodeType,
                 tagName, mapper,
-                parent, value, previous;
-
-            if ($(node).hasClass("k-table-resize-handle") || $(node).hasClass("k-column-resize-handle") || $(node).hasClass("k-row-resize-handle")) {
-                return;
-            }
+                parent, value, previous, jqNode;
 
             if (immutables && Editor.Immutables.immutable(node)) {
                 result.push(immutables.serialize(node));
             } else if (nodeType == 1) {
                 tagName = dom.name(node);
+                jqNode = $(node);
+
+                if (jqNode.hasClass("k-table-resize-handle-wrapper") || jqNode.hasClass("k-column-resize-handle-wrapper") || jqNode.hasClass("k-row-resize-handle-wrapper")) {
+                    return;
+                }
 
                 if (!tagName || dom.insignificant(node)) {
                     return;
