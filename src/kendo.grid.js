@@ -6821,7 +6821,12 @@ var __meta__ = { // jshint ignore:line
                 delta = kendo.wheelDeltaY(e);
 
             if (delta) {
-                e.preventDefault();
+                if (content[0].scrollHeight > content[0].clientHeight &&
+                    (content[0].scrollTop < content[0].scrollHeight - content[0].clientHeight && delta < 0 ||
+                    content[0].scrollTop > 0 && delta > 0)) {
+                    e.preventDefault();
+                }
+
                 content.scrollTop(scrollTop + (-delta));
             }
         },
