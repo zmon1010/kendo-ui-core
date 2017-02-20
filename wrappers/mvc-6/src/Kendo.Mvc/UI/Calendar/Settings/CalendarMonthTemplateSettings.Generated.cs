@@ -30,16 +30,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (WeekNumber?.HasValue() == true)
-            {
-                settings["weekNumber"] = WeekNumber;
-            }
-
-            if (WeekNumberId?.HasValue() == true)
-            {
-                settings["weekNumberId"] = WeekNumberId;
-            }
-
             return settings;
         }
     }
