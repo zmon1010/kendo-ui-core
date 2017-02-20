@@ -34,3 +34,9 @@
 
     - :name: monthTemplate.contentId
       :type: String
+
+    - :name: monthTemplate.weekNumber
+      :type: String
+
+    - :name: monthTemplate.weekNumberId
+      :type: String
