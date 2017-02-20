@@ -10,6 +10,8 @@
 - datetimepicker.monthTemplate.contentId
 - datetimepicker.monthTemplate.empty
 - datetimepicker.monthTemplate.emptyId
+- datetimepicker.monthTemplate.weekNumber
+- datetimepicker.monthTemplate.weekNumberId
 - editor.tag
 - editor.tools.palette
 - editor.value
@@ -39,6 +41,8 @@
 - datepicker.monthTemplate.contentId
 - datepicker.monthTemplate.empty
 - datepicker.monthTemplate.emptyId
+- datepicker.monthTemplate.weekNumber
+- datepicker.monthTemplate.weekNumberId
 - tooltip.filter
 - calendar.footer
 - calendar.monthTemplate
@@ -46,6 +50,8 @@
 - calendar.monthTemplate.contentId
 - calendar.monthTemplate.empty
 - calendar.monthTemplate.emptyId
+- calendar.monthTemplate.weekNumber
+- calendar.monthTemplate.weekNumberId
 - menu.aligntoanchor
 - menu.closeonclick
 - menu.openonclick
