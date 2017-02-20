@@ -1069,17 +1069,11 @@ var __meta__ = { // jshint ignore:line
             }
 
             var delta = kendo.wheelDeltaY(e);
-            var lockedDiv = $(e.currentTarget);
 
-            console.log(delta);
             if (delta) {
-                if (lockedDiv[0].scrollHeight > lockedDiv[0].clientHeight &&
-                    (lockedDiv[0].scrollTop < lockedDiv[0].scrollHeight - lockedDiv[0].clientHeight && delta < 0 ||
-                    lockedDiv[0].scrollTop > 0 && delta > 0)) {
-                    e.preventDefault();
-                }
+                e.preventDefault();
                 //In Firefox DOMMouseScroll event cannot be canceled
-                lockedDiv.one("wheel" + NS, false);
+                $(e.currentTarget).one("wheel" + NS, false);
 
                 this.content.scrollTop(this.content.scrollTop() + (-delta));
             }
