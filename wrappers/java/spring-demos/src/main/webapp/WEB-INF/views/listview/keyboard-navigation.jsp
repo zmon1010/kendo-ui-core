@@ -14,7 +14,7 @@
 <div class="demo-section">
     <div class="k-toolbar k-grid-toolbar">
         <a class="k-button k-button-icontext k-add-button" href="#"><span
-            class="k-icon k-add"></span>Add new record</a>
+            class="k-icon k-i-add"></span>Add new record</a>
     </div>
 </div>
 
@@ -61,8 +61,8 @@
 <script type="text/x-kendo-tmpl" id="template">
     <div class="product-view k-widget">
         <div class="edit-buttons">
-            <a class="k-button k-button-icontext k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-            <a class="k-button k-button-icontext k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+            <a class="k-button k-button-icontext k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+            <a class="k-button k-button-icontext k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
         </div>
         <dl>
             <dt>Product Name</dt>
@@ -80,8 +80,8 @@
 <script type="text/x-kendo-tmpl" id="editTemplate">
     <div class="product-view k-widget">
         <div class="edit-buttons">
-            <a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
         <dl>
             <dt>Product Name</dt>

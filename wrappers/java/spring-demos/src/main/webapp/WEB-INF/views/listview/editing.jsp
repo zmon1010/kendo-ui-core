@@ -13,7 +13,7 @@
 
 <div class="demo-section k-content wide">
 		<a class="k-button k-button-icontext k-add-button" href="#"><span
-			class="k-icon k-add"></span>Add new record</a>
+			class="k-icon k-i-add"></span>Add new record</a>
 
 <kendo:listView name="listView" template="template" pageable="true"
 	editTemplate="editTemplate">
@@ -68,8 +68,8 @@
             <dd>#:discontinued#</dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+            <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+            <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
         </div>
     </div>
 </script>
@@ -96,8 +96,8 @@
             <dd><input type="checkbox" name="discontinued" data-bind="checked:discontinued"></dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
