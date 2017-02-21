@@ -70,6 +70,7 @@ var __meta__ = { // jshint ignore:line
         isArray = $.isArray,
         NS = ".kendoScheduler",
         CLICK = "click",
+        MOUSEDOWN = "mousedown",
         CHANGE = "change",
         CANCEL = "cancel",
         REMOVE = "remove",
@@ -3735,7 +3736,7 @@ var __meta__ = { // jshint ignore:line
                 }
             });
 
-            toolbar.on(CLICK + NS, ".k-scheduler-views li, .k-scheduler-refresh", function(e) {
+            toolbar.on(CLICK + NS, ".k-scheduler-views li:not(.k-current-view), .k-scheduler-refresh", function(e) {
                 e.preventDefault();
 
                 var name = $(this).attr(kendo.attr("name"));
@@ -3748,6 +3749,13 @@ var __meta__ = { // jshint ignore:line
 
             toolbar.on(CLICK + NS, ".k-scheduler-views li.k-current-view", function() {
                 that.element.find(".k-scheduler-views").toggleClass("k-state-expanded");
+                $(document).on(MOUSEDOWN + NS, function(e) {
+                    if($(e.target).closest(".k-scheduler-views").length === 0)
+                    {
+                        that.element.find(".k-state-expanded").removeClass("k-state-expanded");
+                        $(document).off(CLICK + NS);
+                    }
+                });
             });
 
             toolbar.find("li").hover(function(){
