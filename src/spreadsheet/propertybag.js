@@ -186,6 +186,12 @@
                     }
                 }
             }
+
+            [ "borderLeft", "borderRight", "borderTop", "borderBottom" ].forEach(function(b){
+                if (value[b] !== undefined) {
+                    this.set(b, index, index, value[b]);
+                }
+            }, this);
         },
 
         copy: function(sourceStart, sourceEnd, targetStart) {
