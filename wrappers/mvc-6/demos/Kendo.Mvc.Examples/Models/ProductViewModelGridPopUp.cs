@@ -44,31 +44,5 @@ namespace Kendo.Mvc.Examples.Models
             get;
             set;
         }
-
-        [Display(Name = "Last supply")]
-        [DataType(DataType.Date)]
-        public DateTime LastSupply
-        {
-            get;
-            set;
-        }
-
-        [DataType("Integer")]
-        public int UnitsOnOrder
-        {
-            get;
-            set;
-        }
-
-        [UIHint("ClientCategory")]
-        public CategoryViewModel Category
-        {
-            get;
-            set;
-        }
-
-        public int? CategoryID { get; set; }
-
-        public string QuantityPerUnit { get; set; }
     }
 }
