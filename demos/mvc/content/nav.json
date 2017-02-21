@@ -1511,7 +1511,6 @@
     "text": "Dialog",
     "name": "dialog",
     "api": { "all": "web/dialog" },
-    "new": "true",
     "documentation": {
       "kendo-ui": "getting-started/web/dialog/overview",
       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dialog/overview",
@@ -3470,7 +3469,6 @@
     "text": "MediaPlayer",
     "name": "mediaplayer",
     "api": { "all": "web/mediaplayer" },
-    "new": true,
     "documentation": {
       "kendo-ui": "getting-started/web/mediaplayer/overview",
       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mediaplayer/overview"
