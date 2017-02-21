@@ -21,25 +21,41 @@
     )
 </div>
 <script>
-    function startChange() {
-        var endPicker = $("#end").data("kendoDateTimePicker"),
-            startDate = this.value();
+	function startChange() {
+		var start = $("#start").data("kendoDateTimePicker");
+		var end = $("#end").data("kendoDateTimePicker");
+        var startDate = start.value();
+        var endDate = end.value();
 
         if (startDate) {
             startDate = new Date(startDate);
-            startDate.setDate(startDate.getDate() + 1);
-            endPicker.min(startDate);
+            startDate.setDate(startDate.getDate());
+            end.min(startDate);
+        } else if (endDate) {
+            start.max(new Date(endDate));
+        } else {
+            endDate = new Date();
+            start.max(endDate);
+            end.min(endDate);
         }
     }
 
     function endChange() {
-        var startPicker = $("#start").data("kendoDateTimePicker"),
-            endDate = this.value();
+		var start = $("#start").data("kendoDateTimePicker");
+		var end = $("#end").data("kendoDateTimePicker");
+        var endDate = end.value();
+        var startDate = start.value();
 
         if (endDate) {
             endDate = new Date(endDate);
-            endDate.setDate(endDate.getDate() - 1);
-            startPicker.max(endDate);
+            endDate.setDate(endDate.getDate());
+            start.max(endDate);
+        } else if (startDate) {
+            end.min(new Date(startDate));
+        } else {
+            endDate = new Date();
+            start.max(endDate);
+            end.min(endDate);
         }
     }
 </script>
