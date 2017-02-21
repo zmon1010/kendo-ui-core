@@ -3642,7 +3642,6 @@
           "kendo-ui": "<p>The <strong>Menu</strong> widget enables you to bind JSON data through the <a href='http://docs.telerik.com/kendo-ui/api/javascript/ui/menu#configuration-dataSource' target='_blank'>dataSource option</a> exposed.</p><p>This demo shows how you can process data fecthed through remote binding, using <strong>DataSource</strong>, and populate the <strong>Menu Items</strong> with it. Additionally, to accomplish specific functionality requirments you can bind the items' attributes in order and use the values bound later to run operations based on the end user's selection.</p>"
         },
         "packages": [
-          "!jsp",
           "!php"
         ]     
       },
