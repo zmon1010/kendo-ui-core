@@ -128,7 +128,7 @@ var __meta__ = { // jshint ignore:line
                 "remove": "Remove",
                 "clearSelectedFiles": "Clear",
                 "uploadSelectedFiles": "Upload",
-                "dropFilesHere": "drop files here to upload",
+                "dropFilesHere": "Drop files here to upload",
                 "statusUploading": "uploading",
                 "statusUploaded": "uploaded",
                 "statusWarning": "warning",

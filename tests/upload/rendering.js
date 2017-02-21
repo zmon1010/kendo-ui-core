@@ -190,7 +190,7 @@ test("drop zone label is rendered", function() {
 });
 
 test("drop zone label text is rendered", function() {
-    equal($("> .k-dropzone > em", uploadInstance.wrapper).text(), "drop files here to upload");
+    equal($("> .k-dropzone > em", uploadInstance.wrapper).text(), "Drop files here to upload");
 });
 
 test("drop zone is not active initially", function() {
