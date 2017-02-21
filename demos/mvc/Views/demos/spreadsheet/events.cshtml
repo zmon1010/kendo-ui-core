@@ -1,4 +1,5 @@
 <div id="example">
+    <button type="button" class="k-primary" id="exportButton">Export Spreadsheet sheet to PDF</button>
     <div id="spreadsheet" style="width: 100%"></div>
 
     <div class="box wide">
@@ -11,19 +12,111 @@
             kendoConsole.log("Spreadsheet is rendered");
         }
 
+        function onSelect(arg) {
+            kendoConsole.log("New range selected. New value: " + arg.range.value());
+        }
+
         function onChange(arg) {
-            kendoConsole.log("Spreadsheet change, new value: " + arg.range.value());
+            kendoConsole.log("Spreadsheet change. New value: " + arg.range.value());
+        }
+
+        function onChangeFormat(arg) {
+            kendoConsole.log("Format of the range with value " + arg.range.value() + " changed to " + arg.range.format());
         }
 
         function onExcelExport(arg) {
             kendoConsole.log("Spreadsheet is exported to Excel");
         }
 
-        $(function() {
+        function onExcelImport(arg) {
+            kendoConsole.log(arg.file.name + " file is about to be imported in the Spreadsheet");
+        }
+
+        function onPdfExport(arg) {
+            kendoConsole.log("Spreadsheet is exported to PDF");
+        }
+
+        function onInsertSheet(arg) {
+            kendoConsole.log("Inserted new Sheet");
+        }
+
+        function onRemoveSheet(arg) {
+            kendoConsole.log(arg.sheet.name() + " sheet removed");
+        }
+
+        function onRenameSheet(arg) {
+            kendoConsole.log(arg.sheet.name() + " renamed to " + arg.newSheetName);
+        }
+
+        function onSelectSheet(arg) {
+            kendoConsole.log(arg.sheet.name() + " sheet is selected");
+        }
+
+        function onUnhideColumn(arg) {
+            kendoConsole.log("The column at index " + arg.index + " on sheet " + arg.sheet.name() + " is unhidden");
+        }
+
+        function onUnhideRow(arg) {
+            kendoConsole.log("The row at index " + arg.index + " on sheet " + arg.sheet.name() + " is unhidden");
+        }
+
+        function onHideColumn(arg) {
+            kendoConsole.log("The column at index " + arg.index + " on sheet " + arg.sheet.name() + " is hidden");
+        }
+
+        function onHideRow(arg) {
+            kendoConsole.log("The row at index " + arg.index + " on sheet " + arg.sheet.name() + " is hidden");
+        }
+
+        function onDeleteColumn(arg) {
+            kendoConsole.log("The column at index " + arg.index + " on sheet " + arg.sheet.name() + " is deleted");
+        }
+
+        function onDeleteRow(arg) {
+            kendoConsole.log("The row at index " + arg.index + " on sheet " + arg.sheet.name() + " is deleted");
+        }
+
+        function onInsertColumn(arg) {
+            kendoConsole.log("New column at index " + arg.index + " on sheet " + arg.sheet.name() + " is inserted");
+        }
+
+        function onInsertRow(arg) {
+            kendoConsole.log("New row at index " + arg.index + " on sheet " + arg.sheet.name() + " is inserted");
+        }
+
+        function exportSpreadsheet() {
+            var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+            spreadsheet.saveAsPDF();
+        }
+
+        $(function () {
+            $("#exportButton").kendoButton({
+                click: exportSpreadsheet
+            });
+
             $("#spreadsheet").kendoSpreadsheet({
-                change: onChange,
                 render: onRender,
+                select: onSelect,
+                change: onChange,
+                changeFormat: onChangeFormat,
+                excelImport: onExcelImport,
+                pdfExport: onPdfExport,
                 excelExport: onExcelExport,
+                insertSheet: onInsertSheet,
+                removeSheet: onRemoveSheet,
+                renameSheet: onRenameSheet,
+                selectSheet: onSelectSheet,
+                unhideColumn: onUnhideColumn,
+                unhideRow: onUnhideRow,
+                hideColumn: onHideColumn,
+                hideRow: onHideRow,
+                deleteColumn: onDeleteColumn,
+                deleteRow: onDeleteRow,
+                insertColumn: onInsertColumn,
+                insertRow: onInsertRow,
+                pdf: {
+                    area: "sheet"
+                },
                 sheets: [
                 {
                     name: "Invoices",
