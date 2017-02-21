@@ -766,7 +766,7 @@
                     // inserting rows/cols in an empty sheet.
                     for (var key in cell) {
                         var val = cell[key];
-                        if (val !== undefined && val !== defStyle[key]) {
+                        if (val !== undefined && val !== null && val !== defStyle[key]) {
                             throw yesItHas;
                         }
                     }

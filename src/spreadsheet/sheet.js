@@ -341,9 +341,18 @@
             return false;
         },
 
-        preventInsertColumn: function() {
+        preventInsertColumn: function(colIndex, count) {
             if (this.selectedHeaders().allCols) {
                 return { reason: "error", type: "insertColumnWhenRowIsSelected" };
+            }
+
+            count = count || 1;
+            var grid = this._grid;
+            var range = this.range(0, grid.columnCount - count, grid.rowCount, count);
+
+            //TODO: Improve has value to return true only if real value is available?
+            if (range.hasValue()) {
+                return { reason: "error", type: "shiftingNonblankCells" };
             }
 
             return false;
