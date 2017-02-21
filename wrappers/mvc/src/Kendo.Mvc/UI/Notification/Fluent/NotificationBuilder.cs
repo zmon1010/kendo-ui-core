@@ -130,7 +130,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// &lt;%= Html.Kendo().Notification()
         ///            .Name("Notification")
         ///            .Events(events =>
-        ///                events.Click("onClick"))
+        ///                events.Hide("onHide"))
         /// %&gt;
         /// </code>
         /// </example>
