@@ -7,8 +7,6 @@
         return;
     }
 
-    var $ = kendo.jQuery;
-
     var Property = kendo.Class.extend({
         init: function(list) {
             this.list = list;
@@ -266,9 +264,12 @@
         }
     });
 
-    kendo.spreadsheet.ALL_PROPERTIES = $.map(kendo.spreadsheet.PropertyBag.prototype.specs, function(spec) {
-        return spec.name;
-    });
+    kendo.spreadsheet.ALL_PROPERTIES = kendo.spreadsheet.PropertyBag.prototype.specs.reduce(function(a, spec) {
+        if (spec.serializable) {
+            a.push(spec.name);
+        }
+        return a;
+    }, [ "borderTop", "borderRight", "borderBottom", "borderLeft" ]);
 
 })(window.kendo);
 
