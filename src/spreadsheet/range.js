@@ -435,9 +435,12 @@
                 };
 
                 for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
+                    if (sheet.isHiddenColumn(ci)) {
+                        continue;
+                    }
                     for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
                         var row = props[ri - topLeftRow];
-                        if (row) {
+                        if (row && !sheet.isHiddenRow(ri)) {
                             data = row[ci - topLeftCol];
                             if (data) {
                                 Object.keys(data).forEach(setProp);
