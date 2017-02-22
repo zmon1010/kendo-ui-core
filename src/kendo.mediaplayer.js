@@ -819,18 +819,17 @@
                 this._youtubeApiReadyHandler = null;
                 this._onYouTubePlayerReady = null;
                 this._onPlayerStateChangeHandler = null;
-                this._dropDownSelectHandler = null;
-
-                this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
-                this._media.ondurationchange = this._mediaDurationChangeHandler = null;
-                this._media.oncanplay = this._mediaCanPlayHandler = null;
-                this._media.onplay = this._mediaPlayHandler = null;
-                this._media.onended = this._mediaEndedHandler = null;
+                this._dropDownSelectHandler = null;               
 
                 if (this._youTubeVideo) {
                     this._ytmedia.destroy();
                 }
                 else {
+                    this._media.ontimeupdate = this._mediaTimeUpdateHandler = null;
+                    this._media.ondurationchange = this._mediaDurationChangeHandler = null;
+                    this._media.oncanplay = this._mediaCanPlayHandler = null;
+                    this._media.onplay = this._mediaPlayHandler = null;
+                    this._media.onended = this._mediaEndedHandler = null;
                     this._media.src = "";
                     this._media.remove();
                 }
