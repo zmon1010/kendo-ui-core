@@ -73,7 +73,7 @@ namespace Kendo.Extensions
         public static String CdnRoot(this HtmlHelper html)
         {
 #if DEBUG
-            return "http://kendo.cdn.telerik.com/2015.3.930";
+            return "http://kendo.cdn.telerik.com/2017.1.118";
 #else
             return ConfigurationManager.AppSettings["CDN_ROOT"];
 #endif
