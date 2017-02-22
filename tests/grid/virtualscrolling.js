@@ -159,7 +159,7 @@
 
         kendo.ui.progress(container, true);
         scroller.refresh();
-        equal(container.find("div.k-overlay").length, 0);
+        equal(container.find("div.k-loading-mask").length, 0);
     });
 
     test("fetch if lastRow is at the end of the available page fetches next page", function() {
