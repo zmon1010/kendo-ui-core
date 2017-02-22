@@ -12793,7 +12793,9 @@ var Chart = Class.extend({
             options.transitions = false;
             transitionsState = true;
         }
-        this.redraw();
+
+        this._redraw();
+
         if (transitionsState) {
             options.transitions = true;
         }
