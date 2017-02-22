@@ -2404,6 +2404,20 @@
                 "url": "menu/modelbinding"
             },
             {
+                "text": "Bind Custom Attributes",
+                "new": "true",
+                "title": {
+                    "aspnet-mvc": "Bind Custom Attributes in $FRAMEWORK Menu"
+                },
+                "url": "menu/menu-bind-attributes",
+                "meta": {
+                    "aspnet-mvc": "In this example you can see how you can bind custom attributes in the Menu items and populate them with data. Which can be later used for executing your own logic."
+                },
+                "description": {
+                    "aspnet-mvc": "<p>The <strong>Telerik Menu for $FRAMEWORK</strong> enables you apply Model binding to populate items dynamically from the server.</p><p>This demo shows an advanced approach to bind the items' attributes to fields from the Model passed so that you can apply client-side logic on item selection.</p>"
+                }   
+            },
+            {
                 "text": "Animation effects",
                 "url": "menu/animation",
                 "title": {
