@@ -151,7 +151,7 @@
         });
 
         scroller._fetch(0, 15);
-        equal(container.find("div.k-overlay").length, 0);
+        equal(container.find("div.k-loading-mask").length, 0);
     });
 
     test("mask is hidden on refresh", function() {
