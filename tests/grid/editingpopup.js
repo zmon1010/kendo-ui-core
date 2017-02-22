@@ -714,4 +714,16 @@
         equal(container.find(".k-edit-field:first > input").length, 1);
     });
 
+    test("progress animation is toggled on editor container", 1, function() {
+        var grid = setup({
+            columns: ["foo", "name"],
+            editable: "popup"
+        }),
+        row = table.find("tr:first");
+
+        grid.editRow(row);
+        grid.dataSource.trigger("progress");
+
+        ok(grid._editContainer.find(".k-loading-mask").length > 0);
+    });
 })();

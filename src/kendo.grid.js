@@ -7411,7 +7411,9 @@ var __meta__ = { // jshint ignore:line
         _progress: function(toggle) {
             var element = this.element;
 
-            if (this.lockedContent) {
+            if (this._editContainer && this._editContainer.data("kendoWindow")) {
+                element = this._editContainer;
+            } else if (this.lockedContent) {
                 element = this.wrapper;
             } else if (this.element.is("table")) {
                 element = this.element.parent();
