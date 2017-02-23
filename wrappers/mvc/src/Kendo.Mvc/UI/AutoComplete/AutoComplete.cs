@@ -17,7 +17,12 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
-        
+        public bool? AutoWidth
+        {
+            get;
+            set;
+        }
+
         public bool? HighlightFirst
         {
             get;
@@ -54,6 +59,11 @@ namespace Kendo.Mvc.UI
             if (HighlightFirst != null)
             {
                 options["highlightFirst"] = HighlightFirst;
+            }
+
+            if (AutoWidth != null)
+            {
+                options["autoWidth"] = AutoWidth;
             }
 
             if (!string.IsNullOrEmpty(Placeholder))

@@ -40,6 +40,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Controls whether to adjust the popup width 
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ComboBox()
+        ///             .Name("ComboBox")
+        ///             .AutoWidth(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ComboBoxBuilder AutoWidth(bool autoWidth)
+        {
+            Component.AutoWidth = autoWidth;
+
+            return this;
+        }
+
+        /// <summary>
         /// Binds the ComboBox to a list of DropDownListItem.
         /// </summary>
         /// <param name="dataSource">The data source.</param>
