@@ -257,7 +257,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// @(Html.Kendo().Grid()
         ///       .Name("Grid")
         ///       .Events(events => events
-        ///           .Cancel("onCancel")
+        ///           .BeforeEdit("onBeforeEdit")
         ///       )
         /// )
         /// </code>

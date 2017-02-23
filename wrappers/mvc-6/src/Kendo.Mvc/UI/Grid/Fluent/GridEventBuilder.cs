@@ -14,6 +14,28 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the beforeEdit event.</param>
+        public GridEventBuilder BeforeEdit(string handler)
+        {
+            Handler("beforeEdit", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public GridEventBuilder BeforeEdit(Func<object, object> handler)
+        {
+            Handler("beforeEdit", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the cancel event.</param>

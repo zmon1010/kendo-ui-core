@@ -288,6 +288,20 @@ its resize handle. In this case the column will assume the smallest possible wid
     }
 
     /**
+    * Sets the beforeEdit event of the Grid.
+    * Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Grid
+    */
+    public function beforeEdit($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('beforeEdit', $value);
+    }
+
+    /**
     * Sets the cancel event of the Grid.
     * Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

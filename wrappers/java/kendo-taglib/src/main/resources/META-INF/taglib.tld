@@ -22942,6 +22942,11 @@ and the string value will be passed as an argument to a kendo.template() functio
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>beforeEdit</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>cancel</name>
             <rtexprvalue>true</rtexprvalue>
@@ -24678,6 +24683,12 @@ This class can be used to obtain reference to the button after Grid initializati
         <body-content>JSP</body-content>
     </tag>
 
+    <tag>
+        <description>Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-beforeEdit</name>
+        <tag-class>com.kendoui.taglib.grid.BeforeEditFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-cancel</name>

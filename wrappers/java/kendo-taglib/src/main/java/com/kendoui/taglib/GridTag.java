@@ -124,6 +124,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     }
 
+    public void setBeforeEdit(BeforeEditFunctionTag value) {
+        setEvent("beforeEdit", value.getBody());
+    }
+
     public void setCancel(CancelFunctionTag value) {
         setEvent("cancel", value.getBody());
     }
@@ -398,6 +402,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setToolbar(java.lang.String value) {
         setProperty("toolbar", value);
+    }
+
+    public String getBeforeEdit() {
+        Function property = ((Function)getProperty("beforeEdit"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setBeforeEdit(String value) {
+        setProperty("beforeEdit", new Function(value));
     }
 
     public String getCancel() {
