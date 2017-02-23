@@ -348,6 +348,18 @@
         grid.editRow(table.find("tr:first"));
     });
 
+    test("beforeEdit event is raised when entering edit mode", 3, function() {
+        var grid = setup({
+            beforeEdit: function(e) {
+                ok(!e.container);
+                ok(!this._editContainer);
+                equal(e.model, grid.dataSource.get("bar"));
+            }
+        });
+
+        grid.editRow(table.find("tr:first"));
+    });
+
     test("addRow creates window instance", function() {
         var grid = setup();
         grid.addRow();

@@ -103,6 +103,7 @@ var __meta__ = { // jshint ignore:line
         HEADERCELLS = "th.k-header:not(.k-group-cell):not(.k-hierarchy-cell)",
         NS = ".kendoGrid",
         EDIT = "edit",
+        BEFOREEDIT = "beforeEdit",
         SAVE = "save",
         REMOVE = "remove",
         DETAILINIT = "detailInit",
@@ -1439,6 +1440,7 @@ var __meta__ = { // jshint ignore:line
            FILTERMENUINIT,
            COLUMNMENUINIT,
            EDIT,
+           BEFOREEDIT,
            SAVE,
            REMOVE,
            SAVECHANGES,
@@ -2772,6 +2774,9 @@ var __meta__ = { // jshint ignore:line
             that.closeCell();
 
             if (model && isColumnEditable(column, model) && !column.command) {
+                if (that.trigger(BEFOREEDIT, { model: model })) {
+                    return;
+                }
 
                 that._attachModelChange(model);
 
@@ -3094,23 +3099,27 @@ var __meta__ = { // jshint ignore:line
         },
 
         _createPopupEditor: function(model) {
-            var that = this,
-                html = '<div ' + kendo.attr("uid") + '="' + model.uid + '" class="k-popup-edit-form' + (that._isMobile ? ' k-mobile-list' : '') + '"><div class="k-edit-form-container">',
-                column,
-                command,
-                fields = [],
-                idx,
-                length,
-                tmpl,
-                updateText,
-                cancelText,
-                tempCommand,
-                columns = leafColumns(that.columns),
-                attr,
-                editable = that.options.editable,
-                template = editable.template,
-                options = isPlainObject(editable) ? editable.window : {},
-                settings = extend({}, kendo.Template, that.options.templateSettings);
+            var that = this;
+            var html = '<div ' + kendo.attr("uid") + '="' + model.uid + '" class="k-popup-edit-form' + (that._isMobile ? ' k-mobile-list' : '') + '"><div class="k-edit-form-container">';
+            var column;
+            var command;
+            var fields = [];
+            var idx;
+            var length;
+            var tmpl;
+            var updateText;
+            var cancelText;
+            var tempCommand;
+            var columns = leafColumns(that.columns);
+            var attr;
+            var editable = that.options.editable;
+            var template = editable.template;
+            var options = isPlainObject(editable) ? editable.window : {};
+            var settings = extend({}, kendo.Template, that.options.templateSettings);
+
+            if (that.trigger(BEFOREEDIT, { model: model })) {
+                return;
+            }
 
             options = options || {};
 
@@ -3255,12 +3264,15 @@ var __meta__ = { // jshint ignore:line
         },
 
         _createInlineEditor: function(row, model) {
-            var that = this,
-                column,
-                cell,
-                command,
-                fields = [];
+            var that = this;
+            var column;
+            var cell;
+            var command;
+            var fields = [];
 
+            if (that.trigger(BEFOREEDIT, { model: model })) {
+                return;
+            }
 
             if (that.lockedContent) {
                 row = row.add(that._relatedRow(row));

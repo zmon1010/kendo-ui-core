@@ -500,6 +500,56 @@
         equal(table.find("td.k-edit-cell").length, 1);
     });
 
+    test("beforeEdit event is raised before entering edit mode", 3, function() {
+        var grid = setup({
+                beforeEdit: function(e) {
+                    ok(!e.container);
+                    ok(!this._editContainer);
+                    equal(e.model, grid.dataSource.get("bar"));
+                },
+                dataSource: new DataSource({
+                    schema: {
+                        model: {
+                            id: "foo",
+                            fields: {
+                                foo: "foo"
+                            }
+                        }
+                    },
+                    data: [{ foo: "bar", name: "tom" }, { foo: "baz", name: "jerry" }]
+                })
+            });
+
+        table.find("tr>td:first").click();
+    });
+
+    test("beforeEdit event can be prevented", 3, function() {
+        var grid = setup({
+                beforeEdit: function(e) {
+                    ok(!e.container);
+                    ok(!this._editContainer);
+                    equal(e.model, grid.dataSource.get("bar"));
+                    e.preventDefault();
+                },
+                edit: function(e) {
+                    ok(false);
+                },
+                dataSource: new DataSource({
+                    schema: {
+                        model: {
+                            id: "foo",
+                            fields: {
+                                foo: "foo"
+                            }
+                        }
+                    },
+                    data: [{ foo: "bar", name: "tom" }, { foo: "baz", name: "jerry" }]
+                })
+            });
+
+        table.find("tr>td:first").click();
+    });
+
     test("edit event is raised when entering edit mode", function() {
         var args,
             grid = setup({

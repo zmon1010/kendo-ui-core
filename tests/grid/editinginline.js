@@ -469,6 +469,35 @@
         equal(table.find("tr:first").find("input").length, 2);
     });
 
+    test("beforeEdit event is raised before entering edit mode", 3, function() {
+        var grid = setup({
+            columns: ["foo", "name"],
+            editable: "inline",
+            beforeEdit: function(e) {
+                ok(!e.container);
+                ok(!this._editContainer);
+                equal(e.model, grid.dataSource.get("bar"));
+            }
+        });
+
+        grid.editRow(table.find("tr:first"));
+    });
+
+    test("beforeEdit event can be prevented", 0, function() {
+        var grid = setup({
+            columns: ["foo", "name"],
+            editable: "inline",
+            beforeEdit: function(e) {
+                e.preventDefault();
+            },
+            edit: function(e) {
+                ok(false);
+            }
+        });
+
+        grid.editRow(table.find("tr:first"));
+    });
+
     test("edit event is raised when entering edit mode", 2, function() {
         var grid = setup({
             columns: ["foo", "name"],
