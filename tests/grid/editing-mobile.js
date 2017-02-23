@@ -89,6 +89,67 @@
         ok(grid.view === grid.pane.view(), "Current view is not the one which wraps the Grid");
     });
 
+    asyncTest("loading indicator is shown when saving rows", 1, function() {
+        var grid = setup({
+            dataSource: {
+                transport: {
+                    read: function(e) {
+                        e.success([{ foo: "bar", name: "tom" }, { foo: "baz", name: "jerry" }]);
+                    },
+                    update: function(e) {
+                        start();
+                        equal(grid._editContainer.find(".k-loading-mask").length, 1);
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "foo",
+                        fields: {
+                            name: "name",
+                            foo: "foo"
+                        }
+                    }
+                }
+            }
+        });
+
+        grid.editRow(grid.items().eq(0));
+        grid._modelForContainer(grid._editContainer).set("name", "newName");
+        grid.saveRow(grid.items().eq(0));
+    });
+
+    asyncTest("loading indicator is removed when request completes", 2, function() {
+        var grid = setup({
+            dataSource: {
+                transport: {
+                    read: function(e) {
+                        e.success([{ foo: "bar", name: "tom" }, { foo: "baz", name: "jerry" }]);
+                    },
+                    update: function(e) {
+                        start();
+
+                        equal(grid._editContainer.find(".k-loading-mask").length, 1);
+                        e.error("SomeError");
+                        equal(grid._editContainer.find(".k-loading-mask").length, 0);
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "foo",
+                        fields: {
+                            name: "name",
+                            foo: "foo"
+                        }
+                    }
+                }
+            }
+        });
+
+        grid.editRow(grid.items().eq(0));
+        grid._modelForContainer(grid._editContainer).set("name", "newName");
+        grid.saveRow(grid.items().eq(0));
+    });
+
     asyncTest("saveRow navigates back to grid view", 1, function() {
         var grid = setup();
 

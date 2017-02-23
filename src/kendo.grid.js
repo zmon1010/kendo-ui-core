@@ -7411,7 +7411,7 @@ var __meta__ = { // jshint ignore:line
         _progress: function(toggle) {
             var element = this.element;
 
-            if (this._editContainer && this._editContainer.data("kendoWindow")) {
+            if (this._editContainer && this._editMode() === "popup") {
                 element = this._editContainer;
             } else if (this.lockedContent) {
                 element = this.wrapper;
