@@ -1052,6 +1052,20 @@
         ok(!wasCalled);
     });
 
+    test("cellClose event is triggered", 3, function() {
+        var wasCalled = false;
+        var grid = setup({
+            cellClose: function(e) {
+                ok(e.container.is(table.find("td:first")));
+                equal(e.model, grid.dataSource.get("bar"));
+                equal(e.type, "save");
+            }
+        });
+
+        grid.editCell(table.find("td:first"));
+        grid.editCell(table.find("td:last"));
+    });
+
     test("updating model field persist row selection", function() {
         var grid = setup({
             selectable: true,

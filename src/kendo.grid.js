@@ -109,6 +109,7 @@ var __meta__ = { // jshint ignore:line
         DETAILINIT = "detailInit",
         FILTERMENUINIT = "filterMenuInit",
         COLUMNMENUINIT = "columnMenuInit",
+        CELLCLOSE = "cellClose",
         CHANGE = "change",
         COLUMNHIDE = "columnHide",
         COLUMNSHOW = "columnShow",
@@ -1444,6 +1445,7 @@ var __meta__ = { // jshint ignore:line
            SAVE,
            REMOVE,
            SAVECHANGES,
+           CELLCLOSE,
            COLUMNRESIZE,
            COLUMNREORDER,
            COLUMNSHOW,
@@ -2914,6 +2916,8 @@ var __meta__ = { // jshint ignore:line
 
             id = cell.closest("tr").attr(kendo.attr("uid"));
             model = that.dataSource.getByUid(id);
+
+            that.trigger(CELLCLOSE, { type: isCancel ? "cancel" : "save", model, container: cell });
 
             if (isCancel && that.trigger("cancel", { container: cell, model: model })) {
                 return;
