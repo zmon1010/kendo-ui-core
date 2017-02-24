@@ -6671,8 +6671,10 @@ function closest(el, selector) {
     if (el.closest) {
         return el.closest(selector);
     }
-    // IE
-    while (el && el !== document) {
+    // IE: stringifying rather than simply comparing with `document`,
+    // which is not iframe-proof and fails in editor export —
+    // https://github.com/telerik/kendo/issues/6721
+    while (el && String(el) != "[object HTMLDocument]") {
         if (matches(el, selector)) {
             return el;
         }
