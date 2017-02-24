@@ -660,11 +660,9 @@ function toMatrix(transformation) {
 
 var Point = Class.extend({
     init: function(x, y) {
-        if (x === void 0) { x = 0; }
-        if (y === void 0) { y = 0; }
 
-        this.x = x;
-        this.y = y;
+        this.x = x || 0;
+        this.y = y || 0;
     },
 
     equals: function(other) {
@@ -843,11 +841,9 @@ ObserversMixin.extend(Point.prototype);
 
 var Size = Class.extend({
     init: function(width, height) {
-        if (width === void 0) { width = 0; }
-        if (height === void 0) { height = 0; }
 
-        this.width = width;
-        this.height = height;
+        this.width = width || 0;
+        this.height = height || 0;
     },
 
     equals: function(other) {
