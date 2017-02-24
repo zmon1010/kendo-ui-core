@@ -4786,7 +4786,9 @@ var BaseTooltip = Class.extend({
     },
 
     hide: function() {
-        this.chartService.notify(HIDE_TOOLTIP);
+        if (this.chartService) {
+            this.chartService.notify(HIDE_TOOLTIP);
+        }
     },
 
     destroy: function() {
@@ -8343,6 +8345,7 @@ var PlotAreaFactory = Class.extend({
 PlotAreaFactory.current = new PlotAreaFactory();
 
 var ZOOM_ACCELERATION = 3;
+var SELECTOR_HEIGHT_ADJUST = 0.1;
 
 function createDiv(className) {
     var element = document.createElement("div");
@@ -8478,7 +8481,7 @@ var Selection = Class.extend({
 
         this.options = deepExtend({}, {
             width: categoryAxisLineBox.width(),
-            height: valueAxisLineBox.height(),
+            height: valueAxisLineBox.height() + SELECTOR_HEIGHT_ADJUST, //workaround for sub-pixel hover on the paths in chrome
             padding: {
                 left: paddingLeft,
                 top: paddingTop
@@ -12868,8 +12871,10 @@ var Chart = Class.extend({
 
         this._destroyView();
 
-        this.surface.destroy();
-        this.surface = null;
+        if (this.surface) {
+            this.surface.destroy();
+            this.surface = null;
+        }
 
         this._clearRedrawTimeout();
     },
