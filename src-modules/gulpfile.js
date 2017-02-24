@@ -66,6 +66,7 @@ const SPARKLINE_GLOBALS = {
 };
 
 const STOCK_GLOBALS = {
+    '@progress/kendo-drawing': 'kendo',
     'chart/constants': 'kendo.dataviz.constants',
     'chart': 'kendo.dataviz',
     'core': 'kendo.dataviz',

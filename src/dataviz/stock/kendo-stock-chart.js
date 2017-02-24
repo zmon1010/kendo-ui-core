@@ -14,8 +14,9 @@ var toTime = dataviz.toTime;
 var services = dataviz.services;
 var datavizConstants = dataviz.constants;
 var Chart = dataviz.Chart;
+var drawing = kendo.drawing;
 
-var FadeOutAnimation = _progress_kendoDrawing.drawing.Animation.extend({
+var FadeOutAnimation = drawing.Animation.extend({
     setup: function() {
         this._initialOpacity = parseFloat(elementStyles(this.element, 'opacity').opacity);
     },
@@ -27,7 +28,7 @@ var FadeOutAnimation = _progress_kendoDrawing.drawing.Animation.extend({
     },
 
     abort: function() {
-        _progress_kendoDrawing.drawing.Animation.fn.abort.call(this);
+        drawing.Animation.fn.abort.call(this);
         elementStyles(this.element, {
             display: 'none',
             opacity: String(this._initialOpacity)
@@ -35,7 +36,7 @@ var FadeOutAnimation = _progress_kendoDrawing.drawing.Animation.extend({
     },
 
     cancel: function() {
-        _progress_kendoDrawing.drawing.Animation.fn.abort.call(this);
+        drawing.Animation.fn.abort.call(this);
         elementStyles(this.element, {
             opacity: String(this._initialOpacity)
         });
