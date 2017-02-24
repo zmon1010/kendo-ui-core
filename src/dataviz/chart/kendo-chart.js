@@ -11941,12 +11941,16 @@ var Chart = Class.extend({
         var tooltip;
 
         if (this._sharedTooltip()) {
-            tooltip = new SharedTooltip(this._plotArea, tooltipOptions);
+            tooltip = this._createSharedTooltip(tooltipOptions);
         } else {
             tooltip = new Tooltip(this.chartService, tooltipOptions);
         }
 
         return tooltip;
+    },
+
+    _createSharedTooltip: function(options) {
+        return new SharedTooltip(this._plotArea, options);
     },
 
     applyDefaults: function(options, themeOptions) {
