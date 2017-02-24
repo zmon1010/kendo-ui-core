@@ -85,7 +85,8 @@
             var isFirefox = support.browser.mozilla;
 
             deepExtend(navigatorOptions, {
-                filterable: !!navigatorOptions.dataSource,
+                autoBindElements: !navigatorOptions.dataSource,
+                partialRedraw: navigatorOptions.dataSource,
                 liveDrag: !isTouch && !isFirefox
             });
         },
