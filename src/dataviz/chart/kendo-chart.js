@@ -8960,7 +8960,8 @@ var SharedTooltip = BaseTooltip.extend({
                 shared: true,
                 points: points,
                 category: point.category,
-                categoryText: this.formatService.auto(this.options.categoryFormat, point.category)
+                categoryText: this.formatService.auto(this.options.categoryFormat, point.category),
+                series: this.plotArea.series
             }, this.options);
         }
     },
