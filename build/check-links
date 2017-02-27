@@ -9,4 +9,4 @@ PAUSE=$2
 PAUSE="${PAUSE:=1}"
 CONFIG=$3
 CONFIG="${CONFIG:=check-links.ini}"
-linkchecker --no-status --verbose --config=build/$CONFIG -P$PAUSE $1
+linkchecker --no-status --config=build/$CONFIG -P$PAUSE $1
