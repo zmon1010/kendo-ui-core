@@ -126,6 +126,20 @@
         ok(map.extent().se.round().lng > 180);
     });
 
+    test("se corner wraps around -180 in east direction", function() {
+        createMap();
+        map.extent(new Extent([10, 170], [0, -160]));
+
+        close(map.extent().se.lng, 210, 10);
+    });
+
+    test("se corner does not wrap around -180", function() {
+        createMap();
+        map.extent(new Extent([10, -170], [10, -160]));
+
+        close(map.extent().se.lng, -160, 10);
+    });
+
     test("se corner does not wrap around", function() {
         createMap({ zoom: 1, wraparound: false });
         map.element.css("width", "2000px");
