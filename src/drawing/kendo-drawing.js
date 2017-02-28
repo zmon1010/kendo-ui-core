@@ -4498,6 +4498,8 @@ var Node = BaseNode.extend({
             this.updateDefinition(field, value);
         } else if (field === "opacity") {
             this.attr("opacity", value);
+        } else if (field === "cursor") {
+            this.css("cursor", value);
         }
 
         BaseNode.fn.optionsChange.call(this, e);
@@ -6025,6 +6027,74 @@ function zIndexComparer(x1, x2) {
     return 0;
 }
 
+var SurfaceCursor = Class.extend({
+    init: function(surface) {
+        surface.bind("mouseenter", this._mouseenter.bind(this));
+        surface.bind("mouseleave", this._mouseleave.bind(this));
+
+        this.element = surface.element;
+    },
+
+    clear: function() {
+        this._resetCursor();
+    },
+
+    destroy: function() {
+        this._resetCursor();
+        delete this.element;
+    },
+
+    _mouseenter: function(e) {
+        var cursor = this._shapeCursor(e);
+
+        if (!cursor) {
+            this._resetCursor();
+        } else {
+            if (!this._current) {
+                this._defaultCursor = this._getCursor();
+            }
+
+            this._setCursor(cursor);
+        }
+    },
+
+    _mouseleave: function() {
+        this._resetCursor();
+    },
+
+    _shapeCursor: function(e) {
+        var shape = e.element;
+
+        while (shape && !defined(shape.options.cursor)) {
+            shape = shape.parent;
+        }
+
+        if (shape) {
+            return shape.options.cursor;
+        }
+    },
+
+    _getCursor: function() {
+        if (this.element) {
+            return this.element.style.cursor;
+        }
+    },
+
+    _setCursor: function(cursor) {
+        if (this.element) {
+            this.element.style.cursor = cursor;
+            this._current = cursor;
+        }
+    },
+
+    _resetCursor: function() {
+        if (this._current) {
+            this._setCursor(this._defaultCursor || "");
+            delete this._current;
+        }
+    }
+});
+
 var Surface$3 = Surface.extend({
     init: function(element, options) {
         Surface.fn.init.call(this, element, options);
@@ -6062,6 +6132,11 @@ var Surface$3 = Surface.extend({
             delete this._searchTree;
         }
 
+        if (this._cursor) {
+            this._cursor.destroy();
+            delete this._cursor;
+        }
+
         unbindEvents(this.element, {
             click: this._mouseTrackHandler,
             mousemove: this._mouseTrackHandler
@@ -6083,6 +6158,10 @@ var Surface$3 = Surface.extend({
 
         if (this._searchTree) {
             this._searchTree.clear();
+        }
+
+        if (this._cursor) {
+            this._cursor.clear();
         }
     },
 
@@ -6158,6 +6237,7 @@ var Surface$3 = Surface.extend({
 
     _enableTracking: function() {
         this._searchTree = new ShapesQuadTree();
+        this._cursor = new SurfaceCursor(this);
 
         Surface.fn._enableTracking.call(this);
     },
