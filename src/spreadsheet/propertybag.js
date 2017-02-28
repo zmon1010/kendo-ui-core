@@ -257,7 +257,9 @@
                 addBorder("borderLeft", leftBorders, index);
                 addBorder("borderRight", rightBorders, index + this.rowCount);
                 addBorder("borderTop", hBorders, index);
-                addBorder("borderBottom", hBorders, index + 1);
+                if ((index + 1) % this.rowCount) {
+                    addBorder("borderBottom", hBorders, index + 1);
+                }
 
                 callback(values);
             }
