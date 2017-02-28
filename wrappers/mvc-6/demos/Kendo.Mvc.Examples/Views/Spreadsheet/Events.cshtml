@@ -1,9 +1,36 @@
 ﻿<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 
+@(Html.Kendo().Button()
+    .Name("exporttButton")
+    .Content("Export Spreadsheet to PDF")
+    .HtmlAttributes(new { type = "button", @class = "k-primary" })
+    .Events(ev => ev.Click("exportSpreadsheet"))
+)
+
 @(Html.Kendo().Spreadsheet()
     .Name("spreadsheet")
     .HtmlAttributes(new { style = "width:100%;" })
-    .Events(events => events.Render("onRender").ExcelExport("onExcelExport").Change("onChange"))
+    .Events(events => events
+        .Render("onRender")
+        .Select("onSelect")
+        .Change("onChange")
+        .ChangeFormat("onChangeFormat")
+        .ExcelExport("onExcelExport")
+        .ExcelImport("onExcelImport")
+        .PdfExport("onPdfExport")
+        .InsertSheet("onInsertSheet")
+        .RemoveSheet("onRemoveSheet")
+        .RenameSheet("onRenameSheet")
+        .SelectSheet("onSelectSheet")
+        .UnhideColumn("onUnhideColumn")
+        .UnhideRow("onUnhideRow")
+        .HideColumn("onHideColumn")
+        .HideRow("onHideRow")
+        .DeleteColumn("onDeleteColumn")
+        .DeleteRow("onDeleteRow")
+        .InsertColumn("onInsertColumn")
+        .InsertRow("onInsertRow")
+    )
     .Sheets(sheets =>
     {
         sheets.Add()
@@ -341,15 +368,84 @@
 </div>
 
 <script>
+    function exportSpreadsheet(e) {
+        var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+        spreadsheet.saveAsPDF();
+    }
+
     function onRender(arg) {
         kendoConsole.log("Spreadsheet is rendered");
+    }
+
+    function onSelect(arg) {
+        kendoConsole.log("New range selected. New value: " + arg.range.value());
+    }
+
+    function onChange(arg) {
+        kendoConsole.log("Spreadsheet change, new value: " + arg.range.value());
+    }
+
+    function onChangeFormat(arg) {
+        kendoConsole.log("Format of the range with value " + arg.range.value() + " changed to " + arg.range.format());
     }
 
     function onExcelExport(arg) {
         kendoConsole.log("Spreadsheet is exported to Excel");
     }
 
-    function onChange(arg) {
-        kendoConsole.log("Spreadsheet change, new value: " + arg.range.value());
+    function onExcelImport(arg) {
+        kendoConsole.log(arg.file.name + " file is about to be imported in the Spreadsheet");
+    }
+
+    function onPdfExport(arg) {
+        kendoConsole.log("Spreadsheet is exported to PDF");
+    }
+
+    function onInsertSheet(arg) {
+        kendoConsole.log("Inserted new Sheet");
+    }
+
+    function onRemoveSheet(arg) {
+        kendoConsole.log(arg.sheet.name() + " sheet removed");
+    }
+
+    function onRenameSheet(arg) {
+        kendoConsole.log(arg.sheet.name() + " renamed to " + arg.newSheetName);
+    }
+
+    function onSelectSheet(arg) {
+        kendoConsole.log(arg.sheet.name() + " sheet is selected");
+    }
+
+    function onUnhideColumn(arg) {
+        kendoConsole.log("The column at index " + arg.index + " on sheet " + arg.sheet.name() + " is unhidden");
+    }
+
+    function onUnhideRow(arg) {
+        kendoConsole.log("The row at index " + arg.index + " on sheet " + arg.sheet.name() + " is unhidden");
+    }
+
+    function onHideColumn(arg) {
+        kendoConsole.log("The column at index " + arg.index + " on sheet " + arg.sheet.name() + " is hidden");
+    }
+
+    function onHideRow(arg) {
+        kendoConsole.log("The row at index " + arg.index + " on sheet " + arg.sheet.name() + " is hidden");
+    }
+
+    function onDeleteColumn(arg) {
+        kendoConsole.log("The column at index " + arg.index + " on sheet " + arg.sheet.name() + " is deleted");
+    }
+
+    function onDeleteRow(arg) {
+        kendoConsole.log("The row at index " + arg.index + " on sheet " + arg.sheet.name() + " is deleted");
+    }
+
+    function onInsertColumn(arg) {
+        kendoConsole.log("New column at index " + arg.index + " on sheet " + arg.sheet.name() + " is inserted");
+    }
+
+    function onInsertRow(arg) {
+        kendoConsole.log("New row at index " + arg.index + " on sheet " + arg.sheet.name() + " is inserted");
     }
 </script>
