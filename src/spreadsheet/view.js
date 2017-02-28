@@ -120,7 +120,8 @@
             return el;
         }
 
-        if (!cls && !kendo.spreadsheet.draw.shouldDrawCell(cell)) {
+        var shouldDraw = (cell.value != null || cell.merged || (cell.validation != null && !cell.validation.value)); // jshint ignore:line
+        if (!cls && !shouldDraw) {
             return;
         }
 
