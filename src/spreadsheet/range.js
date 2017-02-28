@@ -721,13 +721,14 @@
                 }
 
                 var row = origin.row;
+                var hasFilter = this.hasFilter();
                 state.data.forEach(function(data, dr){
-                    if (clipboard && !clipboard.isExternal() && sheet.isHiddenRow(state.ref.row + dr)) {
+                    if (hasFilter && clipboard && !clipboard.isExternal() && sheet.isHiddenRow(state.ref.row + dr)) {
                         return;
                     }
                     var col = origin.col;
                     data.forEach(function(cellState, dc){
-                        if (clipboard && !clipboard.isExternal() && sheet.isHiddenColumn(state.ref.col + dc)) {
+                        if (hasFilter && clipboard && !clipboard.isExternal() && sheet.isHiddenColumn(state.ref.col + dc)) {
                             return;
                         }
                         var range = clipboard ? sheet.range(row, col)
