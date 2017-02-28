@@ -2917,11 +2917,11 @@ var __meta__ = { // jshint ignore:line
             id = cell.closest("tr").attr(kendo.attr("uid"));
             model = that.dataSource.getByUid(id);
 
-            that.trigger(CELLCLOSE, { type: isCancel ? "cancel" : "save", model: model, container: cell });
-
             if (isCancel && that.trigger("cancel", { container: cell, model: model })) {
                 return;
             }
+
+            that.trigger(CELLCLOSE, { type: isCancel ? "cancel" : "save", model: model, container: cell });
 
             cell.removeClass("k-edit-cell");
             column = leafColumns(that.columns)[that.cellIndex(cell)];

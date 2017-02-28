@@ -1053,7 +1053,6 @@
     });
 
     test("cellClose event is triggered", 3, function() {
-        var wasCalled = false;
         var grid = setup({
             cellClose: function(e) {
                 ok(e.container.is(table.find("td:first")));
