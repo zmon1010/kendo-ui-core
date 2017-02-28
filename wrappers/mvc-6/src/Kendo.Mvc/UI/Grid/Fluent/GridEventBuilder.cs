@@ -58,6 +58,28 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the cellClose event.</param>
+        public GridEventBuilder CellClose(string handler)
+        {
+            Handler("cellClose", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public GridEventBuilder CellClose(Func<object, object> handler)
+        {
+            Handler("cellClose", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fired when the user selects a table row or cell in the grid.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>

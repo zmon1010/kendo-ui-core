@@ -22952,6 +22952,11 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>cellClose</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the user selects a table row or cell in the grid.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
@@ -24693,6 +24698,12 @@ This class can be used to obtain reference to the button after Grid initializati
         <description>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-cancel</name>
         <tag-class>com.kendoui.taglib.grid.CancelFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-cellClose</name>
+        <tag-class>com.kendoui.taglib.grid.CellCloseFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
