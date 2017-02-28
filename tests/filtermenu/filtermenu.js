@@ -654,6 +654,23 @@
         equal(dataSource.filter(), null);
     });
 
+    test("resetting the form does not throw an exception if only search is enabled", function() {
+        var filterMenu = setup(dom, {
+            dataSource: dataSource,
+            search: true
+        });
+
+        filterMenu.filter({
+            filters:[
+                { value: "1", field: "foo"}
+            ]
+        });
+
+        filterMenu.form.trigger("reset");
+
+        equal(dataSource.filter(), null);
+    });
+
     test("resetting the form triggers change event", 1, function() {
         var filterMenu = setup(dom, {
             dataSource: dataSource
