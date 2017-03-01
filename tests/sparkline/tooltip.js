@@ -1,4 +1,4 @@
-(function() {        
+(function() {
     var dataviz = kendo.dataviz;
     var chartElement;
     var tooltip;
@@ -75,7 +75,8 @@
                 anchor: createAnchor(),
                 style: {},
                 points: [pointMock],
-                shared: true
+                shared: true,
+                series: [{}]
             }, options));
             tooltip.move();
         }
@@ -115,5 +116,5 @@
             equal($(".k-chart-tooltip").length, 0);
         });
     })();
-    
-})();    
+
+})();
