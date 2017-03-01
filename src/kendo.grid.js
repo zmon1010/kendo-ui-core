@@ -109,6 +109,8 @@ var __meta__ = { // jshint ignore:line
         DETAILINIT = "detailInit",
         FILTERMENUINIT = "filterMenuInit",
         COLUMNMENUINIT = "columnMenuInit",
+        FILTERMENUOPEN = "filterMenuOpen",
+        COLUMNMENUOPEN = "columnMenuOpen",
         CELLCLOSE = "cellClose",
         CHANGE = "change",
         COLUMNHIDE = "columnHide",
@@ -5569,6 +5571,9 @@ var __meta__ = { // jshint ignore:line
                 initCallback = function(e) {
                     that.trigger(COLUMNMENUINIT, { field: e.field, container: e.container });
                 },
+                openCallback = function(e) {
+                    that.trigger(COLUMNMENUOPEN, { field: e.field, container: e.container });
+                },
                 closeCallback = function(element) {
                     focusTable(element.closest("table"), true);
                 },
@@ -5626,6 +5631,7 @@ var __meta__ = { // jshint ignore:line
                             owner: that,
                             closeCallback: closeCallback,
                             init: initCallback,
+                            open: openCallback,
                             pane: that.pane,
                             sort: sortHandler,
                             filtering: filterHandler,
@@ -5667,6 +5673,9 @@ var __meta__ = { // jshint ignore:line
                         e.preventDefault();
                     }
                 },
+                filterOpen = function(e) {
+                    that.trigger(FILTERMENUOPEN, { field: e.field, container: e.container });
+                },
                 filterable = that.options.filterable;
                 if (filterable && typeof filterable.mode == STRING && filterable.mode.indexOf("menu") == -1) {
                     filterable = false;
@@ -5702,6 +5711,7 @@ var __meta__ = { // jshint ignore:line
                                 closeCallback: closeCallback,
                                 title: columns[idx].title || columns[idx].field,
                                 init: filterInit,
+                                open: filterOpen,
                                 pane: that.pane,
                                 change: filterHandler
                             }

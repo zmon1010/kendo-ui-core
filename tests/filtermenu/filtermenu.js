@@ -1201,6 +1201,17 @@
         filterMenu.link.click();
     });
 
+    test("open event is raised when form is opened", 2, function() {
+        filterMenu = new FilterMenu(dom, {dataSource: dataSource, field: "foo" });
+
+        filterMenu.bind("open", function(e) {
+            equal(e.field, "foo");
+            equal(e.container, filterMenu.form);
+        });
+
+        filterMenu.link.click();
+    });
+
     test("role is not set if ui is function", 2, function() {
         filterMenu = setup(dom, {
             dataSource: dataSource,

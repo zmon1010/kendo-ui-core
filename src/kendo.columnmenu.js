@@ -23,6 +23,7 @@ var __meta__ = { // jshint ignore:line
         DESC = "desc",
         CHANGE = "change",
         INIT = "init",
+        OPEN = "open",
         SELECT = "select",
         POPUP = "kendoPopup",
         FILTERMENU = "kendoFilterMenu",
@@ -119,7 +120,7 @@ var __meta__ = { // jshint ignore:line
             that.trigger(INIT, { field: that.field, container: that.wrapper });
         },
 
-        events: [ INIT, "sort", "filtering" ],
+        events: [ INIT, OPEN, "sort", "filtering" ],
 
         options: {
             name: "ColumnMenu",
@@ -320,6 +321,8 @@ var __meta__ = { // jshint ignore:line
         },
 
         _activate: function() {
+            this.trigger(OPEN, { field: this.field, container: this.wrapper });
+
             this.menu.element.focus();
         },
 

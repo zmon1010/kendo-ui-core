@@ -79,6 +79,19 @@
         equal(chkbxs.eq(1).closest("label").text(), "some other");
     });
 
+    test("open event is raised when form is opened", 2, function() {
+        filterMenu = setup({
+            dataSource: dataSource()
+        });
+
+        filterMenu.bind("open", function(e) {
+            equal(e.field, "foo");
+            equal(e.container, filterMenu.form);
+        });
+
+        filterMenu._link.click();
+    });
+
     test("renders checkboxes with corresponding values when providing initial data", function() {
         setup({
                 dataSource: new kendo.data.DataSource({
