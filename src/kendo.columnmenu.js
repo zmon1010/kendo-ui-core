@@ -321,9 +321,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         _activate: function() {
-            this.trigger(OPEN, { field: this.field, container: this.wrapper });
-
             this.menu.element.focus();
+
+            this.trigger(OPEN, { field: this.field, container: this.wrapper });
         },
 
         _ownerColumns: function() {

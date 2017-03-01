@@ -1201,12 +1201,13 @@
         filterMenu.link.click();
     });
 
-    test("open event is raised when form is opened", 2, function() {
+    test("open event is raised when form is opened", 3, function() {
         filterMenu = new FilterMenu(dom, {dataSource: dataSource, field: "foo" });
 
         filterMenu.bind("open", function(e) {
             equal(e.field, "foo");
             equal(e.container, filterMenu.form);
+            ok(this.form.find(":kendoFocusable:first").is($(document.activeElement)));
         });
 
         filterMenu.link.click();

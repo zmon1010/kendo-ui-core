@@ -596,7 +596,7 @@
         columnMenu.link.click();
     });
 
-    test("open event is raised when opened", 2, function() {
+    test("open event is raised when opened", 3, function() {
         var columnMenu = new ColumnMenu(dom, {
             dataSource: dataSource,
             owner: ownerFactory({
@@ -607,6 +607,7 @@
         columnMenu.bind("open", function(e) {
             equal(e.field, columnMenu.field);
             equal(e.container, columnMenu.wrapper);
+            ok(this.menu.element.is($(document.activeElement)));
         });
 
         columnMenu.link.click();

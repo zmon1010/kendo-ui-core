@@ -670,9 +670,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         _activate: function() {
-            this.trigger(OPEN, { field: this.field, container: this.form });
-
             this.form.find(":kendoFocusable:first").focus();
+
+            this.trigger(OPEN, { field: this.field, container: this.form });
         },
 
         _keydown: function(e) {
@@ -989,9 +989,9 @@ var __meta__ = { // jshint ignore:line
             }
         },
         _activate: function() {
-            this.trigger(OPEN, { field: this.field, container: this.form });
-
             this.form.find(":kendoFocusable:first").focus();
+
+            this.trigger(OPEN, { field: this.field, container: this.form });
         },
         _createForm: function() {
             var options = this.options;

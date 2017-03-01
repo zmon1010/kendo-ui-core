@@ -79,7 +79,7 @@
         equal(chkbxs.eq(1).closest("label").text(), "some other");
     });
 
-    test("open event is raised when form is opened", 2, function() {
+    test("open event is raised when form is opened", 3, function() {
         filterMenu = setup({
             dataSource: dataSource()
         });
@@ -87,6 +87,7 @@
         filterMenu.bind("open", function(e) {
             equal(e.field, "foo");
             equal(e.container, filterMenu.form);
+            ok(this.form.find(":kendoFocusable:first").is($(document.activeElement)));
         });
 
         filterMenu._link.click();
