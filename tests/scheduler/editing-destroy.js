@@ -247,7 +247,7 @@
         setTimeout(function() {
             start();
             scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
-            $(".k-window").find(".k-button:first").click();
+            $(".k-window").find(".k-content .k-button:first").click();
 
             ok(scheduler.dataSource.args("remove")[0].isOccurrence());
         });
@@ -271,7 +271,7 @@
             startTime = new Date(scheduler.dataSource.at(0).start);
 
             scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
-            $(".k-window").find(".k-button:first").click();
+            $(".k-window").find(".k-content .k-button:first").click();
 
             setTimeout(function() {
                 start();
@@ -295,7 +295,7 @@
         setTimeout(function() {
 
             scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
-            $(".k-window").find(".k-button:last").click();
+            $(".k-window").find(".k-content .k-button:last").click();
             start();
             ok(scheduler.dataSource.args("remove")[0].isRecurrenceHead());
         });
@@ -317,7 +317,7 @@
             setTimeout(function() {
                 start();
                 scheduler.removeEvent(scheduler.wrapper.find(".k-event:last").data("uid"));
-                $(".k-window").find(".k-button:last").click();
+                $(".k-window").find(".k-content .k-button:last").click();
 
                 equal(scheduler.dataSource.calls("remove"), 0);
                 equal(scheduler.dataSource.data().length, 1);

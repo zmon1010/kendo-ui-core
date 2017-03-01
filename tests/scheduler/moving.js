@@ -309,7 +309,7 @@
 
         dragdrop(scheduler, handle, slots.eq(2));
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
         equal(scheduler.dataSource.at(0).start.getHours(), 11);
         equal(scheduler.dataSource.at(0).start.getMinutes(), 0);
@@ -333,7 +333,7 @@
 
         dragdrop(scheduler, handle, slots.eq(2));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         equal(scheduler.dataSource.at(1).start.getHours(), 11);
         equal(scheduler.dataSource.at(1).start.getMinutes(), 0);
@@ -356,7 +356,7 @@
 
         dragdrop(scheduler, handle, slots.eq(1));
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
         equal(scheduler.dataSource.at(0).start.getHours(), 11);
         equal(scheduler.dataSource.at(0).start.getMinutes(), 0);
@@ -380,7 +380,7 @@
 
         dragdrop(scheduler, handle, slots.eq(2));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         equal(scheduler.dataSource.at(1).start.getHours(), 11);
         equal(scheduler.dataSource.at(1).start.getMinutes(), 0);
@@ -404,7 +404,7 @@
 
         dragdrop(scheduler, handle, slot);
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
         equal(scheduler.dataSource.data().length, 1);
     });
@@ -1788,7 +1788,7 @@
 
         dragdrop(scheduler, handle, slot);
 
-        $(".k-window").find(".k-button:first").click()
+        $(".k-window").find(".k-content .k-button:first").click()
         jasmine.clock().tick(1);
         var occurrence = scheduler.occurrenceByUid(div.find(".k-event:last").attr("data-uid"));
 
@@ -1825,7 +1825,7 @@
 
         dragdrop(scheduler, handle, slot);
 
-        $(".k-window").find(".k-button:first").click()
+        $(".k-window").find(".k-content .k-button:first").click()
 
         jasmine.clock().tick(1);
         equal(div.find(".k-event").length, 2);

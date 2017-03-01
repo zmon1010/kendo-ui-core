@@ -783,9 +783,9 @@
         var eventUID = scheduler.dataSource.at(1).uid;
         scheduler.editEvent(eventUID);
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
         $(".k-window .k-scheduler-delete").click();
-         jasmine.clock().tick();
+        jasmine.clock().tick();
         var windows = $(".k-window");
         var confirmationWindow = $(windows[1]);
 
@@ -807,7 +807,7 @@
         var eventUID = scheduler.dataSource.at(0).uid;
         scheduler.editEvent(eventUID);
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
         $(".k-window .k-scheduler-delete").click();
 
         var windows = $(".k-window");
@@ -836,7 +836,7 @@
         var eventUID = scheduler.dataSource.at(1).uid;
         scheduler.editEvent(eventUID);
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
         $(".k-window .k-scheduler-delete").click();
 
         equal($(".k-window").length, 0);
@@ -860,7 +860,7 @@
         var eventUID = scheduler.dataSource.at(0).uid;
         scheduler.editEvent(eventUID);
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
         $(".k-window .k-scheduler-delete").click();
 
         equal($(".k-window").length, 0);
@@ -1078,7 +1078,7 @@
 
         var popup = $(".k-window");
 
-        popup.find(".k-button:first").click();
+        popup.find(".k-content .k-button:first").click();
 
         equal(popup.is(":visible"), false);
     });
@@ -1094,7 +1094,7 @@
         jasmine.clock().tick();
         scheduler.editEvent(scheduler.dataSource.at(0).uid);
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
         var editor = scheduler._editor.container.find("[data-role=recurrenceeditor]").data("kendoRecurrenceEditor");
 
@@ -1118,7 +1118,7 @@
         scheduler.editEvent(eventUID);
 
         //edit current instance
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
         jasmine.clock().tick(10);
         equal(scheduler.calls("addEvent"), 1);
     });
@@ -1137,7 +1137,7 @@
             exception;
 
         scheduler.editEvent(eventUID);
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         exception = scheduler.dataSource.at(1);
 
@@ -1159,7 +1159,7 @@
 
         scheduler.editEvent(eventUID);
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         exception = scheduler.dataSource.at(1);
 
@@ -1181,7 +1181,7 @@
 
         scheduler.editEvent(eventUID);
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         exception = scheduler.dataSource.at(1);
 
@@ -1204,7 +1204,7 @@
 
         scheduler.editEvent(events.last().data("uid"));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         scheduler.saveEvent();
 
@@ -1214,7 +1214,7 @@
         scheduler.editEvent(events.first().data("uid"));
 
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
         scheduler.saveEvent();
         jasmine.clock().tick(10);
 
@@ -1256,7 +1256,7 @@
 
         scheduler.editEvent(events.last().data("uid"));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         scheduler.saveEvent();
 
@@ -1280,7 +1280,7 @@
 
         scheduler.editEvent(events.last().data("uid"));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         scheduler.saveEvent();
 
@@ -1311,7 +1311,7 @@
             exception;
 
         scheduler.editEvent(eventUID);
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         exception = scheduler.dataSource.at(1);
 
@@ -1331,7 +1331,7 @@
 
         scheduler.editEvent(origin.uid);
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         exception = scheduler.dataSource.at(1);
 
@@ -1357,7 +1357,7 @@
         scheduler.editEvent(eventUID);
 
         //edit current instance
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
         var model = scheduler.args("_editEvent", 0)[0];
 
@@ -1377,7 +1377,7 @@
 
         scheduler.editEvent(event.data("uid"));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         scheduler.saveEvent();
         scheduler.dataSource.at(1).set("id", 2);
@@ -1386,7 +1386,7 @@
         scheduler.editEvent(eventUID);
 
         //edit current instance
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
         scheduler.saveEvent();
 
         var model = scheduler.dataSource.at(0);
@@ -1411,7 +1411,7 @@
         jasmine.clock().tick(10);
         scheduler.removeEvent(scheduler.element.find(".k-event").eq(2).data("uid"));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         var model = scheduler.dataSource.at(0);
 
@@ -1508,9 +1508,9 @@
 
         scheduler.removeEvent(event.data("uid"));
 
-        $(".k-window .k-button:first").click(); //delete current occurrence
+        $(".k-window .k-content .k-button:first").click(); //delete current occurrence
 
-        $(".k-window .k-button:first").click(); //accept deletion
+        $(".k-window .k-content .k-button:first").click(); //accept deletion
 
         equal(scheduler.dataSource.data().length, 1);
         equal(origin.recurrenceException, recurrenceException);
@@ -1536,9 +1536,9 @@
 
         scheduler.removeEvent(event.data("uid"));
 
-        $(".k-window .k-button:last").click(); //delete series
+        $(".k-window .k-content .k-button:last").click(); //delete series
 
-        $(".k-window .k-button:first").click(); //accept deletion
+        $(".k-window .k-content .k-button:first").click(); //accept deletion
 
         equal(scheduler.dataSource.data().length, 0);
     });
@@ -1562,8 +1562,8 @@
         var event = scheduler.element.find(".k-event").eq(2);
 
         scheduler.removeEvent(event.data("uid"));
-        $(".k-window .k-button:first").click(); //delete current occurrence
-        $(".k-window .k-button:last").click(); //cancel deletion
+        $(".k-window .k-content .k-button:first").click(); //delete current occurrence
+        $(".k-window .k-content .k-button:last").click(); //cancel deletion
 
         ok(scheduler.dataSource.at(0).recurrenceRule);
     });
