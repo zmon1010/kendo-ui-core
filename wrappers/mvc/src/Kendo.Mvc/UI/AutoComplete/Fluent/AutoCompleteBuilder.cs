@@ -36,6 +36,24 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+
+        /// <summary>
+        /// Controls whether to adjust the popup width 
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().AutoComplete()
+        ///             .Name("AutoComplete")
+        ///             .AutoWidth(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public AutoCompleteBuilder AutoWidth(bool autoWidth)
+        {
+            Component.AutoWidth = autoWidth;
+
+            return this;
+        }
         /// <summary>
         /// Configures the client-side events.
         /// </summary>

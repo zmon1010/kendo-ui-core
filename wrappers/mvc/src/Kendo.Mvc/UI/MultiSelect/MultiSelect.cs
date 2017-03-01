@@ -22,6 +22,11 @@
             get;
             set;
         }
+        public bool? AutoWidth
+        {
+            get;
+            set;
+        }
 
         public bool? AutoClose
         {
@@ -144,6 +149,11 @@
             if (AutoBind != null)
             {
                 options["autoBind"] = AutoBind;
+            }
+
+            if (AutoWidth != null)
+            {
+                options["autoWidth"] = AutoWidth;
             }
 
             if (AutoClose != null)
