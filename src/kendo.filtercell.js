@@ -173,11 +173,19 @@ var __meta__ = { // jshint ignore:line
             if (options.inputWidth !== null) {
                 input.width(options.inputWidth);
             }
+
+            input.attr("aria-label", that._getColumnTitle());
+
             that._setInputType(options, type);
 
             if (type != BOOL && options.showOperators !== false) {
                 that._createOperatorDropDown(operators);
             } else {
+                $('<div unselectable="on" />')
+                    .css("display", "none")
+                    .text(operators[viewModel.operator])
+                    .appendTo(wrapper);
+
                 wrapper.addClass("k-operator-hidden");
             }
 
@@ -240,7 +248,8 @@ var __meta__ = { // jshint ignore:line
                 wrapper.append([labelTrue, labelFalse]);
 
             } else if (type == "number") {
-                input.attr(kendo.attr("role"), "numerictextbox");
+                input.attr(kendo.attr("role"), "numerictextbox")
+                        .attr("title", that._getColumnTitle());
             } else if (type == ENUM) {
                 input.attr(kendo.attr("role"), "combobox")
                         .attr(kendo.attr("text-field"), "text")
@@ -251,8 +260,16 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
+        _getColumnTitle: function() {
+            var column = this.options.column;
+            return column
+                ? column.title || column.field
+                : "";
+        },
+
         _createOperatorDropDown: function(operators) {
-            var items = [];
+            var items = [],
+                viewModel = this.viewModel;;
             for (var prop in operators) {
                 items.push({
                     text: operators[prop],
@@ -270,6 +287,11 @@ var __meta__ = { // jshint ignore:line
                 },
                 valuePrimitive: true
             }).data("kendoDropDownList");
+
+            viewModel.bind("change", function() {
+                var ariaLabel = operators[viewModel.operator];
+                dropdown.attr("aria-label", ariaLabel);
+            });
 
             this.operatorDropDown.wrapper.find(".k-i-arrow-60-down").removeClass("k-i-arrow-60-down").addClass("k-i-filter");
         },
@@ -420,6 +442,7 @@ var __meta__ = { // jshint ignore:line
             var that = this;
 
             $("<button type='button' class='k-button k-button-icon' title = " + that.options.messages.clear + "/>")
+                .attr("aria-label", that.options.messages.clear)
                 .attr(kendo.attr("bind"), "visible:operatorVisible")
                 .html("<span class='k-icon k-i-close'/>")
                 .click(proxy(that.clearFilter, that))
