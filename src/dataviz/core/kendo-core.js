@@ -234,6 +234,8 @@ function interpolateValue(start, end, progress) {
     return kendo.drawing.util.round(start + (end - start) * progress, COORD_PRECISION);
 }
 
+var TRIGGER = 'trigger';
+
 var InstanceObserver = Class.extend({
     init: function(observer, handlers) {
         this.observer = observer;
@@ -246,12 +248,19 @@ var InstanceObserver = Class.extend({
         var handlerMap = ref.handlerMap;
         var isDefaultPrevented;
         if (handlerMap[name]) {
-            isDefaultPrevented = observer[handlerMap[name]](args);
-        } else if (observer.trigger) {
-            isDefaultPrevented = observer.trigger(name, args);
+            isDefaultPrevented = this.callObserver(handlerMap[name], args);
+        } else if (observer[TRIGGER]) {
+            isDefaultPrevented = this.callObserver(TRIGGER, name, args);
         }
 
         return isDefaultPrevented;
+    },
+
+    callObserver: function(fnName) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        return this.observer[fnName].apply(this.observer, args);
     },
 
     requiresHandlers: function(names) {

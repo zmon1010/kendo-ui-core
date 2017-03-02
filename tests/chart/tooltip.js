@@ -35,8 +35,8 @@
         }
     }
 
-    function createPoint(options) {
-        pointMock = {
+    function createMockPoint(options) {
+        var point = {
             value: 1,
             options: {
                 aboveAxis: true,
@@ -55,7 +55,13 @@
             }
         };
 
-        kendo.deepExtend(pointMock, options);
+        kendo.deepExtend(point, options);
+
+        return point;
+    }
+
+    function createPoint(options) {
+        pointMock = createMockPoint(options);
     }
 
     (function() {
@@ -457,7 +463,8 @@
             function showSharedTooltip(options) {
                 showTooltip(kendo.deepExtend({
                     shared: true,
-                    points: [pointMock]
+                    points: [pointMock],
+                    series: [{}]
                 }, options));
             }
 
@@ -486,16 +493,53 @@
                 ok(!tooltip.element.hasClass("k-chart-shared-tooltip"));
             });
 
-            test("shows series color in default template", function() {
-                showSharedTooltip();
+            test("shows series color in default template if there are multiple series", function() {
+                showSharedTooltip({ series: [{}, {}] });
                 equal(tooltip.element.find("td").length, 3);
                 equal(tooltip.element.find(".k-chart-shared-tooltip-marker").css("backgroundColor"), BLUE);
             });
 
+            test("does not show series color in default template if there is single series", function() {
+                showSharedTooltip({ series: [{}] });
+                equal(tooltip.element.find("td").length, 2);
+            });
+
             test("shows series name in default template", function() {
                 showSharedTooltip();
-                equal(tooltip.element.find("td").length, 3);
+                equal(tooltip.element.find("td").length, 2);
                 ok(tooltip.element.html().indexOf("series") !== -1);
+            });
+
+            test("shows name cell if there is single series with name", function() {
+                var noNamePoint = createMockPoint({});
+                delete noNamePoint.series.name;
+                showSharedTooltip({
+                    points: [createMockPoint({ series: { name: "foo" }}), noNamePoint]
+                });
+
+                var row = tooltip.element.find("tr").last();
+                var colspan = tooltip.element.find("tr").first().children().first().attr("colspan");
+                equal(row.children().length, 2);
+                equal(colspan, "2");
+            });
+
+            test("does not show name cell if there is no series with defined name", 3, function() {
+                var noNamePoint = createMockPoint({});
+                delete noNamePoint.series.name;
+                var noNamePoint1 = createMockPoint({});
+                delete noNamePoint1.series.name;
+                showSharedTooltip({
+                    points: [noNamePoint, noNamePoint1]
+                });
+
+                var colspan = tooltip.element.find("tr:first").nextAll("tr").each(function() {
+                    equal($(this).children().length, 1);
+                })
+                .end()
+                .children()
+                .first().attr("colspan");
+
+                equal(colspan, "1");
             });
 
             test("shows shared tooltip for series w/o name", function() {
