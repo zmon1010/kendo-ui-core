@@ -152,6 +152,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setEvent("columnMenuInit", value.getBody());
     }
 
+    public void setColumnMenuOpen(ColumnMenuOpenFunctionTag value) {
+        setEvent("columnMenuOpen", value.getBody());
+    }
+
     public void setColumnReorder(ColumnReorderFunctionTag value) {
         setEvent("columnReorder", value.getBody());
     }
@@ -202,6 +206,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setFilterMenuInit(FilterMenuInitFunctionTag value) {
         setEvent("filterMenuInit", value.getBody());
+    }
+
+    public void setFilterMenuOpen(FilterMenuOpenFunctionTag value) {
+        setEvent("filterMenuOpen", value.getBody());
     }
 
     public void setGroup(GroupFunctionTag value) {
@@ -492,6 +500,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setProperty("columnMenuInit", new Function(value));
     }
 
+    public String getColumnMenuOpen() {
+        Function property = ((Function)getProperty("columnMenuOpen"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setColumnMenuOpen(String value) {
+        setProperty("columnMenuOpen", new Function(value));
+    }
+
     public String getColumnReorder() {
         Function property = ((Function)getProperty("columnReorder"));
         if (property != null) {
@@ -646,6 +666,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setFilterMenuInit(String value) {
         setProperty("filterMenuInit", new Function(value));
+    }
+
+    public String getFilterMenuOpen() {
+        Function property = ((Function)getProperty("filterMenuOpen"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setFilterMenuOpen(String value) {
+        setProperty("filterMenuOpen", new Function(value));
     }
 
     public String getGroup() {

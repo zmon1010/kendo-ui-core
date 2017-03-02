@@ -372,6 +372,20 @@ its resize handle. In this case the column will assume the smallest possible wid
     }
 
     /**
+    * Sets the columnMenuOpen event of the Grid.
+    * Fired when the grid column menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Grid
+    */
+    public function columnMenuOpen($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('columnMenuOpen', $value);
+    }
+
+    /**
     * Sets the columnReorder event of the Grid.
     * Fired when the user changes the order of a column.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
@@ -579,6 +593,20 @@ its resize handle. In this case the column will assume the smallest possible wid
         }
 
         return $this->setProperty('filterMenuInit', $value);
+    }
+
+    /**
+    * Sets the filterMenuOpen event of the Grid.
+    * Fired when the grid filter menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Grid
+    */
+    public function filterMenuOpen($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('filterMenuOpen', $value);
     }
 
     /**
