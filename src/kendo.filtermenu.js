@@ -890,7 +890,8 @@ var __meta__ = { // jshint ignore:line
             var link = element.addClass("k-with-icon k-filterable").find(".k-grid-filter");
 
             if (!link[0]) {
-                link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-i-filter"/></a>').find(".k-grid-filter");
+                link = element.prepend('<a class="k-grid-filter" href="#" aria-label="' +
+                    this.options.messages.filter + '"><span class="k-icon k-i-filter"/></a>').find(".k-grid-filter");
             }
 
             this._link = link.attr("tabindex", -1).on("click" + NS, proxy(this._click, this));

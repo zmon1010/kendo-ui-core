@@ -5971,7 +5971,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (hasDetails) {
-                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-i-expand" href="\\#" tabindex="-1"></a></td>';
+                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-i-expand" href="\\#" aria-label="Expand" tabindex="-1"></a></td>';
                 }
 
                 for (idx = 0; idx < length; idx++) {
@@ -6301,10 +6301,12 @@ var __meta__ = { // jshint ignore:line
                     detailRow,
                     detailTemplate = that.detailTemplate,
                     data,
-                    hasDetails = that._hasDetails();
+                    hasDetails = that._hasDetails(),
+                    ariaLabelText = expanding ? "Collapse" : "Expand";
 
                 button.toggleClass("k-i-expand", !expanding)
-                    .toggleClass("k-i-collapse", expanding);
+                    .toggleClass("k-i-collapse", expanding)
+                    .attr("aria-label", ariaLabelText);
 
                 detailRow = masterRow.next();
 
@@ -6650,7 +6652,7 @@ var __meta__ = { // jshint ignore:line
                    for (idx = 0; idx < rows.length; idx++) {
                        html += "<tr>";
                        if (hasDetails) {
-                           html += '<th class="k-hierarchy-cell" scope="col">&nbsp;</th>';
+                           html += '<td class="k-hierarchy-cell" scope="col">&nbsp;</td>';
                        }
                        html += that._createHeaderCells(rows[idx].cells, rows[idx].rowSpan);
                        html += "</tr>";
@@ -8151,7 +8153,7 @@ var __meta__ = { // jshint ignore:line
        return '<tr role="row" class="k-grouping-row">' + groupCells(level) +
            '<td colspan="' + colspan + '" aria-expanded="true">' +
            '<p class="k-reset">' +
-           '<a class="k-icon k-i-collapse" href="#" tabindex="-1"></a>' + text +
+           '<a class="k-icon k-i-collapse" href="#" tabindex="-1" aria-label="Collapse"></a>' + text +
        '</p></td></tr>';
    }
 
