@@ -120,7 +120,8 @@
             return el;
         }
 
-        var shouldDraw = (cell.value != null || cell.merged || (cell.validation != null && !cell.validation.value)); // jshint ignore:line
+        var shouldDraw = (cell.value != null || (cell.validation != null && !cell.validation.value) || // jshint ignore:line
+                          cell.background || cell.merged);
         if (!cls && !shouldDraw) {
             return;
         }
