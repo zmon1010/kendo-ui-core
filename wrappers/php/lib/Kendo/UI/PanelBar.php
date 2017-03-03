@@ -259,7 +259,7 @@ Setting this to false causes all child DataSources to be loaded at initializatio
 
     /**
     * Sets the select event of the PanelBar.
-    * Triggered when an item of a PanelBar is selected.
+    * Triggered when an item of a PanelBar is selected by the user.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\PanelBar
     */

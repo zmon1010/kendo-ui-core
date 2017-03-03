@@ -146,7 +146,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Triggered when an item of a PanelBar is selected.
+        /// Triggered when an item of a PanelBar is selected by the user.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the select event.</param>
         public PanelBarEventBuilder Select(string handler)
@@ -157,7 +157,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Triggered when an item of a PanelBar is selected.
+        /// Triggered when an item of a PanelBar is selected by the user.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public PanelBarEventBuilder Select(Func<object, object> handler)
