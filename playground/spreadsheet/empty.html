@@ -6,13 +6,14 @@
     <script src="../loader.js"></script>
     <script>
       requireSync([
-        "../../src/jquery.js",
-        "../../src/kendo.dom.js",
+          "../../src/jquery.js",
+          "../../src/kendo.dom.js",
           "../../src/kendo.spreadsheet.js",
           "../../src/kendo.window.js"
       ]);
     </script>
     <script src="../../src/jszip.js"></script>
+    <script src="../../src/pako_deflate.min.js"></script>
 
     <style type="text/css">
      body {
@@ -26,12 +27,20 @@
        width: 100%;
        height: 100%;
      }
+     .k-spreadsheet-vborder {
+       position: absolute;
+       border-left-style: solid;
+     }
+     .k-spreadsheet-hborder {
+       position: absolute;
+       border-top-style: solid;
+     }
     </style>
   </head>
   <body>
     <div id="spreadsheet"></div>
     <script>
-     window.ss = $("#spreadsheet").kendoSpreadsheet({ rows: 4000 }).getKendoSpreadsheet();
+     window.ss = $("#spreadsheet").kendoSpreadsheet({ rows: 20, columns: 15 }).getKendoSpreadsheet();
      window.sheet = ss.activeSheet();
 
      sheet.batch(function(){
@@ -43,9 +52,41 @@
          sheet.range("E1").value("Much\nUnderlined\nText").underline(true).wrap(true).textAlign("right").italic(true);
          sheet.range("F1").value("Some text that wraps without newlines").wrap(true);
 
+         [ "D4:G10", "H4:H5", "C7:C8", "I3", "J3:K4", "J5:K6" ].forEach(function(ref){
+             sheet.range(ref)
+                  .borderTop({ size: 1, color: "#000" })
+                  .borderRight({ size: 1, color: "#000" })
+                  .borderBottom({ size: 1, color: "#000" })
+                  .borderLeft({ size: 1, color: "#000" });
+         });
+
+         [ "E5:F6" ].forEach(function(ref){
+             sheet.range(ref)
+                  .borderTop({ size: 3, color: "#d22" })
+                  .borderRight({ size: 3, color: "#2d2" })
+                  .borderBottom({ size: 3, color: "#22d" })
+                  .borderLeft({ size: 3, color: "#2dd" });
+         });
+
+         [ "E8:F9" ].forEach(function(ref){
+             sheet.range(ref)
+                  .borderTop({ size: 2, color: "#d22" })
+                  .borderRight({ size: 2, color: "#2d2" })
+                  .borderBottom({ size: 2, color: "#22d" })
+                  .borderLeft({ size: 2, color: "#2dd" });
+         });
+
          sheet.range("J3:K4").merge().value("a");
          sheet.range("J5:K6").merge().value("b");
          sheet.range("J7:K8").merge().value("c");
+
+         var borderColor = "#F00";
+         sheet.range("B12:G13")
+              .merge()
+              .borderTop({ size: 1, color: borderColor })
+              .borderRight({ size: 1, color: borderColor })
+              .borderBottom({ size: 1, color: borderColor })
+              .borderLeft({ size: 1, color: borderColor });
      }, { recalc: true });
     </script>
   </body>

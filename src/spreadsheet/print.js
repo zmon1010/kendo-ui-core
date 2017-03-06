@@ -50,6 +50,10 @@
     }
 
     function doLayout(sheet, range, options) {
+        // normalize reference so we don't have to deal with Infinity here.
+        var grid = sheet._grid;
+        range = grid.normalize(range);
+
         // 1. obtain the list of cells that need to be printed, the
         //    row heights and column widths.  Place in each cell row,
         //    col (relative to range, i.e. first is 0,0), rowspan,
@@ -58,6 +62,7 @@
         var rowHeights = [];
         var colWidths = [];
         var mergedCells = sheet._getMergedCells(range);
+
         var maxRow = -1, maxCol = -1;
         sheet.forEach(range, function(row, col, cell){
             var relrow = row - range.topLeft.row;
@@ -87,6 +92,8 @@
             } else {
                 cell.empty = true;
             }
+            cell.row = relrow;
+            cell.col = relcol;
             var m = mergedCells.primary[id];
             if (m) {
                 delete mergedCells.primary[id];
@@ -101,8 +108,6 @@
                 cell.rowspan = 1;
                 cell.colspan = 1;
             }
-            cell.row = relrow;
-            cell.col = relcol;
             cells.push(cell);
         });
 
@@ -116,7 +121,7 @@
 
         // when fitWidth is requested, we must update the page size
         // with the corresponding scale factor; the algorithm below
-        // (2) will continue to work, just drwaing on a bigger page.
+        // (2) will continue to work, just drawing on a bigger page.
         if (options.fitWidth) {
             var width = colWidths.reduce(sum, 0);
             if (width > pageWidth) {
@@ -199,13 +204,17 @@
         });
 
         return {
-            width  : boxWidth,
-            height : boxHeight,
-            cells  : cells.sort(normalOrder),
-            scale  : scaleFactor,
-            xCoords: xCoords,
-            yCoords: yCoords
+            width    : boxWidth,
+            height   : boxHeight,
+            cells    : cells.sort(normalOrder),
+            scale    : scaleFactor,
+            xCoords  : xCoords,
+            yCoords  : yCoords
         };
+    }
+
+    function sameBorder(a, b) {
+        return a.size === b.size && a.color === b.color;
     }
 
     function sum(a, b) {
@@ -315,7 +324,7 @@
                                     .moveTo(x, top)
                                     .lineTo(x, endbottom)
                                     .close()
-                                    .stroke("#999", GUIDELINE_WIDTH)
+                                    .stroke("#aaa", GUIDELINE_WIDTH)
                             );
                         }
                     });
@@ -329,22 +338,53 @@
                                     .moveTo(left, y)
                                     .lineTo(endright, y)
                                     .close()
-                                    .stroke("#999", GUIDELINE_WIDTH)
+                                    .stroke("#aaa", GUIDELINE_WIDTH)
                             );
                         }
                     });
                 }
 
-                var borders = new drawing.Group();
+                var borders = Borders(); // jshint ignore: line
                 cells.forEach(function(cell){
-                    drawCell(cell, content, borders, options);
+                    drawCell(cell, content, options);
+                    borders.add(cell);
                 });
-                content.append(borders);
+
+                var bordersGroup = new drawing.Group();
+                borders.vert.forEach(function(a){
+                    a.forEach(function(b){
+                        if (!b.rendered) {
+                            b.rendered = true;
+                            bordersGroup.append(
+                                new drawing.Path()
+                                    .moveTo(b.x, b.top)
+                                    .lineTo(b.x, b.bottom)
+                                    .close()
+                                    .stroke(b.color, b.size)
+                            );
+                        }
+                    });
+                });
+                borders.horiz.forEach(function(a){
+                    a.forEach(function(b){
+                        if (!b.rendered) {
+                            b.rendered = true;
+                            bordersGroup.append(
+                                new drawing.Path()
+                                    .moveTo(b.left, b.y)
+                                    .lineTo(b.right, b.y)
+                                    .close()
+                                    .stroke(b.color, b.size)
+                            );
+                        }
+                    });
+                });
+                content.append(bordersGroup);
             }
         }
     }
 
-    function drawCell(cell, content, borders, options) {
+    function drawCell(cell, content, options) {
         var g = new drawing.Group();
         content.append(g);
         var rect = new geo.Rect([ cell.left, cell.top ],
@@ -362,42 +402,6 @@
                 new drawing.Rect(r2d2)
                     .fill(cell.background || "#fff")
                     .stroke(null)
-            );
-        }
-        if (cell.borderLeft) {
-            borders.append(
-                new drawing.Path()
-                    .moveTo(cell.left, cell.top)
-                    .lineTo(cell.left, cell.bottom)
-                    .close()
-                    .stroke(cell.borderLeft.color, cell.borderLeft.size)
-            );
-        }
-        if (cell.borderTop) {
-            borders.append(
-                new drawing.Path()
-                    .moveTo(cell.left, cell.top)
-                    .lineTo(cell.right, cell.top)
-                    .close()
-                    .stroke(cell.borderTop.color, cell.borderTop.size)
-            );
-        }
-        if (cell.borderRight) {
-            borders.append(
-                new drawing.Path()
-                    .moveTo(cell.right, cell.top)
-                    .lineTo(cell.right, cell.bottom)
-                    .close()
-                    .stroke(cell.borderRight.color, cell.borderRight.size)
-            );
-        }
-        if (cell.borderBottom) {
-            borders.append(
-                new drawing.Path()
-                    .moveTo(cell.left, cell.bottom)
-                    .lineTo(cell.right, cell.bottom)
-                    .close()
-                    .stroke(cell.borderBottom.color, cell.borderBottom.size)
             );
         }
         var val = cell.value;
@@ -539,8 +543,8 @@
         var pageWidth = paper.paperSize[0];
         var pageHeight = paper.paperSize[1];
         if (paper.margin) {
-            pageWidth -= paper.margin.left + paper.margin.right;
-            pageHeight -= paper.margin.top + paper.margin.bottom;
+            pageWidth -= paper.margin.left + paper.margin.right + 1;
+            pageHeight -= paper.margin.top + paper.margin.bottom + 1;
         }
         options.pageWidth = pageWidth;
         options.pageHeight = pageHeight;
@@ -560,10 +564,66 @@
         }
     };
 
+    function Borders() {
+        var horiz = [];
+        var vert = [];
+        function add(cell) {
+            if (cell.borderLeft) {
+                addVert(cell.row, cell.col, cell.borderLeft,
+                        cell.left, cell.top, cell.bottom);
+            }
+            if (cell.borderRight) {
+                addVert(cell.row, cell.col + cell.colspan, cell.borderRight,
+                        cell.right, cell.top, cell.bottom);
+            }
+            if (cell.borderTop) {
+                addHoriz(cell.row, cell.col, cell.borderTop,
+                         cell.top, cell.left, cell.right);
+            }
+            if (cell.borderBottom) {
+                addHoriz(cell.row + cell.rowspan, cell.col, cell.borderBottom,
+                         cell.bottom, cell.left, cell.right);
+            }
+        }
+        function addVert(row, col, border, x, top, bottom) {
+            var a = vert[col] || (vert[col] = []);
+            var prev = row > 0 && a[row - 1];
+            if (prev && sameBorder(prev, border)) {
+                a[row] = prev;
+                prev.bottom = bottom;
+            } else {
+                a[row] = {
+                    size: border.size,
+                    color: border.color,
+                    x: x,
+                    top: top,
+                    bottom: bottom
+                };
+            }
+        }
+        function addHoriz(row, col, border, y, left, right) {
+            var a = horiz[row] || (horiz[row] = []);
+            var prev = col > 0 && a[col - 1];
+            if (prev && sameBorder(prev, border)) {
+                a[col] = prev;
+                prev.right = right;
+            } else {
+                a[col] = {
+                    size: border.size,
+                    color: border.color,
+                    y: y,
+                    left: left,
+                    right: right
+                };
+            }
+        }
+        return { add: add, horiz: horiz, vert: vert };
+    }
+
     spreadsheet.draw = {
+        Borders        : Borders,
         doLayout       : doLayout,
-        drawLayout     : drawLayout,
-        shouldDrawCell : shouldDrawCell
+        drawLayout     : drawLayout
     };
 
 }, typeof define == 'function' && define.amd ? define : function(a1, a2, a3){ (a3 || a2)(); });

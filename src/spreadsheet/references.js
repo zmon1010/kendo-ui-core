@@ -817,7 +817,13 @@
             }));
         },
         forEach: function(callback, obj) {
-            this.refs.forEach(callback, obj);
+            this.refs.forEach(function(ref){
+                if (ref instanceof UnionRef) {
+                    ref.forEach(callback, obj);
+                } else {
+                    callback.call(obj, ref);
+                }
+            }, obj);
         },
         toRangeRef: function() {
             return this.refs[0].toRangeRef();
@@ -826,7 +832,11 @@
             return this.refs.some(function(ref) { return ref.contains(theRef); });
         },
         map: function(callback, obj) {
-            return new UnionRef(this.refs.map(callback, obj));
+            var refs = [];
+            this.forEach(function(ref){
+                refs.push(callback.call(obj, ref));
+            });
+            return new UnionRef(refs);
         },
         first: function() {
             return this.refs[0].first();
