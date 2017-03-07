@@ -6918,10 +6918,10 @@ var __meta__ = { // jshint ignore:line
                 template = column.groupHeaderTemplate,
                 text = (column.title || field) + ': ' + formatGroupValue(group.value, column.format, column.values, column.encoded),
                 footerDefaults = that._groupAggregatesDefaultObject || {},
+                groupItems = group.items,
                 aggregates = extend({}, footerDefaults, group.aggregates),
-                headerData = extend({}, { field: group.field, value: group.value, aggregates: aggregates }, group.aggregates[group.field]),
-                groupFooterTemplate = templates.groupFooterTemplate,
-                groupItems = group.items;
+                headerData = extend({}, { field: group.field, value: group.value, items: groupItems, aggregates: aggregates }, group.aggregates[group.field]),
+                groupFooterTemplate = templates.groupFooterTemplate;
 
             if (template) {
                 text  = typeof template === FUNCTION ? template(headerData) : kendo.template(template)(headerData);
@@ -6941,7 +6941,7 @@ var __meta__ = { // jshint ignore:line
                 var footerData = {};
                 for (var aggregate in aggregates) {
                     footerData[aggregate] = extend({}, aggregates[aggregate],
-                        { group: { field: group.field, value: group.value } }
+                        { group: { field: group.field, value: group.value, items: groupItems } }
                     );
                 }
 
