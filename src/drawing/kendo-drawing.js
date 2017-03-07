@@ -9323,7 +9323,7 @@ function renderContents(element, group) {
         break;
 
       default:
-        var blocks = [], floats = [], inline = [], positioned = [];
+        var children = [], floats = [], positioned = [];
         for (var i = element.firstChild; i; i = i.nextSibling) {
             switch (i.nodeType) {
               case 3:         // Text
@@ -9333,29 +9333,22 @@ function renderContents(element, group) {
                 break;
               case 1:         // Element
                 var style = getComputedStyle(i);
-                var display = getPropertyValue(style, "display");
                 var floating = getPropertyValue(style, "float");
                 var position = getPropertyValue(style, "position");
                 if (position != "static") {
                     positioned.push(i);
                 }
-                else if (display != "inline") {
-                    if (floating != "none") {
-                        floats.push(i);
-                    } else {
-                        blocks.push(i);
-                    }
-                }
-                else {
-                    inline.push(i);
+                else if (floating != "none") {
+                    floats.push(i);
+                } else {
+                    children.push(i);
                 }
                 break;
             }
         }
 
-        mergeSort(blocks, zIndexSort).forEach(function(el){ renderElement(el, group); });
+        mergeSort(children, zIndexSort).forEach(function(el){ renderElement(el, group); });
         mergeSort(floats, zIndexSort).forEach(function(el){ renderElement(el, group); });
-        mergeSort(inline, zIndexSort).forEach(function(el){ renderElement(el, group); });
         mergeSort(positioned, zIndexSort).forEach(function(el){ renderElement(el, group); });
     }
 }
