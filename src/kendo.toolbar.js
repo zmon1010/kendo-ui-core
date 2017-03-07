@@ -192,7 +192,7 @@ var __meta__ = { // jshint ignore:line
                 } else if (!this.group) {
                     this.select(state);
                 }
-
+                
                 if (propagate && this.twin()) {
                     this.twin().toggle(state);
                 }
@@ -310,7 +310,7 @@ var __meta__ = { // jshint ignore:line
                 this.overflow = true;
 
                 Button.fn.init.call(this, options, toolbar);
-
+                
                 var element = this.element;
 
                 if (options.showText != "toolbar" && options.text) {
