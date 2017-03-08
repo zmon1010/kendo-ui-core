@@ -2,6 +2,9 @@
             <div id="grid"></div>
 
             <script type="text/x-kendo-template" id="template">
+                <div class="refreshBtnContainer">
+                    <a href="\\#" class="k-pager-refresh k-link k-button" title="Refresh"><span class="k-icon k-i-reload"></span></a>
+                </div>
                 <div class="toolbar">
                     <label class="category-label" for="category">Show products by category:</label>
                     <input type="search" id="category" style="width: 150px"/>
@@ -14,16 +17,12 @@
                             type: "odata",
                             transport: {
                                 read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
-                            },
-                            pageSize: 20,
-                            serverPaging: true,
-                            serverSorting: true,
-                            serverFiltering: true
+                            }
                         },
                         toolbar: kendo.template($("#template").html()),
                         height: 550,
                         sortable: true,
-                        pageable: true,
+                        
                         columns: [
                             { field: "ProductID", title: "Product ID", width: 100 },
                             { field: "ProductName", title: "Product Name" },
@@ -52,13 +51,18 @@
                             }
                         }
                     });
+
+                    grid.find(".k-grid-toolbar").on("click", ".k-pager-refresh", function (e) {
+                        e.preventDefault();
+                        grid.data("kendoGrid").dataSource.read();
+                    });
                 });
 
             </script>
             <style>
                 #grid .k-grid-toolbar
                 {
-                    padding: .6em 1.3em;
+                    padding: .6em 1.3em .6em .4em;
                 }
                 .category-label
                 {
@@ -68,6 +72,9 @@
                 #category
                 {
                     vertical-align: middle;
+                }
+                .refreshBtnContainer {
+                    display: inline-block;
                 }
                 .toolbar {
                     float: right;

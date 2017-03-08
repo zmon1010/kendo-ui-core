@@ -42,7 +42,6 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->pageSize(20)
            ->schema($schema)
            ->serverSorting(true)
            ->serverFiltering(true)
@@ -73,14 +72,15 @@ $grid->addColumn($productID, $productName, $unitPrice, $quantityPerUnit)
      ->dataSource($dataSource)
      ->height(550)
      ->sortable(true)
-     ->pageable(true)
      ->toolbarTemplateId('toolbar');
 
 echo $grid->render();
 ?>
 
 <script id="toolbar" type="text/x-kendo-template">
-
+<div class="refreshBtnContainer">
+    <a href="\\#" class="k-pager-refresh k-link k-button" title="Refresh"><span class="k-icon k-i-reload"></span></a>
+</div>
 <div class="toolbar">
     <label class="category-label" for="category">Show products by category:</label>
 
@@ -123,6 +123,15 @@ echo $grid->render();
 </script>
 
 <script>
+    $(function () {
+        var grid = $("#grid");
+        grid.find(".k-grid-toolbar").on("click", ".k-pager-refresh", function (e) {
+            e.preventDefault();
+            grid.data("kendoGrid").dataSource.read();
+        });
+
+    });
+
     function categoryChange() {
         var value = this.value(),
             grid = $("#grid").data("kendoGrid");
@@ -138,7 +147,7 @@ echo $grid->render();
 <style>
     #grid .k-grid-toolbar
     {
-        padding: .6em 1.3em;
+        padding: .6em 1.3em .6em .4em;
     }
     .category-label
     {
@@ -148,6 +157,9 @@ echo $grid->render();
     #category
     {
         vertical-align: middle;
+    }
+    .refreshBtnContainer {
+        display: inline-block;
     }
     .toolbar {
         float: right;

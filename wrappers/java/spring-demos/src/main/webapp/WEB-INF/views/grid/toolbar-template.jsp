@@ -8,8 +8,11 @@
 <c:url value="/grid/toolbar-template/categories" var="categoriesReadUrl" />
 
 <demo:header />
-    <kendo:grid name="grid" pageable="true" height="550px">
+    <kendo:grid name="grid" height="550px">
     	<kendo:grid-toolbarTemplate>
+    		<div class="refreshBtnContainer">
+        		<a href="\\#" class="k-pager-refresh k-link k-button" title="Refresh"><span class="k-icon k-i-reload"></span></a>
+    		</div>
     		<div class="toolbar">
     			<label class="category-label" for="categories">Show products by category:</label>
 	    		<kendo:dropDownList name="categories" optionLabel="All" dataTextField="categoryName"
@@ -28,7 +31,7 @@
             <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" width="150px" />
             <kendo:grid-column title="Quantity Per Unit" field="quantityPerUnit" />
         </kendo:grid-columns>
-        <kendo:dataSource pageSize="20">
+        <kendo:dataSource>
             <kendo:dataSource-transport>            	
                 <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST" contentType="application/json"/>
                 <kendo:dataSource-transport-parameterMap>
@@ -44,6 +47,14 @@
     </kendo:grid>
     
 <script type="text/javascript">
+	$(function () {
+	    var grid = $("#grid");
+	    grid.find(".k-grid-toolbar").on("click", ".k-pager-refresh", function (e) {
+            e.preventDefault();
+            grid.data("kendoGrid").dataSource.read();
+        });
+	    
+	});
 	function categoriesChange() {	
 		 var value = this.value(),
 		 	 grid = $("#grid").data("kendoGrid");
@@ -58,7 +69,7 @@
  <style>
     #grid .k-grid-toolbar
     {
-        padding: .6em 1.3em;
+        padding: .6em 1.3em .6em .4em;
     }
     .category-label
     {
@@ -68,6 +79,9 @@
     #category
     {
         vertical-align: middle;
+    }
+    .refreshBtnContainer {
+        display: inline-block;
     }
     .toolbar {
         float: right;
