@@ -145,8 +145,8 @@
 
     var ThemeChooserViewModel = kendo.observable({
         sassThemes: [
-            { value: "default-v2", name: "Default v2", colors: [ "#ff6358", "#eb5b51", "#fff" ]  }//,
-            //{ value: "bootstrap-v4", name: "Bootstrap v4", colors: [ "#0275d8", "#67afe9", "#fff" ]  }
+            { value: "default-v2", name: "Default v2", colors: [ "#ff6358", "#eb5b51", "#fff" ]  },
+            { value: "bootstrap-v4", name: "Bootstrap v4", colors: [ "#0275d8", "#67afe9", "#fff" ]  }
         ],
         themes: [
             { value: "black", name: "Black", colors: [ "#0167cc", "#4698e9", "#272727" ]  },
