@@ -14,6 +14,28 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the beforeEdit event.</param>
+        public GridEventBuilder BeforeEdit(string handler)
+        {
+            Handler("beforeEdit", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public GridEventBuilder BeforeEdit(Func<object, object> handler)
+        {
+            Handler("beforeEdit", handler);
+
+            return this;
+        }
+
+        /// <summary>
         /// Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the cancel event.</param>
@@ -31,6 +53,28 @@ namespace Kendo.Mvc.UI.Fluent
         public GridEventBuilder Cancel(Func<object, object> handler)
         {
             Handler("cancel", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the cellClose event.</param>
+        public GridEventBuilder CellClose(string handler)
+        {
+            Handler("cellClose", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public GridEventBuilder CellClose(Func<object, object> handler)
+        {
+            Handler("cellClose", handler);
 
             return this;
         }
@@ -97,6 +141,28 @@ namespace Kendo.Mvc.UI.Fluent
         public GridEventBuilder ColumnMenuInit(Func<object, object> handler)
         {
             Handler("columnMenuInit", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the grid column menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the columnMenuOpen event.</param>
+        public GridEventBuilder ColumnMenuOpen(string handler)
+        {
+            Handler("columnMenuOpen", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the grid column menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public GridEventBuilder ColumnMenuOpen(Func<object, object> handler)
+        {
+            Handler("columnMenuOpen", handler);
 
             return this;
         }
@@ -427,6 +493,28 @@ namespace Kendo.Mvc.UI.Fluent
         public GridEventBuilder FilterMenuInit(Func<object, object> handler)
         {
             Handler("filterMenuInit", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the grid filter menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the filterMenuOpen event.</param>
+        public GridEventBuilder FilterMenuOpen(string handler)
+        {
+            Handler("filterMenuOpen", handler);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Fired when the grid filter menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public GridEventBuilder FilterMenuOpen(Func<object, object> handler)
+        {
+            Handler("filterMenuOpen", handler);
 
             return this;
         }

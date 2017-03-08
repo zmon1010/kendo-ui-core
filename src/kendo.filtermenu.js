@@ -17,6 +17,7 @@ var __meta__ = { // jshint ignore:line
         proxy = $.proxy,
         POPUP = "kendoPopup",
         INIT = "init",
+        OPEN = "open",
         REFRESH = "refresh",
         CHANGE = "change",
         NS = ".kendoFilterMenu",
@@ -670,6 +671,8 @@ var __meta__ = { // jshint ignore:line
 
         _activate: function() {
             this.form.find(":kendoFocusable:first").focus();
+
+            this.trigger(OPEN, { field: this.field, container: this.form });
         },
 
         _keydown: function(e) {
@@ -678,7 +681,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        events: [ INIT, "change" ],
+        events: [ INIT, "change", OPEN ],
 
         options: {
             name: "FilterMenu",
@@ -987,6 +990,8 @@ var __meta__ = { // jshint ignore:line
         },
         _activate: function() {
             this.form.find(":kendoFocusable:first").focus();
+
+            this.trigger(OPEN, { field: this.field, container: this.form });
         },
         _createForm: function() {
             var options = this.options;
@@ -1286,7 +1291,7 @@ var __meta__ = { // jshint ignore:line
                 right: "slide:right"
             }
         },
-        events: [ INIT, REFRESH, "change"]
+        events: [ INIT, REFRESH, "change", OPEN ]
     });
 
     $.extend(FilterMultiCheck.fn, {

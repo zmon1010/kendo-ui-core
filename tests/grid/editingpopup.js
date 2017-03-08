@@ -348,6 +348,18 @@
         grid.editRow(table.find("tr:first"));
     });
 
+    test("beforeEdit event is raised when entering edit mode", 3, function() {
+        var grid = setup({
+            beforeEdit: function(e) {
+                ok(!e.container);
+                ok(!this._editContainer);
+                equal(e.model, grid.dataSource.get("bar"));
+            }
+        });
+
+        grid.editRow(table.find("tr:first"));
+    });
+
     test("addRow creates window instance", function() {
         var grid = setup();
         grid.addRow();
@@ -714,4 +726,16 @@
         equal(container.find(".k-edit-field:first > input").length, 1);
     });
 
+    test("progress animation is toggled on editor container", 1, function() {
+        var grid = setup({
+            columns: ["foo", "name"],
+            editable: "popup"
+        }),
+        row = table.find("tr:first");
+
+        grid.editRow(row);
+        grid.dataSource.trigger("progress");
+
+        ok(grid._editContainer.find(".k-loading-mask").length > 0);
+    });
 })();

@@ -103,11 +103,15 @@ var __meta__ = { // jshint ignore:line
         HEADERCELLS = "th.k-header:not(.k-group-cell):not(.k-hierarchy-cell)",
         NS = ".kendoGrid",
         EDIT = "edit",
+        BEFOREEDIT = "beforeEdit",
         SAVE = "save",
         REMOVE = "remove",
         DETAILINIT = "detailInit",
         FILTERMENUINIT = "filterMenuInit",
         COLUMNMENUINIT = "columnMenuInit",
+        FILTERMENUOPEN = "filterMenuOpen",
+        COLUMNMENUOPEN = "columnMenuOpen",
+        CELLCLOSE = "cellClose",
         CHANGE = "change",
         COLUMNHIDE = "columnHide",
         COLUMNSHOW = "columnShow",
@@ -1437,11 +1441,15 @@ var __meta__ = { // jshint ignore:line
            DETAILCOLLAPSE,
            DETAILINIT,
            FILTERMENUINIT,
+           FILTERMENUOPEN,
            COLUMNMENUINIT,
+           COLUMNMENUOPEN,
            EDIT,
+           BEFOREEDIT,
            SAVE,
            REMOVE,
            SAVECHANGES,
+           CELLCLOSE,
            COLUMNRESIZE,
            COLUMNREORDER,
            COLUMNSHOW,
@@ -2772,6 +2780,9 @@ var __meta__ = { // jshint ignore:line
             that.closeCell();
 
             if (model && isColumnEditable(column, model) && !column.command) {
+                if (that.trigger(BEFOREEDIT, { model: model })) {
+                    return;
+                }
 
                 that._attachModelChange(model);
 
@@ -2913,6 +2924,8 @@ var __meta__ = { // jshint ignore:line
             if (isCancel && that.trigger("cancel", { container: cell, model: model })) {
                 return;
             }
+
+            that.trigger(CELLCLOSE, { type: isCancel ? "cancel" : "save", model: model, container: cell });
 
             cell.removeClass("k-edit-cell");
             column = leafColumns(that.columns)[that.cellIndex(cell)];
@@ -3094,23 +3107,27 @@ var __meta__ = { // jshint ignore:line
         },
 
         _createPopupEditor: function(model) {
-            var that = this,
-                html = '<div ' + kendo.attr("uid") + '="' + model.uid + '" class="k-popup-edit-form' + (that._isMobile ? ' k-mobile-list' : '') + '"><div class="k-edit-form-container">',
-                column,
-                command,
-                fields = [],
-                idx,
-                length,
-                tmpl,
-                updateText,
-                cancelText,
-                tempCommand,
-                columns = leafColumns(that.columns),
-                attr,
-                editable = that.options.editable,
-                template = editable.template,
-                options = isPlainObject(editable) ? editable.window : {},
-                settings = extend({}, kendo.Template, that.options.templateSettings);
+            var that = this;
+            var html = '<div ' + kendo.attr("uid") + '="' + model.uid + '" class="k-popup-edit-form' + (that._isMobile ? ' k-mobile-list' : '') + '"><div class="k-edit-form-container">';
+            var column;
+            var command;
+            var fields = [];
+            var idx;
+            var length;
+            var tmpl;
+            var updateText;
+            var cancelText;
+            var tempCommand;
+            var columns = leafColumns(that.columns);
+            var attr;
+            var editable = that.options.editable;
+            var template = editable.template;
+            var options = isPlainObject(editable) ? editable.window : {};
+            var settings = extend({}, kendo.Template, that.options.templateSettings);
+
+            if (that.trigger(BEFOREEDIT, { model: model })) {
+                return;
+            }
 
             options = options || {};
 
@@ -3255,12 +3272,15 @@ var __meta__ = { // jshint ignore:line
         },
 
         _createInlineEditor: function(row, model) {
-            var that = this,
-                column,
-                cell,
-                command,
-                fields = [];
+            var that = this;
+            var column;
+            var cell;
+            var command;
+            var fields = [];
 
+            if (that.trigger(BEFOREEDIT, { model: model })) {
+                return;
+            }
 
             if (that.lockedContent) {
                 row = row.add(that._relatedRow(row));
@@ -5553,6 +5573,9 @@ var __meta__ = { // jshint ignore:line
                 initCallback = function(e) {
                     that.trigger(COLUMNMENUINIT, { field: e.field, container: e.container });
                 },
+                openCallback = function(e) {
+                    that.trigger(COLUMNMENUOPEN, { field: e.field, container: e.container });
+                },
                 closeCallback = function(element) {
                     focusTable(element.closest("table"), true);
                 },
@@ -5610,6 +5633,7 @@ var __meta__ = { // jshint ignore:line
                             owner: that,
                             closeCallback: closeCallback,
                             init: initCallback,
+                            open: openCallback,
                             pane: that.pane,
                             sort: sortHandler,
                             filtering: filterHandler,
@@ -5651,6 +5675,9 @@ var __meta__ = { // jshint ignore:line
                         e.preventDefault();
                     }
                 },
+                filterOpen = function(e) {
+                    that.trigger(FILTERMENUOPEN, { field: e.field, container: e.container });
+                },
                 filterable = that.options.filterable;
                 if (filterable && typeof filterable.mode == STRING && filterable.mode.indexOf("menu") == -1) {
                     filterable = false;
@@ -5686,6 +5713,7 @@ var __meta__ = { // jshint ignore:line
                                 closeCallback: closeCallback,
                                 title: columns[idx].title || columns[idx].field,
                                 init: filterInit,
+                                open: filterOpen,
                                 pane: that.pane,
                                 change: filterHandler
                             }
@@ -7411,7 +7439,9 @@ var __meta__ = { // jshint ignore:line
         _progress: function(toggle) {
             var element = this.element;
 
-            if (this.lockedContent) {
+            if (this._editContainer && this._editMode() === "popup") {
+                element = this._editContainer;
+            } else if (this.lockedContent) {
                 element = this.wrapper;
             } else if (this.element.is("table")) {
                 element = this.element.parent();

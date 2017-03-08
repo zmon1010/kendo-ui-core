@@ -288,6 +288,20 @@ its resize handle. In this case the column will assume the smallest possible wid
     }
 
     /**
+    * Sets the beforeEdit event of the Grid.
+    * Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Grid
+    */
+    public function beforeEdit($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('beforeEdit', $value);
+    }
+
+    /**
     * Sets the cancel event of the Grid.
     * Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
@@ -299,6 +313,20 @@ its resize handle. In this case the column will assume the smallest possible wid
         }
 
         return $this->setProperty('cancel', $value);
+    }
+
+    /**
+    * Sets the cellClose event of the Grid.
+    * Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Grid
+    */
+    public function cellClose($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('cellClose', $value);
     }
 
     /**
@@ -341,6 +369,20 @@ its resize handle. In this case the column will assume the smallest possible wid
         }
 
         return $this->setProperty('columnMenuInit', $value);
+    }
+
+    /**
+    * Sets the columnMenuOpen event of the Grid.
+    * Fired when the grid column menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Grid
+    */
+    public function columnMenuOpen($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('columnMenuOpen', $value);
     }
 
     /**
@@ -551,6 +593,20 @@ its resize handle. In this case the column will assume the smallest possible wid
         }
 
         return $this->setProperty('filterMenuInit', $value);
+    }
+
+    /**
+    * Sets the filterMenuOpen event of the Grid.
+    * Fired when the grid filter menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Grid
+    */
+    public function filterMenuOpen($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('filterMenuOpen', $value);
     }
 
     /**

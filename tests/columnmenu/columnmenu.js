@@ -596,6 +596,23 @@
         columnMenu.link.click();
     });
 
+    test("open event is raised when opened", 3, function() {
+        var columnMenu = new ColumnMenu(dom, {
+            dataSource: dataSource,
+            owner: ownerFactory({
+                columns: [{ field: "foo" }, { field: "bar", hidden: true}],
+            })
+        });
+
+        columnMenu.bind("open", function(e) {
+            equal(e.field, columnMenu.field);
+            equal(e.container, columnMenu.wrapper);
+            ok(this.menu.element.is($(document.activeElement)));
+        });
+
+        columnMenu.link.click();
+    });
+
     test("locked columns section is initialized", function() {
         var menu = setup({ lockedColumns: true });
 

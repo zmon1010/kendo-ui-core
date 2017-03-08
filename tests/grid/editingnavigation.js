@@ -224,6 +224,30 @@
         ok(table.find("tr>td:first").hasClass("k-state-focused"));
     });
 
+    test("pressing escape key on edited cell trigger cellClose event with correct arguments", 1, function() {
+        var grid = setup({
+            cellClose: function(e) {
+                equal(e.type, "cancel");
+            }
+        });
+
+        focusCell(grid).table.press(kendo.keys.ENTER).press(kendo.keys.ESC);
+    });
+
+    test("cellClose event is triggered after cancel event", 1, function() {
+        var cancelTriggered = false;
+        var grid = setup({
+            cellClose: function(e) {
+                ok(cancelTriggered);
+            },
+            cancel: function(e) {
+                cancelTriggered = true;
+            }
+        });
+
+        focusCell(grid).table.press(kendo.keys.ENTER).press(kendo.keys.ESC);
+    });
+
     test("pressing escape key on edited cell triggers cancel event (incell edit mode)", function() {
         var grid = setup({
             cancel: function(e) {

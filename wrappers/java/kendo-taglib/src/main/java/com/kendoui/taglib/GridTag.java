@@ -124,8 +124,16 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     }
 
+    public void setBeforeEdit(BeforeEditFunctionTag value) {
+        setEvent("beforeEdit", value.getBody());
+    }
+
     public void setCancel(CancelFunctionTag value) {
         setEvent("cancel", value.getBody());
+    }
+
+    public void setCellClose(CellCloseFunctionTag value) {
+        setEvent("cellClose", value.getBody());
     }
 
     public void setChange(ChangeFunctionTag value) {
@@ -142,6 +150,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setColumnMenuInit(ColumnMenuInitFunctionTag value) {
         setEvent("columnMenuInit", value.getBody());
+    }
+
+    public void setColumnMenuOpen(ColumnMenuOpenFunctionTag value) {
+        setEvent("columnMenuOpen", value.getBody());
     }
 
     public void setColumnReorder(ColumnReorderFunctionTag value) {
@@ -194,6 +206,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setFilterMenuInit(FilterMenuInitFunctionTag value) {
         setEvent("filterMenuInit", value.getBody());
+    }
+
+    public void setFilterMenuOpen(FilterMenuOpenFunctionTag value) {
+        setEvent("filterMenuOpen", value.getBody());
     }
 
     public void setGroup(GroupFunctionTag value) {
@@ -400,6 +416,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setProperty("toolbar", value);
     }
 
+    public String getBeforeEdit() {
+        Function property = ((Function)getProperty("beforeEdit"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setBeforeEdit(String value) {
+        setProperty("beforeEdit", new Function(value));
+    }
+
     public String getCancel() {
         Function property = ((Function)getProperty("cancel"));
         if (property != null) {
@@ -410,6 +438,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setCancel(String value) {
         setProperty("cancel", new Function(value));
+    }
+
+    public String getCellClose() {
+        Function property = ((Function)getProperty("cellClose"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setCellClose(String value) {
+        setProperty("cellClose", new Function(value));
     }
 
     public String getChange() {
@@ -458,6 +498,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setColumnMenuInit(String value) {
         setProperty("columnMenuInit", new Function(value));
+    }
+
+    public String getColumnMenuOpen() {
+        Function property = ((Function)getProperty("columnMenuOpen"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setColumnMenuOpen(String value) {
+        setProperty("columnMenuOpen", new Function(value));
     }
 
     public String getColumnReorder() {
@@ -614,6 +666,18 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setFilterMenuInit(String value) {
         setProperty("filterMenuInit", new Function(value));
+    }
+
+    public String getFilterMenuOpen() {
+        Function property = ((Function)getProperty("filterMenuOpen"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setFilterMenuOpen(String value) {
+        setProperty("filterMenuOpen", new Function(value));
     }
 
     public String getGroup() {

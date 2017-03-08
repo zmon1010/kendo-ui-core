@@ -22942,8 +22942,18 @@ and the string value will be passed as an argument to a kendo.template() functio
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>beforeEdit</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>cellClose</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -22959,6 +22969,11 @@ and the string value will be passed as an argument to a kendo.template() functio
         <attribute>
             <description>Fired when the column menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>columnMenuInit</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the grid column menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>columnMenuOpen</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -23034,6 +23049,11 @@ and the string value will be passed as an argument to a kendo.template() functio
         <attribute>
             <description>Fired when the grid filter menu is initialized, when it is opened for the first time.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>filterMenuInit</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the grid filter menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>filterMenuOpen</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -24679,9 +24699,21 @@ This class can be used to obtain reference to the button after Grid initializati
     </tag>
 
     <tag>
+        <description>Fired when the user try to edit or create a data item, before the editor is created. Can be used for preventing the editing depending on custom logic.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-beforeEdit</name>
+        <tag-class>com.kendoui.taglib.grid.BeforeEditFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-cancel</name>
         <tag-class>com.kendoui.taglib.grid.CancelFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when "incell" edit mode is used and the cell is going to be closed. The event is triggerd after saving or canceling the chages, but before the cell is closed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-cellClose</name>
+        <tag-class>com.kendoui.taglib.grid.CellCloseFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -24700,6 +24732,12 @@ This class can be used to obtain reference to the button after Grid initializati
         <description>Fired when the column menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-columnMenuInit</name>
         <tag-class>com.kendoui.taglib.grid.ColumnMenuInitFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the grid column menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-columnMenuOpen</name>
+        <tag-class>com.kendoui.taglib.grid.ColumnMenuOpenFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -24790,6 +24828,12 @@ This class can be used to obtain reference to the button after Grid initializati
         <description>Fired when the grid filter menu is initialized, when it is opened for the first time.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-filterMenuInit</name>
         <tag-class>com.kendoui.taglib.grid.FilterMenuInitFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the grid filter menu is opened, after the animations are completed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>grid-filterMenuOpen</name>
+        <tag-class>com.kendoui.taglib.grid.FilterMenuOpenFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
