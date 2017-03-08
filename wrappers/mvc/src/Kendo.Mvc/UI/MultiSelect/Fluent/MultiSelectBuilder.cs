@@ -40,6 +40,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Controls whether to adjust the popup width 
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().MultiSelect()
+        ///             .Name("MultiSelect")
+        ///             .AutoWidth(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public MultiSelectBuilder AutoWidth(bool autoWidth)
+        {
+            Component.AutoWidth = autoWidth;
+
+            return this;
+        }
+
+        /// <summary>
         /// Controls whether to close the widget suggestion list on item selection.
         /// </summary>
         /// <example>

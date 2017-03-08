@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.draganddrop" ], f);
+    define([ "./kendo.draganddrop", "./kendo.popup"], f);
 })(function(){
 
     var __meta__ = { // jshint ignore:line
@@ -7,7 +7,7 @@
         name: "Window",
         category: "web",
         description: "The Window widget displays content in a modal or non-modal HTML window.",
-        depends: [ "draganddrop" ],
+        depends: [ "draganddrop", "popup" ],
         features: [ {
             id: "window-fx",
             name: "Animation",
@@ -19,6 +19,7 @@
     (function($, undefined) {
         var kendo = window.kendo,
             Widget = kendo.ui.Widget,
+            TabKeyTrap = kendo.ui.Popup.TabKeyTrap,
             Draggable = kendo.ui.Draggable,
             isPlainObject = $.isPlainObject,
             activeElement = kendo._activeElement,
@@ -215,6 +216,14 @@
                 }
 
                 kendo.notify(that);
+
+                if(this.options.modal) {
+                    this._tabKeyTrap = new TabKeyTrap(wrapper);
+                    this._tabKeyTrap.trap();
+                    this._tabKeyTrap.shouldTrap = function () {
+                        return windowContent.data("isFront");
+                    };
+                }
             },
 
             _buttonEnter: function(e) {
@@ -452,14 +461,13 @@
                     distance = 10,
                     isMaximized = that.options.isMaximized,
                     newWidth, newHeight, w, h;
-
+                if (keyCode == keys.ESC && that._closable()) {
+                    that._close(false);
+                }
                 if (e.target != e.currentTarget || that._closing) {
                     return;
                 }
 
-                if (keyCode == keys.ESC && that._closable()) {
-                    that._close(false);
-                }
 
                 if (options.draggable && !e.ctrlKey && !isMaximized) {
                     offset = kendo.getOffset(wrapper);
@@ -723,6 +731,12 @@
                         }
 
                         overlay.show();
+
+                        $(window).on("focus", function() {
+                            if (contentElement.data("isFront")) {
+                                that.element.focus();
+                            }
+                        });
                     }
 
                     if (!wrapper.is(VISIBLE)) {
@@ -871,6 +885,7 @@
                         zIndex = Math.max(+zIndexNew, zIndex);
                     }
 
+                    contentElement.data("isFront", element == currentWindow);
                     // Add overlay to windows with iframes and lower z-index to prevent
                     // trapping of events when resizing / dragging
                     if (element != currentWindow && contentElement.find("> ." + KCONTENTFRAME).length > 0) {
@@ -1281,7 +1296,7 @@
         templates = {
             wrapper: template("<div class='k-widget k-window' />"),
             action: template(
-                "<a role='button' href='\\#' class='k-window-action k-link' aria-label='#= name #'>" +
+                "<a role='button' href='\\#' class='k-button k-bare k-button-icon k-window-action' aria-label='#= name #'>" +
                 "<span class='k-icon k-i-#= name.toLowerCase() #'></span>" +
                 "</a>"
             ),

@@ -1873,7 +1873,7 @@ function loadImage(url, cont) {
             // (BinaryStream does not create a copy), potentially saving some GC cycles.
             var reader = new FileReader();
             reader.onload = function() {
-                img = new PDFJpegImage(img.width, img.height, BinaryStream(new Uint8Array(this.result)));
+                img = new PDFJpegImage(BinaryStream(new Uint8Array(this.result)));
                 URL.revokeObjectURL(bloburl);
                 cont(IMAGE_CACHE[url] = img);
             };
@@ -1931,8 +1931,7 @@ function loadImage(url, cont) {
 
             var stream = BinaryStream();
             stream.writeBase64(data);
-            stream.offset(0);
-            img = new PDFJpegImage(img.width, img.height, stream);
+            img = new PDFJpegImage(stream);
         }
 
         cont(IMAGE_CACHE[url] = img);
@@ -2283,17 +2282,67 @@ var PDFPageTree = defclass(function PDFPageTree(){
 
 // JPEG
 
-function PDFJpegImage(width, height, data) {
+var SOF_CODES = [0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf];
+
+function PDFJpegImage(data) {
+    // we must determine the correct color space.  we'll parse a bit
+    // of the JPEG stream for this, it's still better than going
+    // through the canvas.
+    // https://github.com/telerik/kendo-ui-core/issues/2845
+    data.offset(0);
+    var width, height, colorSpace, bitsPerComponent;
+    var soi = data.readShort();
+    if (soi != 0xFFD8) {
+        // XXX: do we have some better options here?
+        throw new Error("Invalid JPEG image");
+    }
+    while (!data.eof()) {
+        var ff = data.readByte();
+        if (ff != 0xFF) {
+            throw new Error("Invalid JPEG image");
+        }
+        var marker = data.readByte();
+        var length = data.readShort();
+        if (SOF_CODES.indexOf(marker) >= 0) {
+            // "start of frame" marker
+            bitsPerComponent = data.readByte();
+            height = data.readShort();
+            width = data.readShort();
+            colorSpace = data.readByte();
+            break;
+        }
+        data.skip(length - 2);
+    }
+
+    if (colorSpace == null) {
+        throw new Error("Invalid JPEG image");
+    }
+
+    var props = {
+        Type             : _("XObject"),
+        Subtype          : _("Image"),
+        Width            : width,
+        Height           : height,
+        BitsPerComponent : bitsPerComponent,
+        Filter           : _("DCTDecode")
+    };
+
+    switch (colorSpace) {
+      case 1:
+        props.ColorSpace = _("DeviceGray");
+        break;
+      case 3:
+        props.ColorSpace = _("DeviceRGB");
+        break;
+      case 4:
+        props.ColorSpace = _("DeviceCMYK");
+        props.Decode = [ 1, 0, 1, 0, 1, 0, 1, 0 ]; // invert colors
+        break;
+    }
+
     this.asStream = function() {
-        var stream = new PDFStream(data, {
-            Type             : _("XObject"),
-            Subtype          : _("Image"),
-            Width            : width,
-            Height           : height,
-            BitsPerComponent : 8,
-            ColorSpace       : _("DeviceRGB"),
-            Filter           : _("DCTDecode")
-        });
+        data.offset(0);
+        var stream = new PDFStream(data, props);
         stream._resourceName = _("I" + (++RESOURCE_COUNTER));
         return stream;
     };

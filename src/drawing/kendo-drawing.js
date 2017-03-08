@@ -660,11 +660,9 @@ function toMatrix(transformation) {
 
 var Point = Class.extend({
     init: function(x, y) {
-        if (x === void 0) { x = 0; }
-        if (y === void 0) { y = 0; }
 
-        this.x = x;
-        this.y = y;
+        this.x = x || 0;
+        this.y = y || 0;
     },
 
     equals: function(other) {
@@ -843,11 +841,9 @@ ObserversMixin.extend(Point.prototype);
 
 var Size = Class.extend({
     init: function(width, height) {
-        if (width === void 0) { width = 0; }
-        if (height === void 0) { height = 0; }
 
-        this.width = width;
-        this.height = height;
+        this.width = width || 0;
+        this.height = height || 0;
     },
 
     equals: function(other) {
@@ -4502,6 +4498,8 @@ var Node = BaseNode.extend({
             this.updateDefinition(field, value);
         } else if (field === "opacity") {
             this.attr("opacity", value);
+        } else if (field === "cursor") {
+            this.css("cursor", value);
         }
 
         BaseNode.fn.optionsChange.call(this, e);
@@ -6029,6 +6027,74 @@ function zIndexComparer(x1, x2) {
     return 0;
 }
 
+var SurfaceCursor = Class.extend({
+    init: function(surface) {
+        surface.bind("mouseenter", this._mouseenter.bind(this));
+        surface.bind("mouseleave", this._mouseleave.bind(this));
+
+        this.element = surface.element;
+    },
+
+    clear: function() {
+        this._resetCursor();
+    },
+
+    destroy: function() {
+        this._resetCursor();
+        delete this.element;
+    },
+
+    _mouseenter: function(e) {
+        var cursor = this._shapeCursor(e);
+
+        if (!cursor) {
+            this._resetCursor();
+        } else {
+            if (!this._current) {
+                this._defaultCursor = this._getCursor();
+            }
+
+            this._setCursor(cursor);
+        }
+    },
+
+    _mouseleave: function() {
+        this._resetCursor();
+    },
+
+    _shapeCursor: function(e) {
+        var shape = e.element;
+
+        while (shape && !defined(shape.options.cursor)) {
+            shape = shape.parent;
+        }
+
+        if (shape) {
+            return shape.options.cursor;
+        }
+    },
+
+    _getCursor: function() {
+        if (this.element) {
+            return this.element.style.cursor;
+        }
+    },
+
+    _setCursor: function(cursor) {
+        if (this.element) {
+            this.element.style.cursor = cursor;
+            this._current = cursor;
+        }
+    },
+
+    _resetCursor: function() {
+        if (this._current) {
+            this._setCursor(this._defaultCursor || "");
+            delete this._current;
+        }
+    }
+});
+
 var Surface$3 = Surface.extend({
     init: function(element, options) {
         Surface.fn.init.call(this, element, options);
@@ -6066,6 +6132,11 @@ var Surface$3 = Surface.extend({
             delete this._searchTree;
         }
 
+        if (this._cursor) {
+            this._cursor.destroy();
+            delete this._cursor;
+        }
+
         unbindEvents(this.element, {
             click: this._mouseTrackHandler,
             mousemove: this._mouseTrackHandler
@@ -6087,6 +6158,10 @@ var Surface$3 = Surface.extend({
 
         if (this._searchTree) {
             this._searchTree.clear();
+        }
+
+        if (this._cursor) {
+            this._cursor.clear();
         }
     },
 
@@ -6162,6 +6237,7 @@ var Surface$3 = Surface.extend({
 
     _enableTracking: function() {
         this._searchTree = new ShapesQuadTree();
+        this._cursor = new SurfaceCursor(this);
 
         Surface.fn._enableTracking.call(this);
     },
@@ -6675,8 +6751,10 @@ function closest(el, selector) {
     if (el.closest) {
         return el.closest(selector);
     }
-    // IE
-    while (el && el !== document) {
+    // IE: stringifying rather than simply comparing with `document`,
+    // which is not iframe-proof and fails in editor export —
+    // https://github.com/telerik/kendo/issues/6721
+    while (el && !/^\[object (?:HTML)?Document\]$/.test(String(el))) {
         if (matches(el, selector)) {
             return el;
         }
@@ -9245,7 +9323,7 @@ function renderContents(element, group) {
         break;
 
       default:
-        var blocks = [], floats = [], inline = [], positioned = [];
+        var children = [], floats = [], positioned = [];
         for (var i = element.firstChild; i; i = i.nextSibling) {
             switch (i.nodeType) {
               case 3:         // Text
@@ -9255,29 +9333,22 @@ function renderContents(element, group) {
                 break;
               case 1:         // Element
                 var style = getComputedStyle(i);
-                var display = getPropertyValue(style, "display");
                 var floating = getPropertyValue(style, "float");
                 var position = getPropertyValue(style, "position");
                 if (position != "static") {
                     positioned.push(i);
                 }
-                else if (display != "inline") {
-                    if (floating != "none") {
-                        floats.push(i);
-                    } else {
-                        blocks.push(i);
-                    }
-                }
-                else {
-                    inline.push(i);
+                else if (floating != "none") {
+                    floats.push(i);
+                } else {
+                    children.push(i);
                 }
                 break;
             }
         }
 
-        mergeSort(blocks, zIndexSort).forEach(function(el){ renderElement(el, group); });
+        mergeSort(children, zIndexSort).forEach(function(el){ renderElement(el, group); });
         mergeSort(floats, zIndexSort).forEach(function(el){ renderElement(el, group); });
-        mergeSort(inline, zIndexSort).forEach(function(el){ renderElement(el, group); });
         mergeSort(positioned, zIndexSort).forEach(function(el){ renderElement(el, group); });
     }
 }

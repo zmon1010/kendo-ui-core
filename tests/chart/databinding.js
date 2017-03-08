@@ -684,6 +684,65 @@
         });
 
         // ------------------------------------------------------------
+        module("Binding to DataSource/ series visibiliry", {
+            teardown: destroyChart
+        });
+
+        asyncTest("keeps visibility on change", 1, function() {
+            var first = true;
+            chart = createChart({
+                dataSource: [{
+                    foo: 100,
+                    bar: 100
+                }],
+                series: [{
+                    field: "foo"
+                }, {
+                    field: "bar"
+                }],
+                dataBound: function() {
+                    if (first) {
+                        first = false;
+                        this._legendItemClick(1);
+                        this.dataSource.at(0).set("bar", 50);
+                    } else {
+                        equal(this.options.series[1].visible, false);
+                        start();
+                    }
+                }
+            });
+        });
+
+        asyncTest("clears visibility on read", 1, function() {
+            var first = true;
+            chart = createChart({
+                dataSource: [{
+                    foo: 100,
+                    bar: 100
+                }],
+                series: [{
+                    field: "foo"
+                }, {
+                    field: "bar"
+                }],
+                dataBound: function() {
+                    if (first) {
+                        var chart = this;
+                        first = false;
+                        setTimeout(function() {
+                            chart._legendItemClick(1);
+                            chart.dataSource.read();
+                        }, 0);
+
+                    } else {
+                        equal(this.options.series[1].visible, true);
+                        start();
+                    }
+                }
+            });
+        });
+
+        // ------------------------------------------------------------
         function createGroupedChart(dataBound, series, data) {
             chart = createChart({
                 dataSource: {
@@ -927,12 +986,13 @@
         asyncTest("applies groups visible state to series on change", 1, function() {
             var firstCall = true;
             createGroupedChart(function() {
+                var chart = this;
                 if (firstCall) {
                     firstCall = false;
-                    this._groupVisibleState = {
-                        Bar: false
-                    };
-                    this.dataSource.at(0).set("sales", 120);
+                    setTimeout(function() {
+                        chart._legendItemClick(1);
+                        chart.dataSource.at(0).set("sales", 120);
+                    }, 0);
                 } else {
                     equal(this.options.series[1].visible, false);
                     start();
@@ -940,18 +1000,17 @@
             });
         });
 
-        asyncTest("clears groups visible state on read", 2, function() {
+        asyncTest("clears groups visible state on read", 1, function() {
             var firstCall = true;
             createGroupedChart(function() {
                 if (firstCall) {
                     firstCall = false;
-                    this._groupVisibleState = {
-                        Bar: false
-                    };
-                    this.dataSource.read();
+                    setTimeout(function() {
+                        chart._legendItemClick(1);
+                        chart.dataSource.read();
+                    }, 0);
                 } else {
                     equal(this.options.series[1].visible, true);
-                    ok(!this._groupVisibleState);
                     start();
                 }
             });

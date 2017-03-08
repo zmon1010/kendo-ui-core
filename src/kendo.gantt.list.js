@@ -143,7 +143,9 @@ var __meta__ = { // jshint ignore:line
         },
 
         _adjustHeight: function() {
-            this.content.height(this.element.height() - outerHeight(this.header.parent()));
+            if(this.content){
+                this.content.height(this.element.height() - outerHeight(this.header.parent()));
+            }
         },
 
         destroy: function() {

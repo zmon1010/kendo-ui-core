@@ -629,7 +629,7 @@ var __meta__ = { // jshint ignore:line
         _reset: function() {
             this.clear();
 
-            if (this.options.search){
+            if (this.options.search && this.container) {
                 this.container.find("label").parent().show();
             }
             this._closeForm();

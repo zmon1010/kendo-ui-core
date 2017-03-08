@@ -274,21 +274,23 @@
             this._type = options.border;
             this._style = options.style;
         },
+        _batch: function(f) {
+            return this.range().sheet().batch(f, {});
+        },
         exec: function() {
-            this.getState();
-            this[this._type](this._style);
+            var self = this;
+            self.getState();
+            self._batch(function(){
+                self[self._type](self._style);
+            });
         },
         noBorders: function() {
-            var range = this.range();
-            range.sheet().batch(function() {
-                range.borderLeft(null).borderTop(null).borderRight(null).borderBottom(null);
-            }.bind(this), {});
+            this.range().insideBorders(null);
+            this.outsideBorders(null);
         },
         allBorders: function(style) {
-            var range = this.range();
-            range.sheet().batch(function() {
-                range.borderLeft(style).borderTop(style).borderRight(style).borderBottom(style);
-            }.bind(this), {});
+            this.range().insideBorders(style);
+            this.outsideBorders(style);
         },
         leftBorder: function(style) {
             this.range().leftColumn().borderLeft(style);
@@ -304,34 +306,20 @@
         },
         outsideBorders: function(style) {
             var range = this.range();
-            range.sheet().batch(function() {
-                range.leftColumn().borderLeft(style);
-                range.topRow().borderTop(style);
-                range.rightColumn().borderRight(style);
-                range.bottomRow().borderBottom(style);
-            }.bind(this), {});
+            range.leftColumn().borderLeft(style);
+            range.topRow().borderTop(style);
+            range.rightColumn().borderRight(style);
+            range.bottomRow().borderBottom(style);
         },
         insideBorders: function(style) {
-            this.range().sheet().batch(function() {
-                this.allBorders(style);
-                this.outsideBorders(null);
-            }.bind(this), {});
+            this.range().insideBorders(style);
+            this.outsideBorders(null);
         },
         insideHorizontalBorders: function(style) {
-            var range = this.range();
-
-            range.sheet().batch(function() {
-                range.borderBottom(style);
-                range.bottomRow().borderBottom(null);
-            }.bind(this), {});
+            this.range().insideHorizontalBorders(style);
         },
         insideVerticalBorders: function(style) {
-            var range = this.range();
-
-            range.sheet().batch(function() {
-                range.borderRight(style);
-                range.rightColumn().borderRight(null);
-            }.bind(this), {});
+            this.range().insideVerticalBorders(style);
         }
     });
 

@@ -44,14 +44,14 @@ else
     ADMIN_RELEASE_UPLOAD_LOGIN = 'KendoBuildUser@telerik.com'
 
     SITE_URL = "http://www.telerik.com"
-    SITE_LOGIN = "stefan.rahnev@telerik.com"
+    SITE_LOGIN = "tsvetomir.tsonev@telerik.com"
     NUGET_SITE_URL = "https://www.nuget.org/"
     NUGET_SITE_LOGIN = "stefan.rahnev@telerik.com"
 end
 
 ADMIN_RELEASE_UPLOAD_PASS = "5x1DP2nV3!vB"
 # SITE_DOWNLOAD_BUILDER_UPLOAD_PASS = "t3l3r1kc0m"
-SITE_DOWNLOAD_BUILDER_UPLOAD_PASS = "oaW6waj6id7n"
+SITE_DOWNLOAD_BUILDER_UPLOAD_PASS = "E5U3WqgA#4%9hs"
 
 NUGET_UPLOAD_PASS = "9c8kxjNdLEoDyX"
 

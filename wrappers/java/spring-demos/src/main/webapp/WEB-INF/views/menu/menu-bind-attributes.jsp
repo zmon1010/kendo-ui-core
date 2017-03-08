@@ -169,7 +169,7 @@
 
 <style>
     #products-wrapper {
-        width: 70%;
+        width: 80%;
         display: inline-block;
         vertical-align: top;
         border-right: 1px solid rgba(20, 53, 80, 0.137255);

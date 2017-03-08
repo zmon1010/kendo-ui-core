@@ -12,7 +12,7 @@ position: 9
 
 The recommended approach to include Kendo UI is by using the NPM package. As of the Kendo UI 2016 Q2 SP1 release, both Kendo UI Core and Kendo UI Professional are distributed in an NPM format.
 
-For more details, check [the installation instructions]({% slug kendoui_npm_packages_kendoui_installation %}) and the [sample repository](https://github.com/telerik/kendo-ui-npm-example/tree/master/typescript-webpack).
+For more details, check [the installation instructions]({% slug kendoui_npm_packages_kendoui_installation %}).
 
 > **Important**
 > * The typescript step is optional&mdash;the NPM package might be consumed from vanilla JavaScript or with the Babel transpiler.
@@ -40,6 +40,10 @@ The Kendo UI packaged scripts are in an AMD-compatible format, which means that 
 This section is intended for holders of the commercial Kendo UI Complete license.
 
 The commercial Kendo UI distribution `zip` file, available for download for the active customer subscriptions has the packaged scripts available in the `js` directory.
+
+## Use in JavaScript and TypeScript Applications
+
+To see the runnable examples on how to use Kendo UI with Webpack in both JavaScript and TypeScript applications, refer to the following [sample repository](https://github.com/telerik/kendo-ui-npm-example/tree/master/typescript-webpack).
 
 ## Build AMD-Formatted Scripts
 

@@ -276,4 +276,79 @@
 
         notEqual(input[0], kendo._activeElement());
     });
+
+    test("Add content in 'input' event; Windows Phone scenario", function() {
+        var masked = new MaskedTextBox(input, {
+            mask: "00.00",
+            promptChar: "_"
+        });
+
+        masked.value("1");
+        masked.element[0].value = "12_.__";
+
+        input[0].focus();
+        caret(input[0], 2, 2);
+        input.trigger("input");
+        input.trigger("propertychange");
+
+        equal(masked.value(), "12.__");
+    });
+
+    test("MaskedTextBox value is not undefined when clearPromptChar is true and empty mask is used", 1, function() {
+        input.attr("value","123")
+        var maskedtextbox = new MaskedTextBox(input, {
+            clearPromptChar: true
+        });
+
+        input.focus();
+
+        equal(input.val(), "123");
+    });
+
+    asyncTest("MaskTextBox will not shift character if it is not correct", 1, function() {
+        var maskedtextbox = new MaskedTextBox(input, {
+            mask: "0ba",
+            rules: {
+                "b": function (char) {
+                    return (char === "0" || char === "1" || char === "2" ||
+                            char === "3" || char === "4" || char === "5");
+                },
+                "a": function (char) {
+                    return (char === "0" || char === "1" || char === "2");
+                }
+            },
+            value:"9__"
+        });
+
+        input.focus();
+        setTimeout(function() {
+            start();
+            caret(input[0], 0);
+            input.trigger({
+                type: "keypress",
+                which: 54
+                });
+
+            equal(input.val(), "6__");
+        });
+    });
+
+    asyncTest("Entering invalid symbol does not change the value", 1, function() {
+        var maskedtextbox = new MaskedTextBox(input, {
+            mask: "0-000",
+            value: "0-__3"
+        });
+
+        input.focus();
+        setTimeout(function() {
+            start();
+            caret(input[0], 2);
+            input.trigger({
+                type: "keypress",
+                which: 103
+                });
+
+            equal(input.val(), "0-__3");
+        });
+    });
 })();

@@ -4786,7 +4786,9 @@ var BaseTooltip = Class.extend({
     },
 
     hide: function() {
-        this.chartService.notify(HIDE_TOOLTIP);
+        if (this.chartService) {
+            this.chartService.notify(HIDE_TOOLTIP);
+        }
     },
 
     destroy: function() {
@@ -8343,6 +8345,7 @@ var PlotAreaFactory = Class.extend({
 PlotAreaFactory.current = new PlotAreaFactory();
 
 var ZOOM_ACCELERATION = 3;
+var SELECTOR_HEIGHT_ADJUST = 0.1;
 
 function createDiv(className) {
     var element = document.createElement("div");
@@ -8478,7 +8481,7 @@ var Selection = Class.extend({
 
         this.options = deepExtend({}, {
             width: categoryAxisLineBox.width(),
-            height: valueAxisLineBox.height(),
+            height: valueAxisLineBox.height() + SELECTOR_HEIGHT_ADJUST, //workaround for sub-pixel hover on the paths in chrome
             padding: {
                 left: paddingLeft,
                 top: paddingTop
@@ -8957,7 +8960,8 @@ var SharedTooltip = BaseTooltip.extend({
                 shared: true,
                 points: points,
                 category: point.category,
-                categoryText: this.formatService.auto(this.options.categoryFormat, point.category)
+                categoryText: this.formatService.auto(this.options.categoryFormat, point.category),
+                series: this.plotArea.series
             }, this.options);
         }
     },
@@ -11647,7 +11651,7 @@ var Chart = Class.extend({
 
         this._initHandlers();
 
-        this._bindCategories();
+        this.bindCategories();
         dataviz.FontLoader.preloadFonts(userOptions, function () {
             if (!this$1._destroyed) {
                 this$1._redraw();
@@ -11679,7 +11683,7 @@ var Chart = Class.extend({
         options.series = seriesCopies;
 
         resolveAxisAliases(options);
-        this._applyDefaults(options, themeOptions);
+        this.applyDefaults(options, themeOptions);
 
         // Clean up default if not overriden by data attributes
         if (options.seriesColors === null) {
@@ -11687,7 +11691,7 @@ var Chart = Class.extend({
         }
 
         this.options = deepExtend({}, themeOptions, options);
-        this._applySeriesColors();
+        this.applySeriesColors();
     },
 
     getSize: function() {
@@ -11711,8 +11715,8 @@ var Chart = Class.extend({
     },
 
     redraw: function(paneName) {
-        this._applyDefaults(this.options);
-        this._applySeriesColors();
+        this.applyDefaults(this.options);
+        this.applySeriesColors();
 
         if (paneName) {
             var plotArea = this._model._plotArea;
@@ -11767,11 +11771,11 @@ var Chart = Class.extend({
         }
 
         if (points) {
-            this._togglePointsHighlight(show, points);
+            this.togglePointsHighlight(show, points);
         }
     },
 
-    _togglePointsHighlight: function(show, points) {
+    togglePointsHighlight: function(show, points) {
         var highlight = this._highlight;
         for (var idx = 0; idx < points.length; idx++) {
             highlight.togglePointHighlight(points[idx], show);
@@ -11938,7 +11942,7 @@ var Chart = Class.extend({
         var tooltip;
 
         if (this._sharedTooltip()) {
-            tooltip = new SharedTooltip(this._plotArea, tooltipOptions);
+            tooltip = this._createSharedTooltip(tooltipOptions);
         } else {
             tooltip = new Tooltip(this.chartService, tooltipOptions);
         }
@@ -11946,12 +11950,16 @@ var Chart = Class.extend({
         return tooltip;
     },
 
-    _applyDefaults: function(options, themeOptions) {
+    _createSharedTooltip: function(options) {
+        return new SharedTooltip(this._plotArea, options);
+    },
+
+    applyDefaults: function(options, themeOptions) {
         applyAxisDefaults(options, themeOptions);
         applySeriesDefaults(options, themeOptions);
     },
 
-    _applySeriesColors: function() {
+    applySeriesColors: function() {
         var options = this.options;
         var series = options.series;
         var colors = options.seriesColors || [];
@@ -12703,7 +12711,7 @@ var Chart = Class.extend({
         }
     },
 
-    _bindCategories: function() {
+    bindCategories: function() {
         var this$1 = this;
 
         var options = this.options;
@@ -12712,12 +12720,12 @@ var Chart = Class.extend({
         for (var axisIx = 0; axisIx < definitions.length; axisIx++) {
             var axis = definitions[axisIx];
             if (axis.autoBind !== false) {
-                this$1._bindCategoryAxisFromSeries(axis, axisIx);
+                this$1.bindCategoryAxisFromSeries(axis, axisIx);
             }
         }
     },
 
-    _bindCategoryAxisFromSeries: function(axis, axisIx) {
+    bindCategoryAxisFromSeries: function(axis, axisIx) {
         var this$1 = this;
 
         var series = this.options.series;
@@ -12793,7 +12801,9 @@ var Chart = Class.extend({
             options.transitions = false;
             transitionsState = true;
         }
-        this.redraw();
+
+        this._redraw();
+
         if (transitionsState) {
             options.transitions = true;
         }
@@ -12845,7 +12855,7 @@ var Chart = Class.extend({
 
     setOptions: function(options, theme) {
         this.applyOptions(options, theme);
-        this._bindCategories();
+        this.bindCategories();
         this.redraw();
         this.updateMouseMoveHandler();
     },
@@ -12866,8 +12876,10 @@ var Chart = Class.extend({
 
         this._destroyView();
 
-        this.surface.destroy();
-        this.surface = null;
+        if (this.surface) {
+            this.surface.destroy();
+            this.surface = null;
+        }
 
         this._clearRedrawTimeout();
     },

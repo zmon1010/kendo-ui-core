@@ -28677,7 +28677,7 @@ Setting this to false causes all child DataSources to be loaded at initializatio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Triggered when an item of a PanelBar is selected.</description>
+            <description>Triggered when an item of a PanelBar is selected by the user.</description>
             <name>select</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -28873,7 +28873,7 @@ is closed. Options include "fadeOut".</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Triggered when an item of a PanelBar is selected.</description>
+        <description>Triggered when an item of a PanelBar is selected by the user.</description>
         <name>panelBar-select</name>
         <tag-class>com.kendoui.taglib.panelbar.SelectFunctionTag</tag-class>
         <body-content>JSP</body-content>

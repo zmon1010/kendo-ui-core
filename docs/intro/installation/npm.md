@@ -73,6 +73,10 @@ The Kendo UI Professional NPM Package, named `@progress/kendo-ui` is available a
     npm install --save @progress/kendo-ui
     ```
 
+> **Important**
+>
+> The scripts in the NPM package are not usable in the browser. To work around this issue, use a bundler such as [WebPack]({% slug webpacksupport_integration_kendoui %}).
+
 ### Legacy Package (Git Repo)
 
 The legacy `kendo` package, accessible through **git+https://bower.telerik.com/npm-kendo-ui/npm-kendo.git**, will not be updated after May 2017. The repository itself will remain active.

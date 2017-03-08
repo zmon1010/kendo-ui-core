@@ -8,12 +8,40 @@
 
 window.kendo.dataviz = window.kendo.dataviz || {};
 var dataviz = kendo.dataviz;
-var deepExtend = dataviz.deepExtend;
 var elementStyles = dataviz.elementStyles;
+var deepExtend = dataviz.deepExtend;
 var toTime = dataviz.toTime;
 var services = dataviz.services;
 var datavizConstants = dataviz.constants;
 var Chart = dataviz.Chart;
+var drawing = kendo.drawing;
+
+var FadeOutAnimation = drawing.Animation.extend({
+    setup: function() {
+        this._initialOpacity = parseFloat(elementStyles(this.element, 'opacity').opacity);
+    },
+
+    step: function(pos) {
+        elementStyles(this.element, {
+            opacity: String(dataviz.interpolateValue(this._initialOpacity, 0, pos))
+        });
+    },
+
+    abort: function() {
+        drawing.Animation.fn.abort.call(this);
+        elementStyles(this.element, {
+            display: 'none',
+            opacity: String(this._initialOpacity)
+        });
+    },
+
+    cancel: function() {
+        drawing.Animation.fn.abort.call(this);
+        elementStyles(this.element, {
+            opacity: String(this._initialOpacity)
+        });
+    }
+});
 
 function createDiv(className, style) {
     var div = document.createElement("div");
@@ -69,9 +97,7 @@ var NavigatorHint = dataviz.Class.extend({
         var offset = middle - options.min;
         var text = this.chartService.intl.format(options.format, from, to);
 
-        if (this._hideTimeout) {
-            clearTimeout(this._hideTimeout);
-        }
+        this.clearHideTimeout();
 
         if (!this._visible) {
             elementStyles(element, {
@@ -107,20 +133,39 @@ var NavigatorHint = dataviz.Class.extend({
         });
     },
 
-    hide: function() {
-        var this$1 = this;
-
+    clearHideTimeout: function() {
         if (this._hideTimeout) {
             clearTimeout(this._hideTimeout);
         }
 
+        if (this._hideAnimation) {
+            this._hideAnimation.cancel();
+        }
+    },
+
+    hide: function() {
+        var this$1 = this;
+
+        this.clearHideTimeout();
+
         this._hideTimeout = setTimeout(function () {
             this$1._visible = false;
-            //TO DO: animate
-            elementStyles(this$1.element, {
-                display: 'none'
-            });
+            this$1._hideAnimation = new FadeOutAnimation(this$1.element);
+            this$1._hideAnimation.setup();
+            this$1._hideAnimation.play();
         }, this.options.hideDelay);
+    },
+
+    destroy: function() {
+        this.clearHideTimeout();
+        if (this.container) {
+            this.container.removeChild(this.element);
+        }
+        delete this.container;
+        delete this.chartService;
+        delete this.element;
+        delete this.tooltip;
+        delete this.scroll;
     }
 });
 
@@ -173,14 +218,19 @@ var Navigator = dataviz.Class.extend({
             this.selection.destroy();
             delete this.selection;
         }
+
+        if (this.hint) {
+            this.hint.destroy();
+            delete this.hint;
+        }
     },
 
     redraw: function() {
         this._redrawSelf();
-        this._initSelection();
+        this.initSelection();
     },
 
-    _initSelection: function() {
+    initSelection: function() {
         var ref = this;
         var chart = ref.chart;
         var options = ref.options;
@@ -220,6 +270,10 @@ var Navigator = dataviz.Class.extend({
             selectEnd: '_selectEnd'
         }));
 
+        if (this.hint) {
+            this.hint.destroy();
+        }
+
         if (options.hint.visible) {
             this.hint = new NavigatorHint(chart.element, chart.chartService, {
                 min: min,
@@ -230,7 +284,7 @@ var Navigator = dataviz.Class.extend({
         }
     },
 
-    _setRange: function() {
+    setRange: function() {
         var plotArea = this.chart._createPlotArea(true);
         var axis = plotArea.namedCategoryAxes[NAVIGATOR_AXIS];
 
@@ -270,8 +324,9 @@ var Navigator = dataviz.Class.extend({
         var plotArea = chart._plotArea;
         var slavePanes = plotArea.panes.slice(0, -1);
 
-        // Update the original series before partial refresh.
+        // Update the original series and categoryAxis before partial refresh.
         plotArea.srcSeries = chart.options.series;
+        plotArea.options.categoryAxis = chart.options.categoryAxis;
 
         plotArea.redraw(slavePanes);
     },
@@ -362,11 +417,8 @@ var Navigator = dataviz.Class.extend({
     filter: function() {
         var ref = this;
         var chart = ref.chart;
-        var ref_options = ref.options;
-        var filterable = ref_options.filterable;
-        var select = ref_options.select;
-
-        if (filterable) {
+        var select = ref.options.select;
+        if (chart.requiresHandlers([ "navigatorFilter" ])) {
             var axisOptions = new dataviz.DateCategoryAxis(deepExtend({
                 baseUnit: "fit"
             }, chart.options.categoryAxis[0], {
@@ -526,7 +578,7 @@ Navigator.attachAxes = function(options, naviOptions) {
         majorTicks: { visible: true },
         tooltip: { visible: false },
         labels: { step: 1 },
-        autoBind: !naviOptions.filterable,
+        autoBind: naviOptions.autoBindElements,
         autoBaseUnitSteps: {
             minutes: [ 1 ],
             hours: [ 1, 2 ],
@@ -598,7 +650,7 @@ Navigator.attachSeries = function(options, naviOptions, themeOptions) {
             }, defaults, navigatorSeries[idx], {
                 axis: NAVIGATOR_AXIS,
                 categoryAxis: NAVIGATOR_AXIS,
-                autoBind: !naviOptions.filterable
+                autoBind: naviOptions.autoBindElements
             })
         );
     }
@@ -613,7 +665,7 @@ function clone(obj) {
 var AUTO_CATEGORY_WIDTH = 28;
 
 var StockChart = Chart.extend({
-    _applyDefaults: function(options, themeOptions) {
+    applyDefaults: function(options, themeOptions) {
         var width = dataviz.elementSize(this.element).width || datavizConstants.DEFAULT_WIDTH;
         var theme = themeOptions;
 
@@ -644,7 +696,7 @@ var StockChart = Chart.extend({
 
         Navigator.setup(options, theme);
 
-        Chart.fn._applyDefaults.call(this, options, theme);
+        Chart.fn.applyDefaults.call(this, options, theme);
     },
 
     _setElementClass: function(element) {
@@ -652,7 +704,7 @@ var StockChart = Chart.extend({
     },
 
     setOptions: function(options) {
-        this._destroyNavigator();
+        this.destroyNavigator();
         Chart.fn.setOptions.call(this, options);
     },
 
@@ -665,9 +717,9 @@ var StockChart = Chart.extend({
     },
 
     _redraw: function() {
-        var navigator = this._navigator;
+        var navigator = this.navigator;
 
-        if (!this._dirty() && navigator && navigator.options.filterable) {
+        if (!this._dirty() && navigator && navigator.options.partialRedraw) {
             navigator.redrawSlaves();
         } else {
             this._fullRedraw();
@@ -685,16 +737,16 @@ var StockChart = Chart.extend({
     },
 
     _fullRedraw: function() {
-        var navigator = this._navigator;
+        var navigator = this.navigator;
 
         if (!navigator) {
-            navigator = this._navigator = new Navigator(this);
+            navigator = this.navigator = new Navigator(this);
             this.trigger("navigatorCreated", { navigator: navigator });
         }
 
-        navigator._setRange();
+        navigator.setRange();
         Chart.fn._redraw.call(this);
-        navigator._initSelection();
+        navigator.initSelection();
     },
 
     _trackSharedTooltip: function(coords) {
@@ -708,13 +760,34 @@ var StockChart = Chart.extend({
         }
     },
 
-    _destroyNavigator: function() {
-        this._navigator.destroy();
-        this._navigator = null;
+    bindCategories: function() {
+        Chart.fn.bindCategories.call(this);
+        this.copyNavigatorCategories();
+    },
+
+    copyNavigatorCategories: function() {
+        var definitions = [].concat(this.options.categoryAxis);
+        var categories;
+
+        for (var axisIx = 0; axisIx < definitions.length; axisIx++) {
+            var axis = definitions[axisIx];
+            if (axis.name === NAVIGATOR_AXIS) {
+                categories = axis.categories;
+            } else if (categories && axis.pane === NAVIGATOR_PANE) {
+                axis.categories = categories;
+            }
+        }
+    },
+
+    destroyNavigator: function() {
+        if (this.navigator) {
+            this.navigator.destroy();
+            this.navigator = null;
+        }
     },
 
     destroy: function() {
-        this._destroyNavigator();
+        this.destroyNavigator();
         Chart.fn.destroy.call(this);
     },
 

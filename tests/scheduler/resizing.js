@@ -1296,7 +1296,7 @@
 
         dragdrop(scheduler, handle, slots.first());
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
         equal(scheduler.dataSource.at(0).start.getHours(), 0);
         equal(scheduler.dataSource.at(0).start.getMinutes(), 0);
@@ -1381,7 +1381,7 @@
 
         dragdrop(scheduler, handle, slots.first());
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
         equal(scheduler.dataSource.at(0).start.getHours(), 0);
         equal(scheduler.dataSource.at(0).start.getMinutes(), 0);
@@ -1404,7 +1404,7 @@
 
         dragdrop(scheduler, handle, slots.first());
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         equal(scheduler.dataSource.at(1).start.getHours(), 0);
         equal(scheduler.dataSource.at(1).start.getMinutes(), 0);
@@ -1428,7 +1428,7 @@
 
         dragdrop(scheduler, handle, slots.eq(1));
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
 
         equal(scheduler.dataSource.at(0).end.getHours(), 12);
@@ -1453,7 +1453,7 @@
 
         dragdrop(scheduler, handle, slots.eq(1));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
 
         equal(scheduler.dataSource.at(1).end.getHours(), 12);
@@ -1478,7 +1478,7 @@
 
         dragdrop(scheduler, handle, slots.eq(0));
 
-        $(".k-window .k-button:last").click();
+        $(".k-window .k-content .k-button:last").click();
 
 
         equal(scheduler.dataSource.at(0).start.getHours(), 11);
@@ -1503,7 +1503,7 @@
 
         dragdrop(scheduler, handle, slots.eq(0));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
 
         equal(scheduler.dataSource.at(1).start.getHours(), 11);
@@ -1528,7 +1528,7 @@
 
         dragdrop(scheduler, handle, slots.eq(0));
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         equal(scheduler.dataSource.at(1).start.getHours(), 11);
         equal(scheduler.dataSource.at(1).start.getMinutes(), 0);
@@ -1552,7 +1552,7 @@
 
         dragdrop(scheduler, handle, slots.first());
 
-        $(".k-window .k-button:first").click();
+        $(".k-window .k-content .k-button:first").click();
 
         equal(scheduler.dataSource.at(1).start.getHours(), 0);
         equal(scheduler.dataSource.at(1).start.getMinutes(), 0);
@@ -1930,7 +1930,7 @@
                 { start: new Date("2013/5/26 10:30 AM"), end: new Date("2013/5/27 12:00 AM"), title: "" }
             ]
         });
-        jasmine.clock().tick(1); 
+        jasmine.clock().tick(1);
         var handle = div.find(".k-resize-e");
 
         var slots = div.find(".k-scheduler-content td:nth-child(2)");

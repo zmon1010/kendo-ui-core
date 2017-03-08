@@ -12,8 +12,8 @@
 
     (function($, undefined) {
         var kendo = window.kendo,
-            Class = kendo.Class,
             Widget = kendo.ui.Widget,
+            TabKeyTrap = kendo.ui.Popup.TabKeyTrap,
             proxy = $.proxy,
             template = kendo.template,
             keys = kendo.keys,
@@ -950,7 +950,7 @@
                     "<div class='k-window-actions k-dialog-actions' />" +
                 "</div>"
             ),
-            close: template("<a role='button' href='\\#' class='k-button k-bare k-window-action k-dialog-action k-dialog-close' title='#= messages.close #' aria-label='#= messages.close #' tabindex='-1'><span class='k-icon k-i-close'></span></a>"),
+            close: template("<a role='button' href='\\#' class='k-button k-bare k-button-icon k-window-action k-dialog-action k-dialog-close' title='#= messages.close #' aria-label='#= messages.close #' tabindex='-1'><span class='k-icon k-i-close'></span></a>"),
             actionbar: template("<div class='k-button-group k-dialog-buttongroup k-dialog-button-layout-#= buttonLayout #' role='toolbar' />"),
             overlay: "<div class='k-overlay' />",
             alertWrapper: template("<div class='k-widget k-window k-dialog' role='alertdialog' />"),
@@ -959,53 +959,6 @@
             prompt: "<div />",
             promptInputContainer: "<div class='k-prompt-container'><input type='text' class='k-textbox' /></div>"
         };
-
-        var tabKeyTrapNS = "kendoTabKeyTrap";
-        var focusableNodesSelector = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex], *[contenteditable]";
-        var TabKeyTrap = Class.extend({
-            init: function(element) {
-                this.element = $(element);
-                this.element.autoApplyNS(tabKeyTrapNS);
-            },
-
-            trap: function() {
-                this.element.on("keydown", proxy(this._keepInTrap, this));
-            },
-
-            removeTrap: function() {
-                this.element.kendoDestroy(tabKeyTrapNS);
-            },
-
-            destroy: function() {
-                this.element.kendoDestroy(tabKeyTrapNS);
-                this.element = undefined;
-            },
-
-            _keepInTrap: function(e) {
-                if (e.which !== 9) {
-                    return;
-                }
-
-                var target = e.target;
-                var focusableItems = this.element.find(focusableNodesSelector).filter(':visible[tabindex!=-1]');
-                var focusableItemsCount = focusableItems.length;
-                var lastIndex = focusableItemsCount - 1;
-                var focusedItemIndex = focusableItems.index(target);
-
-                if (e.shiftKey) {
-                    if (focusedItemIndex === 0) {
-                        focusableItems.get(lastIndex).focus();
-                        e.preventDefault();
-                    }
-                }
-                else {
-                    if (focusedItemIndex === lastIndex) {
-                        focusableItems.get(0).focus();
-                        e.preventDefault();
-                    }
-                }
-            }
-        });
 
         kendo.alert = kendoAlert;
         kendo.confirm = kendoConfirm;

@@ -61,11 +61,13 @@ const CHART_GLOBALS = {
 const SPARKLINE_GLOBALS = {
     'chart/constants': 'kendo.dataviz.constants',
     'chart': 'kendo.dataviz',
+    'core': 'kendo.dataviz',
     'common/constants': 'kendo.dataviz.constants',
     'common': 'kendo.dataviz'
 };
 
 const STOCK_GLOBALS = {
+    '@progress/kendo-drawing': 'kendo',
     'chart/constants': 'kendo.dataviz.constants',
     'chart': 'kendo.dataviz',
     'core': 'kendo.dataviz',

@@ -23,6 +23,11 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+        public bool? AutoWidth
+        {
+            get;
+            set;
+        }
 
         public string CascadeFrom
         {
@@ -99,6 +104,11 @@ namespace Kendo.Mvc.UI
             if (AutoBind != null)
             {
                 options["autoBind"] = AutoBind;
+            }
+
+            if (AutoWidth != null)
+            {
+                options["autoWidth"] = AutoWidth;
             }
 
             if (ClearButton != null)

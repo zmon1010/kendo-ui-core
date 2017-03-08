@@ -278,44 +278,28 @@
         equal(sheet.range("A2").background(), "#afa");
     });
 
-    test("borderTop resets borderBottom of cell above", function() {
-        sheet.range("A1").borderBottom({ color: "#f00" });
+    test("borderTop sets borderBottom of cell above", function() {
+        sheet.range("A2").borderTop("red");
 
-        sheet.range("A2").borderTop({ color: "#00f" });
-
-        equal(sheet.range("A1").borderBottom(), null);
+        equal(sheet.range("A1").borderBottom(), "red");
     });
 
-    test("borderTop wihtout arguments does not reset borderBottom", function() {
-        sheet.range("A1").borderBottom({ color: "#f00" });
+    test("borderBottom sets borderTop of cell below", function() {
+        sheet.range("A1").borderBottom("red");
 
-        sheet.range("A2").borderTop();
-
-        equal(sheet.range("A1").borderBottom().color, "#f00");
+        equal(sheet.range("A2").borderTop(), "red");
     });
 
-    test("borderBottom resets borderTop of cell below", function() {
-        sheet.range("A2").borderTop({ color: "#f00" });
+    test("borderLeft sets borderRight of previous cell", function() {
+        sheet.range("B1").borderLeft("red");
 
-        sheet.range("A1").borderBottom({ color: "#00f" });
-
-        equal(sheet.range("A2").borderTop(), null);
+        equal(sheet.range("A1").borderRight(), "red");
     });
 
-    test("borderLeft resets borderRight of previous cell", function() {
-        sheet.range("A1").borderRight({ color: "#f00" });
+    test("borderRight sets borderLeft of next cell", function() {
+        sheet.range("A1").borderRight("red");
 
-        sheet.range("B1").borderLeft({ color: "#00f" });
-
-        equal(sheet.range("A1").borderRight(), null);
-    });
-
-    test("borderRight resets borderLeft of next cell", function() {
-        sheet.range("B1").borderLeft({ color: "#f00" });
-
-        sheet.range("A1").borderRight({ color: "#00f" });
-
-        equal(sheet.range("B1").borderLeft(), null);
+        equal(sheet.range("B1").borderLeft(), "red");
     });
 
     test("wrap returns the wrap of a range", function() {

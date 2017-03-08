@@ -16,15 +16,9 @@
     var PROPERTIES = [
         "color", "fontFamily", "underline",
         "italic", "bold", "textAlign",
-        "verticalAlign", "background", "format", "link", "editor"
+        "verticalAlign", "background", "format", "link", "editor",
+        "borderTop", "borderRight", "borderBottom", "borderLeft"
     ];
-
-    var borders = {
-        borderTop: { complement: "borderBottom", direction: { top: -1, bottom: -1 } },
-        borderLeft: { complement: "borderRight", direction: { left: -1, right: -1 } },
-        borderRight: { complement: "borderLeft", direction: { left: 1, right: 1 }  },
-        borderBottom: { complement: "borderTop", direction: { top: 1, bottom: 1 }  }
-    };
 
     var Range = kendo.Class.extend({
         init: function(ref, sheet) {
@@ -41,21 +35,17 @@
             var self = this, sheet = self._sheet;
             var skipHiddenRows = sheet.isHiddenRow.bind(sheet);
             var skipHiddenCols = sheet.isHiddenColumn.bind(sheet);
-            self._ref.forEach(function add(ref){
-                if (ref instanceof UnionRef) {
-                    ref.forEach(add);
-                } else {
-                    ref = self._normalize(ref.toRangeRef());
-                    var tl = ref.topLeft, br = ref.bottomRight;
-                    var rows = partition(tl.row, br.row, skipHiddenRows);
-                    var cols = partition(tl.col, br.col, skipHiddenCols);
-                    for (var i = 0; i < rows.length; ++i) {
-                        for (var j = 0; j < cols.length; ++j) {
-                            refs.push(new RangeRef(
-                                new CellRef(rows[i].begin, cols[j].begin),
-                                new CellRef(rows[i].end, cols[j].end)
-                            ));
-                        }
+            self._ref.forEach(function(ref){
+                ref = self._normalize(ref.toRangeRef());
+                var tl = ref.topLeft, br = ref.bottomRight;
+                var rows = partition(tl.row, br.row, skipHiddenRows);
+                var cols = partition(tl.col, br.col, skipHiddenCols);
+                for (var i = 0; i < rows.length; ++i) {
+                    for (var j = 0; j < cols.length; ++j) {
+                        refs.push(new RangeRef(
+                            new CellRef(rows[i].begin, cols[j].begin),
+                            new CellRef(rows[i].end, cols[j].end)
+                        ));
                     }
                 }
             });
@@ -114,68 +104,6 @@
             return this._ref.map(function(ref) {
                 return ref.toRangeRef().resize(direction);
             });
-        },
-
-        _border: function(property, value) {
-            var result;
-            var complement = borders[property].complement;
-            var direction = borders[property].direction;
-            var sheet = this._sheet;
-
-            sheet.batch(function() {
-                result = this._property(property, value);
-
-                if (value !== undefined) {
-                    this._resizedRef(direction).forEach(function(ref) {
-                        if (ref !== kendo.spreadsheet.NULLREF) {
-                            new Range(ref, sheet)._property(complement, null);
-                        }
-                    });
-                }
-            }.bind(this), {});
-
-            return result;
-        },
-
-        _collapsedBorder: function(property) {
-            var result = this._property(property);
-            var complement = borders[property].complement;
-            var direction = borders[property].direction;
-
-            this._resizedRef(direction).forEach(function(ref) {
-                if (!result && ref !== kendo.spreadsheet.NULLREF) {
-                    var range = new Range(ref, this._sheet);
-                    result = range._property(complement);
-                }
-            }.bind(this));
-
-            return result;
-        },
-
-        borderTop: function(value) {
-            return this._border("borderTop", value);
-        },
-        borderRight: function(value) {
-            return this._border("borderRight", value);
-        },
-        borderBottom: function(value) {
-            return this._border("borderBottom", value);
-        },
-        borderLeft: function(value) {
-            return this._border("borderLeft", value);
-        },
-
-        collapsedBorderTop: function() {
-            return this._collapsedBorder("borderTop");
-        },
-        collapsedBorderRight: function() {
-            return this._collapsedBorder("borderRight");
-        },
-        collapsedBorderBottom: function() {
-            return this._collapsedBorder("borderBottom");
-        },
-        collapsedBorderLeft: function() {
-            return this._collapsedBorder("borderLeft");
         },
 
         input: function(value) {
@@ -454,12 +382,13 @@
         },
 
         clear: function(options) {
-            var clearAll = !options || !Object.keys(options).length;
+            options = options || {};
+            var clearAll = options.clearAll || !Object.keys(options).length;
 
             var sheet = this._sheet;
 
             var reason = {
-                recalc: clearAll || (options && options.contentsOnly === true),
+                recalc: clearAll || options.contentsOnly,
                 ref: this._ref
             };
 
@@ -473,9 +402,11 @@
                     this.validation(null);
                 }
 
-                if (clearAll || (options && options.formatOnly === true)) {
+                if (clearAll || options.formatOnly) {
                     PROPERTIES.forEach(function(x) {
-                        this[x](null);
+                        if (!(options.keepBorders && /^border/i.test(x))) {
+                            this[x](null);
+                        }
                     }.bind(this));
                     this.unmerge();
                 }
@@ -721,13 +652,14 @@
                 }
 
                 var row = origin.row;
+                var hasFilter = this.hasFilter();
                 state.data.forEach(function(data, dr){
-                    if (clipboard && !clipboard.isExternal() && sheet.isHiddenRow(state.ref.row + dr)) {
+                    if (hasFilter && clipboard && !clipboard.isExternal() && sheet.isHiddenRow(state.ref.row + dr)) {
                         return;
                     }
                     var col = origin.col;
                     data.forEach(function(cellState, dc){
-                        if (clipboard && !clipboard.isExternal() && sheet.isHiddenColumn(state.ref.col + dc)) {
+                        if (hasFilter && clipboard && !clipboard.isExternal() && sheet.isHiddenColumn(state.ref.col + dc)) {
                             return;
                         }
                         var range = clipboard ? sheet.range(row, col)
@@ -834,7 +766,7 @@
                     // inserting rows/cols in an empty sheet.
                     for (var key in cell) {
                         var val = cell[key];
-                        if (val !== undefined && val !== defStyle[key]) {
+                        if (val !== undefined && val !== null && val !== defStyle[key]) {
                             throw yesItHas;
                         }
                     }
@@ -897,6 +829,32 @@
 
         draw: function(options, callback) {
             this._sheet.draw(this, options, callback);
+        },
+
+        insideBorders: function(value) {
+            return this.insideVerticalBorders(value).insideHorizontalBorders(value);
+        },
+
+        insideVerticalBorders: function(value) {
+            this._ref.forEach(function(ref){
+                if (ref instanceof RangeRef && ref.width() > 1) {
+                    ref = ref.clone();
+                    ref.topLeft.col++;
+                    this._sheet.range(ref)._set("vBorders", value);
+                }
+            }, this);
+            return this;
+        },
+
+        insideHorizontalBorders: function(value) {
+            this._ref.forEach(function(ref){
+                if (ref instanceof RangeRef && ref.height() > 1) {
+                    ref = ref.clone();
+                    ref.topLeft.row++;
+                    this._sheet.range(ref)._set("hBorders", value);
+                }
+            }, this);
+            return this;
         }
     });
 

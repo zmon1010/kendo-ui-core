@@ -2027,9 +2027,16 @@ var ExportPdfCommand = Command.extend({
 
     exec: function() {
         var that = this;
-        var range = this.lockRange(true);
-        this.editor.saveAsPDF().then(function() {
+        var range = that.lockRange(true);
+        var editor = that.editor;
+
+        editor._destroyResizings();
+
+        editor.saveAsPDF().then(function() {
             that.releaseRange(range);
+            editor._initializeColumnResizing();
+            editor._initializeRowResizing();
+            editor._initializeTableResizing();
         });
     }
 });

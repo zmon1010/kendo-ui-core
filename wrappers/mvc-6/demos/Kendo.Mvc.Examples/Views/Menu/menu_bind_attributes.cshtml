@@ -1,0 +1,195 @@
+@model IEnumerable<Kendo.Mvc.Examples.Models.Category>
+
+@functions {
+
+    void GenerateProductItems(Kendo.Mvc.UI.Fluent.MenuItemFactory productItems, Category category)
+    {
+        foreach (var product in category.Products)
+        {
+            productItems.Add()
+                .Text(product.ProductName)
+                .HtmlAttributes(new
+                {
+                    categoryid = product.CategoryID,
+                    productid = product.ProductID,
+                    unitprice = product.UnitPrice,
+                    unitsinstock = product.UnitsInStock
+                });
+        }
+    }
+}
+
+<div class="demo-section k-content wide">
+    <div id="products-wrapper">
+        @(Html.Kendo().Menu()
+          .Name("menu")
+          .Items(items => {
+                foreach (var category in Model)
+                {
+                    items.Add()
+                      .Text(category.CategoryName)
+                      .HtmlAttributes(new
+                      {
+                          categoryid = category.CategoryID,
+                          title = category.Description
+                      })
+                      .Items(productItems => { GenerateProductItems(productItems, category); });
+                }
+            })
+            .Events(events => events.Select("onMenuSelect"))
+        )
+
+        @(Html.Kendo().ListView<Kendo.Mvc.Examples.Models.Product>()
+            .Name("products")
+            .TagName("div")
+            .ClientTemplateId("template")
+            .DataSource(dataSource => dataSource
+                .Custom()
+                .Type("odata")
+                .Schema(schema => schema
+                    .Model(model => model.Id(m => m.ProductID))
+                )
+                .Transport(transport => transport
+                    .Read(read => read.Url("https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products")
+                        .DataType("jsonp"))
+                )
+            )
+            .Pageable(pageable => pageable.Enabled(false))
+        )
+    </div>
+    <div id="product-wrapper">
+        <h3 class="bottom-border">Product Details:</h3>
+        <div id="product"></div>
+    </div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="product">
+        <img src="@Url.Content("~/shared/web/foods/")#:ProductID#.jpg" alt="#:ProductName# image" />
+        <div class="product-description">
+            <h3>#:ProductName#</h3>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-kendo-tmpl" id="productCard">
+    <div class="productCard">
+        <h3>#:ProductName#</h3>
+        <p><img src="@Url.Content("~/shared/web/foods/")#:ProductID#.jpg" alt="#:ProductName# image" /></p>
+        <div class="product-description">
+            <table>
+                <tr>
+                    <th>Price</th>
+                    <td>#: kendo.toString(parseFloat(UnitPrice), "c") #</td>
+                </tr>
+                <tr>
+                    <th>Units</th>
+                    <td>#: UnitsInStock #</td>
+                </tr>
+                <tr>
+                    <th>Discontinued</th>
+                    <td>#: Discontinued ? 'Yes' : 'No' #</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</script>
+
+<script>
+    var productCard = kendo.template($("#productCard").html());
+    var dataSource;
+
+    $(document).ready(function () {
+        dataSource = $("#products").data("kendoListView").dataSource;
+
+        $("#products").data("kendoListView")
+            .one("dataBound", function (ev) {
+                showCategory(1);
+            })
+    })
+
+    function onMenuSelect(ev) {
+        showCategory($(ev.item).attr("categoryid"));
+
+        var productid = $(ev.item).attr("productid");
+        if (productid) {
+            $("#product").html(productCard(getProductById(productid)));
+        }
+    }
+
+    function showCategory(id) {
+        dataSource.filter({ field: "CategoryID", operator: "eq", value: id });
+    }
+
+    function getProductById(productid) {
+        var view = dataSource.view();
+        var product = view.find(function (item) {
+            return item.ProductID == productid;
+        });
+
+        return product
+    }
+</script>
+
+<style>
+    #products-wrapper {
+        width: 80%;
+        display: inline-block;
+        vertical-align: top;
+        border-right: 1px solid rgba(20, 53, 80, 0.137255);
+        padding-right: 40px;
+    }
+
+#product-wrapper {
+    height: 100%;
+        margin: 15px 0 0 50px;
+        display: inline-block;
+    }
+
+    #products {
+        margin-top: 10px;
+        border: none;
+    }
+
+    .product {
+        margin: 20px 5px 0 0;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+        .product img, .productCard img {
+        width: 110px;
+        height: 110px;
+    }
+
+        .product h3 {
+        max-width: 110px;
+    }
+
+        .product h3, #product-wrapper h3 {
+            display: inline-block;
+            margin: 0;
+            padding: 3px 5px 0 0;
+            overflow: hidden;
+            line-height: 1.1em;
+            font-size: .9em;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: #999;
+        }
+
+    #product-wrapper h3 {
+        color: #999;
+    }
+
+    .productCard {
+        margin-top: 30px;
+    }
+
+        .productCard table {
+        margin-top: 20px;
+        text-align: left;
+        font-size: .9em;
+        color: #999;
+        }
+</style>

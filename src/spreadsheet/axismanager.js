@@ -158,12 +158,13 @@
         preventAddRow: function() {
             var range = this._sheet.select().toRangeRef();
             var rowCount = range.height();
-
             return this._sheet.preventInsertRow(0, rowCount);
         },
 
         preventAddColumn: function() {
-            return this._sheet.preventInsertColumn();
+            var range = this._sheet.select().toRangeRef();
+            var columnCount = range.width();
+            return this._sheet.preventInsertColumn(0, columnCount);
         },
 
         addRowAbove: function() {

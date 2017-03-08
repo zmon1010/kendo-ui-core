@@ -1156,10 +1156,10 @@
         test("saves group visibility", function() {
             chartSeries = chart.findSeriesByName("B");
             chartSeries.toggleVisibility(false);
-            equal(chart._groupVisibleState.B, false);
+            equal(chart._seriesVisibility.groups.B, false);
 
             chartSeries.toggleVisibility(true);
-            equal(chart._groupVisibleState.B, true);
+            equal(chart._seriesVisibility.groups.B, true);
         });
 
         // ------------------------------------------------------------

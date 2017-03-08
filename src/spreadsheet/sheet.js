@@ -120,8 +120,6 @@
         ],
 
         _reinit: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth, defaultCellStyle) {
-            var cellCount = rowCount * columnCount - 1;
-
             defaultCellStyle = defaultCellStyle || {};
 
             this._defaultCellStyle = {
@@ -146,7 +144,7 @@
             this._gridLinesColor = null;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._sheetRef = this._grid.normalize(kendo.spreadsheet.SHEETREF);
-            this._properties = new kendo.spreadsheet.PropertyBag(cellCount, this._defaultCellStyle);
+            this._properties = new kendo.spreadsheet.PropertyBag(rowCount, columnCount, this._defaultCellStyle);
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
 
             this._viewSelection = new Selection(this);
@@ -343,9 +341,18 @@
             return false;
         },
 
-        preventInsertColumn: function() {
+        preventInsertColumn: function(colIndex, count) {
             if (this.selectedHeaders().allCols) {
                 return { reason: "error", type: "insertColumnWhenRowIsSelected" };
+            }
+
+            count = count || 1;
+            var grid = this._grid;
+            var range = this.range(0, grid.columnCount - count, grid.rowCount, count);
+
+            //TODO: Improve has value to return true only if real value is available?
+            if (range.hasValue()) {
+                return { reason: "error", type: "shiftingNonblankCells" };
             }
 
             return false;
@@ -389,7 +396,7 @@
 
                     this._copyRange(nextRef, new CellRef(topLeft.row + 1, topLeft.col));
 
-                    new Range(ref, this).clear();
+                    new Range(ref, this).clear({ clearAll: true, keepBorders: true });
                 }
 
                 this._adjustReferences("row", rowIndex, 1, mergedCells);
@@ -433,7 +440,7 @@
                 for (var ci = 0; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
 
-                    new Range(ref, this).clear();
+                    new Range(ref, this).clear({ clearAll: true, keepBorders: true });
 
                     var topLeft = grid.normalize(ref.topLeft);
                     var bottomRight = grid.normalize(ref.bottomRight);
@@ -483,7 +490,7 @@
                 for (var ci = columnCount; ci >= columnIndex; ci--) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
 
-                    new Range(ref, this).clear();
+                    new Range(ref, this).clear({ clearAll: true, keepBorders: true });
 
                     if (ci == columnIndex) {
                         break;
@@ -540,7 +547,7 @@
                 for (var ci = columnIndex; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
 
-                    new Range(ref, this).clear();
+                    new Range(ref, this).clear({ clearAll: true, keepBorders: true });
 
                     if (ci == columnCount - 1) {
                         break;

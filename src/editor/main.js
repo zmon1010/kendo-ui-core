@@ -913,10 +913,11 @@
                 that._destroyResizings();
                 // preserve updated value before re-initializing
                 // don't use update() to prevent the editor from encoding the content too early
-                that.textarea.val(that.value());
+                var value = that.value();
+                that.textarea.val(value);
                 that.wrapper.find("iframe").remove();
                 that._initializeContentElement(that);
-                that.value(that.textarea.val());
+                that.value(value);
             }
         },
 

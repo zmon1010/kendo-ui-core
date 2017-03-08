@@ -30,6 +30,7 @@
     var services = dataviz.services;
     var proxy = $.proxy;
     var isArray = $.isArray;
+    var extend = $.extend;
     var template = kendo.template;
 
     var MOUSELEAVE_NS = "mouseleave" + NS;
@@ -109,6 +110,8 @@
                 userOptions.dataSource = dataSource;
             }
 
+            this._seriesVisibility = new SeriesVisibilityState();
+
             this.bind(this.events, this.options);
             this._initDataSource(userOptions);
 
@@ -168,8 +171,8 @@
         refresh: function() {
             var chart = this;
             var instance = chart._instance;
-            instance._applyDefaults(chart.options);
-            instance._applySeriesColors();
+            instance.applyDefaults(chart.options);
+            instance.applySeriesColors();
 
             chart._bindSeries();
             chart._bindCategories();
@@ -329,7 +332,6 @@
             }
         },
 
-
         _getThemeOptions: function(userOptions) {
             var themeName = (userOptions || {}).theme;
             if (themeName === "sass" || themeName === "default-v2") {
@@ -468,18 +470,17 @@
                 plotArea = chart._plotArea,
                 currentSeries = (plotArea.srcSeries || plotArea.series)[seriesIndex];
 
-            if ($.inArray(currentSeries.type, [PIE, DONUT,FUNNEL]) >= 0) {
+            if ($.inArray(currentSeries.type, [PIE, DONUT, FUNNEL]) >= 0) {
                 var pointVisibility = currentSeries.pointVisibility = currentSeries.pointVisibility || {};
                 var visible = pointVisibility[pointIndex];
                 pointVisibility[pointIndex] = defined(visible) ? !visible : false;
             } else {
                 currentSeries.visible = !currentSeries.visible;
-                this._saveGroupVisibleState(currentSeries);
+                this._seriesVisibility.save(currentSeries);
             }
 
             chart._noTransitionsRedraw();
         },
-
 
         _createTooltip: function() {
             return new Tooltip(this.element, this.options.tooltip);
@@ -504,22 +505,29 @@
                 data = chart.dataSource.view(),
                 grouped = (chart.dataSource.group() || []).length > 0,
                 processedSeries = [],
-                currentSeries;
+                seriesVisibility = this._seriesVisibility,
+                currentSeries,
+                groupedSeries;
 
             for (seriesIx = 0; seriesIx < seriesLength; seriesIx++) {
                 currentSeries = series[seriesIx];
 
                 if (chart._isBindable(currentSeries) && grouped) {
-                    processedSeries = processedSeries.concat(groupSeries(currentSeries, data));
-                    this._applyGroupVisibleState(processedSeries, e);
+                    groupedSeries = groupSeries(currentSeries, data);
+                    processedSeries = processedSeries.concat(groupedSeries);
+
+                    seriesVisibility.applyByGroup(groupedSeries, e);
                 } else {
-                    processedSeries.push(currentSeries || []);
+                    currentSeries = extend({}, currentSeries);
+                    processedSeries.push(currentSeries);
+
+                    seriesVisibility.applyByIndex(currentSeries, e);
                 }
             }
 
             chart._sourceSeries = series;
             options.series = processedSeries;
-            this._instance._applySeriesColors();
+            this._instance.applySeriesColors();
 
             chart._bindSeries();
             chart._bindCategories();
@@ -532,29 +540,6 @@
 
             this.trigger(DATABOUND);
             this._redraw();
-        },
-
-        _applyGroupVisibleState: function(processedSeries, e) {
-            if (e && e.action) {
-                var visibleState = this._groupVisibleState = this._groupVisibleState || {};
-                for (var idx = 0; idx < processedSeries.length; idx++) {
-                    if (visibleState[processedSeries[idx]._groupValue] === false) {
-                        processedSeries[idx].visible = false;
-                    }
-                }
-            } else {
-                delete this._groupVisibleState;
-            }
-        },
-
-        _saveGroupVisibleState: function(series) {
-            if (defined(series._groupValue)) {
-                if (!this._groupVisibleState) {
-                    this._groupVisibleState = {};
-                }
-
-                this._groupVisibleState[series._groupValue] = series.visible;
-            }
         },
 
         _bindSeries: function() {
@@ -626,7 +611,7 @@
                     }
                 }
             } else if (this._instance) {
-                this._instance._bindCategoryAxisFromSeries(axis, axisIx);
+                this._instance.bindCategoryAxisFromSeries(axis, axisIx);
             }
         },
 
@@ -731,6 +716,47 @@
 
     dataviz.ui.plugin(Chart);
 
+    var SeriesVisibilityState = Class.extend({
+        init: function() {
+            this.groups = {};
+            this.index = {};
+        },
+
+        applyByGroup: function(series, e) {
+            if (e && e.action) {
+                for (var idx = 0; idx < series.length; idx++) {
+                    if (this.groups[series[idx]._groupValue] === false) {
+                        series[idx].visible = false;
+                    }
+                }
+            } else {
+                this.groups = {};
+            }
+        },
+
+        applyByIndex: function(series, e) {
+            if (e && e.action) {
+                if (this.index[series.index] === false) {
+                    series.visible = false;
+                }
+            } else {
+                this.index = {};
+            }
+        },
+
+        save: function(series) {
+            if (!series) {
+                return;
+            }
+
+            if (defined(series._groupValue)) {
+                this.groups[series._groupValue] = series.visible;
+            } else {
+                this.index[series.index] = series.visible;
+            }
+        }
+    });
+
     var geom = kendo.geometry;
 
     var Tooltip = Observable.extend({
@@ -782,13 +808,15 @@
             },
             sharedTemplate:
                 "<table>" +
-                "<th colspan='3'>#= categoryText #</th>" +
+                "<th colspan='#= colspan #'>#= categoryText #</th>" +
                 "# for(var i = 0; i < points.length; i++) { #" +
                 "# var point = points[i]; #" +
                 "<tr>" +
-                    "<td><span class='k-chart-shared-tooltip-marker' style='background-color:#:point.series.color#'></span></td>" +
-                    "# if(point.series.name) { # " +
-                        "<td> #= point.series.name #:</td>" +
+                    "# if(colorMarker) { # " +
+                        "<td><span class='k-chart-shared-tooltip-marker' style='background-color:#:point.series.color#'></span></td>" +
+                    "# } #" +
+                    "# if(nameColumn) { # " +
+                        "<td> #if (point.series.name) {# #: point.series.name #: #} else {# &nbsp; #}#</td>" +
                     "# } #" +
                     "<td>#= content(point) #</td>" +
                 "</tr>" +
@@ -909,16 +937,29 @@
         },
 
         _sharedContent: function(e) {
-            var tooltip = this,
-                template,
-                content;
+            var points = e.points;
+            var nameColumn = dataviz.grep(points, function(point) {
+                return defined(point.series.name);
+            }).length;
 
-            template = kendo.template(tooltip.options.sharedTemplate);
-            content = template({
-                points: e.points,
+            var colorMarker = e.series.length > 1;
+            var colspan = 1;
+            if (nameColumn) {
+                colspan++;
+            }
+            if (colorMarker) {
+                colspan++;
+            }
+
+            var template = kendo.template(this.options.sharedTemplate);
+            var content = template({
+                points: points,
                 category: e.category,
                 categoryText: e.categoryText,
-                content: tooltip._pointContent
+                content: this._pointContent,
+                colorMarker: colorMarker,
+                nameColumn: nameColumn,
+                colspan: colspan
             });
 
             return content;
@@ -1117,7 +1158,7 @@
                     var axis = plotArea.seriesCategoryAxis(series);
                     var options = [].concat(chart.options.categoryAxis);
 
-                    chart._instance._bindCategoryAxisFromSeries(options[axis.axisIndex], axis.axisIndex);
+                    chart._instance.bindCategoryAxisFromSeries(options[axis.axisIndex], axis.axisIndex);
                 }
 
                 chart._noTransitionsRedraw();
@@ -1145,7 +1186,7 @@
                 elements = isArray(elements) ? elements : [elements];
             }
 
-            this._chart._instance._togglePointsHighlight(show, elements);
+            this._chart._instance.togglePointsHighlight(show, elements);
         },
 
         toggleVisibility: function(visible, filter) {
@@ -1154,7 +1195,7 @@
             var hasFilter = kendo.isFunction(filter);
             if (!hasFilter) {
                 seriesOptions.visible = visible;
-                chart._saveGroupVisibleState(seriesOptions);
+                chart._seriesVisibility.save(seriesOptions);
             } else {
                 if (inArray(seriesOptions.type, [PIE, DONUT, FUNNEL])) {
                     var data = this._filterData(filter);

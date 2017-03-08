@@ -20,13 +20,21 @@
         },
         replaceCommon: function(code, common) {
             if (common) {
-                code = code.replace(/common\.min\.css/, common + ".min.css");
+                if (/-empty/.test(common)) {
+                    code = code.replace(/&#10;\s*<link[^>]*common\.min\.css[^>]*>/, "");
+                } else {
+                    code = code.replace(/common\.min\.css/, common + ".min.css");
+                }
             }
 
             return code;
         },
         replaceTheme: function(code, theme) {
             if (theme) {
+                if (/(default-v2|bootstrap-v4)/.test(theme)) {
+                    code = code.replace(/&#10;\s*<link[^>]*default\.mobile\.min\.css[^>]*>/, "");
+                }
+
                 code = code.replace(/default(\.mobile)?\.min\.css/g, theme + "$1.min.css");
             }
 

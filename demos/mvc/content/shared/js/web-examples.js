@@ -1,7 +1,7 @@
 $(function () {
     populateSearchDataSource(desktopExamples);
 
-    var regex = /\/(kendo-ui|staging-kendo-ui|aspnet-mvc|aspnet-core|staging-mvc|production-aspnet-mvc|staging-core|php-ui|jsp-ui)/i;
+    var regex = /\/(kendo-ui|staging-kendo-ui|aspnet-mvc|aspnet-core|staging-mvc|staging-core|production-staging-mvc|production-staging-core|php-ui|jsp-ui)/i;
     var match = regex.exec(window.location.href);
 
     var basePathName = match ? match[0] + "/" : "/";

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+      requireSync([
+        "../../src/jquery.js",
+        "../../src/kendo.dom.js",
+          "../../src/kendo.spreadsheet.js",
+          "../../src/kendo.window.js"
+      ]);
+    </script>
+    <script src="../../src/jszip.js"></script>
+
+    <style type="text/css">
+     body {
+       font: 14px Arial,sans-serif;
+       padding: 0;
+       margin: 0;
+       overflow: hidden;
+     }
+     #spreadsheet {
+       position: absolute;
+       width: 100%;
+       height: 100%;
+     }
+     .k-spreadsheet-vborder {
+       position: absolute;
+       border-left-style: solid;
+     }
+     .k-spreadsheet-hborder {
+       position: absolute;
+       border-top-style: solid;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="spreadsheet"></div>
+    <script>
+     window.ss = $("#spreadsheet").kendoSpreadsheet({ rows: 30, columns: 20 }).getKendoSpreadsheet();
+     window.sheet = ss.activeSheet();
+
+     sheet.batch(function(){
+         sheet.range("A1:D4")
+              .borderTop({ size: 1, color: "red" })
+              .borderRight({ size: 1, color: "red" })
+              .borderBottom({ size: 1, color: "red" })
+              .borderLeft({ size: 1, color: "red" });
+         sheet.range("B2:D4").merge();
+         sheet.range("B2:S29")
+              .borderTop({ size: 1, color: "#334" })
+              .borderRight({ size: 1, color: "#334" })
+              .borderBottom({ size: 1, color: "#334" })
+              .borderLeft({ size: 1, color: "#334" });
+         sheet.range("A1, A30, T1, T30").value("#").textAlign("center")
+              .borderTop({ size: 1, color: "#334" })
+              .borderRight({ size: 1, color: "#334" })
+              .borderBottom({ size: 1, color: "#334" })
+              .borderLeft({ size: 1, color: "#334" });
+         sheet.range("G8:L18").merge();
+     }, { recalc: true });
+    </script>
+  </body>
+</html>

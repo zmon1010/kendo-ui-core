@@ -7,8 +7,6 @@
         return;
     }
 
-    var $ = kendo.jQuery;
-
     var Property = kendo.Class.extend({
         init: function(list) {
             this.list = list;
@@ -51,16 +49,15 @@
     });
 
     var ValueProperty = Property.extend({
-        init: function(values, formats, validations) {
+        init: function(values, formats) {
             Property.prototype.init.call(this, values);
-
-            this.validations = validations;
             this.formats = formats;
         },
 
         set: function(start, end, value) {
-            //TODO: RESET VALIDATION AS WELL?
             if (value instanceof Date) {
+                // XXX: should we check if existing format is not
+                // already date, in which case not reset it?
                 value = kendo.spreadsheet.dateToNumber(value);
                 this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
             }
@@ -75,14 +72,12 @@
 
     kendo.spreadsheet.PropertyBag = kendo.Class.extend({
         specs: [
-            { property: ValueProperty, name: "value", value: null, sortable: true, serializable: true, depends: "format" },
             { property: Property, name: "format", value: null, sortable: true, serializable: true },
+            { property: ValueProperty, name: "value", value: null, sortable: true, serializable: true, depends: "format" },
             { property: Property, name: "formula", value: null, sortable: true, serializable: true },
             { property: Property, name: "background", value: null, sortable: true, serializable: true },
-            { property: JsonProperty, name: "borderBottom", value: null, sortable: false, serializable: true },
-            { property: JsonProperty, name: "borderRight", value: null, sortable: false, serializable: true },
-            { property: JsonProperty, name: "borderLeft", value: null, sortable: false, serializable: true },
-            { property: JsonProperty, name: "borderTop", value: null, sortable: false, serializable: true },
+            { property: JsonProperty, name: "vBorders", value: null, sortable: false, serializable: false },
+            { property: JsonProperty, name: "hBorders", value: null, sortable: false, serializable: false },
             { property: Property, name: "color", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontFamily", value: null, sortable: true, serializable: true },
             { property: Property, name: "underline", value: null, sortable: true, serializable: true },
@@ -98,21 +93,24 @@
             { property: Property, name: "editor", value: null, sortable: false, serializable: true }
         ],
 
-        init: function(cellCount, defaultValues) {
+        init: function(rowCount, columnCount, defaultValues) {
             defaultValues = defaultValues || {};
+            var cellCount = rowCount * columnCount - 1;
 
+            this.rowCount = rowCount;
+            this.columnCount = columnCount;
+            this.cellCount = cellCount;
             this.properties = {};
-
             this.lists = {};
 
             this.specs.forEach(function(spec) {
-                var value = defaultValues[spec.name] !== undefined ? defaultValues[spec.name] : spec.value;
-
-               this.lists[spec.name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
-            }, this);
-
-            this.specs.forEach(function(spec) {
-                this.properties[spec.name] = new spec.property(this.lists[spec.name], this.lists[spec.depends]);
+                var name = spec.name;
+                var value = defaultValues[name];
+                if (value === undefined) {
+                    value = spec.value;
+                }
+                this.lists[name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, value);
+                this.properties[name] = new spec.property(this.lists[name], this.lists[spec.depends]);
             }, this);
         },
 
@@ -137,11 +135,45 @@
                 return this.lists[name];
             }
 
-            return this.properties[name].get(index);
+            switch (name) {
+              case "borderRight":
+                index += this.rowCount;
+                /* falls through */
+              case "borderLeft":
+                name = "vBorders";
+                break;
+
+              case "borderBottom":
+                index++;
+                /* falls through */
+              case "borderTop":
+                name = "hBorders";
+                break;
+            }
+            return index > this.cellCount ? null : this.properties[name].get(index);
         },
 
         set: function(name, start, end, value) {
-            this.properties[name].set(start, end, value);
+            switch (name) {
+              case "borderRight":
+                start += this.rowCount;
+                end += this.rowCount;
+                /* falls through */
+              case "borderLeft":
+                name = "vBorders";
+                break;
+
+              case "borderBottom":
+                start++;
+                end++;
+                /* falls through */
+              case "borderTop":
+                name = "hBorders";
+                break;
+            }
+            if (start <= end && end <= this.cellCount) {
+                this.properties[name].set(start, end, value);
+            }
         },
 
         fromJSON: function(index, value) {
@@ -154,6 +186,12 @@
                     }
                 }
             }
+
+            [ "borderLeft", "borderRight", "borderTop", "borderBottom" ].forEach(function(b){
+                if (value[b] !== undefined) {
+                    this.set(b, index, index, value[b]);
+                }
+            }, this);
         },
 
         copy: function(sourceStart, sourceEnd, targetStart) {
@@ -163,39 +201,49 @@
         },
 
         iterator: function(name, start, end) {
-            return this.properties[name].iterator(start, end);
+            var prop = this.properties[name];
+            var iter = prop.iterator(start, end), at = iter.at;
+            var cellCount = this.cellCount;
+            iter.at = function(index) {
+                return index > cellCount ? null : prop.parse(at.call(iter, index));
+            };
+            iter.name = name;
+            iter.value = prop.list.range.value;
+            return iter;
         },
 
         sortable: function() {
             return this.specs.filter(function(spec) { return spec.sortable; })
-                              .map(function(spec) {
-                                return this.lists[spec.name];
-                              }, this);
+                .map(function(spec) {
+                    return this.lists[spec.name];
+                }, this);
         },
 
         iterators: function(start, end) {
-            var specs = this.specs.filter(function(spec) {
-                return spec.serializable;
-            });
-
-            return specs.map(function(spec) {
-                var iterator = this.iterator(spec.name, start, end);
-
-                return {
-                    name: spec.name,
-                    value: spec.value,
-                    at: function (index) {
-                        return spec.property.fn.parse(iterator.at(index));
-                    }
-                };
-            }, this);
+            return this.specs.reduce(function(ret, spec) {
+                if (spec.serializable) {
+                    ret.push(this.iterator(spec.name, start, end));
+                }
+                return ret;
+            }.bind(this), []);
         },
 
         forEach: function(start, end, callback) {
             var iterators = this.iterators(start, end);
+            var hBorders = this.iterator("hBorders", start, end + 1);
+            var leftBorders = this.iterator("vBorders", start, end);
+            var rightBorders = this.iterator("vBorders", start + this.rowCount, end + this.rowCount);
+            var values, index;
 
-            for (var index = start; index <= end; index++) {
-                var values = {};
+            function addBorder(name, iterator, index) {
+                var val = iterator.at(index);
+                if (val !== iterator.value) {
+                    values[name] = val;
+                }
+            }
+
+            for (index = start; index <= end; index++) {
+                values = {};
 
                 for (var i = 0; i < iterators.length; i++) {
                     var iterator = iterators[i];
@@ -204,6 +252,13 @@
                     if (value !== iterator.value) {
                         values[iterator.name] = value;
                     }
+                }
+
+                addBorder("borderLeft", leftBorders, index);
+                addBorder("borderRight", rightBorders, index + this.rowCount);
+                addBorder("borderTop", hBorders, index);
+                if ((index + 1) % this.rowCount) {
+                    addBorder("borderBottom", hBorders, index + 1);
                 }
 
                 callback(values);
@@ -217,9 +272,12 @@
         }
     });
 
-    kendo.spreadsheet.ALL_PROPERTIES = $.map(kendo.spreadsheet.PropertyBag.prototype.specs, function(spec) {
-        return spec.name;
-    });
+    kendo.spreadsheet.ALL_PROPERTIES = kendo.spreadsheet.PropertyBag.prototype.specs.reduce(function(a, spec) {
+        if (spec.serializable) {
+            a.push(spec.name);
+        }
+        return a;
+    }, [ "borderTop", "borderRight", "borderBottom", "borderLeft" ]);
 
 })(window.kendo);
 

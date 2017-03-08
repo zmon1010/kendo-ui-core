@@ -159,6 +159,7 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (!emptyMask) {
+                this._oldValue = value;
                 element.val(value);
                 return;
             }
@@ -168,6 +169,7 @@ var __meta__ = { // jshint ignore:line
             element.val(value ? emptyMask : "");
 
             this._mask(0, this._maskLength, value);
+            this._unmaskedValue = null;
 
             value = element.val();
             this._oldValue = value;
@@ -275,13 +277,26 @@ var __meta__ = { // jshint ignore:line
             }
 
             if (value !== that._old && !that._pasting) {
-                start = caret(element)[0];
-                unmasked = that._unmask(value.substring(start), start);
+                var d = value.length - that._old.length;
+                if(d > 0)  { //typing on a windows phone (lack of keypress; should handle input in the "input" event)
+                    var selection = caret(element);
 
-                element.value = that._old = value.substring(0, start) + that._emptyMask.substring(start);
+                    var next = selection[0];
+                    start = next - d;
+                    var content = value.substr(start, d);
+                    element.value = value.substring(0, start) + value.substring(next);
 
-                that._mask(start, start, unmasked);
-                caret(element, start);
+                    this._mask(start, start, content);
+                }
+                else {
+                    start = caret(element)[0];
+                    unmasked = that._unmask(value.substring(start), start);
+
+                    element.value = that._old = value.substring(0, start) + that._emptyMask.substring(start);
+
+                    that._mask(start, start, unmasked);
+                    caret(element, start);
+                }
             }
         },
 
@@ -297,19 +312,8 @@ var __meta__ = { // jshint ignore:line
             that._pasting = true;
 
             setTimeout(function() {
-                var value = element.value;
-                var pasted = value.substring(start, caret(element)[0]);
-
-                element.value = that._old = value.substring(0, start) + that._emptyMask.substring(start);
-
-                that._mask(start, start, pasted);
-
-                start = caret(element)[0];
-
-                that._mask(start, start, unmasked);
-
-                caret(element, start);
-
+                var pasted = element.value.substring(start, caret(element)[0]);
+                that._insertString(start, end, pasted, unmasked);
                 that._pasting = false;
             });
         },
@@ -337,6 +341,23 @@ var __meta__ = { // jshint ignore:line
 
                 that._formElement = form.on("reset", that._resetHandler);
             }
+        },
+
+        _insertString : function(start, end, insertString, unmasked, trimPrompt) {
+            var that = this;
+            var element = that.element[0];
+            var value = element.value;
+
+            element.value = that._old = value.substring(0, start) + that._emptyMask.substring(start);
+            that._mask(start, start, insertString);
+
+            if(trimPrompt && start !== caret(element)[0] && unmasked[0] === that.options.promptChar) {
+                unmasked = unmasked.substring(1);
+            }
+
+            start = caret(element)[0];
+            that._mask(start, start, unmasked);
+            caret(element, start);
         },
 
         _keydown: function(e) {
@@ -382,11 +403,11 @@ var __meta__ = { // jshint ignore:line
             }
 
             var character = String.fromCharCode(e.which);
-
             var selection = caret(this.element);
+            var unmasked = this._unmask(this.element.val().substring(selection[1]), selection[1]);
 
-            this._mask(selection[0], selection[1], character);
-
+            this._insertString(selection[0], selection[1], character, unmasked, true);
+            
             if (e.keyCode === keys.BACKSPACE || character) {
                 e.preventDefault();
             }
@@ -465,7 +486,10 @@ var __meta__ = { // jshint ignore:line
             if (!value) {
                 return "";
             }
-
+            
+            if(this._unmaskedValue === value) {
+                return this._unmaskedValue;
+            }
             value = (value + "").split("");
 
             var chr;
@@ -504,7 +528,7 @@ var __meta__ = { // jshint ignore:line
                     break;
                 }
             }
-
+            this._unmaskedValue = result;
             return result;
         },
 

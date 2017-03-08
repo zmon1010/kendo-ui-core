@@ -309,16 +309,23 @@
         },
 
         _setExtent: function(extent) {
-            extent = Extent.create(extent);
+            var raw = Extent.create(extent);
+            var se = raw.se.clone();
+            if (this.options.wraparound && se.lng < 0 && extent.nw.lng > 0) {
+                se.lng = 180 + (180 + se.lng);
+            }
+
+            extent = new Extent(raw.nw, se);
             this.center(extent.center());
 
             var width = this.element.width();
             var height = this.element.height();
             for (var zoom = this.options.maxZoom; zoom >= this.options.minZoom; zoom--) {
-                var nw = this.locationToLayer(extent.nw, zoom);
-                var se = this.locationToLayer(extent.se, zoom);
-                var layerWidth = math.abs(se.x - nw.x);
-                var layerHeight = math.abs(se.y - nw.y);
+                var topLeft = this.locationToLayer(extent.nw, zoom);
+                var bottomRight = this.locationToLayer(extent.se, zoom);
+
+                var layerWidth = math.abs(bottomRight.x - topLeft.x);
+                var layerHeight = math.abs(bottomRight.y - topLeft.y);
 
                 if (layerWidth <= width && layerHeight <= height) {
                     break;
