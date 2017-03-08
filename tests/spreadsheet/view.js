@@ -33,7 +33,7 @@
     test("renders border color", function() {
         sheet.fromJSON(singleCell({ borderRight: { color: "rgb(255, 0, 0)" } }));
 
-        equal(element.find(".k-spreadsheet-vborder").css("borderColor"), "rgb(255, 0, 0)");
+        equal(element.find(".k-spreadsheet-vborder").css("borderRightColor"), "rgb(255, 0, 0)");
     });
 
     test("renders border size", function() {
