@@ -8,7 +8,7 @@ var toolTemplate = kendo.template(editorNS.EditorUtils.buttonTemplate, { useWith
 var keys = kendo.keys;
 var messages = {
     createTableHint: "Table will be {0} by {1} cells",
-    dialogCancel: "Abort"
+    createTable: "Create a table"
 };
 
 module("editor insert table tool", {
@@ -177,7 +177,7 @@ test("uses messages object to set status messages", function() {
 
     var status = popup.element.find(".k-status");
 
-    equal(status.text(), messages.dialogCancel);
+    equal(status.text(), messages.createTable);
 
     dom.press({ keyCode: keys.RIGHT });
 

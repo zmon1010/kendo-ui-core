@@ -236,7 +236,7 @@ var InsertTableTool = PopupTool.extend({
                 );
             });
         } else {
-            status.text(messages.dialogCancel);
+            status.text(messages.createTable);
             cells.removeClass(SELECTEDSTATE);
         }
     },
@@ -294,7 +294,7 @@ var InsertTableTool = PopupTool.extend({
         PopupTool.fn._open.call(this);
 
         this.popup().element
-            .find(".k-status").text(messages.dialogCancel).end()
+            .find(".k-status").text(messages.createTable).end()
             .find(".k-ct-cell").removeClass(SELECTEDSTATE);
     },
 

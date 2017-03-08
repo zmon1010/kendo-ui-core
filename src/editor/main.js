@@ -188,7 +188,7 @@
         dialogOk: "Ok",
         dialogCancel: "Cancel",
         cleanFormatting: "Clean formatting",
-        createTable: "Create table",
+        createTable: "Create a table",
         createTableHint: "Create a {0} x {1} table",
         addColumnLeft: "Add column on the left",
         addColumnRight: "Add column on the right",
