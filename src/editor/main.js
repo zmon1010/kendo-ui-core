@@ -179,6 +179,7 @@
         imageHeight: "Height (px)",
         fileWebAddress: "Web address",
         fileTitle: "Title",
+        fileText: "Text",
         linkWebAddress: "Web address",
         linkText: "Text",
         linkToolTip: "ToolTip",

@@ -526,7 +526,9 @@ var Dom = {
     },
 
     remove: function (node) {
-        node.parentNode.removeChild(node);
+        if(node.parentNode) {
+            node.parentNode.removeChild(node);
+        }
     },
 
     removeTextSiblings: function(node) {
