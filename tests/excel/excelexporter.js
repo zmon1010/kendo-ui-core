@@ -543,8 +543,8 @@ test("passes all aggregates to groupFooterTemplate", function() {
        ],
     });
 
-    testWorkbook({ columns: [ { field: "foo", groupFooterTemplate: "Foo: #= data.foo.count # #=data.bar.count#" }, { field: "bar" } ], dataSource: dataSource }, function(book) {
-        equal(book.sheets[0].rows[3].cells[1].value, "Foo: 1 1");
+    testWorkbook({ columns: [ { field: "foo", groupFooterTemplate: "Foo: #= data.foo.count # #=data.bar.count# #=group.field# #=group.items.length#" }, { field: "bar" } ], dataSource: dataSource }, function(book) {
+        equal(book.sheets[0].rows[3].cells[1].value, "Foo: 1 1 bar 1");
     });
 });
 
