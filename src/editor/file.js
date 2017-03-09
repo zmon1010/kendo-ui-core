@@ -126,7 +126,7 @@ var FileCommand = Command.extend({
         function apply(e) {
             var element = dialog.element,
                 href = element.find(KEDITORFILEURL).val().replace(/ /g, "%20"),
-                innerHTML = element.find(KEDITORFILETEXT).val()
+                innerHTML = element.find(KEDITORFILETEXT).val(),
                 title = element.find(KEDITORFILETITLE).val();
 
             that.attributes = {
