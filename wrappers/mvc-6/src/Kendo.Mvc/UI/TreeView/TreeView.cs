@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI
             Items = new LinkedObjectCollection<TreeViewItem>(null);
 
             DataSource = new DataSource(ModelMetadataProvider);
-            DataSource.Schema.Model = new TreeListModelDescriptor(typeof(object), ModelMetadataProvider);
+            DataSource.Schema.Model = new ModelDescriptor(typeof(object), ModelMetadataProvider);
             LoadOnDemand = true;
             AutoBind = true;
         }
