@@ -88,6 +88,7 @@ const defaultOptions = Object.freeze({
     colors: true,
     autoWatch: true,
     browsers: browsers,
+    retryLimit: 5,
     customLaunchers: {
         ChromiumTravis: {
             base: 'Chrome',
