@@ -1,4 +1,4 @@
-namespace Kendo.Mvc.Tests.Menu
+namespace Kendo.Mvc.Tests.TreeView
 {
     using Kendo.Mvc.UI;
     using Kendo.Mvc.UI.Fluent;

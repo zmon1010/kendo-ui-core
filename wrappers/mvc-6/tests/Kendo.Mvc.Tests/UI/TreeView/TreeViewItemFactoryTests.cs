@@ -1,4 +1,4 @@
-namespace Kendo.Mvc.UI.Tests
+namespace Kendo.Mvc.Tests.TreeView
 {
     using Kendo.Mvc.UI.Fluent;
     using Xunit;
