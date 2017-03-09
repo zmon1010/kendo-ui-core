@@ -108,7 +108,7 @@ const flavours = Object.freeze({
         singleRun: true,
         browsers: browsers,
         concurrency: 1,
-
+        autoWatch: false,
         files: (tests) => [].concat(
             TESTS.beforeTestFiles,
             allKendoFiles(),
