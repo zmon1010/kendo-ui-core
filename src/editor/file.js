@@ -17,6 +17,7 @@ var kendo = window.kendo,
     textNodes = RangeUtils.textNodes,
     keys = kendo.keys,
     KEDITORFILEURL = "#k-editor-file-url",
+    KEDITORFILETEXT = "#k-editor-file-text",
     KEDITORFILETITLE = "#k-editor-file-title";
 
 var FileCommand = Command.extend({
@@ -39,6 +40,7 @@ var FileCommand = Command.extend({
             if (!file) {
                 file = dom.create(doc, "a", {href: attributes.href});
                 file.innerHTML = attributes.innerHTML;
+                file.title = attributes.title;
 
                 range.deleteContents();
                 range.insertNode(file);
@@ -70,6 +72,12 @@ var FileCommand = Command.extend({
                 "</div>" +
                 "<div class='k-edit-field'>" +
                     '<input type="text" class="k-input k-textbox" id="k-editor-file-url">' +
+                "</div>" +
+                "<div class='k-edit-label'>" +
+                    '<label for="k-editor-file-text">#: messages.fileText #</label>' +
+                "</div>" +
+                "<div class='k-edit-field'>" +
+                    '<input type="text" class="k-input k-textbox" id="k-editor-file-text">' +
                 "</div>" +
                 "<div class='k-edit-label'>" +
                     '<label for="k-editor-file-title">#: messages.fileTitle #</label>' +
@@ -112,17 +120,19 @@ var FileCommand = Command.extend({
                 visible: false,
                 resizable: showBrowser
             };
-        
+    
         this.expandImmutablesIn(range);
 
         function apply(e) {
             var element = dialog.element,
                 href = element.find(KEDITORFILEURL).val().replace(/ /g, "%20"),
-                innerHTML = element.find(KEDITORFILETITLE).val();
+                innerHTML = element.find(KEDITORFILETEXT).val()
+                title = element.find(KEDITORFILETITLE).val();
 
             that.attributes = {
                 href: href,
-                innerHTML: innerHTML !== "" ? innerHTML : href
+                innerHTML: innerHTML !== "" ? innerHTML : href,
+                title: title
             };
 
             applied = that.insertFile(file, range);
@@ -165,6 +175,7 @@ var FileCommand = Command.extend({
             .find(".k-edit-field input").keydown(keyDown).end()
             // IE < 8 returns absolute url if getAttribute is not used
             .find(KEDITORFILEURL).val(file ? file.getAttribute("href", 2) : "http://").end()
+            .find(KEDITORFILETEXT).val(file ? file.innerText : "").end()
             .find(KEDITORFILETITLE).val(file ? file.title : "").end()
             .data("kendoWindow");
 
