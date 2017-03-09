@@ -4,6 +4,8 @@ namespace Kendo.Mvc.Tests.TreeView
     using Xunit;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Mvc.Tests;
+    using Mvc.UI;
+
     public class TreeViewItemFactoryTests
     {
         private readonly TreeViewItemFactory factory;
