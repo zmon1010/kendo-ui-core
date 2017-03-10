@@ -66,7 +66,7 @@ if (jqueryOption) {
 if (browserOption) {
     browsers = [ browserOption ];
 } else {
-    browsers = ['Chrome'];
+    browsers = ['ChromeNoSandbox'];
 }
 
 TESTS.beforeTestFiles.push(jquery);
