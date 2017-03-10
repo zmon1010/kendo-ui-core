@@ -262,14 +262,12 @@ var __meta__ = { // jshint ignore:line
 
         _getColumnTitle: function() {
             var column = this.options.column;
-            return column
-                ? column.title || column.field
-                : "";
+            return column ? column.title || column.field : "";
         },
 
         _createOperatorDropDown: function(operators) {
             var items = [],
-                viewModel = this.viewModel;;
+                viewModel = this.viewModel;
             for (var prop in operators) {
                 items.push({
                     text: operators[prop],
