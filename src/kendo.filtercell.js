@@ -183,7 +183,7 @@ var __meta__ = { // jshint ignore:line
             } else {
                 $('<div unselectable="on" />')
                     .css("display", "none")
-                    .text(operators[viewModel.operator])
+                    .text("eq")
                     .appendTo(wrapper);
 
                 wrapper.addClass("k-operator-hidden");

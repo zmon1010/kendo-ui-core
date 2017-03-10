@@ -6652,7 +6652,7 @@ var __meta__ = { // jshint ignore:line
                    for (idx = 0; idx < rows.length; idx++) {
                        html += "<tr>";
                        if (hasDetails) {
-                           html += '<td class="k-hierarchy-cell" scope="col">&nbsp;</td>';
+                           html += '<th class="k-hierarchy-cell" scope="col">&nbsp;</th>';
                        }
                        html += that._createHeaderCells(rows[idx].cells, rows[idx].rowSpan);
                        html += "</tr>";
