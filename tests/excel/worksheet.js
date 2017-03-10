@@ -890,12 +890,23 @@ test("toXML sets the 'count' attribute of the 'mergeCells' element for spans and
         mergedCells: ["C3:E5"],
         rows: [{
             cells: [{ colSpan: 3 }, { }]
-        }],
+        }]
     });
 
     var dom = $(worksheet.toXML());
 
     equal(dom.find("mergeCells").attr("count"), 2);
+});
+
+test("toXML sets border styles for all cells in a merged range", function(){
+    var worksheet = Worksheet({
+        mergedCells: ["A1:C1"],
+        rows: [{
+            cells: [{ borderTop: "RED" }]
+        }]
+    });
+    var dom = $(worksheet.toXML());
+    equal(dom.find('c[r="A1"][s="1"], c[r="B1"][s="1"], c[r="C1"][s="1"]').length, 3);
 });
 
 test("toXML creates 'mergeCell' elements for multiple cells with colSpan attribute", function() {

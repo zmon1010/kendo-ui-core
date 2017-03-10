@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
+    <script src="../loader.js"></script>
+    <script>
+     requireSync([
+         "../../src/jquery.js",
+         "../../src/kendo.dom.js",
+         "../../src/kendo.spreadsheet.js",
+         "../../src/kendo.window.js"
+     ]);
+    </script>
+    <script src="../../src/jszip.js"></script>
+
+    <style type="text/css">
+     body {
+       font: 14px Arial,sans-serif;
+     }
+    </style>
+  </head>
+  <body>
+
+    <button id="export">Export to Excel</button>
+    <div id="spreadsheet"></div>
+    <script>
+     $("#spreadsheet").kendoSpreadsheet({
+         sheets: [{		
+             mergedCells:["B2:D2"],
+             rows: [
+                 { index: 1,
+                   cells: [ { index: 1, value: "Blah blah blah", borderTop: { color: "#ff0000", size: 3 }} ] }
+             ]
+         }]
+     });
+
+     $("#export").click(function(e) {
+         var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+         spreadsheet.saveAsExcel();
+     });
+    </script>
+  </body>
+</html>
