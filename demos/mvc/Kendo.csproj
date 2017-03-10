@@ -1266,6 +1266,7 @@
     <Content Include="Views\demos\panelbar\angular.cshtml" />
     <Content Include="Views\demos\menu\menu-bind-attributes.cshtml" />
     <Content Include="Views\demos\upload\chunkupload.cshtml" />
+    <Content Include="Views\demos\dateinput\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

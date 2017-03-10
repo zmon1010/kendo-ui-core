@@ -914,6 +914,47 @@
     "category": "Editors"
   },
   {
+    "text": "DateInput",
+    "name": "dateinput",
+    "new": "true",
+    "api": { "all": "web/dateinput" },
+    "documentation": {
+      "kendo-ui": "getting-started/web/dateinput/overview",
+      "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dateinput/overview",
+      "jsp-ui": "getting-started/using-kendo-with/jsp/tags/dateinput/overview",
+      "php-ui": "getting-started/using-kendo-with/php/widgets/dateinput/overview"
+    },
+    "forum": {
+      "kendo-ui": "kendo-ui/date-input",
+      "aspnet-mvc": "aspnet-mvc/date-input",
+      "jsp-ui": "jsp/dateinput",
+      "php-ui": "php/dateinput"
+    },
+    "codelibrary": {
+      "kendo-ui": "kendo-ui/dateinput",
+      "aspnet-mvc": "aspnet-mvc/dateinput",
+      "jsp-ui": "jsp/dateinput",
+      "php-ui": "php/dateinput"
+    },
+    "spriteCssClass": "dateInputIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "dateinput/index",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Kendo UI jQuery DateInput Demo",
+          "aspnet-mvc": "ASP.NET MVC DateInput sample"
+        },
+        "meta": {
+          "kendo-ui": " ",
+          "aspnet-mvc": " "
+        }
+      }
+    ],
+    "category": "Editors"
+  },
+  {
     "text": "DatePicker",
     "name": "datepicker",
     "api": { "all": "web/datepicker" },
