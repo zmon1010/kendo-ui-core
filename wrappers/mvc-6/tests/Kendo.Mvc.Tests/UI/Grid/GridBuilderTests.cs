@@ -105,7 +105,8 @@ namespace Kendo.Mvc.UI.Fluent.Tests
 
 			grid.ClientAltRowTemplate.ShouldEqual(template);
 		}
-		/*
+
+        /*
 				[Fact]
 				public void PrefixUrlParameters_sets_the_corresponding_property()
 				{
@@ -113,5 +114,20 @@ namespace Kendo.Mvc.UI.Fluent.Tests
 					Assert.Equal(false, grid.PrefixUrlParameters);
 				}
 				*/
-	}
+        [Fact]
+        public void PersistSelection_sets_the_value_correctly()
+        {
+            builder.PersistSelection(true);
+
+            grid.PersistSelection.ShouldEqual(true);
+        }
+
+        [Fact]
+        public void PersistSelection_enables_correctly()
+        {
+            builder.PersistSelection();
+
+            grid.PersistSelection.ShouldEqual(true);
+        }
+    }
 }

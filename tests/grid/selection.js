@@ -1242,6 +1242,66 @@
 
         ok(!wasCalled);
     });
+
+    test("persistence selection works correctly when paging", 1,  function() {
+        var grid = setup({
+            selectable: "multiple, row",
+            persistSelection: true,
+            columns: [
+                { field: "foo" },
+                { field: "bar" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: 1, bar: 1 },
+                    { foo: 2, bar: 2 },
+                    { foo: 3, bar: 3 },
+                    { foo: 4, bar: 4 }
+                ],
+                schema : {
+                    model: {
+                        id: "foo"
+                    }
+                }
+            },
+            pageable: {
+                pageSize: 2
+            }
+        });
+        grid.select("tr:eq(1)");
+        grid.dataSource.page(2);
+        grid.dataSource.page(1);
+        equal(grid.select().length, 1);
+    });
+
+    test("persistence selection works correctly when paging", 1,  function() {
+        var grid = setup({
+            selectable: "multiple, row",
+            persistSelection: true,
+            columns: [
+                { field: "foo" },
+                { field: "bar" }
+            ],
+            dataSource: {
+                data: [
+                    { foo: 1, bar: 1 },
+                    { foo: 2, bar: 2 },
+                    { foo: 3, bar: 3 },
+                    { foo: 4, bar: 4 }
+                ],
+                schema : {
+                    model: {
+                        id: "foo"
+                    }
+                }
+            },
+            pageable: {
+                pageSize: 2
+            }
+        });
+        grid.select("tr:eq(1)");
+        equal(grid.selectedKeyNames()[0], 2);
+    });
 })();
 
 /*

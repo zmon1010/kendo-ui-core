@@ -1516,6 +1516,7 @@ var __meta__ = { // jshint ignore:line
             allowCopy: false,
             navigatable: false,
             pageable: false,
+            persistSelection: false,
             editable: false,
             groupable: false,
             rowTemplate: "",
@@ -1585,6 +1586,9 @@ var __meta__ = { // jshint ignore:line
                 that.selectable.destroy();
 
                 that.clearArea();
+                if(that.options.persistSelection === true) {
+                    that._selectedIds = null;
+                }
 
                 if (that.copyHandler) {
                     that.wrapper.off("keydown", that.copyHandler);
@@ -3787,7 +3791,8 @@ var __meta__ = { // jshint ignore:line
                 cell,
                 notString = [],
                 isLocked = that._isLocked(),
-                selectable = that.options.selectable;
+                selectable = that.options.selectable,
+                dataSourceOptions = that.dataSource.options;
 
             if (selectable) {
 
@@ -3795,6 +3800,13 @@ var __meta__ = { // jshint ignore:line
                     that.selectable.destroy();
                 }
 
+                if (that.options.persistSelection === true) {
+                    if(!dataSourceOptions.schema || !dataSourceOptions.schema.model || !dataSourceOptions.schema.model.id) {
+                        throw new Error("Selection persistence requires a data source with a model that has e defined id");
+                    }
+                    that._selectedIds = {};
+                }
+              
                 selectable = kendo.ui.Selectable.parseOptions(selectable);
 
                 multi = selectable.multiple;
@@ -3824,6 +3836,29 @@ var __meta__ = { // jshint ignore:line
                     aria: true,
                     multiple: multi,
                     change: function() {
+                        if(that.options.persistSelection && !cell) {
+                            var key,
+                                dataItem,
+                                allRows = that.tbody.children(":not(.k-grouping-row,.k-detail-row)"),
+                                modelId = dataSourceOptions.schema.model.id,
+                                selectedViewIds = {};
+
+                            this.value().each(function() {
+                                dataItem = that.dataItem(this);
+                                selectedViewIds[dataItem[modelId]] = true;
+                            });
+
+                            for (var i = 0; i < allRows.length; i ++) {
+                                dataItem = that.dataItem(allRows[i]);
+                                key = dataItem[modelId];
+                                if(selectedViewIds[key]) {
+                                    that._selectedIds[key] = true;
+                                } else {
+                                    delete that._selectedIds[key]; 
+                                }
+                            }
+                        }
+                       
                         that.trigger(CHANGE);
                     },
                     useAllItems: isLocked && multi && cell,
@@ -4109,6 +4144,16 @@ var __meta__ = { // jshint ignore:line
             }
 
             return selectable.value();
+        },
+
+        selectedKeyNames: function() {
+            var that = this,
+                ids = [];
+            for (var property in that._selectedIds) {
+                ids.push(property)
+            }
+            ids.sort();
+            return ids;
         },
 
         _updateCurrentAttr: function(current, next) {
@@ -7577,6 +7622,10 @@ var __meta__ = { // jshint ignore:line
                 that._angularItems("compile");
             });
 
+            if(that.options.selectable && !kendo.ui.Selectable.parseOptions(that.options.selectable).cell && that.options.persistSelection) {
+                that._restoreSelection();
+            }
+
             that.trigger(DATABOUND);
        },
 
@@ -7613,6 +7662,20 @@ var __meta__ = { // jshint ignore:line
             if (this._current) {
                 focusTable(this._current.closest("table")[0], true);
             }
+        },
+
+        _restoreSelection: function() {
+            var that = this,
+                rows = that.tbody.children(":not(.k-grouping-row,.k-detail-row)");
+           
+            rows = grep(rows, function(row) {
+                 var dataItemKey = that.dataItem(row)[that.dataSource.options.schema.model.id];
+                 if(that._selectedIds[dataItemKey]) {
+                    return row;
+                 }
+            });
+
+            that.select(rows);
         },
 
        _angularItems: function(cmd) {

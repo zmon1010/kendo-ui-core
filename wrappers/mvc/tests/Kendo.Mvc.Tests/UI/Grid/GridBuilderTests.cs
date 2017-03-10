@@ -152,5 +152,21 @@ namespace Kendo.Mvc.UI.Fluent.Tests
 
             Assert.Equal(templateId, grid.NoRecords.TemplateId);
         }
+
+        [Fact]
+        public void PersistSelection_sets_correctly()
+        {
+            builder.PersistSelection(true);
+
+            Assert.Equal(true, grid.PersistSelection);
+        }
+
+        [Fact]
+        public void PersistSelection_enables_correctly()
+        {
+            builder.PersistSelection();
+
+            Assert.Equal(true, grid.PersistSelection);
+        }
     }
 }

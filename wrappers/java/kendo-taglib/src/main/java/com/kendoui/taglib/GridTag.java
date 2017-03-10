@@ -360,6 +360,14 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setProperty("pageable", value);
     }
 
+    public boolean getPersistSelection() {
+        return (Boolean)getProperty("persistSelection");
+    }
+
+    public void setPersistSelection(boolean value) {
+        setProperty("persistSelection", value);
+    }
+
     public boolean getReorderable() {
         return (Boolean)getProperty("reorderable");
     }

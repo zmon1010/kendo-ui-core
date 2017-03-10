@@ -2532,4 +2532,44 @@
         equal(syncSpy.calls("destroy"), 1);
     });
 
+    test("error is thrown when selection persistence is enabled and data source does not have a schema", function() {
+        throws(function() {
+            var grid = new Grid(table, {
+                persistSelection: true,
+                dataSource: {
+                    data:[{ foo: 1, bar: "bar"}]
+                },
+                columns: [{ command: { className: "foo" } }]
+            });
+        });
+    });
+
+    test("error is thrown when selection persistence is enabled and data source does not have a model", function() {
+        throws(function() {
+            var grid = new Grid(table, {
+                persistSelection: true,
+                dataSource: {
+                    data:[{ foo: 1, bar: "bar"}],
+                    schema: {}
+                },
+                columns: [{ command: { className: "foo" } }]
+            });
+        });
+    });
+
+    test("error is thrown when selection persistence is enabled and data source does not have an id for the model", function() {
+        throws(function() {
+            var grid = new Grid(table, {
+                persistSelection: true,
+                dataSource: {
+                    data:[{ foo: 1, bar: "bar"}],
+                    schema: {
+                        model : {}
+                    }
+                },
+                columns: [{ command: { className: "foo" } }]
+            });
+        });
+    });
+
 })();

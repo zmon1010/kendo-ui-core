@@ -29,6 +29,8 @@ namespace Kendo.Mvc.UI
 
         public GridPdfSettings<T> Pdf { get; } = new GridPdfSettings<T>();
 
+        public bool? PersistSelection { get; set; }
+
         public GridSortableSettings<T> Sortable { get; } = new GridSortableSettings<T>();
 
 
@@ -101,6 +103,11 @@ namespace Kendo.Mvc.UI
             if (pdf.Any())
             {
                 settings["pdf"] = pdf;
+            }
+
+            if (PersistSelection.HasValue)
+            {
+                settings["persistSelection"] = PersistSelection;
             }
 
             var sortable = Sortable.Serialize();

@@ -188,6 +188,12 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public bool? PersistSelection
+        {
+            get;
+            set;
+        }
+
         internal IList<IDataKey> DataKeys
         {
             get;
@@ -824,6 +830,11 @@ namespace Kendo.Mvc.UI
             if (pdf.Any())
             {
                 options["pdf"] = pdf;
+            }
+
+            if (PersistSelection.HasValue)
+            {
+                options["persistSelection"] = PersistSelection;
             }
 
             if (ColumnMenu.Enabled)

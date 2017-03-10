@@ -166,6 +166,15 @@ The grid uses same layout for both phone and tablet.
     }
 
     /**
+    * Sets a value indicating whether the selection will be persisted when sorting, paging, filtering and etc are performed.
+    * @param boolean $value
+    * @return \Kendo\UI\Grid
+    */
+    public function persistSelection($value) {
+        return $this->setProperty('persistSelection', $value);
+    }
+
+    /**
     * If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
 Multi-level headers allow reordering only in same level.
     * @param boolean $value

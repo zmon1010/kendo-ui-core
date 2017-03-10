@@ -214,6 +214,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets a value indicating whether the selection will be persisted when sorting, paging, filtering and etc are performed.
+        /// </summary>
+        /// <param name="value">The value for PersistSelection</param>
+        public GridBuilder<T> PersistSelection(bool value)
+        {
+            Container.PersistSelection = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets a value indicating whether the selection will be persisted when sorting, paging, filtering and etc are performed.
+        /// </summary>
+        public GridBuilder<T> PersistSelection()
+        {
+            Container.PersistSelection = true;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the user could sort the grid by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the sortable setting.</param>
