@@ -10,14 +10,11 @@ var __meta__ = { // jshint ignore:line
     depends: [ "core" ]
 };
 
-(function($, undefined) {
+(function ($, undefined) {
     var global = window;
-    var Array = global.Array;
     var kendo = global.kendo;
     var caret = kendo.caret;
-    var keys = kendo.keys;
     var Class = kendo.Class;
-    var isFunction = kendo.isFunction;
     var ui = kendo.ui;
     var Widget = ui.Widget;
     var ns = ".kendoDateInput";
@@ -29,17 +26,123 @@ var __meta__ = { // jshint ignore:line
     var READONLY = "readonly";
     var CHANGE = "change";
 
-    function isString(value) {
-        return (typeof value === "string");
+
+    //TODO: class that will be able to work with partially filled dates.
+    var customDateTime = function () {
+        var zeros = ["", "0", "00", "000", "0000"];
+        function pad(number, digits, end) {
+            number = number + "";
+            digits = digits || 2;
+            end = digits - number.length;
+
+            if (end) {
+                return zeros[digits].substring(0, end) + number;
+            }
+
+            return number;
+        }
+        var dateFormatRegExp = /dddd|ddd|dd|d|MMMM|MMM|MM|M|yyyy|yy|HH|H|hh|h|mm|m|fff|ff|f|tt|ss|s|zzz|zz|z|"[^"]*"|'[^']*'/g;
+        var date = null, months = null, calendar = null, days = null, returnsFormat = false;
+        var matcher = function (match) {
+            var minutes, sign;
+            var result;
+
+            switch (match) {
+                case ("d"): result = date.getDate(); break;
+                case ("dd"): result = pad(date.getDate()); break;
+                case ("ddd"): result = days.namesAbbr[date.getDay()]; break;
+                case ("dddd"): result = days.names[date.getDay()]; break;
+
+                case ("M"): result = date.getMonth() + 1; break;
+                case ("MM"): result = pad(date.getMonth() + 1); break;
+                case ("MMM"): result = months.namesAbbr[date.getMonth()]; break;
+                case ("MMMM"): result = months.names[date.getMonth()]; break;
+
+                case ("yy"): result = pad(date.getFullYear() % 100); break;
+                case ("yyyy"): result = pad(date.getFullYear(), 4); break;
+
+                case ("h"): result = date.getHours() % 12 || 12; break;
+                case ("hh"): result = pad(date.getHours() % 12 || 12); break;
+                case ("H"): result = date.getHours(); break;
+                case ("HH"): result = pad(date.getHours()); break;
+                case ("m"): result = date.getMinutes(); break;
+                case ("mm"): result = pad(date.getMinutes()); break;
+                case ("s"): result = date.getSeconds(); break;
+                case ("ss"): result = pad(date.getSeconds()); break;
+                case ("f"): result = math.floor(date.getMilliseconds() / 100); break;
+                case ("ff"):
+                    result = date.getMilliseconds();
+                    if (result > 99) {
+                        result = math.floor(result / 10);
+                    }
+                    result = pad(result);
+                    break;
+                case ("fff"): result = pad(date.getMilliseconds(), 3); break;
+                case ("tt"): result = date.getHours() < 12 ? calendar.AM[0] : calendar.PM[0]; break;
+                case ("zzz"):
+                    minutes = date.getTimezoneOffset();
+                    sign = minutes < 0;
+                    result = math.abs(minutes / 60).toString().split(".")[0];
+                    minutes = math.abs(minutes) - (result * 60);
+                    result = (sign ? "+" : "-") + pad(result);
+                    result += ":" + pad(minutes);
+                    break;
+                case ("z"):
+                case ("zz"):
+                    result = date.getTimezoneOffset() / 60;
+                    sign = result < 0;
+                    result = math.abs(result).toString().split(".")[0];
+                    result = (sign ? "+" : "-") + (match === "zz" ? pad(result) : result);
+                    break;
+            }
+            result !== undefined ? result : match.slice(1, match.length - 1);
+
+            if (returnsFormat) {
+                result = "" + result;
+                var formatResult = "";
+                for (var i = 0; i < result.length; i++) {
+                    formatResult += match[0];
+                }
+                return formatResult;
+            } else {
+                return result;
+            }
+        }
+
+        function generateMatcher(culture, format, date1, retFormat = false) {
+            returnsFormat = retFormat;
+            calendar = culture.calendars.standard;
+            format = calendar.patterns[format] || format;
+            days = calendar.days;
+            date = date1;
+            months = calendar.months;
+            return matcher;
+        }
+
+        this.formatDate = function (date, format, culture) {
+            if (!format) {
+                //TODO: revise this
+                return ["", ""];
+                //return date !== undefined ? value : "";
+            }
+            culture = kendo.getCulture(culture);
+            //console.log(format.replace(dateFormatRegExp, generateMatcher(culture, format, date, false)));
+            //console.log(format.replace(dateFormatRegExp, generateMatcher(culture, format, date, true)));
+
+            return [format.replace(dateFormatRegExp, generateMatcher(culture, format, date, false)),
+            format.replace(dateFormatRegExp, generateMatcher(culture, format, date, true))];
+        }
     }
 
     var DateInput = Widget.extend({
-        init: function(element, options) {
+        init: function (element, options) {
             var that = this;
             var DOMElement;
 
             Widget.fn.init.call(that, element, options);
-            that._rules = $.extend({}, that.rules, that.options.rules);
+
+            options = that.options;
+            options.format = kendo._extractFormat(options.format || kendo.getCulture(options.culture).calendars.standard.patterns.d);
 
             element = that.element;
             DOMElement = element[0];
@@ -49,25 +152,25 @@ var __meta__ = { // jshint ignore:line
             that.element
                 .addClass("k-textbox")
                 .attr("autocomplete", "off")
-                .on("focus" + ns, function() {
+                .on("focus" + ns, function () {
                     var value = DOMElement.value;
                 })
-                .on("focusout" + ns, function() {
+                .on("focusout" + ns, function () {
                     var value = element.val();
                     that._change();
                 });
 
-             var disabled = element.is("[disabled]") || $(that.element).parents("fieldset").is(':disabled');
+            var disabled = element.is("[disabled]") || $(that.element).parents("fieldset").is(':disabled');
 
-             if (disabled) {
-                 that.enable(false);
-             } else {
-                 that.readonly(element.is("[readonly]"));
-             }
+            if (disabled) {
+                that.enable(false);
+            } else {
+                that.readonly(element.is("[readonly]"));
+            }
 
-             that.value(that.options.value || element.val());
+            that.value(that.options.value || element.val());
 
-             kendo.notify(that);
+            kendo.notify(that);
         },
 
         options: {
@@ -81,14 +184,14 @@ var __meta__ = { // jshint ignore:line
             CHANGE
         ],
 
-        setOptions: function(options) {
+        setOptions: function (options) {
             var that = this;
             Widget.fn.setOptions.call(that, options);
             this._unbindInput();
-            this._bindInput();            
+            this._bindInput();
         },
 
-        destroy: function() {
+        destroy: function () {
             var that = this;
 
             that.element.off(ns);
@@ -100,7 +203,7 @@ var __meta__ = { // jshint ignore:line
             Widget.fn.destroy.call(that);
         },
 
-        value: function(value) {
+        value: function (value) {
             var element = this.element;
             var options = this.options;
 
@@ -111,42 +214,43 @@ var __meta__ = { // jshint ignore:line
             if (value === null) {
                 value = "";
             }
+            var dt = new customDateTime();
 
-            element.val(kendo.toString(new Date(), options.format, options.culture));
+            element.val(dt.formatDate(new Date(), options.format, options.culture)[0]);
         },
 
-        readonly: function(readonly) {
+        readonly: function (readonly) {
             this._editable({
                 readonly: readonly === undefined ? true : readonly,
                 disable: false
             });
         },
 
-        enable: function(enable) {
+        enable: function (enable) {
             this._editable({
                 readonly: false,
                 disable: !(enable = enable === undefined ? true : enable)
             });
         },
 
-        _bindInput: function() {
+        _bindInput: function () {
             var that = this;
 
-                that.element
-                    .on("keydown" + ns, proxy(that._keydown, that))
-                    .on("paste" + ns, proxy(that._paste, that))
-                    .on(INPUT_EVENT_NAME, proxy(that._propertyChange, that));
-            
+            that.element
+                .on("keydown" + ns, proxy(that._keydown, that))
+                .on("paste" + ns, proxy(that._paste, that))
+                .on(INPUT_EVENT_NAME, proxy(that._input, that));
+
         },
 
-        _unbindInput: function() {
+        _unbindInput: function () {
             this.element
                 .off("keydown" + ns)
                 .off("paste" + ns)
                 .off(INPUT_EVENT_NAME);
         },
 
-        _editable: function(options) {
+        _editable: function (options) {
             var that = this;
             var element = that.element;
             var disable = options.disable;
@@ -156,18 +260,18 @@ var __meta__ = { // jshint ignore:line
 
             if (!readonly && !disable) {
                 element.removeAttr(DISABLED)
-                       .removeAttr(READONLY)
-                       .removeClass(STATEDISABLED);
+                    .removeAttr(READONLY)
+                    .removeClass(STATEDISABLED);
 
                 that._bindInput();
             } else {
                 element.attr(DISABLED, disable)
-                       .attr(READONLY, readonly)
-                       .toggleClass(STATEDISABLED, disable);
+                    .attr(READONLY, readonly)
+                    .toggleClass(STATEDISABLED, disable);
             }
         },
 
-        _change: function() {
+        _change: function () {
             var that = this;
             var value = that.value();
 
@@ -179,7 +283,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _propertyChange: function() {
+        _input: function () {
             var that = this;
             var element = that.element[0];
             var value = element.value;
@@ -192,19 +296,19 @@ var __meta__ = { // jshint ignore:line
             //TODO, do the magic here
         },
 
-        _paste: function(e) {
+        _paste: function (e) {
             that._pasting = true;
         },
 
-        _form: function() {
+        _form: function () {
             var that = this;
             var element = that.element;
             var formId = element.attr("form");
             var form = formId ? $("#" + formId) : element.closest("form");
 
             if (form[0]) {
-                that._resetHandler = function() {
-                    setTimeout(function() {
+                that._resetHandler = function () {
+                    setTimeout(function () {
                         that.value(element[0].value);
                     });
                 };
@@ -213,7 +317,7 @@ var __meta__ = { // jshint ignore:line
             }
         },
 
-        _keydown: function(e) {
+        _keydown: function (e) {
             var key = e.keyCode;
             var element = this.element[0];
             var selection = caret(element);
@@ -222,7 +326,7 @@ var __meta__ = { // jshint ignore:line
             //TODO: keyboard navigation
         }
     });
-    
+
     ui.plugin(DateInput);
 
 })(window.kendo.jQuery);
