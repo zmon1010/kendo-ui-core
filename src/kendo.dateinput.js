@@ -124,6 +124,7 @@ var __meta__ = { // jshint ignore:line
             }
             var stringAndFromat = this._dateTime.toPair(this.options.format, this.options.culture);
             this.element.val(stringAndFromat[0]);
+            this._oldText = stringAndFromat[0];
             this._format = stringAndFromat[1];
         },
 
@@ -147,7 +148,8 @@ var __meta__ = { // jshint ignore:line
                 .on("keydown" + ns, proxy(that._keydown, that))
                 .on("paste" + ns, proxy(that._paste, that))
                 .on(INPUT_EVENT_NAME, proxy(that._input, that))
-                .on("mouseup" + ns, proxy(that._mouseUp, that));
+                .on("mouseup" + ns, proxy(that._mouseUp, that))
+                .on("mousewheel" + ns, proxy(that._scroll, that));
 
         },
 
@@ -156,8 +158,8 @@ var __meta__ = { // jshint ignore:line
                 .off("keydown" + ns)
                 .off("paste" + ns)
                 .off(INPUT_EVENT_NAME)
-                .on("mouseup" + ns);
-
+                .on("mouseup" + ns)
+                .on("mousewheel" + ns);
         },
 
         _editable: function (options) {
@@ -204,6 +206,10 @@ var __meta__ = { // jshint ignore:line
             }
 
             //TODO, do the magic here
+            var symbol = this._format[caret(this.element[0])[0]];
+            this._dateTime.parsePart(symbol, null);
+            this._updateElementValue();
+            this._selectSegment(symbol);
         },
 
         _mouseUp: function () {
@@ -215,6 +221,29 @@ var __meta__ = { // jshint ignore:line
 
         _paste: function (e) {
             that._pasting = true;
+        },
+
+        _scroll: function (e) {
+            if (kendo._activeElement() !== this.element[0]) {
+                return;
+            }
+            e = window.event || e;
+
+            var newEvent = { keyCode: 37, preventDefault: function () { } };
+
+            if (e.shiftKey) {
+                newEvent.keyCode = (e.wheelDelta || -e.detail) > 0 ? 37 : 39;
+            } else {
+                newEvent.keyCode = (e.wheelDelta || -e.detail) > 0 ? 38 : 40;
+            }
+            this._keydown(newEvent);
+            e.returnValue = false;
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
         },
 
         _form: function () {
@@ -246,7 +275,7 @@ var __meta__ = { // jshint ignore:line
                 var index = (dir == -1) ? caret(this.element[0])[0] - 1 : caret(this.element[0])[1] + 1;
                 while (index >= 0 && index < this._format.length) {
                     if (knownSymbols.indexOf(this._format[index]) >= 0) {
-                        this._selectDateSegment(this._format[index]);
+                        this._selectSegment(this._format[index]);
                         break;
                     }
                     index += dir;
@@ -259,7 +288,7 @@ var __meta__ = { // jshint ignore:line
                 if (knownSymbols.indexOf(symbol) >= 0) {
                     this._dateTime.modifyPart(symbol, key == 38 ? 1 : -1);
                     this._updateElementValue();
-                    this._selectDateSegment(symbol);
+                    this._selectSegment(symbol);
                 }
             }
         },
@@ -269,17 +298,17 @@ var __meta__ = { // jshint ignore:line
             var start = selection[0];
             for (var i = start, j = start - 1; i < this._format.length || j >= 0; i++ , j--) {
                 if (i < this._format.length && knownSymbols.indexOf(this._format[i]) !== -1) {
-                    this._selectDateSegment(this._format[i]);
+                    this._selectSegment(this._format[i]);
                     return;
                 }
                 if (j >= 0 && knownSymbols.indexOf(this._format[j]) !== -1) {
-                    this._selectDateSegment(this._format[j]);
+                    this._selectSegment(this._format[j]);
                     return;
                 }
             }
         },
 
-        _selectDateSegment: function (symbol) {
+        _selectSegment: function (symbol) {
             var begin = -1, end = 0;
             for (var i = 0; i < this._format.length; i++) {
                 if (this._format[i] === symbol) {
@@ -299,18 +328,12 @@ var __meta__ = { // jshint ignore:line
 
     ui.plugin(DateInput);
 
-    //TODO: class that will be able to work with partially filled dates.
     var customDateTime = function () {
         var value = new Date();
 
-        var year = true;
-        var month = true;
-        var date = true;
-        var hours = true;
-        var minutes = true;
-        var seconds = true;
-        var milliseconds = true;
+        var year = true, month = true, date = true, hours = true, minutes = true, seconds = true, milliseconds = true;
 
+        //TODO: rewrite pad method
         var zeros = ["", "0", "00", "000", "0000"];
         function pad(number, digits, end) {
             number = number + "";
@@ -330,18 +353,18 @@ var __meta__ = { // jshint ignore:line
             var result;
 
             switch (match) {
-                case ("d"): result = value.getDate(); break;
-                case ("dd"): result = pad(value.getDate()); break;
-                case ("ddd"): result = days.namesAbbr[value.getDay()]; break;
-                case ("dddd"): result = days.names[value.getDay()]; break;
+                case ("d"): result = date ? value.getDate() : "DAY"; break;
+                case ("dd"): result = date ? pad(value.getDate()) : "DAY"; break;
+                case ("ddd"): result = date ? days.namesAbbr[value.getDay()] : "DAY"; break;
+                case ("dddd"): result = date ? days.names[value.getDay()] : "DAY"; break;
 
-                case ("M"): result = value.getMonth() + 1; break;
-                case ("MM"): result = pad(value.getMonth() + 1); break;
-                case ("MMM"): result = months.namesAbbr[value.getMonth()]; break;
-                case ("MMMM"): result = months.names[value.getMonth()]; break;
+                case ("M"): result = month ? value.getMonth() + 1 : "MONTH"; break;
+                case ("MM"): result = month ? pad(value.getMonth() + 1) : "MONTH"; break;
+                case ("MMM"): result = month ? months.namesAbbr[value.getMonth()] : "MONTH"; break;
+                case ("MMMM"): result = month ? months.names[value.getMonth()] : "MONTH"; break;
 
-                case ("yy"): result = pad(value.getFullYear() % 100); break;
-                case ("yyyy"): result = pad(value.getFullYear(), 4); break;
+                case ("yy"): result = year ? pad(value.getFullYear() % 100) : "YEAR"; break;
+                case ("yyyy"): result = year ? pad(value.getFullYear(), 4) : "YEAR"; break;
 
                 case ("h"): result = value.getHours() % 12 || 12; break;
                 case ("hh"): result = pad(value.getHours() % 12 || 12); break;
@@ -400,14 +423,15 @@ var __meta__ = { // jshint ignore:line
             return matcher;
         };
 
-        function setExisting(symbol, value) {
+        function setExisting(symbol, val) {
             switch (symbol) {
-                case "y": this.year = value; break;
-                case "M": this.month = value; if (value === false) { this.value.setMonth(0); } break; //make sure you can type 31 at day part
-                case "d": this.date = value; break;
-                case "h": this.hours = value; break;
-                case "m": this.minutes = value; break;
-                case "s": this.seconds = value; break;
+                case "y": year = val; break;
+                case "M": month = val;
+                    if (val === false) { value.setMonth(0); } break;
+                case "d": date = val; break;
+                case "h": hours = val; break;
+                case "m": minutes = val; break;
+                case "s": seconds = val; break;
                 default: return;
             }
         };
@@ -437,7 +461,14 @@ var __meta__ = { // jshint ignore:line
                 value = newValue;
             }
         };
-        
+
+        this.parsePart = function (symbol, currentChar) {
+            if (!currentChar) {
+                setExisting(symbol, false);
+                return null;
+            }
+        };
+
         this.toPair = function (format, culture) {
             if (!format) {
                 //TODO: revise this
