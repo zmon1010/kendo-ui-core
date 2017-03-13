@@ -136,6 +136,9 @@ var __meta__ = { // jshint ignore:line
         NORECORDS = "No records available.",
         CONFIRMDELETE = "Delete",
         CANCELDELETE = "Cancel",
+        COLLAPSE = "Collapse",
+        EXPAND = "Expand",
+        ARIALABEL = "aria-label",
         formatRegExp = /(\}|\#)/ig,
         templateHashRegExp = /#/ig,
         whitespaceRegExp = "[\\x20\\t\\r\\n\\f]",
@@ -3806,7 +3809,7 @@ var __meta__ = { // jshint ignore:line
                     }
                     that._selectedIds = {};
                 }
-              
+
                 selectable = kendo.ui.Selectable.parseOptions(selectable);
 
                 multi = selectable.multiple;
@@ -3854,11 +3857,11 @@ var __meta__ = { // jshint ignore:line
                                 if(selectedViewIds[key]) {
                                     that._selectedIds[key] = true;
                                 } else {
-                                    delete that._selectedIds[key]; 
+                                    delete that._selectedIds[key];
                                 }
                             }
                         }
-                       
+
                         that.trigger(CHANGE);
                     },
                     useAllItems: isLocked && multi && cell,
@@ -6016,7 +6019,7 @@ var __meta__ = { // jshint ignore:line
                 }
 
                 if (hasDetails) {
-                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-i-expand" href="\\#" aria-label="Expand" tabindex="-1"></a></td>';
+                    rowTemplate += '<td class="k-hierarchy-cell"><a class="k-icon k-i-expand" href="\\#" ' + ARIALABEL + '="' + EXPAND + '" tabindex="-1"></a></td>';
                 }
 
                 for (idx = 0; idx < length; idx++) {
@@ -6347,11 +6350,11 @@ var __meta__ = { // jshint ignore:line
                     detailTemplate = that.detailTemplate,
                     data,
                     hasDetails = that._hasDetails(),
-                    ariaLabelText = expanding ? "Collapse" : "Expand";
+                    ariaLabelText = expanding ? COLLAPSE : EXPAND;
 
                 button.toggleClass("k-i-expand", !expanding)
                     .toggleClass("k-i-collapse", expanding)
-                    .attr("aria-label", ariaLabelText);
+                    .attr(ARIALABEL, ariaLabelText);
 
                 detailRow = masterRow.next();
 
@@ -6697,7 +6700,8 @@ var __meta__ = { // jshint ignore:line
                    for (idx = 0; idx < rows.length; idx++) {
                        html += "<tr>";
                        if (hasDetails) {
-                           html += '<th class="k-hierarchy-cell" scope="col">&nbsp;</th>';
+                           // an empty <th> is not 508 compliant and it should have some text content
+                           html += '<th class="k-hierarchy-cell" scope="col" style="visibility: hidden;">.</th>';
                        }
                        html += that._createHeaderCells(rows[idx].cells, rows[idx].rowSpan);
                        html += "</tr>";
@@ -7049,7 +7053,9 @@ var __meta__ = { // jshint ignore:line
 
             level = group.find(".k-group-cell").length;
             group.find(".k-i-collapse").addClass("k-i-expand").removeClass("k-i-collapse");
-            group.find("td[aria-expanded='true']:first").attr("aria-expanded", false);
+            group.find("td[aria-expanded='true']:first").attr("aria-expanded", false)
+                .find("a").attr(ARIALABEL, EXPAND);
+
             group = group.nextAll("tr");
 
             var toHide = [];
@@ -7102,7 +7108,8 @@ var __meta__ = { // jshint ignore:line
 
             level = group.find(".k-group-cell").length;
             group.find(".k-i-expand").addClass("k-i-collapse").removeClass("k-i-expand");
-            group.find("td[aria-expanded='false']:first").attr("aria-expanded", true);
+            group.find("td[aria-expanded='false']:first").attr("aria-expanded", true)
+                .find("a").attr(ARIALABEL, COLLAPSE);
             group = group.nextAll("tr");
 
             for (idx = 0, length = group.length; idx < length; idx ++ ) {
@@ -7157,7 +7164,8 @@ var __meta__ = { // jshint ignore:line
                 });
 
             if(groups > length) {
-                $(new Array(groups - length + 1).join('<th class="k-group-cell k-header" scope="col">&nbsp;</th>')).prependTo(container.children("tr:not(.k-filter-row)"));
+                // an empty <th> is not 508 compliant and it should have some text content
+                $(new Array(groups - length + 1).join('<th class="k-group-cell k-header" scope="col" style="visibility: hidden;">.</th>')).prependTo(container.children("tr:not(.k-filter-row)"));
                 if (that.element.is(":visible")) {
                     rows.find("th.k-group-cell").hide();
                 }
@@ -8216,7 +8224,7 @@ var __meta__ = { // jshint ignore:line
        return '<tr role="row" class="k-grouping-row">' + groupCells(level) +
            '<td colspan="' + colspan + '" aria-expanded="true">' +
            '<p class="k-reset">' +
-           '<a class="k-icon k-i-collapse" href="#" tabindex="-1" aria-label="Collapse"></a>' + text +
+           '<a class="k-icon k-i-collapse" href="#" tabindex="-1" ' + ARIALABEL + '="' + COLLAPSE + '"></a>' + text +
        '</p></td></tr>';
    }
 

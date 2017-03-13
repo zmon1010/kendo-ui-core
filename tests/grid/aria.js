@@ -1,14 +1,10 @@
 (function() {
     var Grid = kendo.ui.Grid,
         table,
-        DataSource = kendo.data.DataSource,
-        ns;
+        DataSource = kendo.data.DataSource;
 
-    module("grid aria", {
+    module("kendo.ui.Grid aria", {
         setup: function() {
-            ns = kendo.ns;
-            kendo.ns = "kendo-";
-
             table = document.createElement("table");
             table.id = "test";
 
@@ -17,7 +13,6 @@
         teardown: function() {
             kendo.destroy(QUnit.fixture);
             $(table).closest(".k-grid").remove();
-            kendo.ns = ns;
         }
     });
 
@@ -112,6 +107,7 @@
         });
 
         equal(grid.element.attr("role"), "treegrid");
+        equal(grid.element.find("tbody td:first a").attr("aria-label"), "Expand");
     });
 
     test("Grid set expanded state on expand", function() {
@@ -123,6 +119,7 @@
         });
         grid.table.focus().find(".k-icon:first").click();
         equal(grid.current().attr("aria-expanded"), "true");
+        equal(grid.element.find("tbody td:first a").attr("aria-label"), "Collapse");
     });
 
     test("Grid set expanded state on collapse", function() {
@@ -136,6 +133,7 @@
         grid.table.focus().find(".k-icon:first").click().click();
 
         equal(grid.current().attr("aria-expanded"), "false");
+        equal(grid.element.find("tbody td:first a").attr("aria-label"), "Expand");
     });
 
     test("Grid set expanded state on group expand", function() {
@@ -148,8 +146,9 @@
         var row = grid.table.find("tr:first");
         grid.collapseGroup(row);
         grid.expandGroup(row);
-
-        equal(grid.table.find("tr td:first").attr("aria-expanded"), "true");
+        var expandedCell = grid.table.find("tr td:first");
+        equal(expandedCell.attr("aria-expanded"), "true");
+        equal(expandedCell.find("a").attr("aria-label"), "Collapse");
     });
 
     test("Grid set expanded state on group collapse", function() {
@@ -162,18 +161,22 @@
         var row = grid.table.find("tr:first");
         grid.collapseGroup(row);
 
-        equal(grid.table.find("tr td:first").attr("aria-expanded"), "false");
+        var expandedCell = grid.table.find("tr td:first");
+        equal(expandedCell.attr("aria-expanded"), "false");
+        equal(expandedCell.find("a").attr("aria-label"), "Expand");
     });
 
     test("Grid set expanded state is set for group cell", function() {
         var grid = new Grid(table, {
             dataSource: [ { foo: "foo", bar: "bar" } ],
-            columns: [ "foo"]
+            columns: [ "foo" ]
         });
 
         grid.dataSource.group({ field: "foo" });
 
-        equal(grid.table.find("tr td:first").attr("aria-expanded"), "true");
+        var expandedCell = grid.table.find("tr td:first");
+        equal(expandedCell.attr("aria-expanded"), "true");
+        equal(expandedCell.find("a").attr("aria-label"), "Collapse");
     });
 
     test("Grid commands have role attribute set", function() {
@@ -188,4 +191,31 @@
         equal(grid.table.find(".k-grid-edit").attr("role"), "button");
         equal(grid.table.find(".k-grid-delete").attr("role"), "button");
     });
+
+    test("Grid with details th should not be empty", function() {
+        var grid = new Grid(table, {
+            detailTemplate: kendo.template("<p>details</p>"),
+            dataSource: [ { foo: "foo", bar: "bar" } ],
+            columns: [ "foo" ]
+        });
+
+        var firstTh = grid.wrapper.find("th:first");
+        equal(firstTh.css("visibility"), "hidden");
+        notEqual(firstTh.text().trim(), "");
+    });
+
+
+    test("Grid with grouping th should not be empty", function() {
+        var grid = new Grid(table, {
+            dataSource: [ { foo: "foo", bar: "bar" } ],
+            columns: [ "foo" ]
+        });
+
+        grid.dataSource.group({ field: "foo" });
+
+        var firstTh = grid.wrapper.find("th:first");
+        equal(firstTh.css("visibility"), "hidden");
+        notEqual(firstTh.text().trim(), "");
+    });
+
 })();
