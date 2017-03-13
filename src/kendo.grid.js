@@ -4150,7 +4150,7 @@ var __meta__ = { // jshint ignore:line
             var that = this,
                 ids = [];
             for (var property in that._selectedIds) {
-                ids.push(property)
+                ids.push(property);
             }
             ids.sort();
             return ids;
