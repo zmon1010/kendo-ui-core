@@ -207,14 +207,37 @@ var __meta__ = { // jshint ignore:line
 
             //TODO, do the magic here
             var symbol = this._format[caret(this.element[0])[0]];
-            this._dateTime.parsePart(symbol, null);
+
+            var diff = approximateStringMatching(
+                this._oldText,
+                this._format,
+                this.element[0].value,
+                caret(this.element[0])[0]);
+
+
+
+            const navigationOnly = (diff.length === 1 && diff[0][1] === " ");
+            if (!navigationOnly) {
+                for (let i = 0; i < diff.length; i++) {
+                    this._dateTime.parsePart(diff[i][0], diff[i][1]);
+                }
+            }
             this._updateElementValue();
-            this._selectSegment(symbol);
+
+            //this._selectSegment(symbol);
+
+            if (diff.length && diff[0][0] !== " ") {
+                this._selectSegment(diff[0][0]);
+            }
+            if (navigationOnly) {
+                var newEvent = { keyCode: 39, preventDefault: function () { } };
+                this._keydown(newEvent);
+            }
         },
 
         _mouseUp: function () {
             var selection = caret(this.element[0]);
-            if (caret[0] === caret[1]) {
+            if (selection[0] === selection[1]) {
                 this._selectNearestSegment();
             }
         },
@@ -463,10 +486,58 @@ var __meta__ = { // jshint ignore:line
         };
 
         this.parsePart = function (symbol, currentChar) {
-            if (!currentChar) {
+            if (!currentChar || currentChar < "0" || currentChar > "9") {
                 setExisting(symbol, false);
                 return null;
             }
+            var newValue = new Date(value);
+            switch (symbol) {
+                case "d":
+                    var newDate = (date ? newValue.getDate() * 10 : 0) + parseInt(currentChar, 10);
+                    while (newDate > 31) {
+                        newDate = parseInt(newDate.toString().slice(1), 10);
+                    }
+                    if (newDate < 1) {
+                        date = false;
+                    } else {
+                        newValue.setDate(newDate);
+                        if (newValue.getMonth() !== value.getMonth()) {
+                            return;
+                        }
+                        date = true;
+                    }
+                    break;
+                case "M":
+                    var newMonth = (month ? (newValue.getMonth() + 1) * 10 : 0) + parseInt(currentChar, 10);
+                    while (newMonth > 12) {
+                        newMonth = parseInt(newMonth.toString().slice(1), 10);
+                    }
+                    if (newMonth < 1) {
+                        month = false;
+                    } else {
+                        newValue.setMonth(newMonth - 1);
+                        if (newValue.getMonth() !== value.getMonth()) {
+                            newValue.setDate(1);
+                            newValue.setMonth(newMonth - 1);
+                        }
+                        month = true;
+                    }
+                    break;
+                case "y":
+                    var newYear = (year ? (newValue.getFullYear()) * 10 : 0) + parseInt(currentChar, 10);
+                    while (newYear > 9999) {
+                        newYear = parseInt(newYear.toString().slice(1), 10);
+                    }
+                    if (newYear < 1) {
+                        year = false;
+                    } else {
+                        newValue.setFullYear(newYear);
+                        year = true;
+                    }
+                    break;
+                default: break;
+            }
+            value = newValue;
         };
 
         this.toPair = function (format, culture) {
@@ -482,6 +553,48 @@ var __meta__ = { // jshint ignore:line
             ];
         }
     }
+    
+    function approximateStringMatching(oldText, oldFormat, newText, caret){
+        var oldTextSeparator = oldText[caret + oldText.length - newText.length];
+        oldText = oldText.substring(0, caret + oldText.length - newText.length);
+        newText = newText.substring(0, caret);
+        var diff = [];
+        //handle typing single character over the same selection
+        if (oldText === newText && caret > 0) {
+            diff.push([oldFormat[caret - 1], newText[caret - 1]]);
+            return diff;
+        }
+        if (oldText.indexOf(newText) === 0 && (newText.length === 0 || oldFormat[newText.length - 1] !== oldFormat[newText.length])) {
+            //handle delete/backspace
+            var deletedSymbol = "";
+            for (var i = newText.length; i < oldText.length; i++) {
+                if (oldFormat[i] !== deletedSymbol && knownSymbols.indexOf(oldFormat[i]) >= 0) {
+                    deletedSymbol = oldFormat[i];
+                    diff.push([deletedSymbol, ""]);
+                }
+            }
+            return diff;
+        }
+        //handle inserting text (new text is longer than previous)
+        //handle typing over literal as well
+        if (newText.indexOf(oldText) === 0 || knownSymbols.indexOf(oldFormat[caret - 1]) === -1) {
+            var symbol = oldFormat[0];
+            for (var i = Math.max(0, oldText.length - 1); i < oldFormat.length; i++) {
+                if (knownSymbols.indexOf(oldFormat[i]) >= 0) {
+                    symbol = oldFormat[i];
+                    break;
+                }
+            }
+            return [[symbol, newText[caret - 1]]];
+        }
+        //handle entering space or separator, for nagivation to next item
+        if (newText[newText.length - 1] === " " || newText[newText.length - 1] === oldTextSeparator) {
+            return [[oldFormat[caret - 1], " "]];
+        }
+
+        //handle typing over correctly selected part
+        return [[oldFormat[caret - 1], newText[caret - 1]]];
+}
 
 })(window.kendo.jQuery);
 
