@@ -5,7 +5,7 @@ README_DIR = 'resources'
 THIRD_PARTY_LEGAL_DIR = File.join('resources', 'legal', 'third-party')
 XVFB_RUN = "xvfb-run"
 GULP = File.join(Rake.application.original_dir, "node_modules", ".bin", "gulp")
-GULP_XVFB = RUBY_PLATFORM != 'i386-mingw32' && system("which", XVFB_RUN, :out => "/dev/null") ? [XVFB_RUN, "-a", GULP] : [GULP]
+GULP_XVFB = RUBY_PLATFORM != 'x64-mingw32' && system("which", XVFB_RUN, :out => "/dev/null") ? [XVFB_RUN, "-a", GULP] : [GULP]
 METAJS = File.join(Rake.application.original_dir, "build", "kendo-meta.js");
 LESSC = File.join(Rake.application.original_dir, "build", "less-js", "bin", "lessc")
 CSSMIN = File.join(Rake.application.original_dir, "node_modules", "cssmin", "bin", "cssmin")
