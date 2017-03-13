@@ -26,113 +26,7 @@ var __meta__ = { // jshint ignore:line
     var READONLY = "readonly";
     var CHANGE = "change";
 
-
-    //TODO: class that will be able to work with partially filled dates.
-    var customDateTime = function () {
-        var zeros = ["", "0", "00", "000", "0000"];
-        function pad(number, digits, end) {
-            number = number + "";
-            digits = digits || 2;
-            end = digits - number.length;
-
-            if (end) {
-                return zeros[digits].substring(0, end) + number;
-            }
-
-            return number;
-        }
-        var dateFormatRegExp = /dddd|ddd|dd|d|MMMM|MMM|MM|M|yyyy|yy|HH|H|hh|h|mm|m|fff|ff|f|tt|ss|s|zzz|zz|z|"[^"]*"|'[^']*'/g;
-        var date = null, months = null, calendar = null, days = null, returnsFormat = false;
-        var matcher = function (match) {
-            var minutes, sign;
-            var result;
-
-            switch (match) {
-                case ("d"): result = date.getDate(); break;
-                case ("dd"): result = pad(date.getDate()); break;
-                case ("ddd"): result = days.namesAbbr[date.getDay()]; break;
-                case ("dddd"): result = days.names[date.getDay()]; break;
-
-                case ("M"): result = date.getMonth() + 1; break;
-                case ("MM"): result = pad(date.getMonth() + 1); break;
-                case ("MMM"): result = months.namesAbbr[date.getMonth()]; break;
-                case ("MMMM"): result = months.names[date.getMonth()]; break;
-
-                case ("yy"): result = pad(date.getFullYear() % 100); break;
-                case ("yyyy"): result = pad(date.getFullYear(), 4); break;
-
-                case ("h"): result = date.getHours() % 12 || 12; break;
-                case ("hh"): result = pad(date.getHours() % 12 || 12); break;
-                case ("H"): result = date.getHours(); break;
-                case ("HH"): result = pad(date.getHours()); break;
-                case ("m"): result = date.getMinutes(); break;
-                case ("mm"): result = pad(date.getMinutes()); break;
-                case ("s"): result = date.getSeconds(); break;
-                case ("ss"): result = pad(date.getSeconds()); break;
-                case ("f"): result = math.floor(date.getMilliseconds() / 100); break;
-                case ("ff"):
-                    result = date.getMilliseconds();
-                    if (result > 99) {
-                        result = math.floor(result / 10);
-                    }
-                    result = pad(result);
-                    break;
-                case ("fff"): result = pad(date.getMilliseconds(), 3); break;
-                case ("tt"): result = date.getHours() < 12 ? calendar.AM[0] : calendar.PM[0]; break;
-                case ("zzz"):
-                    minutes = date.getTimezoneOffset();
-                    sign = minutes < 0;
-                    result = math.abs(minutes / 60).toString().split(".")[0];
-                    minutes = math.abs(minutes) - (result * 60);
-                    result = (sign ? "+" : "-") + pad(result);
-                    result += ":" + pad(minutes);
-                    break;
-                case ("z"):
-                case ("zz"):
-                    result = date.getTimezoneOffset() / 60;
-                    sign = result < 0;
-                    result = math.abs(result).toString().split(".")[0];
-                    result = (sign ? "+" : "-") + (match === "zz" ? pad(result) : result);
-                    break;
-            }
-            result !== undefined ? result : match.slice(1, match.length - 1);
-
-            if (returnsFormat) {
-                result = "" + result;
-                var formatResult = "";
-                for (var i = 0; i < result.length; i++) {
-                    formatResult += match[0];
-                }
-                return formatResult;
-            } else {
-                return result;
-            }
-        }
-
-        function generateMatcher(culture, format, date1, retFormat = false) {
-            returnsFormat = retFormat;
-            calendar = culture.calendars.standard;
-            format = calendar.patterns[format] || format;
-            days = calendar.days;
-            date = date1;
-            months = calendar.months;
-            return matcher;
-        }
-
-        this.formatDate = function (date, format, culture) {
-            if (!format) {
-                //TODO: revise this
-                return ["", ""];
-                //return date !== undefined ? value : "";
-            }
-            culture = kendo.getCulture(culture);
-            //console.log(format.replace(dateFormatRegExp, generateMatcher(culture, format, date, false)));
-            //console.log(format.replace(dateFormatRegExp, generateMatcher(culture, format, date, true)));
-
-            return [format.replace(dateFormatRegExp, generateMatcher(culture, format, date, false)),
-            format.replace(dateFormatRegExp, generateMatcher(culture, format, date, true))];
-        }
-    }
+    var knownSymbols = "dMyHhmftsz";
 
     var DateInput = Widget.extend({
         init: function (element, options) {
@@ -214,9 +108,23 @@ var __meta__ = { // jshint ignore:line
             if (value === null) {
                 value = "";
             }
-            var dt = new customDateTime();
 
-            element.val(dt.formatDate(new Date(), options.format, options.culture)[0]);
+            this._updateElementValue();
+            // var dt = new customDateTime();
+            // dt.setValue(new Date());
+
+            // var stringAndFromat = dt.toPair(options.format, options.culture);
+            // element.val(stringAndFromat[0]);
+            // this._format = stringAndFromat[1];
+        },
+
+        _updateElementValue: function () {
+            if (!this._dateTime) {
+                this._dateTime = new customDateTime();//(this.intl, this.format, this.value);
+            }
+            var stringAndFromat = this._dateTime.toPair(this.options.format, this.options.culture);
+            this.element.val(stringAndFromat[0]);
+            this._format = stringAndFromat[1];
         },
 
         readonly: function (readonly) {
@@ -235,11 +143,11 @@ var __meta__ = { // jshint ignore:line
 
         _bindInput: function () {
             var that = this;
-
             that.element
                 .on("keydown" + ns, proxy(that._keydown, that))
                 .on("paste" + ns, proxy(that._paste, that))
-                .on(INPUT_EVENT_NAME, proxy(that._input, that));
+                .on(INPUT_EVENT_NAME, proxy(that._input, that))
+                .on("mouseup" + ns, proxy(that._mouseUp, that));
 
         },
 
@@ -247,7 +155,9 @@ var __meta__ = { // jshint ignore:line
             this.element
                 .off("keydown" + ns)
                 .off("paste" + ns)
-                .off(INPUT_EVENT_NAME);
+                .off(INPUT_EVENT_NAME)
+                .on("mouseup" + ns);
+
         },
 
         _editable: function (options) {
@@ -296,6 +206,13 @@ var __meta__ = { // jshint ignore:line
             //TODO, do the magic here
         },
 
+        _mouseUp: function () {
+            var selection = caret(this.element[0]);
+            if (caret[0] === caret[1]) {
+                this._selectNearestSegment();
+            }
+        },
+
         _paste: function (e) {
             that._pasting = true;
         },
@@ -319,15 +236,221 @@ var __meta__ = { // jshint ignore:line
 
         _keydown: function (e) {
             var key = e.keyCode;
-            var element = this.element[0];
-            var selection = caret(element);
+            if (key == 37 || key == 39) { //left/right
+                e.preventDefault();
+                var selection = caret(this.element[0]);
+                if (selection[0] != selection[1]) {
+                    this._selectNearestSegment();
+                }
+                var dir = (key == 37) ? -1 : 1;
+                var index = (dir == -1) ? caret(this.element[0])[0] - 1 : caret(this.element[0])[1] + 1;
+                while (index >= 0 && index < this._format.length) {
+                    if (knownSymbols.indexOf(this._format[index]) >= 0) {
+                        this._selectDateSegment(this._format[index]);
+                        break;
+                    }
+                    index += dir;
+                }
+            }
+            if (key == 38 || key == 40) { //up/down
+                e.preventDefault();
+                var selection = caret(this.element[0]);
+                var symbol = this._format[selection[0]];
+                if (knownSymbols.indexOf(symbol) >= 0) {
+                    this._dateTime.modifyPart(symbol, key == 38 ? 1 : -1);
+                    this._updateElementValue();
+                    this._selectDateSegment(symbol);
+                }
+            }
+        },
+
+        _selectNearestSegment: function () {
+            var selection = caret(this.element[0]);
             var start = selection[0];
-            var end = selection[1];
-            //TODO: keyboard navigation
+            for (var i = start, j = start - 1; i < this._format.length || j >= 0; i++ , j--) {
+                if (i < this._format.length && knownSymbols.indexOf(this._format[i]) !== -1) {
+                    this._selectDateSegment(this._format[i]);
+                    return;
+                }
+                if (j >= 0 && knownSymbols.indexOf(this._format[j]) !== -1) {
+                    this._selectDateSegment(this._format[j]);
+                    return;
+                }
+            }
+        },
+
+        _selectDateSegment: function (symbol) {
+            var begin = -1, end = 0;
+            for (var i = 0; i < this._format.length; i++) {
+                if (this._format[i] === symbol) {
+                    end = i + 1;
+                    if (begin === -1) {
+                        begin = i;
+                    }
+                }
+            }
+            if (begin < 0) {
+                begin = 0;
+            }
+            caret(this.element, begin, end);
         }
+
     });
 
     ui.plugin(DateInput);
+
+    //TODO: class that will be able to work with partially filled dates.
+    var customDateTime = function () {
+        var value = new Date();
+
+        var year = true;
+        var month = true;
+        var date = true;
+        var hours = true;
+        var minutes = true;
+        var seconds = true;
+        var milliseconds = true;
+
+        var zeros = ["", "0", "00", "000", "0000"];
+        function pad(number, digits, end) {
+            number = number + "";
+            digits = digits || 2;
+            end = digits - number.length;
+
+            if (end) {
+                return zeros[digits].substring(0, end) + number;
+            }
+
+            return number;
+        }
+        var dateFormatRegExp = /dddd|ddd|dd|d|MMMM|MMM|MM|M|yyyy|yy|HH|H|hh|h|mm|m|fff|ff|f|tt|ss|s|zzz|zz|z|"[^"]*"|'[^']*'/g;
+        var months = null, calendar = null, days = null, returnsFormat = false;
+        var matcher = function (match) {
+            var minutes, sign;
+            var result;
+
+            switch (match) {
+                case ("d"): result = value.getDate(); break;
+                case ("dd"): result = pad(value.getDate()); break;
+                case ("ddd"): result = days.namesAbbr[value.getDay()]; break;
+                case ("dddd"): result = days.names[value.getDay()]; break;
+
+                case ("M"): result = value.getMonth() + 1; break;
+                case ("MM"): result = pad(value.getMonth() + 1); break;
+                case ("MMM"): result = months.namesAbbr[value.getMonth()]; break;
+                case ("MMMM"): result = months.names[value.getMonth()]; break;
+
+                case ("yy"): result = pad(value.getFullYear() % 100); break;
+                case ("yyyy"): result = pad(value.getFullYear(), 4); break;
+
+                case ("h"): result = value.getHours() % 12 || 12; break;
+                case ("hh"): result = pad(value.getHours() % 12 || 12); break;
+                case ("H"): result = value.getHours(); break;
+                case ("HH"): result = pad(value.getHours()); break;
+                case ("m"): result = value.getMinutes(); break;
+                case ("mm"): result = pad(value.getMinutes()); break;
+                case ("s"): result = value.getSeconds(); break;
+                case ("ss"): result = pad(value.getSeconds()); break;
+                case ("f"): result = math.floor(value.getMilliseconds() / 100); break;
+                case ("ff"):
+                    result = value.getMilliseconds();
+                    if (result > 99) {
+                        result = math.floor(result / 10);
+                    }
+                    result = pad(result);
+                    break;
+                case ("fff"): result = pad(value.getMilliseconds(), 3); break;
+                case ("tt"): result = value.getHours() < 12 ? calendar.AM[0] : calendar.PM[0]; break;
+                case ("zzz"):
+                    minutes = value.getTimezoneOffset();
+                    sign = minutes < 0;
+                    result = math.abs(minutes / 60).toString().split(".")[0];
+                    minutes = math.abs(minutes) - (result * 60);
+                    result = (sign ? "+" : "-") + pad(result);
+                    result += ":" + pad(minutes);
+                    break;
+                case ("z"):
+                case ("zz"):
+                    result = value.getTimezoneOffset() / 60;
+                    sign = result < 0;
+                    result = math.abs(result).toString().split(".")[0];
+                    result = (sign ? "+" : "-") + (match === "zz" ? pad(result) : result);
+                    break;
+            }
+            result !== undefined ? result : match.slice(1, match.length - 1);
+
+            if (returnsFormat) {
+                result = "" + result;
+                var formatResult = "";
+                for (var i = 0; i < result.length; i++) {
+                    formatResult += match[0];
+                }
+                return formatResult;
+            } else {
+                return result;
+            }
+        }
+
+        function generateMatcher(culture, format, retFormat = false) {
+            returnsFormat = retFormat;
+            calendar = culture.calendars.standard;
+            format = calendar.patterns[format] || format;
+            days = calendar.days;
+            months = calendar.months;
+            return matcher;
+        };
+
+        function setExisting(symbol, value) {
+            switch (symbol) {
+                case "y": this.year = value; break;
+                case "M": this.month = value; if (value === false) { this.value.setMonth(0); } break; //make sure you can type 31 at day part
+                case "d": this.date = value; break;
+                case "h": this.hours = value; break;
+                case "m": this.minutes = value; break;
+                case "s": this.seconds = value; break;
+                default: return;
+            }
+        };
+
+        this.setValue = function (val) {
+            date = val;
+        };
+
+        this.getValue = function () {
+            return date;
+        };
+
+        this.modifyPart = function (symbol, offset) {
+            var newValue = new Date(value);
+            switch (symbol) {
+                case "y": newValue.setFullYear(newValue.getFullYear() + offset); break;
+                case "M": newValue.setMonth(newValue.getMonth() + offset); break;
+                case "d":
+                case "E": newValue.setDate(newValue.getDate() + offset); break;
+                case "h": newValue.setHours(newValue.getHours() + offset); break;
+                case "m": newValue.setMinutes(newValue.getMinutes() + offset); break;
+                case "s": newValue.setSeconds(newValue.getSeconds() + offset); break;
+                default: break;
+            }
+            if (newValue.getFullYear() > 0) {
+                setExisting(symbol, true);
+                value = newValue;
+            }
+        };
+        
+        this.toPair = function (format, culture) {
+            if (!format) {
+                //TODO: revise this
+                return ["", ""];
+                //return date !== undefined ? value : "";
+            }
+            culture = kendo.getCulture(culture);
+            return [
+                format.replace(dateFormatRegExp, generateMatcher(culture, format, false)),
+                format.replace(dateFormatRegExp, generateMatcher(culture, format, true))
+            ];
+        }
+    }
 
 })(window.kendo.jQuery);
 
