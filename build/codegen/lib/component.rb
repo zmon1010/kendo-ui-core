@@ -49,7 +49,7 @@ module CodeGen
                 namespace = 'dataviz/ui' if @full_name.start_with?('kendo.dataviz')
             end
 
-            "/api/javascript/#{namespace}/#{js_name.downcase}"
+            "http://docs.telerik.com/kendo-ui/api/javascript/#{namespace}/#{js_name.downcase}"
         end
 
         def js_name
