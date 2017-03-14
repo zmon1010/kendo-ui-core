@@ -205,7 +205,6 @@ var __meta__ = { // jshint ignore:line
                 return;
             }
 
-            //TODO, do the magic here
             var symbol = this._format[caret(this.element[0])[0]];
 
             var diff = approximateStringMatching(
@@ -214,8 +213,6 @@ var __meta__ = { // jshint ignore:line
                 this.element[0].value,
                 caret(this.element[0])[0]);
 
-
-
             const navigationOnly = (diff.length === 1 && diff[0][1] === " ");
             if (!navigationOnly) {
                 for (let i = 0; i < diff.length; i++) {
@@ -223,8 +220,6 @@ var __meta__ = { // jshint ignore:line
                 }
             }
             this._updateElementValue();
-
-            //this._selectSegment(symbol);
 
             if (diff.length && diff[0][0] !== " ") {
                 this._selectSegment(diff[0][0]);
@@ -355,6 +350,7 @@ var __meta__ = { // jshint ignore:line
         var value = new Date();
 
         var year = true, month = true, date = true, hours = true, minutes = true, seconds = true, milliseconds = true;
+        var typedMonthPart = "";
 
         //TODO: rewrite pad method
         var zeros = ["", "0", "00", "000", "0000"];
@@ -372,48 +368,48 @@ var __meta__ = { // jshint ignore:line
         var dateFormatRegExp = /dddd|ddd|dd|d|MMMM|MMM|MM|M|yyyy|yy|HH|H|hh|h|mm|m|fff|ff|f|tt|ss|s|zzz|zz|z|"[^"]*"|'[^']*'/g;
         var months = null, calendar = null, days = null, returnsFormat = false;
         var matcher = function (match) {
-            var minutes, sign;
+            var mins, sign;
             var result;
 
             switch (match) {
-                case ("d"): result = date ? value.getDate() : "DAY"; break;
-                case ("dd"): result = date ? pad(value.getDate()) : "DAY"; break;
-                case ("ddd"): result = date ? days.namesAbbr[value.getDay()] : "DAY"; break;
-                case ("dddd"): result = date ? days.names[value.getDay()] : "DAY"; break;
+                case ("d"): result = date ? value.getDate() : match; break;
+                case ("dd"): result = date ? pad(value.getDate()) : match; break;
+                case ("ddd"): result = date ? days.namesAbbr[value.getDay()] : "EEE"; break;
+                case ("dddd"): result = date ? days.names[value.getDay()] : "EEEE"; break;
 
-                case ("M"): result = month ? value.getMonth() + 1 : "MONTH"; break;
-                case ("MM"): result = month ? pad(value.getMonth() + 1) : "MONTH"; break;
-                case ("MMM"): result = month ? months.namesAbbr[value.getMonth()] : "MONTH"; break;
-                case ("MMMM"): result = month ? months.names[value.getMonth()] : "MONTH"; break;
+                case ("M"): result = month ? value.getMonth() + 1 : match; break;
+                case ("MM"): result = month ? pad(value.getMonth() + 1) : match; break;
+                case ("MMM"): result = month ? months.namesAbbr[value.getMonth()] : match; break;
+                case ("MMMM"): result = month ? months.names[value.getMonth()] : match; break;
 
-                case ("yy"): result = year ? pad(value.getFullYear() % 100) : "YEAR"; break;
-                case ("yyyy"): result = year ? pad(value.getFullYear(), 4) : "YEAR"; break;
+                case ("yy"): result = year ? pad(value.getFullYear() % 100) : match; break;
+                case ("yyyy"): result = year ? pad(value.getFullYear(), 4) : match; break;
 
-                case ("h"): result = value.getHours() % 12 || 12; break;
-                case ("hh"): result = pad(value.getHours() % 12 || 12); break;
-                case ("H"): result = value.getHours(); break;
-                case ("HH"): result = pad(value.getHours()); break;
-                case ("m"): result = value.getMinutes(); break;
-                case ("mm"): result = pad(value.getMinutes()); break;
-                case ("s"): result = value.getSeconds(); break;
-                case ("ss"): result = pad(value.getSeconds()); break;
-                case ("f"): result = math.floor(value.getMilliseconds() / 100); break;
+                case ("h"): result = hours ? value.getHours() % 12 || 12 : match; break;
+                case ("hh"): result = hours ? pad(value.getHours() % 12 || 12) : match; break;
+                case ("H"): result = hours ? value.getHours() : match; break;
+                case ("HH"): result = hours ? pad(value.getHours()) : match; break;
+                case ("m"): result = minutes ? value.getMinutes() : match; break;
+                case ("mm"): result = minutes ? pad(value.getMinutes()) : match; break;
+                case ("s"): result = seconds ? value.getSeconds() : match; break;
+                case ("ss"): result = seconds ? pad(value.getSeconds()) : match; break;
+                case ("f"): result = milliseconds ? math.floor(value.getMilliseconds() / 100) : milliseconds; break;
                 case ("ff"):
                     result = value.getMilliseconds();
                     if (result > 99) {
                         result = math.floor(result / 10);
                     }
-                    result = pad(result);
+                    result = milliseconds ? pad(result) : match;
                     break;
-                case ("fff"): result = pad(value.getMilliseconds(), 3); break;
-                case ("tt"): result = value.getHours() < 12 ? calendar.AM[0] : calendar.PM[0]; break;
+                case ("fff"): result = milliseconds ? pad(value.getMilliseconds(), 3) : match; break;
+                case ("tt"): result = hours ? (value.getHours() < 12 ? calendar.AM[0] : calendar.PM[0]) : match; break;
                 case ("zzz"):
-                    minutes = value.getTimezoneOffset();
-                    sign = minutes < 0;
-                    result = math.abs(minutes / 60).toString().split(".")[0];
-                    minutes = math.abs(minutes) - (result * 60);
+                    mins = value.getTimezoneOffset();
+                    sign = mins < 0;
+                    result = math.abs(mins / 60).toString().split(".")[0];
+                    mins = math.abs(mins) - (result * 60);
                     result = (sign ? "+" : "-") + pad(result);
-                    result += ":" + pad(minutes);
+                    result += ":" + pad(mins);
                     break;
                 case ("z"):
                 case ("zz"):
@@ -428,6 +424,8 @@ var __meta__ = { // jshint ignore:line
             if (returnsFormat) {
                 result = "" + result;
                 var formatResult = "";
+                if (match == "ddd") match = "EEE";
+                if (match == "dddd") match = "EEEE";
                 for (var i = 0; i < result.length; i++) {
                     formatResult += match[0];
                 }
@@ -436,22 +434,17 @@ var __meta__ = { // jshint ignore:line
                 return result;
             }
         }
-
-        function generateMatcher(culture, format, retFormat = false) {
+        function generateMatcher(retFormat = false) {
             returnsFormat = retFormat;
-            calendar = culture.calendars.standard;
-            format = calendar.patterns[format] || format;
-            days = calendar.days;
-            months = calendar.months;
             return matcher;
         };
-
         function setExisting(symbol, val) {
             switch (symbol) {
                 case "y": year = val; break;
                 case "M": month = val;
-                    if (val === false) { value.setMonth(0); } break;
+                    if (val === false) { value.setMonth(0); typedMonthPart = ""; } break;
                 case "d": date = val; break;
+                case "H":
                 case "h": hours = val; break;
                 case "m": minutes = val; break;
                 case "s": seconds = val; break;
@@ -474,9 +467,11 @@ var __meta__ = { // jshint ignore:line
                 case "M": newValue.setMonth(newValue.getMonth() + offset); break;
                 case "d":
                 case "E": newValue.setDate(newValue.getDate() + offset); break;
+                case "H":
                 case "h": newValue.setHours(newValue.getHours() + offset); break;
                 case "m": newValue.setMinutes(newValue.getMinutes() + offset); break;
                 case "s": newValue.setSeconds(newValue.getSeconds() + offset); break;
+                case "t": newValue.setHours((newValue.getHours() + 12) % 24); break;
                 default: break;
             }
             if (newValue.getFullYear() > 0) {
@@ -486,14 +481,15 @@ var __meta__ = { // jshint ignore:line
         };
 
         this.parsePart = function (symbol, currentChar) {
-            if (!currentChar || currentChar < "0" || currentChar > "9") {
+            if (!currentChar) {
                 setExisting(symbol, false);
-                return null;
+                return;
             }
             var newValue = new Date(value);
             switch (symbol) {
                 case "d":
                     var newDate = (date ? newValue.getDate() * 10 : 0) + parseInt(currentChar, 10);
+                    if (isNaN(newDate)) return;
                     while (newDate > 31) {
                         newDate = parseInt(newDate.toString().slice(1), 10);
                     }
@@ -509,22 +505,42 @@ var __meta__ = { // jshint ignore:line
                     break;
                 case "M":
                     var newMonth = (month ? (newValue.getMonth() + 1) * 10 : 0) + parseInt(currentChar, 10);
-                    while (newMonth > 12) {
-                        newMonth = parseInt(newMonth.toString().slice(1), 10);
-                    }
-                    if (newMonth < 1) {
-                        month = false;
-                    } else {
-                        newValue.setMonth(newMonth - 1);
-                        if (newValue.getMonth() !== value.getMonth()) {
-                            newValue.setDate(1);
-                            newValue.setMonth(newMonth - 1);
+                    if (!isNaN(newMonth)) {
+                        while (newMonth > 12) {
+                            newMonth = parseInt(newMonth.toString().slice(1), 10);
                         }
-                        month = true;
+                        if (newMonth < 1) {
+                            month = false;
+                        } else {
+                            newValue.setMonth(newMonth - 1);
+                            if (newValue.getMonth() !== value.getMonth()) {
+                                newValue.setDate(1);
+                                newValue.setMonth(newMonth - 1);
+                            }
+                            month = true;
+                        }
+                    }
+                    else {
+                        var monthNames = calendar.months.names;
+                        typedMonthPart += currentChar.toLowerCase();
+
+                        while (typedMonthPart.length > 0) {
+                            for (let i = 0; i < monthNames.length; i++) {
+                                if (monthNames[i].toLowerCase().indexOf(typedMonthPart) === 0) {
+                                    newValue.setMonth(i);
+                                    month = true;
+                                    value = newValue;
+                                    return;
+                                }
+                            }
+                            typedMonthPart = typedMonthPart.substring(1, typedMonthPart.length);
+                        }
+
                     }
                     break;
                 case "y":
                     var newYear = (year ? (newValue.getFullYear()) * 10 : 0) + parseInt(currentChar, 10);
+                    if (isNaN(newYear)) return;
                     while (newYear > 9999) {
                         newYear = parseInt(newYear.toString().slice(1), 10);
                     }
@@ -535,6 +551,42 @@ var __meta__ = { // jshint ignore:line
                         year = true;
                     }
                     break;
+                case "h":
+                    var newHours = (hours ? (newValue.getHours() % 12 || 12) * 10 : 0) + parseInt(currentChar, 10);
+                    if (isNaN(newHours)) return;
+                    while (newHours > 12) {
+                        newHours = parseInt(newHours.toString().slice(1), 10);
+                    }
+                    newValue.setHours(Math.floor(newValue.getHours() / 12) * 12 + newHours % 12);
+                    hours = true;
+                    break;
+                case "H":
+                    var newHours = (hours ? (newValue.getHours()) * 10 : 0) + parseInt(currentChar, 10);
+                    if (isNaN(newHours)) return;
+                    while (newHours > 23) {
+                        newHours = parseInt(newHours.toString().slice(1), 10);
+                    }
+                    newValue.setHours(newHours);
+                    hours = true;
+                    break;
+                case "m":
+                    var newMinutes = (minutes ? (newValue.getMinutes()) * 10 : 0) + parseInt(currentChar, 10);
+                    if (isNaN(newMinutes)) return;
+                    while (newMinutes > 59) {
+                        newMinutes = parseInt(newMinutes.toString().slice(1), 10);
+                    }
+                    newValue.setMinutes(newMinutes);
+                    minutes = true;
+                    break;
+                case "s":
+                    var newSeconds = (seconds ? (newValue.getSeconds()) * 10 : 0) + parseInt(currentChar, 10);
+                    if (isNaN(newSeconds)) return;
+                    while (newSeconds > 59) {
+                        newSeconds = parseInt(newSeconds.toString().slice(1), 10);
+                    }
+                    newValue.setSeconds(newSeconds);
+                    seconds = true;
+                    break;
                 default: break;
             }
             value = newValue;
@@ -542,14 +594,16 @@ var __meta__ = { // jshint ignore:line
 
         this.toPair = function (format, culture) {
             if (!format) {
-                //TODO: revise this
                 return ["", ""];
-                //return date !== undefined ? value : "";
             }
             culture = kendo.getCulture(culture);
+            calendar = culture.calendars.standard;
+            format = calendar.patterns[format] || format;
+            days = calendar.days;
+            months = calendar.months;
             return [
-                format.replace(dateFormatRegExp, generateMatcher(culture, format, false)),
-                format.replace(dateFormatRegExp, generateMatcher(culture, format, true))
+                format.replace(dateFormatRegExp, generateMatcher(false)),
+                format.replace(dateFormatRegExp, generateMatcher(true))
             ];
         }
     }
@@ -575,6 +629,12 @@ var __meta__ = { // jshint ignore:line
             }
             return diff;
         }
+
+        //handle entering space or separator, for nagivation to next item
+        if (newText[newText.length - 1] === " " || newText[newText.length - 1] === oldTextSeparator) {
+            return [[oldFormat[caret - 1], " "]];
+        }
+
         //handle inserting text (new text is longer than previous)
         //handle typing over literal as well
         if (newText.indexOf(oldText) === 0 || knownSymbols.indexOf(oldFormat[caret - 1]) === -1) {
@@ -587,11 +647,6 @@ var __meta__ = { // jshint ignore:line
             }
             return [[symbol, newText[caret - 1]]];
         }
-        //handle entering space or separator, for nagivation to next item
-        if (newText[newText.length - 1] === " " || newText[newText.length - 1] === oldTextSeparator) {
-            return [[oldFormat[caret - 1], " "]];
-        }
-
         //handle typing over correctly selected part
         return [[oldFormat[caret - 1], newText[caret - 1]]];
 }

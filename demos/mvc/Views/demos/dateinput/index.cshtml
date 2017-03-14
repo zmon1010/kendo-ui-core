@@ -3,7 +3,10 @@
         <input id="dateinput" value="10/10/2011" style="width: 100%" />
         <br />
         <input id="dateinputmonth" value="10/10/2011" style="width: 100%" />
-
+        <br />
+        <input id="timeinput" value="10/10/2011" style="width: 100%" />
+        <br />
+        <input id="datetimeinput" value="10/10/2011" style="width: 100%" />
     </div>
     <script>
         $(document).ready(function () {
@@ -12,6 +15,12 @@
 
             $("#dateinputmonth").kendoDateInput({
                 format: "MMMM yyyy"
+            });
+            $("#timeinput").kendoDateInput({
+                format: "HH:mm:ss"
+            });
+            $("#datetimeinput").kendoDateInput({
+                format: "F"
             });
         });
     </script>
