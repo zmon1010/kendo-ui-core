@@ -3740,6 +3740,22 @@
         ]
       },
       {
+        "text": "MVVM - ContextMenu",
+        "url": "menu/context-menu-mvvm",
+        "new": "true",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI ContextMenu"
+        },
+        "meta": {
+          "kendo-ui": "MVVM support for Kendo UI ContextMenu"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
         "text": "AngularJS",
         "url": "menu/angular",
         "title": {
