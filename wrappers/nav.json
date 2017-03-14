@@ -522,6 +522,47 @@
         "category": "Editors"
     },
     {
+        "text": "DateInput",
+        "name": "dateinput",
+        "api": "web/dateinput",
+        "new": true,
+        "documentation": {
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/dateinput/overview"
+        },
+        "forum": {
+            "aspnet-mvc": "aspnet-mvc/date-time-input"
+        },
+        "codelibrary": {
+            "aspnet-mvc": "aspnet-mvc/datetime"
+        },
+        "spriteCssClass": "dateInputIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "dateinput/index",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK DateInput sample"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows Telerik DateInput basic features to select dates and times in $FRAMEWORK application."
+                },
+                "new": true
+            },
+            {
+                "text": "Tag Helper",
+                "url": "dateinput/tag-helper",
+                "title": {
+                    "aspnet-mvc": "$FRAMEWORK DateInput Tag Helper sample"
+                },
+                "packages": [
+                    "mvc-core"
+                ],
+                "new": true
+            }
+        ],
+        "category": "Editors"
+    },
+    {
         "text": "DatePicker",
         "name": "datepicker",
         "api": "web/datepicker",

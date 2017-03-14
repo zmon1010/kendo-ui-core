@@ -213,9 +213,9 @@ var __meta__ = { // jshint ignore:line
                 this.element[0].value,
                 caret(this.element[0])[0]);
 
-            const navigationOnly = (diff.length === 1 && diff[0][1] === " ");
+            var navigationOnly = (diff.length === 1 && diff[0][1] === " ");
             if (!navigationOnly) {
-                for (let i = 0; i < diff.length; i++) {
+                for (var i = 0; i < diff.length; i++) {
                     this._dateTime.parsePart(diff[i][0], diff[i][1]);
                 }
             }
@@ -434,7 +434,7 @@ var __meta__ = { // jshint ignore:line
                 return result;
             }
         }
-        function generateMatcher(retFormat = false) {
+        function generateMatcher(retFormat) {
             returnsFormat = retFormat;
             return matcher;
         };
@@ -525,7 +525,7 @@ var __meta__ = { // jshint ignore:line
                         typedMonthPart += currentChar.toLowerCase();
 
                         while (typedMonthPart.length > 0) {
-                            for (let i = 0; i < monthNames.length; i++) {
+                            for (var i = 0; i < monthNames.length; i++) {
                                 if (monthNames[i].toLowerCase().indexOf(typedMonthPart) === 0) {
                                     newValue.setMonth(i);
                                     month = true;
