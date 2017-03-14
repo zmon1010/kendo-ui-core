@@ -119,6 +119,14 @@ public class ContextMenuTag extends WidgetWithItemsTag /* interfaces */implement
         setProperty("closeOnClick", value);
     }
 
+    public boolean getCopyAnchorStyles() {
+        return (Boolean)getProperty("copyAnchorStyles");
+    }
+
+    public void setCopyAnchorStyles(boolean value) {
+        setProperty("copyAnchorStyles", value);
+    }
+
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
     }

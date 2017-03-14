@@ -49,6 +49,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Copies and uses the styles from the anchor.
+        /// </summary>
+        /// <param name="value">The value for CopyAnchorStyles</param>
+        public ContextMenuBuilder CopyAnchorStyles(bool value)
+        {
+            Container.CopyAnchorStyles = value;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies ContextMenu filter selector - the ContextMenu will only be shown on items that satisfy the provided selector.
         /// </summary>
         /// <param name="value">The value for Filter</param>

@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public bool? CloseOnClick { get; set; }
 
+        public bool? CopyAnchorStyles { get; set; }
+
         public string Filter { get; set; }
 
         public double? HoverDelay { get; set; }
@@ -35,6 +37,11 @@ namespace Kendo.Mvc.UI
             if (AppendTo?.HasValue() == true)
             {
                 settings["appendTo"] = AppendTo;
+            }
+
+            if (CopyAnchorStyles.HasValue)
+            {
+                settings["copyAnchorStyles"] = CopyAnchorStyles;
             }
 
             if (Filter?.HasValue() == true)

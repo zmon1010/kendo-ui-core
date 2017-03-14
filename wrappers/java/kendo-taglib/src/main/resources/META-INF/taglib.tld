@@ -12132,6 +12132,12 @@ by setting the close animation. Each animation also has a direction which can be
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Copies and uses the styles from the anchor.</description>
+            <name>copyAnchorStyles</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The data source of the widget which is used to render its items. Can be a JSON object/Array that contains an item or an Array of items to be rendered.
 Refer to the example below for a list of the supported properties.</description>
             <name>dataSource</name>

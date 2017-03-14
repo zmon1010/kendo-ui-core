@@ -62,6 +62,15 @@ by setting the close animation. Each animation also has a direction which can be
     }
 
     /**
+    * Copies and uses the styles from the anchor.
+    * @param boolean $value
+    * @return \Kendo\UI\ContextMenu
+    */
+    public function copyAnchorStyles($value) {
+        return $this->setProperty('copyAnchorStyles', $value);
+    }
+
+    /**
     * The data source of the widget which is used to render its items. Can be a JSON object/Array that contains an item or an Array of items to be rendered.
 Refer to the example below for a list of the supported properties.
     * @param |array $value
