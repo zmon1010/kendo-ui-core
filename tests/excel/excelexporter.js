@@ -453,8 +453,8 @@ test("uses groupHeaderTemplate for the group cell value when the column is hidde
        group: { field: "foo", aggregates: [ { field: "foo", aggregate: "count" }]  }
     });
 
-    testWorkbook({ columns: [ { title: "Foo", field: "foo", groupHeaderTemplate: "Foo=#=value#,count=#=count#", hidden: true }, { field: "bar" } ], dataSource: dataSource }, function(book) {
-        equal(book.sheets[0].rows[1].cells[0].value, "Foo=boo,count=1");
+    testWorkbook({ columns: [ { title: "Foo", field: "foo", groupHeaderTemplate: "Foo=#=value#,count=#=count#,items=#=items.length#", hidden: true }, { field: "bar" } ], dataSource: dataSource }, function(book) {
+        equal(book.sheets[0].rows[1].cells[0].value, "Foo=boo,count=1,items=1");
     });
 });
 
@@ -543,8 +543,8 @@ test("passes all aggregates to groupFooterTemplate", function() {
        ],
     });
 
-    testWorkbook({ columns: [ { field: "foo", groupFooterTemplate: "Foo: #= data.foo.count # #=data.bar.count#" }, { field: "bar" } ], dataSource: dataSource }, function(book) {
-        equal(book.sheets[0].rows[3].cells[1].value, "Foo: 1 1");
+    testWorkbook({ columns: [ { field: "foo", groupFooterTemplate: "Foo: #= data.foo.count # #=data.bar.count# #=group.field# #=group.items.length#" }, { field: "bar" } ], dataSource: dataSource }, function(book) {
+        equal(book.sheets[0].rows[3].cells[1].value, "Foo: 1 1 bar 1");
     });
 });
 

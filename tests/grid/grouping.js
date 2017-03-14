@@ -572,6 +572,69 @@
         equal(grid.tbody.find("tr>td:first").text(), "foo : 1 count: 1 bar count: 1");
     });
 
+    test("groupHeaderTemplate receive current group items", function() {
+        window.itemsCount = function(items) {
+            console.log(items);
+            return items.length;
+        };
+        var grid = new Grid(table(), {
+            dataSource: {
+                data: [{foo: "1", bar: "bar"}, {foo: "foo1", bar: "baz"}],
+                group: { field: "foo", aggregates: [ { field: "foo", aggregate: "count" } ]}
+            },
+            columns: [ { field: "foo", groupHeaderTemplate: "items: #=items.length#"  } ]
+        });
+
+        equal(grid.tbody.find("tr>td:first").text(), "items: 1");
+    });
+
+    test("groupHeaderTemplate receive current group items on multiple levels of grouping", function() {
+        window.itemsCount = function(items) {
+            return items.length;
+        };
+        var template = "items: #=items.length# #=items.filter(function(m){return m.uid;}).length ? 'has_model' : 'has_group'#";
+        var grid = new Grid(table(), {
+            dataSource: {
+                data: [{foo: "1", bar: "bar"}, {foo: "foo1", bar: "baz"}, {foo: "1", bar: "bar"}],
+                group: [
+                    { field: "foo", aggregates: [ { field: "foo", aggregate: "count" } ]},
+                    { field: "bar", aggregates: [ { field: "foo", aggregate: "count" } ]}
+                ]
+            },
+            columns: [ { field: "foo", groupHeaderTemplate: template },
+                        { field: "bar", groupHeaderTemplate: template } ]
+        });
+
+        var secondRow = $(grid.tbody.find("tr.k-grouping-row")[1]);
+
+        equal(grid.tbody.find("tr>td:first").text(), "items: 1 has_group");
+        equal(secondRow.find("td:last").text(), "items: 2 has_model");
+    });
+
+    test("groupFooterTemplate receive current group items on multiple levels of grouping", function() {
+        window.itemsCount = function(items) {
+            return items.length;
+        };
+        var template = "#var group=data.foo?data.foo.group:data.bar.group;##=group.items.filter(function(m){return m.uid;}).length ? 'has_model' : 'has_group'#";
+        var grid = new Grid(table(), {
+            dataSource: {
+                data: [{foo: "1", bar: "bar"}, {foo: "foo1", bar: "baz"}, {foo: "1", bar: "bar"}],
+                group: [
+                    { field: "foo", aggregates: [ { field: "foo", aggregate: "count" } ]},
+                    { field: "bar", aggregates: [ { field: "foo", aggregate: "count" } ]}
+                ]
+            },
+            columns: [ { field: "foo", groupFooterTemplate: template },
+                        { field: "bar", groupFooterTemplate: template } ]
+        });
+
+        var masterGroup = $(grid.tbody.find("tr.k-group-footer")[1]);
+        var childGroup = $(grid.tbody.find("tr.k-group-footer")[0]);
+
+        equal(masterGroup.find("td:nth-child(3)").text(), "has_group");
+        equal(childGroup.find("td:nth-child(3)").text(), "has_model");
+    });
+
     test("resetting DataSource instantiate new Groupable", 1, function() {
         var grid = new Grid(table(), { groupable: true, columns: ["text", "value"] });
 

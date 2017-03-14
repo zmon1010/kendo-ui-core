@@ -160,13 +160,16 @@ kendo.ExcelExporter = kendo.Class.extend({
             })[0];
 
             var title = column && column.title ? column.title : dataItem.field;
+
             var template = column ? column.groupHeaderTemplate : null;
             var value = title + ": " + dataItem.value;
+
             var group = $.extend({
                     title: title,
                     field: dataItem.field,
                     value: column && column.values ? column.values[dataItem.value] : dataItem.value,
-                    aggregates: dataItem.aggregates
+                    aggregates: dataItem.aggregates,
+                    items: dataItem.items
                 }, dataItem.aggregates[dataItem.field]);
 
             if (template) {
@@ -222,11 +225,13 @@ kendo.ExcelExporter = kendo.Class.extend({
 
         var cells = $.map(this.columns, $.proxy(function(column) {
             if (column.groupFooterTemplate) {
+                var groupData = { group: { items: dataItem.items, field: dataItem.field, value: dataItem.value }};
                 footer = true;
+
                 return {
                     background: "#dfdfdf",
                     color: "#333",
-                    value: column.groupFooterTemplate($.extend({}, this.dataSource.aggregates(), dataItem.aggregates, dataItem.aggregates[column.field]))
+                    value: column.groupFooterTemplate($.extend({}, this.dataSource.aggregates(), dataItem.aggregates, dataItem.aggregates[column.field], groupData))
                 };
             } else {
                 return {
