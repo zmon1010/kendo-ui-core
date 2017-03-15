@@ -6,6 +6,8 @@
         <script src="../src/jquery.js"></script>
         <script src="../src/kendo.core.js"></script>
         <script src="../src/kendo.data.js"></script>
+        <script src="../src/kendo.userevents.js"></script>
+        <script src="../src/kendo.selectable.js"></script>
         <script src="../src/kendo.listbox.js" type="text/javascript" charset="utf-8"></script>
 
         <link rel="stylesheet/less" href="../styles/web/kendo.common.less" type="text/css" media="screen" charset="utf-8">
@@ -38,7 +40,8 @@
 
                  $("#templateListBox").kendoListBox({ 
                         dataSource: [ {name: "Tom", id:1 }, {name: "Jerry", id:2 }, {name: "Donald", id:3 }],
-                        template:$("#template").html()
+                        template:$("#template").html(),
+                        selectable: "multiple"
                 });
 
             });

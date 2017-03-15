@@ -15,4 +15,20 @@
         var listBox = new ListBox(div);
         ok(div.data("kendoListBox") instanceof ListBox);
     });
+
+    test("Has selectedable on", function() {
+        var listBox = new ListBox(div, {
+            selectable: true
+        });
+
+        ok(listBox.selectable instanceof kendo.ui.Selectable);
+    });
+
+    test("Selectable is always on", function() {
+        var listBox = new ListBox(div, {
+            selectable: false
+        });
+
+        ok(listBox.selectable instanceof kendo.ui.Selectable);
+    });
 })();

@@ -1,13 +1,13 @@
 /* jshint eqnull: true */
 (function(f, define){
-    define([ "./kendo.draganddrop", "./kendo.data" ], f);
+    define([ "./kendo.draganddrop", "./kendo.data", "./kendo.selectable" ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
     id: "listbox",
     name: "ListBox",
     category: "web",
-    depends: ["draganddrop", "data"]
+    depends: ["draganddrop", "data", "selectable"]
 };
 
 (function($, undefined) {
@@ -16,8 +16,10 @@ var __meta__ = { // jshint ignore:line
         data = kendo.data,
         Widget = kendo.ui.Widget,
         DataSource = data.DataSource,
+        Selectable = kendo.ui.Selectable,
         DataBoundWidget = kendo.ui.DataBoundWidget,
-        CHANGE = "change";
+        CHANGE = "change",
+        ITEMSELECTOR = ".k-listbox>*";
 
     var ListBox = DataBoundWidget.extend({
         init: function(element, options) {
@@ -29,6 +31,8 @@ var __meta__ = { // jshint ignore:line
             that._dataSource();
 
             that._templates();
+
+            that._selectable();
 
             if(that.options.autoBind) {
                 that.dataSource.fetch();
@@ -44,6 +48,14 @@ var __meta__ = { // jshint ignore:line
             autoBind: true,
             template: "",
             dataTextField: null
+        },
+
+        select: function() {
+
+        },
+
+        clearSelection: function() {
+
         },
 
         _dataSource: function() {
@@ -92,6 +104,17 @@ var __meta__ = { // jshint ignore:line
             }
             html+= "</ul>";
             that.element.html(html);
+        },
+
+        _selectable: function() {
+            var selectable = this.options.selectable;
+            var selectableOptions = Selectable.parseOptions(selectable);
+
+            this.selectable = new Selectable(this.element, {
+                aria: true,
+                multiple: selectableOptions.multiple,
+                filter: ITEMSELECTOR
+            });
         },
 
         destroy: function() {
