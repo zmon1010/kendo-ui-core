@@ -4,7 +4,7 @@
 
     module("kendo.ui.ListBox initialization", {
         setup: function() {
-            div = $("<div />").appendTo(QUnit.fixture); 
+            div = $("<div />").appendTo(QUnit.fixture);
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -15,5 +15,4 @@
         var listBox = new ListBox(div);
         ok(div.data("kendoListBox") instanceof ListBox);
     });
-	
 })();

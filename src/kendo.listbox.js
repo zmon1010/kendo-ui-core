@@ -16,9 +16,10 @@ var __meta__ = { // jshint ignore:line
         data = kendo.data,
         Widget = kendo.ui.Widget,
         DataSource = data.DataSource,
+        DataBoundWidget = kendo.ui.DataBoundWidget,
         CHANGE = "change";
-       
-    var ListBox = kendo.ui.DataBoundWidget.extend({
+
+    var ListBox = DataBoundWidget.extend({
         init: function(element, options) {
             var that = this;
             Widget.fn.init.call(that, element, options);
@@ -84,7 +85,7 @@ var __meta__ = { // jshint ignore:line
                 view = that.dataSource.view(),
                 template = that.options.template,
                 html = "";
-            
+
             html+= "<ul class='k-listBox'>";
             for (var idx = 0; idx < view.length; idx++) {
                 html += template(view[idx]);
