@@ -116,6 +116,19 @@ The duration of the open animation in milliseconds.
 
  Specifies the culture info used by the widget.
 
+### dateInput `Boolean`*(default: false)*
+
+ Specifies if the DatePicker will use DateInput for editing value
+
+ #### Example
+
+    <input id="datepicker" />
+    <script>
+    $("#datepicker").kendoDatePicker({
+        dateInput: true
+    });
+    </script>
+
 #### Example - specify German culture internationalization
 
     <!--

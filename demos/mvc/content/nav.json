@@ -1036,6 +1036,7 @@
       {
         "text": "Basic usage",
         "url": "datepicker/index",
+        "updated": "true",
         "title": {
           "kendo-ui": "Kendo UI jQuery DatePicker Demo",
           "aspnet-mvc": "ASP.NET MVC DatePicker sample"

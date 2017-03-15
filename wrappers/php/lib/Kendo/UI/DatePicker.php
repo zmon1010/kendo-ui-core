@@ -65,6 +65,15 @@ class DatePicker extends \Kendo\UI\Widget {
     }
 
     /**
+    * Specifies if the DatePicker will use DateInput for editing value#### Example
+    * @param boolean $value
+    * @return \Kendo\UI\DatePicker
+    */
+    public function dateInput($value) {
+        return $this->setProperty('dateInput', $value);
+    }
+
+    /**
     * Specifies a list of dates, which will be passed to the month template.
     * @param array $value
     * @return \Kendo\UI\DatePicker

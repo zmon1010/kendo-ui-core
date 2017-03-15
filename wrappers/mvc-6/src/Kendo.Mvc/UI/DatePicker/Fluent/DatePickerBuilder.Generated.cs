@@ -40,6 +40,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies if the DatePicker will use DateInput for editing value#### Example
+        /// </summary>
+        /// <param name="value">The value for DateInput</param>
+        public DatePickerBuilder DateInput(bool value)
+        {
+            Container.DateInput = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies if the DatePicker will use DateInput for editing value#### Example
+        /// </summary>
+        public DatePickerBuilder DateInput()
+        {
+            Container.DateInput = true;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies a list of dates, which will be passed to the month template.
         /// </summary>
         /// <param name="value">The value for Dates</param>

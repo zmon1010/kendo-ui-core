@@ -19,6 +19,7 @@ var __meta__ = { // jshint ignore:line
     var Widget = ui.Widget;
     var ns = ".kendoDateInput";
     var proxy = $.proxy;
+    var objectToString = {}.toString;
 
     var INPUT_EVENT_NAME = (kendo.support.propertyChangeEvent ? "propertychange" : "input") + ns;
     var STATEDISABLED = "k-state-disabled";
@@ -43,8 +44,10 @@ var __meta__ = { // jshint ignore:line
             that.wrapper = element;
             that._form();
 
+            var insidePicker = that.element.attr("Class");
+
             that.element
-                .addClass("k-textbox")
+                .addClass(insidePicker ? " " : "k-textbox")
                 .attr("autocomplete", "off")
                 .on("focus" + ns, function () {
                     var value = DOMElement.value;
@@ -71,7 +74,9 @@ var __meta__ = { // jshint ignore:line
             name: "DateInput",
             culture: "",
             value: "",
-            format: ""
+            format: "",
+            min: new Date(1900, 0, 1),
+            max: new Date(2099, 11, 31),
         },
 
         events: [
@@ -108,6 +113,11 @@ var __meta__ = { // jshint ignore:line
             if (value === null) {
                 value = "";
             }
+
+            if (objectToString.call(value) !== "[object Date]") {
+                value = kendo.parseDate(value, this.options.format, this.options.culture);
+            }
+
             this._dateTime = new customDateTime(value, this.options.format, this.options.culture);
 
             this._updateElementValue();

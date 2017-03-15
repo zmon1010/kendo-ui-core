@@ -341,6 +341,10 @@ var __meta__ = { // jshint ignore:line
                     "aria-owns": that.dateView._dateViewID
                 });
 
+            if (options.dateInput) {
+                that._dateInput = new ui.DateInput(element, options);
+            }
+
             that._reset();
             that._template();
 
@@ -372,9 +376,10 @@ var __meta__ = { // jshint ignore:line
             start: MONTH,
             depth: MONTH,
             animation: {},
-            month : {},
+            month: {},
             dates: [],
-            ARIATemplate: 'Current focused date is #=kendo.toString(data.current, "D")#'
+            ARIATemplate: 'Current focused date is #=kendo.toString(data.current, "D")#',
+            dateInput: false
         },
 
         setOptions: function(options) {
@@ -391,6 +396,9 @@ var __meta__ = { // jshint ignore:line
             normalize(options);
 
             that.dateView.setOptions(options);
+            if (that._dateInput) {
+                that._dateInput.setOptions(options);
+            }
 
             if (value) {
                 that.element.val(kendo.toString(value, options.format, options.culture));
@@ -636,7 +644,11 @@ var __meta__ = { // jshint ignore:line
 
             that._value = date;
             that.dateView.value(date);
-            that.element.val(kendo.toString(date || value, options.format, options.culture));
+            if (that._dateInput) {
+                that._dateInput.value(date || value);
+            } else {
+                that.element.val(kendo.toString(date || value, options.format, options.culture));
+            }
             that._updateARIA(date);
 
             return date;

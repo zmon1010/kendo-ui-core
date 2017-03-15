@@ -13177,6 +13177,12 @@ sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation 
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Specifies if the DatePicker will use DateInput for editing value#### Example</description>
+            <name>dateInput</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies a list of dates, which will be passed to the month template.</description>
             <name>dates</name>
             <rtexprvalue>true</rtexprvalue>

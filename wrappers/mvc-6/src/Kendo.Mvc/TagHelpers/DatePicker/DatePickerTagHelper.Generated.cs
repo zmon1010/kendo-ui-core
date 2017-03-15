@@ -28,6 +28,11 @@ namespace Kendo.Mvc.TagHelpers
         public string Culture { get; set; }
 
         /// <summary>
+        /// Specifies if the DatePicker will use DateInput for editing value#### Example
+        /// </summary>
+        public bool? DateInput { get; set; }
+
+        /// <summary>
         /// The template which renders the footer of the calendar. If false, the footer will not be rendered.
         /// </summary>
         public string Footer { get; set; }
@@ -93,6 +98,11 @@ namespace Kendo.Mvc.TagHelpers
             if (Culture?.HasValue() == true)
             {
                 settings["culture"] = Culture;
+            }
+
+            if (DateInput.HasValue)
+            {
+                settings["dateInput"] = DateInput;
             }
 
             if (Format?.HasValue() == true)
