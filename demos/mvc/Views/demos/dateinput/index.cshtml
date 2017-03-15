@@ -4,9 +4,9 @@
         <br />
         <input id="dateinputmonth" value="10/10/2011" style="width: 100%" />
         <br />
-        <input id="timeinput" value="10/10/2011" style="width: 100%" />
+        <input id="timeinput" style="width: 100%" />
         <br />
-        <input id="datetimeinput" value="10/10/2011" style="width: 100%" />
+        <input id="datetimeinput" style="width: 100%" />
     </div>
     <script>
         $(document).ready(function () {
@@ -20,7 +20,8 @@
                 format: "HH:mm:ss"
             });
             $("#datetimeinput").kendoDateInput({
-                format: "F"
+                format: "F",
+                value: new Date()
             });
         });
     </script>

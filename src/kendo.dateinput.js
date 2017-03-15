@@ -102,26 +102,18 @@ var __meta__ = { // jshint ignore:line
             var options = this.options;
 
             if (value === undefined) {
-                return this.element.val();
+                return this._dateTime.getDateObject();
             }
 
             if (value === null) {
                 value = "";
             }
+            this._dateTime = new customDateTime(value, this.options.format, this.options.culture);
 
             this._updateElementValue();
-            // var dt = new customDateTime();
-            // dt.setValue(new Date());
-
-            // var stringAndFromat = dt.toPair(options.format, options.culture);
-            // element.val(stringAndFromat[0]);
-            // this._format = stringAndFromat[1];
         },
 
         _updateElementValue: function () {
-            if (!this._dateTime) {
-                this._dateTime = new customDateTime();//(this.intl, this.format, this.value);
-            }
             var stringAndFromat = this._dateTime.toPair(this.options.format, this.options.culture);
             this.element.val(stringAndFromat[0]);
             this._oldText = stringAndFromat[0];
@@ -242,7 +234,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _scroll: function (e) {
-            if (kendo._activeElement() !== this.element[0]) {
+            if (kendo._activeElement() !== this.element[0] || this.element.is("[readonly]")) {
                 return;
             }
             e = window.event || e;
@@ -346,9 +338,9 @@ var __meta__ = { // jshint ignore:line
 
     ui.plugin(DateInput);
 
-    var customDateTime = function () {
-        var value = new Date();
+    var customDateTime = function (initDate, initFormat, initCulture) {
 
+        var value = null;
         var year = true, month = true, date = true, hours = true, minutes = true, seconds = true, milliseconds = true;
         var typedMonthPart = "";
 
@@ -605,9 +597,24 @@ var __meta__ = { // jshint ignore:line
                 format.replace(dateFormatRegExp, generateMatcher(false)),
                 format.replace(dateFormatRegExp, generateMatcher(true))
             ];
+        };
+
+        this.getDateObject = function () {
+            return (year && month && date && hours && minutes && seconds && milliseconds) ?
+                new Date(value) : null;
+        };
+        
+        if (!initDate) {
+            value = new Date();
+            var sampleFormat = this.toPair(initFormat, initCulture)[1];
+            for (var i = 0; i < sampleFormat.length; i++) {
+                setExisting(sampleFormat[i], false);
+            }
+        } else {
+            value = new Date(initDate);
         }
     }
-    
+
     function approximateStringMatching(oldText, oldFormat, newText, caret){
         var oldTextSeparator = oldText[caret + oldText.length - newText.length];
         oldText = oldText.substring(0, caret + oldText.length - newText.length);

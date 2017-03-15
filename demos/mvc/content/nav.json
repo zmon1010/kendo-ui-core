@@ -950,6 +950,61 @@
           "kendo-ui": " ",
           "aspnet-mvc": " "
         }
+      },
+      {
+        "text": "API",
+        "url": "dateinput/api",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Kendo UI DateInput API Demo",
+          "aspnet-mvc": "API ASP.NET MVC Dateinput example"
+        },
+        "meta": {
+          "kendo-ui": "DateInput API example shows how the API functions can be used to apply enable/disable functionality to jQuery-powered date input control or open/close the calendar.",
+          "aspnet-mvc": "This example demonstrates how the API of Telerik ASP.NET MVC Dateinput can be configured to modify the features of the extension."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "url": "dateinput/keyboard-navigation",
+        "new": "true",
+        "title": {
+          "kendo-ui": "Keyboard navigation in Kendo UI DateInput",
+          "aspnet-mvc": "Keyboard navigation in ASP.NET MVC DateInput"
+        },
+        "meta": {
+          "kendo-ui": "This example shows how the keyboard navigation functionality is supported in Kendo UI DateInput widget.",
+          "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in ASP.NET MVC DateInput control."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "dateinput/mvvm",
+        "new": "true",
+        "title": {
+          "kendo-ui": "MVVM support in Kendo UI DateInput"
+        },
+        "meta": {
+          "kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI DateInput"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "RTL support",
+        "url": "dateinput/right-to-left-support",
+        "new": "true",
+        "title": {
+          "kendo-ui": "RTL support in Kendo UI DateInput widget | Kendo UI Demo",
+          "aspnet-mvc": "RTL support in ASP.NET MVC DateInput control | ASP.NET MVC Demo"
+        },
+        "meta": {
+          "kendo-ui": "See how Kendo UI DateInput component supports RTL functionality.",
+          "aspnet-mvc": "See how ASP.NET MVC DateInput component supports RTL functionality."
+        }
       }
     ],
     "category": "Editors"
