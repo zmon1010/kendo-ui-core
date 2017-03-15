@@ -596,7 +596,9 @@ var __meta__ = { // jshint ignore:line
             } else {
                 that.readonly(element.is("[readonly]"));
             }
-
+            if (options.dateInput) {
+                that._dateInput = new ui.DateInput(element, options);
+            }
             that._old = that._update(options.value || that.element.val());
             that._oldText = element.val();
 
@@ -852,7 +854,11 @@ var __meta__ = { // jshint ignore:line
             }
 
             that._value = date;
-            that.element.val(kendo.toString(date || value, options.format, options.culture));
+            if (that._dateInput) {
+                that._dateInput.value(date || value);
+            } else {
+                that.element.val(kendo.toString(date || value, options.format, options.culture));
+            }
             timeView.value(date);
 
             return date;

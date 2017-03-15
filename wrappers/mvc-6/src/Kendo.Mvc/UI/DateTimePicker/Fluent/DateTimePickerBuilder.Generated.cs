@@ -40,6 +40,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies if the DateTimePicker will use DateInput for editing value
+        /// </summary>
+        /// <param name="value">The value for DateInput</param>
+        public DateTimePickerBuilder DateInput(bool value)
+        {
+            Container.DateInput = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies if the DateTimePicker will use DateInput for editing value
+        /// </summary>
+        public DateTimePickerBuilder DateInput()
+        {
+            Container.DateInput = true;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies a list of dates, which will be passed to the month template of the DateView.
 		/// All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
         /// </summary>

@@ -13177,7 +13177,7 @@ sorting, filtering, paging, and grouping.Refer to the jQuery.ajax documentation 
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Specifies if the DatePicker will use DateInput for editing value#### Example</description>
+            <description>Specifies if the DatePicker will use DateInput for editing value</description>
             <name>dateInput</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -13401,6 +13401,12 @@ The following settings are available for the start value:</description>
             <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the DateTimePicker will use DateInput for editing value</description>
+            <name>dateInput</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Specifies a list of dates, which will be passed to the month template of the DateView.
@@ -45492,6 +45498,12 @@ is closed. By default not specified - uses the opening animation with reverse.</
             <name>culture</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the TimePicker will use DateInput for editing value</description>
+            <name>dateInput</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Specifies a list of dates, which are shown in the time drop-down list. If not set, the TimePicker will auto-generate the available times.</description>

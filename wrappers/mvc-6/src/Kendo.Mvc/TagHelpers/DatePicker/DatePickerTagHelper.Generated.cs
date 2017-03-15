@@ -28,7 +28,7 @@ namespace Kendo.Mvc.TagHelpers
         public string Culture { get; set; }
 
         /// <summary>
-        /// Specifies if the DatePicker will use DateInput for editing value#### Example
+        /// Specifies if the DatePicker will use DateInput for editing value
         /// </summary>
         public bool? DateInput { get; set; }
 

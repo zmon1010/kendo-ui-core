@@ -8,9 +8,12 @@
                 <input id="descr" class="k-textbox" type="text" value="Wake up" style="width: 100%" />
             </div>
             <script>
-                $(document).ready(function() {
+                $(document).ready(function () {
                     // create TimePicker from input HTML element
-                    $("#timepicker").kendoTimePicker();
+                    $("#timepicker").kendoTimePicker({
+                        //optional: specify masked DateInput to be used as input element
+                        dateInput: true
+                    });
                 });
             </script>
 

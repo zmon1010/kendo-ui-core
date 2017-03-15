@@ -40,7 +40,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies if the DatePicker will use DateInput for editing value#### Example
+        /// Specifies if the DatePicker will use DateInput for editing value
         /// </summary>
         /// <param name="value">The value for DateInput</param>
         public DatePickerBuilder DateInput(bool value)
@@ -50,7 +50,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies if the DatePicker will use DateInput for editing value#### Example
+        /// Specifies if the DatePicker will use DateInput for editing value
         /// </summary>
         public DatePickerBuilder DateInput()
         {

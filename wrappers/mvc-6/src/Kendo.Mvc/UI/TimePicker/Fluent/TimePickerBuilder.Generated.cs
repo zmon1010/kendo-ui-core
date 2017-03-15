@@ -20,6 +20,25 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies if the TimePicker will use DateInput for editing value
+        /// </summary>
+        /// <param name="value">The value for DateInput</param>
+        public TimePickerBuilder DateInput(bool value)
+        {
+            Container.DateInput = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies if the TimePicker will use DateInput for editing value
+        /// </summary>
+        public TimePickerBuilder DateInput()
+        {
+            Container.DateInput = true;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies a list of dates, which are shown in the time drop-down list. If not set, the TimePicker will auto-generate the available times.
         /// </summary>
         /// <param name="value">The value for Dates</param>

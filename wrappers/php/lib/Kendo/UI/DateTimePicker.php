@@ -64,6 +64,15 @@ class DateTimePicker extends \Kendo\UI\Widget {
     }
 
     /**
+    * Specifies if the DateTimePicker will use DateInput for editing value
+    * @param boolean $value
+    * @return \Kendo\UI\DateTimePicker
+    */
+    public function dateInput($value) {
+        return $this->setProperty('dateInput', $value);
+    }
+
+    /**
     * Specifies a list of dates, which will be passed to the month template of the DateView.
 All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
     * @param array $value

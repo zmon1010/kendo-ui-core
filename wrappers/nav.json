@@ -549,6 +549,55 @@
                 "new": true
             },
             {
+                "text": "Events",
+                "url": "dateinput/events",
+                "new": true,
+                "title": {
+                    "aspnet-mvc": "Attach an event to $FRAMEWORK DateInput | $FRAMEWORK Demos"
+                },
+                "meta": {
+                    "aspnet-mvc": "This sample shows how to access the events, attached to a date, as well as use $FRAMEWORK Date Input to pick a date or change it manually from a dropdown calendar."
+                }
+            },
+            {
+                "text": "API",
+                "url": "dateinput/api",
+                "new": true,
+                "title": {
+                    "aspnet-mvc": "API $FRAMEWORK Dateinput example"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example demonstrates how the API of Telerik $FRAMEWORK Dateinput can be configured to modify the features of the extension."
+                }
+            },
+            {
+                "new": true,
+                "text": "Globalization",
+                "url": "dateinput/globalization"
+            },
+            {
+                "new": true,
+                "text": "RTL support",
+                "url": "dateinput/right-to-left-support",
+                "title": {
+                    "aspnet-mvc": "RTL support in $FRAMEWORK DateInput control | $FRAMEWORK Demo"
+                },
+                "meta": {
+                    "aspnet-mvc": "See how $FRAMEWORK DateInput component supports RTL functionality."
+                }
+            },
+            {
+                "new": true,
+                "text": "Keyboard navigation",
+                "url": "dateinput/keyboard-navigation",
+                "title": {
+                    "aspnet-mvc": "Keyboard navigation in $FRAMEWORK DateInput"
+                },
+                "meta": {
+                    "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in $FRAMEWORK DateInput control."
+                }
+            },
+            {
                 "text": "Tag Helper",
                 "url": "dateinput/tag-helper",
                 "title": {
@@ -580,6 +629,7 @@
             {
                 "text": "Basic usage",
                 "url": "datepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK DatePicker sample"
                 },
@@ -703,6 +753,7 @@
             {
                 "text": "Basic usage",
                 "url": "datetimepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK Date and Time picker example"
                 },
@@ -3935,6 +3986,7 @@
             {
                 "text": "Basic usage",
                 "url": "timepicker/index",
+                "updated": true,
                 "title": {
                     "aspnet-mvc": "$FRAMEWORK TimePicker example | UI for $FRAMEWORK demos"
                 },

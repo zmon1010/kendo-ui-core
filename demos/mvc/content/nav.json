@@ -1036,7 +1036,7 @@
       {
         "text": "Basic usage",
         "url": "datepicker/index",
-        "updated": "true",
+        "updated": true,
         "title": {
           "kendo-ui": "Kendo UI jQuery DatePicker Demo",
           "aspnet-mvc": "ASP.NET MVC DatePicker sample"
@@ -1220,6 +1220,7 @@
       {
         "text": "Basic usage",
         "url": "datetimepicker/index",
+        "updated": true,
         "title": {
           "kendo-ui": "Kendo UI Date and Time picker example",
           "aspnet-mvc": "ASP.NET MVC Date and Time picker example"
@@ -6215,6 +6216,7 @@
       {
         "text": "Basic usage",
         "url": "timepicker/index",
+        "updated": true,
         "title": {
           "kendo-ui": "Kendo UI jQuery Time Picker Example",
           "aspnet-mvc": "ASP.NET MVC TimePicker example | UI for ASP.NET MVC demos"

@@ -65,7 +65,7 @@ class DatePicker extends \Kendo\UI\Widget {
     }
 
     /**
-    * Specifies if the DatePicker will use DateInput for editing value#### Example
+    * Specifies if the DatePicker will use DateInput for editing value
     * @param boolean $value
     * @return \Kendo\UI\DatePicker
     */
