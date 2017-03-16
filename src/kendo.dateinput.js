@@ -240,7 +240,7 @@ var __meta__ = { // jshint ignore:line
         },
 
         _paste: function (e) {
-            that._pasting = true;
+            this._pasting = true;
         },
 
         _scroll: function (e) {
@@ -421,7 +421,7 @@ var __meta__ = { // jshint ignore:line
                     result = (sign ? "+" : "-") + (match === "zz" ? pad(result) : result);
                     break;
             }
-            result !== undefined ? result : match.slice(1, match.length - 1);
+            result = (result !== undefined ? result : match.slice(1, match.length - 1));
 
             if (returnsFormat) {
                 result = "" + result;
