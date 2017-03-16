@@ -19,7 +19,7 @@ var __meta__ = { // jshint ignore:line
         Selectable = kendo.ui.Selectable,
         DataBoundWidget = kendo.ui.DataBoundWidget,
         CHANGE = "change",
-        ITEMSELECTOR = ".k-listbox>*";
+        ITEMSELECTOR = ".k-listBox>";
 
     var ListBox = DataBoundWidget.extend({
         init: function(element, options) {
@@ -47,15 +47,35 @@ var __meta__ = { // jshint ignore:line
             name: "ListBox",
             autoBind: true,
             template: "",
-            dataTextField: null
+            dataTextField: null,
+            selectable: "single"
         },
 
-        select: function() {
+        items: function() {
+            var list = this._getList();
+            return list.children();
+        },
 
+        select: function(items) {
+            var selectable = this.selectable;
+
+            if (typeof(items) === "undefined") {
+                return selectable.value();
+            }
+
+            var list = this._getList();
+            items = list.find(items);
+
+            if (!selectable.options.multiple) {
+                selectable.clear();
+                items = items.first();
+            }
+
+            return selectable.value(items);
         },
 
         clearSelection: function() {
-
+            this.selectable.clear();
         },
 
         _dataSource: function() {
@@ -107,14 +127,22 @@ var __meta__ = { // jshint ignore:line
         },
 
         _selectable: function() {
-            var selectable = this.options.selectable;
+            var that = this;
+            var selectable = that.options.selectable;
             var selectableOptions = Selectable.parseOptions(selectable);
 
-            this.selectable = new Selectable(this.element, {
+            that.selectable = new Selectable(that.element, {
                 aria: true,
                 multiple: selectableOptions.multiple,
-                filter: ITEMSELECTOR
+                filter: ITEMSELECTOR,
+                change: function() {
+                    that.trigger(CHANGE);
+                }
             });
+        },
+
+        _getList: function() {
+            return this.element.find(".k-listBox");
         },
 
         destroy: function() {
