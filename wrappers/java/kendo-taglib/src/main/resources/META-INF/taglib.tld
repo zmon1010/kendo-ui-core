@@ -23069,7 +23069,7 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user clicks the "destroy" command button.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user clicks the "destroy" command button and delete operation is confirmed in the confirmation window, if the cancel button in the window is clicked the event will not be fired.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>remove</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -24849,7 +24849,7 @@ This class can be used to obtain reference to the button after Grid initializati
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user clicks the "destroy" command button.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user clicks the "destroy" command button and delete operation is confirmed in the confirmation window, if the cancel button in the window is clicked the event will not be fired.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-remove</name>
         <tag-class>com.kendoui.taglib.grid.RemoveFunctionTag</tag-class>
         <body-content>JSP</body-content>

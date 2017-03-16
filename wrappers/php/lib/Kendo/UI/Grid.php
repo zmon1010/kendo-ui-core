@@ -620,7 +620,7 @@ its resize handle. In this case the column will assume the smallest possible wid
 
     /**
     * Sets the remove event of the Grid.
-    * Fired when the user clicks the "destroy" command button.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user clicks the "destroy" command button and delete operation is confirmed in the confirmation window, if the cancel button in the window is clicked the event will not be fired.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Grid
     */

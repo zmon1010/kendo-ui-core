@@ -520,7 +520,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user clicks the "destroy" command button.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user clicks the "destroy" command button and delete operation is confirmed in the confirmation window, if the cancel button in the window is clicked the event will not be fired.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the remove event.</param>
         public GridEventBuilder Remove(string handler)
@@ -531,7 +531,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user clicks the "destroy" command button.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user clicks the "destroy" command button and delete operation is confirmed in the confirmation window, if the cancel button in the window is clicked the event will not be fired.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public GridEventBuilder Remove(Func<object, object> handler)
