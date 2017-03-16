@@ -235,6 +235,12 @@
     <Compile Include="Controllers\ComboBox\GroupingController.cs" />
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
     <Compile Include="Controllers\DataSource\Shared_DatasourceController.cs" />
+    <Compile Include="Controllers\DateInput\ApiController.cs" />
+    <Compile Include="Controllers\DateInput\EventsController.cs" />
+    <Compile Include="Controllers\DateInput\GlobalizationController.cs" />
+    <Compile Include="Controllers\DateInput\IndexController.cs" />
+    <Compile Include="Controllers\DateInput\Keyboard_NavigationController.cs" />
+    <Compile Include="Controllers\DateInput\Right_To_Left_SupportController.cs" />
     <Compile Include="Controllers\DatePicker\DisableDatesController.cs" />
     <Compile Include="Controllers\DatePicker\Week_ColumnController.cs" />
     <Compile Include="Controllers\DateTimePicker\DisableDatesController.cs" />
@@ -3002,6 +3008,12 @@
     <Content Include="Views\menu\menu_bind_attributes.cshtml" />
     <Content Include="Views\upload\chunkupload.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\dateinput\api.cshtml" />
+    <Content Include="Views\dateinput\globalization.cshtml" />
+    <Content Include="Views\dateinput\index.cshtml" />
+    <Content Include="Views\dateinput\keyboard_navigation.cshtml" />
+    <Content Include="Views\dateinput\right_to_left_support.cshtml" />
+    <Content Include="Views\dateinput\events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\map\api.cshtml" />

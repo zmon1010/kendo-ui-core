@@ -199,6 +199,11 @@ namespace Kendo.Mvc.UI
                 options["disableDates"] = DisableDatesHandler;
             }
 
+            if (DateInput.HasValue)
+            {
+                options["dateInput"] = DateInput;
+            }
+
             writer.Write(Initializer.Initialize(Selector, "DateTimePicker", options));
 
             base.WriteInitializationScript(writer);

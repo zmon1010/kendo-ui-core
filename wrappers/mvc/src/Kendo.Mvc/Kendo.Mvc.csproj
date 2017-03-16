@@ -2774,4 +2774,4 @@
     <Compile Include="UI\Spreadsheet\Settings\SpreadsheetDefaultCellStyleSettings.cs" />
     <Compile Include="UI\Spreadsheet\Fluent\SpreadsheetDefaultCellStyleSettingsBuilder.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="UI\DateInput\DateInput.cs" /><Compile Include="UI\DateInput\Fluent\DateInputBuilder.cs" /><Compile Include="UI\DateInput\Fluent\DateInputEventBuilder.cs" /><Compile Include="UI\DateInput\Html\DateInputHtmlBuilder.cs" /></ItemGroup></Project>

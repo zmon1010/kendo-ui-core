@@ -1424,6 +1424,21 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Creates a <see cref="DateInput"/>
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DateInput()
+        ///             .Name("DateInput")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public virtual DateInputBuilder DateInput()
+        {
+            return new DateInputBuilder(new DateInput(ViewContext, Initializer, UrlGenerator));
+        }
+        
+        /// <summary>
         /// Creates a <see cref="Dialog"/>
         /// </summary>
         /// <example>

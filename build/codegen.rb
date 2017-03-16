@@ -121,7 +121,8 @@ namespace :generate do
                     'docs/api/javascript/ui/treelist.md',
                     'docs/api/javascript/ui/treeview.md',
                     'docs/api/javascript/ui/spreadsheet.md',
-                    'docs/api/javascript/ui/dialog.md'
+                    'docs/api/javascript/ui/dialog.md',
+					'docs/api/javascript/ui/dateinput.md'
                 ]
 
                 components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC::Wrappers::DataViz::Component) }

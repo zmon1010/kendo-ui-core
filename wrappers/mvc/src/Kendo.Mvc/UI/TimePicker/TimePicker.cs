@@ -60,6 +60,11 @@ namespace Kendo.Mvc.UI
                 options["dates"] = Dates;
             }
 
+            if (DateInput.HasValue)
+            {
+                options["dateInput"] = DateInput;
+            }
+
             writer.Write(Initializer.Initialize(Selector, "TimePicker", options));
 
             base.WriteInitializationScript(writer);
