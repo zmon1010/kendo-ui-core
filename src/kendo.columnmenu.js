@@ -77,7 +77,9 @@ var __meta__ = { // jshint ignore:line
             link = element.find(".k-header-column-menu");
 
             if (!link[0]) {
-                link = element.addClass("k-with-icon").prepend('<a class="k-header-column-menu" href="#" title="' + options.messages.settings + '"><span class="k-icon k-i-more-vertical"></span></a>').find(".k-header-column-menu");
+                link = element.addClass("k-with-icon").prepend('<a class="k-header-column-menu" href="#" title="' + 
+                    options.messages.settings + '" aria-label="' +
+                    options.messages.settings + '"><span class="k-icon k-i-more-vertical"></span></a>').find(".k-header-column-menu");
             }
 
             that.link = link
