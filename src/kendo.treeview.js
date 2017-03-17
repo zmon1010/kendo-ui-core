@@ -325,19 +325,22 @@ var __meta__ = { // jshint ignore:line
 
         _animation: function() {
             var options = this.options,
-                animationOptions = options.animation;
+                animationOptions = options.animation,
+                hasCollapseAnimation = animationOptions.collapse && "effects" in animationOptions.collapse,
+                collapse = extend({}, animationOptions.expand, animationOptions.collapse);
+
+            if (!hasCollapseAnimation) {
+                collapse = extend(collapse, {reverse: true});
+            }
 
             if (animationOptions === false) {
                 animationOptions = {
                     expand: { effects: {} },
                     collapse: { hide: true, effects: {} }
                 };
-            } else if (!animationOptions.collapse || !("effects" in animationOptions.collapse)) {
-                animationOptions.collapse = extend({ reverse: true }, animationOptions.expand);
             }
 
-            extend(animationOptions.collapse, { hide: true });
-
+            animationOptions.collapse = extend(collapse, {hide: true});
             options.animation = animationOptions;
         },
 
