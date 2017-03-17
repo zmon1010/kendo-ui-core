@@ -7909,7 +7909,7 @@ function getComputedStyle(element, pseudoElt) {
     return window.getComputedStyle(element, pseudoElt || null);
 }
 
-function getPropertyValue(style, prop) {
+function getPropertyValue(style, prop, defa) {
     var val = style.getPropertyValue(prop);
     if (val == null || val === "") {
         if (browser.webkit) {
@@ -7922,7 +7922,11 @@ function getPropertyValue(style, prop) {
             val = style.getPropertyValue("-ms-" + prop);
         }
     }
-    return val;
+    if (arguments.length > 2 && (val == null || val === "")) {
+        return defa;
+    } else {
+        return val;
+    }
 }
 
 function pleaseSetPropertyValue(style, prop, value, important) {
@@ -8847,86 +8851,83 @@ function _renderElement(element, group) {
             return;
         }
 
-        { // eslint-disable-line no-constant-condition
-            // so that it's easy to comment out..  uglifyjs will drop the spurious if.
+        // START paint borders
+        // if all borders have equal colors...
+        if (top.color == right.color && top.color == bottom.color && top.color == left.color) {
 
-            // if all borders have equal colors...
-            if (top.color == right.color && top.color == bottom.color && top.color == left.color) {
+            // if same widths too, we can draw the whole border by stroking a single path.
+            if (top.width == right.width && top.width == bottom.width && top.width == left.width)
+            {
+                if (shouldDrawLeft && shouldDrawRight) {
+                    // reduce box by half the border width, so we can draw it by stroking.
+                    box = innerBox(box, top.width/2);
 
-                // if same widths too, we can draw the whole border by stroking a single path.
-                if (top.width == right.width && top.width == bottom.width && top.width == left.width)
-                {
-                    if (shouldDrawLeft && shouldDrawRight) {
-                        // reduce box by half the border width, so we can draw it by stroking.
-                        box = innerBox(box, top.width/2);
-
-                        // adjust the border radiuses, again by top.width/2, and make the path element.
-                        var path = elementRoundBox(element, box, top.width/2);
-                        path.options.stroke = {
-                            color: top.color,
-                            width: top.width
-                        };
-                        group.append(path);
-                        return;
-                    }
-                }
-            }
-
-            // if border radiuses are zero and widths are at most one pixel, we can again use simple
-            // paths.
-            if (rTL0.x === 0 && rTR0.x === 0 && rBR0.x === 0 && rBL0.x === 0) {
-                // alright, 1.9px will do as well.  the difference in color blending should not be
-                // noticeable.
-                if (top.width < 2 && left.width < 2 && right.width < 2 && bottom.width < 2) {
-                    // top border
-                    if (top.width > 0) {
-                        group.append(
-                            new Path({
-                                stroke: { width: top.width, color: top.color }
-                            })
-                                .moveTo(box.left, box.top + top.width/2)
-                                .lineTo(box.right, box.top + top.width/2)
-                        );
-                    }
-
-                    // bottom border
-                    if (bottom.width > 0) {
-                        group.append(
-                            new Path({
-                                stroke: { width: bottom.width, color: bottom.color }
-                            })
-                                .moveTo(box.left, box.bottom - bottom.width/2)
-                                .lineTo(box.right, box.bottom - bottom.width/2)
-                        );
-                    }
-
-                    // left border
-                    if (shouldDrawLeft) {
-                        group.append(
-                            new Path({
-                                stroke: { width: left.width, color: left.color }
-                            })
-                                .moveTo(box.left + left.width/2, box.top)
-                                .lineTo(box.left + left.width/2, box.bottom)
-                        );
-                    }
-
-                    // right border
-                    if (shouldDrawRight) {
-                        group.append(
-                            new Path({
-                                stroke: { width: right.width, color: right.color }
-                            })
-                                .moveTo(box.right - right.width/2, box.top)
-                                .lineTo(box.right - right.width/2, box.bottom)
-                        );
-                    }
-
+                    // adjust the border radiuses, again by top.width/2, and make the path element.
+                    var path = elementRoundBox(element, box, top.width/2);
+                    path.options.stroke = {
+                        color: top.color,
+                        width: top.width
+                    };
+                    group.append(path);
                     return;
                 }
             }
-
         }
+
+        // if border radiuses are zero and widths are at most one pixel, we can again use simple
+        // paths.
+        if (rTL0.x === 0 && rTR0.x === 0 && rBR0.x === 0 && rBL0.x === 0) {
+            // alright, 1.9px will do as well.  the difference in color blending should not be
+            // noticeable.
+            if (top.width < 2 && left.width < 2 && right.width < 2 && bottom.width < 2) {
+                // top border
+                if (top.width > 0) {
+                    group.append(
+                        new Path({
+                            stroke: { width: top.width, color: top.color }
+                        })
+                            .moveTo(box.left, box.top + top.width/2)
+                            .lineTo(box.right, box.top + top.width/2)
+                    );
+                }
+
+                // bottom border
+                if (bottom.width > 0) {
+                    group.append(
+                        new Path({
+                            stroke: { width: bottom.width, color: bottom.color }
+                        })
+                            .moveTo(box.left, box.bottom - bottom.width/2)
+                            .lineTo(box.right, box.bottom - bottom.width/2)
+                    );
+                }
+
+                // left border
+                if (shouldDrawLeft) {
+                    group.append(
+                        new Path({
+                            stroke: { width: left.width, color: left.color }
+                        })
+                            .moveTo(box.left + left.width/2, box.top)
+                            .lineTo(box.left + left.width/2, box.bottom)
+                    );
+                }
+
+                // right border
+                if (shouldDrawRight) {
+                    group.append(
+                        new Path({
+                            stroke: { width: right.width, color: right.color }
+                        })
+                            .moveTo(box.right - right.width/2, box.top)
+                            .lineTo(box.right - right.width/2, box.bottom)
+                    );
+                }
+
+                return;
+            }
+        }
+        // END paint borders
 
         var tmp = adjustBorderRadiusForBox(box, rTL0, rTR0, rBR0, rBL0);
         var rTL = tmp.tl;
@@ -9397,6 +9398,7 @@ function renderText(element, node, group) {
     var range = element.ownerDocument.createRange();
     var align$$1 = getPropertyValue(style, "text-align");
     var isJustified = align$$1 == "justify";
+    var columnCount = getPropertyValue(style, "column-count", 1);
     var whiteSpace = getPropertyValue(style, "white-space");
 
     // IE shrinks the text with text-overflow: ellipsis,
@@ -9500,7 +9502,7 @@ function renderText(element, node, group) {
 
         // for justified text we must split at each space, because space has variable width.
         var found = false;
-        if (isJustified) {
+        if (isJustified || columnCount > 1) {
             pos = text.substr(start).search(/\s/);
             if (pos >= 0) {
                 // we can only split there if it's on the same line, otherwise we'll fall back

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Kendo UI PDF export of columns</title>
+
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+     requireSync([
+         "../src/jquery.js",
+         "../src/kendo.pdf.js",
+         "./console.time.js",
+         "./test-pdf-helpers.js"
+     ]);
+    </script>
+
+    <style>
+     html {
+       font-family: "DejaVu Sans", sans-serif;
+     }
+
+     .columns {
+       column-count: 2;
+       -moz-column-count: 2;
+       max-width: 500px;
+     }
+    </style>
+  </head>
+  <body>
+
+    Kendo:
+    <button onclick="pdf('#test1')">PDF</button>
+    <button onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    |
+    <button onclick="h2c('#test1')">html2canvas</button>
+    <div id="test1" style="padding: 2em; background: #ffc">
+      <div class="columns">
+        111 111 111 111 111 111 111 111 111 111 111 111 111 111 111 111
+        111 111 111 111 111 111 111 111 111 111 111 111 111 111 111 111
+        111 111 111 111 111 111 111 111 111 111 111 111 111 111 111 111
+        111 111 111 111 222 222 222 222 222 222 222 222 222 222 222 222
+        222 222 222 222 222 222 222 222 222 222 222 222 222 222 222 222
+        222 222 222 222 222 222 222 222 222 222 222 222 222 222 222 222
+        222 222 222 222 222 222
+      </div>
+    </div>
+
+    <script>
+     window.onload = function() {
+         draw('#test1', 'svg');
+     };
+    </script>
+
+  </body>
+</html>
