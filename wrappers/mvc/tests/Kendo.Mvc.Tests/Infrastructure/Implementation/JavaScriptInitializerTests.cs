@@ -112,6 +112,14 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Tests
         }
 
         [Fact]
+        public void Should_create_serializer_with_max_value_of_MaxJsonLength()
+        {
+            var serializer = initializer.CreateSerializer() as DefaultJavaScriptSerializer;
+
+            serializer.MaxJsonLength.ShouldEqual(Int32.MaxValue);
+        }
+
+        [Fact]
         public void Should_serialize_enumerables_as_array()
         {
             data["foo"] = new [] { "foo" };
@@ -208,7 +216,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Tests
         [Fact]
         public void Should_serialize_nested_object_client_event_handler_name_within_an_array()
         {
-            var nested = new Dictionary<string, object>() 
+            var nested = new Dictionary<string, object>()
             {
                 { "bar", new ClientHandlerDescriptor { HandlerName = "baz" } }
             };
