@@ -364,10 +364,10 @@
     <value>Sloupce</value>
   </data>
   <data name="Grid_SortAscending" xml:space="preserve">
-    <value>Roustoucí</value>
+    <value>Řadit vzestupně</value>
   </data>
   <data name="Grid_SortDescending" xml:space="preserve">
-    <value>Klesající</value>
+    <value>Řadit sestupně</value>
   </data>
   <data name="Editor_DeleteFile" xml:space="preserve">
     <value>Opravdu chcete smazat "{0}"?</value>
