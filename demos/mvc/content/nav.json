@@ -964,6 +964,18 @@
           "aspnet-mvc": "This example demonstrates how the API of Telerik ASP.NET MVC Dateinput can be configured to modify the features of the extension."
         }
       },
+	  {
+        "text": "Events",
+        "url": "dateinput/events",
+        "title": {
+          "kendo-ui": "Attach an event to Kendo UI jQuery DateInput | Kendo UI Web Demos",
+          "aspnet-mvc": "Attach an event to ASP.NET MVC DateInput | ASP.NET MVC Demos"
+        },
+        "meta": {
+          "kendo-ui": "This example shows how to subscribe to the change event in the Kendo UI DateInput widget.",
+          "aspnet-mvc": "This example shows how to subscribe to the change event in the Kendo UI DateInput widget."
+        }
+      },
       {
         "text": "Keyboard navigation",
         "url": "dateinput/keyboard-navigation",

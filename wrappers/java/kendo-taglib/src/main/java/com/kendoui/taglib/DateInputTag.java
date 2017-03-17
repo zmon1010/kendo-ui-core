@@ -4,7 +4,9 @@ package com.kendoui.taglib;
 
 
 import com.kendoui.taglib.json.Function;
-
+import com.kendoui.taglib.dateinput.*;
+import com.kendoui.taglib.html.Element;
+import com.kendoui.taglib.html.Input;
 
 import javax.servlet.jsp.JspException;
 
@@ -13,6 +15,11 @@ public class DateInputTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public DateInputTag() {
         super("DateInput");
+    }
+    
+    @Override
+    protected Element<?> createElement() {
+        return new Input().attr("name", getName());
     }
     
     @Override

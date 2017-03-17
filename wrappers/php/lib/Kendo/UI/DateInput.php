@@ -6,6 +6,10 @@ class DateInput extends \Kendo\UI\Widget {
     public function name() {
         return 'DateInput';
     }
+
+    protected function createElement() {
+        return new \Kendo\Html\Element('input', true);
+    }
 //>> Properties
 
     /**
