@@ -196,6 +196,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public int MinResizableWidth
+        {
+            get;
+            set;
+        }
+
         public GridFilterUIRole FilterUIRole 
         { 
             get; 

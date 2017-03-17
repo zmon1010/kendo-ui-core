@@ -96,6 +96,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        int MinResizableWidth
+        {
+            get;
+            set;
+        }
+
         string Width 
         { 
             get; 

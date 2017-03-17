@@ -105,6 +105,11 @@ namespace Kendo.Mvc.UI
                 json["minScreenWidth"] = MinScreenWidth;
             }
 
+            if (MinResizableWidth != default(int))
+            {
+                json["minResizableWidth"] = MinResizableWidth;
+            }
+
             if (ClientTemplate.HasValue())                  
             {
                 json["template"] = WebUtility.UrlDecode(ClientTemplate);
@@ -203,6 +208,18 @@ namespace Kendo.Mvc.UI
             set
             {
                 Settings.MinScreenWidth = value;
+            }
+        }
+
+        public int MinResizableWidth
+        {
+            get
+            {
+                return Settings.MinResizableWidth;
+            }
+            set
+            {
+                Settings.MinResizableWidth = value;
             }
         }
 

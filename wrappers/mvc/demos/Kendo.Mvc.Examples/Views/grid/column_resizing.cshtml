@@ -7,7 +7,7 @@
     .Columns(columns =>
     {
         columns.Bound(o => o.OrderDate).Width(120).Format("{0:MM/dd/yyyy}");
-        columns.Bound(o => o.ShipCountry);
+        columns.Bound(o => o.ShipCountry).MinResizableWidth(100);
         columns.Bound(o => o.ShipCity);
         columns.Bound(o => o.ShipName);
         columns.Bound(o => o.ShippedDate).Format("{0:MM/dd/yyyy}").Width(200);

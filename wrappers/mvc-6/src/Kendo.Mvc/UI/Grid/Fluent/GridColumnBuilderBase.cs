@@ -179,6 +179,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The pixel screen width below which the user will not be able to resize the column via the UI.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().Grid(Model)
+        ///     .Name("Grid")
+        ///     .Columns(columns => columns.Bound(o => o.OrderID).MinResizableWidth(450))
+        /// )
+        /// </code>
+        /// </example>
+        public TColumnBuilder MinResizableWidth(int value)
+        {
+            Column.MinResizableWidth = value;
+
+            return this as TColumnBuilder;
+        }
+
+        /// <summary>
         /// Sets the width of the column in pixels.
         /// </summary>
         /// <param name="pixelWidth">The width in pixels.</param>
