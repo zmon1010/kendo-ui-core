@@ -228,5 +228,13 @@ namespace Kendo.Mvc.UI.Tests
             Assert.IsType(typeof(PanelBarBuilder), returnedBuilder);
         }
 
+        [Fact]
+        public void Animation_should_set_duration_to_panelBar()
+        {
+            builder.Animation(animation => animation.Expand(expand => expand.Duration(3000)).Collapse(collapse => collapse.Duration(300)));
+            panelBar.Animation.Expand.Duration.ShouldEqual(3000);
+            panelBar.Animation.Collapse.Duration.ShouldEqual(300);
+        }
+        
     }
 }

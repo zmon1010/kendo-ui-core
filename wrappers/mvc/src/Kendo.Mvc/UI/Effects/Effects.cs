@@ -40,17 +40,21 @@ namespace Kendo.Mvc.UI
 
         protected override void Serialize(IDictionary<string, object> json)
         {
+            var options = new Dictionary<string, object>();
+            if (Duration != (int)AnimationDuration.Normal)
+            {
+                options["duration"] = Duration;
+            }
             if (Container.Any())
             {
-                var options = new Dictionary<string, object>();
-
                 options["effects"] = string.Join(" ", Container);
-                options["duration"] = Duration;
-                if (Reverse)
-                {
-                    options["reverse"] = Reverse;
-                }
-                
+            }
+            if (Reverse)
+            {
+                options["reverse"] = Reverse;
+            }
+            if (options.Keys.Any())
+            {
                 json[Name] = options;
             }
         }
