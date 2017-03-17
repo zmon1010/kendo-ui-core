@@ -967,6 +967,7 @@
 	  {
         "text": "Events",
         "url": "dateinput/events",
+        "new": "true",
         "title": {
           "kendo-ui": "Attach an event to Kendo UI jQuery DateInput | Kendo UI Web Demos",
           "aspnet-mvc": "Attach an event to ASP.NET MVC DateInput | ASP.NET MVC Demos"
