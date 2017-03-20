@@ -6,6 +6,7 @@
 artifacts/**
 **/bin/**
 **/Properties/debugSettings.json
+**/PublishProfiles/**
 **/packages/**
 TestResults/
 apidiff.txt
