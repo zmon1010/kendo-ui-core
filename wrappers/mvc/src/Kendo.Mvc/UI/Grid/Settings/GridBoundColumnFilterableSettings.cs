@@ -32,6 +32,7 @@ namespace Kendo.Mvc.UI
         public bool CheckAll { get; set; }
         public bool? Search { get; set; }
         public bool? IgnoreCase { get; set; }
+        public string DataSourceId { get; set; }
 
         public GridColumnFilterableCellSettings CellSettings { get; set; }
 
@@ -72,7 +73,11 @@ namespace Kendo.Mvc.UI
                 json["checkAll"] = CheckAll;
             }
 
-            if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url))
+            if (!string.IsNullOrEmpty(DataSourceId))
+            {
+                json["dataSourceId"] = DataSourceId;
+            }
+            else if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url))
             {
                 json["dataSource"] = DataSource.ToJson();
             }

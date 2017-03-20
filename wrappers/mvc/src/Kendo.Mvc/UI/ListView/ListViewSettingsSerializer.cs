@@ -20,7 +20,7 @@
             }
             else
             {
-                options["dataSourceId"] = listView.DataSource;
+                options["dataSourceId"] = listView.DataSourceId;
             }
             var autoBind = listView.DataSource.Type != DataSourceType.Server && listView.AutoBind.GetValueOrDefault(true);
 

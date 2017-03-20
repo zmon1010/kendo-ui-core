@@ -162,13 +162,19 @@ namespace Kendo.Mvc.UI.Fluent
 		{
 			configurator(new ReadOnlyDataSourceBuilder(settings.DataSource, this.viewContext, this.urlGenerator));
 
-			return this;
-		}
+            return this;
+        }
 
-		/// <summary>
-		/// Provide IEnumerable that will be used as DataSource for Multi CheckBox filtering on this column
-		/// </summary>
-		public GridBoundColumnFilterableBuilder BindTo(System.Collections.IEnumerable dataSource)
+        public GridBoundColumnFilterableBuilder DataSource(string dataSourceId)
+        {
+            settings.DataSourceId = dataSourceId;
+            return this;
+        }
+
+        /// <summary>
+        /// Provide IEnumerable that will be used as DataSource for Multi CheckBox filtering on this column
+        /// </summary>
+        public GridBoundColumnFilterableBuilder BindTo(System.Collections.IEnumerable dataSource)
 		{
 			settings.DataSource.Data = dataSource;
 

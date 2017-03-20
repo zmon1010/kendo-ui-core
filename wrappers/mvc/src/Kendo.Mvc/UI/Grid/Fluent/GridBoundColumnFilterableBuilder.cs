@@ -183,5 +183,12 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        public GridBoundColumnFilterableBuilder DataSource(string DataSourceId)
+        {
+            settings.DataSourceId = DataSourceId;
+
+            return this;
+        }
     }
 }

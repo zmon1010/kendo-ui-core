@@ -30,10 +30,11 @@ namespace Kendo.Mvc.UI
         public GridColumnFilterableCellSettings CellSettings { get; }
 		public DataSource DataSource { get; set; }
 
-		protected override void Serialize(IDictionary<string, object> json)
+        public string DataSourceId { get; set; }
+
+        protected override void Serialize(IDictionary<string, object> json)
 		{
 			base.Serialize(json);
-
 			if (FilterUIHandler.HasValue())
 			{
 				json["ui"] = FilterUIHandler;
@@ -45,18 +46,22 @@ namespace Kendo.Mvc.UI
 
 			var cellSettings = CellSettings.ToJson();
 			if (cellSettings.Any())
-			{
-				json["cell"] = cellSettings;
-			}
+            {
+                json["cell"] = cellSettings;
+            }
 
-            if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url))
+            if (!string.IsNullOrEmpty(this.DataSourceId))
+            {
+                json["dataSourceId"] = this.DataSourceId;
+            }
+            else if (!string.IsNullOrEmpty(DataSource.Transport.Read.Url))
             {
                 json["dataSource"] = DataSource.ToJson();
             }
             else if (DataSource.Data != null)
             {
                 json["dataSource"] = DataSource.Data;
-            }            
+            }
 
             if (Multi)
 			{
