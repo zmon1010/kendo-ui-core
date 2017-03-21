@@ -83,11 +83,28 @@ var __meta__ = { // jshint ignore:line
             CHANGE
         ],
 
+        min: function (value) {
+            if (value !== undefined) {
+                this.options.min = value;
+            } else {
+                return this.options.min;
+            }
+        },
+
+        max: function (value) {
+            if (value !== undefined) {
+                this.options.max = value;
+            } else {
+                return this.options.max;
+            }
+        },
+
         setOptions: function (options) {
             var that = this;
             Widget.fn.setOptions.call(that, options);
             this._unbindInput();
             this._bindInput();
+            this._updateElementValue();
         },
 
         destroy: function () {
@@ -188,6 +205,14 @@ var __meta__ = { // jshint ignore:line
         _change: function () {
             var that = this;
             var value = that.value();
+            if (value && that.min() && value < that.min()) {
+                that.value(that.min());
+                value = that.value();
+            }
+            if (value && that.max() && value > that.max()) {
+                that.value(that.max());
+                value = that.value();
+            }
 
             if (value !== that._oldValue) {
                 that._oldValue = value;
