@@ -174,6 +174,7 @@
 @button-focused-shadow: none;
 @button-focused-active-shadow: none;
 @accent-color: @accent;
+@input-validation-error: darken(@error, 20%);
 
 /* Kendo skin */
 
@@ -3297,4 +3298,29 @@ div.k-window.k-state-focused
             }
         }
     }
+}
+
+.k-numeric-wrap .k-i-warning {
+    color: @input-validation-error;
+    position: absolute;
+    top: 0;
+    right: 2.2em;
+    width: 2.2em;
+}
+
+.k-numeric-wrap.k-state-invalid {
+    border-color: @input-validation-error;
+
+    .k-select {
+        border-color: @input-validation-error;
+    }
+
+    input {
+        color: @input-validation-error;
+    }
+}
+
+.k-rtl .k-numeric-wrap.k-state-invalid .k-i-warning {
+    right: auto;
+    left: 2.2em;
 }

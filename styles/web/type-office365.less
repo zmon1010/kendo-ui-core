@@ -179,6 +179,7 @@
 @secondary-header-color: rgba(256, 256, 256, 0.5);
 @secondary-header-background-color: darken(@base, 13%);
 @accent-color: lighten(@base, 17%);
+@input-validation-error: @error;
 
 /* Kendo skin */
 
@@ -3564,4 +3565,25 @@ input.k-textbox:focus {
             margin: -2px 6px 0;
         }
     }
+}
+
+.k-numeric-wrap .k-i-warning {
+    color: @input-validation-error;
+    position: absolute;
+    top: 0;
+    right: 1.9em;
+    width: 1.9em;
+}
+
+.k-numeric-wrap.k-state-invalid {
+    border-color: @input-validation-error;
+
+    input {
+        color: @input-validation-error;
+    }
+}
+
+.k-rtl .k-numeric-wrap.k-state-invalid .k-i-warning {
+    right: auto;
+    left: 1.9em;
 }
