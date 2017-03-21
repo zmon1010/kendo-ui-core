@@ -135,6 +135,10 @@ var __meta__ = { // jshint ignore:line
                 value = kendo.parseDate(value, this.options.format, this.options.culture);
             }
 
+            if (value && !value.getTime()) {
+                value = null;
+            }
+
             this._dateTime = new customDateTime(value, this.options.format, this.options.culture);
 
             this._updateElementValue();
@@ -250,6 +254,10 @@ var __meta__ = { // jshint ignore:line
 
             if (diff.length && diff[0][0] !== " ") {
                 this._selectSegment(diff[0][0]);
+
+                //android fix
+                var that = this, difSym = diff[0][0];
+                setTimeout(function () { that._selectSegment(difSym); });
             }
             if (navigationOnly) {
                 var newEvent = { keyCode: 39, preventDefault: function () { } };
@@ -491,7 +499,15 @@ var __meta__ = { // jshint ignore:line
             var newValue = new Date(value);
             switch (symbol) {
                 case "y": newValue.setFullYear(newValue.getFullYear() + offset); break;
-                case "M": newValue.setMonth(newValue.getMonth() + offset); break;
+                case "M":
+                    var newMonth = newValue.getMonth() + offset;
+                    newValue.setMonth(newMonth);
+                    if (newValue.getMonth() % 12 !== (newMonth + 12) % 12) {
+                        //handle case when new month does not have such date
+                        newValue.setDate(1);
+                        newValue.setMonth(newMonth);
+                    }
+                    break;
                 case "d":
                 case "E": newValue.setDate(newValue.getDate() + offset); break;
                 case "H":
@@ -540,7 +556,7 @@ var __meta__ = { // jshint ignore:line
                             month = false;
                         } else {
                             newValue.setMonth(newMonth - 1);
-                            if (newValue.getMonth() !== value.getMonth()) {
+                            if (newValue.getMonth() !== newMonth - 1) {
                                 newValue.setDate(1);
                                 newValue.setMonth(newMonth - 1);
                             }
