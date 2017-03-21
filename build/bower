@@ -22,8 +22,7 @@ cp -rf $BUNDLE_DIR/src $WORKING_DIR
 rsync -av $BUNDLE_DIR-source/src --exclude 'AspNet*' --exclude 'Kendo*' --exclude 'Telerik*' --exclude 'README' $WORKING_DIR
 cp -rf $BUNDLE_DIR/styles $WORKING_DIR
 
-cd $WORKING_DIR
-sed "s/\"version\".*/\"version\": \"$VERSION\",/" bower.json > bower.json.new && mv bower.json.new bower.json
+sed "s/\"version\".*/\"version\": \"$VERSION\",/" $WORKING_DIR/bower.json > bower.json.new && mv bower.json.new $WORKING_DIR/bower.json
 
 $bowergit add --all .
 $bowergit commit -m "Update to $VERSION"
