@@ -24,6 +24,8 @@ JQUERY = File.join(DIST_JS_ROOT, "jquery.min.js")
 JSZIP = File.join(DIST_JS_ROOT, "jszip.min.js")
 PAKO = File.join(DIST_JS_ROOT, "pako_deflate.min.js")
 ANGULAR = File.join(DIST_JS_ROOT, "angular.min.js")
+WEBCOMPONENTS = File.join(DIST_JS_ROOT, 'kendo.webcomponents.js')
+INTEROP = FileList[ANGULAR, WEBCOMPONENTS]
 JQUERY_MAP = FileList[File.join(DIST_JS_ROOT, 'jquery.min.map')]
 
 # Suites
@@ -32,19 +34,19 @@ COMPLETE_JS = dependencies("all").include('dist/js/kendo.dataviz.mobile.js')
 MIN_JS = FileList[COMPLETE_JS - JS_BUNDLES - CULTURES_AND_TIMEZONES].include(ASPNET_MVC).ext('min.js')
 
 WEB_SRC_JS = dependencies("web")
-WEB_MIN_JS = WEB_SRC_JS.ext('min.js').include(JQUERY).include(ANGULAR).include(JSZIP).include(PAKO)
+WEB_MIN_JS = WEB_SRC_JS.ext('min.js').include(JQUERY).include(INTEROP).include(JSZIP).include(PAKO)
 WEB_MIN_JS_MAP = maps(WEB_SRC_JS)
 
 DATAVIZ_SRC_JS = dependencies("dataviz")
-DATAVIZ_MIN_JS = DATAVIZ_SRC_JS.ext('min.js').include(JQUERY).include(ANGULAR).include(PAKO)
+DATAVIZ_MIN_JS = DATAVIZ_SRC_JS.ext('min.js').include(JQUERY).include(INTEROP).include(PAKO)
 DATAVIZ_MIN_JS_MAP = maps(DATAVIZ_SRC_JS)
 
 MOBILE_SRC_JS = dependencies("mobile")
-MOBILE_MIN_JS = MOBILE_SRC_JS.ext('min.js').include(JQUERY).include(ANGULAR)
+MOBILE_MIN_JS = MOBILE_SRC_JS.ext('min.js').include(JQUERY).include(INTEROP)
 MOBILE_MIN_JS_MAP = maps(MOBILE_SRC_JS)
 
 COMPLETE_SRC_JS = FileList[COMPLETE_JS]
-COMPLETE_MIN_JS = COMPLETE_JS.ext('min.js').include(JQUERY).include(ANGULAR).include(JSZIP).include(PAKO)
+COMPLETE_MIN_JS = COMPLETE_JS.ext('min.js').include(JQUERY).include(INTEROP).include(JSZIP).include(PAKO)
 COMPLETE_MIN_JS_MAP = maps(COMPLETE_JS)
 
 MVC_SRC_JS = FileList[COMPLETE_JS].include(ASPNET_MVC)
@@ -61,5 +63,5 @@ APP_BUILDER_MIN_JS = FileList[File.join(DIST_JS_ROOT, 'kendo.dataviz.mobile.min.
 APP_BUILDER_CORE_MIN_JS = FileList[File.join(DIST_JS_ROOT, 'kendo.mobile.min.js')].include(JQUERY)
 
 CORE_SRC_JS = dependencies("ui.core")
-CORE_MIN_JS = CORE_SRC_JS.ext('min.js').include(JQUERY).include(ANGULAR)
+CORE_MIN_JS = CORE_SRC_JS.ext('min.js').include(JQUERY).include(INTEROP)
 CORE_MIN_JS_MAP = maps(CORE_SRC_JS)
