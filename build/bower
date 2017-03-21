@@ -2,22 +2,27 @@
 
 # Script should not be called directly, use rake bower:push
 
-bowergit="git --work-tree=$2 --git-dir=$2/.git"
+REPO_URL=$1
+WORKING_DIR=$2
+BUNDLE_DIR=$3
 
-if [ ! -d $2 ]; then
-    git clone $1 $2
+bowergit="git --work-tree=$WORKING_DIR --git-dir=$WORKING_DIR/.git"
+
+if [ ! -d $WORKING_DIR ]; then
+    git clone $REPO_URL $WORKING_DIR
 else
     $bowergit fetch
     $bowergit reset --hard origin/master
     $bowergit clean -dfx
 fi;
 
-rm -rf $2/{js,styles,src}
-cp -rf $3/js $2
-cp -rf $3/src $2
-rsync -av $3-source/src --exclude 'AspNet*' --exclude 'Kendo*' --exclude 'Telerik*' --exclude 'README' $2
-cp -rf $3/styles $2
+rm -rf $WORKING_DIR/{js,styles,src}
+cp -rf $BUNDLE_DIR/js $WORKING_DIR
+cp -rf $BUNDLE_DIR/src $WORKING_DIR
+rsync -av $BUNDLE_DIR-source/src --exclude 'AspNet*' --exclude 'Kendo*' --exclude 'Telerik*' --exclude 'README' $WORKING_DIR
+cp -rf $BUNDLE_DIR/styles $WORKING_DIR
 
+cd $WORKING_DIR
 sed "s/\"version\".*/\"version\": \"$VERSION\",/" bower.json > bower.json.new && mv bower.json.new bower.json
 
 $bowergit add --all .
