@@ -31,4 +31,14 @@
 
         ok(listBox.selectable instanceof kendo.ui.Selectable);
     });
+
+    test("Selectable is destroyed on widget destroy", function() {
+        var listBox = new ListBox(div);
+        var destroySpy = spy(listBox.selectable, "destroy");
+
+        listBox.destroy();
+
+        equal(destroySpy.calls("destroy"), 1);
+        equal(listBox.selectable, undefined);
+    });
 })();

@@ -124,4 +124,32 @@
 
         equal(listbox.select().length, 0);
     });
+
+    module("Selectable API",  {
+        setup: function() {
+            container = $("<div>").appendTo(QUnit.fixture);
+            listbox = new ListBox(container, {
+                dataSource: [1, 2, 3]
+            });
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("should not select disabled items", function() {
+        listbox.items().addClass("k-state-disabled");
+
+        listbox.select(listbox.items());
+
+        equal(listbox.select().length, 0);
+    });
+
+    test("should not select items from disabled listbox", function() {
+        listbox.enable(false);
+
+        listbox.select(listbox.items());
+
+        equal(listbox.select().length, 0);
+    });
 })();
