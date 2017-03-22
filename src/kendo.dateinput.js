@@ -119,7 +119,6 @@ var __meta__ = { // jshint ignore:line
 
         destroy: function () {
             var that = this;
-
             that.element.off(ns);
 
             if (that._formElement) {
@@ -191,8 +190,8 @@ var __meta__ = { // jshint ignore:line
                 .off("keydown" + ns)
                 .off("paste" + ns)
                 .off(INPUT_EVENT_NAME)
-                .on("mouseup" + ns)
-                .on("mousewheel" + ns);
+                .off("mouseup" + ns)
+                .off("mousewheel" + ns);
         },
 
         _editable: function (options) {

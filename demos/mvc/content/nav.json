@@ -941,7 +941,6 @@
       {
         "text": "Basic usage",
         "url": "dateinput/index",
-        "new": "true",
         "title": {
           "kendo-ui": "Kendo UI jQuery DateInput Demo",
           "aspnet-mvc": "ASP.NET MVC DateInput sample"
@@ -954,7 +953,6 @@
       {
         "text": "API",
         "url": "dateinput/api",
-        "new": "true",
         "title": {
           "kendo-ui": "Kendo UI DateInput API Demo",
           "aspnet-mvc": "API ASP.NET MVC Dateinput example"
@@ -967,7 +965,6 @@
 	  {
         "text": "Events",
         "url": "dateinput/events",
-        "new": "true",
         "title": {
           "kendo-ui": "Attach an event to Kendo UI jQuery DateInput | Kendo UI Web Demos",
           "aspnet-mvc": "Attach an event to ASP.NET MVC DateInput | ASP.NET MVC Demos"
@@ -980,7 +977,6 @@
       {
         "text": "Keyboard navigation",
         "url": "dateinput/keyboard-navigation",
-        "new": "true",
         "title": {
           "kendo-ui": "Keyboard navigation in Kendo UI DateInput",
           "aspnet-mvc": "Keyboard navigation in ASP.NET MVC DateInput"
@@ -993,7 +989,6 @@
       {
         "text": "MVVM",
         "url": "dateinput/mvvm",
-        "new": "true",
         "title": {
           "kendo-ui": "MVVM support in Kendo UI DateInput"
         },
@@ -1009,7 +1004,6 @@
       {
         "text": "RTL support",
         "url": "dateinput/right-to-left-support",
-        "new": "true",
         "title": {
           "kendo-ui": "RTL support in Kendo UI DateInput widget | Kendo UI Demo",
           "aspnet-mvc": "RTL support in ASP.NET MVC DateInput control | ASP.NET MVC Demo"
@@ -1017,6 +1011,18 @@
         "meta": {
           "kendo-ui": "See how Kendo UI DateInput component supports RTL functionality.",
           "aspnet-mvc": "See how ASP.NET MVC DateInput component supports RTL functionality."
+        }
+      },
+      {
+        "text": "Localization and Globalization",
+        "url": "dateinput/localization-globalization",
+        "title": {
+          "kendo-ui": "Localization and Globalization in Kendo UI DateInput widget | Kendo UI Demo",
+          "aspnet-mvc": "Localization and Globalization in ASP.NET MVC DateInput control | ASP.NET MVC Demo"
+        },
+        "meta": {
+          "kendo-ui": "See how Kendo UI DateInput component supports Localization and Globalization.",
+          "aspnet-mvc": "See how ASP.NET MVC DateInput component supports Localization and Globalization."
         }
       }
     ],
