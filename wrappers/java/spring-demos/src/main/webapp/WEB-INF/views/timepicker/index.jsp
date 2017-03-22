@@ -8,7 +8,7 @@
  <div class="demo-section k-content">
     <h4>Set alarm time</h4>
 
-	<kendo:timePicker name="timepicker" value="${now}" style="width: 100%;"></kendo:timePicker>
+	<kendo:timePicker name="timepicker" dateInput="true" value="${now}" style="width: 100%;"></kendo:timePicker>
   	<h4 style="padding-top: 2em;">Alarm descriprion</h4>
   	<input id="descr" class="k-textbox" type="text" value="Wake up" style="width: 100%" />
 </div>
