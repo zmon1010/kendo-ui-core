@@ -398,6 +398,7 @@ var __meta__ = { // jshint ignore:line
         var value = null;
         var year = true, month = true, date = true, hours = true, minutes = true, seconds = true, milliseconds = true;
         var typedMonthPart = "";
+        var typedDayPeriodPart = "";
         var placeholders = {};
 
         //TODO: rewrite pad method
@@ -491,10 +492,18 @@ var __meta__ = { // jshint ignore:line
             switch (symbol) {
                 case "y": year = val; break;
                 case "M": month = val;
-                    if (val === false) { value.setMonth(0); typedMonthPart = ""; } break;
+                    if (!val) {
+                        value.setMonth(0);
+                        typedMonthPart = "";
+                    }
+                    break;
                 case "d": date = val; break;
                 case "H":
-                case "h": hours = val; break;
+                case "h": hours = val;
+                    if (!val) {
+                        typedDayPeriodPart = "";
+                    }
+                    break;
                 case "m": minutes = val; break;
                 case "s": seconds = val; break;
                 default: return;
@@ -643,6 +652,20 @@ var __meta__ = { // jshint ignore:line
                     }
                     newValue.setSeconds(newSeconds);
                     seconds = true;
+                    break;
+                case "t":
+                    if (hours) {
+                        typedDayPeriodPart += currentChar.toLowerCase();
+                        while (typedDayPeriodPart.length > 0) {
+                            if (calendar.AM[0].toLowerCase().indexOf(typedDayPeriodPart) === 0 && newValue.getHours() >= 12 ||
+                                calendar.PM[0].toLowerCase().indexOf(typedDayPeriodPart) === 0 && newValue.getHours() < 12) {
+                                newValue.setHours((newValue.getHours() + 12) % 24);
+                                value = newValue;
+                                return;
+                            }
+                            typedDayPeriodPart = typedDayPeriodPart.substring(1, typedDayPeriodPart.length);
+                        }
+                    }
                     break;
                 default: break;
             }
